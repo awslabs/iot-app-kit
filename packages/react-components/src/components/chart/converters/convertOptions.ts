@@ -1,4 +1,3 @@
-import { DEFAULT_TOOL_BOX } from '../eChartsConstants';
 import { convertGrid } from './convertGrid';
 import { convertTooltip } from './convertTooltip';
 import { useMemo } from 'react';
@@ -7,7 +6,7 @@ import { EChartsOption, SeriesOption } from 'echarts';
 
 type ConvertChartOptions = Pick<
   ChartOptions,
-  'backgroundColor' | 'axis' | 'gestures' | 'legend' | 'significantDigits' | 'titleText' | 'defaultVisualizationType'
+  'backgroundColor' | 'axis' | 'gestures' | 'legend' | 'significantDigits' | 'titleText'
 >;
 
 /**
@@ -24,8 +23,8 @@ export const useConvertedOptions = ({
   options: ConvertChartOptions;
   series: SeriesOption[];
 }): EChartsOption => {
-  const { backgroundColor, axis, significantDigits, titleText, defaultVisualizationType } = options;
-  const text = series.length === 0 ? 'No data present' : titleText ?? defaultVisualizationType ?? '';
+  const { backgroundColor, axis, significantDigits, titleText } = options;
+  const text = series.length === 0 ? 'No data present' : titleText ?? '';
   return useMemo(
     () => ({
       aria: {
@@ -38,7 +37,6 @@ export const useConvertedOptions = ({
       backgroundColor,
       grid: convertGrid(options.legend),
       tooltip: convertTooltip(significantDigits),
-      toolbox: DEFAULT_TOOL_BOX,
     }),
     [backgroundColor, axis, significantDigits, text]
   );

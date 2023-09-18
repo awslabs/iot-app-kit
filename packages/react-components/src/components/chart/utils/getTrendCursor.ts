@@ -6,7 +6,6 @@ import {
   TREND_CURSOR_CLOSE_GRAPHIC_INDEX,
   TREND_CURSOR_DELETE_BUTTON_HEIGHT,
   TREND_CURSOR_HEADER_BACKGROUND_COLOR,
-  TREND_CURSOR_HEADER_COLORS,
   TREND_CURSOR_HEADER_GRAPHIC_INDEX,
   TREND_CURSOR_HEADER_OFFSET,
   TREND_CURSOR_HEADER_TEXT_COLOR,
@@ -128,13 +127,13 @@ export const onResizeUpdateTrendCursorYValues = (
 };
 
 // this function return the TC line and the ondrag handles the user dragging action
-const addTCLine = (uId: string, size: SizeConfig) => ({
+export const addTCLine = (uId: string, size: SizeConfig) => ({
   type: 'line',
   z: TREND_CURSOR_Z_INDEX,
   id: `line-${uId}`,
   draggable: 'horizontal' as const,
   shape: {
-    y1: DEFAULT_MARGIN,
+    y1: DEFAULT_MARGIN - 6,
     y2: size.height - DEFAULT_MARGIN,
   },
   style: {
@@ -142,7 +141,7 @@ const addTCLine = (uId: string, size: SizeConfig) => ({
     lineWidth: TREND_CURSOR_LINE_WIDTH,
   },
 });
-const addTCHeader = (uId: string, timestampInMs: number, headerColor: string): GraphicComponentTextOption => ({
+export const addTCHeader = (uId: string, timestampInMs: number): GraphicComponentTextOption => ({
   type: 'text',
   z: TREND_CURSOR_Z_INDEX + 1,
   id: `text-${uId}`,
@@ -152,11 +151,6 @@ const addTCHeader = (uId: string, timestampInMs: number, headerColor: string): G
     fill: TREND_CURSOR_HEADER_TEXT_COLOR,
     align: 'center',
     rich: {
-      title: {
-        width: TREND_CURSOR_HEADER_WIDTH + 5, // width plus padding
-        backgroundColor: headerColor,
-        height: 6,
-      },
       timestamp: {
         width: TREND_CURSOR_HEADER_WIDTH,
         backgroundColor: TREND_CURSOR_HEADER_BACKGROUND_COLOR,
@@ -172,7 +166,7 @@ const addTCHeader = (uId: string, timestampInMs: number, headerColor: string): G
   silent: true,
 });
 
-const addTCDeleteButton = (uId: string): GraphicComponentZRPathOption => ({
+export const addTCDeleteButton = (uId: string): GraphicComponentZRPathOption => ({
   id: `polyline-${uId}`,
   type: 'polyline',
   z: TREND_CURSOR_Z_INDEX + 1,
@@ -195,7 +189,7 @@ const addTCDeleteButton = (uId: string): GraphicComponentZRPathOption => ({
   },
 });
 
-const addTCMarkers = (uId: string, yAxisMarkers: number[], series: SeriesOption[]) =>
+export const addTCMarkers = (uId: string, yAxisMarkers: number[], series: SeriesOption[]) =>
   yAxisMarkers.map((marker, index) => ({
     id: `circle-${index}-${uId}`,
     type: 'circle',
@@ -217,7 +211,6 @@ const addTCMarkers = (uId: string, yAxisMarkers: number[], series: SeriesOption[
 export const getNewTrendCursor = ({
   e,
   size,
-  tcHeaderColorIndex,
   series,
   tcId,
   x,
@@ -227,26 +220,29 @@ export const getNewTrendCursor = ({
 }: GetNewTrendCursorProps) => {
   const posX = e?.offsetX ?? x ?? 0;
   const uId = tcId ? tcId.split('trendCursor-')[1] : uuid();
-  // TODO: test this once echarts live mode is supported
   const timestampInMs = timestamp ?? calculateTimeStamp(posX, chartRef);
-
   const boundedX = setXWithBounds(size, posX);
-  // TODO: test this once echarts live mode is supported
+
   const { trendCursorsSeriesMakersValue, trendCursorsSeriesMakersInPixels } = calculateTrendCursorsSeriesMakers(
     series,
     timestampInMs,
     chartRef,
     visualization
   );
+
+  // this check makes sure that the chart lines are rendered first and only then we render the TC markers
+  // this avoids the re-render issue because of changing key on change in query
+  // without this check, we see that the TC's X will default to left and no markers
+  if (trendCursorsSeriesMakersInPixels.every((v) => v === 0)) {
+    return undefined;
+  }
   // rotate the colors in a round-robin fashion
-  const headerColor = TREND_CURSOR_HEADER_COLORS[tcHeaderColorIndex % TREND_CURSOR_HEADER_COLORS.length];
   return {
     id: tcId ?? `trendCursor-${uId}`,
     $action: 'merge' as const,
     type: 'group' as const,
     timestampInMs,
     yAxisMarkerValue: trendCursorsSeriesMakersValue,
-    headerColor,
     x: boundedX,
     // update the Y of the series markers
     //   childIndex --> purpose
@@ -257,7 +253,7 @@ export const getNewTrendCursor = ({
     // from index 3 --> series markers
     children: [
       addTCLine(uId, size),
-      addTCHeader(uId, timestampInMs, headerColor),
+      addTCHeader(uId, timestampInMs),
       addTCDeleteButton(uId),
       ...addTCMarkers(uId, trendCursorsSeriesMakersInPixels, series),
     ],

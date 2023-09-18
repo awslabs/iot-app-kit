@@ -1,7 +1,17 @@
 import { describe, expect } from '@jest/globals';
-import { ElementEvent, SeriesOption } from 'echarts';
-import { getNewTrendCursor, onDragUpdateTrendCursor } from '../utils/getTrendCursor';
-import { calculateXFromTimestamp, convertViewportToMs } from '../utils/trendCursorCalculations';
+import { SeriesOption } from 'echarts';
+import {
+  addTCDeleteButton,
+  addTCHeader,
+  addTCLine,
+  addTCMarkers,
+  onDragUpdateTrendCursor,
+} from '../utils/getTrendCursor';
+import {
+  calculateTrendCursorsSeriesMakers,
+  calculateXFromTimestamp,
+  convertViewportToMs,
+} from '../utils/trendCursorCalculations';
 import { createRef } from 'react';
 import { renderHook } from '@testing-library/react';
 import { useECharts } from '../../../hooks/useECharts';
@@ -37,46 +47,55 @@ export const mockViewport = {
   start: new Date('2023-07-13T16:00:00.000Z'),
   end: new Date('2023-07-13T16:30:00.000Z'),
 };
+
+export const mockGraphic = {
+  id: 'trendCursor-b07ad559-2c02-4d03-9d67-9a45fb25111b',
+  $action: 'merge',
+  type: 'group' as const,
+  timestampInMs: 0,
+  yAxisMarkerValue: [22.9396],
+  x: 50,
+  children: [
+    {
+      type: 'line' as const,
+      z: 100,
+      id: 'line-b07ad559-2c02-4d03-9d67-9a45fb25111b',
+      draggable: 'horizontal',
+    },
+    {
+      type: 'text' as const,
+      z: 101,
+      id: 'text-b07ad559-2c02-4d03-9d67-9a45fb25111b',
+      silent: true,
+    },
+    {
+      id: 'polyline-b07ad559-2c02-4d03-9d67-9a45fb25111b',
+      type: 'polyline' as const,
+      z: 101,
+      x: 45,
+      y: 31,
+    },
+    {
+      id: 'circle-0-b07ad559-2c02-4d03-9d67-9a45fb25111b',
+      type: 'circle' as const,
+      z: 101,
+      y: 0,
+    },
+  ],
+};
 export const mockViewportInMs = convertViewportToMs(mockViewport);
 export const mockSize = { width: 500, height: 500 };
 export const mockRef = createRef<HTMLDivElement>();
 describe('Testing getNewTrendCursor file', () => {
-  describe('getNewTrendCursor', () => {
-    const mockSize = { width: 500, height: 500 };
-
-    it('should add a new TC', () => {
-      const mockEvent = {} as ElementEvent;
-      const { result } = renderHook(() => useECharts('dark'));
-      const newTrendCursor = getNewTrendCursor({
-        e: mockEvent,
-        size: mockSize,
-        tcHeaderColorIndex: 0,
-        series: mockSeries,
-        chartRef: result.current.chartRef,
-        visualization: DEFAULT_CHART_VISUALIZATION,
-      });
-
-      expect(newTrendCursor).not.toBeNull();
-      expect(newTrendCursor.children.length).toBe(4);
-    });
-  });
-
   describe('ondragUpdateTrendCursor', () => {
     it('should update timestamp on drag', () => {
-      const mockEvent = {} as ElementEvent;
       const { result } = renderHook(() => useECharts('dark'));
-      const newTrendCursor = getNewTrendCursor({
-        e: mockEvent,
-        size: mockSize,
-        tcHeaderColorIndex: 0,
-        series: mockSeries,
-        chartRef: result.current.chartRef,
-        visualization: DEFAULT_CHART_VISUALIZATION,
-      });
-
+      const newTrendCursor = mockGraphic;
       const timestamp = Date.parse('2023-07-13T16:00:00.000Z') + 1000 * 60 * 60 * 2; // 1689271200000
 
       onDragUpdateTrendCursor({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         graphic: newTrendCursor,
         posX: calculateXFromTimestamp(timestamp, result.current.chartRef),
         timeInMs: timestamp,
@@ -86,7 +105,40 @@ describe('Testing getNewTrendCursor file', () => {
         visualization: DEFAULT_CHART_VISUALIZATION,
       });
       expect(newTrendCursor).not.toBeNull();
-      expect(newTrendCursor.timestampInMs).toBe(1689271200000);
+      expect(newTrendCursor?.timestampInMs).toBe(1689271200000);
+    });
+  });
+
+  describe('Test adding new elements', () => {
+    it('addTCLine', () => {
+      const newTCLine = addTCLine('ID', { width: 100, height: 100 });
+      expect(newTCLine.id).toBe('line-ID');
+    });
+    it('addTCHeader', () => {
+      const newTTCHeader = addTCHeader('ID', 0);
+      expect(newTTCHeader.id).toBe('text-ID');
+    });
+    it('addTCDeleteButton', () => {
+      const newTCDeleteButton = addTCDeleteButton('ID');
+      expect(newTCDeleteButton.id).toBe('polyline-ID');
+    });
+    it('addTCMarkers', () => {
+      const newTCMarker = addTCMarkers('ID', [200], []);
+      expect(newTCMarker[0].id).toBe('circle-0-ID');
+    });
+  });
+
+  describe('testing markers calculations, calculateTrendCursorsSeriesMakers', () => {
+    it('calculateTrendCursorsSeriesMakers should populate the required values', () => {
+      const { result } = renderHook(() => useECharts('dark'));
+      const { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue } = calculateTrendCursorsSeriesMakers(
+        mockSeries,
+        1689264600000,
+        result.current.chartRef,
+        'line'
+      );
+      expect(trendCursorsSeriesMakersInPixels.length > 0).toBeTruthy();
+      expect(trendCursorsSeriesMakersValue.length > 0).toBeTruthy();
     });
   });
 });

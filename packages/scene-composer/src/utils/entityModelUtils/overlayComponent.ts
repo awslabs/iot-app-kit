@@ -64,15 +64,18 @@ export const createOverlayEntityComponent = (overlay: IDataOverlayComponent): Co
   return comp;
 };
 
-export const updateOverlayEntityComponent = (overlay: IDataOverlayComponent, updateType?: ComponentUpdateType): ComponentUpdateRequest => {
+export const updateOverlayEntityComponent = (
+  overlay: IDataOverlayComponent,
+  updateType?: ComponentUpdateType,
+): ComponentUpdateRequest => {
   if (updateType === ComponentUpdateType.DELETE) {
     return {
       componentTypeId: componentTypeToId[KnownComponentType.DataOverlay],
       updateType: updateType,
     };
   }
-  
-  const request = createOverlayEntityComponent(overlay);  
+
+  const request = createOverlayEntityComponent(overlay);
   return {
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,

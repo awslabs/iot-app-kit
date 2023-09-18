@@ -1,6 +1,7 @@
 import React from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
 import { MpSdk } from '@matterport/r3f/dist';
+import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import { ISceneNodeInternal, useStore } from '../../../store';
 import { MattertagItem, TagItem } from '../../../utils/matterportTagUtils';
@@ -8,7 +9,12 @@ import useDynamicScene from '../../../hooks/useDynamicScene';
 import { KnownSceneProperty } from '../../../interfaces';
 import { createLayer } from '../../../utils/entityModelUtils/sceneLayerUtils';
 import { LayerType, MATTERPORT_TAG_LAYER_PREFIX } from '../../../common/entityModelConstants';
-import { createSceneRootEntity } from '../../../utils/entityModelUtils/sceneUtils';
+import {
+  checkIfEntityAvailable,
+  createSceneRootEntity,
+  prepareWorkspace,
+} from '../../../utils/entityModelUtils/sceneUtils';
+import { setTwinMakerSceneMetadataModule } from '../../../common/GlobalSettings';
 
 import { MatterportTagSync } from './MatterportTagSync';
 
@@ -42,6 +48,8 @@ jest.mock('../../../utils/entityModelUtils/sceneLayerUtils', () => ({
 }));
 jest.mock('../../../utils/entityModelUtils/sceneUtils', () => ({
   createSceneRootEntity: jest.fn(),
+  prepareWorkspace: jest.fn(),
+  checkIfEntityAvailable: jest.fn(),
 }));
 
 describe('MatterportTagSync', () => {
@@ -168,8 +176,8 @@ describe('MatterportTagSync', () => {
     });
 
     expect(getComponentRefByTypeMock).toBeCalled();
-    expect(handleAddMatterportTagMock).toBeCalledWith(undefined, undefined, 'id3', matterTag3);
-    expect(handleUpdateMatterportTagMock).toBeCalledWith(undefined, 'ref2', node2, matterTag2);
+    expect(handleAddMatterportTagMock).toBeCalledWith({ id: 'id3', item: matterTag3 });
+    expect(handleUpdateMatterportTagMock).toBeCalledWith({ ref: 'ref2', node: node2, item: matterTag2 });
     expect(handleRemoveMatterportTagMock).toBeCalledWith('ref1');
   });
 
@@ -217,8 +225,8 @@ describe('MatterportTagSync', () => {
     });
 
     expect(getComponentRefByTypeMock).toBeCalled();
-    expect(handleAddMatterportTagMock).toBeCalledWith(undefined, undefined, 'id3', tag2);
-    expect(handleUpdateMatterportTagMock).toBeCalledWith(undefined, 'ref2', node2, tag3);
+    expect(handleAddMatterportTagMock).toBeCalledWith({ id: 'id3', item: tag2 });
+    expect(handleUpdateMatterportTagMock).toBeCalledWith({ ref: 'ref2', node: node2, item: tag3 });
     expect(handleRemoveMatterportTagMock).toBeCalledWith('ref1');
   });
 
@@ -232,6 +240,7 @@ describe('MatterportTagSync', () => {
       (createSceneRootEntity as jest.Mock).mockImplementation(() => {
         return Promise.resolve({ entityId: 'scene-root-id' });
       });
+      (prepareWorkspace as jest.Mock).mockResolvedValue(undefined);
 
       getScenePropertyMock.mockImplementation((p) => {
         if (p == KnownSceneProperty.MatterportModelId) {
@@ -244,6 +253,45 @@ describe('MatterportTagSync', () => {
           return undefined;
         }
       });
+
+      (checkIfEntityAvailable as jest.Mock).mockReturnValue(true);
+
+      setTwinMakerSceneMetadataModule({} as TwinMakerSceneMetadataModule);
+    });
+
+    it('should render success status', async () => {
+      useStore('default').setState(baseState);
+      const rendered = render(<MatterportTagSync />);
+
+      await act(async () => {
+        fireEvent.click(rendered.getByTestId('matterport-tag-sync-button'));
+      });
+
+      expect(rendered.getByTestId('sync-button-status')).toMatchSnapshot();
+    });
+
+    it('should render failure status', async () => {
+      useStore('default').setState(baseState);
+      (prepareWorkspace as jest.Mock).mockRejectedValue(new Error('prepare workspace failed'));
+
+      const rendered = render(<MatterportTagSync />);
+
+      await act(async () => {
+        fireEvent.click(rendered.getByTestId('matterport-tag-sync-button'));
+      });
+
+      expect(rendered.getByTestId('sync-button-status')).toMatchSnapshot();
+    });
+
+    it('should call prepareWorkspace', async () => {
+      useStore('default').setState(baseState);
+      const rendered = render(<MatterportTagSync />);
+
+      await act(async () => {
+        fireEvent.click(rendered.getByTestId('matterport-tag-sync-button'));
+      });
+
+      expect(prepareWorkspace as jest.Mock).toBeCalledTimes(1);
     });
 
     it('should create a default layer and root entity when none available', async () => {
@@ -271,6 +319,54 @@ describe('MatterportTagSync', () => {
       expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.LayerIds, [
         MATTERPORT_TAG_LAYER_PREFIX + 'matterportModelId',
       ]);
+      expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.SceneRootEntityId, 'scene-root-id');
+    });
+
+    it('should create a default layer entity when it does not exist', async () => {
+      (checkIfEntityAvailable as jest.Mock).mockImplementation((entityId) => {
+        if (entityId == 'layer-id') {
+          return Promise.resolve(false);
+        }
+        return Promise.resolve(true);
+      });
+
+      useStore('default').setState(baseState);
+      const rendered = render(<MatterportTagSync />);
+
+      await act(async () => {
+        fireEvent.click(rendered.getByTestId('matterport-tag-sync-button'));
+      });
+
+      expect(createLayer as jest.Mock).toBeCalledTimes(1);
+      expect(createLayer as jest.Mock).toBeCalledWith(
+        MATTERPORT_TAG_LAYER_PREFIX + 'matterportModelId',
+        LayerType.Relationship,
+      );
+      expect(createSceneRootEntity as jest.Mock).not.toBeCalled();
+      expect(setScenePropertyMock).toBeCalledTimes(1);
+      expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.LayerIds, [
+        MATTERPORT_TAG_LAYER_PREFIX + 'matterportModelId',
+      ]);
+    });
+
+    it('should create a default scene entity when it does not exist', async () => {
+      (checkIfEntityAvailable as jest.Mock).mockImplementation((entityId) => {
+        if (entityId == 'scene-root-id') {
+          return Promise.resolve(false);
+        }
+        return Promise.resolve(true);
+      });
+
+      useStore('default').setState(baseState);
+      const rendered = render(<MatterportTagSync />);
+
+      await act(async () => {
+        fireEvent.click(rendered.getByTestId('matterport-tag-sync-button'));
+      });
+
+      expect(createLayer as jest.Mock).not.toBeCalled();
+      expect(createSceneRootEntity as jest.Mock).toBeCalledTimes(1);
+      expect(setScenePropertyMock).toBeCalledTimes(1);
       expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.SceneRootEntityId, 'scene-root-id');
     });
 
@@ -337,8 +433,19 @@ describe('MatterportTagSync', () => {
       });
 
       expect(getComponentRefByTypeMock).toBeCalled();
-      expect(handleAddMatterportTagMock).toBeCalledWith('layer-id', 'scene-root-id', 'id3', matterTag3);
-      expect(handleUpdateMatterportTagMock).toBeCalledWith('layer-id', 'ref2', node2, matterTag2);
+      expect(handleAddMatterportTagMock).toBeCalledWith({
+        layerId: 'layer-id',
+        sceneRootId: 'scene-root-id',
+        id: 'id3',
+        item: matterTag3,
+      });
+      expect(handleUpdateMatterportTagMock).toBeCalledWith({
+        layerId: 'layer-id',
+        sceneRootId: 'scene-root-id',
+        ref: 'ref2',
+        node: node2,
+        item: matterTag2,
+      });
       expect(handleRemoveMatterportTagMock).toBeCalledWith('ref1');
     });
 
@@ -386,8 +493,19 @@ describe('MatterportTagSync', () => {
       });
 
       expect(getComponentRefByTypeMock).toBeCalled();
-      expect(handleAddMatterportTagMock).toBeCalledWith('layer-id', 'scene-root-id', 'id3', tag2);
-      expect(handleUpdateMatterportTagMock).toBeCalledWith('layer-id', 'ref2', node2, tag3);
+      expect(handleAddMatterportTagMock).toBeCalledWith({
+        layerId: 'layer-id',
+        sceneRootId: 'scene-root-id',
+        id: 'id3',
+        item: tag2,
+      });
+      expect(handleUpdateMatterportTagMock).toBeCalledWith({
+        layerId: 'layer-id',
+        sceneRootId: 'scene-root-id',
+        ref: 'ref2',
+        node: node2,
+        item: tag3,
+      });
       expect(handleRemoveMatterportTagMock).toBeCalledWith('ref1');
     });
   });

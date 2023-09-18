@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Button, Popover, StatusIndicator } from '@awsui/components-react';
 import { isEmpty } from 'lodash';
@@ -12,7 +12,12 @@ import useMatterportObserver from '../../../hooks/useMatterportObserver';
 import { LayerType, MATTERPORT_TAG_LAYER_PREFIX } from '../../../common/entityModelConstants';
 import { createLayer } from '../../../utils/entityModelUtils/sceneLayerUtils';
 import useDynamicScene from '../../../hooks/useDynamicScene';
-import { createSceneRootEntity } from '../../../utils/entityModelUtils/sceneUtils';
+import {
+  checkIfEntityAvailable,
+  createSceneRootEntity,
+  prepareWorkspace,
+} from '../../../utils/entityModelUtils/sceneUtils';
+import { getGlobalSettings } from '../../../common/GlobalSettings';
 
 export const MatterportTagSync: React.FC = () => {
   const logger = useLifecycleLogging('MatterportTagSync');
@@ -35,84 +40,100 @@ export const MatterportTagSync: React.FC = () => {
 
   const { handleAddMatterportTag, handleUpdateMatterportTag, handleRemoveMatterportTag } = useMatterportTags();
   const { mattertagObserver, tagObserver } = useMatterportObserver();
+  const [syncTagStatus, setSyncTagStatus] = useState<'loading' | 'success' | 'error'>('loading');
 
   const doSync = useCallback(async () => {
-    const layerName = MATTERPORT_TAG_LAYER_PREFIX + matterportModelId;
-    let layerId = sceneLayerIds?.at(0);
-    let rootId = sceneRootId;
+    setSyncTagStatus('loading');
 
-    // Create default layer and default scene root node
-    if (dynamicSceneEnabled) {
-      if (isEmpty(layerId)) {
-        try {
+    try {
+      const layerName = MATTERPORT_TAG_LAYER_PREFIX + matterportModelId;
+      let layerId = sceneLayerIds?.at(0);
+      let rootId = sceneRootId;
+      const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
+
+      if (dynamicSceneEnabled && sceneMetadataModule) {
+        // Before backend can create the new default roots, the client side code will
+        // create them temporarily here.
+        await prepareWorkspace(sceneMetadataModule);
+
+        // Create default layer and default scene root node
+        if (!layerId || isEmpty(layerId) || !(await checkIfEntityAvailable(layerId, sceneMetadataModule))) {
           const layer = await createLayer(layerName, LayerType.Relationship);
           layerId = layer?.entityId;
           setSceneProperty(KnownSceneProperty.LayerIds, [layerId]);
-        } catch (e) {
-          logger?.error('Create layer entity error', e);
-          // TODO: error handling
-          return;
         }
-      }
-      if (isEmpty(sceneRootId)) {
-        try {
+        if (!sceneRootId || isEmpty(sceneRootId) || !(await checkIfEntityAvailable(sceneRootId, sceneMetadataModule))) {
           const root = await createSceneRootEntity();
           rootId = root?.entityId;
           setSceneProperty(KnownSceneProperty.SceneRootEntityId, rootId);
-        } catch (e) {
-          logger?.error('Create scene root entity error', e);
-          // TODO: error handling
-          return;
         }
       }
-    }
 
-    const mattertags = mattertagObserver.getMattertags(); // Matterport tags v1
-    const tags = tagObserver.getTags(); // Matterport tags v2
+      const mattertags = mattertagObserver.getMattertags(); // Matterport tags v1
+      const tags = tagObserver.getTags(); // Matterport tags v2
 
-    const tagRecords = getComponentRefByType(KnownComponentType.Tag);
-    const oldTagMap: Record<string, { nodeRef: string; node: ISceneNodeInternal }> = {};
-    for (const key in tagRecords) {
-      const node = getSceneNodeByRef(key);
-      if (node?.properties.matterportId) {
-        oldTagMap[node.properties.matterportId as string] = { nodeRef: key, node: node };
-      }
-    }
-
-    // Process Matterport tags v2
-    if (tags) {
-      for (const [key, value] of tags) {
-        if (oldTagMap[key]) {
-          await handleUpdateMatterportTag(layerId, oldTagMap[key].nodeRef, oldTagMap[key].node, value);
-        } else {
-          await handleAddMatterportTag(layerId, rootId, key, value);
+      const tagRecords = getComponentRefByType(KnownComponentType.Tag);
+      const oldTagMap: Record<string, { nodeRef: string; node: ISceneNodeInternal }> = {};
+      for (const key in tagRecords) {
+        const node = getSceneNodeByRef(key);
+        if (node?.properties.matterportId) {
+          oldTagMap[node.properties.matterportId as string] = { nodeRef: key, node: node };
         }
-        delete oldTagMap[key];
       }
-    }
 
-    // Process Matterport tags v1
-    if (mattertags) {
-      // matterport dictionary is a customer matterport type that doesn't inherit other javascript properties like
-      // enumerable so use this exact iterable for it only
-      for (const [key, value] of mattertags) {
-        // Process only those tags which are not already taken care by v2 tags version
-        if (tags && tags[key]) {
-          continue;
+      // Process Matterport tags v2
+      if (tags) {
+        for (const [key, value] of tags) {
+          if (oldTagMap[key]) {
+            await handleUpdateMatterportTag({
+              layerId,
+              sceneRootId: rootId,
+              ref: oldTagMap[key].nodeRef,
+              node: oldTagMap[key].node,
+              item: value,
+            });
+          } else {
+            await handleAddMatterportTag({ layerId, sceneRootId: rootId, id: key, item: value });
+          }
+          delete oldTagMap[key];
         }
-
-        if (oldTagMap[key]) {
-          await handleUpdateMatterportTag(layerId, oldTagMap[key].nodeRef, oldTagMap[key].node, value);
-        } else {
-          await handleAddMatterportTag(layerId, rootId, key, value);
-        }
-        delete oldTagMap[key];
       }
+
+      // Process Matterport tags v1
+      if (mattertags) {
+        // matterport dictionary is a customer matterport type that doesn't inherit other javascript properties like
+        // enumerable so use this exact iterable for it only
+        for (const [key, value] of mattertags) {
+          // Process only those tags which are not already taken care by v2 tags version
+          if (tags && tags[key]) {
+            continue;
+          }
+
+          if (oldTagMap[key]) {
+            await handleUpdateMatterportTag({
+              layerId,
+              sceneRootId: rootId,
+              ref: oldTagMap[key].nodeRef,
+              node: oldTagMap[key].node,
+              item: value,
+            });
+          } else {
+            await handleAddMatterportTag({ layerId, sceneRootId: rootId, id: key, item: value });
+          }
+          delete oldTagMap[key];
+        }
+      }
+
+      for (const key in oldTagMap) {
+        await handleRemoveMatterportTag(oldTagMap[key].nodeRef);
+      }
+    } catch (e) {
+      logger?.error(String(e));
+      setSyncTagStatus('error');
+      return;
     }
 
-    for (const key in oldTagMap) {
-      handleRemoveMatterportTag(oldTagMap[key].nodeRef);
-    }
+    setSyncTagStatus('success');
   }, [
     getSceneNodeByRef,
     mattertagObserver,
@@ -134,8 +155,12 @@ export const MatterportTagSync: React.FC = () => {
         size='small'
         triggerType='custom'
         content={
-          <StatusIndicator type='success'>
-            {intl.formatMessage({ defaultMessage: 'Tags sync successful', description: 'Status indicator label' })}
+          <StatusIndicator type={syncTagStatus} data-testid='sync-button-status'>
+            {syncTagStatus === 'success'
+              ? intl.formatMessage({ defaultMessage: 'Tags sync successful', description: 'Status indicator label' })
+              : syncTagStatus === 'error'
+              ? intl.formatMessage({ defaultMessage: 'Tags sync failed', description: 'Status indicator label' })
+              : intl.formatMessage({ defaultMessage: 'Syncing tags', description: 'Status indicator label' })}
           </StatusIndicator>
         }
       >

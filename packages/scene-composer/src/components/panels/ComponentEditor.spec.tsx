@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import { KnownComponentType } from '../../interfaces';
+import { ISceneNodeInternal } from '../../store/internalInterfaces';
 
 import { ComponentEditor, DefaultComponentEditor } from './ComponentEditor';
 
@@ -48,7 +49,7 @@ jest.mock('./scene-components/EntityBindingComponentEditor', () => ({
 describe('ComponentEditor renders correct component', () => {
   it('render DefaultComponentEditor correctly', async () => {
     const { container } = render(
-      <DefaultComponentEditor node={{} as any} component={{ ref: 'refId', type: 'random' }} />,
+      <DefaultComponentEditor node={{} as ISceneNodeInternal} component={{ ref: 'refId', type: 'random' }} />,
     );
 
     expect(container).toMatchSnapshot();
@@ -57,7 +58,10 @@ describe('ComponentEditor renders correct component', () => {
   Object.keys(KnownComponentType).forEach((editorType) => {
     it(`should render the "${editorType}" editor correctly`, () => {
       const { container } = render(
-        <ComponentEditor node={{} as any} component={{ ref: 'refId', type: KnownComponentType[editorType] }} />,
+        <ComponentEditor
+          node={{} as ISceneNodeInternal}
+          component={{ ref: 'refId', type: KnownComponentType[editorType] }}
+        />,
       );
 
       expect(container).toMatchSnapshot();

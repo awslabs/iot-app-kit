@@ -563,6 +563,10 @@
     "note": "Form Field label",
     "text": "Model Type"
   },
+  "V1T3We": {
+    "note": "Status indicator label",
+    "text": "Syncing tags"
+  },
   "VObiQu": {
     "note": "option text of a Select component",
     "text": "Arrow with background"
@@ -906,6 +910,10 @@
   "oppsQx": {
     "note": "placeholder",
     "text": "Choose a rule"
+  },
+  "osIcJX": {
+    "note": "Status indicator label",
+    "text": "Tags sync failed"
   },
   "pyg21P": {
     "note": "Number of Triangles in a scene",

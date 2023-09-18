@@ -3,7 +3,11 @@ import { DocumentType } from '@aws-sdk/types';
 import { isEmpty } from 'lodash';
 
 import { IEntityBindingComponent, ISceneNode, KnownComponentType } from '../../interfaces';
-import { DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME, NODE_COMPONENT_TYPE_ID, componentTypeToId } from '../../common/entityModelConstants';
+import {
+  DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
+  NODE_COMPONENT_TYPE_ID,
+  componentTypeToId,
+} from '../../common/entityModelConstants';
 import { ISceneComponentInternal, ISceneNodeInternal } from '../../store';
 import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
 
@@ -80,8 +84,12 @@ export const createNodeEntityComponent = (node: ISceneNode, layerId?: string): C
   return comp;
 };
 
-export const updateNodeEntityComponent = (node: ISceneNode, layerId?: string, updateType?: ComponentUpdateType): ComponentUpdateRequest => {
-  if (updateType === ComponentUpdateType.DELETE) {
+export const updateNodeEntityComponent = (
+  node: ISceneNode,
+  layerId?: string,
+  updateType?: ComponentUpdateType,
+): ComponentUpdateRequest => {
+  if (updateType === ComponentUpdateType.UPDATE || updateType === ComponentUpdateType.DELETE) {
     return {
       componentTypeId: componentTypeToId[KnownComponentType.EntityBinding],
       updateType: updateType,
@@ -89,19 +97,18 @@ export const updateNodeEntityComponent = (node: ISceneNode, layerId?: string, up
   }
 
   const request = createNodeEntityComponent(node, layerId);
-  const entityBinding = node.components?.find((component) => component.type === "EntityBinding");
-  console.log({ entityBinding })
+  const entityBinding = node.components?.find((component) => component.type === KnownComponentType.EntityBinding);
   if (entityBinding) {
-     const entityId = (entityBinding as IEntityBindingComponent)?.valueDataBinding?.dataBindingContext?.entityId;
-  request.properties![DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME] = {
+    const entityId = (entityBinding as IEntityBindingComponent)?.valueDataBinding?.dataBindingContext?.entityId;
+    request.properties![DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME] = {
       value: {
         relationshipValue: {
-          targetEntityId: entityId
-        }
-      }
-    }
+          targetEntityId: entityId,
+        },
+      },
+    };
   }
- 
+
   return {
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,

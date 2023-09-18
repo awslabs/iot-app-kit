@@ -10,13 +10,9 @@ import { updateOverlayEntityComponent } from '../../utils/entityModelUtils/overl
 export const updateEntity = async (
   node: ISceneNodeInternal,
   compToBeUpdated?: ISceneComponentInternal,
-  updateType?: ComponentUpdateType
+  updateType?: ComponentUpdateType,
 ): Promise<void> => {
   const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
-  let index = node.components.findIndex((c) => c.ref === compToBeUpdated?.ref)
-  const entityBindingFromType = node.components?.find((component) => component.type === "EntityBinding");
-  const fromIndex = node.components[index]
-  console.log({entityBinding: entityBindingFromType}, {fromIndex}, {compToBeUpdated})
   let comp: ComponentUpdateRequest | undefined = undefined;
   switch (compToBeUpdated?.type) {
     case KnownComponentType.Tag:
@@ -33,7 +29,7 @@ export const updateEntity = async (
     entityId: node.ref,
     entityName: node.name + '_' + node.ref,
     componentUpdates: {
-      Node: nodecomp
+      Node: nodecomp,
     },
   };
 

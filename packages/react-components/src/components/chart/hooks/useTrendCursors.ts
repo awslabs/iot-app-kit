@@ -3,7 +3,7 @@ import useDataStore from '../../../store';
 import handleResize from '../utils/handleResize';
 import handleSync from '../utils/handleSync';
 import useTrendCursorsEvents from './useTrendCursorsEvents';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { handleViewport } from '../utils/handleViewport';
 import { DEBUG_TREND_CURSORS } from '../eChartsConstants';
 
@@ -54,7 +54,10 @@ const useTrendCursors = ({
 
   handleViewport({ graphic, setGraphic, viewportInMs, size, series, chartRef, visualization });
 
-  return { onContextMenuClickHandler, hotKeyHandlers, trendCursors: graphic };
+  return useMemo(
+    () => ({ onContextMenuClickHandler, hotKeyHandlers, trendCursors: graphic }),
+    [graphic, onContextMenuClickHandler, hotKeyHandlers]
+  );
 };
 
 export default useTrendCursors;

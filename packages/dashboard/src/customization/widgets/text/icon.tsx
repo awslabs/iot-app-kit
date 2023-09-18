@@ -1,14 +1,13 @@
 import React from 'react';
 
-const TextIcon: React.FC = () => {
-  return (
-    <svg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'>
-      <text x='5' y='15'>
-        T
-      </text>
-      <line x1='2.5' y1='20' x2='17.5' y2='20' stroke='inherit' strokeWidth='2'></line>
-    </svg>
-  );
-};
+import { default as textSvg } from './text.svg';
+import { default as textSvgDark } from './text-dark.svg';
+
+const TextIcon: React.FC = () => (
+  <span>
+    <img src={textSvg} alt='Text widget light icon' />
+    <img src={textSvgDark} alt='Text widget dark icon' />
+  </span>
+);
 
 export default TextIcon;

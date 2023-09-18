@@ -165,9 +165,9 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
     .concat(
       selectedRuleMapId
         ? intl.formatMessage({
-          defaultMessage: 'No Rule',
-          description: 'signify No rule option to be selected in a drop down menu',
-        })
+            defaultMessage: 'No Rule',
+            description: 'signify No rule option to be selected in a drop down menu',
+          })
         : [],
     )
     .map((ruleMapId) => ({ label: ruleMapId, value: ruleMapId }));

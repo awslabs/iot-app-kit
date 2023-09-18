@@ -119,10 +119,10 @@ export const WebGLCanvasManager: React.FC = () => {
             <gridHelper
               ref={gridHelperRef}
               args={[
-                1000 /* size */,
-                500 /* grid# */,
-                new THREE.Color('#d5dbdb') /* center line color */,
-                new THREE.Color(hexColorFromDesignToken(awsui.colorTextInputPlaceholder)) /* grid color */,
+                1000 /* size */, 500 /* grid# */,
+                // TODO: Restore custom colors for grid center lind
+                // new THREE.Color('#d5dbdb') /* center line color */,
+                // new THREE.Color(hexColorFromDesignToken(awsui.colorTextInputPlaceholder)) /* grid color */,
               ]}
             />
             <mesh

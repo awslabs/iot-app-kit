@@ -20,14 +20,17 @@ export const DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME = 'isVisualOf';
 export const DEFAULT_PARENT_RELATIONSHIP_NAME = 'isChildOf';
 export const DEFAULT_NODE_COMPONENT_NAME = 'Node';
 export const SCENE_ROOT_ENTITY_ID = 'SCENES_EntityId';
+export const SCENE_ROOT_ENTITY_NAME = '$SCENES';
 
 // Matterport
 export const MATTERPORT_TAG_LAYER_PREFIX = 'Matterport_Tag_';
 
 // Layer
 export const DEFAULT_LAYER_RELATIONSHIP_NAME = 'inLayerOf';
+export const DEFAULT_ENTITY_RELATIONSHIP_NAME = 'isVisualOf';
 export const DEFAULT_LAYER_COMPONENT_NAME = 'Layer';
 export const LAYER_ROOT_ENTITY_ID = 'LAYERS_EntityId';
+export const LAYER_ROOT_ENTITY_NAME = '$LAYERS';
 export enum LayerType {
   Relationship = 'Relationship',
   Query = 'Query',

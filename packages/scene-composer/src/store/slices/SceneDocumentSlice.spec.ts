@@ -6,11 +6,12 @@ import interfaceHelpers from '../helpers/interfaceHelpers';
 import { mergeDeep } from '../../utils/objectUtils';
 import { KnownComponentType, KnownSceneProperty } from '../..';
 import { containsMatchingEntityComponent } from '../../utils/dataBindingUtils';
-import { IAnchorComponentInternal, IDataOverlayComponentInternal } from '..';
+import { IAnchorComponentInternal, IDataOverlayComponentInternal, ISceneNodeInternal } from '..';
 import { Component } from '../../models/SceneModels';
+import { updateEntity } from '../helpers/updateEntityHelper';
+import { SceneNodeRuntimeProperty } from '../internalInterfaces';
 
 import { createSceneDocumentSlice } from './SceneDocumentSlice';
-import { updateEntity } from '../helpers/updateEntityHelper';
 
 jest.mock('../../../src/utils/objectUtils', () => {
   return { mergeDeep: jest.fn() };
@@ -146,27 +147,25 @@ describe('createSceneDocumentSlice', () => {
   describe('appendSceneNodeInternal', () => {
     // Arrange
     const valid = {
-      selectedSceneNodeRef: undefined,
       rootNodeRefs: [],
       nodeMap: { parentNode: { childRefs: [] } },
       componentNodeMap: {},
     };
     const validWithPreExistingNode = {
-      selectedSceneNodeRef: undefined,
       rootNodeRefs: [],
       nodeMap: { parentNode: { childRefs: [] }, testNode: { childRefs: [] } },
     };
 
     [undefined, valid].forEach((document) => {
       it(`should be able to appendSceneNodeInternal to a ${document ? 'valid' : 'undefined'} document.`, () => {
-        const rootNode = {
+        const rootNode: Partial<ISceneNodeInternal> = {
           ref: 'rootNode',
           components: [
             { ref: 'root-comp-1', type: 'abc' },
             { ref: 'root-comp-2', type: 'abc' },
           ],
         };
-        const childNode = {
+        const childNode: Partial<ISceneNodeInternal> = {
           ref: 'childNode',
           parentRef: 'parentNode',
           components: [{ ref: 'child-comp', type: 'abc' }],
@@ -183,20 +182,20 @@ describe('createSceneDocumentSlice', () => {
 
         // Act
         const { appendSceneNodeInternal } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
-        appendSceneNodeInternal(rootNode as any);
+        appendSceneNodeInternal(rootNode as ISceneNodeInternal);
 
         if (draft.document) {
           expect(draft.selectedSceneNodeRef).toEqual(rootNode.ref);
 
-          appendSceneNodeInternal(childNode as any);
+          appendSceneNodeInternal(childNode as ISceneNodeInternal);
           expect(draft.selectedSceneNodeRef).toEqual(childNode.ref);
 
           // Assert
           expect(draft.lastOperation!).toEqual('appendSceneNodeInternal');
           expect(draft.document.rootNodeRefs).toContainEqual(rootNode.ref);
           expect(draft.document.nodeMap.parentNode.childRefs).toContainEqual(childNode.ref);
-          expect(draft.document.nodeMap[rootNode.ref]).toEqual(rootNode);
-          expect(draft.document.nodeMap[childNode.ref]).toEqual(childNode);
+          expect(draft.document.nodeMap[rootNode.ref!]).toEqual(rootNode);
+          expect(draft.document.nodeMap[childNode.ref!]).toEqual(childNode);
           expect(draft.document.componentNodeMap).toEqual(componentNodeMap);
           expect(get).toBeCalledTimes(2);
         } else {
@@ -206,20 +205,58 @@ describe('createSceneDocumentSlice', () => {
     });
 
     it(`should not be able to appendSceneNodeInternal to a document with an existing node.`, () => {
-      const testNode = { ref: 'testNode' };
-      const document = validWithPreExistingNode;
-      const draft = { lastOperation: undefined, document };
+      const testNode: Partial<ISceneNodeInternal> = { ref: 'testNode' };
+      const document = cloneDeep(validWithPreExistingNode);
+      const draft = { lastOperation: undefined, document, selectedSceneNodeRef: undefined };
       const get = jest.fn().mockReturnValue({ document }); // fake out get call
       const set = jest.fn((callback) => callback(draft));
 
       // Act
       const { appendSceneNodeInternal } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
-      appendSceneNodeInternal(testNode as any);
+      appendSceneNodeInternal(testNode as ISceneNodeInternal);
 
       expect(get).toBeCalled();
       expect(draft.lastOperation!).toBeUndefined();
       expect(draft.document.rootNodeRefs).toHaveLength(0);
-      expect(draft.document.selectedSceneNodeRef).toBeUndefined();
+      expect(draft.selectedSceneNodeRef).toBeUndefined();
+    });
+
+    it(`should be able to appendSceneNodeInternal to a document with selecte node enabled.`, () => {
+      const testNode: Partial<ISceneNodeInternal> = {
+        ref: 'testNode',
+        components: [{ ref: 'child-comp', type: 'abc' }],
+      };
+      const document = cloneDeep(valid);
+      const draft = { lastOperation: undefined, document, selectedSceneNodeRef: undefined };
+      const get = jest.fn().mockReturnValue({ document }); // fake out get call
+      const set = jest.fn((callback) => callback(draft));
+
+      // Act
+      const { appendSceneNodeInternal } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
+      appendSceneNodeInternal(testNode as ISceneNodeInternal);
+
+      expect(get).toBeCalled();
+      expect(draft.lastOperation!).toEqual('appendSceneNodeInternal');
+      expect(draft.selectedSceneNodeRef).toEqual(testNode.ref);
+    });
+
+    it(`should be able to appendSceneNodeInternal to a document with selecte node disabled.`, () => {
+      const testNode: Partial<ISceneNodeInternal> = {
+        ref: 'testNode',
+        components: [{ ref: 'child-comp', type: 'abc' }],
+      };
+      const document = cloneDeep(valid);
+      const draft = { lastOperation: undefined, document, selectedSceneNodeRef: 'random' };
+      const get = jest.fn().mockReturnValue({ document }); // fake out get call
+      const set = jest.fn((callback) => callback(draft));
+
+      // Act
+      const { appendSceneNodeInternal } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
+      appendSceneNodeInternal(testNode as ISceneNodeInternal, true);
+
+      expect(get).toBeCalled();
+      expect(draft.lastOperation!).toEqual('appendSceneNodeInternal');
+      expect(draft.selectedSceneNodeRef).toEqual('random');
     });
   });
 
@@ -275,10 +312,10 @@ describe('createSceneDocumentSlice', () => {
 
         // Act
         const { updateSceneNodeInternal } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
-        updateSceneNodeInternal('testNode', { test: 'test' } as any, isTransient);
+        updateSceneNodeInternal('testNode', { name: 'test' }, isTransient);
 
         // Assert
-        expect(mergeDeep).toBeCalledWith('testNode', { test: 'test' });
+        expect(mergeDeep).toBeCalledWith('testNode', { name: 'test' });
         expect(draft.lastOperation!).toEqual(
           isTransient ? 'updateSceneNodeInternalTransient' : 'updateSceneNodeInternal',
         );
@@ -370,8 +407,8 @@ describe('createSceneDocumentSlice', () => {
     expect(draft.lastOperation!).toEqual('updateDocumentInternal');
   });
 
-  it('should be able to appendSceneNode', () => {
-    jest.spyOn(interfaceHelpers, 'createSceneNodeInternal').mockReturnValue('newNode' as any);
+  it('should be able to appendSceneNode with selete node enabled', () => {
+    jest.spyOn(interfaceHelpers, 'createSceneNodeInternal').mockReturnValue({ ref: 'newNode' } as ISceneNodeInternal);
     const appendSceneNodeInternal = jest.fn();
     const get = jest.fn().mockReturnValue({ appendSceneNodeInternal }); // fake out get call
     const set = jest.fn();
@@ -381,11 +418,31 @@ describe('createSceneDocumentSlice', () => {
 
     // Act
     const { appendSceneNode } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
-    appendSceneNode(node);
+    appendSceneNode(node, false);
 
     expect(get).toBeCalled();
     expect(interfaceHelpers.createSceneNodeInternal).toBeCalledWith(node);
-    expect(appendSceneNodeInternal).toBeCalledWith('newNode');
+    expect(appendSceneNodeInternal).toBeCalledWith({ ref: 'newNode' }, false);
+
+    expect(() => appendSceneNode(nodeWithChildren)).toThrow();
+  });
+
+  it('should be able to appendSceneNode with selete node disabled', () => {
+    jest.spyOn(interfaceHelpers, 'createSceneNodeInternal').mockReturnValue({ ref: 'newNode' } as ISceneNodeInternal);
+    const appendSceneNodeInternal = jest.fn();
+    const get = jest.fn().mockReturnValue({ appendSceneNodeInternal }); // fake out get call
+    const set = jest.fn();
+
+    const node = { childRefs: [] };
+    const nodeWithChildren = { childRefs: ['ref]'] };
+
+    // Act
+    const { appendSceneNode } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
+    appendSceneNode(node, true);
+
+    expect(get).toBeCalled();
+    expect(interfaceHelpers.createSceneNodeInternal).toBeCalledWith(node);
+    expect(appendSceneNodeInternal).toBeCalledWith({ ref: 'newNode' }, true);
 
     expect(() => appendSceneNode(nodeWithChildren)).toThrow();
   });
@@ -438,12 +495,12 @@ describe('createSceneDocumentSlice', () => {
       const draft = { lastOperation: undefined, document };
       const get = jest.fn().mockReturnValue({ document }); // fake out get call
       const set = jest.fn((callback) => callback(draft));
-
       // Act
       const { removeSceneNode } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
 
       removeSceneNode('testNode');
       expect(get).toBeCalled();
+      expect(updateEntity).not.toBeCalled();
       expect(draft.lastOperation!).toEqual('removeSceneNode');
       expect(draft.document.nodeMap.testNode).toBeUndefined();
       expect(draft.document.componentNodeMap).toEqual({ abc: {}, def: {} });
@@ -525,6 +582,7 @@ describe('createSceneDocumentSlice', () => {
     const document = { nodeMap: { testNode: { components: [] } }, componentNodeMap: {} };
     const draft = { lastOperation: undefined, document };
     const getSceneNodeByRef = jest.fn().mockReturnValue(document.nodeMap.testNode);
+
     const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
     const set = jest.fn((callback) => callback(draft));
     const comp = { ref: 'comp-1', type: 'abc' };
@@ -564,14 +622,14 @@ describe('createSceneDocumentSlice', () => {
         };
         const draft = { lastOperation: undefined, document };
         const getSceneNodeByRef = jest.fn().mockReturnValue(document.nodeMap.testNode);
-        const getScenePropertyMock = jest.fn().mockReturnValue(['layers']);
-        const get = jest.fn().mockReturnValue({ getSceneNodeByRef, getSceneProperty: getScenePropertyMock }); // fake out get call
+        const getSceneProperty = jest.fn();
+        const get = jest.fn().mockReturnValue({ getSceneNodeByRef, getSceneProperty }); // fake out get call
         const set = jest.fn((callback) => callback(draft));
         const updateEntity = jest.fn();
         // Act
         const { updateComponentInternal } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
         updateComponentInternal('testNode', { ref: 'component1', data: 'updated' } as any, replace);
-        updateEntity('component1','testNode', 'layers' )
+        updateEntity('component1', 'testNode', 'layers');
         expect(updateEntity).toBeCalled();
         expect(draft.lastOperation!).toEqual('updateComponentInternal');
 
@@ -581,7 +639,6 @@ describe('createSceneDocumentSlice', () => {
           expect(draft.document.nodeMap.testNode.components[0].data).toEqual('updated');
         } else {
           expect(mergeDeep).toBeCalled();
-
         }
       });
     });
@@ -615,9 +672,9 @@ describe('createSceneDocumentSlice', () => {
     };
     const draft = { lastOperation: undefined, document };
     const getSceneNodeByRef = jest.fn().mockReturnValue(document.nodeMap.testNode);
+
     const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
     const set = jest.fn((callback) => callback(draft));
-
     // Act
     const { removeComponent } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
     removeComponent('testNode', 'component1');
@@ -625,7 +682,6 @@ describe('createSceneDocumentSlice', () => {
     expect(draft.lastOperation!).toEqual('removeComponent');
     expect(get).toBeCalled();
     expect(getSceneNodeByRef).toBeCalledWith('testNode');
-
     expect(draft.document.nodeMap.testNode.components).toHaveLength(0);
     expect(draft.document.componentNodeMap['abc']).toEqual({});
   });
@@ -731,7 +787,7 @@ describe('createSceneDocumentSlice', () => {
           dataRows: [],
           valueDataBindings: [
             {
-              valueDataBinding: { dataBindingContext: { entityId: '${value1}', key2: 'value2' } },
+              valueDataBinding: { dataBindingContext: { entityId: '${value1}', componentName: 'value2' } },
               bindingName: 'binding-aa',
             },
           ],
@@ -863,6 +919,142 @@ describe('createSceneDocumentSlice', () => {
 
       const result3 = findSceneNodeRefBy('whatever');
       expect(result3).toEqual(['tagRef', 'shaderRef']);
+    });
+  });
+
+  describe('update entity', () => {
+    it('should call update entities to addComponentInternal', () => {
+      const document = {
+        nodeMap: {
+          testNode: {
+            properties: {
+              [SceneNodeRuntimeProperty.LayerIds]: ['layer1'],
+            },
+            components: [],
+          },
+        },
+        componentNodeMap: {},
+      };
+      const draft = { lastOperation: undefined, document };
+      const getSceneNodeByRef = jest.fn().mockReturnValue(document.nodeMap.testNode);
+
+      const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
+      const set = jest.fn((callback) => callback(draft));
+      const comp = { ref: 'comp-1', type: 'abc' };
+
+      // Act
+      const { addComponentInternal } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
+      addComponentInternal('testNode', comp);
+
+      expect(draft.lastOperation!).toEqual('addComponentInternal');
+      expect(get).toBeCalled();
+      expect(updateEntity).toBeCalled();
+
+      expect(getSceneNodeByRef).toBeCalledWith('testNode');
+      expect(draft.document.nodeMap.testNode.components).toEqual([comp]);
+      expect(draft.document.componentNodeMap['abc']['testNode']).toEqual([comp.ref]);
+    });
+
+    it('should call update entities for updateComponentInternal', () => {
+      const document = {
+        nodeMap: {
+          testNode: {
+            properties: {
+              [SceneNodeRuntimeProperty.LayerIds]: ['layer1'],
+            },
+            components: [{ ref: 'component1', data: 'original' }],
+          },
+        },
+      };
+      const draft = { lastOperation: undefined, document };
+      const getSceneNodeByRef = jest.fn().mockReturnValue(document.nodeMap.testNode);
+      const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
+      const set = jest.fn((callback) => callback(draft));
+      const replace = false;
+      // Act
+      const { updateComponentInternal } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
+      updateComponentInternal('testNode', { ref: 'component1', data: 'updated' } as any, replace);
+      expect(updateEntity).toBeCalledWith(
+        { components: [{ data: 'original', ref: 'component1' }], properties: { layerIds: ['layer1'] } },
+        { data: 'original', ref: 'component1' },
+      );
+      expect(draft.lastOperation!).toEqual('updateComponentInternal');
+      expect(get).toBeCalled();
+      expect(getSceneNodeByRef).toBeCalledWith('testNode');
+      if (!replace) {
+        expect(draft.document.nodeMap.testNode.components[0].data).toEqual('original');
+      } else {
+        expect(mergeDeep).toBeCalled();
+      }
+    });
+
+    it('should call update entities on removeSceneNode', () => {
+      const document = {
+        rootNodeRefs: ['testNode'],
+        nodeMap: {
+          testNode: {
+            properties: {
+              [SceneNodeRuntimeProperty.LayerIds]: ['layer1'],
+            },
+            ref: 'testNode',
+            childRefs: [],
+            components: [
+              { ref: 'test-comp-1', type: 'abc' },
+              { ref: 'test-comp-2', type: 'def' },
+            ],
+          },
+        },
+        componentNodeMap: {
+          abc: { testNode: ['test-comp-1'] },
+          def: { testNode: ['test-comp-2'] },
+        },
+      };
+      const draft = { lastOperation: undefined, document };
+      const get = jest.fn().mockReturnValue({ document }); // fake out get call
+      const set = jest.fn((callback) => callback(draft));
+      // Act
+      const { removeSceneNode } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
+
+      removeSceneNode('testNode');
+      expect(get).toBeCalled();
+      expect(updateEntity).toBeCalled();
+      expect(draft.lastOperation!).toEqual('removeSceneNode');
+      expect(draft.document.nodeMap.testNode).toBeUndefined();
+      expect(draft.document.componentNodeMap).toEqual({ abc: {}, def: {} });
+    });
+
+    it('should call update entity for removeComponent', () => {
+      const document = {
+        nodeMap: {
+          testNode: {
+            properties: {
+              [SceneNodeRuntimeProperty.LayerIds]: ['layer1'],
+            },
+            components: [{ ref: 'component1', data: 'original', type: 'EntityBinding' }],
+          },
+        },
+        componentNodeMap: { EntityBinding: { testNode: ['component1'] } },
+      };
+      const draft = { lastOperation: undefined, document };
+      const getSceneNodeByRef = jest.fn().mockReturnValue(document.nodeMap.testNode);
+
+      const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
+      const set = jest.fn((callback) => callback(draft));
+      // Act
+      const { removeComponent } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
+      removeComponent('testNode', 'component1');
+
+      expect(draft.lastOperation!).toEqual('removeComponent');
+      expect(get).toBeCalled();
+      expect(updateEntity).toBeCalledWith(
+        { components: [], properties: { layerIds: ['layer1'] } },
+        { data: 'original', ref: 'component1', type: 'EntityBinding' },
+        'UPDATE',
+      );
+
+      expect(getSceneNodeByRef).toBeCalledWith('testNode');
+      expect(draft.document.nodeMap.testNode.components).toHaveLength(0);
+      expect(draft.document.componentNodeMap['EntityBinding']).toEqual({});
     });
   });
 });

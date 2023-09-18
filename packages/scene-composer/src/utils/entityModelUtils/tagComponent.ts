@@ -76,14 +76,17 @@ export const createTagEntityComponent = (tag: IAnchorComponent): ComponentReques
   return comp;
 };
 
-export const updateTagEntityComponent = (tag: IAnchorComponent, updateType?: ComponentUpdateType): ComponentUpdateRequest => {
+export const updateTagEntityComponent = (
+  tag: IAnchorComponent,
+  updateType?: ComponentUpdateType,
+): ComponentUpdateRequest => {
   if (updateType === ComponentUpdateType.DELETE) {
     return {
       componentTypeId: componentTypeToId[KnownComponentType.Tag],
       updateType: updateType,
     };
   }
-  
+
   const request = createTagEntityComponent(tag);
   return {
     componentTypeId: request.componentTypeId,

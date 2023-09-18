@@ -44,7 +44,7 @@ const ScatterChartWidgetComponent: React.FC<ScatterChartWidget> = (widget) => {
     return (
       <WidgetTile widget={widget} removeable title='Scatter Chart'>
         <Chart
-          defaultVisualizationType='bar'
+          defaultVisualizationType='scatter'
           key={key}
           queries={queries}
           viewport={viewport}
