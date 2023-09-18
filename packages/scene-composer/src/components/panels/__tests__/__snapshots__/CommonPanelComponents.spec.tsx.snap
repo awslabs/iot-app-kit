@@ -219,9 +219,19 @@ exports[`render correct panels. render Matrix3XInputGrid correctly. 1`] = `
 
 <div>
   <div
-    data-mocked="FormField"
-    label="gridName"
+    data-mocked="Box"
   >
+    <div
+      data-mocked="Box"
+      margin="{\\"bottom\\":\\"xxs\\"}"
+    >
+      <label
+        id="gridName_label"
+      >
+        gridName
+      </label>
+    </div>
+     
     <div
       data-mocked="Grid"
       griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
@@ -235,15 +245,19 @@ exports[`render correct panels. render Matrix3XInputGrid correctly. 1`] = `
           <div
             data-mocked="TextContent"
           >
-            <p>
+            <label
+              for="gridName_input_l1"
+            >
               l1
-            </p>
+            </label>
+             
           </div>
         </div>
         <div
           class="c2"
         >
           <div
+            arialabelledby="gridName_input_l1 gridName_label"
             controlid="gridName_input_l1"
             data-mocked="Input"
             value="1"
@@ -259,15 +273,19 @@ exports[`render correct panels. render Matrix3XInputGrid correctly. 1`] = `
           <div
             data-mocked="TextContent"
           >
-            <p>
+            <label
+              for="gridName_input_l2"
+            >
               l2
-            </p>
+            </label>
+             
           </div>
         </div>
         <div
           class="c2"
         >
           <div
+            arialabelledby="gridName_input_l2 gridName_label"
             controlid="gridName_input_l2"
             data-mocked="Input"
             value="2"
@@ -283,15 +301,19 @@ exports[`render correct panels. render Matrix3XInputGrid correctly. 1`] = `
           <div
             data-mocked="TextContent"
           >
-            <p>
+            <label
+              for="gridName_input_l3"
+            >
               l3
-            </p>
+            </label>
+             
           </div>
         </div>
         <div
           class="c2"
         >
           <div
+            arialabelledby="gridName_input_l3 gridName_label"
             controlid="gridName_input_l3"
             data-mocked="Input"
             value="3"
@@ -333,9 +355,19 @@ exports[`render correct panels. render Matrix3XInputGrid readonly correctly. 1`]
 
 <div>
   <div
-    data-mocked="FormField"
-    label="gridName"
+    data-mocked="Box"
   >
+    <div
+      data-mocked="Box"
+      margin="{\\"bottom\\":\\"xxs\\"}"
+    >
+      <label
+        id="gridName_label"
+      >
+        gridName
+      </label>
+    </div>
+     
     <div
       data-mocked="Grid"
       griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
@@ -349,9 +381,12 @@ exports[`render correct panels. render Matrix3XInputGrid readonly correctly. 1`]
           <div
             data-mocked="TextContent"
           >
-            <p>
+            <label
+              for="gridName_input_l1"
+            >
               l1
-            </p>
+            </label>
+             
           </div>
         </div>
         <div
@@ -375,9 +410,12 @@ exports[`render correct panels. render Matrix3XInputGrid readonly correctly. 1`]
           <div
             data-mocked="TextContent"
           >
-            <p>
+            <label
+              for="gridName_input_l2"
+            >
               l2
-            </p>
+            </label>
+             
           </div>
         </div>
         <div
@@ -401,9 +439,12 @@ exports[`render correct panels. render Matrix3XInputGrid readonly correctly. 1`]
           <div
             data-mocked="TextContent"
           >
-            <p>
+            <label
+              for="gridName_input_l3"
+            >
               l3
-            </p>
+            </label>
+             
           </div>
         </div>
         <div
