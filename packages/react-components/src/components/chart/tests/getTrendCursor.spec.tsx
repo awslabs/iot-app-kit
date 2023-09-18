@@ -50,14 +50,13 @@ describe('Testing getNewTrendCursor file', () => {
       const newTrendCursor = getNewTrendCursor({
         e: mockEvent,
         size: mockSize,
-        tcHeaderColorIndex: 0,
         series: mockSeries,
         chartRef: result.current.chartRef,
         visualization: DEFAULT_CHART_VISUALIZATION,
       });
 
       expect(newTrendCursor).not.toBeNull();
-      expect(newTrendCursor.children.length).toBe(4);
+      expect(newTrendCursor?.children.length).toBe(4);
     });
   });
 
@@ -68,7 +67,6 @@ describe('Testing getNewTrendCursor file', () => {
       const newTrendCursor = getNewTrendCursor({
         e: mockEvent,
         size: mockSize,
-        tcHeaderColorIndex: 0,
         series: mockSeries,
         chartRef: result.current.chartRef,
         visualization: DEFAULT_CHART_VISUALIZATION,
@@ -86,7 +84,7 @@ describe('Testing getNewTrendCursor file', () => {
         visualization: DEFAULT_CHART_VISUALIZATION,
       });
       expect(newTrendCursor).not.toBeNull();
-      expect(newTrendCursor.timestampInMs).toBe(1689271200000);
+      expect(newTrendCursor?.timestampInMs).toBe(1689271200000);
     });
   });
 });

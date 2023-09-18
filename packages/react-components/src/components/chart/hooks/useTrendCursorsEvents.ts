@@ -9,8 +9,6 @@ import useDataStore from '../../../store';
 import { Action } from '../contextMenu/ChartContextMenu';
 import copy from 'copy-to-clipboard';
 
-let trendCursorStaticIndex = 0;
-
 const useTrendCursorsEvents = ({
   chartRef,
   graphic,
@@ -66,12 +64,10 @@ const useTrendCursorsEvents = ({
           groupId: groupId ?? '',
           tcId: `trendCursor-${uuid()}`,
           timestamp: timestampInMs,
-          tcHeaderColorIndex: trendCursorStaticIndex++,
         });
       } else {
         const newTc = getNewTrendCursor({
           size: sizeRef.current,
-          tcHeaderColorIndex: trendCursorStaticIndex++,
           series: seriesRef.current,
           x: posX,
           chartRef,
