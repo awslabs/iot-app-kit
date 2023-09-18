@@ -46,7 +46,6 @@ export const setXWithBounds = (size: SizeConfig, x: number) => {
 export const getTrendCursorHeaderTimestampText = (timestampInMs: number) => {
   return [
     `{timestamp|${new Date(timestampInMs).toLocaleDateString()} ${new Date(timestampInMs).toLocaleTimeString()}}`,
-    '{title|}',
   ].join('\n');
 };
 
@@ -87,8 +86,10 @@ export const calculateTrendCursorsSeriesMakers = (
     const { leftIndex, rightIndex } = getLeftRightIndexes(data, timestampInMs);
     let value = 0;
 
-    // There is no Left value , so we take the first available value
-    if (leftIndex < 0) {
+    if (data.length === 0) {
+      value = 0;
+    } else if (leftIndex < 0) {
+      // There is no Left value , so we take the first available value
       value = data[0][1];
     } else if (rightIndex === data.length) {
       // There is no right value , so we take the last available value

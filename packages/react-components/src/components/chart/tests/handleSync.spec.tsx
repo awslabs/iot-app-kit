@@ -40,7 +40,6 @@ describe('handleSync', () => {
         group1: {
           'trendCursor-1': {
             timestamp: Date.now(),
-            tcHeaderColorIndex: 0,
           },
         },
       },
@@ -70,7 +69,6 @@ describe('handleSync', () => {
         group1: {
           'trendCursor-1': {
             timestamp: newTime,
-            tcHeaderColorIndex: 0,
           },
         },
       },

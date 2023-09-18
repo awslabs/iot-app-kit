@@ -23,7 +23,7 @@ const handleSync = ({
     });
 
     // if no changes, we skip setting the state
-    if (toBeAdded.length || toBeDeleted.length || toBeUpdated.length) {
+    if ((toBeAdded.length || toBeDeleted.length || toBeUpdated.length) && series.length > 0) {
       // add a new trend cursor
       if (toBeAdded.length) {
         toBeAdded.forEach((tcId) => {
@@ -33,7 +33,6 @@ const handleSync = ({
               tcId,
               timestamp,
               size,
-              tcHeaderColorIndex: (syncedTrendCursors ?? {})[tcId].tcHeaderColorIndex,
               series,
               x: calculateXFromTimestamp(timestamp, chartRef),
               chartRef,

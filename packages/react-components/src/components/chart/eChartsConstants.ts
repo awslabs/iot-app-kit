@@ -4,7 +4,6 @@ import type {
   LegendComponentOption,
   TooltipComponentOption,
   DataZoomComponentOption,
-  ToolboxComponentOption,
 } from 'echarts';
 
 export const DEFAULT_X_AXIS: XAXisComponentOption = {
@@ -49,16 +48,6 @@ export const DEFAULT_DATA_ZOOM: DataZoomComponentOption = {
   zoomOnMouseWheel: true,
   moveOnMouseMove: 'shift',
   moveOnMouseWheel: false,
-};
-
-export const DEFAULT_TOOL_BOX: ToolboxComponentOption = {
-  show: true,
-  showTitle: false,
-  feature: {
-    saveAsImage: {},
-  },
-  top: 10,
-  right: 10,
 };
 
 export const DEFAULT_X_AXIS_ID = 'default-x-Axis';

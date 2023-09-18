@@ -6,7 +6,6 @@ import {
   TREND_CURSOR_CLOSE_GRAPHIC_INDEX,
   TREND_CURSOR_DELETE_BUTTON_HEIGHT,
   TREND_CURSOR_HEADER_BACKGROUND_COLOR,
-  TREND_CURSOR_HEADER_COLORS,
   TREND_CURSOR_HEADER_GRAPHIC_INDEX,
   TREND_CURSOR_HEADER_OFFSET,
   TREND_CURSOR_HEADER_TEXT_COLOR,
@@ -134,7 +133,7 @@ const addTCLine = (uId: string, size: SizeConfig) => ({
   id: `line-${uId}`,
   draggable: 'horizontal' as const,
   shape: {
-    y1: DEFAULT_MARGIN,
+    y1: DEFAULT_MARGIN - 6,
     y2: size.height - DEFAULT_MARGIN,
   },
   style: {
@@ -142,7 +141,7 @@ const addTCLine = (uId: string, size: SizeConfig) => ({
     lineWidth: TREND_CURSOR_LINE_WIDTH,
   },
 });
-const addTCHeader = (uId: string, timestampInMs: number, headerColor: string): GraphicComponentTextOption => ({
+const addTCHeader = (uId: string, timestampInMs: number): GraphicComponentTextOption => ({
   type: 'text',
   z: TREND_CURSOR_Z_INDEX + 1,
   id: `text-${uId}`,
@@ -152,11 +151,6 @@ const addTCHeader = (uId: string, timestampInMs: number, headerColor: string): G
     fill: TREND_CURSOR_HEADER_TEXT_COLOR,
     align: 'center',
     rich: {
-      title: {
-        width: TREND_CURSOR_HEADER_WIDTH + 5, // width plus padding
-        backgroundColor: headerColor,
-        height: 6,
-      },
       timestamp: {
         width: TREND_CURSOR_HEADER_WIDTH,
         backgroundColor: TREND_CURSOR_HEADER_BACKGROUND_COLOR,
@@ -217,7 +211,6 @@ const addTCMarkers = (uId: string, yAxisMarkers: number[], series: SeriesOption[
 export const getNewTrendCursor = ({
   e,
   size,
-  tcHeaderColorIndex,
   series,
   tcId,
   x,
@@ -227,11 +220,9 @@ export const getNewTrendCursor = ({
 }: GetNewTrendCursorProps) => {
   const posX = e?.offsetX ?? x ?? 0;
   const uId = tcId ? tcId.split('trendCursor-')[1] : uuid();
-  // TODO: test this once echarts live mode is supported
   const timestampInMs = timestamp ?? calculateTimeStamp(posX, chartRef);
-
   const boundedX = setXWithBounds(size, posX);
-  // TODO: test this once echarts live mode is supported
+
   const { trendCursorsSeriesMakersValue, trendCursorsSeriesMakersInPixels } = calculateTrendCursorsSeriesMakers(
     series,
     timestampInMs,
@@ -239,14 +230,12 @@ export const getNewTrendCursor = ({
     visualization
   );
   // rotate the colors in a round-robin fashion
-  const headerColor = TREND_CURSOR_HEADER_COLORS[tcHeaderColorIndex % TREND_CURSOR_HEADER_COLORS.length];
   return {
     id: tcId ?? `trendCursor-${uId}`,
     $action: 'merge' as const,
     type: 'group' as const,
     timestampInMs,
     yAxisMarkerValue: trendCursorsSeriesMakersValue,
-    headerColor,
     x: boundedX,
     // update the Y of the series markers
     //   childIndex --> purpose
@@ -257,7 +246,7 @@ export const getNewTrendCursor = ({
     // from index 3 --> series markers
     children: [
       addTCLine(uId, size),
-      addTCHeader(uId, timestampInMs, headerColor),
+      addTCHeader(uId, timestampInMs),
       addTCDeleteButton(uId),
       ...addTCMarkers(uId, trendCursorsSeriesMakersInPixels, series),
     ],

@@ -21,6 +21,7 @@
 
 .base-chart-element {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .base-chart-container {

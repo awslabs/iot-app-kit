@@ -73,7 +73,6 @@ export type ChartStyleSettings = {
 export type InternalGraphicComponentGroupOption = {
   timestampInMs: number;
   yAxisMarkerValue: number[];
-  headerColor: string;
 } & GraphicComponentGroupOption;
 
 export type ChartEventType = { target: { id?: OptionId }; offsetX?: number };
@@ -141,7 +140,6 @@ export interface UseTrendCursorsProps {
 export interface GetNewTrendCursorProps {
   e?: ElementEvent;
   size: SizeConfig;
-  tcHeaderColorIndex: number;
   series: SeriesOption[];
   tcId?: string;
   x?: number;
