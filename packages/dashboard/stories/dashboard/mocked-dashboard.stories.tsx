@@ -1,3 +1,5 @@
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
@@ -7,8 +9,9 @@ import Dashboard from '../../src/components/dashboard';
 import { DashboardClientConfiguration } from '../../src/types';
 
 const clientConfiguration: DashboardClientConfiguration = {
-  iotSiteWiseClient: createMockSiteWiseSDK(),
+  iotSiteWiseClient: createMockSiteWiseSDK() as IoTSiteWiseClient,
   iotEventsClient: createMockIoTEventsSDK(),
+  iotTwinMakerClient: new IoTTwinMakerClient({}),
 };
 
 const displaySettings = {

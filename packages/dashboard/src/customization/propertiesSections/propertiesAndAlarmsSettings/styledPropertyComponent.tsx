@@ -11,11 +11,11 @@ import {
 } from '@cloudscape-design/components';
 import ColorPicker from '../shared/colorPicker';
 import type { FC } from 'react';
-import type { AssetSummary } from '~/components/resourceExplorer/components/mapper';
 
 import './propertyComponent.css';
 import { StyledAssetPropertyQuery, YAxisOptions } from '~/customization/widgets/types';
 import { getPropertyDisplay } from './getPropertyDetails';
+import type { AssetSummary } from '../../../hooks/useAssetDescriptionQueries';
 
 const YAxisPropertyConfig = ({
   resetStyles,

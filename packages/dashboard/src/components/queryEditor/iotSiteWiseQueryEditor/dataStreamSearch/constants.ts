@@ -1,0 +1,1 @@
+export const MAX_QUERY_STATEMENT_LENGTH = 1000;

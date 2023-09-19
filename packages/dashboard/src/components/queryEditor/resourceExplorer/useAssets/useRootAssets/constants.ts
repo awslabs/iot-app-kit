@@ -1,2 +1,0 @@
-export const ROOT_ASSETS_LIST_FILTER = 'TOP_LEVEL';
-export const MAX_ROOT_ASSETS_PER_PAGE = 250;

@@ -1,5 +1,9 @@
 import type { StyleSettingsMap, Threshold, ThresholdSettings } from '@iot-app-kit/core';
-import type { AssetPropertyQuery, SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import type {
+  AssetPropertyQuery,
+  SiteWiseAssetQuery,
+  SiteWisePropertyAliasQuery,
+} from '@iot-app-kit/source-iotsitewise';
 import type { DashboardWidget } from '~/types';
 import type { AxisSettings, ComplexFontSettings, SimpleFontSettings, ThresholdWithId } from '../settings';
 import type { TableColumnDefinition, TableItem } from '@iot-app-kit/react-components/src';
@@ -10,7 +14,10 @@ export type QueryConfig<S, T> = {
   query: T;
 };
 
-export type SiteWiseQueryConfig = QueryConfig<'iotsitewise', SiteWiseAssetQuery | undefined>;
+export type SiteWiseQueryConfig = QueryConfig<
+  'iotsitewise',
+  (Partial<SiteWiseAssetQuery> & Partial<SiteWisePropertyAliasQuery>) | undefined
+>;
 
 export type QueryProperties = {
   styleSettings?: StyleSettingsMap;

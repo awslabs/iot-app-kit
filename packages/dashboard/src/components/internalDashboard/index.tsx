@@ -6,6 +6,7 @@ import SpaceBetween from '@cloudscape-design/components/space-between';
 import { colorBackgroundCellShaded } from '@cloudscape-design/design-tokens';
 
 import { selectedRect } from '~/util/select';
+
 /**
  * Component imports
  */
@@ -16,9 +17,10 @@ import Widgets from '../widgets/list';
 import UserSelection from '../userSelection';
 import ComponentPalette from '../palette';
 import CustomDragLayer from '../dragLayer';
-import { ResourceExplorer } from '../resourceExplorer';
 import ViewportSelection from '../viewportSelection';
 import Actions from '../actions';
+import { QueryEditor } from '../queryEditor';
+import { useClients } from '../dashboard/clientContext';
 
 /**
  * Store imports
@@ -61,6 +63,12 @@ const defaultUserSelect: CSSProperties = { userSelect: 'initial' };
 const disabledUserSelect: CSSProperties = { userSelect: 'none' };
 
 const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, editable, propertiesPanel }) => {
+  const { iotSiteWiseClient, iotTwinMakerClient } = useClients();
+
+  if (iotSiteWiseClient == null || iotTwinMakerClient == null) {
+    return null;
+  }
+
   /**
    * disable user select styles on drag to prevent highlighting of text under the pointer
    */
@@ -212,7 +220,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
         </Box>
       </div>
       <ResizablePanes
-        leftPane={<ResourceExplorer />}
+        leftPane={<QueryEditor iotSiteWiseClient={iotSiteWiseClient} iotTwinMakerClient={iotTwinMakerClient} />}
         centerPane={
           <div
             className='display-area'

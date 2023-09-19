@@ -1,3 +1,5 @@
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import React from 'react';
 import { RenderResult, act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import createWrapper from '@cloudscape-design/components/test-utils/dom';
@@ -82,8 +84,9 @@ const renderTestComponentAsync = async (options?: SetupStoreOptions): Promise<Re
   const describeAsset = jest.fn().mockImplementation(() => Promise.resolve(mockAssetDescription));
 
   const clientContext: DashboardIotSiteWiseClients = {
-    iotSiteWiseClient: createMockSiteWiseSDK({ describeAsset }),
+    iotSiteWiseClient: createMockSiteWiseSDK({ describeAsset }) as IoTSiteWiseClient,
     iotEventsClient: createMockIoTEventsSDK(),
+    iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
   };
 
   await act(async () => {

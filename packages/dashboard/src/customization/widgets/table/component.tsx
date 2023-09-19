@@ -12,6 +12,7 @@ import { useQueries } from '~/components/dashboard/queryContext';
 import { useChartSize } from '~/hooks/useChartSize';
 import { DEFAULT_PREFERENCES } from './table-config';
 import { TABLE_OVERFLOW_HEIGHT, TABLE_WIDGET_MAX_HEIGHT } from '../constants';
+import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 
 export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
   {
@@ -44,7 +45,10 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
-  const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
+  const queries =
+    iotSiteWiseQuery && queryConfig.query
+      ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query as SiteWiseAssetQuery)]
+      : [];
   const key = computeQueryConfigKey(viewport, widget.properties.queryConfig);
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;

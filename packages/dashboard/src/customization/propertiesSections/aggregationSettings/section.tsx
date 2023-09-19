@@ -68,7 +68,7 @@ const AggregationSettings: FC<AggregationSettingsProps> = ({ queryConfig, update
   const siteWiseAssetQuery = queryConfig.value;
 
   const { filteredResolutionOptions, filteredAggregationOptions, selectedAggregation, selectedResolution } =
-    getAggregationSectionOptions(siteWiseAssetQuery, supportsRawData);
+    getAggregationSectionOptions(siteWiseAssetQuery as SiteWiseAssetQuery, supportsRawData);
 
   // given a resolution, determine what the new aggregation should be
   const getUpdatedAggregation = (resolution?: string) => {
@@ -93,7 +93,7 @@ const AggregationSettings: FC<AggregationSettingsProps> = ({ queryConfig, update
     const newAggregation = getUpdatedAggregation(newResolution);
 
     // new assets with updated resolution and aggregation
-    const assets = siteWiseAssetQuery.assets.map((asset: AssetQuery) => ({
+    const assets = siteWiseAssetQuery.assets?.map((asset: AssetQuery) => ({
       ...asset,
       properties: asset.properties.map((assetProp: AssetPropertyQuery) => ({
         ...assetProp,
@@ -112,7 +112,7 @@ const AggregationSettings: FC<AggregationSettingsProps> = ({ queryConfig, update
     const newResolution = getUpdatedResolution(newAggregation);
 
     // new assets with updated resolution and aggregation
-    const assets = siteWiseAssetQuery.assets.map((asset: AssetQuery) => ({
+    const assets = siteWiseAssetQuery.assets?.map((asset: AssetQuery) => ({
       ...asset,
       properties: asset.properties.map((assetProp: AssetPropertyQuery) => ({
         ...assetProp,

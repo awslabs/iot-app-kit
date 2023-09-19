@@ -75,7 +75,7 @@
 }
 
 .collapsible-panel {
-  overflow: hidden;
+  overflow: auto;
   position: relative;
 }
 
@@ -87,5 +87,4 @@
   max-height: calc(100vh - var(--toolbar-overlay-height));
   z-index: var(--stack-order-grid-inputs);
   background-color: var(--colors-white);
-  overflow-y: auto;
 }
