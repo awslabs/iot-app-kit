@@ -10,12 +10,6 @@
   flex: 1;
 }
 
-.widget-tile-resize-handle {
-  position: absolute;
-  bottom: 0;
-  right: 4px;
-}
-
 .horizontal-divider {
   width: 100%;
   height: 2px;
