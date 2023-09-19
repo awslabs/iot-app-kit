@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Button from '@cloudscape-design/components/button';
-import Icon from '@cloudscape-design/components/icon';
 import {
   colorBorderDividerDefault,
   borderRadiusBadge,
@@ -50,7 +49,6 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
   const isReadOnly = useSelector((state: DashboardState) => state.readOnly);
 
   const isRemoveable = !isReadOnly && removeable;
-  const isResizable = !isReadOnly;
   const headerVisible = !isReadOnly || title;
 
   return (
@@ -81,14 +79,7 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
           </SpaceBetween>
         </div>
       )}
-      <div className='widget-tile-body'>
-        {children}
-        {isResizable && (
-          <div className='widget-tile-resize-handle'>
-            <Icon variant='disabled' name='resize-area' />
-          </div>
-        )}
-      </div>
+      <div className='widget-tile-body'>{children}</div>
     </div>
   );
 };
