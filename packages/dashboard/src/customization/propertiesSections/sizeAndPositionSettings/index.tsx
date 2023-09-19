@@ -4,7 +4,8 @@ import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { SizeAndPositionSection } from './section';
 import { DashboardWidget } from '~/types';
 
-const isNotLineScatterWidget = (widget: DashboardWidget): widget is DashboardWidget => widget.type !== 'line-scatter-chart';
+const isNotLineScatterWidget = (widget: DashboardWidget): widget is DashboardWidget =>
+  widget.type !== 'line-scatter-chart';
 
 export const SizeAndPositionConfiguration: React.FC = () => (
   <PropertiesSection

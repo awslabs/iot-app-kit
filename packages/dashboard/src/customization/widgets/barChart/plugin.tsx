@@ -11,7 +11,11 @@ export const barChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
     registerWidget<BarChartWidget>('bar-chart', {
       render: (widget) => (
-        <MultiQueryWidget widget={widget} onDrop={queryWidgetOnDrop}  allowedDataTypes={[PropertyDataType.DOUBLE, PropertyDataType.INTEGER]}>
+        <MultiQueryWidget
+          widget={widget}
+          onDrop={queryWidgetOnDrop}
+          allowedDataTypes={[PropertyDataType.DOUBLE, PropertyDataType.INTEGER]}
+        >
           <BarChartWidgetComponent {...widget} />
         </MultiQueryWidget>
       ),

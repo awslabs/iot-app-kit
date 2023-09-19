@@ -1,36 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { SpaceBetween, Box } from '@cloudscape-design/components';
+import { SpaceBetween, Box, Toggle } from '@cloudscape-design/components';
 
-import { ThresholdWithId } from '~/customization/settings';
+import { StyledThreshold, ThresholdWithId } from '~/customization/settings';
 import { ThresholdComponent } from './thresholdComponent';
 import { ComparisonOperators } from './comparisonOperators';
+import { ThresholdStyleType } from '~/customization/widgets/types';
 
-const NoThresholds = () => <Box variant='p'>No thresholds found</Box>;
+const NoThresholds = () => <Box />;
 
 type ThresholdsListProps = {
-  thresholds: ThresholdWithId[];
+  thresholds: (ThresholdWithId & StyledThreshold)[];
   comparisonOperators: ComparisonOperators;
-  updateThresholds: (newValue: ThresholdWithId[] | undefined) => void;
+  updateThresholds?: (newValue: (ThresholdWithId & StyledThreshold)[] | undefined) => void;
+  thresholdStyle?: ThresholdStyleType;
 };
 export const ThresholdsList: React.FC<ThresholdsListProps> = ({
   thresholds,
   updateThresholds,
   comparisonOperators,
+  thresholdStyle,
 }) => {
+
   const onUpdateThreshold = (updatedThreshold: ThresholdWithId) => {
-    updateThresholds(
-      thresholds.map((t) => {
-        if (t.id === updatedThreshold.id) {
-          return updatedThreshold;
-        }
-        return t;
-      })
-    );
-  };
+    if (!!updateThresholds) {
+      updateThresholds(
+        thresholds.map((t) => {
+          if (t.id === updatedThreshold.id) {
+            return updatedThreshold;
+          }
+          return t;
+        })
+      );
+    };
+  }
 
   const handleDeleteThreshold = (threshold: ThresholdWithId) => () => {
-    updateThresholds(thresholds.filter((t) => t.id !== threshold.id));
+    if (!!updateThresholds) {
+      updateThresholds(thresholds.filter((t) => t.id !== threshold.id));
+    }
   };
 
   const handleUpdateThresholdValue = (threshold: ThresholdWithId) => (value: ThresholdWithId['value']) => {
@@ -39,6 +47,7 @@ export const ThresholdsList: React.FC<ThresholdsListProps> = ({
       value,
     });
   };
+
   const handleUpdateComparisonOperator =
     (threshold: ThresholdWithId) => (comparisonOperator: ThresholdWithId['comparisonOperator']) => {
       onUpdateThreshold({
@@ -53,6 +62,26 @@ export const ThresholdsList: React.FC<ThresholdsListProps> = ({
       color,
     });
   };
+
+  const [shouldHideThresholds, setShouldHideThresholds] = useState<boolean>(false);
+
+  const handleUpdateHideAllThresholds = (checked: boolean) => {
+    setShouldHideThresholds(checked)
+    if (!!thresholdStyle && !!updateThresholds) {
+      const newThresholds = thresholds.map((threshold) => ({
+        ...threshold,
+        visible: checked ? false : thresholdStyle.visible,
+        fill: checked ? undefined : thresholdStyle.fill,
+      }));
+      updateThresholds(newThresholds);
+    }
+  }
+
+  const hideThresholdsToggle = (
+    <Toggle onChange={({ detail }) => handleUpdateHideAllThresholds(detail.checked)} checked={shouldHideThresholds}>
+      Hide all thresholds
+    </Toggle>
+  );
 
   const thresholdsComponents = thresholds.map((threshold) => {
     return (
@@ -69,8 +98,11 @@ export const ThresholdsList: React.FC<ThresholdsListProps> = ({
   });
 
   return (
-    <SpaceBetween size='m' direction='vertical'>
-      {thresholdsComponents.length ? thresholdsComponents : <NoThresholds />}
+    <SpaceBetween size='xs' direction='vertical'>
+      {!!thresholdStyle && hideThresholdsToggle}
+      <SpaceBetween size='m' direction='vertical'>
+        {thresholdsComponents.length ? thresholdsComponents : <NoThresholds />}
+      </SpaceBetween>
     </SpaceBetween>
   );
 };

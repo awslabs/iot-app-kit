@@ -10,7 +10,7 @@ import { DashboardWidget } from '~/types';
 
 import './queryWidget.css';
 
-type MultiQueryWidgetComponentOptions= PropsWithChildren<{
+type MultiQueryWidgetComponentOptions = PropsWithChildren<{
   widget: DashboardWidget;
   onDrop: (item: ResourcePanelItem, widget: DashboardWidget) => DashboardWidget;
   allowedDataTypes?: PropertyDataType[];
@@ -35,7 +35,7 @@ const MultiQueryWidgetComponent: React.FC<MultiQueryWidgetComponentOptions> = ({
 }) => {
   const { update } = useWidgetActions();
 
-  const dropCallback = useCallback((item: ResourcePanelItem) => update(onDrop(item, widget)), [widget, onDrop])
+  const dropCallback = useCallback((item: ResourcePanelItem) => update(onDrop(item, widget)), [widget, onDrop]);
 
   const [collected, drop] = useMultiAssetPropertyDrop({ drop: dropCallback, allowedDataTypes });
 

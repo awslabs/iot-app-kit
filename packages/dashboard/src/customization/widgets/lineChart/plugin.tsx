@@ -11,7 +11,11 @@ export const lineChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
     registerWidget<LineChartWidget>('line-chart', {
       render: (widget) => (
-        <MultiQueryWidget widget={widget} onDrop={queryWidgetOnDrop} allowedDataTypes={[PropertyDataType.DOUBLE, PropertyDataType.INTEGER]}>
+        <MultiQueryWidget
+          widget={widget}
+          onDrop={queryWidgetOnDrop}
+          allowedDataTypes={[PropertyDataType.DOUBLE, PropertyDataType.INTEGER]}
+        >
           <LineChartWidgetComponent {...widget} />
         </MultiQueryWidget>
       ),

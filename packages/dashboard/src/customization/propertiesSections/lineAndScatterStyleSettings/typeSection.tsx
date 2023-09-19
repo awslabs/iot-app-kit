@@ -18,21 +18,13 @@ type TypeSectionOptions = {
   updateType: (type: string) => void;
 };
 
-export const TypeSection: FC<TypeSectionOptions> = ({
-  type,
-  updateType
-}) => {
-  
+export const TypeSection: FC<TypeSectionOptions> = ({ type, updateType }) => {
   return (
     <ExpandableSection headerText='Line widget' defaultExpanded>
-      <FormField
-        label="Type"
-      >
+      <FormField label='Type'>
         <Select
           selectedOption={typeOptions.find(({ value }) => value === type) ?? null}
-          onChange={({ detail }) =>
-            updateType(detail.selectedOption.value ?? defaultTypeOption.value)
-          }
+          onChange={({ detail }) => updateType(detail.selectedOption.value ?? defaultTypeOption.value)}
           options={typeOptions}
         />
       </FormField>

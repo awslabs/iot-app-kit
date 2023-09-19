@@ -28,7 +28,7 @@ export const getCurrentAggregationResolution = (widget: QueryWidget | LineScatte
     return {
       aggregation: widget.properties.aggregationType,
       resolution: widget.properties.resolution,
-    }
+    };
   }
 
   const widgetType = widget.type;
@@ -44,7 +44,7 @@ export const getCurrentAggregationResolution = (widget: QueryWidget | LineScatte
 
 export const getAggregation = (widget: QueryWidget | LineScatterChartWidget) => {
   if ('aggregationType' in widget.properties && 'resolution' in widget.properties) {
-    return widget.properties.aggregationType
+    return widget.properties.aggregationType;
   }
 
   const firstAssetProperty = widget.properties.queryConfig.query?.assets[0].properties[0];

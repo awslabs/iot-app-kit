@@ -45,14 +45,18 @@ export const styledQueryWidgetOnDrop = (item: ResourcePanelItem, widget: Dashboa
         query: queryWithResolution,
       },
     },
-  }
+  };
 };
 
 export const lineScatterChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
     registerWidget<LineScatterChartWidget>('line-scatter-chart', {
       render: (widget) => (
-        <MultiQueryWidget widget={widget} onDrop={styledQueryWidgetOnDrop} allowedDataTypes={[PropertyDataType.DOUBLE, PropertyDataType.INTEGER]}>
+        <MultiQueryWidget
+          widget={widget}
+          onDrop={styledQueryWidgetOnDrop}
+          allowedDataTypes={[PropertyDataType.DOUBLE, PropertyDataType.INTEGER]}
+        >
           <LineScatterChartWidgetComponent {...widget} />
         </MultiQueryWidget>
       ),
@@ -78,7 +82,7 @@ export const lineScatterChartPlugin: DashboardPlugin = {
         },
         legend: {
           visible: true,
-        }
+        },
       }),
       initialSize: {
         height: 250,

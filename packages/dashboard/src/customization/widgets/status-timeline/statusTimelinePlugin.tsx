@@ -10,7 +10,7 @@ export const statusTimelineChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
     registerWidget<StatusTimelineWidget>('status-timeline', {
       render: (widget) => (
-        <MultiQueryWidget widget={widget} onDrop={queryWidgetOnDrop} >
+        <MultiQueryWidget widget={widget} onDrop={queryWidgetOnDrop}>
           <StatusTimelineWidgetComponent {...widget} />
         </MultiQueryWidget>
       ),

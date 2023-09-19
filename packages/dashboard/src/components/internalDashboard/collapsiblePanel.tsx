@@ -58,9 +58,7 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
           </Box>
         </Box>
       </div>
-      <div className='collapsible-panel-content'>
-        {props.panelContent}
-      </div>
+      <div className='collapsible-panel-content'>{props.panelContent}</div>
     </div>
   );
 

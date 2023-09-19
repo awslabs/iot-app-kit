@@ -197,7 +197,7 @@ export const useSeriesAndYAxis = (
 ) => {
   const defaultYAxis: YAXisComponentOption[] = useMemo(() => [convertChartYAxis(axis)], [axis]);
   const convertedThresholds = convertThresholds(thresholds);
-
+  // console.log(convertedThresholds);
   const getStyles = getChartStyleSettingsFromMap(styleSettings);
 
   const { series, yAxis, yMaxs, yMins } = useMemo(() => {
@@ -210,6 +210,7 @@ export const useSeriesAndYAxis = (
     series[0].markArea = convertedThresholds.markArea;
     series[0].markLine = convertedThresholds.markLine;
   }
+  console.log('series', series);
 
   return { series, yAxis, yMaxs, yMins };
 };

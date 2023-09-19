@@ -67,7 +67,7 @@ export type ScatterChartProperties = QueryProperties & {
 };
 export type ScatterChartPropertiesKeys = keyof ScatterChartProperties;
 
-type LineAndScatterStyles = {
+export type LineAndScatterStyles = {
   significantDigits?: number;
   color?: string;
   symbol?: SymbolStyles;
@@ -83,7 +83,16 @@ export type LineStyles = {
 };
 export type SymbolStyles = {
   visible?: boolean;
-  style?: 'circle' | 'filled-circle' | 'rectangle' | 'rounded-rectangle' | 'triangle' | 'diamond' | 'pin' | 'arrow' | 'none';
+  style?:
+    | 'circle'
+    | 'filled-circle'
+    | 'rectangle'
+    | 'rounded-rectangle'
+    | 'triangle'
+    | 'diamond'
+    | 'pin'
+    | 'arrow'
+    | 'none';
   color?: string;
   size?: number;
 };
@@ -94,11 +103,14 @@ export type StyledAssetQuery = {
     assetId: SiteWiseAssetQuery['assets'][number]['assetId'];
     properties: StyledAssetPropertyQuery[];
   }[];
-}
-type StyledThreshold = Threshold & {
+};
+
+export type ThresholdStyleType = {
   visible?: boolean;
   fill?: string;
 };
+export type StyledThreshold = Threshold & ThresholdStyleType;
+
 type YAxisRange = {
   yMin?: number;
   yMax?: number;
@@ -120,8 +132,8 @@ export type LineScatterChartProperties = LineAndScatterStyles & {
   axis?: ChartAxisOptions;
   legend?: ChartLegend;
   queryConfig: {
-    source: 'iotsitewise',
-    query: StyledAssetQuery | undefined,
+    source: 'iotsitewise';
+    query: StyledAssetQuery | undefined;
   };
 };
 export type LineScatterChartPropertiesKeys = keyof LineScatterChartProperties;

@@ -1,4 +1,4 @@
-import { SiteWiseAssetQuery } from "@iot-app-kit/source-iotsitewise";
+import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 
 import { v4 as uuid } from 'uuid';
 

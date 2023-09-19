@@ -28,30 +28,23 @@ export const AggregationAndResolutionSection: FC<AggregationAndResolutionSection
   return (
     <ExpandableSection headerText='Aggregation and resolution' defaultExpanded>
       <SpaceBetween direction='vertical' size='s'>
-        <FormField
-          label="Resolution"
-        >
+        <FormField label='Resolution'>
           <Select
             selectedOption={selectedResolution}
             onChange={({ detail }) => {
               const newResolution = detail.selectedOption.value;
               if (newResolution) updateResolution(newResolution);
-            }
-            }
+            }}
             options={resolutionOptions}
           />
         </FormField>
-        <FormField
-          label="Aggregation"
-        >
+        <FormField label='Aggregation'>
           <Select
             selectedOption={selectedAggregation}
             onChange={({ detail }) => {
               const newAggregation = detail.selectedOption.value;
               if (newAggregation) updateAggregation(newAggregation);
-            }
-
-            }
+            }}
             options={aggregationOptions}
           />
         </FormField>

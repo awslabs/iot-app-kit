@@ -5,7 +5,15 @@ import { Chart } from '@iot-app-kit/react-components';
 
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
-import type { AssetPropertyStyles, ChartAxisOptions, LineAndScatterStyles, LineScatterChartWidget, LineStyles, StyledAssetQuery, SymbolStyles } from '../types';
+import type {
+  AssetPropertyStyles,
+  ChartAxisOptions,
+  LineAndScatterStyles,
+  LineScatterChartWidget,
+  LineStyles,
+  StyledAssetQuery,
+  SymbolStyles,
+} from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
@@ -15,7 +23,9 @@ import { ChartOptions, ChartStyleSettingsOptions } from '@iot-app-kit/react-comp
 // import { applyResolutionToQuery } from '../utils/assetQuery/applyResolutionToQuery';
 import WidgetTile from '~/components/widgets/tile/tile';
 
-const mapConnectionStyleToVisualizationType = (connectionStyle: LineStyles['connectionStyle']): ChartStyleSettingsOptions['visualizationType'] => {
+const mapConnectionStyleToVisualizationType = (
+  connectionStyle: LineStyles['connectionStyle']
+): ChartStyleSettingsOptions['visualizationType'] => {
   switch (connectionStyle) {
     case 'linear':
       return 'line';
@@ -29,10 +39,10 @@ const mapConnectionStyleToVisualizationType = (connectionStyle: LineStyles['conn
       return undefined;
     default:
       return undefined;
-  };
+  }
 };
 const mapSymboleStyleToSymbol = (symbolStyle: SymbolStyles['style']): ChartStyleSettingsOptions['symbol'] => {
-  switch(symbolStyle) {
+  switch (symbolStyle) {
     case 'circle':
       return 'emptyCircle';
     case 'filled-circle':
@@ -50,27 +60,29 @@ const mapSymboleStyleToSymbol = (symbolStyle: SymbolStyles['style']): ChartStyle
     default:
       return undefined;
   }
-}
+};
 
 const useAdaptedStyleSettings = (rootStyles: LineAndScatterStyles, styledAssetQuery?: StyledAssetQuery) => {
   return useMemo(() => {
-    if (!styledAssetQuery)  return {};
+    if (!styledAssetQuery) return {};
 
     const styleSettings: ChartOptions['styleSettings'] = {};
 
-    styledAssetQuery.assets.forEach(asset => {
-      asset.properties.forEach(property => {
+    styledAssetQuery.assets.forEach((asset) => {
+      asset.properties.forEach((property) => {
         if (!property.refId) return;
         styleSettings[property.refId] = mapStyledAssetPropertyToChartStyleSettings(rootStyles, property);
       });
     });
 
     return styleSettings;
-
   }, [JSON.stringify(styledAssetQuery), JSON.stringify(rootStyles)]);
 };
 
-const mapStyledAssetPropertyToChartStyleSettings = ({ line, symbol }: LineAndScatterStyles, styles: AssetPropertyStyles): ChartStyleSettingsOptions => {
+const mapStyledAssetPropertyToChartStyleSettings = (
+  { line, symbol }: LineAndScatterStyles,
+  styles: AssetPropertyStyles
+): ChartStyleSettingsOptions => {
   return {
     visualizationType: mapConnectionStyleToVisualizationType(styles.line?.connectionStyle ?? line?.connectionStyle),
     color: styles.color,
@@ -81,7 +93,7 @@ const mapStyledAssetPropertyToChartStyleSettings = ({ line, symbol }: LineAndSca
     lineThickness: styles.line?.thickness,
     yAxis: styles.yAxis,
     significantDigits: styles.significantDigits,
-  }
+  };
 };
 
 const convertAxis = (axis: ChartAxisOptions | undefined) => ({
@@ -89,7 +101,7 @@ const convertAxis = (axis: ChartAxisOptions | undefined) => ({
   showX: axis?.xVisible,
   yMin: axis?.yMin,
   yMax: axis?.yMax,
-})
+});
 
 const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
@@ -107,13 +119,15 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
     significantDigits: widgetSignificantDigits,
   } = widget.properties;
 
+  console.log('thresholds', thresholds);
+
   const query = queryConfig.query;
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && query ? [iotSiteWiseQuery?.timeSeriesData(query)] : [];
   const key = computeQueryConfigKey(viewport, queryConfig);
-  
+
   const styleSettings = useAdaptedStyleSettings({ line, symbol }, query);
-  
+
   const aggregation = getAggregation(widget);
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
@@ -135,7 +149,6 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
         aggregationType={aggregateToString(aggregation)}
         styleSettings={styleSettings}
         thresholds={thresholds}
-        thresholdSettings={{ colorBreachedData: true }}
         significantDigits={significantDigits}
         size={size}
       />

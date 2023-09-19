@@ -78,11 +78,13 @@ export type InternalGraphicComponentGroupOption = {
 
 export type ChartEventType = { target: { id?: OptionId }; offsetX?: number };
 
-
-export type StyledThreshold = Threshold & {
+export type ThresholdStyleType = {
   visible?: boolean;
   fill?: string;
 };
+
+export type StyledThreshold = Threshold & ThresholdStyleType;
+
 export type ChartOptions = {
   queries: TimeSeriesDataQuery[];
   defaultVisualizationType?: Visualization;

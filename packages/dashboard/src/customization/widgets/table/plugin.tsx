@@ -4,7 +4,7 @@ import TableWidgetComponent, { DEFAULT_TABLE_COLUMN_DEFINITIONS } from './compon
 import TableIcon from './icon';
 import { toId } from '@iot-app-kit/source-iotsitewise';
 import type { DashboardPlugin } from '~/customization/api';
-import type { QueryWidget, TableWidget } from '../types';
+import type { TableWidget } from '../types';
 import { TABLE_WIDGET_INITIAL_HEIGHT, TABLE_WIDGET_INITIAL_WIDTH } from './constants';
 import { queryWidgetOnDrop } from '../queryWidget/multiQueryWidgetDrop';
 import { ResourcePanelItem } from '~/components/resourceExplorer/components/panel';
@@ -50,10 +50,11 @@ const tableOnDropAsset = (item: ResourcePanelItem, widget: DashboardWidget) => {
 export const tablePlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
     registerWidget<TableWidget>('table', {
-      render: (widget: TableWidget) =>
-        <MultiQueryWidgetComponent widget={widget} onDrop={tableOnDropAsset} >
+      render: (widget: TableWidget) => (
+        <MultiQueryWidgetComponent widget={widget} onDrop={tableOnDropAsset}>
           <TableWidgetComponent {...widget} />
-        </MultiQueryWidgetComponent>,
+        </MultiQueryWidgetComponent>
+      ),
       componentLibrary: {
         name: 'Table',
         icon: TableIcon,

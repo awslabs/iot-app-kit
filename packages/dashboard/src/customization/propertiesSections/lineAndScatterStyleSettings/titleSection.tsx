@@ -9,20 +9,11 @@ type TitleSectionOptions = {
   updateTitle: (title: string) => void;
 };
 
-export const TitleSection: FC<TitleSectionOptions> = ({
-  title,
-  updateTitle
-}) => {
-  
+export const TitleSection: FC<TitleSectionOptions> = ({ title, updateTitle }) => {
   return (
     <ExpandableSection headerText='Title' defaultExpanded>
-      <FormField
-        label="Name"
-      >
-        <Input
-          onChange={({ detail }) => updateTitle(detail.value)}
-          value={title ?? ''}
-        />
+      <FormField label='Name'>
+        <Input onChange={({ detail }) => updateTitle(detail.value)} value={title ?? ''} />
       </FormField>
     </ExpandableSection>
   );

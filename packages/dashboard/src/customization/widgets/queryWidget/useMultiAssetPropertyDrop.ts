@@ -1,8 +1,8 @@
-import { PropertyDataType } from "@aws-sdk/client-iotsitewise";
+import { PropertyDataType } from '@aws-sdk/client-iotsitewise';
 import { isDefined } from '~/util/isDefined';
-import { useDrop } from "react-dnd";
-import { ItemTypes } from "~/components/dragLayer/itemTypes";
-import { ResourcePanelItem } from "~/components/resourceExplorer/components/panel";
+import { useDrop } from 'react-dnd';
+import { ItemTypes } from '~/components/dragLayer/itemTypes';
+import { ResourcePanelItem } from '~/components/resourceExplorer/components/panel';
 
 type MultiAssetPropertyDropOptions = {
   drop: (item: ResourcePanelItem) => void;

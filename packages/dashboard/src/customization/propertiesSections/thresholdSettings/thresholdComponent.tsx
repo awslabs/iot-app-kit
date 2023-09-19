@@ -14,10 +14,11 @@ import * as awsui from '@cloudscape-design/design-tokens';
 import './thresholdComponent.css';
 
 const defaultMessages = {
-  if: 'if',
+  if: 'If',
   title: 'Threshold',
   containsLabel: 'Contains',
   thresholdPlaceHolder: 'Threshold value',
+  showAs: 'show as',
 };
 
 export const ThresholdComponent: FC<{
@@ -39,9 +40,6 @@ export const ThresholdComponent: FC<{
   const validateValue: (value: ThresholdValue) => boolean = (value: ThresholdValue) => {
     const notAllowString = !OPS_ALLOWED_WITH_STRING.find((op) => comparisonOperator === op);
     const parsedValue = parseFloat(value as string);
-    if (value === '') {
-      return false;
-    }
 
     return !(Number.isNaN(parsedValue) && notAllowString);
   };
@@ -86,6 +84,7 @@ export const ThresholdComponent: FC<{
                 data-test-id='threshold-component-value-input'
                 invalid={!validValue}
               />
+              {defaultMessages.showAs}
               <ColorPicker
                 color={color || DEFAULT_THRESHOLD_COLOR}
                 updateColor={onUpdateColor}
@@ -95,7 +94,7 @@ export const ThresholdComponent: FC<{
           </Box>
         </SpaceBetween>
       </div>
-      <Button iconName='close' variant='icon' onClick={onDelete} data-test-id='threshold-component-delete-button' />
+      <Button iconName='remove' variant='icon' onClick={onDelete} data-test-id='threshold-component-delete-button' />
     </div>
   );
 };

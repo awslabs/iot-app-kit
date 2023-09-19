@@ -11,7 +11,11 @@ export const scatterChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
     registerWidget<ScatterChartWidget>('scatter-chart', {
       render: (widget) => (
-        <MultiQueryWidget widget={widget} onDrop={queryWidgetOnDrop} allowedDataTypes={[PropertyDataType.DOUBLE, PropertyDataType.INTEGER]}>
+        <MultiQueryWidget
+          widget={widget}
+          onDrop={queryWidgetOnDrop}
+          allowedDataTypes={[PropertyDataType.DOUBLE, PropertyDataType.INTEGER]}
+        >
           <ScatterChartWidgetComponent {...widget} />
         </MultiQueryWidget>
       ),

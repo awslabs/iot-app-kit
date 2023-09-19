@@ -1,6 +1,6 @@
-import { DashboardPlugin } from "../api";
+import { DashboardPlugin } from '../api';
 
-import { lineScatterChartPlugin } from "./lineScatterChart/plugin";
+import { lineScatterChartPlugin } from './lineScatterChart/plugin';
 import { barChartPlugin } from './barChart/plugin';
 import { kpiPlugin } from './kpi/plugin';
 import { lineChartPlugin } from './lineChart/plugin';
@@ -8,7 +8,7 @@ import { scatterChartPlugin } from './scatterChart/plugin';
 import { statusPlugin } from './status/plugin';
 import { statusTimelineChartPlugin } from './status-timeline/statusTimelinePlugin';
 import { tablePlugin } from './table/plugin';
-import { getConfigValue } from "@iot-app-kit/react-components";
+import { getConfigValue } from '@iot-app-kit/react-components';
 
 export const appKitPlugin: DashboardPlugin = {
   install: (options) => {

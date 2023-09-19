@@ -1,4 +1,4 @@
-import { Box, Button, Header, SpaceBetween } from '@cloudscape-design/components';
+import { SpaceBetween } from '@cloudscape-design/components';
 import ExpandableSection from '@cloudscape-design/components/expandable-section';
 import FormField from '@cloudscape-design/components/form-field';
 import Input from '@cloudscape-design/components/input';
@@ -17,15 +17,16 @@ type YAxisSectionOptions = {
 };
 
 const YAxisToggle = ({ visible, setVisible }: Pick<YAxisSectionOptions, 'visible' | 'setVisible'>) => (
-  <div onClick={(e) => {
-    e.stopPropagation();
-    e.preventDefault();
-  }}>
+  <div
+    onClick={(e) => {
+      e.stopPropagation();
+      e.preventDefault();
+    }}
+  >
     <Toggle
       onChange={(e) => {
-        setVisible(e.detail.checked)
-      }
-      }
+        setVisible(e.detail.checked);
+      }}
       checked={visible}
     >
       View on chart
@@ -33,60 +34,42 @@ const YAxisToggle = ({ visible, setVisible }: Pick<YAxisSectionOptions, 'visible
   </div>
 );
 
-export const YAxisSection: FC<YAxisSectionOptions> = ({
-  visible,
-  min,
-  max,
-  setVisible,
-  updateMin,
-  updateMax,
-}) => {
+export const YAxisSection: FC<YAxisSectionOptions> = ({ visible, min, max, setVisible, updateMin, updateMax }) => {
   const [expanded, setExpanded] = useExpandable(true);
 
   const onSetRange = (updater: (value: number | null) => void, value: string) => {
     const parsed = parseInt(value);
     updater(isNaN(parsed) ? null : parsed);
-  }
-  
+  };
+
   return (
     <ExpandableSection
       expanded={expanded}
       onChange={(e) => setExpanded(e.detail.expanded)}
       headerText={
-        <SpaceBetween size={'s'} direction='horizontal'>
+        <SpaceBetween size='s' direction='horizontal'>
           <div onClick={() => setExpanded(!expanded)}>Y-axis</div>
           <YAxisToggle setVisible={setVisible} visible={visible} />
         </SpaceBetween>
       }
     >
-      <FormField
-        description="Leave empty to auto-calculate based on all the values"
-        label="Range"
-      >
-        <label htmlFor='y-axis-min'>
-          Min
-        </label>
+      <FormField description='Leave empty to auto-calculate based on all the values' label='Range'>
+        <label htmlFor='y-axis-min'>Min</label>
         <Input
           placeholder='Auto'
           controlId='y-axis-min'
           value={`${min === null ? '' : min}`}
           type='number'
-          onChange={({ detail }) =>
-            onSetRange(updateMin, detail.value)
-          }
+          onChange={({ detail }) => onSetRange(updateMin, detail.value)}
         />
 
-        <label htmlFor='y-axis-max'>
-          Max
-        </label>
+        <label htmlFor='y-axis-max'>Max</label>
         <Input
           placeholder='Auto'
           controlId='y-axis-max'
           value={`${max === null ? '' : max}`}
           type='number'
-          onChange={({ detail }) =>
-            onSetRange(updateMax, detail.value)
-          }
+          onChange={({ detail }) => onSetRange(updateMax, detail.value)}
         />
       </FormField>
     </ExpandableSection>

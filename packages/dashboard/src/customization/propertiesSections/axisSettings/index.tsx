@@ -11,8 +11,7 @@ const axisWidgetTypes: readonly string[] = ['line-chart', 'scatter-chart', 'bar-
 const axisWidgetTypesThatSupportYAxis: readonly string[] = ['line-chart', 'scatter-chart', 'bar-chart'];
 
 type AxisWidget = DashboardWidget<{ axis?: AxisSettings }>;
-const isAxisWidget = (w: DashboardWidget): w is AxisWidget =>
-  axisWidgetTypes.some((t) => t === w.type);
+const isAxisWidget = (w: DashboardWidget): w is AxisWidget => axisWidgetTypes.some((t) => t === w.type);
 const supportsYAxis = (w: DashboardWidget): w is AxisWidget =>
   axisWidgetTypesThatSupportYAxis.some((t) => t === w.type);
 

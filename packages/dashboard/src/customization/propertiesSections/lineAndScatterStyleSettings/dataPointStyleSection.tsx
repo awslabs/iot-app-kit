@@ -4,7 +4,7 @@ import Select from '@cloudscape-design/components/select';
 import type { FC } from 'react';
 import React from 'react';
 
-const defaultDataPointStyleOption = { label: 'Filled circle', value: 'filled-circle', };
+const defaultDataPointStyleOption = { label: 'Filled circle', value: 'filled-circle' };
 const dataPointStyleOptions = [
   defaultDataPointStyleOption,
   { label: 'Empty circle', value: 'circle' },
@@ -20,20 +20,14 @@ type LineStyleSectionOptions = {
   updateDataPointStyle: (dataPointStyle: string) => void;
 };
 
-export const DataPointStyleSection: FC<LineStyleSectionOptions> = ({
-  dataPointStyle,
-  updateDataPointStyle
-}) => {
-  
+export const DataPointStyleSection: FC<LineStyleSectionOptions> = ({ dataPointStyle, updateDataPointStyle }) => {
   return (
     <ExpandableSection headerText='Data point style' defaultExpanded>
-      <FormField
-        label="Style"
-      >
+      <FormField label='Style'>
         <Select
           selectedOption={dataPointStyleOptions.find(({ value }) => value === dataPointStyle) ?? null}
           onChange={({ detail }) =>
-          updateDataPointStyle(detail.selectedOption.value ?? defaultDataPointStyleOption.value)
+            updateDataPointStyle(detail.selectedOption.value ?? defaultDataPointStyleOption.value)
           }
           options={dataPointStyleOptions}
         />
