@@ -3,10 +3,10 @@ import { Button, SpaceBetween, Box } from '@cloudscape-design/components';
 import ColorPicker from '../shared/colorPicker';
 import type { FC } from 'react';
 import type { StyleSettingsMap } from '@iot-app-kit/core';
-import type { AssetSummary } from '~/components/resourceExplorer/components/mapper';
 
 import './propertyComponent.css';
 import { getPropertyDisplay } from './getPropertyDetails';
+import type { AssetSummary } from '~/hooks/useAssetDescriptionQueries';
 
 export type PropertyComponentProps = {
   propertyId: string;

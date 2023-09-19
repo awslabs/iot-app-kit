@@ -5,7 +5,7 @@ import type { TableItemRef } from '@iot-app-kit/react-components';
 import { TableItem } from '@iot-app-kit/react-components';
 import { isJust } from '~/util/maybe';
 import { SelectOneWidget } from '../shared/selectOneWidget';
-import { SiteWiseAssetQuery, toId } from '@iot-app-kit/source-iotsitewise';
+import { toId, type SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Box from '@cloudscape-design/components/box';
 import { PropertiesAlarmsSectionProps } from './sectionTypes';
@@ -47,7 +47,7 @@ export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = 
   const mustEditAsSingle = !editablePropertiesAndAlarms || !editableStyleSettings;
 
   const siteWiseAssetQuery = (editablePropertiesAndAlarms && queryConfig.value.query) || undefined;
-  const describedAssetsMapQuery = useAssetDescriptionMapQuery(siteWiseAssetQuery);
+  const describedAssetsMapQuery = useAssetDescriptionMapQuery(siteWiseAssetQuery as SiteWiseAssetQuery);
   const describedAssetsMap = describedAssetsMapQuery.data ?? {};
 
   const getComponents = () => {
@@ -72,7 +72,7 @@ export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = 
       });
     };
 
-    const components = siteWiseAssetQuery?.assets.flatMap(({ assetId, properties }) =>
+    const components = siteWiseAssetQuery?.assets?.flatMap(({ assetId, properties }) =>
       properties.map(({ propertyId, refId = propertyId }) =>
         describedAssetsMap[assetId] ? (
           <PropertyComponent
@@ -82,9 +82,9 @@ export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = 
             assetSummary={describedAssetsMap[assetId]}
             styleSettings={styleSettingsValue}
             onDeleteAssetQuery={onDeleteAssetQuery({
+              siteWiseAssetQuery: siteWiseAssetQuery as SiteWiseAssetQuery,
               assetId,
               propertyId,
-              siteWiseAssetQuery,
               updateSiteWiseAssetQuery,
             })}
             onUpdatePropertyColor={onUpdatePropertyColor(refId)}

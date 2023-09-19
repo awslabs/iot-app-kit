@@ -1,5 +1,4 @@
 import React from 'react';
-import SingleQueryWidget from '../queryWidget/singleQueryWidget';
 import KPIWidgetComponent from './component';
 import KPIIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';
@@ -9,11 +8,7 @@ import { KPI_WIDGET_INITIAL_HEIGHT, KPI_WIDGET_INITIAL_WIDTH } from '../constant
 export const kpiPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
     registerWidget<KPIWidget>('kpi', {
-      render: (widget) => (
-        <SingleQueryWidget {...widget}>
-          <KPIWidgetComponent {...widget} />
-        </SingleQueryWidget>
-      ),
+      render: (widget) => <KPIWidgetComponent {...widget} />,
       componentLibrary: {
         name: 'KPI',
         icon: KPIIcon,

@@ -11,6 +11,7 @@ import { getAggregation } from '../utils/widgetAggregationUtils';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { useChartSize } from '~/hooks/useChartSize';
 import WidgetTile from '~/components/widgets/tile';
+import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 
 const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
@@ -28,7 +29,10 @@ const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
   } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
-  const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
+  const queries =
+    iotSiteWiseQuery && queryConfig.query
+      ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query as SiteWiseAssetQuery)]
+      : [];
   const key = computeQueryConfigKey(viewport, queryConfig);
   const aggregation = getAggregation(widget);
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;

@@ -20,6 +20,13 @@ import '../../styles/variables.css';
 import { queryClient } from '~/data/query-client';
 import { PropertiesPanel } from '~/customization/propertiesSections';
 
+/*
+if (process.env.NODE_ENV === 'development') {
+  const { worker } = require('../../msw/browser');
+  worker.start();
+}
+*/
+
 export type DashboardProperties = {
   onSave: DashboardSave;
   clientConfiguration: DashboardClientConfiguration;

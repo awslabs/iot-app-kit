@@ -7,5 +7,5 @@ import type { DashboardState } from '~/store/state';
 
 const compareSelectedWidgets = (a: DashboardWidget[], b: DashboardWidget[]) => isEqual(a, b);
 
-export const useSelectedWidgets = () =>
-  useSelector((state: DashboardState) => state.selectedWidgets, compareSelectedWidgets);
+export const useSelectedWidgets = <Properties extends Record<string, unknown> = Record<string, unknown>>() =>
+  useSelector((state: DashboardState<Properties>) => state.selectedWidgets, compareSelectedWidgets);

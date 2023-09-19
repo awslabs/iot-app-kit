@@ -1,1 +1,1 @@
-export { QueryEditor, type QueryEditorProps } from './queryEditor';
+export { QueryEditor } from './queryEditor';

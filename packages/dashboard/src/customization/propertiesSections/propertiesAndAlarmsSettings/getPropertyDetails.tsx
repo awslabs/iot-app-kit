@@ -1,4 +1,4 @@
-import { AssetSummary, PropertySummary } from '~/components/resourceExplorer/components/mapper';
+import { AssetSummary, PropertySummary } from '~/hooks/useAssetDescriptionQueries';
 
 type DisplayType = 'property' | 'alarm' | 'none';
 export const getPropertyDisplay = (

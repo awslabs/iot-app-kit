@@ -32,7 +32,7 @@ export const getCurrentAggregationResolution = (widget: QueryWidget | LineScatte
   }
 
   const widgetType = widget.type;
-  const firstAssetProperty = widget.properties.queryConfig.query?.assets[0].properties[0];
+  const firstAssetProperty = getFirstProperty(widget.properties.queryConfig);
   const currentAggregation = firstAssetProperty?.aggregationType ?? WidgetDefaultAggregation[widgetType];
   const currentResolution = firstAssetProperty?.resolution ?? WidgetDefaultResolution[widgetType];
 
@@ -47,8 +47,19 @@ export const getAggregation = (widget: QueryWidget | LineScatterChartWidget) => 
     return widget.properties.aggregationType;
   }
 
-  if (widget.properties.queryConfig.query?.assets.length === 0) return undefined;
+  const firstProperty = getFirstProperty(widget.properties.queryConfig);
 
-  const firstAssetProperty = widget.properties.queryConfig.query?.assets[0].properties[0];
-  return firstAssetProperty?.aggregationType;
+  return firstProperty?.aggregationType;
 };
+
+function getFirstProperty(queryConfig: QueryWidget['properties']['queryConfig']) {
+  if ('query' in queryConfig && queryConfig.query != null) {
+    if ('properties' in queryConfig.query && queryConfig.query.properties != null) {
+      return queryConfig.query.properties[0];
+    }
+
+    if ('assets' in queryConfig.query && queryConfig.query.assets != null) {
+      return queryConfig.query.assets[0].properties[0];
+    }
+  }
+}

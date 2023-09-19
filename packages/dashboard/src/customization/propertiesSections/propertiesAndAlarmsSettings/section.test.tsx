@@ -4,6 +4,7 @@ import { act, cleanup, render, screen } from '@testing-library/react';
 import { waitFor } from '@testing-library/dom';
 import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 
 import { MOCK_KPI_WIDGET } from '../../../../testing/mocks';
 import { configureDashboardStore } from '../../../store';
@@ -66,8 +67,9 @@ const renderPropertiesAndAlarmsSectionAsync = async () => {
   const describeAsset = jest.fn().mockImplementation(() => Promise.resolve(mockAssetDescription));
 
   const clientContext: DashboardIotSiteWiseClients = {
-    iotSiteWiseClient: createMockSiteWiseSDK({ describeAsset }),
+    iotSiteWiseClient: createMockSiteWiseSDK({ describeAsset }) as IoTSiteWiseClient,
     iotEventsClient: createMockIoTEventsSDK(),
+    iotTwinMakerClient: { send: jest.fn() } as unknown as IoTSiteWiseClient,
   };
 
   await act(async () => {
