@@ -46,6 +46,7 @@ import type { WidgetsProps } from '../widgets/list';
 import type { UserSelectionProps } from '../userSelection';
 import type { DashboardState } from '~/store/state';
 import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
+import ConfirmDeleteModal from '../confirmDeleteModal';
 
 import '@iot-app-kit/components/styles.css';
 import './index.css';
@@ -86,6 +87,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
   const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
   const [viewFrame, setViewFrameElement] = useState<HTMLDivElement | undefined>(undefined);
+  const [visible, setVisible] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const createWidgets = (widgets: DashboardWidget[]) =>
@@ -120,17 +122,22 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
   };
 
   const deleteWidgets = () => {
+    setVisible(true);
+  };
+
+  const onDelete = () => {
     dispatch(
       onDeleteWidgetsAction({
         widgets: selectedWidgets,
       })
     );
+    setVisible(false);
   };
 
   /**
    * setup keyboard shortcuts for actions
    */
-  useKeyboardShortcuts();
+  useKeyboardShortcuts({ deleteWidgets });
 
   /**
    * setup gesture handling for grid
@@ -277,7 +284,31 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
 
   return (
     <TrendCursorSync>
-      <TimeSync group='dashboard-timesync'>{readOnly ? ReadOnlyComponent : EditComponent}</TimeSync>
+      <TimeSync initialViewport={{ duration: '5m' }} group='dashboard-timesync'>
+        {readOnly ? ReadOnlyComponent : EditComponent}
+        <ConfirmDeleteModal
+          visible={visible}
+          headerTitle={`Delete selected widget${selectedWidgets.length > 1 ? 's' : ''}?`}
+          cancelTitle='Cancel'
+          submitTitle='Delete'
+          description={
+            <Box>
+              <Box variant='p'>
+                {`Are you sure you want to delete the selected widget${
+                  selectedWidgets.length > 1 ? 's' : ''
+                }? You'll lose all the progress you made to the
+                          widget${selectedWidgets.length > 1 ? 's' : ''}`}
+              </Box>
+              <Box variant='p' padding={{ top: 'm' }}>
+                You cannot undo this action.
+              </Box>
+            </Box>
+          }
+          handleDismiss={() => setVisible(false)}
+          handleCancel={() => setVisible(false)}
+          handleSubmit={onDelete}
+        />
+      </TimeSync>
     </TrendCursorSync>
   );
 };

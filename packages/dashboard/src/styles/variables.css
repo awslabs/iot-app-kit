@@ -40,4 +40,6 @@
   --radius-component-palette-icon: 8px;
   --toolbar-overlay-height: 116px;
   --button-action-gap: 0.5rem;
+  --colors-background-button: #f90;
+  --colors-button-hover: #ec7211;
 }
