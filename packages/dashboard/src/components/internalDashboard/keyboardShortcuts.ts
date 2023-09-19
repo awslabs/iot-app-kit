@@ -11,8 +11,13 @@ import {
 } from '../../store/actions';
 import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
+import { isFunction } from 'lodash';
 
-export const useKeyboardShortcuts = () => {
+type useKeyboardShortcutsProps = {
+  deleteWidgets?: () => void;
+};
+
+export const useKeyboardShortcuts = ({ deleteWidgets: handleDeleteWidgetModal }: useKeyboardShortcutsProps) => {
   const dispatch = useDispatch();
   const selectedWidgets = useSelectedWidgets();
 
@@ -46,11 +51,15 @@ export const useKeyboardShortcuts = () => {
   };
 
   const deleteWidgets = useCallback(() => {
-    dispatch(
-      onDeleteWidgetsAction({
-        widgets: selectedWidgets,
-      })
-    );
+    if (isFunction(handleDeleteWidgetModal)) {
+      handleDeleteWidgetModal();
+    } else {
+      dispatch(
+        onDeleteWidgetsAction({
+          widgets: selectedWidgets,
+        })
+      );
+    }
   }, [selectedWidgets]);
 
   /**
@@ -59,10 +68,12 @@ export const useKeyboardShortcuts = () => {
    * other areas where we might use keyboard interactions such as
    * the settings pane or a text area in a widget
    */
+
   const keyPressFilter = (e: KeyboardEvent) =>
     e.target !== null &&
     e.target instanceof Element &&
     (e.target.id === DASHBOARD_CONTAINER_ID || e.target === document.body);
+
   useKeyPress('esc', { filter: keyPressFilter, callback: onClearSelection });
   useKeyPress('backspace, del', { filter: keyPressFilter, callback: deleteWidgets });
   useKeyPress('mod+c', { filter: keyPressFilter, callback: copyWidgets });

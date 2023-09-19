@@ -9,12 +9,7 @@ import { act } from '@testing-library/react';
 import InternalDashboard from './index';
 import { configureDashboardStore } from '../../store';
 
-import {
-  onBringWidgetsToFrontAction,
-  onDeleteWidgetsAction,
-  onSelectWidgetsAction,
-  onSendWidgetsToBackAction,
-} from '../../store/actions';
+import { onBringWidgetsToFrontAction, onSelectWidgetsAction, onSendWidgetsToBackAction } from '../../store/actions';
 
 jest.mock('../../store/actions', () => {
   const originalModule = jest.requireActual('../../store/actions');
@@ -85,18 +80,6 @@ it.skip('can clear the selection', () => {
   });
 });
 
-// TODO: fix these tests (likely need to mock TwinMaker client)
-it.skip('can delete the selection', () => {
-  (onDeleteWidgetsAction as jest.Mock).mockImplementation(() => ({ type: '', payload: {} }));
-
-  renderDashboardAndPressKey({ key: 'Backspace', meta: false });
-
-  expect(onDeleteWidgetsAction).toBeCalledWith({
-    widgets: [],
-  });
-});
-
-// TODO: fix these tests (likely need to mock TwinMaker client)
 it.skip('can send the selection to the back', () => {
   (onSendWidgetsToBackAction as jest.Mock).mockImplementation(() => ({ type: '', payload: {} }));
 

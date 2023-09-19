@@ -71,6 +71,11 @@ describe('WidgetTile', () => {
       removeButton?.click();
     });
 
+    const deleteBtn = screen.getByText('Delete');
+    expect(deleteBtn).toBeInTheDocument();
+    act(() => {
+      deleteBtn?.click();
+    });
     expect(store.getState().dashboardConfiguration.widgets).toEqual([]);
   });
 

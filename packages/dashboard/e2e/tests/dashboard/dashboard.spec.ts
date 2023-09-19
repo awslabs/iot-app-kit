@@ -114,6 +114,10 @@ test('dashboard add and remove multiple widgets', async ({ page }) => {
 
   await page.keyboard.down('Delete');
 
+  const deleteBtn = await page.getByRole('button', { name: 'Delete', exact: true });
+
+  await deleteBtn.click();
+
   const deletedWidgets = await grid.widgets();
   expect(deletedWidgets).toHaveLength(0);
 });

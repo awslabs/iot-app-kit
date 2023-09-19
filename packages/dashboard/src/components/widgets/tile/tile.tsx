@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, SyntheticEvent } from 'react';
+import React, { PropsWithChildren, SyntheticEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Box from '@cloudscape-design/components/box';
@@ -15,26 +15,28 @@ import {
 import { CancelableEventHandler, ClickDetail } from '@cloudscape-design/components/internal/events';
 
 import { DashboardWidget } from '~/types';
-import { DashboardState } from '~/store/state';
 import { useDeleteWidgets } from '~/hooks/useDeleteWidgets';
+import ConfirmDeleteModal from '~/components/confirmDeleteModal';
+import { DashboardState } from '~/store/state';
 
 import './tile.css';
 import { onChangeDashboardGridEnabledAction } from '~/store/actions';
 import { gestureable } from '~/components/internalDashboard/gestures/determineTargetGestures';
 
 type DeletableTileActionProps = {
-  widget: DashboardWidget;
+  handleDelete: CancelableEventHandler<ClickDetail>;
 };
-const DeletableTileAction = ({ widget }: DeletableTileActionProps) => {
-  const { onDelete } = useDeleteWidgets();
 
-  const handleDelete: CancelableEventHandler<ClickDetail> = (e) => {
-    e.preventDefault();
+const DeletableTileAction = ({ handleDelete }: DeletableTileActionProps) => {
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-    onDelete(widget);
   };
 
-  return <Button onClick={handleDelete} ariaLabel='delete widget' variant='icon' iconName='close'></Button>;
+  return (
+    <div onMouseDown={handleMouseDown}>
+      <Button onClick={handleDelete} ariaLabel='delete widget' variant='icon' iconName='close' />
+    </div>
+  );
 };
 
 export type WidgetTileProps = PropsWithChildren<{
@@ -51,6 +53,8 @@ export type WidgetTileProps = PropsWithChildren<{
 const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, removeable }) => {
   const isReadOnly = useSelector((state: DashboardState) => state.readOnly);
   const dispatch = useDispatch();
+  const [visible, setVisible] = useState(false);
+  const { onDelete } = useDeleteWidgets();
 
   const isRemoveable = !isReadOnly && removeable;
   const headerVisible = !isReadOnly || title;
@@ -61,6 +65,24 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
 
   const enableGridMovement = (_event: SyntheticEvent) => {
     dispatch(onChangeDashboardGridEnabledAction({ enabled: true }));
+  };
+
+  const handleDelete: CancelableEventHandler<ClickDetail> = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(onChangeDashboardGridEnabledAction({ enabled: false }));
+    setVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    dispatch(onChangeDashboardGridEnabledAction({ enabled: true }));
+    setVisible(false);
+  };
+
+  const handleSubmit = () => {
+    onDelete(widget);
+    dispatch(onChangeDashboardGridEnabledAction({ enabled: true }));
+    setVisible(false);
   };
 
   return (
@@ -88,7 +110,27 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
             {title}
           </Box>
           <SpaceBetween size='s' direction='horizontal'>
-            {isRemoveable && <DeletableTileAction widget={widget} />}
+            {isRemoveable && <DeletableTileAction handleDelete={handleDelete} />}
+            <ConfirmDeleteModal
+              visible={visible}
+              headerTitle='Delete selected widget?'
+              cancelTitle='Cancel'
+              submitTitle='Delete'
+              description={
+                <Box>
+                  <Box variant='p'>
+                    Are you sure you want to delete the selected widget? You'll lose all the progress you made to the
+                    widget
+                  </Box>
+                  <Box variant='p' padding={{ top: 'm' }}>
+                    You cannot undo this action.
+                  </Box>
+                </Box>
+              }
+              handleDismiss={handleCloseModal}
+              handleCancel={handleCloseModal}
+              handleSubmit={handleSubmit}
+            />
           </SpaceBetween>
         </div>
       )}
