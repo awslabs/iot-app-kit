@@ -95,3 +95,7 @@ export const MULTI_Y_AXIS_LEGEND_WIDTH = 172;
 // style constants
 export const EMPHASIZE_SCALE_CONSTANT = 2;
 export const DEEMPHASIZE_OPACITY = 0.25;
+
+// Zoom constants
+
+export const ECHARTS_ZOOM_DEBOUNCE_MS = 300;
