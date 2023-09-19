@@ -50,11 +50,8 @@ const getNewDataOverlayComponent = (item: MattertagItem | TagItem): IDataOverlay
 
 const addTag = async (
   dynamicSceneEnabled: boolean,
-  layerId: string | undefined,
-  sceneRootId: string | undefined,
   addSceneNode: (node: ISceneNode, parentRef?: string) => Readonly<ISceneNode>,
-  id: string,
-  item: MattertagItem | TagItem,
+  { layerId, sceneRootId, id, item }: AddTagInputs,
 ) => {
   const tagStyleEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
 
@@ -118,11 +115,8 @@ const addTag = async (
 
 const updateTag = async (
   dynamicSceneEnabled: boolean,
-  layerId: string | undefined,
   updateSceneNode: (ref: string, partial: RecursivePartial<ISceneNodeInternal>, isTransient?: boolean) => void,
-  ref: string,
-  node: ISceneNodeInternal,
-  item: MattertagItem | TagItem,
+  { layerId, sceneRootId, ref, node, item }: UpdateTagInputs,
 ) => {
   const tagStyleEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
 
@@ -164,31 +158,61 @@ const updateTag = async (
       return;
     }
 
-    const tagComp = tagIndex !== -1 ? updateTagEntityComponent(components[tagIndex]) : undefined;
+    const isUpdate = !!node.properties.layerIds?.at(0);
+    const tagComp =
+      tagIndex !== -1
+        ? (isUpdate ? updateTagEntityComponent : createTagEntityComponent)(components[tagIndex])
+        : undefined;
     const overlayComp =
       dataOverlayIndex !== -1
-        ? updateOverlayEntityComponent(components[dataOverlayIndex] as IDataOverlayComponent)
+        ? (isUpdate ? updateOverlayEntityComponent : createOverlayEntityComponent)(
+            components[dataOverlayIndex] as IDataOverlayComponent,
+          )
         : undefined;
-    const nodeComp = updateNodeEntityComponent(node, layerId);
+    const nodeComp = (isUpdate ? updateNodeEntityComponent : createNodeEntityComponent)(node, layerId);
 
-    const updateEntity: UpdateEntityCommandInput = {
-      workspaceId: undefined,
-      entityId: ref,
-      entityName: item.label + '_' + ref,
-      componentUpdates: {
-        Node: nodeComp,
-      },
-    };
-    if (tagComp) {
-      updateEntity.componentUpdates![KnownComponentType.Tag] = tagComp;
-    }
-    if (overlayComp) {
-      updateEntity.componentUpdates![KnownComponentType.DataOverlay] = overlayComp;
-    }
-    try {
-      await sceneMetadataModule.updateSceneEntity(updateEntity);
-    } catch (e) {
-      console.error('Update scene node entity failed', e);
+    if (isUpdate) {
+      const updateEntity: UpdateEntityCommandInput = {
+        workspaceId: undefined,
+        entityId: ref,
+        entityName: item.label + '_' + ref,
+        componentUpdates: {
+          Node: nodeComp,
+        },
+      };
+      if (tagComp) {
+        updateEntity.componentUpdates![KnownComponentType.Tag] = tagComp;
+      }
+      if (overlayComp) {
+        updateEntity.componentUpdates![KnownComponentType.DataOverlay] = overlayComp;
+      }
+
+      try {
+        await sceneMetadataModule.updateSceneEntity(updateEntity);
+      } catch (e) {
+        console.error('Update scene node entity failed', e);
+      }
+    } else {
+      const createEntity: CreateEntityCommandInput = {
+        workspaceId: undefined,
+        entityId: ref,
+        entityName: item.label + '_' + ref,
+        parentEntityId: sceneRootId,
+        components: {
+          Node: nodeComp,
+        },
+      };
+      if (tagComp) {
+        createEntity.components![KnownComponentType.Tag] = tagComp;
+      }
+      if (overlayComp) {
+        createEntity.components![KnownComponentType.DataOverlay] = overlayComp;
+      }
+      try {
+        await sceneMetadataModule.createSceneEntity(createEntity);
+      } catch (e) {
+        console.error('Create scene node entity failed', e);
+      }
     }
   }
 
@@ -198,22 +222,29 @@ const updateTag = async (
       position: [item.anchorPosition.x, item.anchorPosition.y, item.anchorPosition.z],
     },
     components: components,
+    properties: {
+      [SceneNodeRuntimeProperty.LayerIds]: layerId && dynamicSceneEnabled ? [layerId] : undefined,
+    },
   });
 };
 
+type AddTagInputs = {
+  layerId?: string;
+  sceneRootId?: string;
+  id: string;
+  item: MattertagItem | TagItem;
+};
+type UpdateTagInputs = {
+  layerId?: string;
+  sceneRootId?: string;
+  ref: string;
+  node: ISceneNodeInternal;
+  item: MattertagItem | TagItem;
+};
+
 const useMatterportTags = (): {
-  handleAddMatterportTag: (
-    layerId: string | undefined,
-    sceneRootId: string | undefined,
-    id: string,
-    item: MattertagItem | TagItem,
-  ) => Promise<void>;
-  handleUpdateMatterportTag: (
-    layerId: string | undefined,
-    ref: string,
-    node: ISceneNodeInternal,
-    item: MattertagItem | TagItem,
-  ) => Promise<void>;
+  handleAddMatterportTag: (inputs: AddTagInputs) => Promise<void>;
+  handleUpdateMatterportTag: (inputs: UpdateTagInputs) => Promise<void>;
   handleRemoveMatterportTag: (nodeRef: string) => void;
 } => {
   const sceneComposerId = useSceneComposerId();
@@ -223,15 +254,15 @@ const useMatterportTags = (): {
   const dynamicSceneEnabled = useDynamicScene();
 
   const handleAddMatterportTag = useCallback(
-    async (layerId: string | undefined, sceneRootId: string | undefined, id: string, item: MattertagItem | TagItem) => {
-      await addTag(dynamicSceneEnabled, layerId, sceneRootId, appendSceneNode, id, item);
+    async (inputs: AddTagInputs) => {
+      await addTag(dynamicSceneEnabled, appendSceneNode, inputs);
     },
     [appendSceneNode],
   );
 
   const handleUpdateMatterportTag = useCallback(
-    async (layerId: string | undefined, ref: string, node: ISceneNodeInternal, item: MattertagItem | TagItem) => {
-      await updateTag(dynamicSceneEnabled, layerId, updateSceneNodeInternal, ref, node, item);
+    async (inputs: UpdateTagInputs) => {
+      await updateTag(dynamicSceneEnabled, updateSceneNodeInternal, inputs);
     },
     [updateSceneNodeInternal],
   );
