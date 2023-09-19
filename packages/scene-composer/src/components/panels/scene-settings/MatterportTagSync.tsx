@@ -83,9 +83,15 @@ export const MatterportTagSync: React.FC = () => {
     if (tags) {
       for (const [key, value] of tags) {
         if (oldTagMap[key]) {
-          await handleUpdateMatterportTag(layerId, oldTagMap[key].nodeRef, oldTagMap[key].node, value);
+          await handleUpdateMatterportTag({
+            layerId,
+            sceneRootId: rootId,
+            ref: oldTagMap[key].nodeRef,
+            node: oldTagMap[key].node,
+            item: value,
+          });
         } else {
-          await handleAddMatterportTag(layerId, rootId, key, value);
+          await handleAddMatterportTag({ layerId, sceneRootId: rootId, id: key, item: value });
         }
         delete oldTagMap[key];
       }
@@ -102,9 +108,15 @@ export const MatterportTagSync: React.FC = () => {
         }
 
         if (oldTagMap[key]) {
-          await handleUpdateMatterportTag(layerId, oldTagMap[key].nodeRef, oldTagMap[key].node, value);
+          await handleUpdateMatterportTag({
+            layerId,
+            sceneRootId: rootId,
+            ref: oldTagMap[key].nodeRef,
+            node: oldTagMap[key].node,
+            item: value,
+          });
         } else {
-          await handleAddMatterportTag(layerId, rootId, key, value);
+          await handleAddMatterportTag({ layerId, sceneRootId: rootId, id: key, item: value });
         }
         delete oldTagMap[key];
       }

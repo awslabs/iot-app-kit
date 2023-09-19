@@ -123,21 +123,21 @@ ${mattertagItem.description}`,
   it('should add matterport mattertag', () => {
     const { handleAddMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-    handleAddMatterportTag('', '', id, mattertagItem);
+    handleAddMatterportTag({ id, item: mattertagItem });
     expect(appendSceneNode).toBeCalledWith(testNode);
   });
 
   it('should add matterport tag', () => {
     const { handleAddMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-    handleAddMatterportTag('', '', id, tagItem);
+    handleAddMatterportTag({ id, item: tagItem });
     expect(appendSceneNode).toBeCalledWith(testNode);
   });
 
   it('should update matterport mattertag', () => {
     const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-    handleUpdateMatterportTag('', '', testInternalNode, mattertagItem);
+    handleUpdateMatterportTag({ ref: '', node: testInternalNode, item: mattertagItem });
     expect(updateSceneNodeInternal).toBeCalledWith('', {
       name: mattertagItem.label,
       transform: {
@@ -160,13 +160,14 @@ ${mattertagItem.description}`,
           ],
         },
       ],
+      properties: { [SceneNodeRuntimeProperty.LayerIds]: undefined },
     });
   });
 
   it('should update matterport tag', () => {
     const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-    handleUpdateMatterportTag('', '', testInternalNode, tagItem);
+    handleUpdateMatterportTag({ ref: '', node: testInternalNode, item: tagItem });
     expect(updateSceneNodeInternal).toBeCalledWith('', {
       name: tagItem.label,
       transform: {
@@ -189,6 +190,7 @@ ${mattertagItem.description}`,
           ],
         },
       ],
+      properties: { [SceneNodeRuntimeProperty.LayerIds]: undefined },
     });
   });
 
@@ -209,6 +211,14 @@ ${mattertagItem.description}`,
       deleteSceneEntity,
     };
 
+    const testInternalNodeWithLayerId: ISceneNodeInternal = {
+      ...testInternalNode,
+      properties: {
+        ...testInternalNode.properties,
+        [SceneNodeRuntimeProperty.LayerIds]: ['layer-id'],
+      },
+    };
+
     beforeEach(() => {
       jest.clearAllMocks();
 
@@ -225,7 +235,7 @@ ${mattertagItem.description}`,
     it('should add matterport mattertag', async () => {
       const { handleAddMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-      await handleAddMatterportTag('layer-id', 'scene-root-id', id, mattertagItem);
+      await handleAddMatterportTag({ layerId: 'layer-id', sceneRootId: 'scene-root-id', id, item: mattertagItem });
       expect(appendSceneNode).toBeCalledTimes(1);
       expect(appendSceneNode).toBeCalledWith({
         ...testNode,
@@ -251,7 +261,7 @@ ${mattertagItem.description}`,
     it('should add matterport tag', async () => {
       const { handleAddMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-      await handleAddMatterportTag('layer-id', 'scene-root-id', id, tagItem);
+      await handleAddMatterportTag({ layerId: 'layer-id', sceneRootId: 'scene-root-id', id, item: tagItem });
       expect(appendSceneNode).toBeCalledTimes(1);
       expect(createSceneEntity).toBeCalledTimes(1);
       expect(createSceneEntity).toBeCalledWith({
@@ -270,7 +280,13 @@ ${mattertagItem.description}`,
     it('should update matterport mattertag', async () => {
       const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-      await handleUpdateMatterportTag('layer-id', generateUUID(), testInternalNode, mattertagItem);
+      await handleUpdateMatterportTag({
+        layerId: 'layer-id',
+        sceneRootId: 'scene-root',
+        ref: generateUUID(),
+        node: testInternalNodeWithLayerId,
+        item: mattertagItem,
+      });
       expect(updateSceneNodeInternal).toBeCalledTimes(1);
       expect(updateSceneEntity).toBeCalledTimes(1);
       expect(updateSceneEntity).toBeCalledWith({
@@ -287,7 +303,13 @@ ${mattertagItem.description}`,
     it('should update matterport tag', async () => {
       const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-      await handleUpdateMatterportTag('layer-id', generateUUID(), testInternalNode, tagItem);
+      await handleUpdateMatterportTag({
+        layerId: 'layer-id',
+        sceneRootId: 'scene-root',
+        ref: generateUUID(),
+        node: testInternalNodeWithLayerId,
+        item: tagItem,
+      });
       expect(updateSceneNodeInternal).toBeCalledTimes(1);
       expect(updateSceneEntity).toBeCalledTimes(1);
       expect(updateSceneEntity).toBeCalledWith({
@@ -297,6 +319,31 @@ ${mattertagItem.description}`,
         componentUpdates: {
           Node: expect.anything(),
           [KnownComponentType.Tag]: expect.anything(),
+        },
+      });
+    });
+
+    it('should create matterport tag when existing tag is not linked to a layer', async () => {
+      const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
+
+      await handleUpdateMatterportTag({
+        layerId: 'layer-id',
+        sceneRootId: 'scene-root',
+        ref: generateUUID(),
+        node: testInternalNode,
+        item: tagItem,
+      });
+      expect(updateSceneNodeInternal).toBeCalledTimes(1);
+      expect(updateSceneEntity).not.toBeCalled();
+      expect(createSceneEntity).toBeCalledTimes(1);
+      expect(createSceneEntity).toBeCalledWith({
+        workspaceId: undefined,
+        entityId: generateUUID(),
+        entityName: tagItem.label + '_' + generateUUID(),
+        parentEntityId: 'scene-root',
+        components: {
+          [KnownComponentType.Tag]: expect.anything(),
+          Node: expect.anything(),
         },
       });
     });

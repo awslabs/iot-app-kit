@@ -168,8 +168,8 @@ describe('MatterportTagSync', () => {
     });
 
     expect(getComponentRefByTypeMock).toBeCalled();
-    expect(handleAddMatterportTagMock).toBeCalledWith(undefined, undefined, 'id3', matterTag3);
-    expect(handleUpdateMatterportTagMock).toBeCalledWith(undefined, 'ref2', node2, matterTag2);
+    expect(handleAddMatterportTagMock).toBeCalledWith({ id: 'id3', item: matterTag3 });
+    expect(handleUpdateMatterportTagMock).toBeCalledWith({ ref: 'ref2', node: node2, item: matterTag2 });
     expect(handleRemoveMatterportTagMock).toBeCalledWith('ref1');
   });
 
@@ -217,8 +217,8 @@ describe('MatterportTagSync', () => {
     });
 
     expect(getComponentRefByTypeMock).toBeCalled();
-    expect(handleAddMatterportTagMock).toBeCalledWith(undefined, undefined, 'id3', tag2);
-    expect(handleUpdateMatterportTagMock).toBeCalledWith(undefined, 'ref2', node2, tag3);
+    expect(handleAddMatterportTagMock).toBeCalledWith({ id: 'id3', item: tag2 });
+    expect(handleUpdateMatterportTagMock).toBeCalledWith({ ref: 'ref2', node: node2, item: tag3 });
     expect(handleRemoveMatterportTagMock).toBeCalledWith('ref1');
   });
 
@@ -337,8 +337,19 @@ describe('MatterportTagSync', () => {
       });
 
       expect(getComponentRefByTypeMock).toBeCalled();
-      expect(handleAddMatterportTagMock).toBeCalledWith('layer-id', 'scene-root-id', 'id3', matterTag3);
-      expect(handleUpdateMatterportTagMock).toBeCalledWith('layer-id', 'ref2', node2, matterTag2);
+      expect(handleAddMatterportTagMock).toBeCalledWith({
+        layerId: 'layer-id',
+        sceneRootId: 'scene-root-id',
+        id: 'id3',
+        item: matterTag3,
+      });
+      expect(handleUpdateMatterportTagMock).toBeCalledWith({
+        layerId: 'layer-id',
+        sceneRootId: 'scene-root-id',
+        ref: 'ref2',
+        node: node2,
+        item: matterTag2,
+      });
       expect(handleRemoveMatterportTagMock).toBeCalledWith('ref1');
     });
 
@@ -386,8 +397,19 @@ describe('MatterportTagSync', () => {
       });
 
       expect(getComponentRefByTypeMock).toBeCalled();
-      expect(handleAddMatterportTagMock).toBeCalledWith('layer-id', 'scene-root-id', 'id3', tag2);
-      expect(handleUpdateMatterportTagMock).toBeCalledWith('layer-id', 'ref2', node2, tag3);
+      expect(handleAddMatterportTagMock).toBeCalledWith({
+        layerId: 'layer-id',
+        sceneRootId: 'scene-root-id',
+        id: 'id3',
+        item: tag2,
+      });
+      expect(handleUpdateMatterportTagMock).toBeCalledWith({
+        layerId: 'layer-id',
+        sceneRootId: 'scene-root-id',
+        ref: 'ref2',
+        node: node2,
+        item: tag3,
+      });
       expect(handleRemoveMatterportTagMock).toBeCalledWith('ref1');
     });
   });
