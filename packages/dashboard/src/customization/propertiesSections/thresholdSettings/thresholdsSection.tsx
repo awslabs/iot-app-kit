@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react';
 import { ThresholdSettings } from '@iot-app-kit/core';
 import { nanoid } from '@reduxjs/toolkit';
 
-import { Button, ExpandableSection, SpaceBetween } from '@cloudscape-design/components';
+import { Button, ExpandableSection, SpaceBetween, Toggle } from '@cloudscape-design/components';
 
 import ExpandableSectionHeader from '../shared/expandableSectionHeader';
 import { DEFAULT_THRESHOLD_COLOR } from './defaultValues';
@@ -65,6 +65,27 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
 
   const [isExpanded, setIsExpanded] = useExpandable();
 
+  const [shouldHideThresholds, setShouldHideThresholds] = useState<boolean>(false);
+
+  const handleUpdateHideAllThresholds = (checked: boolean) => {
+    setShouldHideThresholds(checked);
+    if (styledThresholdsEnabled) {
+      const t = maybeWithDefault([], styledThresholds) ?? [];
+      const newThresholds = t.map((threshold) => ({
+        ...threshold,
+        visible: checked ? false : thresholdStyle.visible,
+        fill: checked ? undefined : thresholdStyle.fill,
+      }));
+      updateStyledThresholds(newThresholds);
+    }
+  };
+
+  const hideThresholdsToggle = (
+    <Toggle onChange={({ detail }) => handleUpdateHideAllThresholds(detail.checked)} checked={shouldHideThresholds}>
+      Hide all thresholds
+    </Toggle>
+  );
+
   /**
    * Helper function for returning displaying the proper thresholds component
    *
@@ -104,15 +125,15 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
         }
       };
       const thresholdsComponent = (
-        <>
+        <SpaceBetween size='m' direction='vertical'>
+          {styledThresholdsEnabled && hideThresholdsToggle}
           <ThresholdsList
-            thresholds={thresholdsEnabled ? thresholdsValue : (styledThresholdsEnabled ? styledThresholdsValue : [])}
+            thresholds={thresholdsEnabled ? thresholdsValue : styledThresholdsEnabled ? styledThresholdsValue : []}
             updateThresholds={thresholdsEnabled ? updateThresholds : updateStyledThresholds}
             comparisonOperators={comparisonOperators}
-            thresholdStyle={thresholdStyle}
           />
           <Button onClick={onAddNewThreshold}>Add a threshold</Button>
-        </>
+        </SpaceBetween>
       );
       return thresholdsComponent;
     }
@@ -140,15 +161,17 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
     if (styledThresholdsEnabled) {
       const styledThresholdsValue = styledThresholds ? maybeWithDefault([], styledThresholds) ?? [] : [];
       const updateAllThresholdStyles = (thresholdStyle: ThresholdStyleType) => {
-        const newStyledThresholds = styledThresholdsValue.map((threshold) => {
-          const newThresholdStyle = {
-            ...threshold,
-            visible: thresholdStyle.visible,
-            fill: thresholdStyle.fill ? threshold.color : undefined,
-          };
-          return newThresholdStyle;
-        });
-        updateStyledThresholds(newStyledThresholds);
+        if (!shouldHideThresholds) {
+          const newStyledThresholds = styledThresholdsValue.map((threshold) => {
+            const newThresholdStyle = {
+              ...threshold,
+              visible: thresholdStyle.visible,
+              fill: thresholdStyle.fill ? threshold.color : undefined,
+            };
+            return newThresholdStyle;
+          });
+          updateStyledThresholds(newStyledThresholds);
+        }
       };
 
       return (

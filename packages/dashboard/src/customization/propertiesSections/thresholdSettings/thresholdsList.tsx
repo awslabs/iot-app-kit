@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { SpaceBetween, Box, Toggle } from '@cloudscape-design/components';
+import { SpaceBetween, Box } from '@cloudscape-design/components';
 
 import { StyledThreshold, ThresholdWithId } from '~/customization/settings';
 import { ThresholdComponent } from './thresholdComponent';
 import { ComparisonOperators } from './comparisonOperators';
-import { ThresholdStyleType } from '~/customization/widgets/types';
 
 const NoThresholds = () => <Box />;
 
@@ -13,15 +12,12 @@ type ThresholdsListProps = {
   thresholds: (ThresholdWithId & StyledThreshold)[];
   comparisonOperators: ComparisonOperators;
   updateThresholds?: (newValue: (ThresholdWithId & StyledThreshold)[] | undefined) => void;
-  thresholdStyle?: ThresholdStyleType;
 };
 export const ThresholdsList: React.FC<ThresholdsListProps> = ({
   thresholds,
   updateThresholds,
   comparisonOperators,
-  thresholdStyle,
 }) => {
-
   const onUpdateThreshold = (updatedThreshold: ThresholdWithId) => {
     if (!!updateThresholds) {
       updateThresholds(
@@ -32,8 +28,8 @@ export const ThresholdsList: React.FC<ThresholdsListProps> = ({
           return t;
         })
       );
-    };
-  }
+    }
+  };
 
   const handleDeleteThreshold = (threshold: ThresholdWithId) => () => {
     if (!!updateThresholds) {
@@ -63,26 +59,6 @@ export const ThresholdsList: React.FC<ThresholdsListProps> = ({
     });
   };
 
-  const [shouldHideThresholds, setShouldHideThresholds] = useState<boolean>(false);
-
-  const handleUpdateHideAllThresholds = (checked: boolean) => {
-    setShouldHideThresholds(checked)
-    if (!!thresholdStyle && !!updateThresholds) {
-      const newThresholds = thresholds.map((threshold) => ({
-        ...threshold,
-        visible: checked ? false : thresholdStyle.visible,
-        fill: checked ? undefined : thresholdStyle.fill,
-      }));
-      updateThresholds(newThresholds);
-    }
-  }
-
-  const hideThresholdsToggle = (
-    <Toggle onChange={({ detail }) => handleUpdateHideAllThresholds(detail.checked)} checked={shouldHideThresholds}>
-      Hide all thresholds
-    </Toggle>
-  );
-
   const thresholdsComponents = thresholds.map((threshold) => {
     return (
       <ThresholdComponent
@@ -98,11 +74,8 @@ export const ThresholdsList: React.FC<ThresholdsListProps> = ({
   });
 
   return (
-    <SpaceBetween size='xs' direction='vertical'>
-      {!!thresholdStyle && hideThresholdsToggle}
-      <SpaceBetween size='m' direction='vertical'>
-        {thresholdsComponents.length ? thresholdsComponents : <NoThresholds />}
-      </SpaceBetween>
+    <SpaceBetween size='m' direction='vertical'>
+      {thresholdsComponents.length ? thresholdsComponents : <NoThresholds />}
     </SpaceBetween>
   );
 };

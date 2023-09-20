@@ -16,7 +16,7 @@ enum ThresholdStyleOptions {
 }
 
 const options = [
-  { label: ThresholdStyleOptions.asLines, value: '1', },
+  { label: ThresholdStyleOptions.asLines, value: '1' },
   { label: ThresholdStyleOptions.asFilledRegion, value: '2' },
   { label: ThresholdStyleOptions.asLinesAndFilledRegion, value: '3' },
 ];
