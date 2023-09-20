@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 
-import { ThresholdSettings } from '@iot-app-kit/core';
+import { ComparisonOperator, ThresholdSettings } from '@iot-app-kit/core';
 import { nanoid } from '@reduxjs/toolkit';
 
 import { Button, ExpandableSection, SpaceBetween, Toggle } from '@cloudscape-design/components';
@@ -54,6 +54,7 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
   const thresholdsAdded = thresholdsEnabled && (maybeWithDefault([], thresholds)?.length ?? 0) > 0;
   const thresholdSettingsEnabled = !!thresholdSettings && !!updateThresholdSettings;
   const styledThresholdsEnabled = !!styledThresholds && !!updateStyledThresholds;
+  const styledThresholdsAdded = styledThresholdsEnabled && (maybeWithDefault([], styledThresholds)?.length ?? 0) > 0;
   /**
    * determines if we should show the toggle for coloring all breached data.
    * Some widgets doen't support this setting. Those widgets will have no
@@ -61,21 +62,41 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
    */
   const annotationsEnabled = thresholdsAdded && thresholdSettingsEnabled;
 
-  const [thresholdStyle, setThresholdStyle] = useState<ThresholdStyleType>({ visible: true });
+  /**
+   * Handle threshold style when the dashboard is saved. Determine style state based
+   * on saved threshold properties 'visible' and 'fill'
+   */
+
+  // Only care about the 'visible' field here, but need to fill in required fields
+  const defaultStyledThreshold = { color: '', value: '', comparisonOperator: 'EQ' as ComparisonOperator, id: '1', visible: true };
+  // Default style should match the first option of <ThresholdStyleSettings/> if no thresholds are added
+  let defaultThresholdStyle: ThresholdStyleType = { visible: true };
+  if (styledThresholdsAdded) {
+    // All threshold styles are the same, check on any of the thresholds to determine the saved style
+    const styledThreshold: (ThresholdWithId & StyledThreshold)[] = maybeWithDefault([defaultStyledThreshold], styledThresholds) ?? [defaultStyledThreshold];
+    defaultThresholdStyle = { visible: styledThreshold[0].visible, fill: styledThreshold[0].fill };
+  }
+  const [thresholdStyle, setThresholdStyle] = useState<ThresholdStyleType>(defaultThresholdStyle);
 
   const [isExpanded, setIsExpanded] = useExpandable();
 
-  const [shouldHideThresholds, setShouldHideThresholds] = useState<boolean>(false);
+  // Hide all thresholds button state can be saved, determined by the saved threshold properties 'visible' and 'fill'
+  const defaultShouldHideThresholds = defaultThresholdStyle.visible === false && defaultThresholdStyle.fill === undefined;
+  const [shouldHideThresholds, setShouldHideThresholds] = useState<boolean>(defaultShouldHideThresholds);
 
   const handleUpdateHideAllThresholds = (checked: boolean) => {
     setShouldHideThresholds(checked);
     if (styledThresholdsEnabled) {
       const t = maybeWithDefault([], styledThresholds) ?? [];
-      const newThresholds = t.map((threshold) => ({
-        ...threshold,
-        visible: checked ? false : thresholdStyle.visible,
-        fill: checked ? undefined : thresholdStyle.fill,
-      }));
+      const newThresholds = t.map((threshold) => {
+        const defaultStyle = { visible: true, fill: undefined };
+        const style = thresholdStyle.visible === false && thresholdStyle.fill === undefined ? defaultStyle : thresholdStyle;
+        return {
+          ...threshold,
+          visible: checked ? false : style.visible,
+          fill: checked ? undefined : style.fill,
+        }
+      });
       updateStyledThresholds(newThresholds);
     }
   };

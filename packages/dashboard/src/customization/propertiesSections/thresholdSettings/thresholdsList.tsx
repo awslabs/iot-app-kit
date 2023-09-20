@@ -15,8 +15,8 @@ type ThresholdsListProps = {
 };
 export const ThresholdsList: React.FC<ThresholdsListProps> = ({
   thresholds,
-  updateThresholds,
   comparisonOperators,
+  updateThresholds,
 }) => {
   const onUpdateThreshold = (updatedThreshold: ThresholdWithId) => {
     if (!!updateThresholds) {

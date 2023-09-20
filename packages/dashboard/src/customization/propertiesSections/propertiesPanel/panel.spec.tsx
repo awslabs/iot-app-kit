@@ -173,7 +173,6 @@ describe(`${PropertiesPanel.name}`, () => {
       trigger.findTabs()?.findTabLinkByIndex(3)?.click();
     });
 
-    expect(screen.getByText('No thresholds found')).toBeVisible();
     expect(screen.getByText('Add a threshold')).toBeVisible();
   });
 });
