@@ -12,7 +12,12 @@ import useMatterportObserver from '../../../hooks/useMatterportObserver';
 import { LayerType, MATTERPORT_TAG_LAYER_PREFIX } from '../../../common/entityModelConstants';
 import { createLayer } from '../../../utils/entityModelUtils/sceneLayerUtils';
 import useDynamicScene from '../../../hooks/useDynamicScene';
-import { createSceneRootEntity } from '../../../utils/entityModelUtils/sceneUtils';
+import {
+  checkIfEntityAvailable,
+  createSceneRootEntity,
+  prepareWorkspace,
+} from '../../../utils/entityModelUtils/sceneUtils';
+import { getGlobalSettings } from '../../../common/GlobalSettings';
 
 export const MatterportTagSync: React.FC = () => {
   const logger = useLifecycleLogging('MatterportTagSync');
@@ -40,10 +45,15 @@ export const MatterportTagSync: React.FC = () => {
     const layerName = MATTERPORT_TAG_LAYER_PREFIX + matterportModelId;
     let layerId = sceneLayerIds?.at(0);
     let rootId = sceneRootId;
+    const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
 
-    // Create default layer and default scene root node
-    if (dynamicSceneEnabled) {
-      if (isEmpty(layerId)) {
+    if (dynamicSceneEnabled && sceneMetadataModule) {
+      // Before backend can create the new default roots, the client side code will
+      // create them temporarily here.
+      await prepareWorkspace(sceneMetadataModule);
+
+      // Create default layer and default scene root node
+      if (!layerId || isEmpty(layerId) || !(await checkIfEntityAvailable(layerId, sceneMetadataModule))) {
         try {
           const layer = await createLayer(layerName, LayerType.Relationship);
           layerId = layer?.entityId;
@@ -54,7 +64,7 @@ export const MatterportTagSync: React.FC = () => {
           return;
         }
       }
-      if (isEmpty(sceneRootId)) {
+      if (!sceneRootId || isEmpty(sceneRootId) || !(await checkIfEntityAvailable(sceneRootId, sceneMetadataModule))) {
         try {
           const root = await createSceneRootEntity();
           rootId = root?.entityId;

@@ -1,5 +1,5 @@
 import { GetState, SetState } from 'zustand';
-import { debounce, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import { isDataBindingTemplate } from '@iot-app-kit/source-iottwinmaker';
 
 import DebugLogger from '../../logger/DebugLogger';
@@ -38,7 +38,7 @@ export interface ISceneDocumentSlice {
   /* Internal Data Model APIs */
   getSceneNodeByRef(ref?: string): Readonly<ISceneNodeInternal> | undefined;
   getSceneNodesByRefs(refs: (string | undefined)[]): (ISceneNodeInternal | undefined)[];
-  appendSceneNodeInternal(node: ISceneNodeInternal, parentRef?: string): void;
+  appendSceneNodeInternal(node: ISceneNodeInternal, disableAutoSelect?: boolean): void;
 
   renderSceneNodesFromLayers(nodes: ISceneNodeInternal[], layerId: string): void;
 
@@ -56,7 +56,7 @@ export interface ISceneDocumentSlice {
 
   /* External Data Model APIs */
   loadScene(sceneContent: string, options?: IDeserializeOptions): void;
-  appendSceneNode(node: ISceneNode, parentRef?: string): Readonly<ISceneNode>;
+  appendSceneNode(node: ISceneNode, disableAutoSelect?: boolean): Readonly<ISceneNode>;
   removeSceneNode(nodeRef: string): Readonly<ISceneNode> | undefined;
   updateSceneNode(ref: string, partial: Pick<ISceneNode, 'name' | 'parentRef' | 'transform' | 'childRefs'>): void;
   removeComponent(nodeRef: string, componentRef: string): void;
@@ -127,7 +127,7 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
       return refs.map((ref) => get().getSceneNodeByRef(ref));
     },
 
-    appendSceneNodeInternal: (node) => {
+    appendSceneNodeInternal: (node, disableAutoSelect) => {
       const document = get().document;
 
       if (!document) {
@@ -160,7 +160,9 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         addNodeToComponentNodeMap(draft.document.componentNodeMap, node);
 
         // Update the selected node
-        draft.selectedSceneNodeRef = node.ref;
+        if (!disableAutoSelect) {
+          draft.selectedSceneNodeRef = node.ref;
+        }
 
         draft.lastOperation = 'appendSceneNodeInternal';
       });
@@ -222,12 +224,12 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
       });
     },
 
-    appendSceneNode: (node) => {
+    appendSceneNode: (node, disableAutoSelect) => {
       if (node.childRefs && node.childRefs.length > 0) {
         throw new Error('Error: node with children are not supported by append operation');
       }
       const newNode = interfaceHelpers.createSceneNodeInternal(node);
-      get().appendSceneNodeInternal(newNode);
+      get().appendSceneNodeInternal(newNode, disableAutoSelect);
       return newNode;
     },
 
