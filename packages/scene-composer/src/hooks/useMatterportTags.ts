@@ -50,7 +50,7 @@ const getNewDataOverlayComponent = (item: MattertagItem | TagItem): IDataOverlay
 
 const addTag = async (
   dynamicSceneEnabled: boolean,
-  addSceneNode: (node: ISceneNode, parentRef?: string) => Readonly<ISceneNode>,
+  addSceneNode: (node: ISceneNode, disableAutoSelect?: boolean) => Readonly<ISceneNode>,
   { layerId, sceneRootId, id, item }: AddTagInputs,
 ) => {
   const tagStyleEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
@@ -110,7 +110,7 @@ const addTag = async (
       console.error('Create scene node entity failed', e);
     }
   }
-  addSceneNode(node);
+  addSceneNode(node, true);
 };
 
 const updateTag = async (
