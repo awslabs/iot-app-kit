@@ -240,6 +240,7 @@ describe('MatterportTagSync', () => {
       (createSceneRootEntity as jest.Mock).mockImplementation(() => {
         return Promise.resolve({ entityId: 'scene-root-id' });
       });
+      (prepareWorkspace as jest.Mock).mockResolvedValue(undefined);
 
       getScenePropertyMock.mockImplementation((p) => {
         if (p == KnownSceneProperty.MatterportModelId) {
@@ -256,6 +257,30 @@ describe('MatterportTagSync', () => {
       (checkIfEntityAvailable as jest.Mock).mockReturnValue(true);
 
       setTwinMakerSceneMetadataModule({} as TwinMakerSceneMetadataModule);
+    });
+
+    it('should render success status', async () => {
+      useStore('default').setState(baseState);
+      const rendered = render(<MatterportTagSync />);
+
+      await act(async () => {
+        fireEvent.click(rendered.getByTestId('matterport-tag-sync-button'));
+      });
+
+      expect(rendered.getByTestId('sync-button-status')).toMatchSnapshot();
+    });
+
+    it('should render failure status', async () => {
+      useStore('default').setState(baseState);
+      (prepareWorkspace as jest.Mock).mockRejectedValue(new Error('prepare workspace failed'));
+
+      const rendered = render(<MatterportTagSync />);
+
+      await act(async () => {
+        fireEvent.click(rendered.getByTestId('matterport-tag-sync-button'));
+      });
+
+      expect(rendered.getByTestId('sync-button-status')).toMatchSnapshot();
     });
 
     it('should call prepareWorkspace', async () => {

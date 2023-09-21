@@ -104,11 +104,7 @@ const addTag = async (
         Node: nodeComp,
       },
     };
-    try {
-      await sceneMetadataModule.createSceneEntity(creatEntity);
-    } catch (e) {
-      console.error('Create scene node entity failed', e);
-    }
+    await sceneMetadataModule.createSceneEntity(creatEntity);
   }
   addSceneNode(node, true);
 };
@@ -187,11 +183,7 @@ const updateTag = async (
         updateEntity.componentUpdates![KnownComponentType.DataOverlay] = overlayComp;
       }
 
-      try {
-        await sceneMetadataModule.updateSceneEntity(updateEntity);
-      } catch (e) {
-        console.error('Update scene node entity failed', e);
-      }
+      await sceneMetadataModule.updateSceneEntity(updateEntity);
     } else {
       const createEntity: CreateEntityCommandInput = {
         workspaceId: undefined,
@@ -208,11 +200,7 @@ const updateTag = async (
       if (overlayComp) {
         createEntity.components![KnownComponentType.DataOverlay] = overlayComp;
       }
-      try {
-        await sceneMetadataModule.createSceneEntity(createEntity);
-      } catch (e) {
-        console.error('Create scene node entity failed', e);
-      }
+      await sceneMetadataModule.createSceneEntity(createEntity);
     }
   }
 
@@ -245,7 +233,7 @@ type UpdateTagInputs = {
 const useMatterportTags = (): {
   handleAddMatterportTag: (inputs: AddTagInputs) => Promise<void>;
   handleUpdateMatterportTag: (inputs: UpdateTagInputs) => Promise<void>;
-  handleRemoveMatterportTag: (nodeRef: string) => void;
+  handleRemoveMatterportTag: (nodeRef: string) => Promise<void>;
 } => {
   const sceneComposerId = useSceneComposerId();
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
@@ -268,20 +256,12 @@ const useMatterportTags = (): {
   );
 
   const handleRemoveMatterportTag = useCallback(
-    (nodeRef: string) => {
+    async (nodeRef: string) => {
       const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
       if (dynamicSceneEnabled && sceneMetadataModule) {
-        sceneMetadataModule
-          .deleteSceneEntity({ entityId: nodeRef })
-          .then((_) => {
-            removeSceneNode(nodeRef);
-          })
-          .catch((e) => {
-            console.error('Delete scene node entity failed', e);
-          });
-      } else {
-        removeSceneNode(nodeRef);
+        await sceneMetadataModule.deleteSceneEntity({ entityId: nodeRef });
       }
+      removeSceneNode(nodeRef);
     },
     [removeSceneNode],
   );
