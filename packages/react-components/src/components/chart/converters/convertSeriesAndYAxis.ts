@@ -172,8 +172,14 @@ export const reduceSeriesAndYAxis = (
   return {
     series: [...acc.series, addYAxisIndex(series, yAxisIndex)],
     yAxis: yAxis ? [...acc.yAxis, yAxis] : [...acc.yAxis],
-    yMins: yAxis && yMin ? [...acc.yMins, yMin] : [...acc.yMins],
-    yMaxs: yAxis && yMax ? [...acc.yMaxs, yMax] : [...acc.yMaxs],
+    yMins:
+      yAxis && yMin
+        ? [...acc.yMins, { ...yMin, value: { x: 0, y: (yAxis.min as number) ?? yMin.value.y } }]
+        : [...acc.yMins],
+    yMaxs:
+      yAxis && yMax
+        ? [...acc.yMaxs, { ...yMax, value: { x: 0, y: (yAxis.max as number) ?? yMax.value.y } }]
+        : [...acc.yMaxs],
   };
 };
 
@@ -197,7 +203,6 @@ export const useSeriesAndYAxis = (
 ) => {
   const defaultYAxis: YAXisComponentOption[] = useMemo(() => [convertChartYAxis(axis)], [axis]);
   const convertedThresholds = convertThresholds(thresholds);
-  // console.log(convertedThresholds);
   const getStyles = getChartStyleSettingsFromMap(styleSettings);
 
   const { series, yAxis, yMaxs, yMins } = useMemo(() => {
@@ -210,7 +215,6 @@ export const useSeriesAndYAxis = (
     series[0].markArea = convertedThresholds.markArea;
     series[0].markLine = convertedThresholds.markLine;
   }
-  console.log('series', series);
 
   return { series, yAxis, yMaxs, yMins };
 };

@@ -97,7 +97,7 @@ export type SymbolStyles = {
   size?: number;
 };
 export type AssetPropertyStyles = LineAndScatterStyles & { yAxis?: YAxisOptions };
-type StyledAssetPropertyQuery = AssetPropertyQuery & AssetPropertyStyles;
+export type StyledAssetPropertyQuery = AssetPropertyQuery & AssetPropertyStyles;
 export type StyledAssetQuery = {
   assets: {
     assetId: SiteWiseAssetQuery['assets'][number]['assetId'];
@@ -115,7 +115,7 @@ type YAxisRange = {
   yMin?: number;
   yMax?: number;
 };
-type YAxisOptions = YAxisRange & {
+export type YAxisOptions = YAxisRange & {
   visible?: boolean;
 };
 export type ChartAxisOptions = YAxisRange & {
@@ -126,16 +126,16 @@ type ChartLegend = {
   visible?: boolean;
 };
 
+export type StyledSiteWiseQueryConfig = QueryConfig<'iotsitewise', StyledAssetQuery | undefined>;
+
 export type LineScatterChartProperties = LineAndScatterStyles & {
   title?: string;
   thresholds?: StyledThreshold[];
   axis?: ChartAxisOptions;
   legend?: ChartLegend;
-  queryConfig: {
-    source: 'iotsitewise';
-    query: StyledAssetQuery | undefined;
-  };
+  queryConfig: StyledSiteWiseQueryConfig;
 };
+
 export type LineScatterChartPropertiesKeys = keyof LineScatterChartProperties;
 
 export type BarChartProperties = QueryProperties & {

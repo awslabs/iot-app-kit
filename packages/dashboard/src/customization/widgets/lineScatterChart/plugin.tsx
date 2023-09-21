@@ -12,6 +12,7 @@ import { getCurrentAggregationResolution } from '../utils/widgetAggregationUtils
 import { applyAggregationToQuery } from '../utils/assetQuery/applyAggregationToQuery';
 import { applyResolutionToQuery } from '../utils/assetQuery/applyResolutionToQuery';
 import { DashboardWidget } from '~/types';
+import { applyDefaultStylesToQuery } from '../utils/assetQuery/applyDefaultStylesToQuery';
 
 export const styledQueryWidgetOnDrop = (item: ResourcePanelItem, widget: DashboardWidget) => {
   const lineScatterWidget = widget as LineScatterChartWidget;
@@ -35,6 +36,7 @@ export const styledQueryWidgetOnDrop = (item: ResourcePanelItem, widget: Dashboa
 
   const queryWithAggregation = applyAggregationToQuery(queryWithRefIds, aggregation);
   const queryWithResolution = applyResolutionToQuery(queryWithAggregation, resolution);
+  const queryWithDefaultStyles = applyDefaultStylesToQuery(queryWithResolution);
 
   return {
     ...lineScatterWidget,
@@ -42,7 +44,7 @@ export const styledQueryWidgetOnDrop = (item: ResourcePanelItem, widget: Dashboa
       ...lineScatterWidget.properties,
       queryConfig: {
         ...lineScatterWidget.properties.queryConfig,
-        query: queryWithResolution,
+        query: queryWithDefaultStyles,
       },
     },
   };

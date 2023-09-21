@@ -1,4 +1,4 @@
-import { DataPoint, DataStream, Threshold, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
+import { DataPoint, DataStream, Threshold, ThresholdSettings, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
 import {
   GraphicComponentElementOption,
   GraphicComponentGroupOption,
@@ -90,6 +90,7 @@ export type ChartOptions = {
   defaultVisualizationType?: Visualization;
   size?: SizeConfig;
   styleSettings?: ChartStyleSettings;
+  thresholdSettings?: ThresholdSettings;
   aggregationType?: string;
   axis?: ChartAxisOptions;
   thresholds?: StyledThreshold[];

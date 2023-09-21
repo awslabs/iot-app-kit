@@ -52,8 +52,8 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({ id, signific
                 color: '#eb4034',
                 comparisonOperator: 'GT',
                 visible: true,
-                fill: 'asdf'
-              }
+                fill: 'asdf',
+              },
             ]}
           />
         ))}

@@ -113,6 +113,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   const convertedOptions = useConvertedOptions({
     series,
     options,
+    shouldShowYAxisLegend,
   });
 
   // determine the set option settings

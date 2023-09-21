@@ -19,7 +19,7 @@ export const ThresholdsList: React.FC<ThresholdsListProps> = ({
   updateThresholds,
 }) => {
   const onUpdateThreshold = (updatedThreshold: ThresholdWithId) => {
-    if (!!updateThresholds) {
+    if (updateThresholds) {
       updateThresholds(
         thresholds.map((t) => {
           if (t.id === updatedThreshold.id) {
@@ -32,7 +32,7 @@ export const ThresholdsList: React.FC<ThresholdsListProps> = ({
   };
 
   const handleDeleteThreshold = (threshold: ThresholdWithId) => () => {
-    if (!!updateThresholds) {
+    if (updateThresholds) {
       updateThresholds(thresholds.filter((t) => t.id !== threshold.id));
     }
   };

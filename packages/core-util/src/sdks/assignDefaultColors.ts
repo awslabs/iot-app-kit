@@ -1,11 +1,15 @@
 import { colorPalette } from './colorPalette';
 
-export const assignDefaultColor: <T extends { color?: string }>(colorableItem: T, colorIndexOffset?: number) => T = (
-  colorableItem,
-  colorIndexOffset = 0
-) => {
-  return {
-    ...colorableItem,
-    color: colorableItem.color || colorPalette[colorIndexOffset % colorPalette.length],
+const defaultColorPicker = () => {
+  let colorIndexOffset = 0;
+
+  return (colorableItem: any, offset?: number) => {
+    const indexOffset = offset ?? colorIndexOffset++;
+    const color = colorPalette[indexOffset % colorPalette.length];
+    return {
+      ...colorableItem,
+      color: colorableItem.color || color,
+    };
   };
 };
+export const assignDefaultColor = defaultColorPicker();

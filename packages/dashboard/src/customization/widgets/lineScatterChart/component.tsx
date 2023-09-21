@@ -91,7 +91,7 @@ const mapStyledAssetPropertyToChartStyleSettings = (
     symbolSize: styles.symbol?.size,
     lineStyle: styles.line?.style ?? line?.style,
     lineThickness: styles.line?.thickness,
-    yAxis: styles.yAxis,
+    yAxis: styles.yAxis?.visible ? styles.yAxis : undefined,
     significantDigits: styles.significantDigits,
   };
 };
@@ -118,8 +118,6 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
     symbol,
     significantDigits: widgetSignificantDigits,
   } = widget.properties;
-
-  console.log('thresholds', thresholds);
 
   const query = queryConfig.query;
   const { iotSiteWiseQuery } = useQueries();

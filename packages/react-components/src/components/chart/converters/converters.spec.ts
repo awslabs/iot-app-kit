@@ -58,7 +58,7 @@ describe('testing converters', () => {
   });
 
   it('converts grid to echarts grid', async () => {
-    const convertedGrid = convertGrid(MOCK_LEGEND);
+    const convertedGrid = convertGrid(MOCK_LEGEND, false);
 
     expect(convertedGrid).toHaveProperty('bottom', 50);
     expect(convertedGrid).toHaveProperty('top', 50);
@@ -78,6 +78,7 @@ describe('testing converters', () => {
       useConvertedOptions({
         options: { backgroundColor: 'white', axis: MOCK_AXIS, legend: MOCK_LEGEND, significantDigits: 2 },
         series: [],
+        shouldShowYAxisLegend: false,
       })
     );
 

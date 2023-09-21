@@ -20,9 +20,11 @@ type ConvertChartOptions = Pick<
 export const useConvertedOptions = ({
   series,
   options,
+  shouldShowYAxisLegend,
 }: {
   options: ConvertChartOptions;
   series: SeriesOption[];
+  shouldShowYAxisLegend: boolean;
 }): EChartsOption => {
   const { backgroundColor, axis, significantDigits, titleText, defaultVisualizationType } = options;
   const text = series.length === 0 ? 'No data present' : titleText ?? defaultVisualizationType ?? '';
@@ -36,7 +38,7 @@ export const useConvertedOptions = ({
         top: 10,
       },
       backgroundColor,
-      grid: convertGrid(options.legend),
+      grid: convertGrid(options.legend, shouldShowYAxisLegend),
       tooltip: convertTooltip(significantDigits),
       toolbox: DEFAULT_TOOL_BOX,
     }),
