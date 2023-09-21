@@ -23,7 +23,6 @@ import useActiveCamera from '../../hooks/useActiveCamera';
 import { getSafeBoundingBox } from '../../utils/objectThreeUtils';
 import { getMatterportSdk } from '../../common/GlobalSettings';
 import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../../three/OrbitControls';
-import { PointerLockControls as PointerLockControlsImpl } from '../../three/PointerLockControls';
 import { isOrbitOrPanControl } from '../../utils/controlUtils';
 
 import { MapControls, OrbitControls, PointerLockControls } from './controls';
@@ -77,14 +76,28 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
       log?.verbose('finding camera Object3D target by command', cameraCommand);
 
       if (command === undefined) return;
-      if (typeof command.target !== 'string') return command.target;
+
+      if (typeof command.target !== 'string') {
+        if (scene && cameraRef.current) {
+          const position = new THREE.Vector3(...command.target.position);
+          const direction = new THREE.Vector3(...command.target.target).sub(position).normalize();
+          const raycaster = new THREE.Raycaster(position, direction);
+          raycaster.camera = cameraRef.current;
+          const intersections = raycaster.intersectObjects([scene, ...scene.children]);
+
+          if (intersections.length > 0) {
+            return { position: command.target.position, target: intersections[0].point.toArray() } as FixedCameraTarget;
+          }
+        }
+        return command.target;
+      }
 
       const object3d = getObject3DBySceneNodeRef(command.target);
       if (object3d) return findBestViewingPosition(object3d, false, cameraControlsImplRef.current);
 
       log?.warn('unable to find the correct object in the scene. using the default camera setting.');
     };
-  }, []);
+  }, [scene]);
 
   const controlsRef = useCallback((ref) => {
     if (ref) {

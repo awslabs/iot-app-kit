@@ -235,7 +235,7 @@ describe('EditorMainCamera', () => {
       expect(tweenTarget.duration).toEqual(500);
     });
 
-    it('should setTween to correct camera target when camera command changes to fixed camera target', async () => {
+    it('should setTween to correct camera target when camera command changes to fixed camera target with no intersections ahead', async () => {
       useStore('default').setState(baseState);
       const setPositionSpy = jest.spyOn(mockCamera.position, 'set');
       mockMergeRefs.mockImplementation((refs) => {
@@ -247,6 +247,17 @@ describe('EditorMainCamera', () => {
         tweenPosition = position;
         tweenTarget = target;
       });
+
+      const mockThreeStatesWithGeometry = {
+        scene: new THREE.Scene(),
+        set: jest.fn(),
+      };
+      // override generic mock for one to support geometry testing
+      const useThreeMock = useThree as Mock;
+      useThreeMock.mockImplementation((s) => {
+        return s(mockThreeStatesWithGeometry);
+      });
+
       const rendered = render(<EditorMainCamera />);
 
       await act(async () => {
@@ -268,6 +279,77 @@ describe('EditorMainCamera', () => {
       expect(tweenPosition.duration).toEqual(0);
       expect(tweenTarget.from).toEqual({ x: 0, y: 0, z: 0 });
       expect(tweenTarget.to).toEqual({ x: 44, y: 55, z: 66 });
+      expect(tweenTarget.duration).toEqual(0);
+
+      // onUpdate tween
+      tweenPosition.onUpdate();
+      expect(setPositionSpy).toBeCalledTimes(1);
+      expect(setPositionSpy).toBeCalledWith(1, 2, 3);
+    });
+
+    it('should setTween to correct camera target when camera command changes to fixed camera target with intersections ahead', async () => {
+      useStore('default').setState(baseState);
+      const setPositionSpy = jest.spyOn(mockCamera.position, 'set');
+      mockMergeRefs.mockImplementation((refs) => {
+        if (refs[1]) refs[1].current = mockCamera;
+      });
+      let tweenPosition;
+      let tweenTarget;
+      mockSetTween.mockImplementation((position, target) => {
+        tweenPosition = position;
+        tweenTarget = target;
+      });
+
+      const mockThreeStatesWithGeometry = {
+        scene: new THREE.Scene(),
+        set: jest.fn(),
+      };
+      const boxSize = 1;
+      const position = new THREE.Vector3(11, 22, 33);
+      const targetOffset = new THREE.Vector3(33, 33, 33);
+      const target = new THREE.Vector3();
+      target.copy(position);
+      target.add(targetOffset);
+      const geometry = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
+      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      const cube = new THREE.Mesh(geometry, material);
+      cube.translateX(position.x + 0.5 * targetOffset.x);
+      cube.translateY(position.y + 0.5 * targetOffset.y);
+      cube.translateZ(position.z + 0.5 * targetOffset.z);
+      cube.updateMatrixWorld();
+      mockThreeStatesWithGeometry.scene.add(cube);
+
+      // override generic mock for one to support geometry testing
+      const useThreeMock = useThree as Mock;
+      useThreeMock.mockImplementation((s) => {
+        return s(mockThreeStatesWithGeometry);
+      });
+
+      const rendered = render(<EditorMainCamera />);
+
+      await act(async () => {
+        useStore('default').setState({
+          ...baseState,
+          cameraCommand: {
+            target: {
+              position: position,
+              target: target,
+            },
+            mode: 'teleport',
+          },
+        });
+        rendered.rerender(<EditorMainCamera />);
+      });
+
+      expect(tweenPosition.from).toEqual({ x: 1, y: 2, z: 3 });
+      expect(tweenPosition.to).toEqual(position);
+      expect(tweenPosition.duration).toEqual(0);
+      expect(tweenTarget.from).toEqual({ x: 0, y: 0, z: 0 });
+      expect(tweenTarget.to).toEqual({
+        x: position.x + 0.5 * targetOffset.x - 0.5 * boxSize,
+        y: position.y + 0.5 * targetOffset.y - 0.5 * boxSize,
+        z: position.z + 0.5 * targetOffset.z - 0.5 * boxSize,
+      });
       expect(tweenTarget.duration).toEqual(0);
 
       // onUpdate tween
