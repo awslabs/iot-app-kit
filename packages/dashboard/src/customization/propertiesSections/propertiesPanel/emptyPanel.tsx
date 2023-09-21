@@ -1,20 +1,21 @@
 import Box from '@cloudscape-design/components/box';
 import React from 'react';
-
-const PROPERTIES_PANEL_EMPTY_STYLE = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height: '100%',
-};
+import EmptyPanelSvg from './assets/emptyPanel.svg';
+import { SpaceBetween } from '@cloudscape-design/components';
+import './emptyPanel.css';
 
 /** Empty state for the properties panel. */
 export function PropertiesPanelEmpty() {
   return (
-    <div style={PROPERTIES_PANEL_EMPTY_STYLE}>
-      <Box margin='m' variant='p' color='text-status-inactive'>
-        Select widgets to configure.
-      </Box>
+    <div className='empty-panel'>
+      <SpaceBetween direction='vertical' size='xl'>
+        <Box textAlign='center' variant='p' fontWeight='bold'>
+          Select a widget to configure.
+        </Box>
+        <Box textAlign='center'>
+          <img src={EmptyPanelSvg} alt={EmptyPanelSvg} />
+        </Box>
+      </SpaceBetween>
     </div>
   );
 }

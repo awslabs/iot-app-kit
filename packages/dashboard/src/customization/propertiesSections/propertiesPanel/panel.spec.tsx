@@ -125,7 +125,7 @@ describe(`${PropertiesPanel.name}`, () => {
   it('should render an empty selection when nothing is selected', async () => {
     await renderTestComponentAsync({ selectedWidgets: [] });
 
-    expect(screen.getByText('Select widgets to configure.')).toBeVisible();
+    expect(screen.getByText('Select a widget to configure.')).toBeVisible();
   });
 
   it('should render the style section', async () => {
