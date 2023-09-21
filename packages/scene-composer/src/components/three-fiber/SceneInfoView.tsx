@@ -7,6 +7,8 @@ import * as THREE from 'three';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useStore } from '../../store';
 
+const SCENE_INFO_VIEW_WIDTH = 140; //in px
+
 const i18nSceneStatsStrings = defineMessages({
   Vertices: {
     defaultMessage: 'Vertices : {sceneInfoVertices, number}',
@@ -77,7 +79,7 @@ export function SceneInfoView() {
     <Html
       calculatePosition={calculatePosition}
       style={{
-        width: '140px',
+        width: `${SCENE_INFO_VIEW_WIDTH}px`,
         height: '100px',
         paddingLeft: '16px',
         paddingTop: '8px',
@@ -107,10 +109,52 @@ export function SceneInfoView() {
   );
 }
 
+//Use three.js lerpVectors function to handle the interpolation calculation.
+//We only need one dimension but have to provide 3 for three.js to be satisfied,
+// so we are ignoring y and z dimensions.
+const interpolateBetween = (point1: number, point2: number, factor: number) => {
+  const firstPoint = new THREE.Vector3(point1, 0, 0);
+  const secondPoint = new THREE.Vector3(point2, 0, 0);
+  const lerpPoint = new THREE.Vector3();
+
+  return lerpPoint.lerpVectors(firstPoint, secondPoint, factor).x;
+};
+
+//For wide screens (> 600px wide), position the scene info 300px away from the right edge of the scene.
+//For small screens (< 300px wide), position the scene info right against the edge of the scene
+//For screens in between, use a linear interpolation to smooth out the transition
 function calculatePosition(
   el: THREE.Object3D,
   camera: THREE.Camera,
   size: { width: number; height: number },
 ): number[] {
-  return [size.width - 300, size.height - 120];
+  const wideScreenWidthPixels = 600;
+  const compactScreenWidthPixels = 300;
+
+  const standardHorizontalDisplacementPixels = 300;
+  const compactHorizontalDisplacementPixels = SCENE_INFO_VIEW_WIDTH;
+  const standardVerticleDisplacementPixels = 120;
+
+  const standardHorizontalPosition = size.width - standardHorizontalDisplacementPixels;
+  const compactHorizontalPosition = size.width - compactHorizontalDisplacementPixels;
+  const standardVerticlePosition = size.height - standardVerticleDisplacementPixels;
+
+  if (size.width > wideScreenWidthPixels) {
+    return [standardHorizontalPosition, standardVerticlePosition];
+  } else if (size.width > compactScreenWidthPixels) {
+    const interpolationFactor =
+      (size.width - compactScreenWidthPixels) / (wideScreenWidthPixels - compactScreenWidthPixels);
+
+    return [
+      size.width -
+        interpolateBetween(
+          compactHorizontalDisplacementPixels,
+          standardHorizontalDisplacementPixels,
+          interpolationFactor,
+        ),
+      standardVerticlePosition,
+    ];
+  } else {
+    return [compactHorizontalPosition, standardVerticlePosition];
+  }
 }
