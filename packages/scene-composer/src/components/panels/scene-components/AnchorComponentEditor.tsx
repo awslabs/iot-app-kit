@@ -2,13 +2,19 @@ import { AttributeEditor, FormField, Grid, Input, Select, SpaceBetween, TextCont
 import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { debounce } from 'lodash';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { useIntl } from 'react-intl';
+import { defineMessages, useIntl } from 'react-intl';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { SCENE_ICONS } from '../../../common/constants';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import useDynamicScene from '../../../hooks/useDynamicScene';
-import { COMPOSER_FEATURES, IValueDataBinding, KnownSceneProperty, SceneResourceType } from '../../../interfaces';
+import {
+  COMPOSER_FEATURES,
+  DefaultAnchorStatus,
+  IValueDataBinding,
+  KnownSceneProperty,
+  SceneResourceType,
+} from '../../../interfaces';
 import { IAnchorComponentInternal, ISceneComponentInternal, useSceneDocument, useStore } from '../../../store';
 import { shallowEqualsArray } from '../../../utils/objectUtils';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
@@ -26,6 +32,14 @@ export const convertParamsToKeyValuePairs = (params: Record<string, string>) => 
     return { key, value: params[key] };
   });
 };
+
+const i18nIconStrings = defineMessages({
+  [DefaultAnchorStatus.Info]: { defaultMessage: 'Info icon', description: 'Icon name label' },
+  [DefaultAnchorStatus.Warning]: { defaultMessage: 'Warning icon', description: 'Icon name label' },
+  [DefaultAnchorStatus.Error]: { defaultMessage: 'Error icon', description: 'Icon name label' },
+  [DefaultAnchorStatus.Video]: { defaultMessage: 'Video icon', description: 'Icon name label' },
+  [DefaultAnchorStatus.Custom]: { defaultMessage: 'Custom icon', description: 'Icon name label' },
+});
 
 export type IAnchorComponentEditorProps = IComponentEditorProps;
 
@@ -209,9 +223,15 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
                 customIcon={findIconDefinition(customIcon)}
                 width='32px'
                 height='32px'
+                ariaLabel={intl.formatMessage(i18nIconStrings[iconOptions[iconSelectedOptionIndex]?.value])}
               />
             ) : (
-              <img width='32px' height='32px' src={`data:image/svg+xml;base64,${iconString}`} />
+              <img
+                aria-label={intl.formatMessage(i18nIconStrings[iconOptions[iconSelectedOptionIndex]?.value])}
+                width='32px'
+                height='32px'
+                src={`data:image/svg+xml;base64,${iconString}`}
+              />
             ))}
         </Grid>
       </FormField>

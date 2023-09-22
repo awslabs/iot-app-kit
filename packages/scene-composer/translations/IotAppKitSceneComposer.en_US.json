@@ -127,6 +127,10 @@
     "note": "Expandable Section title",
     "text": "Annotation"
   },
+  "5F/kwX": {
+    "note": "Icon name label",
+    "text": "Error icon"
+  },
   "5pV1+0": {
     "note": "Form field label",
     "text": "Ref"
@@ -238,6 +242,10 @@
   "AEkvpm": {
     "note": "Input error message",
     "text": "Invalid character in the name"
+  },
+  "AePRVy": {
+    "note": "Icon name label",
+    "text": "Custom icon"
   },
   "As6z+e": {
     "note": "ExpandableInfoSection Title",
@@ -687,6 +695,10 @@
     "note": "Placeholder",
     "text": "Choose a color value"
   },
+  "duq5aL": {
+    "note": "Icon name label",
+    "text": "Warning icon"
+  },
   "dw/mQp": {
     "note": "Light Type in a dropdown menu",
     "text": "Hemisphere"
@@ -754,6 +766,10 @@
   "gZDAVH": {
     "note": "Menu Item label",
     "text": "Add Animations"
+  },
+  "gc20C0": {
+    "note": "Icon name label",
+    "text": "Info icon"
   },
   "ggiL3k": {
     "note": "Form Field label",
@@ -882,6 +898,10 @@
   "nhcDIE": {
     "note": "select box option text value",
     "text": "Receive Shadow"
+  },
+  "nwQbTY": {
+    "note": "Icon name label",
+    "text": "Video icon"
   },
   "o3PtbU": {
     "note": "Sub-Section Description",
