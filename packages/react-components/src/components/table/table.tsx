@@ -36,7 +36,7 @@ export const Table = ({
   significantDigits?: number;
   paginationEnabled?: boolean;
   pageSize?: number;
-} & Pick<TableBaseProps, 'resizableColumns' | 'sortingDisabled' | 'stickyHeader' | 'empty'>) => {
+} & Pick<TableBaseProps, 'resizableColumns' | 'sortingDisabled' | 'stickyHeader' | 'empty' | 'preferences'>) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries,
