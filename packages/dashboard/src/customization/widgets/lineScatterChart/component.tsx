@@ -22,6 +22,8 @@ import { ChartOptions, ChartStyleSettingsOptions } from '@iot-app-kit/react-comp
 // import { applyAggregationToQuery } from '../utils/assetQuery/applyAggregationToQuery';
 // import { applyResolutionToQuery } from '../utils/assetQuery/applyResolutionToQuery';
 import WidgetTile from '~/components/widgets/tile/tile';
+import NoChartData from '../components/no-chart-data';
+import { default as lineSvgDark } from './line-dark.svg';
 
 const mapConnectionStyleToVisualizationType = (
   connectionStyle: LineStyles['connectionStyle']
@@ -135,6 +137,17 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
   // so not entirely sure if we can have a mechanism where the container auto adjusts the height
   // the 44 is from the widget tile header's height
   const size = { width: chartSize.width, height: chartSize.height - 44 };
+
+  const isEmptyWidget = !queryConfig.query || queryConfig.query.assets.length === 0;
+
+  if (isEmptyWidget) {
+    return (
+      <NoChartData
+        icon={lineSvgDark}
+        emptyStateText='Browse and select to add your asset properties in your line widget.'
+      />
+    );
+  }
 
   return (
     <WidgetTile widget={widget} removeable title={title}>
