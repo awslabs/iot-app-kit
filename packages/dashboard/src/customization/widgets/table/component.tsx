@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { CollectionPreferences, CollectionPreferencesProps } from '@cloudscape-design/components';
 
 import { Table, TableColumnDefinition } from '@iot-app-kit/react-components';
+import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 
 import EmptyTableComponent from './emptyTableComponent';
 
@@ -10,9 +12,10 @@ import type { DashboardState } from '~/store/state';
 import type { TableWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { useChartSize } from '~/hooks/useChartSize';
-import { DEFAULT_PREFERENCES } from './table-config';
+
+import { DEFAULT_PREFERENCES, collectionPreferencesProps } from './table-config';
 import { TABLE_OVERFLOW_HEIGHT, TABLE_WIDGET_MAX_HEIGHT } from '../constants';
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import { onUpdateWidgetsAction } from '~/store/actions';
 
 export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
   {
@@ -52,8 +55,9 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   const key = computeQueryConfigKey(viewport, widget.properties.queryConfig);
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
-  const [preferences] = useState(DEFAULT_PREFERENCES); //TODO: setpreference will add once page preferences are added
   const chartSize = useChartSize(widget);
+  const readOnly = useSelector((state: DashboardState) => state.readOnly);
+  const dispatch = useDispatch();
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
@@ -63,6 +67,14 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
     if (target.className.includes('resizer')) {
       e.stopPropagation();
     }
+  };
+
+  const setPreferences = (detail: CollectionPreferencesProps.Preferences) => {
+    dispatch(
+      onUpdateWidgetsAction({
+        widgets: [{ ...widget, properties: { ...widget.properties, pageSize: detail.pageSize } }],
+      })
+    );
   };
 
   return (
@@ -84,9 +96,18 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
         significantDigits={significantDigits}
         sortingDisabled
         stickyHeader
-        pageSize={preferences.pageSize}
+        pageSize={widget.properties.pageSize ?? DEFAULT_PREFERENCES.pageSize}
         paginationEnabled
         empty={<EmptyTableComponent />}
+        preferences={
+          !readOnly && (
+            <CollectionPreferences
+              {...collectionPreferencesProps}
+              preferences={{ pageSize: widget.properties.pageSize ?? DEFAULT_PREFERENCES.pageSize }}
+              onConfirm={({ detail }) => setPreferences(detail)}
+            />
+          )
+        }
       />
     </div>
   );
