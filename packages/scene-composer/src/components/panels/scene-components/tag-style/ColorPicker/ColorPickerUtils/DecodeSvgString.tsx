@@ -9,6 +9,7 @@ interface IConvertComponentProps {
   customIcon?: IconDefinition;
   width?: string;
   height?: string;
+  ariaLabel?: string;
 }
 
 export const DecodeSvgString = ({
@@ -17,6 +18,7 @@ export const DecodeSvgString = ({
   customIcon,
   width,
   height,
+  ariaLabel,
 }: IConvertComponentProps): JSX.Element => {
   const iconWidth = customIcon?.icon[0];
   const iconHeight = customIcon?.icon[1];
@@ -25,5 +27,7 @@ export const DecodeSvgString = ({
   ) as string;
 
   const svgCode = useSvgParser({ selectedColor, iconString, decodeCustomIcon, iconWidth, iconHeight });
-  return <img src={`data:image/svg+xml;base64,${btoa(svgCode)}`} width={width} height={height} />;
+  return (
+    <img aria-label={ariaLabel} src={`data:image/svg+xml;base64,${btoa(svgCode)}`} width={width} height={height} />
+  );
 };

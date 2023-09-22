@@ -1,6 +1,6 @@
 import { Grid, Select } from '@awsui/components-react';
 import React, { useMemo, useState } from 'react';
-import { useIntl } from 'react-intl';
+import { useIntl, defineMessages } from 'react-intl';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { SCENE_ICONS } from '../../../common/constants';
@@ -38,6 +38,15 @@ export const SceneRuleTargetIconEditor: React.FC<ISceneRuleTargetIconEditorProps
   }, [selectedIcon]);
 
   const isCustomStyle = tagStyle && targetValue === 'Custom';
+
+  const i18nIconStrings = defineMessages({
+    [DefaultAnchorStatus.Info]: { defaultMessage: 'Info icon', description: 'Icon name label' },
+    [DefaultAnchorStatus.Warning]: { defaultMessage: 'Warning icon', description: 'Icon name label' },
+    [DefaultAnchorStatus.Error]: { defaultMessage: 'Error icon', description: 'Icon name label' },
+    [DefaultAnchorStatus.Video]: { defaultMessage: 'Video icon', description: 'Icon name label' },
+    [DefaultAnchorStatus.Custom]: { defaultMessage: 'Custom icon', description: 'Icon name label' },
+  });
+
   return (
     <Grid gridDefinition={[{ colspan: 9 }, { colspan: 2 }]}>
       <Select
@@ -66,9 +75,15 @@ export const SceneRuleTargetIconEditor: React.FC<ISceneRuleTargetIconEditorProps
           iconString={iconString}
           width='32px'
           height='32px'
+          ariaLabel={intl.formatMessage(i18nIconStrings[targetValue])}
         />
       ) : (
-        <img width='32px' height='32px' src={`data:image/svg+xml;base64,${iconString}`} />
+        <img
+          aria-label={intl.formatMessage(i18nIconStrings[targetValue])}
+          width='32px'
+          height='32px'
+          src={`data:image/svg+xml;base64,${iconString}`}
+        />
       )}
     </Grid>
   );
