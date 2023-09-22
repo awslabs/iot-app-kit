@@ -40,11 +40,42 @@ const QUERIES = mockTimeSeriesDataQuery([
 
 describe('testing converters', () => {
   it('converts axis to eCharts axis', async () => {
-    const convertedYAxis = convertYAxis(MOCK_AXIS);
+    [
+      {
+        yAxisLabel: 'Y Value',
+        yMin: 0,
+        yMax: 100,
+        showY: true,
+        showX: true,
+      },
+      {
+        yAxisLabel: 'Y Value',
+        yMin: 0,
+        yMax: 100,
+        showY: false,
+        showX: false,
+      },
+      {
+        yAxisLabel: 'Y Value',
+        yMin: 0,
+        yMax: 100,
+        showY: true,
+        showX: false,
+      },
+      {
+        yAxisLabel: 'Y Value',
+        yMin: 0,
+        yMax: 100,
+        showY: false,
+        showX: true,
+      },
+    ].forEach((axis_values) => {
+      const convertedYAxis = convertYAxis(axis_values);
 
-    expect(convertedYAxis).toHaveProperty('type', 'value');
-    expect(convertedYAxis).toHaveProperty('name', MOCK_AXIS.yAxisLabel);
-    expect(convertedYAxis).toHaveProperty('show', true);
+      expect(convertedYAxis).toHaveProperty('type', 'value');
+      expect(convertedYAxis).toHaveProperty('name', axis_values.yAxisLabel);
+      expect(convertedYAxis).toHaveProperty('show', axis_values.showY);
+    });
   });
 
   it('converts data points to echarts data points', async () => {
