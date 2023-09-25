@@ -6,6 +6,7 @@ import type { DashboardPlugin } from '~/customization/api';
 import type { ScatterChartWidget } from '../types';
 import { PropertyDataType } from '@aws-sdk/client-iotsitewise';
 import { queryWidgetOnDrop } from '../queryWidget/multiQueryWidgetDrop';
+import { WIDGET_INITIAL_HEIGHT, WIDGET_INITIAL_WIDTH } from '../constants';
 
 export const scatterChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
@@ -34,8 +35,8 @@ export const scatterChartPlugin: DashboardPlugin = {
         },
       }),
       initialSize: {
-        height: 250,
-        width: 270,
+        height: WIDGET_INITIAL_HEIGHT,
+        width: WIDGET_INITIAL_WIDTH,
       },
     });
   },

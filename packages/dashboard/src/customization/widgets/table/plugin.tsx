@@ -5,10 +5,10 @@ import TableIcon from './icon';
 import { toId } from '@iot-app-kit/source-iotsitewise';
 import type { DashboardPlugin } from '~/customization/api';
 import type { TableWidget } from '../types';
-import { TABLE_WIDGET_INITIAL_HEIGHT, TABLE_WIDGET_INITIAL_WIDTH } from './constants';
 import { queryWidgetOnDrop } from '../queryWidget/multiQueryWidgetDrop';
 import { ResourcePanelItem } from '~/components/resourceExplorer/components/panel';
 import { DashboardWidget } from '~/types';
+import { TABLE_WIDGET_INITIAL_HEIGHT, TABLE_WIDGET_INITIAL_WIDTH } from '../constants';
 
 const tableOnDropAsset = (item: ResourcePanelItem, widget: DashboardWidget) => {
   const tableWidget = widget as TableWidget;

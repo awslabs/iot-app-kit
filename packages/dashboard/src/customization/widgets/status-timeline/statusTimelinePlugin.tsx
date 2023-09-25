@@ -5,6 +5,7 @@ import { StatusTimelineWidget } from '../types';
 import StatusTimelineWidgetComponent from './statusTimeline';
 import StatusTimelineIcon from './statusTimelineIcon';
 import { queryWidgetOnDrop } from '../queryWidget/multiQueryWidgetDrop';
+import { WIDGET_INITIAL_HEIGHT, WIDGET_INITIAL_WIDTH } from '../constants';
 
 export const statusTimelineChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
@@ -29,8 +30,8 @@ export const statusTimelineChartPlugin: DashboardPlugin = {
         },
       }),
       initialSize: {
-        height: 250,
-        width: 270,
+        height: WIDGET_INITIAL_HEIGHT,
+        width: WIDGET_INITIAL_WIDTH,
       },
     });
   },
