@@ -15,7 +15,7 @@ const assignDefaultColor = ({
 
   // Only provide default if one is not already present in the data stream, and none is specified in the associated style settings.
   if (dataStream.color == null && !hasAssociatedColor) {
-    return assignColor(dataStream, index);
+    return assignColor(dataStream, index) as DataStream;
   }
   return dataStream;
 };

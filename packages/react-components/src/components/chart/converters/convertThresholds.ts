@@ -1,5 +1,6 @@
-import { AnnotationValue, COMPARISON_OPERATOR, ComparisonOperator, Threshold } from '@iot-app-kit/core';
+import { AnnotationValue, COMPARISON_OPERATOR, ComparisonOperator } from '@iot-app-kit/core';
 import { COMPARATOR_MAP } from '../../../common/constants';
+import { StyledThreshold } from '../types';
 
 const comparisonOperatorToLowerYAxis = (comparisonOperator: ComparisonOperator, value: AnnotationValue) => {
   switch (comparisonOperator) {
@@ -26,7 +27,7 @@ const comparisonOperatorToUpperYAxis = (comparisonOperator: ComparisonOperator, 
   }
 };
 
-export const convertThresholds = (thresholds?: Threshold[]) => {
+export const convertThresholds = (thresholds?: StyledThreshold[]) => {
   if (!thresholds || !thresholds.length) return {};
   return {
     markLine: {
@@ -39,9 +40,11 @@ export const convertThresholds = (thresholds?: Threshold[]) => {
         .map((t) => ({
           label: {
             formatter: `${COMPARATOR_MAP[t.comparisonOperator]} ${t.value}`,
+            color: t.color,
           },
           lineStyle: {
             color: t.color,
+            opacity: t.visible === false ? 0 : 1,
           },
           yAxis: t.value,
         })),
@@ -51,12 +54,12 @@ export const convertThresholds = (thresholds?: Threshold[]) => {
       animation: false,
       data: thresholds
         .filter((t) => typeof t.value === 'number')
-        .map(({ comparisonOperator, value, color }) => [
+        .map(({ comparisonOperator, value, color, fill }) => [
           {
             yAxis: comparisonOperatorToLowerYAxis(comparisonOperator, value),
             itemStyle: {
               color: color,
-              opacity: 0.1,
+              opacity: fill !== undefined ? 0.1 : 0,
             },
           },
           {

@@ -19,6 +19,7 @@ export const PropertiesPanel = () => {
   return selection ? (
     <Box padding={{ horizontal: 'm', bottom: 'l' }}>
       <Tabs
+        disableContentPaddings
         tabs={[
           {
             label: 'Style',

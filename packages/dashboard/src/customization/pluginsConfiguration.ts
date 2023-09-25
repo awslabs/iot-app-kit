@@ -1,12 +1,4 @@
-import {
-  barChartPlugin,
-  kpiPlugin,
-  lineChartPlugin,
-  scatterChartPlugin,
-  statusTimelineChartPlugin,
-  tablePlugin,
-  textPlugin,
-} from './widgets';
+import { appKitPlugin, textPlugin } from './widgets';
 
 /**
  * plugin list to be added to the dashboard
@@ -14,12 +6,4 @@ import {
  * order matters for component library
  *
  */
-export default [
-  lineChartPlugin,
-  scatterChartPlugin,
-  barChartPlugin,
-  statusTimelineChartPlugin,
-  kpiPlugin,
-  tablePlugin,
-  textPlugin,
-];
+export default [appKitPlugin, textPlugin];

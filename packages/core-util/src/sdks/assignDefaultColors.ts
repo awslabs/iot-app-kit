@@ -1,11 +1,18 @@
 import { colorPalette } from './colorPalette';
 
-export const assignDefaultColor: <T extends { color?: string }>(colorableItem: T, colorIndexOffset?: number) => T = (
-  colorableItem,
-  colorIndexOffset = 0
-) => {
-  return {
-    ...colorableItem,
-    color: colorableItem.color || colorPalette[colorIndexOffset % colorPalette.length],
+// eslint-disable-next-line  @typescript-eslint/no-explicit-any
+type GenericObject = { [key: string]: any };
+
+const defaultColorPicker = () => {
+  let colorIndexOffset = 0;
+
+  return (colorableItem: GenericObject, offset?: number) => {
+    const indexOffset = offset ?? colorIndexOffset++;
+    const color = colorPalette[indexOffset % colorPalette.length];
+    return {
+      ...colorableItem,
+      color: colorableItem.color || color,
+    };
   };
 };
+export const assignDefaultColor = defaultColorPicker();

@@ -1,8 +1,9 @@
-import type { StyleSettingsMap, ThresholdSettings } from '@iot-app-kit/core';
-import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import type { StyleSettingsMap, Threshold, ThresholdSettings } from '@iot-app-kit/core';
+import type { AssetPropertyQuery, SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import type { DashboardWidget } from '~/types';
 import type { AxisSettings, ComplexFontSettings, SimpleFontSettings, ThresholdWithId } from '../settings';
 import type { TableColumnDefinition, TableItem } from '@iot-app-kit/react-components/src';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 
 export type QueryConfig<S, T> = {
   source: S;
@@ -65,6 +66,77 @@ export type ScatterChartProperties = QueryProperties & {
   significantDigits?: number;
 };
 export type ScatterChartPropertiesKeys = keyof ScatterChartProperties;
+
+export type LineAndScatterStyles = {
+  significantDigits?: number;
+  color?: string;
+  symbol?: SymbolStyles;
+  line?: LineStyles;
+  aggregationType?: AggregateType;
+  resolution?: string;
+};
+export type LineStyles = {
+  connectionStyle?: 'none' | 'linear' | 'curve' | 'step-start' | 'step-middle' | 'step-end';
+  style?: 'solid' | 'dotted' | 'dashed';
+  thickness?: number;
+  color?: string;
+};
+export type SymbolStyles = {
+  visible?: boolean;
+  style?:
+    | 'circle'
+    | 'filled-circle'
+    | 'rectangle'
+    | 'rounded-rectangle'
+    | 'triangle'
+    | 'diamond'
+    | 'pin'
+    | 'arrow'
+    | 'none';
+  color?: string;
+  size?: number;
+};
+export type AssetPropertyStyles = LineAndScatterStyles & { yAxis?: YAxisOptions };
+export type StyledAssetPropertyQuery = AssetPropertyQuery & AssetPropertyStyles;
+export type StyledAssetQuery = {
+  assets: {
+    assetId: SiteWiseAssetQuery['assets'][number]['assetId'];
+    properties: StyledAssetPropertyQuery[];
+  }[];
+};
+
+export type ThresholdStyleType = {
+  visible?: boolean;
+  fill?: string;
+};
+export type StyledThreshold = Threshold & ThresholdStyleType;
+
+type YAxisRange = {
+  yMin?: number;
+  yMax?: number;
+};
+export type YAxisOptions = YAxisRange & {
+  visible?: boolean;
+};
+export type ChartAxisOptions = YAxisRange & {
+  yVisible?: boolean;
+  xVisible?: boolean;
+};
+type ChartLegend = {
+  visible?: boolean;
+};
+
+export type StyledSiteWiseQueryConfig = QueryConfig<'iotsitewise', StyledAssetQuery | undefined>;
+
+export type LineScatterChartProperties = LineAndScatterStyles & {
+  title?: string;
+  thresholds?: StyledThreshold[];
+  axis?: ChartAxisOptions;
+  legend?: ChartLegend;
+  queryConfig: StyledSiteWiseQueryConfig;
+};
+
+export type LineScatterChartPropertiesKeys = keyof LineScatterChartProperties;
 
 export type BarChartProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
@@ -132,6 +204,7 @@ export type KPIWidget = DashboardWidget<KPIProperties>;
 export type StatusWidget = DashboardWidget<StatusProperties>;
 export type LineChartWidget = DashboardWidget<LineChartProperties>;
 export type ScatterChartWidget = DashboardWidget<ScatterChartProperties>;
+export type LineScatterChartWidget = DashboardWidget<LineScatterChartProperties>;
 export type BarChartWidget = DashboardWidget<BarChartProperties>;
 export type TableWidget = DashboardWidget<TableProperties>;
 export type TextWidget = DashboardWidget<TextProperties>;

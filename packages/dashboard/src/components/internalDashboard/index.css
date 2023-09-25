@@ -56,7 +56,6 @@
 .collapsible-panel-content {
   min-height: 0;
   overflow-y: scroll;
-  height: 100%;
 }
 
 .collapsible-panel-vertical-divider {

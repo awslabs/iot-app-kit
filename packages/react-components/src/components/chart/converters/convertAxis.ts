@@ -6,4 +6,6 @@ export const convertYAxis = (axis: ChartAxisOptions | undefined): YAXisComponent
   ...DEFAULT_Y_AXIS,
   name: axis?.yAxisLabel,
   show: axis?.showX ?? DEFAULT_Y_AXIS.show,
+  min: axis?.yMin ?? undefined,
+  max: axis?.yMax ?? undefined,
 });

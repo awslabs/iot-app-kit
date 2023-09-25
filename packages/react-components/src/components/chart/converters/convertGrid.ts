@@ -6,12 +6,19 @@ const unsetGutter = {
   top: DEFAULT_MARGIN,
 };
 
-export const convertGrid = (legend: ChartOptions['legend']) => {
+export const convertGrid = (legend: ChartOptions['legend'], shouldShowYAxisLegend: boolean) => {
   const legendPosition = legend?.position ?? 'bottom';
+
+  const multiYAxisPadding = shouldShowYAxisLegend
+    ? {
+        left: 5,
+      }
+    : {};
 
   return {
     ...DEFAULT_GRID,
     ...unsetGutter,
+    ...multiYAxisPadding,
     [legendPosition]: DEFAULT_MARGIN,
   };
 };

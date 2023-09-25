@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { spaceScaledS } from '@cloudscape-design/design-tokens';
-
 import { YAxisLegend } from './yAxisMenu';
 import { MULTI_Y_AXIS_LEGEND_WIDTH } from '../eChartsConstants';
 
@@ -23,9 +21,9 @@ type MultiYAxisLegendOptions = {
 export const MultiYAxisLegend = ({ height, yMax, yMin }: MultiYAxisLegendOptions) => {
   const maxHeight = height / 2;
   return (
-    <div className='multi-y-axis-legend' style={{ width: MULTI_Y_AXIS_LEGEND_WIDTH, paddingInline: spaceScaledS }}>
-      <YAxisLegend maxHeight={maxHeight} label='Y-Min' axes={yMin} />
-      <YAxisLegend maxHeight={maxHeight} label='Y-Max' axes={yMax} menuPosition='top' />
+    <div className='multi-y-axis-legend' style={{ width: MULTI_Y_AXIS_LEGEND_WIDTH, paddingBottom: '4px' }}>
+      <YAxisLegend maxHeight={maxHeight} label='Y-Max' axes={yMax} />
+      <YAxisLegend maxHeight={maxHeight} label='Y-Min' axes={yMin} menuPosition='top' />
     </div>
   );
 };

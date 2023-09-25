@@ -5,12 +5,17 @@ import ScatterIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';
 import type { ScatterChartWidget } from '../types';
 import { PropertyDataType } from '@aws-sdk/client-iotsitewise';
+import { queryWidgetOnDrop } from '../queryWidget/multiQueryWidgetDrop';
 
 export const scatterChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
     registerWidget<ScatterChartWidget>('scatter-chart', {
       render: (widget) => (
-        <MultiQueryWidget {...widget} allowedDataTypes={[PropertyDataType.DOUBLE, PropertyDataType.INTEGER]}>
+        <MultiQueryWidget
+          widget={widget}
+          onDrop={queryWidgetOnDrop}
+          allowedDataTypes={[PropertyDataType.DOUBLE, PropertyDataType.INTEGER]}
+        >
           <ScatterChartWidgetComponent {...widget} />
         </MultiQueryWidget>
       ),

@@ -7,13 +7,17 @@ import { AggregationsSettingsConfiguration } from '../aggregationSettings';
 import { AxisSettingsConfiguration } from '../axisSettings';
 import { SettingsConfiguration } from '../settings';
 import { TextSettingsConfiguration } from '../textSettings';
+import { LineAndScatterStyleSettingsSection } from '../lineAndScatterStyleSettings/section';
 
 export const StylesSection = () => (
-  <SpaceBetween size='xs' direction='vertical'>
-    <SizeAndPositionConfiguration />
-    <AggregationsSettingsConfiguration />
-    <AxisSettingsConfiguration />
-    <SettingsConfiguration />
-    <TextSettingsConfiguration />
-  </SpaceBetween>
+  <div>
+    <SpaceBetween size='xs' direction='vertical'>
+      <SizeAndPositionConfiguration />
+      <LineAndScatterStyleSettingsSection />
+      <AggregationsSettingsConfiguration />
+      <AxisSettingsConfiguration />
+      <SettingsConfiguration />
+      <TextSettingsConfiguration />
+    </SpaceBetween>
+  </div>
 );
