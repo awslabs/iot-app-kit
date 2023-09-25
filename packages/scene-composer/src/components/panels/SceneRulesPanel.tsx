@@ -1,5 +1,14 @@
-import React, { useCallback, useContext, useState } from 'react';
-import { AttributeEditor, Box, Button, FormField, Input, SpaceBetween, Textarea } from '@awsui/components-react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
+import {
+  AttributeEditor,
+  Box,
+  Button,
+  FormField,
+  Input,
+  InputProps,
+  SpaceBetween,
+  Textarea,
+} from '@awsui/components-react';
 import { useIntl } from 'react-intl';
 
 import { useSceneDocument } from '../../store';
@@ -119,6 +128,7 @@ export const SceneRulesPanel: React.FC = () => {
   const { getSceneRuleMapById, listSceneRuleMapIds, updateSceneRuleMapById } = useSceneDocument(sceneComposerId);
   const [newRuleBasedMapId, setNewRuleBasedMapId] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const inputRef = useRef<InputProps.Ref | null>(null);
   const intl = useIntl();
 
   const onAddRuleClick = useCallback(() => {
@@ -134,6 +144,7 @@ export const SceneRulesPanel: React.FC = () => {
           description: 'Error message wrong input',
         }),
       );
+      inputRef.current?.focus();
     }
   }, [newRuleBasedMapId]);
 
@@ -157,6 +168,7 @@ export const SceneRulesPanel: React.FC = () => {
               onChange={(event) => {
                 setNewRuleBasedMapId(event.detail.value);
               }}
+              ref={inputRef}
             />
           </FormField>
           <Button data-testid='addNewRuleButton' onClick={onAddRuleClick}>
