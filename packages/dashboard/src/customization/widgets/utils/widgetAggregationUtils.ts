@@ -47,6 +47,8 @@ export const getAggregation = (widget: QueryWidget | LineScatterChartWidget) => 
     return widget.properties.aggregationType;
   }
 
+  if (widget.properties.queryConfig.query?.assets.length === 0) return undefined;
+
   const firstAssetProperty = widget.properties.queryConfig.query?.assets[0].properties[0];
   return firstAssetProperty?.aggregationType;
 };
