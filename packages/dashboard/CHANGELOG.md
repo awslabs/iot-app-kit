@@ -1,5 +1,54 @@
 # Changelog
 
+## [7.4.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v7.3.1...dashboard-v7.4.0) (2023-09-25)
+
+
+### Features
+
+* add fixed width and height to the table ([7005009](https://github.com/awslabs/iot-app-kit/commit/7005009b1e325a8f333b281113ce1cf4745b0b19))
+* auto collapse state for both panels ([fc54b1c](https://github.com/awslabs/iot-app-kit/commit/fc54b1cb71979e48dc5440620577ca8a2adc4be6))
+* **dashboard:** add widget tile ([13573c5](https://github.com/awslabs/iot-app-kit/commit/13573c59d560e7192159db8751d6818cfebcf531))
+* **dashboard:** break out properties sections into tabs ([fb8b685](https://github.com/awslabs/iot-app-kit/commit/fb8b685f1d6ea8459c40637f12f0cf6ddc75aa55))
+* **dashboard:** change dashboard viewport default from 5m to 10m ([803d9a4](https://github.com/awslabs/iot-app-kit/commit/803d9a4944f6a55cb2e0e9691ddc3e537966c501))
+* **dashboard:** empty widget configuration panel ([72bc7e3](https://github.com/awslabs/iot-app-kit/commit/72bc7e32a373a724077e1b7ba0d9f671af4495eb))
+* **dashboard:** line symbol ([bba8e8d](https://github.com/awslabs/iot-app-kit/commit/bba8e8d392f73b3e52109bad1557cda4ef00221c))
+* **dashboard:** new line-scatter-chart ([53768b9](https://github.com/awslabs/iot-app-kit/commit/53768b911a13066b9527c88f0e95a620f0025f7a))
+* **dashboard:** update collapsible side panels ([1495451](https://github.com/awslabs/iot-app-kit/commit/149545160551174af83ce3ddb2a61f1a61977c94))
+* **react-components:** adding TrendCursor Sync to dashboard ([d046184](https://github.com/awslabs/iot-app-kit/commit/d046184b836e9cb3670b210eb24c4fd91167b52a))
+* **react-components:** sync echarts viewport ([e04e040](https://github.com/awslabs/iot-app-kit/commit/e04e04079630361047e82d8564678cd4e5857cdd))
+* remove drag icon in chat widget ([64e1b89](https://github.com/awslabs/iot-app-kit/commit/64e1b897dc9389055cfd9df9fce01b0415b9e170))
+* table widget pagination and sortingdisabled ([b727eae](https://github.com/awslabs/iot-app-kit/commit/b727eae8364f19f2e997fa0c9275e1f0a947f854))
+* update icons for widget library-952 ([5f7f9ee](https://github.com/awslabs/iot-app-kit/commit/5f7f9ee8274f99b88fd464bd4ee434d0f4126594))
+* updated chart initial widget size [#1920](https://github.com/awslabs/iot-app-kit/issues/1920)) ([88218af](https://github.com/awslabs/iot-app-kit/commit/88218afb1aed84e63d08fbad3acacab044c2ab8a))
+* updated dashboard background color to grey-125 [#1950](https://github.com/awslabs/iot-app-kit/issues/1950) ([0f81bb2](https://github.com/awslabs/iot-app-kit/commit/0f81bb2240086c9222ab0063dac576927fd407c1))
+
+
+### Bug Fixes
+
+* **dashboard:** removing all props wont crash chart ([bac2fb6](https://github.com/awslabs/iot-app-kit/commit/bac2fb6debc1364d831c2b93e68a7eafd2b45b9c))
+* **react-components:** fixing the viewport and some styling elements ([7d3526e](https://github.com/awslabs/iot-app-kit/commit/7d3526e34c86b55632a4d5aa0c7029fd1499a48b))
+* **react-components:** updating echarts ux ([ddfc9c8](https://github.com/awslabs/iot-app-kit/commit/ddfc9c8cc15f32a8c307653daf5d2159918e58b2))
+* **react-components:** updating echarts with the fixes founf during bug bash ([9f32c21](https://github.com/awslabs/iot-app-kit/commit/9f32c21ae53d99ddac718caa520d9e852a25f499))
+* resolved table widget column resize issue ([8b6b418](https://github.com/awslabs/iot-app-kit/commit/8b6b4189601c594ffef9dd6ed915e6ddbf7fa938))
+* resolved table widget column resize issue ([08b1993](https://github.com/awslabs/iot-app-kit/commit/08b19932614978cac915e34a27747f72da78c657))
+* use one timesync for all of dashboard ([c979995](https://github.com/awslabs/iot-app-kit/commit/c979995ec642d0ac8081056a3d2e83dd42a90d18))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/core bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/core-util bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/react-components bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/source-iotsitewise bumped from 7.3.1 to 7.4.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/testing-util bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/ts-config bumped from 7.3.1 to 7.4.0
+    * eslint-config-iot-app-kit bumped from 7.3.1 to 7.4.0
+
 ## [7.3.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v7.3.0...dashboard-v7.3.1) (2023-08-24)
 
 

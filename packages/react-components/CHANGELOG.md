@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [7.4.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v7.3.1...react-components-v7.4.0) (2023-09-25)
+
+
+### Features
+
+* add fixed width and height to the table ([7005009](https://github.com/awslabs/iot-app-kit/commit/7005009b1e325a8f333b281113ce1cf4745b0b19))
+* chart fit and finish - match cloudscape colors for axis and labels [#1929](https://github.com/awslabs/iot-app-kit/issues/1929) ([6fe3424](https://github.com/awslabs/iot-app-kit/commit/6fe3424ec90052d2e63a06a34b874958b9c7bf0c))
+* **dashboard:** new line-scatter-chart ([53768b9](https://github.com/awslabs/iot-app-kit/commit/53768b911a13066b9527c88f0e95a620f0025f7a))
+* **echarts:** allow scroll left and right ([5d2341e](https://github.com/awslabs/iot-app-kit/commit/5d2341e71f531556ac8147e1a0742233992ed82d))
+* **react-components:** adding TrendCursor Sync to dashboard ([d046184](https://github.com/awslabs/iot-app-kit/commit/d046184b836e9cb3670b210eb24c4fd91167b52a))
+* **react-components:** sync echarts viewport ([e04e040](https://github.com/awslabs/iot-app-kit/commit/e04e04079630361047e82d8564678cd4e5857cdd))
+* table widget pagination and sortingdisabled ([b727eae](https://github.com/awslabs/iot-app-kit/commit/b727eae8364f19f2e997fa0c9275e1f0a947f854))
+
+
+### Bug Fixes
+
+* **CSS-Loader:** updated sass-loader & fixed style ([aee4abc](https://github.com/awslabs/iot-app-kit/commit/aee4abcd22617cd1b28641711a4be2d1bab4e252))
+* **react-components:** adding debounce to the echarts zoom handler ([b983385](https://github.com/awslabs/iot-app-kit/commit/b98338508da223bab1a99c28641276ff02c537b5))
+* **react-components:** echarts resize drag fix ([19ccc7e](https://github.com/awslabs/iot-app-kit/commit/19ccc7ee4569aea891b43883a8ba1dedf3ac4fc9))
+* **react-components:** fix TC behaviour when there is a change in query ([50edcc1](https://github.com/awslabs/iot-app-kit/commit/50edcc1b2131c03c9e30621407a3d3d201825a90))
+* **react-components:** fixing TCs on data zoom ([379525c](https://github.com/awslabs/iot-app-kit/commit/379525cd1246061398ff8a113963b968466ae11a))
+* **react-components:** fixing the duplicate yAxis values ([60073ef](https://github.com/awslabs/iot-app-kit/commit/60073ef7ea4e1167218c8cdecd021bc677d5cc66))
+* **react-components:** fixing the viewport and some styling elements ([7d3526e](https://github.com/awslabs/iot-app-kit/commit/7d3526e34c86b55632a4d5aa0c7029fd1499a48b))
+* **react-components:** need stop propagation in start and end of resize event ([30e9901](https://github.com/awslabs/iot-app-kit/commit/30e99010bc57e48040ddcac8c41546e745a5a3f9))
+* **react-components:** updating echarts ux ([ddfc9c8](https://github.com/awslabs/iot-app-kit/commit/ddfc9c8cc15f32a8c307653daf5d2159918e58b2))
+* **react-components:** updating echarts with the fixes founf during bug bash ([9f32c21](https://github.com/awslabs/iot-app-kit/commit/9f32c21ae53d99ddac718caa520d9e852a25f499))
+* x-axis toggle will toggle both x and y axis [#1925](https://github.com/awslabs/iot-app-kit/issues/1925) ([58b0dbb](https://github.com/awslabs/iot-app-kit/commit/58b0dbbc72a9dbfd13648a454ea36ac570efd0eb))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/core bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/core-util bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/source-iottwinmaker bumped from 7.3.1 to 7.4.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/source-iotsitewise bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/testing-util bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/ts-config bumped from 7.3.1 to 7.4.0
+    * eslint-config-iot-app-kit bumped from 7.3.1 to 7.4.0
+
 ## [7.3.1](https://github.com/awslabs/iot-app-kit/compare/react-components-v7.3.0...react-components-v7.3.1) (2023-08-24)
 
 

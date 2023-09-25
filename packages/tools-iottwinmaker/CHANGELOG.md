@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.4.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v7.3.1...tools-iottwinmaker-v7.4.0) (2023-09-25)
+
+
+### Bug Fixes
+
+* **tools-iottwinmaker:** update dashboard role to include execute query api ([b63d053](https://github.com/awslabs/iot-app-kit/commit/b63d0537ce247724d0dd73d8d0d1ffba20e0ab5a))
+
 ## [7.3.1](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v7.3.0...tools-iottwinmaker-v7.3.1) (2023-08-24)
 
 

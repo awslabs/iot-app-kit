@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.4.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v7.3.1...core-util-v7.4.0) (2023-09-25)
+
+
+### Features
+
+* **dashboard:** new line-scatter-chart ([53768b9](https://github.com/awslabs/iot-app-kit/commit/53768b911a13066b9527c88f0e95a620f0025f7a))
+
 ## [7.3.1](https://github.com/awslabs/iot-app-kit/compare/core-util-v7.3.0...core-util-v7.3.1) (2023-08-24)
 
 
