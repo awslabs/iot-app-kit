@@ -8,4 +8,8 @@ export const convertYAxis = (axis: ChartAxisOptions | undefined): YAXisComponent
   show: axis?.showY ?? DEFAULT_Y_AXIS.show,
   min: axis?.yMin ?? undefined,
   max: axis?.yMax ?? undefined,
+  axisLabel: {
+    hideOverlap: true,
+    color: '#5f6b7a',
+  },
 });
