@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v7.4.0...scene-composer-v7.5.0) (2023-09-25)
+
+
+### Miscellaneous Chores
+
+* **scene-composer:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.4.0 to 7.5.0
+    * @iot-app-kit/react-components bumped from 7.4.0 to 7.5.0
+    * @iot-app-kit/related-table bumped from 7.4.0 to 7.5.0
+    * @iot-app-kit/source-iottwinmaker bumped from 7.4.0 to 7.5.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 7.4.0 to 7.5.0
+
 ## [7.4.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v7.3.1...scene-composer-v7.4.0) (2023-09-25)
 
 

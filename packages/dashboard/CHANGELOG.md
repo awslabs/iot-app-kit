@@ -1,5 +1,33 @@
 # Changelog
 
+## [7.5.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v7.4.0...dashboard-v7.5.0) (2023-09-25)
+
+
+### Features
+
+* integrate query editor ([82c36a1](https://github.com/awslabs/iot-app-kit/commit/82c36a1cf4f7c47b45ba32c1f5e15cdf3e132cb4))
+
+
+### Bug Fixes
+
+* **dashboard:** set initial viewport to 5m ([f7a5684](https://github.com/awslabs/iot-app-kit/commit/f7a568414a772e98ceb03bdac4978173b36ddb47))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 7.4.0 to 7.5.0
+    * @iot-app-kit/core bumped from 7.4.0 to 7.5.0
+    * @iot-app-kit/core-util bumped from 7.4.0 to 7.5.0
+    * @iot-app-kit/react-components bumped from 7.4.0 to 7.5.0
+    * @iot-app-kit/source-iotsitewise bumped from 7.4.0 to 7.5.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.4.0 to 7.5.0
+    * @iot-app-kit/testing-util bumped from 7.4.0 to 7.5.0
+    * @iot-app-kit/ts-config bumped from 7.4.0 to 7.5.0
+    * eslint-config-iot-app-kit bumped from 7.4.0 to 7.5.0
+
 ## [7.4.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v7.3.1...dashboard-v7.4.0) (2023-09-25)
 
 

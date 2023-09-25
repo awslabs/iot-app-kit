@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v7.4.0...source-iottwinmaker-v7.5.0) (2023-09-25)
+
+
+### Miscellaneous Chores
+
+* **source-iottwinmaker:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.4.0 to 7.5.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.4.0 to 7.5.0
+    * @iot-app-kit/ts-config bumped from 7.4.0 to 7.5.0
+    * eslint-config-iot-app-kit bumped from 7.4.0 to 7.5.0
+
 ## [7.4.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v7.3.1...source-iottwinmaker-v7.4.0) (2023-09-25)
 
 
