@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { WebglContext, TrendCursorSync, TimeSync } from '@iot-app-kit/react-components';
 import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
+import { colorBackgroundCellShaded } from '@cloudscape-design/design-tokens';
 
 import { selectedRect } from '~/util/select';
 /**
@@ -213,7 +214,11 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
       <ResizablePanes
         leftPane={<ResourceExplorer />}
         centerPane={
-          <div className='display-area' ref={(el) => setViewFrameElement(el || undefined)}>
+          <div
+            className='display-area'
+            ref={(el) => setViewFrameElement(el || undefined)}
+            style={{ backgroundColor: colorBackgroundCellShaded }}
+          >
             <GestureableGrid {...gridProps}>
               <ContextMenu {...contextMenuProps} />
               <Widgets {...widgetsProps} />
@@ -249,7 +254,11 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
           </SpaceBetween>
         </Box>
       </div>
-      <div className='display-area' ref={(el) => setViewFrameElement(el || undefined)}>
+      <div
+        className='display-area'
+        ref={(el) => setViewFrameElement(el || undefined)}
+        style={{ backgroundColor: colorBackgroundCellShaded }}
+      >
         <ReadOnlyGrid {...grid}>
           <Widgets {...widgetsProps} />
         </ReadOnlyGrid>
