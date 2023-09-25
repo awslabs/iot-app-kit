@@ -269,7 +269,9 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
 
   return (
     <TrendCursorSync>
-      <TimeSync group='dashboard-timesync'>{readOnly ? ReadOnlyComponent : EditComponent}</TimeSync>
+      <TimeSync initialViewport={{ duration: '5m' }} group='dashboard-timesync'>
+        {readOnly ? ReadOnlyComponent : EditComponent}
+      </TimeSync>
     </TrendCursorSync>
   );
 };
