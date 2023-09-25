@@ -4,6 +4,7 @@ import KPIWidgetComponent from './component';
 import KPIIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';
 import type { KPIWidget } from '../types';
+import { KPI_WIDGET_INITIAL_HEIGHT, KPI_WIDGET_INITIAL_WIDTH } from '../constants';
 
 export const kpiPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
@@ -26,8 +27,8 @@ export const kpiPlugin: DashboardPlugin = {
         secondaryFont: {},
       }),
       initialSize: {
-        height: 120,
-        width: 270,
+        height: KPI_WIDGET_INITIAL_HEIGHT,
+        width: KPI_WIDGET_INITIAL_WIDTH,
       },
     });
   },

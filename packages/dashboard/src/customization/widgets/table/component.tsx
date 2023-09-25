@@ -11,7 +11,7 @@ import type { TableWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { useChartSize } from '~/hooks/useChartSize';
 import { DEFAULT_PREFERENCES } from './table-config';
-import { TABLE_OVERFLOW_HEIGHT, TABLE_WIDGET_MAX_HEIGHT } from './constants';
+import { TABLE_OVERFLOW_HEIGHT, TABLE_WIDGET_MAX_HEIGHT } from '../constants';
 
 export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
   {
