@@ -31,7 +31,7 @@ export const useResizeableEChart = (
 ) => {
   const { width, height } = size;
   const [leftLegendRef, { width: leftLegendWidth }] = useMeasure<HTMLDivElement>();
-  const [chartWidth, setWidth] = useState(getChartWidth(width - leftLegendWidth));
+  const [chartWidth, setWidth] = useState(getChartWidth(width));
 
   const onResize = (_event: SyntheticEvent, data: ResizeCallbackData) => {
     _event.stopPropagation();
@@ -39,17 +39,13 @@ export const useResizeableEChart = (
   };
 
   useEffect(() => {
-    setWidth(getChartWidth(width - leftLegendWidth));
-  }, [leftLegendWidth]);
-
-  useEffect(() => {
-    setWidth(getChartWidth(width - leftLegendWidth));
-  }, [width]);
+    setWidth(getChartWidth(width));
+  }, [width, leftLegendWidth]);
 
   useEffect(() => {
     const chart = chartRef.current;
     chart?.resize({ width: chartWidth, height: height });
-  }, [chartRef, width, height, chartWidth]);
+  }, [chartRef, height, chartWidth]);
 
   const minConstraints: [number, number] = useMemo(() => {
     return [width * CHART_RESIZE_MIN_FACTOR, height];
@@ -60,7 +56,6 @@ export const useResizeableEChart = (
   }, [width, height]);
 
   return {
-    width,
     height,
     chartWidth,
     leftLegendWidth,

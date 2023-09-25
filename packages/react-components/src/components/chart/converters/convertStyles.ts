@@ -4,6 +4,7 @@ import { ChartOptions } from '../types';
 import { ChartStyleSettingsWithDefaults, Emphasis, getDefaultStyles, getStyles } from '../utils/getStyles';
 import { useChartStore } from '../store';
 import { isDataStreamInList } from '../../../utils/isDataStreamInList';
+import merge from 'lodash.merge';
 
 type ConvertChartOptions = Pick<ChartOptions, 'defaultVisualizationType' | 'styleSettings' | 'significantDigits'>;
 
@@ -21,7 +22,7 @@ export const convertStyles =
 
     const emphasisWithDefault = emphasis ?? 'none';
 
-    return { ...defaultStyles, ...userDefinedStyles, emphasis: emphasisWithDefault };
+    return merge(defaultStyles, userDefinedStyles, { emphasis: emphasisWithDefault });
   };
 
 export type StyleSettingsMap = {

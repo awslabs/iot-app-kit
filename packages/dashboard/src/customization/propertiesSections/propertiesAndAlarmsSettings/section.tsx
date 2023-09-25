@@ -1,55 +1,21 @@
 import React, { FC } from 'react';
 import { useAssetDescriptionMapQuery } from '~/hooks/useAssetDescriptionQueries';
 import { PropertyComponent } from './propertyComponent';
-import type { SiteWiseQueryConfig } from '~/customization/widgets/types';
-import type { StyleSettingsMap } from '@iot-app-kit/core';
 import type { TableItemRef } from '@iot-app-kit/react-components';
 import { TableItem } from '@iot-app-kit/react-components';
-import { Maybe, isJust } from '~/util/maybe';
+import { isJust } from '~/util/maybe';
 import { SelectOneWidget } from '../shared/selectOneWidget';
 import { SiteWiseAssetQuery, toId } from '@iot-app-kit/source-iotsitewise';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Box from '@cloudscape-design/components/box';
+import { PropertiesAlarmsSectionProps } from './sectionTypes';
+import { defaultOnDeleteQuery } from './onDeleteProperty';
 
 const NoComponents = () => <Box variant='p'>No properties or alarms found</Box>;
 
 function isTableItemRef(value: TableItem[string]): value is TableItemRef {
   return typeof value === 'object' && value?.$cellRef !== undefined;
 }
-
-export type PropertiesAlarmsSectionProps = {
-  queryConfig: Maybe<SiteWiseQueryConfig>;
-  updateQueryConfig: (newValue: SiteWiseQueryConfig) => void;
-  styleSettings: Maybe<StyleSettingsMap | undefined>;
-  updateStyleSettings: (newValue: StyleSettingsMap | undefined) => void;
-  onDeleteAssetQuery?: (params: {
-    assetId: string;
-    propertyId: string;
-    siteWiseAssetQuery: SiteWiseAssetQuery;
-    updateSiteWiseAssetQuery: (newQuery: SiteWiseAssetQuery) => void;
-  }) => () => void;
-  colorable?: boolean;
-};
-
-const defaultOnDeleteQuery: PropertiesAlarmsSectionProps['onDeleteAssetQuery'] =
-  ({ assetId, propertyId, siteWiseAssetQuery, updateSiteWiseAssetQuery }) =>
-  () => {
-    const assets =
-      siteWiseAssetQuery?.assets
-        .map((asset) => {
-          if (assetId === asset.assetId) {
-            const { properties } = asset;
-            return {
-              assetId,
-              properties: properties.filter((p) => p.propertyId !== propertyId),
-            };
-          }
-          return asset;
-        })
-        .filter((asset) => asset.properties.length > 0) ?? [];
-
-    updateSiteWiseAssetQuery({ assets });
-  };
 
 export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({
   onDeleteAssetQuery = defaultOnDeleteQuery,

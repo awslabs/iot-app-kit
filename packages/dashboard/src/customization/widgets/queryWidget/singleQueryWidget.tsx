@@ -24,7 +24,7 @@ const SingleQueryWidgetComponent: React.FC<QueryWidget & { children: ReactNode }
     () => ({
       accept: [ItemTypes.ResourceExplorerAssetProperty, ItemTypes.ResourceExplorerAlarm],
       drop: ({ assetSummary }: ResourcePanelItem) => {
-        const { aggregation, resolution } = getCurrentAggregationResolution([], widget.type);
+        const { aggregation, resolution } = getCurrentAggregationResolution(widget);
 
         const asset = {
           assetId: assetSummary.assetId || '',
