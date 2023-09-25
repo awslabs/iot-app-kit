@@ -118,7 +118,7 @@ describe(`${PropertiesPanel.name}`, () => {
     await renderTestComponentAsync();
 
     expect(screen.getByText('Style')).toBeVisible();
-    expect(screen.getByText('Properties & Alarms')).toBeVisible();
+    expect(screen.getByText('Properties')).toBeVisible();
     expect(screen.getByText('Thresholds')).toBeVisible();
   });
 
@@ -152,7 +152,7 @@ describe(`${PropertiesPanel.name}`, () => {
     const element = await renderTestComponentAsync();
     const trigger = createWrapper(element.baseElement);
 
-    expect(screen.getByText('Properties & Alarms')).toBeVisible();
+    expect(screen.getByText('Properties')).toBeVisible();
 
     await act(() => {
       trigger.findTabs()?.findTabLinkByIndex(2)?.click();

@@ -27,8 +27,8 @@ export const PropertiesPanel = () => {
             content: <StylesSection />,
           },
           {
-            label: 'Properties & Alarms',
-            id: 'propertiesAndAlarms',
+            label: 'Properties',
+            id: 'properties',
             content: (
               <SpaceBetween size='xs' direction='vertical'>
                 <PropertiesAndAlarmsSettingsConfiguration />
