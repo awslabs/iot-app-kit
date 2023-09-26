@@ -1,7 +1,7 @@
-import { getSiteWiseClient, getIotEventsClient } from '@iot-app-kit/core-util';
-import { DashboardClientConfiguration, DashboardIotSiteWiseClients, DashboardClientCredentials } from '~/types';
-import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import { DashboardClientConfiguration, DashboardIotSiteWiseClients, DashboardClientCredentials } from '~/types';
 
 export const isCredentials = (
   dashboardClientConfiguration: DashboardClientConfiguration
@@ -11,12 +11,22 @@ export const isCredentials = (
 export const getClients = (dashboardClientConfiguration: DashboardClientConfiguration): DashboardIotSiteWiseClients => {
   if (!isCredentials(dashboardClientConfiguration)) return dashboardClientConfiguration;
 
+  const iotEventsClient = new IoTEventsClient({
+    credentials: dashboardClientConfiguration.awsCredentials,
+    region: dashboardClientConfiguration.awsRegion,
+  });
+  const iotSiteWiseClient = new IoTSiteWiseClient({
+    credentials: dashboardClientConfiguration.awsCredentials,
+    region: dashboardClientConfiguration.awsRegion,
+  });
+  const iotTwinMakerClient = new IoTTwinMakerClient({
+    credentials: dashboardClientConfiguration.awsCredentials,
+    region: dashboardClientConfiguration.awsRegion,
+  });
+
   return {
-    iotEventsClient: getIotEventsClient(dashboardClientConfiguration),
-    iotSiteWiseClient: getSiteWiseClient(dashboardClientConfiguration) as IoTSiteWiseClient,
-    iotTwinMakerClient: new IoTTwinMakerClient({
-      credentials: dashboardClientConfiguration.awsCredentials,
-      region: dashboardClientConfiguration.awsRegion,
-    }),
+    iotEventsClient,
+    iotSiteWiseClient,
+    iotTwinMakerClient,
   };
 };

@@ -54,11 +54,15 @@ export const getAggregation = (widget: QueryWidget | LineScatterChartWidget) => 
 
 function getFirstProperty(queryConfig: QueryWidget['properties']['queryConfig']) {
   if ('query' in queryConfig && queryConfig.query != null) {
-    if ('properties' in queryConfig.query && queryConfig.query.properties != null) {
+    if (
+      'properties' in queryConfig.query &&
+      queryConfig.query.properties != null &&
+      queryConfig.query.properties.length > 0
+    ) {
       return queryConfig.query.properties[0];
     }
 
-    if ('assets' in queryConfig.query && queryConfig.query.assets != null) {
+    if ('assets' in queryConfig.query && queryConfig.query.assets != null && queryConfig.query.assets.length > 0) {
       return queryConfig.query.assets[0].properties[0];
     }
   }

@@ -5,10 +5,28 @@ import { DashboardWidget } from '~/types';
 import { applyDefaultStylesToQuery } from '~/customization/widgets/utils/assetQuery/applyDefaultStylesToQuery';
 import { assignDefaultStyles } from '~/customization/widgets/utils/assignDefaultStyleSettings';
 import { QueryWidget } from '~/customization/widgets/types';
+import { assignDefaultRefId } from '~/customization/widgets/utils/assetQuery/assignDefaultRefId';
+import { applyAggregationToQuery } from '~/customization/widgets/utils/assetQuery/applyAggregationToQuery';
+import { applyResolutionToQuery } from '~/customization/widgets/utils/assetQuery/applyResolutionToQuery';
+import { getCurrentAggregationResolution } from '~/customization/widgets/utils/widgetAggregationUtils';
 
-type Query = QueryWidget['properties']['queryConfig']['query'];
+type Query = NonNullable<QueryWidget['properties']['queryConfig']['query']>;
 type QueryProperty = { queryConfig: { query: Query } };
 type WidgetWithQuery = DashboardWidget<QueryProperty>;
+
+export const styledQueryWidgetOnDrop = (updatedQuery: Query, widget: QueryWidget) => {
+  const mergedQuery = { assets: [], properties: [], ...updatedQuery };
+
+  const queryWithRefIds = assignDefaultRefId(mergedQuery);
+
+  const { aggregation, resolution } = getCurrentAggregationResolution(widget);
+
+  const queryWithAggregation = applyAggregationToQuery(queryWithRefIds, aggregation);
+  const queryWithResolution = applyResolutionToQuery(queryWithAggregation, resolution);
+  const queryWithDefaultStyles = applyDefaultStylesToQuery(queryWithResolution);
+
+  return queryWithDefaultStyles;
+};
 
 /**
  * Use to get and set the query of the selected widget.
@@ -33,7 +51,7 @@ export function useQuery(): [Query | undefined, (cb: (currentQuery?: Query) => Q
       if (updatedQuery != null) {
         if (selectedWidget.type === 'line-scatter-chart') {
           // @ts-expect-error TODO: Fix this
-          updatedQuery = applyDefaultStylesToQuery(updatedQuery);
+          updatedQuery = styledQueryWidgetOnDrop(updatedQuery, selectedWidget);
         }
 
         let updatedWidget = createUpdatedWidget(selectedWidget, updatedQuery as Query);
