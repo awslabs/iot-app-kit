@@ -16,9 +16,13 @@ exports[`<Tree /> should render appropriate structure 1`] = `
       >
         <input
           type="radio"
-          value=""
+          value="Level 1"
         />
-        Level 1
+        <div
+          data-mocked="SceneNodeLabel"
+        >
+          {"objectRef":"","labelText":"Level 1","componentTypes":[""]}
+        </div>
       </label>
       <ol
         class="tm-tree"
@@ -34,9 +38,13 @@ exports[`<Tree /> should render appropriate structure 1`] = `
           >
             <input
               type="radio"
-              value=""
+              value="Level 2"
             />
-            Level 2
+            <div
+              data-mocked="SceneNodeLabel"
+            >
+              {"objectRef":"","labelText":"Level 2","componentTypes":[""]}
+            </div>
           </label>
           <ol
             class="tm-tree"
@@ -52,9 +60,13 @@ exports[`<Tree /> should render appropriate structure 1`] = `
               >
                 <input
                   type="radio"
-                  value=""
+                  value="Level 3"
                 />
-                Level 1
+                <div
+                  data-mocked="SceneNodeLabel"
+                >
+                  {"objectRef":"","labelText":"Level 3","componentTypes":[""]}
+                </div>
               </label>
             </li>
           </ol>
@@ -71,9 +83,13 @@ exports[`<Tree /> should render appropriate structure 1`] = `
       >
         <input
           type="radio"
-          value=""
+          value="Level 1 Sibling"
         />
-        Level 1 Sibling
+        <div
+          data-mocked="SceneNodeLabel"
+        >
+          {"objectRef":"","labelText":"Level 1 Sibling","componentTypes":[""]}
+        </div>
       </label>
     </li>
   </ol>

@@ -96,7 +96,8 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   return (
     <EnhancedTreeItem
       key={key}
-      labelText={<SceneNodeLabel objectRef={key} labelText={labelText} componentTypes={componentTypes} />}
+      labelNode={<SceneNodeLabel objectRef={key} labelText={labelText} componentTypes={componentTypes} />}
+      labelText={labelText}
       onExpand={onExpandNode}
       expanded={expanded}
       expandable={((node && node.childRefs.length > 0) || showSubModel) && !isSearching}

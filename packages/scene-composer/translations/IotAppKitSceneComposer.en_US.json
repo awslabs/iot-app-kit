@@ -31,6 +31,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "Custom Scale"
   },
+  "/RFl5Q": {
+    "note": "Label for button that triggers a expandable section",
+    "text": "Expand"
+  },
   "/j+uhN": {
     "note": "Select an icon",
     "text": "Select an icon"
@@ -499,6 +503,10 @@
     "note": "Label clarifying the exact text a user is searching for.",
     "text": "Use: {value}"
   },
+  "PIF5h2": {
+    "note": "Label for button that triggers a collapsable section",
+    "text": "Collapse"
+  },
   "PLTmIg": {
     "note": "circle picker",
     "text": "circlePicker"
@@ -530,6 +538,10 @@
   "QU6P87": {
     "note": "Distance Units in a dropdown menu",
     "text": "millimeters"
+  },
+  "QVa0GF": {
+    "note": "Label for button that toggles visibility of nodes in the scene",
+    "text": "Toggle visibility"
   },
   "R+xDel": {
     "note": "Form Field label",

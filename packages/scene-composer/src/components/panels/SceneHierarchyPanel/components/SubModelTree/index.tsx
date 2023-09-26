@@ -146,7 +146,7 @@ const SubModelTree: FC<SubModelTreeProps> = ({
   return (
     <TreeItem
       className='tm-sub-model'
-      labelText={
+      labelNode={
         <TreeItemLabel
           onMouseOver={onHover}
           onMouseLeave={onMouseLeave}
@@ -157,6 +157,7 @@ const SubModelTree: FC<SubModelTreeProps> = ({
           {name}
         </TreeItemLabel>
       }
+      labelText={name}
       expandable={namedChildren.length > 0}
       expanded={expanded}
       onExpand={setExpanded}

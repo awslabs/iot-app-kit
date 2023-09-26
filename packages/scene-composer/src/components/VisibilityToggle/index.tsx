@@ -1,5 +1,6 @@
 import React, { FC, useCallback } from 'react';
 import { Button, ButtonProps } from '@awsui/components-react';
+import { useIntl } from 'react-intl';
 
 import { Show } from '../../assets/auto-gen/icons';
 
@@ -11,6 +12,8 @@ interface VisibilityToggleProps extends ButtonProps {
 }
 
 const VisibilityToggle: FC<VisibilityToggleProps> = ({ visible = true, onToggle = () => {}, ...props }) => {
+  const { formatMessage } = useIntl();
+
   const onToggleHandler = useCallback(
     (e) => {
       onToggle(!visible);
@@ -30,6 +33,10 @@ const VisibilityToggle: FC<VisibilityToggleProps> = ({ visible = true, onToggle 
           <Show />
         </span>
       }
+      ariaLabel={formatMessage({
+        defaultMessage: 'Toggle visibility',
+        description: 'Label for button that toggles visibility of nodes in the scene',
+      })}
     />
   );
 };
