@@ -20,6 +20,7 @@ import CustomDragLayer from '../dragLayer';
 import Actions from '../actions';
 import { QueryEditor } from '../queryEditor';
 import { useClients } from '../dashboard/clientContext';
+import DashboardEmptyState from './dashboardEmptyState';
 
 /**
  * Store imports
@@ -127,6 +128,8 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
     );
   };
 
+  const widgetLength = dashboardConfiguration.widgets.length;
+
   /**
    * setup keyboard shortcuts for actions
    */
@@ -230,6 +233,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
             <GestureableGrid {...gridProps}>
               <ContextMenu {...contextMenuProps} />
               <Widgets {...widgetsProps} />
+              {!widgetLength && <DashboardEmptyState />}
               {activeGesture === 'select' && <UserSelection {...selectionProps} />}
             </GestureableGrid>
             <WebglContext viewFrame={viewFrame} />

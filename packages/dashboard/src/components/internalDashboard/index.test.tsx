@@ -6,8 +6,13 @@ import { render, fireEvent, screen } from '@testing-library/react';
 
 import InternalDashboard from './index';
 import { configureDashboardStore } from '~/store';
+import { useDashboardPlugins } from '../../customization/api';
 import { DashboardWidgetsConfiguration } from '~/types';
 import { initialState } from '~/store/state';
+
+import { AppKitConfig } from '@iot-app-kit/react-components';
+import { DEFAULT_APP_KIT_CONFIG } from '@iot-app-kit/react-components/src/components/iot-app-kit-config/defaultValues';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const EMPTY_DASHBOARD: DashboardWidgetsConfiguration = {
   widgets: [],
@@ -129,4 +134,35 @@ it.skip('toggles to preview mode and hides the component library', function () {
 
   expect(screen.queryByText(/time machine/i)).toBeInTheDocument();
   expect(screen.queryByText(/actions/i)).toBeInTheDocument();
+});
+
+// TODO: fix these tests (likely need to mock TwinMaker client)
+it.skip('empty state within the dashboard when no widget is selected', function () {
+  const args = {
+    readOnly: false,
+    dashboardConfiguration: EMPTY_DASHBOARD,
+  };
+
+  const InternalDashboardAux = () => {
+    useDashboardPlugins();
+    return <InternalDashboard editable={true} />;
+  };
+
+  render(
+    <AppKitConfig customFeatureConfig={DEFAULT_APP_KIT_CONFIG.featureFlagConfig}>
+      <Provider store={configureDashboardStore(args)}>
+        <DndProvider
+          backend={HTML5Backend}
+          options={{
+            enableMouseEvents: true,
+            enableKeyboardEvents: true,
+          }}
+        >
+          <InternalDashboardAux />
+        </DndProvider>
+      </Provider>
+    </AppKitConfig>
+  );
+
+  expect(screen.getByTestId('empty-state')).toBeInTheDocument();
 });
