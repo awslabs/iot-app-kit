@@ -1,6 +1,6 @@
 {
   "name": "@iot-app-kit/jest-config",
-  "version": "7.4.0",
+  "version": "7.5.0",
   "main": "index.ts",
   "private": true,
   "publishConfig": {
