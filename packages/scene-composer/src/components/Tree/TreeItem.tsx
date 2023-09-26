@@ -1,5 +1,6 @@
 import { Button } from '@awsui/components-react';
 import React, { ComponentPropsWithRef, FC, ReactNode, useCallback } from 'react';
+import { useIntl } from 'react-intl';
 
 import RadioButton from '../RadioButton';
 import { useStore } from '../../store';
@@ -17,7 +18,8 @@ interface TreeItemInnerProps {
 }
 
 export interface TreeItemProps extends TreeItemInnerProps, ComponentPropsWithRef<'li'> {
-  labelText: ReactNode;
+  labelNode: ReactNode;
+  labelText: string;
   selectionMode?: SelectionMode;
 
   // Expandable
@@ -77,6 +79,7 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
   (
     {
       className = '',
+      labelNode,
       labelText,
       children,
       selected,
@@ -91,6 +94,7 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
     }: TreeItemProps,
     ref,
   ) => {
+    const { formatMessage } = useIntl();
     const expandHandler = useCallback(
       async (e) => {
         e.stopPropagation(); // Prevent bubbling that would result in triggering selected.
@@ -111,7 +115,7 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
           selectable={selectable}
           onActivated={onActivated}
           onSelected={onSelected}
-          label={(labelText as any)?.props?.labelText || ''}
+          label={labelText}
         >
           {expandable && (
             <Button
@@ -119,9 +123,21 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
               variant='inline-icon'
               onClick={expandHandler}
               iconName={`treeview-${expanded ? 'collapse' : 'expand'}`}
+              ariaExpanded={expanded}
+              ariaLabel={`${
+                expanded
+                  ? formatMessage({
+                      defaultMessage: 'Collapse',
+                      description: 'Label for button that triggers a collapsable section',
+                    })
+                  : formatMessage({
+                      defaultMessage: 'Expand',
+                      description: 'Label for button that triggers a expandable section',
+                    })
+              } ${labelText}`}
             />
           )}
-          {labelText}
+          {labelNode}
         </TreeItemInner>
         {!expandable || (expandable && expanded) ? children : null}
       </li>

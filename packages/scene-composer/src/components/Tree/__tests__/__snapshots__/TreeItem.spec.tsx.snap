@@ -1,50 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<TreeItem /> should render appropriate configuration "{"labelText":"","selected":false,"expandable":false}" 1`] = `
+exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"","selected":false,"expandable":false}" 1`] = `
 <div>
   <li
     class="tm-tree-item"
-    role="treeitem"
-  >
-    <label
-      aria-selected="false"
-      class="tm-tree-item-inner"
-    >
-      <input
-        type="radio"
-        value=""
-      />
-    </label>
-    Item
-  </li>
-</div>
-`;
-
-exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Label 1","selected":false,"expandable":false}" 1`] = `
-<div>
-  <li
-    class="tm-tree-item"
-    role="treeitem"
-  >
-    <label
-      aria-selected="false"
-      class="tm-tree-item-inner"
-    >
-      <input
-        type="radio"
-        value=""
-      />
-      Label 1
-    </label>
-    Item
-  </li>
-</div>
-`;
-
-exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Label","selected":false,"expandable":true}" 1`] = `
-<div>
-  <li
-    class="tm-tree-item expandable"
     role="treeitem"
   >
     <label
@@ -56,18 +15,98 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Lab
         value=""
       />
       <div
+        data-mocked="SceneNodeLabel"
+      >
+        {"objectRef":"","labelText":"","componentTypes":[""]}
+      </div>
+    </label>
+    Item
+  </li>
+</div>
+`;
+
+exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label 1","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label 1","selected":false,"expandable":false}" 1`] = `
+<div>
+  <li
+    class="tm-tree-item"
+    role="treeitem"
+  >
+    <label
+      aria-selected="false"
+      class="tm-tree-item-inner"
+    >
+      <input
+        type="radio"
+        value="Label 1"
+      />
+      <div
+        data-mocked="SceneNodeLabel"
+      >
+        {"objectRef":"","labelText":"Label 1","componentTypes":[""]}
+      </div>
+    </label>
+    Item
+  </li>
+</div>
+`;
+
+exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label","selected":false,"expandable":false}" 1`] = `
+<div>
+  <li
+    class="tm-tree-item"
+    role="treeitem"
+  >
+    <label
+      aria-selected="false"
+      class="tm-tree-item-inner"
+    >
+      <input
+        type="radio"
+        value="Label"
+      />
+      <div
+        data-mocked="SceneNodeLabel"
+      >
+        {"objectRef":"","labelText":"Label","componentTypes":[""]}
+      </div>
+    </label>
+    Item
+  </li>
+</div>
+`;
+
+exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label","selected":false,"expandable":true}" 1`] = `
+<div>
+  <li
+    class="tm-tree-item expandable"
+    role="treeitem"
+  >
+    <label
+      aria-selected="false"
+      class="tm-tree-item-inner"
+    >
+      <input
+        type="radio"
+        value="Label"
+      />
+      <div
+        arialabel="Expand Label"
         class="tm-tree-item-expand-btn"
         data-mocked="Button"
         iconname="treeview-expand"
         variant="inline-icon"
       />
-      Label
+      <div
+        data-mocked="SceneNodeLabel"
+      >
+        {"objectRef":"","labelText":"Label","componentTypes":[""]}
+      </div>
     </label>
   </li>
 </div>
 `;
 
-exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Label","selected":true,"expandable":false}" 1`] = `
+exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label","selected":true,"expandable":false}" 1`] = `
 <div>
   <li
     class="tm-tree-item"
@@ -80,16 +119,20 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Lab
       <input
         checked=""
         type="radio"
-        value=""
+        value="Label"
       />
-      Label
+      <div
+        data-mocked="SceneNodeLabel"
+      >
+        {"objectRef":"","labelText":"Label","componentTypes":[""]}
+      </div>
     </label>
     Item
   </li>
 </div>
 `;
 
-exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Label","selected":true,"expandable":true}" 1`] = `
+exports[`<TreeItem /> should render appropriate configuration "{"labelNode":{"key":null,"ref":null,"props":{"objectRef":"","labelText":"Label","componentTypes":[""]},"_owner":null,"_store":{}},"labelText":"Label","selected":true,"expandable":true}" 1`] = `
 <div>
   <li
     class="tm-tree-item expandable"
@@ -102,59 +145,21 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Lab
       <input
         checked=""
         type="radio"
-        value=""
+        value="Label"
       />
       <div
+        arialabel="Expand Label"
         class="tm-tree-item-expand-btn"
         data-mocked="Button"
         iconname="treeview-expand"
         variant="inline-icon"
       />
-      Label
+      <div
+        data-mocked="SceneNodeLabel"
+      >
+        {"objectRef":"","labelText":"Label","componentTypes":[""]}
+      </div>
     </label>
-  </li>
-</div>
-`;
-
-exports[`<TreeItem /> should render appropriate configuration "{"labelText":{"type":"span","key":null,"ref":null,"props":{"children":"Label"},"_owner":null,"_store":{}},"selected":false,"expandable":false}" 1`] = `
-<div>
-  <li
-    class="tm-tree-item"
-    role="treeitem"
-  >
-    <label
-      aria-selected="false"
-      class="tm-tree-item-inner"
-    >
-      <input
-        type="radio"
-        value=""
-      />
-      <span>
-        Label
-      </span>
-    </label>
-    Item
-  </li>
-</div>
-`;
-
-exports[`<TreeItem /> should render appropriate configuration "{"labelText":null,"selected":false,"expandable":false}" 1`] = `
-<div>
-  <li
-    class="tm-tree-item"
-    role="treeitem"
-  >
-    <label
-      aria-selected="false"
-      class="tm-tree-item-inner"
-    >
-      <input
-        type="radio"
-        value=""
-      />
-    </label>
-    Item
   </li>
 </div>
 `;

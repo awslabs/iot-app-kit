@@ -20,6 +20,7 @@ exports[`SubModelTreeItemLabel should render as appropriate 1`] = `
         variant="inline-icon"
       />
       <div
+        arialabel="Toggle visibility"
         class="tm-visibility-toggle visible tm-icon-button"
         data-mocked="Button"
         variant="inline-icon"

@@ -51,6 +51,7 @@ exports[`SubModelTree should not render a SubModel Tree if isOriginal flag is fa
       class="tm-tree-item-inner"
     >
       <div
+        arialabel="Expand RootObject"
         class="tm-tree-item-expand-btn"
         data-mocked="Button"
         iconname="treeview-expand"
@@ -77,6 +78,7 @@ exports[`SubModelTree should not render a SubModel Tree if name is null 1`] = `
       class="tm-tree-item-inner"
     >
       <div
+        arialabel="Expand RootObject"
         class="tm-tree-item-expand-btn"
         data-mocked="Button"
         iconname="treeview-expand"
@@ -103,6 +105,7 @@ exports[`SubModelTree should render appropriately based on the object 1`] = `
       class="tm-tree-item-inner"
     >
       <div
+        arialabel="Expand RootObject"
         class="tm-tree-item-expand-btn"
         data-mocked="Button"
         iconname="treeview-expand"
