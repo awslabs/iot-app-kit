@@ -6,7 +6,7 @@ export const MINIMUM_CENTER_PANE_WIDTH = 100;
 
 export const MINIMUM_SIDE_PANE_WIDTH = 100;
 
-export const DEFAULT_SIDE_PANE_WIDTH = 250;
+export const DEFAULT_SIDE_PANE_WIDTH = 400;
 
 export const DEFAULT_COLLAPSED_SIDE_PANE_WIDTH = 80;
 

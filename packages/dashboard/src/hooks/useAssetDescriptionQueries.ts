@@ -35,7 +35,7 @@ const describeAsset = (client: IoTSiteWiseClient, assetId: string) =>
   client.send(new DescribeAssetCommand({ assetId }));
 
 const describeSiteWiseAssetQuery = async (client: IoTSiteWiseClient, siteWiseAssetQuery: SiteWiseAssetQuery) =>
-  Promise.all(siteWiseAssetQuery.assets.map(({ assetId }) => describeAsset(client, assetId)));
+  Promise.all(siteWiseAssetQuery.assets.map(({ assetId }: { assetId: string }) => describeAsset(client, assetId)));
 
 const ASSET_DESCRIPTION_QUERY_KEY = ['assetDescriptions'];
 
