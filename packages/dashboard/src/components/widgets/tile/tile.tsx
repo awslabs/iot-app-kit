@@ -8,8 +8,9 @@ import {
   colorBorderDividerDefault,
   borderRadiusBadge,
   colorBackgroundContainerContent,
+  spaceScaledXxs,
   spaceScaledXs,
-  spaceScaledS,
+  spaceScaledM,
 } from '@cloudscape-design/design-tokens';
 import { CancelableEventHandler, ClickDetail } from '@cloudscape-design/components/internal/events';
 
@@ -67,7 +68,7 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            padding: `${spaceScaledXs} ${spaceScaledXs} 0 ${spaceScaledS}`,
+            padding: `${spaceScaledXs} ${spaceScaledXs} ${spaceScaledXxs} ${spaceScaledM}`,
             borderBottom: `2px solid ${colorBorderDividerDefault}`,
           }}
         >
