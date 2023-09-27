@@ -58,6 +58,7 @@ const YAxisPropertyConfig = ({
             <SpaceBetween size='s' direction='horizontal'>
               <label htmlFor='y-axis-min'>Min</label>
               <Input
+                disabled={!property.yAxis?.visible}
                 placeholder='Auto'
                 controlId='y-axis-min'
                 value={`${property.yAxis?.yMin ?? ''}`}
@@ -68,6 +69,7 @@ const YAxisPropertyConfig = ({
             <SpaceBetween size='s' direction='horizontal'>
               <label htmlFor='y-axis-max'>Max</label>
               <Input
+                disabled={!property.yAxis?.visible}
                 placeholder='Auto'
                 controlId='y-axis-max'
                 value={`${property.yAxis?.yMax ?? ''}`}
