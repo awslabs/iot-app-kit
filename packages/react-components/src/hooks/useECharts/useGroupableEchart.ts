@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import type { ECharts } from 'echarts';
+import { connect, disconnect, type ECharts } from 'echarts';
 
 /**
  * hook to update a group on an echarts instance
@@ -12,6 +12,8 @@ export const useGroupableEChart = (chartRef: React.MutableRefObject<ECharts | nu
   useEffect(() => {
     if (groupId && chartRef.current) {
       chartRef.current.group = groupId;
+      disconnect(groupId);
+      connect(groupId);
     }
   }, [groupId]);
 };
