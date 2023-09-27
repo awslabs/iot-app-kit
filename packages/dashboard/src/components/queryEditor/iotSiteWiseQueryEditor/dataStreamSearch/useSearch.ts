@@ -14,9 +14,9 @@ const CACHE_KEYS = {
 };
 
 interface UseSearchProps {
-  client: IoTTwinMakerClient;
-  searchQuery: string;
   workspaceId: string;
+  searchQuery: string;
+  client: IoTTwinMakerClient;
 }
 
 /** Use to send a search request. */

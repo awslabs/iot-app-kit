@@ -7,7 +7,7 @@ import { Controller, type Control } from 'react-hook-form';
 
 import { useWorkspaces } from './useWorkspaces';
 import { WorkspaceOptionFactory } from './workspaceOptionFactory';
-import type { SearchFields } from '../../types';
+import type { SearchFields } from '../types';
 
 type CloudscapeStatusType = NonNullable<SelectProps['statusType']>;
 type TanstackStatusType = ReturnType<typeof useQuery>['status'];

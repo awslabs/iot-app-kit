@@ -1,4 +1,4 @@
-import { WorkspaceOption } from './dataStreamSearchForm/workspaceSelector/types';
+import { WorkspaceOption } from './workspaceSelector/types';
 
 export interface SearchFields {
   workspace: WorkspaceOption | null;

@@ -1,42 +1,53 @@
-import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import React, { useEffect, useState } from 'react';
+import Button from '@cloudscape-design/components/button';
+import Form from '@cloudscape-design/components/form';
+import Header from '@cloudscape-design/components/header';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
-import { DataStreamSearchForm } from './dataStreamSearchForm';
-import { useSearch } from './useSearch';
+import { WorkspaceSelector } from './workspaceSelector';
+import { SearchQueryInput } from './searchQueryInput';
 import type { SearchFields } from './types';
-import { ModeledDataStream } from '../modeledDataStreamQueryEditor/modeledDataStreamExplorer/types';
 
 export interface DataStreamSearchProps {
-  onSearch: (modeledDataStreams: ModeledDataStream[]) => void;
-  iotSiteWiseClient: IoTSiteWiseClient;
-  iotTwinMakerClient: IoTTwinMakerClient;
+  client: IoTTwinMakerClient;
+  onSubmit: ({ workspace, searchQuery }: SearchFields) => void;
 }
 
-/** Advanced search for exploring your AWS IoT SiteWise properties. */
-export function DataStreamSearch({ onSearch, iotSiteWiseClient, iotTwinMakerClient }: DataStreamSearchProps) {
-  const [searchFieldValues, setSearchFieldValues] = useState<SearchFields>({ workspace: null, searchQuery: '' });
-
-  const workspaceId =
-    searchFieldValues.workspace != null && 'value' in searchFieldValues.workspace
-      ? searchFieldValues.workspace.value
-      : undefined;
-
-  const { modeledDataStreams } = useSearch({
-    workspaceId: workspaceId ?? '',
-    client: iotTwinMakerClient,
-    searchQuery: searchFieldValues.searchQuery,
+export function DataStreamSearch({ onSubmit, client }: DataStreamSearchProps) {
+  const { control, handleSubmit } = useForm<SearchFields>({
+    defaultValues: { workspace: null, searchQuery: '' },
   });
 
-  useEffect(() => {
-    onSearch(modeledDataStreams);
-  }, [modeledDataStreams]);
-
   return (
-    <DataStreamSearchForm
-      iotSiteWiseClient={iotSiteWiseClient}
-      iotTwinMakerClient={iotTwinMakerClient}
-      onSubmit={setSearchFieldValues}
-    />
+    <SpaceBetween size='xxs'>
+      <Header variant='h3' description='Search for modeled data streams by name or by the associated asset.'>
+        Search modeled data streams
+      </Header>
+
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+
+          void handleSubmit((data) => {
+            onSubmit(data);
+          })();
+        }}
+      >
+        <Form
+          actions={
+            <Button iconName='search' variant='primary'>
+              Search
+            </Button>
+          }
+        >
+          <SpaceBetween size='s'>
+            <SearchQueryInput control={control} />
+            <WorkspaceSelector control={control} client={client} />
+          </SpaceBetween>
+        </Form>
+      </form>
+    </SpaceBetween>
   );
 }
