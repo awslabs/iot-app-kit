@@ -137,7 +137,7 @@ describe('testing converters', () => {
     const result = convertedSeriesAndYAxisFunc(datastream);
 
     expect(result.series.data).toBeArrayOfSize(0);
-    expect(result).toHaveProperty('series.itemStyle.color', '#688ae8');
+    expect(result).toHaveProperty('series.itemStyle.color', '#7d2105');
     expect(result).toHaveProperty('series.step', 'middle');
   });
 
