@@ -10,6 +10,7 @@ import { convertStyles } from './convertStyles';
 import { convertThresholds } from './convertThresholds';
 import { useConvertedOptions } from './convertOptions';
 import { renderHook } from '@testing-library/react';
+import { colorPalette } from '@iot-app-kit/core-util';
 
 const MOCK_AXIS = {
   yAxisLabel: 'Y Value',
@@ -137,7 +138,7 @@ describe('testing converters', () => {
     const result = convertedSeriesAndYAxisFunc(datastream);
 
     expect(result.series.data).toBeArrayOfSize(0);
-    expect(result).toHaveProperty('series.itemStyle.color', '#7d2105');
+    expect(result).toHaveProperty('series.itemStyle.color', colorPalette[0]);
     expect(result).toHaveProperty('series.step', 'middle');
   });
 

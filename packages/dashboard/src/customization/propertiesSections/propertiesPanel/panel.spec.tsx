@@ -64,7 +64,6 @@ const setupStore = ({ widgets, selectedWidgets }: SetupStoreOptions) =>
   configureDashboardStore({
     dashboardConfiguration: {
       widgets,
-      viewport: { duration: '5m' },
     },
     selectedWidgets,
   });

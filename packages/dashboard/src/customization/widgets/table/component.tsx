@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CollectionPreferences, CollectionPreferencesProps } from '@cloudscape-design/components';
 
-import { Table, TableColumnDefinition } from '@iot-app-kit/react-components';
 import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import { Table, TableColumnDefinition, useViewport } from '@iot-app-kit/react-components';
 
 import EmptyTableComponent from './emptyTableComponent';
 
@@ -36,7 +36,7 @@ export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
 ];
 
 const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
-  const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
+  const { viewport } = useViewport();
   const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
   const {

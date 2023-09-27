@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StatusTimeline } from '@iot-app-kit/react-components';
+import { StatusTimeline, useViewport } from '@iot-app-kit/react-components';
 import { useSelector } from 'react-redux';
 import { DashboardState } from '~/store/state';
 import { StatusTimelineWidget } from '../types';
@@ -11,7 +11,7 @@ import WidgetTile from '~/components/widgets/tile';
 import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 
 const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) => {
-  const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
+  const { viewport } = useViewport();
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
 

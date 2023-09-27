@@ -5,6 +5,7 @@ import { ECHARTS_GESTURE } from '../../../common/constants';
 import { DEFAULT_DATA_ZOOM, ECHARTS_ZOOM_DEBOUNCE_MS } from '../eChartsConstants';
 import { ViewportInMs } from '../types';
 import { Viewport } from '@iot-app-kit/core';
+import throttle from 'lodash.throttle';
 
 // known bug with zooming into live data https://github.com/apache/echarts/issues/11679
 // this function will prevent the data from moving if we are zoomed in
@@ -18,18 +19,6 @@ const onDataZoomEvent = (chart: EChartsType, setViewport: (viewport: Viewport, l
       );
     }
   }
-};
-// this variable has to live in the global namespace else debounce will not work
-let debounceTimer: NodeJS.Timeout | null = null;
-const debounceZoom = (func: (...args: unknown[]) => void, delay: number) => {
-  return (...args: unknown[]) => {
-    if (debounceTimer) {
-      clearTimeout(debounceTimer);
-    }
-    debounceTimer = setTimeout(() => {
-      func.call(null, ...args);
-    }, delay);
-  };
 };
 
 export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, viewportInMs: ViewportInMs) => {
@@ -57,7 +46,7 @@ export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, view
     const chart = chartRef?.current;
     if (chart) {
       chart.on('dataZoom', () => {
-        debounceZoom(() => {
+        throttle(() => {
           setIsScrolling(true);
           onDataZoomEvent(chart, setViewport);
         }, ECHARTS_ZOOM_DEBOUNCE_MS)();

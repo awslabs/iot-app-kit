@@ -9,11 +9,11 @@ import type { Gesture } from './types';
 
 type SelectionHooksProps = {
   setActiveGesture: React.Dispatch<React.SetStateAction<Gesture>>;
-  dashboardConfiguration: DashboardState['dashboardConfiguration'];
+  dashboardWidgets: DashboardWidget[];
   cellSize: DashboardState['grid']['cellSize'];
 };
 
-export const useSelectionGestures = ({ setActiveGesture, dashboardConfiguration, cellSize }: SelectionHooksProps) => {
+export const useSelectionGestures = ({ setActiveGesture, dashboardWidgets, cellSize }: SelectionHooksProps) => {
   const dispatch = useDispatch();
   const selectWidgets = (widgets: DashboardWidget[], union: boolean) => {
     dispatch(
@@ -29,14 +29,14 @@ export const useSelectionGestures = ({ setActiveGesture, dashboardConfiguration,
   const onPointSelect = useCallback(
     ({ position, union }: { position: Position; union: boolean }) => {
       const intersectedWidget = pointSelect({
-        dashboardConfiguration,
+        dashboardWidgets,
         cellSize,
         position,
       });
 
       selectWidgets(intersectedWidget ? [intersectedWidget] : [], union);
     },
-    [dashboardConfiguration, cellSize]
+    [dashboardWidgets, cellSize]
   );
 
   const onSelectionStart = (dragEvent: DragEvent) => {
@@ -59,13 +59,13 @@ export const useSelectionGestures = ({ setActiveGesture, dashboardConfiguration,
 
       const intersectedWidgets = getSelectedWidgets({
         selectedRect: selectedRect(updatedSelection),
-        dashboardConfiguration,
+        dashboardWidgets,
         cellSize,
       });
 
       selectWidgets(intersectedWidgets, union);
     },
-    [dashboardConfiguration, cellSize]
+    [dashboardWidgets, cellSize]
   );
 
   const onSelectionEnd = () => {

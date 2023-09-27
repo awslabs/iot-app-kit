@@ -35,7 +35,7 @@ it('sets the active gesture to move when moving an unselected widget', () => {
   const { result } = renderHook(
     () =>
       useGestures({
-        dashboardConfiguration: MockDashboardFactory.get(),
+        dashboardWidgets: MockDashboardFactory.get().widgets,
         selectedWidgets: [],
         cellSize: 1,
       }),
@@ -61,7 +61,7 @@ it('sets the active gesture to move when moving a selected widget', () => {
   const { result } = renderHook(
     () =>
       useGestures({
-        dashboardConfiguration: MockDashboardFactory.get(),
+        dashboardWidgets: MockDashboardFactory.get().widgets,
         selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'kpi', properties: {} }],
         cellSize: 1,
       }),
@@ -87,7 +87,7 @@ it('sets the active gesture to resize when moving an anchor', () => {
   const { result } = renderHook(
     () =>
       useGestures({
-        dashboardConfiguration: MockDashboardFactory.get(),
+        dashboardWidgets: MockDashboardFactory.get().widgets,
         selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'kpi', properties: {} }],
         cellSize: 1,
       }),
@@ -113,7 +113,7 @@ it('sets the active gesture to select when moving on the grid', () => {
   const { result } = renderHook(
     () =>
       useGestures({
-        dashboardConfiguration: MockDashboardFactory.get(),
+        dashboardWidgets: MockDashboardFactory.get().widgets,
         selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'kpi', properties: {} }],
         cellSize: 1,
       }),
@@ -139,7 +139,7 @@ it('resets the active gesture after the gesture ends', () => {
   const { result } = renderHook(
     () =>
       useGestures({
-        dashboardConfiguration: MockDashboardFactory.get(),
+        dashboardWidgets: MockDashboardFactory.get().widgets,
         selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'kpi', properties: {} }],
         cellSize: 1,
       }),

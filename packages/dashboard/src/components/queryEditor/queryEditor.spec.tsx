@@ -43,7 +43,6 @@ function TestQueryEditor() {
       store={configureDashboardStore({
         dashboardConfiguration: {
           widgets: [],
-          viewport: { duration: '5m' },
         },
       })}
     >

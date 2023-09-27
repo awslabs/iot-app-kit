@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import pickBy from 'lodash/pickBy';
-import { Status } from '@iot-app-kit/react-components';
+import { Status, useViewport } from '@iot-app-kit/react-components';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type { StatusWidget } from '../types';
@@ -14,7 +14,7 @@ import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import './component.css';
 
 const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
-  const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
+  const { viewport } = useViewport();
   const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
   const {
@@ -31,7 +31,6 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
-  // const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
   const query =
     iotSiteWiseQuery && queryConfig.query
       ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query as SiteWiseAssetQuery)

@@ -1,11 +1,11 @@
-import { MockDashboardFactory, MockWidgetFactory, MOCK_EMPTY_DASHBOARD } from '../../testing/mocks';
+import { MockWidgetFactory } from '../../testing/mocks';
 import { getSelectedWidgetIds, pointSelect, selectedRect } from './select';
 
 describe('getSelectedIds', () => {
   it('returns no ids when dashboard has no widgets', () => {
     expect(
       getSelectedWidgetIds({
-        dashboardConfiguration: MOCK_EMPTY_DASHBOARD,
+        dashboardWidgets: [],
         cellSize: 10,
         selectedRect: { x: 0, y: 0, width: 1000, height: 1000 },
       })
@@ -15,9 +15,7 @@ describe('getSelectedIds', () => {
   it('returns id of widget that is contained within the selected rectangle', () => {
     expect(
       getSelectedWidgetIds({
-        dashboardConfiguration: MockDashboardFactory.get({
-          widgets: [MockWidgetFactory.getLineChartWidget({ x: 5, y: 5, width: 1, height: 1, id: 'some-id' })],
-        }),
+        dashboardWidgets: [MockWidgetFactory.getLineChartWidget({ x: 5, y: 5, width: 1, height: 1, id: 'some-id' })],
         cellSize: 10,
         selectedRect: { x: 0, y: 0, width: 100, height: 100 },
       })
@@ -27,9 +25,7 @@ describe('getSelectedIds', () => {
   it('returns id of widget that overlaps the selected rectangle', () => {
     expect(
       getSelectedWidgetIds({
-        dashboardConfiguration: MockDashboardFactory.get({
-          widgets: [MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, id: 'some-id' })],
-        }),
+        dashboardWidgets: [MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, id: 'some-id' })],
         cellSize: 10,
         selectedRect: { x: 10, y: 10, width: 10, height: 10 },
       })
@@ -39,9 +35,7 @@ describe('getSelectedIds', () => {
   it('returns no ids when the widgets are not overlapping the selected rectangle', () => {
     expect(
       getSelectedWidgetIds({
-        dashboardConfiguration: MockDashboardFactory.get({
-          widgets: [MockWidgetFactory.getLineChartWidget({ x: 0, y: 0, width: 1, height: 1, id: 'some-id' })],
-        }),
+        dashboardWidgets: [MockWidgetFactory.getLineChartWidget({ x: 0, y: 0, width: 1, height: 1, id: 'some-id' })],
         cellSize: 5,
         selectedRect: { x: 10, y: 10, width: 10, height: 10 },
       })
@@ -51,12 +45,10 @@ describe('getSelectedIds', () => {
   it('returns only ids of overlapping widgets when multiple widgets provided', () => {
     expect(
       getSelectedWidgetIds({
-        dashboardConfiguration: MockDashboardFactory.get({
-          widgets: [
-            MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, id: 'some-id' }),
-            MockWidgetFactory.getLineChartWidget({ x: 50, y: 50, width: 1, height: 1, id: 'some-id-2' }),
-          ],
-        }),
+        dashboardWidgets: [
+          MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, id: 'some-id' }),
+          MockWidgetFactory.getLineChartWidget({ x: 50, y: 50, width: 1, height: 1, id: 'some-id-2' }),
+        ],
         cellSize: 10,
         selectedRect: { x: 10, y: 10, width: 10, height: 10 },
       })
@@ -68,12 +60,10 @@ describe('pointSelect', () => {
   it('returns undefined if point is not contained within a widget bounds', () => {
     expect(
       pointSelect({
-        dashboardConfiguration: MockDashboardFactory.get({
-          widgets: [
-            MockWidgetFactory.getLineChartWidget({ x: 10, y: 10, width: 1, height: 1, id: 'some-id' }),
-            MockWidgetFactory.getLineChartWidget({ x: 50, y: 50, width: 1, height: 1, id: 'some-id-2' }),
-          ],
-        }),
+        dashboardWidgets: [
+          MockWidgetFactory.getLineChartWidget({ x: 10, y: 10, width: 1, height: 1, id: 'some-id' }),
+          MockWidgetFactory.getLineChartWidget({ x: 50, y: 50, width: 1, height: 1, id: 'some-id-2' }),
+        ],
         cellSize: 10,
         position: { x: 0, y: 0 },
       })
@@ -83,12 +73,10 @@ describe('pointSelect', () => {
   it('returns the a widget if the point is contained within its bounds', () => {
     expect(
       pointSelect({
-        dashboardConfiguration: MockDashboardFactory.get({
-          widgets: [
-            MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, id: 'some-id' }),
-            MockWidgetFactory.getLineChartWidget({ x: 50, y: 50, width: 1, height: 1, id: 'some-id-2' }),
-          ],
-        }),
+        dashboardWidgets: [
+          MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, id: 'some-id' }),
+          MockWidgetFactory.getLineChartWidget({ x: 50, y: 50, width: 1, height: 1, id: 'some-id-2' }),
+        ],
         cellSize: 10,
         position: { x: 15, y: 15 },
       })
@@ -96,12 +84,10 @@ describe('pointSelect', () => {
 
     expect(
       pointSelect({
-        dashboardConfiguration: MockDashboardFactory.get({
-          widgets: [
-            MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, id: 'some-id' }),
-            MockWidgetFactory.getLineChartWidget({ x: 50, y: 50, width: 1, height: 1, id: 'some-id-2' }),
-          ],
-        }),
+        dashboardWidgets: [
+          MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, id: 'some-id' }),
+          MockWidgetFactory.getLineChartWidget({ x: 50, y: 50, width: 1, height: 1, id: 'some-id-2' }),
+        ],
         cellSize: 10,
         position: { x: 505, y: 505 },
       })
@@ -111,12 +97,10 @@ describe('pointSelect', () => {
   it('returns the top most widget if point is contained within 2 overlapping widgets', () => {
     expect(
       pointSelect({
-        dashboardConfiguration: MockDashboardFactory.get({
-          widgets: [
-            MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, z: 0, id: 'some-id' }),
-            MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, z: 1, id: 'some-id-2' }),
-          ],
-        }),
+        dashboardWidgets: [
+          MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, z: 0, id: 'some-id' }),
+          MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, z: 1, id: 'some-id-2' }),
+        ],
         cellSize: 10,
         position: { x: 15, y: 15 },
       })

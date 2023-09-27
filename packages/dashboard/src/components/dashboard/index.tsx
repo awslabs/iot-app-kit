@@ -19,6 +19,7 @@ import '@cloudscape-design/global-styles/index.css';
 import '../../styles/variables.css';
 import { queryClient } from '~/data/query-client';
 import { PropertiesPanel } from '~/customization/propertiesSections';
+import { useDashboardViewport } from '~/hooks/useDashboardViewport';
 
 /*
 if (process.env.NODE_ENV === 'development') {
@@ -41,6 +42,7 @@ const Dashboard: React.FC<DashboardProperties> = ({
   initialViewMode,
 }) => {
   useDashboardPlugins();
+  useDashboardViewport(dashboardConfiguration.viewport);
 
   const readOnly = initialViewMode && initialViewMode === 'preview';
   return (

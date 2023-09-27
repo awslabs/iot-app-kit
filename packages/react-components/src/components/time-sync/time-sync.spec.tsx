@@ -61,7 +61,7 @@ describe('updates to viewport group', () => {
     render(<TimeSync group={GROUP}>'</TimeSync>);
 
     expect(update).toBeCalledTimes(1);
-    expect(update).toBeCalledWith(GROUP, { duration: '6h' });
+    expect(update).toBeCalledWith(GROUP, { duration: '10m' });
   });
 });
 

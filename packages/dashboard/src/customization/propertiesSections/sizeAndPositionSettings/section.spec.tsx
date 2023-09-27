@@ -20,7 +20,6 @@ const widget: KPIWidget = {
 const state: Partial<DashboardState> = {
   dashboardConfiguration: {
     widgets: [widget],
-    viewport: { duration: '5m' },
   },
   selectedWidgets: [widget],
 };
