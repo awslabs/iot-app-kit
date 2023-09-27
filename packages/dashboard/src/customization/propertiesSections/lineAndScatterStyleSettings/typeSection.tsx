@@ -10,7 +10,7 @@ const typeOptions = [
   defaultTypeOption,
   { label: 'Step before', value: 'step-start', description: 'Step points rendered at the end of the step.' },
   { label: 'Step middle', value: 'step-middle', description: 'Step points rendered in the middle of the step.' },
-  { label: 'Step after', value: 'step-after', description: 'Step points rendered at the beginning of the step.' },
+  { label: 'Step after', value: 'step-end', description: 'Step points rendered at the beginning of the step.' },
 ] as const;
 
 type TypeSectionOptions = {
