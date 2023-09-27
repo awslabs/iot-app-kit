@@ -2,15 +2,15 @@ import FormField from '@cloudscape-design/components/form-field';
 import Input from '@cloudscape-design/components/input';
 import React from 'react';
 import { Controller, type Control } from 'react-hook-form';
-import { SearchFields } from '../types';
+import { SearchFields } from './types';
 
 export interface SearchQueryInputProps {
   control: Control<SearchFields>;
 }
 
 export function SearchQueryInput({ control }: SearchQueryInputProps) {
-  const MIN_SEARCH_QUERY_LENGTH = 3;
-  const MAX_SEARCH_QUERY_LENGTH = 20;
+  const MIN_SEARCH_QUERY_LENGTH = 1;
+  const MAX_SEARCH_QUERY_LENGTH = 18;
 
   return (
     <Controller

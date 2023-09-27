@@ -5,9 +5,11 @@ import { AssetExplorer } from './assetExplorer';
 import { ModeledDataStreamExplorer } from './modeledDataStreamExplorer';
 import { AssetSummary, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { ModeledDataStream } from './modeledDataStreamExplorer/types';
-import { DataStreamSearch } from '../dataStreamSearch/dataStreamSearch';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { BROWSE_SEGMENT_ID, BrowseSearchToggle, useBrowseSearchToggle } from './browseSearchToggle';
+import { useSearch } from '../dataStreamSearch/useSearch';
+import { SearchFields } from '../dataStreamSearch/types';
+import { DataStreamSearch } from '../dataStreamSearch';
 
 export interface ModeledDataStreamQueryEditorProps {
   onClickAdd: (modeledDataStreams: ModeledDataStream[]) => void;
@@ -27,34 +29,45 @@ export function ModeledDataStreamQueryEditor({
 
   const { selectedSegment, onChangeSegment } = useBrowseSearchToggle();
 
-  const [searchedDataStreams, setSearchedDataStreams] = useState<ModeledDataStream[] | undefined>(undefined);
+  const [searchFieldValues, setSearchFieldValues] = useState<SearchFields>({
+    workspace: null,
+    searchQuery: '',
+  });
+
+  const workspaceId =
+    searchFieldValues.workspace != null && 'value' in searchFieldValues.workspace
+      ? searchFieldValues.workspace.value
+      : undefined;
+
+  const { modeledDataStreams } = useSearch({
+    workspaceId: workspaceId ?? '',
+    client: iotTwinMakerClient,
+    searchQuery: searchFieldValues.searchQuery,
+  });
 
   return (
     <Box padding={{ horizontal: 's' }}>
       <BrowseSearchToggle selectedSegment={selectedSegment} onChange={onChangeSegment} />
 
       {selectedSegment === BROWSE_SEGMENT_ID ? (
-        <AssetExplorer client={iotSiteWiseClient} onSelect={handleOnSelectAsset} />
+        <>
+          <AssetExplorer client={iotSiteWiseClient} onSelect={handleOnSelectAsset} />
+          <ModeledDataStreamExplorer
+            client={iotSiteWiseClient}
+            onClickAddModeledDataStreams={onClickAdd}
+            selectedAssetId={selectedAsset?.id}
+          />
+        </>
       ) : (
-        <DataStreamSearch
-          onSearch={(dataStreams) => {
-            if (dataStreams.length > 0) {
-              setSearchedDataStreams(dataStreams);
-            } else {
-              setSearchedDataStreams(undefined);
-            }
-          }}
-          iotSiteWiseClient={iotSiteWiseClient}
-          iotTwinMakerClient={iotTwinMakerClient}
-        />
+        <>
+          <DataStreamSearch onSubmit={setSearchFieldValues} client={iotTwinMakerClient} />
+          <ModeledDataStreamExplorer
+            client={iotSiteWiseClient}
+            onClickAddModeledDataStreams={onClickAdd}
+            dataStreams={modeledDataStreams}
+          />
+        </>
       )}
-
-      <ModeledDataStreamExplorer
-        client={iotSiteWiseClient}
-        onClickAddModeledDataStreams={onClickAdd}
-        selectedAssetId={selectedAsset?.id}
-        dataStreams={searchedDataStreams}
-      />
     </Box>
   );
 }

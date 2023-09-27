@@ -1,4 +1,1 @@
-export {
-  DataStreamSearch as IoTSiteWiseDataStreamSearch,
-  type DataStreamSearchProps as IoTSiteWiseDataStreamSearchProps,
-} from './dataStreamSearch';
+export { DataStreamSearch, type DataStreamSearchProps } from './dataStreamSearch';
