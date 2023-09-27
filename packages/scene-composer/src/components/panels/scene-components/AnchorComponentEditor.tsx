@@ -7,20 +7,15 @@ import { defineMessages, useIntl } from 'react-intl';
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { SCENE_ICONS } from '../../../common/constants';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import useDynamicScene from '../../../hooks/useDynamicScene';
-import {
-  COMPOSER_FEATURES,
-  DefaultAnchorStatus,
-  IValueDataBinding,
-  KnownSceneProperty,
-  SceneResourceType,
-} from '../../../interfaces';
+import { COMPOSER_FEATURES, DefaultAnchorStatus, IValueDataBinding, SceneResourceType } from '../../../interfaces';
 import { IAnchorComponentInternal, ISceneComponentInternal, useSceneDocument, useStore } from '../../../store';
 import { shallowEqualsArray } from '../../../utils/objectUtils';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
 import { convertToIotTwinMakerNamespace, getSceneResourceInfo } from '../../../utils/sceneResourceUtils';
 import { colors } from '../../../utils/styleUtils';
 import { IComponentEditorProps } from '../ComponentEditor';
+import { TextInput } from '../CommonPanelComponents';
+import useDynamicScene from '../../../hooks/useDynamicScene';
 
 import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
 import { ColorPicker } from './tag-style/ColorPicker/ColorPicker';
@@ -60,6 +55,8 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
   const { listSceneRuleMapIds } = useSceneDocument(sceneComposerId);
   const intl = useIntl();
 
+  const dynamicSceneEnabled = useDynamicScene();
+
   const ruleMapIds = listSceneRuleMapIds();
   const selectedRuleMapId =
     anchorComponent.ruleBasedMapId && ruleMapIds.includes(anchorComponent.ruleBasedMapId)
@@ -67,10 +64,13 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
       : null;
 
   const onUpdateCallbackDebounced = useCallback(
-    debounce((componentPartial: any, replace?: boolean) => {
-      const componentPartialWithRef: ISceneComponentInternal = { ref: component.ref, ...componentPartial };
-      updateComponentInternal(node.ref, componentPartialWithRef, replace);
-    }, 100),
+    debounce(
+      (componentPartial: any, replace?: boolean) => {
+        const componentPartialWithRef: ISceneComponentInternal = { ref: component.ref, ...componentPartial };
+        updateComponentInternal(node.ref, componentPartialWithRef, replace);
+      },
+      dynamicSceneEnabled ? 1000 : 100,
+    ), // TODO: Temporary solution for the error when updating entity too frequent. Will implement a better solution for GA.
     [node.ref, component.ref],
   );
 
@@ -291,9 +291,9 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
             const ruleMapId = e.detail.selectedOption.value;
             if (ruleMapId) {
               if (ruleMapIds.includes(ruleMapId)) {
-                onUpdateCallback({ ruleBasedMapId: ruleMapId });
+                onUpdateCallbackDebounced({ ruleBasedMapId: ruleMapId });
               } else {
-                onUpdateCallback({ ruleBasedMapId: undefined });
+                onUpdateCallbackDebounced({ ruleBasedMapId: undefined });
               }
             }
           }}
@@ -309,10 +309,10 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
       </FormField>
 
       <FormField label={intl.formatMessage({ defaultMessage: 'Link Target', description: 'Form field label' })}>
-        <Input
+        <TextInput
           data-testid='anchor-link-target-input'
           value={anchorComponent.navLink?.destination || ''}
-          onChange={(e) => onUpdateCallback({ navLink: { destination: e.detail.value } })}
+          setValue={(e) => onUpdateCallback({ navLink: { destination: e } })}
         />
       </FormField>
 

@@ -13,9 +13,6 @@ describe('createDataBindingMap', () => {
   it('should return map with only entityId', () => {
     expect(createDataBindingMap({ dataBindingContext: { entityId: 'eid' } })).toEqual({
       entityId: { stringValue: 'eid' },
-      componentName: { stringValue: undefined },
-      propertyName: { stringValue: undefined },
-      isStaticData: { stringValue: 'false' },
     });
   });
 

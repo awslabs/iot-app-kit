@@ -126,9 +126,6 @@ describe('createTagEntityComponent', () => {
             propertyName: {
               stringValue: 'pname',
             },
-            isStaticData: {
-              stringValue: 'false',
-            },
           },
         },
       },
