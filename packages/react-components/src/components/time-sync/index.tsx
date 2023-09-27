@@ -21,8 +21,8 @@ export interface TimeSyncProps {
   children: ReactNode;
 }
 
-const DEFAULT_VIEWPORT: Viewport = {
-  duration: '6h', // default viewport
+export const DEFAULT_VIEWPORT: Viewport = {
+  duration: '10m', // default viewport
 };
 
 export const TimeSync: React.FC<TimeSyncProps> = ({ group, initialViewport, children }) => {

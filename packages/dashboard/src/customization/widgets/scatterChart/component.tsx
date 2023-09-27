@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { ScatterChart } from '@iot-app-kit/react-components';
 import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import { ScatterChart, useViewport } from '@iot-app-kit/react-components';
 
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
@@ -14,7 +14,7 @@ import { useChartSize } from '~/hooks/useChartSize';
 import WidgetTile from '~/components/widgets/tile';
 
 const ScatterChartWidgetComponent: React.FC<ScatterChartWidget> = (widget) => {
-  const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
+  const { viewport } = useViewport();
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
   const chartSize = useChartSize(widget);

@@ -9,17 +9,17 @@ import type { DragEvent, PointClickEvent } from '../../grid';
 import type { Gesture } from './types';
 
 type GestureHooksProps = {
-  dashboardConfiguration: DashboardState['dashboardConfiguration'];
+  dashboardWidgets: DashboardWidget[];
   selectedWidgets: DashboardWidget[];
   cellSize: DashboardState['grid']['cellSize'];
 };
 
-export const useGestures = ({ dashboardConfiguration, selectedWidgets, cellSize }: GestureHooksProps) => {
+export const useGestures = ({ dashboardWidgets, selectedWidgets, cellSize }: GestureHooksProps) => {
   const [activeGesture, setActiveGesture] = useState<Gesture | undefined>(undefined);
 
   const { userSelection, onPointSelect, onSelectionStart, onSelectionUpdate, onSelectionEnd } = useSelectionGestures({
     setActiveGesture,
-    dashboardConfiguration,
+    dashboardWidgets,
     cellSize: cellSize,
   });
   const { onMoveStart, onMoveUpdate, onMoveEnd } = useMoveGestures({

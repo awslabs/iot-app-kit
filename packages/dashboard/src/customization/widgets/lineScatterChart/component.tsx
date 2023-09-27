@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Chart } from '@iot-app-kit/react-components';
+import { Chart, useViewport } from '@iot-app-kit/react-components';
+import { ChartOptions, ChartStyleSettingsOptions } from '@iot-app-kit/react-components/src/components/chart/types';
 
-import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type {
   AssetPropertyStyles,
@@ -18,9 +18,6 @@ import { useQueries } from '~/components/dashboard/queryContext';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { useChartSize } from '~/hooks/useChartSize';
-import { ChartOptions, ChartStyleSettingsOptions } from '@iot-app-kit/react-components/src/components/chart/types';
-// import { applyAggregationToQuery } from '../utils/assetQuery/applyAggregationToQuery';
-// import { applyResolutionToQuery } from '../utils/assetQuery/applyResolutionToQuery';
 import WidgetTile from '~/components/widgets/tile/tile';
 import NoChartData from '../components/no-chart-data';
 import { default as lineSvgDark } from './line-dark.svg';
@@ -106,7 +103,7 @@ const convertAxis = (axis: ChartAxisOptions | undefined) => ({
 });
 
 const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widget) => {
-  const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
+  const { viewport } = useViewport();
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const chartSize = useChartSize(widget);
   const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
@@ -124,7 +121,6 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
   const query = queryConfig.query;
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && query ? [iotSiteWiseQuery?.timeSeriesData(query)] : [];
-  const key = computeQueryConfigKey(viewport, queryConfig);
 
   const styleSettings = useAdaptedStyleSettings({ line, symbol }, query);
 
@@ -152,7 +148,6 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
   return (
     <WidgetTile widget={widget} removeable title={title}>
       <Chart
-        key={key}
         queries={queries}
         viewport={viewport}
         gestures={readOnly}

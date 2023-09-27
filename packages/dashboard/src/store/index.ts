@@ -24,9 +24,6 @@ export const configureDashboardStore = (preloadedState?: RecursivePartial<Dashbo
       ...mergedState,
       dashboardConfiguration: {
         ...mergedState.dashboardConfiguration,
-        // The viewport object has a different property set depending on whether it's relative or absolute so merging does not create the correct type
-        viewport: (preloadedState?.dashboardConfiguration?.viewport ||
-          initialState.dashboardConfiguration.viewport) as DashboardState['dashboardConfiguration']['viewport'],
       },
     },
   });
@@ -35,7 +32,7 @@ export const configureDashboardStore = (preloadedState?: RecursivePartial<Dashbo
 };
 
 export const toDashboardState = (dashboardConfiguration: DashboardConfiguration): RecursivePartial<DashboardState> => {
-  const { viewport, widgets, displaySettings } = dashboardConfiguration;
+  const { widgets, displaySettings } = dashboardConfiguration;
   const { numRows, numColumns, cellSize } = displaySettings;
 
   return {
@@ -46,7 +43,6 @@ export const toDashboardState = (dashboardConfiguration: DashboardConfiguration)
       stretchToFit: !cellSize,
     },
     dashboardConfiguration: {
-      viewport,
       widgets,
     },
   };

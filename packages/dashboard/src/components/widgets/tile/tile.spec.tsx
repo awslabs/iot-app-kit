@@ -18,7 +18,6 @@ describe('WidgetTile', () => {
         store={configureDashboardStore({
           dashboardConfiguration: {
             widgets: [MOCK_LINE_CHART_WIDGET],
-            viewport: { duration: '5m' },
           },
         })}
       >
@@ -38,7 +37,6 @@ describe('WidgetTile', () => {
         store={configureDashboardStore({
           dashboardConfiguration: {
             widgets: [MOCK_LINE_CHART_WIDGET],
-            viewport: { duration: '5m' },
           },
         })}
       >
@@ -56,7 +54,6 @@ describe('WidgetTile', () => {
     const store = configureDashboardStore({
       dashboardConfiguration: {
         widgets: [MOCK_LINE_CHART_WIDGET],
-        viewport: { duration: '5m' },
       },
     });
     const { container } = render(
@@ -83,7 +80,6 @@ describe('WidgetTile', () => {
         store={configureDashboardStore({
           dashboardConfiguration: {
             widgets: [MOCK_LINE_CHART_WIDGET],
-            viewport: { duration: '5m' },
           },
           readOnly: true,
         })}

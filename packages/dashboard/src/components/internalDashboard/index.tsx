@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { WebglContext, TrendCursorSync, TimeSync } from '@iot-app-kit/react-components';
+import { WebglContext, TrendCursorSync, TimeSync, TimeSelection } from '@iot-app-kit/react-components';
 import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { colorBackgroundCellShaded } from '@cloudscape-design/design-tokens';
@@ -17,7 +17,6 @@ import Widgets from '../widgets/list';
 import UserSelection from '../userSelection';
 import ComponentPalette from '../palette';
 import CustomDragLayer from '../dragLayer';
-import ViewportSelection from '../viewportSelection';
 import Actions from '../actions';
 import { QueryEditor } from '../queryEditor';
 import { useClients } from '../dashboard/clientContext';
@@ -78,6 +77,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
    * Store variables
    */
   const dashboardConfiguration = useSelector((state: DashboardState) => state.dashboardConfiguration);
+  const dashboardWidgets = useSelector((state: DashboardState) => state.dashboardConfiguration.widgets);
   const grid = useSelector((state: DashboardState) => state.grid);
   const cellSize = useSelector((state: DashboardState) => state.grid.cellSize);
   const copiedWidgets = useSelector((state: DashboardState) => state.copiedWidgets);
@@ -136,7 +136,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
    * setup gesture handling for grid
    */
   const { activeGesture, userSelection, onPointClick, onGestureStart, onGestureUpdate, onGestureEnd } = useGestures({
-    dashboardConfiguration,
+    dashboardWidgets,
     selectedWidgets,
     cellSize,
   });
@@ -205,7 +205,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
         </Box>
         <Box float='right' padding='xs'>
           <SpaceBetween size='s' direction='horizontal'>
-            <ViewportSelection key='1' messageOverrides={DefaultDashboardMessages} />
+            <TimeSelection />
             <Divider key='2' />
             <Actions
               key='3'
@@ -244,7 +244,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
       <div className='dashboard-toolbar-read-only'>
         <Box float='right' padding='s'>
           <SpaceBetween size='s' direction='horizontal'>
-            <ViewportSelection key='1' messageOverrides={DefaultDashboardMessages} />
+            <TimeSelection />
             {editable && (
               <>
                 <Divider key='2' />
@@ -277,9 +277,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
 
   return (
     <TrendCursorSync>
-      <TimeSync initialViewport={{ duration: '5m' }} group='dashboard-timesync'>
-        {readOnly ? ReadOnlyComponent : EditComponent}
-      </TimeSync>
+      <TimeSync group='dashboard-timesync'>{readOnly ? ReadOnlyComponent : EditComponent}</TimeSync>
     </TrendCursorSync>
   );
 };

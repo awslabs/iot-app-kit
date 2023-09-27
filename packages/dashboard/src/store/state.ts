@@ -1,4 +1,4 @@
-import type { DashboardWidgetsConfiguration, DashboardWidget } from '~/types';
+import type { DashboardWidget } from '~/types';
 import { deepFreeze } from '~/util/deepFreeze';
 
 export type DashboardState<Properties extends Record<string, unknown> = Record<string, unknown>> = {
@@ -13,7 +13,7 @@ export type DashboardState<Properties extends Record<string, unknown> = Record<s
   selectedWidgets: DashboardWidget<Properties>[];
   copiedWidgets: DashboardWidget<Properties>[];
   pasteCounter: number;
-  dashboardConfiguration: DashboardWidgetsConfiguration<Properties>;
+  dashboardConfiguration: { widgets: DashboardWidget<Properties>[] };
   significantDigits: number;
 };
 
@@ -39,7 +39,6 @@ export const initialState: DashboardState = deepFreeze({
   copiedWidgets: [],
   pasteCounter: 0,
   dashboardConfiguration: {
-    viewport: { duration: '10m' },
     widgets: [],
   },
   significantDigits: 4,

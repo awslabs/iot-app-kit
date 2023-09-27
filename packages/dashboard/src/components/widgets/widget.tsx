@@ -5,7 +5,7 @@ import DynamicWidgetComponent from './dynamicWidget';
 import './widget.css';
 import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import type { DashboardMessages } from '~/messages';
-import type { DashboardWidgetsConfiguration, DashboardWidget } from '~/types';
+import type { DashboardWidget } from '~/types';
 
 export type WidgetProps = {
   readOnly: boolean;
@@ -13,7 +13,6 @@ export type WidgetProps = {
   isSelected: boolean;
   cellSize: number;
   widget: DashboardWidget;
-  viewport: DashboardWidgetsConfiguration['viewport'];
   messageOverrides: DashboardMessages;
 };
 

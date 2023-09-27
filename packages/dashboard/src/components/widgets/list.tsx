@@ -6,13 +6,14 @@ import WidgetComponent from './widget';
 import SelectionBox from './selectionBox';
 import './list.css';
 import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import type { DashboardWidgetsConfiguration, DashboardWidget } from '~/types';
+import type { DashboardWidget } from '~/types';
 import type { DashboardMessages } from '~/messages';
+import { DashboardState } from '~/store/state';
 
 export type WidgetsProps = {
   readOnly: boolean;
   query?: SiteWiseQuery;
-  dashboardConfiguration: DashboardWidgetsConfiguration;
+  dashboardConfiguration: DashboardState['dashboardConfiguration'];
   selectedWidgets: DashboardWidget[];
   cellSize: number;
   dragEnabled: boolean;
@@ -28,7 +29,7 @@ const Widgets: React.FC<WidgetsProps> = ({
   query,
   readOnly,
 }) => {
-  const { widgets, viewport } = dashboardConfiguration;
+  const { widgets } = dashboardConfiguration;
   const isSelected = (id: string) =>
     includes(
       map(selectedWidgets, (sw) => sw.id),
@@ -52,7 +53,6 @@ const Widgets: React.FC<WidgetsProps> = ({
           key={widget.id}
           cellSize={cellSize}
           widget={widget}
-          viewport={viewport}
         />
       ))}
     </div>
