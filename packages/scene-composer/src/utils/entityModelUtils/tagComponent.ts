@@ -40,7 +40,9 @@ export const createTagEntityComponent = (tag: IAnchorComponent): ComponentReques
   if (tag.navLink?.params) {
     const params = {};
     Object.keys(tag.navLink.params).forEach((k) => {
-      params[k] = { stringValue: encodeURI(tag.navLink?.params![k]) };
+      if (k) {
+        params[k] = { stringValue: encodeURI(tag.navLink?.params![k]) };
+      }
     });
     comp.properties![TagComponentProperty.NavLinkParams] = {
       value: {

@@ -1,6 +1,5 @@
 import React from 'react';
-import { act, render } from '@testing-library/react';
-import wrapper from '@awsui/components-react/test-utils/dom';
+import { act, fireEvent, render } from '@testing-library/react';
 
 import { DataBindingMapNameEditor } from './DataBindingMapNameEditor';
 
@@ -13,7 +12,7 @@ describe('DataBindingMapNameEditor', () => {
     {
       bindingName: 'binding-1',
       valueDataBinding: {
-        dataBindingContext: 'random-1',
+        dataBindingContext: { entityId: 'random-1' },
       },
     },
   ];
@@ -24,26 +23,23 @@ describe('DataBindingMapNameEditor', () => {
   });
 
   it('should update binding name', async () => {
-    const { container } = render(
+    const { getByDisplayValue } = render(
       <DataBindingMapNameEditor
         bindingName='binding-1'
-        index={0}
         valueDataBindings={valueDataBindings}
-        onUpdateCallback={onUpdateCallbackMock}
+        onBindingNameChange={onUpdateCallbackMock}
       />,
     );
-    const polarisWrapper = wrapper(container);
 
-    const nameInput = polarisWrapper.findInput('[data-testid="binding-name-input"]');
+    const nameInput = getByDisplayValue('binding-1');
     expect(nameInput).not.toBeNull();
 
     act(() => {
-      nameInput!.setInputValue('new-name');
+      fireEvent.change(nameInput, { target: { value: 'new-name' } });
+      fireEvent.blur(nameInput);
     });
 
     expect(onUpdateCallbackMock).toBeCalledTimes(1);
-    expect(onUpdateCallbackMock).toBeCalledWith({
-      valueDataBindings: [{ ...valueDataBindings[0], bindingName: 'new-name' }],
-    });
+    expect(onUpdateCallbackMock).toBeCalledWith('new-name');
   });
 });

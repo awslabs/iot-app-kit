@@ -4,9 +4,9 @@ import {
   AttributeEditor,
   Box,
   ExpandableSection,
-  FormField,
   Grid,
   Input,
+  InputProps,
   Select,
   SelectProps,
   SpaceBetween,
@@ -54,7 +54,7 @@ export function NumericInput(props: {
 export type TextInputProps = {
   value: string;
   setValue: (val: string | null) => void;
-};
+} & InputProps;
 
 export const TextInput = (props: TextInputProps): React.ReactElement => {
   const { value, setValue } = props;
@@ -66,6 +66,7 @@ export const TextInput = (props: TextInputProps): React.ReactElement => {
 
   return (
     <Input
+      {...props}
       value={inputValue}
       onChange={(event) => {
         setInputValue(event.detail.value);

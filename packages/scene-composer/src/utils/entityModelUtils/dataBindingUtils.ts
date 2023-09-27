@@ -14,25 +14,40 @@ enum DataBindingPropertyKey {
 
 export const createDataBindingMap = (
   binding: ValueDataBinding | undefined,
-): Record<DataBindingPropertyKey, DataValue> | {} => {
+): Partial<Record<DataBindingPropertyKey, DataValue>> => {
+  const result: Partial<Record<DataBindingPropertyKey, DataValue>> = {};
+
   if (!binding || isEmpty(binding.dataBindingContext)) {
-    return {};
+    return result;
   }
 
-  return {
-    [DataBindingPropertyKey.EntityId]: {
+  const context = binding.dataBindingContext as ITwinMakerEntityDataBindingContext;
+
+  if (context.entityId) {
+    result[DataBindingPropertyKey.EntityId] = {
       stringValue: binding.dataBindingContext.entityId,
-    },
-    [DataBindingPropertyKey.ComponentName]: {
-      stringValue: (binding.dataBindingContext as ITwinMakerEntityDataBindingContext).componentName,
-    },
-    [DataBindingPropertyKey.PropertyName]: {
-      stringValue: (binding.dataBindingContext as ITwinMakerEntityDataBindingContext).propertyName,
-    },
-    [DataBindingPropertyKey.IsStaticData]: {
+    };
+  }
+
+  if (context.componentName) {
+    result[DataBindingPropertyKey.ComponentName] = {
+      stringValue: context.componentName,
+    };
+  }
+
+  if (context.propertyName) {
+    result[DataBindingPropertyKey.PropertyName] = {
+      stringValue: context.propertyName,
+    };
+  }
+
+  if (binding.isStaticData !== undefined) {
+    result[DataBindingPropertyKey.IsStaticData] = {
       stringValue: String(!!binding.isStaticData),
-    },
-  };
+    };
+  }
+
+  return result;
 };
 
 export const parseDataBinding = (bindingMap: DocumentType): ValueDataBinding | undefined => {
