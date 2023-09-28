@@ -7,3 +7,4 @@ export * from './table/plugin';
 export * from './text/plugin';
 export * from './rectangleSymbol/plugin';
 export * from './appKitPlugin';
+export * from './status/plugin';
