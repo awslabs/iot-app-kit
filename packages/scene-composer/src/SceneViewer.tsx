@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { isEqual } from 'lodash';
 import styled from 'styled-components';
 
-import { COMPOSER_FEATURES, KnownComponentType, SceneViewerProps } from './interfaces';
+import { COMPOSER_FEATURES, ISelectedDataBinding, KnownComponentType, SceneViewerProps } from './interfaces';
 import { SceneComposerInternal, useSceneComposerApi } from './components/SceneComposerInternal';
 
 const SceneComposerContainer = styled.div`
@@ -24,7 +24,7 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
     return sceneComposerId || uuid();
   }, [sceneComposerId]);
   const composerApis = useSceneComposerApi(composerId);
-  const prevSelectedRef: any = useRef();
+  const prevSelectedRef = useRef<ISelectedDataBinding | undefined>();
   const [sceneLoaded, setSceneLoaded] = useState(false);
 
   useEffect(() => {
@@ -68,6 +68,9 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
           ...(config || {}),
           mode: 'Viewing',
           featureConfig: {
+            // Allow beta users to override feature config
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            ...((config as any)?.featureConfig || {}),
             [COMPOSER_FEATURES.SceneHierarchySearch]: true,
             [COMPOSER_FEATURES.SceneHierarchyReorder]: true,
             [COMPOSER_FEATURES.SubModelSelection]: true,

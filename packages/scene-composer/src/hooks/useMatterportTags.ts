@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { CreateEntityCommandInput, UpdateEntityCommandInput } from '@aws-sdk/client-iottwinmaker';
+import { CreateEntityCommandInput } from '@aws-sdk/client-iottwinmaker';
 import { Color } from 'three';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
@@ -18,11 +18,12 @@ import { RecursivePartial } from '../utils/typeUtils';
 import { Component } from '../models/SceneModels';
 import { generateUUID } from '../utils/mathUtils';
 import { getGlobalSettings } from '../common/GlobalSettings';
-import { createTagEntityComponent, updateTagEntityComponent } from '../utils/entityModelUtils/tagComponent';
-import { createOverlayEntityComponent, updateOverlayEntityComponent } from '../utils/entityModelUtils/overlayComponent';
-import { createNodeEntityComponent, updateNodeEntityComponent } from '../utils/entityModelUtils/nodeComponent';
+import { createTagEntityComponent } from '../utils/entityModelUtils/tagComponent';
+import { createOverlayEntityComponent } from '../utils/entityModelUtils/overlayComponent';
+import { createNodeEntityComponent } from '../utils/entityModelUtils/nodeComponent';
 import { convertToIotTwinMakerNamespace } from '../utils/sceneResourceUtils';
 import { SceneNodeRuntimeProperty } from '../store/internalInterfaces';
+import { isDynamicNode } from '../utils/entityModelUtils/sceneUtils';
 
 import useDynamicScene from './useDynamicScene';
 
@@ -111,24 +112,33 @@ const addTag = async (
 
 const updateTag = async (
   dynamicSceneEnabled: boolean,
-  updateSceneNode: (ref: string, partial: RecursivePartial<ISceneNodeInternal>, isTransient?: boolean) => void,
+  updateSceneNode: (
+    ref: string,
+    partial: RecursivePartial<ISceneNodeInternal>,
+    isTransient?: boolean,
+    skipEntityUpdate?: boolean,
+  ) => void,
   { layerId, sceneRootId, ref, node, item }: UpdateTagInputs,
 ) => {
-  const tagStyleEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
+  const shouldSyncTagStyle = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle] && item.color;
 
   // assume only one tag per node which is same assumption as findComponentByType
   const components = [...node.components];
   const tagIndex = node.components.findIndex((elem) => elem.type === KnownComponentType.Tag);
   if (tagIndex !== -1) {
+    const tag = components[tagIndex] as IAnchorComponent;
+    const icon = shouldSyncTagStyle
+      ? convertToIotTwinMakerNamespace(SceneResourceType.Icon, DefaultAnchorStatus.Custom)
+      : tag.icon;
+    const chosenColor = shouldSyncTagStyle
+      ? '#' + new Color(item.color.r, item.color.g, item.color.b).getHexString('srgb')
+      : tag.chosenColor;
+
     components[tagIndex] = {
       ...components[tagIndex],
       offset: [item.stemVector.x, item.stemVector.y, item.stemVector.z],
-      icon: tagStyleEnabled
-        ? convertToIotTwinMakerNamespace(SceneResourceType.Icon, DefaultAnchorStatus.Custom)
-        : undefined,
-      chosenColor: tagStyleEnabled
-        ? '#' + new Color(item.color.r, item.color.g, item.color.b).getHexString('srgb')
-        : undefined,
+      icon,
+      chosenColor,
     } as IAnchorComponentInternal;
   }
   const dataOverlayIndex = node.components.findIndex((elem) => elem.type === KnownComponentType.DataOverlay);
@@ -148,43 +158,21 @@ const updateTag = async (
   }
 
   const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
+  const isUpdate = isDynamicNode(node);
 
   if (dynamicSceneEnabled && sceneMetadataModule) {
     if (!layerId) {
       return;
     }
 
-    const isUpdate = !!node.properties.layerIds?.at(0);
-    const tagComp =
-      tagIndex !== -1
-        ? (isUpdate ? updateTagEntityComponent : createTagEntityComponent)(components[tagIndex])
-        : undefined;
-    const overlayComp =
-      dataOverlayIndex !== -1
-        ? (isUpdate ? updateOverlayEntityComponent : createOverlayEntityComponent)(
-            components[dataOverlayIndex] as IDataOverlayComponent,
-          )
-        : undefined;
-    const nodeComp = (isUpdate ? updateNodeEntityComponent : createNodeEntityComponent)(node, layerId);
+    if (!isUpdate) {
+      const tagComp = tagIndex !== -1 ? createTagEntityComponent(components[tagIndex]) : undefined;
+      const overlayComp =
+        dataOverlayIndex !== -1
+          ? createOverlayEntityComponent(components[dataOverlayIndex] as IDataOverlayComponent)
+          : undefined;
+      const nodeComp = createNodeEntityComponent(node, layerId);
 
-    if (isUpdate) {
-      const updateEntity: UpdateEntityCommandInput = {
-        workspaceId: undefined,
-        entityId: ref,
-        entityName: item.label + '_' + ref,
-        componentUpdates: {
-          Node: nodeComp,
-        },
-      };
-      if (tagComp) {
-        updateEntity.componentUpdates![KnownComponentType.Tag] = tagComp;
-      }
-      if (overlayComp) {
-        updateEntity.componentUpdates![KnownComponentType.DataOverlay] = overlayComp;
-      }
-
-      await sceneMetadataModule.updateSceneEntity(updateEntity);
-    } else {
       const createEntity: CreateEntityCommandInput = {
         workspaceId: undefined,
         entityId: ref,
@@ -204,16 +192,21 @@ const updateTag = async (
     }
   }
 
-  updateSceneNode(ref, {
-    name: item.label,
-    transform: {
-      position: [item.anchorPosition.x, item.anchorPosition.y, item.anchorPosition.z],
+  updateSceneNode(
+    ref,
+    {
+      name: item.label,
+      transform: {
+        position: [item.anchorPosition.x, item.anchorPosition.y, item.anchorPosition.z],
+      },
+      components: components,
+      properties: {
+        [SceneNodeRuntimeProperty.LayerIds]: layerId && dynamicSceneEnabled ? [layerId] : undefined,
+      },
     },
-    components: components,
-    properties: {
-      [SceneNodeRuntimeProperty.LayerIds]: layerId && dynamicSceneEnabled ? [layerId] : undefined,
-    },
-  });
+    false,
+    !isUpdate,
+  );
 };
 
 type AddTagInputs = {

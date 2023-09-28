@@ -29,6 +29,7 @@ import {
 } from '../internalInterfaces';
 import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity';
 import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
+import { isDynamicNode } from '../../utils/entityModelUtils/sceneUtils';
 
 const LOG = new DebugLogger('stateStore');
 
@@ -44,7 +45,12 @@ export interface ISceneDocumentSlice {
 
   renderSceneNodesFromLayers(nodes: ISceneNodeInternal[], layerId: string): void;
 
-  updateSceneNodeInternal(ref: string, partial: RecursivePartial<ISceneNodeInternal>, isTransient?: boolean): void;
+  updateSceneNodeInternal(
+    ref: string,
+    partial: RecursivePartial<ISceneNodeInternal>,
+    isTransient?: boolean,
+    skipEntityUpdate?: boolean,
+  ): void;
   updateDocumentInternal(partial: RecursivePartial<Pick<ISceneDocumentInternal, 'unit'>>): void;
   listSceneRuleMapIds(): string[];
   getSceneRuleMapById(id?: string): Readonly<IRuleBasedMapInternal> | undefined;
@@ -183,7 +189,7 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
       });
     },
 
-    updateSceneNodeInternal: (ref, partial, isTransient) => {
+    updateSceneNodeInternal: (ref, partial, isTransient, skipEntityUpdate) => {
       const document = get().document;
 
       set((draft) => {
@@ -214,9 +220,10 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
           }
         }
 
-        const layerId = draft.document.nodeMap[ref].properties.layerIds?.at(0);
-        if (layerId) {
-          updateEntity(draft.document.nodeMap[ref]);
+        const updatedNode = draft.document.nodeMap[ref];
+        if (isDynamicNode(updatedNode) && !skipEntityUpdate) {
+          const compsToBeUpdated = !isEmpty(partial.components) ? updatedNode.components : undefined;
+          updateEntity(updatedNode, compsToBeUpdated);
         }
 
         draft.lastOperation = isTransient ? 'updateSceneNodeInternalTransient' : 'updateSceneNodeInternal';
@@ -263,8 +270,7 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
 
         nodeToRemove = removeNode(draft.document, nodeRef, LOG);
 
-        const layerId = nodeToRemove.properties.layerIds?.at(0);
-        if (layerId) {
+        if (isDynamicNode(nodeToRemove)) {
           deleteNodeEntity(nodeRef);
         }
 
@@ -314,8 +320,8 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         }
         addComponentToComponentNodeMap(draft.document.componentNodeMap[component.type]!, nodeRef, component.ref);
 
-        if (node.properties?.layerIds?.at(0)) {
-          updateEntity(node, component);
+        if (isDynamicNode(node)) {
+          updateEntity(node, [component]);
         }
 
         draft.lastOperation = 'addComponentInternal';
@@ -347,9 +353,8 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         const updatedNode = draft.document.nodeMap[nodeRef];
         const updatedComponenet = updatedNode?.components[componentToUpdateIndex];
 
-        const layerId = updatedNode.properties.layerIds?.at(0);
-        if (updatedComponenet && layerId) {
-          updateEntity(updatedNode, updatedComponenet);
+        if (updatedComponenet && isDynamicNode(updatedNode)) {
+          updateEntity(updatedNode, [updatedComponenet]);
         }
 
         draft.lastOperation = 'updateComponentInternal';
@@ -372,9 +377,8 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
 
         const removedComponenet = draft.document.nodeMap[nodeRef].components.splice(componentIndex, 1).at(0);
 
-        const layerId = draft.document.nodeMap[nodeRef].properties.layerIds?.at(0);
-        if (removedComponenet && layerId) {
-          updateEntity(draft.document.nodeMap[nodeRef], removedComponenet, ComponentUpdateType.DELETE);
+        if (removedComponenet && isDynamicNode(draft.document.nodeMap[nodeRef])) {
+          updateEntity(draft.document.nodeMap[nodeRef], [removedComponenet], ComponentUpdateType.DELETE);
         }
 
         draft.lastOperation = 'removeComponent';

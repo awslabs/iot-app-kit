@@ -11,7 +11,7 @@ import { updateOverlayEntityComponent } from './overlayComponent';
 
 export const updateEntity = async (
   node: ISceneNodeInternal,
-  compToBeUpdated?: ISceneComponentInternal,
+  compsToBeUpdated?: ISceneComponentInternal[],
   updateType?: ComponentUpdateType,
 ): Promise<void> => {
   const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
@@ -27,30 +27,32 @@ export const updateEntity = async (
     },
   };
 
-  if (compToBeUpdated && compToBeUpdated?.type !== KnownComponentType.EntityBinding) {
-    let comp: ComponentUpdateRequest | undefined = undefined;
-    if (updateType === ComponentUpdateType.DELETE) {
-      comp = {
-        componentTypeId: componentTypeToId[compToBeUpdated?.type],
-        updateType: updateType,
-      };
-    } else {
-      switch (compToBeUpdated?.type) {
-        case KnownComponentType.Tag:
-          comp = updateTagEntityComponent(compToBeUpdated);
-          break;
-        case KnownComponentType.DataOverlay:
-          comp = updateOverlayEntityComponent(compToBeUpdated as IDataOverlayComponent);
-          break;
-        default:
-          throw new Error('Component type not supported');
+  compsToBeUpdated?.forEach((compToBeUpdated) => {
+    if (compToBeUpdated?.type !== KnownComponentType.EntityBinding) {
+      let comp: ComponentUpdateRequest | undefined = undefined;
+      if (updateType === ComponentUpdateType.DELETE) {
+        comp = {
+          componentTypeId: componentTypeToId[compToBeUpdated?.type],
+          updateType: updateType,
+        };
+      } else {
+        switch (compToBeUpdated?.type) {
+          case KnownComponentType.Tag:
+            comp = updateTagEntityComponent(compToBeUpdated);
+            break;
+          case KnownComponentType.DataOverlay:
+            comp = updateOverlayEntityComponent(compToBeUpdated as IDataOverlayComponent);
+            break;
+          default:
+            throw new Error('Component type not supported');
+        }
+      }
+
+      if (comp) {
+        updateEntity.componentUpdates![compToBeUpdated.type] = comp;
       }
     }
-
-    if (comp) {
-      updateEntity.componentUpdates![compToBeUpdated.type] = comp;
-    }
-  }
+  });
 
   try {
     await sceneMetadataModule?.updateSceneEntity(updateEntity);

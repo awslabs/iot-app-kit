@@ -1,5 +1,6 @@
 import { CreateEntityCommandInput, CreateEntityCommandOutput } from '@aws-sdk/client-iottwinmaker';
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { isEmpty } from 'lodash';
 
 import {
   LAYER_ROOT_ENTITY_ID,
@@ -9,6 +10,7 @@ import {
 } from '../../common/entityModelConstants';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { generateUUID } from '../mathUtils';
+import { ISceneNodeInternal } from '../../store';
 
 export const createSceneEntityId = (sceneName: string): string => {
   return `SCENE_${sceneName}_${generateUUID()}`;
@@ -63,4 +65,8 @@ export const prepareWorkspace = async (sceneMetadataModule: TwinMakerSceneMetada
     );
   }
   await Promise.all(createRootRequests);
+};
+
+export const isDynamicNode = (node?: ISceneNodeInternal): boolean => {
+  return !isEmpty(node?.properties.layerIds);
 };

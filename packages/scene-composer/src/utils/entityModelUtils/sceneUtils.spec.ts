@@ -7,8 +7,15 @@ import {
   SCENE_ROOT_ENTITY_ID,
   SCENE_ROOT_ENTITY_NAME,
 } from '../../common/entityModelConstants';
+import { ISceneNodeInternal, SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
 
-import { checkIfEntityAvailable, createSceneEntityId, createSceneRootEntity, prepareWorkspace } from './sceneUtils';
+import {
+  checkIfEntityAvailable,
+  createSceneEntityId,
+  createSceneRootEntity,
+  isDynamicNode,
+  prepareWorkspace,
+} from './sceneUtils';
 
 jest.mock('../mathUtils', () => ({
   generateUUID: jest.fn(() => 'random-uuid'),
@@ -136,5 +143,28 @@ describe('prepareWorkspace', () => {
     await prepareWorkspace(mockMetadataModule as TwinMakerSceneMetadataModule);
 
     expect(createSceneEntity).not.toBeCalled();
+  });
+});
+
+describe('isDynamicNode', () => {
+  it('should return true', () => {
+    expect(
+      isDynamicNode({
+        properties: {
+          [SceneNodeRuntimeProperty.LayerIds]: ['layer'],
+        },
+      } as ISceneNodeInternal),
+    ).toEqual(true);
+  });
+
+  it('should return false', () => {
+    expect(
+      isDynamicNode({
+        properties: {
+          [SceneNodeRuntimeProperty.LayerIds]: [] as string[],
+        },
+      } as ISceneNodeInternal),
+    ).toEqual(false);
+    expect(isDynamicNode({ properties: {} } as ISceneNodeInternal)).toEqual(false);
   });
 });

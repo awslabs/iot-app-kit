@@ -50,10 +50,36 @@ describe('updateEntity', () => {
     expect(updateOverlayEntityComponent).not.toHaveBeenCalled();
   });
 
+  it('should call update entity to update multiple components', async () => {
+    const tag = { type: KnownComponentType.Tag, ref: 'tag-ref' };
+    const overlay = { type: KnownComponentType.DataOverlay, ref: 'overlay-ref' };
+
+    await updateEntity(defaultNode, [tag, overlay], 'UPDATE');
+
+    expect(updateSceneEntity).toHaveBeenCalledTimes(1);
+    expect(updateSceneEntity).toHaveBeenCalledWith({
+      workspaceId: undefined,
+      entityId: defaultNode.ref,
+      entityName: defaultNode.name + '_' + defaultNode.ref,
+      componentUpdates: {
+        Node: { componentTypeId: '3d.node' },
+        Tag: { componentTypeId: '3d.tag' },
+        DataOverlay: { componentTypeId: '3d.overlay' },
+      },
+    });
+
+    expect(updateNodeEntityComponent).toHaveBeenCalledTimes(1);
+    expect(updateNodeEntityComponent).toHaveBeenCalledWith(defaultNode, undefined, 'UPDATE');
+    expect(updateTagEntityComponent).toHaveBeenCalledTimes(1);
+    expect(updateTagEntityComponent).toHaveBeenCalledWith(tag);
+    expect(updateOverlayEntityComponent).toHaveBeenCalledTimes(1);
+    expect(updateOverlayEntityComponent).toHaveBeenCalledWith(overlay);
+  });
+
   it('should call update entity to update tag component', async () => {
     const compToUpdate = { type: KnownComponentType.Tag, ref: 'tag-ref' };
 
-    await updateEntity(defaultNode, compToUpdate, 'UPDATE');
+    await updateEntity(defaultNode, [compToUpdate], 'UPDATE');
 
     expect(updateSceneEntity).toHaveBeenCalledTimes(1);
     expect(updateSceneEntity).toHaveBeenCalledWith({
@@ -76,7 +102,7 @@ describe('updateEntity', () => {
   it('should call update entity to update overlay component', async () => {
     const compToUpdate = { type: KnownComponentType.DataOverlay, ref: 'overlay-ref' };
 
-    await updateEntity(defaultNode, compToUpdate, 'UPDATE');
+    await updateEntity(defaultNode, [compToUpdate], 'UPDATE');
 
     expect(updateSceneEntity).toHaveBeenCalledTimes(1);
     expect(updateSceneEntity).toHaveBeenCalledWith({
@@ -99,7 +125,7 @@ describe('updateEntity', () => {
   it('should call update entity without entity binding component', async () => {
     const compToUpdate = { type: KnownComponentType.EntityBinding, ref: 'entity-binding-ref' };
 
-    await updateEntity(defaultNode, compToUpdate, 'UPDATE');
+    await updateEntity(defaultNode, [compToUpdate], 'UPDATE');
 
     expect(updateSceneEntity).toHaveBeenCalledTimes(1);
     expect(updateSceneEntity).toHaveBeenCalledWith({
@@ -120,7 +146,7 @@ describe('updateEntity', () => {
   it('should call update entity to delete tag component', async () => {
     const compToUpdate = { type: KnownComponentType.Tag, ref: 'tag-ref' };
 
-    await updateEntity(defaultNode, compToUpdate, 'DELETE');
+    await updateEntity(defaultNode, [compToUpdate], 'DELETE');
 
     expect(updateSceneEntity).toHaveBeenCalledTimes(1);
     expect(updateSceneEntity).toHaveBeenCalledWith({
