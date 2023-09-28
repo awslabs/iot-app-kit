@@ -375,6 +375,10 @@
     "note": "Menu Item",
     "text": "Pointer Lock"
   },
+  "J+haL1": {
+    "note": "Aria live announcement for when a statement is removed",
+    "text": "Removed statement"
+  },
   "JTUN+G": {
     "note": "Form field label",
     "text": "Focal length"
@@ -526,6 +530,10 @@
   "RNZ9kW": {
     "note": "Expandable Section title",
     "text": "Tag"
+  },
+  "RZeAOs": {
+    "note": "Aria label for remove statement button",
+    "text": "Remove statement"
   },
   "SYAG+q": {
     "note": "Form Field label",

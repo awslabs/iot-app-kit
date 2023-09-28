@@ -14,6 +14,7 @@ exports[`SceneRulesPanel returns expected elements. SceneRulesPanel returns expe
         data-mocked="AttributeEditor"
         definition="[{\\"label\\":\\"Expression\\"},{\\"label\\":\\"Target\\"}]"
         empty="No statements"
+        i18nstrings="{\\"itemRemovedAriaLive\\":\\"Removed statement\\"}"
         items="[{\\"expression\\":\\"exp1\\",\\"target\\":\\"target1\\"},\\"mapId\\"]"
         removebuttontext="Remove statement"
       />
