@@ -3,10 +3,9 @@ import { DATA_TYPE } from '@iot-app-kit/core';
 import random from 'lodash/random';
 import {
   KPIWidget,
-  LineChartWidget,
+  LineScatterChartWidget,
   LineWidget,
   RectangleWidget,
-  ScatterChartWidget,
   StatusWidget,
   TextWidget,
 } from '~/customization/widgets/types';
@@ -56,7 +55,7 @@ export const MOCK_KPI_WIDGET: KPIWidget = {
   },
 };
 
-export const MOCK_SCATTER_CHART_WIDGET: ScatterChartWidget = {
+export const MOCK_SCATTER_CHART_WIDGET: LineScatterChartWidget = {
   id: 'mock-scatter-chart-widget',
   type: 'iot-scatter',
   x: 2,
@@ -71,7 +70,9 @@ export const MOCK_SCATTER_CHART_WIDGET: ScatterChartWidget = {
         assets: [
           {
             assetId: DEMO_TURBINE_ASSET_1,
-            properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
+            properties: [
+              { resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3, line: { connectionStyle: 'none' } },
+            ],
           },
         ],
       },
@@ -79,7 +80,7 @@ export const MOCK_SCATTER_CHART_WIDGET: ScatterChartWidget = {
   },
 };
 
-export const MOCK_LINE_CHART_WIDGET: LineChartWidget = {
+export const MOCK_LINE_CHART_WIDGET: LineScatterChartWidget = {
   id: 'mock-line-chart-widget',
   type: 'line-chart',
   x: 2,

@@ -50,14 +50,6 @@ export type StatusProperties = QueryProperties & {
 };
 export type StatusPropertiesKeys = keyof StatusProperties;
 
-export type LineChartProperties = QueryProperties & {
-  thresholds?: ThresholdWithId[];
-  thresholdSettings?: ThresholdSettings;
-  axis?: AxisSettings;
-  significantDigits?: number;
-};
-export type LineChartPropertiesKeys = keyof LineChartProperties;
-
 export type StatusTimelineProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
   thresholdSettings?: ThresholdSettings;
@@ -65,14 +57,6 @@ export type StatusTimelineProperties = QueryProperties & {
   significantDigits?: number;
 };
 export type StatusTimelinePropertiesKeys = keyof StatusTimelineProperties;
-
-export type ScatterChartProperties = QueryProperties & {
-  thresholds?: ThresholdWithId[];
-  thresholdSettings?: ThresholdSettings;
-  axis?: AxisSettings;
-  significantDigits?: number;
-};
-export type ScatterChartPropertiesKeys = keyof ScatterChartProperties;
 
 export type LineAndScatterStyles = {
   significantDigits?: number;
@@ -193,14 +177,11 @@ export type LineProperties = {
 type ChartPropertiesUnion =
   | KPIProperties
   | StatusProperties
-  | LineChartProperties
-  | ScatterChartProperties
   | BarChartProperties
   | TableProperties
   | StatusTimelineProperties;
 type ChartPropertiesKeysIntersection = KPIPropertiesKeys &
   StatusPropertiesKeys &
-  LineChartPropertiesKeys &
   BarChartPropertiesKeys &
   TablePropertiesKeys &
   StatusTimelinePropertiesKeys;
@@ -210,8 +191,6 @@ export type QueryWidget = DashboardWidget<QueryProperties>;
 
 export type KPIWidget = DashboardWidget<KPIProperties>;
 export type StatusWidget = DashboardWidget<StatusProperties>;
-export type LineChartWidget = DashboardWidget<LineChartProperties>;
-export type ScatterChartWidget = DashboardWidget<ScatterChartProperties>;
 export type LineScatterChartWidget = DashboardWidget<LineScatterChartProperties>;
 export type BarChartWidget = DashboardWidget<BarChartProperties>;
 export type TableWidget = DashboardWidget<TableProperties>;
