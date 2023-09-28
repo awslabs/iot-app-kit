@@ -1,15 +1,19 @@
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWiseDataStreamQuery } from '~/types';
 
 export const applyAggregationToQuery = (
-  siteWiseAssetQuery: SiteWiseAssetQuery,
+  { assets = [], properties = [] }: IoTSiteWiseDataStreamQuery,
   aggregationType: AggregateType | undefined
 ) => ({
-  assets: siteWiseAssetQuery.assets.map(({ properties, ...others }) => ({
+  assets: assets.map(({ properties, ...others }) => ({
     ...others,
     properties: properties.map((propertyQuery) => ({
       ...propertyQuery,
       aggregationType,
     })),
+  })),
+  properties: properties.map((propertyQuery) => ({
+    ...propertyQuery,
+    aggregationType,
   })),
 });

@@ -11,7 +11,6 @@ import type {
   LineAndScatterStyles,
   LineScatterChartWidget,
   LineStyles,
-  StyledAssetQuery,
   SymbolStyles,
 } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
@@ -21,6 +20,7 @@ import { useChartSize } from '~/hooks/useChartSize';
 import WidgetTile from '~/components/widgets/tile/tile';
 import NoChartData from '../components/no-chart-data';
 import { default as lineSvgDark } from './line-dark.svg';
+import { IoTSiteWiseDataStreamQuery } from '~/types';
 
 const mapConnectionStyleToVisualizationType = (
   connectionStyle: LineStyles['connectionStyle']
@@ -61,17 +61,22 @@ const mapSymboleStyleToSymbol = (symbolStyle: SymbolStyles['style']): ChartStyle
   }
 };
 
-const useAdaptedStyleSettings = (rootStyles: LineAndScatterStyles, styledAssetQuery?: StyledAssetQuery) => {
+const useAdaptedStyleSettings = (rootStyles: LineAndScatterStyles, styledAssetQuery?: IoTSiteWiseDataStreamQuery) => {
   return useMemo(() => {
     if (!styledAssetQuery) return {};
 
     const styleSettings: ChartOptions['styleSettings'] = {};
 
-    styledAssetQuery.assets.forEach((asset) => {
+    styledAssetQuery.assets?.forEach((asset) => {
       asset.properties.forEach((property) => {
         if (!property.refId) return;
         styleSettings[property.refId] = mapStyledAssetPropertyToChartStyleSettings(rootStyles, property);
       });
+    });
+
+    styledAssetQuery.properties?.forEach((property) => {
+      if (!property.refId) return;
+      styleSettings[property.refId] = mapStyledAssetPropertyToChartStyleSettings(rootStyles, property);
     });
 
     return styleSettings;
@@ -118,12 +123,13 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
     significantDigits: widgetSignificantDigits,
   } = widget.properties;
 
+  //debugger;
   const query = queryConfig.query;
   const filteredQuery = {
     ...query,
     assets:
       query?.assets
-        .map((asset) => {
+        ?.map((asset) => {
           const { assetId, properties } = asset;
           return {
             assetId,
@@ -149,7 +155,8 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
   // the 44 is from the widget tile header's height
   const size = { width: chartSize.width, height: chartSize.height - 44 };
 
-  const isEmptyWidget = !queryConfig.query || queryConfig.query.assets.length === 0;
+  const isEmptyWidget =
+    !queryConfig.query || (queryConfig.query.assets?.length === 0 && queryConfig.query.properties?.length === 0);
 
   if (isEmptyWidget) {
     return (

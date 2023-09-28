@@ -7,6 +7,7 @@ import {
   LineWidget,
   RectangleWidget,
   StatusWidget,
+  StyledAssetQuery,
   TextWidget,
 } from '~/customization/widgets/types';
 /**
@@ -75,7 +76,7 @@ export const MOCK_SCATTER_CHART_WIDGET: LineScatterChartWidget = {
             ],
           },
         ],
-      },
+      } as StyledAssetQuery,
     },
   },
 };

@@ -5,7 +5,7 @@ export const defaultOnDeleteQuery: OnDeleteAssetQuery =
   () => {
     const assets =
       siteWiseAssetQuery?.assets
-        .map((asset) => {
+        ?.map((asset) => {
           if (assetId === asset.assetId) {
             const { properties } = asset;
             return {
@@ -17,5 +17,7 @@ export const defaultOnDeleteQuery: OnDeleteAssetQuery =
         })
         .filter((asset) => asset.properties.length > 0) ?? [];
 
-    updateSiteWiseAssetQuery({ assets });
+    const properties = siteWiseAssetQuery?.properties?.filter((p) => p.propertyAlias !== propertyId) ?? [];
+
+    updateSiteWiseAssetQuery({ assets, properties });
   };

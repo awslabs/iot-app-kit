@@ -1,13 +1,13 @@
 import type { StyledAssetQuery, StyledSiteWiseQueryConfig, SiteWiseQueryConfig } from '~/customization/widgets/types';
 import { Maybe } from '~/util/maybe';
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import type { StyleSettingsMap } from '@iot-app-kit/core';
+import type { IoTSiteWiseDataStreamQuery } from '~/types';
 
 export type OnDeleteAssetQuery = (params: {
   assetId: string;
   propertyId: string;
-  siteWiseAssetQuery: SiteWiseAssetQuery | StyledAssetQuery;
-  updateSiteWiseAssetQuery: (newQuery: SiteWiseAssetQuery) => void;
+  siteWiseAssetQuery: IoTSiteWiseDataStreamQuery | StyledAssetQuery;
+  updateSiteWiseAssetQuery: (newQuery: IoTSiteWiseDataStreamQuery) => void;
 }) => () => void;
 
 export type PropertiesAlarmsSectionProps = {

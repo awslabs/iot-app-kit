@@ -5,7 +5,7 @@ import type { FC } from 'react';
 import type { StyleSettingsMap } from '@iot-app-kit/core';
 
 import './propertyComponent.css';
-import { getPropertyDisplay } from './getPropertyDetails';
+import { getPropertyDisplay } from './getPropertyDisplay';
 import type { AssetSummary } from '~/hooks/useAssetDescriptionQueries';
 
 export type PropertyComponentProps = {
