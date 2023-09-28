@@ -41,7 +41,10 @@ export function useQuery(): [Query | undefined, (cb: (currentQuery?: Query) => Q
   const selectedWidgets = useSelectedWidgets<QueryProperty>();
   const selectedWidget = isOneWidgetSelected(selectedWidgets) ? getFirstWidget(selectedWidgets) : undefined;
 
-  const query = isWidget(selectedWidget) ? getQueryFromWidget(selectedWidget) : undefined;
+  const query =
+    isWidget(selectedWidget) && 'queryConfig' in selectedWidget.properties
+      ? getQueryFromWidget(selectedWidget)
+      : undefined;
 
   function setQuery(cb: (currentQuery?: Query) => Query | undefined): void {
     // Only update the query if a widget is selected
