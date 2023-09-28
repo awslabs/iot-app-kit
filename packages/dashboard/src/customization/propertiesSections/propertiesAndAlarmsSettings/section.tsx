@@ -5,11 +5,12 @@ import type { TableItemRef } from '@iot-app-kit/react-components';
 import { TableItem } from '@iot-app-kit/react-components';
 import { isJust } from '~/util/maybe';
 import { SelectOneWidget } from '../shared/selectOneWidget';
-import { toId, type SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import { toId } from '@iot-app-kit/source-iotsitewise';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Box from '@cloudscape-design/components/box';
 import { PropertiesAlarmsSectionProps } from './sectionTypes';
 import { defaultOnDeleteQuery } from './onDeleteProperty';
+import { IoTSiteWiseDataStreamQuery } from '~/types';
 
 const NoComponents = () => <Box variant='p'>No properties or alarms found</Box>;
 
@@ -47,7 +48,7 @@ export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = 
   const mustEditAsSingle = !editablePropertiesAndAlarms || !editableStyleSettings;
 
   const siteWiseAssetQuery = (editablePropertiesAndAlarms && queryConfig.value.query) || undefined;
-  const describedAssetsMapQuery = useAssetDescriptionMapQuery(siteWiseAssetQuery as SiteWiseAssetQuery);
+  const describedAssetsMapQuery = useAssetDescriptionMapQuery(siteWiseAssetQuery);
   const describedAssetsMap = describedAssetsMapQuery.data ?? {};
 
   const getComponents = () => {
@@ -55,7 +56,7 @@ export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = 
 
     const styleSettingsValue = styleSettings.value ?? {};
 
-    const updateSiteWiseAssetQuery = (newQuery: SiteWiseAssetQuery) => {
+    const updateSiteWiseAssetQuery = (newQuery: IoTSiteWiseDataStreamQuery) => {
       updateQueryConfig({
         ...queryConfig.value,
         query: newQuery,
@@ -72,29 +73,53 @@ export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = 
       });
     };
 
-    const components = siteWiseAssetQuery?.assets?.flatMap(({ assetId, properties }) =>
-      properties.map(({ propertyId, refId = propertyId }) =>
-        describedAssetsMap[assetId] ? (
+    const modeled =
+      siteWiseAssetQuery?.assets?.flatMap(({ assetId, properties }) =>
+        properties.map(({ propertyId, refId = propertyId }) =>
+          describedAssetsMap[assetId] ? (
+            <PropertyComponent
+              key={`${assetId}-${propertyId}`}
+              propertyId={propertyId}
+              refId={refId}
+              assetSummary={describedAssetsMap[assetId]}
+              styleSettings={styleSettingsValue}
+              onDeleteAssetQuery={onDeleteAssetQuery({
+                siteWiseAssetQuery: siteWiseAssetQuery,
+                assetId,
+                propertyId,
+                updateSiteWiseAssetQuery,
+              })}
+              onUpdatePropertyColor={onUpdatePropertyColor(refId)}
+              colorable={colorable}
+            />
+          ) : null
+        )
+      ) ?? [];
+
+    const unmodeled =
+      siteWiseAssetQuery?.properties?.map(({ propertyAlias, refId = propertyAlias }) =>
+        describedAssetsMap[propertyAlias] ? (
           <PropertyComponent
-            key={`${assetId}-${propertyId}`}
-            propertyId={propertyId}
+            key={propertyAlias}
+            propertyId={propertyAlias}
             refId={refId}
-            assetSummary={describedAssetsMap[assetId]}
+            assetSummary={describedAssetsMap[propertyAlias]}
             styleSettings={styleSettingsValue}
             onDeleteAssetQuery={onDeleteAssetQuery({
-              siteWiseAssetQuery: siteWiseAssetQuery as SiteWiseAssetQuery,
-              assetId,
-              propertyId,
+              siteWiseAssetQuery: siteWiseAssetQuery,
+              assetId: '',
+              propertyId: propertyAlias,
               updateSiteWiseAssetQuery,
             })}
             onUpdatePropertyColor={onUpdatePropertyColor(refId)}
             colorable={colorable}
           />
         ) : null
-      )
-    );
+      ) ?? [];
 
-    return components?.length ? components : <NoComponents />;
+    const components = [...modeled, ...unmodeled];
+
+    return components.length ? modeled : <NoComponents />;
   };
 
   return (
@@ -117,7 +142,7 @@ export const TablePropertiesAlarmsSection: FC<TablePropertiesAlarmsSectionProps>
     () => {
       const assets =
         siteWiseAssetQuery?.assets
-          .map((asset) => {
+          ?.map((asset) => {
             if (assetId === asset.assetId) {
               const { properties } = asset;
               return {

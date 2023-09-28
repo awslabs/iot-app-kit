@@ -10,7 +10,7 @@ import { createSiteWiseAssetDataSource } from './asset-modules/asset-data-source
 import { createDataSource } from './time-series-data';
 import { assetSession } from './sessions';
 import { SiteWiseAlarmModule } from './alarms/iotevents';
-import type { SiteWiseAssetQuery, SiteWiseDataSourceSettings, SiteWiseDataStreamQuery } from './time-series-data/types';
+import type { SiteWiseDataSourceSettings, SiteWiseDataStreamQuery } from './time-series-data/types';
 import type {
   RootedSiteWiseAssetTreeQueryArguments,
   SiteWiseAssetDataSource,
@@ -29,7 +29,7 @@ export type SiteWiseDataSourceInitInputs = {
 };
 
 export type SiteWiseQuery = {
-  timeSeriesData: (query: SiteWiseAssetQuery) => TimeSeriesDataQuery;
+  timeSeriesData: (query: SiteWiseDataStreamQuery) => TimeSeriesDataQuery;
   assetTree: {
     fromRoot: (query?: SiteWiseAssetTreeQueryArguments) => TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
     fromAsset: (query: RootedSiteWiseAssetTreeQueryArguments) => TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;

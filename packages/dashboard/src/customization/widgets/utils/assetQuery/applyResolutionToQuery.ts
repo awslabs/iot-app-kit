@@ -1,11 +1,18 @@
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import { IoTSiteWiseDataStreamQuery } from '~/types';
 
-export const applyResolutionToQuery = (siteWiseAssetQuery: SiteWiseAssetQuery, resolution: string | undefined) => ({
-  assets: siteWiseAssetQuery.assets.map(({ properties, ...others }) => ({
+export const applyResolutionToQuery = (
+  { assets = [], properties = [] }: IoTSiteWiseDataStreamQuery,
+  resolution: string | undefined
+) => ({
+  assets: assets.map(({ properties, ...others }) => ({
     ...others,
     properties: properties.map((propertyQuery) => ({
       ...propertyQuery,
       resolution,
     })),
+  })),
+  properties: properties.map((propertyQuery) => ({
+    ...propertyQuery,
+    resolution,
   })),
 });

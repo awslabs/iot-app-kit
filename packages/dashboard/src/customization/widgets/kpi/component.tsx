@@ -13,7 +13,6 @@ import { getAggregation } from '../utils/widgetAggregationUtils';
 import './component.css';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import WidgetTile from '~/components/widgets/tile';
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 
 const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const { viewport } = useViewport();
@@ -34,10 +33,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
-  const query =
-    iotSiteWiseQuery && queryConfig.query
-      ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query as SiteWiseAssetQuery)
-      : undefined;
+  const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
   const key = computeQueryConfigKey(viewport, queryConfig);
   const aggregation = getAggregation(widget);
 

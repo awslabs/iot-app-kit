@@ -31,7 +31,7 @@ export const getPropertyDisplay = (
   }
 
   return {
-    display: 'none',
+    display: 'property',
     label: propertyId,
     property: undefined,
   };

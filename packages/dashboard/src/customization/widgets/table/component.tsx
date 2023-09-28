@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CollectionPreferences, CollectionPreferencesProps } from '@cloudscape-design/components';
 
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import { Table, TableColumnDefinition, useViewport } from '@iot-app-kit/react-components';
 
 import EmptyTableComponent from './emptyTableComponent';
@@ -48,10 +47,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
-  const queries =
-    iotSiteWiseQuery && queryConfig.query
-      ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query as SiteWiseAssetQuery)]
-      : [];
+  const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
   const key = computeQueryConfigKey(viewport, widget.properties.queryConfig);
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;

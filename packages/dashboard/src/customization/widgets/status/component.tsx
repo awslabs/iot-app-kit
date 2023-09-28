@@ -10,7 +10,6 @@ import { useQueries } from '~/components/dashboard/queryContext';
 import { isDefined } from '~/util/isDefined';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { getAggregation } from '../utils/widgetAggregationUtils';
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import './component.css';
 
 const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
@@ -31,10 +30,7 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
-  const query =
-    iotSiteWiseQuery && queryConfig.query
-      ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query as SiteWiseAssetQuery)
-      : undefined;
+  const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
 
   const shouldShowEmptyState = query == null || !iotSiteWiseQuery;
   const key = computeQueryConfigKey(viewport, queryConfig);

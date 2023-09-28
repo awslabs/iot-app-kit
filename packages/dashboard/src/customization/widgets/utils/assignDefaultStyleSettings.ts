@@ -3,18 +3,22 @@ import { v4 as uuid } from 'uuid';
 import type { QueryWidget } from '../types';
 import { assignDefaultColor } from '@iot-app-kit/core-util';
 import { isDefined } from '~/util/isDefined';
+import { IoTSiteWiseDataStreamQuery } from '~/types';
 
 type Query = NonNullable<QueryWidget['properties']['queryConfig']['query']>;
 
-const assignDefaultRefId = (siteWiseQuery: Query, getId: () => string = uuid) => ({
-  assets: siteWiseQuery.assets?.map(({ properties, ...others }) => ({
+const assignDefaultRefId = (
+  { assets = [], properties = [] }: IoTSiteWiseDataStreamQuery,
+  getId: () => string = uuid
+) => ({
+  assets: assets.map(({ properties, ...others }) => ({
     ...others,
     properties: properties.map((propertyQuery) => ({
       ...propertyQuery,
       refId: propertyQuery.refId || getId(),
     })),
   })),
-  properties: siteWiseQuery.properties?.map((propertyQuery) => ({
+  properties: properties.map((propertyQuery) => ({
     ...propertyQuery,
     refId: propertyQuery.refId || getId(),
   })),

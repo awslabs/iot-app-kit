@@ -1,7 +1,7 @@
 import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import { useDispatch } from 'react-redux';
 import { onUpdateWidgetsAction } from '~/store/actions';
-import { DashboardWidget } from '~/types';
+import { DashboardWidget, IoTSiteWiseDataStreamQuery } from '~/types';
 import { applyDefaultStylesToQuery } from '~/customization/widgets/utils/assetQuery/applyDefaultStylesToQuery';
 import { assignDefaultStyles } from '~/customization/widgets/utils/assignDefaultStyleSettings';
 import { QueryWidget } from '~/customization/widgets/types';
@@ -10,11 +10,9 @@ import { applyAggregationToQuery } from '~/customization/widgets/utils/assetQuer
 import { applyResolutionToQuery } from '~/customization/widgets/utils/assetQuery/applyResolutionToQuery';
 import { getCurrentAggregationResolution } from '~/customization/widgets/utils/widgetAggregationUtils';
 
-type Query = NonNullable<QueryWidget['properties']['queryConfig']['query']>;
-type QueryProperty = { queryConfig: { query: Query } };
-type WidgetWithQuery = DashboardWidget<QueryProperty>;
+type WidgetWithQuery = DashboardWidget<{ queryConfig: { query: IoTSiteWiseDataStreamQuery } }>;
 
-export const styledQueryWidgetOnDrop = (updatedQuery: Query, widget: QueryWidget) => {
+export const styledQueryWidgetOnDrop = (updatedQuery: IoTSiteWiseDataStreamQuery, widget: QueryWidget) => {
   const mergedQuery = { assets: [], properties: [], ...updatedQuery };
 
   const queryWithRefIds = assignDefaultRefId(mergedQuery);
@@ -36,9 +34,12 @@ export const styledQueryWidgetOnDrop = (updatedQuery: Query, widget: QueryWidget
  * TECH DEBT: This hook only supports single selection. If multiple assets are selected, the query will be undefined.
  * Usage requires additional handling the lack of single select support in the UI. This is a leaky abstraction.
  */
-export function useQuery(): [Query | undefined, (cb: (currentQuery?: Query) => Query | undefined) => void] {
+export function useQuery(): [
+  IoTSiteWiseDataStreamQuery | undefined,
+  (cb: (currentQuery?: IoTSiteWiseDataStreamQuery) => IoTSiteWiseDataStreamQuery | undefined) => void
+] {
   const dispatch = useDispatch();
-  const selectedWidgets = useSelectedWidgets<QueryProperty>();
+  const selectedWidgets = useSelectedWidgets<{ queryConfig: { query: IoTSiteWiseDataStreamQuery } }>();
   const selectedWidget = isOneWidgetSelected(selectedWidgets) ? getFirstWidget(selectedWidgets) : undefined;
 
   const query =
@@ -46,7 +47,7 @@ export function useQuery(): [Query | undefined, (cb: (currentQuery?: Query) => Q
       ? getQueryFromWidget(selectedWidget)
       : undefined;
 
-  function setQuery(cb: (currentQuery?: Query) => Query | undefined): void {
+  function setQuery(cb: (currentQuery?: IoTSiteWiseDataStreamQuery) => IoTSiteWiseDataStreamQuery | undefined): void {
     // Only update the query if a widget is selected
     if (isWidget(selectedWidget)) {
       let updatedQuery = cb(query);
@@ -57,7 +58,7 @@ export function useQuery(): [Query | undefined, (cb: (currentQuery?: Query) => Q
           updatedQuery = styledQueryWidgetOnDrop(updatedQuery, selectedWidget);
         }
 
-        let updatedWidget = createUpdatedWidget(selectedWidget, updatedQuery as Query);
+        let updatedWidget = createUpdatedWidget(selectedWidget, updatedQuery as IoTSiteWiseDataStreamQuery);
 
         if (selectedWidget.type !== 'line-scatter-chart') {
           updatedWidget = assignDefaultStyles(updatedWidget as QueryWidget) as typeof updatedWidget;
@@ -85,11 +86,11 @@ function getFirstWidget(widgets: WidgetWithQuery[]): WidgetWithQuery | undefined
   return widgets.at(0);
 }
 
-function getQueryFromWidget(widget: WidgetWithQuery): Query {
+function getQueryFromWidget(widget: WidgetWithQuery): IoTSiteWiseDataStreamQuery {
   return widget.properties.queryConfig.query;
 }
 
-function createUpdatedWidget(widget: WidgetWithQuery, newQuery: Query): WidgetWithQuery {
+function createUpdatedWidget(widget: WidgetWithQuery, newQuery: IoTSiteWiseDataStreamQuery): WidgetWithQuery {
   const updatedWidget = {
     ...widget,
     properties: {

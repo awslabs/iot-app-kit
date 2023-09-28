@@ -8,7 +8,6 @@ import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import WidgetTile from '~/components/widgets/tile';
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 
 const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) => {
   const { viewport } = useViewport();
@@ -24,10 +23,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) =
   } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
-  const queries =
-    iotSiteWiseQuery && queryConfig.query
-      ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query as SiteWiseAssetQuery)]
-      : [];
+  const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
   const key = computeQueryConfigKey(undefined, queryConfig);
   const aggregation = getAggregation(widget);
 

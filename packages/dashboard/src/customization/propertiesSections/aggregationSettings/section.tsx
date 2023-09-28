@@ -2,7 +2,7 @@ import React from 'react';
 import type { FC } from 'react';
 import { SelectProps, ExpandableSection, Box, Select } from '@cloudscape-design/components';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import type { SiteWiseAssetQuery, SiteWisePropertyAliasQuery } from '@iot-app-kit/source-iotsitewise';
 import type { SiteWiseQueryConfig } from '~/customization/widgets/types';
 import { AssetPropertyQuery, AssetQuery } from '@iot-app-kit/source-iotsitewise/dist/es/time-series-data/types';
 import { getResolutionOptions, getAggregationOptions } from './helpers';
@@ -29,10 +29,13 @@ const Section: React.FC<React.PropsWithChildren> = ({ children }) => (
   </ExpandableSection>
 );
 
-const getAggregationSectionOptions = (siteWiseAssetQuery: SiteWiseAssetQuery | undefined, supportsRawData: boolean) => {
-  const { aggregationType, resolution } = siteWiseAssetQuery?.assets[0]?.properties[0] ?? {};
+const getAggregationSectionOptions = (
+  siteWiseQuery: Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery> | undefined,
+  supportsRawData: boolean
+) => {
+  const { aggregationType, resolution } = siteWiseQuery?.assets?.at(0)?.properties?.at(0) ?? {};
 
-  const dataTypeSet = useWidgetDataTypeSet(siteWiseAssetQuery);
+  const dataTypeSet = useWidgetDataTypeSet(siteWiseQuery);
   const filteredResolutionOptions = getResolutionOptions(supportsRawData);
   const filteredAggregationOptions = getAggregationOptions(supportsRawData, dataTypeSet, resolution);
 

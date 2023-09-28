@@ -5,7 +5,7 @@ import {
   type DescribeAssetResponse,
   type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
-import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import type { SiteWiseAssetQuery, SiteWisePropertyAliasQuery } from '@iot-app-kit/source-iotsitewise';
 import { useQuery } from '@tanstack/react-query';
 
 import { useClients } from '~/components/dashboard/clientContext';
@@ -34,8 +34,10 @@ export type AssetSummary = {
 const describeAsset = (client: IoTSiteWiseClient, assetId: string) =>
   client.send(new DescribeAssetCommand({ assetId }));
 
-const describeSiteWiseAssetQuery = async (client: IoTSiteWiseClient, siteWiseAssetQuery: SiteWiseAssetQuery) =>
-  Promise.all(siteWiseAssetQuery.assets.map(({ assetId }: { assetId: string }) => describeAsset(client, assetId)));
+const describeSiteWiseAssetQuery = async (
+  client: IoTSiteWiseClient,
+  siteWiseQuery: Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>
+) => Promise.all(siteWiseQuery.assets?.map(({ assetId }: { assetId: string }) => describeAsset(client, assetId)) ?? []);
 
 const ASSET_DESCRIPTION_QUERY_KEY = ['assetDescriptions'];
 
@@ -68,19 +70,21 @@ export const mapAssetDescriptionToAssetSummary = (description: DescribeAssetResp
   alarms: description.assetCompositeModels?.filter(isAlarm).map(mapCompositeModelToAlarmSummary) ?? [],
 });
 
-export const useAssetDescriptionMapQuery = (siteWiseAssetQuery: SiteWiseAssetQuery | undefined) => {
+export const useAssetDescriptionMapQuery = (
+  siteWiseQuery: Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery> | undefined
+) => {
   const { iotSiteWiseClient } = useClients();
 
   const fetchSiteWiseAssetQueryDescription = async () => {
-    if (!iotSiteWiseClient || !siteWiseAssetQuery) return [];
-    return describeSiteWiseAssetQuery(iotSiteWiseClient, siteWiseAssetQuery);
+    if (!iotSiteWiseClient || !siteWiseQuery) return [];
+    return describeSiteWiseAssetQuery(iotSiteWiseClient, siteWiseQuery);
   };
 
   return useQuery({
     queryKey: [
       ...ASSET_DESCRIPTION_QUERY_KEY,
       'assetDescriptionsMap',
-      ...(siteWiseAssetQuery?.assets.map((a) => a.assetId) ?? []),
+      ...(siteWiseQuery?.assets?.map((a) => a.assetId) ?? []),
     ],
     queryFn: () => fetchSiteWiseAssetQueryDescription(),
     select: (data) =>
