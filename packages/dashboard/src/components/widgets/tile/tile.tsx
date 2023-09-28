@@ -1,5 +1,5 @@
-import React, { PropsWithChildren } from 'react';
-import { useSelector } from 'react-redux';
+import React, { PropsWithChildren, SyntheticEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
@@ -18,6 +18,8 @@ import { DashboardState } from '~/store/state';
 import { useDeleteWidgets } from '~/hooks/useDeleteWidgets';
 
 import './tile.css';
+import { onChangeDashboardGridEnabledAction } from '~/store/actions';
+import { gestureable } from '~/components/internalDashboard/gestures/determineTargetGestures';
 
 type DeletableTileActionProps = {
   widget: DashboardWidget;
@@ -47,9 +49,18 @@ export type WidgetTileProps = PropsWithChildren<{
  */
 const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, removeable }) => {
   const isReadOnly = useSelector((state: DashboardState) => state.readOnly);
+  const dispatch = useDispatch();
 
   const isRemoveable = !isReadOnly && removeable;
   const headerVisible = !isReadOnly || title;
+
+  const disableGridMovement = (_event: SyntheticEvent) => {
+    dispatch(onChangeDashboardGridEnabledAction({ enabled: false }));
+  };
+
+  const enableGridMovement = (_event: SyntheticEvent) => {
+    dispatch(onChangeDashboardGridEnabledAction({ enabled: true }));
+  };
 
   return (
     <div
@@ -70,6 +81,7 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
             padding: `${spaceScaledXs} ${spaceScaledXs} 0 ${spaceScaledS}`,
             borderBottom: `2px solid ${colorBorderDividerDefault}`,
           }}
+          {...gestureable('moveable')}
         >
           <Box variant='h1' fontSize='body-m'>
             {title}
@@ -79,7 +91,9 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
           </SpaceBetween>
         </div>
       )}
-      <div className='widget-tile-body'>{children}</div>
+      <div className='widget-tile-body' onPointerEnter={disableGridMovement} onPointerLeave={enableGridMovement}>
+        {children}
+      </div>
     </div>
   );
 };
