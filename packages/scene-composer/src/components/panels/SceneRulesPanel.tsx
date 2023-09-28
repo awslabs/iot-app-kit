@@ -80,9 +80,24 @@ export const SceneRuleMapExpandableInfoSection: React.FC<
   if (newRule) {
     items.push(newRule);
   }
+  //TODO: When we migrate from polaris to cloudscape, just pass these as normal props to AttributeEditor
+  const a11yProps = {
+    i18nStrings: {
+      itemRemovedAriaLive: intl.formatMessage({
+        defaultMessage: 'Removed statement',
+        description: 'Aria live announcement for when a statement is removed',
+      }),
+    },
+    removeButtonAriaLabel: (statement: IRuleStatementInternal) =>
+      `${intl.formatMessage({
+        defaultMessage: 'Remove statement',
+        description: 'Aria label for remove statement button',
+      })} ${statement.expression}`,
+  };
   return (
     <ExpandableInfoSection title={ruleBasedMapId} defaultExpanded={false}>
       <AttributeEditor
+        {...a11yProps}
         onAddButtonClick={() => setNewRule({ expression: '', target: '' })}
         onRemoveButtonClick={({ detail: { itemIndex } }) => onRemoveRule(itemIndex)}
         items={items}
