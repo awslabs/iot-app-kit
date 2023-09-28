@@ -1,24 +1,32 @@
 import React, { useCallback } from 'react';
 import { render } from '@testing-library/react';
 
+// eslint-disable-next-line import/order
+import mockComponent from '../../../../../../../__mocks__/mockComponent';
+
+jest.doMock('../constants', () => ({
+  EnhancedTree: mockComponent('EnhancedTree'),
+  EnhancedTreeItem: mockComponent('EnhancedTreeItem'),
+  AcceptableDropTypes: 'AcceptableDropTypes',
+}));
+jest.doMock('../../SubModelTree', () => mockComponent('SubModelTree'));
+jest.doMock('../SceneNodeLabel', () => mockComponent('SceneNodeLabel'));
+
 import { useSceneHierarchyData, useChildNodes } from '../../../SceneHierarchyDataProvider';
 import SceneHierarchyTreeItem from '../SceneHierarchyTreeItem';
 import { KnownComponentType } from '../../../../../../interfaces';
+import { isDynamicNode } from '../../../../../../utils/entityModelUtils/sceneUtils';
 
 jest.mock('../../../../../../enhancers/draggable', () => (item: any) => item);
 jest.mock('../../../../../../enhancers/droppable', () => (item: any) => item);
 jest.mock('../../../SceneHierarchyDataProvider');
-jest.mock('../../SubModelTree', () => (props) => <div data-mocked='SubModelTree' {...props} />);
-jest.mock('../constants', () => ({
-  EnhancedTree: 'EnhancedTree',
-  EnhancedTreeItem: 'EnhancedTreeItem',
-  AcceptableDropTypes: 'AcceptableDropTypes',
-}));
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useCallback: jest.fn(),
 }));
+
+jest.mock('../../../../../../utils/entityModelUtils/sceneUtils');
 
 describe('SceneHierarchyTreeItem', () => {
   const select = jest.fn();
@@ -46,6 +54,7 @@ describe('SceneHierarchyTreeItem', () => {
         selectionMode: 'single',
         remove,
         isViewing,
+        validationErrors: {},
       };
     });
 
@@ -123,6 +132,17 @@ describe('SceneHierarchyTreeItem', () => {
 
     const { container } = render(
       <SceneHierarchyTreeItem objectRef='1' name='Label 1' componentTypes={[KnownComponentType.ModelRef]} />,
+    );
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render dynamic node with drag and drop disabled', () => {
+    isViewing.mockImplementationOnce(() => false);
+    (isDynamicNode as jest.Mock).mockReturnValueOnce(true);
+
+    const { container } = render(
+      <SceneHierarchyTreeItem objectRef='1' name='Label 1' componentTypes={[KnownComponentType.Tag]} />,
     );
 
     expect(container).toMatchSnapshot();

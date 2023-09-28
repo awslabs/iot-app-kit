@@ -72,7 +72,10 @@ export const createNodeEntityComponent = (node: ISceneNode, layerId?: string): C
       if (Object.values(SceneNodeRuntimeProperty).includes(k as SceneNodeRuntimeProperty)) {
         return;
       }
-      params[k] = { stringValue: encodeURI(node.properties![k]) };
+      const value = node.properties![k];
+      if (value !== undefined) {
+        params[k] = { stringValue: String(value) };
+      }
     });
     comp.properties![NodeComponentProperty.Properties] = {
       value: {
@@ -158,8 +161,9 @@ export const parseNode = (entity: DocumentType, nodeCompo: DocumentType): IScene
     nodeCompo['properties'].find((p) => p['propertyName'] === NodeComponentProperty.Properties)?.propertyValue ?? {};
 
   Object.keys(properties).forEach((k) => {
-    properties[k] = decodeURI(properties[k]);
+    properties[k] = k === 'alwaysVisible' || k === 'hiddenWhileImmersive' ? Boolean(properties[k]) : properties[k];
   });
+
   const node: ISceneNodeInternal = {
     ref: entity['entityId'],
     childRefs: [],

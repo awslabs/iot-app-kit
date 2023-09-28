@@ -37,6 +37,7 @@ describe('DataOverlayComponentEditor', () => {
   };
   const node = {
     ref: 'node-ref',
+    properties: {},
   } as ISceneNodeInternal;
   const updateComponentInternalMock = jest.fn();
 

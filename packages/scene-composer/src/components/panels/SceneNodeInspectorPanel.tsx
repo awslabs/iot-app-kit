@@ -17,6 +17,7 @@ import { findComponentByType, isEnvironmentNode } from '../../utils/nodeUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
 import { toNumber } from '../../utils/stringUtils';
 import { RecursivePartial } from '../../utils/typeUtils';
+import { isDynamicNode } from '../../utils/entityModelUtils/sceneUtils';
 
 import { AddComponentMenu } from './AddComponentMenu';
 import { ExpandableInfoSection, Matrix3XInputGrid, TextInput, Triplet } from './CommonPanelComponents';
@@ -93,6 +94,8 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   const isTagComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.Tag);
   const isOverlayComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.DataOverlay);
   const isSubModelComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.SubModelRef);
+
+  const debounceInterval = isDynamicNode(selectedSceneNode) ? 1000 : 100;
 
   const transformVisible = !isSubModelComponent || subModelMovementEnabled;
 
@@ -198,7 +201,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
               onChange={debounce((items) => {
                 handleInputChanges({ transform: { position: items } });
                 applySnapToFloorConstraint();
-              }, 100)}
+              }, debounceInterval)}
             />
             <Matrix3XInputGrid
               name={intl.formatMessage({ defaultMessage: 'Rotation', description: 'Input Grid title name' })}
@@ -211,7 +214,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
               onChange={debounce((items) => {
                 handleInputChanges({ transform: { rotation: items } });
                 applySnapToFloorConstraint();
-              }, 100)}
+              }, debounceInterval)}
             />
             {shouldShowScale && (
               <Matrix3XInputGrid
@@ -229,7 +232,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
                 onChange={debounce((items) => {
                   handleInputChanges({ transform: { scale: items } });
                   applySnapToFloorConstraint();
-                }, 100)}
+                }, debounceInterval)}
               />
             )}
             {isModelComponent && (

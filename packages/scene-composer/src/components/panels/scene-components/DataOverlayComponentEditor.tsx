@@ -7,7 +7,7 @@ import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { Component } from '../../../models/SceneModels';
 import { IDataOverlayComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
 import { IComponentEditorProps } from '../ComponentEditor';
-import useDynamicScene from '../../../hooks/useDynamicScene';
+import { isDynamicNode } from '../../../utils/entityModelUtils/sceneUtils';
 
 import { ComponentWithDataBindings, DataBindingMapEditor } from './common/DataBindingMapEditor';
 
@@ -26,7 +26,7 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
   );
   const [newRows, setNewRows] = useState<Component.DataOverlayMarkdownRow[]>(component.dataRows);
 
-  const dynamicSceneEnabled = useDynamicScene();
+  const isDynamic = isDynamicNode(node);
 
   const { formatMessage } = useIntl();
   const onUpdateCallback = useCallback(
@@ -35,7 +35,7 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
         const componentPartialWithRef = { ref: component.ref, ...componentPartial };
         updateComponentInternal(node.ref, componentPartialWithRef as ISceneComponentInternal, replace);
       },
-      dynamicSceneEnabled ? 1000 : 100,
+      isDynamic ? 1000 : 100,
     ), // TODO: Temporary solution for the error when updating entity too frequent. Will implement a better solution for GA.
     [node.ref, component.ref],
   );

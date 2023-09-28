@@ -138,60 +138,70 @@ ${mattertagItem.description}`,
     const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
     handleUpdateMatterportTag({ ref: '', node: testInternalNode, item: mattertagItem });
-    expect(updateSceneNodeInternal).toBeCalledWith('', {
-      name: mattertagItem.label,
-      transform: {
-        position: [mattertagItem.anchorPosition.x, mattertagItem.anchorPosition.y, mattertagItem.anchorPosition.z],
-      },
-      components: [
-        {
-          ...anchorComponent,
-          ref: '',
-          offset: [mattertagItem.stemVector.x, mattertagItem.stemVector.y, mattertagItem.stemVector.z],
+    expect(updateSceneNodeInternal).toBeCalledWith(
+      '',
+      {
+        name: mattertagItem.label,
+        transform: {
+          position: [mattertagItem.anchorPosition.x, mattertagItem.anchorPosition.y, mattertagItem.anchorPosition.z],
         },
-        {
-          ...dataOverlayComponent,
-          dataRows: [
-            {
-              rowType: Component.DataOverlayRowType.Markdown,
-              content: `#### **${mattertagItem.label}**  
+        components: [
+          {
+            ...anchorComponent,
+            ref: '',
+            offset: [mattertagItem.stemVector.x, mattertagItem.stemVector.y, mattertagItem.stemVector.z],
+          },
+          {
+            ...dataOverlayComponent,
+            dataRows: [
+              {
+                rowType: Component.DataOverlayRowType.Markdown,
+                content: `#### **${mattertagItem.label}**  
 ${mattertagItem.description}`,
-            },
-          ],
-        },
-      ],
-      properties: { [SceneNodeRuntimeProperty.LayerIds]: undefined },
-    });
+              },
+            ],
+          },
+        ],
+        properties: { [SceneNodeRuntimeProperty.LayerIds]: undefined },
+      },
+      false,
+      true,
+    );
   });
 
   it('should update matterport tag', () => {
     const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
     handleUpdateMatterportTag({ ref: '', node: testInternalNode, item: tagItem });
-    expect(updateSceneNodeInternal).toBeCalledWith('', {
-      name: tagItem.label,
-      transform: {
-        position: [tagItem.anchorPosition.x, tagItem.anchorPosition.y, tagItem.anchorPosition.z],
-      },
-      components: [
-        {
-          ...anchorComponent,
-          ref: '',
-          offset: [tagItem.stemVector.x, tagItem.stemVector.y, tagItem.stemVector.z],
+    expect(updateSceneNodeInternal).toBeCalledWith(
+      '',
+      {
+        name: tagItem.label,
+        transform: {
+          position: [tagItem.anchorPosition.x, tagItem.anchorPosition.y, tagItem.anchorPosition.z],
         },
-        {
-          ...dataOverlayComponent,
-          dataRows: [
-            {
-              rowType: Component.DataOverlayRowType.Markdown,
-              content: `#### **${mattertagItem.label}**  
+        components: [
+          {
+            ...anchorComponent,
+            ref: '',
+            offset: [tagItem.stemVector.x, tagItem.stemVector.y, tagItem.stemVector.z],
+          },
+          {
+            ...dataOverlayComponent,
+            dataRows: [
+              {
+                rowType: Component.DataOverlayRowType.Markdown,
+                content: `#### **${mattertagItem.label}**  
 ${mattertagItem.description}`,
-            },
-          ],
-        },
-      ],
-      properties: { [SceneNodeRuntimeProperty.LayerIds]: undefined },
-    });
+              },
+            ],
+          },
+        ],
+        properties: { [SceneNodeRuntimeProperty.LayerIds]: undefined },
+      },
+      false,
+      true,
+    );
   });
 
   it('should delete matterport mattertag or tag', () => {
@@ -291,16 +301,8 @@ ${mattertagItem.description}`,
         item: mattertagItem,
       });
       expect(updateSceneNodeInternal).toBeCalledTimes(1);
-      expect(updateSceneEntity).toBeCalledTimes(1);
-      expect(updateSceneEntity).toBeCalledWith({
-        workspaceId: undefined,
-        entityId: generateUUID(),
-        entityName: mattertagItem.label + '_' + generateUUID(),
-        componentUpdates: {
-          Node: expect.anything(),
-          [KnownComponentType.Tag]: expect.anything(),
-        },
-      });
+      expect(updateSceneNodeInternal).toBeCalledWith('random-uuid', expect.anything(), false, false);
+      expect(updateSceneEntity).not.toBeCalled();
     });
 
     it('should update matterport tag', async () => {
@@ -314,19 +316,11 @@ ${mattertagItem.description}`,
         item: tagItem,
       });
       expect(updateSceneNodeInternal).toBeCalledTimes(1);
-      expect(updateSceneEntity).toBeCalledTimes(1);
-      expect(updateSceneEntity).toBeCalledWith({
-        workspaceId: undefined,
-        entityId: generateUUID(),
-        entityName: tagItem.label + '_' + generateUUID(),
-        componentUpdates: {
-          Node: expect.anything(),
-          [KnownComponentType.Tag]: expect.anything(),
-        },
-      });
+      expect(updateSceneNodeInternal).toBeCalledWith('random-uuid', expect.anything(), false, false);
+      expect(updateSceneEntity).not.toBeCalled();
     });
 
-    it('should create matterport tag when existing tag is not linked to a layer', async () => {
+    it('should create matterport tag when existing tag is not a dynamic node yet', async () => {
       const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
       await handleUpdateMatterportTag({
@@ -337,6 +331,7 @@ ${mattertagItem.description}`,
         item: tagItem,
       });
       expect(updateSceneNodeInternal).toBeCalledTimes(1);
+      expect(updateSceneNodeInternal).toBeCalledWith('random-uuid', expect.anything(), false, true);
       expect(updateSceneEntity).not.toBeCalled();
       expect(createSceneEntity).toBeCalledTimes(1);
       expect(createSceneEntity).toBeCalledWith({

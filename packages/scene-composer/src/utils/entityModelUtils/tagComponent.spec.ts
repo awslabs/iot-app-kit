@@ -52,10 +52,10 @@ describe('createTagEntityComponent', () => {
         value: {
           mapValue: {
             param1: {
-              stringValue: 'value%201',
+              stringValue: 'value 1',
             },
             param2: {
-              stringValue: 'value%202',
+              stringValue: 'value 2',
             },
           },
         },

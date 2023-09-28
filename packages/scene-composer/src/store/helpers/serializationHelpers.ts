@@ -34,6 +34,7 @@ import {
   IEntityBindingComponentInternal,
   SceneNodeRuntimeProperty,
 } from '../internalInterfaces';
+import { isDynamicNode } from '../../utils/entityModelUtils/sceneUtils';
 
 import { addComponentToComponentNodeMap } from './componentMapHelpers';
 
@@ -615,14 +616,12 @@ function convertNodes(
 
   // create nodes first
   const exportedNodes: Node[] = [];
-  Object.getOwnPropertyNames(nodes).forEach((nodeRef, index) => {
+  Object.getOwnPropertyNames(nodes).forEach((nodeRef) => {
     const node = nodes[nodeRef]!;
     // Do not serialize dynamic nodes rendered from layers
-    if (!isEmpty(node.properties.layerIds)) {
+    if (isDynamicNode(node)) {
       return;
     }
-
-    nodeRefToIndexMap[node.ref] = index;
 
     const convertedComponents: any[] = [];
 
@@ -665,6 +664,8 @@ function convertNodes(
       components: convertedComponents,
       properties,
     });
+
+    nodeRefToIndexMap[node.ref] = exportedNodes.length - 1;
   });
 
   // filling the children

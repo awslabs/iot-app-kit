@@ -634,11 +634,11 @@ describe('serializationHelpers', () => {
     sceneNodeInternal.components = [...(node.components as ISceneComponentInternal[])];
     sceneNodeInternal.childRefs = ['testNode'];
     const nodes = {
-      testNode: sceneNodeInternal,
-      layerNode: { ...sceneNodeInternal, properties: { layerIds: ['layer'] } }, // Node from layer shouldn't be serialized
+      layerNode: { ...sceneNodeInternal, ref: 'layerNode', properties: { layerIds: ['layer'] } }, // Node from layer shouldn't be serialized
+      testNode: { ...sceneNodeInternal, ref: 'testNode' },
     };
 
-    const mappedObjectCollector = { Node: { testNode: 0 } };
+    const mappedObjectCollector = { Node: {} };
     const indexedObjectCollector = { testNode: [KnownComponentType.Camera] };
 
     const convertedNodes = exportsForTesting.convertNodes(nodes, mappedObjectCollector, indexedObjectCollector);

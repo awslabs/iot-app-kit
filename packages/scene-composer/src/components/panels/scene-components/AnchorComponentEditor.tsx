@@ -7,7 +7,6 @@ import { defineMessages, useIntl } from 'react-intl';
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { SCENE_ICONS } from '../../../common/constants';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import useDynamicScene from '../../../hooks/useDynamicScene';
 import {
   COMPOSER_FEATURES,
   DefaultAnchorStatus,
@@ -22,6 +21,7 @@ import { convertToIotTwinMakerNamespace, getSceneResourceInfo } from '../../../u
 import { colors } from '../../../utils/styleUtils';
 import { TextInput } from '../CommonPanelComponents';
 import { IComponentEditorProps } from '../ComponentEditor';
+import { isDynamicNode } from '../../../utils/entityModelUtils/sceneUtils';
 
 import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
 import { ColorSelectorCombo } from './tag-style/ColorSelectorCombo/ColorSelectorCombo';
@@ -64,7 +64,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
 
   const intl = useIntl();
 
-  const dynamicSceneEnabled = useDynamicScene();
+  const isDynamic = isDynamicNode(node);
 
   const ruleMapIds = listSceneRuleMapIds();
   const filteredList: string[] = useMemo(
@@ -88,7 +88,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
         const componentPartialWithRef: ISceneComponentInternal = { ref: component.ref, ...componentPartial };
         updateComponentInternal(node.ref, componentPartialWithRef, replace);
       },
-      dynamicSceneEnabled ? 1000 : 100,
+      isDynamic ? 1000 : 100,
     ), // TODO: Temporary solution for the error when updating entity too frequent. Will implement a better solution for GA.
     [node.ref, component.ref],
   );

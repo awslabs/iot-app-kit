@@ -91,7 +91,7 @@ describe('createNodeEntityComponent', () => {
 
   it('should return expected node component with properties', () => {
     const result = createNodeEntityComponent({
-      properties: { matterportId: 'abc def', layerIds: ['layer-1'] },
+      properties: { matterportId: 'abc def', layerIds: ['layer-1'], alwaysVisible: true },
     } as ISceneNode);
 
     expect(result.properties).toEqual({
@@ -104,7 +104,10 @@ describe('createNodeEntityComponent', () => {
         value: {
           mapValue: {
             matterportId: {
-              stringValue: 'abc%20def',
+              stringValue: 'abc def',
+            },
+            alwaysVisible: {
+              stringValue: 'true',
             },
           },
         },
@@ -194,7 +197,8 @@ describe('parseNode', () => {
       {
         propertyName: 'properties',
         propertyValue: {
-          matterportId: 'abc%20def',
+          matterportId: 'abc def',
+          alwaysVisible: 'true',
         },
       },
     ],
@@ -224,6 +228,7 @@ describe('parseNode', () => {
       },
       properties: {
         matterportId: 'abc def',
+        alwaysVisible: true,
       },
     });
   });
