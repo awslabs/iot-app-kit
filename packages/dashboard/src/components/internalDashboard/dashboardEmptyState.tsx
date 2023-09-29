@@ -7,7 +7,7 @@ import {
   spaceStaticXxxl,
 } from '@cloudscape-design/design-tokens';
 
-import { default as lineSvg } from '../../customization/widgets/lineChart/line.svg';
+import { default as lineSvg } from '../../customization/widgets/lineScatterChart/line.svg';
 import './dashboardEmptyState.css';
 
 const emptyState = {
