@@ -23,7 +23,7 @@ import useActiveCamera from '../../hooks/useActiveCamera';
 import { getSafeBoundingBox } from '../../utils/objectThreeUtils';
 import { getMatterportSdk } from '../../common/GlobalSettings';
 import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../../three/OrbitControls';
-import { isOrbitOrPanControl } from '../../utils/controlUtils';
+import { isOrbitOrPanControlImpl } from '../../utils/controlUtils';
 
 import { MapControls, OrbitControls, PointerLockControls } from './controls';
 
@@ -171,24 +171,25 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
         },
       ];
 
-      if (isOrbitOrPanControl(cameraControlsType)) {
-        const controlRef = cameraControlsImplRef.current as OrbitControlsImpl | MapControlsImpl | undefined;
-        const currentTarget = getTweenValueFromVector3(controlRef?.target ?? DEFAULT_CAMERA_TARGET);
-        tweenConfigs.push({
-          from: currentTarget,
-          to: getTweenValueFromVector3(target),
-          onUpdate: () => {
-            controlRef?.target.set(currentTarget.x, currentTarget.y, currentTarget.z);
-          },
-          duration,
-        });
-      }
+      const controlRef: OrbitControlsImpl | MapControlsImpl | undefined =
+        cameraControlsImplRef.current && isOrbitOrPanControlImpl(cameraControlsImplRef.current)
+          ? (cameraControlsImplRef.current as OrbitControlsImpl | MapControlsImpl)
+          : undefined;
+      const currentTarget = getTweenValueFromVector3(controlRef?.target ?? DEFAULT_CAMERA_TARGET);
+      tweenConfigs.push({
+        from: currentTarget,
+        to: getTweenValueFromVector3(target),
+        onUpdate: () => {
+          controlRef?.target.set(currentTarget.x, currentTarget.y, currentTarget.z);
+        },
+        duration,
+      });
 
       log?.verbose('moving camera to target', position, target);
 
       setTween(...tweenConfigs);
     }
-  }, [cameraTarget, cameraControlsType]);
+  }, [cameraTarget]);
 
   // handle mouse events
   useEffect(() => {
