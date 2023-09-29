@@ -119,25 +119,10 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
   } = widget.properties;
 
   const query = queryConfig.query;
-  const filteredQuery = {
-    ...query,
-    assets:
-      query?.assets
-        .map((asset) => {
-          const { assetId, properties } = asset;
-          return {
-            assetId,
-            properties: properties.filter((p) => p.visible ?? true),
-          };
-        })
-        .filter((asset) => asset.properties.length > 0) ?? [],
-  };
-
   const { iotSiteWiseQuery } = useQueries();
+  const queries = iotSiteWiseQuery && query ? [iotSiteWiseQuery?.timeSeriesData(query)] : [];
 
-  const queries = iotSiteWiseQuery && filteredQuery ? [iotSiteWiseQuery?.timeSeriesData(filteredQuery)] : [];
-
-  const styleSettings = useAdaptedStyleSettings({ line, symbol }, filteredQuery);
+  const styleSettings = useAdaptedStyleSettings({ line, symbol }, query);
 
   const aggregation = getAggregation(widget);
 

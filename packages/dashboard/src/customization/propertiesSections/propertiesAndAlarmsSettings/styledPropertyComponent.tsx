@@ -16,16 +16,6 @@ import './propertyComponent.css';
 import { StyledAssetPropertyQuery, YAxisOptions } from '~/customization/widgets/types';
 import { getPropertyDisplay } from './getPropertyDetails';
 import type { AssetSummary } from '../../../hooks/useAssetDescriptionQueries';
-import {
-  colorBackgroundHomeHeader,
-  colorBackgroundLayoutMain,
-  colorBorderButtonNormalDisabled,
-  spaceScaledM,
-  spaceScaledXxxs,
-  spaceStaticXs,
-} from '@cloudscape-design/design-tokens';
-import { StatusEyeHidden, StatusEyeVisible } from './icons';
-import { ClickDetail, NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 
 const YAxisPropertyConfig = ({
   resetStyles,
@@ -98,51 +88,21 @@ export type StyledPropertyComponentProps = {
   updateStyle: (newStyles: object) => void;
   assetSummary: AssetSummary;
   property: StyledAssetPropertyQuery;
-  onHideAssetQuery: () => void;
   onDeleteAssetQuery?: () => void;
   colorable: boolean;
-  isPropertyVisible: boolean;
 };
 
 export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
   assetSummary,
   property,
   updateStyle,
-  onHideAssetQuery,
   onDeleteAssetQuery,
   colorable,
-  isPropertyVisible,
 }) => {
   const { display, label } = getPropertyDisplay(property.propertyId, assetSummary);
-  const [onMouseOver, setOnMouseOver] = useState(false);
-  const isAssetQueryVisible = !onMouseOver ? isPropertyVisible : !isPropertyVisible;
-  const propertyVisibilityIcon = isAssetQueryVisible ? StatusEyeVisible : StatusEyeHidden;
-  const tooltipStyle = {
-    fontSize: spaceScaledM,
-    color: colorBackgroundHomeHeader,
-    backgroundColor: colorBackgroundLayoutMain,
-    padding: `${spaceStaticXs} ${spaceStaticXs}`,
-    borderRadius: spaceStaticXs,
-    borderWidth: spaceScaledXxxs,
-    borderColor: colorBorderButtonNormalDisabled,
-    boxShadow: `${spaceScaledXxxs} ${spaceScaledXxxs} ${spaceScaledXxxs} ${colorBorderButtonNormalDisabled}`,
-  };
 
   const resetStyles = (styleToReset: object) => {
     updateStyle(styleToReset); // as we add more sections, reset style values here
-  };
-
-  const onToggleAssetQuery: NonCancelableEventHandler<ClickDetail> = (e) => {
-    e.stopPropagation();
-    onHideAssetQuery();
-  };
-
-  const handleMouseEnter = () => {
-    setOnMouseOver(true);
-  };
-
-  const handleMouseLeave = () => {
-    setOnMouseOver(false);
   };
 
   const YAxisHeader = (
@@ -151,13 +111,7 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
         <ColorPicker color={property.color || ''} updateColor={(newColor) => updateStyle({ color: newColor })} />
       )}
       <div style={{ fontWeight: 'normal' }}>{label}</div>
-      <div className='property-display-toggle' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        <Button onClick={onToggleAssetQuery} variant='icon' iconSvg={propertyVisibilityIcon} />
-        <span className='tooltiptext' style={tooltipStyle}>
-          {onMouseOver && isPropertyVisible ? 'hide' : 'unhide'}
-        </span>
-      </div>
-
+      {/* <Button onClick={() => {}} variant='icon' iconSvg={StatusEyeVisible} /> TODO */}
       <Button onClick={onDeleteAssetQuery} variant='icon' iconName='remove' />
     </SpaceBetween>
   );
