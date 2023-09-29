@@ -4,7 +4,7 @@ import type {
   SiteWiseAssetQuery,
   SiteWisePropertyAliasQuery,
 } from '@iot-app-kit/source-iotsitewise';
-import type { DashboardWidget, IoTSiteWiseDataStreamQuery } from '~/types';
+import type { DashboardWidget } from '~/types';
 import type { AxisSettings, ComplexFontSettings, SimpleFontSettings, ThresholdWithId } from '../settings';
 import type { TableColumnDefinition, TableItem } from '@iot-app-kit/react-components/src';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
@@ -65,6 +65,7 @@ export type LineAndScatterStyles = {
   line?: LineStyles;
   aggregationType?: AggregateType;
   resolution?: string;
+  visible?: boolean; // defaults to true
 };
 export type LineStyles = {
   connectionStyle?: 'none' | 'linear' | 'curve' | 'step-start' | 'step-middle' | 'step-end';
@@ -118,7 +119,7 @@ type ChartLegend = {
   visible?: boolean;
 };
 
-export type StyledSiteWiseQueryConfig = QueryConfig<'iotsitewise', IoTSiteWiseDataStreamQuery | undefined>;
+export type StyledSiteWiseQueryConfig = QueryConfig<'iotsitewise', StyledAssetQuery | undefined>;
 
 export type LineScatterChartProperties = LineAndScatterStyles & {
   title?: string;
