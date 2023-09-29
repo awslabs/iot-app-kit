@@ -123,10 +123,8 @@ export type SelectionChangedEventCallback = (event: ISelectionChangedEvent) => v
 
 export interface ILightComponent extends ISceneComponent, SceneModels.Component.Light {}
 
-export type CameraType = 'Perspective' | 'Orthographic';
-
 export interface ICameraBasics {
-  cameraType: CameraType;
+  cameraType: SceneModels.CameraType;
   fov?: number;
   near: number;
   far: number;

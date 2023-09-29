@@ -5,7 +5,7 @@ import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import { useEditorState } from '../store';
 import { CameraControlMode, CameraSettings } from '../interfaces';
 import { DEFAULT_CAMERA_OPTIONS, DEFAULT_CAMERA_POSITION, DEFAULT_CAMERA_TARGET } from '../common/constants';
-import { Transform } from '../models/SceneModels';
+import { CameraType, Transform } from '../models/SceneModels';
 
 const useActiveCamera = () => {
   const sceneComposerId = useSceneComposerId();
@@ -20,7 +20,7 @@ const useActiveCamera = () => {
   } = useEditorState(sceneComposerId);
 
   const defaultCameraSettings: CameraSettings = {
-    cameraType: 'Perspective',
+    cameraType: CameraType.Perspective,
     fov: DEFAULT_CAMERA_OPTIONS.fov,
     far: DEFAULT_CAMERA_OPTIONS.far,
     near: DEFAULT_CAMERA_OPTIONS.near,
