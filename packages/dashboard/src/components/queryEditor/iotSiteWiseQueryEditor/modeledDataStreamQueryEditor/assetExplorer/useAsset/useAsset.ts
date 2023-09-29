@@ -31,7 +31,7 @@ function isEnabled(assetId: string | undefined): assetId is string {
   return Boolean(assetId);
 }
 
-function createQueryFn(client: IoTSiteWiseClient) {
+export function createQueryFn(client: IoTSiteWiseClient) {
   return async function ({
     queryKey: [{ assetId }],
     signal,

@@ -3,8 +3,7 @@ import React from 'react';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { LineScatterChartWidget, QueryWidget, TableWidget } from '~/customization/widgets/types';
 import { DashboardWidget } from '~/types';
-import { maybeWithDefault } from '~/util/maybe';
-import { GeneralPropertiesAlarmsSection, TablePropertiesAlarmsSection } from './section';
+import { GeneralPropertiesAlarmsSection } from './section';
 import { StyledPropertiesAlarmsSection } from './styledSection';
 
 // exclude table because it is handled specially
@@ -57,19 +56,14 @@ export const PropertiesAndAlarmsSettingsConfiguration: React.FC = () => (
           (properties) => properties.styleSettings,
           (properties, updatedStyleSettings) => ({ ...properties, styleSettings: updatedStyleSettings })
         );
-        const [items, updateItems] = useProperty(
-          (properties) => properties.items,
-          (properties, updatedItems) => ({ ...properties, items: updatedItems })
-        );
 
         return (
-          <TablePropertiesAlarmsSection
-            items={maybeWithDefault([], items)}
-            updateItems={updateItems}
+          <GeneralPropertiesAlarmsSection
             queryConfig={queryConfig}
             updateQueryConfig={updateQueryConfig}
             styleSettings={styleSettings}
             updateStyleSettings={updateStyleSettings}
+            colorable={false}
           />
         );
       }}
