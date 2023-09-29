@@ -7,7 +7,7 @@ export type OnDeleteAssetQuery = (params: {
   assetId: string;
   propertyId: string;
   siteWiseAssetQuery: IoTSiteWiseDataStreamQuery | StyledAssetQuery;
-  updateSiteWiseAssetQuery: (newQuery: IoTSiteWiseDataStreamQuery) => void;
+  updateSiteWiseAssetQuery: (newQuery: StyledAssetQuery) => void;
 }) => () => void;
 
 export type PropertiesAlarmsSectionProps = {

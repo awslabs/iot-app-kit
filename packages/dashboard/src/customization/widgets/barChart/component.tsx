@@ -28,7 +28,10 @@ const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
   } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
-  const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
+  const queries =
+    iotSiteWiseQuery && queryConfig.query
+      ? [iotSiteWiseQuery?.timeSeriesData({ assets: [], ...queryConfig.query })]
+      : [];
   const key = computeQueryConfigKey(undefined, queryConfig);
   const aggregation = getAggregation(widget);
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
