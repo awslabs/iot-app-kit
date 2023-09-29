@@ -1,10 +1,20 @@
+import THREE from 'three';
+
+import { MapControls, OrbitControls } from '../three/OrbitControls';
+import { PointerLockControls } from '../three/PointerLockControls';
+
 import {
   isImmersiveControl,
   isPanControl,
   isPointerLockControl,
   isOrbitControl,
   isOrbitOrPanControl,
+  isOrbitControlImpl,
+  isPanControlImpl,
+  isPointerLockControlImpl,
+  isOrbitOrPanControlImpl,
 } from './controlUtils';
+
 describe('control utils', () => {
   it('should detect immersive correctly', () => {
     expect(isImmersiveControl('immersive')).toBeTruthy();
@@ -35,5 +45,32 @@ describe('control utils', () => {
     expect(isOrbitOrPanControl('orbit')).toBeTruthy();
     expect(isOrbitOrPanControl('pan')).toBeTruthy();
     expect(isOrbitOrPanControl('pointerLock')).toBeFalsy();
+  });
+});
+describe('control implementation utils', () => {
+  const camera = new THREE.PerspectiveCamera();
+  const orbit = new OrbitControls(camera);
+  const pan = new MapControls(camera);
+  const pointerLock = new PointerLockControls(camera);
+  it('should detect orbit correctly', () => {
+    expect(isOrbitControlImpl(orbit)).toBeTruthy();
+    //map is a extension of orbit
+    expect(isOrbitControlImpl(pan)).toBeTruthy();
+    expect(isOrbitControlImpl(pointerLock)).toBeFalsy();
+  });
+  it('should detect pan correctly', () => {
+    expect(isPanControlImpl(orbit)).toBeFalsy();
+    expect(isPanControlImpl(pan)).toBeTruthy();
+    expect(isPanControlImpl(pointerLock)).toBeFalsy();
+  });
+  it('should detect pointer lock correctly', () => {
+    expect(isPointerLockControlImpl(orbit)).toBeFalsy();
+    expect(isPointerLockControlImpl(pan)).toBeFalsy();
+    expect(isPointerLockControlImpl(pointerLock)).toBeTruthy();
+  });
+  it('should detect pan or orbit correctly', () => {
+    expect(isOrbitOrPanControlImpl(orbit)).toBeTruthy();
+    expect(isOrbitOrPanControlImpl(pan)).toBeTruthy();
+    expect(isOrbitOrPanControlImpl(pointerLock)).toBeFalsy();
   });
 });
