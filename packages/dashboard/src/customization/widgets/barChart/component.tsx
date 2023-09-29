@@ -33,7 +33,7 @@ const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
     iotSiteWiseQuery && queryConfig.query
       ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query as SiteWiseAssetQuery)]
       : [];
-  const key = computeQueryConfigKey(viewport, queryConfig);
+  const key = computeQueryConfigKey(undefined, queryConfig);
   const aggregation = getAggregation(widget);
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
   // there may be better ways to fix this, i.e. not have -44 and let the chart container  take its parent height,

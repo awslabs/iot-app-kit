@@ -28,7 +28,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) =
     iotSiteWiseQuery && queryConfig.query
       ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query as SiteWiseAssetQuery)]
       : [];
-  const key = computeQueryConfigKey(viewport, queryConfig);
+  const key = computeQueryConfigKey(undefined, queryConfig);
   const aggregation = getAggregation(widget);
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
