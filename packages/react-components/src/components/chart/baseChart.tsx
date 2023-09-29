@@ -163,9 +163,11 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
           )}
         </HotKeys>
       </Resizable>
-      <div style={{ height, width: rightLegendWidth }}>
-        <Legend series={series} graphic={trendCursors} datastreams={dataStreams} />
-      </div>
+      {options.legend && (
+        <div style={{ height, width: rightLegendWidth }}>
+          <Legend series={series} graphic={trendCursors} datastreams={dataStreams} />
+        </div>
+      )}
     </div>
   );
 };

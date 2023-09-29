@@ -141,6 +141,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
     thresholds,
     line,
     symbol,
+    legend,
     significantDigits: widgetSignificantDigits,
   } = widgetToDisplay.properties;
 
@@ -200,6 +201,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
         thresholds={thresholds}
         significantDigits={significantDigits}
         size={size}
+        legend={legend?.visible == true ? {} : undefined}
       />
     </WidgetTile>
   );
