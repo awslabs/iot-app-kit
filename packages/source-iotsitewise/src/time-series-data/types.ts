@@ -21,6 +21,7 @@ export type AssetPropertyQuery = {
   cacheSettings?: CacheSettings;
   aggregationType?: AggregateType;
   alarms?: boolean;
+  visible?: boolean;
 };
 
 export type PropertyAliasQuery = {
