@@ -11,6 +11,7 @@ import useSelectedNode from '../../../hooks/useSelectedNode';
 import useActiveCamera from '../../../hooks/useActiveCamera';
 import { getCameraSettings } from '../../../utils/cameraUtils';
 import { useEditorHelper } from '../../../hooks';
+import { CameraType } from '../../../models/SceneModels';
 
 interface ICameraComponentProps {
   node: ISceneNodeInternal;
@@ -38,7 +39,7 @@ const CameraComponent: React.FC<ICameraComponentProps> = ({ node, component }: I
 
       setActiveCameraSettings(
         getCameraSettings(object3D, {
-          cameraType: 'Perspective',
+          cameraType: CameraType.Perspective,
           fov,
           near,
           far,
@@ -49,7 +50,7 @@ const CameraComponent: React.FC<ICameraComponentProps> = ({ node, component }: I
   }, [activeCameraName]);
 
   let cameraNode: JSX.Element;
-  if (component.cameraType === 'Orthographic') {
+  if (component.cameraType === CameraType.Orthographic) {
     cameraNode = (
       <OrthographicCamera
         // TODO: Make Editable once we expose this camera type
