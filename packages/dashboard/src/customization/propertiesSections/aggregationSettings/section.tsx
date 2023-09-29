@@ -105,7 +105,13 @@ const AggregationSettings: FC<AggregationSettingsProps> = ({ queryConfig, update
       })),
     }));
 
-    updateQuery({ assets });
+    const properties = siteWiseAssetQuery.properties?.map((property) => ({
+      ...property,
+      resolution: detail.selectedOption.value,
+      aggregationType: newAggregation as AggregateType,
+    }));
+
+    updateQuery({ assets, properties });
   };
 
   const onUpdateAggregation: SelectProps['onChange'] = ({ detail }) => {
@@ -124,7 +130,13 @@ const AggregationSettings: FC<AggregationSettingsProps> = ({ queryConfig, update
       })),
     }));
 
-    updateQuery({ assets });
+    const properties = siteWiseAssetQuery.properties?.map((property) => ({
+      ...property,
+      resolution: newResolution,
+      aggregationType: newAggregation,
+    }));
+
+    updateQuery({ assets, properties });
   };
 
   return (
