@@ -2,13 +2,14 @@ import React, { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useViewport } from '@iot-app-kit/react-components';
-import { DEFAULT_VIEWPORT } from '@iot-app-kit/react-components/src/components/time-sync';
 import { Button, SpaceBetween, Box } from '@cloudscape-design/components';
 import { onToggleReadOnly } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
 import { isEqual, pick } from 'lodash';
 import { DashboardSave } from '~/types';
 import DashboardSettings from './settings';
+
+const DEFAULT_VIEWPORT = { duration: '10m' };
 
 export type ActionsProps = {
   grid: DashboardState['grid'];
