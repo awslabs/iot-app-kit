@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [8.0.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v7.5.0...react-components-v8.0.0) (2023-09-30)
+
+
+### Features
+
+* add filtering ability ([51933bc](https://github.com/awslabs/iot-app-kit/commit/51933bc6cc1a76071ae1287ee7f79072c8d4dac7))
+* preferences for pagination in table widget [#1890](https://github.com/awslabs/iot-app-kit/issues/1890) ([8072232](https://github.com/awslabs/iot-app-kit/commit/8072232240a17274556d208fc22d32a811866517))
+
+
+### Bug Fixes
+
+* **dashboard:** remove viewport from the dashboard state to use viewport hook ([a9011a8](https://github.com/awslabs/iot-app-kit/commit/a9011a8a22e3bc41076fa6fb64065c016282d012))
+* groupable echarts ([d704292](https://github.com/awslabs/iot-app-kit/commit/d704292964e6434450572154c60863fbdb027dc2))
+* update unit test ([2276584](https://github.com/awslabs/iot-app-kit/commit/2276584325c75b8aa823d24588fb589b18876699))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/core bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/core-util bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/source-iottwinmaker bumped from 7.5.0 to 8.0.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/source-iotsitewise bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/testing-util bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/ts-config bumped from 7.5.0 to 8.0.0
+    * eslint-config-iot-app-kit bumped from 7.5.0 to 8.0.0
+
 ## [7.5.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v7.4.0...react-components-v7.5.0) (2023-09-26)
 
 

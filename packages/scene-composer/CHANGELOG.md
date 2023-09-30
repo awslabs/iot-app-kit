@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v7.5.0...scene-composer-v8.0.0) (2023-09-30)
+
+
+### Features
+
+* **composer:** add a11y color picker ([e768a88](https://github.com/awslabs/iot-app-kit/commit/e768a884118768b5080e745ef8113a344dd0d80e))
+
+
+### Bug Fixes
+
+* **composer:** add aria labels to rules panel ([ff78ab0](https://github.com/awslabs/iot-app-kit/commit/ff78ab0831170be7c5bad53cba0c903d20034aaf))
+* **composer:** debounce component update to reduce UpdateEntity error ([4f13db1](https://github.com/awslabs/iot-app-kit/commit/4f13db18ae134c7a95c50ed1d855e9e977f59539))
+* **composer:** lock 3d tiles lib to working version ([f719bc4](https://github.com/awslabs/iot-app-kit/commit/f719bc4964e454db16d6c746548b37c092692ca3))
+* update component name ([e768a88](https://github.com/awslabs/iot-app-kit/commit/e768a884118768b5080e745ef8113a344dd0d80e))
+* update package-lock.json ([e768a88](https://github.com/awslabs/iot-app-kit/commit/e768a884118768b5080e745ef8113a344dd0d80e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/react-components bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/related-table bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/source-iottwinmaker bumped from 7.5.0 to 8.0.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 7.5.0 to 8.0.0
+
 ## [7.5.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v7.4.0...scene-composer-v7.5.0) (2023-09-26)
 
 
