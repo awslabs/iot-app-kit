@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v7.5.0...source-iotsitewise-v8.0.0) (2023-09-30)
+
+
+### Features
+
+* ability to toggle property visibility in config panel [#1986](https://github.com/awslabs/iot-app-kit/issues/1986) ([560b776](https://github.com/awslabs/iot-app-kit/commit/560b7765c4a4ae8db6d06e70f69b2276844716a8))
+* unmodeled data streams ([71bebef](https://github.com/awslabs/iot-app-kit/commit/71bebefebdaefc235ec2ec505bc5f4dd0d1c7f31))
+
+
+### Bug Fixes
+
+* **ResourceExplorer:** implement toggling on/off of properties visibility ([8666736](https://github.com/awslabs/iot-app-kit/commit/8666736eb4642cadd7efcedd99fc680b4df17f83))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/core-util bumped from 7.5.0 to 8.0.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/testing-util bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/ts-config bumped from 7.5.0 to 8.0.0
+    * eslint-config-iot-app-kit bumped from 7.5.0 to 8.0.0
+
 ## [7.5.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v7.4.0...source-iotsitewise-v7.5.0) (2023-09-26)
 
 

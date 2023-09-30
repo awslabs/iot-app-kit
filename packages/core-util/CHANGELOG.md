@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.0.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v7.5.0...core-util-v8.0.0) (2023-09-30)
+
+
+### Bug Fixes
+
+* add more unique colors ([8641b1f](https://github.com/awslabs/iot-app-kit/commit/8641b1f737919b868da7b309cb7ebc6183ef1918))
+
 ## [7.5.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v7.4.0...core-util-v7.5.0) (2023-09-26)
 
 
