@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.0.2](https://github.com/awslabs/iot-app-kit/compare/core-util-v8.0.1...core-util-v8.0.2) (2023-09-30)
+
+
+### Miscellaneous Chores
+
+* **core-util:** Synchronize iot-app-kit versions
+
 ## [8.0.1](https://github.com/awslabs/iot-app-kit/compare/core-util-v8.0.0...core-util-v8.0.1) (2023-09-30)
 
 

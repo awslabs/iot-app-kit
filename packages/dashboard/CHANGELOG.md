@@ -1,5 +1,28 @@
 # Changelog
 
+## [8.0.2](https://github.com/awslabs/iot-app-kit/compare/dashboard-v8.0.1...dashboard-v8.0.2) (2023-09-30)
+
+
+### Bug Fixes
+
+* **Dashboard:** fix breaking build due to invalid import ([6690640](https://github.com/awslabs/iot-app-kit/commit/6690640ddc41797a3e1a3bb724974deb2a963db0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 8.0.1 to 8.0.2
+    * @iot-app-kit/core bumped from 8.0.1 to 8.0.2
+    * @iot-app-kit/core-util bumped from 8.0.1 to 8.0.2
+    * @iot-app-kit/react-components bumped from 8.0.1 to 8.0.2
+    * @iot-app-kit/source-iotsitewise bumped from 8.0.1 to 8.0.2
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 8.0.1 to 8.0.2
+    * @iot-app-kit/testing-util bumped from 8.0.1 to 8.0.2
+    * @iot-app-kit/ts-config bumped from 8.0.1 to 8.0.2
+    * eslint-config-iot-app-kit bumped from 8.0.1 to 8.0.2
+
 ## [8.0.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v8.0.0...dashboard-v8.0.1) (2023-09-30)
 
 

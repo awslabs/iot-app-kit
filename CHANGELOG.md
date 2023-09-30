@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.2](https://github.com/awslabs/iot-app-kit/compare/root-v8.0.1...root-v8.0.2) (2023-09-30)
+
+
+### Bug Fixes
+
+* **Dashboard:** fix breaking build due to invalid import ([6690640](https://github.com/awslabs/iot-app-kit/commit/6690640ddc41797a3e1a3bb724974deb2a963db0))
+
 ## [8.0.1](https://github.com/awslabs/iot-app-kit/compare/root-v8.0.0...root-v8.0.1) (2023-09-30)
 
 
