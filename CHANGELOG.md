@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.1](https://github.com/awslabs/iot-app-kit/compare/root-v8.0.0...root-v8.0.1) (2023-09-30)
+
+
+### Bug Fixes
+
+* toggle working linechar ([9ea6117](https://github.com/awslabs/iot-app-kit/commit/9ea61177710b9ece1be169a0c50e1c19fdefb5e6))
+
 ## [8.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v7.5.0...root-v8.0.0) (2023-09-30)
 
 

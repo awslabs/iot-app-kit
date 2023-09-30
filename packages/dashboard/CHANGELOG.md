@@ -1,5 +1,28 @@
 # Changelog
 
+## [8.0.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v8.0.0...dashboard-v8.0.1) (2023-09-30)
+
+
+### Bug Fixes
+
+* toggle working linechar ([9ea6117](https://github.com/awslabs/iot-app-kit/commit/9ea61177710b9ece1be169a0c50e1c19fdefb5e6))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 8.0.0 to 8.0.1
+    * @iot-app-kit/core bumped from 8.0.0 to 8.0.1
+    * @iot-app-kit/core-util bumped from 8.0.0 to 8.0.1
+    * @iot-app-kit/react-components bumped from 8.0.0 to 8.0.1
+    * @iot-app-kit/source-iotsitewise bumped from 8.0.0 to 8.0.1
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 8.0.0 to 8.0.1
+    * @iot-app-kit/testing-util bumped from 8.0.0 to 8.0.1
+    * @iot-app-kit/ts-config bumped from 8.0.0 to 8.0.1
+    * eslint-config-iot-app-kit bumped from 8.0.0 to 8.0.1
+
 ## [8.0.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v7.5.0...dashboard-v8.0.0) (2023-09-30)
 
 
