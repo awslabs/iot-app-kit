@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import pickBy from 'lodash/pickBy';
 import { KPI, useViewport } from '@iot-app-kit/react-components';
-import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import type { DashboardState } from '~/store/state';
 import type { KPIWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
@@ -32,12 +32,11 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     significantDigits: widgetSignificantDigits,
   } = widget.properties;
 
-  const { iotSiteWiseQuery } = useQueries();
-  const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
-  const key = computeQueryConfigKey(viewport, queryConfig);
+  const queries = useQueries(queryConfig.query);
+  const key = createWidgetRenderKey(widget.id);
   const aggregation = getAggregation(widget);
 
-  const shouldShowEmptyState = query == null || !iotSiteWiseQuery;
+  const shouldShowEmptyState = queries.length === 0;
 
   if (shouldShowEmptyState) {
     return (
@@ -64,10 +63,9 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
-    <WidgetTile widget={widget} removeable>
+    <WidgetTile widget={widget} removeable key={key}>
       <KPI
-        key={key}
-        query={query}
+        query={queries[0]}
         viewport={viewport}
         styles={styleSettings}
         settings={settings}

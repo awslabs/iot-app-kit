@@ -4,10 +4,12 @@ import { useSelector } from 'react-redux';
 import { DashboardState } from '~/store/state';
 import { StatusTimelineWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
-import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import WidgetTile from '~/components/widgets/tile';
+import NoChartData from '../components/no-chart-data';
+import { default as timelineSvgDark } from './timeline-dark.svg';
 
 const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) => {
   const { viewport } = useViewport();
@@ -22,17 +24,25 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) =
     significantDigits: widgetSignificantDigits,
   } = widget.properties;
 
-  const { iotSiteWiseQuery } = useQueries();
-  const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
-  const key = computeQueryConfigKey(undefined, queryConfig);
+  const queries = useQueries(queryConfig.query);
+  const key = createWidgetRenderKey(widget.id);
   const aggregation = getAggregation(widget);
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 
+  const isEmptyWidget = queries.length === 0;
+  if (isEmptyWidget) {
+    return (
+      <NoChartData
+        icon={timelineSvgDark}
+        emptyStateText='Browse and select to add your asset properties in your line widget.'
+      />
+    );
+  }
+
   return (
-    <WidgetTile widget={widget} removeable>
+    <WidgetTile widget={widget} removeable key={key}>
       <StatusTimeline
-        key={key}
         queries={queries}
         viewport={viewport}
         gestures={readOnly}
