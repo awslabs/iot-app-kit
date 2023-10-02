@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { BarChart, useViewport } from '@iot-app-kit/react-components';
 
-import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import type { DashboardState } from '~/store/state';
 import type { BarChartWidget } from '.././types';
 import { useQueries } from '~/components/dashboard/queryContext';
@@ -27,12 +27,8 @@ const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
     significantDigits: widgetSignificantDigits,
   } = widget.properties;
 
-  const { iotSiteWiseQuery } = useQueries();
-  const queries =
-    iotSiteWiseQuery && queryConfig.query
-      ? [iotSiteWiseQuery?.timeSeriesData({ assets: [], ...queryConfig.query })]
-      : [];
-  const key = computeQueryConfigKey(undefined, queryConfig);
+  const queries = useQueries(queryConfig.query);
+  const key = createWidgetRenderKey(widget.id);
   const aggregation = getAggregation(widget);
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
   // there may be better ways to fix this, i.e. not have -44 and let the chart container  take its parent height,

@@ -161,9 +161,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
         .filter((asset) => asset.properties.length > 0) ?? [],
   };
 
-  const { iotSiteWiseQuery } = useQueries();
-
-  const queries = iotSiteWiseQuery && filteredQuery ? [iotSiteWiseQuery?.timeSeriesData(filteredQuery)] : [];
+  const queries = useQueries(filteredQuery);
 
   const styleSettings = useAdaptedStyleSettings({ line, symbol }, filteredQuery);
 
@@ -177,9 +175,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
   // the 44 is from the widget tile header's height
   const size = { width: chartSize.width, height: chartSize.height - 44 };
 
-  const isEmptyWidget =
-    !queryConfig.query || (queryConfig.query.assets?.length === 0 && queryConfig.query.properties?.length === 0);
-
+  const isEmptyWidget = queries.length === 0;
   if (isEmptyWidget) {
     return (
       <NoChartData
