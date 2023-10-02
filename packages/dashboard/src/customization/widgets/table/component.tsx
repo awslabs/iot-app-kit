@@ -6,7 +6,6 @@ import { Table, TableColumnDefinition, useViewport } from '@iot-app-kit/react-co
 
 import EmptyTableComponent from './emptyTableComponent';
 
-import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type { TableWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
@@ -43,7 +42,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
 
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
-  const key = computeQueryConfigKey(viewport, widget.properties.queryConfig);
+  const key = widget.id;
 
   const items = useTableItems(queryConfig.query);
 

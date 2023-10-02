@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { DashboardState } from '~/store/state';
 import { StatusTimelineWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
-import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import WidgetTile from '~/components/widgets/tile';
@@ -24,7 +23,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) =
 
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
-  const key = computeQueryConfigKey(undefined, queryConfig);
+  const key = widget.id;
   const aggregation = getAggregation(widget);
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
