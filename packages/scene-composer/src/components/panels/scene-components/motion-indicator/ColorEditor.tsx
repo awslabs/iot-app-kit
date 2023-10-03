@@ -3,7 +3,6 @@ import { Box, Button, FormField, Grid, Icon, Select, SpaceBetween } from '@awsui
 import { isEmpty } from 'lodash';
 import styled from 'styled-components';
 import { defineMessages, useIntl } from 'react-intl';
-import { ColorRepresentation } from 'three';
 
 import { IMotionIndicatorComponentInternal, useStore } from '../../../../store';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
@@ -14,7 +13,7 @@ import { ColorPicker } from '../../ColorPicker/ColorPicker';
 
 import { DataBindingEditor } from './DataBindingEditor';
 
-const ColorSwatch = styled.div<{ backgroundColor: string }>`
+const ColorSwatch = styled.div<{ backgroundColor?: string }>`
   background-color: ${(props) => props.backgroundColor};
   width: 100%;
   height: 30px;
@@ -125,7 +124,7 @@ const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedColorType
             <ColorSwatch
               data-testid='foreground-color-swatch'
               onClick={toggleColorPicker}
-              backgroundColor={component.config.defaultForegroundColor as string}
+              backgroundColor={component.config.defaultForegroundColor}
             />
           </Grid>
         </FormField>
@@ -138,7 +137,7 @@ const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedColorType
               <ColorSwatch
                 data-testid='background-color-swatch'
                 onClick={toggleColorPicker}
-                backgroundColor={component.config.defaultBackgroundColor as string}
+                backgroundColor={component.config.defaultBackgroundColor}
               />
             )}
             <Button data-testid='opacity-button' variant='normal' onClick={() => setShowSlider(!showSlider)}>
@@ -175,11 +174,9 @@ const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedColorType
       {showColorPicker && (
         <ColorPicker
           color={
-            (selectedForegroundColor
-              ? component.config.defaultForegroundColor
-              : component.config.defaultBackgroundColor) as string
+            selectedForegroundColor ? component.config.defaultForegroundColor : component.config.defaultBackgroundColor
           }
-          onChange={(newColor: ColorRepresentation) => {
+          onChange={(newColor: string) => {
             const updatedComponent = {
               ...component,
               config: {

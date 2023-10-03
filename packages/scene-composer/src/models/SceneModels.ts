@@ -176,8 +176,8 @@ export namespace Component {
   export interface IMotionIndicatorConfig {
     numOfRepeatInY: number;
     backgroundColorOpacity: number;
-    defaultBackgroundColor?: Color;
-    defaultForegroundColor?: Color;
+    defaultBackgroundColor?: string;
+    defaultForegroundColor?: string;
     defaultSpeed?: number;
   }
   export type ILinearPlaneMotionIndicatorConfig = IMotionIndicatorConfig;
