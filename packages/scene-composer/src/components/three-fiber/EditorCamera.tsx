@@ -83,7 +83,7 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
           const direction = new THREE.Vector3(...command.target.target).sub(position).normalize();
           const raycaster = new THREE.Raycaster(position, direction);
           raycaster.camera = cameraRef.current;
-          const intersections = raycaster.intersectObjects([scene, ...scene.children]);
+          const intersections = raycaster.intersectObjects([scene]);
 
           if (intersections.length > 0) {
             return { position: command.target.position, target: intersections[0].point.toArray() } as FixedCameraTarget;
