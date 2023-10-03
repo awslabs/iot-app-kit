@@ -33,7 +33,7 @@ exports[`HistoryItemGroup should render correctly with redo disabled 1`] = `
         },
       ]
     }
-    onClick={[Function]}
+    onSelect={[Function]}
     type="button"
   />
   <ToolbarItem
@@ -50,7 +50,7 @@ exports[`HistoryItemGroup should render correctly with redo disabled 1`] = `
         },
       ]
     }
-    onClick={[Function]}
+    onSelect={[Function]}
     type="button"
   />
 </div>
@@ -145,7 +145,7 @@ exports[`HistoryItemGroup should render correctly with undo disabled 1`] = `
         },
       ]
     }
-    onClick={[Function]}
+    onSelect={[Function]}
     type="button"
   />
   <ToolbarItem
@@ -162,7 +162,7 @@ exports[`HistoryItemGroup should render correctly with undo disabled 1`] = `
         },
       ]
     }
-    onClick={[Function]}
+    onSelect={[Function]}
     type="button"
   />
 </div>
