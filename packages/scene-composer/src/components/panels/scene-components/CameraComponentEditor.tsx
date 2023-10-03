@@ -175,12 +175,14 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
 
       if (updatedSettings.zoom) {
         tempCamera.zoom = updatedSettings.zoom;
+      } else {
+        tempCamera.zoom = cameraSettings.zoom;
       }
 
       return {
         cameraType: cameraSettings.cameraType,
         focalLength: tempCamera.getFocalLength(),
-        fov: tempCamera.getEffectiveFOV(),
+        fov: tempCamera.fov,
         far: tempCamera.far,
         near: tempCamera.near,
         zoom: tempCamera.zoom,
@@ -281,6 +283,94 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
     }
   }, [needsUpdate]);
 
+  const onChangeFocalLength = useCallback(
+    ({ detail }) => {
+      const { selectedOption } = detail;
+      if (selectedOption?.value) {
+        const updatedSettings = recalculateCameraSettings({
+          focalLength: Number.parseFloat(selectedOption.value),
+        });
+
+        updateSettings(updatedSettings);
+      }
+    },
+    [cameraSettings],
+  );
+
+  const setValueFOV = useCallback(
+    (value) => {
+      if (value) {
+        const updatedSettings = recalculateCameraSettings({
+          fov: value,
+        });
+
+        setFovError(value < 10);
+        if (value < 10) return;
+
+        updateSettings(updatedSettings);
+      }
+    },
+    [cameraSettings],
+  );
+
+  const onChangeZoom = useCallback(
+    ({ detail }) => {
+      const { selectedOption } = detail;
+      if (selectedOption?.value) {
+        const updatedSettings = recalculateCameraSettings({
+          zoom: Number.parseFloat(selectedOption.value),
+        });
+
+        updateSettings(updatedSettings);
+      }
+    },
+    [cameraSettings],
+  );
+
+  const setValueFar = useCallback(
+    (value) => {
+      if (value) {
+        const updatedSettings = recalculateCameraSettings({
+          far: value,
+        });
+
+        updateSettings(updatedSettings);
+      }
+    },
+    [cameraSettings],
+  );
+
+  const setValueNear = useCallback(
+    (value) => {
+      if (value) {
+        const updatedSettings = recalculateCameraSettings({
+          near: value,
+        });
+
+        updateSettings(updatedSettings);
+      }
+    },
+    [cameraSettings],
+  );
+
+  const onClickFixCamera = useCallback(() => {
+    if (mainCameraObject) {
+      const parent = getObject3DBySceneNodeRef(node.parentRef);
+      const newNode = createNodeWithTransform(
+        node,
+        mainCameraObject.position,
+        mainCameraObject.rotation,
+        mainCameraObject.scale,
+        parent,
+      );
+      const updatedNodePartial = {
+        transform: newNode.transform,
+      };
+
+      updateSceneNodeInternal(node.ref, updatedNodePartial);
+    }
+  }, [mainCameraObject, node]);
+
   return (
     <SpaceBetween size='m'>
       <SpaceBetween size='xs'>
@@ -291,15 +381,7 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
           <DynamicSelect
             data-testid='camera-focal-length-select'
             selectedOption={selectedFocalLengthOption} // Find this by value
-            onChange={useCallback((e) => {
-              if (e.detail.selectedOption.value) {
-                const updatedSettings = recalculateCameraSettings({
-                  focalLength: Number.parseFloat(e.detail.selectedOption.value),
-                });
-
-                updateSettings(updatedSettings);
-              }
-            }, [])}
+            onChange={onChangeFocalLength}
             options={focalLengthOptions}
             selectedAriaLabel={intl.formatMessage({
               defaultMessage: 'Selected',
@@ -332,18 +414,7 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
               value={cameraSettings.fov!}
               toStr={(val) => val.toFixed(2)}
               fromStr={(str) => parseFloatOrDefault(str, 1)}
-              setValue={useCallback((value) => {
-                if (value) {
-                  const updatedSettings = recalculateCameraSettings({
-                    fov: value,
-                  });
-
-                  setFovError(value < 10);
-                  if (value < 10) return;
-
-                  updateSettings(updatedSettings);
-                }
-              }, [])}
+              setValue={setValueFOV}
             />
           </FormField>
           <TextContent>
@@ -364,15 +435,7 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
             <Select
               data-testid='camera-zoom-select'
               selectedOption={selectedZoomOption} // Find this by value
-              onChange={useCallback((e) => {
-                if (e.detail.selectedOption.value) {
-                  const updatedSettings = recalculateCameraSettings({
-                    zoom: Number.parseFloat(e.detail.selectedOption.value),
-                  });
-
-                  updateSettings(updatedSettings);
-                }
-              }, [])}
+              onChange={onChangeZoom}
               options={zoomOptions}
               selectedAriaLabel={intl.formatMessage({
                 defaultMessage: 'Selected',
@@ -407,15 +470,7 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
             value={cameraSettings.far!}
             toStr={(val) => val.toFixed(2)}
             fromStr={(str) => parseFloatOrDefault(str, 1)}
-            setValue={useCallback((value) => {
-              if (value) {
-                const updatedSettings = recalculateCameraSettings({
-                  far: value,
-                });
-
-                updateSettings(updatedSettings);
-              }
-            }, [])}
+            setValue={setValueFar}
           />
         </FormField>
       </SpaceBetween>
@@ -428,15 +483,7 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
             value={cameraSettings.near!}
             toStr={(val) => val.toFixed(2)}
             fromStr={(str) => parseFloatOrDefault(str, 1)}
-            setValue={useCallback((value) => {
-              if (value) {
-                const updatedSettings = recalculateCameraSettings({
-                  near: value,
-                });
-
-                updateSettings(updatedSettings);
-              }
-            }, [])}
+            setValue={setValueNear}
           />
         </FormField>
       </SpaceBetween>
@@ -459,26 +506,7 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
               </StatusIndicator>
             }
           >
-            <Button
-              data-testid='fix-camera-from-current-button'
-              onClick={useCallback(() => {
-                if (mainCameraObject) {
-                  const parent = getObject3DBySceneNodeRef(node.parentRef);
-                  const newNode = createNodeWithTransform(
-                    node,
-                    mainCameraObject.position,
-                    mainCameraObject.rotation,
-                    mainCameraObject.scale,
-                    parent,
-                  );
-                  const updatedNodePartial = {
-                    transform: newNode.transform,
-                  };
-
-                  updateSceneNodeInternal(node.ref, updatedNodePartial);
-                }
-              }, [mainCameraObject, node])}
-            >
+            <Button data-testid='fix-camera-from-current-button' onClick={onClickFixCamera}>
               {intl.formatMessage({ defaultMessage: 'Fix view', description: 'Form button text' })}
             </Button>
           </Popover>

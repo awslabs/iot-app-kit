@@ -56,7 +56,7 @@ describe('CameraComponentEditor', () => {
       {
         ...mockNode.components[0],
         cameraType: CameraType.Perspective,
-        fov: expectedCamera.getEffectiveFOV(),
+        fov: expectedCamera.fov,
         near: expectedCamera.near,
         far: expectedCamera.far,
         zoom: expectedCamera.zoom,
@@ -91,7 +91,7 @@ describe('CameraComponentEditor', () => {
       {
         ...mockNode.components[0],
         cameraType: CameraType.Perspective,
-        fov: expectedCamera.getEffectiveFOV(),
+        fov: expectedCamera.fov,
         near: expectedCamera.near,
         far: expectedCamera.far,
         zoom: expectedCamera.zoom,
@@ -143,7 +143,7 @@ describe('CameraComponentEditor', () => {
       {
         ...mockNode.components[0],
         cameraType: CameraType.Perspective,
-        fov: expectedCamera.getEffectiveFOV(),
+        fov: expectedCamera.fov,
         near: expectedCamera.near,
         far: expectedCamera.far,
         zoom: expectedCamera.zoom,
@@ -177,7 +177,7 @@ describe('CameraComponentEditor', () => {
       {
         ...mockNode.components[0],
         cameraType: CameraType.Perspective,
-        fov: expectedCamera.getEffectiveFOV(),
+        fov: expectedCamera.fov,
         near: expectedCamera.near,
         far: expectedCamera.far,
         zoom: expectedCamera.zoom,
@@ -210,7 +210,7 @@ describe('CameraComponentEditor', () => {
       {
         ...mockNode.components[0],
         cameraType: CameraType.Perspective,
-        fov: expectedCamera.getEffectiveFOV(),
+        fov: expectedCamera.fov,
         near: expectedCamera.near,
         far: expectedCamera.far,
         zoom: expectedCamera.zoom,
