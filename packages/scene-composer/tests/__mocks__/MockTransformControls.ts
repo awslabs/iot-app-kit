@@ -25,4 +25,5 @@ export class MockTransformControls {
   setMode = MockTransformControls.setMode;
   attach = MockTransformControls.attach;
   detach = MockTransformControls.detach;
+  traverse = jest.fn();
 }
