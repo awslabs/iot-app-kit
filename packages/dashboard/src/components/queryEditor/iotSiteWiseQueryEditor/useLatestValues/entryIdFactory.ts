@@ -50,8 +50,9 @@ export class EntryIdFactory {
     propertyId?: string;
     propertyAlias?: string;
   }) {
-    const trimmedPropertyAlias = this.#trimPropertyAlias(propertyAlias);
-    const joinedIdentifiers = Object.values({ assetId, propertyId, propertyAlias: trimmedPropertyAlias }).join('');
+    const trimmedAlias = this.#trimPropertyAlias(propertyAlias);
+    const aliasWithoutSlashes = this.#removeSlashesFromPropertyAlias(trimmedAlias);
+    const joinedIdentifiers = Object.values({ assetId, propertyId, propertyAlias: aliasWithoutSlashes }).join('');
     const identifiersWithoutDashes = this.#removeDashes(joinedIdentifiers);
 
     return identifiersWithoutDashes;
@@ -62,6 +63,12 @@ export class EntryIdFactory {
     const trimmedPropertyAlias = propertyAlias?.substring(0, this.#MAXIMUM_ENTRY_ID_LENGTH);
 
     return trimmedPropertyAlias;
+  }
+
+  #removeSlashesFromPropertyAlias(propertyAlias?: string): string | undefined {
+    const propertyAliasWithoutSlashes = propertyAlias?.split('/').join('');
+
+    return propertyAliasWithoutSlashes;
   }
 
   #removeDashes(joinedIdentifiers: string) {
