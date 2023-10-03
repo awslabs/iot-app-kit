@@ -145,7 +145,6 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
     significantDigits: widgetSignificantDigits,
   } = widgetToDisplay.properties;
 
-  //debugger;
   const query = queryConfig.query;
   const filteredQuery = {
     ...query,
