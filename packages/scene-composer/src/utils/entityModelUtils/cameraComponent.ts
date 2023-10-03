@@ -28,28 +28,28 @@ export const createCameraEntityComponent = (camera: ICameraComponent): Component
     },
   };
 
-  if (camera.fov) {
+  if (camera.fov !== undefined) {
     comp.properties![CameraComponentProperty.Fov] = {
       value: {
         doubleValue: camera.fov,
       },
     };
   }
-  if (camera.near) {
+  if (camera.near !== undefined) {
     comp.properties![CameraComponentProperty.Near] = {
       value: {
         doubleValue: camera.near,
       },
     };
   }
-  if (camera.far) {
+  if (camera.far !== undefined) {
     comp.properties![CameraComponentProperty.Far] = {
       value: {
         doubleValue: camera.far,
       },
     };
   }
-  if (camera.zoom) {
+  if (camera.zoom !== undefined) {
     comp.properties![CameraComponentProperty.Zoom] = {
       value: {
         doubleValue: camera.zoom,

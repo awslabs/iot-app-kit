@@ -62,8 +62,8 @@ const AppearanceEditor: React.FC<IAppearanceEditorProps> = ({ component, onUpdat
           {isEmpty(component.valueDataBindings[selectedColorType]) && (
             <PreviewArrow
               opacity={selectedForegroundColor ? 1 : component.config.backgroundColorOpacity}
-              background={component.config.defaultBackgroundColor as string}
-              color={selectedForegroundColor ? (component.config.defaultForegroundColor as string) : undefined}
+              background={component.config.defaultBackgroundColor}
+              color={selectedForegroundColor ? component.config.defaultForegroundColor : undefined}
             />
           )}
         </Grid>
