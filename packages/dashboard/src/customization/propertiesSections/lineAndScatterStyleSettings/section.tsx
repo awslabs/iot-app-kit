@@ -72,7 +72,7 @@ export const LineAndScatterStyleSettingsSection: React.FC = () => (
         })
       );
 
-      const [query, updateQuery] = useProperty(
+      const [query] = useProperty(
         (properties) => properties.queryConfig.query,
         (properties, updatedQuery) => ({
           ...properties,
@@ -86,6 +86,12 @@ export const LineAndScatterStyleSettingsSection: React.FC = () => (
         (properties) => properties.aggregationType,
         (properties, updatedAggregationType) => ({
           ...properties,
+          queryConfig: {
+            ...properties.queryConfig,
+            query: properties.queryConfig.query
+              ? applyAggregationToQuery(properties.queryConfig.query, updatedAggregationType)
+              : undefined,
+          },
           aggregationType: updatedAggregationType,
         })
       );
@@ -93,6 +99,12 @@ export const LineAndScatterStyleSettingsSection: React.FC = () => (
         (properties) => properties.resolution,
         (properties, updatedResolution) => ({
           ...properties,
+          queryConfig: {
+            ...properties.queryConfig,
+            query: properties.queryConfig.query
+              ? applyResolutionToQuery(properties.queryConfig.query, updatedResolution)
+              : undefined,
+          },
           resolution: updatedResolution,
         })
       );
@@ -123,19 +135,6 @@ export const LineAndScatterStyleSettingsSection: React.FC = () => (
       const filteredResolutionOptions = getResolutionOptions(true);
       const filteredAggregationOptions = getAggregationOptions(true, dataTypeSet, resolution);
 
-      const onUpdateAggregation = (updatedAggregationType: AggregateType) => {
-        updateAggregation(updatedAggregationType);
-        if (assetQuery) {
-          updateQuery(applyAggregationToQuery(assetQuery, updatedAggregationType));
-        }
-      };
-      const onUpdateResolution = (updatedResolution: string) => {
-        updateResolution(updatedResolution);
-        if (assetQuery) {
-          updateQuery(applyResolutionToQuery(assetQuery, updatedResolution));
-        }
-      };
-
       return (
         <>
           <TypeSection
@@ -162,8 +161,8 @@ export const LineAndScatterStyleSettingsSection: React.FC = () => (
           <AggregationAndResolutionSection
             aggregation={aggregationType}
             resolution={resolution}
-            updateAggregation={(updatedAggregationType) => onUpdateAggregation(updatedAggregationType as AggregateType)}
-            updateResolution={onUpdateResolution}
+            updateAggregation={(updatedAggregationType) => updateAggregation(updatedAggregationType as AggregateType)}
+            updateResolution={updateResolution}
             resolutionOptions={filteredResolutionOptions}
             aggregationOptions={filteredAggregationOptions}
           />
