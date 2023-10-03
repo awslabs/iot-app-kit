@@ -49,6 +49,7 @@ export const ToolbarItemContainer = styled.div<
   justify-content: flex-start;
   min-width: 40px;
   height: ${({ height }) => height || '40px'};
+  max-height: ${({ height }) => height || '10vh'};
   text-decoration: none;
   cursor: ${({ isDisabled, isSelected }) => (isDisabled || isSelected ? 'default' : 'pointer')};
   pointer-events: ${({ isDisabled, isSelected }) => (isDisabled || isSelected ? 'none' : 'initial')};

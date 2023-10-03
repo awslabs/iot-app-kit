@@ -1,11 +1,13 @@
-import React, { useCallback, useContext } from 'react';
 import { FormField, SpaceBetween, Textarea } from '@awsui/components-react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { debounce } from 'lodash';
 
-import { IComponentEditorProps } from '../ComponentEditor';
-import { IDataOverlayComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { Component } from '../../../models/SceneModels';
+import { IDataOverlayComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
+import { IComponentEditorProps } from '../ComponentEditor';
+import { isDynamicNode } from '../../../utils/entityModelUtils/sceneUtils';
 
 import { ComponentWithDataBindings, DataBindingMapEditor } from './common/DataBindingMapEditor';
 
@@ -22,20 +24,30 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
   const valueDataBindingProvider = useStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
-  const { formatMessage } = useIntl();
+  const [newRows, setNewRows] = useState<Component.DataOverlayMarkdownRow[]>(component.dataRows);
 
+  const isDynamic = isDynamicNode(node);
+
+  const { formatMessage } = useIntl();
   const onUpdateCallback = useCallback(
-    (componentPartial: Partial<IDataOverlayComponentInternal>, replace?: boolean) => {
-      const componentPartialWithRef = { ref: component.ref, ...componentPartial };
-      updateComponentInternal(node.ref, componentPartialWithRef as ISceneComponentInternal, replace);
-    },
+    debounce(
+      (componentPartial: Partial<IDataOverlayComponentInternal>, replace?: boolean) => {
+        const componentPartialWithRef = { ref: component.ref, ...componentPartial };
+        updateComponentInternal(node.ref, componentPartialWithRef as ISceneComponentInternal, replace);
+      },
+      isDynamic ? 1000 : 100,
+    ), // TODO: Temporary solution for the error when updating entity too frequent. Will implement a better solution for GA.
     [node.ref, component.ref],
   );
 
+  useEffect(() => {
+    setNewRows(component.dataRows);
+  }, [component.dataRows]);
+
   return (
     <SpaceBetween size='s'>
-      {component.dataRows.length > 0 &&
-        component.dataRows.map(
+      {newRows.length > 0 &&
+        newRows.map(
           (row, index) =>
             row.rowType === Component.DataOverlayRowType.Markdown && (
               <FormField
@@ -53,9 +65,10 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
                     { variable: '${temperature-binding-name}' },
                   )}
                   onChange={(e) => {
-                    const newRows = [...component.dataRows];
-                    newRows[index] = { ...newRows[index], content: e.detail.value };
-                    onUpdateCallback({ dataRows: newRows });
+                    const changedRows = [...newRows];
+                    changedRows[index] = { ...changedRows[index], content: e.detail.value };
+                    setNewRows(changedRows);
+                    onUpdateCallback({ dataRows: changedRows });
                   }}
                 />
               </FormField>

@@ -2,7 +2,8 @@ import type { Viewport } from '@iot-app-kit/core';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
-import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
+import { SiteWiseAssetQuery, SiteWisePropertyAliasQuery, SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
+import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 
 export type DashboardClientCredentials = {
   awsCredentials: AwsCredentialIdentity | Provider<AwsCredentialIdentity>;
@@ -12,17 +13,20 @@ export type DashboardClientCredentials = {
 export type DashboardIotSiteWiseClients = {
   iotSiteWiseClient: IoTSiteWiseClient;
   iotEventsClient: IoTEventsClient;
+  iotTwinMakerClient: IoTTwinMakerClient;
 };
 
 export type DashboardIotSiteWiseQueries = {
   iotSiteWiseQuery: SiteWiseQuery;
 };
 
+export type IoTSiteWiseDataStreamQuery = Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>;
+
 export type DashboardClientConfiguration = DashboardIotSiteWiseClients | DashboardClientCredentials;
 
 export type DashboardSave = (dashboardConfiguration: DashboardConfiguration) => Promise<void>;
 
-export type DashboardWidget<T extends Record<string, unknown> = Record<string, unknown>> = {
+export type DashboardWidget<Properties extends Record<string, unknown> = Record<string, unknown>> = {
   type: string;
   id: string;
   x: number;
@@ -30,7 +34,7 @@ export type DashboardWidget<T extends Record<string, unknown> = Record<string, u
   z: number;
   height: number;
   width: number;
-  properties: T;
+  properties: Properties;
 };
 
 export type DashboardDisplaySettings = {
@@ -40,14 +44,14 @@ export type DashboardDisplaySettings = {
   significantDigits?: number;
 };
 
-export type DashboardConfiguration = {
+export type DashboardConfiguration<Properties extends Record<string, unknown> = Record<string, unknown>> = {
   displaySettings: DashboardDisplaySettings;
-  widgets: DashboardWidget[];
+  widgets: DashboardWidget<Properties>[];
   viewport: Viewport;
 };
 
-export type DashboardWidgetsConfiguration = {
-  widgets: DashboardWidget[];
+export type DashboardWidgetsConfiguration<Properties extends Record<string, unknown> = Record<string, unknown>> = {
+  widgets: DashboardWidget<Properties>[];
   viewport: Viewport;
 };
 

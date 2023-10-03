@@ -20,8 +20,8 @@
 }
 
 .base-chart-element {
-  border: 1px solid  #d6dbdb;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .base-chart-container {

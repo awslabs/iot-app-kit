@@ -3,6 +3,86 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.2](https://github.com/awslabs/iot-app-kit/compare/core-v8.0.1...core-v8.0.2) (2023-09-30)
+
+
+### Miscellaneous Chores
+
+* **core:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 8.0.1 to 8.0.2
+    * @iot-app-kit/ts-config bumped from 8.0.1 to 8.0.2
+    * eslint-config-iot-app-kit bumped from 8.0.1 to 8.0.2
+
+## [8.0.1](https://github.com/awslabs/iot-app-kit/compare/core-v8.0.0...core-v8.0.1) (2023-09-30)
+
+
+### Miscellaneous Chores
+
+* **core:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 8.0.0 to 8.0.1
+    * @iot-app-kit/ts-config bumped from 8.0.0 to 8.0.1
+    * eslint-config-iot-app-kit bumped from 8.0.0 to 8.0.1
+
+## [8.0.0](https://github.com/awslabs/iot-app-kit/compare/core-v7.5.0...core-v8.0.0) (2023-09-30)
+
+
+### Miscellaneous Chores
+
+* **core:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/ts-config bumped from 7.5.0 to 8.0.0
+    * eslint-config-iot-app-kit bumped from 7.5.0 to 8.0.0
+
+## [7.5.0](https://github.com/awslabs/iot-app-kit/compare/core-v7.4.0...core-v7.5.0) (2023-09-26)
+
+
+### Miscellaneous Chores
+
+* **core:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.4.0 to 7.5.0
+    * @iot-app-kit/ts-config bumped from 7.4.0 to 7.5.0
+    * eslint-config-iot-app-kit bumped from 7.4.0 to 7.5.0
+
+## [7.4.0](https://github.com/awslabs/iot-app-kit/compare/core-v7.3.1...core-v7.4.0) (2023-09-25)
+
+
+### Miscellaneous Chores
+
+* **core:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/ts-config bumped from 7.3.1 to 7.4.0
+    * eslint-config-iot-app-kit bumped from 7.3.1 to 7.4.0
+
 ## [7.3.1](https://github.com/awslabs/iot-app-kit/compare/core-v7.3.0...core-v7.3.1) (2023-08-24)
 
 

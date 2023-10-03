@@ -3,6 +3,138 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.2](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v8.0.1...scene-composer-v8.0.2) (2023-09-30)
+
+
+### Miscellaneous Chores
+
+* **scene-composer:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 8.0.1 to 8.0.2
+    * @iot-app-kit/react-components bumped from 8.0.1 to 8.0.2
+    * @iot-app-kit/related-table bumped from 8.0.1 to 8.0.2
+    * @iot-app-kit/source-iottwinmaker bumped from 8.0.1 to 8.0.2
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 8.0.1 to 8.0.2
+
+## [8.0.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v8.0.0...scene-composer-v8.0.1) (2023-09-30)
+
+
+### Miscellaneous Chores
+
+* **scene-composer:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 8.0.0 to 8.0.1
+    * @iot-app-kit/react-components bumped from 8.0.0 to 8.0.1
+    * @iot-app-kit/related-table bumped from 8.0.0 to 8.0.1
+    * @iot-app-kit/source-iottwinmaker bumped from 8.0.0 to 8.0.1
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 8.0.0 to 8.0.1
+
+## [8.0.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v7.5.0...scene-composer-v8.0.0) (2023-09-30)
+
+
+### Features
+
+* **composer:** add a11y color picker ([e768a88](https://github.com/awslabs/iot-app-kit/commit/e768a884118768b5080e745ef8113a344dd0d80e))
+
+
+### Bug Fixes
+
+* **composer:** add aria labels to rules panel ([ff78ab0](https://github.com/awslabs/iot-app-kit/commit/ff78ab0831170be7c5bad53cba0c903d20034aaf))
+* **composer:** debounce component update to reduce UpdateEntity error ([4f13db1](https://github.com/awslabs/iot-app-kit/commit/4f13db18ae134c7a95c50ed1d855e9e977f59539))
+* **composer:** lock 3d tiles lib to working version ([f719bc4](https://github.com/awslabs/iot-app-kit/commit/f719bc4964e454db16d6c746548b37c092692ca3))
+* update component name ([e768a88](https://github.com/awslabs/iot-app-kit/commit/e768a884118768b5080e745ef8113a344dd0d80e))
+* update package-lock.json ([e768a88](https://github.com/awslabs/iot-app-kit/commit/e768a884118768b5080e745ef8113a344dd0d80e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/react-components bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/related-table bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/source-iottwinmaker bumped from 7.5.0 to 8.0.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 7.5.0 to 8.0.0
+
+## [7.5.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v7.4.0...scene-composer-v7.5.0) (2023-09-26)
+
+
+### Miscellaneous Chores
+
+* **scene-composer:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.4.0 to 7.5.0
+    * @iot-app-kit/react-components bumped from 7.4.0 to 7.5.0
+    * @iot-app-kit/related-table bumped from 7.4.0 to 7.5.0
+    * @iot-app-kit/source-iottwinmaker bumped from 7.4.0 to 7.5.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 7.4.0 to 7.5.0
+
+## [7.4.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v7.3.1...scene-composer-v7.4.0) (2023-09-25)
+
+
+### Features
+
+* **composer:** render tags from layer ([d9c5191](https://github.com/awslabs/iot-app-kit/commit/d9c519114d3e39c3913eb32b23984f8204b756d8))
+* **composer:** support sync matterport tag as entities ([7db178a](https://github.com/awslabs/iot-app-kit/commit/7db178a4aee74cbd299dc115c7cf3786dc376800))
+* **dynamic scenes:** save node updates to entities ([0bb2445](https://github.com/awslabs/iot-app-kit/commit/0bb2445fb39659ca970c51319a42cd2d0ff95360))
+* **dynamic scenes:** update entities using dynamic scenes ([8eee582](https://github.com/awslabs/iot-app-kit/commit/8eee582e039a5cb2a3e25c81f822a4ecca95672c))
+* **first Person:** proof of using pointer lock for a first person view ([391eddd](https://github.com/awslabs/iot-app-kit/commit/391edddd5ab3c56be2e394aec06346dfbc29b776))
+* **propertyName:** add copy button and textarea ([7c0eaf4](https://github.com/awslabs/iot-app-kit/commit/7c0eaf432e40e25a5319a29e7546442d81e8c3dc))
+* **scene composer:** added icon picker changes ([8ca53b8](https://github.com/awslabs/iot-app-kit/commit/8ca53b8552f9eb09f107ea43d983a6b47f19fa88))
+* **TM-source:** add entity APIs to SceneMetadataModule ([1a91084](https://github.com/awslabs/iot-app-kit/commit/1a910844692aa30bbd4b9d1920d415378bcad130))
+
+
+### Bug Fixes
+
+* **camera:** selecting camera view uses raycast to set better target distance for orbit ([76d9272](https://github.com/awslabs/iot-app-kit/commit/76d927214ae02ca2c1c8657afb9f8d01bf396548))
+* **composer:** add aria labels to icons ([8a70eb1](https://github.com/awslabs/iot-app-kit/commit/8a70eb13f081b39dae701dfa999e8aa3ce0a8378))
+* **composer:** add new translations ([de7249a](https://github.com/awslabs/iot-app-kit/commit/de7249a8a920e1c43faeda4fd94fb57e9d0fc9f3))
+* **composer:** associate inputs to labels ([8b64f9a](https://github.com/awslabs/iot-app-kit/commit/8b64f9aa38761ed684be8b9088a8b7edd6bb0681))
+* **composer:** autofocus on error, rules panel ([b132e27](https://github.com/awslabs/iot-app-kit/commit/b132e278a00a8729642afeec3382312685877110))
+* **composer:** create default entity roots ([4b38ea5](https://github.com/awslabs/iot-app-kit/commit/4b38ea598360fdaa4dd3545273dab888963d7bb7))
+* **composer:** create existing matterport tag as entities ([0d1d16e](https://github.com/awslabs/iot-app-kit/commit/0d1d16e17c35af067ef1f5f4f41030bfd3897d9a))
+* **composer:** error when switching motion indicator appearance ([c51f135](https://github.com/awslabs/iot-app-kit/commit/c51f13530b36c8a7e1e17d8ea65c4bec515fb16d))
+* **composer:** matterport tag sync tag style under flag ([83334ce](https://github.com/awslabs/iot-app-kit/commit/83334ce21a089ecff46c86ddfb320f1bafe6011d))
+* **composer:** resize/reposition overlaps on small screens ([64d3855](https://github.com/awslabs/iot-app-kit/commit/64d3855b866ec6f50e7d9891863c1fea801ceabf))
+* **composer:** show sync matterport tag status ([2c041c5](https://github.com/awslabs/iot-app-kit/commit/2c041c56d637efd201e615e04f27a6761cc20c4c))
+* **CSS-Loader:** updated sass-loader & fixed style ([aee4abc](https://github.com/awslabs/iot-app-kit/commit/aee4abcd22617cd1b28641711a4be2d1bab4e252))
+* **matterport:** fix zoom to tag ([49a04f8](https://github.com/awslabs/iot-app-kit/commit/49a04f81bc464d20798f219f77f325bde74ad1f6))
+* **scene composer:** fix for missing grid ([2a4c4c8](https://github.com/awslabs/iot-app-kit/commit/2a4c4c8b194a2eceebe73dc87d24215836be4a99))
+* **scene composer:** removing custom grid line colors ([632f7a2](https://github.com/awslabs/iot-app-kit/commit/632f7a210a80281b1d3c53b0a5de168f8cae9d10))
+* **scene tags:** fix anchor stems not triggering onWidgetClick ([6945512](https://github.com/awslabs/iot-app-kit/commit/6945512eadbdd8d8bc09977ecce7511fbf136311))
+* **tools-iottwinmaker:** update dashboard role to include execute query api ([b63d053](https://github.com/awslabs/iot-app-kit/commit/b63d0537ce247724d0dd73d8d0d1ffba20e0ab5a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/react-components bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/related-table bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/source-iottwinmaker bumped from 7.3.1 to 7.4.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 7.3.1 to 7.4.0
+
 ## [7.3.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v7.3.0...scene-composer-v7.3.1) (2023-08-24)
 
 

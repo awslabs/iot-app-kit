@@ -1,10 +1,13 @@
 import {
+  DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
   DEFAULT_LAYER_COMPONENT_NAME,
   DEFAULT_LAYER_RELATIONSHIP_NAME,
   NODE_COMPONENT_TYPE_ID,
+  componentTypeToId,
 } from '../../common/entityModelConstants';
+import { ISceneComponent, ISceneNode, KnownComponentType } from '../../interfaces';
 
-import { createNodeEntityComponent, updateNodeEntityComponent } from './nodeComponent';
+import { createNodeEntityComponent, parseNode, updateNodeEntityComponent } from './nodeComponent';
 
 describe('createNodeEntityComponent', () => {
   it('should return expected empty node component', () => {
@@ -87,7 +90,9 @@ describe('createNodeEntityComponent', () => {
   });
 
   it('should return expected node component with properties', () => {
-    const result = createNodeEntityComponent({ properties: { matterportId: 'abc def' } });
+    const result = createNodeEntityComponent({
+      properties: { matterportId: 'abc def', layerIds: ['layer-1'], alwaysVisible: true },
+    } as ISceneNode);
 
     expect(result.properties).toEqual({
       name: {
@@ -99,7 +104,10 @@ describe('createNodeEntityComponent', () => {
         value: {
           mapValue: {
             matterportId: {
-              stringValue: 'abc%20def',
+              stringValue: 'abc def',
+            },
+            alwaysVisible: {
+              stringValue: 'true',
             },
           },
         },
@@ -120,5 +128,118 @@ describe('updateNodeEntityComponent', () => {
         },
       },
     });
+  });
+
+  it('should return expected node component with entity binding', () => {
+    const result = updateNodeEntityComponent({
+      name: 'Test',
+      components: [
+        {
+          type: KnownComponentType.EntityBinding,
+          valueDataBinding: {
+            dataBindingContext: { entityId: 'data-entity-id' },
+          },
+        } as ISceneComponent,
+      ],
+    });
+
+    expect(result).toEqual({
+      componentTypeId: NODE_COMPONENT_TYPE_ID,
+      propertyUpdates: {
+        name: {
+          value: {
+            stringValue: 'Test',
+          },
+        },
+        [DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME]: {
+          value: {
+            relationshipValue: {
+              targetEntityId: 'data-entity-id',
+            },
+          },
+        },
+      },
+    });
+  });
+});
+
+describe('parseNode', () => {
+  const entity = {
+    entityId: 'entity-id',
+  };
+  const tagComp = {
+    componentTypeId: componentTypeToId.Tag,
+    properties: [],
+  };
+  const nodeComp = {
+    componentTypeId: NODE_COMPONENT_TYPE_ID,
+    properties: [
+      {
+        propertyName: 'name',
+        propertyValue: 'Node name',
+      },
+      {
+        propertyName: 'transform_position',
+        propertyValue: [3, 3, 3],
+      },
+      {
+        propertyName: 'transform_rotation',
+        propertyValue: [2, 2, 2],
+      },
+      {
+        propertyName: 'transfransform_scale',
+        propertyValue: [1, 1, 1],
+      },
+      {
+        propertyName: 'transformConstraint_snapToFloor',
+        propertyValue: true,
+      },
+      {
+        propertyName: 'properties',
+        propertyValue: {
+          matterportId: 'abc def',
+          alwaysVisible: 'true',
+        },
+      },
+    ],
+  };
+
+  it('should return undefined when node entity is empty', () => {
+    expect(parseNode(null, null)).toBeUndefined();
+    expect(parseNode({}, {})).toBeUndefined();
+    expect(parseNode({}, {})).toBeUndefined();
+  });
+
+  it('should parse to expected node without components', () => {
+    const result = parseNode(entity, nodeComp);
+
+    expect(result).toEqual({
+      ref: entity.entityId,
+      name: 'Node name',
+      childRefs: [],
+      transform: {
+        position: [3, 3, 3],
+        rotation: [2, 2, 2],
+        scale: [1, 1, 1],
+      },
+      components: [],
+      transformConstraint: {
+        snapToFloor: true,
+      },
+      properties: {
+        matterportId: 'abc def',
+        alwaysVisible: true,
+      },
+    });
+  });
+
+  it('should parse to expected node component with components', () => {
+    const result = parseNode({ ...entity, components: [tagComp] }, nodeComp);
+
+    expect(result?.components).toEqual([
+      expect.objectContaining({
+        type: KnownComponentType.Tag,
+      }),
+    ]);
   });
 });

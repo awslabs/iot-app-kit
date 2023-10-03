@@ -21,7 +21,7 @@ it('returns user selection when performing a selection gesture', () => {
     () =>
       useSelectionGestures({
         setActiveGesture,
-        dashboardConfiguration: MockDashboardFactory.get(),
+        dashboardWidgets: MockDashboardFactory.get().widgets,
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -67,7 +67,7 @@ it('sets the gesture to selection when performing a selection gesture', () => {
     () =>
       useSelectionGestures({
         setActiveGesture,
-        dashboardConfiguration: MockDashboardFactory.get(),
+        dashboardWidgets: MockDashboardFactory.get().widgets,
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -93,7 +93,7 @@ it('sets the userSelection to undefined when ending a selection gesture', () => 
     () =>
       useSelectionGestures({
         setActiveGesture,
-        dashboardConfiguration: MockDashboardFactory.get(),
+        dashboardWidgets: MockDashboardFactory.get().widgets,
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }

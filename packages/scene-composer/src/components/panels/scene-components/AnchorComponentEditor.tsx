@@ -1,23 +1,31 @@
 import { AttributeEditor, FormField, Grid, Input, Select, SpaceBetween, TextContent } from '@awsui/components-react';
+import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { debounce } from 'lodash';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { useIntl } from 'react-intl';
-import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { defineMessages, useIntl } from 'react-intl';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { SCENE_ICONS } from '../../../common/constants';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { COMPOSER_FEATURES, IValueDataBinding, SceneResourceType } from '../../../interfaces';
+import {
+  COMPOSER_FEATURES,
+  DefaultAnchorStatus,
+  IValueDataBinding,
+  KnownSceneProperty,
+  SceneResourceType,
+} from '../../../interfaces';
 import { IAnchorComponentInternal, ISceneComponentInternal, useSceneDocument, useStore } from '../../../store';
 import { shallowEqualsArray } from '../../../utils/objectUtils';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
 import { convertToIotTwinMakerNamespace, getSceneResourceInfo } from '../../../utils/sceneResourceUtils';
 import { colors } from '../../../utils/styleUtils';
+import { TextInput } from '../CommonPanelComponents';
 import { IComponentEditorProps } from '../ComponentEditor';
+import { isDynamicNode } from '../../../utils/entityModelUtils/sceneUtils';
 
 import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
-import { ColorPicker } from './tag-style/ColorPicker/ColorPicker';
-import { DecodeSvgString } from './tag-style/ColorPicker/ColorPickerUtils/DecodeSvgString';
+import { ColorSelectorCombo } from './tag-style/ColorSelectorCombo/ColorSelectorCombo';
+import { DecodeSvgString } from './tag-style/ColorSelectorCombo/ColorSelectorComboUtils/DecodeSvgString';
 import { IconPicker } from './tag-style/IconPicker/IconPicker';
 
 export const convertParamsToKeyValuePairs = (params: Record<string, string>) => {
@@ -25,6 +33,14 @@ export const convertParamsToKeyValuePairs = (params: Record<string, string>) => 
     return { key, value: params[key] };
   });
 };
+
+const i18nIconStrings = defineMessages({
+  [DefaultAnchorStatus.Info]: { defaultMessage: 'Info icon', description: 'Icon name label' },
+  [DefaultAnchorStatus.Warning]: { defaultMessage: 'Warning icon', description: 'Icon name label' },
+  [DefaultAnchorStatus.Error]: { defaultMessage: 'Error icon', description: 'Icon name label' },
+  [DefaultAnchorStatus.Video]: { defaultMessage: 'Video icon', description: 'Icon name label' },
+  [DefaultAnchorStatus.Custom]: { defaultMessage: 'Custom icon', description: 'Icon name label' },
+});
 
 export type IAnchorComponentEditorProps = IComponentEditorProps;
 
@@ -42,20 +58,46 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
   const anchorComponent = component as IAnchorComponentInternal;
   const [items, setItems] = useState<{ key: string; value: string; constraintText?: string }[]>([]);
   const hasDuplicateKeyRef = useRef<boolean>(false);
-  const { listSceneRuleMapIds } = useSceneDocument(sceneComposerId);
+  const { listSceneRuleMapIds, getSceneProperty, getSceneRuleMapById } = useSceneDocument(sceneComposerId);
+  const tagStyleColors = getSceneProperty<string[]>(KnownSceneProperty.TagCustomColors, []);
+  const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
+
   const intl = useIntl();
 
+  const isDynamic = isDynamicNode(node);
+
   const ruleMapIds = listSceneRuleMapIds();
+  const filteredList: string[] = useMemo(
+    () =>
+      ruleMapIds.filter((id) =>
+        getSceneRuleMapById(id)?.statements.some(
+          (sm) => getSceneResourceInfo(sm.target).type === SceneResourceType.Icon,
+        ),
+      ),
+    [ruleMapIds],
+  );
+
   const selectedRuleMapId =
     anchorComponent.ruleBasedMapId && ruleMapIds.includes(anchorComponent.ruleBasedMapId)
       ? anchorComponent.ruleBasedMapId
       : null;
 
   const onUpdateCallbackDebounced = useCallback(
+    debounce(
+      (componentPartial: any, replace?: boolean) => {
+        const componentPartialWithRef: ISceneComponentInternal = { ref: component.ref, ...componentPartial };
+        updateComponentInternal(node.ref, componentPartialWithRef, replace);
+      },
+      isDynamic ? 1000 : 100,
+    ), // TODO: Temporary solution for the error when updating entity too frequent. Will implement a better solution for GA.
+    [node.ref, component.ref],
+  );
+
+  const onUpdateCallbackForChosenColor = useCallback(
     debounce((componentPartial: any, replace?: boolean) => {
       const componentPartialWithRef: ISceneComponentInternal = { ref: component.ref, ...componentPartial };
       updateComponentInternal(node.ref, componentPartialWithRef, replace);
-    }, 100),
+    }, 300),
     [node.ref, component.ref],
   );
 
@@ -153,7 +195,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
     return btoa(iconStrings[iconSelectedOptionIndex]);
   }, [iconSelectedOptionIndex]);
 
-  const ruleOptions = ruleMapIds
+  const ruleOptions = filteredList
     .concat(
       selectedRuleMapId
         ? intl.formatMessage({
@@ -162,13 +204,14 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
           })
         : [],
     )
-    .map((ruleMapId) => ({ label: ruleMapId, value: ruleMapId }));
+    .map((ruleMapId) => {
+      return { label: ruleMapId, value: ruleMapId };
+    });
 
   const hasIcon = iconSelectedOptionIndex >= 0;
   const iconGridDefinition = hasIcon ? [{ colspan: 10 }, { colspan: 2 }] : [{ colspan: 12 }];
   const isCustomStyle = tagStyle && iconOptions[iconSelectedOptionIndex]?.value === 'Custom';
-  const customIcon = (anchorComponent.customIcon ?? { prefix: 'fas', iconName: 'info' }) as IconLookup;
-
+  const customIcon = (anchorComponent.customIcon ?? { prefix: '', iconName: '' }) as IconLookup;
   return (
     <SpaceBetween size='s'>
       <FormField label={intl.formatMessage({ defaultMessage: 'Tag style', description: 'Form field label' })}>
@@ -197,27 +240,35 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
               <DecodeSvgString
                 selectedColor={anchorComponent.chosenColor ?? colors.infoBlue}
                 iconString={iconString!}
-                customIcon={findIconDefinition(customIcon)}
+                customIcon={customIcon && findIconDefinition(customIcon)}
                 width='32px'
                 height='32px'
+                ariaLabel={intl.formatMessage(i18nIconStrings[iconOptions[iconSelectedOptionIndex]?.value])}
               />
             ) : (
-              <img width='32px' height='32px' src={`data:image/svg+xml;base64,${iconString}`} />
+              <img
+                aria-label={intl.formatMessage(i18nIconStrings[iconOptions[iconSelectedOptionIndex]?.value])}
+                width='32px'
+                height='32px'
+                src={`data:image/svg+xml;base64,${iconString}`}
+              />
             ))}
         </Grid>
       </FormField>
       {isCustomStyle && (
         <FormField>
           <SpaceBetween size='m'>
-            <ColorPicker
+            <ColorSelectorCombo
               color={anchorComponent.chosenColor ?? colors.customBlue}
               onSelectColor={(pickedColor) => {
-                onUpdateCallback({
+                onUpdateCallbackForChosenColor({
                   chosenColor: pickedColor,
                 });
               }}
-              onUpdateCustomColors={(chosenCustomColors) => onUpdateCallback({ customColors: chosenCustomColors })}
-              customColors={anchorComponent.customColors}
+              onUpdateCustomColors={(chosenCustomColors) =>
+                setSceneProperty(KnownSceneProperty.TagCustomColors, chosenCustomColors)
+              }
+              customColors={tagStyleColors}
               colorPickerLabel={intl.formatMessage({ defaultMessage: 'Color', description: 'Color' })}
               customColorLabel={intl.formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}
             />
@@ -234,6 +285,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
                 defaultMessage: 'Filter icons',
                 description: 'Filter icons',
               })}
+              iconButtonText={intl.formatMessage({ defaultMessage: 'Select an icon', description: 'Select an icon' })}
             />
           </SpaceBetween>
         </FormField>
@@ -260,9 +312,9 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
             const ruleMapId = e.detail.selectedOption.value;
             if (ruleMapId) {
               if (ruleMapIds.includes(ruleMapId)) {
-                onUpdateCallback({ ruleBasedMapId: ruleMapId });
+                onUpdateCallbackDebounced({ ruleBasedMapId: ruleMapId });
               } else {
-                onUpdateCallback({ ruleBasedMapId: undefined });
+                onUpdateCallbackDebounced({ ruleBasedMapId: undefined });
               }
             }
           }}
@@ -278,10 +330,10 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
       </FormField>
 
       <FormField label={intl.formatMessage({ defaultMessage: 'Link Target', description: 'Form field label' })}>
-        <Input
+        <TextInput
           data-testid='anchor-link-target-input'
           value={anchorComponent.navLink?.destination || ''}
-          onChange={(e) => onUpdateCallback({ navLink: { destination: e.detail.value } })}
+          setValue={(e) => onUpdateCallback({ navLink: { destination: e } })}
         />
       </FormField>
 

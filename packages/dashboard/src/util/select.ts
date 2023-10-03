@@ -1,16 +1,16 @@
 import last from 'lodash/last';
 import sortBy from 'lodash/sortBy';
 import { overlaps } from './overlaps';
-import type { DashboardWidgetsConfiguration, Position, Rect, Selection, DashboardWidget } from '~/types';
+import type { Position, Rect, Selection, DashboardWidget } from '~/types';
 
 export const getSelectedWidgets = ({
   selectedRect,
   cellSize,
-  dashboardConfiguration,
+  dashboardWidgets,
 }: {
   selectedRect: Rect | undefined;
   cellSize: number;
-  dashboardConfiguration: DashboardWidgetsConfiguration;
+  dashboardWidgets: DashboardWidget[];
 }) => {
   const isSelected = (rect: Rect): boolean =>
     selectedRect
@@ -24,7 +24,7 @@ export const getSelectedWidgets = ({
           selectedRect
         )
       : false;
-  return dashboardConfiguration.widgets.filter(isSelected);
+  return dashboardWidgets.filter(isSelected);
 };
 
 /**
@@ -35,12 +35,12 @@ export const getSelectedWidgets = ({
 export const getSelectedWidgetIds = ({
   selectedRect,
   cellSize,
-  dashboardConfiguration,
+  dashboardWidgets,
 }: {
   selectedRect: Rect | undefined;
   cellSize: number;
-  dashboardConfiguration: DashboardWidgetsConfiguration;
-}) => getSelectedWidgets({ selectedRect, cellSize, dashboardConfiguration }).map((widget) => widget.id);
+  dashboardWidgets: DashboardWidget[];
+}) => getSelectedWidgets({ selectedRect, cellSize, dashboardWidgets }).map((widget) => widget.id);
 
 /**
  *
@@ -49,11 +49,11 @@ export const getSelectedWidgetIds = ({
 export const pointSelect = ({
   position,
   cellSize,
-  dashboardConfiguration,
+  dashboardWidgets,
 }: {
   position: Position;
   cellSize: number;
-  dashboardConfiguration: DashboardWidgetsConfiguration;
+  dashboardWidgets: DashboardWidget[];
 }): DashboardWidget | undefined => {
   /**
    * TODO edge case where bottom most pixel on a widget does not pick up the intersection
@@ -62,13 +62,13 @@ export const pointSelect = ({
   const { x, y } = position;
   const intersectedWidgets = getSelectedWidgets({
     selectedRect: { x, y, width: 1, height: 1 },
-    dashboardConfiguration,
+    dashboardWidgets,
     cellSize: cellSize,
   });
 
   const sortableWidgets = intersectedWidgets.map((widget, index) => ({ id: widget.id, z: widget.z, index }));
   const topMostWidgetId = last(sortBy(sortableWidgets, ['z', 'index']).map((widget) => widget.id));
-  return dashboardConfiguration.widgets.find((widget) => widget.id === topMostWidgetId);
+  return dashboardWidgets.find((widget) => widget.id === topMostWidgetId);
 };
 
 export const selectedRect = (selection: Selection | undefined): Rect | undefined => {

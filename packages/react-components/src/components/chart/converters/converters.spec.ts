@@ -10,6 +10,7 @@ import { convertStyles } from './convertStyles';
 import { convertThresholds } from './convertThresholds';
 import { useConvertedOptions } from './convertOptions';
 import { renderHook } from '@testing-library/react';
+import { colorPalette } from '@iot-app-kit/core-util';
 
 const MOCK_AXIS = {
   yAxisLabel: 'Y Value',
@@ -40,11 +41,42 @@ const QUERIES = mockTimeSeriesDataQuery([
 
 describe('testing converters', () => {
   it('converts axis to eCharts axis', async () => {
-    const convertedYAxis = convertYAxis(MOCK_AXIS);
+    [
+      {
+        yAxisLabel: 'Y Value',
+        yMin: 0,
+        yMax: 100,
+        showY: true,
+        showX: true,
+      },
+      {
+        yAxisLabel: 'Y Value',
+        yMin: 0,
+        yMax: 100,
+        showY: false,
+        showX: false,
+      },
+      {
+        yAxisLabel: 'Y Value',
+        yMin: 0,
+        yMax: 100,
+        showY: true,
+        showX: false,
+      },
+      {
+        yAxisLabel: 'Y Value',
+        yMin: 0,
+        yMax: 100,
+        showY: false,
+        showX: true,
+      },
+    ].forEach((axis_values) => {
+      const convertedYAxis = convertYAxis(axis_values);
 
-    expect(convertedYAxis).toHaveProperty('type', 'value');
-    expect(convertedYAxis).toHaveProperty('name', MOCK_AXIS.yAxisLabel);
-    expect(convertedYAxis).toHaveProperty('show', true);
+      expect(convertedYAxis).toHaveProperty('type', 'value');
+      expect(convertedYAxis).toHaveProperty('name', axis_values.yAxisLabel);
+      expect(convertedYAxis).toHaveProperty('show', axis_values.showY);
+    });
   });
 
   it('converts data points to echarts data points', async () => {
@@ -58,7 +90,7 @@ describe('testing converters', () => {
   });
 
   it('converts grid to echarts grid', async () => {
-    const convertedGrid = convertGrid(MOCK_LEGEND);
+    const convertedGrid = convertGrid(MOCK_LEGEND, false);
 
     expect(convertedGrid).toHaveProperty('bottom', 50);
     expect(convertedGrid).toHaveProperty('top', 50);
@@ -78,6 +110,7 @@ describe('testing converters', () => {
       useConvertedOptions({
         options: { backgroundColor: 'white', axis: MOCK_AXIS, legend: MOCK_LEGEND, significantDigits: 2 },
         series: [],
+        shouldShowYAxisLegend: false,
       })
     );
 
@@ -105,7 +138,7 @@ describe('testing converters', () => {
     const result = convertedSeriesAndYAxisFunc(datastream);
 
     expect(result.series.data).toBeArrayOfSize(0);
-    expect(result).toHaveProperty('series.itemStyle.color', '#688ae8');
+    expect(result).toHaveProperty('series.itemStyle.color', colorPalette[0]);
     expect(result).toHaveProperty('series.step', 'middle');
   });
 

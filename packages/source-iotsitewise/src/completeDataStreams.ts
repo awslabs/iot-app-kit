@@ -20,7 +20,10 @@ export const completeDataStreams = ({
   return dataStreams.map((dataStream) => {
     const propertyInfo = fromId(dataStream.id);
     if ('propertyAlias' in propertyInfo) {
-      return dataStream;
+      const latestValue = dataStream.data.at(-1)?.y;
+      const dataType =
+        typeof latestValue === 'boolean' ? 'BOOLEAN' : typeof latestValue === 'string' ? 'STRING' : 'NUMBER';
+      return { ...dataStream, name: propertyInfo.propertyAlias, dataType };
     }
     const { assetId, propertyId } = propertyInfo;
 

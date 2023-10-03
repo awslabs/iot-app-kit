@@ -4,9 +4,9 @@ import {
   AttributeEditor,
   Box,
   ExpandableSection,
-  FormField,
   Grid,
   Input,
+  InputProps,
   Select,
   SelectProps,
   SpaceBetween,
@@ -54,7 +54,7 @@ export function NumericInput(props: {
 export type TextInputProps = {
   value: string;
   setValue: (val: string | null) => void;
-};
+} & InputProps;
 
 export const TextInput = (props: TextInputProps): React.ReactElement => {
   const { value, setValue } = props;
@@ -66,6 +66,7 @@ export const TextInput = (props: TextInputProps): React.ReactElement => {
 
   return (
     <Input
+      {...props}
       value={inputValue}
       onChange={(event) => {
         setInputValue(event.detail.value);
@@ -168,13 +169,16 @@ export function Matrix3XInputGrid<T>({
   }, [values, dirty, focus]);
 
   return (
-    <FormField label={name}>
+    <Box>
+      <Box margin={{ bottom: 'xxs' }}>
+        <label id={`${name}_label`}>{name}</label>
+      </Box>{' '}
       <Grid gridDefinition={[{ colspan: 4 }, { colspan: 4 }, { colspan: 4 }]}>
         {values.map((value, index) => (
           <MatrixCell key={index}>
             <MatrixLabel>
               <TextContent>
-                <p>{labels[index]}</p>
+                <label htmlFor={`${name}_input_${labels[index]}`}>{labels[index]}</label>{' '}
               </TextContent>
             </MatrixLabel>
             <MatrixCellInputWrapper>
@@ -192,13 +196,14 @@ export function Matrix3XInputGrid<T>({
                     setDirty(true);
                   }}
                   disabled={disabled && disabled[index]}
+                  ariaLabelledby={`${name}_input_${labels[index]} ${name}_label`}
                 ></Input>
               )}
             </MatrixCellInputWrapper>
           </MatrixCell>
         ))}
       </Grid>
-    </FormField>
+    </Box>
   );
 }
 

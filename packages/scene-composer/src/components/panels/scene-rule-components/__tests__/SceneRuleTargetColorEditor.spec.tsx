@@ -4,9 +4,8 @@ import { fireEvent, render } from '@testing-library/react';
 import { SceneRuleTargetColorEditor } from '../SceneRuleTargetColorEditor';
 import { colors } from '../../../../utils/styleUtils';
 
-jest.mock('react-color', () => ({
-  ...jest.requireActual('react-color'),
-  ChromePicker: (props) => <div data-mocked='ChromePicker' {...props} />,
+jest.mock('../../ColorPicker/ColorPicker', () => ({
+  ColorPicker: (props) => <div data-mocked='ColorPicker'>{JSON.stringify(props)}</div>,
 }));
 
 describe('SceneRuleTargetColorEditor', () => {

@@ -31,15 +31,15 @@
   --spacing-component-palette-icon: 8px;
   --border-width-button: 2px;
   --border-width-context-menu-section: 0.5px;
-  --border-width-component-palette-icon: 2px;
   --border-width-toolbar: 2px;
   --size-text-button-icon: 30px;
   --size-context-menu-min-width: 200px;
-  --size-component-palette-icon: 22px;
   --size-text-link-edit-menu-min-width: 200px;
   --size-asset-ghost-width: 300px;
   --radius-context-menu: 3px;
   --radius-component-palette-icon: 8px;
   --toolbar-overlay-height: 116px;
   --button-action-gap: 0.5rem;
+  --colors-background-button: #f90;
+  --colors-button-hover: #ec7211;
 }

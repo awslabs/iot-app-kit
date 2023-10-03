@@ -1,10 +1,10 @@
-import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import { useAssetDescriptionMapQuery } from './useAssetDescriptionQueries';
 import { isDefined } from '~/util/isDefined';
+import type { IoTSiteWiseDataStreamQuery } from '~/types';
 
 // hook grabs all the data types of the assets in a SiteWiseAssetQuery
-export const useWidgetDataTypeSet = (siteWiseAssetQuery: SiteWiseAssetQuery | undefined): Set<string> => {
-  const describedAssetsMapQuery = useAssetDescriptionMapQuery(siteWiseAssetQuery);
+export const useWidgetDataTypeSet = (siteWiseQuery: IoTSiteWiseDataStreamQuery | undefined): Set<string> => {
+  const describedAssetsMapQuery = useAssetDescriptionMapQuery(siteWiseQuery);
   const describedAssetsMap = describedAssetsMapQuery.data ?? {};
 
   const getPropertyType = (assetId: string, propertyId: string) => {
@@ -15,10 +15,11 @@ export const useWidgetDataTypeSet = (siteWiseAssetQuery: SiteWiseAssetQuery | un
     );
   };
 
-  const dataTypes = siteWiseAssetQuery?.assets
-    .map(({ assetId, properties }) => properties.map(({ propertyId }) => getPropertyType(assetId, propertyId)))
-    .flat(2) // need to flatten array of assets where each asset has array of properties
-    .filter(isDefined);
+  const dataTypes =
+    siteWiseQuery?.assets
+      ?.map(({ assetId, properties }) => properties.map(({ propertyId }) => getPropertyType(assetId, propertyId)))
+      .flat(2) // need to flatten array of assets where each asset has array of properties
+      .filter(isDefined) ?? [];
 
   return new Set(dataTypes);
 };

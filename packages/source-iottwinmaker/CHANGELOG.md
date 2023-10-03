@@ -3,6 +3,97 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.2](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v8.0.1...source-iottwinmaker-v8.0.2) (2023-09-30)
+
+
+### Miscellaneous Chores
+
+* **source-iottwinmaker:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 8.0.1 to 8.0.2
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 8.0.1 to 8.0.2
+    * @iot-app-kit/ts-config bumped from 8.0.1 to 8.0.2
+    * eslint-config-iot-app-kit bumped from 8.0.1 to 8.0.2
+
+## [8.0.1](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v8.0.0...source-iottwinmaker-v8.0.1) (2023-09-30)
+
+
+### Miscellaneous Chores
+
+* **source-iottwinmaker:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 8.0.0 to 8.0.1
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 8.0.0 to 8.0.1
+    * @iot-app-kit/ts-config bumped from 8.0.0 to 8.0.1
+    * eslint-config-iot-app-kit bumped from 8.0.0 to 8.0.1
+
+## [8.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v7.5.0...source-iottwinmaker-v8.0.0) (2023-09-30)
+
+
+### Miscellaneous Chores
+
+* **source-iottwinmaker:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.5.0 to 8.0.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.5.0 to 8.0.0
+    * @iot-app-kit/ts-config bumped from 7.5.0 to 8.0.0
+    * eslint-config-iot-app-kit bumped from 7.5.0 to 8.0.0
+
+## [7.5.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v7.4.0...source-iottwinmaker-v7.5.0) (2023-09-26)
+
+
+### Miscellaneous Chores
+
+* **source-iottwinmaker:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.4.0 to 7.5.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.4.0 to 7.5.0
+    * @iot-app-kit/ts-config bumped from 7.4.0 to 7.5.0
+    * eslint-config-iot-app-kit bumped from 7.4.0 to 7.5.0
+
+## [7.4.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v7.3.1...source-iottwinmaker-v7.4.0) (2023-09-25)
+
+
+### Features
+
+* **composer:** render tags from layer ([d9c5191](https://github.com/awslabs/iot-app-kit/commit/d9c519114d3e39c3913eb32b23984f8204b756d8))
+* **TM-source:** add entity APIs to SceneMetadataModule ([1a91084](https://github.com/awslabs/iot-app-kit/commit/1a910844692aa30bbd4b9d1920d415378bcad130))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.3.1 to 7.4.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/ts-config bumped from 7.3.1 to 7.4.0
+    * eslint-config-iot-app-kit bumped from 7.3.1 to 7.4.0
+
 ## [7.3.1](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v7.3.0...source-iottwinmaker-v7.3.1) (2023-08-24)
 
 

@@ -1,10 +1,10 @@
-import { useMemo } from 'react';
 import { Primitive } from '@iot-app-kit/core';
+import { useMemo } from 'react';
 
-import { IValueDataBinding } from '../interfaces';
-import { useSceneDocument, useDataStore } from '../store';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
-import { dataBindingValuesProvider, ruleEvaluator } from '../utils/dataBindingUtils';
+import { IValueDataBinding } from '../interfaces';
+import { useDataStore, useSceneDocument } from '../store';
+import { RuleReturnResult, dataBindingValuesProvider, ruleEvaluator } from '../utils/dataBindingUtils';
 
 import useBindingData from './useBindingData';
 
@@ -16,7 +16,7 @@ const useRuleResult = ({
   ruleMapId?: string;
   dataBinding?: IValueDataBinding;
   defaultValue?: string;
-}) => {
+}): RuleReturnResult => {
   const sceneComposerId = useSceneComposerId();
   const { getSceneRuleMapById } = useSceneDocument(sceneComposerId);
   const { dataBindingTemplate, dataInput } = useDataStore(sceneComposerId);
@@ -29,7 +29,6 @@ const useRuleResult = ({
       bindingData ?? dataBindingValuesProvider(dataInput, dataBinding, dataBindingTemplate);
     return ruleEvaluator(defaultValue || '', values, rule);
   }, [rule, dataInput, dataBinding, bindingData, dataBindingTemplate, defaultValue]);
-
   return ruleResult;
 };
 

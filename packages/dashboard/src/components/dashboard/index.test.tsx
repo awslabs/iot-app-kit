@@ -3,6 +3,8 @@ import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/test
 
 import Dashboard from './index';
 import React from 'react';
+import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 
 it('renders', function () {
   const { queryByText } = render(
@@ -18,12 +20,13 @@ it('renders', function () {
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: createMockSiteWiseSDK(),
+        iotSiteWiseClient: createMockSiteWiseSDK() as IoTSiteWiseClient,
+        iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
       }}
     />
   );
 
-  expect(queryByText(/component library/i)).toBeInTheDocument();
+  expect(queryByText(/component library/i)).not.toBeInTheDocument();
   expect(queryByText(/actions/i)).toBeInTheDocument();
   expect(queryByText(/time machine/i)).toBeInTheDocument();
 });
@@ -42,7 +45,8 @@ it('renders in readonly initially', function () {
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: createMockSiteWiseSDK(),
+        iotSiteWiseClient: createMockSiteWiseSDK() as IoTSiteWiseClient,
+        iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
       }}
       initialViewMode='preview'
     />

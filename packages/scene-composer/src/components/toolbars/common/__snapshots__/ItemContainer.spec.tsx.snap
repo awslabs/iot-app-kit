@@ -20,6 +20,7 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
   justify-content: flex-start;
   min-width: 40px;
   height: 40px;
+  max-height: 10vh;
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
@@ -71,6 +72,7 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
   justify-content: flex-start;
   min-width: 40px;
   height: 40px;
+  max-height: 10vh;
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
@@ -105,6 +107,7 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
   justify-content: flex-start;
   min-width: 40px;
   height: 40px;
+  max-height: 10vh;
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: default;
@@ -387,6 +390,7 @@ exports[`ItemContainer should render selected item properly with custom menuHeig
   justify-content: flex-start;
   min-width: 40px;
   height: 100px;
+  max-height: 100px;
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: default;
@@ -429,6 +433,7 @@ exports[`ItemContainer should render when feature is enabled 1`] = `
   justify-content: flex-start;
   min-width: 40px;
   height: 40px;
+  max-height: 10vh;
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;

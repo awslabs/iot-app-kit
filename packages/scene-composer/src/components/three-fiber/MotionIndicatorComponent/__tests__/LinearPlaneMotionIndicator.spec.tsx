@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 import * as THREE from 'three';
 
 import * as helpers from '../helpers';
@@ -23,7 +23,7 @@ describe('LinearPlaneMotionIndicator', () => {
     };
     jest.spyOn(helpers, 'useArrowTexture').mockReturnValue(mockTextureRef);
 
-    const container = renderer.create(<LinearPlaneMotionIndicator {...baseProps} />);
+    const container = create(<LinearPlaneMotionIndicator {...baseProps} />);
 
     expect(container).toMatchSnapshot();
   });

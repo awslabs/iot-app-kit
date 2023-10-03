@@ -1,5 +1,40 @@
 # Changelog
 
+## [8.0.2](https://github.com/awslabs/iot-app-kit/compare/jest-config-v8.0.1...jest-config-v8.0.2) (2023-09-30)
+
+
+### Miscellaneous Chores
+
+* **jest-config:** Synchronize iot-app-kit versions
+
+## [8.0.1](https://github.com/awslabs/iot-app-kit/compare/jest-config-v8.0.0...jest-config-v8.0.1) (2023-09-30)
+
+
+### Miscellaneous Chores
+
+* **jest-config:** Synchronize iot-app-kit versions
+
+## [8.0.0](https://github.com/awslabs/iot-app-kit/compare/jest-config-v7.5.0...jest-config-v8.0.0) (2023-09-30)
+
+
+### Miscellaneous Chores
+
+* **jest-config:** Synchronize iot-app-kit versions
+
+## [7.5.0](https://github.com/awslabs/iot-app-kit/compare/jest-config-v7.4.0...jest-config-v7.5.0) (2023-09-26)
+
+
+### Miscellaneous Chores
+
+* **jest-config:** Synchronize iot-app-kit versions
+
+## [7.4.0](https://github.com/awslabs/iot-app-kit/compare/jest-config-v7.3.1...jest-config-v7.4.0) (2023-09-25)
+
+
+### Miscellaneous Chores
+
+* **jest-config:** Synchronize iot-app-kit versions
+
 ## [7.3.1](https://github.com/awslabs/iot-app-kit/compare/jest-config-v7.3.0...jest-config-v7.3.1) (2023-08-24)
 
 

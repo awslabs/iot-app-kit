@@ -76,7 +76,6 @@ const useChartsLegend = ({
   const getHeaderNode = (g: InternalGraphicComponentGroupOption) => (
     <div className='base-chart-legend-tc-header-container'>
       <div>{getTcHeader((g.children[1] as GraphicComponentTextOption)?.style?.text ?? '')}</div>
-      <div style={{ backgroundColor: g.headerColor }} className='base-chart-legend-tc-header-color-marker' />
     </div>
   );
 

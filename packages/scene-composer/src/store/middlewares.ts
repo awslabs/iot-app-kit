@@ -55,6 +55,7 @@ export type UndoState = Partial<
 export interface UndoStoreState {
   prevStates: any[];
   futureStates: any[];
+
   undo: () => void;
   redo: () => void;
   clear: () => void;

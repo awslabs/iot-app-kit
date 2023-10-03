@@ -1,5 +1,5 @@
 import * as React from 'react';
-import renderer, { act } from 'react-test-renderer';
+import { act, create } from 'react-test-renderer';
 import { cleanup, renderHook } from '@testing-library/react-hooks';
 import str2ab from 'string-to-arraybuffer';
 import flushPromises from 'flush-promises';
@@ -64,7 +64,7 @@ describe('SceneComposerInternal', () => {
           );
         };
 
-        renderer.create(<TestComponent />);
+        create(<TestComponent />);
 
         await flushPromises();
       });
@@ -84,7 +84,7 @@ describe('SceneComposerInternal', () => {
       };
 
       await act(async () => {
-        renderer.create(<TestComponent />);
+        create(<TestComponent />);
 
         await flushPromises();
       });

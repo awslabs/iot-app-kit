@@ -4,11 +4,12 @@ import flushPromises from 'flush-promises';
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import { generateUUID } from '../utils/mathUtils';
-import { IAnchorComponent, ISceneNode, KnownComponentType } from '../interfaces';
+import { COMPOSER_FEATURES, IAnchorComponent, ISceneNode, KnownComponentType } from '../interfaces';
 import { IDataOverlayComponentInternal, ISceneNodeInternal, useStore } from '../store';
 import { MattertagItem, TagItem } from '../utils/matterportTagUtils';
 import { Component } from '../models/SceneModels';
-import { setTwinMakerSceneMetadataModule } from '../common/GlobalSettings';
+import { setFeatureConfig, setTwinMakerSceneMetadataModule } from '../common/GlobalSettings';
+import { SceneNodeRuntimeProperty } from '../store/internalInterfaces';
 
 import useMatterportTags from './useMatterportTags';
 import useDynamicScene from './useDynamicScene';
@@ -116,78 +117,91 @@ ${mattertagItem.description}`,
       removeSceneNode,
     });
     jest.clearAllMocks();
+    setFeatureConfig({ [COMPOSER_FEATURES.TagStyle]: true });
   });
 
   it('should add matterport mattertag', () => {
     const { handleAddMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-    handleAddMatterportTag('', '', id, mattertagItem);
-    expect(appendSceneNode).toBeCalledWith(testNode);
+    handleAddMatterportTag({ id, item: mattertagItem });
+    expect(appendSceneNode).toBeCalledWith(testNode, true);
   });
 
   it('should add matterport tag', () => {
     const { handleAddMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-    handleAddMatterportTag('', '', id, tagItem);
-    expect(appendSceneNode).toBeCalledWith(testNode);
+    handleAddMatterportTag({ id, item: tagItem });
+    expect(appendSceneNode).toBeCalledWith(testNode, true);
   });
 
   it('should update matterport mattertag', () => {
     const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-    handleUpdateMatterportTag('', '', testInternalNode, mattertagItem);
-    expect(updateSceneNodeInternal).toBeCalledWith('', {
-      name: mattertagItem.label,
-      transform: {
-        position: [mattertagItem.anchorPosition.x, mattertagItem.anchorPosition.y, mattertagItem.anchorPosition.z],
-      },
-      components: [
-        {
-          ...anchorComponent,
-          ref: '',
-          offset: [mattertagItem.stemVector.x, mattertagItem.stemVector.y, mattertagItem.stemVector.z],
+    handleUpdateMatterportTag({ ref: '', node: testInternalNode, item: mattertagItem });
+    expect(updateSceneNodeInternal).toBeCalledWith(
+      '',
+      {
+        name: mattertagItem.label,
+        transform: {
+          position: [mattertagItem.anchorPosition.x, mattertagItem.anchorPosition.y, mattertagItem.anchorPosition.z],
         },
-        {
-          ...dataOverlayComponent,
-          dataRows: [
-            {
-              rowType: Component.DataOverlayRowType.Markdown,
-              content: `#### **${mattertagItem.label}**  
+        components: [
+          {
+            ...anchorComponent,
+            ref: '',
+            offset: [mattertagItem.stemVector.x, mattertagItem.stemVector.y, mattertagItem.stemVector.z],
+          },
+          {
+            ...dataOverlayComponent,
+            dataRows: [
+              {
+                rowType: Component.DataOverlayRowType.Markdown,
+                content: `#### **${mattertagItem.label}**  
 ${mattertagItem.description}`,
-            },
-          ],
-        },
-      ],
-    });
+              },
+            ],
+          },
+        ],
+        properties: { [SceneNodeRuntimeProperty.LayerIds]: undefined },
+      },
+      false,
+      true,
+    );
   });
 
   it('should update matterport tag', () => {
     const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-    handleUpdateMatterportTag('', '', testInternalNode, tagItem);
-    expect(updateSceneNodeInternal).toBeCalledWith('', {
-      name: tagItem.label,
-      transform: {
-        position: [tagItem.anchorPosition.x, tagItem.anchorPosition.y, tagItem.anchorPosition.z],
-      },
-      components: [
-        {
-          ...anchorComponent,
-          ref: '',
-          offset: [tagItem.stemVector.x, tagItem.stemVector.y, tagItem.stemVector.z],
+    handleUpdateMatterportTag({ ref: '', node: testInternalNode, item: tagItem });
+    expect(updateSceneNodeInternal).toBeCalledWith(
+      '',
+      {
+        name: tagItem.label,
+        transform: {
+          position: [tagItem.anchorPosition.x, tagItem.anchorPosition.y, tagItem.anchorPosition.z],
         },
-        {
-          ...dataOverlayComponent,
-          dataRows: [
-            {
-              rowType: Component.DataOverlayRowType.Markdown,
-              content: `#### **${mattertagItem.label}**  
+        components: [
+          {
+            ...anchorComponent,
+            ref: '',
+            offset: [tagItem.stemVector.x, tagItem.stemVector.y, tagItem.stemVector.z],
+          },
+          {
+            ...dataOverlayComponent,
+            dataRows: [
+              {
+                rowType: Component.DataOverlayRowType.Markdown,
+                content: `#### **${mattertagItem.label}**  
 ${mattertagItem.description}`,
-            },
-          ],
-        },
-      ],
-    });
+              },
+            ],
+          },
+        ],
+        properties: { [SceneNodeRuntimeProperty.LayerIds]: undefined },
+      },
+      false,
+      true,
+    );
   });
 
   it('should delete matterport mattertag or tag', () => {
@@ -207,6 +221,14 @@ ${mattertagItem.description}`,
       deleteSceneEntity,
     };
 
+    const testInternalNodeWithLayerId: ISceneNodeInternal = {
+      ...testInternalNode,
+      properties: {
+        ...testInternalNode.properties,
+        [SceneNodeRuntimeProperty.LayerIds]: ['layer-id'],
+      },
+    };
+
     beforeEach(() => {
       jest.clearAllMocks();
 
@@ -223,8 +245,18 @@ ${mattertagItem.description}`,
     it('should add matterport mattertag', async () => {
       const { handleAddMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-      await handleAddMatterportTag('layer-id', 'scene-root-id', id, mattertagItem);
+      await handleAddMatterportTag({ layerId: 'layer-id', sceneRootId: 'scene-root-id', id, item: mattertagItem });
       expect(appendSceneNode).toBeCalledTimes(1);
+      expect(appendSceneNode).toBeCalledWith(
+        {
+          ...testNode,
+          properties: {
+            ...testNode.properties,
+            [SceneNodeRuntimeProperty.LayerIds]: ['layer-id'],
+          },
+        },
+        true,
+      );
       expect(createSceneEntity).toBeCalledTimes(1);
       expect(createSceneEntity).toBeCalledWith({
         workspaceId: undefined,
@@ -242,7 +274,7 @@ ${mattertagItem.description}`,
     it('should add matterport tag', async () => {
       const { handleAddMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-      await handleAddMatterportTag('layer-id', 'scene-root-id', id, tagItem);
+      await handleAddMatterportTag({ layerId: 'layer-id', sceneRootId: 'scene-root-id', id, item: tagItem });
       expect(appendSceneNode).toBeCalledTimes(1);
       expect(createSceneEntity).toBeCalledTimes(1);
       expect(createSceneEntity).toBeCalledWith({
@@ -261,33 +293,55 @@ ${mattertagItem.description}`,
     it('should update matterport mattertag', async () => {
       const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-      await handleUpdateMatterportTag('layer-id', generateUUID(), testInternalNode, mattertagItem);
-      expect(updateSceneNodeInternal).toBeCalledTimes(1);
-      expect(updateSceneEntity).toBeCalledTimes(1);
-      expect(updateSceneEntity).toBeCalledWith({
-        workspaceId: undefined,
-        entityId: generateUUID(),
-        entityName: mattertagItem.label + '_' + generateUUID(),
-        componentUpdates: {
-          Node: expect.anything(),
-          [KnownComponentType.Tag]: expect.anything(),
-        },
+      await handleUpdateMatterportTag({
+        layerId: 'layer-id',
+        sceneRootId: 'scene-root',
+        ref: generateUUID(),
+        node: testInternalNodeWithLayerId,
+        item: mattertagItem,
       });
+      expect(updateSceneNodeInternal).toBeCalledTimes(1);
+      expect(updateSceneNodeInternal).toBeCalledWith('random-uuid', expect.anything(), false, false);
+      expect(updateSceneEntity).not.toBeCalled();
     });
 
     it('should update matterport tag', async () => {
       const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 
-      await handleUpdateMatterportTag('layer-id', generateUUID(), testInternalNode, tagItem);
+      await handleUpdateMatterportTag({
+        layerId: 'layer-id',
+        sceneRootId: 'scene-root',
+        ref: generateUUID(),
+        node: testInternalNodeWithLayerId,
+        item: tagItem,
+      });
       expect(updateSceneNodeInternal).toBeCalledTimes(1);
-      expect(updateSceneEntity).toBeCalledTimes(1);
-      expect(updateSceneEntity).toBeCalledWith({
+      expect(updateSceneNodeInternal).toBeCalledWith('random-uuid', expect.anything(), false, false);
+      expect(updateSceneEntity).not.toBeCalled();
+    });
+
+    it('should create matterport tag when existing tag is not a dynamic node yet', async () => {
+      const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
+
+      await handleUpdateMatterportTag({
+        layerId: 'layer-id',
+        sceneRootId: 'scene-root',
+        ref: generateUUID(),
+        node: testInternalNode,
+        item: tagItem,
+      });
+      expect(updateSceneNodeInternal).toBeCalledTimes(1);
+      expect(updateSceneNodeInternal).toBeCalledWith('random-uuid', expect.anything(), false, true);
+      expect(updateSceneEntity).not.toBeCalled();
+      expect(createSceneEntity).toBeCalledTimes(1);
+      expect(createSceneEntity).toBeCalledWith({
         workspaceId: undefined,
         entityId: generateUUID(),
         entityName: tagItem.label + '_' + generateUUID(),
-        componentUpdates: {
-          Node: expect.anything(),
+        parentEntityId: 'scene-root',
+        components: {
           [KnownComponentType.Tag]: expect.anything(),
+          Node: expect.anything(),
         },
       });
     });

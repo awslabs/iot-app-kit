@@ -26,6 +26,7 @@ import { useContextMenu } from './hooks/useContextMenu';
 import { useViewportToMS } from './hooks/useViewportToMS';
 import { DEFAULT_CHART_VISUALIZATION } from './eChartsConstants';
 import { useDataZoom } from './hooks/useDataZoom';
+import { useViewport } from '../../hooks/useViewport';
 
 /**
  * Developer Notes:
@@ -49,6 +50,8 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   // Setup instance of echarts
   const { ref, chartRef } = useECharts(options?.theme);
 
+  const { group } = useViewport();
+
   const chartId = useChartId(options.id);
 
   // convert TimeSeriesDataQuery to TimeSeriesData
@@ -60,12 +63,12 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   } = useVisualizedDataStreams(queries, viewport);
   const allThresholds = [...queryThresholds, ...(options.thresholds ?? [])];
 
-  // Setup resize container and calculate size for echart
+  // Setup resize container and calculate size for echarts
   const { height, chartWidth, rightLegendWidth, onResize, minConstraints, maxConstraints, leftLegendRef } =
     useResizeableEChart(chartRef, size);
 
   // apply group to echarts
-  useGroupableEChart(chartRef, options.groupId);
+  useGroupableEChart(chartRef, group);
 
   // apply loading animation to echarts
   useLoadableEChart(chartRef, isLoading);
@@ -95,7 +98,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     series,
     chartId,
     viewportInMs,
-    groupId: options.groupId,
+    groupId: group,
     onContextMenu: handleContextMenu,
     visualization: options.defaultVisualizationType ?? DEFAULT_CHART_VISUALIZATION,
   });
@@ -109,6 +112,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   const convertedOptions = useConvertedOptions({
     series,
     options,
+    shouldShowYAxisLegend,
   });
 
   // determine the set option settings
@@ -159,9 +163,11 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
           )}
         </HotKeys>
       </Resizable>
-      <div style={{ height, width: rightLegendWidth }}>
-        <Legend series={series} graphic={trendCursors} datastreams={dataStreams} />
-      </div>
+      {options.legend && (
+        <div style={{ height, width: rightLegendWidth }}>
+          <Legend series={series} graphic={trendCursors} datastreams={dataStreams} />
+        </div>
+      )}
     </div>
   );
 };

@@ -1,24 +1,28 @@
 import { Grid, Select } from '@awsui/components-react';
+import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import React, { useMemo, useState } from 'react';
-import { useIntl } from 'react-intl';
+import { defineMessages, useIntl } from 'react-intl';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { SCENE_ICONS } from '../../../common/constants';
 import { COMPOSER_FEATURES, DefaultAnchorStatus } from '../../../interfaces';
+import { IIconLookup } from '../../../models/SceneModels';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
 import { colors } from '../../../utils/styleUtils';
-import { DecodeSvgString } from '../scene-components/tag-style/ColorPicker/ColorPickerUtils/DecodeSvgString';
+import { DecodeSvgString } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorComboUtils/DecodeSvgString';
 
 interface ISceneRuleTargetIconEditorProps {
   targetValue: string;
   onChange: (target: string) => void;
   chosenColor?: string;
+  customIcon?: IIconLookup;
 }
 
 export const SceneRuleTargetIconEditor: React.FC<ISceneRuleTargetIconEditorProps> = ({
   targetValue,
   onChange,
   chosenColor,
+  customIcon,
 }: ISceneRuleTargetIconEditorProps) => {
   const propsSelectedIcon = DefaultAnchorStatus[targetValue] ?? DefaultAnchorStatus.Info;
   const [selectedIcon, setSelectedIcon] = useState<DefaultAnchorStatus>(propsSelectedIcon);
@@ -38,6 +42,16 @@ export const SceneRuleTargetIconEditor: React.FC<ISceneRuleTargetIconEditorProps
   }, [selectedIcon]);
 
   const isCustomStyle = tagStyle && targetValue === 'Custom';
+
+  const i18nIconStrings = defineMessages({
+    [DefaultAnchorStatus.Info]: { defaultMessage: 'Info icon', description: 'Icon name label' },
+    [DefaultAnchorStatus.Warning]: { defaultMessage: 'Warning icon', description: 'Icon name label' },
+    [DefaultAnchorStatus.Error]: { defaultMessage: 'Error icon', description: 'Icon name label' },
+    [DefaultAnchorStatus.Video]: { defaultMessage: 'Video icon', description: 'Icon name label' },
+    [DefaultAnchorStatus.Custom]: { defaultMessage: 'Custom icon', description: 'Icon name label' },
+  });
+  const iconInfo = (customIcon ?? { prefix: 'fas', iconName: 'info' }) as IconLookup;
+
   return (
     <Grid gridDefinition={[{ colspan: 9 }, { colspan: 2 }]}>
       <Select
@@ -64,11 +78,18 @@ export const SceneRuleTargetIconEditor: React.FC<ISceneRuleTargetIconEditorProps
         <DecodeSvgString
           selectedColor={chosenColor ?? colors.customBlue}
           iconString={iconString}
+          customIcon={findIconDefinition(iconInfo)}
           width='32px'
           height='32px'
+          ariaLabel={intl.formatMessage(i18nIconStrings[targetValue])}
         />
       ) : (
-        <img width='32px' height='32px' src={`data:image/svg+xml;base64,${iconString}`} />
+        <img
+          aria-label={intl.formatMessage(i18nIconStrings[targetValue])}
+          width='32px'
+          height='32px'
+          src={`data:image/svg+xml;base64,${iconString}`}
+        />
       )}
     </Grid>
   );

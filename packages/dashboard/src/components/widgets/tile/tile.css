@@ -1,0 +1,16 @@
+.widget-tile {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.widget-tile-body {
+  flex: 1;
+}
+
+.horizontal-divider {
+  width: 100%;
+  height: 2px;
+}

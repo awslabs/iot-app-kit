@@ -1,7 +1,7 @@
 import { KnownComponentType } from '../interfaces';
 
 // Scene Nodes
-const SCENE_COMPONENT_TYPE_ID_PREFIX = 'com.example.3d';
+const SCENE_COMPONENT_TYPE_ID_PREFIX = 'com.amazon.iottwinmaker.3d';
 export const NODE_COMPONENT_TYPE_ID = `${SCENE_COMPONENT_TYPE_ID_PREFIX}.node`;
 export const LAYER_COMPONENT_TYPE_ID = `${SCENE_COMPONENT_TYPE_ID_PREFIX}.layer`;
 export const componentTypeToId: Record<KnownComponentType, string> = {
@@ -17,8 +17,10 @@ export const componentTypeToId: Record<KnownComponentType, string> = {
   EntityBinding: NODE_COMPONENT_TYPE_ID, // EntityBinding is saved at node component
 };
 export const DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME = 'isVisualOf';
+export const DEFAULT_PARENT_RELATIONSHIP_NAME = 'isChildOf';
 export const DEFAULT_NODE_COMPONENT_NAME = 'Node';
 export const SCENE_ROOT_ENTITY_ID = 'SCENES_EntityId';
+export const SCENE_ROOT_ENTITY_NAME = '$SCENES';
 
 // Matterport
 export const MATTERPORT_TAG_LAYER_PREFIX = 'Matterport_Tag_';
@@ -27,6 +29,7 @@ export const MATTERPORT_TAG_LAYER_PREFIX = 'Matterport_Tag_';
 export const DEFAULT_LAYER_RELATIONSHIP_NAME = 'inLayerOf';
 export const DEFAULT_LAYER_COMPONENT_NAME = 'Layer';
 export const LAYER_ROOT_ENTITY_ID = 'LAYERS_EntityId';
+export const LAYER_ROOT_ENTITY_NAME = '$LAYERS';
 export enum LayerType {
   Relationship = 'Relationship',
   Query = 'Query',

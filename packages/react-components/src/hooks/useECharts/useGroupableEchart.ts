@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
-import { connect } from 'echarts';
-import type { ECharts } from 'echarts';
-import { useViewport } from '../useViewport';
+import { connect, disconnect, type ECharts } from 'echarts';
 
 /**
  * hook to update a group on an echarts instance
@@ -11,12 +9,11 @@ import { useViewport } from '../useViewport';
  * @returns void
  */
 export const useGroupableEChart = (chartRef: React.MutableRefObject<ECharts | null>, groupId?: string) => {
-  const { group } = useViewport();
   useEffect(() => {
-    const usedGroup = groupId ?? group;
-    if (usedGroup && chartRef.current) {
-      chartRef.current.group = usedGroup;
-      connect(usedGroup);
+    if (groupId && chartRef.current) {
+      chartRef.current.group = groupId;
+      disconnect(groupId);
+      connect(groupId);
     }
   }, [groupId]);
 };

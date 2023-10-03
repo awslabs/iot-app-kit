@@ -196,7 +196,7 @@ describe('dataBindingValuesProvider', () => {
 describe('ruleEvaluator', () => {
   it('should return default state with no rules', async () => {
     const result = ruleEvaluator('mockDefaultState', {});
-    expect(result).toBe('mockDefaultState');
+    expect(result).toEqual({ target: 'mockDefaultState', targetMetadata: undefined });
   });
 
   it('should return default state with empty value', async () => {
@@ -210,7 +210,7 @@ describe('ruleEvaluator', () => {
     };
 
     const result = ruleEvaluator('mockDefaultState', {}, rule);
-    expect(result).toBe('mockDefaultState');
+    expect(result).toEqual({ target: 'mockDefaultState', targetMetadata: undefined });
   });
 
   it('should return rule target if it matches', async () => {
@@ -228,7 +228,7 @@ describe('ruleEvaluator', () => {
       ],
     };
     const result = ruleEvaluator('mockDefaultState', value, rule);
-    expect(result).toBe('mockTarget2');
+    expect(result).toEqual({ target: 'mockTarget2', targetMetadata: undefined });
   });
 
   it('should return rule evaluation result if target is number', async () => {
@@ -241,8 +241,11 @@ describe('ruleEvaluator', () => {
         },
       ],
     };
-    expect(ruleEvaluator('mockDefaultState', value, rule)).toEqual(2);
-    expect(ruleEvaluator('mockDefaultState', { temperature: 10 }, rule)).toEqual(3);
+    expect(ruleEvaluator('mockDefaultState', value, rule)).toEqual({ target: 2, targetMetadata: undefined });
+    expect(ruleEvaluator('mockDefaultState', { temperature: 10 }, rule)).toEqual({
+      target: 3,
+      targetMetadata: undefined,
+    });
   });
 
   it('should return default state if rule evaluation result is a number while target is number', async () => {
@@ -255,7 +258,10 @@ describe('ruleEvaluator', () => {
         },
       ],
     };
-    expect(ruleEvaluator('mockDefaultState', value, rule)).toEqual('mockDefaultState');
+    expect(ruleEvaluator('mockDefaultState', value, rule)).toEqual({
+      target: 'mockDefaultState',
+      targetMetadata: undefined,
+    });
   });
 
   it('should return default state if no rule matches', async () => {
@@ -273,7 +279,24 @@ describe('ruleEvaluator', () => {
       ],
     };
     const result = ruleEvaluator('mockDefaultState', value, rule);
-    expect(result).toBe('mockDefaultState');
+    expect(result).toEqual({ target: 'mockDefaultState', targetMetadata: undefined });
+  });
+
+  it('should return default state if rule matches', async () => {
+    const value = { temperature: 20 };
+    const rule: IRuleBasedMap = {
+      statements: [
+        {
+          expression: 'temperature == 20',
+          target: 'mockTarget1',
+          targetMetadata: {
+            color: '#ffffff',
+          },
+        },
+      ],
+    };
+    const result = ruleEvaluator('mockDefaultState', value, rule);
+    expect(result).toEqual({ target: 'mockTarget1', targetMetadata: { color: '#ffffff' } });
   });
 
   it('should property names with special characters should work correctly', async () => {
@@ -296,6 +319,6 @@ describe('ruleEvaluator', () => {
       ],
     };
     const result = ruleEvaluator('mockDefaultState', value, rule);
-    expect(result).toBe('mockTarget2');
+    expect(result).toEqual({ target: 'mockTarget2', targetMetadata: undefined });
   });
 });

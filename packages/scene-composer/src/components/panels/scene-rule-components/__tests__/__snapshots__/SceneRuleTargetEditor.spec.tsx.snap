@@ -29,7 +29,9 @@ exports[`SceneRuleTargetEditor should render a drop down with appropriate option
       selectedarialabel="test message"
       selectedoption="{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"}"
     />
-    SceneRuleTargetIconEditor
+    <div>
+      SceneRuleTargetIconEditor
+    </div>
   </div>
 </div>
 `;
@@ -79,7 +81,9 @@ exports[`SceneRuleTargetEditor should render a drop down with appropriate option
       selectedarialabel="test message"
       selectedoption="{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"}"
     />
-    SceneRuleTargetIconEditor
+    <div>
+      SceneRuleTargetIconEditor
+    </div>
   </div>
 </div>
 `;

@@ -140,6 +140,13 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
               valueDataBindingProviders={bindingProvider}
               onSceneUpdated={handleSceneUpdated}
               dataStreams={source === 'local' ? convertDataInputToDataStreams(getTestDataInputContinuous()) : undefined}
+              showAssetBrowserCallback={(cb) => {
+                if (source == 'local') {
+                  cb(null, 'PALLET_JACK.glb');
+                } else {
+                  cb(null, 'CookieFactoryMixer.glb'); // Update the string to a model available in your S3 bucket
+                }
+              }}
               {...props}
             />
           </SceneComposerContainer>

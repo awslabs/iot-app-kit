@@ -8,7 +8,7 @@ import { CommonChartProperties } from '~/customization/widgets/types';
 import { nonNegative } from '~/util/number';
 
 const isSettingsWidget = (w: DashboardWidget): w is DashboardWidget<CommonChartProperties> =>
-  'queryConfig' in w.properties;
+  'queryConfig' in w.properties && w.type !== 'line-scatter-chart';
 
 export const SettingsConfiguration: React.FC = () => (
   <PropertiesSection

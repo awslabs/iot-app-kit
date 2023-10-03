@@ -1,3 +1,5 @@
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import React from 'react';
 import { RenderResult, act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import createWrapper from '@cloudscape-design/components/test-utils/dom';
@@ -62,7 +64,6 @@ const setupStore = ({ widgets, selectedWidgets }: SetupStoreOptions) =>
   configureDashboardStore({
     dashboardConfiguration: {
       widgets,
-      viewport: { duration: '5m' },
     },
     selectedWidgets,
   });
@@ -82,8 +83,9 @@ const renderTestComponentAsync = async (options?: SetupStoreOptions): Promise<Re
   const describeAsset = jest.fn().mockImplementation(() => Promise.resolve(mockAssetDescription));
 
   const clientContext: DashboardIotSiteWiseClients = {
-    iotSiteWiseClient: createMockSiteWiseSDK({ describeAsset }),
+    iotSiteWiseClient: createMockSiteWiseSDK({ describeAsset }) as IoTSiteWiseClient,
     iotEventsClient: createMockIoTEventsSDK(),
+    iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
   };
 
   await act(async () => {
@@ -117,17 +119,15 @@ describe(`${PropertiesPanel.name}`, () => {
   it('should render tabs', async () => {
     await renderTestComponentAsync();
 
-    expect(screen.getByText('Configuration')).toBeVisible();
     expect(screen.getByText('Style')).toBeVisible();
-    expect(screen.getByText('Properties & Alarms')).toBeVisible();
+    expect(screen.getByText('Properties')).toBeVisible();
     expect(screen.getByText('Thresholds')).toBeVisible();
   });
 
   it('should render an empty selection when nothing is selected', async () => {
     await renderTestComponentAsync({ selectedWidgets: [] });
 
-    expect(screen.getByText('Configuration')).toBeVisible();
-    expect(screen.getByText('Select widgets to configure.')).toBeVisible();
+    expect(screen.getByText('Select a widget to configure.')).toBeVisible();
   });
 
   it('should render the style section', async () => {
@@ -154,7 +154,7 @@ describe(`${PropertiesPanel.name}`, () => {
     const element = await renderTestComponentAsync();
     const trigger = createWrapper(element.baseElement);
 
-    expect(screen.getByText('Properties & Alarms')).toBeVisible();
+    expect(screen.getByText('Properties')).toBeVisible();
 
     await act(() => {
       trigger.findTabs()?.findTabLinkByIndex(2)?.click();
@@ -175,7 +175,6 @@ describe(`${PropertiesPanel.name}`, () => {
       trigger.findTabs()?.findTabLinkByIndex(3)?.click();
     });
 
-    expect(screen.getByText('No thresholds found')).toBeVisible();
     expect(screen.getByText('Add a threshold')).toBeVisible();
   });
 });

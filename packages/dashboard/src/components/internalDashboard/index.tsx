@@ -1,10 +1,12 @@
 import React, { CSSProperties, ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TimeSync, WebglContext } from '@iot-app-kit/react-components';
+import { WebglContext, TrendCursorSync, TimeSync, TimeSelection } from '@iot-app-kit/react-components';
 import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
+import { colorBackgroundCellShaded } from '@cloudscape-design/design-tokens';
 
 import { selectedRect } from '~/util/select';
+
 /**
  * Component imports
  */
@@ -15,9 +17,10 @@ import Widgets from '../widgets/list';
 import UserSelection from '../userSelection';
 import ComponentPalette from '../palette';
 import CustomDragLayer from '../dragLayer';
-import { ResourceExplorer } from '../resourceExplorer';
-import ViewportSelection from '../viewportSelection';
 import Actions from '../actions';
+import { QueryEditor } from '../queryEditor';
+import { useClients } from '../dashboard/clientContext';
+import DashboardEmptyState from './dashboardEmptyState';
 
 /**
  * Store imports
@@ -44,6 +47,7 @@ import type { WidgetsProps } from '../widgets/list';
 import type { UserSelectionProps } from '../userSelection';
 import type { DashboardState } from '~/store/state';
 import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
+import ConfirmDeleteModal from '../confirmDeleteModal';
 
 import '@iot-app-kit/components/styles.css';
 import './index.css';
@@ -60,6 +64,12 @@ const defaultUserSelect: CSSProperties = { userSelect: 'initial' };
 const disabledUserSelect: CSSProperties = { userSelect: 'none' };
 
 const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, editable, propertiesPanel }) => {
+  const { iotSiteWiseClient, iotTwinMakerClient } = useClients();
+
+  if (iotSiteWiseClient == null || iotTwinMakerClient == null) {
+    return null;
+  }
+
   /**
    * disable user select styles on drag to prevent highlighting of text under the pointer
    */
@@ -69,6 +79,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
    * Store variables
    */
   const dashboardConfiguration = useSelector((state: DashboardState) => state.dashboardConfiguration);
+  const dashboardWidgets = useSelector((state: DashboardState) => state.dashboardConfiguration.widgets);
   const grid = useSelector((state: DashboardState) => state.grid);
   const cellSize = useSelector((state: DashboardState) => state.grid.cellSize);
   const copiedWidgets = useSelector((state: DashboardState) => state.copiedWidgets);
@@ -77,6 +88,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
   const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
   const [viewFrame, setViewFrameElement] = useState<HTMLDivElement | undefined>(undefined);
+  const [visible, setVisible] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const createWidgets = (widgets: DashboardWidget[]) =>
@@ -111,23 +123,30 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
   };
 
   const deleteWidgets = () => {
+    setVisible(true);
+  };
+
+  const onDelete = () => {
     dispatch(
       onDeleteWidgetsAction({
         widgets: selectedWidgets,
       })
     );
+    setVisible(false);
   };
+
+  const widgetLength = dashboardConfiguration.widgets.length;
 
   /**
    * setup keyboard shortcuts for actions
    */
-  useKeyboardShortcuts();
+  useKeyboardShortcuts({ deleteWidgets });
 
   /**
    * setup gesture handling for grid
    */
   const { activeGesture, userSelection, onPointClick, onGestureStart, onGestureUpdate, onGestureEnd } = useGestures({
-    dashboardConfiguration,
+    dashboardWidgets,
     selectedWidgets,
     cellSize,
   });
@@ -187,82 +206,114 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
     hasSelectedWidgets: selectedWidgets.length > 0,
   };
 
-  if (readOnly) {
-    return (
-      <TimeSync>
-        <div className='dashboard'>
-          <div className='dashboard-toolbar-read-only'>
-            <Box float='right' padding='s'>
-              <SpaceBetween size='s' direction='horizontal'>
-                <ViewportSelection key='1' messageOverrides={DefaultDashboardMessages} />
-                {editable && (
-                  <>
-                    <Divider key='2' />
-                    <Actions
-                      key='3'
-                      readOnly={readOnly}
-                      onSave={onSave}
-                      dashboardConfiguration={dashboardConfiguration}
-                      grid={grid}
-                      significantDigits={significantDigits}
-                      editable={editable}
-                    />
-                  </>
-                )}
-              </SpaceBetween>
-            </Box>
-          </div>
-          <div className='display-area' ref={(el) => setViewFrameElement(el || undefined)}>
-            <ReadOnlyGrid {...grid}>
+  const EditComponent = (
+    <div className='dashboard' style={userSelect}>
+      <CustomDragLayer onDrag={(isDragging) => setUserSelect(isDragging ? disabledUserSelect : defaultUserSelect)} />
+      <div className='dashboard-toolbar'>
+        <Box float='left' padding='xs'>
+          <ComponentPalette />
+        </Box>
+        <Box float='right' padding='xs'>
+          <SpaceBetween size='s' direction='horizontal'>
+            <TimeSelection />
+            <Divider key='2' />
+            <Actions
+              key='3'
+              readOnly={readOnly}
+              onSave={onSave}
+              dashboardConfiguration={dashboardConfiguration}
+              grid={grid}
+              significantDigits={significantDigits}
+              editable={editable}
+            />
+          </SpaceBetween>
+        </Box>
+      </div>
+      <ResizablePanes
+        leftPane={<QueryEditor iotSiteWiseClient={iotSiteWiseClient} iotTwinMakerClient={iotTwinMakerClient} />}
+        centerPane={
+          <div
+            className='display-area'
+            ref={(el) => setViewFrameElement(el || undefined)}
+            style={{ backgroundColor: colorBackgroundCellShaded }}
+          >
+            <GestureableGrid {...gridProps}>
+              <ContextMenu {...contextMenuProps} />
               <Widgets {...widgetsProps} />
-            </ReadOnlyGrid>
+              {!widgetLength && <DashboardEmptyState />}
+              {activeGesture === 'select' && <UserSelection {...selectionProps} />}
+            </GestureableGrid>
             <WebglContext viewFrame={viewFrame} />
           </div>
-        </div>
-      </TimeSync>
-    );
-  }
+        }
+        rightPane={propertiesPanel}
+      />
+    </div>
+  );
+  const ReadOnlyComponent = (
+    <div className='dashboard'>
+      <div className='dashboard-toolbar-read-only'>
+        <Box float='right' padding='s'>
+          <SpaceBetween size='s' direction='horizontal'>
+            <TimeSelection />
+            {editable && (
+              <>
+                <Divider key='2' />
+                <Actions
+                  key='3'
+                  readOnly={readOnly}
+                  onSave={onSave}
+                  dashboardConfiguration={dashboardConfiguration}
+                  grid={grid}
+                  significantDigits={significantDigits}
+                  editable={editable}
+                />
+              </>
+            )}
+          </SpaceBetween>
+        </Box>
+      </div>
+      <div
+        className='display-area'
+        ref={(el) => setViewFrameElement(el || undefined)}
+        style={{ backgroundColor: colorBackgroundCellShaded }}
+      >
+        <ReadOnlyGrid {...grid}>
+          <Widgets {...widgetsProps} />
+        </ReadOnlyGrid>
+        <WebglContext viewFrame={viewFrame} />
+      </div>
+    </div>
+  );
 
   return (
-    <TimeSync>
-      <div className='dashboard' style={userSelect}>
-        <CustomDragLayer onDrag={(isDragging) => setUserSelect(isDragging ? disabledUserSelect : defaultUserSelect)} />
-        <div className='dashboard-toolbar'>
-          <Box float='left' padding='xs'>
-            <ComponentPalette />
-          </Box>
-          <Box float='right' padding='xs'>
-            <SpaceBetween size='s' direction='horizontal'>
-              <ViewportSelection key='1' messageOverrides={DefaultDashboardMessages} />
-              <Divider key='2' />
-              <Actions
-                key='3'
-                readOnly={readOnly}
-                onSave={onSave}
-                dashboardConfiguration={dashboardConfiguration}
-                grid={grid}
-                significantDigits={significantDigits}
-                editable={editable}
-              />
-            </SpaceBetween>
-          </Box>
-        </div>
-        <ResizablePanes
-          leftPane={<ResourceExplorer />}
-          centerPane={
-            <div className='display-area' ref={(el) => setViewFrameElement(el || undefined)}>
-              <GestureableGrid {...gridProps}>
-                <ContextMenu {...contextMenuProps} />
-                <Widgets {...widgetsProps} />
-                {activeGesture === 'select' && <UserSelection {...selectionProps} />}
-              </GestureableGrid>
-              <WebglContext viewFrame={viewFrame} />
-            </div>
+    <TrendCursorSync>
+      <TimeSync initialViewport={{ duration: '5m' }} group='dashboard-timesync'>
+        {readOnly ? ReadOnlyComponent : EditComponent}
+        <ConfirmDeleteModal
+          visible={visible}
+          headerTitle={`Delete selected widget${selectedWidgets.length > 1 ? 's' : ''}?`}
+          cancelTitle='Cancel'
+          submitTitle='Delete'
+          description={
+            <Box>
+              <Box variant='p'>
+                {`Are you sure you want to delete the selected widget${
+                  selectedWidgets.length > 1 ? 's' : ''
+                }? You'll lose all the progress you made to the
+                          widget${selectedWidgets.length > 1 ? 's' : ''}`}
+              </Box>
+              <Box variant='p' padding={{ top: 'm' }}>
+                You cannot undo this action.
+              </Box>
+            </Box>
           }
-          rightPane={propertiesPanel}
+          handleDismiss={() => setVisible(false)}
+          handleCancel={() => setVisible(false)}
+          handleSubmit={onDelete}
         />
-      </div>
-    </TimeSync>
+      </TimeSync>
+    </TrendCursorSync>
   );
 };
 

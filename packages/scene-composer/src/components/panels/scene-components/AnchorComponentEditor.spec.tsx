@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 
 import { IAnchorComponentInternal, useStore } from '../../../store';
 import {
@@ -39,6 +39,8 @@ jest.mock('../../../../src/store/Store', () => {
     __esModule: true,
     ...originalModule,
     useSceneDocument: jest.fn(() => ({
+      getSceneProperty: jest.fn(),
+      getSceneRuleMapById: jest.fn(),
       listSceneRuleMapIds: jest.fn(() => {
         return ['rule1'];
       }),
@@ -89,7 +91,7 @@ describe('AnchorComponentEditor', () => {
 
       callbackFn({ ref: 'ref', prop: 'value' });
 
-      expect(updateComponentInternalFn).toBeCalled();
+      waitFor(() => expect(updateComponentInternalFn).toBeCalled());
     });
   });
 });

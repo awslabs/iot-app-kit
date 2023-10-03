@@ -2,7 +2,8 @@ import React, { useContext, useMemo } from 'react';
 import { useIntl, IntlShape } from 'react-intl';
 
 import { OrbitCameraSvg, PanCameraSvg } from '../../../../assets/svgs';
-import { CameraControlsType } from '../../../../interfaces';
+import { CameraControlsType, COMPOSER_FEATURES } from '../../../../interfaces';
+import { getGlobalSettings } from '../../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useStore } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
@@ -29,6 +30,16 @@ const cameraControlItemsOptions: (ToolbarItemOptions & { mode: CameraControlsTyp
   },
 ];
 
+const firstPersonCameraControlItemOptions: (ToolbarItemOptions & { mode: CameraControlsType })[] = [
+  {
+    icon: { scale: 1.04, svg: PanCameraSvg },
+    label: 'Pointer Lock',
+    mode: 'pointerLock',
+    text: '3D Pointer Lock',
+    uuid: 'camera-controls-pointer-lock',
+  },
+];
+
 const intlCameraControlItems = (intl: IntlShape): { label: string; text: string }[] => [
   {
     label: intl.formatMessage({ defaultMessage: 'Orbit', description: 'Menu Item' }),
@@ -40,12 +51,26 @@ const intlCameraControlItems = (intl: IntlShape): { label: string; text: string 
   },
 ];
 
-const cameraControlItems = (intl: IntlShape): (ToolbarItemOptions & { mode: CameraControlsType })[] => {
+const intlFirstPersonCameraControlItems = (intl: IntlShape): { label: string; text: string }[] => [
+  {
+    label: intl.formatMessage({ defaultMessage: 'Pointer Lock', description: 'Menu Item' }),
+    text: intl.formatMessage({ defaultMessage: '3D Pointer Lock', description: 'Menu Item' }),
+  },
+];
+
+const cameraControlItems = (
+  intl: IntlShape,
+  firstPersonOn: boolean | undefined,
+): (ToolbarItemOptions & { mode: CameraControlsType })[] => {
   const items: (ToolbarItemOptions & { mode: CameraControlsType })[] = [];
   cameraControlItemsOptions.forEach((item, index) => {
     items.push({ ...item, ...intlCameraControlItems(intl)[index] });
   });
-
+  if (firstPersonOn) {
+    firstPersonCameraControlItemOptions.forEach((item, index) => {
+      items.push({ ...item, ...intlFirstPersonCameraControlItems(intl)[index] });
+    });
+  }
   return items;
 };
 
@@ -58,17 +83,21 @@ export function SceneItemGroup({ isViewing = false }: SceneItemGroupProps): JSX.
   const cameraControlsType = useStore(sceneComposerId)((state) => state.cameraControlsType);
   const setCameraControlsType = useStore(sceneComposerId)((state) => state.setCameraControlsType);
   const { enableMatterportViewer } = useMatterportViewer();
+  const firstPersonOn = getGlobalSettings().featureConfig[COMPOSER_FEATURES.FirstPerson];
   const intl = useIntl();
 
   const initialSelectedItem = useMemo(() => {
-    return cameraControlItems(intl).find((item) => item.mode === cameraControlsType) ?? cameraControlItemsOptions[0];
-  }, [cameraControlItems, cameraControlsType]);
+    return (
+      cameraControlItems(intl, firstPersonOn).find((item) => item.mode === cameraControlsType) ??
+      cameraControlItemsOptions[0]
+    );
+  }, [cameraControlItems, cameraControlsType, firstPersonOn]);
 
   const items = useMemo(() => {
-    const rawItems = cameraControlItems(intl);
+    const rawItems = cameraControlItems(intl, firstPersonOn);
     rawItems.forEach((item) => (item.isSelected = item.mode === cameraControlsType));
     return rawItems;
-  }, [cameraControlsType]);
+  }, [cameraControlsType, firstPersonOn]);
 
   return (
     <ToolbarItemGroup>

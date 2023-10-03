@@ -2,24 +2,63 @@
 
 exports[`SceneHierarchyTreeItem should bubble up when expanded 1`] = `
 <div>
-  <enhancedtreeitem
+  <div
     acceptdrop="AcceptableDropTypes"
-    data="[object Object]"
+    data="{\\"ref\\":\\"1\\"}"
+    data-mocked="EnhancedTreeItem"
     datatype="modelRef"
-    labeltext="[object Object]"
     selectionmode="single"
-  />
+  >
+    <div>
+      <div
+        componenttypes="[\\"modelRef\\"]"
+        data-mocked="SceneNodeLabel"
+        labeltext="Label 1"
+        objectref="1"
+      />
+    </div>
+  </div>
 </div>
 `;
 
 exports[`SceneHierarchyTreeItem should render SubModelTree when item has a model, and not in view mode 1`] = `
 <div>
-  <enhancedtreeitem
+  <div
     acceptdrop="AcceptableDropTypes"
-    data="[object Object]"
+    data="{\\"ref\\":\\"1\\"}"
+    data-mocked="EnhancedTreeItem"
     datatype="ModelRef"
-    labeltext="[object Object]"
     selectionmode="single"
-  />
+  >
+    <div>
+      <div
+        componenttypes="[\\"ModelRef\\"]"
+        data-mocked="SceneNodeLabel"
+        labeltext="Label 1"
+        objectref="1"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SceneHierarchyTreeItem should render dynamic node with drag and drop disabled 1`] = `
+<div>
+  <div
+    acceptdrop="[]"
+    data="{\\"ref\\":\\"1\\"}"
+    data-mocked="EnhancedTreeItem"
+    datatype="Tag"
+    selectionmode="single"
+  >
+    <div>
+      <div
+        componenttypes="[\\"Tag\\"]"
+        data-mocked="SceneNodeLabel"
+        labeltext="Label 1"
+        objectref="1"
+      />
+    </div>
+  </div>
 </div>
 `;

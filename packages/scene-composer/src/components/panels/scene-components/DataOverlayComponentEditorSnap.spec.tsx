@@ -49,6 +49,7 @@ describe('DataOverlayComponentEditorSnap', () => {
   };
   const node = {
     ref: 'node-ref',
+    properties: {},
   } as ISceneNodeInternal;
 
   const baseState = {

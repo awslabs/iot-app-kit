@@ -63,6 +63,22 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
     [component.valueDataBindings, onUpdateCallback],
   );
 
+  const onBindingNameChange = useCallback(
+    (bindingName: string, index) => {
+      // we don't want to merge the dataBindingContext, so we'll need to manually replace it
+      const updatedComponent = {
+        ...component,
+        valueDataBindings: [...component.valueDataBindings],
+      };
+      updatedComponent.valueDataBindings[index] = {
+        ...updatedComponent.valueDataBindings[index],
+        bindingName,
+      };
+      onUpdateCallback(updatedComponent, true);
+    },
+    [component, onUpdateCallback],
+  );
+
   const onRemoveBinding = useCallback(
     (index) => {
       const newBindings = component.valueDataBindings.filter((_, i) => i !== index);
@@ -99,9 +115,8 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
                 {hasBindingName && (
                   <DataBindingMapNameEditor
                     bindingName={(binding as Component.ValueDataBindingNamedMap).bindingName}
-                    index={index}
                     valueDataBindings={component.valueDataBindings as Component.ValueDataBindingNamedMap[]}
-                    onUpdateCallback={onUpdateCallback}
+                    onBindingNameChange={(name) => onBindingNameChange(name, index)}
                   />
                 )}
 

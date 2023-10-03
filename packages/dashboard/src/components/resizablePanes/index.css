@@ -10,17 +10,6 @@
   position: relative;
 }
 
-.iot-resizable-panes-pane-left,
-.iot-resizable-panes-pane-right {
-  width: 15%;
-  min-width: 0;
-  height: 100%;
-  max-height: calc(100vh - var(--toolbar-overlay-height));
-  z-index: var(--stack-order-grid-inputs);
-  background-color: var(--colors-white);
-  overflow-y: auto;
-}
-
 .iot-resizable-panes-handle {
   background-color: var(--colors-light-grey);
   cursor: ew-resize;

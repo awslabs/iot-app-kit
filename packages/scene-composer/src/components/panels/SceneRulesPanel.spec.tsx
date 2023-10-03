@@ -1,11 +1,7 @@
+import { render } from '@testing-library/react';
 import React from 'react';
-import { render, act, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
-import { IRuleBasedMapInternal, IRuleStatementInternal } from '../../store/internalInterfaces';
-import { IRuleBasedMap } from '../../interfaces';
-
-import { SceneRuleMapExpandableInfoSection, SceneRulesPanel } from './SceneRulesPanel';
+import { SceneRulesPanel } from './SceneRulesPanel';
 
 jest.mock('../../logger/react-logger/log-provider', () => (props) => <div {...props} />);
 jest.mock('./CommonPanelComponents', () => ({
@@ -39,7 +35,6 @@ jest.mock('../../store/Store', () => {
 describe('SceneRulesPanel returns expected elements.', () => {
   it('SceneRulesPanel returns expected elements.', async () => {
     const { container } = render(<SceneRulesPanel />);
-
     expect(container).toMatchSnapshot();
   });
 });

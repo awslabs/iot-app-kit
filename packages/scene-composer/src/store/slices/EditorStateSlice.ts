@@ -13,6 +13,7 @@ import {
 import { RootState } from '../Store';
 import { CursorStyle, IDisplayMessage, IEditorConfig } from '../internalInterfaces';
 import { DEFAULT_CAMERA_OPTIONS, DEFAULT_CAMERA_POSITION } from '../../common/constants';
+import { CameraType } from '../../models/SceneModels';
 
 // The MappingWrapper is used to bypass immer's snapshotting/copy-on-write mechanism
 // Immer will make plain objects immutable which makes it impossible to update without
@@ -130,7 +131,7 @@ function createDefaultEditorState() {
     cursorVisible: false,
     cursorStyle: 'move',
     activeCameraSettings: {
-      cameraType: 'Perspective',
+      cameraType: CameraType.Perspective,
       fov: DEFAULT_CAMERA_OPTIONS.fov,
       far: DEFAULT_CAMERA_OPTIONS.far,
       near: DEFAULT_CAMERA_OPTIONS.near,

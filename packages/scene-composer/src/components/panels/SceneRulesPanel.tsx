@@ -1,12 +1,21 @@
-import React, { useCallback, useContext, useState } from 'react';
-import { AttributeEditor, Box, Button, FormField, Input, SpaceBetween, Textarea } from '@awsui/components-react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
+import {
+  AttributeEditor,
+  Box,
+  Button,
+  FormField,
+  Input,
+  InputProps,
+  SpaceBetween,
+  Textarea,
+} from '@awsui/components-react';
 import { useIntl } from 'react-intl';
 
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
+import LogProvider from '../../logger/react-logger/log-provider';
 import { useSceneDocument } from '../../store';
 import { IRuleBasedMapInternal, IRuleStatementInternal } from '../../store/internalInterfaces';
-import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { validateRuleId } from '../../utils/inputValidationUtils';
-import LogProvider from '../../logger/react-logger/log-provider';
 
 import { ExpandableInfoSection } from './CommonPanelComponents';
 import { SceneRuleTargetEditor } from './scene-rule-components/SceneRuleTargetEditor';
@@ -67,13 +76,29 @@ export const SceneRuleMapExpandableInfoSection: React.FC<
   const items: IRuleStatementInternal[] = ruleMap.statements.map((rule) => ({
     expression: rule.expression,
     target: rule.target,
+    targetMetadata: rule.targetMetadata,
   }));
   if (newRule) {
     items.push(newRule);
   }
+  //TODO: When we migrate from polaris to cloudscape, just pass these as normal props to AttributeEditor
+  const a11yProps = {
+    i18nStrings: {
+      itemRemovedAriaLive: intl.formatMessage({
+        defaultMessage: 'Removed statement',
+        description: 'Aria live announcement for when a statement is removed',
+      }),
+    },
+    removeButtonAriaLabel: (statement: IRuleStatementInternal) =>
+      `${intl.formatMessage({
+        defaultMessage: 'Remove statement',
+        description: 'Aria label for remove statement button',
+      })} ${statement.expression}`,
+  };
   return (
     <ExpandableInfoSection title={ruleBasedMapId} defaultExpanded={false}>
       <AttributeEditor
+        {...a11yProps}
         onAddButtonClick={() => setNewRule({ expression: '', target: '' })}
         onRemoveButtonClick={({ detail: { itemIndex } }) => onRemoveRule(itemIndex)}
         items={items}
@@ -88,7 +113,13 @@ export const SceneRuleMapExpandableInfoSection: React.FC<
                   defaultMessage: 'e.g. value > 0',
                   description: 'AttributeEditor control placeholder',
                 })}
-                onChange={(event) => onUpdateRule(itemIndex, { expression: event.detail.value, target: item.target })}
+                onChange={(event) =>
+                  onUpdateRule(itemIndex, {
+                    expression: event.detail.value,
+                    target: item.target,
+                    targetMetadata: item.targetMetadata,
+                  })
+                }
               />
             ),
           },
@@ -97,7 +128,10 @@ export const SceneRuleMapExpandableInfoSection: React.FC<
             control: (item, itemIndex) => (
               <SceneRuleTargetEditor
                 target={item.target}
-                onChange={(target) => onUpdateRule(itemIndex, { expression: item.expression, target })}
+                targetMetadata={item.targetMetadata}
+                onChange={(target, targetMetadata) => {
+                  onUpdateRule(itemIndex, { expression: item.expression, target, targetMetadata });
+                }}
               />
             ),
           },
@@ -119,6 +153,7 @@ export const SceneRulesPanel: React.FC = () => {
   const { getSceneRuleMapById, listSceneRuleMapIds, updateSceneRuleMapById } = useSceneDocument(sceneComposerId);
   const [newRuleBasedMapId, setNewRuleBasedMapId] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const inputRef = useRef<InputProps.Ref | null>(null);
   const intl = useIntl();
 
   const onAddRuleClick = useCallback(() => {
@@ -134,6 +169,7 @@ export const SceneRulesPanel: React.FC = () => {
           description: 'Error message wrong input',
         }),
       );
+      inputRef.current?.focus();
     }
   }, [newRuleBasedMapId]);
 
@@ -153,10 +189,12 @@ export const SceneRulesPanel: React.FC = () => {
             errorText={errorMessage}
           >
             <Input
+              data-testid='input-rule'
               value={newRuleBasedMapId}
               onChange={(event) => {
                 setNewRuleBasedMapId(event.detail.value);
               }}
+              ref={inputRef}
             />
           </FormField>
           <Button data-testid='addNewRuleButton' onClick={onAddRuleClick}>

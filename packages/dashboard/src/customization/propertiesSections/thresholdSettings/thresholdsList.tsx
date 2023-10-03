@@ -2,35 +2,39 @@ import React from 'react';
 
 import { SpaceBetween, Box } from '@cloudscape-design/components';
 
-import { ThresholdWithId } from '~/customization/settings';
+import { StyledThreshold, ThresholdWithId } from '~/customization/settings';
 import { ThresholdComponent } from './thresholdComponent';
 import { ComparisonOperators } from './comparisonOperators';
 
-const NoThresholds = () => <Box variant='p'>No thresholds found</Box>;
+const NoThresholds = () => <Box />;
 
 type ThresholdsListProps = {
-  thresholds: ThresholdWithId[];
+  thresholds: (ThresholdWithId & StyledThreshold)[];
   comparisonOperators: ComparisonOperators;
-  updateThresholds: (newValue: ThresholdWithId[] | undefined) => void;
+  updateThresholds?: (newValue: (ThresholdWithId & StyledThreshold)[] | undefined) => void;
 };
 export const ThresholdsList: React.FC<ThresholdsListProps> = ({
   thresholds,
-  updateThresholds,
   comparisonOperators,
+  updateThresholds,
 }) => {
   const onUpdateThreshold = (updatedThreshold: ThresholdWithId) => {
-    updateThresholds(
-      thresholds.map((t) => {
-        if (t.id === updatedThreshold.id) {
-          return updatedThreshold;
-        }
-        return t;
-      })
-    );
+    if (updateThresholds) {
+      updateThresholds(
+        thresholds.map((t) => {
+          if (t.id === updatedThreshold.id) {
+            return updatedThreshold;
+          }
+          return t;
+        })
+      );
+    }
   };
 
   const handleDeleteThreshold = (threshold: ThresholdWithId) => () => {
-    updateThresholds(thresholds.filter((t) => t.id !== threshold.id));
+    if (updateThresholds) {
+      updateThresholds(thresholds.filter((t) => t.id !== threshold.id));
+    }
   };
 
   const handleUpdateThresholdValue = (threshold: ThresholdWithId) => (value: ThresholdWithId['value']) => {
@@ -39,6 +43,7 @@ export const ThresholdsList: React.FC<ThresholdsListProps> = ({
       value,
     });
   };
+
   const handleUpdateComparisonOperator =
     (threshold: ThresholdWithId) => (comparisonOperator: ThresholdWithId['comparisonOperator']) => {
       onUpdateThreshold({

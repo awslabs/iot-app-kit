@@ -31,6 +31,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "Custom Scale"
   },
+  "/j+uhN": {
+    "note": "Select an icon",
+    "text": "Select an icon"
+  },
   "/kZshs": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "Color"
@@ -66,6 +70,10 @@
   "15KXQ/": {
     "note": "Input error message",
     "text": "Invalid name"
+  },
+  "1Zas7b": {
+    "note": "Abbreviation for blue",
+    "text": "B"
   },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
@@ -127,6 +135,10 @@
     "note": "Expandable Section title",
     "text": "Annotation"
   },
+  "5F/kwX": {
+    "note": "Icon name label",
+    "text": "Error icon"
+  },
   "5pV1+0": {
     "note": "Form field label",
     "text": "Ref"
@@ -187,6 +199,10 @@
     "note": "Status indicator label",
     "text": "Tags sync successful"
   },
+  "81kEJb": {
+    "note": "Menu Item",
+    "text": "3D Pointer Lock"
+  },
   "89bwEi": {
     "note": "Environment presets drop down menu options",
     "text": "Chromatic"
@@ -235,6 +251,10 @@
     "note": "Input error message",
     "text": "Invalid character in the name"
   },
+  "AePRVy": {
+    "note": "Icon name label",
+    "text": "Custom icon"
+  },
   "As6z+e": {
     "note": "ExpandableInfoSection Title",
     "text": "Current View Settings"
@@ -250,6 +270,10 @@
   "BPH9Er": {
     "note": "Environment presets drop down menu options",
     "text": "Neutral"
+  },
+  "BZ1qKo": {
+    "note": "Abbreviation for red",
+    "text": "R"
   },
   "BZPp7d": {
     "note": "Form field label",
@@ -270,6 +294,10 @@
   "Bzw++H": {
     "note": "label for the remove animation button",
     "text": "remove"
+  },
+  "C9z9wU": {
+    "note": "Abbreviation for green",
+    "text": "G"
   },
   "CyWR+b": {
     "note": "placeholder",
@@ -358,6 +386,14 @@
   "IRTrH8": {
     "note": "Menu Item",
     "text": "Add camera from current view"
+  },
+  "IsC9Hg": {
+    "note": "Menu Item",
+    "text": "Pointer Lock"
+  },
+  "J+haL1": {
+    "note": "Aria live announcement for when a statement is removed",
+    "text": "Removed statement"
   },
   "JTUN+G": {
     "note": "Form field label",
@@ -511,6 +547,10 @@
     "note": "Expandable Section title",
     "text": "Tag"
   },
+  "RZeAOs": {
+    "note": "Aria label for remove statement button",
+    "text": "Remove statement"
+  },
   "SYAG+q": {
     "note": "Form Field label",
     "text": "Environment Preset"
@@ -554,6 +594,10 @@
   "UoOmLE": {
     "note": "Form Field label",
     "text": "Model Type"
+  },
+  "V1T3We": {
+    "note": "Status indicator label",
+    "text": "Syncing tags"
   },
   "VObiQu": {
     "note": "option text of a Select component",
@@ -607,10 +651,6 @@
     "note": "checkbox option",
     "text": "Enable Shadow"
   },
-  "YGtqhG": {
-    "note": "button label",
-    "text": "Add overlay"
-  },
   "ZKJ6Ci": {
     "note": "Toolbar label",
     "text": "Delete"
@@ -639,10 +679,6 @@
     "note": "Menu Item",
     "text": "Remove entity binding"
   },
-  "aUtGJh": {
-    "note": "button label",
-    "text": "Remove overlay"
-  },
   "aX7AgI": {
     "note": "select box option text value",
     "text": "Cast Shadow"
@@ -667,6 +703,10 @@
     "note": "FormField label",
     "text": "Toggle visibility"
   },
+  "cxZDHy": {
+    "note": "Form field error message",
+    "text": "Invalid Hex"
+  },
   "d/nRJX": {
     "note": "Menu Item",
     "text": "3D Orbit"
@@ -682,6 +722,10 @@
   "dlo3Px": {
     "note": "Placeholder",
     "text": "Choose a color value"
+  },
+  "duq5aL": {
+    "note": "Icon name label",
+    "text": "Warning icon"
   },
   "dw/mQp": {
     "note": "Light Type in a dropdown menu",
@@ -750,6 +794,10 @@
   "gZDAVH": {
     "note": "Menu Item label",
     "text": "Add Animations"
+  },
+  "gc20C0": {
+    "note": "Icon name label",
+    "text": "Info icon"
   },
   "ggiL3k": {
     "note": "Form Field label",
@@ -879,6 +927,10 @@
     "note": "select box option text value",
     "text": "Receive Shadow"
   },
+  "nwQbTY": {
+    "note": "Icon name label",
+    "text": "Video icon"
+  },
   "o3PtbU": {
     "note": "Sub-Section Description",
     "text": "Connecting your Matterport account enables viewing spaces in your TwinMaker scene."
@@ -906,6 +958,10 @@
   "oppsQx": {
     "note": "placeholder",
     "text": "Choose a rule"
+  },
+  "osIcJX": {
+    "note": "Status indicator label",
+    "text": "Tags sync failed"
   },
   "pyg21P": {
     "note": "Number of Triangles in a scene",
@@ -954,6 +1010,10 @@
   "rlcAuK": {
     "note": "Menu label",
     "text": "Rotate"
+  },
+  "s9468I": {
+    "note": "Abbreviation for hexidecimal",
+    "text": "Hex"
   },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",

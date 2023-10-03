@@ -27,7 +27,7 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
   const ruleResult = useRuleResult({ ruleMapId: ruleBasedMapId, dataBinding: valueDataBinding });
 
   const ruleColor = useMemo(() => {
-    const { type, value } = getSceneResourceInfo(ruleResult as string);
+    const { type, value } = getSceneResourceInfo(ruleResult.target as string);
 
     switch (type) {
       case SceneResourceType.Color:

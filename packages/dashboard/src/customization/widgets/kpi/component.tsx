@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import pickBy from 'lodash/pickBy';
-import { KPI } from '@iot-app-kit/react-components';
-import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
+import { KPI, useViewport } from '@iot-app-kit/react-components';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import type { DashboardState } from '~/store/state';
 import type { KPIWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
@@ -12,9 +12,10 @@ import { getAggregation } from '../utils/widgetAggregationUtils';
 
 import './component.css';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import WidgetTile from '~/components/widgets/tile';
 
 const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
-  const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
+  const { viewport } = useViewport();
   const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
   const {
@@ -31,15 +32,18 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     significantDigits: widgetSignificantDigits,
   } = widget.properties;
 
-  const { iotSiteWiseQuery } = useQueries();
-  const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
-  const key = computeQueryConfigKey(viewport, queryConfig);
-  const aggregation = getAggregation(queryConfig);
+  const queries = useQueries(queryConfig.query);
+  const key = createWidgetRenderKey(widget.id);
+  const aggregation = getAggregation(widget);
 
-  const shouldShowEmptyState = query == null || !iotSiteWiseQuery;
+  const shouldShowEmptyState = queries.length === 0;
 
   if (shouldShowEmptyState) {
-    return <KPIWidgetEmptyStateComponent />;
+    return (
+      <WidgetTile widget={widget} removeable>
+        <KPIWidgetEmptyStateComponent />
+      </WidgetTile>
+    );
   }
 
   const settings = pickBy(
@@ -59,16 +63,17 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
-    <KPI
-      key={key}
-      query={query}
-      viewport={viewport}
-      styles={styleSettings}
-      settings={settings}
-      thresholds={thresholds}
-      aggregationType={aggregateToString(aggregation)}
-      significantDigits={significantDigits}
-    />
+    <WidgetTile widget={widget} removeable key={key}>
+      <KPI
+        query={queries[0]}
+        viewport={viewport}
+        styles={styleSettings}
+        settings={settings}
+        thresholds={thresholds}
+        aggregationType={aggregateToString(aggregation)}
+        significantDigits={significantDigits}
+      />
+    </WidgetTile>
   );
 };
 

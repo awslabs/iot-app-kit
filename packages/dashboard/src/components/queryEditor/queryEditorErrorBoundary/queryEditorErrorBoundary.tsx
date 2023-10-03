@@ -34,6 +34,6 @@ export function QueryEditorErrorBoundary({ children }: QueryEditorErrorBoundaryP
 }
 
 function handleError(error: Error) {
-  const errorMessage = `An error has triggered <QueryEditor>'s error boundary and the component has failed to render. Error: ${error}`;
+  const errorMessage = `An error has triggered <QueryEditor />'s error boundary and the component has failed to render. Error: ${error}`;
   console.error(errorMessage);
 }

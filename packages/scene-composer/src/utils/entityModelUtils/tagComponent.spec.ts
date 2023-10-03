@@ -1,7 +1,7 @@
 import { componentTypeToId } from '../../common/entityModelConstants';
 import { KnownComponentType } from '../../interfaces';
 
-import { createTagEntityComponent, updateTagEntityComponent } from './tagComponent';
+import { createTagEntityComponent, parseTagComp, updateTagEntityComponent } from './tagComponent';
 
 describe('createTagEntityComponent', () => {
   it('should return expected empty tag component', () => {
@@ -52,10 +52,10 @@ describe('createTagEntityComponent', () => {
         value: {
           mapValue: {
             param1: {
-              stringValue: 'value%201',
+              stringValue: 'value 1',
             },
             param2: {
-              stringValue: 'value%202',
+              stringValue: 'value 2',
             },
           },
         },
@@ -117,9 +117,6 @@ describe('createTagEntityComponent', () => {
       styleBinding: {
         value: {
           mapValue: {
-            ruleBasedMapId: {
-              stringValue: undefined,
-            },
             entityId: {
               stringValue: 'eid',
             },
@@ -128,9 +125,6 @@ describe('createTagEntityComponent', () => {
             },
             propertyName: {
               stringValue: 'pname',
-            },
-            isStaticData: {
-              stringValue: 'false',
             },
           },
         },
@@ -144,6 +138,147 @@ describe('updateTagEntityComponent', () => {
     expect(updateTagEntityComponent({ type: KnownComponentType.Tag })).toEqual({
       componentTypeId: componentTypeToId[KnownComponentType.Tag],
       propertyUpdates: {},
+    });
+  });
+});
+
+describe('parseTagComp', () => {
+  it('should parse to expected empty tag component', () => {
+    expect(
+      parseTagComp({
+        componentTypeId: componentTypeToId[KnownComponentType.Tag],
+        properties: [],
+      }),
+    ).toEqual({
+      ref: expect.any(String),
+      type: KnownComponentType.Tag,
+      icon: undefined,
+      offset: undefined,
+      navLink: {
+        destination: undefined,
+        params: undefined,
+      },
+      chosenColor: undefined,
+      ruleBasedMapId: undefined,
+      valueDataBinding: undefined,
+    });
+  });
+
+  it('should parse to expected tag component with icon', () => {
+    const result = parseTagComp({
+      componentTypeId: componentTypeToId[KnownComponentType.Tag],
+      properties: [
+        {
+          propertyName: 'icon',
+          propertyValue: 'info',
+        },
+      ],
+    });
+
+    expect(result?.icon).toEqual('info');
+  });
+
+  it('should parse to expected tag component with navLink destination', () => {
+    const result = parseTagComp({
+      componentTypeId: componentTypeToId[KnownComponentType.Tag],
+      properties: [
+        {
+          propertyName: 'navLink_destination',
+          propertyValue: 'destination',
+        },
+      ],
+    });
+
+    expect(result?.navLink?.destination).toEqual('destination');
+  });
+
+  it('should parse to expected tag component with navLink params', () => {
+    const result = parseTagComp({
+      componentTypeId: componentTypeToId[KnownComponentType.Tag],
+      properties: [
+        {
+          propertyName: 'navLink_params',
+          propertyValue: {
+            param1: 'value 1',
+            param2: 'value 2',
+          },
+        },
+      ],
+    });
+
+    expect(result?.navLink?.params).toEqual({
+      param1: 'value 1',
+      param2: 'value 2',
+    });
+  });
+
+  it('should parse to expected tag component with offset', () => {
+    const result = parseTagComp({
+      componentTypeId: componentTypeToId[KnownComponentType.Tag],
+      properties: [
+        {
+          propertyName: 'offset',
+          propertyValue: [1, 2, 3],
+        },
+      ],
+    });
+
+    expect(result?.offset).toEqual([1, 2, 3]);
+  });
+
+  it('should parse to expected tag component with chosenColor', () => {
+    const result = parseTagComp({
+      componentTypeId: componentTypeToId[KnownComponentType.Tag],
+      properties: [
+        {
+          propertyName: 'chosenColor',
+          propertyValue: 'red',
+        },
+      ],
+    });
+
+    expect(result?.chosenColor).toEqual('red');
+  });
+
+  it('should parse to expected tag component with styleBinding with rule id', () => {
+    const result = parseTagComp({
+      componentTypeId: componentTypeToId[KnownComponentType.Tag],
+      properties: [
+        {
+          propertyName: 'styleBinding',
+          propertyValue: {
+            ruleBasedMapId: 'rule-id',
+          },
+        },
+      ],
+    });
+
+    expect(result?.ruleBasedMapId).toEqual('rule-id');
+  });
+
+  it('should parse to expected tag component with styleBinding with data binding context', () => {
+    const result = parseTagComp({
+      componentTypeId: componentTypeToId[KnownComponentType.Tag],
+      properties: [
+        {
+          propertyName: 'styleBinding',
+          propertyValue: {
+            entityId: 'eid',
+            componentName: 'cname',
+            propertyName: 'pname',
+            isStaticData: 'true',
+          },
+        },
+      ],
+    });
+
+    expect(result?.valueDataBinding).toEqual({
+      dataBindingContext: {
+        entityId: 'eid',
+        componentName: 'cname',
+        propertyName: 'pname',
+      },
+      isStaticData: true,
     });
   });
 });

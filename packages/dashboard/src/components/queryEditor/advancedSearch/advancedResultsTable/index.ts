@@ -1,1 +1,0 @@
-export { AdvancedResultsTable } from './advancedResultsTable';

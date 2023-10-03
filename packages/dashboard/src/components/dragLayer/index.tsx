@@ -7,7 +7,6 @@ import { ItemTypes } from './itemTypes';
 import DashboardWidget from './components/widget';
 
 import './index.css';
-import { ResourceExplorerPanelAssetPropertyDragGhost } from '../resourceExplorer/components/panel';
 import { DefaultDashboardMessages } from '~/messages';
 
 const getItemStyles = (initialOffset: XYCoord | null, currentOffset: XYCoord | null) => {
@@ -49,9 +48,6 @@ const CustomDragLayer: React.FC<CustomDragLayerProps> = ({ onDrag }) => {
     switch (itemType) {
       case ItemTypes.Component:
         return <DashboardWidget componentTag={item.componentTag} messageOverrides={DefaultDashboardMessages} />;
-      case ItemTypes.ResourceExplorerAssetProperty:
-      case ItemTypes.ResourceExplorerAlarm:
-        return <ResourceExplorerPanelAssetPropertyDragGhost item={item} />;
       default:
         return null;
     }

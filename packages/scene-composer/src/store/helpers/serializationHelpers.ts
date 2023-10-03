@@ -1,4 +1,4 @@
-import { isNumber } from 'lodash';
+import { isEmpty, isNumber } from 'lodash';
 
 import DebugLogger from '../../logger/DebugLogger';
 import {
@@ -32,7 +32,9 @@ import {
   ISubModelRefComponentInternal,
   IDataOverlayComponentInternal,
   IEntityBindingComponentInternal,
+  SceneNodeRuntimeProperty,
 } from '../internalInterfaces';
+import { isDynamicNode } from '../../utils/entityModelUtils/sceneUtils';
 
 import { addComponentToComponentNodeMap } from './componentMapHelpers';
 
@@ -402,6 +404,7 @@ function createSceneNodeInternal(deserializedNode: Node) {
 
   return result;
 }
+
 function createAnimationRefComponent(
   component: Component.Animation,
   _errorCollector?: ISerializationErrorDetails[],
@@ -612,10 +615,13 @@ function convertNodes(
   const nodeRefToIndexMap = mappedObjectCollector.Node!;
 
   // create nodes first
-  const exportedNodes: Node[] = Object.getOwnPropertyNames(nodes).map((nodeRef, index) => {
+  const exportedNodes: Node[] = [];
+  Object.getOwnPropertyNames(nodes).forEach((nodeRef) => {
     const node = nodes[nodeRef]!;
-
-    nodeRefToIndexMap[node.ref] = index;
+    // Do not serialize dynamic nodes rendered from layers
+    if (isDynamicNode(node)) {
+      return;
+    }
 
     const convertedComponents: any[] = [];
 
@@ -642,14 +648,24 @@ function convertNodes(
       }
     });
 
-    return {
+    // Do not serialize runtime scene node properties
+    const properties = {};
+    Object.keys(node.properties).forEach((key) => {
+      if (!Object.values(SceneNodeRuntimeProperty).includes(key as SceneNodeRuntimeProperty)) {
+        properties[key] = node.properties[key];
+      }
+    });
+
+    exportedNodes.push({
       name: node.name,
       transform: node.transform,
       transformConstraint: node.transformConstraint,
       children: undefined,
       components: convertedComponents,
-      properties: node.properties,
-    };
+      properties,
+    });
+
+    nodeRefToIndexMap[node.ref] = exportedNodes.length - 1;
   });
 
   // filling the children
@@ -657,7 +673,7 @@ function convertNodes(
     const node = nodes[key];
     const index = nodeRefToIndexMap[key]!;
     const exportedNode = exportedNodes[index];
-    if (node.childRefs && node.childRefs.length > 0) {
+    if (exportedNode && node.childRefs && node.childRefs.length > 0) {
       // we know the indexMap will not return undefined
       exportedNode.children = node.childRefs.map((ref) => nodeRefToIndexMap[ref]).filter((index) => isNumber(index));
     }

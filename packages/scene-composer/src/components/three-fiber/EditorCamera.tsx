@@ -9,7 +9,7 @@ import useLogger from '../../logger/react-logger/hooks/useLogger';
 import {
   Layers,
   ROOT_OBJECT_3D_NAME,
-  DEFAULT_CAMERA_CONTROLS_OPTIONS,
+  DEFAULT_ORBIT_CAMERA_CONTROLS_OPTIONS,
   DEFAULT_CAMERA_POSITION,
   DEFAULT_CAMERA_TARGET,
   DEFAULT_TWEEN_DURATION,
@@ -22,8 +22,10 @@ import { CameraControlImpl, TweenValueObject } from '../../store/internalInterfa
 import useActiveCamera from '../../hooks/useActiveCamera';
 import { getSafeBoundingBox } from '../../utils/objectThreeUtils';
 import { getMatterportSdk } from '../../common/GlobalSettings';
+import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../../three/OrbitControls';
+import { isOrbitOrPanControlImpl } from '../../utils/controlUtils';
 
-import { MapControls, OrbitControls } from './controls';
+import { MapControls, OrbitControls, PointerLockControls } from './controls';
 
 export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
   const log = useLogger('EditorMainCamera');
@@ -34,7 +36,8 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
   const matterportSdk = getMatterportSdk(sceneComposerId);
   const scene = useThree((state) => state.scene);
   const setThree = useThree((state) => state.set);
-  const makeDefault = cameraControlsType === 'orbit' || cameraControlsType === 'pan';
+  const makeDefault =
+    cameraControlsType === 'orbit' || cameraControlsType === 'pan' || cameraControlsType === 'pointerLock';
 
   const cameraControlsImplRef = useRef<CameraControlImpl>();
   const cameraRef = useRef<Camera>();
@@ -55,7 +58,13 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
       return;
     }
     // Otherwise, return CameraControls for the current cameraControlsType. Do nothing for Immersive
-    return cameraControlsType === 'orbit' ? OrbitControls : cameraControlsType === 'pan' ? MapControls : undefined;
+    return cameraControlsType === 'orbit'
+      ? OrbitControls
+      : cameraControlsType === 'pan'
+      ? MapControls
+      : cameraControlsType === 'pointerLock'
+      ? PointerLockControls
+      : undefined;
   }, [cameraControlsType, controlsRemove]);
 
   const handleTransformEvent = useCallback(({ type }) => {
@@ -67,19 +76,35 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
       log?.verbose('finding camera Object3D target by command', cameraCommand);
 
       if (command === undefined) return;
-      if (typeof command.target !== 'string') return command.target;
+
+      if (typeof command.target !== 'string') {
+        if (scene && cameraRef.current) {
+          const position = new THREE.Vector3(...command.target.position);
+          const direction = new THREE.Vector3(...command.target.target).sub(position).normalize();
+          const raycaster = new THREE.Raycaster(position, direction);
+          raycaster.camera = cameraRef.current;
+          const intersections = raycaster.intersectObjects([scene, ...scene.children]);
+
+          if (intersections.length > 0) {
+            return { position: command.target.position, target: intersections[0].point.toArray() } as FixedCameraTarget;
+          }
+        }
+        return command.target;
+      }
 
       const object3d = getObject3DBySceneNodeRef(command.target);
       if (object3d) return findBestViewingPosition(object3d, false, cameraControlsImplRef.current);
 
       log?.warn('unable to find the correct object in the scene. using the default camera setting.');
     };
-  }, []);
+  }, [scene]);
 
   const controlsRef = useCallback((ref) => {
     if (ref) {
       const controls = ref as CameraControlImpl;
-      controls.listenToWindowKeyEvents(window);
+      if (controls instanceof OrbitControlsImpl || controls instanceof MapControlsImpl) {
+        controls.listenToWindowKeyEvents(window);
+      }
       cameraControlsImplRef.current = controls;
       setThree({ controls });
       log?.verbose('setting camera controls', controls);
@@ -106,14 +131,20 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
       });
     } else {
       log?.verbose('setting camera target by command', cameraCommand);
-      const object3d = cameraCommand?.target === 'string' ? getObject3DBySceneNodeRef(cameraCommand.target) : undefined;
-      setCameraTarget({
-        target: getCameraTargetByCommand(cameraCommand),
-        shouldTween: cameraCommand?.mode === 'transition',
-        object3d,
-      });
+      const object3d =
+        typeof cameraCommand?.target === 'string' ? getObject3DBySceneNodeRef(cameraCommand.target) : undefined;
+      if (matterportSdk && object3d) {
+        // Don't set target and instead let matterport internally calculate best viewing position based on the object3d
+        setCameraTarget({ object3d });
+      } else {
+        setCameraTarget({
+          target: getCameraTargetByCommand(cameraCommand),
+          shouldTween: cameraCommand?.mode === 'transition',
+          object3d,
+        });
+      }
     }
-  }, [cameraCommand, mounted]);
+  }, [cameraCommand, mounted, matterportSdk]);
 
   // execute camera command
   useEffect(() => {
@@ -126,12 +157,9 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
       }
 
       const currentPosition = getTweenValueFromVector3(cameraRef.current.position);
-      const currentTarget = getTweenValueFromVector3(cameraControlsImplRef.current?.target ?? DEFAULT_CAMERA_TARGET);
       const duration = cameraTarget?.shouldTween ? DEFAULT_TWEEN_DURATION : 0;
 
-      log?.verbose('moving camera to target', position, target);
-
-      setTween(
+      const tweenConfigs = [
         {
           from: currentPosition,
           to: getTweenValueFromVector3(position),
@@ -141,15 +169,25 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
           },
           duration,
         },
-        {
-          from: currentTarget,
-          to: getTweenValueFromVector3(target),
-          onUpdate: () => {
-            cameraControlsImplRef.current?.target.set(currentTarget.x, currentTarget.y, currentTarget.z);
-          },
-          duration,
+      ];
+
+      const controlRef: OrbitControlsImpl | MapControlsImpl | undefined =
+        cameraControlsImplRef.current && isOrbitOrPanControlImpl(cameraControlsImplRef.current)
+          ? (cameraControlsImplRef.current as OrbitControlsImpl | MapControlsImpl)
+          : undefined;
+      const currentTarget = getTweenValueFromVector3(controlRef?.target ?? DEFAULT_CAMERA_TARGET);
+      tweenConfigs.push({
+        from: currentTarget,
+        to: getTweenValueFromVector3(target),
+        onUpdate: () => {
+          controlRef?.target.set(currentTarget.x, currentTarget.y, currentTarget.z);
         },
-      );
+        duration,
+      });
+
+      log?.verbose('moving camera to target', position, target);
+
+      setTween(...tweenConfigs);
     }
   }, [cameraTarget]);
 
@@ -174,6 +212,8 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
     setMainCameraObject(cameraRef.current);
   }, [cameraRef.current]);
 
+  // TODO: change to useKeyMap hook to get keySettings
+  // note current interface uses keyboardevent.code but useKeyMap is using keyboardevent.key
   const keysSetting = useMemo(() => {
     return { LEFT: 'KeyA', UP: 'KeyW', RIGHT: 'KeyD', BOTTOM: 'KeyS' };
   }, []);
@@ -207,16 +247,24 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
         makeDefault={makeDefault}
         ref={mergeRefs([forwardedRef, cameraRef])}
       />
-      {makeDefault && CameraControls && (
-        <CameraControls
-          {...DEFAULT_CAMERA_CONTROLS_OPTIONS}
-          camera={cameraRef.current}
-          target={cameraControlsImplRef.current?.target}
-          makeDefault
-          ref={controlsRef}
-          keys={keysSetting}
-        />
-      )}
+      {makeDefault &&
+        CameraControls &&
+        (cameraControlsType === 'orbit' || cameraControlsType === 'pan' ? (
+          <CameraControls
+            {...DEFAULT_ORBIT_CAMERA_CONTROLS_OPTIONS}
+            camera={cameraRef.current}
+            target={(cameraControlsImplRef.current as OrbitControlsImpl)?.target}
+            makeDefault
+            ref={controlsRef}
+            keys={keysSetting}
+          />
+        ) : (
+          <CameraControls // as PointerLockControls
+            camera={cameraRef.current}
+            makeDefault
+            ref={controlsRef}
+          />
+        ))}
     </Fragment>
   );
 });
@@ -243,11 +291,12 @@ export function findBestViewingPosition(
     Number.isFinite(objectBoundingBox.max.z)
   ) {
     // normal case
-    const camera = controls.object as THREE.PerspectiveCamera;
+    const camera =
+      controls instanceof OrbitControlsImpl || controls instanceof MapControlsImpl ? controls.object : controls.camera;
     const currentCameraPosition: THREE.Vector3 = initial ? objectBoundingBox.max : camera.position;
     const distanceToTarget = currentCameraPosition.distanceTo(target);
 
-    const minimumDistance = minimumDistanceByGeometry(size, camera);
+    const minimumDistance = minimumDistanceByGeometry(size, camera as THREE.PerspectiveCamera);
 
     if (distanceToTarget >= minimumDistance) {
       position.copy(currentCameraPosition);

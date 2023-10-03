@@ -222,7 +222,7 @@ export const AddObjectMenu = (): JSX.Element => {
     if (mainCameraObject) {
       const cameraComponent: ICameraComponent = {
         cameraType: activeCameraSettings.cameraType,
-        type: 'Camera',
+        type: KnownComponentType.Camera,
         fov: activeCameraSettings.fov,
         far: activeCameraSettings.far,
         near: activeCameraSettings.near,

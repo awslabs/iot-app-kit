@@ -1,6 +1,6 @@
 /* eslint-disable import/first,import/order */
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 
 import { AddObjectMenu } from '../../../../src/components/toolbars/floatingToolbar/items/AddObjectMenu';
 
@@ -26,14 +26,12 @@ describe('FloatingToolbar', () => {
   });
 
   it('should render correctly', () => {
-    const container = renderer.create(
-      <FloatingToolbar enableDefaultItems={true} additionalMenuItems={<AddObjectMenu />} />,
-    );
+    const container = create(<FloatingToolbar enableDefaultItems={true} additionalMenuItems={<AddObjectMenu />} />);
     expect(container).toMatchSnapshot();
   });
 
   it('should render correctly in view mode', () => {
-    const container = renderer.create(
+    const container = create(
       <FloatingToolbar isViewing={true} enableDefaultItems={true} additionalMenuItems={<AddObjectMenu />} />,
     );
     expect(container).toMatchSnapshot();
@@ -43,7 +41,7 @@ describe('FloatingToolbar', () => {
     useStore('default').setState({
       addingWidget: {},
     } as any);
-    const container = renderer.create(<FloatingToolbar enableDefaultItems={true} />);
+    const container = create(<FloatingToolbar enableDefaultItems={true} />);
     expect(container).toMatchSnapshot();
   });
 });

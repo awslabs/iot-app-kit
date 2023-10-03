@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import pickBy from 'lodash/pickBy';
-import { Status } from '@iot-app-kit/react-components';
-import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
+import { Status, useViewport } from '@iot-app-kit/react-components';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import type { DashboardState } from '~/store/state';
 import type { StatusWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
@@ -10,11 +10,10 @@ import { useQueries } from '~/components/dashboard/queryContext';
 import { isDefined } from '~/util/isDefined';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { getAggregation } from '../utils/widgetAggregationUtils';
-
 import './component.css';
 
 const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
-  const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
+  const { viewport } = useViewport();
   const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
   const {
@@ -30,12 +29,10 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
     significantDigits: widgetSignificantDigits,
   } = widget.properties;
 
-  const { iotSiteWiseQuery } = useQueries();
-  const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
-
-  const shouldShowEmptyState = query == null || !iotSiteWiseQuery;
-  const key = computeQueryConfigKey(viewport, queryConfig);
-  const aggregation = getAggregation(queryConfig);
+  const queries = useQueries(queryConfig.query);
+  const shouldShowEmptyState = queries.length === 0;
+  const key = createWidgetRenderKey(widget.id);
+  const aggregation = getAggregation(widget);
 
   if (shouldShowEmptyState) {
     return <StatusWidgetEmptyStateComponent />;
@@ -59,7 +56,7 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   return (
     <Status
       key={key}
-      query={query}
+      query={queries[0]}
       viewport={viewport}
       styles={styleSettings}
       settings={settings}

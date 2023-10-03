@@ -22,6 +22,7 @@ exports[`AnchorComponentEditor should render with no tag style 1`] = `
           selectedoption="{\\"label\\":\\"Info\\",\\"value\\":\\"Info\\"}"
         />
         <img
+          aria-label="Info icon"
           height="32px"
           src="data:image/svg+xml;base64,CiAgPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1MiA1Micgd2lkdGg9JzI1NicgaGVpZ2h0PScyNTYnPgogICAgPGcgZmlsbD0nbm9uZScgZmlsbFJ1bGU9J2V2ZW5vZGQnIHRyYW5zZm9ybT0ndHJhbnNsYXRlKDEgMSknPgogICAgICA8ZWxsaXBzZSBjeD0nMjUnIGN5PScyNScgcng9JzIxJyByeT0nMjEnIHN0cm9rZT0nIzAwMDAwMCcgc3Ryb2tlLXdpZHRoPScyJyAvPgogICAgICA8Y2lyY2xlIGN4PScyNScgY3k9JzI1JyByPScxNicgZmlsbD0nIzAwMDAwMCcgLz4KICAgIDwvZz4KICA8L3N2Zz4K"
           width="32px"
@@ -105,7 +106,7 @@ exports[`AnchorComponentEditor should render with no tag style 1`] = `
       <div
         data-mocked="Select"
         data-testid="anchor-rule-id-select"
-        options="[{\\"label\\":\\"rule1\\",\\"value\\":\\"rule1\\"},{\\"label\\":\\"No Rule\\",\\"value\\":\\"No Rule\\"}]"
+        options="[{\\"label\\":\\"No Rule\\",\\"value\\":\\"No Rule\\"}]"
         placeholder="Choose a rule"
         selectedarialabel="Selected"
         selectedoption="{\\"label\\":\\"rule1\\",\\"value\\":\\"rule1\\"}"
@@ -161,6 +162,7 @@ exports[`AnchorComponentEditor should render with tag style 1`] = `
           selectedoption="{\\"label\\":\\"Info\\",\\"value\\":\\"Info\\"}"
         />
         <img
+          aria-label="Info icon"
           height="32px"
           src="data:image/svg+xml;base64,CiAgPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1MiA1Micgd2lkdGg9JzI1NicgaGVpZ2h0PScyNTYnPgogICAgPGcgZmlsbD0nbm9uZScgZmlsbFJ1bGU9J2V2ZW5vZGQnIHRyYW5zZm9ybT0ndHJhbnNsYXRlKDEgMSknPgogICAgICA8ZWxsaXBzZSBjeD0nMjUnIGN5PScyNScgcng9JzIxJyByeT0nMjEnIHN0cm9rZT0nIzAwMDAwMCcgc3Ryb2tlLXdpZHRoPScyJyAvPgogICAgICA8Y2lyY2xlIGN4PScyNScgY3k9JzI1JyByPScxNicgZmlsbD0nIzAwMDAwMCcgLz4KICAgIDwvZz4KICA8L3N2Zz4K"
           width="32px"
@@ -244,7 +246,7 @@ exports[`AnchorComponentEditor should render with tag style 1`] = `
       <div
         data-mocked="Select"
         data-testid="anchor-rule-id-select"
-        options="[{\\"label\\":\\"rule1\\",\\"value\\":\\"rule1\\"},{\\"label\\":\\"No Rule\\",\\"value\\":\\"No Rule\\"}]"
+        options="[{\\"label\\":\\"No Rule\\",\\"value\\":\\"No Rule\\"}]"
         placeholder="Choose a rule"
         selectedarialabel="Selected"
         selectedoption="{\\"label\\":\\"rule1\\",\\"value\\":\\"rule1\\"}"

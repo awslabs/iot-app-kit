@@ -3,6 +3,7 @@ import { Euler, Quaternion, Vector3 } from 'three';
 import { ICameraComponentInternal } from '../store';
 import { CameraSettings, ICameraBasics } from '../interfaces';
 import { DEFAULT_CAMERA_POSITION, DEFAULT_CAMERA_SETTINGS } from '../common/constants';
+import { CameraType } from '../models/SceneModels';
 
 export const getCameraSettings = (
   object3D: THREE.Object3D | undefined,
@@ -33,7 +34,7 @@ export const getCameraSettings = (
 
   return {
     ...DEFAULT_CAMERA_SETTINGS,
-    cameraType: 'Perspective',
+    cameraType: CameraType.Perspective,
     transform,
   };
 };

@@ -3,6 +3,144 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.2](https://github.com/awslabs/iot-app-kit/compare/root-v8.0.1...root-v8.0.2) (2023-09-30)
+
+
+### Bug Fixes
+
+* **Dashboard:** fix breaking build due to invalid import ([6690640](https://github.com/awslabs/iot-app-kit/commit/6690640ddc41797a3e1a3bb724974deb2a963db0))
+
+## [8.0.1](https://github.com/awslabs/iot-app-kit/compare/root-v8.0.0...root-v8.0.1) (2023-09-30)
+
+
+### Bug Fixes
+
+* toggle working linechar ([9ea6117](https://github.com/awslabs/iot-app-kit/commit/9ea61177710b9ece1be169a0c50e1c19fdefb5e6))
+
+## [8.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v7.5.0...root-v8.0.0) (2023-09-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* **dashboard:** remove line and scatter widgets
+
+### Features
+
+* ability to toggle property visibility in config panel [#1986](https://github.com/awslabs/iot-app-kit/issues/1986) ([560b776](https://github.com/awslabs/iot-app-kit/commit/560b7765c4a4ae8db6d06e70f69b2276844716a8))
+* add delete confirm modal for widgets ([84fb016](https://github.com/awslabs/iot-app-kit/commit/84fb01663e37ac5c1ba84a08baf75d1b1a7668f0))
+* add filtering ability ([51933bc](https://github.com/awslabs/iot-app-kit/commit/51933bc6cc1a76071ae1287ee7f79072c8d4dac7))
+* added empty state for line and scatter chart widgets ([f2662cc](https://github.com/awslabs/iot-app-kit/commit/f2662cc23860d08f1c8fd3cde69e86df4d3c3b6c))
+* **composer:** add a11y color picker ([e768a88](https://github.com/awslabs/iot-app-kit/commit/e768a884118768b5080e745ef8113a344dd0d80e))
+* dashboard: re-introduce status widget icon [#1977](https://github.com/awslabs/iot-app-kit/issues/1977) ([0b62042](https://github.com/awslabs/iot-app-kit/commit/0b6204289d3dd1d0d3627cac4c9dcb0d330d2369))
+* **dashboard:** add echart line-scatter-widget ([076f151](https://github.com/awslabs/iot-app-kit/commit/076f15129b4a1e61b4ef57467031210365ef58cb))
+* empty state within the dashboard to help guide users how to create their dashboard ([f59a069](https://github.com/awslabs/iot-app-kit/commit/f59a0693480832cc3af38b8d9addef88309fecce))
+* make session token optional for local development ([1a26b36](https://github.com/awslabs/iot-app-kit/commit/1a26b3622d3e8780cc54b1a66fc83aac96ecf2d9))
+* preferences for pagination in table widget [#1890](https://github.com/awslabs/iot-app-kit/issues/1890) ([8072232](https://github.com/awslabs/iot-app-kit/commit/8072232240a17274556d208fc22d32a811866517))
+* unmodeled data streams ([71bebef](https://github.com/awslabs/iot-app-kit/commit/71bebefebdaefc235ec2ec505bc5f4dd0d1c7f31))
+
+
+### Bug Fixes
+
+* add more unique colors ([8641b1f](https://github.com/awslabs/iot-app-kit/commit/8641b1f737919b868da7b309cb7ebc6183ef1918))
+* **composer:** add aria labels to rules panel ([ff78ab0](https://github.com/awslabs/iot-app-kit/commit/ff78ab0831170be7c5bad53cba0c903d20034aaf))
+* **composer:** debounce component update to reduce UpdateEntity error ([4f13db1](https://github.com/awslabs/iot-app-kit/commit/4f13db18ae134c7a95c50ed1d855e9e977f59539))
+* **composer:** lock 3d tiles lib to working version ([f719bc4](https://github.com/awslabs/iot-app-kit/commit/f719bc4964e454db16d6c746548b37c092692ca3))
+* **dashboard:** disable dashboard drag when shift key is pressed ([2e47a3c](https://github.com/awslabs/iot-app-kit/commit/2e47a3cee18d1cbfdb0509f599b3cbc575f2f94a))
+* **dashboard:** fix styling for tile and config panel ([932d2f0](https://github.com/awslabs/iot-app-kit/commit/932d2f0b5e0910069cd030044dbe5cf9d26f7287))
+* **dashboard:** fix table item creation ([1c406b6](https://github.com/awslabs/iot-app-kit/commit/1c406b6de03e620fcb2f6c88bd1da256377d178b))
+* **dashboard:** remove viewport from the dashboard state to use viewport hook ([a9011a8](https://github.com/awslabs/iot-app-kit/commit/a9011a8a22e3bc41076fa6fb64065c016282d012))
+* **dashboard:** text widget crashed dashboard when resource explorer is open ([337bcaf](https://github.com/awslabs/iot-app-kit/commit/337bcaf3b8ae4b846a5f82180856ce046f1fa719))
+* **dashboard:** update icon path for empty dashboard ([b24a2b5](https://github.com/awslabs/iot-app-kit/commit/b24a2b5752520b7c52a09d47bd7ae660b238139d))
+* dont move widget when resizing legend ([a7cefce](https://github.com/awslabs/iot-app-kit/commit/a7cefce603e98776b1ab5d8914e929fe73ac7517))
+* enable changing resolution and aggregation of unmodeled data streams ([e187898](https://github.com/awslabs/iot-app-kit/commit/e187898fd63872ae11b8592e865fc29959492761))
+* fix broken synchro-charts widgets ([5e61361](https://github.com/awslabs/iot-app-kit/commit/5e61361084c59bb4ea90ba65ac2016aba99f658e))
+* fixed step after chart type [#1978](https://github.com/awslabs/iot-app-kit/issues/1978) ([546b2a0](https://github.com/awslabs/iot-app-kit/commit/546b2a004a3d8793fd8283a6d69d631fc3ace93d))
+* groupable echarts ([d704292](https://github.com/awslabs/iot-app-kit/commit/d704292964e6434450572154c60863fbdb027dc2))
+* **ResourceExplorer:** implement toggling on/off of properties visibility ([8666736](https://github.com/awslabs/iot-app-kit/commit/8666736eb4642cadd7efcedd99fc680b4df17f83))
+* update component name ([e768a88](https://github.com/awslabs/iot-app-kit/commit/e768a884118768b5080e745ef8113a344dd0d80e))
+* update package-lock.json ([e768a88](https://github.com/awslabs/iot-app-kit/commit/e768a884118768b5080e745ef8113a344dd0d80e))
+* update unit test ([2276584](https://github.com/awslabs/iot-app-kit/commit/2276584325c75b8aa823d24588fb589b18876699))
+
+## [7.5.0](https://github.com/awslabs/iot-app-kit/compare/root-v7.4.0...root-v7.5.0) (2023-09-26)
+
+
+### Features
+
+* integrate query editor ([82c36a1](https://github.com/awslabs/iot-app-kit/commit/82c36a1cf4f7c47b45ba32c1f5e15cdf3e132cb4))
+
+
+### Bug Fixes
+
+* **dashboard:** set initial viewport to 5m ([f7a5684](https://github.com/awslabs/iot-app-kit/commit/f7a568414a772e98ceb03bdac4978173b36ddb47))
+* **echarts:** bugs for demo ([b1e57ee](https://github.com/awslabs/iot-app-kit/commit/b1e57ee4b0d768c0a83be24c55b837a8f0fd950d))
+
+## [7.4.0](https://github.com/awslabs/iot-app-kit/compare/root-v7.3.1...root-v7.4.0) (2023-09-25)
+
+
+### Features
+
+* add fixed width and height to the table ([7005009](https://github.com/awslabs/iot-app-kit/commit/7005009b1e325a8f333b281113ce1cf4745b0b19))
+* auto collapse state for both panels ([fc54b1c](https://github.com/awslabs/iot-app-kit/commit/fc54b1cb71979e48dc5440620577ca8a2adc4be6))
+* chart fit and finish - match cloudscape colors for axis and labels [#1929](https://github.com/awslabs/iot-app-kit/issues/1929) ([6fe3424](https://github.com/awslabs/iot-app-kit/commit/6fe3424ec90052d2e63a06a34b874958b9c7bf0c))
+* **composer:** render tags from layer ([d9c5191](https://github.com/awslabs/iot-app-kit/commit/d9c519114d3e39c3913eb32b23984f8204b756d8))
+* **composer:** support sync matterport tag as entities ([7db178a](https://github.com/awslabs/iot-app-kit/commit/7db178a4aee74cbd299dc115c7cf3786dc376800))
+* **dashboard:** add widget tile ([13573c5](https://github.com/awslabs/iot-app-kit/commit/13573c59d560e7192159db8751d6818cfebcf531))
+* **dashboard:** break out properties sections into tabs ([fb8b685](https://github.com/awslabs/iot-app-kit/commit/fb8b685f1d6ea8459c40637f12f0cf6ddc75aa55))
+* **dashboard:** change dashboard viewport default from 5m to 10m ([803d9a4](https://github.com/awslabs/iot-app-kit/commit/803d9a4944f6a55cb2e0e9691ddc3e537966c501))
+* **dashboard:** empty widget configuration panel ([72bc7e3](https://github.com/awslabs/iot-app-kit/commit/72bc7e32a373a724077e1b7ba0d9f671af4495eb))
+* **dashboard:** line symbol ([bba8e8d](https://github.com/awslabs/iot-app-kit/commit/bba8e8d392f73b3e52109bad1557cda4ef00221c))
+* **dashboard:** new line-scatter-chart ([53768b9](https://github.com/awslabs/iot-app-kit/commit/53768b911a13066b9527c88f0e95a620f0025f7a))
+* **dashboard:** update collapsible side panels ([1495451](https://github.com/awslabs/iot-app-kit/commit/149545160551174af83ce3ddb2a61f1a61977c94))
+* **dynamic scenes:** save node updates to entities ([0bb2445](https://github.com/awslabs/iot-app-kit/commit/0bb2445fb39659ca970c51319a42cd2d0ff95360))
+* **dynamic scenes:** update entities using dynamic scenes ([8eee582](https://github.com/awslabs/iot-app-kit/commit/8eee582e039a5cb2a3e25c81f822a4ecca95672c))
+* **echarts:** allow scroll left and right ([5d2341e](https://github.com/awslabs/iot-app-kit/commit/5d2341e71f531556ac8147e1a0742233992ed82d))
+* **first Person:** proof of using pointer lock for a first person view ([391eddd](https://github.com/awslabs/iot-app-kit/commit/391edddd5ab3c56be2e394aec06346dfbc29b776))
+* **propertyName:** add copy button and textarea ([7c0eaf4](https://github.com/awslabs/iot-app-kit/commit/7c0eaf432e40e25a5319a29e7546442d81e8c3dc))
+* **react-components:** adding TrendCursor Sync to dashboard ([d046184](https://github.com/awslabs/iot-app-kit/commit/d046184b836e9cb3670b210eb24c4fd91167b52a))
+* **react-components:** sync echarts viewport ([e04e040](https://github.com/awslabs/iot-app-kit/commit/e04e04079630361047e82d8564678cd4e5857cdd))
+* remove drag icon in chat widget ([64e1b89](https://github.com/awslabs/iot-app-kit/commit/64e1b897dc9389055cfd9df9fce01b0415b9e170))
+* **scene composer:** added icon picker changes ([8ca53b8](https://github.com/awslabs/iot-app-kit/commit/8ca53b8552f9eb09f107ea43d983a6b47f19fa88))
+* table widget pagination and sortingdisabled ([b727eae](https://github.com/awslabs/iot-app-kit/commit/b727eae8364f19f2e997fa0c9275e1f0a947f854))
+* **TM-source:** add entity APIs to SceneMetadataModule ([1a91084](https://github.com/awslabs/iot-app-kit/commit/1a910844692aa30bbd4b9d1920d415378bcad130))
+* update icons for widget library-952 ([5f7f9ee](https://github.com/awslabs/iot-app-kit/commit/5f7f9ee8274f99b88fd464bd4ee434d0f4126594))
+* updated chart initial widget size [#1920](https://github.com/awslabs/iot-app-kit/issues/1920)) ([88218af](https://github.com/awslabs/iot-app-kit/commit/88218afb1aed84e63d08fbad3acacab044c2ab8a))
+* updated dashboard background color to grey-125 [#1950](https://github.com/awslabs/iot-app-kit/issues/1950) ([0f81bb2](https://github.com/awslabs/iot-app-kit/commit/0f81bb2240086c9222ab0063dac576927fd407c1))
+
+
+### Bug Fixes
+
+* **camera:** selecting camera view uses raycast to set better target distance for orbit ([76d9272](https://github.com/awslabs/iot-app-kit/commit/76d927214ae02ca2c1c8657afb9f8d01bf396548))
+* **composer:** add aria labels to icons ([8a70eb1](https://github.com/awslabs/iot-app-kit/commit/8a70eb13f081b39dae701dfa999e8aa3ce0a8378))
+* **composer:** add new translations ([de7249a](https://github.com/awslabs/iot-app-kit/commit/de7249a8a920e1c43faeda4fd94fb57e9d0fc9f3))
+* **composer:** associate inputs to labels ([8b64f9a](https://github.com/awslabs/iot-app-kit/commit/8b64f9aa38761ed684be8b9088a8b7edd6bb0681))
+* **composer:** autofocus on error, rules panel ([b132e27](https://github.com/awslabs/iot-app-kit/commit/b132e278a00a8729642afeec3382312685877110))
+* **composer:** create default entity roots ([4b38ea5](https://github.com/awslabs/iot-app-kit/commit/4b38ea598360fdaa4dd3545273dab888963d7bb7))
+* **composer:** create existing matterport tag as entities ([0d1d16e](https://github.com/awslabs/iot-app-kit/commit/0d1d16e17c35af067ef1f5f4f41030bfd3897d9a))
+* **composer:** error when switching motion indicator appearance ([c51f135](https://github.com/awslabs/iot-app-kit/commit/c51f13530b36c8a7e1e17d8ea65c4bec515fb16d))
+* **composer:** matterport tag sync tag style under flag ([83334ce](https://github.com/awslabs/iot-app-kit/commit/83334ce21a089ecff46c86ddfb320f1bafe6011d))
+* **composer:** resize/reposition overlaps on small screens ([64d3855](https://github.com/awslabs/iot-app-kit/commit/64d3855b866ec6f50e7d9891863c1fea801ceabf))
+* **composer:** show sync matterport tag status ([2c041c5](https://github.com/awslabs/iot-app-kit/commit/2c041c56d637efd201e615e04f27a6761cc20c4c))
+* **CSS-Loader:** updated sass-loader & fixed style ([aee4abc](https://github.com/awslabs/iot-app-kit/commit/aee4abcd22617cd1b28641711a4be2d1bab4e252))
+* **dashboard:** removing all props wont crash chart ([bac2fb6](https://github.com/awslabs/iot-app-kit/commit/bac2fb6debc1364d831c2b93e68a7eafd2b45b9c))
+* **matterport:** fix zoom to tag ([49a04f8](https://github.com/awslabs/iot-app-kit/commit/49a04f81bc464d20798f219f77f325bde74ad1f6))
+* **react-components:** adding debounce to the echarts zoom handler ([b983385](https://github.com/awslabs/iot-app-kit/commit/b98338508da223bab1a99c28641276ff02c537b5))
+* **react-components:** echarts resize drag fix ([19ccc7e](https://github.com/awslabs/iot-app-kit/commit/19ccc7ee4569aea891b43883a8ba1dedf3ac4fc9))
+* **react-components:** fix TC behaviour when there is a change in query ([50edcc1](https://github.com/awslabs/iot-app-kit/commit/50edcc1b2131c03c9e30621407a3d3d201825a90))
+* **react-components:** fixing TCs on data zoom ([379525c](https://github.com/awslabs/iot-app-kit/commit/379525cd1246061398ff8a113963b968466ae11a))
+* **react-components:** fixing the duplicate yAxis values ([60073ef](https://github.com/awslabs/iot-app-kit/commit/60073ef7ea4e1167218c8cdecd021bc677d5cc66))
+* **react-components:** fixing the viewport and some styling elements ([7d3526e](https://github.com/awslabs/iot-app-kit/commit/7d3526e34c86b55632a4d5aa0c7029fd1499a48b))
+* **react-components:** need stop propagation in start and end of resize event ([30e9901](https://github.com/awslabs/iot-app-kit/commit/30e99010bc57e48040ddcac8c41546e745a5a3f9))
+* **react-components:** updating echarts ux ([ddfc9c8](https://github.com/awslabs/iot-app-kit/commit/ddfc9c8cc15f32a8c307653daf5d2159918e58b2))
+* **react-components:** updating echarts with the fixes founf during bug bash ([9f32c21](https://github.com/awslabs/iot-app-kit/commit/9f32c21ae53d99ddac718caa520d9e852a25f499))
+* resolved table widget column resize issue ([8b6b418](https://github.com/awslabs/iot-app-kit/commit/8b6b4189601c594ffef9dd6ed915e6ddbf7fa938))
+* resolved table widget column resize issue ([08b1993](https://github.com/awslabs/iot-app-kit/commit/08b19932614978cac915e34a27747f72da78c657))
+* **scene composer:** fix for missing grid ([2a4c4c8](https://github.com/awslabs/iot-app-kit/commit/2a4c4c8b194a2eceebe73dc87d24215836be4a99))
+* **scene composer:** removing custom grid line colors ([632f7a2](https://github.com/awslabs/iot-app-kit/commit/632f7a210a80281b1d3c53b0a5de168f8cae9d10))
+* **scene tags:** fix anchor stems not triggering onWidgetClick ([6945512](https://github.com/awslabs/iot-app-kit/commit/6945512eadbdd8d8bc09977ecce7511fbf136311))
+* **tools-iottwinmaker:** update dashboard role to include execute query api ([b63d053](https://github.com/awslabs/iot-app-kit/commit/b63d0537ce247724d0dd73d8d0d1ffba20e0ab5a))
+* use one timesync for all of dashboard ([c979995](https://github.com/awslabs/iot-app-kit/commit/c979995ec642d0ac8081056a3d2e83dd42a90d18))
+* x-axis toggle will toggle both x and y axis [#1925](https://github.com/awslabs/iot-app-kit/issues/1925) ([58b0dbb](https://github.com/awslabs/iot-app-kit/commit/58b0dbbc72a9dbfd13648a454ea36ac570efd0eb))
+
 ## [7.3.1](https://github.com/awslabs/iot-app-kit/compare/root-v7.3.0...root-v7.3.1) (2023-08-24)
 
 

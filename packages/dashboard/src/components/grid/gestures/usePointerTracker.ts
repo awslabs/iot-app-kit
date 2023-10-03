@@ -40,7 +40,6 @@ export const usePointerTracker = ({ readOnly, enabled, union, click }: PointerTr
 
   const onPointerUp: PointerEventHandler = (e) => {
     if (cancelClick || !enabled || readOnly) return;
-
     if (e.button === MouseClick.Left) {
       click({
         position: getDashboardPosition(e),

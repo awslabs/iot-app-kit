@@ -37,6 +37,15 @@ jest.doMock('../../../src/components/three-fiber/controls/OrbitControls', () => 
   };
 });
 
+const mockPointerLockControls = jest.fn();
+jest.doMock('../../../src/components/three-fiber/controls/PointerLockControls', () => {
+  const originalModule = jest.requireActual('../../../src/components/three-fiber/controls/PointerLockControls');
+  return {
+    ...originalModule,
+    PointerLockControls: mockPointerLockControls,
+  };
+});
+
 const mockPerspectiveCamera = jest.fn();
 jest.doMock('@react-three/drei/core/PerspectiveCamera', () => {
   const originalModule = jest.requireActual('@react-three/drei/core/PerspectiveCamera');
@@ -70,6 +79,9 @@ import { EditorMainCamera, findBestViewingPosition } from '../../../src/componen
 import { useStore } from '../../../src/store';
 
 import { useThree } from '@react-three/fiber';
+
+import { OrbitControls } from '../../../src/three/OrbitControls';
+
 /* eslint-enable */
 
 describe('EditorMainCamera', () => {
@@ -87,6 +99,7 @@ describe('EditorMainCamera', () => {
 
     mockMapControls.mockReturnValue(<div data-testid='map-control' />);
     mockOrbitControls.mockReturnValue(<div data-testid='orbit-control' />);
+    mockPointerLockControls.mockReturnValue(<div data-testid='pointer-lock-control' />);
     mockPerspectiveCamera.mockReturnValue(<div data-testid='perspective-camera' />);
     const useThreeMock = useThree as Mock;
     useThreeMock.mockImplementation((s) => {
@@ -111,6 +124,7 @@ describe('EditorMainCamera', () => {
       expect(rendered.queryByTestId('perspective-camera')).toBeTruthy();
       expect(rendered.queryByTestId('orbit-control')).toBeTruthy();
       expect(rendered.queryByTestId('map-control')).toBeFalsy();
+      expect(rendered.queryByTestId('pointer-lock-control')).toBeFalsy();
     });
 
     it('should render MapControl', async () => {
@@ -121,6 +135,18 @@ describe('EditorMainCamera', () => {
       expect(rendered.queryByTestId('perspective-camera')).toBeTruthy();
       expect(rendered.queryByTestId('orbit-control')).toBeFalsy();
       expect(rendered.queryByTestId('map-control')).toBeTruthy();
+      expect(rendered.queryByTestId('pointer-lock-control')).toBeFalsy();
+    });
+
+    it('should render PointerLockControl', async () => {
+      useStore('default').setState({ ...baseState, cameraControlsType: 'pointerLock' });
+
+      const rendered = render(<EditorMainCamera />);
+
+      expect(rendered.queryByTestId('perspective-camera')).toBeTruthy();
+      expect(rendered.queryByTestId('orbit-control')).toBeFalsy();
+      expect(rendered.queryByTestId('map-control')).toBeFalsy();
+      expect(rendered.queryByTestId('pointer-lock-control')).toBeTruthy();
     });
 
     it('should not render if ImmersiveViewControl', async () => {
@@ -131,6 +157,7 @@ describe('EditorMainCamera', () => {
       expect(rendered.queryByTestId('perspective-camera')).toBeTruthy();
       expect(rendered.queryByTestId('orbit-control')).toBeFalsy();
       expect(rendered.queryByTestId('map-control')).toBeFalsy();
+      expect(rendered.queryByTestId('pointer-lock-control')).toBeFalsy();
     });
 
     it('should not render control on mouseDown and render control on mouseUp', async () => {
@@ -146,6 +173,7 @@ describe('EditorMainCamera', () => {
       expect(rendered.queryByTestId('perspective-camera')).toBeTruthy();
       expect(rendered.queryByTestId('orbit-control')).toBeTruthy();
       expect(rendered.queryByTestId('map-control')).toBeFalsy();
+      expect(rendered.queryByTestId('pointer-lock-control')).toBeFalsy();
 
       // mouseDown
       await act(async () => {
@@ -156,6 +184,7 @@ describe('EditorMainCamera', () => {
       expect(rendered.queryByTestId('perspective-camera')).toBeTruthy();
       expect(rendered.queryByTestId('orbit-control')).toBeFalsy();
       expect(rendered.queryByTestId('map-control')).toBeFalsy();
+      expect(rendered.queryByTestId('pointer-lock-control')).toBeFalsy();
 
       // mouseUp
       await act(async () => {
@@ -166,6 +195,7 @@ describe('EditorMainCamera', () => {
       expect(rendered.queryByTestId('perspective-camera')).toBeTruthy();
       expect(rendered.queryByTestId('orbit-control')).toBeTruthy();
       expect(rendered.queryByTestId('map-control')).toBeFalsy();
+      expect(rendered.queryByTestId('pointer-lock-control')).toBeFalsy();
 
       // unmount remove listener
       rendered.unmount();
@@ -205,7 +235,7 @@ describe('EditorMainCamera', () => {
       expect(tweenTarget.duration).toEqual(500);
     });
 
-    it('should setTween to correct camera target when camera command changes to fixed camera target', async () => {
+    it('should setTween to correct camera target when camera command changes to fixed camera target with no intersections ahead', async () => {
       useStore('default').setState(baseState);
       const setPositionSpy = jest.spyOn(mockCamera.position, 'set');
       mockMergeRefs.mockImplementation((refs) => {
@@ -217,6 +247,17 @@ describe('EditorMainCamera', () => {
         tweenPosition = position;
         tweenTarget = target;
       });
+
+      const mockThreeStatesWithGeometry = {
+        scene: new THREE.Scene(),
+        set: jest.fn(),
+      };
+      // override generic mock for one to support geometry testing
+      const useThreeMock = useThree as Mock;
+      useThreeMock.mockImplementation((s) => {
+        return s(mockThreeStatesWithGeometry);
+      });
+
       const rendered = render(<EditorMainCamera />);
 
       await act(async () => {
@@ -238,6 +279,77 @@ describe('EditorMainCamera', () => {
       expect(tweenPosition.duration).toEqual(0);
       expect(tweenTarget.from).toEqual({ x: 0, y: 0, z: 0 });
       expect(tweenTarget.to).toEqual({ x: 44, y: 55, z: 66 });
+      expect(tweenTarget.duration).toEqual(0);
+
+      // onUpdate tween
+      tweenPosition.onUpdate();
+      expect(setPositionSpy).toBeCalledTimes(1);
+      expect(setPositionSpy).toBeCalledWith(1, 2, 3);
+    });
+
+    it('should setTween to correct camera target when camera command changes to fixed camera target with intersections ahead', async () => {
+      useStore('default').setState(baseState);
+      const setPositionSpy = jest.spyOn(mockCamera.position, 'set');
+      mockMergeRefs.mockImplementation((refs) => {
+        if (refs[1]) refs[1].current = mockCamera;
+      });
+      let tweenPosition;
+      let tweenTarget;
+      mockSetTween.mockImplementation((position, target) => {
+        tweenPosition = position;
+        tweenTarget = target;
+      });
+
+      const mockThreeStatesWithGeometry = {
+        scene: new THREE.Scene(),
+        set: jest.fn(),
+      };
+      const boxSize = 1;
+      const position = new THREE.Vector3(11, 22, 33);
+      const targetOffset = new THREE.Vector3(33, 33, 33);
+      const target = new THREE.Vector3();
+      target.copy(position);
+      target.add(targetOffset);
+      const geometry = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
+      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      const cube = new THREE.Mesh(geometry, material);
+      cube.translateX(position.x + 0.5 * targetOffset.x);
+      cube.translateY(position.y + 0.5 * targetOffset.y);
+      cube.translateZ(position.z + 0.5 * targetOffset.z);
+      cube.updateMatrixWorld();
+      mockThreeStatesWithGeometry.scene.add(cube);
+
+      // override generic mock for one to support geometry testing
+      const useThreeMock = useThree as Mock;
+      useThreeMock.mockImplementation((s) => {
+        return s(mockThreeStatesWithGeometry);
+      });
+
+      const rendered = render(<EditorMainCamera />);
+
+      await act(async () => {
+        useStore('default').setState({
+          ...baseState,
+          cameraCommand: {
+            target: {
+              position: position,
+              target: target,
+            },
+            mode: 'teleport',
+          },
+        });
+        rendered.rerender(<EditorMainCamera />);
+      });
+
+      expect(tweenPosition.from).toEqual({ x: 1, y: 2, z: 3 });
+      expect(tweenPosition.to).toEqual(position);
+      expect(tweenPosition.duration).toEqual(0);
+      expect(tweenTarget.from).toEqual({ x: 0, y: 0, z: 0 });
+      expect(tweenTarget.to).toEqual({
+        x: position.x + 0.5 * targetOffset.x - 0.5 * boxSize,
+        y: position.y + 0.5 * targetOffset.y - 0.5 * boxSize,
+        z: position.z + 0.5 * targetOffset.z - 0.5 * boxSize,
+      });
       expect(tweenTarget.duration).toEqual(0);
 
       // onUpdate tween
@@ -303,9 +415,7 @@ describe('EditorMainCamera', () => {
 
     const mockCamera = new THREE.PerspectiveCamera(60, 0.75);
     mockCamera.position.copy(new THREE.Vector3(-1, -1, -1));
-    const mockControls: any = {
-      object: mockCamera,
-    };
+    const mockControls: OrbitControls = new OrbitControls(mockCamera);
 
     // half length of unit vector divide by sin of half our smallest FOV axis for our box of size 1,1,1
     const minimumDistance = Math.sqrt(3) / 2 / Math.sin(0.5 * (Math.PI / 180) * 45);
@@ -376,9 +486,7 @@ describe('EditorMainCamera', () => {
       );
       const mockCamera = new THREE.PerspectiveCamera(60, 0.75);
       mockCamera.position.copy(new THREE.Vector3(0.1, 0.1, 0.1));
-      const mockControls: any = {
-        object: mockCamera,
-      };
+      const mockControls: OrbitControls = new OrbitControls(mockCamera);
       const result = findBestViewingPosition(mockObject, false, mockControls);
 
       expect(result.position[0]).toBeCloseTo(expectedVectorLength, 5);

@@ -1,12 +1,15 @@
 import React, { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { useViewport } from '@iot-app-kit/react-components';
 import { Button, SpaceBetween, Box } from '@cloudscape-design/components';
 import { onToggleReadOnly } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
 import { isEqual, pick } from 'lodash';
 import { DashboardSave } from '~/types';
 import DashboardSettings from './settings';
+
+const DEFAULT_VIEWPORT = { duration: '10m' };
 
 export type ActionsProps = {
   grid: DashboardState['grid'];
@@ -28,6 +31,8 @@ const Actions: React.FC<ActionsProps> = ({
   const [dashboardSettingsVisible, setDashboardSettingsVisible] = useState(false);
   const dispatch = useDispatch();
 
+  const { viewport } = useViewport();
+
   const handleOnSave = () => {
     if (!onSave) return;
     onSave({
@@ -38,6 +43,7 @@ const Actions: React.FC<ActionsProps> = ({
         significantDigits,
       },
       ...dashboardConfiguration,
+      viewport: viewport ?? DEFAULT_VIEWPORT,
     });
   };
 

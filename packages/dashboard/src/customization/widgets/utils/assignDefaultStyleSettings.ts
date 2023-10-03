@@ -1,28 +1,38 @@
 import type { StyleSettingsMap } from '@iot-app-kit/core';
-import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import { v4 as uuid } from 'uuid';
 import type { QueryWidget } from '../types';
 import { assignDefaultColor } from '@iot-app-kit/core-util';
 import { isDefined } from '~/util/isDefined';
+import { IoTSiteWiseDataStreamQuery } from '~/types';
 
-const assignDefaultRefId = (siteWiseAssetQuery: SiteWiseAssetQuery, getId: () => string = uuid) => ({
-  assets: siteWiseAssetQuery.assets.map(({ properties, ...others }) => ({
+type Query = NonNullable<QueryWidget['properties']['queryConfig']['query']>;
+
+const assignDefaultRefId = (
+  { assets = [], properties = [] }: IoTSiteWiseDataStreamQuery,
+  getId: () => string = uuid
+) => ({
+  assets: assets.map(({ properties, ...others }) => ({
     ...others,
     properties: properties.map((propertyQuery) => ({
       ...propertyQuery,
       refId: propertyQuery.refId || getId(),
     })),
   })),
+  properties: properties.map((propertyQuery) => ({
+    ...propertyQuery,
+    refId: propertyQuery.refId || getId(),
+  })),
 });
 
 const assignDefaultColors = (
   styleSettings: StyleSettingsMap,
-  siteWiseAssetQuery: SiteWiseAssetQuery,
+  siteWiseQuery: Query,
   colorIndexOffset = 0
 ): StyleSettingsMap => {
-  const refIds = siteWiseAssetQuery.assets
-    .flatMap((asset) => asset.properties.map(({ refId }) => refId))
-    .filter(isDefined);
+  const assetRefIds =
+    siteWiseQuery.assets?.flatMap((asset) => asset.properties.map(({ refId }) => refId)).filter(isDefined) ?? [];
+  const propertyRefIds = siteWiseQuery.properties?.map(({ refId }) => refId).filter(isDefined) ?? [];
+  const refIds = [...assetRefIds, ...propertyRefIds];
 
   return refIds.reduce((acc: StyleSettingsMap, refId, index) => {
     const existing = styleSettings[refId] || {};

@@ -1,7 +1,7 @@
-import type { DashboardWidgetsConfiguration, DashboardWidget } from '~/types';
+import type { DashboardWidget } from '~/types';
 import { deepFreeze } from '~/util/deepFreeze';
 
-export type DashboardState = {
+export type DashboardState<Properties extends Record<string, unknown> = Record<string, unknown>> = {
   grid: {
     enabled: boolean;
     width: number;
@@ -10,10 +10,10 @@ export type DashboardState = {
     stretchToFit: boolean;
   };
   readOnly: boolean;
-  selectedWidgets: DashboardWidget[];
-  copiedWidgets: DashboardWidget[];
+  selectedWidgets: DashboardWidget<Properties>[];
+  copiedWidgets: DashboardWidget<Properties>[];
   pasteCounter: number;
-  dashboardConfiguration: DashboardWidgetsConfiguration;
+  dashboardConfiguration: { widgets: DashboardWidget<Properties>[] };
   significantDigits: number;
 };
 
@@ -39,7 +39,6 @@ export const initialState: DashboardState = deepFreeze({
   copiedWidgets: [],
   pasteCounter: 0,
   dashboardConfiguration: {
-    viewport: { duration: '5m' },
     widgets: [],
   },
   significantDigits: 4,

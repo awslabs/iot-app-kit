@@ -10,6 +10,7 @@ export const getQueries = (dashboardClientConfiguration: DashboardClientConfigur
   }
 
   const iotSiteWiseQuery = initialize({
+    // @ts-expect-error TODO: Fix this
     iotSiteWiseClient: iotSiteWiseClient,
     iotEventsClient: iotEventsClient,
   }).query;

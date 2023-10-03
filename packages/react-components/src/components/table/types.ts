@@ -50,4 +50,6 @@ export interface TableProps extends Omit<CloudscapeTableProps<TableItemHydrated>
   propertyFiltering?: UseCollectionOptions<TableItemHydrated>['propertyFiltering'];
   messageOverrides: TableMessages;
   precision?: number;
+  pageSize?: number;
+  paginationEnabled?: boolean;
 }

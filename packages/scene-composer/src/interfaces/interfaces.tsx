@@ -72,6 +72,7 @@ export enum KnownSceneProperty {
   MatterportModelId = 'matterportModelId',
   LayerIds = 'layerIds',
   SceneRootEntityId = 'sceneRootEntityId',
+  TagCustomColors = 'tagCustomColors',
 }
 
 /************************************************
@@ -79,7 +80,7 @@ export enum KnownSceneProperty {
  ************************************************/
 
 export type CameraControlMode = 'transition' | 'teleport';
-export type CameraControlsType = 'orbit' | 'pan' | 'immersive';
+export type CameraControlsType = 'orbit' | 'pan' | 'immersive' | 'pointerLock';
 export type TransformControlMode = 'translate' | 'rotate' | 'scale';
 export enum CameraViewAxisValues {
   Front = 'front',

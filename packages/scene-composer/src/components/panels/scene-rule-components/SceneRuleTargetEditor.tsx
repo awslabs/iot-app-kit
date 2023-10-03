@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { useIntl, defineMessages } from 'react-intl';
 import { Grid, Select } from '@awsui/components-react';
+import React, { useContext, useState } from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
-import { COMPOSER_FEATURES, SceneResourceType } from '../../../interfaces';
+import { getGlobalSettings } from '../../../common/GlobalSettings';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
+import useFeature from '../../../hooks/useFeature';
+import { COMPOSER_FEATURES, KnownSceneProperty, SceneResourceType, TargetMetadata } from '../../../interfaces';
+import { IIconLookup } from '../../../models/SceneModels';
+import { useSceneDocument, useStore } from '../../../store';
 import {
   convertToIotTwinMakerNamespace,
   getSceneResourceDefaultValue,
   getSceneResourceInfo,
 } from '../../../utils/sceneResourceUtils';
-import useFeature from '../../../hooks/useFeature';
-import { getGlobalSettings } from '../../../common/GlobalSettings';
-import { ColorPicker } from '../scene-components/tag-style/ColorPicker/ColorPicker';
 import { colors } from '../../../utils/styleUtils';
+import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
+import { IconPicker } from '../scene-components/tag-style/IconPicker/IconPicker';
 
 import { SceneRuleTargetColorEditor } from './SceneRuleTargetColorEditor';
 import { SceneRuleTargetIconEditor } from './SceneRuleTargetIconEditor';
@@ -38,20 +42,25 @@ const i18nSceneResourceTypeStrings = defineMessages({
 
 interface ISceneRuleTargetEditorProps {
   target: string;
-  onChange: (target: string) => void;
+  onChange: (target: string, targetMetadata?: TargetMetadata) => void;
+  targetMetadata?: TargetMetadata;
 }
 
 export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
   target,
   onChange,
+  targetMetadata,
 }: ISceneRuleTargetEditorProps) => {
-  const getCustomColor: string = target.includes('Custom-') ? target.split('-')[1] : colors.customBlue;
   const targetInfo = getSceneResourceInfo(target);
   const { formatMessage } = useIntl();
-
+  const sceneComposerId = useContext(sceneComposerIdContext);
   const [{ variation: opacityRuleEnabled }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.OpacityRule]);
   const tagStyle = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
-  const [chosenColor, setChosenColor] = useState<string>(getCustomColor);
+  const [chosenColor, setChosenColor] = useState<string>(targetMetadata?.color ?? colors.customBlue);
+  const [icon, setIcon] = useState<IIconLookup>({
+    prefix: targetMetadata?.iconPrefix as string,
+    iconName: targetMetadata?.iconName as string,
+  });
   const options = Object.values(SceneResourceType)
     .filter((type) => {
       return opacityRuleEnabled === 'C' ? type !== SceneResourceType.Opacity : true;
@@ -60,12 +69,12 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
       label: formatMessage(i18nSceneResourceTypeStrings[SceneResourceType[type]]) || SceneResourceType[type],
       value: SceneResourceType[type],
     }));
+  const { getSceneProperty } = useSceneDocument(sceneComposerId);
+
+  const tagStyleColors = getSceneProperty<string[]>(KnownSceneProperty.TagCustomColors, []);
+  const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
+
   const isCustomStyle = tagStyle && targetInfo.value === 'Custom';
-
-  useEffect(() => {
-    setChosenColor(getCustomColor);
-  }, [getCustomColor]);
-
   return (
     <Grid gridDefinition={[{ colspan: 4 }, { colspan: 8 }]}>
       <Select
@@ -88,30 +97,59 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
         })}
       />
       {targetInfo.type === SceneResourceType.Icon && (
-        <>
+        <div>
           <SceneRuleTargetIconEditor
             targetValue={targetInfo.value}
             onChange={(targetValue) => {
-              const colorWithIcon = targetValue === 'Custom' ? `${targetValue}-${chosenColor}` : targetValue;
-              onChange(convertToIotTwinMakerNamespace(targetInfo.type, colorWithIcon));
+              onChange(convertToIotTwinMakerNamespace(targetInfo.type, targetValue));
             }}
             chosenColor={chosenColor}
+            customIcon={icon}
           />
           {isCustomStyle && (
-            <ColorPicker
-              color={chosenColor}
-              onSelectColor={(newColor) => {
-                const colorWithIcon =
-                  targetInfo.value === 'Custom' ? `${targetInfo.value}-${newColor}` : targetInfo.value;
-                onChange(convertToIotTwinMakerNamespace(targetInfo.type, colorWithIcon));
-                setChosenColor(newColor);
-              }}
-              colorPickerLabel={formatMessage({ defaultMessage: 'Colors', description: 'Colors' })}
-              customColorLabel={formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}
-            />
+            <div>
+              <ColorSelectorCombo
+                color={chosenColor}
+                onSelectColor={(newColor) => {
+                  onChange(convertToIotTwinMakerNamespace(targetInfo.type, targetInfo.value), {
+                    ...targetMetadata,
+                    color: newColor,
+                  } as TargetMetadata);
+                  setChosenColor(newColor);
+                }}
+                customColors={tagStyleColors}
+                onUpdateCustomColors={(customColors) =>
+                  setSceneProperty(KnownSceneProperty.TagCustomColors, customColors)
+                }
+                colorPickerLabel={formatMessage({ defaultMessage: 'Colors', description: 'Colors' })}
+                customColorLabel={formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}
+              />
+              <IconPicker
+                onSelectIconChange={(pickedIcon) => {
+                  onChange(convertToIotTwinMakerNamespace(targetInfo.type, targetInfo.value), {
+                    ...targetMetadata,
+                    iconPrefix: pickedIcon.prefix,
+                    iconName: pickedIcon.iconName,
+                  } as TargetMetadata);
+                  setIcon(pickedIcon);
+                }}
+                selectedIcon={icon}
+                iconPickerLabel={formatMessage({ defaultMessage: 'Icon', description: 'Icon' })}
+                iconFilterText={formatMessage({ defaultMessage: 'Find icons', description: 'Find icons' })}
+                iconFilterTextAriaLabel={formatMessage({
+                  defaultMessage: 'Filter icons',
+                  description: 'Filter icons',
+                })}
+                iconButtonText={formatMessage({
+                  defaultMessage: 'Select an icon',
+                  description: 'Select an icon',
+                })}
+              />
+            </div>
           )}
-        </>
+        </div>
       )}
+
       {targetInfo.type === SceneResourceType.Color && (
         <SceneRuleTargetColorEditor
           targetValue={targetInfo.value}

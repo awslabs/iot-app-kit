@@ -73,20 +73,26 @@ export type ChartStyleSettings = {
 export type InternalGraphicComponentGroupOption = {
   timestampInMs: number;
   yAxisMarkerValue: number[];
-  headerColor: string;
 } & GraphicComponentGroupOption;
 
 export type ChartEventType = { target: { id?: OptionId }; offsetX?: number };
+
+export type ThresholdStyleType = {
+  visible?: boolean;
+  fill?: string;
+};
+
+export type StyledThreshold = Threshold & ThresholdStyleType;
 
 export type ChartOptions = {
   queries: TimeSeriesDataQuery[];
   defaultVisualizationType?: Visualization;
   size?: SizeConfig;
   styleSettings?: ChartStyleSettings;
+  thresholdSettings?: ThresholdSettings;
   aggregationType?: string;
   axis?: ChartAxisOptions;
-  thresholds?: Threshold[];
-  thresholdSettings?: ThresholdSettings;
+  thresholds?: StyledThreshold[];
   viewport?: Viewport;
   gestures?: boolean;
   backgroundColor?: string;
@@ -95,7 +101,6 @@ export type ChartOptions = {
   significantDigits?: number;
   graphic?: InternalGraphicComponentGroupOption[];
   theme?: string;
-  groupId?: string;
   id?: string;
   titleText?: string;
 };
@@ -142,7 +147,6 @@ export interface UseTrendCursorsProps {
 export interface GetNewTrendCursorProps {
   e?: ElementEvent;
   size: SizeConfig;
-  tcHeaderColorIndex: number;
   series: SeriesOption[];
   tcId?: string;
   x?: number;

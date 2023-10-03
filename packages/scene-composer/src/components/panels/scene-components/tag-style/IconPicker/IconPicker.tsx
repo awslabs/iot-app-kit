@@ -1,7 +1,8 @@
 import { Button, FormField, SpaceBetween, TextContent, TextFilter } from '@awsui/components-react';
-import { IconDefinition, IconLookup, library } from '@fortawesome/fontawesome-svg-core';
+import { IconDefinition, IconLookup, IconName, IconPrefix, library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { isEmpty } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { IIconPicker } from '../interface';
@@ -17,9 +18,13 @@ export const IconPicker = ({
   iconPickerLabel,
   iconFilterText,
   iconFilterTextAriaLabel,
+  iconButtonText,
 }: IIconPicker): JSX.Element => {
   const [filteringText, setFilteringText] = useState<string>('');
-  const [icon, setIcon] = useState<IconLookup>(selectedIcon);
+  const [icon, setIcon] = useState<IconLookup>({
+    prefix: selectedIcon.prefix as IconPrefix,
+    iconName: selectedIcon.iconName as IconName,
+  });
   const [showPicker, setShowPicker] = useState<boolean>(false);
   const iconsPerPage = 8; // Number of icons per page
   const defaultRows = 3; // Number of rows to display by default
@@ -78,10 +83,7 @@ export const IconPicker = ({
 
   const filteredIcons = filterIcons(Object.values(fas));
 
-  useEffect(() => {
-    setIcon(selectedIcon);
-  }, [selectedIcon]);
-
+  const emptyIcon = isEmpty(icon.iconName) && isEmpty(icon.prefix);
   return (
     <SpaceBetween size='l' direction='horizontal'>
       <TextContent>
@@ -92,10 +94,12 @@ export const IconPicker = ({
           id={'button-svg' + `${randomDomId}`}
           className='tm-icon-picker-button'
           data-testid='icon-button'
-          iconSvg={<FontAwesomeIcon icon={icon} />}
+          iconSvg={!emptyIcon ? <FontAwesomeIcon icon={icon} /> : null}
           iconAlign='right'
           onClick={() => setShowPicker(!showPicker)}
-        />
+        >
+          {emptyIcon && iconButtonText}
+        </Button>
         <div id={'icon-picker' + `${randomDomId}`} style={tmIconPickerContainer}>
           {showPicker && (
             <div data-testid='icon-popover' style={tmIconPickerPopover}>
@@ -115,7 +119,7 @@ export const IconPicker = ({
                   {currentIcons.map((icon, index) => {
                     return <FontAwesomeIcon key={index} icon={icon} onClick={() => handleIconClick(icon)} />;
                   })}
-                </div>{' '}
+                </div>
               </SpaceBetween>
             </div>
           )}

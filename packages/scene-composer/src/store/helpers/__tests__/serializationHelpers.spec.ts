@@ -1,8 +1,8 @@
 import SerializationHelpers, { exportsForTesting } from '../serializationHelpers';
 import { ERROR_MESSAGE_DICT, ErrorCode, ErrorLevel, IModelRefComponent, KnownComponentType } from '../../..';
 import { generateUUID } from '../../../utils/mathUtils';
-import { Component } from '../../../models/SceneModels';
-import { ISceneDocumentInternal, ISceneNodeInternal } from '../..';
+import { Component, Node } from '../../../models/SceneModels';
+import { ISceneComponentInternal, ISceneDocumentInternal, ISceneNodeInternal } from '../..';
 
 jest.mock('../../../utils/mathUtils', () => ({
   ...jest.requireActual('../../../utils/mathUtils'),
@@ -170,7 +170,7 @@ describe('serializationHelpers', () => {
       valueDataBindings: [
         {
           bindingName: 'bindingA',
-          valueDataBinding: { dataBindingContext: 'dataBindingContext' },
+          valueDataBinding: { dataBindingContext: { entityId: 'eid' } },
         },
       ],
     };
@@ -200,7 +200,7 @@ describe('serializationHelpers', () => {
     const component: Component.EntityBindingComponent = {
       type: KnownComponentType.EntityBinding,
       valueDataBinding: {
-        dataBindingContext: 'dataBindingContext',
+        dataBindingContext: { entityId: 'eid' },
       },
     };
     const binding = exportsForTesting.createEntityBindingComponent(component);
@@ -405,7 +405,7 @@ describe('serializationHelpers', () => {
         ref: 'test-uuid',
         icon: 'testIcon',
         ruleBasedMapId: '42',
-        valueDataBinding: { dataBindingContext: 'dataBindingContext' },
+        valueDataBinding: { dataBindingContext: { entityId: 'eid' } },
         navLink: 'https://test-nav.link',
       } as Component.Tag;
 
@@ -485,7 +485,7 @@ describe('serializationHelpers', () => {
         valueDataBindings: {
           speed: {
             ruleBasedMapId: '42',
-            valueDataBinding: { dataBindingContext: 'dataBindingContext' },
+            valueDataBinding: { dataBindingContext: { entityId: 'eid' } },
           },
         },
         config: {
@@ -621,25 +621,24 @@ describe('serializationHelpers', () => {
           ref: 'a2a91acc-3a47-4875-a146-b95741aedc2a',
           type: 'Camera',
           cameraIndex: 0,
-        },
+        } as Component.Camera,
         {
           ref: 'a2a91acc-3a47-4875-a146-b95741aedc2a',
           type: 'testComponent',
           details: { stuff: 'testStuff' },
-        },
+        } as unknown as Component.IComponent,
       ],
-      parentRef: 'testParent',
-      childRefs: ['testNode'],
       properties: { hiddenWhileImmersive: true },
-    };
-    const sceneNodeInternal = exportsForTesting.createSceneNodeInternal(node as any);
-    sceneNodeInternal.components = [...(node.components as any)];
-    sceneNodeInternal.childRefs = node.childRefs;
+    } as Node;
+    const sceneNodeInternal = exportsForTesting.createSceneNodeInternal(node);
+    sceneNodeInternal.components = [...(node.components as ISceneComponentInternal[])];
+    sceneNodeInternal.childRefs = ['testNode'];
     const nodes = {
-      testNode: sceneNodeInternal,
+      layerNode: { ...sceneNodeInternal, ref: 'layerNode', properties: { layerIds: ['layer'] } }, // Node from layer shouldn't be serialized
+      testNode: { ...sceneNodeInternal, ref: 'testNode' },
     };
 
-    const mappedObjectCollector = { Node: { testNode: 0 } };
+    const mappedObjectCollector = { Node: {} };
     const indexedObjectCollector = { testNode: [KnownComponentType.Camera] };
 
     const convertedNodes = exportsForTesting.convertNodes(nodes, mappedObjectCollector, indexedObjectCollector);

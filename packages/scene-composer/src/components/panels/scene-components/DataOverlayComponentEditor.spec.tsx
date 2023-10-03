@@ -1,6 +1,5 @@
 import React from 'react';
-import { act, render } from '@testing-library/react';
-import wrapper from '@awsui/components-react/test-utils/dom';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 
 import { KnownComponentType } from '../../../interfaces';
 import { IDataOverlayComponentInternal, ISceneNodeInternal, useStore } from '../../../store';
@@ -38,6 +37,7 @@ describe('DataOverlayComponentEditor', () => {
   };
   const node = {
     ref: 'node-ref',
+    properties: {},
   } as ISceneNodeInternal;
   const updateComponentInternalMock = jest.fn();
 
@@ -53,22 +53,23 @@ describe('DataOverlayComponentEditor', () => {
   it('should add new binding by clicking add button', async () => {
     useStore('default').setState(baseState);
 
-    const { container } = render(<DataOverlayComponentEditor node={node} component={component} />);
-    const polarisWrapper = wrapper(container);
+    const { getByDisplayValue } = render(<DataOverlayComponentEditor node={node} component={component} />);
 
-    const textarea = polarisWrapper.findTextarea();
+    const textarea = getByDisplayValue(component.dataRows[0].content);
     expect(textarea).not.toBeNull();
 
     const newContent = 'new content';
     act(() => {
-      textarea!.setTextareaValue(newContent);
+      fireEvent.change(textarea, { target: { value: newContent } });
     });
 
-    expect(updateComponentInternalMock).toBeCalledTimes(1);
-    expect(updateComponentInternalMock).toBeCalledWith(
-      node.ref,
-      { ref: component.ref, dataRows: [{ ...component.dataRows[0], content: newContent }] },
-      undefined,
+    waitFor(() => expect(updateComponentInternalMock).toBeCalledTimes(1));
+    waitFor(() =>
+      expect(updateComponentInternalMock).toBeCalledWith(
+        node.ref,
+        { ref: component.ref, dataRows: [{ ...component.dataRows[0], content: newContent }] },
+        undefined,
+      ),
     );
   });
 });

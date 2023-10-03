@@ -1,12 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { CollectionPreferences, CollectionPreferencesProps } from '@cloudscape-design/components';
 
-import { Table, TableColumnDefinition } from '@iot-app-kit/react-components';
+import { Table, TableColumnDefinition, useViewport } from '@iot-app-kit/react-components';
 
-import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
+import EmptyTableComponent from './emptyTableComponent';
+
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import type { DashboardState } from '~/store/state';
 import type { TableWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
+import { useChartSize } from '~/hooks/useChartSize';
+
+import { DEFAULT_PREFERENCES, collectionPreferencesProps, PROPERTY_FILTERING } from './table-config';
+import { TABLE_OVERFLOW_HEIGHT, TABLE_WIDGET_MAX_HEIGHT } from '../constants';
+import { onUpdateWidgetsAction } from '~/store/actions';
+import { useTableItems } from './useTableItems';
 
 export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
   {
@@ -27,22 +36,20 @@ export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
 ];
 
 const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
-  const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
+  const { viewport } = useViewport();
   const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
-  const {
-    queryConfig,
-    columnDefinitions = DEFAULT_TABLE_COLUMN_DEFINITIONS,
-    items = [],
-    thresholds,
-    significantDigits: widgetSignificantDigits,
-  } = widget.properties;
+  const { queryConfig, thresholds, significantDigits: widgetSignificantDigits } = widget.properties;
 
-  const { iotSiteWiseQuery } = useQueries();
-  const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
-  const key = computeQueryConfigKey(viewport, widget.properties.queryConfig);
+  const queries = useQueries(queryConfig.query);
+  const key = createWidgetRenderKey(widget.id);
+
+  const items = useTableItems(queryConfig.query);
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
+  const chartSize = useChartSize(widget);
+  const readOnly = useSelector((state: DashboardState) => state.readOnly);
+  const dispatch = useDispatch();
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
@@ -54,17 +61,47 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
     }
   };
 
+  const setPreferences = (detail: CollectionPreferencesProps.Preferences) => {
+    dispatch(
+      onUpdateWidgetsAction({
+        widgets: [{ ...widget, properties: { ...widget.properties, pageSize: detail.pageSize } }],
+      })
+    );
+  };
+
   return (
-    <div onMouseDown={handleMouseDown}>
+    <div
+      data-testid='table-widget-component'
+      onMouseDown={handleMouseDown}
+      style={{
+        maxHeight: chartSize.height > TABLE_WIDGET_MAX_HEIGHT ? `${TABLE_WIDGET_MAX_HEIGHT}px` : chartSize.height,
+        overflow: chartSize.height > TABLE_OVERFLOW_HEIGHT ? 'auto' : 'scroll',
+      }}
+    >
       <Table
         resizableColumns
         key={key}
         queries={queries}
         viewport={viewport}
-        columnDefinitions={columnDefinitions}
+        columnDefinitions={DEFAULT_TABLE_COLUMN_DEFINITIONS}
         items={items}
         thresholds={thresholds}
         significantDigits={significantDigits}
+        sortingDisabled
+        stickyHeader
+        pageSize={widget.properties.pageSize ?? DEFAULT_PREFERENCES.pageSize}
+        paginationEnabled
+        empty={<EmptyTableComponent />}
+        preferences={
+          !readOnly && (
+            <CollectionPreferences
+              {...collectionPreferencesProps}
+              preferences={{ pageSize: widget.properties.pageSize ?? DEFAULT_PREFERENCES.pageSize }}
+              onConfirm={({ detail }) => setPreferences(detail)}
+            />
+          )
+        }
+        propertyFiltering={PROPERTY_FILTERING}
       />
     </div>
   );

@@ -1,9 +1,9 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 
 import AnchorComponent from '..';
-import { IAnchorComponentInternal, ISceneNodeInternal } from '../../../../store';
 import { DefaultAnchorStatus } from '../../../..';
+import { IAnchorComponentInternal, ISceneNodeInternal } from '../../../../store';
 
 jest.mock('../../../../augmentations/components/three-fiber/anchor/AnchorWidget', () => ({
   AnchorWidget: 'AnchorWidget',
@@ -26,7 +26,7 @@ describe('AnchorComponent', () => {
   } as unknown as IAnchorComponentInternal;
 
   it('should render correctly with default icon', () => {
-    const container = renderer.create(<AnchorComponent node={node} component={component} />);
+    const container = create(<AnchorComponent node={node} component={component} />);
     expect(container).toMatchSnapshot();
   });
 
@@ -37,7 +37,7 @@ describe('AnchorComponent', () => {
       navLink: 'https://test.url',
       valueDataBinding: { test: 'test' },
     } as unknown as IAnchorComponentInternal;
-    const container = renderer.create(<AnchorComponent node={node} component={component} />);
+    const container = create(<AnchorComponent node={node} component={component} />);
     expect(container).toMatchSnapshot();
   });
 });

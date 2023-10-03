@@ -1,18 +1,14 @@
 import React from 'react';
-import SingleQueryWidget from '../queryWidget/singleQueryWidget';
 import StatusWidgetComponent from './component';
 import StatusIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';
 import type { StatusWidget } from '../types';
+import { STATUS_WIDGET_INITIAL_HEIGHT, STATUS_WIDGET_INITIAL_WIDTH } from '../constants';
 
 export const statusPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
     registerWidget<StatusWidget>('status', {
-      render: (widget) => (
-        <SingleQueryWidget {...widget}>
-          <StatusWidgetComponent {...widget} />
-        </SingleQueryWidget>
-      ),
+      render: (widget) => <StatusWidgetComponent {...widget} />,
       componentLibrary: {
         name: 'Status',
         icon: StatusIcon,
@@ -26,8 +22,8 @@ export const statusPlugin: DashboardPlugin = {
         secondaryFont: {},
       }),
       initialSize: {
-        height: 180,
-        width: 270,
+        height: STATUS_WIDGET_INITIAL_HEIGHT,
+        width: STATUS_WIDGET_INITIAL_WIDTH,
       },
     });
   },

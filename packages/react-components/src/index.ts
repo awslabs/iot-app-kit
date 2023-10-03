@@ -4,7 +4,7 @@
  * carefully consider what should be part of the public API. Attempt to minimize the overall API surface area.
  */
 
-export * from './components/video-player';
+export { VideoPlayer } from './components/video-player';
 export { ResourceExplorer } from './components';
 export { Table } from './components/table';
 export { LineChart } from './components/line-chart';
@@ -27,5 +27,7 @@ export { useHasFeatureFlag } from './hooks/useHasFeatureFlag';
 export { getConfigValue } from './store/index';
 
 export { Chart } from './components/chart';
+
+export { TrendCursorSync } from './components/trend-cursor-sync';
 
 export type { TableColumnDefinition, TableItem, TableItemRef } from './components/table';

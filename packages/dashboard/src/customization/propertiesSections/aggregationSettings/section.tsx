@@ -2,7 +2,7 @@ import React from 'react';
 import type { FC } from 'react';
 import { SelectProps, ExpandableSection, Box, Select } from '@cloudscape-design/components';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import type { SiteWiseAssetQuery, SiteWisePropertyAliasQuery } from '@iot-app-kit/source-iotsitewise';
 import type { SiteWiseQueryConfig } from '~/customization/widgets/types';
 import { AssetPropertyQuery, AssetQuery } from '@iot-app-kit/source-iotsitewise/dist/es/time-series-data/types';
 import { getResolutionOptions, getAggregationOptions } from './helpers';
@@ -29,10 +29,13 @@ const Section: React.FC<React.PropsWithChildren> = ({ children }) => (
   </ExpandableSection>
 );
 
-const getAggregationSectionOptions = (siteWiseAssetQuery: SiteWiseAssetQuery | undefined, supportsRawData: boolean) => {
-  const { aggregationType, resolution } = siteWiseAssetQuery?.assets[0]?.properties[0] ?? {};
+const getAggregationSectionOptions = (
+  siteWiseQuery: Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery> | undefined,
+  supportsRawData: boolean
+) => {
+  const { aggregationType, resolution } = siteWiseQuery?.assets?.at(0)?.properties?.at(0) ?? {};
 
-  const dataTypeSet = useWidgetDataTypeSet(siteWiseAssetQuery);
+  const dataTypeSet = useWidgetDataTypeSet(siteWiseQuery);
   const filteredResolutionOptions = getResolutionOptions(supportsRawData);
   const filteredAggregationOptions = getAggregationOptions(supportsRawData, dataTypeSet, resolution);
 
@@ -68,7 +71,7 @@ const AggregationSettings: FC<AggregationSettingsProps> = ({ queryConfig, update
   const siteWiseAssetQuery = queryConfig.value;
 
   const { filteredResolutionOptions, filteredAggregationOptions, selectedAggregation, selectedResolution } =
-    getAggregationSectionOptions(siteWiseAssetQuery, supportsRawData);
+    getAggregationSectionOptions(siteWiseAssetQuery as SiteWiseAssetQuery, supportsRawData);
 
   // given a resolution, determine what the new aggregation should be
   const getUpdatedAggregation = (resolution?: string) => {
@@ -93,7 +96,7 @@ const AggregationSettings: FC<AggregationSettingsProps> = ({ queryConfig, update
     const newAggregation = getUpdatedAggregation(newResolution);
 
     // new assets with updated resolution and aggregation
-    const assets = siteWiseAssetQuery.assets.map((asset: AssetQuery) => ({
+    const assets = siteWiseAssetQuery.assets?.map((asset: AssetQuery) => ({
       ...asset,
       properties: asset.properties.map((assetProp: AssetPropertyQuery) => ({
         ...assetProp,
@@ -102,7 +105,13 @@ const AggregationSettings: FC<AggregationSettingsProps> = ({ queryConfig, update
       })),
     }));
 
-    updateQuery({ assets });
+    const properties = siteWiseAssetQuery.properties?.map((property) => ({
+      ...property,
+      resolution: detail.selectedOption.value,
+      aggregationType: newAggregation as AggregateType,
+    }));
+
+    updateQuery({ assets, properties });
   };
 
   const onUpdateAggregation: SelectProps['onChange'] = ({ detail }) => {
@@ -112,7 +121,7 @@ const AggregationSettings: FC<AggregationSettingsProps> = ({ queryConfig, update
     const newResolution = getUpdatedResolution(newAggregation);
 
     // new assets with updated resolution and aggregation
-    const assets = siteWiseAssetQuery.assets.map((asset: AssetQuery) => ({
+    const assets = siteWiseAssetQuery.assets?.map((asset: AssetQuery) => ({
       ...asset,
       properties: asset.properties.map((assetProp: AssetPropertyQuery) => ({
         ...assetProp,
@@ -121,7 +130,13 @@ const AggregationSettings: FC<AggregationSettingsProps> = ({ queryConfig, update
       })),
     }));
 
-    updateQuery({ assets });
+    const properties = siteWiseAssetQuery.properties?.map((property) => ({
+      ...property,
+      resolution: newResolution,
+      aggregationType: newAggregation,
+    }));
+
+    updateQuery({ assets, properties });
   };
 
   return (

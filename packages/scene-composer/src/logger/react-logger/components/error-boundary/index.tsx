@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { Component, ContextType, ReactNode } from 'react';
 
 import LoggingContext from '../../contexts/logging';
 
@@ -14,9 +14,9 @@ interface ErrorBoundaryState {
   errorInfo?: any;
 }
 
-class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   static contextType = LoggingContext;
-  context: React.ContextType<typeof LoggingContext> | undefined;
+  context: ContextType<typeof LoggingContext> | undefined;
 
   constructor(props: ErrorBoundaryProps) {
     super(props);

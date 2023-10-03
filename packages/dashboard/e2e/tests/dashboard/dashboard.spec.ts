@@ -12,7 +12,6 @@ test('dashboard', async ({ page }) => {
   const frame = page.locator(TEST_IFRAME); // Need to go into frame otherwise the `locator` won't locate the selection.
 
   // KPI will always show value shows value
-  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Component library');
   await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
 });
 
@@ -23,7 +22,6 @@ test('dashboard drag and drop text widget', async ({ page }) => {
   const dragGenerator = dragAndDrop(page);
 
   // KPI will always show value shows value
-  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Component library');
   await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
 
   const textWidget = page.getByRole('button', { name: 'add Text widget' });
@@ -43,7 +41,6 @@ test('dashboard resize, move, and select gestures', async ({ page }) => {
   const grid = gridUtil(page);
 
   // KPI will always show value shows value
-  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Component library');
   await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
 
   const location1 = await grid.cellLocation(0, 0);
@@ -97,7 +94,6 @@ test('dashboard add and remove multiple widgets', async ({ page }) => {
   const grid = gridUtil(page);
 
   // KPI will always show value shows value
-  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Component library');
   await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
 
   const location1 = await grid.cellLocation(0, 0);
@@ -117,6 +113,10 @@ test('dashboard add and remove multiple widgets', async ({ page }) => {
   await grid.selectAll();
 
   await page.keyboard.down('Delete');
+
+  const deleteBtn = await page.getByRole('button', { name: 'Delete', exact: true });
+
+  await deleteBtn.click();
 
   const deletedWidgets = await grid.widgets();
   expect(deletedWidgets).toHaveLength(0);

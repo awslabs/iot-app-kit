@@ -18,6 +18,7 @@ export enum COMPOSER_FEATURES {
   AutoQuery = 'AutoQuery',
   Animations = 'Animations',
   DynamicScene = 'DynamicScene',
+  FirstPerson = 'FirstPerson',
 
   // Deprecated features (to be removed)
   EnvironmentModel = 'EnvironmentModel',

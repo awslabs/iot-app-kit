@@ -38,7 +38,7 @@ export const useGridDragAndDrop = ({
   });
   const { dragRef } = useDragMonitor({
     readOnly,
-    enabled,
+    enabled: enabled && !union,
     union,
     target,
     dashboardGrid,

@@ -27,6 +27,7 @@ import {
   IEntityBindingComponent,
 } from '../interfaces';
 import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../three/OrbitControls';
+import { PointerLockControls as PointerLockControlsImpl } from '../three/PointerLockControls';
 
 export type ISerializationErrorDetails = IErrorDetails;
 
@@ -45,7 +46,7 @@ export enum DisplayMessageCategory {
   Info = 'Info',
 }
 
-export type CameraControlImpl = MapControlsImpl | OrbitControlsImpl;
+export type CameraControlImpl = OrbitControlsImpl | MapControlsImpl | PointerLockControlsImpl;
 export type TweenValueObject = { x: number; y: number; z: number };
 
 export type CursorStyle = 'move' | 'edit';
@@ -73,6 +74,11 @@ export type ITransformInternal = ITransform;
 export type IRuleBasedMapInternal = IRuleBasedMap;
 export type IRuleStatementInternal = IRuleStatement;
 
+// The list os scene node property keys that are for runtime only and are not saved to data base.
+export enum SceneNodeRuntimeProperty {
+  LayerIds = 'layerIds', // The layer ids that the node is rendered from.
+}
+
 export interface ISceneNodeInternal extends ISceneNode {
   // below fields are not nullable internally
   ref: string;
@@ -81,7 +87,10 @@ export interface ISceneNodeInternal extends ISceneNode {
   transformConstraint: ITransformConstraint;
   components: ISceneComponentInternal[];
   childRefs: string[];
-  properties: Partial<Record<'alwaysVisible' | 'matterportId' | 'hiddenWhileImmersive', boolean | string>>;
+  properties: Partial<
+    Record<'alwaysVisible' | 'matterportId' | 'hiddenWhileImmersive', boolean | string> &
+      Record<SceneNodeRuntimeProperty, string[]>
+  >;
 }
 
 export interface ISceneDocumentInternal extends ISceneDocument {

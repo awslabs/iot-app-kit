@@ -9,8 +9,6 @@ import useDataStore from '../../../store';
 import { Action } from '../contextMenu/ChartContextMenu';
 import copy from 'copy-to-clipboard';
 
-let trendCursorStaticIndex = 0;
-
 const useTrendCursorsEvents = ({
   chartRef,
   graphic,
@@ -45,6 +43,9 @@ const useTrendCursorsEvents = ({
   const onContextMenuRef = useRef(onContextMenu);
   const visualizationRef = useRef(visualization);
 
+  const seriesDep = JSON.stringify(series);
+  const graphicDep = JSON.stringify(graphic);
+
   // these properties will be updated in every render so that the event handlers below is not re-rendered everytime
   useEffect(() => {
     seriesRef.current = series;
@@ -54,7 +55,7 @@ const useTrendCursorsEvents = ({
     sizeRef.current = size;
     setGraphicRef.current = setGraphic;
     visualizationRef.current = visualization;
-  }, [series, size, isInCursorAddMode, setGraphic, isInSyncMode, graphic, visualization]);
+  }, [seriesDep, size, isInCursorAddMode, setGraphic, isInSyncMode, graphicDep, visualization]);
 
   // shared add function between the context menu and on click action
   const addNewTrendCursor = ({ posX, ignoreHotKey }: { posX: number; ignoreHotKey: boolean }) => {
@@ -66,19 +67,19 @@ const useTrendCursorsEvents = ({
           groupId: groupId ?? '',
           tcId: `trendCursor-${uuid()}`,
           timestamp: timestampInMs,
-          tcHeaderColorIndex: trendCursorStaticIndex++,
         });
       } else {
         const newTc = getNewTrendCursor({
           size: sizeRef.current,
-          tcHeaderColorIndex: trendCursorStaticIndex++,
           series: seriesRef.current,
           x: posX,
           chartRef,
           visualization,
         });
 
-        setGraphicRef.current([...graphicRef.current, newTc]);
+        if (newTc) {
+          setGraphicRef.current([...graphicRef.current, newTc]);
+        }
       }
     }
   };

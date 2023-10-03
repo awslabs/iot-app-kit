@@ -16,7 +16,7 @@ import {
   ITagSettings,
   IOverlaySettings,
 } from '../interfaces';
-import { CameraControlImpl } from '../store/internalInterfaces';
+import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../three/OrbitControls';
 
 /******************************************************************************
  * Document Constants
@@ -140,12 +140,14 @@ export const DEFAULT_OVERLAY_GLOBAL_SETTINGS: IOverlaySettings = {
 /******************************************************************************
  * Camera Constants
  ******************************************************************************/
-export const DEFAULT_CAMERA_CONTROLS_OPTIONS: Pick<CameraControlImpl, 'dampingFactor' | 'maxDistance' | 'minDistance'> =
-  {
-    dampingFactor: 0.2,
-    maxDistance: Infinity,
-    minDistance: 0,
-  };
+export const DEFAULT_ORBIT_CAMERA_CONTROLS_OPTIONS: Pick<
+  OrbitControlsImpl | MapControlsImpl,
+  'dampingFactor' | 'maxDistance' | 'minDistance'
+> = {
+  dampingFactor: 0.2,
+  maxDistance: Infinity,
+  minDistance: 0,
+};
 export const DEFAULT_CAMERA_POSITION: Vector3 = [5, 5, 5];
 export const DEFAULT_CAMERA_OPTIONS: Pick<THREE.PerspectiveCamera, 'far' | 'fov' | 'near'> = {
   far: 1000,
