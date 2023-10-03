@@ -1,5 +1,4 @@
-import { InternalGraphicComponentGroupOption } from '../types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { TableProps } from '@cloudscape-design/components/table/interfaces';
 import { GraphicComponentTextOption } from 'echarts/types/src/component/graphic/GraphicModel';
 import { SeriesOption } from 'echarts';
@@ -7,17 +6,25 @@ import { LineSeriesOption } from 'echarts/types/src/chart/line/LineSeries';
 import { DataStream } from '@iot-app-kit/core';
 import { useHover } from 'react-use';
 
-import { borderRadiusDropdown, colorBackgroundDropdownItemHover, spaceScaledS } from '@cloudscape-design/design-tokens';
+import {
+  borderRadiusDropdown,
+  colorBackgroundDropdownItemHover,
+  spaceStaticXxs,
+} from '@cloudscape-design/design-tokens';
 
+import { InternalGraphicComponentGroupOption } from '../types';
 import { useChartStore } from '../store';
 import { isDataStreamInList } from '../../../utils/isDataStreamInList';
+import { CHART_LEGEND_WRAPPER_WIDTH } from '../eChartsConstants';
 
-const LegendCell = (e: { datastream: DataStream; lineColor: string; name: string }) => {
-  const { datastream, lineColor, name } = e;
+const LegendCell = (e: { datastream: DataStream; lineColor: string; name: string; width: number }) => {
+  const { datastream, lineColor, name, width } = e;
   const highlightDataStream = useChartStore((state) => state.highlightDataStream);
   const unHighlightDataStream = useChartStore((state) => state.unHighlightDataStream);
   const highlightedDataStreams = useChartStore((state) => state.highlightedDataStreams);
   const isDataStreamHighlighted = isDataStreamInList(highlightedDataStreams);
+  const nameRef = useRef<HTMLDivElement | null>(null);
+  const [isNameTruncated, setIsNameTruncated] = useState(false);
 
   const toggleHighlighted = () => {
     if (isDataStreamHighlighted(datastream)) {
@@ -47,10 +54,27 @@ const LegendCell = (e: { datastream: DataStream; lineColor: string; name: string
     </div>
   ));
 
+  useEffect(() => {
+    if (nameRef.current) {
+      setIsNameTruncated(nameRef.current.scrollWidth > nameRef.current.clientWidth);
+    }
+  }, [name, width]);
+
   return (
     <div className='base-chart-legend-row-data-container'>
       {lineIcon}
-      <div style={{ marginBlock: spaceScaledS }}>{name}</div>
+      <div
+        className='base-chart-legend-row-data'
+        style={{
+          marginBlock: spaceStaticXxs,
+          width: `${width - CHART_LEGEND_WRAPPER_WIDTH}px`,
+          maxWidth: `${width - CHART_LEGEND_WRAPPER_WIDTH}px`,
+        }}
+        ref={nameRef}
+        title={isNameTruncated ? name : undefined}
+      >
+        {name}
+      </div>
     </div>
   );
 };
@@ -59,15 +83,17 @@ const useChartsLegend = ({
   datastreams,
   graphic,
   series,
+  width,
 }: {
   datastreams: DataStream[];
   graphic: InternalGraphicComponentGroupOption[];
   series: SeriesOption[];
+  width: number;
 }) => {
   const legendColumnDefinition = {
     id: 'Legends',
     header: <div className='base-chart-legend-col-header'>Properties</div>,
-    cell: (e: { datastream: DataStream; lineColor: string; name: string }) => <LegendCell {...e} />,
+    cell: (e: { datastream: DataStream; lineColor: string; name: string; width: number }) => <LegendCell {...e} />,
     isRowHeader: true,
   };
 
@@ -112,6 +138,7 @@ const useChartsLegend = ({
         // TODO: may need to update this for non-line type graphs
         lineColor: (lineItem as LineSeriesOption)?.lineStyle?.color ?? '',
         datastream: datastreams.find((ds) => lineItem.id === ds.id),
+        width,
         ...values,
       };
     });
