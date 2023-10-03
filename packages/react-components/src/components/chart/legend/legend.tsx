@@ -12,6 +12,7 @@ const Legend = (legendOptions: {
   datastreams: DataStream[];
   series: SeriesOption[];
   graphic: InternalGraphicComponentGroupOption[];
+  width: number;
 }) => {
   const { items: allItems, columnDefinitions } = useChartsLegend(legendOptions);
 
