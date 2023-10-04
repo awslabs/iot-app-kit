@@ -50,40 +50,34 @@ export function ToolbarItem<T extends ToolbarItemOptions>({
     return null;
   };
 
-  const handleItemClick = useCallback(
-    (item: T) => {
+  const handleItemClick = (item: T) => {
+    type === 'mode-select' && setSelectedItem(item);
+    onSelect?.(item);
+  };
+
+  const handleItemKeyDown = (item: T, e, focusIndex?: number) => {
+    if (e.key === 'Enter') {
+      setShowMenu(true);
       type === 'mode-select' && setSelectedItem(item);
       onSelect?.(item);
-    },
-    [type],
-  );
-
-  const handleItemKeyDown = useCallback(
-    (item: T, e, focusIndex?: number) => {
-      if (e.key === 'Enter') {
-        setShowMenu(true);
-        type === 'mode-select' && setSelectedItem(item);
-        onSelect?.(item);
+    }
+    // if not a submenu item, return
+    if (focusIndex === undefined) {
+      return;
+    }
+    if (showMenu) {
+      if (e.key === 'Escape') {
+        itemContainerRef.current?.focus();
+        setShowMenu(false);
+      } else if (e.key === 'Tab' && !e.shiftKey && isItemLast(focusIndex) && firstItemRef.current) {
+        e.preventDefault(); // prevent tab from changing focus
+        firstItemRef.current.focus();
+      } else if (e.key === 'Tab' && e.shiftKey && isItemFirst(focusIndex) && lastItemRef.current) {
+        e.preventDefault(); // prevent tab + shift from changing focus
+        lastItemRef.current.focus();
       }
-      // if not a submenu item, return
-      if (focusIndex === undefined) {
-        return;
-      }
-      if (showMenu) {
-        if (e.key === 'Escape') {
-          itemContainerRef.current?.focus();
-          setShowMenu(false);
-        } else if (e.key === 'Tab' && !e.shiftKey && isItemLast(focusIndex) && firstItemRef.current) {
-          e.preventDefault(); // prevent tab from changing focus
-          firstItemRef.current.focus();
-        } else if (e.key === 'Tab' && e.shiftKey && isItemFirst(focusIndex) && lastItemRef.current) {
-          e.preventDefault(); // prevent tab + shift from changing focus
-          lastItemRef.current.focus();
-        }
-      }
-    },
-    [showMenu],
-  );
+    }
+  };
 
   useEffect(() => {
     initialSelectedItem && setSelectedItem(initialSelectedItem);
