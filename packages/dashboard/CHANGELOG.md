@@ -1,5 +1,30 @@
 # Changelog
 
+## [8.1.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v8.0.2...dashboard-v8.1.0) (2023-10-04)
+
+
+### Bug Fixes
+
+* **dashboard:** correctly update aggregation and resolution configs ([e749d48](https://github.com/awslabs/iot-app-kit/commit/e749d48985f9d9d419a98a299ab933273fb45c85))
+* remove slashes from property alias when requesting latest in query editor ([fbead83](https://github.com/awslabs/iot-app-kit/commit/fbead83ac6765e4fed27b73925a9c4d460dc5a08))
+* remove viewport and query from widget render key ([1587e2a](https://github.com/awslabs/iot-app-kit/commit/1587e2aa05887b1e9b1e486c153e8adc74cfde21))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 8.0.2 to 8.1.0
+    * @iot-app-kit/core bumped from 8.0.2 to 8.1.0
+    * @iot-app-kit/core-util bumped from 8.0.2 to 8.1.0
+    * @iot-app-kit/react-components bumped from 8.0.2 to 8.1.0
+    * @iot-app-kit/source-iotsitewise bumped from 8.0.2 to 8.1.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 8.0.2 to 8.1.0
+    * @iot-app-kit/testing-util bumped from 8.0.2 to 8.1.0
+    * @iot-app-kit/ts-config bumped from 8.0.2 to 8.1.0
+    * eslint-config-iot-app-kit bumped from 8.0.2 to 8.1.0
+
 ## [8.0.2](https://github.com/awslabs/iot-app-kit/compare/dashboard-v8.0.1...dashboard-v8.0.2) (2023-09-30)
 
 

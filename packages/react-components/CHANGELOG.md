@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [8.1.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v8.0.2...react-components-v8.1.0) (2023-10-04)
+
+
+### Bug Fixes
+
+* **video player:** correcting the VideoPlayer export ([18213d7](https://github.com/awslabs/iot-app-kit/commit/18213d7b254355776900c0e6c735ce6a039ac3f5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 8.0.2 to 8.1.0
+    * @iot-app-kit/core bumped from 8.0.2 to 8.1.0
+    * @iot-app-kit/core-util bumped from 8.0.2 to 8.1.0
+    * @iot-app-kit/source-iottwinmaker bumped from 8.0.2 to 8.1.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 8.0.2 to 8.1.0
+    * @iot-app-kit/source-iotsitewise bumped from 8.0.2 to 8.1.0
+    * @iot-app-kit/testing-util bumped from 8.0.2 to 8.1.0
+    * @iot-app-kit/ts-config bumped from 8.0.2 to 8.1.0
+    * eslint-config-iot-app-kit bumped from 8.0.2 to 8.1.0
+
 ## [8.0.2](https://github.com/awslabs/iot-app-kit/compare/react-components-v8.0.1...react-components-v8.0.2) (2023-09-30)
 
 
