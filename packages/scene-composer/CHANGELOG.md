@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v8.0.2...scene-composer-v8.1.0) (2023-10-04)
+
+
+### Features
+
+* **composer:** add keyboard nav to floating toolbar ([efd375f](https://github.com/awslabs/iot-app-kit/commit/efd375fc7ba23fd7fe7617783f45a140e464ccdb))
+* **composer:** utils to handle camera component in entity ([7ad3bf5](https://github.com/awslabs/iot-app-kit/commit/7ad3bf51a7d548edc242a6d2c9de13167ec2d4bb))
+* **composer:** utils to handle motion indicator component in entity ([4a1a8b4](https://github.com/awslabs/iot-app-kit/commit/4a1a8b4a972670e56363f445aed7038253e5192d))
+* **dynamic scene:** crud functionalities for model ref ([2314926](https://github.com/awslabs/iot-app-kit/commit/2314926f385c44f76243223839f9d3d4f6325c51))
+* **scene composer:** icon picker rule changes ([e126b53](https://github.com/awslabs/iot-app-kit/commit/e126b53371a0c3a03a4e7ff1d48f104c9b99c395))
+
+
+### Bug Fixes
+
+* **composer:** bug fixes for dynamic scene ([2f3b396](https://github.com/awslabs/iot-app-kit/commit/2f3b396bc9aa41c2e4df17b0d9a47863db97f211))
+* **composer:** remove useCallback from menu event handlers ([0a7c133](https://github.com/awslabs/iot-app-kit/commit/0a7c13336760f2f0548e8c902a95086fb4d27be4))
+* **icon rules:** align icon-picker layout with target editor ([536f391](https://github.com/awslabs/iot-app-kit/commit/536f3910d2f50cfa41a80e98b43a43f59d0a249f))
+* **scene:** fix camera returning to last target on mode change ([08e608d](https://github.com/awslabs/iot-app-kit/commit/08e608dfffdbdb990beb421ead3a504da607d50f))
+* **scene:** remove transform controls from raycast ([9cd9861](https://github.com/awslabs/iot-app-kit/commit/9cd9861768fb538726f22541aa54ef05c0f4adf9))
+* update HistoryItemGroup snap ([ff64273](https://github.com/awslabs/iot-app-kit/commit/ff64273d2ec48609a4edb2156a2ea9e4bb04a1b4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 8.0.2 to 8.1.0
+    * @iot-app-kit/react-components bumped from 8.0.2 to 8.1.0
+    * @iot-app-kit/related-table bumped from 8.0.2 to 8.1.0
+    * @iot-app-kit/source-iottwinmaker bumped from 8.0.2 to 8.1.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 8.0.2 to 8.1.0
+
 ## [8.0.2](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v8.0.1...scene-composer-v8.0.2) (2023-09-30)
 
 
