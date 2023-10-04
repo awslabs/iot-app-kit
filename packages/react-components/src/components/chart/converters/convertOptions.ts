@@ -19,11 +19,9 @@ type ConvertChartOptions = Pick<
 export const useConvertedOptions = ({
   series,
   options,
-  shouldShowYAxisLegend,
 }: {
   options: ConvertChartOptions;
   series: SeriesOption[];
-  shouldShowYAxisLegend: boolean;
 }): EChartsOption => {
   const { backgroundColor, significantDigits, titleText } = options;
   const text = series.length === 0 ? 'No data present' : titleText ?? '';
@@ -37,9 +35,9 @@ export const useConvertedOptions = ({
         top: 10,
       },
       backgroundColor,
-      grid: convertGrid(options.legend, shouldShowYAxisLegend),
+      grid: convertGrid(options.legend),
       tooltip: convertTooltip(significantDigits),
     }),
-    [backgroundColor, significantDigits, text, options.legend, shouldShowYAxisLegend]
+    [backgroundColor, significantDigits, text, options.legend]
   );
 };

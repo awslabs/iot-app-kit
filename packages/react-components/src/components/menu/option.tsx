@@ -23,6 +23,8 @@ export type MenuOptionProps = {
   disabled?: boolean;
   label?: string;
   classNames?: string;
+  styles?: React.CSSProperties;
+  highlighted?: boolean;
   iconStart?: () => React.ReactElement | React.ReactNode;
   iconEnd?: () => React.ReactElement | React.ReactNode;
   onPointerEnter?: (e: React.PointerEvent) => void;
@@ -45,7 +47,9 @@ export const MenuOption: React.FC<PropsWithChildren<MenuOptionProps>> = ({
   disabled,
   label,
   classNames,
+  styles,
   children,
+  highlighted,
   iconStart,
   iconEnd,
   onPointerEnter,
@@ -72,7 +76,7 @@ export const MenuOption: React.FC<PropsWithChildren<MenuOptionProps>> = ({
     else if (onClick && isPointerEvent(e)) onClick(e);
   };
 
-  const hoverStyle = hover && {
+  const hoverStyle = (hover || highlighted) && {
     backgroundColor: colorBackgroundDropdownItemHover,
     boxShadow: `0 0 0 ${spaceScaledXxxs} ${colorBorderControlDefault}`,
   };
@@ -92,6 +96,7 @@ export const MenuOption: React.FC<PropsWithChildren<MenuOptionProps>> = ({
         lineHeight: spaceScaledL,
         borderRadius,
         borderBottom: `1px solid ${colorBorderDividerDefault}`,
+        ...styles,
       }}
       className={`menu-option ${classNames}`}
       onPointerEnter={handlePointerEnter}

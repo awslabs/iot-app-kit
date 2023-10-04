@@ -1,9 +1,15 @@
 .axis-menu {
-  box-sizing: border-box;
+  /* important required because dashboard styles override it */
+  box-sizing: border-box !important;
   overflow-y: auto;
+}
+
+.axis-menu-option {
+  gap: 8px;
 }
 
 .axis-menu-option-value {
   text-overflow: ellipsis;
   overflow: hidden;
+  font-size: 14px;
 }
