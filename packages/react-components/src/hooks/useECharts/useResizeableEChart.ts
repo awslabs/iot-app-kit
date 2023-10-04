@@ -8,7 +8,9 @@ import {
 import { ResizeCallbackData } from 'react-resizable';
 import { useMeasure } from 'react-use';
 
-const getChartWidth = (width: number) => width * CHART_RESIZE_INITIAL_FACTOR;
+const getChartWidth = (width: number, staticWidth: number) => {
+  return width * CHART_RESIZE_INITIAL_FACTOR - staticWidth;
+};
 
 /**
  * hook to set up the size of an echarts instance within the base chart component
@@ -31,7 +33,9 @@ export const useResizeableEChart = (
 ) => {
   const { width, height } = size;
   const [leftLegendRef, { width: leftLegendWidth }] = useMeasure<HTMLDivElement>();
-  const [chartWidth, setWidth] = useState(getChartWidth(width));
+  const [chartWidth, setWidth] = useState(getChartWidth(width, leftLegendWidth));
+
+  const rightLegendWidth = useMemo(() => width - leftLegendWidth - chartWidth, [width, leftLegendWidth, chartWidth]);
 
   const onResize = (_event: SyntheticEvent, data: ResizeCallbackData) => {
     _event.stopPropagation();
@@ -39,7 +43,7 @@ export const useResizeableEChart = (
   };
 
   useEffect(() => {
-    setWidth(getChartWidth(width));
+    setWidth(getChartWidth(width, leftLegendWidth));
   }, [width, leftLegendWidth]);
 
   useEffect(() => {
@@ -59,7 +63,7 @@ export const useResizeableEChart = (
     height,
     chartWidth,
     leftLegendWidth,
-    rightLegendWidth: width - leftLegendWidth - chartWidth,
+    rightLegendWidth,
     onResize,
     minConstraints,
     maxConstraints,
