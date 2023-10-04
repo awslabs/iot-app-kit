@@ -30,6 +30,11 @@ import {
 } from '~/customization/propertiesSections/propertiesAndAlarmsSettings/icons';
 import { ClickDetail, NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 
+const numberOrUndefined = (number: string) => {
+  const parsed = Number(number);
+  return isNaN(parsed) || number.length === 0 ? undefined : parsed;
+};
+
 const YAxisPropertyConfig = ({
   resetStyles,
   property,
@@ -76,7 +81,7 @@ const YAxisPropertyConfig = ({
                 controlId='y-axis-min'
                 value={`${property.yAxis?.yMin ?? ''}`}
                 type='number'
-                onChange={({ detail }) => onUpdateYAxis({ ...property.yAxis, yMin: parseInt(detail.value) })}
+                onChange={({ detail }) => onUpdateYAxis({ ...property.yAxis, yMin: numberOrUndefined(detail.value) })}
               />
             </SpaceBetween>
             <SpaceBetween size='s' direction='horizontal'>
@@ -87,7 +92,7 @@ const YAxisPropertyConfig = ({
                 controlId='y-axis-max'
                 value={`${property.yAxis?.yMax ?? ''}`}
                 type='number'
-                onChange={({ detail }) => onUpdateYAxis({ ...property.yAxis, yMax: parseInt(detail.value) })}
+                onChange={({ detail }) => onUpdateYAxis({ ...property.yAxis, yMax: numberOrUndefined(detail.value) })}
               />
             </SpaceBetween>
           </SpaceBetween>
