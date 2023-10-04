@@ -1,0 +1,31 @@
+{
+  "name": "next-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@cloudscape-design/components": "^3.0.286",
+    "@iot-app-kit/components": "*",
+    "@iot-app-kit/core": "*",
+    "@iot-app-kit/react-components": "*",
+    "@iot-app-kit/related-table": "*",
+    "@iot-app-kit/scene-composer": "*",
+    "@iot-app-kit/source-iotsitewise": "*",
+    "@iot-app-kit/source-iottwinmaker": "*",
+    "@iot-app-kit/table": "*",
+    "@types/node": "20.6.2",
+    "@types/react": "18.2.22",
+    "@types/react-dom": "18.2.7",
+    "eslint": "8.49.0",
+    "eslint-config-next": "13.5.1",
+    "next": "13.5.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "5.2.2"
+  }
+}
