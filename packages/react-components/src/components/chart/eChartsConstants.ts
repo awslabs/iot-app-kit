@@ -90,7 +90,7 @@ export const CHART_RESIZE_MIN_FACTOR = 0.3;
 // this is an arbitrary value, so that user can almost "close" the legend section if they want to
 export const CHART_RESIZE_MAX_FACTOR = 0.85;
 
-export const MULTI_Y_AXIS_LEGEND_WIDTH = 128;
+export const MULTI_Y_AXIS_LEGEND_WIDTH = 170;
 
 // style constants
 export const EMPHASIZE_SCALE_CONSTANT = 2;
