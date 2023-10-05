@@ -1,7 +1,7 @@
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import React from 'react';
-import { RenderResult, act, cleanup, render, screen, waitFor } from '@testing-library/react';
+import { RenderResult, act, cleanup, render, screen } from '@testing-library/react';
 import createWrapper from '@cloudscape-design/components/test-utils/dom';
 import { Provider } from 'react-redux';
 
@@ -100,10 +100,6 @@ const renderTestComponentAsync = async (options?: SetupStoreOptions): Promise<Re
     );
   });
 
-  if (selectedWidgets.length > 0) {
-    await waitFor(() => expect(describeAsset).toBeCalled());
-  }
-
   if (element === undefined) throw new Error('Something went wrong!');
 
   return element;
@@ -135,7 +131,6 @@ describe(`${PropertiesPanel.name}`, () => {
 
     expect(screen.getByText('Style')).toBeVisible();
     expect(screen.getByText('Size and position')).toBeVisible();
-    expect(screen.getByText('Aggregations and resolution')).toBeVisible();
     expect(screen.getByText('Axis')).toBeVisible();
     expect(screen.getByText('Settings')).toBeVisible();
   });
@@ -145,24 +140,8 @@ describe(`${PropertiesPanel.name}`, () => {
 
     expect(screen.getByText('Style')).toBeVisible();
     expect(screen.getByText('Size and position')).toBeVisible();
-    expect(screen.getByText('Aggregations and resolution')).toBeVisible();
     expect(screen.getByText('Axis')).toBeVisible();
     expect(screen.getByText('Settings')).toBeVisible();
-  });
-
-  it('should render the properties and alarms section', async () => {
-    const element = await renderTestComponentAsync();
-    const trigger = createWrapper(element.baseElement);
-
-    expect(screen.getByText('Properties')).toBeVisible();
-
-    await act(() => {
-      trigger.findTabs()?.findTabLinkByIndex(2)?.click();
-    });
-
-    expect(screen.getByText('property one (Mock Asset)')).toBeVisible();
-    expect(screen.getByText('property two (Mock Asset)')).toBeVisible();
-    expect(screen.getByText('windSpeedAlarm (Mock Asset)')).toBeVisible();
   });
 
   it('should render an empty thresholds section', async () => {

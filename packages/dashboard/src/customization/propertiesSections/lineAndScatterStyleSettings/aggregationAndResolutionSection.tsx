@@ -8,8 +8,8 @@ import React from 'react';
 type AggregationAndResolutionSectionOptions = {
   aggregation: string | undefined;
   resolution: string | undefined;
-  updateAggregation: (aggregation: string) => void;
-  updateResolution: (resolution: string) => void;
+  updateAggregation: (aggregation?: string) => void;
+  updateResolution: (resolution?: string) => void;
   resolutionOptions: SelectProps.Option[];
   aggregationOptions: SelectProps.Option[];
 };
@@ -31,9 +31,12 @@ export const AggregationAndResolutionSection: FC<AggregationAndResolutionSection
         <FormField label='Resolution'>
           <Select
             selectedOption={selectedResolution}
-            onChange={({ detail }) => {
-              const newResolution = detail.selectedOption.value;
-              if (newResolution) updateResolution(newResolution);
+            onChange={({
+              detail: {
+                selectedOption: { value: newResolution },
+              },
+            }) => {
+              updateResolution(newResolution);
             }}
             options={resolutionOptions}
           />
@@ -41,9 +44,12 @@ export const AggregationAndResolutionSection: FC<AggregationAndResolutionSection
         <FormField label='Aggregation'>
           <Select
             selectedOption={selectedAggregation}
-            onChange={({ detail }) => {
-              const newAggregation = detail.selectedOption.value;
-              if (newAggregation) updateAggregation(newAggregation);
+            onChange={({
+              detail: {
+                selectedOption: { value: newAggregation },
+              },
+            }) => {
+              updateAggregation(newAggregation);
             }}
             options={aggregationOptions}
           />
