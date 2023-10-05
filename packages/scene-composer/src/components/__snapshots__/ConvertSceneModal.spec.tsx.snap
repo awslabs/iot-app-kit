@@ -1,0 +1,305 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConvertSceneModal should call convertAllNodesToEntities and convert scene successfully 1`] = `
+.c0 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
+}
+
+<div>
+  <div
+    class="c0"
+    data-mocked="Container"
+  >
+    <div>
+      <div
+        data-mocked="Header"
+        variant="h2"
+      >
+        Convert scene
+      </div>
+    </div>
+    <div>
+      <div
+        data-mocked="Box"
+        float="right"
+        padding="{\\"bottom\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Button"
+          data-testid="ok-button"
+        >
+          Ok
+        </div>
+      </div>
+    </div>
+    <div
+      data-mocked="Alert"
+      header="Convert to entities successful"
+      type="success"
+    >
+      All nodes have been converted successfully
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ConvertSceneModal should call prepareWorkspace when converting scene 1`] = `
+.c0 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
+}
+
+.c1 {
+  width: 100%;
+}
+
+.c2 {
+  color: !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+<div>
+  <div
+    class="c0"
+    data-mocked="Container"
+  >
+    <div>
+      <div
+        data-mocked="Header"
+        variant="h2"
+      >
+        Convert scene
+      </div>
+    </div>
+    <div>
+      <div
+        data-mocked="Box"
+        float="right"
+        padding="{\\"bottom\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+          direction="horizontal"
+        >
+          <div
+            data-mocked="Button"
+            data-testid="cancel-button"
+          >
+            Cancel
+          </div>
+          <div
+            data-mocked="Button"
+            data-testid="confirm-button"
+            disabled=""
+            variant="primary"
+          >
+            Confirm
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1"
+      data-mocked="Container"
+      data-testid="progress-container"
+    >
+      <div
+        data-mocked="ProgressBar"
+        label="Converting nodes"
+        status="in-progress"
+        value="0"
+      >
+        <div>
+          <div
+            class="c2"
+            data-mocked="Box"
+          >
+            0 out of 2 converted
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ConvertSceneModal should render with converting scene failure 1`] = `
+.c0 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
+}
+
+<div>
+  <div
+    class="c0"
+    data-mocked="Container"
+  >
+    <div>
+      <div
+        data-mocked="Header"
+        variant="h2"
+      >
+        Convert scene
+      </div>
+    </div>
+    <div>
+      <div
+        data-mocked="Box"
+        float="right"
+        padding="{\\"bottom\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Button"
+          data-testid="ok-button"
+        >
+          Ok
+        </div>
+      </div>
+    </div>
+    <div
+      data-mocked="Alert"
+      header="Convert to entities failed"
+      type="error"
+    >
+      <div
+        data-mocked="Box"
+      >
+        Some node conversion failed:
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"s\\"}"
+      >
+        failure-node
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ConvertSceneModal should render with correct confirmation view 1`] = `
+.c0 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
+}
+
+<div>
+  <div
+    class="c0"
+    data-mocked="Container"
+  >
+    <div>
+      <div
+        data-mocked="Header"
+        variant="h2"
+      >
+        Convert scene
+      </div>
+    </div>
+    <div>
+      <div
+        data-mocked="Box"
+        float="right"
+        padding="{\\"bottom\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+          direction="horizontal"
+        >
+          <div
+            data-mocked="Button"
+            data-testid="cancel-button"
+          >
+            Cancel
+          </div>
+          <div
+            data-mocked="Button"
+            data-testid="confirm-button"
+            variant="primary"
+          >
+            Confirm
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      data-mocked="Alert"
+      header="Converting scene"
+      type="warning"
+    >
+      Proceeding with this action will permanently change your scene. You cannot undo this action
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ConvertSceneModal should render with preparing workspace failure 1`] = `
+.c0 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
+}
+
+<div>
+  <div
+    class="c0"
+    data-mocked="Container"
+  >
+    <div>
+      <div
+        data-mocked="Header"
+        variant="h2"
+      >
+        Convert scene
+      </div>
+    </div>
+    <div>
+      <div
+        data-mocked="Box"
+        float="right"
+        padding="{\\"bottom\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Button"
+          data-testid="ok-button"
+        >
+          Ok
+        </div>
+      </div>
+    </div>
+    <div
+      data-mocked="Alert"
+      header="Convert to entities failed"
+      type="error"
+    >
+      <div
+        data-mocked="Box"
+      >
+        prepare workspace error
+      </div>
+    </div>
+  </div>
+</div>
+`;

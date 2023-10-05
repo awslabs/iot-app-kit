@@ -85,12 +85,14 @@ export const convertAllNodesToEntities = ({
   layerId,
   getObject3DBySceneNodeRef,
   onSuccess,
+  onFailure,
 }: {
   document: ISceneDocumentInternal;
   sceneRootEntityId: string;
   layerId: string;
   getObject3DBySceneNodeRef: (nodeRef: string) => THREE.Object3D | undefined;
   onSuccess?: (node: ISceneNodeInternal) => void;
+  onFailure?: (node: ISceneNodeInternal, error: Error) => void;
 }): void => {
   Object.keys(document.nodeMap).forEach((nodeRef) => {
     const node = document.nodeMap[nodeRef];
@@ -110,9 +112,13 @@ export const convertAllNodesToEntities = ({
         },
       };
 
-      createNodeEntity(worldTransformNode, sceneRootEntityId, layerId)?.then(() => {
-        onSuccess?.(worldTransformNode);
-      });
+      createNodeEntity(worldTransformNode, sceneRootEntityId, layerId)
+        ?.then(() => {
+          onSuccess?.(worldTransformNode);
+        })
+        .catch((error) => {
+          onFailure?.(worldTransformNode, error);
+        });
     }
   });
 };

@@ -29,6 +29,7 @@ import { CameraPreview } from '../../components/three-fiber/CameraPreview';
 import useMatterportViewer from '../../hooks/useMatterportViewer';
 import useSelectedNode from '../../hooks/useSelectedNode';
 import { findComponentByType } from '../../utils/nodeUtils';
+import ConvertSceneModal from '../../components/ConvertSceneModal';
 
 import { Direction } from './components/utils';
 import ScenePanel from './components/ScenePanel';
@@ -97,12 +98,14 @@ interface SceneLayoutProps {
   onPointerMissed: (event: ThreeEvent<PointerEvent>) => void;
   LoadingView: ReactNode;
   showMessageModal: boolean;
+  showConvertSceneModal?: boolean;
   externalLibraryConfig?: ExternalLibraryConfig;
 }
 const SceneLayout: FC<SceneLayoutProps> = ({
   isViewing,
   LoadingView = null,
   showMessageModal,
+  showConvertSceneModal,
   externalLibraryConfig,
 }) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
@@ -177,8 +180,8 @@ const SceneLayout: FC<SceneLayoutProps> = ({
           </LogProvider>
         </Fragment>
       }
-      showModal={showMessageModal}
-      modalContent={<MessageModal />}
+      showModal={showMessageModal || (showConvertSceneModal && !isViewing)}
+      modalContent={showConvertSceneModal && !isViewing ? <ConvertSceneModal /> : <MessageModal />}
       header={!isViewing && <MenuBar />}
       leftPanel={isViewing ? viewingModeScenePanel : leftPanel}
       rightPanel={!isViewing && rightPanel}

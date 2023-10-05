@@ -30,6 +30,7 @@ import useActiveCamera from '../hooks/useActiveCamera';
 import { COMPOSER_FEATURES, KnownComponentType, SceneComposerInternalConfig } from '..';
 import * as THREE from 'three';
 import { SCENE_CAPABILITY_MATTERPORT } from '../common/constants';
+import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 jest.mock('../hooks/useActiveCamera', () => {
   return jest.fn().mockReturnValue({
@@ -90,7 +91,7 @@ describe('StateManager', () => {
     getSceneInfo,
     updateSceneInfo,
     get3pConnectionList,
-  };
+  } as unknown as TwinMakerSceneMetadataModule;
   const mockDataStreams: DataStream[] = [numberStream, stringStream];
 
   beforeEach(() => {

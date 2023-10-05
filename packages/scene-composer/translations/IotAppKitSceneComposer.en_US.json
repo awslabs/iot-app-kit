@@ -15,6 +15,10 @@
     "note": "Light Type in a dropdown menu",
     "text": "Ambient"
   },
+  "+RIFYb": {
+    "note": "alert body text",
+    "text": "All nodes have been converted successfully"
+  },
   "+SQx9E": {
     "note": "Menu Item label",
     "text": "Add component"
@@ -82,6 +86,10 @@
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
     "text": "# of arrows"
+  },
+  "1fLT/q": {
+    "note": "button label",
+    "text": "Cancel"
   },
   "1kXRWn": {
     "note": "Progress Bar status",
@@ -231,6 +239,10 @@
     "note": "Menu Item label",
     "text": "Empty node"
   },
+  "9D+o0B": {
+    "note": "alert body text",
+    "text": "Proceeding with this action will permanently change your scene. You cannot undo this action"
+  },
   "9I3nDM": {
     "note": "Menu Item label",
     "text": "Undo"
@@ -266,6 +278,14 @@
   "B5EPL8": {
     "note": "Menu Item",
     "text": "Add 3D model"
+  },
+  "B6QsMN": {
+    "note": "button label",
+    "text": "Confirm"
+  },
+  "BK/UYP": {
+    "note": "alert header text",
+    "text": "Convert to entities failed"
   },
   "BNscqX": {
     "note": "Default Message for before an animation is selected",
@@ -422,6 +442,10 @@
   "KnEACH": {
     "note": "Hyperlink title",
     "text": "Learn More"
+  },
+  "KoTFFN": {
+    "note": "Button text",
+    "text": "Convert scene"
   },
   "KsFvzR": {
     "note": "Placeholder hint message for searching across entities",
@@ -663,6 +687,10 @@
     "note": "checkbox option",
     "text": "Enable Shadow"
   },
+  "YPkcJC": {
+    "note": "alert header text",
+    "text": "Converting scene"
+  },
   "ZKJ6Ci": {
     "note": "Toolbar label",
     "text": "Delete"
@@ -702,6 +730,10 @@
   "azq+4C": {
     "note": "Form section title",
     "text": "Link Parameters"
+  },
+  "bO1OgH": {
+    "note": "Progress Bar label",
+    "text": "Converting nodes"
   },
   "bVAsrx": {
     "note": "Form Field label",
@@ -750,6 +782,10 @@
   "e9HZHd": {
     "note": "FormField label",
     "text": "Indicator shape"
+  },
+  "eElB3q": {
+    "note": "Sub-Section Description",
+    "text": "Converting your scene to entities enables auto updating, filtering and querying your scene."
   },
   "eKQvAU": {
     "note": "placeholder",
@@ -947,6 +983,10 @@
     "note": "Sub-Section Description",
     "text": "Connecting your Matterport account enables viewing spaces in your TwinMaker scene."
   },
+  "oECZco": {
+    "note": "button label",
+    "text": "Ok"
+  },
   "oEXVJ5": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Linear Plane"
@@ -975,6 +1015,10 @@
     "note": "Status indicator label",
     "text": "Tags sync failed"
   },
+  "pqZzsr": {
+    "note": "alert header text",
+    "text": "Convert to entities successful"
+  },
   "pyg21P": {
     "note": "Number of Triangles in a scene",
     "text": "Triangles : {sceneInfoTriangles, number}"
@@ -986,6 +1030,10 @@
   "qU9dRt": {
     "note": "Form Field label",
     "text": "Scale"
+  },
+  "qZiKXL": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Convert scene"
   },
   "r0JN3A": {
     "note": "Menu Item",
@@ -1079,6 +1127,10 @@
     "note": "Enter your Matterport model id placeholder",
     "text": "Enter your Matterport model id"
   },
+  "ujFSQs": {
+    "note": "alert body text",
+    "text": "Some node conversion failed:"
+  },
   "v+Dj24": {
     "note": "hex validations messages",
     "text": "Invalid hex code"
@@ -1086,6 +1138,10 @@
   "v+tpx1": {
     "note": "Menu Item label",
     "text": "Light"
+  },
+  "v6Z7tj": {
+    "note": "Progress Bar description",
+    "text": "{convertedNumber} out of {totalNumber} converted"
   },
   "v7BBG+": {
     "note": "Error message wrong input",
@@ -1130,6 +1186,14 @@
   "x8NTqi": {
     "note": "Menu Item",
     "text": "Add empty node"
+  },
+  "xyFy7p": {
+    "note": "modal header text",
+    "text": "Convert scene"
+  },
+  "y9R3yg": {
+    "note": "Sub-Section Header",
+    "text": "Convert to entities"
   },
   "yXdV0F": {
     "note": "ExpandableInfoSection Title",
