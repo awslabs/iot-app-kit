@@ -2,8 +2,12 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**"],
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ],
       "outputMode": "new-only"
     },
     "pack": {
@@ -19,17 +23,36 @@
       "outputMode": "new-only"
     },
     "test": {
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "outputMode": "new-only"
     },
     "test:ui": {
-      "dependsOn": ["build"],
-      "env": ["CI"],
+      "dependsOn": [
+        "build"
+      ],
+      "env": [
+        "CI"
+      ],
       "outputMode": "new-only"
     },
     "start": {
-      "dependsOn": ["^build"],
-      "env": ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_SESSION_TOKEN", "REGION", "AWS_REGION", "ASSET_ID_1", "PROPERTY_ID_1", "PROPERTY_ID_2", "PROPERTY_ID_3"]
+      "dependsOn": [
+        "^build"
+      ],
+      "env": [
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_SESSION_TOKEN",
+        "AWS_REGION",
+        "ASSET_ID_1",
+        "NODE_ENV",
+        "PROPERTY_ID_1",
+        "PROPERTY_ID_2",
+        "PROPERTY_ID_3",
+        "REGION"
+      ]
     },
     "version": {
       "dependsOn": [],
