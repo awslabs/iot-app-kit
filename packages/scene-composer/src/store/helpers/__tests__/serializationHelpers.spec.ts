@@ -12,6 +12,7 @@ jest.mock('../../../utils/mathUtils', () => ({
 describe('serializationHelpers', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    (generateUUID as jest.Mock).mockReturnValue('test-uuid');
   });
 
   it('should appropriately create model ref componentAs or log errors when calling createModelRefComponent', () => {
@@ -43,8 +44,6 @@ describe('serializationHelpers', () => {
   });
 
   it('should appropriately create tag components or log errors when calling createTagComponent', () => {
-    (generateUUID as jest.Mock).mockReturnValue('test-uuid');
-
     const component = {
       icon: 'testIcon',
       ruleBasedMapId: 42,
@@ -86,8 +85,6 @@ describe('serializationHelpers', () => {
   });
 
   it('should appropriately create light components or log errors when calling createLightComponent', () => {
-    (generateUUID as jest.Mock).mockReturnValueOnce('test-uuid');
-
     const light = { lightType: 'Ambient', lightSettings: { volume: 'full' } };
     expect(exportsForTesting.createLightComponent(light as any, [])).toEqual({
       ref: 'test-uuid',
@@ -102,45 +99,39 @@ describe('serializationHelpers', () => {
   });
 
   it('should appropriately create model shader component or log errors when calling createModelShaderComponent', () => {
-    (generateUUID as jest.Mock).mockReturnValueOnce('test-uuid');
-
     const modelShaderComponent = exportsForTesting.createModelShaderComponent({ shader: 'test' } as any, []);
     expect(modelShaderComponent).toEqual({ ref: 'test-uuid', shader: 'test' });
   });
 
   it('should appropriately create motion indicator components or log errors when calling createMotionIndicatorComponent', () => {
-    (generateUUID as jest.Mock).mockReturnValueOnce('test-uuid');
-
-    const component = {
-      shape: 'LinearPlane',
+    const component: Component.MotionIndicator = {
+      type: KnownComponentType.MotionIndicator,
+      shape: Component.MotionIndicatorShape.LinearCylinder,
       valueDataBindings: {
         speed: {
-          ruleBasedMapId: 42,
-          valueDataBinding: { dataBindingContext: 'dataBindingContext' },
+          ruleBasedMapId: 42 as unknown as string,
+          valueDataBinding: { dataBindingContext: { entityId: 'eid' } },
         },
       },
       config: {
         numOfRepeatInY: 2,
         backgroundColorOpacity: 1,
+        defaultSpeed: '0.5' as unknown as number,
       },
     };
     const resolver = jest.fn();
     resolver.mockReturnValueOnce('here is a map');
     resolver.mockReturnValueOnce(undefined);
     const errorCollector = [];
-    const motionIndicator = exportsForTesting.createMotionIndicatorComponent(
-      component as any,
-      resolver,
-      errorCollector,
-    );
-    const error = exportsForTesting.createMotionIndicatorComponent(component as any, resolver, errorCollector);
+    const motionIndicator = exportsForTesting.createMotionIndicatorComponent(component, resolver, errorCollector);
+    const error = exportsForTesting.createMotionIndicatorComponent(component, resolver, errorCollector);
 
     expect(motionIndicator).toEqual({
       ref: 'test-uuid',
       type: 'MotionIndicator',
       valueDataBindings: component.valueDataBindings,
       shape: component.shape,
-      config: component.config,
+      config: { ...component.config, defaultSpeed: 0.5 },
     });
 
     expect(error).toEqual(motionIndicator);
@@ -156,8 +147,6 @@ describe('serializationHelpers', () => {
   });
 
   it('should appropriately create data overlay components or log errors when calling createDataOverlayComponent', () => {
-    (generateUUID as jest.Mock).mockReturnValue('test-uuid');
-
     const component: Component.DataOverlay = {
       type: KnownComponentType.DataOverlay,
       subType: Component.DataOverlaySubType.OverlayPanel,
@@ -195,8 +184,6 @@ describe('serializationHelpers', () => {
   });
 
   it('should appropriately create entity binding components when calling createEntityBindingComponent', () => {
-    (generateUUID as jest.Mock).mockReturnValue('test-uuid');
-
     const component: Component.EntityBindingComponent = {
       type: KnownComponentType.EntityBinding,
       valueDataBinding: {
@@ -213,8 +200,6 @@ describe('serializationHelpers', () => {
   });
 
   it('should create a scene node when calling createSceneNodeInternal', () => {
-    (generateUUID as jest.Mock).mockReturnValueOnce('test-uuid');
-
     const sceneNode = {
       ref: 'a2a91acc-3a47-4875-a146-b95741aedc2a',
       name: 'testNode',
@@ -249,8 +234,6 @@ describe('serializationHelpers', () => {
   });
 
   it('should create an indexed object resolver when calling createObjectResolver which validates input', () => {
-    (generateUUID as jest.Mock).mockReturnValueOnce('test-uuid');
-
     const scene = {
       specVersion: '1.0',
       version: '1.0',

@@ -35,6 +35,7 @@ describe('parseDataBinding', () => {
   it('should return undefined when binding map is empty', () => {
     expect(parseDataBinding(null)).toBeUndefined();
     expect(parseDataBinding({})).toBeUndefined();
+    expect(parseDataBinding({ random: 'random' })).toBeUndefined();
   });
 
   it('should return binding object with only entityId', () => {

@@ -114,6 +114,14 @@ describe('createNodeEntityComponent', () => {
       },
     });
   });
+
+  it('should return expected node component without properties when only runtime property exist', () => {
+    const result = createNodeEntityComponent({
+      properties: { layerIds: ['layer-1'] },
+    } as ISceneNode);
+
+    expect(result.properties!.properties).toBeUndefined();
+  });
 });
 
 describe('updateNodeEntityComponent', () => {
@@ -171,6 +179,42 @@ describe('parseNode', () => {
     componentTypeId: componentTypeToId.Tag,
     properties: [],
   };
+  const overlayComp = {
+    componentTypeId: componentTypeToId.DataOverlay,
+    properties: [
+      {
+        propertyName: 'subType',
+        propertyValue: 'TextAnnotation',
+      },
+    ],
+  };
+  const modelRefComp = {
+    componentTypeId: componentTypeToId.ModelRef,
+    properties: [
+      {
+        propertyName: 'uri',
+        propertyValue: 'uri.abc',
+      },
+      {
+        propertyName: 'modelType',
+        propertyValue: 'GLB',
+      },
+    ],
+  };
+  const cameraComp = {
+    componentTypeId: componentTypeToId.Camera,
+    properties: [],
+  };
+  const indicatorComp = {
+    componentTypeId: componentTypeToId.MotionIndicator,
+    properties: [
+      {
+        propertyName: 'shape',
+        propertyValue: 'LinearPlane',
+      },
+    ],
+  };
+
   const nodeComp = {
     componentTypeId: NODE_COMPONENT_TYPE_ID,
     properties: [
@@ -234,12 +278,28 @@ describe('parseNode', () => {
   });
 
   it('should parse to expected node component with components', () => {
-    const result = parseNode({ ...entity, components: [tagComp] }, nodeComp);
+    const result = parseNode(
+      { ...entity, components: [tagComp, overlayComp, modelRefComp, cameraComp, indicatorComp] },
+      nodeComp,
+    );
 
-    expect(result?.components).toEqual([
+    const expectedComponents = [
       expect.objectContaining({
         type: KnownComponentType.Tag,
       }),
-    ]);
+      expect.objectContaining({
+        type: KnownComponentType.DataOverlay,
+      }),
+      expect.objectContaining({
+        type: KnownComponentType.ModelRef,
+      }),
+      expect.objectContaining({
+        type: KnownComponentType.Camera,
+      }),
+      expect.objectContaining({
+        type: KnownComponentType.MotionIndicator,
+      }),
+    ];
+    expect(result?.components).toEqual(expectedComponents);
   });
 });

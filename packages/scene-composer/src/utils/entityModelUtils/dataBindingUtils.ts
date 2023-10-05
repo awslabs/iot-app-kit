@@ -1,6 +1,6 @@
 import { DataValue } from '@aws-sdk/client-iottwinmaker';
 import { DocumentType } from '@aws-sdk/types';
-import { ITwinMakerEntityDataBindingContext } from '@iot-app-kit/source-iottwinmaker';
+import { ITwinMakerDataBindingContext, ITwinMakerEntityDataBindingContext } from '@iot-app-kit/source-iottwinmaker';
 import { isEmpty } from 'lodash';
 
 import { ValueDataBinding } from '../../models/SceneModels';
@@ -51,16 +51,32 @@ export const createDataBindingMap = (
 };
 
 export const parseDataBinding = (bindingMap: DocumentType): ValueDataBinding | undefined => {
-  if (!bindingMap || isEmpty(bindingMap)) {
+  const dataBindingContext: ITwinMakerDataBindingContext = {
+    entityId: bindingMap?.[DataBindingPropertyKey.EntityId],
+    componentName: bindingMap?.[DataBindingPropertyKey.ComponentName],
+    propertyName: bindingMap?.[DataBindingPropertyKey.PropertyName],
+  };
+
+  Object.keys(dataBindingContext).forEach((key) => {
+    if (dataBindingContext[key] === undefined) {
+      delete dataBindingContext[key];
+    }
+  });
+
+  const result: ValueDataBinding = {};
+  if (!isEmpty(dataBindingContext)) {
+    result.dataBindingContext = dataBindingContext;
+  }
+
+  const isStaticDataValue = bindingMap?.[DataBindingPropertyKey.IsStaticData];
+
+  if (isStaticDataValue !== undefined) {
+    result.isStaticData = isStaticDataValue === 'true';
+  }
+
+  if (isEmpty(result)) {
     return undefined;
   }
 
-  return {
-    dataBindingContext: {
-      entityId: bindingMap[DataBindingPropertyKey.EntityId],
-      componentName: bindingMap[DataBindingPropertyKey.ComponentName],
-      propertyName: bindingMap[DataBindingPropertyKey.PropertyName],
-    },
-    isStaticData: bindingMap[DataBindingPropertyKey.IsStaticData] === 'true',
-  };
+  return result;
 };

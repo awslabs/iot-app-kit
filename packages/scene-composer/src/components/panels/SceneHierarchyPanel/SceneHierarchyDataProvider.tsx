@@ -2,13 +2,12 @@ import React, { FC, createContext, useContext, useCallback, useState, useEffect,
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { isEmpty } from 'lodash';
-import { Euler, Vector3, Quaternion } from 'three';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { findComponentByType, getFinalTransform, isEnvironmentNode, Transform } from '../../../utils/nodeUtils';
+import { findComponentByType, getFinalNodeTransform, isEnvironmentNode } from '../../../utils/nodeUtils';
 import { ISceneNodeInternal, useNodeErrorState, useSceneDocument, useStore } from '../../../store';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { KnownComponentType } from '../../../interfaces';
+import { ITransform, KnownComponentType } from '../../../interfaces';
 import { RecursivePartial } from '../../../utils/typeUtils';
 
 import ISceneHierarchyNode from './model/ISceneHierarchyNode';
@@ -226,35 +225,16 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
         newHierarchyParentObject = getObject3DBySceneNodeRef(hierarchyParent?.ref);
       }
 
-      let maintainedTransform: Transform | null = null;
+      let maintainedTransform: ITransform | null = null;
       if (originalObject3D) {
-        const worldPosition = originalObject3D.getWorldPosition(new Vector3());
-        const worldRotation = new Euler().setFromQuaternion(originalObject3D.getWorldQuaternion(new Quaternion()));
-        const worldScale = originalObject3D.getWorldScale(new Vector3());
-        maintainedTransform = getFinalTransform(
-          {
-            position: worldPosition,
-            rotation: worldRotation,
-            scale: worldScale,
-          },
-          newHierarchyParentObject,
-        );
+        maintainedTransform = getFinalNodeTransform(originalObject, originalObject3D, newHierarchyParentObject);
       }
 
       // Create updates to the moving object
       const partial: RecursivePartial<ISceneNodeInternal> = { parentRef: newParentRef };
       if (maintainedTransform) {
-        // Scale of Tag component is independent of its ancestors, therefore keep its original value.
-        const finalScale = findComponentByType(originalObject, KnownComponentType.Tag)
-          ? originalObject?.transform.scale
-          : maintainedTransform.scale.toArray();
-
         // Update the node position to remain in its world space
-        partial.transform = {
-          position: maintainedTransform.position.toArray(),
-          rotation: [maintainedTransform.rotation.x, maintainedTransform.rotation.y, maintainedTransform.rotation.z],
-          scale: finalScale,
-        };
+        partial.transform = maintainedTransform;
       }
 
       updateSceneNodeInternal(objectRef, partial);

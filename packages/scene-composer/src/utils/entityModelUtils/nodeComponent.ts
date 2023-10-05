@@ -14,6 +14,9 @@ import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
 import { attachToLayerRequest } from './sceneLayerUtils';
 import { parseTagComp } from './tagComponent';
 import { parseOverlayComp } from './overlayComponent';
+import { parseModelRefComp } from './modelRefComponent';
+import { parseCameraComp } from './cameraComponent';
+import { parseMotionIndicatorComp } from './motionIndicatorComponent';
 
 enum NodeComponentProperty {
   Name = 'name',
@@ -66,17 +69,18 @@ export const createNodeEntityComponent = (node: ISceneNode, layerId?: string): C
   if (layerId) {
     comp.properties = Object.assign(comp.properties!, attachToLayerRequest(layerId));
   }
-  if (!isEmpty(node.properties)) {
-    const params = {};
-    Object.keys(node.properties).forEach((k) => {
-      if (Object.values(SceneNodeRuntimeProperty).includes(k as SceneNodeRuntimeProperty)) {
-        return;
-      }
-      const value = node.properties![k];
-      if (value !== undefined) {
-        params[k] = { stringValue: String(value) };
-      }
-    });
+
+  const params = {};
+  Object.keys(node.properties || {}).forEach((k) => {
+    if (Object.values(SceneNodeRuntimeProperty).includes(k as SceneNodeRuntimeProperty)) {
+      return;
+    }
+    const value = node.properties![k];
+    if (value !== undefined) {
+      params[k] = { stringValue: String(value) };
+    }
+  });
+  if (!isEmpty(params)) {
     comp.properties![NodeComponentProperty.Properties] = {
       value: {
         mapValue: params,
@@ -137,6 +141,27 @@ const parseNodeComponents = (components: DocumentType): ISceneComponentInternal[
         const overlay = parseOverlayComp(comp);
         if (overlay) {
           results.push(overlay);
+        }
+        break;
+      }
+      case componentTypeToId.ModelRef: {
+        const modelRef = parseModelRefComp(comp);
+        if (modelRef) {
+          results.push(modelRef);
+        }
+        break;
+      }
+      case componentTypeToId.Camera: {
+        const camera = parseCameraComp(comp);
+        if (camera) {
+          results.push(camera);
+        }
+        break;
+      }
+      case componentTypeToId.MotionIndicator: {
+        const indicator = parseMotionIndicatorComp(comp);
+        if (indicator) {
+          results.push(indicator);
         }
         break;
       }

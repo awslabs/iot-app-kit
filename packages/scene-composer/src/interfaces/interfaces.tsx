@@ -48,7 +48,7 @@ export interface ISceneDocument {
   rootNodeRefs: string[];
   unit?: string;
   version: string;
-  properties?: Record<string, any>;
+  properties?: Partial<Record<KnownSceneProperty, any>>;
   specVersion?: string;
 }
 

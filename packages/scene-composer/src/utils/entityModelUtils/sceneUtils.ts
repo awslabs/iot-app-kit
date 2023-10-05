@@ -10,7 +10,11 @@ import {
 } from '../../common/entityModelConstants';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { generateUUID } from '../mathUtils';
-import { ISceneNodeInternal } from '../../store';
+import { ISceneDocumentInternal, ISceneNodeInternal } from '../../store';
+import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
+import { getFinalNodeTransform } from '../nodeUtils';
+
+import { createNodeEntity } from './createNodeEntity';
 
 export const createSceneEntityId = (sceneName: string): string => {
   return `SCENE_${sceneName}_${generateUUID()}`;
@@ -69,4 +73,46 @@ export const prepareWorkspace = async (sceneMetadataModule: TwinMakerSceneMetada
 
 export const isDynamicNode = (node?: ISceneNodeInternal): boolean => {
   return !isEmpty(node?.properties.layerIds);
+};
+
+export const staticNodeCount = (nodeMap: { [key: string]: ISceneNodeInternal }): number => {
+  return Object.values(nodeMap).filter((node) => !isDynamicNode(node)).length;
+};
+
+export const convertAllNodesToEntities = ({
+  document,
+  sceneRootEntityId,
+  layerId,
+  getObject3DBySceneNodeRef,
+  onSuccess,
+}: {
+  document: ISceneDocumentInternal;
+  sceneRootEntityId: string;
+  layerId: string;
+  getObject3DBySceneNodeRef: (nodeRef: string) => THREE.Object3D | undefined;
+  onSuccess?: (node: ISceneNodeInternal) => void;
+}): void => {
+  Object.keys(document.nodeMap).forEach((nodeRef) => {
+    const node = document.nodeMap[nodeRef];
+    const object3D = getObject3DBySceneNodeRef(nodeRef);
+
+    if (!isDynamicNode(node) && object3D) {
+      // Use world transform before supporting hierarchy relationship
+      const worldTransform = getFinalNodeTransform(node, object3D, null);
+
+      const worldTransformNode: ISceneNodeInternal = {
+        ...node,
+        parentRef: undefined,
+        transform: worldTransform,
+        properties: {
+          ...node.properties,
+          [SceneNodeRuntimeProperty.LayerIds]: [layerId!],
+        },
+      };
+
+      createNodeEntity(worldTransformNode, sceneRootEntityId, layerId)?.then(() => {
+        onSuccess?.(worldTransformNode);
+      });
+    }
+  });
 };
