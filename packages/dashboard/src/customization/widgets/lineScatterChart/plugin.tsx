@@ -14,6 +14,8 @@ export const lineScatterChartPlugin: DashboardPlugin = {
         icon: LineIcon,
       },
       properties: () => ({
+        aggregationType: 'AVERAGE',
+        resolution: undefined,
         queryConfig: {
           source: 'iotsitewise',
           query: undefined,

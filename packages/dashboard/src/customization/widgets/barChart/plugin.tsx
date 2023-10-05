@@ -14,6 +14,8 @@ export const barChartPlugin: DashboardPlugin = {
         icon: BarIcon,
       },
       properties: () => ({
+        aggregationType: 'AVERAGE',
+        resolution: undefined,
         queryConfig: {
           source: 'iotsitewise',
           query: undefined,
