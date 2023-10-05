@@ -47,7 +47,7 @@ const RenderAggregationsPropertiesSection = ({
 }) => {
   const [aggregationMaybe, updateAggregation] = useProperty(
     // Default resolution is auto. We ensure the aggregation is defaulted to average instead of raw.
-    ({ aggregationType, resolution }) => (resolution == null && aggregationType == null ? 'AVERAGE' : aggregationType),
+    ({ aggregationType }) => aggregationType,
     (properties, updatedAggregationType) => {
       return {
         ...properties,

@@ -86,8 +86,8 @@ const RenderLineAndScatterStyleSettingsSection = ({
   );
 
   const [aggregationMaybe, updateAggregation] = useProperty(
-    // Default resolution is auto. We ensure the aggregation is defaulted to average instead of raw.
-    ({ aggregationType, resolution }) => (resolution == null && aggregationType == null ? 'AVERAGE' : aggregationType),
+    // Default resolution is auto. We ensure the aggregation is defaulted to average instead of no aggregation.
+    ({ aggregationType }) => aggregationType,
     (properties, updatedAggregationType) => ({
       ...properties,
       queryConfig: {

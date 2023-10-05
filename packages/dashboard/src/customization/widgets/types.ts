@@ -136,6 +136,8 @@ export type BarChartProperties = QueryProperties & {
   thresholdSettings?: ThresholdSettings;
   axis?: AxisSettings;
   significantDigits?: number;
+  resolution?: string;
+  aggregationType?: AggregateType;
 };
 export type BarChartPropertiesKeys = keyof BarChartProperties;
 
