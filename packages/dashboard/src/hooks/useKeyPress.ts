@@ -38,19 +38,22 @@ export const useKeyPress = (key: string, options?: KeyPressOptions | KeyPressCal
 
   const [keyPressed, setKeyPressed] = useState<boolean>(false);
 
-  const onKeyPress = (e: KeyboardEvent) => {
-    const keyPressed =
-      e.type === 'keydown' &&
-      key
-        .split(',')
-        .map((k) => k.trim())
-        .some((k) => isHotkey(k, { byKey: true }, e));
-    setKeyPressed(keyPressed);
+  const onKeyPress = useCallback(
+    (e: KeyboardEvent) => {
+      const keyPressed =
+        e.type === 'keydown' &&
+        key
+          .split(',')
+          .map((k) => k.trim())
+          .some((k) => isHotkey(k, { byKey: true }, e));
+      setKeyPressed(keyPressed);
 
-    if (keyPressed && callback && filter && filter(e)) {
-      callbackWrapper(e);
-    }
-  };
+      if (keyPressed && callback && filter && filter(e)) {
+        callbackWrapper(e);
+      }
+    },
+    [callback, callbackWrapper, key]
+  );
 
   useEffect(() => {
     window.addEventListener('keydown', onKeyPress);
@@ -59,7 +62,7 @@ export const useKeyPress = (key: string, options?: KeyPressOptions | KeyPressCal
       window.removeEventListener('keydown', onKeyPress);
       window.removeEventListener('keyup', onKeyPress);
     };
-  }, []);
+  }, [onKeyPress]);
 
   return keyPressed;
 };

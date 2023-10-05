@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { onChangeDashboardGridEnabledAction } from '~/store/actions';
 
@@ -21,15 +21,18 @@ const TextWidgetComponent: React.FC<TextWidget> = (widget) => {
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleSetEdit = (editing: boolean) => {
-    dispatch(onChangeDashboardGridEnabledAction({ enabled: !editing }));
-    setIsEditing(editing);
-  };
+  const handleSetEdit = useCallback(
+    (editing: boolean) => {
+      dispatch(onChangeDashboardGridEnabledAction({ enabled: !editing }));
+      setIsEditing(editing);
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     // allow immediate edit if no value on widget creation
     if (!value) handleSetEdit(true);
-  }, []);
+  }, [value, handleSetEdit]);
 
   useEffect(() => {
     return () => {
@@ -39,7 +42,7 @@ const TextWidgetComponent: React.FC<TextWidget> = (widget) => {
        */
       handleSetEdit(false);
     };
-  }, []);
+  }, [handleSetEdit]);
 
   const props = { readOnly, isSelected, handleSetEdit, ...widget };
 

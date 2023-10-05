@@ -1,7 +1,7 @@
 import { describe, expect } from '@jest/globals';
 import { mockSeries, mockSize, mockViewportInMs } from './getTrendCursor.spec';
 import { renderHook } from '@testing-library/react';
-import handleResize from '../utils/handleResize';
+import useHandleResize from '../hooks/useHandleResize';
 import { InternalGraphicComponentGroupOption } from '../types';
 import { useECharts } from '../../../hooks/useECharts';
 import { DEFAULT_CHART_VISUALIZATION } from '../eChartsConstants';
@@ -29,7 +29,7 @@ describe('handleResize', () => {
 
   it('set state should not be called when there is no change in size ', () => {
     renderHook(() =>
-      handleResize({
+      useHandleResize({
         ...useSyncProps,
       })
     );
@@ -37,7 +37,7 @@ describe('handleResize', () => {
   });
 
   it('set state should be called when there is change in size ', () => {
-    const { rerender } = renderHook((props) => handleResize(props), {
+    const { rerender } = renderHook((props) => useHandleResize(props), {
       initialProps: useSyncProps,
     });
     rerender({ ...useSyncProps, size: { height: 600, width: 700 } });

@@ -22,6 +22,8 @@ export const useViewportToMS = (viewport?: Viewport) => {
         clearInterval(interval);
       }
     };
+    // disabling because viewport is stringified as viewportString
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewportString]);
 
   return inMS;

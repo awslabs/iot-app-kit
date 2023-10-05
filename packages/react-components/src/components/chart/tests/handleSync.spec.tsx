@@ -1,5 +1,5 @@
 import { describe, expect } from '@jest/globals';
-import handleSync from '../utils/handleSync';
+import useHandleSync from '../hooks/useHandleSync';
 import { mockSeries, mockSize, mockViewportInMs } from './getTrendCursor.spec';
 import { renderHook } from '@testing-library/react';
 import useDataStore from '../../../store';
@@ -26,7 +26,7 @@ describe('handleSync', () => {
     const { result } = renderHook(() => useECharts('dark'));
 
     renderHook(() =>
-      handleSync({
+      useHandleSync({
         chartRef: result.current.chartRef,
         ...useSyncProps,
       })
@@ -49,7 +49,7 @@ describe('handleSync', () => {
     const { result } = renderHook(() => useECharts('dark'));
 
     renderHook(() =>
-      handleSync({
+      useHandleSync({
         chartRef: result.current.chartRef,
         ...useSyncProps,
         graphic: [
@@ -81,7 +81,7 @@ describe('handleSync', () => {
     const { result } = renderHook(() => useECharts('dark'));
 
     renderHook(() =>
-      handleSync({
+      useHandleSync({
         chartRef: result.current.chartRef,
         ...useSyncProps,
         graphic: [

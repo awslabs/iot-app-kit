@@ -52,7 +52,7 @@ export const TimeSync: React.FC<TimeSyncProps> = ({ group, initialViewport, chil
       updateViewportGroup(initialViewport || DEFAULT_VIEWPORT);
     }
     return unsubscribe;
-  }, [group]);
+  }, [group, initialViewport, updateViewportGroup]);
 
   return (
     <ViewportContext.Provider

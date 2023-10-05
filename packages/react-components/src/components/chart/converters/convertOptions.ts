@@ -25,7 +25,7 @@ export const useConvertedOptions = ({
   series: SeriesOption[];
   shouldShowYAxisLegend: boolean;
 }): EChartsOption => {
-  const { backgroundColor, axis, significantDigits, titleText } = options;
+  const { backgroundColor, significantDigits, titleText } = options;
   const text = series.length === 0 ? 'No data present' : titleText ?? '';
   return useMemo(
     () => ({
@@ -40,6 +40,6 @@ export const useConvertedOptions = ({
       grid: convertGrid(options.legend, shouldShowYAxisLegend),
       tooltip: convertTooltip(significantDigits),
     }),
-    [backgroundColor, axis, significantDigits, text]
+    [backgroundColor, significantDigits, text, options.legend, shouldShowYAxisLegend]
   );
 };

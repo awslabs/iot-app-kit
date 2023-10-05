@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ['iot-app-kit'],
+  extends: ['iot-app-kit', 'plugin:react-hooks/recommended'],
   overrides: [
     {
       // Disabling explicit any rule for graph-view component since types are defined in 3p component.

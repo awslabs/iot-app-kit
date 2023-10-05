@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { STYLE_PREFIX } from './constants';
 import { RefObject, useCallback, useEffect, useState } from 'react';
 

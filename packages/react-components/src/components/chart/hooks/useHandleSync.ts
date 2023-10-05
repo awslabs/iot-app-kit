@@ -1,10 +1,10 @@
-import { calculateSyncDelta } from './handleSyncTrendCursors';
-import { getNewTrendCursor, onDragUpdateTrendCursor } from './getTrendCursor';
-import { calculateXFromTimestamp } from './trendCursorCalculations';
+import { calculateSyncDelta } from '../utils/handleSyncTrendCursors';
+import { getNewTrendCursor, onDragUpdateTrendCursor } from '../utils/getTrendCursor';
+import { calculateXFromTimestamp } from '../utils/trendCursorCalculations';
 import useDataStore from '../../../store';
 import { UseSyncProps } from '../types';
 
-const handleSync = ({
+const useHandleSync = ({
   chartRef,
   isInSyncMode,
   graphic,
@@ -80,4 +80,4 @@ const handleSync = ({
   }
 };
 
-export default handleSync;
+export default useHandleSync;

@@ -44,7 +44,7 @@ type Setter<T, V> = (target: T, value: V) => T;
 type Lens<W> = <T>(selector: Getter<W, T>, updater: Setter<W, T>) => [Maybe<T>, (newValue: T) => void];
 
 // Lense specifically for widget properties
-type PropertyLens<W extends DashboardWidget> = Lens<W['properties']>;
+export type PropertyLens<W extends DashboardWidget> = Lens<W['properties']>;
 
 const NO_SIZE = { height: 0, width: 0 };
 const NO_POSITION = { x: 0, y: 0 };

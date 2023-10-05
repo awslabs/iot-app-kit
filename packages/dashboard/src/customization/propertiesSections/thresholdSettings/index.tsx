@@ -2,6 +2,7 @@ import React from 'react';
 import { ThresholdSettings } from '@iot-app-kit/core';
 
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
+import { PropertyLens } from '~/customization/propertiesSection';
 import { StyledThreshold, ThresholdWithId } from '~/customization/settings';
 import { DashboardWidget } from '~/types';
 import ThresholdsSection from './thresholdsSection';
@@ -33,64 +34,78 @@ const isThresholdWidgetSupportsAnnotations = (w: DashboardWidget): w is Threshol
   supportsAnnotations(w);
 const isStyledThresholdWidget = (w: DashboardWidget): w is ThresholdsWithStyleWidget => supportsStyledThreshold(w);
 
+const RenderThresholdsSettingsWithContains = ({ useProperty }: { useProperty: PropertyLens<ThresholdsWidget> }) => {
+  const [thresholds, updateThresholds] = useProperty(
+    (properties) => properties.thresholds,
+    (properties, updatedThresholds) => ({ ...properties, thresholds: updatedThresholds })
+  );
+
+  return (
+    <ThresholdsSection
+      thresholds={thresholds}
+      updateThresholds={updateThresholds}
+      comparisonOperators={getComparisonOperators({ supportsContains: true })}
+    />
+  );
+};
+
+const RenderThresholdsSettingsWithAnnotations = ({
+  useProperty,
+}: {
+  useProperty: PropertyLens<ThresholdsWithAnnotationsWidget>;
+}) => {
+  const [thresholds, updateThresholds] = useProperty(
+    (properties) => properties.thresholds,
+    (properties, updatedThresholds) => ({ ...properties, thresholds: updatedThresholds })
+  );
+  const [thresholdSettings, updateThresholdSettings] = useProperty(
+    (properties) => properties.thresholdSettings,
+    (properties, updatedThresholdSettings) => ({ ...properties, thresholdSettings: updatedThresholdSettings })
+  );
+
+  return (
+    <ThresholdsSection
+      thresholds={thresholds}
+      updateThresholds={updateThresholds}
+      comparisonOperators={getComparisonOperators({ supportsContains: false })}
+      thresholdSettings={thresholdSettings}
+      updateThresholdSettings={updateThresholdSettings}
+    />
+  );
+};
+
+const RenderThresholdsSettingsWithStyledQuery = ({
+  useProperty,
+}: {
+  useProperty: PropertyLens<ThresholdsWithStyleWidget>;
+}) => {
+  const [thresholds, updateThresholds] = useProperty(
+    (properties) => properties.thresholds,
+    (properties, updatedThresholds) => ({ ...properties, thresholds: updatedThresholds })
+  );
+
+  return (
+    <ThresholdsSection
+      comparisonOperators={getComparisonOperators({ supportsContains: false })}
+      styledThresholds={thresholds}
+      updateStyledThresholds={updateThresholds}
+    />
+  );
+};
+
 export const ThresholdSettingsConfiguration: React.FC = () => (
   <>
     <PropertiesSection
       isVisible={isThresholdWidgetSupportsContainsOperator}
-      render={({ useProperty }) => {
-        const [thresholds, updateThresholds] = useProperty(
-          (properties) => properties.thresholds,
-          (properties, updatedThresholds) => ({ ...properties, thresholds: updatedThresholds })
-        );
-
-        return (
-          <ThresholdsSection
-            thresholds={thresholds}
-            updateThresholds={updateThresholds}
-            comparisonOperators={getComparisonOperators({ supportsContains: true })}
-          />
-        );
-      }}
+      render={({ useProperty }) => <RenderThresholdsSettingsWithContains useProperty={useProperty} />}
     />
     <PropertiesSection
       isVisible={isThresholdWidgetSupportsAnnotations}
-      render={({ useProperty }) => {
-        const [thresholds, updateThresholds] = useProperty(
-          (properties) => properties.thresholds,
-          (properties, updatedThresholds) => ({ ...properties, thresholds: updatedThresholds })
-        );
-        const [thresholdSettings, updateThresholdSettings] = useProperty(
-          (properties) => properties.thresholdSettings,
-          (properties, updatedThresholdSettings) => ({ ...properties, thresholdSettings: updatedThresholdSettings })
-        );
-
-        return (
-          <ThresholdsSection
-            thresholds={thresholds}
-            updateThresholds={updateThresholds}
-            comparisonOperators={getComparisonOperators({ supportsContains: false })}
-            thresholdSettings={thresholdSettings}
-            updateThresholdSettings={updateThresholdSettings}
-          />
-        );
-      }}
+      render={({ useProperty }) => <RenderThresholdsSettingsWithAnnotations useProperty={useProperty} />}
     />
     <PropertiesSection
       isVisible={isStyledThresholdWidget}
-      render={({ useProperty }) => {
-        const [thresholds, updateThresholds] = useProperty(
-          (properties) => properties.thresholds,
-          (properties, updatedThresholds) => ({ ...properties, thresholds: updatedThresholds })
-        );
-
-        return (
-          <ThresholdsSection
-            comparisonOperators={getComparisonOperators({ supportsContains: false })}
-            styledThresholds={thresholds}
-            updateStyledThresholds={updateThresholds}
-          />
-        );
-      }}
+      render={({ useProperty }) => <RenderThresholdsSettingsWithStyledQuery useProperty={useProperty} />}
     />
   </>
 );

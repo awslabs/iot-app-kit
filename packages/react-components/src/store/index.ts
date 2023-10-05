@@ -13,4 +13,4 @@ const useDataStore = create<StateData>()(
 
 export default useDataStore;
 
-export const getConfigValue = (configName: Flags) => useDataStore((state) => state.config[configName]);
+export const useGetConfigValue = (configName: Flags) => useDataStore((state) => state.config[configName]);

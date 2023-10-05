@@ -28,37 +28,47 @@ export const useHover = <T extends Element>(
     }
   }, [timeout]);
 
-  const setHover = (hovering: boolean, event: Event) => {
-    callback(hovering, event as MouseEvent);
-    setValue(hovering);
-  };
-
   const [value, setValue] = useState(false);
   const ref = useRef<T>(null);
-  const handleMouseOver = (e: Event) => {
-    if (delay > 0) {
-      cancel();
-      setTimeoutId(
-        setTimeout(() => {
-          setHover(true, e);
-        }, delay)
-      );
-    } else {
-      setHover(true, e);
-    }
-  };
-  const handleMouseLeave = (e: Event) => {
-    if (delay > 0) {
-      cancel();
-      setTimeoutId(
-        setTimeout(() => {
-          setHover(false, e);
-        }, delay)
-      );
-    } else {
-      setHover(false, e);
-    }
-  };
+  const setHover = useCallback(
+    (hovering: boolean, event: Event) => {
+      callback(hovering, event as MouseEvent);
+      setValue(hovering);
+    },
+    [callback, setValue]
+  );
+  const handleMouseOver = useCallback(
+    (e: Event) => {
+      if (delay > 0) {
+        cancel();
+        setTimeoutId(
+          setTimeout(() => {
+            setHover(true, e);
+          }, delay)
+        );
+      } else {
+        setHover(true, e);
+      }
+    },
+    [cancel, delay, setHover]
+  );
+
+  const handleMouseLeave = useCallback(
+    (e: Event) => {
+      if (delay > 0) {
+        cancel();
+        setTimeoutId(
+          setTimeout(() => {
+            setHover(false, e);
+          }, delay)
+        );
+      } else {
+        setHover(false, e);
+      }
+    },
+    [cancel, delay, setHover]
+  );
+
   useEffect(() => {
     const node = ref.current;
     if (node) {
@@ -69,6 +79,6 @@ export const useHover = <T extends Element>(
         node.removeEventListener('mouseleave', handleMouseLeave);
       };
     }
-  }, [ref.current, options]);
+  }, [options, handleMouseLeave, handleMouseOver]);
   return [ref, value, cancel];
 };

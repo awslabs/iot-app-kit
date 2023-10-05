@@ -27,7 +27,7 @@ export const useClickOutside = <T extends HTMLElement>(cb: ClickCallback) => {
       document.removeEventListener('pointerdown', handlePointerDown);
       document.removeEventListener('pointerup', handleClickOutside);
     };
-  }, [ref, pointerDown]);
+  }, [pointerDown, cb]);
 
   return ref;
 };

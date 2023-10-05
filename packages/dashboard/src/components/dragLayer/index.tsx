@@ -42,7 +42,7 @@ const CustomDragLayer: React.FC<CustomDragLayerProps> = ({ onDrag }) => {
 
   useEffect(() => {
     onDrag(isDragging);
-  }, [isDragging]);
+  }, [isDragging, onDrag]);
 
   const layer = () => {
     switch (itemType) {

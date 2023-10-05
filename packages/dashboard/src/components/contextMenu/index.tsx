@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Menu from './menu';
 import ContextMenuOption from './option';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from '../grid/getDashboardPosition';
@@ -48,10 +48,10 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 
   useKeyPress('esc', () => toggleContextMenu());
 
-  const onContextMenu = (e: MouseEvent) => {
+  const onContextMenu = useCallback((e: MouseEvent) => {
     e.preventDefault();
     toggleContextMenu(getDashboardPosition(e));
-  };
+  }, []);
 
   const onClickOutside = () => {
     toggleContextMenu();
@@ -66,7 +66,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
     return () => {
       dashboardContainer.removeEventListener('contextmenu', onContextMenu);
     };
-  }, []);
+  }, [onContextMenu]);
 
   const withClose = (action: () => void) => () => {
     action();

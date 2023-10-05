@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import type { MouseEvent, FC, ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -169,7 +169,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
    * proportionally when the screen is resized to prevent these collisions.
    */
 
-  const resizeSidePanes = () => {
+  const resizeSidePanes = useCallback(() => {
     const el = panes.current as HTMLElement | null;
     if (!el) return;
     const elementWidth = el.offsetWidth;
@@ -208,7 +208,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
     // Set pane widths
     setLeftPaneWidth(nextLeftPaneWidth);
     setRightPaneWidth(nextRightPaneWidth);
-  };
+  }, [rightPaneWidth, leftPaneWidth]);
 
   // expand and collapse left pane
   const onLeftCollapsedPaneClick = () => {
@@ -235,7 +235,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
   useEffect(() => {
     window.addEventListener('resize', resizeSidePanes);
     return () => window.removeEventListener('resize', resizeSidePanes);
-  }, [leftPaneWidth, rightPaneWidth]);
+  }, [leftPaneWidth, rightPaneWidth, resizeSidePanes]);
 
   return (
     <div

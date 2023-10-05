@@ -67,12 +67,15 @@ const useDragAndUpdate = (
     },
   });
 
+  const diffDep = JSON.stringify(diff);
   useEffect(() => {
     if (isDragging && diff) {
       const newPoint = computeNewPosition(initialPointRef.current, diff, dimensions.height, dimensions.width, cellSize);
       updateWidget(newPoint);
     }
-  }, [diff?.x, diff?.y]);
+    // disabling because diff is stringified
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [diffDep, cellSize, dimensions.height, dimensions.width, isDragging, updateWidget]);
   return ref;
 };
 

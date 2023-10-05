@@ -80,6 +80,8 @@ export const useChartStyleSettings = (datastreams: DataStream[], chartOptions: C
     }, {});
     colorIndexRef.current = index;
     return map;
+    // disabling because we stringified dataStreams
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [datastreamDeps]);
 
   return useMemo(() => {
@@ -94,5 +96,7 @@ export const useChartStyleSettings = (datastreams: DataStream[], chartOptions: C
       return styleMap;
     }, {});
     return [map, getChartStyleSettingsFromMap(map)] as const;
-  }, [datastreamDeps, optionsDeps, highlightedDataStreams]);
+    // disabling because dataStreams and options are stringified
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [datastreamDeps, optionsDeps, highlightedDataStreams, isDataStreamHighlighted]);
 };

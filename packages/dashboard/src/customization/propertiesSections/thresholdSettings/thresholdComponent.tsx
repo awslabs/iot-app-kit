@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import type { ComparisonOperator, Threshold, ThresholdValue } from '@iot-app-kit/core';
 import type { InputProps, SelectProps } from '@cloudscape-design/components';
@@ -37,17 +37,20 @@ export const ThresholdComponent: FC<{
 
   const { color, comparisonOperator, value } = threshold;
 
-  const validateValue: (value: ThresholdValue) => boolean = (value: ThresholdValue) => {
-    const notAllowString = !OPS_ALLOWED_WITH_STRING.find((op) => comparisonOperator === op);
-    const parsedValue = parseFloat(value as string);
+  const validateValue: (value: ThresholdValue) => boolean = useCallback(
+    (value: ThresholdValue) => {
+      const notAllowString = !OPS_ALLOWED_WITH_STRING.find((op) => comparisonOperator === op);
+      const parsedValue = parseFloat(value as string);
 
-    return !(Number.isNaN(parsedValue) && notAllowString);
-  };
+      return !(Number.isNaN(parsedValue) && notAllowString);
+    },
+    [comparisonOperator]
+  );
 
   useEffect(() => {
     const validation = validateValue(value);
     if (validation !== validValue) updateValidValue(validateValue(value));
-  }, [value, comparisonOperator]);
+  }, [value, validValue, validateValue, comparisonOperator]);
 
   const selectedOption =
     comparisonOptions.find(({ value = '' }) => value === comparisonOperator) || comparisonOptions[0];

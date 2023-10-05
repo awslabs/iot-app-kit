@@ -72,9 +72,9 @@ export const useDragMonitor = ({
     [union, startTracker.getPosition(), endTracker.getPosition()]
   );
 
-  useEffect(() => {
-    const { isDragging, clientOffset } = collected;
+  const { isDragging, clientOffset } = collected;
 
+  useEffect(() => {
     if (isDragging && clientOffset) {
       if (!dashboardGrid) return;
       const constrainedOffset = constrainPosition({
@@ -113,7 +113,8 @@ export const useDragMonitor = ({
       deltaTracker.setPosition(clientOffset);
       setCancelClick(true);
     }
-  }, [collected.isDragging, collected.clientOffset]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDragging, clientOffset]);
 
   return {
     dragRef,

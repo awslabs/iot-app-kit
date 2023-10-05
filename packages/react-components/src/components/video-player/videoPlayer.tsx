@@ -1,5 +1,6 @@
 // VideoJS exports as a single namespace
 /* eslint-disable import/no-named-as-default-member */
+/* eslint-disable react-hooks/exhaustive-deps */
 import DOMPurify from 'dompurify';
 import React, { useEffect, useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';

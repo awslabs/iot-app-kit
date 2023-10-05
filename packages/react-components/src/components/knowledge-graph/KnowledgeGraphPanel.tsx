@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { HTMLAttributes, useEffect, useCallback, useMemo, useState, useRef } from 'react';
 import { IntlProvider, FormattedMessage } from 'react-intl';
 import type { Core, EventObjectNode, EventObjectEdge } from 'cytoscape';

@@ -62,6 +62,8 @@ const mapSymboleStyleToSymbol = (symbolStyle: SymbolStyles['style']): ChartStyle
 };
 
 const useAdaptedStyleSettings = (rootStyles: LineAndScatterStyles, styledAssetQuery?: IoTSiteWiseDataStreamQuery) => {
+  const depQuery = JSON.stringify(styledAssetQuery);
+  const depStyles = JSON.stringify(rootStyles);
   return useMemo(() => {
     if (!styledAssetQuery) return {};
 
@@ -80,7 +82,9 @@ const useAdaptedStyleSettings = (rootStyles: LineAndScatterStyles, styledAssetQu
     });
 
     return styleSettings;
-  }, [JSON.stringify(styledAssetQuery), JSON.stringify(rootStyles)]);
+    // disabling because query and root styles are stringified
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [depQuery, depStyles]);
 };
 
 const mapStyledAssetPropertyToChartStyleSettings = (

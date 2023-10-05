@@ -49,7 +49,7 @@ export const useArcs = ({
 
     setColorRing(valueArc(ringD) || '');
     setDefaultRing(remainingArc(ringD) || '');
-  }, [percent]);
+  }, [percent, radius, lineThickness]);
 
   return { colorRing, defaultRing };
 };
