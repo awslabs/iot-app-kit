@@ -4,8 +4,7 @@ import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { SizeAndPositionSection } from './section';
 import { DashboardWidget, Rect } from '~/types';
 
-const isNotLineScatterWidget = (widget: DashboardWidget): widget is DashboardWidget =>
-  widget.type !== 'line-scatter-chart';
+const isNotLineScatterWidget = (widget: DashboardWidget): widget is DashboardWidget => widget.type !== 'xy-plot';
 
 const RenderSizeAndPositionConfiguration = ({
   useSize,
