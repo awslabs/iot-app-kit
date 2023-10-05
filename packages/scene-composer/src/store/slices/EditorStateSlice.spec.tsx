@@ -1,18 +1,24 @@
 import { Object3D, Vector3 } from 'three';
+import { StoreApi } from 'zustand';
 
-import { createEditStateSlice, exportsForTesting } from '../../../src/store/slices/EditorStateSlice';
-import { KnownComponentType } from '../../../src';
-import { ISceneNodeInternal } from '../../../src/store';
+import { CameraControlsType, KnownComponentType } from '../../interfaces';
+import { ISceneNodeInternal, RootState } from '..';
+import { DisplayMessageCategory, IEditorConfig } from '../internalInterfaces';
+import { TransformControls } from '../../three/TransformControls';
+
+import { createEditStateSlice, exportsForTesting } from './EditorStateSlice';
 
 describe('createEditStateSlice', () => {
+  const mockApi = jest.fn() as unknown as StoreApi<RootState>;
+
   it('should be able to getEditorConfig', () => {
     // Arrange
     const editorConfig = { message: 'this is a fake editor config' };
-    const get = jest.fn(() => ({ editorConfig })); // fake out get call
+    const get = jest.fn(() => ({ editorConfig } as unknown as RootState)); // fake out get call
     const set = jest.fn();
 
     // Act
-    const { getEditorConfig } = createEditStateSlice(set, get as any, undefined as any); // api is never used in the function, so it's not needed
+    const { getEditorConfig } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
     const result = getEditorConfig();
 
     // Assert
@@ -29,11 +35,11 @@ describe('createEditStateSlice', () => {
         editorConfig: { message: 'this is the initial draft that should be replaced', otherProp: 'other property' },
       };
       const get = jest.fn();
-      const set = jest.fn(((callback) => callback(draft)) as any);
+      const set = jest.fn((callback) => callback(draft));
 
       // Act
-      const { setEditorConfig } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
-      setEditorConfig(editorConfig as any, replace);
+      const { setEditorConfig } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
+      setEditorConfig(editorConfig as IEditorConfig, replace);
 
       // Assert
       expect(draft.lastOperation!).toEqual('setEditorConfig');
@@ -50,10 +56,10 @@ describe('createEditStateSlice', () => {
       operationMode === 'Viewing'
     } when operationMode id ${operationMode} with isViewing`, () => {
       const editorConfig = { operationMode };
-      const get = jest.fn(() => ({ editorConfig })); // fake out get call
+      const get = jest.fn(() => ({ editorConfig } as unknown as RootState)); // fake out get call
       const set = jest.fn();
 
-      const { isViewing } = createEditStateSlice(set, get as any, undefined as any); // api is never used in the function, so it's not needed
+      const { isViewing } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
 
       expect(isViewing()).toEqual(operationMode === 'Viewing');
     });
@@ -64,10 +70,10 @@ describe('createEditStateSlice', () => {
       operationMode === 'Editing'
     } when operationMode id ${operationMode} with isEditing`, () => {
       const editorConfig = { operationMode };
-      const get = jest.fn(() => ({ editorConfig })); // fake out get call
+      const get = jest.fn(() => ({ editorConfig } as unknown as RootState)); // fake out get call
       const set = jest.fn();
 
-      const { isEditing } = createEditStateSlice(set, get as any, undefined as any); // api is never used in the function, so it's not needed
+      const { isEditing } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
 
       expect(isEditing()).toEqual(operationMode === 'Editing');
     });
@@ -80,11 +86,11 @@ describe('createEditStateSlice', () => {
       { category: 'Warning', message: 'this is a fake warning' },
       { category: 'Error', message: 'this is a fake error' },
     ];
-    const get = jest.fn(() => ({ messages })); // fake out get call
+    const get = jest.fn(() => ({ messages } as unknown as RootState)); // fake out get call
     const set = jest.fn();
 
     // Act
-    const { getMessages } = createEditStateSlice(set, get as any, undefined as any); // api is never used in the function, so it's not needed
+    const { getMessages } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
     const result = getMessages();
 
     // Assert
@@ -95,17 +101,17 @@ describe('createEditStateSlice', () => {
   it('should be able to addMessages', () => {
     // Arrange
     const messages = [
-      { category: 'Info', message: 'this is a fake info', params: { test: 'test' } },
-      { category: 'Warning', message: 'this is a fake warning' },
-      { category: 'Error', message: 'this is a fake error' },
+      { category: DisplayMessageCategory.Info, messageText: 'this is a fake info', params: { test: 'test' } },
+      { category: DisplayMessageCategory.Warning, messageText: 'this is a fake warning' },
+      { category: DisplayMessageCategory.Error, messageText: 'this is a fake error' },
     ];
     const draft = { lastOperation: undefined, messages };
     const get = jest.fn();
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { addMessages } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
-    addMessages(messages as any);
+    const { addMessages } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
+    addMessages(messages);
 
     // Assert
     expect(draft.lastOperation!).toEqual('addMessages');
@@ -115,22 +121,36 @@ describe('createEditStateSlice', () => {
   it('should be able to clearMessages', () => {
     // Arrange
     const messages = [
-      { category: 'Info', message: 'this is a fake info', params: { test: 'test' } },
-      { category: 'Warning', message: 'this is a fake warning' },
-      { category: 'Error', message: 'this is a fake error' },
+      { category: DisplayMessageCategory.Info, messageText: 'this is a fake info', params: { test: 'test' } },
+      { category: DisplayMessageCategory.Warning, messageText: 'this is a fake warning' },
+      { category: DisplayMessageCategory.Error, messageText: 'this is a fake error' },
     ];
     const draft = { lastOperation: undefined, messages };
     const get = jest.fn();
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { addMessages, clearMessages } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
-    addMessages(messages as any);
+    const { addMessages, clearMessages } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
+    addMessages(messages);
     clearMessages();
 
     // Assert
     expect(draft.lastOperation!).toEqual('clearMessages');
     expect(draft.messages).toEqual([]);
+  });
+
+  it('should be able to set convert scene modal visibility', () => {
+    const draft = { lastOperation: undefined, convertSceneModalVisible: false };
+    const get = jest.fn();
+    const set = jest.fn((callback) => callback(draft));
+
+    // Act
+    const { setConvertSceneModalVisibility } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
+    setConvertSceneModalVisibility(true);
+
+    // Assert
+    expect(draft.lastOperation!).toEqual('setConvertSceneModalVisibility');
+    expect(draft.convertSceneModalVisible).toEqual(true);
   });
 
   [true, false].forEach((modelLoading) => {
@@ -142,11 +162,11 @@ describe('createEditStateSlice', () => {
         isLoadingModel,
       };
       const get = jest.fn();
-      const set = jest.fn(((callback) => callback(draft)) as any);
+      const set = jest.fn((callback) => callback(draft));
 
       // Act
-      const { setLoadingModelState } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
-      setLoadingModelState(isLoadingModel as any);
+      const { setLoadingModelState } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
+      setLoadingModelState(isLoadingModel);
 
       // Assert
       expect(draft.lastOperation!).toEqual('setLoadingModelState');
@@ -159,11 +179,11 @@ describe('createEditStateSlice', () => {
     const selectedSceneNodeRef = 'nodeRef';
     const draft = { lastOperation: undefined, selectedSceneNodeRef };
     const get = jest.fn();
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { setSelectedSceneNodeRef } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
-    setSelectedSceneNodeRef(selectedSceneNodeRef as any);
+    const { setSelectedSceneNodeRef } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
+    setSelectedSceneNodeRef(selectedSceneNodeRef);
 
     // Assert
     expect(draft.lastOperation!).toEqual('setSelectedSceneNodeRef');
@@ -175,11 +195,11 @@ describe('createEditStateSlice', () => {
     const highlightedSceneNodeRef = 'nodeRef';
     const draft = { lastOperation: undefined, highlightedSceneNodeRef };
     const get = jest.fn();
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { setHighlightedSceneNodeRef } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
-    setHighlightedSceneNodeRef(highlightedSceneNodeRef as any);
+    const { setHighlightedSceneNodeRef } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
+    setHighlightedSceneNodeRef(highlightedSceneNodeRef);
 
     // Assert
     expect(draft.lastOperation!).toEqual('setHighlightedSceneNodeRef');
@@ -191,11 +211,11 @@ describe('createEditStateSlice', () => {
     const transformControlMode = 'translate';
     const draft = { lastOperation: undefined, transformControlMode };
     const get = jest.fn();
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { setTransformControlMode } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
-    setTransformControlMode(transformControlMode as any);
+    const { setTransformControlMode } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
+    setTransformControlMode(transformControlMode);
 
     // Assert
     expect(draft.lastOperation!).toEqual('setTransformControlMode');
@@ -207,11 +227,11 @@ describe('createEditStateSlice', () => {
     const transformControls = 'new TransformControls';
     const draft = { lastOperation: undefined, transformControls };
     const get = jest.fn();
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { setTransformControls } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
-    setTransformControls(transformControls as any);
+    const { setTransformControls } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
+    setTransformControls(transformControls as unknown as TransformControls);
 
     // Assert
     expect(draft.lastOperation!).toEqual('setTransformControls');
@@ -223,11 +243,11 @@ describe('createEditStateSlice', () => {
     const cameraControls = 'new CameraControls';
     const draft = { lastOperation: undefined, cameraControls };
     const get = jest.fn();
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { setCameraControlsType } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
-    setCameraControlsType(cameraControls as any);
+    const { setCameraControlsType } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
+    setCameraControlsType(cameraControls as CameraControlsType);
 
     // Assert
     expect(draft.lastOperation!).toEqual('setCameraControlsType');
@@ -239,11 +259,11 @@ describe('createEditStateSlice', () => {
     const cameraCommand = { target: 'target', mode: 'transition' };
     const draft = { lastOperation: undefined, cameraCommand };
     const get = jest.fn();
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { setCameraTarget } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
-    setCameraTarget(cameraCommand.target, cameraCommand.mode as any);
+    const { setCameraTarget } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
+    setCameraTarget(cameraCommand.target, 'transition');
 
     // Assert
     expect(draft.lastOperation!).toEqual('setCameraTarget');
@@ -265,10 +285,10 @@ describe('createEditStateSlice', () => {
       sceneNodeRefObject3DMapping: new exportsForTesting.MappingWrapper(),
     };
     const get = jest.fn();
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { resetEditorState } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
+    const { resetEditorState } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
     resetEditorState();
 
     // Assert
@@ -284,10 +304,10 @@ describe('createEditStateSlice', () => {
     sceneNodeRefObject3DMapping.getMapping()[ref] = object3D;
     const draft = { sceneNodeRefObject3DMapping };
     const get = jest.fn().mockReturnValue({ sceneNodeRefObject3DMapping: new exportsForTesting.MappingWrapper() });
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { setSceneNodeObject3DMapping } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
+    const { setSceneNodeObject3DMapping } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
     setSceneNodeObject3DMapping(ref, object3D);
 
     // Assert
@@ -303,10 +323,10 @@ describe('createEditStateSlice', () => {
     sceneNodeRefObject3DMapping.getMapping()[ref] = object3D;
     const draft = { sceneNodeRefObject3DMapping };
     const get = jest.fn().mockReturnValue(draft);
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { getObject3DBySceneNodeRef } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
+    const { getObject3DBySceneNodeRef } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
     const without = getObject3DBySceneNodeRef(nonRef);
     const nodeRef = getObject3DBySceneNodeRef(ref);
     // Assert
@@ -319,10 +339,10 @@ describe('createEditStateSlice', () => {
     const cursorPosition = new Vector3();
     const draft = { lastOperation: undefined, cursorPosition };
     const get = jest.fn();
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { setCursorPosition } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
+    const { setCursorPosition } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
     setCursorPosition(cursorPosition);
 
     // Assert
@@ -335,10 +355,10 @@ describe('createEditStateSlice', () => {
     const cursorLookAt = new Vector3();
     const draft = { lastOperation: undefined, cursorLookAt };
     const get = jest.fn();
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { setCursorLookAt } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
+    const { setCursorLookAt } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
     setCursorLookAt(cursorLookAt);
 
     // Assert
@@ -351,10 +371,10 @@ describe('createEditStateSlice', () => {
     const cursorVisible = true;
     const draft = { lastOperation: undefined, cursorVisible };
     const get = jest.fn().mockReturnValue({});
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { setCursorVisible } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
+    const { setCursorVisible } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
     setCursorVisible(cursorVisible);
 
     // Assert
@@ -367,10 +387,10 @@ describe('createEditStateSlice', () => {
     const cursorStyle = 'edit';
     const draft = { lastOperation: undefined, cursorStyle };
     const get = jest.fn().mockReturnValue({});
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { setCursorStyle } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
+    const { setCursorStyle } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
     setCursorStyle(cursorStyle);
 
     // Assert
@@ -386,10 +406,10 @@ describe('createEditStateSlice', () => {
     };
     const draft = { lastOperation: undefined, addingWidget };
     const get = jest.fn();
-    const set = jest.fn(((callback) => callback(draft)) as any);
+    const set = jest.fn((callback) => callback(draft));
 
     // Act
-    const { setAddingWidget } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
+    const { setAddingWidget } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
     setAddingWidget(addingWidget);
 
     // Assert

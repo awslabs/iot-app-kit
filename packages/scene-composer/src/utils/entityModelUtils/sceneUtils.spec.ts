@@ -322,4 +322,41 @@ describe('convertAllNodesToEntities', () => {
       },
     });
   });
+
+  it('should call onFailure when createNodeEntity failed', async () => {
+    const document: Partial<ISceneDocumentInternal> = {
+      nodeMap: {
+        staticNode,
+      },
+    };
+    const error = new Error('createNodeEntity failed');
+    (createNodeEntity as jest.Mock).mockRejectedValue(error);
+    const onFailure = jest.fn();
+
+    convertAllNodesToEntities({
+      document: document as ISceneDocumentInternal,
+      onSuccess,
+      onFailure,
+      getObject3DBySceneNodeRef: jest.fn().mockReturnValue(new Object3D()),
+      sceneRootEntityId: 'scene-root',
+      layerId: 'layer',
+    });
+
+    await flushPromises();
+
+    expect(createNodeEntity).toBeCalledTimes(1);
+    expect(onSuccess).not.toBeCalled();
+    expect(onFailure).toBeCalledTimes(1);
+    expect(onFailure).toBeCalledWith(
+      {
+        ...staticNode,
+        parentRef: undefined,
+        properties: {
+          ...staticNode.properties,
+          [SceneNodeRuntimeProperty.LayerIds]: ['layer'],
+        },
+      },
+      error,
+    );
+  });
 });

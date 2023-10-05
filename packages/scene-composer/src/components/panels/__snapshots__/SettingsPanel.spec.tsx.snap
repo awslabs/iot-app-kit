@@ -229,6 +229,135 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
 </div>
 `;
 
+exports[`SettingsPanel contains expected elements. should contains settings element for converting scene in editing. 1`] = `
+.c0 {
+  height: 1px;
+  border-width: 0px;
+  background-color: colorBorderDividerDefault;
+}
+
+<div>
+  <div
+    data-mocked="ExpandableInfoSection"
+    title="Current View Settings"
+  >
+    <div
+      data-mocked="FormField"
+    >
+      <div>
+        <div
+          data-mocked="Box"
+          font-weight="bold"
+        >
+          Toggle visibility
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Animation
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Motion indicator
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Tag
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    data-mocked="ExpandableInfoSection"
+    title="Scene Settings"
+  >
+    <div
+      data-mocked="SpaceBetween"
+    >
+      <div
+        data-mocked="FormField"
+        label="Environment Preset"
+      >
+        <div
+          data-mocked="Select"
+          options="[{\\"label\\":\\"No Preset\\",\\"value\\":\\"n/a\\"},{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"},{\\"label\\":\\"Directional\\",\\"value\\":\\"directional\\"},{\\"label\\":\\"Chromatic\\",\\"value\\":\\"chromatic\\"}]"
+          placeholder="Choose an environment"
+          selectedarialabel="Selected"
+          selectedoption="{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"}"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    data-mocked="ExpandableInfoSection"
+    title="Convert scene"
+  >
+    <div
+      data-mocked="ConvertSceneSettings"
+    />
+  </div>
+</div>
+`;
+
 exports[`SettingsPanel contains expected elements. should contains settings element for overlay in editing. 1`] = `
 .c0 {
   height: 1px;

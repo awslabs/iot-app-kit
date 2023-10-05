@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConvertSceneSettings should render correctly with convert button disabled 1`] = `
+<div>
+  <div
+    data-mocked="Box"
+    font-weight="bold"
+    margin="{\\"bottom\\":\\"xxs\\"}"
+    variant="p"
+  >
+    Convert to entities
+  </div>
+  <div
+    data-mocked="Box"
+    margin="{\\"bottom\\":\\"xxs\\"}"
+    variant="p"
+  >
+    Converting your scene to entities enables auto updating, filtering and querying your scene.
+  </div>
+  <div
+    data-mocked="Button"
+    data-testid="convert-button"
+    disabled=""
+  >
+    Convert scene
+  </div>
+</div>
+`;
+
+exports[`ConvertSceneSettings should render correctly with convert button enabled 1`] = `
+<div>
+  <div
+    data-mocked="Box"
+    font-weight="bold"
+    margin="{\\"bottom\\":\\"xxs\\"}"
+    variant="p"
+  >
+    Convert to entities
+  </div>
+  <div
+    data-mocked="Box"
+    margin="{\\"bottom\\":\\"xxs\\"}"
+    variant="p"
+  >
+    Converting your scene to entities enables auto updating, filtering and querying your scene.
+  </div>
+  <div
+    data-mocked="Button"
+    data-testid="convert-button"
+  >
+    Convert scene
+  </div>
+</div>
+`;

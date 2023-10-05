@@ -61,6 +61,9 @@ export interface IEditorStateSlice {
   clearMessages(): void;
   getMessages(): IDisplayMessage[];
 
+  convertSceneModalVisible?: boolean;
+  setConvertSceneModalVisibility(visible: boolean): void;
+
   // Selection and highlights
   selectedSceneNodeRef?: string;
   selectedSceneSubmodelRef?: SubModelRef;
@@ -112,11 +115,9 @@ export interface IEditorStateSlice {
   setMainCameraObject(camera?: THREE.Camera);
 }
 
-function createDefaultEditorState() {
+function createDefaultEditorState(): Partial<IEditorStateSlice> {
   return {
     isLoadingModel: false,
-    isInViewpointTransition: false,
-    isAddingWidget: false,
     messages: [],
     selectedSceneNodeRef: undefined,
     highlightedSceneNodeRef: undefined,
@@ -143,7 +144,11 @@ function createDefaultEditorState() {
   };
 }
 
-export const createEditStateSlice = (set: SetState<RootState>, get: GetState<RootState>, _api: StoreApi<RootState>) =>
+export const createEditStateSlice = (
+  set: SetState<RootState>,
+  get: GetState<RootState>,
+  _api: StoreApi<RootState>,
+): IEditorStateSlice =>
   ({
     ...createDefaultEditorState(),
 
@@ -211,6 +216,13 @@ export const createEditStateSlice = (set: SetState<RootState>, get: GetState<Roo
 
     getMessages() {
       return get().messages;
+    },
+
+    setConvertSceneModalVisibility(visible) {
+      set((draft) => {
+        draft.convertSceneModalVisible = visible;
+        draft.lastOperation = 'setConvertSceneModalVisibility';
+      });
     },
 
     setSelectedSceneNodeRef(nodeRef?: string) {

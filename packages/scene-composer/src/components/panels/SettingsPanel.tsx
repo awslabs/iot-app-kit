@@ -11,11 +11,13 @@ import { pascalCase } from '../../utils/stringUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { Component } from '../../models/SceneModels';
 import { Divider } from '../Divider';
+import useDynamicScene from '../../hooks/useDynamicScene';
 
 import { ExpandableInfoSection } from './CommonPanelComponents';
 import { MatterportIntegration, SceneDataBindingTemplateEditor, SceneTagSettingsEditor } from './scene-settings';
 import { ComponentVisibilityToggle } from './scene-settings/ComponentVisibilityToggle';
 import { OverlayPanelVisibilityToggle } from './scene-settings/OverlayPanelVisibilityToggle';
+import { ConvertSceneSettings } from './scene-settings/ConvertSceneSettings';
 
 export interface SettingsPanelProps {
   valueDataBindingProvider?: IValueDataBindingProvider;
@@ -33,6 +35,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
   const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
   const matterportEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Matterport];
   const overlayEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Overlay];
+  const dynamicSceneEnabled = useDynamicScene();
 
   const selectedEnvPreset = useStore(sceneComposerId)((state) =>
     state.getSceneProperty<string>(KnownSceneProperty.EnvironmentPreset),
@@ -207,9 +210,21 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
             description: 'ExpandableInfoSection Title',
             defaultMessage: '3rd Party Resources',
           })}
-          defaultExpanded
+          defaultExpanded={false}
         >
           <MatterportIntegration />
+        </ExpandableInfoSection>
+      )}
+
+      {dynamicSceneEnabled && isEditing && (
+        <ExpandableInfoSection
+          title={intl.formatMessage({
+            description: 'ExpandableInfoSection Title',
+            defaultMessage: 'Convert scene',
+          })}
+          defaultExpanded={false}
+        >
+          <ConvertSceneSettings />
         </ExpandableInfoSection>
       )}
     </Fragment>

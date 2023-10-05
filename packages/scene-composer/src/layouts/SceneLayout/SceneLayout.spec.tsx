@@ -28,6 +28,8 @@ jest.mock('../../components/panels/TopBar', () => {
 
 jest.mock('../../hooks/useSelectedNode', () => jest.fn());
 
+jest.mock('../../components/ConvertSceneModal', () => 'ConvertSceneModal');
+
 class ResizeObserver {
   observe = jest.fn();
   unobserve = jest.fn();
@@ -63,13 +65,14 @@ describe('SceneLayout', () => {
   [
     ['Edit mode', { isViewing: false, showMessageModal: false }],
     ['Viewing mode', { isViewing: true, showMessageModal: false }],
-    ['Edit mode with Modal', { isViewing: false, showMessageModal: true }],
-    ['Viewing mode with modal', { isViewing: true, showMessageModal: true }],
+    ['Edit mode with message modal', { isViewing: false, showMessageModal: true }],
+    ['Viewing mode with message modal', { isViewing: true, showMessageModal: true }],
   ].forEach((value) => {
     it(`should render correctly in ${value[0]}`, () => {
       const container = create(
         <SceneLayout
           onPointerMissed={() => {}}
+          showConvertSceneModal={false}
           LoadingView={<div data-test-id='Loading view' />}
           {...(value[1] as { isViewing: boolean; showMessageModal: boolean })}
         />,
@@ -77,6 +80,20 @@ describe('SceneLayout', () => {
 
       expect(container).toMatchSnapshot();
     });
+  });
+
+  it('should render correctly in edit mode with convert scene modal open', () => {
+    const container = create(
+      <SceneLayout
+        onPointerMissed={() => {}}
+        showConvertSceneModal={true}
+        LoadingView={<div data-test-id='Loading view' />}
+        isViewing={false}
+        showMessageModal={false}
+      />,
+    );
+
+    expect(container).toMatchSnapshot();
   });
 
   it('should render camera preview if editing and camera component is on selectedNode', () => {

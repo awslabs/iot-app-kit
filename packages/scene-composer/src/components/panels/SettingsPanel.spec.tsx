@@ -1,14 +1,16 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { SettingsPanel } from '..';
-import { useStore } from '../../../store';
-import { setFeatureConfig } from '../../../common/GlobalSettings';
-import { COMPOSER_FEATURES } from '../../../interfaces';
-import { mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
+import { useStore } from '../../store';
+import { setFeatureConfig } from '../../common/GlobalSettings';
+import { COMPOSER_FEATURES } from '../../interfaces';
+import { mockProvider } from '../../../tests/components/panels/scene-components/MockComponents';
+import useDynamicScene from '../../hooks/useDynamicScene';
 
-jest.mock('../scene-settings', () => {
-  const originalModule = jest.requireActual('../scene-settings');
+import { SettingsPanel } from '.';
+
+jest.mock('./scene-settings', () => {
+  const originalModule = jest.requireActual('./scene-settings');
   return {
     ...originalModule,
     SceneDataBindingTemplateEditor: 'SceneDataBindingTemplateEditor',
@@ -16,18 +18,37 @@ jest.mock('../scene-settings', () => {
   };
 });
 
-jest.mock('../CommonPanelComponents', () => ({
-  ...jest.requireActual('../CommonPanelComponents'),
+jest.mock('./scene-settings/ConvertSceneSettings', () => {
+  const originalModule = jest.requireActual('./scene-settings/ConvertSceneSettings');
+  return {
+    ...originalModule,
+    ConvertSceneSettings: (props) => <div data-mocked='ConvertSceneSettings' {...props} />,
+  };
+});
+
+jest.mock('./CommonPanelComponents', () => ({
+  ...jest.requireActual('./CommonPanelComponents'),
   ExpandableInfoSection: (props) => <div data-mocked='ExpandableInfoSection' {...props} />,
 }));
 
+jest.mock('../../hooks/useDynamicScene', () => jest.fn());
+
 describe('SettingsPanel contains expected elements.', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    setFeatureConfig({});
+    useStore('default').setState({
+      setSceneProperty: jest.fn(),
+      getSceneProperty: jest.fn().mockReturnValue('neutral'),
+      isEditing: jest.fn(),
+    });
+    (useDynamicScene as jest.Mock).mockReturnValue(false);
+  });
+
   it('should contains default elements in editing mode.', async () => {
     setFeatureConfig({ [COMPOSER_FEATURES.TagResize]: false });
-    const setSceneProperty = jest.fn();
     useStore('default').setState({
-      setSceneProperty: setSceneProperty,
-      getSceneProperty: jest.fn().mockReturnValue('neutral'),
       isEditing: jest.fn().mockReturnValue(true),
     });
 
@@ -41,10 +62,7 @@ describe('SettingsPanel contains expected elements.', () => {
   });
 
   it('should contains default elements in viewing mode.', async () => {
-    const setSceneProperty = jest.fn();
     useStore('default').setState({
-      setSceneProperty: setSceneProperty,
-      getSceneProperty: jest.fn().mockReturnValue('neutral'),
       isEditing: jest.fn().mockReturnValue(false),
     });
 
@@ -59,11 +77,6 @@ describe('SettingsPanel contains expected elements.', () => {
 
   it('should contains tag settings element.', async () => {
     setFeatureConfig({ [COMPOSER_FEATURES.TagResize]: true });
-    const setSceneProperty = jest.fn();
-    useStore('default').setState({
-      setSceneProperty: setSceneProperty,
-      getSceneProperty: jest.fn().mockReturnValue('neutral'),
-    });
 
     const { container, queryByTitle } = render(<SettingsPanel />);
 
@@ -73,10 +86,7 @@ describe('SettingsPanel contains expected elements.', () => {
 
   it('should contains settings element for overlay in editing.', async () => {
     setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true });
-    const setSceneProperty = jest.fn();
     useStore('default').setState({
-      setSceneProperty: setSceneProperty,
-      getSceneProperty: jest.fn().mockReturnValue('neutral'),
       isEditing: jest.fn().mockReturnValue(true),
     });
 
@@ -91,10 +101,7 @@ describe('SettingsPanel contains expected elements.', () => {
 
   it('should contains settings element for overlay in viewing.', async () => {
     setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true });
-    const setSceneProperty = jest.fn();
     useStore('default').setState({
-      setSceneProperty: setSceneProperty,
-      getSceneProperty: jest.fn().mockReturnValue('neutral'),
       isEditing: jest.fn().mockReturnValue(false),
     });
 
@@ -105,5 +112,28 @@ describe('SettingsPanel contains expected elements.', () => {
     expect(queryAllByText('Annotation').length).toEqual(1);
     expect(queryByTitle('Tag Settings')).toBeTruthy();
     expect(container).toMatchSnapshot();
+  });
+
+  it('should contains settings element for converting scene in editing.', async () => {
+    (useDynamicScene as jest.Mock).mockReturnValue(true);
+    useStore('default').setState({
+      isEditing: jest.fn().mockReturnValue(true),
+    });
+
+    const { container, queryByTitle } = render(<SettingsPanel />);
+
+    expect(queryByTitle('Convert scene')).toBeTruthy();
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should not contain settings element for converting scene in viewing.', async () => {
+    (useDynamicScene as jest.Mock).mockReturnValue(true);
+    useStore('default').setState({
+      isEditing: jest.fn().mockReturnValue(false),
+    });
+
+    const { queryByTitle } = render(<SettingsPanel />);
+
+    expect(queryByTitle('Convert scene')).toBeFalsy();
   });
 });

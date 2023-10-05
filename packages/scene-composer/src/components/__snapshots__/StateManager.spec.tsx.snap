@@ -10,6 +10,7 @@ exports[`StateManager should render correctly 1`] = `
   externalLibraryConfig={Object {}}
   isViewing={false}
   onPointerMissed={[Function]}
+  showConvertSceneModal={false}
   showMessageModal={true}
 />
 `;
@@ -32,6 +33,7 @@ exports[`StateManager should render correctly with Matterport configuration 1`] 
   }
   isViewing={false}
   onPointerMissed={[Function]}
+  showConvertSceneModal={false}
   showMessageModal={true}
 />
 `;
@@ -45,6 +47,7 @@ exports[`StateManager should render correctly with error in Matterport configura
   }
   isViewing={false}
   onPointerMissed={[Function]}
+  showConvertSceneModal={false}
   showMessageModal={true}
 />
 `;

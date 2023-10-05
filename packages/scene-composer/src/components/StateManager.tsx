@@ -101,6 +101,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const dataProviderRef = useRef<ProviderWithViewport<TimeSeriesData[]> | undefined>(undefined);
   const prevSelection = useRef<string | undefined>(undefined);
 
+  const convertSceneModalVisible = useStore(sceneComposerId)((state) => !!state.convertSceneModalVisible);
+
   const { setActiveCameraSettings, setActiveCameraName } = useActiveCamera();
 
   const standardUriModifier = useMemo(
@@ -396,6 +398,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     <SceneLayout
       isViewing={isViewing}
       showMessageModal={showMessageModal}
+      showConvertSceneModal={convertSceneModalVisible}
       externalLibraryConfig={updatedExternalLibraryConfig}
       LoadingView={
         <IntlProvider locale={config.locale}>
