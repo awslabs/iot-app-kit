@@ -18,6 +18,7 @@ export type SceneComposerEditorOperation =
   | 'setCursorLookAt'
   | 'setCursorVisible'
   | 'setCursorStyle'
+  | 'setKeyEvent'
   | 'setActiveCameraSettings'
   | 'setActiveCameraName'
   | 'setMainCameraObject';
@@ -85,6 +86,7 @@ export const SceneComposerOperationTypeMap: Record<SceneComposerOperation, Opera
   setCursorLookAt: 'UPDATE_EDITOR',
   setCursorVisible: 'UPDATE_EDITOR',
   setCursorStyle: 'UPDATE_EDITOR',
+  setKeyEvent: 'UPDATE_EDITOR',
   setActiveCameraSettings: 'UPDATE_EDITOR',
   setActiveCameraName: 'UPDATE_EDITOR',
   setMainCameraObject: 'UPDATE_EDITOR',

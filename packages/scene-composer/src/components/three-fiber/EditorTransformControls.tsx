@@ -11,6 +11,7 @@ import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
 import { findComponentByType, isEnvironmentNode } from '../../utils/nodeUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
+import { getPropertyForKeyEvent, handleKeyEventTransform } from '../../utils/keyboardUtils';
 
 export function EditorTransformControls() {
   const { domElement } = useThree(({ gl }) => gl);
@@ -24,6 +25,8 @@ export function EditorTransformControls() {
   const selectedSceneNode = useStore(sceneComposerId)((state) => state.getSceneNodeByRef(selectedSceneNodeRef));
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
   const addingWidget = useStore(sceneComposerId)((state) => state.addingWidget);
+  const keyPressEvent = useStore(sceneComposerId)((state) => state.keyPressEvent);
+  const setKeyEvent = useStore(sceneComposerId)((state) => state.setKeyEvent);
 
   const [transformControls] = useState(() => new TransformControlsImpl(camera, domElement));
   const subModelMovementEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SubModelMovement];
@@ -35,6 +38,33 @@ export function EditorTransformControls() {
   const transformVisible = !isSubModelComponent || subModelMovementEnabled;
   const shouldResetModeToTranslate =
     (isTagComponent || isOverlayComponent) && (transformControlMode === 'scale' || transformControlMode === 'rotate');
+
+  function transformControlsEventCallback() {
+    // @ts-ignore: transformControls has an object prop that TS does not know.
+    const controlledObject = transformControls.object as THREE.Object3D;
+    // getting the state from zustand store directly in ThreeJS callback for performance consideration
+    const rootState = useStore(sceneComposerId).getState();
+    const selectedSceneNodeRef = rootState.selectedSceneNodeRef;
+    const sceneNode = rootState.getSceneNodeByRef(selectedSceneNodeRef);
+
+    if (sceneNode) {
+      let position = [controlledObject.position.x, controlledObject.position.y, controlledObject.position.z];
+
+      if (sceneNode.transformConstraint.snapToFloor) {
+        const parentNode = rootState.getSceneNodeByRef(sceneNode.parentRef);
+        const parentObject3D = parentNode ? getObject3DBySceneNodeRef(parentNode.ref) : undefined;
+        position = snapObjectToFloor(controlledObject, parentObject3D);
+      }
+
+      rootState.updateSceneNodeInternal(sceneNode.ref, {
+        transform: {
+          position,
+          rotation: [controlledObject.rotation.x, controlledObject.rotation.y, controlledObject.rotation.z],
+          scale: [controlledObject.scale.x, controlledObject.scale.y, controlledObject.scale.z],
+        },
+      });
+    }
+  }
 
   // Set transform controls' camera
   useEffect(() => {
@@ -94,34 +124,20 @@ export function EditorTransformControls() {
     }
   }, [selectedSceneNodeRef, selectedSceneNode, document, log, addingWidget]);
 
+  // handle key events
+  useEffect(() => {
+    const { property, amount } = getPropertyForKeyEvent(transformControlMode);
+    if (keyPressEvent && property) {
+      const controlledObject = (transformControls as any).object as THREE.Object3D;
+      handleKeyEventTransform(controlledObject, keyPressEvent, property, amount);
+      transformControlsEventCallback();
+      // reset keypress after executing action
+      setKeyEvent(undefined);
+    }
+  }, [keyPressEvent]);
+
   // Transform control callbacks
   useEffect(() => {
-    function transformControlsEventCallback() {
-      const controlledObject = (transformControls as any).object as THREE.Object3D;
-      // getting the state from zustand store directly in ThreeJS callback for performance consideration
-      const rootState = useStore(sceneComposerId).getState();
-      const selectedSceneNodeRef = rootState.selectedSceneNodeRef;
-      const sceneNode = rootState.getSceneNodeByRef(selectedSceneNodeRef);
-
-      if (sceneNode) {
-        let position = [controlledObject.position.x, controlledObject.position.y, controlledObject.position.z];
-
-        if (sceneNode.transformConstraint.snapToFloor) {
-          const parentNode = rootState.getSceneNodeByRef(sceneNode.parentRef);
-          const parentObject3D = parentNode ? getObject3DBySceneNodeRef(parentNode.ref) : undefined;
-          position = snapObjectToFloor(controlledObject, parentObject3D);
-        }
-
-        rootState.updateSceneNodeInternal(sceneNode.ref, {
-          transform: {
-            position,
-            rotation: [controlledObject.rotation.x, controlledObject.rotation.y, controlledObject.rotation.z],
-            scale: [controlledObject.scale.x, controlledObject.scale.y, controlledObject.scale.z],
-          },
-        });
-      }
-    }
-
     transformControls.addEventListener('mouseUp', transformControlsEventCallback);
 
     return () => {

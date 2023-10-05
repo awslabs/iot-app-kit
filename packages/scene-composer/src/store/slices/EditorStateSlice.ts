@@ -101,6 +101,10 @@ export interface IEditorStateSlice {
   cursorStyle: CursorStyle;
   setCursorStyle(style: CursorStyle): void;
 
+  // Global key event data
+  keyPressEvent?: KeyboardEvent | undefined;
+  setKeyEvent(event: KeyboardEvent | undefined): void;
+
   // Active Camera Settings
   activeCameraSettings: CameraSettings;
   setActiveCameraSettings(cameraSettings: CameraSettings);
@@ -130,6 +134,7 @@ function createDefaultEditorState() {
     cursorLookAt: new THREE.Vector3(0, 0, 0),
     cursorVisible: false,
     cursorStyle: 'move',
+    keyPressEvent: undefined,
     activeCameraSettings: {
       cameraType: CameraType.Perspective,
       fov: DEFAULT_CAMERA_OPTIONS.fov,
@@ -317,6 +322,13 @@ export const createEditStateSlice = (set: SetState<RootState>, get: GetState<Roo
       set((draft) => {
         draft.cursorStyle = style;
         draft.lastOperation = 'setCursorStyle';
+      });
+    },
+
+    setKeyEvent(event: KeyboardEvent | undefined) {
+      set((draft) => {
+        draft.keyPressEvent = event;
+        draft.lastOperation = 'setKeyEvent';
       });
     },
 

@@ -48,6 +48,7 @@ const R3FWrapper = (props: { matterportConfig?: MatterportConfig; children?: Rea
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
   const { enableMatterportViewer } = useMatterportViewer();
   const loadMatterport = enableMatterportViewer && matterportConfig && !isEmpty(matterportConfig.modelId);
+  const setKeyEvent = useStore(sceneComposerId)((state) => state.setKeyEvent);
 
   useEffect(() => {
     if (!loadMatterport) {
@@ -61,6 +62,13 @@ const R3FWrapper = (props: { matterportConfig?: MatterportConfig; children?: Rea
   if (!sceneLoaded) {
     return null;
   }
+
+  const handleKeyDown = (event) => {
+    if (event.key) {
+      setKeyEvent(event);
+    }
+    event.stopPropagataion();
+  };
 
   return loadMatterport ? (
     <MatterportViewer
@@ -84,7 +92,7 @@ const R3FWrapper = (props: { matterportConfig?: MatterportConfig; children?: Rea
       </ContextBridge>
     </MatterportViewer>
   ) : (
-    <UnselectableCanvas shadows dpr={window.devicePixelRatio}>
+    <UnselectableCanvas shadows dpr={window.devicePixelRatio} tabIndex={0} onKeyDown={handleKeyDown}>
       <ContextBridge>
         <Suspense fallback={null}>{children}</Suspense>
       </ContextBridge>

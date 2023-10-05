@@ -116,6 +116,7 @@ const editorStateSelector = (state: RootState) => ({
   cursorLookAt: state.cursorLookAt,
   cursorVisible: state.cursorVisible,
   cursorStyle: state.cursorStyle,
+  keyPressEvent: state.keyPressEvent,
 
   setEditorConfig: state.setEditorConfig,
   getObject3DBySceneNodeRef: state.getObject3DBySceneNodeRef,

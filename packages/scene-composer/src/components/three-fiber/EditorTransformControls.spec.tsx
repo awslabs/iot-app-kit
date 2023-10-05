@@ -448,4 +448,52 @@ describe('EditorTransformControls', () => {
     expect(mockSetTransformControlMode).toBeCalledTimes(1);
     expect(mockSetTransformControlMode).toBeCalledWith('translate');
   });
+
+  it('should transform selected node with key events', async () => {
+    mockGetSceneNodeByRef.mockReturnValue({ ...baseNode, components: [{ type: KnownComponentType.Light }] });
+    mockFindComponentByType.mockReturnValue({ type: KnownComponentType.Light });
+    useStore('default').setState({ ...baseState, transformControlMode: 'translate' });
+
+    const mockTransformControlObject = {
+      position: {
+        x: 111,
+        y: 222,
+        z: 333,
+      },
+      rotation: {
+        x: 11,
+        y: 22,
+        z: 33,
+      },
+      scale: {
+        x: 1,
+        y: 2,
+        z: 3,
+      },
+    };
+    const mockTransformBase = {
+      position: Object.values(mockTransformControlObject.position),
+      rotation: Object.values(mockTransformControlObject.rotation),
+      scale: Object.values(mockTransformControlObject.scale),
+    };
+
+    const mockNode = {
+      ...baseNode,
+      parentRef: 'bbb',
+      transformConstraint: {
+        snapToFloor: true,
+      },
+    };
+    const expected = {
+      transform: {
+        ...mockTransformBase,
+        position: [112, 222, 333],
+      },
+    };
+    const renderer = render(<EditorTransformControls />);
+    MockTransformControls.instance.object = mockTransformControlObject;
+    useStore('default').setState((state) => state.setKeyEvent({ key: 'ArrowRight' } as KeyboardEvent));
+    renderer.rerender(<EditorTransformControls />);
+    expect(mockUpdateSceneNodeInternal).toBeCalledWith(mockNode.ref, expected);
+  });
 });
