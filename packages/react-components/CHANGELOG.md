@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [8.1.1](https://github.com/awslabs/iot-app-kit/compare/react-components-v8.1.0...react-components-v8.1.1) (2023-10-05)
+
+
+### Bug Fixes
+
+* add eslint rule for hooks ([de7cc0d](https://github.com/awslabs/iot-app-kit/commit/de7cc0d94ffdb79d3cb2ce622dd322e6d8497d61))
+* **dashboard:** chart respects absolute min and max between data and thresholds ([db16712](https://github.com/awslabs/iot-app-kit/commit/db1671225e300a18765d55a8afd1534640d264de))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/core bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/core-util bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/source-iottwinmaker bumped from 8.1.0 to 8.1.1
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/source-iotsitewise bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/testing-util bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/ts-config bumped from 8.1.0 to 8.1.1
+    * eslint-config-iot-app-kit bumped from 8.1.0 to 8.1.1
+
 ## [8.1.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v8.0.2...react-components-v8.1.0) (2023-10-04)
 
 
