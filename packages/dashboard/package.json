@@ -36,6 +36,7 @@
     "watch-dependencies": "npm exec turbowatch ./turbowatch.ts"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.2.0",
     "@iot-app-kit/jest-config": "9.4.0",
     "@iot-app-kit/testing-util": "9.4.0",
     "@iot-app-kit/ts-config": "9.4.0",
