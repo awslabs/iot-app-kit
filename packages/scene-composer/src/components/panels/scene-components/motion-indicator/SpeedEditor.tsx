@@ -99,7 +99,7 @@ export const SpeedEditor: React.FC<ISpeedEditorProps> = ({ component, onUpdateCa
           onChange={(event) => {
             const updatedComponent = {
               ...component,
-              config: { ...component.config, defaultSpeed: event.target.value },
+              config: { ...component.config, defaultSpeed: Number(event.target.value) },
             };
             onUpdateCallback(updatedComponent, true);
           }}

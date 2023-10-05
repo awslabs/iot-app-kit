@@ -4,6 +4,7 @@ import { Component } from '../../models/SceneModels';
 import { IMotionIndicatorComponentInternal } from '../../store';
 
 import {
+  EMPTY_COLOR_STRING,
   createMotionIndicatorEntityComponent,
   parseMotionIndicatorComp,
   updateMotionIndicatorEntityComponent,
@@ -39,9 +40,14 @@ describe('createMotionIndicatorEntityComponent', () => {
             doubleValue: indicatorBase.config.backgroundColorOpacity,
           },
         },
-        appearanceBindings: {
+        config_defaultBackgroundColor: {
           value: {
-            listValue: [],
+            stringValue: EMPTY_COLOR_STRING,
+          },
+        },
+        config_defaultForegroundColor: {
+          value: {
+            stringValue: EMPTY_COLOR_STRING,
           },
         },
       },
@@ -81,7 +87,7 @@ describe('createMotionIndicatorEntityComponent', () => {
     });
   });
 
-  it('should return expected tag component with speed binding', () => {
+  it('should return expected motion indicator component with speed binding', () => {
     const result = createMotionIndicatorEntityComponent({
       ...indicatorBase,
       valueDataBindings: {
@@ -110,7 +116,30 @@ describe('createMotionIndicatorEntityComponent', () => {
     });
   });
 
-  it('should return expected tag component with background color binding', () => {
+  it('should return expected motion indicator component with empty speed binding', () => {
+    const result = createMotionIndicatorEntityComponent({
+      ...indicatorBase,
+      valueDataBindings: {
+        speed: undefined,
+      },
+    });
+
+    expect(result.properties!['appearanceBindings']).toEqual({
+      value: {
+        listValue: [
+          {
+            mapValue: {
+              bindingName: {
+                stringValue: 'speed',
+              },
+            },
+          },
+        ],
+      },
+    });
+  });
+
+  it('should return expected motion indicator component with background color binding', () => {
     const result = createMotionIndicatorEntityComponent({
       ...indicatorBase,
       valueDataBindings: {
@@ -136,7 +165,7 @@ describe('createMotionIndicatorEntityComponent', () => {
     });
   });
 
-  it('should return expected tag component with multiple bindings', () => {
+  it('should return expected motion indicator component with multiple bindings', () => {
     const result = createMotionIndicatorEntityComponent({
       ...indicatorBase,
       valueDataBindings: {
@@ -187,7 +216,7 @@ describe('updateMotionIndicatorEntityComponent', () => {
 });
 
 describe('parseMotionIndicatorComp', () => {
-  const indicatorBaseProps = [
+  const indicatorBasePropsWithoutColors = [
     {
       propertyName: 'shape',
       propertyValue: 'LinearPlane',
@@ -199,6 +228,17 @@ describe('parseMotionIndicatorComp', () => {
     {
       propertyName: 'config_backgroundColorOpacity',
       propertyValue: 0,
+    },
+  ];
+  const indicatorBaseProps = [
+    ...indicatorBasePropsWithoutColors,
+    {
+      propertyName: 'config_defaultBackgroundColor',
+      propertyValue: EMPTY_COLOR_STRING,
+    },
+    {
+      propertyName: 'config_defaultForegroundColor',
+      propertyValue: EMPTY_COLOR_STRING,
     },
   ];
 
@@ -241,7 +281,7 @@ describe('parseMotionIndicatorComp', () => {
     const result = parseMotionIndicatorComp({
       componentTypeId: componentTypeToId[KnownComponentType.MotionIndicator],
       properties: [
-        ...indicatorBaseProps,
+        ...indicatorBasePropsWithoutColors,
         {
           propertyName: 'config_defaultBackgroundColor',
           propertyValue: '#abc',
@@ -256,7 +296,7 @@ describe('parseMotionIndicatorComp', () => {
     const result = parseMotionIndicatorComp({
       componentTypeId: componentTypeToId[KnownComponentType.MotionIndicator],
       properties: [
-        ...indicatorBaseProps,
+        ...indicatorBasePropsWithoutColors,
         {
           propertyName: 'config_defaultForegroundColor',
           propertyValue: '#abc',
@@ -292,7 +332,6 @@ describe('parseMotionIndicatorComp', () => {
           dataBindingContext: {
             entityId: 'eid',
           },
-          isStaticData: false,
         },
       },
     });
@@ -318,10 +357,6 @@ describe('parseMotionIndicatorComp', () => {
     expect(result?.valueDataBindings).toEqual({
       backgroundColor: {
         ruleBasedMapId: 'rule-id',
-        valueDataBinding: {
-          dataBindingContext: {},
-          isStaticData: false,
-        },
       },
     });
   });
@@ -355,15 +390,10 @@ describe('parseMotionIndicatorComp', () => {
           dataBindingContext: {
             entityId: 'eid',
           },
-          isStaticData: false,
         },
       },
       foregroundColor: {
         ruleBasedMapId: 'rule-id-2',
-        valueDataBinding: {
-          dataBindingContext: {},
-          isStaticData: false,
-        },
       },
     });
   });

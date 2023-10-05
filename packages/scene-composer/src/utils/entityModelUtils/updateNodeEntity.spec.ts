@@ -9,6 +9,9 @@ import { updateEntity } from './updateNodeEntity';
 import { updateNodeEntityComponent } from './nodeComponent';
 import { updateTagEntityComponent } from './tagComponent';
 import { updateOverlayEntityComponent } from './overlayComponent';
+import { updateCameraEntityComponent } from './cameraComponent';
+import { updateMotionIndicatorEntityComponent } from './motionIndicatorComponent';
+import { updateModelRefComponent } from './modelRefComponent';
 
 jest.mock('./nodeComponent', () => ({
   updateNodeEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.node' }),
@@ -18,6 +21,15 @@ jest.mock('./tagComponent', () => ({
 }));
 jest.mock('./overlayComponent', () => ({
   updateOverlayEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.overlay' }),
+}));
+jest.mock('./cameraComponent', () => ({
+  updateCameraEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.camera' }),
+}));
+jest.mock('./motionIndicatorComponent', () => ({
+  updateMotionIndicatorEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.motionIndicator' }),
+}));
+jest.mock('./modelRefComponent', () => ({
+  updateModelRefComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.modelRef' }),
 }));
 
 describe('updateEntity', () => {
@@ -53,8 +65,11 @@ describe('updateEntity', () => {
   it('should call update entity to update multiple components', async () => {
     const tag = { type: KnownComponentType.Tag, ref: 'tag-ref' };
     const overlay = { type: KnownComponentType.DataOverlay, ref: 'overlay-ref' };
+    const camera = { type: KnownComponentType.Camera, ref: 'camera-ref' };
+    const motionIndicator = { type: KnownComponentType.MotionIndicator, ref: 'indicator-ref' };
+    const modelRef = { type: KnownComponentType.ModelRef, ref: 'modelref-ref' };
 
-    await updateEntity(defaultNode, [tag, overlay], 'UPDATE');
+    await updateEntity(defaultNode, [tag, overlay, camera, motionIndicator, modelRef], 'UPDATE');
 
     expect(updateSceneEntity).toHaveBeenCalledTimes(1);
     expect(updateSceneEntity).toHaveBeenCalledWith({
@@ -65,6 +80,9 @@ describe('updateEntity', () => {
         Node: { componentTypeId: '3d.node' },
         Tag: { componentTypeId: '3d.tag' },
         DataOverlay: { componentTypeId: '3d.overlay' },
+        Camera: { componentTypeId: '3d.camera' },
+        MotionIndicator: { componentTypeId: '3d.motionIndicator' },
+        ModelRef: { componentTypeId: '3d.modelRef' },
       },
     });
 
@@ -74,6 +92,12 @@ describe('updateEntity', () => {
     expect(updateTagEntityComponent).toHaveBeenCalledWith(tag);
     expect(updateOverlayEntityComponent).toHaveBeenCalledTimes(1);
     expect(updateOverlayEntityComponent).toHaveBeenCalledWith(overlay);
+    expect(updateCameraEntityComponent).toHaveBeenCalledTimes(1);
+    expect(updateCameraEntityComponent).toHaveBeenCalledWith(camera);
+    expect(updateMotionIndicatorEntityComponent).toHaveBeenCalledTimes(1);
+    expect(updateMotionIndicatorEntityComponent).toHaveBeenCalledWith(motionIndicator);
+    expect(updateModelRefComponent).toHaveBeenCalledTimes(1);
+    expect(updateModelRefComponent).toHaveBeenCalledWith(modelRef);
   });
 
   it('should call update entity to update tag component', async () => {

@@ -1,5 +1,6 @@
 import { ComponentRequest, ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
 import { DocumentType } from '@aws-sdk/types';
+import { isEmpty } from 'lodash';
 
 import { IMotionIndicatorComponent, KnownComponentType } from '../../interfaces';
 import { componentTypeToId } from '../../common/entityModelConstants';
@@ -21,6 +22,8 @@ enum MotionIndicatorComponentProperty {
   AppearanceRuleBasedMapId = 'ruleBasedMapId',
 }
 
+export const EMPTY_COLOR_STRING = 'null_color';
+
 export const createMotionIndicatorEntityComponent = (indicator: IMotionIndicatorComponent): ComponentRequest => {
   const comp: ComponentRequest = {
     componentTypeId: componentTypeToId[KnownComponentType.MotionIndicator],
@@ -40,45 +43,45 @@ export const createMotionIndicatorEntityComponent = (indicator: IMotionIndicator
           doubleValue: indicator.config.backgroundColorOpacity,
         },
       },
-      [MotionIndicatorComponentProperty.AppearanceBindings]: {
+      [MotionIndicatorComponentProperty.ConfigDefaultBackgroundColor]: {
         value: {
-          listValue: Object.keys(indicator.valueDataBindings).map((k) => {
-            const bindings = createDataBindingMap(indicator.valueDataBindings[k].valueDataBinding);
-            bindings[MotionIndicatorComponentProperty.AppearanceBindingName] = {
-              stringValue: k,
-            };
-            if (indicator.valueDataBindings[k].ruleBasedMapId) {
-              bindings[MotionIndicatorComponentProperty.AppearanceRuleBasedMapId] = {
-                stringValue: indicator.valueDataBindings[k].ruleBasedMapId,
-              };
-            }
-            return {
-              mapValue: bindings,
-            };
-          }),
+          stringValue: indicator.config.defaultBackgroundColor ?? EMPTY_COLOR_STRING,
+        },
+      },
+      [MotionIndicatorComponentProperty.ConfigDefaultForegroundColor]: {
+        value: {
+          stringValue: indicator.config.defaultForegroundColor ?? EMPTY_COLOR_STRING,
         },
       },
     },
   };
 
+  // Empty list cannot be saved to backend
+  if (!isEmpty(indicator.valueDataBindings)) {
+    comp.properties![MotionIndicatorComponentProperty.AppearanceBindings] = {
+      value: {
+        listValue: Object.keys(indicator.valueDataBindings).map((k) => {
+          const bindings = createDataBindingMap(indicator.valueDataBindings[k]?.valueDataBinding);
+          bindings[MotionIndicatorComponentProperty.AppearanceBindingName] = {
+            stringValue: k,
+          };
+          if (indicator.valueDataBindings[k]?.ruleBasedMapId) {
+            bindings[MotionIndicatorComponentProperty.AppearanceRuleBasedMapId] = {
+              stringValue: indicator.valueDataBindings[k].ruleBasedMapId,
+            };
+          }
+          return {
+            mapValue: bindings,
+          };
+        }),
+      },
+    };
+  }
+
   if (indicator.config.defaultSpeed !== undefined) {
     comp.properties![MotionIndicatorComponentProperty.ConfigDefaultSpeed] = {
       value: {
         integerValue: indicator.config.defaultSpeed,
-      },
-    };
-  }
-  if (indicator.config.defaultBackgroundColor !== undefined) {
-    comp.properties![MotionIndicatorComponentProperty.ConfigDefaultBackgroundColor] = {
-      value: {
-        stringValue: indicator.config.defaultBackgroundColor,
-      },
-    };
-  }
-  if (indicator.config.defaultForegroundColor !== undefined) {
-    comp.properties![MotionIndicatorComponentProperty.ConfigDefaultForegroundColor] = {
-      value: {
-        stringValue: indicator.config.defaultForegroundColor,
       },
     };
   }
@@ -112,11 +115,26 @@ export const parseMotionIndicatorComp = (comp: DocumentType): IMotionIndicatorCo
   comp['properties']
     .find((p) => p['propertyName'] === MotionIndicatorComponentProperty.AppearanceBindings)
     ?.propertyValue?.forEach((bindingMap) => {
-      valueDataBindings[bindingMap[MotionIndicatorComponentProperty.AppearanceBindingName]] = {
-        ruleBasedMapId: bindingMap[MotionIndicatorComponentProperty.AppearanceRuleBasedMapId],
-        valueDataBinding: parseDataBinding(bindingMap),
-      };
+      valueDataBindings[bindingMap[MotionIndicatorComponentProperty.AppearanceBindingName]] = {};
+
+      const ruleBasedMapId = bindingMap[MotionIndicatorComponentProperty.AppearanceRuleBasedMapId];
+      const valueDataBinding = parseDataBinding(bindingMap);
+
+      if (ruleBasedMapId !== undefined) {
+        valueDataBindings[bindingMap[MotionIndicatorComponentProperty.AppearanceBindingName]].ruleBasedMapId =
+          ruleBasedMapId;
+      }
+
+      if (valueDataBinding !== undefined) {
+        valueDataBindings[bindingMap[MotionIndicatorComponentProperty.AppearanceBindingName]].valueDataBinding =
+          valueDataBinding;
+      }
+
+      if (isEmpty(valueDataBindings[bindingMap[MotionIndicatorComponentProperty.AppearanceBindingName]])) {
+        valueDataBindings[bindingMap[MotionIndicatorComponentProperty.AppearanceBindingName]] = undefined;
+      }
     });
+
   const motionIndicatorComp: IMotionIndicatorComponentInternal = {
     ref: generateUUID(),
     type: KnownComponentType.MotionIndicator,
@@ -140,6 +158,13 @@ export const parseMotionIndicatorComp = (comp: DocumentType): IMotionIndicatorCo
     },
     valueDataBindings,
   };
+
+  if (motionIndicatorComp.config.defaultBackgroundColor === EMPTY_COLOR_STRING) {
+    motionIndicatorComp.config.defaultBackgroundColor = undefined;
+  }
+  if (motionIndicatorComp.config.defaultForegroundColor === EMPTY_COLOR_STRING) {
+    motionIndicatorComp.config.defaultForegroundColor = undefined;
+  }
 
   return motionIndicatorComp;
 };

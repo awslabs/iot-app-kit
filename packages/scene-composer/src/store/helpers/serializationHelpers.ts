@@ -1,4 +1,4 @@
-import { isEmpty, isNumber } from 'lodash';
+import { isNumber } from 'lodash';
 
 import DebugLogger from '../../logger/DebugLogger';
 import {
@@ -188,12 +188,14 @@ function createMotionIndicatorComponent(
     validateRuleBasedMapId(map.ruleBasedMapId, resolver, errorCollector);
   });
 
+  // defaultSpeed was saved as string in older version, convert it to number here
+  const defaultSpeed = component.config.defaultSpeed !== undefined ? Number(component.config.defaultSpeed) : undefined;
   return {
     ref: generateUUID(),
     type: 'MotionIndicator',
     shape: component.shape,
     valueDataBindings: component.valueDataBindings,
-    config: component.config,
+    config: { ...component.config, defaultSpeed },
   };
 }
 

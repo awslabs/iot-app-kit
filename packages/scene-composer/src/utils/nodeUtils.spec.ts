@@ -1,8 +1,15 @@
 import { Vector3, Object3D, Euler, MathUtils } from 'three';
 
 import { AddingWidgetInfo, KnownComponentType } from '../../src';
+import { defaultNode } from '../../__mocks__/sceneNode';
+import { ISceneNodeInternal } from '../store';
 
-import { createNodeWithPositionAndNormal, createNodeWithTransform, findComponentByType } from './nodeUtils';
+import {
+  createNodeWithPositionAndNormal,
+  createNodeWithTransform,
+  findComponentByType,
+  getFinalNodeTransform,
+} from './nodeUtils';
 
 describe('nodeUtils', () => {
   describe('findComponentByType', () => {
@@ -19,6 +26,32 @@ describe('nodeUtils', () => {
       const component = findComponentByType(node as any, KnownComponentType.Light);
 
       expect(component).toBeUndefined();
+    });
+  });
+
+  describe('getFinalNodeTransform', () => {
+    const tagNode: Partial<ISceneNodeInternal> = {
+      ...defaultNode,
+      components: [
+        {
+          ref: 'tag',
+          type: KnownComponentType.Tag,
+        },
+      ],
+    };
+    const object = new Object3D();
+    object.scale.set(22, 22, 22);
+
+    it('should return original scale for tag node', () => {
+      const transform = getFinalNodeTransform(tagNode as ISceneNodeInternal, object);
+
+      expect(transform.scale).toEqual(defaultNode.transform.scale);
+    });
+
+    it('should return calculated scale for non tag node', () => {
+      const transform = getFinalNodeTransform(defaultNode, object);
+
+      expect(transform.scale).toEqual([22, 22, 22]);
     });
   });
 

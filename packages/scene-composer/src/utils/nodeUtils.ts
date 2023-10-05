@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { IModelRefComponentInternal, ISceneComponentInternal, ISceneNodeInternal } from '../store';
 import { AddingWidgetInfo, KnownComponentType } from '../interfaces';
 import { ModelType } from '../models/SceneModels';
+import { ITransformInternal } from '../store/internalInterfaces';
 
 /**
  * Finds a component on a node by type
@@ -64,6 +65,43 @@ export const getFinalTransform = (transform: Transform, parent?: THREE.Object3D 
     position: finalPosition,
     rotation: finalRotation,
     scale: transform.scale.divide(parentWorldScale),
+  };
+};
+
+/**
+ * Get the final position and rotation from all the ancestors for the node
+ * @param {ISceneNodeInternal} object
+ * @param {THREE.Object3D} object3D
+ * @param {THREE.Object3D} parent
+ * @returns {ITransformInternal} final transform for node.
+ */
+export const getFinalNodeTransform = (
+  object: Readonly<ISceneNodeInternal> | undefined,
+  object3D: THREE.Object3D,
+  parent?: THREE.Object3D | null,
+): ITransformInternal => {
+  const worldPosition = object3D.getWorldPosition(new THREE.Vector3());
+  const worldRotation = new THREE.Euler().setFromQuaternion(object3D.getWorldQuaternion(new THREE.Quaternion()));
+  const worldScale = object3D.getWorldScale(new THREE.Vector3());
+
+  const transform: Transform = {
+    position: worldPosition,
+    rotation: worldRotation,
+    scale: worldScale,
+  };
+
+  const finalTransform = getFinalTransform(transform, parent);
+
+  // Scale of Tag component is independent of its ancestors, therefore keep its original value.
+  const finalScale =
+    object && findComponentByType(object, KnownComponentType.Tag)
+      ? object.transform.scale
+      : finalTransform.scale.toArray();
+
+  return {
+    position: finalTransform.position.toArray(),
+    rotation: [finalTransform.rotation.x, finalTransform.rotation.y, finalTransform.rotation.z],
+    scale: finalScale,
   };
 };
 

@@ -1,13 +1,22 @@
 import { ComponentUpdateRequest, ComponentUpdateType, UpdateEntityCommandInput } from '@aws-sdk/client-iottwinmaker';
 
 import { getGlobalSettings } from '../../common/GlobalSettings';
-import { IDataOverlayComponent, KnownComponentType } from '../../interfaces';
+import {
+  ICameraComponent,
+  IDataOverlayComponent,
+  IModelRefComponent,
+  IMotionIndicatorComponent,
+  KnownComponentType,
+} from '../../interfaces';
 import { ISceneComponentInternal, ISceneNodeInternal } from '../../store/internalInterfaces';
 import { componentTypeToId } from '../../common/entityModelConstants';
 
 import { updateNodeEntityComponent } from './nodeComponent';
 import { updateTagEntityComponent } from './tagComponent';
 import { updateOverlayEntityComponent } from './overlayComponent';
+import { updateModelRefComponent } from './modelRefComponent';
+import { updateCameraEntityComponent } from './cameraComponent';
+import { updateMotionIndicatorEntityComponent } from './motionIndicatorComponent';
 
 export const updateEntity = async (
   node: ISceneNodeInternal,
@@ -42,6 +51,15 @@ export const updateEntity = async (
             break;
           case KnownComponentType.DataOverlay:
             comp = updateOverlayEntityComponent(compToBeUpdated as IDataOverlayComponent);
+            break;
+          case KnownComponentType.ModelRef:
+            comp = updateModelRefComponent(compToBeUpdated as IModelRefComponent);
+            break;
+          case KnownComponentType.Camera:
+            comp = updateCameraEntityComponent(compToBeUpdated as ICameraComponent);
+            break;
+          case KnownComponentType.MotionIndicator:
+            comp = updateMotionIndicatorEntityComponent(compToBeUpdated as IMotionIndicatorComponent);
             break;
           default:
             throw new Error('Component type not supported');
