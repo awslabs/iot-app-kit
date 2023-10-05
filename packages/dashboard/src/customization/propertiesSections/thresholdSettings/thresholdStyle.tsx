@@ -15,13 +15,13 @@ enum ThresholdStyleOptions {
   asLinesAndFilledRegion = 'As lines and filled region',
 }
 
-const options = [
+export const styledOptions = [
   { label: ThresholdStyleOptions.asLines, value: '1' },
   { label: ThresholdStyleOptions.asFilledRegion, value: '2' },
   { label: ThresholdStyleOptions.asLinesAndFilledRegion, value: '3' },
 ];
 
-const convertOptionToThresholdStyle = (selectedOption: OptionDefinition): ThresholdStyleType => {
+export const convertOptionToThresholdStyle = (selectedOption: OptionDefinition): ThresholdStyleType => {
   switch (selectedOption.label) {
     case ThresholdStyleOptions.asLines: {
       return {
@@ -48,13 +48,13 @@ const convertOptionToThresholdStyle = (selectedOption: OptionDefinition): Thresh
 
 const convertThresholdStyleToOption = (thresholdStyle: ThresholdStyleType): OptionDefinition => {
   if (!!thresholdStyle.visible && !thresholdStyle.fill) {
-    return options[0];
+    return styledOptions[0];
   } else if (!thresholdStyle.visible && !!thresholdStyle.fill) {
-    return options[1];
+    return styledOptions[1];
   } else if (!!thresholdStyle.visible && !!thresholdStyle.fill) {
-    return options[2];
+    return styledOptions[2];
   } else {
-    return options[0];
+    return styledOptions[0];
   }
 };
 
@@ -78,7 +78,7 @@ export const ThresholdStyleSettings: React.FC<ThresholdStyleSettingsProps> = ({
           // Update styles of all thresholds
           updateAllThresholdStyles(thresholdStyle);
         }}
-        options={options}
+        options={styledOptions}
         selectedOption={selectedOption}
       />
     </FormField>
