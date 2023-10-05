@@ -75,6 +75,7 @@ export const ThresholdComponent: FC<{
             <div className='threshold-configuration' style={{ gap: awsui.spaceScaledS }}>
               <Box variant='span'>{defaultMessages.if}</Box>
               <Select
+                expandToViewport={true}
                 options={comparisonOptions}
                 selectedOption={selectedOption}
                 onChange={onUpdateComparator}

@@ -8,15 +8,10 @@ import wrapper from '@cloudscape-design/components/test-utils/dom';
 const thresholdStyle: ThresholdStyleType = {
   visible: true,
 };
-const mockSetThresholdStyle = jest.fn();
 const mockUpdateAllThresholdStyles = jest.fn();
 
 const component = (
-  <ThresholdStyleSettings
-    thresholdStyle={thresholdStyle}
-    setThresholdStyle={mockSetThresholdStyle}
-    updateAllThresholdStyles={mockUpdateAllThresholdStyles}
-  />
+  <ThresholdStyleSettings thresholdStyle={thresholdStyle} updateAllThresholdStyles={mockUpdateAllThresholdStyles} />
 );
 
 describe('thresholdStyleSettings', () => {
@@ -33,7 +28,6 @@ describe('thresholdStyleSettings', () => {
     const select = cloudscapeWrapper.findSelect();
     select?.openDropdown();
     select?.selectOptionByValue('2');
-    expect(mockSetThresholdStyle).toBeCalled();
     expect(mockUpdateAllThresholdStyles).toBeCalled();
   });
 });
