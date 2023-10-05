@@ -5,7 +5,6 @@ import { ThresholdStyleType } from '@iot-app-kit/react-components/src/components
 
 export type ThresholdStyleSettingsProps = {
   thresholdStyle: ThresholdStyleType;
-  setThresholdStyle: (thresholdStyle: ThresholdStyleType) => void;
   updateAllThresholdStyles: (thresholdStyle: ThresholdStyleType) => void;
 };
 
@@ -60,7 +59,6 @@ const convertThresholdStyleToOption = (thresholdStyle: ThresholdStyleType): Opti
 
 export const ThresholdStyleSettings: React.FC<ThresholdStyleSettingsProps> = ({
   thresholdStyle,
-  setThresholdStyle,
   updateAllThresholdStyles,
 }) => {
   const [selectedOption, setSelectedOption] = useState<SelectProps.Option>(
@@ -73,8 +71,6 @@ export const ThresholdStyleSettings: React.FC<ThresholdStyleSettingsProps> = ({
         onChange={({ detail }) => {
           setSelectedOption(detail.selectedOption);
           const thresholdStyle = convertOptionToThresholdStyle(detail.selectedOption);
-          // Update thresholdStyle state variable
-          setThresholdStyle(thresholdStyle);
           // Update styles of all thresholds
           updateAllThresholdStyles(thresholdStyle);
         }}

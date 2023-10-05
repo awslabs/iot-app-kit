@@ -89,6 +89,27 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
 
   const [isExpanded, setIsExpanded] = useExpandable();
 
+  /**
+   * Wrapper for updating styled thresholds
+   * If a threshold's comparison operator is "=" then always show a visible line
+   * If the update to thresholds is a new style then pass it into this function, otherwise use the style state
+   */
+  const handleUpdateStyledThresholds = (
+    updatedThresholds: (ThresholdWithId & StyledThreshold)[] | undefined,
+    newThresholdStyle?: ThresholdStyleType
+  ) => {
+    if (updateStyledThresholds) {
+      const thresholds = updatedThresholds?.map((t) => {
+        const visibleStyle = newThresholdStyle ? newThresholdStyle.visible : thresholdStyle.visible;
+        return {
+          ...t,
+          visible: t.comparisonOperator === 'EQ' ? true : visibleStyle,
+        };
+      });
+      updateStyledThresholds(thresholds);
+    }
+  };
+
   // Hide all thresholds button state can be saved, determined by the saved threshold properties 'visible' and 'fill'
   const defaultShouldHideThresholds =
     defaultThresholdStyle.visible === false && defaultThresholdStyle.fill === undefined;
@@ -108,7 +129,7 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
           fill: checked ? undefined : style.fill,
         };
       });
-      updateStyledThresholds(newThresholds);
+      handleUpdateStyledThresholds(newThresholds);
     }
   };
 
@@ -153,7 +174,7 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
             ...newThreshold,
             ...thresholdStyle,
           };
-          updateStyledThresholds([...styledThresholdsValue, newStyledThreshold]);
+          handleUpdateStyledThresholds([...styledThresholdsValue, newStyledThreshold]);
         }
       };
       const thresholdsComponent = (
@@ -161,7 +182,7 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
           {styledThresholdsEnabled && hideThresholdsToggle}
           <ThresholdsList
             thresholds={thresholdsEnabled ? thresholdsValue : styledThresholdsEnabled ? styledThresholdsValue : []}
-            updateThresholds={thresholdsEnabled ? updateThresholds : updateStyledThresholds}
+            updateThresholds={thresholdsEnabled ? updateThresholds : handleUpdateStyledThresholds}
             comparisonOperators={comparisonOperators}
           />
           <Button onClick={onAddNewThreshold}>Add a threshold</Button>
@@ -193,25 +214,24 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
     if (styledThresholdsEnabled) {
       const styledThresholdsValue = styledThresholds ? maybeWithDefault([], styledThresholds) ?? [] : [];
       const updateAllThresholdStyles = (thresholdStyle: ThresholdStyleType) => {
+        // Update threshold style state
+        setThresholdStyle(thresholdStyle);
         if (!shouldHideThresholds) {
           const newStyledThresholds = styledThresholdsValue.map((threshold) => {
             const newThresholdStyle = {
               ...threshold,
-              visible: thresholdStyle.visible,
+              visible: threshold.comparisonOperator === 'EQ' ? true : thresholdStyle.visible,
               fill: thresholdStyle.fill ? threshold.color : undefined,
             };
             return newThresholdStyle;
           });
-          updateStyledThresholds(newStyledThresholds);
+          // Update all thresholds
+          handleUpdateStyledThresholds(newStyledThresholds, thresholdStyle);
         }
       };
 
       return (
-        <ThresholdStyleSettings
-          thresholdStyle={thresholdStyle}
-          setThresholdStyle={setThresholdStyle}
-          updateAllThresholdStyles={updateAllThresholdStyles}
-        />
+        <ThresholdStyleSettings thresholdStyle={thresholdStyle} updateAllThresholdStyles={updateAllThresholdStyles} />
       );
     }
 

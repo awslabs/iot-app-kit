@@ -131,7 +131,8 @@ export const useSelection = <W extends DashboardWidget>(
       ),
   ];
 
-  const type = compositeValue(selection.map((w) => w.type));
+  const types = selection.map((w) => w.type);
+  const type = compositeValue(types);
 
   const useProperty: PropertyLens<W> = (selector, updater) => {
     /**
@@ -157,6 +158,7 @@ export const useSelection = <W extends DashboardWidget>(
 
   return {
     type,
+    types,
     useSize,
     usePosition,
     useProperty,
