@@ -7,7 +7,7 @@ import { WIDGET_INITIAL_HEIGHT, WIDGET_INITIAL_WIDTH } from '../constants';
 
 export const lineScatterChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
-    registerWidget<LineScatterChartWidget>('line-scatter-chart', {
+    registerWidget<LineScatterChartWidget>('xy-plot', {
       render: (widget) => <LineScatterChartWidgetComponent {...widget} />,
       componentLibrary: {
         name: 'Line',

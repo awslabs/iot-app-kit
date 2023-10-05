@@ -53,14 +53,14 @@ export function useQuery(): [
       let updatedQuery = cb(query);
 
       if (updatedQuery != null) {
-        if (selectedWidget.type === 'line-scatter-chart') {
+        if (selectedWidget.type === 'xy-plot') {
           // @ts-expect-error TODO: Fix this
           updatedQuery = styledQueryWidgetOnDrop(updatedQuery, selectedWidget);
         }
 
         let updatedWidget = createUpdatedWidget(selectedWidget, updatedQuery as IoTSiteWiseDataStreamQuery);
 
-        if (selectedWidget.type !== 'line-scatter-chart') {
+        if (selectedWidget.type !== 'xy-plot') {
           updatedWidget = assignDefaultStyles(updatedWidget as QueryWidget) as typeof updatedWidget;
         }
 

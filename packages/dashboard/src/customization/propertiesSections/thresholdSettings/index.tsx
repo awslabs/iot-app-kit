@@ -10,7 +10,7 @@ import { getComparisonOperators } from './comparisonOperators';
 
 const thresholdsWithContainsOperator: readonly string[] = ['kpi', 'status', 'table'];
 const thresholdsWithAnnotations: readonly string[] = ['line-chart', 'scatter-chart', 'bar-chart', 'status-timeline'];
-const thresholdsWithStyle: readonly string[] = ['line-scatter-chart'];
+const thresholdsWithStyle: readonly string[] = ['xy-plot'];
 
 type ThresholdsProperties = { thresholds?: ThresholdWithId[] };
 type AnnotationsProperties = { thresholdSettings?: ThresholdSettings };
