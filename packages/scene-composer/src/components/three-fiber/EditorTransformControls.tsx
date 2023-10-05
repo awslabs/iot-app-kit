@@ -4,7 +4,6 @@ import { useThree } from '@react-three/fiber';
 
 import useLogger from '../../logger/react-logger/hooks/useLogger';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import useOverwriteRaycaster from '../../hooks/useOverwriteRaycaster';
 import { useStore } from '../../store';
 import { TransformControls as TransformControlsImpl } from '../../three/TransformControls';
 import { snapObjectToFloor } from '../../three/transformUtils';
@@ -27,7 +26,6 @@ export function EditorTransformControls() {
   const addingWidget = useStore(sceneComposerId)((state) => state.addingWidget);
 
   const [transformControls] = useState(() => new TransformControlsImpl(camera, domElement));
-  const overwriteRaycaster = useOverwriteRaycaster(transformControls);
   const subModelMovementEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SubModelMovement];
 
   const isTagComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.Tag);
@@ -41,7 +39,6 @@ export function EditorTransformControls() {
   // Set transform controls' camera
   useEffect(() => {
     setTransformControls(transformControls);
-    overwriteRaycaster();
     if (camera) {
       // @ts-ignore: transformControls has a camera prop that TS does not know.
       transformControls.camera = camera;
