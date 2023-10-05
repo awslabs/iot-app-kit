@@ -204,12 +204,15 @@ export const useSeriesAndYAxis = (
   const defaultYAxis: YAXisComponentOption[] = useMemo(() => [convertChartYAxis(axis)], [axis]);
   const convertedThresholds = convertThresholds(thresholds);
   const getStyles = getChartStyleSettingsFromMap(styleSettings);
+  const datastreamDeps = JSON.stringify(datastreams.map(({ id, refId }) => `${id}-${refId}`));
 
   const { series, yAxis, yMaxs, yMins } = useMemo(() => {
     return datastreams
       .map((datastream) => convertSeriesAndYAxis(getStyles(datastream))(datastream))
       .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis, yMins: [], yMaxs: [] });
-  }, [datastreams, styleSettings, defaultYAxis]);
+    // disabling because datastream are stringified as datastreamDeps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [datastreamDeps, defaultYAxis, getStyles]);
 
   if (series.length > 0) {
     series[0].markArea = convertedThresholds.markArea;

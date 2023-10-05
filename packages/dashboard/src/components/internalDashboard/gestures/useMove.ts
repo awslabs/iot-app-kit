@@ -26,7 +26,7 @@ export const useMoveGestures = ({ setActiveGesture, selectedWidgets, cellSize }:
         })
       );
     },
-    [selectedWidgets, cellSize]
+    [selectedWidgets, cellSize, dispatch]
   );
 
   const onMoveStart = () => {

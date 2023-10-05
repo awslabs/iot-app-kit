@@ -1,9 +1,9 @@
-import { ChartAxisOptions, ViewportInMs } from '../types';
+import { ChartAxisOptions } from '../types';
 import { DEFAULT_X_AXIS, DEFAULT_X_AXIS_ID } from '../eChartsConstants';
 import { XAXisOption } from 'echarts/types/dist/shared';
 import { useMemo } from 'react';
 
-export const useXAxis = (viewportInMs: ViewportInMs, axis?: ChartAxisOptions): XAXisOption => {
+export const useXAxis = (axis?: ChartAxisOptions): XAXisOption => {
   return useMemo(
     () => ({
       id: DEFAULT_X_AXIS_ID,
@@ -23,6 +23,6 @@ export const useXAxis = (viewportInMs: ViewportInMs, axis?: ChartAxisOptions): X
       min: 0,
       max: Date.now(),
     }),
-    [viewportInMs]
+    [axis?.showX]
   );
 };

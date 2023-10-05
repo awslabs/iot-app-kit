@@ -51,14 +51,14 @@ export const useTimeSeriesData = ({
   const { viewport: injectedViewport } = useViewport();
   const viewport = passedInViewport || injectedViewport || DEFAULT_VIEWPORT;
 
-  const prevViewport = useRef<undefined | Viewport>(undefined);
-  const providerId = useRef<undefined | string>(undefined);
+  const prevViewportRef = useRef<undefined | Viewport>(undefined);
+  const providerIdRef = useRef<undefined | string>(undefined);
 
   const queriesString = queries.map((query) => query.toQueryString()).join();
 
   useEffect(() => {
     const id = uuid();
-    providerId.current = id;
+    providerIdRef.current = id;
     const provider = ProviderStore.set(
       id,
       combineProviders(
@@ -85,16 +85,17 @@ export const useTimeSeriesData = ({
     return () => {
       unsubscribeProvider(id);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queriesString]);
 
   useEffect(() => {
-    if (prevViewport.current != null) {
-      const provider = providerId.current && ProviderStore.get(providerId.current);
+    if (prevViewportRef.current != null) {
+      const provider = providerIdRef.current && ProviderStore.get(providerIdRef.current);
       if (provider) {
         provider.updateViewport(viewport);
       }
     }
-    prevViewport.current = viewport;
+    prevViewportRef.current = viewport;
   }, [viewport]);
 
   const styledDataStreams = bindStylesToDataStreams({

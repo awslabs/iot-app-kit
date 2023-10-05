@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef } from 'react';
+import { MutableRefObject, useCallback, useEffect, useRef } from 'react';
 import { ECharts } from 'echarts';
 import { MAX_TREND_CURSORS, TREND_CURSOR_CLOSE_GRAPHIC_INDEX } from '../eChartsConstants';
 import { calculateNearestTcIndex, calculateTimeStamp, formatCopyData } from '../utils/trendCursorCalculations';
@@ -55,50 +55,62 @@ const useTrendCursorsEvents = ({
     sizeRef.current = size;
     setGraphicRef.current = setGraphic;
     visualizationRef.current = visualization;
+    // disabling because graphics and series are stringified
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seriesDep, size, isInCursorAddMode, setGraphic, isInSyncMode, graphicDep, visualization]);
 
   // shared add function between the context menu and on click action
-  const addNewTrendCursor = ({ posX, ignoreHotKey }: { posX: number; ignoreHotKey: boolean }) => {
-    // when adding through the context menu, we can ignore the hot key press
-    if ((ignoreHotKey || isInCursorAddModeRef.current) && graphicRef.current.length < MAX_TREND_CURSORS) {
-      if (isInSyncModeRef.current) {
-        const timestampInMs = calculateTimeStamp(posX, chartRef);
-        addTrendCursorsToSyncState({
-          groupId: groupId ?? '',
-          tcId: `trendCursor-${uuid()}`,
-          timestamp: timestampInMs,
-        });
-      } else {
-        const newTc = getNewTrendCursor({
-          size: sizeRef.current,
-          series: seriesRef.current,
-          x: posX,
-          chartRef,
-          visualization,
-        });
+  const addNewTrendCursor = useCallback(
+    ({ posX, ignoreHotKey }: { posX: number; ignoreHotKey: boolean }) => {
+      // when adding through the context menu, we can ignore the hot key press
+      if ((ignoreHotKey || isInCursorAddModeRef.current) && graphicRef.current.length < MAX_TREND_CURSORS) {
+        if (isInSyncModeRef.current) {
+          const timestampInMs = calculateTimeStamp(posX, chartRef);
+          addTrendCursorsToSyncState({
+            groupId: groupId ?? '',
+            tcId: `trendCursor-${uuid()}`,
+            timestamp: timestampInMs,
+          });
+        } else {
+          const newTc = getNewTrendCursor({
+            size: sizeRef.current,
+            series: seriesRef.current,
+            x: posX,
+            chartRef,
+            visualization,
+          });
 
-        if (newTc) {
-          setGraphicRef.current([...graphicRef.current, newTc]);
+          if (newTc) {
+            setGraphicRef.current([...graphicRef.current, newTc]);
+          }
         }
       }
-    }
-  };
+    },
+    // ignoring because refs dont need to be in dependency array
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [groupId, visualization, addTrendCursorsToSyncState]
+  );
 
   // shared delete function between the context menu and on click actions
-  const deleteTrendCursor = (toBeDeletedGraphicIndex: number) => {
-    if (isInSyncModeRef.current) {
-      deleteTrendCursorsInSyncState({
-        groupId: groupId ?? '',
-        tcId: graphicRef.current[toBeDeletedGraphicIndex].id as string,
-      });
-    } else {
-      graphicRef.current[toBeDeletedGraphicIndex].$action = 'remove';
-      graphicRef.current[toBeDeletedGraphicIndex].children = []; // Echarts will throw error if children are not empty
-      chartRef.current?.setOption({ graphic: graphicRef.current });
-      graphicRef.current.splice(toBeDeletedGraphicIndex, 1);
-      setGraphicRef.current([...graphicRef.current]);
-    }
-  };
+  const deleteTrendCursor = useCallback(
+    (toBeDeletedGraphicIndex: number) => {
+      if (isInSyncModeRef.current) {
+        deleteTrendCursorsInSyncState({
+          groupId: groupId ?? '',
+          tcId: graphicRef.current[toBeDeletedGraphicIndex].id as string,
+        });
+      } else {
+        graphicRef.current[toBeDeletedGraphicIndex].$action = 'remove';
+        graphicRef.current[toBeDeletedGraphicIndex].children = []; // Echarts will throw error if children are not empty
+        chartRef.current?.setOption({ graphic: graphicRef.current });
+        graphicRef.current.splice(toBeDeletedGraphicIndex, 1);
+        setGraphicRef.current([...graphicRef.current]);
+      }
+    },
+    // ignoring because refs dont need to be in dependency array
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [groupId, deleteTrendCursorsInSyncState]
+  );
   const deleteTrendCursorByPosition = (clickedPosX: number) => {
     const timestampOfClick = calculateTimeStamp(clickedPosX, chartRef);
     const toBeDeletedGraphicIndex = calculateNearestTcIndex(graphicRef.current, timestampOfClick);
@@ -108,14 +120,15 @@ const useTrendCursorsEvents = ({
   // sync mode --> dispatches the actions from the store
   // standalone mode --> updates the local state
   useEffect(() => {
+    const currentChart = chartRef.current;
     if (prevRef.current !== chartRef) {
-      chartRef.current?.getZr().on('mousemove', () => mouseoverHandler(isInCursorAddModeRef.current, chartRef));
+      currentChart?.getZr().on('mousemove', () => mouseoverHandler(isInCursorAddModeRef.current, chartRef));
 
       // this handles all the clicks on the chart
       // this click would be either
       // 1. delete a TC
       // 2. add a TC
-      chartRef.current?.getZr().on('click', (e) => {
+      currentChart?.getZr().on('click', (e) => {
         // index of the clicked graphic
         const graphicIndex = graphicRef.current.findIndex(
           (g) => g.children[TREND_CURSOR_CLOSE_GRAPHIC_INDEX].id === e?.target?.id
@@ -129,11 +142,11 @@ const useTrendCursorsEvents = ({
       });
 
       // this is the ondrag handler of the trend cursor
-      chartRef.current?.getZr().on('drag', (event) => {
+      currentChart?.getZr().on('drag', (event) => {
         if (event.target.id.toString().startsWith('line')) {
           // update user feedback
           event.stop();
-          chartRef.current?.getZr().setCursorStyle('grab');
+          currentChart?.getZr().setCursorStyle('grab');
 
           const graphicIndex = graphicRef.current.findIndex((g) => g.children[0].id === event.target.id);
           const timeInMs = calculateTimeStamp(event.offsetX ?? 0, chartRef);
@@ -160,22 +173,21 @@ const useTrendCursorsEvents = ({
         }
       });
 
-      chartRef.current?.getZr().on('contextmenu', (event) => {
+      currentChart?.getZr().on('contextmenu', (event) => {
         onContextMenuRef.current(event);
       });
-
-      return () => {
-        if (chartRef.current) {
-          chartRef.current?.getZr()?.off('click');
-          // passing the function so that it will NOT remove all the mouseover behaviour, namely default tooltip
-          chartRef.current?.getZr()?.off('mouseover', () => mouseoverHandler(isInCursorAddModeRef.current, chartRef));
-          chartRef.current?.getZr()?.off('drag');
-          chartRef.current?.getZr()?.off('contextmenu');
-        }
-      };
     }
     prevRef.current = chartRef;
-  }, [chartRef]);
+    return () => {
+      currentChart?.getZr()?.off('click');
+      // passing the function so that it will NOT remove all the mouseover behaviour, namely default tooltip
+      currentChart?.getZr()?.off('mouseover', () => mouseoverHandler(isInCursorAddModeRef.current, chartRef));
+      currentChart?.getZr()?.off('drag');
+      currentChart?.getZr()?.off('contextmenu');
+    };
+    // ignoring because refs dont need to be in dependency array
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addNewTrendCursor, deleteTrendCursor, groupId, updateTrendCursorsInSyncState]);
 
   const copyTrendCursorData = (posX: number) => {
     const timestampOfClick = calculateTimeStamp(posX, chartRef);

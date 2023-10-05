@@ -15,14 +15,17 @@ type SelectionHooksProps = {
 
 export const useSelectionGestures = ({ setActiveGesture, dashboardWidgets, cellSize }: SelectionHooksProps) => {
   const dispatch = useDispatch();
-  const selectWidgets = (widgets: DashboardWidget[], union: boolean) => {
-    dispatch(
-      onSelectWidgetsAction({
-        widgets,
-        union,
-      })
-    );
-  };
+  const selectWidgets = useCallback(
+    (widgets: DashboardWidget[], union: boolean) => {
+      dispatch(
+        onSelectWidgetsAction({
+          widgets,
+          union,
+        })
+      );
+    },
+    [dispatch]
+  );
 
   const [userSelection, setUserSelection] = useState<Selection | undefined>(undefined);
 
@@ -36,7 +39,7 @@ export const useSelectionGestures = ({ setActiveGesture, dashboardWidgets, cellS
 
       selectWidgets(intersectedWidget ? [intersectedWidget] : [], union);
     },
-    [dashboardWidgets, cellSize]
+    [dashboardWidgets, cellSize, selectWidgets]
   );
 
   const onSelectionStart = (dragEvent: DragEvent) => {
@@ -65,7 +68,7 @@ export const useSelectionGestures = ({ setActiveGesture, dashboardWidgets, cellS
 
       selectWidgets(intersectedWidgets, union);
     },
-    [dashboardWidgets, cellSize]
+    [dashboardWidgets, cellSize, selectWidgets]
   );
 
   const onSelectionEnd = () => {

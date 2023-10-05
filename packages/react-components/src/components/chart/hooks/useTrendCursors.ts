@@ -1,10 +1,10 @@
 import { UseTrendCursorsProps } from '../types';
 import useDataStore from '../../../store';
-import handleResize from '../utils/handleResize';
-import handleSync from '../utils/handleSync';
+import useHandleResize from './useHandleResize';
+import useHandleSync from './useHandleSync';
 import useTrendCursorsEvents from './useTrendCursorsEvents';
 import { useMemo, useState } from 'react';
-import { handleViewport } from '../utils/handleViewport';
+import { useHandleViewport } from './useHandleViewport';
 import { DEBUG_TREND_CURSORS } from '../eChartsConstants';
 
 const useTrendCursors = ({
@@ -42,22 +42,20 @@ const useTrendCursors = ({
   });
 
   // for handling the resize of chart
-  handleResize({ series, size, graphic, setGraphic, chartRef, visualization });
+  useHandleResize({ series, size, graphic, setGraphic, chartRef, visualization });
 
   // handling the trend cursor sync mode
-  handleSync({ chartRef, isInSyncMode, graphic, setGraphic, series, size, groupId, visualization });
+  useHandleSync({ chartRef, isInSyncMode, graphic, setGraphic, series, size, groupId, visualization });
 
-  const hotKeyHandlers = {
-    commandDown: () => setIsInCursorAddMode(true),
-    commandUp: () => setIsInCursorAddMode(false),
-  };
+  useHandleViewport({ graphic, setGraphic, viewportInMs, size, series, chartRef, visualization });
 
-  handleViewport({ graphic, setGraphic, viewportInMs, size, series, chartRef, visualization });
-
-  return useMemo(
-    () => ({ onContextMenuClickHandler, hotKeyHandlers, trendCursors: graphic }),
-    [graphic, onContextMenuClickHandler, hotKeyHandlers]
-  );
+  return useMemo(() => {
+    const hotKeyHandlers = {
+      commandDown: () => setIsInCursorAddMode(true),
+      commandUp: () => setIsInCursorAddMode(false),
+    };
+    return { onContextMenuClickHandler, hotKeyHandlers, trendCursors: graphic };
+  }, [graphic, onContextMenuClickHandler]);
 };
 
 export default useTrendCursors;

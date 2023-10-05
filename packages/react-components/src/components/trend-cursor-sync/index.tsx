@@ -24,7 +24,7 @@ export const TrendCursorSync: React.FC<TrendCursorProps> = ({ children }) => {
         deleteTrendCursorsGroup(group);
       };
     }
-  }, [group]);
+  }, [group, addTrendCursorsGroup, deleteTrendCursorsGroup]);
 
   return <>{children}</>;
 };

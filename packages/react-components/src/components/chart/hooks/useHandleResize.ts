@@ -1,9 +1,9 @@
 import { useRef } from 'react';
-import { calculateTrendCursorsSeriesMakers, calculateXFromTimestamp } from './trendCursorCalculations';
-import { onResizeUpdateTrendCursorYValues } from './getTrendCursor';
+import { calculateTrendCursorsSeriesMakers, calculateXFromTimestamp } from '../utils/trendCursorCalculations';
+import { onResizeUpdateTrendCursorYValues } from '../utils/getTrendCursor';
 import { TrendCursorProps } from '../types';
 
-const handleResize = ({ size, series, graphic, setGraphic, chartRef, visualization }: TrendCursorProps) => {
+const useHandleResize = ({ size, series, graphic, setGraphic, chartRef, visualization }: TrendCursorProps) => {
   const prevSize = useRef(size);
   // to avoid unnecessary re-rendering
   if (size.width !== prevSize.current.width || size.height !== prevSize.current.height) {
@@ -36,4 +36,4 @@ const handleResize = ({ size, series, graphic, setGraphic, chartRef, visualizati
   }
 };
 
-export default handleResize;
+export default useHandleResize;

@@ -28,7 +28,7 @@ export const useResizeGestures = ({ setActiveGesture, selectedWidgets, cellSize 
         })
       );
     },
-    [selectedWidgets, cellSize]
+    [selectedWidgets, cellSize, dispatch]
   );
 
   const [anchor, setAnchor] = useState<Anchor | null>(null);

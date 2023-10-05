@@ -85,7 +85,7 @@ export const PositionableMenu: React.FC<PropsWithChildren<PositionableMenuProps>
   useEffect(() => {
     // ensure that popper's position is synced to the reference position.
     update && update();
-  }, [position]);
+  }, [update, position]);
 
   return (
     <>

@@ -15,5 +15,6 @@ export const useGroupableEChart = (chartRef: React.MutableRefObject<ECharts | nu
       disconnect(groupId);
       connect(groupId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [groupId]);
 };

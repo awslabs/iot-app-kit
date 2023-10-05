@@ -1,9 +1,9 @@
 import { InternalGraphicComponentGroupOption, SizeConfig, ViewportInMs, Visualization } from '../types';
 import { Dispatch, MutableRefObject, SetStateAction, useRef } from 'react';
-import { calculateTrendCursorsSeriesMakers, calculateXFromTimestamp } from './trendCursorCalculations';
+import { calculateTrendCursorsSeriesMakers, calculateXFromTimestamp } from '../utils/trendCursorCalculations';
 import { DEFAULT_MARGIN } from '../eChartsConstants';
 import { ECharts, SeriesOption } from 'echarts';
-import { updateTrendCursorLineMarkers } from './getTrendCursor';
+import { updateTrendCursorLineMarkers } from '../utils/getTrendCursor';
 
 interface handleViewportProps {
   graphic: InternalGraphicComponentGroupOption[];
@@ -14,7 +14,7 @@ interface handleViewportProps {
   chartRef: MutableRefObject<ECharts | null>;
   visualization: Visualization;
 }
-export const handleViewport = ({
+export const useHandleViewport = ({
   graphic,
   setGraphic,
   viewportInMs,

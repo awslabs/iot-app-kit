@@ -66,10 +66,6 @@ const disabledUserSelect: CSSProperties = { userSelect: 'none' };
 const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, editable, propertiesPanel }) => {
   const { iotSiteWiseClient, iotTwinMakerClient } = useClients();
 
-  if (iotSiteWiseClient == null || iotTwinMakerClient == null) {
-    return null;
-  }
-
   /**
    * disable user select styles on drag to prevent highlighting of text under the pointer
    */
@@ -91,6 +87,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
   const [visible, setVisible] = useState<boolean>(false);
 
   const dispatch = useDispatch();
+
   const createWidgets = (widgets: DashboardWidget[]) =>
     dispatch(
       onCreateWidgetsAction({
@@ -205,6 +202,10 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
     hasCopiedWidgets: copiedWidgets.length > 0,
     hasSelectedWidgets: selectedWidgets.length > 0,
   };
+
+  if (iotSiteWiseClient == null || iotTwinMakerClient == null) {
+    return null;
+  }
 
   const EditComponent = (
     <div className='dashboard' style={userSelect}>

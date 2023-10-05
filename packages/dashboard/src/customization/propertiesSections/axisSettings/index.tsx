@@ -5,6 +5,7 @@ import { AxisSettings } from '~/customization/settings';
 import { DashboardWidget } from '~/types';
 import { maybeWithDefault } from '~/util/maybe';
 import AxisSection from './section';
+import { PropertyLens } from '~/customization/propertiesSection';
 
 const axisWidgetTypes: readonly string[] = ['line-chart', 'scatter-chart', 'bar-chart', 'status-timeline'];
 // The <StatusTimeline /> widget does not support the Y axis
@@ -18,6 +19,21 @@ const supportsYAxis = (w: DashboardWidget): w is AxisWidget =>
 const isAxisWidgetWithYAxis = (w: DashboardWidget): w is AxisWidget => isAxisWidget(w) && supportsYAxis(w);
 const isAxisWidgetWithoutYAxis = (w: DashboardWidget): w is AxisWidget => isAxisWidget(w) && !supportsYAxis(w);
 
+const RenderAxisSettingSection = ({
+  useProperty,
+  usesYAxis,
+}: {
+  useProperty: PropertyLens<AxisWidget>;
+  usesYAxis: boolean;
+}) => {
+  const [axis, updateAxis] = useProperty(
+    (properties) => properties.axis,
+    (properties, updatedAxis) => ({ ...properties, axis: updatedAxis })
+  );
+
+  return <AxisSection axis={maybeWithDefault(undefined, axis)} updateAxis={updateAxis} usesYAxis={usesYAxis} />;
+};
+
 const AxisSettingSection = ({
   isVisible,
   usesYAxis,
@@ -27,14 +43,7 @@ const AxisSettingSection = ({
 }) => (
   <PropertiesSection
     isVisible={isVisible}
-    render={({ useProperty }) => {
-      const [axis, updateAxis] = useProperty(
-        (properties) => properties.axis,
-        (properties, updatedAxis) => ({ ...properties, axis: updatedAxis })
-      );
-
-      return <AxisSection axis={maybeWithDefault(undefined, axis)} updateAxis={updateAxis} usesYAxis={usesYAxis} />;
-    }}
+    render={({ useProperty }) => <RenderAxisSettingSection useProperty={useProperty} usesYAxis={usesYAxis} />}
   />
 );
 

@@ -68,6 +68,8 @@ export const SiteWiseConnectedBaseChartExample: ComponentStory<FC<StoryInputs>> 
   size,
   styleSettings,
 }) => {
+  const { viewport } = useViewport();
+
   if (!queryConfigured()) {
     return (
       <div>
@@ -86,8 +88,6 @@ export const SiteWiseConnectedBaseChartExample: ComponentStory<FC<StoryInputs>> 
       </div>
     );
   }
-
-  const { viewport } = useViewport();
 
   return (
     <TimeSync>

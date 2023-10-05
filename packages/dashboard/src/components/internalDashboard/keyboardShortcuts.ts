@@ -36,7 +36,7 @@ export const useKeyboardShortcuts = ({ deleteWidgets: handleDeleteWidgetModal }:
         widgets: selectedWidgets,
       })
     );
-  }, [selectedWidgets]);
+  }, [dispatch, selectedWidgets]);
 
   const pasteWidgets = () => {
     dispatch(onPasteWidgetsAction({ position: undefined }));
@@ -60,7 +60,7 @@ export const useKeyboardShortcuts = ({ deleteWidgets: handleDeleteWidgetModal }:
         })
       );
     }
-  }, [selectedWidgets]);
+  }, [selectedWidgets, dispatch, handleDeleteWidgetModal]);
 
   /**
    * Keyboard hotkey / shortcut configuration

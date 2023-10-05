@@ -12,6 +12,49 @@ import { borderRadiusDropdown, colorBackgroundDropdownItemHover, spaceScaledS } 
 import { useChartStore } from '../store';
 import { isDataStreamInList } from '../../../utils/isDataStreamInList';
 
+const LegendCell = (e: { datastream: DataStream; lineColor: string; name: string }) => {
+  const { datastream, lineColor, name } = e;
+  const highlightDataStream = useChartStore((state) => state.highlightDataStream);
+  const unHighlightDataStream = useChartStore((state) => state.unHighlightDataStream);
+  const highlightedDataStreams = useChartStore((state) => state.highlightedDataStreams);
+  const isDataStreamHighlighted = isDataStreamInList(highlightedDataStreams);
+
+  const toggleHighlighted = () => {
+    if (isDataStreamHighlighted(datastream)) {
+      unHighlightDataStream(datastream);
+    } else {
+      highlightDataStream(datastream);
+    }
+  };
+
+  const [lineIcon] = useHover((isHovering) => (
+    <div
+      style={{
+        backgroundColor: isHovering ? colorBackgroundDropdownItemHover : undefined,
+        borderRadius: borderRadiusDropdown,
+      }}
+      className='base-chart-legend-row-line-container'
+      onClick={toggleHighlighted}
+    >
+      <div
+        className={`base-chart-legend-row-line-ind ${
+          isDataStreamHighlighted(datastream) ? 'base-chart-legend-row-line-ind-highlighted' : ''
+        }`}
+        style={{
+          backgroundColor: lineColor,
+        }}
+      />
+    </div>
+  ));
+
+  return (
+    <div className='base-chart-legend-row-data-container'>
+      {lineIcon}
+      <div style={{ marginBlock: spaceScaledS }}>{name}</div>
+    </div>
+  );
+};
+
 const useChartsLegend = ({
   datastreams,
   graphic,
@@ -24,48 +67,7 @@ const useChartsLegend = ({
   const legendColumnDefinition = {
     id: 'Legends',
     header: <div className='base-chart-legend-col-header'>Properties</div>,
-    cell: (e: { datastream: DataStream; lineColor: string; name: string }) => {
-      const { datastream, lineColor, name } = e;
-      const highlightDataStream = useChartStore((state) => state.highlightDataStream);
-      const unHighlightDataStream = useChartStore((state) => state.unHighlightDataStream);
-      const highlightedDataStreams = useChartStore((state) => state.highlightedDataStreams);
-      const isDataStreamHighlighted = isDataStreamInList(highlightedDataStreams);
-
-      const toggleHighlighted = () => {
-        if (isDataStreamHighlighted(datastream)) {
-          unHighlightDataStream(datastream);
-        } else {
-          highlightDataStream(datastream);
-        }
-      };
-
-      const [lineIcon] = useHover((isHovering) => (
-        <div
-          style={{
-            backgroundColor: isHovering ? colorBackgroundDropdownItemHover : undefined,
-            borderRadius: borderRadiusDropdown,
-          }}
-          className='base-chart-legend-row-line-container'
-          onClick={toggleHighlighted}
-        >
-          <div
-            className={`base-chart-legend-row-line-ind ${
-              isDataStreamHighlighted(datastream) ? 'base-chart-legend-row-line-ind-highlighted' : ''
-            }`}
-            style={{
-              backgroundColor: lineColor,
-            }}
-          />
-        </div>
-      ));
-
-      return (
-        <div className='base-chart-legend-row-data-container'>
-          {lineIcon}
-          <div style={{ marginBlock: spaceScaledS }}>{name}</div>
-        </div>
-      );
-    },
+    cell: (e: { datastream: DataStream; lineColor: string; name: string }) => <LegendCell {...e} />,
     isRowHeader: true,
   };
 
@@ -83,6 +85,10 @@ const useChartsLegend = ({
     legendColumnDefinition,
   ]);
   const [items, setItems] = useState<Array<object>>([]);
+
+  const graphicDeps = JSON.stringify(graphic);
+  const seriesDeps = JSON.stringify(series);
+
   useEffect(() => {
     const tcColumnDefinitions = graphic.map((g) => {
       const id = g.id as string;
@@ -111,7 +117,9 @@ const useChartsLegend = ({
     });
 
     setItems(currItems);
-  }, [graphic, series]);
+    // disabling because graphics and series are stringified
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [graphicDeps, seriesDeps]);
   return { columnDefinitions, items };
 };
 

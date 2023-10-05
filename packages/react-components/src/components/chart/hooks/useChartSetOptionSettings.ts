@@ -20,5 +20,5 @@ export const useChartSetOptionSettings = (datastreams: DataStream[]) => {
     const settings = datastreamsDepsRef.current !== datastreamsDeps ? { replaceMerge: ['series'] } : undefined;
     datastreamsDepsRef.current = datastreamsDeps;
     return { ...settings, lazyUpdate: true };
-  }, [datastreams]);
+  }, [datastreamsDeps]);
 };

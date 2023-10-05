@@ -1,4 +1,4 @@
 module.exports = {
   root: true,
-  extends: ['iot-app-kit'],
+  extends: ['iot-app-kit', 'plugin:react-hooks/recommended'],
 };

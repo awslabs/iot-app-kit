@@ -39,7 +39,9 @@ export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, view
         dataZoom: { ...DEFAULT_DATA_ZOOM, startValue: viewportInMs.initial, end: 100 },
       });
     }
-  }, [chartRef, viewportInMs, isScrolling]);
+    // ignoring because refs dont need to be in dependency array
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [viewportInMs, isScrolling, lastUpdatedBy]);
 
   // create listener for DataZoom events so that all charts can sync up
   useEffect(() => {
@@ -56,5 +58,7 @@ export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, view
     return () => {
       chart?.off('dataZoom');
     };
-  }, [chartRef]);
+    // ignoring because refs dont need to be in dependency array
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setViewport]);
 };

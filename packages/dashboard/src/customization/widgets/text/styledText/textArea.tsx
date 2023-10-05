@@ -49,7 +49,9 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({ handleSetEdit, isUrl, .
       ref.current.selectionStart = value.length;
       ref.current.focus();
     }
-  }, [ref]);
+    // disabling because eslint misidentifies the ref as a dependency
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value.length]);
 
   const filter = (e: KeyboardEvent) => e.target === ref.current;
   useKeyPress('mod+shift+l', {

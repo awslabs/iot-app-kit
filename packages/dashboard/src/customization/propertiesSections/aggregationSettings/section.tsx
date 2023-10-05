@@ -31,11 +31,11 @@ const Section: React.FC<React.PropsWithChildren> = ({ children }) => (
 
 const getAggregationSectionOptions = (
   siteWiseQuery: Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery> | undefined,
-  supportsRawData: boolean
+  supportsRawData: boolean,
+  dataTypeSet: Set<string>
 ) => {
   const { aggregationType, resolution } = siteWiseQuery?.assets?.at(0)?.properties?.at(0) ?? {};
 
-  const dataTypeSet = useWidgetDataTypeSet(siteWiseQuery);
   const filteredResolutionOptions = getResolutionOptions(supportsRawData);
   const filteredAggregationOptions = getAggregationOptions(supportsRawData, dataTypeSet, resolution);
 
@@ -60,6 +60,8 @@ type AggregationSettingsProps = {
 };
 const AggregationSettings: FC<AggregationSettingsProps> = ({ queryConfig, updateQuery, supportsRawData }) => {
   const aggregationsEnabled = isJust(queryConfig);
+  const siteWiseAssetQuery = aggregationsEnabled ? queryConfig.value : undefined;
+  const dataTypeSet = useWidgetDataTypeSet(siteWiseAssetQuery as SiteWiseAssetQuery);
 
   if (!aggregationsEnabled)
     return (
@@ -68,10 +70,8 @@ const AggregationSettings: FC<AggregationSettingsProps> = ({ queryConfig, update
       </Section>
     );
 
-  const siteWiseAssetQuery = queryConfig.value;
-
   const { filteredResolutionOptions, filteredAggregationOptions, selectedAggregation, selectedResolution } =
-    getAggregationSectionOptions(siteWiseAssetQuery as SiteWiseAssetQuery, supportsRawData);
+    getAggregationSectionOptions(siteWiseAssetQuery as SiteWiseAssetQuery, supportsRawData, dataTypeSet);
 
   // given a resolution, determine what the new aggregation should be
   const getUpdatedAggregation = (resolution?: string) => {

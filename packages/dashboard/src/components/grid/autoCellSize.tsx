@@ -26,7 +26,7 @@ export const AutoCellSize: React.FC<AutoCellSizeProps> = ({ width, cellSize, chi
     if (cellSize !== fittedCellSize) {
       dispatch(onChangeDashboardCellSizeAction({ cellSize: fittedCellSize }));
     }
-  }, [measuredWidth, width, cellSize]);
+  }, [measuredWidth, width, cellSize, dispatch]);
 
   return <div ref={measureRef}>{children}</div>;
 };
