@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v8.1.0...scene-composer-v8.1.1) (2023-10-05)
+
+
+### Bug Fixes
+
+* **camera:** stop camera view inspector panel from overwriting changes unexpectedly ([37a8122](https://github.com/awslabs/iot-app-kit/commit/37a8122b54ef95f7dca56ad341a5183fd11a05f8))
+* **composer:** add aria labels to buttons in hierarchy panel ([24c8c30](https://github.com/awslabs/iot-app-kit/commit/24c8c30594a0961509079bd942763d22d0d9ccdf))
+* fix bug, update test ([24c8c30](https://github.com/awslabs/iot-app-kit/commit/24c8c30594a0961509079bd942763d22d0d9ccdf))
+* **scene:** fix transform controls being clickable ([b846730](https://github.com/awslabs/iot-app-kit/commit/b846730c0cb4e605d047f6421b0c28472b911cf7))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/react-components bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/related-table bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/source-iottwinmaker bumped from 8.1.0 to 8.1.1
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 8.1.0 to 8.1.1
+
 ## [8.1.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v8.0.2...scene-composer-v8.1.0) (2023-10-04)
 
 

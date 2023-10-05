@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.1](https://github.com/awslabs/iot-app-kit/compare/core-v8.1.0...core-v8.1.1) (2023-10-05)
+
+
+### Miscellaneous Chores
+
+* **core:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/ts-config bumped from 8.1.0 to 8.1.1
+    * eslint-config-iot-app-kit bumped from 8.1.0 to 8.1.1
+
 ## [8.1.0](https://github.com/awslabs/iot-app-kit/compare/core-v8.0.2...core-v8.1.0) (2023-10-04)
 
 

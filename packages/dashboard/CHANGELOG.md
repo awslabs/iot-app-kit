@@ -1,5 +1,31 @@
 # Changelog
 
+## [8.1.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v8.1.0...dashboard-v8.1.1) (2023-10-05)
+
+
+### Bug Fixes
+
+* add eslint rule for hooks ([de7cc0d](https://github.com/awslabs/iot-app-kit/commit/de7cc0d94ffdb79d3cb2ce622dd322e6d8497d61))
+* aggregation and resolution settings ([06207f9](https://github.com/awslabs/iot-app-kit/commit/06207f9204c1a57d390f189e29858b9c8b862b4f))
+* **dashboard:** chart respects absolute min and max between data and thresholds ([db16712](https://github.com/awslabs/iot-app-kit/commit/db1671225e300a18765d55a8afd1534640d264de))
+* default resolution and aggregation ([e5afdc0](https://github.com/awslabs/iot-app-kit/commit/e5afdc025b83013de26b5c3dbac1e5db5e8aca53))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/core bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/core-util bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/react-components bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/source-iotsitewise bumped from 8.1.0 to 8.1.1
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/testing-util bumped from 8.1.0 to 8.1.1
+    * @iot-app-kit/ts-config bumped from 8.1.0 to 8.1.1
+    * eslint-config-iot-app-kit bumped from 8.1.0 to 8.1.1
+
 ## [8.1.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v8.0.2...dashboard-v8.1.0) (2023-10-04)
 
 

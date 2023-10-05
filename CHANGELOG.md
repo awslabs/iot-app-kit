@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.1](https://github.com/awslabs/iot-app-kit/compare/root-v8.1.0...root-v8.1.1) (2023-10-05)
+
+
+### Bug Fixes
+
+* add eslint rule for hooks ([de7cc0d](https://github.com/awslabs/iot-app-kit/commit/de7cc0d94ffdb79d3cb2ce622dd322e6d8497d61))
+* aggregation and resolution settings ([06207f9](https://github.com/awslabs/iot-app-kit/commit/06207f9204c1a57d390f189e29858b9c8b862b4f))
+* **camera:** stop camera view inspector panel from overwriting changes unexpectedly ([37a8122](https://github.com/awslabs/iot-app-kit/commit/37a8122b54ef95f7dca56ad341a5183fd11a05f8))
+* **composer:** add aria labels to buttons in hierarchy panel ([24c8c30](https://github.com/awslabs/iot-app-kit/commit/24c8c30594a0961509079bd942763d22d0d9ccdf))
+* **dashboard:** chart respects absolute min and max between data and thresholds ([db16712](https://github.com/awslabs/iot-app-kit/commit/db1671225e300a18765d55a8afd1534640d264de))
+* default resolution and aggregation ([e5afdc0](https://github.com/awslabs/iot-app-kit/commit/e5afdc025b83013de26b5c3dbac1e5db5e8aca53))
+* fix bug, update test ([24c8c30](https://github.com/awslabs/iot-app-kit/commit/24c8c30594a0961509079bd942763d22d0d9ccdf))
+* **scene:** fix transform controls being clickable ([b846730](https://github.com/awslabs/iot-app-kit/commit/b846730c0cb4e605d047f6421b0c28472b911cf7))
+
 ## [8.1.0](https://github.com/awslabs/iot-app-kit/compare/root-v8.0.2...root-v8.1.0) (2023-10-04)
 
 
