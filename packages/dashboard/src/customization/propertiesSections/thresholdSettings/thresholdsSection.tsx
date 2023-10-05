@@ -15,7 +15,7 @@ import { ThresholdsList } from './thresholdsList';
 import { ComparisonOperators } from './comparisonOperators';
 import { AnnotationsSettings } from './annotations';
 import { CancelableEventHandler, ClickDetail } from '@cloudscape-design/components/internal/events';
-import { ThresholdStyleSettings } from './thresholdStyle';
+import { ThresholdStyleSettings, convertOptionToThresholdStyle, styledOptions } from './thresholdStyle';
 import { ThresholdStyleType } from '@iot-app-kit/react-components/src/components/chart/types';
 
 const ThresholdsExpandableSection: React.FC<React.PropsWithChildren<{ title: string }>> = ({ children, title }) => (
@@ -75,8 +75,8 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
     id: '1',
     visible: true,
   };
-  // Default style should match the first option of <ThresholdStyleSettings/> if no thresholds are added
-  let defaultThresholdStyle: ThresholdStyleType = { visible: true };
+  // Set default threshold style if no thresholds are added
+  let defaultThresholdStyle: ThresholdStyleType = convertOptionToThresholdStyle(styledOptions[2]);
   if (styledThresholdsAdded) {
     // All threshold styles are the same, check on any of the thresholds to determine the saved style
     const styledThreshold: (ThresholdWithId & StyledThreshold)[] = maybeWithDefault(

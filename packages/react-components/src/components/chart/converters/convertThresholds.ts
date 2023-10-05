@@ -8,9 +8,6 @@ const comparisonOperatorToLowerYAxis = (comparisonOperator: ComparisonOperator, 
     case COMPARISON_OPERATOR.GTE:
     case COMPARISON_OPERATOR.EQ:
       return value;
-    case COMPARISON_OPERATOR.LT:
-    case COMPARISON_OPERATOR.LTE:
-      return 0;
     default:
       return undefined;
   }

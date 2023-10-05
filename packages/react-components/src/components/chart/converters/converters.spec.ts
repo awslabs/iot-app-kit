@@ -241,7 +241,7 @@ it('converts thresholds to echarts markLine and markArea', async () => {
 
   expect(convertedThresholds).toHaveProperty('markArea.data[0][0].yAxis', 10);
   expect(convertedThresholds).toHaveProperty('markArea.data[0][1].yAxis', 10);
-  expect(convertedThresholds).toHaveProperty('markArea.data[1][0].yAxis', 0);
+  expect(convertedThresholds).toHaveProperty('markArea.data[1][0].yAxis', undefined);
   expect(convertedThresholds).toHaveProperty('markArea.data[1][1].yAxis', 15);
   expect(convertedThresholds).toHaveProperty('markArea.data[2][0].yAxis', 5);
   expect(convertedThresholds).toHaveProperty('markArea.data[2][1].yAxis', undefined);

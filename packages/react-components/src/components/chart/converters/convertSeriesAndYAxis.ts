@@ -5,19 +5,20 @@ import { BarSeriesOption, SeriesOption, YAXisComponentOption } from 'echarts';
 import maxBy from 'lodash.maxby';
 import minBy from 'lodash.minby';
 
-import { ChartAxisOptions, ChartStyleSettingsOptions, Visualization, YAxisLegendOption } from '../types';
+import { ChartAxisOptions, ChartStyleSettingsOptions, Visualization, YAxisLegendOption, YAxisOptions } from '../types';
 import { convertDataPoint } from './convertDataPoint';
 import { StyleSettingsMap, getChartStyleSettingsFromMap } from './convertStyles';
 import { convertYAxis as convertChartYAxis } from './convertAxis';
 import { convertThresholds } from './convertThresholds';
 import { ChartStyleSettingsWithDefaults } from '../utils/getStyles';
 import { DEEMPHASIZE_OPACITY, EMPHASIZE_SCALE_CONSTANT } from '../eChartsConstants';
+import { padYAxis, validateValue } from './padYAxis';
 
 const yAxisLegendGenerator =
   (options: Pick<YAxisLegendOption, 'datastream' | 'color' | 'significantDigits'>) =>
   (value: DataPoint): YAxisLegendOption => ({ ...options, value });
 
-const dataValue = (point: DataPoint) => point.y;
+export const dataValue = (point: DataPoint) => point.y;
 
 const stepTypes: NonNullable<ChartStyleSettingsOptions['visualizationType']>[] = [
   'step-end',
@@ -211,10 +212,20 @@ export const useSeriesAndYAxis = (
       .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis, yMins: [], yMaxs: [] });
   }, [datastreams, styleSettings, defaultYAxis]);
 
+  let paddedYAxis: NonNullable<YAXisComponentOption | undefined>[] = yAxis;
+  if (yMins.length === 0 && yMaxs.length === 0 && yAxis.length === 1) {
+    const yAxisLabel: YAxisOptions = {
+      yMin: validateValue(yAxis[0].min?.toString()),
+      yMax: validateValue(yAxis[0].max?.toString()),
+    };
+    const [min, max] = padYAxis(yAxisLabel, thresholds, datastreams);
+    paddedYAxis = [{ ...yAxis[0], min, max }];
+  }
+
   if (series.length > 0) {
     series[0].markArea = convertedThresholds.markArea;
     series[0].markLine = convertedThresholds.markLine;
   }
 
-  return { series, yAxis, yMaxs, yMins };
+  return { series, yAxis: paddedYAxis, yMaxs, yMins };
 };
