@@ -21,12 +21,10 @@ import { queryClient } from '~/data/query-client';
 import { PropertiesPanel } from '~/customization/propertiesSections';
 import { useDashboardViewport } from '~/hooks/useDashboardViewport';
 
-/*
 if (process.env.NODE_ENV === 'development') {
   const { worker } = require('../../msw/browser');
   worker.start();
 }
-*/
 
 export type DashboardProperties = {
   onSave: DashboardSave;
