@@ -1,17 +1,38 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import { computeMikkTSpaceTangents } from 'three/examples/jsm/utils/BufferGeometryUtils';
 
-const useOverwriteRaycaster: (object: THREE.Object3D, raycaster?: () => void) => () => void = (
-  object: THREE.Object3D,
+const useOverwriteRaycaster: (
+  object: THREE.Object3D | undefined,
   raycaster?: () => void,
-) => {
-  const overwriteRaycaster = useCallback(() => {
-    const raycastOverride = raycaster ? raycaster : () => {};
-    object.traverse((object: THREE.Object3D) => {
-      object.raycast = raycastOverride;
-    });
+) => [() => void, () => void] = (object: THREE.Object3D | undefined, raycaster?: () => void) => {
+  const originalRaycastMap = useRef({});
+
+  useEffect(() => {
+    if (object) {
+      object.traverse((o: THREE.Object3D) => {
+        originalRaycastMap.current[o.uuid] = o.raycast;
+      });
+    }
   }, [object]);
 
-  return overwriteRaycaster;
+  const overwriteRaycaster = useCallback(() => {
+    const raycastOverride = raycaster ? raycaster : () => {};
+    if (object) {
+      object.traverse((o: THREE.Object3D) => {
+        o.raycast = raycastOverride;
+      });
+    }
+  }, [object, raycaster]);
+
+  const restoreRaycaster = useCallback(() => {
+    if (object) {
+      object.traverse((o: THREE.Object3D) => {
+        o.raycast = originalRaycastMap.current[o.uuid];
+      });
+    }
+  }, [object]);
+
+  return [overwriteRaycaster, restoreRaycaster];
 };
 
 export default useOverwriteRaycaster;

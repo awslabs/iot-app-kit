@@ -20,6 +20,7 @@ import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useEditorState } from '../../store';
 import { CameraControlImpl, TweenValueObject } from '../../store/internalInterfaces';
 import useActiveCamera from '../../hooks/useActiveCamera';
+import useOverwriteRaycaster from '../../hooks/useOverwriteRaycaster';
 import { getSafeBoundingBox } from '../../utils/objectThreeUtils';
 import { getMatterportSdk } from '../../common/GlobalSettings';
 import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../../three/OrbitControls';
@@ -52,6 +53,8 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
 
   const activeCamera = useActiveCamera();
 
+  const [overwriteRaycaster, restoreRaycaster] = useOverwriteRaycaster(transformControls);
+
   const CameraControls = useMemo(() => {
     // Remove CameraControls while using TransformControls
     if (controlsRemove) {
@@ -79,12 +82,14 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
 
       if (typeof command.target !== 'string') {
         if (scene && cameraRef.current) {
+          overwriteRaycaster();
+
           const position = new THREE.Vector3(...command.target.position);
           const direction = new THREE.Vector3(...command.target.target).sub(position).normalize();
           const raycaster = new THREE.Raycaster(position, direction);
           raycaster.camera = cameraRef.current;
           const intersections = raycaster.intersectObjects([scene]);
-
+          restoreRaycaster();
           if (intersections.length > 0) {
             return { position: command.target.position, target: intersections[0].point.toArray() } as FixedCameraTarget;
           }
@@ -97,7 +102,7 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
 
       log?.warn('unable to find the correct object in the scene. using the default camera setting.');
     };
-  }, [scene]);
+  }, [scene, transformControls]);
 
   const controlsRef = useCallback((ref) => {
     if (ref) {

@@ -33,12 +33,19 @@ describe('useOverwriteRaycaster', () => {
     expect(intersectObjects.length).toBe(4);
 
     const mockRaycaster = jest.fn();
-    const overwriteRayCaster = renderHook(() => useOverwriteRaycaster(parentCube, mockRaycaster)).result.current;
+    const [overwriteRayCaster, restoreRaycaster] = renderHook(() => useOverwriteRaycaster(parentCube, mockRaycaster))
+      .result.current;
     overwriteRayCaster();
     const intersectObjects2 = raycaster.intersectObjects([parentCube]);
 
     expect(mockRaycaster).toBeCalledTimes(2);
     expect(intersectObjects2.length).toBe(0);
+
+    restoreRaycaster();
+    const intersectObjects3 = raycaster.intersectObjects([parentCube]);
+
+    expect(mockRaycaster).toBeCalledTimes(2);
+    expect(intersectObjects3.length).toBe(4);
   });
 
   it('it overwrite the raycaster for all objects with default no op function', () => {
@@ -58,9 +65,40 @@ describe('useOverwriteRaycaster', () => {
     //hit each cube on enter and leave
     expect(intersectObjects.length).toBe(4);
 
-    const overwriteRayCaster = renderHook(() => useOverwriteRaycaster(parentCube)).result.current;
+    const [overwriteRayCaster, restoreRaycaster] = renderHook(() => useOverwriteRaycaster(parentCube)).result.current;
     overwriteRayCaster();
     const intersectObjects2 = raycaster.intersectObjects([parentCube]);
     expect(intersectObjects2.length).toBe(0);
+
+    restoreRaycaster();
+    const intersectObjects3 = raycaster.intersectObjects([parentCube]);
+    expect(intersectObjects3.length).toBe(4);
+  });
+
+  it('call restore first should keep previous raycast', () => {
+    const parentCube = new THREE.Mesh(geometry, material);
+    parentCube.translateX(position.x);
+    parentCube.translateY(position.y);
+    parentCube.translateZ(position.z);
+    parentCube.updateMatrixWorld();
+    const cube2 = new THREE.Mesh(geometry, material);
+    cube2.translateX(position.x + 1);
+    cube2.translateY(position.y);
+    cube2.translateZ(position.z);
+    parentCube.add(cube2);
+    cube2.updateMatrixWorld();
+
+    const mockRaycaster = jest.fn();
+    const restoreRaycaster = renderHook(() => useOverwriteRaycaster(parentCube, mockRaycaster)).result.current[1];
+
+    const intersectObjects = raycaster.intersectObjects([parentCube]);
+    //hit each cube on enter and leave
+    expect(intersectObjects.length).toBe(4);
+
+    restoreRaycaster();
+    const intersectObjects2 = raycaster.intersectObjects([parentCube]);
+    expect(intersectObjects2.length).toBe(4);
+
+    expect(mockRaycaster).toBeCalledTimes(0);
   });
 });
