@@ -84,7 +84,7 @@ export const TREND_CURSOR_CLOSE_GRAPHIC_INDEX = 2;
 export const TREND_CURSOR_LINE_MARKERS_GRAPHIC_INDEX = 3;
 
 // resize constants
-export const CHART_RESIZE_INITIAL_FACTOR = 0.7;
+export const CHART_RESIZE_INITIAL_FACTOR = 0.75;
 export const CHART_RESIZE_MIN_FACTOR = 0.3;
 
 // this is an arbitrary value, so that user can almost "close" the legend section if they want to
@@ -99,6 +99,3 @@ export const DEEMPHASIZE_OPACITY = 0.25;
 // Zoom constants
 
 export const ECHARTS_ZOOM_DEBOUNCE_MS = 300;
-
-// Legend constants
-export const CHART_LEGEND_WRAPPER_WIDTH = 100;
