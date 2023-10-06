@@ -22,7 +22,32 @@ export class AssetTableColumnDefinitionsFactory {
   }
 
   public create(): AssetTableColumnDefinitions {
-    return [this.#createNameField(), this.#createDescriptionField()];
+    return [
+      this.#createARNField(),
+      this.#createIDField(),
+      this.#createNameField(),
+      this.#createDescriptionField(),
+      this.#createCreationDateField(),
+      this.#createLastUpdateDateField(),
+    ];
+  }
+
+  #createARNField(): AssetTableColumnDefinitions[1] {
+    return {
+      id: 'arn',
+      header: 'ARN',
+      cell: ({ arn }) => arn,
+      sortingField: 'arn',
+    };
+  }
+
+  #createIDField(): AssetTableColumnDefinitions[1] {
+    return {
+      id: 'id',
+      header: 'ID',
+      cell: ({ id }) => id,
+      sortingField: 'id',
+    };
   }
 
   #createNameField(): AssetTableColumnDefinitions[0] {
@@ -48,6 +73,24 @@ export class AssetTableColumnDefinitionsFactory {
       header: 'Description',
       cell: ({ description }) => description,
       sortingField: 'description',
+    };
+  }
+
+  #createCreationDateField(): AssetTableColumnDefinitions[1] {
+    return {
+      id: 'creationDate',
+      header: 'Creation Date',
+      cell: ({ creationDate }) => creationDate?.toString() ?? '-',
+      sortingField: 'creationDate',
+    };
+  }
+
+  #createLastUpdateDateField(): AssetTableColumnDefinitions[1] {
+    return {
+      id: 'lastUpdateDate',
+      header: 'Last Update Date',
+      cell: ({ lastUpdateDate }) => lastUpdateDate?.toString() ?? '-',
+      sortingField: 'lastUpdateDate',
     };
   }
 }
