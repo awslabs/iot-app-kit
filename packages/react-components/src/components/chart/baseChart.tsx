@@ -21,12 +21,12 @@ import { useChartSetOptionSettings } from './hooks/useChartSetOptionSettings';
 import { MultiYAxisLegend } from './legend/multiYAxis';
 
 import './chart.css';
-import { useXAxis } from './hooks/useXAxis';
 import { useContextMenu } from './hooks/useContextMenu';
 import { useViewportToMS } from './hooks/useViewportToMS';
 import { DEFAULT_CHART_VISUALIZATION } from './eChartsConstants';
 import { useDataZoom } from './hooks/useDataZoom';
 import { useViewport } from '../../hooks/useViewport';
+import { getXAxis } from './utils/getXAxis';
 
 /**
  * Developer Notes:
@@ -88,7 +88,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
 
   const viewportInMs = useViewportToMS(utilizedViewport);
 
-  const xAxis = useXAxis(options.axis);
+  const xAxis = getXAxis(options.axis);
 
   // this will handle all the Trend Cursors operations
   const { onContextMenuClickHandler, trendCursors, hotKeyHandlers } = useTrendCursors({
