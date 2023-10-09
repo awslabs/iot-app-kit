@@ -4,23 +4,31 @@ import type { QueryWidget } from '../types';
 import { assignDefaultColor } from '@iot-app-kit/core-util';
 import { isDefined } from '~/util/isDefined';
 import { IoTSiteWiseDataStreamQuery } from '~/types';
+import { getCurrentAggregationResolution } from './widgetAggregationUtils';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 
 type Query = NonNullable<QueryWidget['properties']['queryConfig']['query']>;
 
-const assignDefaultRefId = (
+// Assigns default RefID to each property and defauly aggregations+resolutions to each property
+const assignDefaults = (
   { assets = [], properties = [] }: IoTSiteWiseDataStreamQuery,
+  resAndAggr: { aggregation?: AggregateType; resolution?: string },
   getId: () => string = uuid
 ) => ({
   assets: assets.map(({ properties, ...others }) => ({
     ...others,
     properties: properties.map((propertyQuery) => ({
       ...propertyQuery,
+      resolution: resAndAggr.resolution,
+      aggregationType: resAndAggr.aggregation,
       refId: propertyQuery.refId || getId(),
     })),
   })),
   properties: properties.map((propertyQuery) => ({
     ...propertyQuery,
     refId: propertyQuery.refId || getId(),
+    resolution: resAndAggr.resolution,
+    aggregationType: resAndAggr.aggregation,
   })),
 });
 
@@ -48,7 +56,8 @@ export const assignDefaultStyles = (widget: QueryWidget): QueryWidget => {
 
   let styleSettings = widget.properties.styleSettings || {};
 
-  const assetQueriesWithRefIds = assignDefaultRefId(siteWiseAssetQuery);
+  const defaultResolutionAndAggregation = getCurrentAggregationResolution(widget);
+  const assetQueriesWithRefIds = assignDefaults(siteWiseAssetQuery, defaultResolutionAndAggregation);
   styleSettings = assignDefaultColors(styleSettings, assetQueriesWithRefIds);
 
   const updated = {
