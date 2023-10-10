@@ -10,6 +10,7 @@
     */
   text-align: initial;
 }
+
 .dashboard * {
   box-sizing: initial;
 }
@@ -75,7 +76,6 @@
 }
 
 .collapsible-panel {
-  overflow: auto;
   position: relative;
 }
 
