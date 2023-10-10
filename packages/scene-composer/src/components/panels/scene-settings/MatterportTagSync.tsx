@@ -18,6 +18,7 @@ import {
   prepareWorkspace,
 } from '../../../utils/entityModelUtils/sceneUtils';
 import { getGlobalSettings } from '../../../common/GlobalSettings';
+import { DisplayMessageCategory, IDisplayMessage } from '../../../store/internalInterfaces';
 
 export const MatterportTagSync: React.FC = () => {
   const logger = useLifecycleLogging('MatterportTagSync');
@@ -26,6 +27,8 @@ export const MatterportTagSync: React.FC = () => {
   const sceneComposerId = useSceneComposerId();
   const getComponentRefByType = useStore(sceneComposerId)((state) => state.getComponentRefByType);
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const addMessages = useStore(sceneComposerId)((state) => state.addMessages);
+
   const matterportModelId = useStore(sceneComposerId)((state) =>
     state.getSceneProperty<string>(KnownSceneProperty.MatterportModelId),
   );
@@ -44,6 +47,7 @@ export const MatterportTagSync: React.FC = () => {
 
   const doSync = useCallback(async () => {
     setSyncTagStatus('loading');
+    const errorMessages: IDisplayMessage[] = [];
 
     try {
       const layerName = MATTERPORT_TAG_LAYER_PREFIX + matterportModelId;
@@ -84,16 +88,23 @@ export const MatterportTagSync: React.FC = () => {
       // Process Matterport tags v2
       if (tags) {
         for (const [key, value] of tags) {
-          if (oldTagMap[key]) {
-            await handleUpdateMatterportTag({
-              layerId,
-              sceneRootId: rootId,
-              ref: oldTagMap[key].nodeRef,
-              node: oldTagMap[key].node,
-              item: value,
+          try {
+            if (oldTagMap[key]) {
+              await handleUpdateMatterportTag({
+                layerId,
+                sceneRootId: rootId,
+                ref: oldTagMap[key].nodeRef,
+                node: oldTagMap[key].node,
+                item: value,
+              });
+            } else {
+              await handleAddMatterportTag({ layerId, sceneRootId: rootId, id: key, item: value });
+            }
+          } catch (e) {
+            errorMessages.push({
+              category: DisplayMessageCategory.Warning,
+              messageText: `Sync tag ${key} failed with error: ${(e as Error).message}`,
             });
-          } else {
-            await handleAddMatterportTag({ layerId, sceneRootId: rootId, id: key, item: value });
           }
           delete oldTagMap[key];
         }
@@ -109,17 +120,25 @@ export const MatterportTagSync: React.FC = () => {
             continue;
           }
 
-          if (oldTagMap[key]) {
-            await handleUpdateMatterportTag({
-              layerId,
-              sceneRootId: rootId,
-              ref: oldTagMap[key].nodeRef,
-              node: oldTagMap[key].node,
-              item: value,
+          try {
+            if (oldTagMap[key]) {
+              await handleUpdateMatterportTag({
+                layerId,
+                sceneRootId: rootId,
+                ref: oldTagMap[key].nodeRef,
+                node: oldTagMap[key].node,
+                item: value,
+              });
+            } else {
+              await handleAddMatterportTag({ layerId, sceneRootId: rootId, id: key, item: value });
+            }
+          } catch (e) {
+            errorMessages.push({
+              category: DisplayMessageCategory.Warning,
+              messageText: `Sync tag ${key} failed with error: ${(e as Error).message}`,
             });
-          } else {
-            await handleAddMatterportTag({ layerId, sceneRootId: rootId, id: key, item: value });
           }
+
           delete oldTagMap[key];
         }
       }
@@ -130,10 +149,18 @@ export const MatterportTagSync: React.FC = () => {
     } catch (e) {
       logger?.error(String(e));
       setSyncTagStatus('error');
-      return;
+      errorMessages.push({
+        category: DisplayMessageCategory.Warning,
+        messageText: `Sync tags failed with error: ${(e as Error).message}`,
+      });
     }
 
-    setSyncTagStatus('success');
+    if (isEmpty(errorMessages)) {
+      setSyncTagStatus('success');
+    } else {
+      setSyncTagStatus('error');
+      addMessages(errorMessages);
+    }
   }, [
     getSceneNodeByRef,
     mattertagObserver,

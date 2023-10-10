@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import { DocumentType } from '@aws-sdk/types';
 
 import { IDataOverlayComponent, KnownComponentType } from '../../interfaces';
-import { componentTypeToId } from '../../common/entityModelConstants';
+import { MAX_PROPERTY_STRING_LENGTH, componentTypeToId } from '../../common/entityModelConstants';
 import { Component } from '../../models/SceneModels';
 import { IDataOverlayComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
@@ -31,14 +31,31 @@ export const createOverlayEntityComponent = (overlay: IDataOverlayComponent): Co
       [OverlayComponentProperty.DataRows]: {
         value: {
           listValue: overlay.dataRows.map((r) => {
+            const contents: Record<string, { stringValue: string }> = {};
+            const encodedContent = encodeURI(r.content);
+            // Split the content into multiple parts to avoid the max string length being exceeded
+            for (
+              let index = 0;
+              index < Math.min(10, Math.ceil(encodedContent.length / MAX_PROPERTY_STRING_LENGTH));
+              index++
+            ) {
+              // the ket for first content part will not have index suffix so existing overlays can continue to work
+              const key =
+                index === 0 ? OverlayComponentProperty.Content : `${OverlayComponentProperty.Content}_${index}`;
+              contents[key] = {
+                stringValue: encodedContent.substring(
+                  index * MAX_PROPERTY_STRING_LENGTH,
+                  Math.min(encodedContent.length, (index + 1) * MAX_PROPERTY_STRING_LENGTH),
+                ),
+              };
+            }
+
             return {
               mapValue: {
                 [OverlayComponentProperty.RowType]: {
                   stringValue: r.rowType,
                 },
-                [OverlayComponentProperty.Content]: {
-                  stringValue: encodeURI(r.content),
-                },
+                ...contents,
               },
             };
           }),
@@ -85,10 +102,18 @@ export const parseOverlayComp = (comp: DocumentType): IDataOverlayComponentInter
     }));
   const rows: Component.DataOverlayMarkdownRow[] = comp['properties']
     .find((p) => p['propertyName'] === OverlayComponentProperty.DataRows)
-    ?.propertyValue?.map((r) => ({
-      content: decodeURI(r[OverlayComponentProperty.Content]),
-      rowType: r[OverlayComponentProperty.RowType],
-    }));
+    ?.propertyValue?.map((r) => {
+      let index = 1;
+      let content = r[OverlayComponentProperty.Content];
+      while (r[`${OverlayComponentProperty.Content}_${index}`]) {
+        content += r[`${OverlayComponentProperty.Content}_${index}`];
+        index++;
+      }
+      return {
+        content: decodeURI(content),
+        rowType: r[OverlayComponentProperty.RowType],
+      };
+    });
 
   const overlayComp: IDataOverlayComponentInternal = {
     ref: generateUUID(),
