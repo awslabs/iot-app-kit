@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [9.0.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v8.1.1...react-components-v9.0.0) (2023-10-10)
+
+
+### Features
+
+* updated the chart legend ux(spacing, legend border color, width, tooltip) ([390cbe3](https://github.com/awslabs/iot-app-kit/commit/390cbe3414286bd7cfb1f041a2d21264552e7bd3))
+
+
+### Bug Fixes
+
+* line chart progresses in time ([15876a8](https://github.com/awslabs/iot-app-kit/commit/15876a86e4d3790e41f917758618b3f11cc948c7))
+
+
+### Reverts
+
+* updated the chart legend ux(spacing, legend border color, width, tooltip) ([6bbe391](https://github.com/awslabs/iot-app-kit/commit/6bbe39103f286ed6f09bd1f4fdd3353dba833e5a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 8.1.1 to 9.0.0
+    * @iot-app-kit/core bumped from 8.1.1 to 9.0.0
+    * @iot-app-kit/core-util bumped from 8.1.1 to 9.0.0
+    * @iot-app-kit/source-iottwinmaker bumped from 8.1.1 to 9.0.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 8.1.1 to 9.0.0
+    * @iot-app-kit/source-iotsitewise bumped from 8.1.1 to 9.0.0
+    * @iot-app-kit/testing-util bumped from 8.1.1 to 9.0.0
+    * @iot-app-kit/ts-config bumped from 8.1.1 to 9.0.0
+    * eslint-config-iot-app-kit bumped from 8.1.1 to 9.0.0
+
 ## [8.1.1](https://github.com/awslabs/iot-app-kit/compare/react-components-v8.1.0...react-components-v8.1.1) (2023-10-05)
 
 

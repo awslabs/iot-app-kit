@@ -1,5 +1,43 @@
 # Changelog
 
+## [9.0.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v8.1.1...dashboard-v9.0.0) (2023-10-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* **dashboard:** widget type change from line-scatter-chart -> xy-plot
+
+### Features
+
+* resource explorer table preferences columns visibility [#1980](https://github.com/awslabs/iot-app-kit/issues/1980) ([22d7028](https://github.com/awslabs/iot-app-kit/commit/22d70287dce77ae072e425ccbaa4fc2132b63595))
+
+
+### Bug Fixes
+
+* **dashboard:** bar chart default aggregation+resolution ([44fd991](https://github.com/awslabs/iot-app-kit/commit/44fd99128d13053cd48fae2d8c9562d6d8ab4ef2))
+* **dashboard:** minor threshold fixes ([5b5c570](https://github.com/awslabs/iot-app-kit/commit/5b5c570f0ab026144e4009663c02ca3e0c948f3c))
+
+
+### Miscellaneous Chores
+
+* **dashboard:** change line-scatter-chart to xy-plot ([70593da](https://github.com/awslabs/iot-app-kit/commit/70593da0638b689f55396488def2c84fdc7dac19))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 8.1.1 to 9.0.0
+    * @iot-app-kit/core bumped from 8.1.1 to 9.0.0
+    * @iot-app-kit/core-util bumped from 8.1.1 to 9.0.0
+    * @iot-app-kit/react-components bumped from 8.1.1 to 9.0.0
+    * @iot-app-kit/source-iotsitewise bumped from 8.1.1 to 9.0.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 8.1.1 to 9.0.0
+    * @iot-app-kit/testing-util bumped from 8.1.1 to 9.0.0
+    * @iot-app-kit/ts-config bumped from 8.1.1 to 9.0.0
+    * eslint-config-iot-app-kit bumped from 8.1.1 to 9.0.0
+
 ## [8.1.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v8.1.0...dashboard-v8.1.1) (2023-10-05)
 
 
