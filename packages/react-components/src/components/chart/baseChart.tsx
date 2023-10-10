@@ -88,7 +88,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
 
   const viewportInMs = useViewportToMS(utilizedViewport);
 
-  const xAxis = getXAxis(options.axis);
+  const xAxis = getXAxis(viewportInMs, options.axis);
 
   // this will handle all the Trend Cursors operations
   const { onContextMenuClickHandler, trendCursors, hotKeyHandlers } = useTrendCursors({

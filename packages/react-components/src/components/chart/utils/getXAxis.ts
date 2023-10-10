@@ -1,8 +1,8 @@
-import { ChartAxisOptions } from '../types';
+import { ChartAxisOptions, ViewportInMs } from '../types';
 import { DEFAULT_X_AXIS, DEFAULT_X_AXIS_ID } from '../eChartsConstants';
 import { XAXisOption } from 'echarts/types/dist/shared';
 
-export function getXAxis(axis?: ChartAxisOptions): XAXisOption {
+export const getXAxis = (viewportInMs: ViewportInMs, axis?: ChartAxisOptions): XAXisOption => {
   return {
     id: DEFAULT_X_AXIS_ID,
     show: axis?.showX ?? DEFAULT_X_AXIS.show,
@@ -19,6 +19,6 @@ export function getXAxis(axis?: ChartAxisOptions): XAXisOption {
     },
     splitNumber: 6,
     min: 0,
-    max: Date.now(),
+    max: viewportInMs.isDurationViewport ? viewportInMs.end : undefined,
   };
-}
+};
