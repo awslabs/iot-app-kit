@@ -25,8 +25,9 @@ import {
   setFeatureConfig,
   setMetricRecorder,
 } from '../../../..';
-import { Component, LightType } from '../../../../models/SceneModels';
+import { CameraType, Component, LightType } from '../../../../models/SceneModels';
 import { createNodeWithTransform } from '../../../../utils/nodeUtils';
+import { ToolbarOrientation } from '../../common/types';
 /* eslint-enable */
 
 jest.mock('../../../../../src/utils/pathUtils', () => ({
@@ -70,7 +71,7 @@ describe('AddObjectMenu', () => {
       lightSettings: DEFAULT_LIGHT_SETTINGS_MAP[LightType.Directional],
     };
 
-    render(<AddObjectMenu />);
+    render(<AddObjectMenu canvasHeight={null} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-object-light');
     fireEvent.pointerUp(sut);
     expect(appendSceneNode).toBeCalledWith({
@@ -84,7 +85,7 @@ describe('AddObjectMenu', () => {
 
   it('should call appendSceneNode when adding a camera', () => {
     const cameraComponent: ICameraComponent = {
-      cameraType: 'Perspective',
+      cameraType: CameraType.Perspective,
       type: 'Camera',
       fov: DEFAULT_CAMERA_OPTIONS.fov,
       far: DEFAULT_CAMERA_OPTIONS.far,
@@ -107,7 +108,7 @@ describe('AddObjectMenu', () => {
 
     (createNodeWithTransform as jest.Mock).mockReturnValue(node);
 
-    render(<AddObjectMenu />);
+    render(<AddObjectMenu canvasHeight={null} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-object-view-camera');
     fireEvent.pointerUp(sut);
 
@@ -121,7 +122,7 @@ describe('AddObjectMenu', () => {
       type: 'Tag',
     };
 
-    render(<AddObjectMenu />);
+    render(<AddObjectMenu canvasHeight={null} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-object-tag');
     fireEvent.pointerUp(sut);
     expect(appendSceneNode).toBeCalledWith({
@@ -134,7 +135,7 @@ describe('AddObjectMenu', () => {
   });
 
   it('should call appendSceneNode when adding an empty node', () => {
-    render(<AddObjectMenu />);
+    render(<AddObjectMenu canvasHeight={null} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-object-empty');
     fireEvent.pointerUp(sut);
     expect(appendSceneNode).toBeCalledWith({
@@ -153,7 +154,7 @@ describe('AddObjectMenu', () => {
     };
     showAssetBrowserCallback.mockImplementationOnce((callback) => callback(null, 'modelUri'));
 
-    render(<AddObjectMenu />);
+    render(<AddObjectMenu canvasHeight={null} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-object-model');
     fireEvent.pointerUp(sut);
     expect(appendSceneNode).toBeCalledWith({
@@ -173,7 +174,7 @@ describe('AddObjectMenu', () => {
     };
     showAssetBrowserCallback.mockImplementationOnce((callback) => callback(null, 'modelUri'));
 
-    render(<AddObjectMenu />);
+    render(<AddObjectMenu canvasHeight={null} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-environment-model');
     fireEvent.pointerUp(sut);
     expect(appendSceneNode).toBeCalledWith({
@@ -191,7 +192,7 @@ describe('AddObjectMenu', () => {
       type: 'ModelShader',
     };
 
-    render(<AddObjectMenu />);
+    render(<AddObjectMenu canvasHeight={null} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-effect-model-shader');
     fireEvent.pointerUp(sut);
     expect(addComponentInternal).toBeCalledWith(selectedSceneNodeRef, colorOverlayComponent);
@@ -210,7 +211,7 @@ describe('AddObjectMenu', () => {
       },
     };
 
-    render(<AddObjectMenu />);
+    render(<AddObjectMenu canvasHeight={null} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-object-motion-indicator');
     fireEvent.pointerUp(sut);
     expect(appendSceneNode).toBeCalledWith({
@@ -225,7 +226,7 @@ describe('AddObjectMenu', () => {
   it('should not see add overlay item when feature is not enabled', () => {
     setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: false });
 
-    render(<AddObjectMenu />);
+    render(<AddObjectMenu canvasHeight={null} toolbarOrientation={ToolbarOrientation.Vertical} />);
 
     expect(screen.queryByTestId('add-overlay-menu')).toBeNull();
   });
@@ -244,7 +245,7 @@ describe('AddObjectMenu', () => {
       ],
     };
 
-    render(<AddObjectMenu />);
+    render(<AddObjectMenu canvasHeight={null} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-object-annotation');
     fireEvent.pointerUp(sut);
     expect(setAddingWidget).toBeCalledWith({

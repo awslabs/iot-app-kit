@@ -6,15 +6,26 @@ import { ItemContainer } from './ItemContainer';
 import { CornerAdornment, ToolbarItemMenu } from './styledComponents';
 import { ToolbarItemOptions, ToolbarItemOrientation, ToolbarItemType, ToolbarMenuPosition } from './types';
 
+interface MenuItemsContainterProps {
+  maxHeight?: string;
+  children: React.ReactNode;
+}
+
+const MenuItemsContainter = ({ maxHeight, children }: MenuItemsContainterProps) => {
+  return <div style={{ overflowY: 'auto', maxHeight: maxHeight }}>{children}</div>;
+};
+
 interface ToolbarItemProps<T extends ToolbarItemOptions> {
   items: T[];
   type: ToolbarItemType;
   initialSelectedItem?: T;
   onSelect?: (item: T) => void;
   orientation?: ToolbarItemOrientation;
+  isVertical?: boolean;
   menuPosition?: ToolbarMenuPosition;
   // Only used by the first root menu item
   menuHeight?: string;
+  maxMenuContainerHeight?: number | undefined;
 }
 
 export function ToolbarItem<T extends ToolbarItemOptions>({
@@ -25,6 +36,8 @@ export function ToolbarItem<T extends ToolbarItemOptions>({
   type,
   menuPosition = 'right',
   menuHeight,
+  maxMenuContainerHeight,
+  isVertical,
 }: ToolbarItemProps<T>) {
   const [selectedItem, setSelectedItem] = useState(initialSelectedItem ?? items[0]);
   const [showMenu, setShowMenu] = useState<boolean>();
@@ -160,12 +173,15 @@ export function ToolbarItem<T extends ToolbarItemOptions>({
       type={type}
       disableSelectedStyle
       ref={itemContainerRef}
+      isVertical={isVertical}
     >
       {type !== 'button' && menuItemComponents && (
         <Fragment>
           <CornerAdornment>{CornerTriangleSvg}</CornerAdornment>
           <ToolbarItemMenu isOpen={showMenu} orientation={orientation} position={menuPosition}>
-            {menuItemComponents}
+            <MenuItemsContainter maxHeight={maxMenuContainerHeight ? `${maxMenuContainerHeight}px` : undefined}>
+              {menuItemComponents}
+            </MenuItemsContainter>
           </ToolbarItemMenu>
         </Fragment>
       )}

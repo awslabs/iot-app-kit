@@ -1,5 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`HistoryItemGroup should correctly render horizontally 1`] = `
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  border-left: 3px solid colorBorderDividerDefault;
+}
+
+.c0:first-of-type {
+  border-top: 0;
+  border-left: 0;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+    <toolbaritem
+      items="[object Object]"
+      type="button"
+    />
+  </div>
+</div>
+`;
+
 exports[`HistoryItemGroup should render correctly with redo disabled 1`] = `
 .c0 {
   position: relative;
@@ -15,6 +49,7 @@ exports[`HistoryItemGroup should render correctly with redo disabled 1`] = `
 
 .c0:first-of-type {
   border-top: 0;
+  border-left: 0;
 }
 
 <div
@@ -71,6 +106,7 @@ exports[`HistoryItemGroup should render correctly with redo enabled 1`] = `
 
 .c0:first-of-type {
   border-top: 0;
+  border-left: 0;
 }
 
 <div
@@ -127,6 +163,7 @@ exports[`HistoryItemGroup should render correctly with undo disabled 1`] = `
 
 .c0:first-of-type {
   border-top: 0;
+  border-left: 0;
 }
 
 <div
@@ -183,6 +220,7 @@ exports[`HistoryItemGroup should render correctly with undo enabled 1`] = `
 
 .c0:first-of-type {
   border-top: 0;
+  border-left: 0;
 }
 
 <div

@@ -39,8 +39,10 @@ export const Icon = styled(PolarisIcon)<ToolbarItemIconProps>`
   transform: ${({ scale = 1, isMirrored }) => isMirrored && css`scaleX(${-scale});`};
 `;
 
+export const TOOLBAR_ITEM_CONTAINER_HEIGHT = 40;
+
 export const ToolbarItemContainer = styled.div<
-  Pick<ToolbarItemOptions, 'isDisabled' | 'isSelected'> & { height?: string }
+  Pick<ToolbarItemOptions, 'isDisabled' | 'isSelected'> & { height?: string; isVertical?: boolean }
 >`
   flex: none;
   position: relative;
@@ -48,13 +50,13 @@ export const ToolbarItemContainer = styled.div<
   align-items: center;
   justify-content: flex-start;
   min-width: 40px;
-  height: ${({ height }) => height || '40px'};
-  max-height: ${({ height }) => height || '10vh'};
+  height: ${({ height }) => height || `${TOOLBAR_ITEM_CONTAINER_HEIGHT}px`};
   text-decoration: none;
   cursor: ${({ isDisabled, isSelected }) => (isDisabled || isSelected ? 'default' : 'pointer')};
   pointer-events: ${({ isDisabled, isSelected }) => (isDisabled || isSelected ? 'none' : 'initial')};
   background-color: ${({ isSelected }) => (isSelected ? colorBackgroundItemSelected : undefined)};
-  border-top: ${ITEM_DIVIDER_WIDTH}px solid ${colorBorderDividerDefault};
+  border-top: ${({ isVertical }) => (isVertical ? `${ITEM_DIVIDER_WIDTH}px solid ${colorBorderDividerDefault}` : '')};
+  border-left: ${({ isVertical }) => (!isVertical ? `${ITEM_DIVIDER_WIDTH}px solid ${colorBorderDividerDefault}` : '')};
 
   &:hover {
     background-color: ${({ isDisabled, isSelected }) => !isDisabled && !isSelected && colorBackgroundDropdownItemHover};
@@ -62,17 +64,23 @@ export const ToolbarItemContainer = styled.div<
 
   &:first-of-type {
     border-top: 0;
+    border-left: 0;
   }
 `;
 
-export const ToolbarItemGroup = styled.div`
+export const ToolbarItemGroup = styled.div<{
+  isVertical: boolean;
+}>`
   position: relative;
   display: flex;
-  flex-direction: column;
-  border-top: ${GROUP_DIVIDER_WIDTH}px solid ${colorBorderDividerDefault};
+  flex-direction: ${({ isVertical }) => (isVertical ? 'column' : 'row')};
+  border-top: ${({ isVertical }) => (isVertical ? `${GROUP_DIVIDER_WIDTH}px solid ${colorBorderDividerDefault}` : '')};
+  border-left: ${({ isVertical }) =>
+    !isVertical ? `${GROUP_DIVIDER_WIDTH}px solid ${colorBorderDividerDefault}` : ''};
 
   &:first-of-type {
     border-top: 0;
+    border-left: 0;
   }
 `;
 

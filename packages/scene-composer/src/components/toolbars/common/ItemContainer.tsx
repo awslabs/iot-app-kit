@@ -27,6 +27,7 @@ interface ToolbarItemContainerProps {
   orientation?: ToolbarItemOrientation;
   onItemClick?: (item: ToolbarItemOptions) => void;
   disableSelectedStyle?: boolean;
+  isVertical?: boolean;
 }
 
 // Solves forwardRef with props and eslint issue. Explictly setting the props type (twice) silences eslint
@@ -46,6 +47,7 @@ export const ItemContainer = React.forwardRef<HTMLDivElement, ToolbarItemContain
       onItemClick,
       type,
       disableSelectedStyle,
+      isVertical,
     }: ToolbarItemContainerProps,
     ref,
   ) => {
@@ -123,6 +125,7 @@ export const ItemContainer = React.forwardRef<HTMLDivElement, ToolbarItemContain
         ref={ref}
         onKeyDown={keyDown}
         tabIndex={0}
+        isVertical={isVertical !== false}
       >
         {item.icon && (
           <ToolbarItemIcon>
@@ -159,6 +162,7 @@ export const ItemContainer = React.forwardRef<HTMLDivElement, ToolbarItemContain
                   onItemKeyDown={onItemKeyDown}
                   item={subItem}
                   type={type}
+                  isVertical={isVertical}
                 />
               );
             })}

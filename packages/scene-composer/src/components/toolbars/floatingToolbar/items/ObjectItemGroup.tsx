@@ -6,9 +6,10 @@ import { KnownComponentType, TransformControlMode } from '../../../../interfaces
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useEditorState, useSceneDocument } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
-import { ToolbarItemGroup } from '../../common/styledComponents';
-import { ToolbarItemOptions } from '../../common/types';
+import { TOOLBAR_ITEM_CONTAINER_HEIGHT, ToolbarItemGroup } from '../../common/styledComponents';
+import { ToolbarItemOptions, ToolbarOrientation } from '../../common/types';
 import { findComponentByType } from '../../../../utils/nodeUtils';
+import { FLOATING_TOOLBAR_VERTICAL_ORIENTATION_BUFFER } from '../FloatingToolbar';
 
 enum TransformTypes {
   Translate = 'transform-translate',
@@ -28,7 +29,12 @@ const textStrings = defineMessages({
   [TransformTypes.Scale]: { defaultMessage: 'Scale object', description: 'Menu Item' },
 });
 
-export function ObjectItemGroup() {
+interface ObjectItemGroupProps {
+  canvasHeight: number | undefined;
+  toolbarOrientation: ToolbarOrientation;
+}
+
+export function ObjectItemGroup({ toolbarOrientation, canvasHeight }: ObjectItemGroupProps) {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const intl = useIntl();
   const { selectedSceneNodeRef, transformControlMode, setTransformControlMode } = useEditorState(sceneComposerId);
@@ -80,7 +86,7 @@ export function ObjectItemGroup() {
   }, [intl, isTagComponent, isOverlayComponent, transformControlMode]);
 
   return (
-    <ToolbarItemGroup>
+    <ToolbarItemGroup isVertical={toolbarOrientation === ToolbarOrientation.Vertical}>
       <ToolbarItem
         items={[
           {
@@ -96,12 +102,20 @@ export function ObjectItemGroup() {
             removeSceneNode(selectedSceneNodeRef);
           }
         }}
+        isVertical={toolbarOrientation === ToolbarOrientation.Vertical}
       />
       <ToolbarItem
         items={translatedItems}
         type='mode-select'
         initialSelectedItem={initialSelectedItem}
         onSelect={(selectedItem) => setTransformControlMode(selectedItem.mode)}
+        maxMenuContainerHeight={
+          canvasHeight
+            ? canvasHeight - FLOATING_TOOLBAR_VERTICAL_ORIENTATION_BUFFER - TOOLBAR_ITEM_CONTAINER_HEIGHT
+            : undefined
+        }
+        isVertical={toolbarOrientation === ToolbarOrientation.Vertical}
+        menuPosition={toolbarOrientation === ToolbarOrientation.Vertical ? 'right' : 'bottom-right'}
       />
     </ToolbarItemGroup>
   );

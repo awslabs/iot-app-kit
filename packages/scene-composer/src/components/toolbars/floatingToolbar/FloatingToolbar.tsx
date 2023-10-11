@@ -1,12 +1,15 @@
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { colorBackgroundDropdownItemDefault } from '@awsui/design-tokens';
 
 import { ToolbarItemGroup } from '../common/styledComponents';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { useEditorState } from '../../../store';
+import { ToolbarOrientation } from '../common/types';
 
 import { HistoryItemGroup, ObjectItemGroup, SceneItemGroup, CancelMenuItem } from './items';
+
+export const FLOATING_TOOLBAR_VERTICAL_ORIENTATION_BUFFER = 10;
 
 const FloatingToolbarContainer = styled.div`
   position: absolute;
@@ -33,17 +36,51 @@ export function FloatingToolbar({
 }: FloatingToolbarProps) {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const { addingWidget } = useEditorState(sceneComposerId);
+  const [toolbarOrientation, setToolbarOrientation] = useState<ToolbarOrientation>(ToolbarOrientation.Vertical);
+  const [toolbarHeightPx, setToolbarHeightPx] = useState(0);
+  const [canvasHeightPx, setCanvasHeightPx] = useState<number | undefined>(undefined);
+  const canvas = document.getElementById('tm-scene-unselectable-canvas') as HTMLCanvasElement | null;
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (canvas && canvas.clientHeight) setCanvasHeightPx(canvas.clientHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    handleResize();
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [canvas?.clientHeight]);
+
+  useEffect(() => {
+    if (canvasHeightPx) {
+      if (toolbarHeightPx > canvasHeightPx - FLOATING_TOOLBAR_VERTICAL_ORIENTATION_BUFFER) {
+        setToolbarOrientation(ToolbarOrientation.Horizontal);
+      } else {
+        setToolbarOrientation(ToolbarOrientation.Vertical);
+      }
+    }
+  }, [canvasHeightPx, toolbarHeightPx]);
+
+  const measuredRef = useCallback((node: HTMLDivElement | null) => {
+    if (node !== null) {
+      setToolbarHeightPx(node.clientHeight);
+    }
+  }, []);
+
   return (
-    <FloatingToolbarContainer>
+    <FloatingToolbarContainer ref={measuredRef}>
       {!addingWidget && enableDefaultItems && (
-        <ToolbarItemGroup>
-          {!isViewing && <HistoryItemGroup />}
-          <SceneItemGroup isViewing={isViewing} />
-          {!isViewing && <ObjectItemGroup />}
+        <ToolbarItemGroup isVertical={toolbarOrientation === ToolbarOrientation.Vertical}>
+          {!isViewing && <HistoryItemGroup toolbarOrientation={toolbarOrientation} />}
+          <SceneItemGroup isViewing={isViewing} toolbarOrientation={toolbarOrientation} canvasHeight={canvasHeightPx} />
+          {!isViewing && <ObjectItemGroup toolbarOrientation={toolbarOrientation} canvasHeight={canvasHeightPx} />}
         </ToolbarItemGroup>
       )}
       {!!addingWidget && enableDefaultItems && (
-        <ToolbarItemGroup>
+        <ToolbarItemGroup isVertical={toolbarOrientation === ToolbarOrientation.Vertical}>
           <CancelMenuItem />
         </ToolbarItemGroup>
       )}
