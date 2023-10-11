@@ -3,6 +3,7 @@ import { ComponentUpdateRequest, ComponentUpdateType, UpdateEntityCommandInput }
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import {
   ICameraComponent,
+  IColorOverlayComponent,
   IDataOverlayComponent,
   IModelRefComponent,
   IMotionIndicatorComponent,
@@ -17,6 +18,7 @@ import { updateOverlayEntityComponent } from './overlayComponent';
 import { updateModelRefComponent } from './modelRefComponent';
 import { updateCameraEntityComponent } from './cameraComponent';
 import { updateMotionIndicatorEntityComponent } from './motionIndicatorComponent';
+import { updateModelShaderEntityComponent } from './modelShaderComponent';
 
 export const updateEntity = async (
   node: ISceneNodeInternal,
@@ -61,6 +63,10 @@ export const updateEntity = async (
           case KnownComponentType.MotionIndicator:
             comp = updateMotionIndicatorEntityComponent(compToBeUpdated as IMotionIndicatorComponent);
             break;
+          case KnownComponentType.ModelShader:
+            comp = updateModelShaderEntityComponent(compToBeUpdated as IColorOverlayComponent);
+            break;
+
           default:
             throw new Error('Component type not supported');
         }

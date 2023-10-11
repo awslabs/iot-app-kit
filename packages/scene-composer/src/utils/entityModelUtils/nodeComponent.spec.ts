@@ -214,6 +214,10 @@ describe('parseNode', () => {
       },
     ],
   };
+  const modelShaderComp = {
+    componentTypeId: componentTypeToId.ModelShader,
+    properties: [],
+  };
 
   const nodeComp = {
     componentTypeId: NODE_COMPONENT_TYPE_ID,
@@ -279,7 +283,7 @@ describe('parseNode', () => {
 
   it('should parse to expected node component with components', () => {
     const result = parseNode(
-      { ...entity, components: [tagComp, overlayComp, modelRefComp, cameraComp, indicatorComp] },
+      { ...entity, components: [tagComp, overlayComp, modelRefComp, cameraComp, indicatorComp, modelShaderComp] },
       nodeComp,
     );
 
@@ -298,6 +302,9 @@ describe('parseNode', () => {
       }),
       expect.objectContaining({
         type: KnownComponentType.MotionIndicator,
+      }),
+      expect.objectContaining({
+        type: KnownComponentType.ModelShader,
       }),
     ];
     expect(result?.components).toEqual(expectedComponents);
