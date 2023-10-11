@@ -45,20 +45,31 @@ export function ModeledDataStreamTable({
     client,
   });
 
-  const { items, collectionProps, paginationProps, propertyFilterProps, actions } = useCollection(modeledDataStreams, {
-    propertyFiltering: {
-      filteringProperties: MODELED_DATA_STREAM_TABLE_FILTERING_PROPERTIES,
-    },
-    pagination: { pageSize: preferences.pageSize },
-    selection: {},
-    sorting: {},
-  });
+  const modeledDataStreamsWithLatestValues =
+    modeledDataStreams?.map((item) => ({
+      ...item,
+      latestValue: getLatestValue({ assetId: item.assetId, propertyId: item.propertyId } as ModeledDataStream)?.value,
+      latestValueTime: getLatestValue({ assetId: item.assetId, propertyId: item.propertyId } as ModeledDataStream)
+        ?.timestamp,
+    })) ?? [];
+
+  const { items, collectionProps, paginationProps, propertyFilterProps, actions } = useCollection(
+    modeledDataStreamsWithLatestValues,
+    {
+      propertyFiltering: {
+        filteringProperties: MODELED_DATA_STREAM_TABLE_FILTERING_PROPERTIES,
+      },
+      pagination: { pageSize: preferences.pageSize },
+      selection: { keepSelection: true, trackBy: 'name' },
+      sorting: {},
+    }
+  );
 
   return (
     <Table
       {...collectionProps}
       items={items}
-      columnDefinitions={createModeledDataStreamColumnDefinitions(getLatestValue)}
+      columnDefinitions={createModeledDataStreamColumnDefinitions()}
       trackBy={(item) => `${item.assetId}---${item.propertyId}`}
       variant='embedded'
       loading={isLoading}
