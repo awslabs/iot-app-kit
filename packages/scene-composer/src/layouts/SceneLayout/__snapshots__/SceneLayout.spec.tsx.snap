@@ -1331,7 +1331,6 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   justify-content: flex-start;
   min-width: 40px;
   height: 40px;
-  max-height: 10vh;
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
@@ -1345,6 +1344,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
 
 .c8:first-of-type {
   border-top: 0;
+  border-left: 0;
 }
 
 .c13 {
@@ -1366,7 +1366,6 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   justify-content: flex-start;
   min-width: 40px;
   height: 40px;
-  max-height: 10vh;
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: default;
@@ -1377,6 +1376,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
 
 .c13:first-of-type {
   border-top: 0;
+  border-left: 0;
 }
 
 .c7 {
@@ -1393,6 +1393,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
 
 .c7:first-of-type {
   border-top: 0;
+  border-left: 0;
 }
 
 .c9 {
@@ -1588,122 +1589,131 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                   className="c12"
                 >
                   <div
-                    className="c13"
-                    data-testid="camera-controls-orbit"
-                    onClick={[Function]}
-                    onKeyDown={[Function]}
-                    onPointerDown={[Function]}
-                    onPointerEnter={[Function]}
-                    onPointerLeave={[Function]}
-                    onPointerUp={[Function]}
-                    tabIndex={0}
+                    style={
+                      Object {
+                        "maxHeight": undefined,
+                        "overflowY": "auto",
+                      }
+                    }
                   >
                     <div
-                      className="c9"
+                      className="c13"
+                      data-testid="camera-controls-orbit"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                      onPointerDown={[Function]}
+                      onPointerEnter={[Function]}
+                      onPointerLeave={[Function]}
+                      onPointerUp={[Function]}
+                      tabIndex={0}
                     >
-                      <span
-                        aria-label="Orbit"
-                        role="img"
-                        title="Orbit"
+                      <div
+                        className="c9"
                       >
-                        <div
-                          className="c10"
-                          data-mocked="Icon"
-                          scale={1.04}
-                          variant="normal"
+                        <span
+                          aria-label="Orbit"
+                          role="img"
+                          title="Orbit"
                         >
-                          <div>
-                            <span>
-                              <svg
-                                height={16}
-                                width={16}
-                              >
-                                <g
-                                  fill="none"
+                          <div
+                            className="c10"
+                            data-mocked="Icon"
+                            scale={1.04}
+                            variant="normal"
+                          >
+                            <div>
+                              <span>
+                                <svg
+                                  height={16}
+                                  width={16}
+                                >
+                                  <g
+                                    fill="none"
+                                  >
+                                    <path
+                                      d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                      stroke="currentColor"
+                                    />
+                                    <path
+                                      d="m9.23 8.61 1.21-2.18 1.28 2.14z"
+                                      fill="currentColor"
+                                    />
+                                    <path
+                                      d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                      stroke="currentColor"
+                                    />
+                                    <path
+                                      d="m7.46 9.29 2.17 1.22-2.14 1.27z"
+                                      fill="currentColor"
+                                    />
+                                  </g>
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
+                        </span>
+                      </div>
+                      <div
+                        className="c14"
+                        color="inherit"
+                        data-mocked="Box"
+                        leftPadding={0}
+                        variant="small"
+                      >
+                        3D Orbit
+                      </div>
+                    </div>
+                    <div
+                      className="c8"
+                      data-testid="camera-controls-pan"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                      onPointerDown={[Function]}
+                      onPointerEnter={[Function]}
+                      onPointerLeave={[Function]}
+                      onPointerUp={[Function]}
+                      tabIndex={0}
+                    >
+                      <div
+                        className="c9"
+                      >
+                        <span
+                          aria-label="Pan"
+                          role="img"
+                          title="Pan"
+                        >
+                          <div
+                            className="c10"
+                            data-mocked="Icon"
+                            scale={1.04}
+                            variant="normal"
+                          >
+                            <div>
+                              <span>
+                                <svg
+                                  height={14}
+                                  width={14}
                                 >
                                   <path
-                                    d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                    d="M9.15 1.5a1 1 0 0 1 2 0m-4 0a1 1 0 1 1 2 0m2 2a1 1 0 0 1 2 0v5.9a4.1 4.1 0 0 1-4.1 4.1h-2A4.1 4.1 0 0 1 3.92 12l-2.8-3.34a1.21 1.21 0 0 1 .39-1.84 1.2 1.2 0 0 1 1.19.06l1.42.91h1V2.5a1 1 0 1 1 2 0m4.02 4.28.01-5.28m-2 5.28V1.5m-2 5.28V1.5"
+                                    fill="none"
                                     stroke="currentColor"
                                   />
-                                  <path
-                                    d="m9.23 8.61 1.21-2.18 1.28 2.14z"
-                                    fill="currentColor"
-                                  />
-                                  <path
-                                    d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
-                                    stroke="currentColor"
-                                  />
-                                  <path
-                                    d="m7.46 9.29 2.17 1.22-2.14 1.27z"
-                                    fill="currentColor"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
+                                </svg>
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c14"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      3D Orbit
-                    </div>
-                  </div>
-                  <div
-                    className="c8"
-                    data-testid="camera-controls-pan"
-                    onClick={[Function]}
-                    onKeyDown={[Function]}
-                    onPointerDown={[Function]}
-                    onPointerEnter={[Function]}
-                    onPointerLeave={[Function]}
-                    onPointerUp={[Function]}
-                    tabIndex={0}
-                  >
-                    <div
-                      className="c9"
-                    >
-                      <span
-                        aria-label="Pan"
-                        role="img"
-                        title="Pan"
+                        </span>
+                      </div>
+                      <div
+                        className="c14"
+                        color="inherit"
+                        data-mocked="Box"
+                        leftPadding={0}
+                        variant="small"
                       >
-                        <div
-                          className="c10"
-                          data-mocked="Icon"
-                          scale={1.04}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                height={14}
-                                width={14}
-                              >
-                                <path
-                                  d="M9.15 1.5a1 1 0 0 1 2 0m-4 0a1 1 0 1 1 2 0m2 2a1 1 0 0 1 2 0v5.9a4.1 4.1 0 0 1-4.1 4.1h-2A4.1 4.1 0 0 1 3.92 12l-2.8-3.34a1.21 1.21 0 0 1 .39-1.84 1.2 1.2 0 0 1 1.19.06l1.42.91h1V2.5a1 1 0 1 1 2 0m4.02 4.28.01-5.28m-2 5.28V1.5m-2 5.28V1.5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c14"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      3D Pan
+                        3D Pan
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1871,7 +1881,6 @@ exports[`SceneLayout should render correctly in Viewing mode with message modal 
   justify-content: flex-start;
   min-width: 40px;
   height: 40px;
-  max-height: 10vh;
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
@@ -1885,6 +1894,7 @@ exports[`SceneLayout should render correctly in Viewing mode with message modal 
 
 .c10:first-of-type {
   border-top: 0;
+  border-left: 0;
 }
 
 .c15 {
@@ -1906,7 +1916,6 @@ exports[`SceneLayout should render correctly in Viewing mode with message modal 
   justify-content: flex-start;
   min-width: 40px;
   height: 40px;
-  max-height: 10vh;
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: default;
@@ -1917,6 +1926,7 @@ exports[`SceneLayout should render correctly in Viewing mode with message modal 
 
 .c15:first-of-type {
   border-top: 0;
+  border-left: 0;
 }
 
 .c9 {
@@ -1933,6 +1943,7 @@ exports[`SceneLayout should render correctly in Viewing mode with message modal 
 
 .c9:first-of-type {
   border-top: 0;
+  border-left: 0;
 }
 
 .c11 {
@@ -2168,122 +2179,131 @@ exports[`SceneLayout should render correctly in Viewing mode with message modal 
                   className="c14"
                 >
                   <div
-                    className="c15"
-                    data-testid="camera-controls-orbit"
-                    onClick={[Function]}
-                    onKeyDown={[Function]}
-                    onPointerDown={[Function]}
-                    onPointerEnter={[Function]}
-                    onPointerLeave={[Function]}
-                    onPointerUp={[Function]}
-                    tabIndex={0}
+                    style={
+                      Object {
+                        "maxHeight": undefined,
+                        "overflowY": "auto",
+                      }
+                    }
                   >
                     <div
-                      className="c11"
+                      className="c15"
+                      data-testid="camera-controls-orbit"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                      onPointerDown={[Function]}
+                      onPointerEnter={[Function]}
+                      onPointerLeave={[Function]}
+                      onPointerUp={[Function]}
+                      tabIndex={0}
                     >
-                      <span
-                        aria-label="Orbit"
-                        role="img"
-                        title="Orbit"
+                      <div
+                        className="c11"
                       >
-                        <div
-                          className="c12"
-                          data-mocked="Icon"
-                          scale={1.04}
-                          variant="normal"
+                        <span
+                          aria-label="Orbit"
+                          role="img"
+                          title="Orbit"
                         >
-                          <div>
-                            <span>
-                              <svg
-                                height={16}
-                                width={16}
-                              >
-                                <g
-                                  fill="none"
+                          <div
+                            className="c12"
+                            data-mocked="Icon"
+                            scale={1.04}
+                            variant="normal"
+                          >
+                            <div>
+                              <span>
+                                <svg
+                                  height={16}
+                                  width={16}
+                                >
+                                  <g
+                                    fill="none"
+                                  >
+                                    <path
+                                      d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                      stroke="currentColor"
+                                    />
+                                    <path
+                                      d="m9.23 8.61 1.21-2.18 1.28 2.14z"
+                                      fill="currentColor"
+                                    />
+                                    <path
+                                      d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                      stroke="currentColor"
+                                    />
+                                    <path
+                                      d="m7.46 9.29 2.17 1.22-2.14 1.27z"
+                                      fill="currentColor"
+                                    />
+                                  </g>
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
+                        </span>
+                      </div>
+                      <div
+                        className="c16"
+                        color="inherit"
+                        data-mocked="Box"
+                        leftPadding={0}
+                        variant="small"
+                      >
+                        3D Orbit
+                      </div>
+                    </div>
+                    <div
+                      className="c10"
+                      data-testid="camera-controls-pan"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                      onPointerDown={[Function]}
+                      onPointerEnter={[Function]}
+                      onPointerLeave={[Function]}
+                      onPointerUp={[Function]}
+                      tabIndex={0}
+                    >
+                      <div
+                        className="c11"
+                      >
+                        <span
+                          aria-label="Pan"
+                          role="img"
+                          title="Pan"
+                        >
+                          <div
+                            className="c12"
+                            data-mocked="Icon"
+                            scale={1.04}
+                            variant="normal"
+                          >
+                            <div>
+                              <span>
+                                <svg
+                                  height={14}
+                                  width={14}
                                 >
                                   <path
-                                    d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                    d="M9.15 1.5a1 1 0 0 1 2 0m-4 0a1 1 0 1 1 2 0m2 2a1 1 0 0 1 2 0v5.9a4.1 4.1 0 0 1-4.1 4.1h-2A4.1 4.1 0 0 1 3.92 12l-2.8-3.34a1.21 1.21 0 0 1 .39-1.84 1.2 1.2 0 0 1 1.19.06l1.42.91h1V2.5a1 1 0 1 1 2 0m4.02 4.28.01-5.28m-2 5.28V1.5m-2 5.28V1.5"
+                                    fill="none"
                                     stroke="currentColor"
                                   />
-                                  <path
-                                    d="m9.23 8.61 1.21-2.18 1.28 2.14z"
-                                    fill="currentColor"
-                                  />
-                                  <path
-                                    d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
-                                    stroke="currentColor"
-                                  />
-                                  <path
-                                    d="m7.46 9.29 2.17 1.22-2.14 1.27z"
-                                    fill="currentColor"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
+                                </svg>
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c16"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      3D Orbit
-                    </div>
-                  </div>
-                  <div
-                    className="c10"
-                    data-testid="camera-controls-pan"
-                    onClick={[Function]}
-                    onKeyDown={[Function]}
-                    onPointerDown={[Function]}
-                    onPointerEnter={[Function]}
-                    onPointerLeave={[Function]}
-                    onPointerUp={[Function]}
-                    tabIndex={0}
-                  >
-                    <div
-                      className="c11"
-                    >
-                      <span
-                        aria-label="Pan"
-                        role="img"
-                        title="Pan"
+                        </span>
+                      </div>
+                      <div
+                        className="c16"
+                        color="inherit"
+                        data-mocked="Box"
+                        leftPadding={0}
+                        variant="small"
                       >
-                        <div
-                          className="c12"
-                          data-mocked="Icon"
-                          scale={1.04}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                height={14}
-                                width={14}
-                              >
-                                <path
-                                  d="M9.15 1.5a1 1 0 0 1 2 0m-4 0a1 1 0 1 1 2 0m2 2a1 1 0 0 1 2 0v5.9a4.1 4.1 0 0 1-4.1 4.1h-2A4.1 4.1 0 0 1 3.92 12l-2.8-3.34a1.21 1.21 0 0 1 .39-1.84 1.2 1.2 0 0 1 1.19.06l1.42.91h1V2.5a1 1 0 1 1 2 0m4.02 4.28.01-5.28m-2 5.28V1.5m-2 5.28V1.5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c16"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      3D Pan
+                        3D Pan
+                      </div>
                     </div>
                   </div>
                 </div>

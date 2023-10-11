@@ -7,8 +7,13 @@ import { UndoStoreState } from '../../../../store/middlewares';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemGroup } from '../../common/styledComponents';
 import useDynamicScene from '../../../../hooks/useDynamicScene';
+import { ToolbarOrientation } from '../../common/types';
 
-export function HistoryItemGroup() {
+interface HistoryItemGroupProps {
+  toolbarOrientation: ToolbarOrientation;
+}
+
+export function HistoryItemGroup({ toolbarOrientation }: HistoryItemGroupProps) {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const [redo, undo] = useStore(sceneComposerId)((state) => [state.redo, state.undo]);
   const undoStore = useStore(sceneComposerId)((state) => state.undoStore);
@@ -25,7 +30,7 @@ export function HistoryItemGroup() {
   }, [undoStore]);
 
   return (
-    <ToolbarItemGroup>
+    <ToolbarItemGroup isVertical={toolbarOrientation === ToolbarOrientation.Vertical}>
       <ToolbarItem
         items={[
           {

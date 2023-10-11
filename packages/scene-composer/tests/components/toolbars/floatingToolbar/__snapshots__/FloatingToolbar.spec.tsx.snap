@@ -1,5 +1,125 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`FloatingToolbar should display the toolbar horiontally if the canvas is small 1`] = `
+.c1 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  border-left: 3px solid colorBorderDividerDefault;
+}
+
+.c1:first-of-type {
+  border-top: 0;
+  border-left: 0;
+}
+
+.c0 {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 999;
+  background-color: colorBackgroundDropdownItemDefault;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <historyitemgroup
+        toolbarorientation="horizontal"
+      />
+      <sceneitemgroup
+        canvasheight="1"
+        toolbarorientation="horizontal"
+      />
+      <objectitemgroup
+        canvasheight="1"
+        toolbarorientation="horizontal"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FloatingToolbar should display the toolbar vertically if the canvas is big 1`] = `
+.c1 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-top: 3px solid colorBorderDividerDefault;
+}
+
+.c1:first-of-type {
+  border-top: 0;
+  border-left: 0;
+}
+
+.c0 {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 999;
+  background-color: colorBackgroundDropdownItemDefault;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <historyitemgroup
+        toolbarorientation="vertical"
+      />
+      <sceneitemgroup
+        canvasheight="1000"
+        toolbarorientation="vertical"
+      />
+      <objectitemgroup
+        canvasheight="1000"
+        toolbarorientation="vertical"
+      />
+    </div>
+  </div>
+</div>
+`;
+
 exports[`FloatingToolbar should render correctly 1`] = `
 .c1 {
   position: relative;
@@ -15,6 +135,7 @@ exports[`FloatingToolbar should render correctly 1`] = `
 
 .c1:first-of-type {
   border-top: 0;
+  border-left: 0;
 }
 
 .c0 {
@@ -42,13 +163,20 @@ exports[`FloatingToolbar should render correctly 1`] = `
   <div
     className="c1"
   >
-    <HistoryItemGroup />
+    <HistoryItemGroup
+      toolbarOrientation="vertical"
+    />
     <SceneItemGroup
       isViewing={false}
+      toolbarOrientation="vertical"
     />
-    <ObjectItemGroup />
+    <ObjectItemGroup
+      toolbarOrientation="vertical"
+    />
   </div>
-  <AddObjectMenu />
+  <AddObjectMenu
+    toolbarOrientation="vertical"
+  />
 </div>
 `;
 
@@ -67,6 +195,7 @@ exports[`FloatingToolbar should render correctly in view mode 1`] = `
 
 .c1:first-of-type {
   border-top: 0;
+  border-left: 0;
 }
 
 .c0 {
@@ -96,9 +225,12 @@ exports[`FloatingToolbar should render correctly in view mode 1`] = `
   >
     <SceneItemGroup
       isViewing={true}
+      toolbarOrientation="vertical"
     />
   </div>
-  <AddObjectMenu />
+  <AddObjectMenu
+    toolbarOrientation="vertical"
+  />
 </div>
 `;
 
@@ -117,6 +249,7 @@ exports[`FloatingToolbar should render correctly when addingWidget 1`] = `
 
 .c1:first-of-type {
   border-top: 0;
+  border-left: 0;
 }
 
 .c0 {

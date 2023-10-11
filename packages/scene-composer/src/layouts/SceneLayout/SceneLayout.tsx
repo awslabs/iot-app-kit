@@ -85,7 +85,7 @@ const R3FWrapper = (props: { matterportConfig?: MatterportConfig; children?: Rea
       </ContextBridge>
     </MatterportViewer>
   ) : (
-    <UnselectableCanvas shadows dpr={window.devicePixelRatio}>
+    <UnselectableCanvas shadows dpr={window.devicePixelRatio} id='tm-scene-unselectable-canvas'>
       <ContextBridge>
         <Suspense fallback={null}>{children}</Suspense>
       </ContextBridge>

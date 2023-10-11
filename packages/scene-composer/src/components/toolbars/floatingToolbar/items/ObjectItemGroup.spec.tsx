@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import { useStore } from '../../../../store';
+import { ToolbarOrientation } from '../../common/types';
 
 import { ObjectItemGroup } from '.';
 
@@ -23,7 +24,7 @@ describe('ObjectItemGroup', () => {
   });
 
   it('should call removeSceneNode when clicking delete with a selected node', () => {
-    render(<ObjectItemGroup />);
+    render(<ObjectItemGroup canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('delete');
     fireEvent.pointerUp(sut);
     expect(removeSceneNode).toBeCalledWith(selectedSceneNodeRef);
@@ -33,14 +34,14 @@ describe('ObjectItemGroup', () => {
     useStore('default').setState({
       selectedSceneNodeRef: undefined,
     });
-    render(<ObjectItemGroup />);
+    render(<ObjectItemGroup canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('delete');
     fireEvent.pointerUp(sut);
     expect(removeSceneNode).not.toBeCalled();
   });
 
   it('should call setTransformControlMode when clicking rotate', () => {
-    render(<ObjectItemGroup />);
+    render(<ObjectItemGroup canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('transform-rotate');
     fireEvent.pointerUp(sut);
     expect(setTransformControlMode).toBeCalledWith('rotate');

@@ -7,9 +7,10 @@ import { getGlobalSettings } from '../../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useStore } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
-import { ToolbarItemGroup } from '../../common/styledComponents';
-import { ToolbarItemOptions } from '../../common/types';
+import { TOOLBAR_ITEM_CONTAINER_HEIGHT, ToolbarItemGroup } from '../../common/styledComponents';
+import { ToolbarItemOptions, ToolbarOrientation } from '../../common/types';
 import useMatterportViewer from '../../../../hooks/useMatterportViewer';
+import { FLOATING_TOOLBAR_VERTICAL_ORIENTATION_BUFFER } from '../FloatingToolbar';
 
 import { AddObjectMenu } from './AddObjectMenu';
 
@@ -76,9 +77,15 @@ const cameraControlItems = (
 
 export interface SceneItemGroupProps {
   isViewing?: boolean;
+  toolbarOrientation: ToolbarOrientation;
+  canvasHeight: number | undefined;
 }
 
-export function SceneItemGroup({ isViewing = false }: SceneItemGroupProps): JSX.Element {
+export function SceneItemGroup({
+  isViewing = false,
+  toolbarOrientation,
+  canvasHeight,
+}: SceneItemGroupProps): JSX.Element {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const cameraControlsType = useStore(sceneComposerId)((state) => state.cameraControlsType);
   const setCameraControlsType = useStore(sceneComposerId)((state) => state.setCameraControlsType);
@@ -100,14 +107,21 @@ export function SceneItemGroup({ isViewing = false }: SceneItemGroupProps): JSX.
   }, [cameraControlsType, firstPersonOn]);
 
   return (
-    <ToolbarItemGroup>
-      {!isViewing && <AddObjectMenu />}
+    <ToolbarItemGroup isVertical={toolbarOrientation === ToolbarOrientation.Vertical}>
+      {!isViewing && <AddObjectMenu canvasHeight={canvasHeight} toolbarOrientation={toolbarOrientation} />}
       {!enableMatterportViewer && (
         <ToolbarItem
           items={items}
           initialSelectedItem={initialSelectedItem}
           type='mode-select'
           onSelect={(selectedItem) => setCameraControlsType(selectedItem.mode)}
+          isVertical={toolbarOrientation === ToolbarOrientation.Vertical}
+          menuPosition={toolbarOrientation === ToolbarOrientation.Vertical ? 'right' : 'bottom-left'}
+          maxMenuContainerHeight={
+            canvasHeight
+              ? canvasHeight - FLOATING_TOOLBAR_VERTICAL_ORIENTATION_BUFFER - TOOLBAR_ITEM_CONTAINER_HEIGHT
+              : undefined
+          }
         />
       )}
     </ToolbarItemGroup>

@@ -28,4 +28,9 @@ export type ToolbarItemType = 'button' | 'action-select' | 'mode-select';
 
 export type ToolbarItemOrientation = 'horizontal' | 'vertical';
 
+export enum ToolbarOrientation {
+  Horizontal = 'horizontal',
+  Vertical = 'vertical',
+}
+
 export type ToolbarMenuPosition = 'right' | 'bottom-left' | 'bottom-right';

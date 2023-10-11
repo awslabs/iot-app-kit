@@ -1,5 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ObjectItemGroupSnap should correctly render horizontally 1`] = `
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  border-left: 3px solid colorBorderDividerDefault;
+}
+
+.c0:first-of-type {
+  border-top: 0;
+  border-left: 0;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <div
+      data-testid="ToolbarItem"
+    >
+      [{"items":[{"label":"Delete","icon":{"svg":"DeleteSvg"},"uuid":"delete","isDisabled":false}],"type":"button","isVertical":false},{}]
+    </div>
+    <div
+      data-testid="ToolbarItem"
+    >
+      [{"items":[{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},{"icon":{"scale":1.06,"svg":"RotateIconSvg"},"uuid":"transform-rotate","mode":"rotate","isDisabled":true,"isSelected":false,"label":"Rotate","text":"Rotate object"},{"icon":{"scale":1.06,"svg":"ScaleIconSvg"},"uuid":"transform-scale","mode":"scale","isDisabled":true,"isSelected":false,"label":"Scale","text":"Scale object"}],"type":"mode-select","initialSelectedItem":{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},"isVertical":false,"menuPosition":"bottom-right"},{}]
+    </div>
+  </div>
+</div>
+`;
+
 exports[`ObjectItemGroupSnap should render with disabled rotate and scale when Overlay is selected 1`] = `
 .c0 {
   position: relative;
@@ -15,6 +51,7 @@ exports[`ObjectItemGroupSnap should render with disabled rotate and scale when O
 
 .c0:first-of-type {
   border-top: 0;
+  border-left: 0;
 }
 
 <div>
@@ -24,12 +61,12 @@ exports[`ObjectItemGroupSnap should render with disabled rotate and scale when O
     <div
       data-testid="ToolbarItem"
     >
-      [{"items":[{"label":"Delete","icon":{"svg":"DeleteSvg"},"uuid":"delete","isDisabled":false}],"type":"button"},{}]
+      [{"items":[{"label":"Delete","icon":{"svg":"DeleteSvg"},"uuid":"delete","isDisabled":false}],"type":"button","isVertical":true},{}]
     </div>
     <div
       data-testid="ToolbarItem"
     >
-      [{"items":[{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},{"icon":{"scale":1.06,"svg":"RotateIconSvg"},"uuid":"transform-rotate","mode":"rotate","isDisabled":true,"isSelected":false,"label":"Rotate","text":"Rotate object"},{"icon":{"scale":1.06,"svg":"ScaleIconSvg"},"uuid":"transform-scale","mode":"scale","isDisabled":true,"isSelected":false,"label":"Scale","text":"Scale object"}],"type":"mode-select","initialSelectedItem":{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"}},{}]
+      [{"items":[{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},{"icon":{"scale":1.06,"svg":"RotateIconSvg"},"uuid":"transform-rotate","mode":"rotate","isDisabled":true,"isSelected":false,"label":"Rotate","text":"Rotate object"},{"icon":{"scale":1.06,"svg":"ScaleIconSvg"},"uuid":"transform-scale","mode":"scale","isDisabled":true,"isSelected":false,"label":"Scale","text":"Scale object"}],"type":"mode-select","initialSelectedItem":{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},"isVertical":true,"menuPosition":"right"},{}]
     </div>
   </div>
 </div>
@@ -50,6 +87,7 @@ exports[`ObjectItemGroupSnap should render with disabled rotate and scale when T
 
 .c0:first-of-type {
   border-top: 0;
+  border-left: 0;
 }
 
 <div>
@@ -59,12 +97,12 @@ exports[`ObjectItemGroupSnap should render with disabled rotate and scale when T
     <div
       data-testid="ToolbarItem"
     >
-      [{"items":[{"label":"Delete","icon":{"svg":"DeleteSvg"},"uuid":"delete","isDisabled":false}],"type":"button"},{}]
+      [{"items":[{"label":"Delete","icon":{"svg":"DeleteSvg"},"uuid":"delete","isDisabled":false}],"type":"button","isVertical":true},{}]
     </div>
     <div
       data-testid="ToolbarItem"
     >
-      [{"items":[{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},{"icon":{"scale":1.06,"svg":"RotateIconSvg"},"uuid":"transform-rotate","mode":"rotate","isDisabled":true,"isSelected":false,"label":"Rotate","text":"Rotate object"},{"icon":{"scale":1.06,"svg":"ScaleIconSvg"},"uuid":"transform-scale","mode":"scale","isDisabled":true,"isSelected":false,"label":"Scale","text":"Scale object"}],"type":"mode-select","initialSelectedItem":{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"}},{}]
+      [{"items":[{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},{"icon":{"scale":1.06,"svg":"RotateIconSvg"},"uuid":"transform-rotate","mode":"rotate","isDisabled":true,"isSelected":false,"label":"Rotate","text":"Rotate object"},{"icon":{"scale":1.06,"svg":"ScaleIconSvg"},"uuid":"transform-scale","mode":"scale","isDisabled":true,"isSelected":false,"label":"Scale","text":"Scale object"}],"type":"mode-select","initialSelectedItem":{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},"isVertical":true,"menuPosition":"right"},{}]
     </div>
   </div>
 </div>

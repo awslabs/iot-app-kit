@@ -70,7 +70,7 @@ describe('ComponentEditMenu', () => {
       fireEvent.pointerUp(addBindingButton);
     });
 
-    expect(getByTestId('edit-component').childNodes[2].childNodes.length).toEqual(2);
+    expect(getByTestId('edit-component').childNodes[2].childNodes[0].childNodes.length).toEqual(2);
     expect(updateComponentInternal).toBeCalledTimes(1);
     expect(updateComponentInternal).toBeCalledWith(nodeRef, {
       ...component,
@@ -94,7 +94,7 @@ describe('ComponentEditMenu', () => {
       fireEvent.pointerUp(removeOverlayButton);
     });
 
-    expect(getByTestId('edit-component').childNodes[2].childNodes.length).toEqual(2);
+    expect(getByTestId('edit-component').childNodes[2].childNodes[0].childNodes.length).toEqual(2);
     expect(removeComponent).toBeCalledTimes(1);
     expect(removeComponent).toBeCalledWith(nodeRef, component.ref);
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);

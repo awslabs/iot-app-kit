@@ -21,11 +21,13 @@ import { Component, LightType, ModelType } from '../../../../models/SceneModels'
 import { IColorOverlayComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../../store';
 import { extractFileNameExtFromUrl, parseS3BucketFromArn } from '../../../../utils/pathUtils';
 import { ToolbarItem } from '../../common/ToolbarItem';
-import { ToolbarItemOptionRaw, ToolbarItemOptions } from '../../common/types';
+import { ToolbarItemOptionRaw, ToolbarItemOptions, ToolbarOrientation } from '../../common/types';
 import { getGlobalSettings } from '../../../../common/GlobalSettings';
 import useActiveCamera from '../../../../hooks/useActiveCamera';
 import useMatterportViewer from '../../../../hooks/useMatterportViewer';
 import { createNodeWithTransform, findComponentByType, isEnvironmentNode } from '../../../../utils/nodeUtils';
+import { FLOATING_TOOLBAR_VERTICAL_ORIENTATION_BUFFER } from '../FloatingToolbar';
+import { TOOLBAR_ITEM_CONTAINER_HEIGHT } from '../../common/styledComponents';
 
 // Note: ObjectType String is used to record metric. DO NOT change existing ids unless it's necessary.
 enum ObjectTypes {
@@ -70,7 +72,12 @@ const textStrings = defineMessages({
   [ObjectTypes.Annotation]: { defaultMessage: 'Add annotation', description: 'Menu Item' },
 });
 
-export const AddObjectMenu = (): JSX.Element => {
+interface AddObjectMenuProps {
+  canvasHeight: number | undefined;
+  toolbarOrientation: ToolbarOrientation;
+}
+
+export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMenuProps): JSX.Element => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const addComponentInternal = useStore(sceneComposerId)((state) => state.addComponentInternal);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
@@ -389,6 +396,13 @@ export const AddObjectMenu = (): JSX.Element => {
 
         getGlobalSettings().metricRecorder?.recordClick(uuid);
       }}
+      maxMenuContainerHeight={
+        canvasHeight
+          ? canvasHeight - FLOATING_TOOLBAR_VERTICAL_ORIENTATION_BUFFER - TOOLBAR_ITEM_CONTAINER_HEIGHT
+          : undefined
+      }
+      isVertical={toolbarOrientation === ToolbarOrientation.Vertical}
+      menuPosition={toolbarOrientation === ToolbarOrientation.Vertical ? 'right' : 'bottom-left'}
     />
   );
 };

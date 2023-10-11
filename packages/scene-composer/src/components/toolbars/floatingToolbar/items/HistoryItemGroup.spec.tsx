@@ -1,9 +1,11 @@
 import React from 'react';
 import { create, act } from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 import useDynamicScene from '../../../../hooks/useDynamicScene';
 import { createUndoStore } from '../../../../store/middlewares';
 import { useStore } from '../../../../store';
+import { ToolbarOrientation } from '../../common/types';
 
 import { HistoryItemGroup } from './HistoryItemGroup';
 
@@ -25,7 +27,7 @@ describe('HistoryItemGroup', () => {
     undoStore.setState({ prevStates: [{}] });
     let container;
     act(() => {
-      container = create(<HistoryItemGroup />);
+      container = create(<HistoryItemGroup toolbarOrientation={ToolbarOrientation.Vertical} />);
     });
     expect(container).toMatchSnapshot();
   });
@@ -38,7 +40,7 @@ describe('HistoryItemGroup', () => {
     undoStore.setState({ prevStates: [{}] });
     let container;
     act(() => {
-      container = create(<HistoryItemGroup />);
+      container = create(<HistoryItemGroup toolbarOrientation={ToolbarOrientation.Vertical} />);
     });
     expect(container).toMatchSnapshot();
   });
@@ -50,7 +52,7 @@ describe('HistoryItemGroup', () => {
     undoStore.setState({ futureStates: [{}] });
     let container;
     act(() => {
-      container = create(<HistoryItemGroup />);
+      container = create(<HistoryItemGroup toolbarOrientation={ToolbarOrientation.Vertical} />);
     });
     expect(container).toMatchSnapshot();
   });
@@ -63,8 +65,18 @@ describe('HistoryItemGroup', () => {
     undoStore.setState({ futureStates: [{}] });
     let container;
     act(() => {
-      container = create(<HistoryItemGroup />);
+      container = create(<HistoryItemGroup toolbarOrientation={ToolbarOrientation.Vertical} />);
     });
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should correctly render horizontally', async () => {
+    let container: HTMLElement | undefined;
+    await act(async () => {
+      const rendered = render(<HistoryItemGroup toolbarOrientation={ToolbarOrientation.Horizontal} />);
+      container = rendered.container;
+    });
+
     expect(container).toMatchSnapshot();
   });
 });
