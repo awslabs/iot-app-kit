@@ -1,3 +1,4 @@
+import React from 'react';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import Box from '@cloudscape-design/components/box';
@@ -8,7 +9,6 @@ import Pagination from '@cloudscape-design/components/pagination';
 import PropertyFilter from '@cloudscape-design/components/property-filter';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Table from '@cloudscape-design/components/table';
-import React from 'react';
 
 import type { UnmodeledDataStream } from '../types';
 import { useExplorerPreferences } from '../../useExplorerPreferences';
@@ -42,8 +42,15 @@ export function UnmodeledDataStreamTable({
     client,
   });
 
+  const unmodeledDataStreamsWithLatestValues =
+    unmodeledDataStreams?.map((item) => ({
+      ...item,
+      latestValue: getLatestValue(item)?.value,
+      latestValueTime: getLatestValue(item)?.timestamp,
+    })) ?? [];
+
   const { items, collectionProps, paginationProps, propertyFilterProps, actions } = useCollection(
-    unmodeledDataStreams,
+    unmodeledDataStreamsWithLatestValues,
     {
       propertyFiltering: {
         filteringProperties: [
@@ -74,7 +81,7 @@ export function UnmodeledDataStreamTable({
         ],
       },
       pagination: { pageSize: preferences.pageSize },
-      selection: {},
+      selection: { keepSelection: true, trackBy: 'propertyAlias' },
       sorting: {},
     }
   );
@@ -122,13 +129,13 @@ export function UnmodeledDataStreamTable({
         {
           id: 'latestValue',
           header: 'Latest value',
-          cell: (unmodeledDataStream) => getLatestValue(unmodeledDataStream)?.value,
+          cell: ({ latestValue }) => latestValue,
           sortingField: 'latestValue',
         },
         {
           id: 'latestValueTime',
           header: 'Latest value time',
-          cell: (unmodeledDataStream) => getLatestValue(unmodeledDataStream)?.timestamp,
+          cell: ({ latestValueTime }) => latestValueTime,
           sortingField: 'latestValueTime',
         },
         {
