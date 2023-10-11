@@ -4,7 +4,7 @@
  * carefully consider what should be part of the public API. Attempt to minimize the overall API surface area.
  */
 
-export { VideoPlayer } from './components/video-player';
+export { RequestVideoUpload, VideoPlayer } from './components/video-player';
 export { ResourceExplorer } from './components';
 export { Table } from './components/table';
 export { LineChart } from './components/line-chart';

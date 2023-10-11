@@ -11,6 +11,7 @@ import { createCameraEntityComponent } from './cameraComponent';
 import { createMotionIndicatorEntityComponent } from './motionIndicatorComponent';
 import { createModelRefComponent } from './modelRefComponent';
 import { createNodeEntity } from './createNodeEntity';
+import { createModelShaderEntityComponent } from './modelShaderComponent';
 
 jest.mock('./nodeComponent', () => ({
   createNodeEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.node' }),
@@ -29,6 +30,9 @@ jest.mock('./motionIndicatorComponent', () => ({
 }));
 jest.mock('./modelRefComponent', () => ({
   createModelRefComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.modelRef' }),
+}));
+jest.mock('./modelShaderComponent', () => ({
+  createModelShaderEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.modelShader' }),
 }));
 
 describe('createNodeEntity', () => {
@@ -66,7 +70,8 @@ describe('createNodeEntity', () => {
     const camera = { type: KnownComponentType.Camera, ref: 'camera-ref' };
     const motionIndicator = { type: KnownComponentType.MotionIndicator, ref: 'indicator-ref' };
     const modelRef = { type: KnownComponentType.ModelRef, ref: 'modelref-ref' };
-    const node = { ...defaultNode, components: [tag, overlay, camera, motionIndicator, modelRef] };
+    const modelShader = { type: KnownComponentType.ModelShader, ref: 'modelShader-ref' };
+    const node = { ...defaultNode, components: [tag, overlay, camera, motionIndicator, modelRef, modelShader] };
 
     await createNodeEntity(node, 'parent', 'layer');
 
@@ -83,6 +88,7 @@ describe('createNodeEntity', () => {
         Camera: { componentTypeId: '3d.camera' },
         MotionIndicator: { componentTypeId: '3d.motionIndicator' },
         ModelRef: { componentTypeId: '3d.modelRef' },
+        ModelShader: { componentTypeId: '3d.modelShader' },
       },
     });
 
@@ -98,5 +104,7 @@ describe('createNodeEntity', () => {
     expect(createMotionIndicatorEntityComponent).toHaveBeenCalledWith(motionIndicator);
     expect(createModelRefComponent).toHaveBeenCalledTimes(1);
     expect(createModelRefComponent).toHaveBeenCalledWith(modelRef);
+    expect(createModelShaderEntityComponent).toHaveBeenCalledTimes(1);
+    expect(createModelShaderEntityComponent).toHaveBeenCalledWith(modelShader);
   });
 });

@@ -7,6 +7,7 @@ import {
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import {
   ICameraComponent,
+  IColorOverlayComponent,
   IDataOverlayComponent,
   IModelRefComponent,
   IMotionIndicatorComponent,
@@ -20,6 +21,7 @@ import { createOverlayEntityComponent } from './overlayComponent';
 import { createMotionIndicatorEntityComponent } from './motionIndicatorComponent';
 import { createCameraEntityComponent } from './cameraComponent';
 import { createModelRefComponent } from './modelRefComponent';
+import { createModelShaderEntityComponent } from './modelShaderComponent';
 
 export const createNodeEntity = (
   node: ISceneNodeInternal,
@@ -58,6 +60,9 @@ export const createNodeEntity = (
           break;
         case KnownComponentType.ModelRef:
           comp = createModelRefComponent(compToBeCreated as IModelRefComponent);
+          break;
+        case KnownComponentType.ModelShader:
+          comp = createModelShaderEntityComponent(compToBeCreated as IColorOverlayComponent);
           break;
 
         default:

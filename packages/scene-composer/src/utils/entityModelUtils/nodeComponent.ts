@@ -17,6 +17,7 @@ import { parseOverlayComp } from './overlayComponent';
 import { parseModelRefComp } from './modelRefComponent';
 import { parseCameraComp } from './cameraComponent';
 import { parseMotionIndicatorComp } from './motionIndicatorComponent';
+import { parseModelShaderComp } from './modelShaderComponent';
 
 enum NodeComponentProperty {
   Name = 'name',
@@ -165,6 +166,14 @@ const parseNodeComponents = (components: DocumentType): ISceneComponentInternal[
         }
         break;
       }
+      case componentTypeToId.ModelShader: {
+        const modelShader = parseModelShaderComp(comp);
+        if (modelShader) {
+          results.push(modelShader);
+        }
+        break;
+      }
+
       case NODE_COMPONENT_TYPE_ID:
         // Ignore node component
         break;

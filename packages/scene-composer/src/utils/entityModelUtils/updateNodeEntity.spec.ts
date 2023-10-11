@@ -12,6 +12,7 @@ import { updateOverlayEntityComponent } from './overlayComponent';
 import { updateCameraEntityComponent } from './cameraComponent';
 import { updateMotionIndicatorEntityComponent } from './motionIndicatorComponent';
 import { updateModelRefComponent } from './modelRefComponent';
+import { updateModelShaderEntityComponent } from './modelShaderComponent';
 
 jest.mock('./nodeComponent', () => ({
   updateNodeEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.node' }),
@@ -30,6 +31,9 @@ jest.mock('./motionIndicatorComponent', () => ({
 }));
 jest.mock('./modelRefComponent', () => ({
   updateModelRefComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.modelRef' }),
+}));
+jest.mock('./modelShaderComponent', () => ({
+  updateModelShaderEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.modelShader' }),
 }));
 
 describe('updateEntity', () => {
@@ -68,8 +72,9 @@ describe('updateEntity', () => {
     const camera = { type: KnownComponentType.Camera, ref: 'camera-ref' };
     const motionIndicator = { type: KnownComponentType.MotionIndicator, ref: 'indicator-ref' };
     const modelRef = { type: KnownComponentType.ModelRef, ref: 'modelref-ref' };
+    const modelShader = { type: KnownComponentType.ModelShader, ref: 'modelshader-ref' };
 
-    await updateEntity(defaultNode, [tag, overlay, camera, motionIndicator, modelRef], 'UPDATE');
+    await updateEntity(defaultNode, [tag, overlay, camera, motionIndicator, modelRef, modelShader], 'UPDATE');
 
     expect(updateSceneEntity).toHaveBeenCalledTimes(1);
     expect(updateSceneEntity).toHaveBeenCalledWith({
@@ -83,6 +88,7 @@ describe('updateEntity', () => {
         Camera: { componentTypeId: '3d.camera' },
         MotionIndicator: { componentTypeId: '3d.motionIndicator' },
         ModelRef: { componentTypeId: '3d.modelRef' },
+        ModelShader: { componentTypeId: '3d.modelShader' },
       },
     });
 
@@ -98,6 +104,8 @@ describe('updateEntity', () => {
     expect(updateMotionIndicatorEntityComponent).toHaveBeenCalledWith(motionIndicator);
     expect(updateModelRefComponent).toHaveBeenCalledTimes(1);
     expect(updateModelRefComponent).toHaveBeenCalledWith(modelRef);
+    expect(updateModelShaderEntityComponent).toHaveBeenCalledTimes(1);
+    expect(updateModelShaderEntityComponent).toHaveBeenCalledWith(modelShader);
   });
 
   it('should call update entity to update tag component', async () => {
