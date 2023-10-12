@@ -5,7 +5,7 @@ const GESTURE_ATTRIBUTE = 'data-gesture';
 const ANCHOR_ATTRIBUTE = 'data-anchor';
 const ID_ATTRIBUTE = 'data-id';
 
-type GestureAttribute = 'grid' | 'resize' | 'selection' | 'widget' | 'moveable';
+type GestureAttribute = 'grid' | 'resize' | 'selection' | 'widget';
 
 export const idable = (id: string) => ({
   [ID_ATTRIBUTE]: id,
