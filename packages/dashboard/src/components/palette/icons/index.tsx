@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type DragEventHandler } from 'react';
 import Box from '@cloudscape-design/components/box';
 import {
   colorBackgroundHomeHeader,
@@ -27,13 +27,18 @@ const PaletteComponentIcon: React.FC<PaletteComponentIconProps> = ({ Icon, widge
     boxShadow: `${spaceScaledXxxs} ${spaceScaledXxxs} ${spaceScaledXxxs} ${colorBorderButtonNormalDisabled}`,
   };
 
+  // Without this, Firefox widget drag and drop does not work correctly.
+  const ignoreDragStart: DragEventHandler = (event) => event.preventDefault();
+
   return (
-    <Box padding='xxs' className='palette-component-icon ripple'>
-      <Icon />
-      <span className='tooltiptext' style={tooltipStyle}>
-        {widgetName}
-      </span>
-    </Box>
+    <span onDragStart={ignoreDragStart}>
+      <Box padding='xxs' className='palette-component-icon ripple'>
+        <Icon />
+        <span className='tooltiptext' style={tooltipStyle}>
+          {widgetName}
+        </span>
+      </Box>
+    </span>
   );
 };
 
