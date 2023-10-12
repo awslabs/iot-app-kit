@@ -103,6 +103,10 @@
     "note": "Error message",
     "text": "Error - unable to render the scene"
   },
+  "2A8qfi": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Fog Settings"
+  },
   "2F5/qR": {
     "note": "ExpandableInfoSection Title",
     "text": "Scene Settings"
@@ -259,6 +263,10 @@
     "note": "label",
     "text": "Select speed"
   },
+  "9yVMfn": {
+    "note": "Form Field label",
+    "text": "Far Distance"
+  },
   "A/Q8OL": {
     "note": "Status indicator label",
     "text": "Camera view saved"
@@ -318,6 +326,10 @@
   "Bzw++H": {
     "note": "label for the remove animation button",
     "text": "remove"
+  },
+  "C11Rim": {
+    "note": "Form Field label",
+    "text": "Near Distance"
   },
   "C9z9wU": {
     "note": "Abbreviation for green",
@@ -498,6 +510,10 @@
   "NXP1Hm": {
     "note": "Form field errorText",
     "text": "FOV cannot be less than 10"
+  },
+  "NZvDHt": {
+    "note": "checkbox label",
+    "text": "Enable Fog"
   },
   "Nj6Ob1": {
     "note": "Select Color type option",

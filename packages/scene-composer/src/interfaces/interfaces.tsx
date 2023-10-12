@@ -73,6 +73,7 @@ export enum KnownSceneProperty {
   LayerIds = 'layerIds',
   SceneRootEntityId = 'sceneRootEntityId',
   TagCustomColors = 'tagCustomColors',
+  FogSettings = 'fogSettings',
 }
 
 /************************************************
@@ -140,4 +141,10 @@ export interface MeshStyle {
 export interface StyleTarget {
   dataBindingContext: unknown;
   style: MeshStyle;
+}
+
+export interface IFogSettings {
+  colorHex: number;
+  near: number;
+  far: number;
 }
