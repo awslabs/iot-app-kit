@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { v4 as uuid } from 'uuid';
 import { isEqual } from 'lodash';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { v4 as uuid } from 'uuid';
 
-import { COMPOSER_FEATURES, ISelectedDataBinding, KnownComponentType, SceneViewerProps } from './interfaces';
 import { SceneComposerInternal, useSceneComposerApi } from './components/SceneComposerInternal';
+import { COMPOSER_FEATURES, ISelectedDataBinding, KnownComponentType, SceneViewerProps } from './interfaces';
 
 const SceneComposerContainer = styled.div`
   position: absolute;
@@ -80,6 +80,7 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
             [COMPOSER_FEATURES.Overlay]: true,
             [COMPOSER_FEATURES.TagResize]: true,
             [COMPOSER_FEATURES.Matterport]: true,
+            [COMPOSER_FEATURES.TagStyle]: true,
           },
         }}
         onSceneLoaded={onSceneLoaded}

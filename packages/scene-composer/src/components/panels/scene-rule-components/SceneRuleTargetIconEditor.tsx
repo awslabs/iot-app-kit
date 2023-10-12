@@ -50,8 +50,7 @@ export const SceneRuleTargetIconEditor: React.FC<ISceneRuleTargetIconEditorProps
     [DefaultAnchorStatus.Video]: { defaultMessage: 'Video icon', description: 'Icon name label' },
     [DefaultAnchorStatus.Custom]: { defaultMessage: 'Custom icon', description: 'Icon name label' },
   });
-  const iconInfo = (customIcon ?? { prefix: 'fas', iconName: 'info' }) as IconLookup;
-
+  const iconInfo = (customIcon ?? { prefix: '', iconName: '' }) as IconLookup;
   return (
     <Grid gridDefinition={[{ colspan: 9 }, { colspan: 2 }]}>
       <Select
