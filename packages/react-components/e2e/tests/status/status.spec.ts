@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const TEST_PAGE = 'http://localhost:6007/?path=/story/widgets-status-status-base--main';
+const TEST_PAGE = '/?path=/story/widgets-status-status-base--main';
 const TEST_IFRAME = '#storybook-preview-iframe';
 const COMPONENT_SELECTOR = '.status-widget';
 
