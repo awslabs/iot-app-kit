@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, SyntheticEvent, useState } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Box from '@cloudscape-design/components/box';
@@ -21,7 +21,6 @@ import { DashboardState } from '~/store/state';
 
 import './tile.css';
 import { onChangeDashboardGridEnabledAction } from '~/store/actions';
-import { gestureable } from '~/components/internalDashboard/gestures/determineTargetGestures';
 
 type DeletableTileActionProps = {
   handleDelete: CancelableEventHandler<ClickDetail>;
@@ -58,14 +57,6 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
 
   const isRemoveable = !isReadOnly && removeable;
   const headerVisible = !isReadOnly || title;
-
-  const disableGridMovement = (_event: SyntheticEvent) => {
-    dispatch(onChangeDashboardGridEnabledAction({ enabled: false }));
-  };
-
-  const enableGridMovement = (_event: SyntheticEvent) => {
-    dispatch(onChangeDashboardGridEnabledAction({ enabled: true }));
-  };
 
   const handleDelete: CancelableEventHandler<ClickDetail> = (e) => {
     e.preventDefault();
@@ -104,7 +95,6 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
             padding: `${spaceScaledXs} ${spaceScaledXs} ${spaceScaledXxs} ${spaceScaledM}`,
             borderBottom: `2px solid ${colorBorderDividerDefault}`,
           }}
-          {...gestureable('moveable')}
         >
           <Box variant='h1' fontSize='body-m'>
             {title}
@@ -134,9 +124,7 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
           </SpaceBetween>
         </div>
       )}
-      <div className='widget-tile-body' onPointerEnter={disableGridMovement} onPointerLeave={enableGridMovement}>
-        {children}
-      </div>
+      <div className='widget-tile-body'>{children}</div>
     </div>
   );
 };

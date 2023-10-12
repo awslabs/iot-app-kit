@@ -4,30 +4,43 @@ import { Menu, MenuOption, PositionableMenu } from '../../menu';
 import Icon from '@cloudscape-design/components/icon';
 import { ColorIcon } from './colorIcon';
 import { Value } from '../../shared-components';
-import { DataPoint, DataStream, Primitive } from '@iot-app-kit/core';
+import { Primitive } from '@iot-app-kit/core';
 
 import { MULTI_Y_AXIS_LEGEND_WIDTH } from '../eChartsConstants';
 import { isNumeric, round } from '../../../utils/number';
 import { useChartStore } from '../store';
 
+import {
+  borderRadiusDropdown,
+  colorBackgroundDropdownItemHover,
+  colorBorderControlDefault,
+  spaceScaledS,
+  spaceScaledXs,
+  spaceScaledXxxs,
+} from '@cloudscape-design/design-tokens';
+
 import './yAxisMenu.css';
+import { isDataStreamInList } from '../../../utils/isDataStreamInList';
+import { YAxisLegendOption } from '../types';
+import { Box } from '@cloudscape-design/components';
 
 const getValue = (value: Primitive, significantDigits: number) =>
   isNumeric(value) ? `${round(value, significantDigits)}` : value.toString();
 
 const MENU_OFFSET = 5;
-
-type YAxis = { datastream: DataStream; color: string; significantDigits: number; value: DataPoint };
+const MENU_FONT_SIZE = 14;
 
 type YAxisLegendOptions = {
   maxHeight: number;
   label: string;
-  axes: YAxis[];
+  axes: YAxisLegendOption[];
   menuPosition?: 'bottom' | 'top';
 };
 export const YAxisLegend = ({ maxHeight, label, axes, menuPosition }: YAxisLegendOptions) => {
   const highlightDataStream = useChartStore((state) => state.highlightDataStream);
   const unHighlightDataStream = useChartStore((state) => state.unHighlightDataStream);
+  const highlightedDataStreams = useChartStore((state) => state.highlightedDataStreams);
+  const isDataStreamHighlighted = isDataStreamInList(highlightedDataStreams);
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuSizeRef, { height }] = useMeasure<HTMLDivElement>();
 
@@ -46,8 +59,12 @@ export const YAxisLegend = ({ maxHeight, label, axes, menuPosition }: YAxisLegen
       referenceElement={(ref) => (
         <div ref={ref}>
           <div ref={menuSizeRef}>
-            <Menu>
+            <Menu styles={{ fontSize: MENU_FONT_SIZE, backgroundColor: colorBackgroundDropdownItemHover }}>
               <MenuOption
+                styles={{
+                  boxShadow: `0 0 0 ${spaceScaledXxxs} ${colorBorderControlDefault}`,
+                  borderRadius: borderRadiusDropdown,
+                }}
                 iconStart={() => (
                   <Icon
                     name={
@@ -59,9 +76,10 @@ export const YAxisLegend = ({ maxHeight, label, axes, menuPosition }: YAxisLegen
                     }
                   />
                 )}
-                label={label}
                 action={() => setMenuOpen(!menuOpen)}
-              />
+              >
+                <Box fontWeight='bold'>{label}</Box>
+              </MenuOption>
             </Menu>
           </div>
         </div>
@@ -70,6 +88,9 @@ export const YAxisLegend = ({ maxHeight, label, axes, menuPosition }: YAxisLegen
       {axes.map(({ datastream, color, value, significantDigits }) => (
         <MenuOption
           classNames='axis-menu-option'
+          styles={{
+            padding: `${spaceScaledXs} ${spaceScaledS}`,
+          }}
           key={datastream.id}
           iconStart={() => <ColorIcon color={color} />}
           onPointerEnter={() => {
@@ -78,9 +99,20 @@ export const YAxisLegend = ({ maxHeight, label, axes, menuPosition }: YAxisLegen
           onPointerLeave={() => {
             unHighlightDataStream(datastream);
           }}
+          iconEnd={() => <span className='axis-menu-option-value'>{datastream.unit}</span>}
+          highlighted={isDataStreamHighlighted(datastream)}
         >
-          <div title={getValue(value.y, significantDigits)} className='axis-menu-option-value'>
-            <Value value={value.y} precision={significantDigits} />
+          <div
+            title={value ? getValue(value.y, significantDigits) : 'No visible data points'}
+            className='axis-menu-option-value'
+          >
+            {value ? (
+              <Value value={value.y} precision={significantDigits} />
+            ) : (
+              <Box color='text-status-inactive' fontSize='body-s' variant='p'>
+                No data
+              </Box>
+            )}
           </div>
         </MenuOption>
       ))}

@@ -3,7 +3,7 @@
     adding hardcoded shadow because cloudscape does not
     have drop shadow tokens
   */
-  box-shadow: rgb(0 7 22 / 10%) 0 4px 20px 1px;
+  box-shadow: 0 4px 20px 0 rgb(0 7 22 / 12%);
 }
 
 .menu-placement {

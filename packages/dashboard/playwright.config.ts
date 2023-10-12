@@ -54,5 +54,6 @@ export default defineConfig({
     command: 'npm run start',
     reuseExistingServer: true,
     port: 6006,
+    timeout: 300 * 1000, // 5 minutes
   },
 });

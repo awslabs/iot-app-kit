@@ -16,7 +16,7 @@ import { padYAxis, validateValue } from './padYAxis';
 
 const yAxisLegendGenerator =
   (options: Pick<YAxisLegendOption, 'datastream' | 'color' | 'significantDigits'>) =>
-  (value: DataPoint): YAxisLegendOption => ({ ...options, value });
+  (value?: DataPoint): YAxisLegendOption => ({ ...options, value });
 
 export const dataValue = (point: DataPoint) => point.y;
 
@@ -133,8 +133,8 @@ export const convertSeriesAndYAxis = (styles: ChartStyleSettingsWithDefaults) =>
   return {
     series,
     yAxis,
-    yMin: yMin && toYAxisLegend(yMin),
-    yMax: yMax && toYAxisLegend(yMax),
+    yMin: toYAxisLegend(yMin),
+    yMax: toYAxisLegend(yMax),
   };
 };
 
@@ -175,11 +175,11 @@ export const reduceSeriesAndYAxis = (
     yAxis: yAxis ? [...acc.yAxis, yAxis] : [...acc.yAxis],
     yMins:
       yAxis && yMin
-        ? [...acc.yMins, { ...yMin, value: { x: 0, y: (yAxis.min as number) ?? yMin.value.y } }]
+        ? [...acc.yMins, { ...yMin, value: yAxis.min ? { x: 0, y: yAxis.min as number } : yMin.value }]
         : [...acc.yMins],
     yMaxs:
       yAxis && yMax
-        ? [...acc.yMaxs, { ...yMax, value: { x: 0, y: (yAxis.max as number) ?? yMax.value.y } }]
+        ? [...acc.yMaxs, { ...yMax, value: yAxis.max ? { x: 0, y: yAxis.max as number } : yMax.value }]
         : [...acc.yMaxs],
   };
 };

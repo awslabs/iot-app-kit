@@ -1,14 +1,13 @@
 import { Locator, Page } from '@playwright/test';
 
 import { DragPosition, dragAndDrop } from './dragAndDrop';
-import { topCenter } from './mousePosition';
+import { center } from './mousePosition';
 import { BoundingBox, getBoundingBox } from './locator';
 
 export const GRID_SIZE = 10;
 
 const WidgetSelector = '[data-gesture=widget]';
 const SelectionSelector = '[data-gesture=selection]';
-const MoveableSelector = '[data-gesture=moveable]';
 const GridSelector = '#container';
 
 const WidgetSelectorMap = {
@@ -76,11 +75,11 @@ export const gridUtil = (page: Page) => {
       await page.mouse.up({ button: 'left' });
     },
     /**
-     * @param widgetLocator - click the top center of the locator
+     * @param widgetLocator - click the center of the locator
      */
     clickWidget: async (widgetLocator: Locator) => {
       const bounds = await getBoundingBox(widgetLocator);
-      await page.mouse.move(...topCenter(bounds));
+      await page.mouse.move(...center(bounds));
       await page.mouse.down({ button: 'left' });
       await page.mouse.up({ button: 'left' });
     },
@@ -109,7 +108,7 @@ export const gridUtil = (page: Page) => {
      * @param targetPosition - the position offset of the selection to move to
      */
     moveSelection: async (targetPosition: DragPosition) => {
-      const selectionLocator = page.locator(MoveableSelector);
+      const selectionLocator = page.locator(SelectionSelector);
       await dragGenerator(selectionLocator).dragTo(gridArea, {
         targetPosition,
       });

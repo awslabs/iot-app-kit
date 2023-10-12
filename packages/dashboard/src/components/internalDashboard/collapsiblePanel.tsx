@@ -11,6 +11,7 @@ import Box, { BoxProps } from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import { IconProps } from '@cloudscape-design/components/icon';
 import { DEFAULT_COLLAPSED_SIDE_PANE_WIDTH } from '../resizablePanes/constants';
+import Tooltip from '../tooltip/tooltip';
 
 type CollapsiblePanelProps = {
   isPanelCollapsed: boolean;
@@ -63,20 +64,21 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
   );
 
   const collapsedPanel = (
-    <div
-      style={{
-        backgroundColor: colorBackgroundButtonPrimaryDefault,
-        margin: spaceContainerHorizontal,
-      }}
-      className='side_panels_collapsed_style'
+    <Tooltip
+      content={borderSide === 'Left' ? 'Configuration' : 'Resource explorer'}
+      position={borderSide === 'Left' ? 'left' : 'right'}
     >
-      <img
-        src={props.icon}
-        alt={props.icon}
+      <div
+        style={{
+          backgroundColor: colorBackgroundButtonPrimaryDefault,
+          margin: spaceContainerHorizontal,
+        }}
+        className='side_panels_collapsed_style'
         onClick={props.onCollapsedPanelClick}
-        data-testid={`collapsed-${props.side}-panel-icon`}
-      />
-    </div>
+      >
+        <img src={props.icon} alt={props.icon} data-testid={`collapsed-${props.side}-panel-icon`} />
+      </div>
+    </Tooltip>
   );
 
   return (

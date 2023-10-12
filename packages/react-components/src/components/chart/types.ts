@@ -175,4 +175,4 @@ export interface ondragUpdateTrendCursorElementsProps {
   timeInMs: number;
 }
 
-export type YAxisLegendOption = { datastream: DataStream; value: DataPoint; color: string; significantDigits: number };
+export type YAxisLegendOption = { datastream: DataStream; value?: DataPoint; color: string; significantDigits: number };
