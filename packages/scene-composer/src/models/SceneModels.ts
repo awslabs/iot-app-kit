@@ -4,6 +4,8 @@
  */
 import { IValueDataBinding } from '@iot-app-kit/source-iottwinmaker';
 
+import { TargetMetadata } from '../interfaces';
+
 export type KeyValuePair = { [key: string]: unknown };
 export type UUID = string;
 export type Vector3 = [number, number, number];
@@ -37,6 +39,7 @@ export interface GeoLocation {
 export interface RuleStatement {
   expression: string;
   target: string;
+  targetMetadata?: TargetMetadata;
 }
 
 export interface RuleBasedMap {
