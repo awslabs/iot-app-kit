@@ -146,6 +146,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
         axis='x'
         minConstraints={minConstraints}
         maxConstraints={maxConstraints}
+        handle={<span className='react-resizable-handle react-resizable-handle-se' data-gesture='resize' />}
         onResizeStart={(e) => e.stopPropagation()}
         onResizeStop={(e) => e.stopPropagation()}
       >
