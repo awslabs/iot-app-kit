@@ -53,7 +53,9 @@ export default defineConfig({
   webServer: {
     command: 'npm run start',
     reuseExistingServer: true,
-    port: 6006,
+    url: 'http://localhost:6006',
     timeout: 300 * 1000, // 5 minutes
+    stdout: 'pipe',
+    stderr: 'pipe',
   },
 });
