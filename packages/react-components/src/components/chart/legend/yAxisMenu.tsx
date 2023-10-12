@@ -7,7 +7,7 @@ import { Value } from '../../shared-components';
 import { Primitive } from '@iot-app-kit/core';
 
 import { MULTI_Y_AXIS_LEGEND_WIDTH } from '../eChartsConstants';
-import { isNumeric, round } from '../../../utils/number';
+import { isNumeric, round } from '@iot-app-kit/core-util';
 import { useChartStore } from '../store';
 
 import {

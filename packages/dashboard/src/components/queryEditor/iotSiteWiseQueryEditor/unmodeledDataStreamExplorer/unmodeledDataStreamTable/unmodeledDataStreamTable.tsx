@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import Box from '@cloudscape-design/components/box';
@@ -9,11 +10,13 @@ import Pagination from '@cloudscape-design/components/pagination';
 import PropertyFilter from '@cloudscape-design/components/property-filter';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Table from '@cloudscape-design/components/table';
+import { round } from '@iot-app-kit/core-util';
 
 import type { UnmodeledDataStream } from '../types';
 import { useExplorerPreferences } from '../../useExplorerPreferences';
 import { SUPPORTED_PAGE_SIZES } from '../../constants';
 import { useLatestValues } from '../../useLatestValues';
+import { DashboardState } from '~/store/state';
 
 export interface UnmodeledDataStreamTableProps {
   onClickAdd: (unmodeledDataStreams: UnmodeledDataStream[]) => void;
@@ -30,6 +33,7 @@ export function UnmodeledDataStreamTable({
   client,
   hasNextPage,
 }: UnmodeledDataStreamTableProps) {
+  const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
   const [preferences, setPreferences] = useExplorerPreferences({
     defaultVisibleContent: ['propertyAlias', 'latestValue'],
     resourceName: 'unmodeled data stream',
@@ -129,13 +133,23 @@ export function UnmodeledDataStreamTable({
         {
           id: 'latestValue',
           header: 'Latest value',
-          cell: ({ latestValue }) => latestValue,
+          cell: ({ latestValue }) => {
+            if (typeof latestValue === 'number' && !Number.isInteger(latestValue)) {
+              return round(latestValue, significantDigits);
+            }
+            return latestValue;
+          },
           sortingField: 'latestValue',
         },
         {
           id: 'latestValueTime',
           header: 'Latest value time',
-          cell: ({ latestValueTime }) => latestValueTime,
+          cell: ({ latestValueTime }) => {
+            if (typeof latestValueTime === 'number' && !Number.isInteger(latestValueTime)) {
+              return round(latestValueTime, significantDigits);
+            }
+            return latestValueTime;
+          },
           sortingField: 'latestValueTime',
         },
         {
