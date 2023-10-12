@@ -23,12 +23,12 @@
       "outputMode": "new-only"
     },
     "test:ui": {
-      "dependsOn": ["build"],
+      "dependsOn": ["start"],
       "env": ["CI"],
       "outputMode": "new-only"
     },
     "start": {
-      "dependsOn": [],
+      "dependsOn": ["build"],
       "env": ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_SESSION_TOKEN", "REGION", "AWS_REGION", "ASSET_ID_1", "PROPERTY_ID_1", "PROPERTY_ID_2", "PROPERTY_ID_3"]
     },
     "version": {
