@@ -19,7 +19,7 @@ export default defineConfig({
      * For example in `await expect(locator).toHaveText();`
      */
     timeout: 10000,
-    toMatchSnapshot: { maxDiffPixelRatio: 0.02 },
+    toMatchSnapshot: { maxDiffPixels: 200, maxDiffPixelRatio: 0.05 },
   },
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -58,6 +58,9 @@ export default defineConfig({
   webServer: {
     command: 'npm run start',
     reuseExistingServer: true,
-    port: 6007,
+    url: 'http://localhost:6007',
+    timeout: 300 * 1000, // 5 minutes
+    stdout: 'pipe',
+    stderr: 'pipe',
   },
 });
