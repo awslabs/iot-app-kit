@@ -23,11 +23,11 @@ import { createCameraEntityComponent } from './cameraComponent';
 import { createModelRefComponent } from './modelRefComponent';
 import { createModelShaderEntityComponent } from './modelShaderComponent';
 
-export const createNodeEntity = (
+export const createNodeEntity = async (
   node: ISceneNodeInternal,
   parentRef: string,
   layerId: string,
-): Promise<CreateEntityCommandOutput> | undefined => {
+): Promise<CreateEntityCommandOutput | undefined> => {
   const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
 
   const nodecomp = createNodeEntityComponent(node, layerId);

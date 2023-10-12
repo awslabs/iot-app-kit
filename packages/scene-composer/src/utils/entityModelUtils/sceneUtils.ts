@@ -13,6 +13,7 @@ import { generateUUID } from '../mathUtils';
 import { ISceneDocumentInternal, ISceneNodeInternal } from '../../store';
 import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
 import { getFinalNodeTransform } from '../nodeUtils';
+import { KnownSceneProperty } from '../../interfaces';
 
 import { createNodeEntity } from './createNodeEntity';
 
@@ -75,6 +76,13 @@ export const isDynamicNode = (node?: ISceneNodeInternal): boolean => {
   return !isEmpty(node?.properties.layerIds);
 };
 
+export const isDynamicScene = (document?: ISceneDocumentInternal): boolean => {
+  return (
+    !isEmpty(document?.properties?.[KnownSceneProperty.LayerIds]) &&
+    !isEmpty(document?.properties?.[KnownSceneProperty.SceneRootEntityId])
+  );
+};
+
 export const staticNodeCount = (nodeMap: { [key: string]: ISceneNodeInternal }): number => {
   return Object.values(nodeMap).filter((node) => !isDynamicNode(node)).length;
 };
@@ -113,7 +121,7 @@ export const convertAllNodesToEntities = ({
       };
 
       createNodeEntity(worldTransformNode, sceneRootEntityId, layerId)
-        ?.then(() => {
+        .then(() => {
           onSuccess?.(worldTransformNode);
         })
         .catch((error) => {

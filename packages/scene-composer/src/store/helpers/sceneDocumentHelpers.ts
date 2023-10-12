@@ -1,4 +1,5 @@
 import ILogger from '../../logger/ILogger';
+import { RootState } from '../Store';
 import { ISceneDocumentInternal, ISceneNodeInternal } from '../internalInterfaces';
 
 import { addNodeToComponentNodeMap, deleteNodeFromComponentNodeMap } from './componentMapHelpers';
@@ -122,4 +123,28 @@ export const renderSceneNodesFromLayers = (
       removeNode(document, ref, logger);
     }
   });
+};
+
+export const appendSceneNode = (draft: RootState, node: ISceneNodeInternal, disableAutoSelect?: boolean): void => {
+  if (!draft.document) {
+    return;
+  }
+  draft.document.nodeMap[node.ref] = node;
+
+  // Update the parent node of the inserted node
+  if (!node.parentRef) {
+    draft.document!.rootNodeRefs.push(node.ref);
+  } else {
+    draft.document!.nodeMap[node.parentRef]!.childRefs.push(node.ref);
+  }
+
+  // Update componentNodeMap
+  addNodeToComponentNodeMap(draft.document.componentNodeMap, node);
+
+  // Update the selected node
+  if (!disableAutoSelect) {
+    draft.selectedSceneNodeRef = node.ref;
+  }
+
+  draft.lastOperation = 'appendSceneNodeInternal';
 };

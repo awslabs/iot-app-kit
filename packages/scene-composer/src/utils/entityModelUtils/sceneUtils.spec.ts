@@ -12,6 +12,7 @@ import {
 import { ISceneDocumentInternal, ISceneNodeInternal, SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
 import { defaultNode } from '../../../__mocks__/sceneNode';
 import { getFinalNodeTransform } from '../nodeUtils';
+import { KnownSceneProperty } from '../../interfaces';
 
 import {
   checkIfEntityAvailable,
@@ -19,6 +20,7 @@ import {
   createSceneEntityId,
   createSceneRootEntity,
   isDynamicNode,
+  isDynamicScene,
   prepareWorkspace,
   staticNodeCount,
 } from './sceneUtils';
@@ -181,6 +183,41 @@ describe('isDynamicNode', () => {
       } as ISceneNodeInternal),
     ).toEqual(false);
     expect(isDynamicNode({ properties: {} } as ISceneNodeInternal)).toEqual(false);
+  });
+});
+
+describe('isDynamicScene', () => {
+  it('should return true', () => {
+    expect(
+      isDynamicScene({
+        properties: {
+          [KnownSceneProperty.LayerIds]: ['layer'],
+          [KnownSceneProperty.SceneRootEntityId]: 'scene-root',
+        },
+      } as ISceneDocumentInternal),
+    ).toEqual(true);
+  });
+
+  it('should return false', () => {
+    expect(
+      isDynamicScene({
+        properties: {
+          [KnownSceneProperty.LayerIds]: ['layer'],
+        },
+      } as ISceneDocumentInternal),
+    ).toEqual(false);
+    expect(
+      isDynamicScene({
+        properties: {
+          [KnownSceneProperty.SceneRootEntityId]: 'scene-root',
+        },
+      } as ISceneDocumentInternal),
+    ).toEqual(false);
+    expect(
+      isDynamicScene({
+        properties: {},
+      } as ISceneDocumentInternal),
+    ).toEqual(false);
   });
 });
 
