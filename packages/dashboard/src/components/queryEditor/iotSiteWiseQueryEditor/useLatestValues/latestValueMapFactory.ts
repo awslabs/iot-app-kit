@@ -33,8 +33,7 @@ export class LatestValueMapFactory {
         ...acc,
         [entry.entryId ?? '']: {
           value: Object.values(entry.assetPropertyValue?.value ?? {})[0],
-          // timestamp is cast to shed TimeInNano type
-          timestamp: entry.assetPropertyValue?.timestamp as unknown as number,
+          timestamp: entry.assetPropertyValue?.timestamp?.timeInSeconds,
         },
       }),
       {}
