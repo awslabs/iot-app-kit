@@ -18,7 +18,7 @@ import { MatterportIntegration, SceneDataBindingTemplateEditor, SceneTagSettings
 import { ComponentVisibilityToggle } from './scene-settings/ComponentVisibilityToggle';
 import { OverlayPanelVisibilityToggle } from './scene-settings/OverlayPanelVisibilityToggle';
 import { ConvertSceneSettings } from './scene-settings/ConvertSceneSettings';
-
+import { FogSettingsEditor } from './scene-settings/FogSettingsEditor';
 export interface SettingsPanelProps {
   valueDataBindingProvider?: IValueDataBindingProvider;
 }
@@ -35,6 +35,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
   const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
   const matterportEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Matterport];
   const overlayEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Overlay];
+  const sceneAppearanceEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SceneAppearance];
   const dynamicSceneEnabled = useDynamicScene();
 
   const selectedEnvPreset = useStore(sceneComposerId)((state) =>
@@ -178,6 +179,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
                 expandToViewport
               />
             </FormField>
+            {sceneAppearanceEnabled && <FogSettingsEditor />}
           </SpaceBetween>
         </ExpandableInfoSection>
       )}

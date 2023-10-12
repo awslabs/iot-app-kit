@@ -19,6 +19,7 @@ export enum COMPOSER_FEATURES {
   Animations = 'Animations',
   DynamicScene = 'DynamicScene',
   FirstPerson = 'FirstPerson',
+  SceneAppearance = 'SceneAppearance',
 
   // Deprecated features (to be removed)
   EnvironmentModel = 'EnvironmentModel',

@@ -6,7 +6,7 @@ import { ThreeEvent, useThree } from '@react-three/fiber';
 import { MatterportModel } from '@matterport/r3f/dist';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { KnownSceneProperty } from '../interfaces';
+import { KnownSceneProperty, COMPOSER_FEATURES } from '../interfaces';
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
 import { useEditorState, useSceneDocument, useStore } from '../store';
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
@@ -21,6 +21,7 @@ import useMatterportViewer from '../hooks/useMatterportViewer';
 import useDynamicScene from '../hooks/useDynamicScene';
 
 import Environment, { presets } from './three-fiber/Environment';
+import Fog from './three-fiber/Fog';
 import { StatsWindow } from './three-fiber/StatsWindow';
 import EntityGroup from './three-fiber/EntityGroup';
 import { EditorMainCamera } from './three-fiber/EditorCamera';
@@ -42,6 +43,7 @@ export const WebGLCanvasManager: React.FC = () => {
 
   const sceneComposerId = useContext(sceneComposerIdContext);
   const { isEditing, addingWidget, setAddingWidget } = useEditorState(sceneComposerId);
+  const sceneAppearanceEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SceneAppearance];
   const { enableMatterportViewer } = useMatterportViewer();
   const { document, getSceneNodeByRef, getSceneProperty } = useSceneDocument(sceneComposerId);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
@@ -86,6 +88,7 @@ export const WebGLCanvasManager: React.FC = () => {
 
   return (
     <React.Fragment>
+      {sceneAppearanceEnabled && <Fog />}
       <EditorMainCamera />
       {environmentPreset && environmentPreset in presets && (
         <Environment preset={environmentPreset} extensions={envLoaderExtension} />
