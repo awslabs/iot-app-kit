@@ -1,4 +1,3 @@
-import React, { useCallback, useContext, useRef, useState } from 'react';
 import {
   AttributeEditor,
   Box,
@@ -9,6 +8,7 @@ import {
   SpaceBetween,
   Textarea,
 } from '@awsui/components-react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
@@ -95,11 +95,12 @@ export const SceneRuleMapExpandableInfoSection: React.FC<
         description: 'Aria label for remove statement button',
       })} ${statement.expression}`,
   };
+
   return (
     <ExpandableInfoSection title={ruleBasedMapId} defaultExpanded={false}>
       <AttributeEditor
         {...a11yProps}
-        onAddButtonClick={() => setNewRule({ expression: '', target: '' })}
+        onAddButtonClick={() => setNewRule({ expression: '', target: '', targetMetadata: {} })}
         onRemoveButtonClick={({ detail: { itemIndex } }) => onRemoveRule(itemIndex)}
         items={items}
         definition={[

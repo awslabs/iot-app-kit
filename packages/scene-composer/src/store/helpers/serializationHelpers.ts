@@ -1,40 +1,40 @@
 import { isNumber } from 'lodash';
 
-import DebugLogger from '../../logger/DebugLogger';
 import {
-  DEFAULT_DISTANCE_UNIT,
-  DEFAULT_CAMERA_SETTINGS,
   CURRENT_MAJOR_VERSION,
   CURRENT_MINOR_VERSION,
+  CURRENT_VERSION,
+  DEFAULT_CAMERA_SETTINGS,
+  DEFAULT_DISTANCE_UNIT,
   DEFAULT_LIGHT_SETTINGS_MAP,
   LEGACY_VERSION,
-  CURRENT_VERSION,
 } from '../../common/constants';
+import { ERROR_MESSAGE_DICT, ErrorCode, ErrorLevel, SceneComposerRuntimeError } from '../../common/errors';
 import { KnownComponentType } from '../../interfaces';
-import { generateUUID } from '../../utils/mathUtils';
-import { ErrorCode, ErrorLevel, ERROR_MESSAGE_DICT, SceneComposerRuntimeError } from '../../common/errors';
+import DebugLogger from '../../logger/DebugLogger';
 import { Component, DistanceUnit, ModelType, Node, Scene } from '../../models/SceneModels';
-import {
-  ISceneComponentInternal,
-  ISceneNodeInternal,
-  ICameraComponentInternal,
-  IRuleBasedMapInternal,
-  ISceneDocumentInternal,
-  isISceneComponentInternal,
-  ISerializationErrorDetails,
-  IDeserializationResult,
-  IModelRefComponentInternal,
-  IAnimationComponentInternal,
-  IAnchorComponentInternal,
-  ILightComponentInternal,
-  IColorOverlayComponentInternal,
-  IMotionIndicatorComponentInternal,
-  ISubModelRefComponentInternal,
-  IDataOverlayComponentInternal,
-  IEntityBindingComponentInternal,
-  SceneNodeRuntimeProperty,
-} from '../internalInterfaces';
 import { isDynamicNode } from '../../utils/entityModelUtils/sceneUtils';
+import { generateUUID } from '../../utils/mathUtils';
+import {
+  IAnchorComponentInternal,
+  IAnimationComponentInternal,
+  ICameraComponentInternal,
+  IColorOverlayComponentInternal,
+  IDataOverlayComponentInternal,
+  IDeserializationResult,
+  IEntityBindingComponentInternal,
+  ILightComponentInternal,
+  IModelRefComponentInternal,
+  IMotionIndicatorComponentInternal,
+  IRuleBasedMapInternal,
+  ISceneComponentInternal,
+  ISceneDocumentInternal,
+  ISceneNodeInternal,
+  ISerializationErrorDetails,
+  ISubModelRefComponentInternal,
+  SceneNodeRuntimeProperty,
+  isISceneComponentInternal,
+} from '../internalInterfaces';
 
 import { addComponentToComponentNodeMap } from './componentMapHelpers';
 
@@ -135,6 +135,7 @@ function createTagComponent(
     type: 'Tag',
     icon,
     chosenColor: component.chosenColor,
+    customIcon: component.customIcon,
     ruleBasedMapId,
     valueDataBinding: {
       ...(valueDataBinding || {}),
@@ -549,6 +550,7 @@ function createDocumentState(
             statements: statements.map((s) => ({
               expression: s.expression,
               target: s.target,
+              targetMetadata: s.targetMetadata,
             })),
           },
         ];
@@ -704,6 +706,7 @@ function convertRules(ruleMap: Record<string, IRuleBasedMapInternal>) {
       const statements = ruleBasedMap.statements.map((s) => ({
         expression: s.expression,
         target: s.target,
+        targetMetadata: s.targetMetadata,
       }));
       return [
         ruleId,
