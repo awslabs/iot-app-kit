@@ -25,23 +25,3 @@ exports[`MatterportTagSync should render correctly 1`] = `
   </div>
 </div>
 `;
-
-exports[`MatterportTagSync when dynamic scene is enabled should render failure status 1`] = `
-<div
-  data-mocked="StatusIndicator"
-  data-testid="sync-button-status"
-  type="error"
->
-  Tags sync failed
-</div>
-`;
-
-exports[`MatterportTagSync when dynamic scene is enabled should render success status 1`] = `
-<div
-  data-mocked="StatusIndicator"
-  data-testid="sync-button-status"
-  type="success"
->
-  Tags sync successful
-</div>
-`;

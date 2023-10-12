@@ -1,23 +1,18 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { MpSdk } from '@matterport/r3f/dist';
-import flushPromises from 'flush-promises';
-import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import { generateUUID } from '../utils/mathUtils';
 import { COMPOSER_FEATURES, IAnchorComponent, ISceneNode, KnownComponentType } from '../interfaces';
 import { IDataOverlayComponentInternal, ISceneNodeInternal, useStore } from '../store';
 import { MattertagItem, TagItem } from '../utils/matterportTagUtils';
 import { Component } from '../models/SceneModels';
-import { setFeatureConfig, setTwinMakerSceneMetadataModule } from '../common/GlobalSettings';
-import { SceneNodeRuntimeProperty } from '../store/internalInterfaces';
+import { setFeatureConfig } from '../common/GlobalSettings';
 
 import useMatterportTags from './useMatterportTags';
-import useDynamicScene from './useDynamicScene';
 
 jest.mock('../utils/mathUtils', () => ({
   generateUUID: jest.fn(() => 'random-uuid'),
 }));
-jest.mock('./useDynamicScene', () => jest.fn());
 
 describe('useMatterportTags', () => {
   const appendSceneNode = jest.fn();
@@ -162,10 +157,8 @@ ${mattertagItem.description}`,
             ],
           },
         ],
-        properties: { [SceneNodeRuntimeProperty.LayerIds]: undefined },
       },
       false,
-      true,
     );
   });
 
@@ -197,10 +190,8 @@ ${mattertagItem.description}`,
             ],
           },
         ],
-        properties: { [SceneNodeRuntimeProperty.LayerIds]: undefined },
       },
       false,
-      true,
     );
   });
 
@@ -209,152 +200,5 @@ ${mattertagItem.description}`,
 
     handleRemoveMatterportTag('deleteMe');
     expect(removeSceneNode).toBeCalledWith('deleteMe');
-  });
-
-  describe('when dynamic scene is enabled', () => {
-    const createSceneEntity = jest.fn().mockResolvedValue({ entityId: generateUUID() });
-    const updateSceneEntity = jest.fn().mockResolvedValue({ entityId: generateUUID() });
-    const deleteSceneEntity = jest.fn().mockResolvedValue({ entityId: generateUUID() });
-    const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
-      createSceneEntity,
-      updateSceneEntity,
-      deleteSceneEntity,
-    };
-
-    const testInternalNodeWithLayerId: ISceneNodeInternal = {
-      ...testInternalNode,
-      properties: {
-        ...testInternalNode.properties,
-        [SceneNodeRuntimeProperty.LayerIds]: ['layer-id'],
-      },
-    };
-
-    beforeEach(() => {
-      jest.clearAllMocks();
-
-      useStore('default').setState({
-        appendSceneNode,
-        updateSceneNodeInternal,
-        removeSceneNode,
-      });
-
-      (useDynamicScene as jest.Mock).mockReturnValue(true);
-      setTwinMakerSceneMetadataModule(mockMetadataModule as unknown as TwinMakerSceneMetadataModule);
-    });
-
-    it('should add matterport mattertag', async () => {
-      const { handleAddMatterportTag } = renderHook(() => useMatterportTags()).result.current;
-
-      await handleAddMatterportTag({ layerId: 'layer-id', sceneRootId: 'scene-root-id', id, item: mattertagItem });
-      expect(appendSceneNode).toBeCalledTimes(1);
-      expect(appendSceneNode).toBeCalledWith(
-        {
-          ...testNode,
-          properties: {
-            ...testNode.properties,
-            [SceneNodeRuntimeProperty.LayerIds]: ['layer-id'],
-          },
-        },
-        true,
-      );
-      expect(createSceneEntity).toBeCalledTimes(1);
-      expect(createSceneEntity).toBeCalledWith({
-        workspaceId: undefined,
-        entityId: generateUUID(),
-        entityName: mattertagItem.label + '_' + generateUUID(),
-        parentEntityId: 'scene-root-id',
-        components: {
-          [KnownComponentType.Tag]: expect.anything(),
-          [KnownComponentType.DataOverlay]: expect.anything(),
-          Node: expect.anything(),
-        },
-      });
-    });
-
-    it('should add matterport tag', async () => {
-      const { handleAddMatterportTag } = renderHook(() => useMatterportTags()).result.current;
-
-      await handleAddMatterportTag({ layerId: 'layer-id', sceneRootId: 'scene-root-id', id, item: tagItem });
-      expect(appendSceneNode).toBeCalledTimes(1);
-      expect(createSceneEntity).toBeCalledTimes(1);
-      expect(createSceneEntity).toBeCalledWith({
-        workspaceId: undefined,
-        entityId: generateUUID(),
-        entityName: tagItem.label + '_' + generateUUID(),
-        parentEntityId: 'scene-root-id',
-        components: {
-          [KnownComponentType.Tag]: expect.anything(),
-          [KnownComponentType.DataOverlay]: expect.anything(),
-          Node: expect.anything(),
-        },
-      });
-    });
-
-    it('should update matterport mattertag', async () => {
-      const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
-
-      await handleUpdateMatterportTag({
-        layerId: 'layer-id',
-        sceneRootId: 'scene-root',
-        ref: generateUUID(),
-        node: testInternalNodeWithLayerId,
-        item: mattertagItem,
-      });
-      expect(updateSceneNodeInternal).toBeCalledTimes(1);
-      expect(updateSceneNodeInternal).toBeCalledWith('random-uuid', expect.anything(), false, false);
-      expect(updateSceneEntity).not.toBeCalled();
-    });
-
-    it('should update matterport tag', async () => {
-      const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
-
-      await handleUpdateMatterportTag({
-        layerId: 'layer-id',
-        sceneRootId: 'scene-root',
-        ref: generateUUID(),
-        node: testInternalNodeWithLayerId,
-        item: tagItem,
-      });
-      expect(updateSceneNodeInternal).toBeCalledTimes(1);
-      expect(updateSceneNodeInternal).toBeCalledWith('random-uuid', expect.anything(), false, false);
-      expect(updateSceneEntity).not.toBeCalled();
-    });
-
-    it('should create matterport tag when existing tag is not a dynamic node yet', async () => {
-      const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
-
-      await handleUpdateMatterportTag({
-        layerId: 'layer-id',
-        sceneRootId: 'scene-root',
-        ref: generateUUID(),
-        node: testInternalNode,
-        item: tagItem,
-      });
-      expect(updateSceneNodeInternal).toBeCalledTimes(1);
-      expect(updateSceneNodeInternal).toBeCalledWith('random-uuid', expect.anything(), false, true);
-      expect(updateSceneEntity).not.toBeCalled();
-      expect(createSceneEntity).toBeCalledTimes(1);
-      expect(createSceneEntity).toBeCalledWith({
-        workspaceId: undefined,
-        entityId: generateUUID(),
-        entityName: tagItem.label + '_' + generateUUID(),
-        parentEntityId: 'scene-root',
-        components: {
-          [KnownComponentType.Tag]: expect.anything(),
-          Node: expect.anything(),
-        },
-      });
-    });
-
-    it('should delete matterport mattertag or tag', async () => {
-      const { handleRemoveMatterportTag } = renderHook(() => useMatterportTags()).result.current;
-
-      handleRemoveMatterportTag('deleteMe');
-      await flushPromises();
-
-      expect(removeSceneNode).toBeCalledTimes(1);
-      expect(deleteSceneEntity).toBeCalledTimes(1);
-      expect(deleteSceneEntity).toBeCalledWith({ entityId: 'deleteMe' });
-    });
   });
 });

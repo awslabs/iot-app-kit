@@ -1,7 +1,9 @@
-import { ISceneDocumentInternal, ISceneNodeInternal } from '../..';
+import { cloneDeep } from 'lodash';
+
+import { ISceneDocumentInternal, ISceneNodeInternal, RootState } from '../..';
 import DebugLogger from '../../../logger/DebugLogger';
 import { ITransformInternal } from '../../internalInterfaces';
-import { removeNode, renderSceneNodesFromLayers } from '../sceneDocumentHelpers';
+import { appendSceneNode, removeNode, renderSceneNodesFromLayers } from '../sceneDocumentHelpers';
 
 const logger = new DebugLogger('stateStore');
 
@@ -167,6 +169,88 @@ describe('sceneDocumentHelpers', () => {
         def: { testNode: ['test-comp-2'], childNode: ['child-comp'] },
       });
       expect(document.rootNodeRefs).toEqual(['root', 'testNode', 'newRoot']);
+    });
+  });
+
+  describe('appendSceneNode', () => {
+    const valid = {
+      rootNodeRefs: [],
+      nodeMap: { parentNode: { childRefs: [] } },
+      componentNodeMap: {},
+    };
+
+    [undefined, valid].forEach((document) => {
+      it(`should be able to appendSceneNode to a ${document ? 'valid' : 'undefined'} document.`, () => {
+        const rootNode: Partial<ISceneNodeInternal> = {
+          ref: 'rootNode',
+          components: [
+            { ref: 'root-comp-1', type: 'abc' },
+            { ref: 'root-comp-2', type: 'abc' },
+          ],
+        };
+        const childNode: Partial<ISceneNodeInternal> = {
+          ref: 'childNode',
+          parentRef: 'parentNode',
+          components: [{ ref: 'child-comp', type: 'abc' }],
+        };
+        const componentNodeMap = {
+          abc: {
+            rootNode: ['root-comp-1', 'root-comp-2'],
+            childNode: ['child-comp'],
+          },
+        };
+        const draft: Partial<RootState> = {
+          lastOperation: undefined,
+          selectedSceneNodeRef: undefined,
+          document: document as unknown as ISceneDocumentInternal,
+        };
+
+        appendSceneNode(draft as RootState, rootNode as ISceneNodeInternal);
+
+        if (document) {
+          expect(draft.selectedSceneNodeRef).toEqual(rootNode.ref);
+
+          appendSceneNode(draft as RootState, childNode as ISceneNodeInternal);
+          expect(draft.selectedSceneNodeRef).toEqual(childNode.ref);
+
+          expect(draft.lastOperation!).toEqual('appendSceneNodeInternal');
+          expect(draft.document?.rootNodeRefs).toContainEqual(rootNode.ref);
+          expect(draft.document?.nodeMap.parentNode.childRefs).toContainEqual(childNode.ref);
+          expect(draft.document?.nodeMap[rootNode.ref!]).toEqual(rootNode);
+          expect(draft.document?.nodeMap[childNode.ref!]).toEqual(childNode);
+          expect(draft.document?.componentNodeMap).toEqual(componentNodeMap);
+        } else {
+          expect(draft.lastOperation).toBeUndefined();
+        }
+      });
+    });
+
+    it(`should be able to appendSceneNode to a document with selecte node enabled.`, () => {
+      const testNode: Partial<ISceneNodeInternal> = {
+        ref: 'testNode',
+        components: [{ ref: 'child-comp', type: 'abc' }],
+      };
+      const document = cloneDeep(valid) as unknown as ISceneDocumentInternal;
+      const draft: Partial<RootState> = { lastOperation: undefined, document, selectedSceneNodeRef: undefined };
+
+      appendSceneNode(draft as RootState, testNode as ISceneNodeInternal);
+
+      expect(draft.lastOperation!).toEqual('appendSceneNodeInternal');
+      expect(draft.selectedSceneNodeRef).toEqual(testNode.ref);
+    });
+
+    it(`should be able to appendSceneNode to a document with selecte node disabled.`, () => {
+      const testNode: Partial<ISceneNodeInternal> = {
+        ref: 'testNode',
+        components: [{ ref: 'child-comp', type: 'abc' }],
+      };
+      const document = cloneDeep(valid) as unknown as ISceneDocumentInternal;
+      const draft: Partial<RootState> = { lastOperation: undefined, document, selectedSceneNodeRef: 'random' };
+
+      appendSceneNode(draft as RootState, testNode as ISceneNodeInternal, true);
+
+      expect(draft.lastOperation!).toEqual('appendSceneNodeInternal');
+      expect(draft.selectedSceneNodeRef).toEqual('random');
     });
   });
 });

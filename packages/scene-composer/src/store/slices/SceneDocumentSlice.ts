@@ -10,26 +10,25 @@ import { containsMatchingEntityComponent } from '../../utils/dataBindingUtils';
 import { mergeDeep } from '../../utils/objectUtils';
 import { RecursivePartial } from '../../utils/typeUtils';
 import { RootState } from '../Store';
-import {
-  addComponentToComponentNodeMap,
-  addNodeToComponentNodeMap,
-  deleteComponentFromComponentNodeMap,
-} from '../helpers/componentMapHelpers';
+import { addComponentToComponentNodeMap, deleteComponentFromComponentNodeMap } from '../helpers/componentMapHelpers';
 import editorStateHelpers from '../helpers/editorStateHelpers';
 import interfaceHelpers from '../helpers/interfaceHelpers';
-import { removeNode, renderSceneNodesFromLayers } from '../helpers/sceneDocumentHelpers';
+import { appendSceneNode, removeNode, renderSceneNodesFromLayers } from '../helpers/sceneDocumentHelpers';
 import serializationHelpers, { IDeserializeOptions } from '../helpers/serializationHelpers';
 import {
+  DisplayMessageCategory,
   IDataBoundSceneComponentInternal,
   IRuleBasedMapInternal,
   ISceneComponentInternal,
   ISceneDocumentInternal,
   ISceneNodeInternal,
   ISerializationErrorDetails,
+  SceneNodeRuntimeProperty,
 } from '../internalInterfaces';
 import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity';
 import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
-import { isDynamicNode } from '../../utils/entityModelUtils/sceneUtils';
+import { isDynamicNode, isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
+import { createNodeEntity } from '../../utils/entityModelUtils/createNodeEntity';
 
 const LOG = new DebugLogger('stateStore');
 
@@ -155,24 +154,28 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
 
       // Add the node to the state
       set((draft) => {
-        draft.document!.nodeMap[node.ref] = node;
-
-        // Update the parent node of the inserted node
-        if (!node.parentRef) {
-          draft.document!.rootNodeRefs.push(node.ref);
+        if (isDynamicScene(draft.document) && !isDynamicNode(node)) {
+          const layerId = draft.document.properties![KnownSceneProperty.LayerIds][0];
+          // Default to the first layer for now. Handle adding to current layer when supporting adding layer.
+          createNodeEntity(node, draft.document.properties![KnownSceneProperty.SceneRootEntityId], layerId)
+            .then(() => {
+              // Add the node to the state after successful entity creation
+              get().appendSceneNodeInternal(
+                { ...node, properties: { ...node.properties, [SceneNodeRuntimeProperty.LayerIds]: [layerId] } },
+                disableAutoSelect,
+              );
+            })
+            .catch((e) => {
+              get().addMessages([
+                {
+                  category: DisplayMessageCategory.Warning,
+                  messageText: `Create entity for node ${node.name} failed with error: ${e.message}`,
+                },
+              ]);
+            });
         } else {
-          draft.document!.nodeMap[node.parentRef]!.childRefs.push(node.ref);
+          appendSceneNode(draft, node, disableAutoSelect);
         }
-
-        // Update componentNodeMap
-        addNodeToComponentNodeMap(draft.document.componentNodeMap, node);
-
-        // Update the selected node
-        if (!disableAutoSelect) {
-          draft.selectedSceneNodeRef = node.ref;
-        }
-
-        draft.lastOperation = 'appendSceneNodeInternal';
       });
     },
 

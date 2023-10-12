@@ -110,7 +110,7 @@ export const parseOverlayComp = (comp: DocumentType): IDataOverlayComponentInter
         index++;
       }
       return {
-        content: decodeURI(content),
+        content: decodeURI(content ?? ''),
         rowType: r[OverlayComponentProperty.RowType],
       };
     });
