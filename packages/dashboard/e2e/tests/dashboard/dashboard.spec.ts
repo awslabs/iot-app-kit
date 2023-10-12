@@ -3,7 +3,7 @@ import { dragAndDrop } from '../utils/dragAndDrop';
 import { GRID_SIZE, gridUtil } from '../utils/grid';
 import { getBoundingBox } from '../utils/locator';
 
-const TEST_PAGE = 'http://localhost:6006/iframe.html?id=dashboard-mocked-data--empty';
+const TEST_PAGE = '/iframe.html?id=dashboard-mocked-data--empty';
 const TEST_IFRAME = '#root';
 const COMPONENT_SELECTOR = '.dashboard';
 
