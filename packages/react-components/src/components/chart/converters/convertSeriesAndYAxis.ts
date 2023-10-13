@@ -11,7 +11,7 @@ import { StyleSettingsMap, getChartStyleSettingsFromMap } from './convertStyles'
 import { convertYAxis as convertChartYAxis } from './convertAxis';
 import { convertThresholds } from './convertThresholds';
 import { ChartStyleSettingsWithDefaults } from '../utils/getStyles';
-import { DEEMPHASIZE_OPACITY, EMPHASIZE_SCALE_CONSTANT } from '../eChartsConstants';
+import { DEEMPHASIZE_OPACITY, DEFAULT_Y_AXIS, EMPHASIZE_SCALE_CONSTANT } from '../eChartsConstants';
 import { padYAxis, validateValue } from './padYAxis';
 
 const yAxisLegendGenerator =
@@ -215,6 +215,11 @@ export const useSeriesAndYAxis = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [datastreamDeps, defaultYAxis, getStyles]);
 
+  const allSeriesEmpty = series.every((series: SeriesOption) => {
+    const data = series.data as Array<number[]>;
+    return data?.length === 0;
+  });
+
   let paddedYAxis: NonNullable<YAXisComponentOption | undefined>[] = yAxis;
   if (yMins.length === 0 && yMaxs.length === 0 && yAxis.length === 1) {
     const yAxisLabel: YAxisOptions = {
@@ -230,5 +235,5 @@ export const useSeriesAndYAxis = (
     series[0].markLine = convertedThresholds.markLine;
   }
 
-  return { series, yAxis: paddedYAxis, yMaxs, yMins };
+  return { series, yAxis: allSeriesEmpty ? [{ ...DEFAULT_Y_AXIS, min: 0, max: 10000 }] : paddedYAxis, yMaxs, yMins };
 };
