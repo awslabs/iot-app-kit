@@ -80,6 +80,7 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
             [COMPOSER_FEATURES.Overlay]: true,
             [COMPOSER_FEATURES.TagResize]: true,
             [COMPOSER_FEATURES.Matterport]: true,
+            [COMPOSER_FEATURES.TagStyle]: true,
           },
         }}
         onSceneLoaded={onSceneLoaded}
