@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [9.1.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.0.0...react-components-v9.1.0) (2023-10-13)
+
+
+### Features
+
+* **composer:** utils to handle model shader component in entity ([95a4be6](https://github.com/awslabs/iot-app-kit/commit/95a4be668b51d413589b16b7edde67fdd40375d1))
+
+
+### Bug Fixes
+
+* **dashboard:** improve widget drag and resize ([fcdc586](https://github.com/awslabs/iot-app-kit/commit/fcdc5862fc558f136d510eaa85e241daa61d9988))
+* **echarts:** improved x+y axis min and max ([38741e2](https://github.com/awslabs/iot-app-kit/commit/38741e245b450c7e547b10305349f9652ae1872f))
+* **react-components:** fixing the xaxis and viewport dependency ([139bcc1](https://github.com/awslabs/iot-app-kit/commit/139bcc15aa219c1906544086ab6bf3d24e4035da))
+* style updates and bugfixes for multi y axis ([e11fd3e](https://github.com/awslabs/iot-app-kit/commit/e11fd3eb6629d75b3b2abdb2ad0466d02e66b8ef))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.0.0 to 9.1.0
+    * @iot-app-kit/core bumped from 9.0.0 to 9.1.0
+    * @iot-app-kit/core-util bumped from 9.0.0 to 9.1.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.0.0 to 9.1.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.0.0 to 9.1.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.0.0 to 9.1.0
+    * @iot-app-kit/testing-util bumped from 9.0.0 to 9.1.0
+    * @iot-app-kit/ts-config bumped from 9.0.0 to 9.1.0
+    * eslint-config-iot-app-kit bumped from 9.0.0 to 9.1.0
+
 ## [9.0.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v8.1.1...react-components-v9.0.0) (2023-10-10)
 
 

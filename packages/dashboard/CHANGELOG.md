@@ -1,5 +1,40 @@
 # Changelog
 
+## [9.1.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.0.0...dashboard-v9.1.0) (2023-10-13)
+
+
+### Features
+
+* side-panels toggle open hit and tooltip on mouseover [#2003](https://github.com/awslabs/iot-app-kit/issues/2003) ([a974964](https://github.com/awslabs/iot-app-kit/commit/a9749645567611a430113071fb2cfcb7bb93b2a3))
+
+
+### Bug Fixes
+
+* **dashboard:** fix toggle hide thresholds ([0abb1b2](https://github.com/awslabs/iot-app-kit/commit/0abb1b24d6117ae13e27fe1b1e02ee9684cf0962))
+* **dashboard:** improve widget drag and resize ([fcdc586](https://github.com/awslabs/iot-app-kit/commit/fcdc5862fc558f136d510eaa85e241daa61d9988))
+* **dashboard:** update unmodeled latest value to timestamp.timeInSeconds ([70bd004](https://github.com/awslabs/iot-app-kit/commit/70bd0048d7e30274c61b41cfc0334362b9f96042))
+* firefox dnd ([5fd8b4f](https://github.com/awslabs/iot-app-kit/commit/5fd8b4f4eed0039852305d4ba8ebec1f453d1fbb))
+* latest value filtering and sorting ([6610382](https://github.com/awslabs/iot-app-kit/commit/66103826b0e157a737cdc2661c4c8bfa5edcb56f))
+* line charts colors too quickly choose similar colors ([0af5465](https://github.com/awslabs/iot-app-kit/commit/0af5465ffc0a7f587a8e4a53487c8fb56c35d36a))
+* **react-components:** fixing the xaxis and viewport dependency ([139bcc1](https://github.com/awslabs/iot-app-kit/commit/139bcc15aa219c1906544086ab6bf3d24e4035da))
+* style updates and bugfixes for multi y axis ([e11fd3e](https://github.com/awslabs/iot-app-kit/commit/e11fd3eb6629d75b3b2abdb2ad0466d02e66b8ef))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.0.0 to 9.1.0
+    * @iot-app-kit/core bumped from 9.0.0 to 9.1.0
+    * @iot-app-kit/core-util bumped from 9.0.0 to 9.1.0
+    * @iot-app-kit/react-components bumped from 9.0.0 to 9.1.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.0.0 to 9.1.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.0.0 to 9.1.0
+    * @iot-app-kit/testing-util bumped from 9.0.0 to 9.1.0
+    * @iot-app-kit/ts-config bumped from 9.0.0 to 9.1.0
+    * eslint-config-iot-app-kit bumped from 9.0.0 to 9.1.0
+
 ## [9.0.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v8.1.1...dashboard-v9.0.0) (2023-10-10)
 
 
