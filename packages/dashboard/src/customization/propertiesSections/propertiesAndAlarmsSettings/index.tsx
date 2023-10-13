@@ -9,9 +9,10 @@ import { PropertyLens } from '~/customization/propertiesSection';
 
 // exclude table because it is handled specially
 const isQueryWidgetExcludesTable = (w: DashboardWidget): w is QueryWidget =>
-  'queryConfig' in w.properties && w.type !== 'table' && w.type !== 'xy-plot';
+  'queryConfig' in w.properties && w.type !== 'table' && !(w.type === 'xy-plot' || w.type === 'line-scatter-chart');
 const isTableWidget = (w: DashboardWidget): w is TableWidget => w.type === 'table';
-const isStyledWidget = (w: DashboardWidget): w is LineScatterChartWidget => w.type === 'xy-plot';
+const isStyledWidget = (w: DashboardWidget): w is LineScatterChartWidget =>
+  w.type === 'xy-plot' || w.type === 'line-scatter-chart';
 
 const RenderPropertiesSectionWithStyledQuery = ({
   useProperty,

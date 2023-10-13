@@ -18,7 +18,8 @@ import { applyAggregationToQuery } from '~/customization/widgets/utils/assetQuer
 import { applyResolutionToQuery } from '~/customization/widgets/utils/assetQuery/applyResolutionToQuery';
 import { PropertyLens } from '~/customization/propertiesSection';
 
-const isLineAndScatterWidget = (w: DashboardWidget): w is LineScatterChartWidget => w.type === 'xy-plot';
+const isLineAndScatterWidget = (w: DashboardWidget): w is LineScatterChartWidget =>
+  w.type === 'xy-plot' || w.type === 'line-scatter-chart';
 
 const RenderLineAndScatterStyleSettingsSection = ({
   useProperty,

@@ -9,7 +9,7 @@ import { nonNegative } from '~/util/number';
 import { PropertyLens } from '~/customization/propertiesSection';
 
 const isSettingsWidget = (w: DashboardWidget): w is DashboardWidget<CommonChartProperties> =>
-  'queryConfig' in w.properties && w.type !== 'xy-plot';
+  'queryConfig' in w.properties && !(w.type === 'xy-plot' || w.type === 'line-scatter-chart');
 
 const RenderSettingsConfiguration = ({
   useProperty,

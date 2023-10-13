@@ -11,7 +11,7 @@ import { Maybe, maybeWithDefault } from '~/util/maybe';
 
 const thresholdsWithContainsOperator: readonly string[] = ['kpi', 'status', 'status-timeline', 'table'];
 const thresholdsWithAnnotations: readonly string[] = ['line-chart', 'scatter-chart', 'bar-chart', 'status-timeline'];
-const thresholdsWithStyle: readonly string[] = ['xy-plot'];
+const thresholdsWithStyle: readonly string[] = ['xy-plot', 'line-scatter-chart'];
 
 // Type encompassing all possible properties for a widget's thresholds
 type ThresholdProperties = {
