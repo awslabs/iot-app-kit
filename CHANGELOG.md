@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.1.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.0.0...root-v9.1.0) (2023-10-13)
+
+
+### Features
+
+* **composer:** convert nodes to entities UI ([43f5e66](https://github.com/awslabs/iot-app-kit/commit/43f5e663efb0e517a2f1e0badb369a43438b0675))
+* **composer:** utils to handle model shader component in entity ([95a4be6](https://github.com/awslabs/iot-app-kit/commit/95a4be668b51d413589b16b7edde67fdd40375d1))
+* **scene composer:** fix for icon rules and save icon metadata ([0ac8508](https://github.com/awslabs/iot-app-kit/commit/0ac85082391d34731fafa73f826309e66d9f6000))
+* side-panels toggle open hit and tooltip on mouseover [#2003](https://github.com/awslabs/iot-app-kit/issues/2003) ([a974964](https://github.com/awslabs/iot-app-kit/commit/a9749645567611a430113071fb2cfcb7bb93b2a3))
+
+
+### Bug Fixes
+
+* **composer:** split overlay content into parts ([328a33c](https://github.com/awslabs/iot-app-kit/commit/328a33c0fc3ad80666476099d9e49768fca03b2b))
+* **dashboard:** fix toggle hide thresholds ([0abb1b2](https://github.com/awslabs/iot-app-kit/commit/0abb1b24d6117ae13e27fe1b1e02ee9684cf0962))
+* **dashboard:** improve widget drag and resize ([fcdc586](https://github.com/awslabs/iot-app-kit/commit/fcdc5862fc558f136d510eaa85e241daa61d9988))
+* **dashboard:** update unmodeled latest value to timestamp.timeInSeconds ([70bd004](https://github.com/awslabs/iot-app-kit/commit/70bd0048d7e30274c61b41cfc0334362b9f96042))
+* **echarts:** improved x+y axis min and max ([38741e2](https://github.com/awslabs/iot-app-kit/commit/38741e245b450c7e547b10305349f9652ae1872f))
+* firefox dnd ([5fd8b4f](https://github.com/awslabs/iot-app-kit/commit/5fd8b4f4eed0039852305d4ba8ebec1f453d1fbb))
+* latest value filtering and sorting ([6610382](https://github.com/awslabs/iot-app-kit/commit/66103826b0e157a737cdc2661c4c8bfa5edcb56f))
+* line charts colors too quickly choose similar colors ([0af5465](https://github.com/awslabs/iot-app-kit/commit/0af5465ffc0a7f587a8e4a53487c8fb56c35d36a))
+* **react-components:** fixing the xaxis and viewport dependency ([139bcc1](https://github.com/awslabs/iot-app-kit/commit/139bcc15aa219c1906544086ab6bf3d24e4035da))
+* style updates and bugfixes for multi y axis ([e11fd3e](https://github.com/awslabs/iot-app-kit/commit/e11fd3eb6629d75b3b2abdb2ad0466d02e66b8ef))
+
 ## [9.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v8.1.1...root-v9.0.0) (2023-10-10)
 
 

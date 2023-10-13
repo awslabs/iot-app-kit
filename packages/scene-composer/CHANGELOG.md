@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.1.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.0.0...scene-composer-v9.1.0) (2023-10-13)
+
+
+### Features
+
+* **composer:** convert nodes to entities UI ([43f5e66](https://github.com/awslabs/iot-app-kit/commit/43f5e663efb0e517a2f1e0badb369a43438b0675))
+* **composer:** utils to handle model shader component in entity ([95a4be6](https://github.com/awslabs/iot-app-kit/commit/95a4be668b51d413589b16b7edde67fdd40375d1))
+* **scene composer:** fix for icon rules and save icon metadata ([0ac8508](https://github.com/awslabs/iot-app-kit/commit/0ac85082391d34731fafa73f826309e66d9f6000))
+
+
+### Bug Fixes
+
+* **composer:** split overlay content into parts ([328a33c](https://github.com/awslabs/iot-app-kit/commit/328a33c0fc3ad80666476099d9e49768fca03b2b))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.0.0 to 9.1.0
+    * @iot-app-kit/react-components bumped from 9.0.0 to 9.1.0
+    * @iot-app-kit/related-table bumped from 9.0.0 to 9.1.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.0.0 to 9.1.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 9.0.0 to 9.1.0
+
 ## [9.0.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v8.1.1...scene-composer-v9.0.0) (2023-10-10)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.1.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v9.0.0...core-util-v9.1.0) (2023-10-13)
+
+
+### Bug Fixes
+
+* line charts colors too quickly choose similar colors ([0af5465](https://github.com/awslabs/iot-app-kit/commit/0af5465ffc0a7f587a8e4a53487c8fb56c35d36a))
+
 ## [9.0.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v8.1.1...core-util-v9.0.0) (2023-10-10)
 
 
