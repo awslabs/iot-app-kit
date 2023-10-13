@@ -21,6 +21,8 @@ const onDataZoomEvent = (chart: EChartsType, setViewport: (viewport: Viewport, l
   }
 };
 
+// This hook handles all of the viewport related things, including:
+// panning, zooming, live mode
 export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, viewportInMs: ViewportInMs) => {
   const { lastUpdatedBy, setViewport } = useViewport();
   const [isScrolling, setIsScrolling] = useState(false);
@@ -30,13 +32,12 @@ export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, view
     viewportInMsRef.current = viewportInMs;
   }, [viewportInMs]);
 
-  // handle live mode
   useEffect(() => {
     const chart = chartRef.current;
     if (chart && (!isScrolling || lastUpdatedBy === 'date-picker')) {
       setIsScrolling(false);
       chart.setOption({
-        dataZoom: { ...DEFAULT_DATA_ZOOM, startValue: viewportInMs.initial, end: 100 },
+        dataZoom: { ...DEFAULT_DATA_ZOOM, startValue: viewportInMs.initial, endValue: viewportInMs.end },
       });
     }
     // ignoring because refs dont need to be in dependency array
