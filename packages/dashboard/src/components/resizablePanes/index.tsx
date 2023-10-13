@@ -14,6 +14,8 @@ import {
   MAXIMUM_PANES_PROPORTION,
   LEFT_WIDTH_PERCENT_STORAGE_KEY,
   RIGHT_WIDTH_PERCENT_STORAGE_KEY,
+  MINIMUM_LEFT_SIDE_PANE_WIDTH,
+  MAXIMUM_LEFT_SIDE_PANE_WIDTH,
 } from './constants';
 
 import './index.css';
@@ -136,8 +138,14 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
         return;
       }
 
+      // limit left pane's min and max width
+      const minMaxLeftPaneWidth = Math.min(
+        Math.max(nextLeftPaneWidth, MINIMUM_LEFT_SIDE_PANE_WIDTH),
+        MAXIMUM_LEFT_SIDE_PANE_WIDTH
+      );
+
       // Persist percentage with sessionStorage
-      setLeftPaneWidth(nextLeftPaneWidth);
+      setLeftPaneWidth(minMaxLeftPaneWidth);
       const nextLeftPaneWidthPercent = nextLeftPaneWidth / elementWidth;
       sessionStorage.setItem(LEFT_WIDTH_PERCENT_STORAGE_KEY, nextLeftPaneWidthPercent.toString());
     }
@@ -245,9 +253,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
       onMouseMove={(e) => onHandleDragMove(e)}
       onMouseUp={() => onHandleDragEnd()}
       style={{
-        gridTemplateColumns: `max-content ${isLeftPaneCollapsed ? '0px' : `${spaceStaticXs}`} auto ${
-          isRightPaneCollapsed ? '0px' : `${spaceStaticXs}`
-        } max-content`,
+        gridTemplateColumns: `max-content ${isLeftPaneCollapsed ? '0px' : `${spaceStaticXs}`} auto 0px max-content`,
       }}
     >
       <CollapsiblePanel
