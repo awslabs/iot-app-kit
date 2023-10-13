@@ -1,8 +1,8 @@
-import { ChartAxisOptions, ViewportInMs } from '../types';
+import { ChartAxisOptions } from '../types';
 import { DEFAULT_X_AXIS, DEFAULT_X_AXIS_ID } from '../eChartsConstants';
 import { XAXisOption } from 'echarts/types/dist/shared';
 
-export const getXAxis = (viewportInMs: ViewportInMs, axis?: ChartAxisOptions): XAXisOption => {
+export const getXAxis = (axis?: ChartAxisOptions): XAXisOption => {
   return {
     id: DEFAULT_X_AXIS_ID,
     show: axis?.showX ?? DEFAULT_X_AXIS.show,
@@ -18,7 +18,8 @@ export const getXAxis = (viewportInMs: ViewportInMs, axis?: ChartAxisOptions): X
       },
     },
     splitNumber: 6,
+    // hardcoding the x axis so that all viewport logic is managed exclusively by useDataZoom hooks
     min: 0,
-    max: viewportInMs.isDurationViewport ? viewportInMs.end : undefined,
+    max: 4102513200000, // Jan 01 2100 19:00:00 UTC
   };
 };
