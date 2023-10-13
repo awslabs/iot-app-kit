@@ -146,7 +146,7 @@ const useTrendCursorsEvents = ({
         if (event.target.id.toString().startsWith('line')) {
           // update user feedback
           event.stop();
-          currentChart?.getZr().setCursorStyle('grab');
+          currentChart?.getZr().setCursorStyle('grabbing');
 
           const graphicIndex = graphicRef.current.findIndex((g) => g.children[0].id === event.target.id);
           const timeInMs = calculateTimeStamp(event.offsetX ?? 0, chartRef);
