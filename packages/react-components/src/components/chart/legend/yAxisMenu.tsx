@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 import { useMeasure } from 'react-use';
-import { Menu, MenuOption, PositionableMenu } from '../../menu';
-import Icon from '@cloudscape-design/components/icon';
-import { ColorIcon } from './colorIcon';
-import { Value } from '../../shared-components';
+import { isNumeric, round } from '@iot-app-kit/core-util';
 import { Primitive } from '@iot-app-kit/core';
 
-import { MULTI_Y_AXIS_LEGEND_WIDTH } from '../eChartsConstants';
-import { isNumeric, round } from '../../../utils/number';
-import { useChartStore } from '../store';
-
+import Icon from '@cloudscape-design/components/icon';
 import {
   borderRadiusDropdown,
   colorBackgroundDropdownItemHover,
@@ -18,11 +12,16 @@ import {
   spaceScaledXs,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
+import { Box } from '@cloudscape-design/components';
 
-import './yAxisMenu.css';
+import { Menu, MenuOption, PositionableMenu } from '../../menu';
+import { ColorIcon } from './colorIcon';
+import { Value } from '../../shared-components';
+import { MULTI_Y_AXIS_LEGEND_WIDTH } from '../eChartsConstants';
+import { useChartStore } from '../store';
 import { isDataStreamInList } from '../../../utils/isDataStreamInList';
 import { YAxisLegendOption } from '../types';
-import { Box } from '@cloudscape-design/components';
+import './yAxisMenu.css';
 
 const getValue = (value: Primitive, significantDigits: number) =>
   isNumeric(value) ? `${round(value, significantDigits)}` : value.toString();

@@ -8,7 +8,7 @@ import type { Primitive } from '@iot-app-kit/core';
  *      round(.02345678) => 0.02346
  */
 export const round = (num: number, precision = 4): number => {
-  if (Number.isNaN(num) || num === Infinity || num === -Infinity) {
+  if (Number.isNaN(num) || num === Infinity || num === -Infinity || precision <= 0) {
     return num;
   }
 
