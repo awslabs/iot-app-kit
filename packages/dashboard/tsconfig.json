@@ -5,6 +5,7 @@
     "./stories"
   ],
   "compilerOptions": {
+    "jsx": "react",
     "baseUrl": ".",
     "paths": {
       "~/*": [

@@ -1,8 +1,10 @@
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import Button from '@cloudscape-design/components/button';
 import Table from '@cloudscape-design/components/table';
-import React from 'react';
+import { Box, SpaceBetween } from '@cloudscape-design/components';
 
 import { useLatestValues } from '../../../useLatestValues';
 import { useExplorerPreferences } from '../../../useExplorerPreferences';
@@ -16,7 +18,7 @@ import { ModeledDataStreamTablePreferences } from './modeledDataStreamTablePrefe
 import { ModeledDataStreamTablePagination } from './modeledDataStreamTablePagination';
 import { ModeledDataStreamTableHeader } from './modeledDataStreamTableHeader';
 import type { ModeledDataStream } from '../types';
-import { Box, SpaceBetween } from '@cloudscape-design/components';
+import { DashboardState } from '~/store/state';
 
 export interface ModeledDataStreamTableProps {
   onClickAddModeledDataStreams: (modeledDataStreams: ModeledDataStream[]) => void;
@@ -33,6 +35,8 @@ export function ModeledDataStreamTable({
   isLoading,
   client,
 }: ModeledDataStreamTableProps) {
+  const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
+
   const [preferences, setPreferences] = useExplorerPreferences({
     defaultVisibleContent: ['name', 'latestValue'],
     resourceName: 'modeled data stream',
@@ -69,7 +73,7 @@ export function ModeledDataStreamTable({
     <Table
       {...collectionProps}
       items={items}
-      columnDefinitions={createModeledDataStreamColumnDefinitions()}
+      columnDefinitions={createModeledDataStreamColumnDefinitions(significantDigits)}
       trackBy={(item) => `${item.assetId}---${item.propertyId}`}
       variant='embedded'
       loading={isLoading}
