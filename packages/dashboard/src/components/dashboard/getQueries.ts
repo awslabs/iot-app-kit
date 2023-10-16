@@ -13,6 +13,10 @@ export const getQueries = (dashboardClientConfiguration: DashboardClientConfigur
     // @ts-expect-error TODO: Fix this
     iotSiteWiseClient: iotSiteWiseClient,
     iotEventsClient: iotEventsClient,
+    // Collect requests over 1 second before sending
+    settings: {
+      batchDuration: 1000,
+    },
   }).query;
 
   return {
