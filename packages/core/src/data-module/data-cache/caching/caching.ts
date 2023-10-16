@@ -208,7 +208,7 @@ export const getRequestInformations = ({
   return requestInformations;
 };
 
-const dataPointCompare = <T extends Primitive = number>(a: DataPoint<T>, b: DataPoint<T>) => {
+export const dataPointCompare = <T extends Primitive = number>(a: DataPoint<T>, b: DataPoint<T>) => {
   const aTime = a.x;
   const bTime = b.x;
   if (aTime !== bTime) {
