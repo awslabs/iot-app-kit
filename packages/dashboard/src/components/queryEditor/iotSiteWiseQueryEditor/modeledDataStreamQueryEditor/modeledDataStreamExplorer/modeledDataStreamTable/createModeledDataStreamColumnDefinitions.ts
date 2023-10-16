@@ -1,7 +1,10 @@
-import type { ModeledDataStream } from '../types';
+import { isNumeric, round } from '@iot-app-kit/core-util';
 import { type TableProps } from '@cloudscape-design/components/table';
+import type { ModeledDataStream } from '../types';
 
-export function createModeledDataStreamColumnDefinitions(): TableProps<
+export function createModeledDataStreamColumnDefinitions(
+  significantDigits: number
+): TableProps<
   ModeledDataStream & { latestValue?: number | string | boolean; latestValueTime?: number }
 >['columnDefinitions'] {
   return [
@@ -14,13 +17,23 @@ export function createModeledDataStreamColumnDefinitions(): TableProps<
     {
       id: 'latestValue',
       header: 'Latest value',
-      cell: ({ latestValue }) => latestValue,
+      cell: ({ latestValue }) => {
+        if (latestValue && isNumeric(latestValue)) {
+          return round(latestValue, significantDigits);
+        }
+        return latestValue;
+      },
       sortingField: 'latestValue',
     },
     {
       id: 'latestValueTime',
       header: 'Latest value time',
-      cell: ({ latestValueTime }) => latestValueTime,
+      cell: ({ latestValueTime }) => {
+        if (latestValueTime && isNumeric(latestValueTime)) {
+          return round(latestValueTime, significantDigits);
+        }
+        return latestValueTime;
+      },
       sortingField: 'latestValueTime',
     },
     {

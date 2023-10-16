@@ -1,9 +1,11 @@
 import React from 'react';
-import { TableProps as CloudscapeTableProps } from '@cloudscape-design/components';
+import { round } from '@iot-app-kit/core-util';
 import { STATUS_ICON_TYPE } from '@iot-app-kit/core';
+
+import { TableProps as CloudscapeTableProps } from '@cloudscape-design/components';
+
 import { LoadingSpinner } from './spinner';
 import { getIcons } from '../../common/iconUtils';
-import { round } from '../../utils/number';
 import type { TableColumnDefinition, TableItemHydrated } from './types';
 
 export const getDefaultColumnDefinitions: (

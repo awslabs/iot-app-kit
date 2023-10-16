@@ -1,8 +1,8 @@
 import { bisector } from 'd3-array';
+import { isNumeric } from '@iot-app-kit/core-util';
+import { COMPARISON_OPERATOR, Threshold, Primitive } from '@iot-app-kit/core';
 
 import { isValid } from './predicates';
-import { isNumeric } from './number';
-import { COMPARISON_OPERATOR, Threshold, Primitive } from '@iot-app-kit/core';
 
 /**
  * Returns only thresholds defined for number

@@ -1,7 +1,8 @@
 import { TooltipComponentOption } from 'echarts';
+import { isNumeric, round } from '@iot-app-kit/core-util';
+
 import { ChartOptions } from '../types';
 import { DEFAULT_TOOLTIP } from '../eChartsConstants';
-import { isNumeric, round } from '../../../utils/number';
 
 const formatValue = (significantDigits: ChartOptions['significantDigits']) => (value: string | number | Date) =>
   value instanceof Date ? value.toISOString() : isNumeric(value) ? `${round(value, significantDigits)}` : value;
