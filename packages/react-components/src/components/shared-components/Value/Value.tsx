@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Primitive } from '@iot-app-kit/core';
-import { round } from '../../../utils/number';
+import { round } from '@iot-app-kit/core-util';
 
 export const Value: React.FC<{ value?: Primitive; unit?: string; precision?: number }> = ({
   value,
