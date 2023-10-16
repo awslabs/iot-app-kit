@@ -42,6 +42,26 @@ export const subtractIntervals = (interval: Interval, intervals: Interval[]): In
     .map(toIntervalNotation);
 };
 
+// removes duplicates (by timestamp) in a data (Datapoint[][])
+const uniqByKeepLast = <T>(data: T[][], key: string) => {
+  return data.map((datum) => {
+    if (Array.isArray(datum)) {
+      return [
+        ...new Map(
+          datum.map((d, index) => {
+            if (typeof d === 'object' && !!d) {
+              return [d[key as keyof T] as unknown, d];
+            }
+            return [index, d];
+          })
+        ).values(),
+      ];
+    } else {
+      return datum;
+    }
+  });
+};
+
 /**
  * Merges together to lists of items given a way to compare items.
  *
@@ -125,8 +145,12 @@ export const addInterval = <T>(
   updatedIntervals.splice(insertIndex, overlappingIntervals.length, combinedInterval);
   const updatedItems = [...intervalStructure.items];
   updatedItems.splice(insertIndex, overlappingIntervals.length, combinedItems);
+
+  // removing duplicate timestamps in an interval
+  const updatedItemsUniqueByTimestamp = uniqByKeepLast(updatedItems, 'x');
+
   return {
     intervals: updatedIntervals,
-    items: updatedItems,
+    items: updatedItemsUniqueByTimestamp,
   };
 };

@@ -1,5 +1,6 @@
 import { addInterval, intersect, isContained, mergeItems, subtractIntervals } from './intervalStructure';
 import type { IntervalStructure } from './intervalStructure';
+import { dataPointCompare } from '../data-module/data-cache/caching/caching';
 
 const INITIAL_STATE = {
   intervals: [],
@@ -437,6 +438,41 @@ describe('adds item to interval structure', () => {
       expect(addInterval(structure, [25, 45], [30, 35, 40], numericalCompare)).toEqual({
         intervals: [[20, 60]],
         items: [[20, 30, 35, 40, 60]],
+      });
+    });
+
+    describe('add interval when data is object', () => {
+      it('the data has no duplicate timestamps', () => {
+        const structure: IntervalStructure<{ x: number; y: number }> = {
+          intervals: [[20, 30]],
+          items: [
+            [
+              { x: 21, y: 100 },
+              { x: 22, y: 100 },
+            ],
+          ],
+        };
+        expect(
+          addInterval(
+            structure,
+            [25, 45],
+            [
+              { x: 21, y: 100 },
+              { x: 22, y: 100 },
+              { x: 23, y: 100 },
+            ],
+            dataPointCompare
+          )
+        ).toEqual({
+          intervals: [[20, 45]],
+          items: [
+            [
+              { x: 21, y: 100 },
+              { x: 22, y: 100 },
+              { x: 23, y: 100 },
+            ],
+          ],
+        });
       });
     });
   });
