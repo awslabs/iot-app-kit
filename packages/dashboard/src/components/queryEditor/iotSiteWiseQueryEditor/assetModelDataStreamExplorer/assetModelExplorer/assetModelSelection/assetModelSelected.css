@@ -1,0 +1,16 @@
+.selected-asset-model-conatiner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.reset-selected-asset-model-container {
+  display: flex;
+  flex-grow: 1;
+  justify-content: end;
+}
+
+.reset-selected-asset-model-vertical-divider {
+  align-self: stretch;
+  height: "initial";
+}

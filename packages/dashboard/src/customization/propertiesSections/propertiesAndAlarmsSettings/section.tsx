@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useAssetDescriptionMapQuery } from '~/hooks/useAssetDescriptionQueries';
+import { AssetSummary, useAssetDescriptionMapQuery } from '~/hooks/useAssetDescriptionQueries';
 import { PropertyComponent } from './propertyComponent';
 import { isJust } from '~/util/maybe';
 import { SelectOneWidget } from '../shared/selectOneWidget';
@@ -8,6 +8,8 @@ import Box from '@cloudscape-design/components/box';
 import { PropertiesAlarmsSectionProps } from './sectionTypes';
 import { defaultOnDeleteQuery } from './onDeleteProperty';
 import { IoTSiteWiseDataStreamQuery } from '~/types';
+import { useAssetModel } from '~/hooks/useAssetModel/useAssetModel';
+import { handleRemoveAssetModelProperty } from './handleDeleteAssetModelProperty';
 
 const NoComponents = () => <Box variant='p'>No properties or alarms found</Box>;
 
@@ -17,6 +19,7 @@ export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = 
   updateQueryConfig,
   styleSettings,
   updateStyleSettings,
+  client,
   colorable = true,
 }) => {
   /**
@@ -43,6 +46,9 @@ export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = 
   const siteWiseAssetQuery = (editablePropertiesAndAlarms && queryConfig.value.query) || undefined;
   const describedAssetsMapQuery = useAssetDescriptionMapQuery(siteWiseAssetQuery);
   const describedAssetsMap = describedAssetsMapQuery.data ?? {};
+
+  const assetModelIds = (siteWiseAssetQuery?.assetModels ?? []).map(({ assetModelId }) => assetModelId);
+  const { assetModels } = useAssetModel({ assetModelIds, client });
 
   const getComponents = () => {
     if (mustEditAsSingle) return <SelectOneWidget />;
@@ -108,7 +114,50 @@ export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = 
         />
       )) ?? [];
 
-    const components = [...modeled, ...unmodeled];
+    const assetModeled =
+      siteWiseAssetQuery?.assetModels?.flatMap(({ assetModelId, properties }) =>
+        properties.map(({ propertyId, refId = propertyId }) => {
+          const assetModel = assetModels?.find((assetModel) => assetModel.assetModelId === assetModelId);
+          if (!assetModel) return null;
+
+          const convertedAssetSummary: AssetSummary = {
+            assetId: assetModelId,
+            assetName: assetModel.assetModelName,
+            properties:
+              assetModel.assetModelProperties?.map((a) => ({
+                propertyId: a.id,
+                name: a.name,
+                unit: a.unit,
+                dataType: a.dataType,
+                alias: a.name,
+              })) ?? [],
+            alarms: [], // not supported
+          };
+
+          return (
+            <PropertyComponent
+              key={`${assetModelId}-${propertyId}`}
+              propertyId={propertyId}
+              refId={refId}
+              assetSummary={convertedAssetSummary}
+              styleSettings={styleSettingsValue}
+              onDeleteAssetQuery={() =>
+                updateSiteWiseAssetQuery({
+                  ...siteWiseAssetQuery,
+                  assetModels: handleRemoveAssetModelProperty(
+                    { assetModels: siteWiseAssetQuery.assetModels ?? [] },
+                    { assetModelId, propertyId }
+                  ),
+                })
+              }
+              onUpdatePropertyColor={onUpdatePropertyColor(refId)}
+              colorable={colorable}
+            />
+          );
+        })
+      ) ?? [];
+
+    const components = [...modeled, ...unmodeled, ...assetModeled];
 
     return components.length ? components : <NoComponents />;
   };
