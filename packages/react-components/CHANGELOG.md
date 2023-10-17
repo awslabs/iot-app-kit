@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [9.2.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.1.0...react-components-v9.2.0) (2023-10-17)
+
+
+### Bug Fixes
+
+* **react-components:** echarts grab on canvas update cursor and tooltip ([a29da3a](https://github.com/awslabs/iot-app-kit/commit/a29da3a08a769137610bc37efde5605bf6b62dc2))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.1.0 to 9.2.0
+    * @iot-app-kit/core bumped from 9.1.0 to 9.2.0
+    * @iot-app-kit/core-util bumped from 9.1.0 to 9.2.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.1.0 to 9.2.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.1.0 to 9.2.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.1.0 to 9.2.0
+    * @iot-app-kit/testing-util bumped from 9.1.0 to 9.2.0
+    * @iot-app-kit/ts-config bumped from 9.1.0 to 9.2.0
+    * eslint-config-iot-app-kit bumped from 9.1.0 to 9.2.0
+
 ## [9.1.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.0.0...react-components-v9.1.0) (2023-10-13)
 
 
