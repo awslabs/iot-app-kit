@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Button,
   SpaceBetween,
@@ -17,18 +17,12 @@ import { StyledAssetPropertyQuery, YAxisOptions } from '~/customization/widgets/
 import { getPropertyDisplay } from './getPropertyDisplay';
 import type { AssetSummary } from '~/hooks/useAssetDescriptionQueries';
 import {
-  colorBackgroundHomeHeader,
-  colorBackgroundLayoutMain,
-  colorBorderButtonNormalDisabled,
-  spaceScaledM,
-  spaceScaledXxxs,
-  spaceStaticXs,
-} from '@cloudscape-design/design-tokens';
-import {
   StatusEyeHidden,
   StatusEyeVisible,
 } from '~/customization/propertiesSections/propertiesAndAlarmsSettings/icons';
 import { ClickDetail, NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
+import Tooltip from '~/components/tooltip/tooltip';
+import { spaceStaticXxs } from '@cloudscape-design/design-tokens';
 
 const numberOrUndefined = (number: string) => {
   const parsed = Number(number);
@@ -125,16 +119,8 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
   const [onMouseOver, setOnMouseOver] = useState(false);
   const isAssetQueryVisible = !onMouseOver ? isPropertyVisible : !isPropertyVisible;
   const propertyVisibilityIcon = isAssetQueryVisible ? StatusEyeVisible : StatusEyeHidden;
-  const tooltipStyle = {
-    fontSize: spaceScaledM,
-    color: colorBackgroundHomeHeader,
-    backgroundColor: colorBackgroundLayoutMain,
-    padding: `${spaceStaticXs} ${spaceStaticXs}`,
-    borderRadius: spaceStaticXs,
-    borderWidth: spaceScaledXxxs,
-    borderColor: colorBorderButtonNormalDisabled,
-    boxShadow: `${spaceScaledXxxs} ${spaceScaledXxxs} ${spaceScaledXxxs} ${colorBorderButtonNormalDisabled}`,
-  };
+  const labelRef = useRef<HTMLDivElement | null>(null);
+  const [isNameTruncated, setIsNameTruncated] = useState(false);
 
   const onToggleAssetQuery: NonCancelableEventHandler<ClickDetail> = (e) => {
     e.stopPropagation();
@@ -153,17 +139,26 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
     updateStyle(styleToReset); // as we add more sections, reset style values here
   };
 
+  useEffect(() => {
+    if (labelRef.current) {
+      setIsNameTruncated(labelRef.current.scrollWidth > labelRef.current.clientWidth);
+    }
+  }, [label]);
+
   const YAxisHeader = (
     <SpaceBetween size='s' direction='horizontal'>
       {colorable && display === 'property' && (
         <ColorPicker color={property.color || ''} updateColor={(newColor) => updateStyle({ color: newColor })} />
       )}
-      <div style={{ fontWeight: 'normal' }}>{label}</div>
-      <div className='property-display-toggle' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        <Button onClick={onToggleAssetQuery} variant='icon' iconSvg={propertyVisibilityIcon} />
-        <span className='tooltiptext' style={tooltipStyle}>
-          {onMouseOver && isPropertyVisible ? 'hide' : 'unhide'}
-        </span>
+      <Tooltip content={isNameTruncated ? label : ''} position='top'>
+        <div className='property-display-label' style={{ marginBlock: spaceStaticXxs }} ref={labelRef}>
+          {label}
+        </div>
+      </Tooltip>
+      <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <Tooltip content={onMouseOver && isPropertyVisible ? 'hide' : 'unhide'} position='top'>
+          <Button onClick={onToggleAssetQuery} variant='icon' iconSvg={propertyVisibilityIcon} />
+        </Tooltip>
       </div>
 
       <Button onClick={onDeleteAssetQuery} variant='icon' iconName='remove' />
