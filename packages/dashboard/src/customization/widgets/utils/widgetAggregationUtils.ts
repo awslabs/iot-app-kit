@@ -65,5 +65,13 @@ function getFirstProperty(queryConfig: QueryWidget['properties']['queryConfig'])
     if ('assets' in queryConfig.query && queryConfig.query.assets != null && queryConfig.query.assets.length > 0) {
       return queryConfig.query.assets[0].properties[0];
     }
+
+    if (
+      'assetModels' in queryConfig.query &&
+      queryConfig.query.assetModels != null &&
+      queryConfig.query.assetModels.length > 0
+    ) {
+      return queryConfig.query.assetModels[0].properties[0];
+    }
   }
 }

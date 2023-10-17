@@ -6,6 +6,7 @@ import { DashboardWidget } from '~/types';
 import { GeneralPropertiesAlarmsSection } from './section';
 import { StyledPropertiesAlarmsSection } from './styledSection';
 import { PropertyLens } from '~/customization/propertiesSection';
+import { useClients } from '~/components/dashboard/clientContext';
 
 // exclude table because it is handled specially
 const isQueryWidgetExcludesTable = (w: DashboardWidget): w is QueryWidget =>
@@ -18,14 +19,27 @@ const RenderPropertiesSectionWithStyledQuery = ({
 }: {
   useProperty: PropertyLens<LineScatterChartWidget>;
 }) => {
+  const { iotSiteWiseClient } = useClients();
+
   const [queryConfig, updateQueryConfig] = useProperty(
     (properties) => properties.queryConfig,
     (properties, updatedQueryConfig) => ({ ...properties, queryConfig: updatedQueryConfig })
   );
-  return <StyledPropertiesAlarmsSection queryConfig={queryConfig} updateQueryConfig={updateQueryConfig} />;
+
+  if (!iotSiteWiseClient) return null;
+
+  return (
+    <StyledPropertiesAlarmsSection
+      queryConfig={queryConfig}
+      updateQueryConfig={updateQueryConfig}
+      client={iotSiteWiseClient}
+    />
+  );
 };
 
 const RenderPropertiesSectionWithoutTable = ({ useProperty }: { useProperty: PropertyLens<QueryWidget> }) => {
+  const { iotSiteWiseClient } = useClients();
+
   const [queryConfig, updateQueryConfig] = useProperty(
     (properties) => properties.queryConfig,
     (properties, updatedQueryConfig) => ({ ...properties, queryConfig: updatedQueryConfig })
@@ -34,17 +48,23 @@ const RenderPropertiesSectionWithoutTable = ({ useProperty }: { useProperty: Pro
     (properties) => properties.styleSettings,
     (properties, updatedStyleSettings) => ({ ...properties, styleSettings: updatedStyleSettings })
   );
+
+  if (!iotSiteWiseClient) return null;
+
   return (
     <GeneralPropertiesAlarmsSection
       queryConfig={queryConfig}
       updateQueryConfig={updateQueryConfig}
       styleSettings={styleSettings}
       updateStyleSettings={updateStyleSettings}
+      client={iotSiteWiseClient}
     />
   );
 };
 
 const RenderPropertiesSectionForTables = ({ useProperty }: { useProperty: PropertyLens<TableWidget> }) => {
+  const { iotSiteWiseClient } = useClients();
+
   const [queryConfig, updateQueryConfig] = useProperty(
     (properties) => properties.queryConfig,
     (properties, updatedQueryConfig) => ({ ...properties, queryConfig: updatedQueryConfig })
@@ -53,6 +73,8 @@ const RenderPropertiesSectionForTables = ({ useProperty }: { useProperty: Proper
     (properties) => properties.styleSettings,
     (properties, updatedStyleSettings) => ({ ...properties, styleSettings: updatedStyleSettings })
   );
+
+  if (!iotSiteWiseClient) return null;
 
   return (
     <GeneralPropertiesAlarmsSection
@@ -61,6 +83,7 @@ const RenderPropertiesSectionForTables = ({ useProperty }: { useProperty: Proper
       styleSettings={styleSettings}
       updateStyleSettings={updateStyleSettings}
       colorable={false}
+      client={iotSiteWiseClient}
     />
   );
 };

@@ -11,7 +11,7 @@ type Query = NonNullable<QueryWidget['properties']['queryConfig']['query']>;
 
 // Assigns default RefID to each property and defauly aggregations+resolutions to each property
 const assignDefaults = (
-  { assets = [], properties = [] }: IoTSiteWiseDataStreamQuery,
+  { assets = [], properties = [], assetModels = [] }: IoTSiteWiseDataStreamQuery,
   resAndAggr: { aggregation?: AggregateType; resolution?: string },
   getId: () => string = uuid
 ) => ({
@@ -30,6 +30,15 @@ const assignDefaults = (
     resolution: resAndAggr.resolution,
     aggregationType: resAndAggr.aggregation,
   })),
+  assetModels: assetModels.map(({ properties, ...others }) => ({
+    ...others,
+    properties: properties.map((propertyQuery) => ({
+      ...propertyQuery,
+      resolution: resAndAggr.resolution,
+      aggregationType: resAndAggr.aggregation,
+      refId: propertyQuery.refId || getId(),
+    })),
+  })),
 });
 
 const assignDefaultColors = (
@@ -40,7 +49,9 @@ const assignDefaultColors = (
   const assetRefIds =
     siteWiseQuery.assets?.flatMap((asset) => asset.properties.map(({ refId }) => refId)).filter(isDefined) ?? [];
   const propertyRefIds = siteWiseQuery.properties?.map(({ refId }) => refId).filter(isDefined) ?? [];
-  const refIds = [...assetRefIds, ...propertyRefIds];
+  const assetModelRefIds =
+    siteWiseQuery.assetModels?.flatMap((asset) => asset.properties.map(({ refId }) => refId)).filter(isDefined) ?? [];
+  const refIds = [...assetRefIds, ...propertyRefIds, ...assetModelRefIds];
 
   return refIds.reduce((acc: StyleSettingsMap, refId, index) => {
     const existing = styleSettings[refId] || {};
