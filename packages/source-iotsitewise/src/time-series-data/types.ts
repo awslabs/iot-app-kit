@@ -14,6 +14,8 @@ export type PropertyAlias = string;
 
 export type AssetId = string;
 
+export type AssetModelId = string;
+
 export type AssetPropertyQuery = {
   propertyId: string;
   refId?: RefId;
@@ -24,16 +26,30 @@ export type AssetPropertyQuery = {
 };
 
 export type PropertyAliasQuery = {
-  propertyAlias: string;
+  propertyAlias: PropertyAlias;
   refId?: RefId;
   resolution?: string;
   aggregationType?: AggregateType;
   cacheSettings?: CacheSettings;
 };
 
+type AssetModelPropertyQuery = {
+  propertyId: string;
+  refId?: RefId;
+  resolution?: string;
+  cacheSettings?: CacheSettings;
+  aggregationType?: AggregateType;
+};
+
 export type AssetQuery = {
   assetId: AssetId;
   properties: AssetPropertyQuery[];
+};
+
+export type AssetModelQuery = {
+  assetModelId: AssetModelId;
+  assetIds?: AssetId[]; // can map multiple assets
+  properties: AssetModelPropertyQuery[];
 };
 
 export type SiteWiseAssetQuery = DataStreamQuery & {
@@ -42,6 +58,10 @@ export type SiteWiseAssetQuery = DataStreamQuery & {
 
 export type SiteWisePropertyAliasQuery = DataStreamQuery & {
   properties: PropertyAliasQuery[];
+};
+
+export type SiteWiseAssetModelQuery = DataStreamQuery & {
+  assetModels: AssetModelQuery[];
 };
 
 export type SiteWiseDataStreamQuery = Partial<SiteWiseAssetQuery> & Partial<SiteWisePropertyAliasQuery>;
