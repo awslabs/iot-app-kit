@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import './tooltip.css';
 import {
   colorBackgroundHomeHeader,
@@ -8,6 +8,7 @@ import {
   spaceStaticXs,
   spaceStaticXxxs,
 } from '@cloudscape-design/design-tokens';
+import { MAX_TOOLTIP_WIDTH, TOP_TOOLTIP_MARGIN, WRAPPED_TOOLTIP_WIDTH } from './constants';
 
 const Tooltip = ({
   content,
@@ -18,6 +19,8 @@ const Tooltip = ({
   position: 'top' | 'bottom' | 'left' | 'right';
   children: React.ReactNode;
 }) => {
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const [isContentWrapped, setIsContentWrapped] = useState(false);
   const tooltipStyle = {
     fontSize: spaceScaledM,
     color: colorBackgroundHomeHeader,
@@ -25,14 +28,40 @@ const Tooltip = ({
     padding: spaceStaticS,
     borderRadius: spaceStaticXs,
     border: `${spaceStaticXxxs} solid ${colorBackgroundHomeHeader}`,
+    maxWidth: `${MAX_TOOLTIP_WIDTH}px`,
+    ...(isContentWrapped && { width: `${MAX_TOOLTIP_WIDTH}px`, bottom: `${TOP_TOOLTIP_MARGIN}%` }),
+  };
+
+  const handleMouseEnter = () => {
+    if (contentRef.current) {
+      setIsContentWrapped(contentRef.current.clientWidth > WRAPPED_TOOLTIP_WIDTH);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsContentWrapped(false);
+  };
+
+  const handleOnClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
   };
 
   return (
-    <div className='tooltip-container'>
+    <div className='tooltip-container' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {children}
-      <div className={`tooltip-text ${position}`} style={tooltipStyle}>
-        {content}
-      </div>
+      {content && (
+        <span
+          className={`tooltip-text ${position}`}
+          style={{
+            ...tooltipStyle,
+            whiteSpace: !isContentWrapped ? 'nowrap' : 'pre-wrap',
+          }}
+          ref={contentRef}
+          onClick={handleOnClick}
+        >
+          {content}
+        </span>
+      )}
     </div>
   );
 };

@@ -5,9 +5,9 @@
 
 .tooltip-text {
   position: absolute;
-  white-space: nowrap;
   visibility: hidden;
-  z-index: 9999;
+  z-index: 99;
+  text-align: center;
 }
 
 .tooltip-container:hover .tooltip-text {
@@ -15,8 +15,8 @@
 }
 
 .top {
-  bottom: 30%;
-  left: 35%;
+  bottom: -30%;
+  left: 40%;
   transform: translateX(-50%) translateY(-100%);
 }
 
