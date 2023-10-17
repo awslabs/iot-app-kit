@@ -2,6 +2,7 @@ import type { StyledAssetQuery, StyledSiteWiseQueryConfig, SiteWiseQueryConfig }
 import { Maybe } from '~/util/maybe';
 import type { StyleSettingsMap } from '@iot-app-kit/core';
 import type { IoTSiteWiseDataStreamQuery } from '~/types';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 
 export type OnDeleteAssetQuery = (params: {
   assetId: string;
@@ -17,6 +18,7 @@ export type PropertiesAlarmsSectionProps = {
   updateStyleSettings: (newValue: StyleSettingsMap | undefined) => void;
   onDeleteAssetQuery?: OnDeleteAssetQuery;
   colorable?: boolean;
+  client: IoTSiteWiseClient;
 };
 
 export type StyledPropertiesAlarmsSectionProps = {
@@ -24,4 +26,5 @@ export type StyledPropertiesAlarmsSectionProps = {
   updateQueryConfig: (newValue: StyledSiteWiseQueryConfig) => void;
   onDeleteAssetQuery?: OnDeleteAssetQuery;
   colorable?: boolean;
+  client: IoTSiteWiseClient;
 };

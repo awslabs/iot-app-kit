@@ -11,6 +11,8 @@ export type {
   SiteWiseDataStreamQuery,
   SiteWiseAssetQuery,
   SiteWisePropertyAliasQuery,
+  SiteWiseAssetModelQuery,
+  AssetModelQuery,
   AssetPropertyQuery,
   PropertyAliasQuery,
 } from './time-series-data/types';

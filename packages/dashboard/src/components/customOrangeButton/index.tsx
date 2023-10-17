@@ -9,7 +9,7 @@ const CustomOrangeButton = ({
   title,
   handleClick,
   ...rest
-}: { title: string; handleClick: () => void } & ButtonProps) => {
+}: { title: string; handleClick?: () => void } & ButtonProps) => {
   return (
     <Button className='btn-custom-primary' onClick={handleClick} data-testid='custom-orange-button' {...rest}>
       <span style={{ color: colorBackgroundHomeHeader }}>{title}</span>
