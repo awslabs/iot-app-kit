@@ -13,7 +13,7 @@ import { getCurrentAggregationResolution } from '~/customization/widgets/utils/w
 type WidgetWithQuery = DashboardWidget<{ queryConfig: { query: IoTSiteWiseDataStreamQuery } }>;
 
 export const styledQueryWidgetOnDrop = (updatedQuery: IoTSiteWiseDataStreamQuery, widget: QueryWidget) => {
-  const mergedQuery = { assets: [], properties: [], ...updatedQuery };
+  const mergedQuery = { assets: [], properties: [], assetModels: [], ...updatedQuery };
 
   const queryWithRefIds = assignDefaultRefId(mergedQuery);
 

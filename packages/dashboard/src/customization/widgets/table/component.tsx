@@ -17,6 +17,7 @@ import { TABLE_OVERFLOW_HEIGHT, TABLE_WIDGET_MAX_HEIGHT } from '../constants';
 import { onUpdateWidgetsAction } from '~/store/actions';
 import { useTableItems } from './useTableItems';
 import WidgetTile from '~/components/widgets/tile/tile';
+import { assetModelQueryToSiteWiseAssetQuery } from '../utils/assetModelQueryToAssetQuery';
 
 export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
   {
@@ -45,7 +46,8 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   const queries = useQueries(queryConfig.query);
   const key = createWidgetRenderKey(widget.id);
 
-  const items = useTableItems(queryConfig.query);
+  const mappedQuery = assetModelQueryToSiteWiseAssetQuery(queryConfig.query);
+  const items = useTableItems(mappedQuery);
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
   const chartSize = useChartSize(widget);
