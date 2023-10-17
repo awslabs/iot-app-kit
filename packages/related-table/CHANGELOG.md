@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.2.0](https://github.com/awslabs/iot-app-kit/compare/related-table-v9.1.0...related-table-v9.2.0) (2023-10-17)
+
+
+### Miscellaneous Chores
+
+* **related-table:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.1.0 to 9.2.0
+    * @iot-app-kit/ts-config bumped from 9.1.0 to 9.2.0
+    * eslint-config-iot-app-kit bumped from 9.1.0 to 9.2.0
+
 ## [9.1.0](https://github.com/awslabs/iot-app-kit/compare/related-table-v9.0.0...related-table-v9.1.0) (2023-10-13)
 
 

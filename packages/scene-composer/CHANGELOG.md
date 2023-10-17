@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.2.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.1.0...scene-composer-v9.2.0) (2023-10-17)
+
+
+### Features
+
+* set tagStyle flag to true for viewer ([af5357f](https://github.com/awslabs/iot-app-kit/commit/af5357f53e59ed227319c0a37061b4b07b62584e))
+
+
+### Bug Fixes
+
+* **composer:** floating toolbar orientation dependent on screen size ([228037d](https://github.com/awslabs/iot-app-kit/commit/228037da8351499be142b75fc6b62aefc9047ee2))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.1.0 to 9.2.0
+    * @iot-app-kit/react-components bumped from 9.1.0 to 9.2.0
+    * @iot-app-kit/related-table bumped from 9.1.0 to 9.2.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.1.0 to 9.2.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 9.1.0 to 9.2.0
+
 ## [9.1.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.0.0...scene-composer-v9.1.0) (2023-10-13)
 
 

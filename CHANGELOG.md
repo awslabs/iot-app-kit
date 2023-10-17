@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.2.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.1.0...root-v9.2.0) (2023-10-17)
+
+
+### Features
+
+* set tagStyle flag to true for viewer ([af5357f](https://github.com/awslabs/iot-app-kit/commit/af5357f53e59ed227319c0a37061b4b07b62584e))
+* setting the sizes, and sizing behavior of the left and right side panels within the dashboard ([8cec7c0](https://github.com/awslabs/iot-app-kit/commit/8cec7c070ab401d71397676c25037ad28f0168b5))
+
+
+### Bug Fixes
+
+* **composer:** floating toolbar orientation dependent on screen size ([228037d](https://github.com/awslabs/iot-app-kit/commit/228037da8351499be142b75fc6b62aefc9047ee2))
+* **core:** fix for duplicate data per timestamp issue ([9cca8b1](https://github.com/awslabs/iot-app-kit/commit/9cca8b1767584b770fe08d4da24b20c4a0fc7a40))
+* **react-components:** echarts grab on canvas update cursor and tooltip ([a29da3a](https://github.com/awslabs/iot-app-kit/commit/a29da3a08a769137610bc37efde5605bf6b62dc2))
+* synchronize batching ([dd0c0c6](https://github.com/awslabs/iot-app-kit/commit/dd0c0c6d0b17f4662ef370633ccd300899f9c106))
+
 ## [9.1.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.0.0...root-v9.1.0) (2023-10-13)
 
 
