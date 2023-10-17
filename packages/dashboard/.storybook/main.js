@@ -1,5 +1,6 @@
 require('dotenv').config();
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const path = require('path');
 
 module.exports = {
   stories: ['../stories/**/*.stories.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -25,5 +26,9 @@ module.exports = {
   webpackFinal: async (config) => {
     config.resolve.plugins = [new TsconfigPathsPlugin()];
     return config;
-  }
+  },
+  alias: {
+    '@iot-app-kit/react-components': path.resolve(__dirname, '../../react-components/dist/esm/index.js'),
+    '@iot-app-kit/core': path.resolve(__dirname, '../../core/dist/es/index.js'),
+  },
 };
