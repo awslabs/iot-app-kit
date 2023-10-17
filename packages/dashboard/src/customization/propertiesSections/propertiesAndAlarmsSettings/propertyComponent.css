@@ -13,47 +13,10 @@
   align-items: center;
 }
 
-.property-display-toggle {
-  position: relative;
-}
-
-.property-display-toggle .tooltiptext {
-  position: absolute;
-  border-style: solid;
-  text-align: center;
-  z-index: 9;
-  visibility: hidden;
-  transform: translateX(-50%);
-  min-width: 60px;
-  left: 50%;
-  bottom: 100%;
-}
-
-.property-display-toggle .tooltiptext::before,
-.property-display-toggle .tooltiptext::after {
-  content: "";
-  position: absolute;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  left: 50%;
-  right: 50%;
-  margin: auto;
-  margin-left: -10px;
-  top: 100%;
-}
-
-.property-display-toggle .tooltiptext::before {
-  border-top: 11px solid #9ba7b6;
-  margin-bottom: 5px;
-}
-
-.property-display-toggle .tooltiptext::after {
-  border-top: 10px solid var(--colors-white);
-  margin-top: -2px;
-  z-index: 1;
-}
-
-.property-display-toggle:hover .tooltiptext {
-  visibility: visible;
-  display: block;
+.property-display-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: normal;
+  width: 288px;
 }
