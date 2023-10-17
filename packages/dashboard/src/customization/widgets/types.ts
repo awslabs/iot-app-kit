@@ -3,6 +3,7 @@ import type {
   AssetPropertyQuery,
   SiteWiseAssetQuery,
   SiteWisePropertyAliasQuery,
+  SiteWiseAssetModelQuery,
 } from '@iot-app-kit/source-iotsitewise';
 import type { DashboardWidget } from '~/types';
 import type { AxisSettings, ComplexFontSettings, SimpleFontSettings, ThresholdWithId } from '../settings';
@@ -16,7 +17,7 @@ export type QueryConfig<S, T> = {
 
 export type SiteWiseQueryConfig = QueryConfig<
   'iotsitewise',
-  (Partial<SiteWiseAssetQuery> & Partial<SiteWisePropertyAliasQuery>) | undefined
+  (Partial<SiteWiseAssetQuery> & Partial<SiteWisePropertyAliasQuery> & Partial<SiteWiseAssetModelQuery>) | undefined
 >;
 
 export type QueryProperties = {
@@ -95,6 +96,11 @@ export type StyledAssetQuery = {
     properties: StyledAssetPropertyQuery[];
   }[];
   properties?: (SiteWisePropertyAliasQuery['properties'][number] & AssetPropertyStyles)[];
+  assetModels?: {
+    assetModelId: SiteWiseAssetModelQuery['assetModels'][number]['assetModelId'];
+    assetIds?: SiteWiseAssetModelQuery['assetModels'][number]['assetIds'];
+    properties: StyledAssetPropertyQuery[];
+  }[];
 };
 
 export type ThresholdStyleType = {

@@ -24,6 +24,7 @@ import WidgetTile from '~/components/widgets/tile/tile';
 import NoChartData from '../components/no-chart-data';
 import { default as lineSvgDark } from './line-dark.svg';
 import { IoTSiteWiseDataStreamQuery } from '~/types';
+import { assetModelQueryToSiteWiseAssetQuery } from '../utils/assetModelQueryToAssetQuery';
 
 const mapConnectionStyleToVisualizationType = (
   connectionStyle: LineStyles['connectionStyle']
@@ -138,7 +139,8 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
 
   const queries = useQueries(query);
 
-  const styleSettings = useAdaptedStyleSettings({ line, symbol }, query);
+  const mappedQuery = assetModelQueryToSiteWiseAssetQuery(query);
+  const styleSettings = useAdaptedStyleSettings({ line, symbol }, mappedQuery);
 
   const aggregation = getAggregation(widget);
 
