@@ -96,7 +96,7 @@ export const ColorOverlayComponentEditor: React.FC<IColorOverlayComponentEditor>
           placeholder={intl.formatMessage({ defaultMessage: 'Choose a rule', description: 'placeholder' })}
         />
       </FormField>
-      <Button onClick={removeComponentCallback}>
+      <Button data-testid='color-overlay-remove-component-button' onClick={removeComponentCallback}>
         {intl.formatMessage({ defaultMessage: 'Remove', description: 'remove Button text' })}
       </Button>
     </SpaceBetween>

@@ -95,7 +95,7 @@ describe('ColorOverlayComponentEditor', () => {
     const { container } = render(<ColorOverlayComponentEditor node={mockNode} component={colorComponent} />);
 
     const polarisWrapper = wrapper(container);
-    const button = polarisWrapper.findButton();
+    const button = polarisWrapper.findButton('[data-testid="color-overlay-remove-component-button"]');
     button!.click();
     expect(removeComponentFn).toBeCalledWith(mockNode.ref, mockNode.components[0].ref);
   });
