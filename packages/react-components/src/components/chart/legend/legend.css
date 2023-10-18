@@ -19,6 +19,12 @@
   grid-template-columns: max-content 1fr;
 }
 
+.base-chart-legend-row-data {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .base-chart-legend-row-line-ind {
   height: 4px;
   width: 20px;
