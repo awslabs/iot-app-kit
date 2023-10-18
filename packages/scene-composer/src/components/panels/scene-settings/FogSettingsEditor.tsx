@@ -7,7 +7,6 @@ import { IFogSettings, KnownSceneProperty } from '../../../interfaces';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { useStore } from '../../../store';
 import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
-import { ExpandableInfoSection } from '../CommonPanelComponents';
 
 export const FogSettingsEditor: React.FC = () => {
   useLifecycleLogging('FogSettingsEditor');
@@ -20,20 +19,20 @@ export const FogSettingsEditor: React.FC = () => {
   );
 
   const [fogEnabled, setFogEnabled] = useState(!!fogSettings);
-  const [internalColor, setInternalColor] = useState(fogSettings?.colorHex || 0xcccccc);
+  const [internalColor, setInternalColor] = useState(fogSettings?.color || '#cccccc');
   const [internalNearDistance, setInternalNearDistance] = useState(fogSettings?.near || 1);
   const [internalFarDistance, setInternalFarDistance] = useState(fogSettings?.far || 1000);
 
-  const tagStyleColors = useStore(sceneComposerId)((state) =>
-    state.getSceneProperty<string[]>(KnownSceneProperty.TagCustomColors, []),
+  const fogColors = useStore(sceneComposerId)((state) =>
+    state.getSceneProperty<string[]>(KnownSceneProperty.FogCustomColors, []),
   );
-  const setTagColorsSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
+  const setFogColorsSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
 
   const onToggleFog = useCallback(
     (checked: boolean) => {
       if (checked) {
         setSceneProperty(KnownSceneProperty.FogSettings, {
-          colorHex: internalColor,
+          color: internalColor,
           near: internalNearDistance,
           far: internalFarDistance,
         });
@@ -48,7 +47,7 @@ export const FogSettingsEditor: React.FC = () => {
   const onInputBlur = useCallback(() => {
     if (fogEnabled && (fogSettings?.near !== internalNearDistance || fogSettings?.far !== internalFarDistance)) {
       setSceneProperty(KnownSceneProperty.FogSettings, {
-        colorHex: internalColor,
+        color: internalColor,
         near: internalNearDistance,
         far: internalFarDistance,
       });
@@ -57,12 +56,11 @@ export const FogSettingsEditor: React.FC = () => {
 
   const onColorChange = useCallback(
     (color: string) => {
-      const hex = parseInt(color.replace(/^#/, ''), 16);
-      if (hex !== internalColor) {
-        setInternalColor(hex);
+      if (color !== internalColor) {
+        setInternalColor(color);
         if (fogEnabled) {
           setSceneProperty(KnownSceneProperty.FogSettings, {
-            colorHex: hex,
+            color: color,
             near: internalNearDistance,
             far: internalFarDistance,
           });
@@ -94,54 +92,53 @@ export const FogSettingsEditor: React.FC = () => {
 
   return (
     <React.Fragment>
-      <ExpandableInfoSection
-        title={intl.formatMessage({ description: 'ExpandableInfoSection Title', defaultMessage: 'Fog Settings' })}
-        defaultExpanded={false}
-      >
-        <SpaceBetween size='s'>
-          <Checkbox
-            data-testid='enable-fog-checkbox'
-            checked={!!fogSettings}
-            onChange={(e) => onToggleFog(e.detail.checked)}
-          >
-            {intl.formatMessage({ defaultMessage: 'Enable Fog', description: 'checkbox label' })}
-          </Checkbox>
-          <ColorSelectorCombo
-            color={`#${internalColor?.toString(16).padStart(6, '0')}`}
-            onSelectColor={(pickedColor) => onColorChange(pickedColor)}
-            onUpdateCustomColors={(chosenCustomColors) =>
-              setTagColorsSceneProperty(KnownSceneProperty.TagCustomColors, chosenCustomColors)
-            }
-            customColors={tagStyleColors}
-            colorPickerLabel={intl.formatMessage({ defaultMessage: 'Color', description: 'Color' })}
-            customColorLabel={intl.formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}
-          />
-          <FormField label={intl.formatMessage({ defaultMessage: 'Near Distance', description: 'Form Field label' })}>
-            <Input
-              data-testid='fog-near-input'
-              value={String(internalNearDistance)}
-              type='number'
-              onBlur={onInputBlur}
-              onChange={onNearChange}
-              onKeyDown={(e) => {
-                if (e.detail.key === 'Enter') onInputBlur();
-              }}
+      <SpaceBetween size='s'>
+        <Checkbox
+          data-testid='enable-fog-checkbox'
+          checked={!!fogSettings}
+          onChange={(e) => onToggleFog(e.detail.checked)}
+        >
+          {intl.formatMessage({ defaultMessage: 'Enable Fog', description: 'checkbox label' })}
+        </Checkbox>
+        {!!fogSettings && (
+          <>
+            <ColorSelectorCombo
+              color={internalColor}
+              onSelectColor={(pickedColor) => onColorChange(pickedColor)}
+              onUpdateCustomColors={(chosenCustomColors) =>
+                setFogColorsSceneProperty(KnownSceneProperty.FogCustomColors, chosenCustomColors)
+              }
+              customColors={fogColors}
+              colorPickerLabel={intl.formatMessage({ defaultMessage: 'Color', description: 'Color' })}
+              customColorLabel={intl.formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}
             />
-          </FormField>
-          <FormField label={intl.formatMessage({ defaultMessage: 'Far Distance', description: 'Form Field label' })}>
-            <Input
-              data-testid='fog-far-input'
-              value={String(internalFarDistance)}
-              type='number'
-              onBlur={onInputBlur}
-              onChange={onFarChange}
-              onKeyDown={(e) => {
-                if (e.detail.key === 'Enter') onInputBlur();
-              }}
-            />
-          </FormField>
-        </SpaceBetween>
-      </ExpandableInfoSection>
+            <FormField label={intl.formatMessage({ defaultMessage: 'Near Distance', description: 'Form Field label' })}>
+              <Input
+                data-testid='fog-near-input'
+                value={String(internalNearDistance)}
+                type='number'
+                onBlur={onInputBlur}
+                onChange={onNearChange}
+                onKeyDown={(e) => {
+                  if (e.detail.key === 'Enter') onInputBlur();
+                }}
+              />
+            </FormField>
+            <FormField label={intl.formatMessage({ defaultMessage: 'Far Distance', description: 'Form Field label' })}>
+              <Input
+                data-testid='fog-far-input'
+                value={String(internalFarDistance)}
+                type='number'
+                onBlur={onInputBlur}
+                onChange={onFarChange}
+                onKeyDown={(e) => {
+                  if (e.detail.key === 'Enter') onInputBlur();
+                }}
+              />
+            </FormField>
+          </>
+        )}
+      </SpaceBetween>
     </React.Fragment>
   );
 };
