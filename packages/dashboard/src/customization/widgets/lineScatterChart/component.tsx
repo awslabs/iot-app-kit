@@ -56,10 +56,13 @@ const mapSymboleStyleToSymbol = (symbolStyle: SymbolStyles['style']): ChartStyle
     case 'pin':
     case 'none':
       return symbolStyle;
+
     default:
       return undefined;
   }
 };
+
+const emptyLegendObject = {};
 
 const useAdaptedStyleSettings = (rootStyles: LineAndScatterStyles, styledAssetQuery?: IoTSiteWiseDataStreamQuery) => {
   const depQuery = JSON.stringify(styledAssetQuery);
@@ -200,7 +203,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
         thresholds={thresholds}
         significantDigits={significantDigits}
         size={size}
-        legend={legend?.visible == true ? {} : undefined}
+        legend={legend?.visible ? emptyLegendObject : undefined}
         defaultVisualizationType={mapConnectionStyleToVisualizationType(line?.connectionStyle)}
       />
     </WidgetTile>
