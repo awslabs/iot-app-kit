@@ -103,10 +103,6 @@
     "note": "Error message",
     "text": "Error - unable to render the scene"
   },
-  "2A8qfi": {
-    "note": "ExpandableInfoSection Title",
-    "text": "Fog Settings"
-  },
   "2F5/qR": {
     "note": "ExpandableInfoSection Title",
     "text": "Scene Settings"
@@ -622,6 +618,10 @@
   "T1kJTq": {
     "note": "label",
     "text": "Select color"
+  },
+  "TWQfaz": {
+    "note": "checkbox label",
+    "text": "Enable Background"
   },
   "TZDmnV": {
     "note": "label for when the user searches for a nonexistent animation",

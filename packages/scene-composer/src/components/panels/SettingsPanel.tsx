@@ -19,6 +19,7 @@ import { ComponentVisibilityToggle } from './scene-settings/ComponentVisibilityT
 import { OverlayPanelVisibilityToggle } from './scene-settings/OverlayPanelVisibilityToggle';
 import { ConvertSceneSettings } from './scene-settings/ConvertSceneSettings';
 import { FogSettingsEditor } from './scene-settings/FogSettingsEditor';
+import { SceneBackgroundSettingsEditor } from './scene-settings/SceneBackgroundSettingsEditor';
 export interface SettingsPanelProps {
   valueDataBindingProvider?: IValueDataBindingProvider;
 }
@@ -179,7 +180,12 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
                 expandToViewport
               />
             </FormField>
-            {sceneAppearanceEnabled && <FogSettingsEditor />}
+            {sceneAppearanceEnabled && (
+              <React.Fragment>
+                <FogSettingsEditor />
+                <SceneBackgroundSettingsEditor />
+              </React.Fragment>
+            )}
           </SpaceBetween>
         </ExpandableInfoSection>
       )}

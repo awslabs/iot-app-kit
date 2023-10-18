@@ -11,13 +11,13 @@ import { useThree } from '@react-three/fiber';
 import React from 'react';
 
 import { useStore } from '../../../src/store';
-import { IFogSettings } from '../../interfaces';
+import { ISceneBackgroundSetting } from '../../interfaces';
 
-import Fog from './Fog';
+import SceneBackground from './SceneBackground';
 
 import Mock = jest.Mock;
 
-describe('Fog', () => {
+describe('SceneBackground', () => {
   const setup = () => {
     jest.resetAllMocks();
 
@@ -28,7 +28,7 @@ describe('Fog', () => {
     setup();
   });
 
-  it(`should add fog to the scene`, () => {
+  it(`should add background color to the scene`, () => {
     const testScene = new THREE.Scene();
     const mockThreeStates = {
       scene: testScene,
@@ -38,23 +38,19 @@ describe('Fog', () => {
       return s(mockThreeStates);
     });
 
-    const fogSetting: IFogSettings = {
+    const backgroundSetting: ISceneBackgroundSetting = {
       color: '#cccccc',
-      near: 2,
-      far: 20,
     };
-    getScenePropertyMock.mockReturnValue(fogSetting);
+    getScenePropertyMock.mockReturnValue(backgroundSetting);
 
-    expect(testScene.fog).toBeNull();
-    render(<Fog />);
-    const fog = testScene.fog as THREE.Fog;
+    expect(testScene.background).toBeNull();
+    render(<SceneBackground />);
+    const background = testScene.background as THREE.Color;
 
-    expect(fog.color.getHexString()).toEqual(fogSetting.color.replace('#', ''));
-    expect(fog.near).toEqual(fogSetting.near);
-    expect(fog.far).toEqual(fogSetting.far);
+    expect(background.getHexString()).toEqual(backgroundSetting.color?.replace('#', ''));
   });
 
-  it(`should not add fog to the scene`, () => {
+  it(`should not add background to the scene`, () => {
     const testScene = new THREE.Scene();
     const mockThreeStates = {
       scene: testScene,
@@ -66,8 +62,8 @@ describe('Fog', () => {
 
     getScenePropertyMock.mockReturnValue(undefined);
 
-    expect(testScene.fog).toBeNull();
-    render(<Fog />);
-    expect(testScene.fog).toBeNull();
+    expect(testScene.background).toBeNull();
+    render(<SceneBackground />);
+    expect(testScene.background).toBeNull();
   });
 });
