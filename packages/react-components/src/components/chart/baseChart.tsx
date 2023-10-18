@@ -65,7 +65,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
 
   // Setup resize container and calculate size for echarts
   const { height, chartWidth, rightLegendWidth, onResize, minConstraints, maxConstraints, leftLegendRef } =
-    useResizeableEChart(chartRef, size);
+    useResizeableEChart(chartRef, size, options.legend);
 
   // apply group to echarts
   useGroupableEChart(chartRef, group);
