@@ -30,7 +30,6 @@
 
 .dashboard .dashboard-toolbar,
 .dashboard .dashboard-toolbar-read-only {
-  border-bottom: var(--border-width-toolbar) solid var(--colors-light-grey);
   background-color: var(--colors-white);
 }
 
