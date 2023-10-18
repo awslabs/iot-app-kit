@@ -7,8 +7,12 @@ import {
 } from '../../components/chart/eChartsConstants';
 import { ResizeCallbackData } from 'react-resizable';
 import { useMeasure } from 'react-use';
+import { ChartLegend } from '../../components/chart/types';
 
-const getChartWidth = (width: number, staticWidth: number) => {
+const getChartWidth = (width: number, staticWidth: number, rightLegend?: ChartLegend) => {
+  if (!rightLegend) {
+    return width - staticWidth;
+  }
   return width * CHART_RESIZE_INITIAL_FACTOR - staticWidth;
 };
 
@@ -29,22 +33,26 @@ const getChartWidth = (width: number, staticWidth: number) => {
  */
 export const useResizeableEChart = (
   chartRef: MutableRefObject<ECharts | null>,
-  size: { width: number; height: number }
+  size: { width: number; height: number },
+  rightLegend?: ChartLegend
 ) => {
   const { width, height } = size;
   const [leftLegendRef, { width: leftLegendWidth }] = useMeasure<HTMLDivElement>();
-  const [chartWidth, setWidth] = useState(getChartWidth(width, leftLegendWidth));
-
-  const rightLegendWidth = useMemo(() => width - leftLegendWidth - chartWidth, [width, leftLegendWidth, chartWidth]);
+  const [chartWidth, setChartWidth] = useState(getChartWidth(width, leftLegendWidth));
+  const rightLegendWidth = rightLegend ? width - leftLegendWidth - chartWidth : 0;
 
   const onResize = (_event: SyntheticEvent, data: ResizeCallbackData) => {
     _event.stopPropagation();
-    setWidth(data.size.width);
+    if (!rightLegend) {
+      setChartWidth(width - leftLegendWidth);
+    } else {
+      setChartWidth(data.size.width);
+    }
   };
 
   useEffect(() => {
-    setWidth(getChartWidth(width, leftLegendWidth));
-  }, [width, leftLegendWidth]);
+    setChartWidth(getChartWidth(width, leftLegendWidth, rightLegend));
+  }, [width, leftLegendWidth, rightLegend]);
 
   useEffect(() => {
     const chart = chartRef.current;
