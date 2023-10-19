@@ -2,6 +2,7 @@ import { baseConfig } from '@iot-app-kit/jest-config';
 
 const config = {
   ...baseConfig,
+  testEnvironment: 'jsdom',
   coverageThreshold: {
     global: {
       statements: 80,

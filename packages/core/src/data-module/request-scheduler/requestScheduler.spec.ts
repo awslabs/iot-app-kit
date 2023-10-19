@@ -102,3 +102,50 @@ it('returns true when the given id exists within the scheduler store', () => {
 
   expect(scheduler.isScheduled(id)).toBeTrue();
 });
+
+it('resets task request intervals when document visibility changes', () => {
+  Object.defineProperty(document, 'hidden', { writable: true, value: false });
+
+  const scheduler = new RequestScheduler();
+  const id = 'id';
+  const cb = jest.fn();
+
+  scheduler.create({
+    id,
+    cb,
+    refreshRate: SECOND_IN_MS,
+  });
+
+  // Make the document hidden
+  Object.defineProperty(document, 'hidden', { value: true, writable: true });
+  document.dispatchEvent(new Event('visibilitychange'));
+
+  // Make the document visible again
+  Object.defineProperty(document, 'hidden', { value: false, writable: true });
+  document.dispatchEvent(new Event('visibilitychange'));
+
+  // The interval should reset, simulating the same behavior as if the tab was made active again
+  const secondsElapsed = 2.4;
+  jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
+
+  expect(cb).toHaveBeenCalledTimes(Math.floor(secondsElapsed));
+});
+
+it('does not reset intervals when document visibility changes but the document is still hidden', () => {
+  Object.defineProperty(document, 'hidden', { writable: true, value: false });
+
+  const scheduler = new RequestScheduler();
+  const id = 'id';
+  const cb = jest.fn();
+
+  scheduler.create({
+    id,
+    cb,
+    refreshRate: SECOND_IN_MS,
+  });
+
+  Object.defineProperty(document, 'hidden', { value: true, writable: true });
+  document.dispatchEvent(new Event('visibilitychange'));
+
+  expect(cb).not.toHaveBeenCalled();
+});
