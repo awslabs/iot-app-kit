@@ -27,11 +27,10 @@ export const IconPicker = ({
   });
   const [showPicker, setShowPicker] = useState<boolean>(false);
   const iconsPerPage = 8; // Number of icons per page
-  const defaultRows = 3; // Number of rows to display by default
   const icons: IconDefinition[] = Object.values(fas); // Array of all Font Awesome Solid icons
   const totalPages = Math.ceil(icons.length / iconsPerPage); // Calculate the total number of pages
   const [currentPage] = useState<number>(1);
-  const [numRows, setNumRows] = useState(defaultRows);
+  const [numRows, setNumRows] = useState(totalPages);
   const generateRandomString = Math.random().toString(16).slice(2);
   const [randomDomId] = useState<string>(generateRandomString);
   // Calculate the starting and ending index of icons for the current page
@@ -62,6 +61,12 @@ export const IconPicker = ({
       document.removeEventListener('click', handleOutsideClick);
     };
   }, [showPicker, handleOutsideClick]);
+
+  useEffect(() => {
+    if (filteringText)
+      setNumRows(0); //This will confine the popover to show only search results when user starts typing
+    else setNumRows(totalPages); // restore default when no text in search field.
+  }, [filteringText]);
 
   const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, clientHeight, scrollHeight } = event.currentTarget;

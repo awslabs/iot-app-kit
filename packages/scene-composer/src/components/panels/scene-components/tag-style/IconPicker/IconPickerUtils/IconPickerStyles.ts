@@ -6,6 +6,7 @@ export const tmIconPickerPopover: CSSProperties = {
   zIndex: 1,
   top: '100%',
   left: '80%',
+  width: '170%', //this to not allow the container to shrink when search results are less than 8 and keep the min width equal to the width for 8 icons which is the chosen # of icons per row.
   transform: 'translateX(-40%)',
   background: colorBackgroundHomeHeader,
   borderRadius: '25px',
