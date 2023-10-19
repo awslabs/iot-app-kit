@@ -4,7 +4,7 @@ import {
   TREND_CURSOR_CLOSE_BUTTON_X_OFFSET,
   TREND_CURSOR_CLOSE_BUTTON_Y_OFFSET,
   TREND_CURSOR_CLOSE_GRAPHIC_INDEX,
-  TREND_CURSOR_DELETE_BUTTON_HEIGHT,
+  TREND_CURSOR_DRAG_RECT_WIDTH,
   TREND_CURSOR_HEADER_BACKGROUND_COLOR,
   TREND_CURSOR_HEADER_GRAPHIC_INDEX,
   TREND_CURSOR_HEADER_OFFSET,
@@ -26,6 +26,7 @@ import {
 } from '../types';
 import {
   GraphicComponentElementOption,
+  GraphicComponentImageOption,
   GraphicComponentTextOption,
   GraphicComponentZRPathOption,
 } from 'echarts/types/src/component/graphic/GraphicModel';
@@ -35,6 +36,8 @@ import {
   getTrendCursorHeaderTimestampText,
   setXWithBounds,
 } from './trendCursorCalculations';
+
+import deleteButtonSvg from './Icon.svg';
 
 const onDragUpdateTrendCursorLine = (elements: GraphicComponentElementOption[]) => {
   // specifically setting the line graphic x value to 0 so that it follows the parent's X
@@ -50,6 +53,7 @@ const onDragUpdateTrendCursorHeaderText = (elements: GraphicComponentElementOpti
     ...(headerGraphic as GraphicComponentTextOption).style,
     text: getTrendCursorHeaderTimestampText(timeInMs),
   };
+  headerGraphic.x = 0;
   return headerGraphic;
 };
 export const updateTrendCursorLineMarkers = (
@@ -121,30 +125,59 @@ export const onResizeUpdateTrendCursorYValues = (
   trendCursorsSeriesMakersInPixels: number[],
   size: SizeConfig
 ) => {
-  ((elements[TREND_CURSOR_LINE_GRAPHIC_INDEX] as GraphicComponentZRPathOption).shape ?? {}).y2 =
-    size.height - DEFAULT_MARGIN;
+  (elements[TREND_CURSOR_LINE_GRAPHIC_INDEX] ?? {}).children = elements[TREND_CURSOR_LINE_GRAPHIC_INDEX].children?.map(
+    (lineElement, index) => {
+      if (index === 0) {
+        (((lineElement ?? {}) as GraphicComponentZRPathOption).shape ?? {}).y2 = size.height - DEFAULT_MARGIN;
+      } else {
+        lineElement.y = size.height - DEFAULT_MARGIN - 6;
+      }
+      return lineElement;
+    }
+  );
   return updateTrendCursorLineMarkers(elements, trendCursorsSeriesMakersInPixels);
 };
 
 // this function return the TC line and the ondrag handles the user dragging action
 export const addTCLine = (uId: string, size: SizeConfig) => ({
-  type: 'line',
-  z: TREND_CURSOR_Z_INDEX,
+  type: 'group',
   id: `line-${uId}`,
   draggable: 'horizontal' as const,
-  shape: {
-    y1: DEFAULT_MARGIN - 6,
-    y2: size.height - DEFAULT_MARGIN,
-  },
-  style: {
-    stroke: TREND_CURSOR_LINE_COLOR,
-    lineWidth: TREND_CURSOR_LINE_WIDTH,
-  },
+  children: [
+    {
+      z: TREND_CURSOR_Z_INDEX + 1,
+      type: 'line',
+      id: `group-line-${uId}`,
+      shape: {
+        y1: DEFAULT_MARGIN - 6,
+        y2: size.height - DEFAULT_MARGIN,
+      },
+      style: {
+        stroke: TREND_CURSOR_LINE_COLOR,
+        lineWidth: TREND_CURSOR_LINE_WIDTH,
+      },
+    },
+    {
+      type: 'rect',
+      id: `group-rect-${uId}`,
+      z: TREND_CURSOR_Z_INDEX + 1,
+      shape: {
+        x: -TREND_CURSOR_DRAG_RECT_WIDTH / 2,
+        y: DEFAULT_MARGIN - 6,
+        width: TREND_CURSOR_DRAG_RECT_WIDTH,
+        height: size.height - DEFAULT_MARGIN * 2 + 6,
+      },
+      style: {
+        opacity: 0,
+      },
+    },
+  ],
 });
 export const addTCHeader = (uId: string, timestampInMs: number): GraphicComponentTextOption => ({
   type: 'text',
   z: TREND_CURSOR_Z_INDEX + 1,
   id: `text-${uId}`,
+  draggable: 'horizontal' as const,
   style: {
     y: TREND_CURSOR_HEADER_OFFSET,
     text: getTrendCursorHeaderTimestampText(timestampInMs),
@@ -162,30 +195,16 @@ export const addTCHeader = (uId: string, timestampInMs: number): GraphicComponen
       },
     },
   },
-  // mouse events are disabled for the header
-  silent: true,
 });
 
-export const addTCDeleteButton = (uId: string): GraphicComponentZRPathOption => ({
-  id: `polyline-${uId}`,
-  type: 'polyline',
+export const addTCDeleteButton = (uId: string): GraphicComponentImageOption => ({
+  id: `delete-button-${uId}`,
+  type: 'image',
   z: TREND_CURSOR_Z_INDEX + 1,
   x: TREND_CURSOR_CLOSE_BUTTON_X_OFFSET,
   y: TREND_CURSOR_CLOSE_BUTTON_Y_OFFSET,
-  shape: {
-    points: [
-      [0, 0],
-      [TREND_CURSOR_DELETE_BUTTON_HEIGHT, TREND_CURSOR_DELETE_BUTTON_HEIGHT],
-      [TREND_CURSOR_DELETE_BUTTON_HEIGHT / 2, TREND_CURSOR_DELETE_BUTTON_HEIGHT / 2],
-      [TREND_CURSOR_DELETE_BUTTON_HEIGHT, 0],
-      [0, TREND_CURSOR_DELETE_BUTTON_HEIGHT],
-      [TREND_CURSOR_DELETE_BUTTON_HEIGHT / 2, TREND_CURSOR_DELETE_BUTTON_HEIGHT / 2],
-    ],
-  },
   style: {
-    stroke: 'white',
-    opacity: 1,
-    lineWidth: 2,
+    image: deleteButtonSvg as unknown as string,
   },
 });
 
