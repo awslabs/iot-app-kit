@@ -201,6 +201,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
         significantDigits={significantDigits}
         size={size}
         legend={legend?.visible == true ? {} : undefined}
+        defaultVisualizationType={mapConnectionStyleToVisualizationType(line?.connectionStyle)}
       />
     </WidgetTile>
   );

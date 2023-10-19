@@ -73,6 +73,7 @@ export type ChartStyleSettings = {
 export type InternalGraphicComponentGroupOption = {
   timestampInMs: number;
   yAxisMarkerValue: number[];
+  dragDeltaInPixels?: number;
 } & GraphicComponentGroupOption;
 
 export type ChartEventType = { target: { id?: OptionId }; offsetX?: number };
