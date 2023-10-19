@@ -27,7 +27,6 @@ import { DEFAULT_CHART_VISUALIZATION } from './eChartsConstants';
 import { useDataZoom } from './hooks/useDataZoom';
 import { useViewport } from '../../hooks/useViewport';
 import { getXAxis } from './utils/getXAxis';
-import { useHandleChartEvents } from './hooks/useHandleChartEvents';
 
 /**
  * Developer Notes:
@@ -118,24 +117,14 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   // determine the set option settings
   const settings = useChartSetOptionSettings(dataStreams);
 
-  // handle dataZoom updates, which are dependent on user events and viewportInMS changes
+  //handle dataZoom updates, which are dependent on user events and viewportInMS changes
   useDataZoom(chartRef, viewportInMs);
-
-  // handle chart event updates
-  const eventOptions = useHandleChartEvents(chartRef);
-
-  const toolTipOptions = {
-    ...convertedOptions.tooltip,
-    ...eventOptions.tooltip,
-  };
 
   // set all the options on the echarts instance
   useEChartOptions(
     chartRef,
     {
       ...convertedOptions,
-      ...eventOptions,
-      tooltip: toolTipOptions,
       series,
       yAxis,
       xAxis,
