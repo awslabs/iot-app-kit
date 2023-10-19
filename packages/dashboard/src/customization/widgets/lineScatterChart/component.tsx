@@ -98,7 +98,7 @@ const mapStyledAssetPropertyToChartStyleSettings = (
     symbolColor: styles.symbol?.color,
     symbolSize: styles.symbol?.size,
     lineStyle: styles.line?.style ?? line?.style,
-    lineThickness: styles.line?.thickness,
+    lineThickness: styles.line?.thickness ?? line?.thickness,
     yAxis: styles.yAxis?.visible ? styles.yAxis : undefined,
     significantDigits: styles.significantDigits,
   };
