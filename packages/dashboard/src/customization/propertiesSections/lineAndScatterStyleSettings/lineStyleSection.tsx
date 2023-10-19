@@ -1,24 +1,31 @@
-import React from 'react';
-import type { FC } from 'react';
-
 import ExpandableSection from '@cloudscape-design/components/expandable-section';
+import FormField from '@cloudscape-design/components/form-field';
+import Select from '@cloudscape-design/components/select';
+import type { FC } from 'react';
+import React from 'react';
 
-import { LineStyleDropdown } from '../components/lineStyleDropdown';
-import { LineThicknessDropdown } from '../components/lineThicknessDropdown';
-import { SpaceBetween } from '@cloudscape-design/components';
+const defaultLineStyleOption = { label: 'Solid', value: 'solid' };
+const lineStyleOptions = [
+  defaultLineStyleOption,
+  { label: 'Dashed', value: 'dashed' },
+  { label: 'Dotted', value: 'dotted' },
+] as const;
 
 type LineStyleSectionOptions = {
-  lineStyle?: string;
+  lineStyle: string | undefined;
   updatelineStyle: (lineStyle: string) => void;
 };
 
 export const LineStyleSection: FC<LineStyleSectionOptions> = ({ lineStyle, updatelineStyle }) => {
   return (
     <ExpandableSection headerText='Line style' defaultExpanded>
-      <SpaceBetween size='m'>
-        <LineStyleDropdown lineStyle={lineStyle} updatelineStyle={updatelineStyle} />
-        <LineThicknessDropdown /> {/* TODO */}
-      </SpaceBetween>
+      <FormField label='Style'>
+        <Select
+          selectedOption={lineStyleOptions.find(({ value }) => value === lineStyle) ?? null}
+          onChange={({ detail }) => updatelineStyle(detail.selectedOption.value ?? defaultLineStyleOption.value)}
+          options={lineStyleOptions}
+        />
+      </FormField>
     </ExpandableSection>
   );
 };
