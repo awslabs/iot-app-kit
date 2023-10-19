@@ -14,6 +14,8 @@ enum TagComponentProperty {
   NavLinkParams = 'navLink_params',
   Offset = 'offset',
   ChosenColor = 'chosenColor',
+  CustomIconName = 'customIcon_iconName',
+  CustomIconPrefix = 'customIcon_prefix',
   RuleBasedMapId = 'ruleBasedMapId',
   StyleBinding = 'styleBinding',
 }
@@ -64,6 +66,20 @@ export const createTagEntityComponent = (tag: IAnchorComponent): ComponentReques
       },
     };
   }
+  if (tag.customIcon?.iconName) {
+    comp.properties![TagComponentProperty.CustomIconName] = {
+      value: {
+        stringValue: tag.customIcon.iconName,
+      },
+    };
+  }
+  if (tag.customIcon?.prefix) {
+    comp.properties![TagComponentProperty.CustomIconPrefix] = {
+      value: {
+        stringValue: tag.customIcon.prefix,
+      },
+    };
+  }
   if (tag.ruleBasedMapId || tag.valueDataBinding?.dataBindingContext) {
     const map = createDataBindingMap(tag.valueDataBinding);
     if (tag.ruleBasedMapId) {
@@ -96,6 +112,14 @@ export const parseTagComp = (comp: DocumentType): IAnchorComponentInternal | und
   const binding = comp['properties'].find(
     (p) => p['propertyName'] === TagComponentProperty.StyleBinding,
   )?.propertyValue;
+
+  const customIconName = comp['properties'].find(
+    (p) => p['propertyName'] === TagComponentProperty.CustomIconName,
+  )?.propertyValue;
+  const customIconPrefix = comp['properties'].find(
+    (p) => p['propertyName'] === TagComponentProperty.CustomIconPrefix,
+  )?.propertyValue;
+
   const tagComp: IAnchorComponentInternal = {
     ref: generateUUID(),
     type: KnownComponentType.Tag,
@@ -107,6 +131,13 @@ export const parseTagComp = (comp: DocumentType): IAnchorComponentInternal | und
       params: comp['properties'].find((p) => p['propertyName'] === TagComponentProperty.NavLinkParams)?.propertyValue,
     },
     chosenColor: comp['properties'].find((p) => p['propertyName'] === TagComponentProperty.ChosenColor)?.propertyValue,
+    customIcon:
+      customIconName && customIconPrefix
+        ? {
+            iconName: customIconName,
+            prefix: customIconPrefix,
+          }
+        : undefined,
     ruleBasedMapId: !binding ? undefined : binding[TagComponentProperty.RuleBasedMapId],
     valueDataBinding: parseDataBinding(binding),
   };

@@ -81,7 +81,7 @@ export const createMotionIndicatorEntityComponent = (indicator: IMotionIndicator
   if (indicator.config.defaultSpeed !== undefined) {
     comp.properties![MotionIndicatorComponentProperty.ConfigDefaultSpeed] = {
       value: {
-        integerValue: indicator.config.defaultSpeed,
+        doubleValue: indicator.config.defaultSpeed,
       },
     };
   }
