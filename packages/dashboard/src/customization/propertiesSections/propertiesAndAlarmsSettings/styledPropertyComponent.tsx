@@ -23,7 +23,6 @@ import {
 } from '~/customization/propertiesSections/propertiesAndAlarmsSettings/icons';
 import Tooltip from '~/components/tooltip/tooltip';
 import { LineStyleDropdown } from '../components/lineStyleDropdown';
-import { LineThicknessDropdown } from '../components/lineThicknessDropdown';
 
 import './propertyComponent.css';
 
@@ -70,7 +69,7 @@ const LineStylePropertyConfig = ({
           lineStyle={lineStyle}
           updatelineStyle={(style) => updateLineStyle(style as LineStyles['style'])}
         />
-        <LineThicknessDropdown disabled={useGlobalStyle} /> {/* TODO */}
+        {/* TODO <LineThicknessDropdown disabled={useGlobalStyle} /> */}
       </SpaceBetween>
     </ExpandableSection>
   );
