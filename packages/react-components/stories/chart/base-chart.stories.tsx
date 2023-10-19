@@ -55,6 +55,7 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({ id, signific
                 fill: 'asdf',
               },
             ]}
+            legend={{}}
           />
         ))}
       </div>
@@ -105,6 +106,7 @@ export const SiteWiseConnectedBaseChartExample: ComponentStory<FC<StoryInputs>> 
             viewport={viewport ?? { duration: '5m' }}
             queries={[getTimeSeriesDataQuery()]}
             theme='light'
+            legend={{}}
           />
         ))}
       </div>
