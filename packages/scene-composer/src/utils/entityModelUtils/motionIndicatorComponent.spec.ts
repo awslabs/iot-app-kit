@@ -61,7 +61,7 @@ describe('createMotionIndicatorEntityComponent', () => {
     });
 
     expect(result.properties!['config_defaultSpeed']).toEqual({
-      value: { integerValue: 11 },
+      value: { doubleValue: 11 },
     });
   });
 

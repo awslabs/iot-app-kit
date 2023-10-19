@@ -85,6 +85,22 @@ describe('createTagEntityComponent', () => {
     });
   });
 
+  it('should return expected tag component with custom icon', () => {
+    const result = createTagEntityComponent({
+      type: KnownComponentType.Tag,
+      customIcon: { prefix: 'prefix', iconName: 'name' },
+    });
+
+    expect(result.properties).toEqual({
+      customIcon_prefix: {
+        value: { stringValue: 'prefix' },
+      },
+      customIcon_iconName: {
+        value: { stringValue: 'name' },
+      },
+    });
+  });
+
   it('should return expected tag component with styleBinding with rule id', () => {
     const result = createTagEntityComponent({ type: KnownComponentType.Tag, ruleBasedMapId: 'rule-id' });
 
@@ -238,6 +254,38 @@ describe('parseTagComp', () => {
     });
 
     expect(result?.chosenColor).toEqual('red');
+  });
+
+  it('should parse to expected tag component with custom icon', () => {
+    const result = parseTagComp({
+      componentTypeId: componentTypeToId[KnownComponentType.Tag],
+      properties: [
+        {
+          propertyName: 'customIcon_prefix',
+          propertyValue: 'prefix',
+        },
+        {
+          propertyName: 'customIcon_iconName',
+          propertyValue: 'name',
+        },
+      ],
+    });
+
+    expect(result?.customIcon).toEqual({ prefix: 'prefix', iconName: 'name' });
+  });
+
+  it('should parse to expected tag component without custom icon when icon prefix is missing', () => {
+    const result = parseTagComp({
+      componentTypeId: componentTypeToId[KnownComponentType.Tag],
+      properties: [
+        {
+          propertyName: 'customIcon_iconName',
+          propertyValue: 'name',
+        },
+      ],
+    });
+
+    expect(result?.customIcon).toBeUndefined();
   });
 
   it('should parse to expected tag component with styleBinding with rule id', () => {
