@@ -71,9 +71,20 @@ const useChartsLegend = ({
     isRowHeader: true,
   };
 
-  // the string will be a rich text in the format of {title|name}\n{info|timestamp}
+  // the string will be a rich text in the format of {timestampStyle|timestamp}
   // refer to echarts rich text and addTCHeader method
-  const getTcHeader = (text: string) => text.split('\n')[0].split('|')[1].replaceAll('}', '').trim();
+  const getTcHeader = (text: string) => {
+    const fullString = text.split('|')[1].replaceAll('}', '').trim();
+
+    const tcDateTime = new Date(fullString);
+    return (
+      <>
+        <span>{tcDateTime.toLocaleDateString()}</span>
+        <br />
+        <span>{tcDateTime.toLocaleTimeString()}</span>
+      </>
+    );
+  };
 
   const getHeaderNode = (g: InternalGraphicComponentGroupOption) => (
     <div className='base-chart-legend-tc-header-container'>
