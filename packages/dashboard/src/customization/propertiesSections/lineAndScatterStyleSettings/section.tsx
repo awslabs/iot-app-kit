@@ -55,6 +55,17 @@ const RenderLineAndScatterStyleSettingsSection = ({
     })
   );
 
+  const [lineThicknessMaybe, updateLineThickness] = useProperty(
+    (properties) => properties.line?.thickness,
+    (properties, updatedLineThickness) => ({
+      ...properties,
+      line: {
+        ...properties.line,
+        thickness: updatedLineThickness,
+      },
+    })
+  );
+
   const [dataPointStyleMaybe, updateDataPointStyle] = useProperty(
     (properties) => properties.symbol?.style,
     (properties, updatedDataPointStyle) => ({
@@ -156,6 +167,7 @@ const RenderLineAndScatterStyleSettingsSection = ({
   const connectionStyle = maybeWithDefault(undefined, connectionStyleMaybe);
   const title = maybeWithDefault(undefined, titleMaybe);
   const lineStyle = maybeWithDefault(undefined, lineStyleMaybe);
+  const lineThickness = maybeWithDefault(undefined, lineThicknessMaybe);
   const dataPointStyle = maybeWithDefault(undefined, dataPointStyleMaybe);
   const axis = maybeWithDefault(undefined, axisMaybe);
   const legendVisible = maybeWithDefault(true, legendVisibleMaybe) ?? true;
@@ -177,7 +189,11 @@ const RenderLineAndScatterStyleSettingsSection = ({
       <TitleSection title={title} updateTitle={updateTitle} />
       <LineStyleSection
         lineStyle={lineStyle}
+        lineThickness={lineThickness}
         updatelineStyle={(style) => updateLineStyle(style as LineStyles['style'])}
+        updateLineThickness={(thickness) => {
+          updateLineThickness(thickness as LineStyles['thickness']);
+        }}
       />
       <DataPointStyleSection
         dataPointStyle={dataPointStyle}
