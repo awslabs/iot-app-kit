@@ -1,7 +1,12 @@
 import { MutableRefObject, useCallback, useEffect, useRef } from 'react';
 import { ECharts } from 'echarts';
 import { MAX_TREND_CURSORS, TREND_CURSOR_CLOSE_GRAPHIC_INDEX } from '../eChartsConstants';
-import { calculateNearestTcIndex, calculateTimeStamp, formatCopyData } from '../utils/trendCursorCalculations';
+import {
+  calculateNearestTcIndex,
+  calculateTimeStamp,
+  calculateXFromTimestamp,
+  formatCopyData,
+} from '../utils/trendCursorCalculations';
 import { v4 as uuid } from 'uuid';
 import { getNewTrendCursor, onDragUpdateTrendCursor } from '../utils/getTrendCursor';
 import { UseEventsProps } from '../types';
@@ -143,40 +148,66 @@ const useTrendCursorsEvents = ({
 
       // this is the ondrag handler of the trend cursor
       currentChart?.getZr().on('drag', (event) => {
-        if (event.target.id.toString().startsWith('line')) {
-          // update user feedback
-          event.stop();
-          currentChart?.getZr().setCursorStyle('grabbing');
+        // update user feedback
+        event.stop();
+        currentChart?.getZr().setCursorStyle('grabbing');
 
-          const graphicIndex = graphicRef.current.findIndex((g) => g.children[0].id === event.target.id);
-          const timeInMs = calculateTimeStamp(event.offsetX ?? 0, chartRef);
-          if (isInSyncModeRef.current) {
-            updateTrendCursorsInSyncState({
-              groupId: groupId ?? '',
-              timestamp: timeInMs,
-              tcId: graphicRef.current[graphicIndex].id as string,
-            });
-          } else {
-            // update current TC
-            graphicRef.current[graphicIndex] = onDragUpdateTrendCursor({
-              graphic: graphicRef.current[graphicIndex],
-              posX: event.offsetX ?? 0,
-              timeInMs,
-              size: sizeRef.current,
-              series: seriesRef.current,
-              chartRef,
-              visualization: visualizationRef.current,
-            });
-            // update component state
-            setGraphicRef.current([...graphicRef.current]);
-          }
+        let graphicIndex = graphicRef.current.findIndex((g) => g.children[0].id === event.target.id);
+
+        if (graphicIndex === -1) {
+          graphicIndex = graphicRef.current.findIndex((g) => g.children[1].id === event.target.id);
+        }
+
+        const posX = (event.offsetX ?? 0) + (graphicRef.current[graphicIndex]?.dragDeltaInPixels ?? 0);
+        const timeInMs = calculateTimeStamp(posX, chartRef);
+
+        if (isInSyncModeRef.current) {
+          updateTrendCursorsInSyncState({
+            groupId: groupId ?? '',
+            timestamp: timeInMs,
+            tcId: graphicRef.current[graphicIndex].id as string,
+          });
+        } else {
+          // update current TC
+          graphicRef.current[graphicIndex] = onDragUpdateTrendCursor({
+            graphic: graphicRef.current[graphicIndex],
+            posX,
+            timeInMs,
+            size: sizeRef.current,
+            series: seriesRef.current,
+            chartRef,
+            visualization: visualizationRef.current,
+          });
+          // update component state
+          setGraphicRef.current([...graphicRef.current]);
         }
       });
 
       currentChart?.getZr().on('contextmenu', (event) => {
         onContextMenuRef.current(event);
       });
+
+      // Calculating delta in pixels between the initial interaction point vs the position of TC line
+      // we need this to avoid snapping the TC line to the center of the point of the mouse's X
+
+      currentChart?.getZr().on('dragstart', (event) => {
+        let graphicIndex = graphicRef.current.findIndex((g) => g.children[0].id === event.target.id);
+
+        if (graphicIndex === -1) {
+          graphicIndex = graphicRef.current.findIndex((g) => g.children[1].id === event.target.id);
+        }
+
+        const dragDeltaInPixels =
+          calculateXFromTimestamp(graphicRef.current[graphicIndex].timestampInMs, chartRef) - event.offsetX;
+
+        graphicRef.current[graphicIndex] = {
+          ...graphicRef.current[graphicIndex],
+          dragDeltaInPixels,
+        };
+        setGraphicRef.current([...graphicRef.current]);
+      });
     }
+
     prevRef.current = chartRef;
     return () => {
       currentChart?.getZr()?.off('click');
@@ -184,6 +215,7 @@ const useTrendCursorsEvents = ({
       currentChart?.getZr()?.off('mouseover', () => mouseoverHandler(isInCursorAddModeRef.current, chartRef));
       currentChart?.getZr()?.off('drag');
       currentChart?.getZr()?.off('contextmenu');
+      currentChart?.getZr()?.off('dragstart');
     };
     // ignoring because refs dont need to be in dependency array
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -192,7 +224,7 @@ const useTrendCursorsEvents = ({
   const copyTrendCursorData = (posX: number) => {
     const timestampOfClick = calculateTimeStamp(posX, chartRef);
     const toBeCopiedGraphicIndex = calculateNearestTcIndex(graphicRef.current, timestampOfClick);
-    // using copy-to-clipboard library to copy in a Excel sheet pastable format
+    // using copy-to-clipboard library to copy in a Excel sheet paste-able format
     copy(formatCopyData(graphicRef.current[toBeCopiedGraphicIndex], seriesRef.current), { format: 'text/plain' });
   };
 

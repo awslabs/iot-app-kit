@@ -120,7 +120,7 @@ describe('Testing getNewTrendCursor file', () => {
     });
     it('addTCDeleteButton', () => {
       const newTCDeleteButton = addTCDeleteButton('ID');
-      expect(newTCDeleteButton.id).toBe('polyline-ID');
+      expect(newTCDeleteButton.id).toBe('delete-button-ID');
     });
     it('addTCMarkers', () => {
       const newTCMarker = addTCMarkers('ID', [200], []);

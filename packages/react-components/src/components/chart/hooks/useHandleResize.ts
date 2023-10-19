@@ -6,6 +6,8 @@ import { TrendCursorProps } from '../types';
 const useHandleResize = ({ size, series, graphic, setGraphic, chartRef, visualization }: TrendCursorProps) => {
   const prevSize = useRef(size);
   // to avoid unnecessary re-rendering
+
+  console.log(size.width !== prevSize.current.width || size.height !== prevSize.current.height);
   if (size.width !== prevSize.current.width || size.height !== prevSize.current.height) {
     const newG = graphic.map((g) => {
       // splitting into two separate if block to avoid calculations when not necessary
@@ -20,6 +22,7 @@ const useHandleResize = ({ size, series, graphic, setGraphic, chartRef, visualiz
           visualization
         );
 
+        // update line height and markers
         g.children = onResizeUpdateTrendCursorYValues(g.children, trendCursorsSeriesMakersInPixels, size);
       }
 
