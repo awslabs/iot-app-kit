@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import type { FC } from 'react';
 import {
   Button,
   SpaceBetween,
@@ -9,20 +10,84 @@ import {
   FormField,
   Input,
 } from '@cloudscape-design/components';
-import ColorPicker from '../shared/colorPicker';
-import type { FC } from 'react';
+import { spaceStaticXxs } from '@cloudscape-design/design-tokens';
+import { ClickDetail, NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 
-import './propertyComponent.css';
-import { StyledAssetPropertyQuery, YAxisOptions } from '~/customization/widgets/types';
+import ColorPicker from '../shared/colorPicker';
+import { LineStyles, StyledAssetPropertyQuery, YAxisOptions } from '~/customization/widgets/types';
 import { getPropertyDisplay } from './getPropertyDisplay';
 import type { AssetSummary } from '~/hooks/useAssetDescriptionQueries';
 import {
   StatusEyeHidden,
   StatusEyeVisible,
 } from '~/customization/propertiesSections/propertiesAndAlarmsSettings/icons';
-import { ClickDetail, NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import Tooltip from '~/components/tooltip/tooltip';
-import { spaceStaticXxs } from '@cloudscape-design/design-tokens';
+import { LineStyleDropdown } from '../components/lineStyleDropdown';
+import { LineThicknessDropdown } from '../components/lineThicknessDropdown';
+
+import './propertyComponent.css';
+
+const LineStylePropertyConfig = ({
+  resetStyles,
+  property,
+  onUpdate,
+}: {
+  resetStyles: (reset: object) => void;
+  property: StyledAssetPropertyQuery;
+  onUpdate: (newStyles: object) => void;
+}) => {
+  const [expanded, setExpanded] = useState(false);
+  const [useGlobalStyle, setUseGlobalStyle] = useState<boolean>(!property.line?.style); //make useGlobalStyle true if no line style
+  const [lineStyle, setLineStyle] = useState<LineStyles['style']>(property.line?.style ?? 'solid');
+  const [lineThickness, setLinethickness] = useState<string | undefined>(property.line?.thickness?.toString() ?? '2');
+
+  const getLineThicknessNumber = (thickness?: string) => (thickness ? parseInt(thickness) : undefined);
+
+  const onToggleUseGlobalStyles = (isChecked: boolean) => {
+    setUseGlobalStyle(isChecked);
+    setLineStyle('solid');
+    setLinethickness('2');
+    if (isChecked) {
+      resetStyles({ line: { style: undefined, thickness: undefined } });
+    } else {
+      onUpdate({ line: { style: lineStyle, thickness: getLineThicknessNumber(lineThickness) } });
+    }
+  };
+
+  const updateLineStyle = (style: LineStyles['style']) => {
+    setLineStyle(style);
+    onUpdate({ line: { style, thickness: getLineThicknessNumber(lineThickness) } });
+  };
+
+  const handleUpdateLineThickness = (thickness: string) => {
+    setLinethickness(thickness);
+    onUpdate({ line: { style: lineStyle, thickness: getLineThicknessNumber(thickness) } });
+  };
+
+  return (
+    <ExpandableSection
+      expanded={expanded}
+      onChange={({ detail }) => setExpanded(detail.expanded)}
+      headerText='Line style'
+    >
+      <SpaceBetween size='m'>
+        <Checkbox onChange={({ detail }) => onToggleUseGlobalStyles(detail.checked)} checked={useGlobalStyle}>
+          Use default style
+        </Checkbox>
+        <LineStyleDropdown
+          disabled={useGlobalStyle}
+          lineStyle={lineStyle}
+          updatelineStyle={(style) => updateLineStyle(style as LineStyles['style'])}
+        />
+        <LineThicknessDropdown
+          disabled={useGlobalStyle}
+          lineThickness={lineThickness}
+          updateLineThickness={(thickness) => handleUpdateLineThickness(thickness)}
+        />
+      </SpaceBetween>
+    </ExpandableSection>
+  );
+};
 
 const numberOrUndefined = (number: string) => {
   const parsed = Number(number);
@@ -173,6 +238,7 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
             <SpaceBetween size='xs' direction='horizontal'>
               <ExpandableSection headerText={YAxisHeader}>
                 <div style={{ padding: '0 24px', backgroundColor: '#fbfbfb' }}>
+                  <LineStylePropertyConfig resetStyles={resetStyles} onUpdate={updateStyle} property={property} />
                   <YAxisPropertyConfig resetStyles={resetStyles} onUpdate={updateStyle} property={property} />
                 </div>
               </ExpandableSection>
