@@ -2,14 +2,26 @@ import { SECOND_IN_MS } from '../../common/time';
 
 const DEFAULT_REFRESH_RATE = 5 * SECOND_IN_MS;
 
+type IntervalDetail = {
+  intervalId: NodeJS.Timeout;
+  refreshRate: number;
+  refreshExpiration?: number;
+  cb: () => void;
+};
+
 type IntervalMap = {
-  [id: string]: NodeJS.Timeout;
+  [id: string]: IntervalDetail;
 };
 
 export default class RequestScheduler {
   private intervalMap: IntervalMap = {};
 
-  public create = ({
+  constructor() {
+    // Ensure intervals are reset when the page is visible again to keep them in sync
+    document.addEventListener('visibilitychange', this.handleVisibilityChange);
+  }
+
+  public create({
     id,
     refreshRate = DEFAULT_REFRESH_RATE,
     refreshExpiration,
@@ -19,8 +31,8 @@ export default class RequestScheduler {
     refreshRate?: number;
     refreshExpiration?: number;
     cb: () => void;
-  }): void => {
-    if (id in this.intervalMap) {
+  }) {
+    if (this.isScheduled(id)) {
       return;
     }
 
@@ -30,24 +42,44 @@ export default class RequestScheduler {
       return;
     }
 
-    this.intervalMap[id] = setInterval(() => {
+    const intervalId = setInterval(() => {
       if (isExpired()) {
         this.remove(id);
+
         return;
       }
 
       cb();
     }, refreshRate);
-  };
 
-  public remove = (id: string): void => {
-    if (!(id in this.intervalMap)) {
+    this.intervalMap[id] = { intervalId, refreshRate, refreshExpiration, cb };
+  }
+
+  public remove(id: string) {
+    if (!this.isScheduled(id)) {
       return;
     }
 
-    clearInterval(this.intervalMap[id]);
+    clearInterval(this.intervalMap[id].intervalId);
     delete this.intervalMap[id];
-  };
+  }
 
   public isScheduled = (id: string): boolean => id in this.intervalMap;
+
+  private handleVisibilityChange = () => {
+    if (!document.hidden) {
+      Object.keys(this.intervalMap).forEach((id) => {
+        this.resetInterval(id);
+      });
+    }
+  };
+
+  private resetInterval(id: string) {
+    const existingInterval = this.intervalMap[id];
+
+    if (existingInterval) {
+      this.remove(id);
+      this.create({ id, ...existingInterval });
+    }
+  }
 }
