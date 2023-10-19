@@ -5,7 +5,7 @@
 .react-resizable-handle {
   position: absolute;
   width: 20px;
-  height: 90%;
+  height: 85%;
   background-repeat: no-repeat;
   background-origin: content-box;
   box-sizing: border-box;
@@ -13,10 +13,11 @@
 }
 
 .react-resizable-handle-se {
-  bottom: 5%;
+  bottom: 10%;
   right: 0;
   cursor: ew-resize;
-  border-right: 2px solid #d6dbdb;
+  background-image: url("./svg/verticalSlider.svg");
+  border-left: 2px solid #e9ebed;
 }
 
 .base-chart-element {
