@@ -2,7 +2,8 @@ import { beforeEach, describe, expect } from '@jest/globals';
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
 import ChartContextMenu from './ChartContextMenu';
-import { InternalGraphicComponentGroupOption } from '../types';
+
+import { InternalGraphicComponentGroupOption } from '../trendCursor/types';
 
 describe('ChartContextMenu', () => {
   const menuOptionClickHandler = jest.fn();
