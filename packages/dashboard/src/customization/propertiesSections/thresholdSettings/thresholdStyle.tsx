@@ -1,82 +1,51 @@
-import React, { useState } from 'react';
-import { FormField, Select, SelectProps } from '@cloudscape-design/components';
-import { OptionDefinition } from '@cloudscape-design/components/internal/components/option/interfaces';
+import FormField from '@cloudscape-design/components/form-field';
+import Select, { type SelectProps } from '@cloudscape-design/components/select';
 import { ThresholdStyleType } from '@iot-app-kit/react-components/src/components/chart/types';
+import React from 'react';
 
-export type ThresholdStyleSettingsProps = {
+export interface ThresholdStyleSettingsProps {
   thresholdStyle: ThresholdStyleType;
   updateAllThresholdStyles: (thresholdStyle: ThresholdStyleType) => void;
-};
-
-enum ThresholdStyleOptions {
-  asLines = 'As lines',
-  asFilledRegion = 'As filled region',
-  asLinesAndFilledRegion = 'As lines and filled region',
 }
 
-export const styledOptions = [
-  { label: ThresholdStyleOptions.asLines, value: '1' },
-  { label: ThresholdStyleOptions.asFilledRegion, value: '2' },
-  { label: ThresholdStyleOptions.asLinesAndFilledRegion, value: '3' },
-];
+type ThresholdStyle = 'lines' | 'filledRegion' | 'linesAndFilledRegion';
 
-export const convertOptionToThresholdStyle = (selectedOption: OptionDefinition): ThresholdStyleType => {
-  switch (selectedOption.label) {
-    case ThresholdStyleOptions.asLines: {
-      return {
-        visible: true,
-      };
-    }
-    case ThresholdStyleOptions.asFilledRegion: {
-      return {
-        visible: false,
-        fill: 'color',
-      };
-    }
-    case ThresholdStyleOptions.asLinesAndFilledRegion: {
-      return {
-        visible: true,
-        fill: 'color',
-      };
-    }
-    default: {
-      return {};
-    }
-  }
+const thresholdStyleMapping: Record<string, SelectProps.Option & Record<'style', ThresholdStyleType>> = {
+  lines: { label: 'As lines', style: { visible: true } },
+  filledRegion: { label: 'As filled region', style: { visible: false, fill: 'color' } },
+  linesAndFilledRegion: { label: 'As lines and filled region', style: { visible: true, fill: 'color' } },
 };
 
-const convertThresholdStyleToOption = (thresholdStyle: ThresholdStyleType): OptionDefinition => {
-  if (!!thresholdStyle.visible && !thresholdStyle.fill) {
-    return styledOptions[0];
-  } else if (!thresholdStyle.visible && !!thresholdStyle.fill) {
-    return styledOptions[1];
-  } else if (!!thresholdStyle.visible && !!thresholdStyle.fill) {
-    return styledOptions[2];
-  } else {
-    return styledOptions[0];
-  }
-};
+const thresholdStyleOptions = Object.keys(thresholdStyleMapping).map((key) => ({
+  label: thresholdStyleMapping[key].label,
+  value: key,
+}));
 
-export const ThresholdStyleSettings: React.FC<ThresholdStyleSettingsProps> = ({
-  thresholdStyle,
-  updateAllThresholdStyles,
-}) => {
-  const [selectedOption, setSelectedOption] = useState<SelectProps.Option>(
-    convertThresholdStyleToOption(thresholdStyle)
+function getOptionFromStyle(thresholdStyle: ThresholdStyleType): SelectProps.Option {
+  const key = Object.keys(thresholdStyleMapping).find(
+    (k) => JSON.stringify(thresholdStyleMapping[k].style) === JSON.stringify(thresholdStyle)
   );
+  return { label: thresholdStyleMapping[key ?? ''].label, value: key };
+}
+
+function getStyleFromOption(optionValue: ThresholdStyle): ThresholdStyleType {
+  return thresholdStyleMapping[optionValue].style;
+}
+
+export function ThresholdStyleSettings({ thresholdStyle, updateAllThresholdStyles }: ThresholdStyleSettingsProps) {
+  const selectedOption = getOptionFromStyle(thresholdStyle);
 
   return (
     <FormField label='Show thresholds'>
       <Select
-        onChange={({ detail }) => {
-          setSelectedOption(detail.selectedOption);
-          const thresholdStyle = convertOptionToThresholdStyle(detail.selectedOption);
-          // Update styles of all thresholds
+        options={thresholdStyleOptions}
+        selectedOption={selectedOption}
+        onChange={({ detail: { selectedOption } }) => {
+          const thresholdOptionValue = selectedOption.value as ThresholdStyle;
+          const thresholdStyle = getStyleFromOption(thresholdOptionValue);
           updateAllThresholdStyles(thresholdStyle);
         }}
-        options={styledOptions}
-        selectedOption={selectedOption}
       />
     </FormField>
   );
-};
+}

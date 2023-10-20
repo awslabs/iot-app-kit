@@ -4,8 +4,7 @@ import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { TextWidget } from '~/customization/widgets/types';
 import { DashboardWidget } from '~/types';
 import { maybeWithDefault } from '~/util/maybe';
-import TextSettings from './text';
-import LinkSettings from './link';
+import { TextSettings } from './text';
 import { PropertyLens } from '~/customization/propertiesSection';
 
 const isTextWidget = (w: DashboardWidget): w is TextWidget => w.type === 'text';
@@ -67,21 +66,13 @@ const RenderTextSettingsConfiguration = ({ useProperty }: { useProperty: Propert
     toggleUnderlined,
     fontSize: maybeWithDefault(undefined, fontSize),
     updateFontSize,
-  };
-
-  const linkSettingsProps = {
     href: maybeWithDefault(undefined, href),
     updateHref,
     isUrl: maybeWithDefault(undefined, isUrl),
     toggleIsUrl,
   };
 
-  return (
-    <>
-      <TextSettings {...textSettingsProps} />
-      <LinkSettings {...linkSettingsProps} />
-    </>
-  );
+  return <TextSettings {...textSettingsProps} />;
 };
 
 export const TextSettingsConfiguration: React.FC = () => (

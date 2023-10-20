@@ -5,7 +5,7 @@ import { RenderResult, act, cleanup, render, screen } from '@testing-library/rea
 import createWrapper from '@cloudscape-design/components/test-utils/dom';
 import { Provider } from 'react-redux';
 
-import { PropertiesPanel } from './panel';
+import { PropertiesPanel } from './propertiesPanel';
 import { configureDashboardStore } from '~/store';
 import { DashboardState } from '~/store/state';
 import { MOCK_LINE_CHART_WIDGET } from '../../../../testing/mocks';

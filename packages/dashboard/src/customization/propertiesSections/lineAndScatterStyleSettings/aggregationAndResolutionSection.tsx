@@ -41,19 +41,21 @@ export const AggregationAndResolutionSection: FC<AggregationAndResolutionSection
             options={resolutionOptions}
           />
         </FormField>
-        <FormField label='Aggregation'>
-          <Select
-            selectedOption={selectedAggregation}
-            onChange={({
-              detail: {
-                selectedOption: { value: newAggregation },
-              },
-            }) => {
-              updateAggregation(newAggregation);
-            }}
-            options={aggregationOptions}
-          />
-        </FormField>
+        {selectedResolution?.value !== '0' && (
+          <FormField label='Aggregation'>
+            <Select
+              selectedOption={selectedAggregation}
+              onChange={({
+                detail: {
+                  selectedOption: { value: newAggregation },
+                },
+              }) => {
+                updateAggregation(newAggregation);
+              }}
+              options={aggregationOptions}
+            />
+          </FormField>
+        )}
       </SpaceBetween>
     </ExpandableSection>
   );

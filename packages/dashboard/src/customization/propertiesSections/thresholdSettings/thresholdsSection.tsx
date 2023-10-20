@@ -1,9 +1,11 @@
+import Button from '@cloudscape-design/components/button';
+import ExpandableSection from '@cloudscape-design/components/expandable-section';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+import Toggle from '@cloudscape-design/components/toggle';
+import { type ComparisonOperator, type ThresholdSettings } from '@iot-app-kit/core';
+import { ThresholdStyleType } from '@iot-app-kit/react-components/src/components/chart/types';
 import React, { FC, useState } from 'react';
-
-import { ComparisonOperator, ThresholdSettings } from '@iot-app-kit/core';
 import { nanoid } from '@reduxjs/toolkit';
-
-import { Button, ExpandableSection, SpaceBetween, Toggle } from '@cloudscape-design/components';
 
 import ExpandableSectionHeader from '../shared/expandableSectionHeader';
 import { DEFAULT_THRESHOLD_COLOR } from './defaultValues';
@@ -15,8 +17,7 @@ import { ThresholdsList } from './thresholdsList';
 import { ComparisonOperators } from './comparisonOperators';
 import { AnnotationsSettings } from './annotations';
 import { CancelableEventHandler, ClickDetail } from '@cloudscape-design/components/internal/events';
-import { ThresholdStyleSettings, convertOptionToThresholdStyle, styledOptions } from './thresholdStyle';
-import { ThresholdStyleType } from '@iot-app-kit/react-components/src/components/chart/types';
+import { ThresholdStyleSettings } from './thresholdStyle';
 
 const ThresholdsExpandableSection: React.FC<React.PropsWithChildren<{ title: string }>> = ({ children, title }) => (
   <ExpandableSection headerText={<ExpandableSectionHeader>{title}</ExpandableSectionHeader>} defaultExpanded>
@@ -76,7 +77,8 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
     visible: true,
   };
   // Set default threshold style if no thresholds are added
-  let defaultThresholdStyle: ThresholdStyleType = convertOptionToThresholdStyle(styledOptions[2]);
+  // let defaultThresholdStyle: ThresholdStyleType = convertOptionToThresholdStyle(thresholdStyleOptions[2]);
+  let defaultThresholdStyle: ThresholdStyleType = { visible: true, fill: undefined };
   if (styledThresholdsAdded) {
     // All threshold styles are the same, check on any of the thresholds to determine the saved style
     const styledThreshold: (ThresholdWithId & StyledThreshold)[] = maybeWithDefault(

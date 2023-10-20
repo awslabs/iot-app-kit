@@ -3,7 +3,7 @@ import React from 'react';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { DashboardWidget } from '~/types';
 import { maybeWithDefault } from '~/util/maybe';
-import { SettingsSection } from './section';
+import { NumberSettings } from './section';
 import { CommonChartProperties } from '~/customization/widgets/types';
 import { nonNegative } from '~/util/number';
 import { PropertyLens } from '~/customization/propertiesSection';
@@ -25,12 +25,13 @@ const RenderSettingsConfiguration = ({
   );
 
   return (
-    <SettingsSection
+    <NumberSettings
       significantDigits={maybeWithDefault(undefined, significantDigits)}
       updateSignificantDigits={updateSignificantDigits}
     />
   );
 };
+
 export const SettingsConfiguration: React.FC = () => (
   <PropertiesSection
     isVisible={isSettingsWidget}

@@ -1,125 +1,99 @@
-import type { FC, MouseEventHandler, ReactNode } from 'react';
-import React from 'react';
-import type { NonCancelableCustomEvent, SelectProps } from '@cloudscape-design/components';
-import { ExpandableSection, Select, SpaceBetween } from '@cloudscape-design/components';
+import Checkbox from '@cloudscape-design/components/checkbox';
+import FormField from '@cloudscape-design/components/form-field';
+import Input from '@cloudscape-design/components/input';
+import Select from '@cloudscape-design/components/select';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+import Toggle from '@cloudscape-design/components/toggle';
 import * as awsui from '@cloudscape-design/design-tokens';
+import React from 'react';
+
 import ColorPicker from '../shared/colorPicker';
-
 import type { TextWidget } from '~/customization/widgets/types';
-
-import './text.css';
-
-interface ButtonWithStateProps {
-  checked: boolean;
-  onToggle: MouseEventHandler;
-  children: ReactNode;
-}
-
-const ButtonWithState: FC<ButtonWithStateProps> = ({
-  checked,
-  children,
-  onToggle,
-  ...others // passing other attributes like data-test-id
-}) => {
-  return (
-    <div
-      role='checkbox'
-      aria-checked={checked}
-      {...others}
-      className={`text-button-toggle ${checked ? 'checked' : ''}`}
-      onClick={onToggle}
-    >
-      {children}
-    </div>
-  );
-};
 
 const fontSizeOptions = [8, 10, 12, 14, 16, 20, 24, 32, 48].map((size) => ({
   label: `${size} px`,
   value: `${size}`,
 }));
 
-const defaultMessages = {
-  title: 'Text',
-  font: 'Font',
-  color: 'Color',
-  style: 'Style',
-  size: 'Size',
-  horizontal: 'Horizontal',
-  vertical: 'Vertical',
-};
-
 type FontSettings = NonNullable<TextWidget['properties']['fontSettings']>;
 type FontSetting<T extends keyof FontSettings> = FontSettings[T];
 
-type TextSettingsProps = FontSettings & {
+interface TextSettingsProps extends FontSettings, Pick<TextWidget['properties'], 'href' | 'isUrl'> {
   updateFontColor: (newValue: FontSetting<'fontColor'>) => void;
   toggleBold: (newValue: FontSetting<'isBold'>) => void;
   toggleItalic: (newValue: FontSetting<'isItalic'>) => void;
   toggleUnderlined: (newValue: FontSetting<'isUnderlined'>) => void;
   updateFontSize: (newValue: FontSetting<'fontSize'>) => void;
-};
+  updateHref: (newValue: string | undefined) => void;
+  toggleIsUrl: (newValue: boolean | undefined) => void;
+}
 
-const TextSettings: FC<TextSettingsProps> = ({
+export function TextSettings({
   fontColor = awsui.colorTextBodyDefault,
-  updateFontColor,
   isBold = false,
-  toggleBold,
   isItalic = false,
-  toggleItalic,
   isUnderlined = false,
-  toggleUnderlined,
   fontSize = 16,
+  href = '',
+  isUrl = false,
+  updateFontColor,
+  toggleBold,
+  toggleItalic,
+  toggleUnderlined,
   updateFontSize,
-}) => {
-  const onFontSizeChange = ({
-    detail: {
-      selectedOption: { value },
-    },
-  }: NonCancelableCustomEvent<SelectProps.ChangeDetail>) => {
-    if (value) {
-      updateFontSize(parseInt(value, 10));
-    }
-  };
-
+  updateHref,
+  toggleIsUrl,
+}: TextSettingsProps) {
   return (
-    <ExpandableSection headerText={defaultMessages.title} defaultExpanded>
-      <div className='text-configuration' style={{ gap: awsui.spaceScaledS }}>
-        <label>{defaultMessages.color}</label>
+    <>
+      <FormField label='Text color'>
         <ColorPicker color={fontColor} updateColor={updateFontColor} />
+      </FormField>
 
-        <label>{defaultMessages.style}</label>
-        <SpaceBetween size='xxs' direction='horizontal'>
-          <ButtonWithState aria-label='toggle bold text' checked={isBold} onToggle={() => toggleBold(!isBold)}>
-            <b>B</b>
-          </ButtonWithState>
-          <ButtonWithState
-            aria-label='toggle italicize text'
-            checked={isItalic}
-            onToggle={() => toggleItalic(!isItalic)}
-          >
-            <i>I</i>
-          </ButtonWithState>
-          <ButtonWithState
-            aria-label='toggle underline text'
-            checked={isUnderlined}
-            onToggle={() => toggleUnderlined(!isUnderlined)}
-          >
-            <u>U</u>
-          </ButtonWithState>
+      <FormField label='Font style'>
+        <SpaceBetween size='xxs' direction='vertical'>
+          <Toggle checked={isBold} onChange={({ detail: { checked } }) => toggleBold(checked)}>
+            Bold
+          </Toggle>
+
+          <Toggle checked={isItalic} onChange={({ detail: { checked } }) => toggleItalic(checked)}>
+            Italicized
+          </Toggle>
+
+          <Toggle checked={isUnderlined} onChange={({ detail: { checked } }) => toggleUnderlined(checked)}>
+            Underlined
+          </Toggle>
         </SpaceBetween>
+      </FormField>
 
-        <label>{defaultMessages.size}</label>
+      <FormField label='Font size'>
         <Select
           selectedOption={{ label: `${fontSize} px`, value: `${fontSize}` }}
           options={fontSizeOptions}
-          onChange={onFontSizeChange}
-          ariaLabel='dropdown font size'
-          data-test-id='text-widget-setting-font-size'
+          onChange={({
+            detail: {
+              selectedOption: { value: updatedFontSize },
+            },
+          }) => {
+            if (updatedFontSize) {
+              updateFontSize(parseInt(updatedFontSize, 10));
+            }
+          }}
         />
-      </div>
-    </ExpandableSection>
-  );
-};
+      </FormField>
 
-export default TextSettings;
+      <FormField label='URL'>
+        <Toggle
+          checked={isUrl}
+          onChange={({ detail }) => {
+            toggleIsUrl(detail.checked);
+          }}
+        >
+          Create link
+        </Toggle>
+
+        {isUrl && <Input value={href} onChange={({ detail: { value: updatedHref } }) => updateHref(updatedHref)} />}
+      </FormField>
+    </>
+  );
+}

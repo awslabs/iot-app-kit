@@ -5,7 +5,7 @@ import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
 import { Provider } from 'react-redux';
 import { configureDashboardStore } from '~/store';
 import { render } from '@testing-library/react';
-import { ThresholdComponent } from './thresholdComponent';
+import { ThresholdFormListItem } from './thresholdFormListItem';
 import type { DashboardState } from '~/store/state';
 import type { ThresholdWithId } from '~/customization/settings';
 import { ThresholdSettingsConfiguration, ThresholdsWidget } from './index';
@@ -47,13 +47,11 @@ const TestThresholdSection = () => (
 
 const TestThresholdComponent = () => (
   <Provider store={configureDashboardStore(state)}>
-    <ThresholdComponent
+    <ThresholdFormListItem
       threshold={MOCK_THRESHOLD_1}
+      thresholds={[MOCK_THRESHOLD_1, MOCK_THRESHOLD_2]}
+      updateThresholds={() => {}}
       comparisonOptions={[]}
-      onDelete={() => {}}
-      onUpdateValue={() => {}}
-      onUpdateComparisonOperator={() => {}}
-      onUpdateColor={() => {}}
     />
   </Provider>
 );

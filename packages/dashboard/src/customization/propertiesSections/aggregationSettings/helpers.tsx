@@ -19,8 +19,6 @@ export const AGGREGATION_OPTIONS: SelectProps.Option[] = [
   { label: 'Sum', value: AggregateType.SUM },
 ];
 
-export const NONE_AGGREGATION = { label: 'No aggregation', value: undefined };
-
 // replacing the underscore in aggregate names with a space
 // ex: "STANDARD_DEVIATION" => "standard deviation"
 export const aggregateToString = (aggregate?: string): string => {
@@ -33,8 +31,7 @@ export const getAggregationOptions = (supportsRawData: boolean, dataTypes: Set<s
       ? [{ label: 'Count', value: AggregateType.COUNT }]
       : AGGREGATION_OPTIONS;
 
-  if (!supportsRawData) return dataTypeAggregations;
-  return !resolution || resolution === '0' ? [...dataTypeAggregations, NONE_AGGREGATION] : dataTypeAggregations;
+  return dataTypeAggregations;
 };
 
 export const getResolutionOptions = (supportsRawData: boolean) => {
