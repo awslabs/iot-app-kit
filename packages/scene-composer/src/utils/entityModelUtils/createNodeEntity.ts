@@ -9,6 +9,7 @@ import {
   ICameraComponent,
   IColorOverlayComponent,
   IDataOverlayComponent,
+  ILightComponent,
   IModelRefComponent,
   IMotionIndicatorComponent,
   KnownComponentType,
@@ -22,6 +23,7 @@ import { createMotionIndicatorEntityComponent } from './motionIndicatorComponent
 import { createCameraEntityComponent } from './cameraComponent';
 import { createModelRefComponent } from './modelRefComponent';
 import { createModelShaderEntityComponent } from './modelShaderComponent';
+import { createLightEntityComponent } from './lightComponent';
 
 export const createNodeEntity = async (
   node: ISceneNodeInternal,
@@ -63,6 +65,9 @@ export const createNodeEntity = async (
           break;
         case KnownComponentType.ModelShader:
           comp = createModelShaderEntityComponent(compToBeCreated as IColorOverlayComponent);
+          break;
+        case KnownComponentType.Light:
+          comp = createLightEntityComponent(compToBeCreated as ILightComponent);
           break;
 
         default:

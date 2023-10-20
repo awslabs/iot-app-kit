@@ -14,7 +14,7 @@ import { KnownComponentType } from '../../interfaces';
 import DebugLogger from '../../logger/DebugLogger';
 import { Component, DistanceUnit, ModelType, Node, Scene } from '../../models/SceneModels';
 import { isDynamicNode } from '../../utils/entityModelUtils/sceneUtils';
-import { generateUUID } from '../../utils/mathUtils';
+import { colorToHexString, generateUUID } from '../../utils/mathUtils';
 import {
   IAnchorComponentInternal,
   IAnimationComponentInternal,
@@ -164,12 +164,20 @@ function createLightComponent(
 
   // merge light settings with default settings so that all fields have valid default values
   const defaultLightSettings = DEFAULT_LIGHT_SETTINGS_MAP[light.lightType];
+  const lightSettings = Object.assign({}, defaultLightSettings, light.lightSettings);
+  if (lightSettings.color) {
+    lightSettings.color = colorToHexString(lightSettings.color);
+  }
+  const groundColor = (lightSettings as Component.IHemisphereLightSettings).groundColor;
+  if (groundColor) {
+    (lightSettings as Component.IHemisphereLightSettings).groundColor = colorToHexString(groundColor);
+  }
 
   return {
     ref: generateUUID(),
-    type: 'Light',
+    type: KnownComponentType.Light,
     lightType: light.lightType,
-    lightSettings: Object.assign({}, defaultLightSettings, light.lightSettings),
+    lightSettings,
   };
 }
 
@@ -193,7 +201,7 @@ function createMotionIndicatorComponent(
   const defaultSpeed = component.config.defaultSpeed !== undefined ? Number(component.config.defaultSpeed) : undefined;
   return {
     ref: generateUUID(),
-    type: 'MotionIndicator',
+    type: KnownComponentType.MotionIndicator,
     shape: component.shape,
     valueDataBindings: component.valueDataBindings,
     config: { ...component.config, defaultSpeed },
@@ -638,7 +646,7 @@ function convertNodes(
         }
         const cameraArray = indexedObjectCollector[KnownComponentType.Camera]!;
         const len = cameraArray.length;
-        const { ref, type, ...cameraComponent } = convertComponent(camera) as ICameraComponentInternal;
+        const { ref: _ref, type: _type, ...cameraComponent } = convertComponent(camera) as ICameraComponentInternal;
         cameraArray.push(cameraComponent);
         const indexedCameraComponent: Component.Camera = {
           type: Component.Type.Camera,
@@ -692,7 +700,7 @@ function convertNodeIndexes(nodeRefs: string[], indexMap: Record<string, number>
 
 // Component is really flexible so what this function does is just a shape change
 function convertComponent(component: ISceneComponentInternal): Component.IComponent {
-  const { ref, ...componentWithoutRef } = component;
+  const { ref: _ref, ...componentWithoutRef } = component;
 
   // TODO: we may add some more validations here.
   return componentWithoutRef as unknown as Component.IComponent;

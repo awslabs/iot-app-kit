@@ -18,6 +18,7 @@ import { parseModelRefComp } from './modelRefComponent';
 import { parseCameraComp } from './cameraComponent';
 import { parseMotionIndicatorComp } from './motionIndicatorComponent';
 import { parseModelShaderComp } from './modelShaderComponent';
+import { parseLightComp } from './lightComponent';
 
 enum NodeComponentProperty {
   Name = 'name',
@@ -170,6 +171,13 @@ const parseNodeComponents = (components: DocumentType): ISceneComponentInternal[
         const modelShader = parseModelShaderComp(comp);
         if (modelShader) {
           results.push(modelShader);
+        }
+        break;
+      }
+      case componentTypeToId.Light: {
+        const light = parseLightComp(comp);
+        if (light) {
+          results.push(light);
         }
         break;
       }

@@ -4,11 +4,8 @@ import { render } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 import _ from 'lodash';
 
-import {
-  colorToHexString,
-  LightComponentEditor,
-} from '../../../../src/components/panels/scene-components/LightComponentEditor';
-import { Color, LightType } from '../../../../src/models/SceneModels';
+import { LightComponentEditor } from '../../../../src/components/panels/scene-components/LightComponentEditor';
+import { LightType } from '../../../../src/models/SceneModels';
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../src/common/constants';
 import { ILightComponentInternal, useStore } from '../../../../src/store';
 
@@ -153,12 +150,5 @@ describe('LightComponentEditor', () => {
       },
       true,
     );
-  });
-
-  it('should return correct values for color to string', () => {
-    const colorStr: Color = '#ff0000';
-    expect(colorToHexString(colorStr)).toEqual('#ff0000');
-    const colorNumber: Color = 16711680;
-    expect(colorToHexString(colorNumber)).toEqual('#ff0000');
   });
 });
