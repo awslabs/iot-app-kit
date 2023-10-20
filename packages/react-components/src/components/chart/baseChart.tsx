@@ -8,25 +8,25 @@ import {
 } from '../../hooks/useECharts';
 import { ChartOptions } from './types';
 import { useVisualizedDataStreams } from './hooks/useVisualizedDataStreams';
-import { useConvertedOptions } from './converters/convertOptions';
-import { useSeriesAndYAxis } from './converters/convertSeriesAndYAxis';
+import { useConvertedOptions } from './chartOptions/convertOptions';
+import { useSeriesAndYAxis } from './chartOptions/seriesAndYAxis/convertSeriesAndYAxis';
 import { HotKeys } from 'react-hotkeys';
-import useTrendCursors from './hooks/useTrendCursors';
+import { useTrendCursors } from './trendCursor';
 import { Resizable } from 'react-resizable';
 import Legend from './legend/legend';
-import { useChartStyleSettings } from './converters/convertStyles';
+import { useChartStyleSettings } from './chartOptions/style/convertStyles';
 import ChartContextMenu, { Action } from './contextMenu/ChartContextMenu';
 import { useChartId } from './hooks/useChartId';
-import { useChartSetOptionSettings } from './hooks/useChartSetOptionSettings';
-import { MultiYAxisLegend } from './legend/multiYAxis';
+import { useChartSetOptionSettings } from './chartOptions/useChartSetOptionSettings';
+import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
 
 import './chart.css';
-import { useContextMenu } from './hooks/useContextMenu';
+import { useContextMenu } from './contextMenu/useContextMenu';
 import { useViewportToMS } from './hooks/useViewportToMS';
 import { DEFAULT_CHART_VISUALIZATION } from './eChartsConstants';
 import { useDataZoom } from './hooks/useDataZoom';
 import { useViewport } from '../../hooks/useViewport';
-import { getXAxis } from './utils/getXAxis';
+import { getXAxis } from './chartOptions/axes/xAxis';
 
 /**
  * Developer Notes:
