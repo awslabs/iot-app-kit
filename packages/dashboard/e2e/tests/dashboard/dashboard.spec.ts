@@ -121,3 +121,21 @@ test('dashboard add and remove multiple widgets', async ({ page }) => {
   const deletedWidgets = await grid.widgets();
   expect(deletedWidgets).toHaveLength(0);
 });
+
+test('pagination buttons', async ({ page }) => {
+  await page.goto(TEST_PAGE);
+  const frame = page.locator(TEST_IFRAME); // Need to go into frame otherwise the `locator` won't locate the selection.
+
+  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
+  const forwardBtn = await page.getByRole('button', {
+    name: /paginate-foward/i,
+  });
+
+  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
+  const backBtn = await page.getByRole('button', {
+    name: /paginate-backward/i,
+  });
+
+  expect(forwardBtn);
+  expect(backBtn);
+});

@@ -10,7 +10,7 @@ import {
 } from '@cloudscape-design/design-tokens';
 import { MAX_TOOLTIP_WIDTH, TOP_TOOLTIP_MARGIN, WRAPPED_TOOLTIP_WIDTH } from './constants';
 
-const Tooltip = ({
+export const Tooltip = ({
   content,
   position,
   children,
@@ -65,5 +65,3 @@ const Tooltip = ({
     </div>
   );
 };
-
-export default Tooltip;

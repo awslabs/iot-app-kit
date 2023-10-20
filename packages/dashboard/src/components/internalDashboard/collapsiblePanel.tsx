@@ -11,7 +11,7 @@ import Box, { BoxProps } from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import { IconProps } from '@cloudscape-design/components/icon';
 import { DEFAULT_COLLAPSED_SIDE_PANE_WIDTH } from '../resizablePanes/constants';
-import Tooltip from '../tooltip/tooltip';
+import { Tooltip } from '@iot-app-kit/react-components';
 
 type CollapsiblePanelProps = {
   isPanelCollapsed: boolean;

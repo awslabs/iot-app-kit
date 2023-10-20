@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Tooltip from './tooltip';
+import { Tooltip } from './tooltip';
 
 describe('Tooltip', () => {
   it('renders the children correctly', () => {
