@@ -32,10 +32,14 @@ export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, view
     viewportInMsRef.current = viewportInMs;
   }, [viewportInMs]);
 
+  // handle live mode + pagination
   useEffect(() => {
     const chart = chartRef.current;
-    if (chart && (!isScrolling || lastUpdatedBy === 'date-picker')) {
-      setIsScrolling(false);
+    if (chart && !isScrolling) {
+      if (viewportInMs.isDurationViewport) {
+        // live mode
+        setIsScrolling(false);
+      }
       chart.setOption({
         dataZoom: { ...DEFAULT_DATA_ZOOM, startValue: viewportInMs.initial, endValue: viewportInMs.end },
       });
@@ -52,6 +56,7 @@ export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, view
         throttle(() => {
           setIsScrolling(true);
           onDataZoomEvent(chart, setViewport);
+          setIsScrolling(false); //allow for pagination after gesture, will enter the correct branch in above useEffect
         }, ECHARTS_ZOOM_DEBOUNCE_MS)();
       });
     }
