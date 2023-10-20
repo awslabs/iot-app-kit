@@ -149,3 +149,36 @@ it('does not reset intervals when document visibility changes but the document i
 
   expect(cb).not.toHaveBeenCalled();
 });
+
+it('synchronizes intervals when a new interval is created', () => {
+  const scheduler = new RequestScheduler();
+  const id1 = 'id1';
+  const id2 = 'id2';
+  const cb1 = jest.fn();
+  const cb2 = jest.fn();
+
+  scheduler.create({
+    id: id1,
+    cb: cb1,
+    refreshRate: SECOND_IN_MS,
+  });
+
+  jest.advanceTimersByTime(SECOND_IN_MS);
+  expect(cb1).toHaveBeenCalledTimes(1);
+
+  cb1.mockClear();
+
+  scheduler.create({
+    id: id2,
+    cb: cb2,
+    refreshRate: SECOND_IN_MS,
+  });
+
+  jest.advanceTimersByTime(SECOND_IN_MS);
+  expect(cb1).toHaveBeenCalledTimes(1);
+  expect(cb2).toHaveBeenCalledTimes(1);
+
+  jest.advanceTimersByTime(SECOND_IN_MS);
+  expect(cb1).toHaveBeenCalledTimes(2);
+  expect(cb2).toHaveBeenCalledTimes(2);
+});
