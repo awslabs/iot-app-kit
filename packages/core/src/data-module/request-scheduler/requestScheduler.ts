@@ -26,11 +26,13 @@ export default class RequestScheduler {
     refreshRate = DEFAULT_REFRESH_RATE,
     refreshExpiration,
     cb,
+    synchronize = true,
   }: {
     id: string;
     refreshRate?: number;
     refreshExpiration?: number;
     cb: () => void;
+    synchronize?: boolean;
   }) {
     if (this.isScheduled(id)) {
       return;
@@ -53,6 +55,10 @@ export default class RequestScheduler {
     }, refreshRate);
 
     this.intervalMap[id] = { intervalId, refreshRate, refreshExpiration, cb };
+
+    if (synchronize) {
+      this.synchronizeIntervals();
+    }
   }
 
   public remove(id: string) {
@@ -68,18 +74,22 @@ export default class RequestScheduler {
 
   private handleVisibilityChange = () => {
     if (!document.hidden) {
-      Object.keys(this.intervalMap).forEach((id) => {
-        this.resetInterval(id);
-      });
+      this.synchronizeIntervals();
     }
   };
 
-  private resetInterval(id: string) {
+  private synchronizeIntervals() {
+    Object.keys(this.intervalMap).forEach((id) => {
+      this.resetInterval(id, false);
+    });
+  }
+
+  private resetInterval = (id: string, synchronize = true) => {
     const existingInterval = this.intervalMap[id];
 
     if (existingInterval) {
       this.remove(id);
-      this.create({ id, ...existingInterval });
+      this.create({ id, ...existingInterval, synchronize });
     }
-  }
+  };
 }
