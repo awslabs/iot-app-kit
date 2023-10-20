@@ -1,7 +1,8 @@
 import React from 'react';
 import { Menu, MenuOption } from '../../menu';
-import { InternalGraphicComponentGroupOption } from '../types';
-import { MAX_TREND_CURSORS } from '../eChartsConstants';
+
+import { MAX_TREND_CURSORS } from '../trendCursor/constants';
+import { InternalGraphicComponentGroupOption } from '../trendCursor/types';
 
 export type Action = 'add' | 'delete' | 'copy';
 interface ChartContextMenu {

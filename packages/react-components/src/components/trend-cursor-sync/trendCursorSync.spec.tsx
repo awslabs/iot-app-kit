@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { TrendCursorSync } from './index';
 import { Chart } from '../chart';
 import React from 'react';
-import { mockViewport } from '../chart/tests/getTrendCursor.spec';
+import { mockViewport } from '../chart/trendCursor/tests/getTrendCursor.spec';
 import { mockQuery } from '../chart/tests/baseChart.spec';
 jest.mock('echarts', () => ({
   use: jest.fn(),
