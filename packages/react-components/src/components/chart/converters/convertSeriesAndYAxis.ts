@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { DataPoint, DataStream, Threshold } from '@iot-app-kit/core';
 import { BarSeriesOption, SeriesOption, YAXisComponentOption } from 'echarts';
 
@@ -11,7 +10,7 @@ import { StyleSettingsMap, getChartStyleSettingsFromMap } from './convertStyles'
 import { convertYAxis as convertChartYAxis } from './convertAxis';
 import { convertThresholds } from './convertThresholds';
 import { ChartStyleSettingsWithDefaults } from '../utils/getStyles';
-import { DEEMPHASIZE_OPACITY, DEFAULT_Y_AXIS, EMPHASIZE_SCALE_CONSTANT } from '../eChartsConstants';
+import { DEEMPHASIZE_OPACITY, EMPHASIZE_SCALE_CONSTANT } from '../eChartsConstants';
 import { padYAxis, validateValue } from './padYAxis';
 
 const yAxisLegendGenerator =
@@ -202,25 +201,16 @@ export const useSeriesAndYAxis = (
     thresholds,
   }: { styleSettings: StyleSettingsMap; thresholds: Threshold[]; axis?: ChartAxisOptions }
 ) => {
-  const defaultYAxis: YAXisComponentOption[] = useMemo(() => [convertChartYAxis(axis)], [axis]);
+  const defaultYAxis: YAXisComponentOption[] = [convertChartYAxis(axis)];
   const convertedThresholds = convertThresholds(thresholds);
   const getStyles = getChartStyleSettingsFromMap(styleSettings);
-  const datastreamDeps = JSON.stringify(datastreams.map(({ id, refId }) => `${id}-${refId}`));
 
-  const { series, yAxis, yMaxs, yMins } = useMemo(() => {
-    return datastreams
-      .map((datastream) => convertSeriesAndYAxis(getStyles(datastream))(datastream))
-      .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis, yMins: [], yMaxs: [] });
-    // disabling because datastream are stringified as datastreamDeps
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [datastreamDeps, defaultYAxis, getStyles]);
-
-  const allSeriesEmpty = series.every((series: SeriesOption) => {
-    const data = series.data as Array<number[]>;
-    return data?.length === 0;
-  });
+  const { series, yAxis, yMaxs, yMins } = datastreams
+    .map((datastream) => convertSeriesAndYAxis(getStyles(datastream))(datastream))
+    .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis, yMins: [], yMaxs: [] });
 
   let paddedYAxis: NonNullable<YAXisComponentOption | undefined>[] = yAxis;
+
   if (yMins.length === 0 && yMaxs.length === 0 && yAxis.length === 1) {
     const yAxisLabel: YAxisOptions = {
       yMin: validateValue(yAxis[0].min?.toString()),
@@ -235,5 +225,17 @@ export const useSeriesAndYAxis = (
     series[0].markLine = convertedThresholds.markLine;
   }
 
-  return { series, yAxis: allSeriesEmpty ? [{ ...DEFAULT_Y_AXIS, min: 0, max: 10000 }] : paddedYAxis, yMaxs, yMins };
+  const allSeriesEmpty = series.every((series: SeriesOption) => {
+    const data = series.data as Array<number[]>;
+    return data?.length === 0;
+  });
+
+  return {
+    series,
+    yAxis: allSeriesEmpty
+      ? paddedYAxis.map((yaxis) => ({ ...yaxis, min: yaxis.min ?? 0, max: yaxis.max ?? 10000 }))
+      : paddedYAxis,
+    yMaxs,
+    yMins,
+  };
 };
