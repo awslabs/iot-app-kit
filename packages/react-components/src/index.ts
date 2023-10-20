@@ -13,6 +13,7 @@ export { ScatterChart } from './components/scatter-chart';
 export { KPI } from './components/kpi/kpi';
 export { StatusTimeline } from './components/status-timeline';
 export { Status } from './components/status/status';
+export { Tooltip } from './components/tooltip';
 export { KnowledgeGraph } from './components/knowledge-graph';
 export type { NodeData, EdgeData, IQueryData } from './components/knowledge-graph';
 

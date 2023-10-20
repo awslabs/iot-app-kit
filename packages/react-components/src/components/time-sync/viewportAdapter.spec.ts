@@ -1,4 +1,9 @@
-import { dateRangeToViewport, viewportToDateRange, relativeOptions } from './viewportAdapter';
+import {
+  dateRangeToViewport,
+  viewportToDateRange,
+  relativeOptions,
+  getViewportStartOnBackwardRelative,
+} from './viewportAdapter';
 
 describe('dateRangeToViewport', () => {
   it('can convert a relative date range option to the correct viewport', () => {
@@ -135,5 +140,59 @@ describe('viewportToDateRange', () => {
       endDate: '2023-02-28T23:59:59.000Z',
       type: 'absolute',
     });
+  });
+});
+
+describe('getViewportStartOnBackwardRelative', () => {
+  it('can get the new start date when going back from a relative duration', () => {
+    let currentDate = new Date();
+    let newDate = getViewportStartOnBackwardRelative({
+      amount: 5,
+      unit: 'minute',
+      type: 'relative',
+    });
+
+    expect(currentDate.getTime() - newDate.getTime()).toEqual(300000);
+
+    currentDate = new Date();
+    newDate = getViewportStartOnBackwardRelative({
+      amount: 1,
+      unit: 'hour',
+      type: 'relative',
+    });
+
+    expect(currentDate.getTime() - newDate.getTime()).toEqual(3600000);
+
+    currentDate = new Date();
+    newDate = getViewportStartOnBackwardRelative({
+      amount: 30,
+      unit: 'second',
+      type: 'relative',
+    });
+    expect(currentDate.getTime() - newDate.getTime()).toEqual(30000);
+
+    currentDate = new Date();
+    newDate = getViewportStartOnBackwardRelative({
+      amount: 1,
+      unit: 'day',
+      type: 'relative',
+    });
+    expect(currentDate.getTime() - newDate.getTime()).toEqual(86400000);
+
+    currentDate = new Date();
+    newDate = getViewportStartOnBackwardRelative({
+      amount: 1,
+      unit: 'week',
+      type: 'relative',
+    });
+    expect(currentDate.getTime() - newDate.getTime()).toEqual(604800000);
+
+    currentDate = new Date();
+    newDate = getViewportStartOnBackwardRelative({
+      amount: 1,
+      unit: 'month',
+      type: 'relative',
+    });
+    expect(currentDate.getTime() - newDate.getTime()).toEqual(2592000000);
   });
 });
