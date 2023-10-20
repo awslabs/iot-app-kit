@@ -1,13 +1,15 @@
+import { Color } from '../models/SceneModels';
+
 import {
   generateUUID,
   getScaleFactor,
   humanFileSize,
   decToHexString,
-  hexStringToDec,
   parseFloatOrDefault,
   approximatelyEquals,
   EPSILON,
-} from '../../src/utils/mathUtils';
+  colorToHexString,
+} from './mathUtils';
 
 describe('generateUUID', () => {
   it('should generate unique strings', () => {
@@ -53,14 +55,12 @@ describe('decToHexString', () => {
   });
 });
 
-describe('hexStringToDec', () => {
-  it('should convert hex string to dec correctly', () => {
-    expect(hexStringToDec('#ffffff')).toBe(0xffffff);
-    expect(hexStringToDec('#00ffff')).toBe(0x00ffff);
-  });
-
-  it('should return 0xffffff if the hex string is invalid', () => {
-    expect(hexStringToDec('xyz')).toBe(0xffffff);
+describe('colorToHexString', () => {
+  it('should return correct values for color to string', () => {
+    const colorStr: Color = '#ff0000';
+    expect(colorToHexString(colorStr)).toEqual('#ff0000');
+    const colorNumber: Color = 16711680;
+    expect(colorToHexString(colorNumber)).toEqual('#ff0000');
   });
 });
 

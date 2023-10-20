@@ -74,13 +74,13 @@ export const DEFAULT_CAMERA_SETTINGS = {
 };
 
 const DEFAULT_DIRECTIONAL_LIGHT_SETTINGS: Component.IDirectionalLightSettings = {
-  color: 0xffffff,
+  color: '#ffffff',
   intensity: 1,
   castShadow: true,
 };
 
 const DEFAULT_POINT_LIGHT_SETTINGS: Component.IPointLightSettings = {
-  color: 0xffffff,
+  color: '#ffffff',
   intensity: 1,
   decay: 2.0,
   distance: 0,
@@ -88,13 +88,13 @@ const DEFAULT_POINT_LIGHT_SETTINGS: Component.IPointLightSettings = {
 };
 
 const DEFAULT_AMBIENT_LIGHT_SETTINGS: Component.IAmbientLightSettings = {
-  color: 0xffffff,
+  color: '#ffffff',
   intensity: 1,
 };
 
 const DEFAULT_HEMISPHERE_LIGHT_SETTINGS: Component.IHemisphereLightSettings = {
-  color: 0xffffff,
-  groundColor: 0x333333,
+  color: '#ffffff',
+  groundColor: '#333333',
   intensity: 1,
 };
 

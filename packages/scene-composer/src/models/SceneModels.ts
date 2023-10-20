@@ -245,7 +245,7 @@ export namespace Component {
   }
 
   interface ILightSettingsBase {
-    color: Color;
+    color: string;
     intensity: number;
   }
 
@@ -266,11 +266,17 @@ export namespace Component {
   export interface IAmbientLightSettings extends ILightSettingsBase {}
 
   export interface IHemisphereLightSettings extends ILightSettingsBase {
-    groundColor: Color;
+    groundColor: string;
   }
+
+  export type ILightSettings =
+    | IDirectionalLightSettings
+    | IAmbientLightSettings
+    | IHemisphereLightSettings
+    | IPointLightSettings;
 
   export interface Light extends IComponent {
     lightType: LightType;
-    lightSettings: IDirectionalLightSettings | IAmbientLightSettings | IHemisphereLightSettings | IPointLightSettings;
+    lightSettings: ILightSettings;
   }
 }

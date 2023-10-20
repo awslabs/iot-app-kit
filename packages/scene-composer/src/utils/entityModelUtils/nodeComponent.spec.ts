@@ -218,6 +218,23 @@ describe('parseNode', () => {
     componentTypeId: componentTypeToId.ModelShader,
     properties: [],
   };
+  const lightComp = {
+    componentTypeId: componentTypeToId.Light,
+    properties: [
+      {
+        propertyName: 'lightType',
+        propertyValue: 'Ambient',
+      },
+      {
+        propertyName: 'lightSettings_color',
+        propertyValue: '#123456',
+      },
+      {
+        propertyName: 'lightSettings_intensity',
+        propertyValue: 2,
+      },
+    ],
+  };
 
   const nodeComp = {
     componentTypeId: NODE_COMPONENT_TYPE_ID,
@@ -283,7 +300,10 @@ describe('parseNode', () => {
 
   it('should parse to expected node component with components', () => {
     const result = parseNode(
-      { ...entity, components: [tagComp, overlayComp, modelRefComp, cameraComp, indicatorComp, modelShaderComp] },
+      {
+        ...entity,
+        components: [tagComp, overlayComp, modelRefComp, cameraComp, indicatorComp, modelShaderComp, lightComp],
+      },
       nodeComp,
     );
 
@@ -305,6 +325,9 @@ describe('parseNode', () => {
       }),
       expect.objectContaining({
         type: KnownComponentType.ModelShader,
+      }),
+      expect.objectContaining({
+        type: KnownComponentType.Light,
       }),
     ];
     expect(result?.components).toEqual(expectedComponents);

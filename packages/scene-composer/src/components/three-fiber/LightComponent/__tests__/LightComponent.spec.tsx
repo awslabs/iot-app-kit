@@ -4,7 +4,9 @@ import React from 'react';
 import { create } from 'react-test-renderer';
 
 import LightComponent from '..';
-import { LightType } from '../../../../models/SceneModels';
+import { Component, LightType } from '../../../../models/SceneModels';
+import { ISceneNodeInternal } from '../../../../store';
+import { KnownComponentType } from '../../../../interfaces';
 
 jest.mock('@react-three/fiber', () => {
   const originalModule = jest.requireActual('@react-three/fiber');
@@ -23,7 +25,7 @@ describe('LightComponent', () => {
     distance: 100,
     decay: 0.1,
     groundColor: 'white',
-  } as any;
+  } as Component.ILightSettings;
 
   [
     ['Point', LightType.Point],
@@ -35,8 +37,13 @@ describe('LightComponent', () => {
     it(`should render correctly for ${value[0]} light`, () => {
       const container = create(
         <LightComponent
-          node={{ name: 'Light' } as any}
-          component={{ ref: 'light-ref', lightType: value[1] as any, lightSettings } as any}
+          node={{ name: 'Light' } as ISceneNodeInternal}
+          component={{
+            ref: 'light-ref',
+            type: KnownComponentType.Light,
+            lightType: value[1] as LightType,
+            lightSettings,
+          }}
         />,
       );
 

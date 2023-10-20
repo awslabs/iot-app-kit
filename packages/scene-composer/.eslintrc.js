@@ -56,5 +56,10 @@ module.exports = {
       },
     },
   ],
-  ignorePatterns: ['src/three/GLTFLoader.js', 'src/three/tiles3d/*', 'tools/watch-build.js'],
+  ignorePatterns: [
+    'src/three/GLTFLoader.js',
+    'src/three/tiles3d/*',
+    'tools/watch-build.js',
+    'src/assets/auto-gen/icons/*',
+  ],
 };

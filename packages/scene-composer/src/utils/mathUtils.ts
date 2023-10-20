@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
 import { DistanceUnit } from '../interfaces';
+import { Color } from '../models/SceneModels';
 
 /**
  * Format bytes as human-readable text.
@@ -50,20 +51,13 @@ export function decToHexString(dec: number) {
   return '#' + str;
 }
 
-/**
- * Convert a css-style color string to its decimal form.
- * For example: #123456 => 0x123456 => 1193046
- *
- * If the input is an invalid hex string, the 0xFFFFFF value is returned.
- *
- * @param hex css-style hex string.
- * @returns decimal number of the hex string
- */
-export function hexStringToDec(hex: string) {
-  // assume hex string is a css-style color string, like #aabbcc
-  const result = Number.parseInt(hex.substring(1), 16);
-  // return 0xFFFFFF on error;
-  return Number.isNaN(result) ? 0xffffff : result;
+export function colorToHexString(color: Color) {
+  if (typeof color === 'string') {
+    // assume the string color is css-style hex
+    return color;
+  }
+
+  return decToHexString(color);
 }
 
 export function parseFloatOrDefault(str: string, defaultValue: number) {

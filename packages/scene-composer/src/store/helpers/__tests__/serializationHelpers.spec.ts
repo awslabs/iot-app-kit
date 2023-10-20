@@ -1,7 +1,7 @@
 import SerializationHelpers, { exportsForTesting } from '../serializationHelpers';
 import { ERROR_MESSAGE_DICT, ErrorCode, ErrorLevel, IModelRefComponent, KnownComponentType } from '../../..';
 import { generateUUID } from '../../../utils/mathUtils';
-import { Component, Node } from '../../../models/SceneModels';
+import { Component, LightType, ModelType, Node } from '../../../models/SceneModels';
 import { ISceneComponentInternal, ISceneDocumentInternal, ISceneNodeInternal } from '../..';
 
 jest.mock('../../../utils/mathUtils', () => ({
@@ -20,14 +20,17 @@ describe('serializationHelpers', () => {
 
     const errorCollector = [];
     const glb = exportsForTesting.createModelRefComponent(
-      { modelType: 'GLB' } as any,
+      { modelType: 'GLB' } as Component.ModelRef,
       errorCollector,
     ) as unknown as ISceneNodeInternal;
     const gltf = exportsForTesting.createModelRefComponent(
-      { modelType: 'GLTF' } as any,
+      { modelType: 'GLTF' } as Component.ModelRef,
       errorCollector,
     ) as unknown as ISceneNodeInternal;
-    const error = exportsForTesting.createModelRefComponent({ modelType: 'OBJ' } as any, errorCollector);
+    const error = exportsForTesting.createModelRefComponent(
+      { modelType: 'OBJ' as ModelType } as Component.ModelRef,
+      errorCollector,
+    );
 
     expect(glb.ref).toEqual('test-uuid');
     expect(gltf.ref).toEqual('other-test-uuid');
@@ -91,7 +94,7 @@ describe('serializationHelpers', () => {
       type: 'Light',
       lightType: 'Ambient',
       lightSettings: {
-        color: 0xffffff,
+        color: '#ffffff',
         intensity: 1,
         volume: 'full',
       },
@@ -432,19 +435,26 @@ describe('serializationHelpers', () => {
       const component = {
         type: Component.Type.Light,
         ref: 'test-uuid',
-        lightType: 'Ambient',
+        lightType: LightType.Ambient,
         lightSettings: {
           color: 0xffffff,
           intensity: 1,
           volume: 'full',
         },
-      } as Component.Light;
+      };
+      const expected: Component.Light = {
+        ...component,
+        lightSettings: {
+          ...component.lightSettings,
+          color: '#ffffff',
+        },
+      };
 
       const node = {} as ISceneNodeInternal;
 
       const deserializedComponent = exportsForTesting.deserializeComponent(component, node, resolver, [], {});
 
-      expect(deserializedComponent).toEqual(component);
+      expect(deserializedComponent).toEqual(expected);
     });
 
     it('should create a modelShader', () => {
@@ -542,7 +552,7 @@ describe('serializationHelpers', () => {
               type: Component.Type.Light,
               lightType: 'Ambient',
               lightSettings: {
-                color: 0xffffff,
+                color: '#ffffff',
                 intensity: 1,
                 volume: 'full',
               },
@@ -756,7 +766,7 @@ describe('serializationHelpers', () => {
           type: Component.Type.Light,
           lightType: 'Ambient',
           lightSettings: {
-            color: 0xffffff,
+            color: '#ffffff',
             intensity: 1,
             volume: 'full',
           },

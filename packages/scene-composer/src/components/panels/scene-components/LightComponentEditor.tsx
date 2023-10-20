@@ -1,29 +1,18 @@
 import React, { useContext, useEffect, useLayoutEffect, useState, useCallback } from 'react';
 import { useIntl, defineMessages } from 'react-intl';
 import { Checkbox, FormField, Select, SpaceBetween } from '@awsui/components-react';
-import { ColorRepresentation } from 'three';
 
 import useLogger from '../../../logger/react-logger/hooks/useLogger';
-import { Color, LightType } from '../../../models/SceneModels';
+import { Component, LightType } from '../../../models/SceneModels';
 import { ILightComponentInternal, useStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IComponentEditorProps } from '../ComponentEditor';
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../common/constants';
-import { decToHexString, hexStringToDec, parseFloatOrDefault } from '../../../utils/mathUtils';
+import { parseFloatOrDefault } from '../../../utils/mathUtils';
 import { NumericInput } from '../CommonPanelComponents';
 import { ColorPicker } from '../ColorPicker/ColorPicker';
-import { hexString } from '../ColorPicker/ColorPickerHelpers';
 
-type OnLightSettingsUpdatedCallback = (lightSettings: unknown) => void;
-
-export function colorToHexString(color: Color) {
-  if (typeof color === 'string') {
-    // assume the string color is css-style hex
-    return color;
-  }
-
-  return decToHexString(color);
-}
+type OnLightSettingsUpdatedCallback = (lightSettings: Component.ILightSettings) => void;
 
 function createInputForField(
   fieldName: string,
@@ -37,9 +26,9 @@ function createInputForField(
     return (
       <FormField key={index} label={intl.formatMessage({ defaultMessage: 'Color', description: 'Form Field label' })}>
         <ColorPicker
-          color={colorToHexString(lightSettings.color)}
-          onChange={(newColor: ColorRepresentation) => {
-            setLightSettings({ ...lightSettings, color: hexStringToDec(hexString(newColor)) });
+          color={lightSettings.color}
+          onChange={(newColor: string) => {
+            setLightSettings({ ...lightSettings, color: newColor });
             setDirty(true);
           }}
         />
@@ -124,9 +113,9 @@ function createInputForField(
         label={intl.formatMessage({ defaultMessage: 'Ground Color', description: 'Form Field label' })}
       >
         <ColorPicker
-          color={colorToHexString(lightSettings.groundColor)}
-          onChange={(newColor: ColorRepresentation) => {
-            setLightSettings({ ...lightSettings, groundColor: hexStringToDec(hexString(newColor)) });
+          color={lightSettings.groundColor}
+          onChange={(newColor: string) => {
+            setLightSettings({ ...lightSettings, groundColor: newColor });
             setDirty(true);
           }}
         />
@@ -135,7 +124,10 @@ function createInputForField(
   }
 }
 
-function LightSettingsEditor(props: { lightSettings: any; onSettingsUpdated: OnLightSettingsUpdatedCallback }) {
+function LightSettingsEditor(props: {
+  lightSettings: Component.ILightSettings;
+  onSettingsUpdated: OnLightSettingsUpdatedCallback;
+}) {
   const [lightSettings, setLightSettings] = useState(props.lightSettings);
   const [dirty, setDirty] = useState(false);
 
@@ -209,7 +201,7 @@ export const LightComponentEditor: React.FC<IComponentEditorProps> = ({ node, co
   }));
 
   const onLightSettingsUpdated = useCallback(
-    (lightSettings: any) => {
+    (lightSettings: Component.ILightSettings) => {
       log?.verbose('updated on light settings', lightSettings);
 
       const currentLightComponent = getSceneNodeByRef(node.ref)?.components.find(
@@ -223,7 +215,7 @@ export const LightComponentEditor: React.FC<IComponentEditorProps> = ({ node, co
 
       updateComponentInternal(node.ref, updatedLightComponent, true);
     },
-    [log, updateComponentInternal],
+    [log, updateComponentInternal, node.ref, component.ref],
   );
 
   const onLightTypeUpdated = (lightType: string) => {

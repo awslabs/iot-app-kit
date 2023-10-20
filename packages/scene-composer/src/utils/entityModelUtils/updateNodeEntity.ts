@@ -5,6 +5,7 @@ import {
   ICameraComponent,
   IColorOverlayComponent,
   IDataOverlayComponent,
+  ILightComponent,
   IModelRefComponent,
   IMotionIndicatorComponent,
   KnownComponentType,
@@ -19,6 +20,7 @@ import { updateModelRefComponent } from './modelRefComponent';
 import { updateCameraEntityComponent } from './cameraComponent';
 import { updateMotionIndicatorEntityComponent } from './motionIndicatorComponent';
 import { updateModelShaderEntityComponent } from './modelShaderComponent';
+import { updateLightEntityComponent } from './lightComponent';
 
 export const updateEntity = async (
   node: ISceneNodeInternal,
@@ -65,6 +67,9 @@ export const updateEntity = async (
             break;
           case KnownComponentType.ModelShader:
             comp = updateModelShaderEntityComponent(compToBeUpdated as IColorOverlayComponent);
+            break;
+          case KnownComponentType.Light:
+            comp = updateLightEntityComponent(compToBeUpdated as ILightComponent);
             break;
 
           default:
