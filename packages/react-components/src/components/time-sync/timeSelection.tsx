@@ -1,13 +1,22 @@
 import React from 'react';
 
+import Button from '@cloudscape-design/components/button';
 import DateRangePicker from '@cloudscape-design/components/date-range-picker';
 import FormField from '@cloudscape-design/components/form-field';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import type { DateRangePickerProps } from '@cloudscape-design/components/date-range-picker';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 
-import { dateRangeToViewport, relativeOptions, viewportToDateRange } from './viewportAdapter';
+import {
+  dateRangeToViewport,
+  relativeOptions,
+  viewportToDateRange,
+  getViewportStartOnBackwardRelative,
+} from './viewportAdapter';
+
 import { rangeValidator } from './rangeValidator';
 import { useViewport } from '../../hooks/useViewport';
+import { Tooltip } from '../tooltip/index';
 
 export type ViewportMessages = DateRangePickerProps.I18nStrings & {
   title: string;
@@ -52,31 +61,79 @@ const messages: ViewportMessages = {
  * parent TimeSync and affect all other viewports in
  * that TimeSync group.
  */
-export const TimeSelection = () => {
+export const TimeSelection = ({ isPaginationEnabled }: { isPaginationEnabled?: boolean }) => {
   const { viewport, setViewport } = useViewport();
 
   const handleChangeDateRange: NonCancelableEventHandler<DateRangePickerProps.ChangeDetail> = (event) => {
     const { value } = event.detail;
-
     if (!value) return;
-
     setViewport(dateRangeToViewport(value), 'date-picker');
+  };
+
+  const handlePaginateForward = () => {
+    const value = viewportToDateRange(viewport);
+    if (!value) return;
+    if (value.type === 'absolute') {
+      const duration = new Date(value.endDate).getTime() - new Date(value.startDate).getTime();
+      const newEnd = new Date(new Date(value.endDate).getTime() + duration);
+      setViewport(
+        dateRangeToViewport({ startDate: value.endDate, endDate: newEnd.toISOString(), type: value.type }),
+        'date-picker'
+      );
+    }
+  };
+
+  const handlePaginateBackward = () => {
+    const value = viewportToDateRange(viewport);
+    if (!value) return;
+    if (value.type === 'absolute') {
+      const duration = new Date(value.endDate).getTime() - new Date(value.startDate).getTime();
+      const newStart = new Date(new Date(value.startDate).getTime() - duration);
+      setViewport(
+        dateRangeToViewport({ startDate: newStart.toISOString(), endDate: value.startDate, type: value.type }),
+        'date-picker'
+      );
+    } else if (value.type === 'relative') {
+      const newEnd = new Date();
+      const newStart = getViewportStartOnBackwardRelative(value);
+      setViewport(
+        dateRangeToViewport({ startDate: newStart.toISOString(), endDate: newEnd.toISOString(), type: 'absolute' }),
+        'date-picker'
+      );
+    }
   };
 
   const { title, placeholder, dateRangeIncompleteError, dateRangeInvalidError, ...i18nStrings } = messages;
 
   return (
     <FormField label={title}>
-      <DateRangePicker
-        expandToViewport={true}
-        onChange={handleChangeDateRange}
-        value={viewportToDateRange(viewport)}
-        showClearButton={false}
-        relativeOptions={relativeOptions}
-        isValidRange={rangeValidator({ dateRangeIncompleteError, dateRangeInvalidError })}
-        i18nStrings={i18nStrings}
-        placeholder={placeholder}
-      />
+      <SpaceBetween direction='horizontal' size='xxs'>
+        {isPaginationEnabled && (
+          <Tooltip
+            content={`Move back ${viewport && 'duration' in viewport ? viewport.duration : 'selected range'}`}
+            position='bottom'
+            children={<Button iconName='caret-left-filled' onClick={handlePaginateBackward} />}
+          />
+        )}
+
+        <DateRangePicker
+          expandToViewport={true}
+          onChange={handleChangeDateRange}
+          value={viewportToDateRange(viewport)}
+          showClearButton={false}
+          relativeOptions={relativeOptions}
+          isValidRange={rangeValidator({ dateRangeIncompleteError, dateRangeInvalidError })}
+          i18nStrings={i18nStrings}
+          placeholder={placeholder}
+        />
+        {isPaginationEnabled && (
+          <Tooltip
+            content={`Move forward ${viewport && 'duration' in viewport ? viewport.duration : 'selected range'}`}
+            position='bottom'
+            children={<Button iconName='caret-right-filled' onClick={handlePaginateForward} />}
+          />
+        )}
+      </SpaceBetween>
     </FormField>
   );
 };
