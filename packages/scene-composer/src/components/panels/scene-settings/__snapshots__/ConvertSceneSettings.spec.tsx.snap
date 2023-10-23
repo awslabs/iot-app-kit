@@ -24,6 +24,20 @@ exports[`ConvertSceneSettings should render correctly with convert button disabl
   >
     Convert scene
   </div>
+  <div
+    data-mocked="Box"
+    font-weight="bold"
+    margin="{\\"bottom\\":\\"xxs\\",\\"top\\":\\"s\\"}"
+    variant="p"
+  >
+    Refresh cycle
+  </div>
+  <div
+    data-mocked="Checkbox"
+    data-testid="auto-update-checkbox"
+  >
+    Auto update (every 30s)
+  </div>
 </div>
 `;
 
@@ -49,6 +63,20 @@ exports[`ConvertSceneSettings should render correctly with convert button enable
     data-testid="convert-button"
   >
     Convert scene
+  </div>
+  <div
+    data-mocked="Box"
+    font-weight="bold"
+    margin="{\\"bottom\\":\\"xxs\\",\\"top\\":\\"s\\"}"
+    variant="p"
+  >
+    Refresh cycle
+  </div>
+  <div
+    data-mocked="Checkbox"
+    data-testid="auto-update-checkbox"
+  >
+    Auto update (every 30s)
   </div>
 </div>
 `;

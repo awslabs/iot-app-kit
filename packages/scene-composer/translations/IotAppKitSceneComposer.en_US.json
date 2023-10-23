@@ -83,6 +83,10 @@
     "note": "Abbreviation for blue",
     "text": "B"
   },
+  "1ZqGeQ": {
+    "note": "checkbox label",
+    "text": "Auto update (every 30s)"
+  },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
     "text": "# of arrows"
@@ -554,6 +558,10 @@
   "PT1lRG": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "Opacity"
+  },
+  "PUKBon": {
+    "note": "Sub-Section Header",
+    "text": "Refresh cycle"
   },
   "PiJTq0": {
     "note": "remove rule Button Text",

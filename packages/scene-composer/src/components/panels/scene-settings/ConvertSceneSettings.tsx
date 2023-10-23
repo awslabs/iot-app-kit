@@ -1,10 +1,12 @@
 import React, { useCallback, useContext } from 'react';
 import { useIntl } from 'react-intl';
-import { Box, Button } from '@awsui/components-react';
+import { Box, Button, Checkbox, CheckboxProps, NonCancelableCustomEvent } from '@awsui/components-react';
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { staticNodeCount } from '../../../utils/entityModelUtils/sceneUtils';
 import { useStore } from '../../../store';
+import { KnownSceneProperty } from '../../../interfaces';
+import { LAYER_DEFAULT_REFRESH_INTERVAL } from '../../../utils/entityModelUtils/sceneLayerUtils';
 
 export const ConvertSceneSettings: React.FC = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
@@ -12,10 +14,24 @@ export const ConvertSceneSettings: React.FC = () => {
   const document = useStore(sceneComposerId)((state) => state.document);
 
   const setConvertSceneModalVisibility = useStore(sceneComposerId)((state) => state.setConvertSceneModalVisibility);
+  const autoUpdateOn = useStore(sceneComposerId)(
+    (state) => (state.getSceneProperty(KnownSceneProperty.LayerDefaultRefreshInterval) as number) > 0,
+  );
+  const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
 
   const convertScene = useCallback(() => {
     setConvertSceneModalVisibility(true);
   }, [setConvertSceneModalVisibility]);
+
+  const setAutoUpdate = useCallback(
+    (e: NonCancelableCustomEvent<CheckboxProps.ChangeDetail>) => {
+      setSceneProperty(
+        KnownSceneProperty.LayerDefaultRefreshInterval,
+        e.detail.checked ? LAYER_DEFAULT_REFRESH_INTERVAL : 0,
+      );
+    },
+    [setSceneProperty],
+  );
 
   return (
     <>
@@ -32,6 +48,14 @@ export const ConvertSceneSettings: React.FC = () => {
       <Button data-testid='convert-button' onClick={convertScene} disabled={staticNodeCount(document.nodeMap) === 0}>
         {formatMessage({ description: 'Button text', defaultMessage: 'Convert scene' })}
       </Button>
+
+      {/* Temporary checkbox to enable/disable auto refresh layer before full Layer UX is ready */}
+      <Box variant='p' fontWeight='bold' margin={{ bottom: 'xxs', top: 's' }}>
+        {formatMessage({ description: 'Sub-Section Header', defaultMessage: 'Refresh cycle' })}
+      </Box>
+      <Checkbox data-testid='auto-update-checkbox' checked={autoUpdateOn} onChange={setAutoUpdate}>
+        {formatMessage({ description: 'checkbox label', defaultMessage: 'Auto update (every 30s)' })}
+      </Checkbox>
     </>
   );
 };

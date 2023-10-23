@@ -4,6 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 
 import { useStore } from '../store';
 import { processQueries } from '../utils/entityModelUtils/processQueries';
+import { KnownSceneProperty } from '../interfaces';
+import { LAYER_DEFAULT_REFRESH_INTERVAL } from '../utils/entityModelUtils/sceneLayerUtils';
 
 import { SceneLayers } from './SceneLayers';
 
@@ -29,7 +31,13 @@ describe('SceneLayers', () => {
     jest.clearAllMocks();
 
     isViewingMock.mockReturnValue(true);
-    getScenePropertyMock.mockReturnValue(['layer1', 'layer2']);
+    getScenePropertyMock.mockImplementation((name) => {
+      if (name === KnownSceneProperty.LayerIds) {
+        return ['layer1', 'layer2'];
+      } else if (name === KnownSceneProperty.LayerDefaultRefreshInterval) {
+        return LAYER_DEFAULT_REFRESH_INTERVAL;
+      }
+    });
   });
 
   it('should enable query when have layerId', async () => {
@@ -76,10 +84,30 @@ describe('SceneLayers', () => {
 
   it('should not refetch when previous query failed', async () => {
     useStore('default').setState(baseState);
-    isViewingMock.mockReturnValue(false);
     let interval;
     (useQuery as jest.Mock).mockImplementation(({ refetchInterval, ..._ }) => {
       interval = refetchInterval(undefined, { state: { error: 'error' } });
+      return {};
+    });
+
+    render(<SceneLayers />);
+
+    expect(interval).toBe(0);
+  });
+
+  it('should not refetch when refresh interval set to 0', async () => {
+    getScenePropertyMock.mockImplementation((name) => {
+      if (name === KnownSceneProperty.LayerIds) {
+        return ['layer1', 'layer2'];
+      } else if (name === KnownSceneProperty.LayerDefaultRefreshInterval) {
+        return 0;
+      }
+    });
+
+    useStore('default').setState(baseState);
+    let interval;
+    (useQuery as jest.Mock).mockImplementation(({ refetchInterval, ..._ }) => {
+      interval = refetchInterval(undefined, { state: {} });
       return {};
     });
 
@@ -98,7 +126,7 @@ describe('SceneLayers', () => {
 
     render(<SceneLayers />);
 
-    expect(interval).toBe(10 * 1000);
+    expect(interval).toBe(LAYER_DEFAULT_REFRESH_INTERVAL);
   });
 
   it('should call processQueries with expected data', async () => {
