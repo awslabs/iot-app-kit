@@ -296,8 +296,8 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
   );
 
   return (
-    <TrendCursorSync>
-      <TimeSync initialViewport={{ duration: '5m' }} group='dashboard-timesync'>
+    <TimeSync initialViewport={{ duration: '5m' }} group='dashboard-timesync'>
+      <TrendCursorSync>
         {readOnly ? ReadOnlyComponent : EditComponent}
         <ConfirmDeleteModal
           visible={visible}
@@ -321,8 +321,8 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
           handleCancel={() => setVisible(false)}
           handleSubmit={onDelete}
         />
-      </TimeSync>
-    </TrendCursorSync>
+      </TrendCursorSync>
+    </TimeSync>
   );
 };
 
