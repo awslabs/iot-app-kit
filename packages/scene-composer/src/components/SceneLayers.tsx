@@ -14,6 +14,9 @@ import {
 export const SceneLayers: React.FC = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
+  const autoUpdateInterval = useStore(sceneComposerId)(
+    (state) => state.getSceneProperty(KnownSceneProperty.LayerDefaultRefreshInterval) as number,
+  );
 
   const renderSceneNodesFromLayers = useStore(sceneComposerId)((state) => state.renderSceneNodesFromLayers);
   const layerIds = useStore(sceneComposerId)((state) => state.getSceneProperty<string[]>(KnownSceneProperty.LayerIds));
@@ -37,8 +40,9 @@ export const SceneLayers: React.FC = () => {
       return nodes;
     },
     refetchInterval: (_, query) => {
-      return !query.state.error && isViewing ? 10 * 1000 : 0;
+      return !query.state.error && isViewing ? autoUpdateInterval : 0;
     },
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {

@@ -18,6 +18,8 @@ import {
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { generateUUID } from '../mathUtils';
 
+export const LAYER_DEFAULT_REFRESH_INTERVAL = 30 * 1000;
+
 export const createLayerId = (layerName: string): string => {
   return `LAYER_${layerName}_${generateUUID()}`;
 };
