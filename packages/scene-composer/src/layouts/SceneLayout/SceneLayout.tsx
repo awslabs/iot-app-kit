@@ -1,7 +1,7 @@
 import React, { FC, Fragment, ReactNode, Suspense, useContext, useEffect, useMemo, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import styled, { ThemeContext } from 'styled-components';
-import { Canvas, ThreeEvent } from '@react-three/fiber';
+import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
 import { useContextBridge } from '@react-three/drei/core/useContextBridge';
 import { MatterportViewer, MpSdk } from '@matterport/r3f/dist';
 import { isEmpty } from 'lodash';
@@ -34,6 +34,8 @@ import ConvertSceneModal from '../../components/ConvertSceneModal';
 import { Direction } from './components/utils';
 import ScenePanel from './components/ScenePanel';
 import CameraPreviewTrack from './components/CameraPreviewTrack';
+
+import { CanvasTestHook } from '../../utils/testUtils';
 
 const UnselectableCanvas = styled(Canvas)`
   user-select: none;
@@ -170,6 +172,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
                 <Suspense fallback={LoadingView}>
                   {!sceneLoaded ? null : (
                     <Fragment>
+                      <CanvasTestHook/>
                       <WebGLCanvasManager />
                       {shouldShowPreview && <CameraPreview track={renderDisplayRef} />}
                     </Fragment>
