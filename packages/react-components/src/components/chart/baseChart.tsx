@@ -101,6 +101,11 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     groupId: group,
     onContextMenu: handleContextMenu,
     visualization: options.defaultVisualizationType ?? DEFAULT_CHART_VISUALIZATION,
+    yAxisOptions: {
+      yAxis,
+      yMins,
+      yMaxs,
+    },
   });
 
   const menuOptionClickHandler = ({ action }: { action: Action; e: React.MouseEvent }) => {
