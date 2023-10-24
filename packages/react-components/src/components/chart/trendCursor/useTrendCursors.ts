@@ -2,11 +2,15 @@ import useDataStore from '../../../store';
 import useHandleResize from './resize/useHandleResize';
 import useHandleSync from './sync/useHandleSync';
 import useTrendCursorsEvents from './mouseEvents/useTrendCursorsEvents';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useHandleViewport } from './viewport/useHandleViewport';
 
 import { DEBUG_TREND_CURSORS } from './constants';
 import { UseTrendCursorsProps } from './types';
+import { YAXisOption } from 'echarts/types/dist/shared';
+import { YAxisLegendOption } from '../types';
+import { useHandleYMinMax } from './yMinMax/useHandleYMinMax';
+import { useHandleSeries } from './series/useHandleSeries';
 
 const useTrendCursors = ({
   chartRef,
@@ -18,7 +22,14 @@ const useTrendCursors = ({
   onContextMenu,
   initialGraphic,
   visualization,
-}: UseTrendCursorsProps) => {
+  yAxisOptions,
+}: UseTrendCursorsProps & {
+  yAxisOptions: {
+    yAxis: YAXisOption[];
+    yMins: YAxisLegendOption[];
+    yMaxs: YAxisLegendOption[];
+  };
+}) => {
   if (DEBUG_TREND_CURSORS) {
     // for debugging purposes
     console.log(`useTrendCursors for chart id : ${chartId}`);
@@ -50,13 +61,15 @@ const useTrendCursors = ({
 
   useHandleViewport({ graphic, setGraphic, viewportInMs, size, series, chartRef, visualization });
 
-  return useMemo(() => {
-    const hotKeyHandlers = {
-      commandDown: () => setIsInCursorAddMode(true),
-      commandUp: () => setIsInCursorAddMode(false),
-    };
-    return { onContextMenuClickHandler, hotKeyHandlers, trendCursors: graphic };
-  }, [graphic, onContextMenuClickHandler]);
+  useHandleYMinMax({ yAxisOptions, graphic, setGraphic, chartRef, visualization, series });
+
+  useHandleSeries({ graphic, setGraphic, chartRef, visualization, series });
+
+  const hotKeyHandlers = {
+    commandDown: () => setIsInCursorAddMode(true),
+    commandUp: () => setIsInCursorAddMode(false),
+  };
+  return { onContextMenuClickHandler, hotKeyHandlers, trendCursors: graphic };
 };
 
 export default useTrendCursors;

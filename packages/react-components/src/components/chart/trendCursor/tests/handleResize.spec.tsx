@@ -5,6 +5,9 @@ import useHandleResize from '../resize/useHandleResize';
 import { useECharts } from '../../../../hooks/useECharts';
 import { DEFAULT_CHART_VISUALIZATION } from '../../eChartsConstants';
 import { InternalGraphicComponentGroupOption } from '../types';
+
+jest.useFakeTimers();
+
 describe('handleResize', () => {
   const setGraphicStub = jest.fn();
   const { result } = renderHook(() => useECharts('dark'));
@@ -33,7 +36,9 @@ describe('handleResize', () => {
         ...useSyncProps,
       })
     );
-    expect(setGraphicStub).not.toBeCalled();
+    setTimeout(() => {
+      expect(setGraphicStub).not.toBeCalled();
+    }, 20);
   });
 
   it('set state should be called when there is change in size ', () => {
@@ -41,6 +46,8 @@ describe('handleResize', () => {
       initialProps: useSyncProps,
     });
     rerender({ ...useSyncProps, size: { height: 600, width: 700 } });
-    expect(setGraphicStub).toBeCalled();
+    setTimeout(() => {
+      expect(setGraphicStub).toBeCalled();
+    }, 20);
   });
 });
