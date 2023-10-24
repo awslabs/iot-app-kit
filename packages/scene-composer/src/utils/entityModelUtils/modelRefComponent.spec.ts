@@ -1,11 +1,15 @@
 import { componentTypeToId } from '../../common/entityModelConstants';
 import { KnownComponentType } from '../../interfaces';
 
-import { createModelRefComponent, parseModelRefComp, updateModelRefComponent } from './modelRefComponent';
+import { createModelRefEntityComponent, parseModelRefComp, updateModelRefEntityComponent } from './modelRefComponent';
 
-describe('createModelRefComponent', () => {
+describe('createModelRefEntityComponent', () => {
   it('should return expected modelRef component with uri and modelType', () => {
-    const result = createModelRefComponent({ type: KnownComponentType.ModelRef, uri: 'abc', modelType: 'modelType' });
+    const result = createModelRefEntityComponent({
+      type: KnownComponentType.ModelRef,
+      uri: 'abc',
+      modelType: 'modelType',
+    });
 
     expect(result.properties).toEqual({
       uri: {
@@ -18,7 +22,7 @@ describe('createModelRefComponent', () => {
   });
 
   it('should return expected modelRef component by setting castShadow and receiveShadow to false', () => {
-    const result = createModelRefComponent({
+    const result = createModelRefEntityComponent({
       type: KnownComponentType.ModelRef,
       uri: 'abc',
       modelType: 'modelType',
@@ -59,7 +63,7 @@ describe('createModelRefComponent', () => {
   });
 
   it('should return expected modelRef component by setting castShadow and receiveShadow to true ', () => {
-    const result = createModelRefComponent({
+    const result = createModelRefEntityComponent({
       type: KnownComponentType.ModelRef,
       uri: 'abc',
       modelType: 'modelType',
@@ -100,9 +104,11 @@ describe('createModelRefComponent', () => {
   });
 });
 
-describe('updateModelRefComponent', () => {
+describe('updateModelRefEntityComponent', () => {
   it('should update a model ref component', () => {
-    expect(updateModelRefComponent({ type: KnownComponentType.ModelRef, uri: 'abc', modelType: 'modelType' })).toEqual({
+    expect(
+      updateModelRefEntityComponent({ type: KnownComponentType.ModelRef, uri: 'abc', modelType: 'modelType' }),
+    ).toEqual({
       componentTypeId: componentTypeToId[KnownComponentType.ModelRef],
       propertyUpdates: {
         uri: {

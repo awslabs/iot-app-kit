@@ -12,6 +12,7 @@ import {
   ILightComponent,
   IModelRefComponent,
   IMotionIndicatorComponent,
+  ISubModelRefComponent,
   KnownComponentType,
 } from '../../interfaces';
 import { ISceneNodeInternal } from '../../store/internalInterfaces';
@@ -21,9 +22,10 @@ import { createTagEntityComponent } from './tagComponent';
 import { createOverlayEntityComponent } from './overlayComponent';
 import { createMotionIndicatorEntityComponent } from './motionIndicatorComponent';
 import { createCameraEntityComponent } from './cameraComponent';
-import { createModelRefComponent } from './modelRefComponent';
+import { createModelRefEntityComponent } from './modelRefComponent';
 import { createModelShaderEntityComponent } from './modelShaderComponent';
 import { createLightEntityComponent } from './lightComponent';
+import { createSubModelRefEntityComponent } from './subModelRefComponent';
 
 export const createNodeEntity = async (
   node: ISceneNodeInternal,
@@ -61,13 +63,16 @@ export const createNodeEntity = async (
           comp = createCameraEntityComponent(compToBeCreated as ICameraComponent);
           break;
         case KnownComponentType.ModelRef:
-          comp = createModelRefComponent(compToBeCreated as IModelRefComponent);
+          comp = createModelRefEntityComponent(compToBeCreated as IModelRefComponent);
           break;
         case KnownComponentType.ModelShader:
           comp = createModelShaderEntityComponent(compToBeCreated as IColorOverlayComponent);
           break;
         case KnownComponentType.Light:
           comp = createLightEntityComponent(compToBeCreated as ILightComponent);
+          break;
+        case KnownComponentType.SubModelRef:
+          comp = createSubModelRefEntityComponent(compToBeCreated as ISubModelRefComponent);
           break;
 
         default:

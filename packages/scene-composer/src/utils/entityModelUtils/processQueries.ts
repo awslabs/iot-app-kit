@@ -8,10 +8,12 @@ import {
   DEFAULT_PARENT_RELATIONSHIP_NAME,
   NODE_COMPONENT_TYPE_ID,
 } from '../../common/entityModelConstants';
-import { IEntityBindingComponentInternal, ISceneNodeInternal } from '../../store';
+import { IEntityBindingComponentInternal, ISceneNodeInternal, ISubModelRefComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
+import { findComponentByType } from '../nodeUtils';
 
 import { parseNode } from './nodeComponent';
+import { SubModelRefComponentProperty } from './subModelRefComponent';
 
 export const isValidSceneNodeEntity = (entity: DocumentType): boolean => {
   return !!(entity && entity['entityId'] && entity['components'] && entity['components'].length > 0);
@@ -77,11 +79,31 @@ export const processQueries = async (
   });
 
   // Remove any nonexist parents and post process the nodes
-  Object.values(sceneNodes).forEach((node) => {
+  for (const node of Object.values(sceneNodes)) {
     postProcessNode?.(node);
+
+    // Fetch parentRef for SubModelRef node
+    const subModelComp = findComponentByType(node, KnownComponentType.SubModelRef) as
+      | ISubModelRefComponentInternal
+      | undefined;
+    if (subModelComp && !subModelComp.parentRef) {
+      const nodeEntity = await sceneMetadataModule.getSceneEntity({ entityId: node.ref });
+      subModelComp.parentRef =
+        nodeEntity.components?.[KnownComponentType.SubModelRef].properties?.[
+          SubModelRefComponentProperty.ParentRef
+        ].value?.relationshipValue?.targetEntityId;
+      node.transform = {
+        position: [0, 0, 0],
+        rotation: [0, 0, 0],
+        scale: [1, 1, 1],
+      };
+      node.parentRef = subModelComp.parentRef;
+    }
+
     if (node.parentRef && !sceneNodes[node.parentRef]) {
       node.parentRef = undefined;
     }
-  });
+  }
+
   return Object.values(sceneNodes);
 };

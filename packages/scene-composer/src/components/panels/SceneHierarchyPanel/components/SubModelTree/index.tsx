@@ -5,7 +5,7 @@ import useMaterialEffect from '../../../../../hooks/useMaterialEffect';
 import { generateUUID } from '../../../../../utils/mathUtils';
 import Tree, { TreeItem } from '../../../../Tree';
 import { ISubModelRefComponent, KnownComponentType } from '../../../../../interfaces';
-import { ISceneComponentInternal, ISceneNodeInternal, useEditorState, useSceneDocument } from '../../../../../store';
+import { ISceneNodeInternal, useEditorState, useSceneDocument } from '../../../../../store';
 import { useSceneComposerId } from '../../../../../common/sceneComposerIdContext';
 import { findComponentByType } from '../../../../../utils/nodeUtils';
 
@@ -86,7 +86,7 @@ const SubModelTree: FC<SubModelTreeProps> = ({
       return;
     }
 
-    const nodeRef = `${parentRef}#${object3D.id}`;
+    const nodeRef = generateUUID();
     const subModelComponent: ISubModelRefComponent = {
       type: KnownComponentType.SubModelRef,
       parentRef,
@@ -97,7 +97,7 @@ const SubModelTree: FC<SubModelTreeProps> = ({
     const node = {
       ref: nodeRef,
       name: object3D.name,
-      components: [subModelComponent as ISceneComponentInternal],
+      components: [subModelComponent],
       parentRef,
       transform: {
         position: [object3D.position.x, object3D.position.y, object3D.position.z],

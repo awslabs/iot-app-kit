@@ -8,6 +8,7 @@ import {
   ILightComponent,
   IModelRefComponent,
   IMotionIndicatorComponent,
+  ISubModelRefComponent,
   KnownComponentType,
 } from '../../interfaces';
 import { ISceneComponentInternal, ISceneNodeInternal } from '../../store/internalInterfaces';
@@ -16,11 +17,12 @@ import { componentTypeToId } from '../../common/entityModelConstants';
 import { updateNodeEntityComponent } from './nodeComponent';
 import { updateTagEntityComponent } from './tagComponent';
 import { updateOverlayEntityComponent } from './overlayComponent';
-import { updateModelRefComponent } from './modelRefComponent';
+import { updateModelRefEntityComponent } from './modelRefComponent';
 import { updateCameraEntityComponent } from './cameraComponent';
 import { updateMotionIndicatorEntityComponent } from './motionIndicatorComponent';
 import { updateModelShaderEntityComponent } from './modelShaderComponent';
 import { updateLightEntityComponent } from './lightComponent';
+import { updateSubModelRefEntityComponent } from './subModelRefComponent';
 
 export const updateEntity = async (
   node: ISceneNodeInternal,
@@ -57,7 +59,7 @@ export const updateEntity = async (
             comp = updateOverlayEntityComponent(compToBeUpdated as IDataOverlayComponent);
             break;
           case KnownComponentType.ModelRef:
-            comp = updateModelRefComponent(compToBeUpdated as IModelRefComponent);
+            comp = updateModelRefEntityComponent(compToBeUpdated as IModelRefComponent);
             break;
           case KnownComponentType.Camera:
             comp = updateCameraEntityComponent(compToBeUpdated as ICameraComponent);
@@ -70,6 +72,9 @@ export const updateEntity = async (
             break;
           case KnownComponentType.Light:
             comp = updateLightEntityComponent(compToBeUpdated as ILightComponent);
+            break;
+          case KnownComponentType.SubModelRef:
+            comp = updateSubModelRefEntityComponent(compToBeUpdated as ISubModelRefComponent);
             break;
 
           default:

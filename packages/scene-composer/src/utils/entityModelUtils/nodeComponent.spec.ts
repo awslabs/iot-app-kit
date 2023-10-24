@@ -235,6 +235,15 @@ describe('parseNode', () => {
       },
     ],
   };
+  const subModelRefComp = {
+    componentTypeId: componentTypeToId.SubModelRef,
+    properties: [
+      {
+        propertyName: 'selector',
+        propertyValue: 'abc',
+      },
+    ],
+  };
 
   const nodeComp = {
     componentTypeId: NODE_COMPONENT_TYPE_ID,
@@ -302,7 +311,16 @@ describe('parseNode', () => {
     const result = parseNode(
       {
         ...entity,
-        components: [tagComp, overlayComp, modelRefComp, cameraComp, indicatorComp, modelShaderComp, lightComp],
+        components: [
+          tagComp,
+          overlayComp,
+          modelRefComp,
+          cameraComp,
+          indicatorComp,
+          modelShaderComp,
+          lightComp,
+          subModelRefComp,
+        ],
       },
       nodeComp,
     );
@@ -328,6 +346,9 @@ describe('parseNode', () => {
       }),
       expect.objectContaining({
         type: KnownComponentType.Light,
+      }),
+      expect.objectContaining({
+        type: KnownComponentType.SubModelRef,
       }),
     ];
     expect(result?.components).toEqual(expectedComponents);
