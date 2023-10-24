@@ -13,42 +13,40 @@ TMDT has 3 core commands:
 *(See below for a more detailed description of the commands)*
 
 
-## Setting up TMDT
+## Setting up TMDT using NPM
 
-First clone the latest tip of this tool:
-
-```
-git clone https://github.com/awslabs/iot-app-kit.git --depth 1 && cd iot-app-kit
-```
-
-Install any node dependencies and navigate to the `tools-iottwinmaker` directory:
+First verify that you have permissions to globally install node packages and run the following to use TMDT globally:
 
 ```
-npm install && cd packages/tools-iottwinmaker
-```
-Build the package:
-```
-npm run build
-```
-
-This will build a node executable named `tmdt_local` on your machine. Run the following from the tmdt directory to verify if it was installed correctly.
-
-```
-./tmdt_local -h
-```
-If this command ran successfully without error, `tmdt` properly installed.
-
-If you wish to install `tmdt` globally, first verify that you have permissions to globally install node packages and run:
-
-```
-npm run build-global
+npm i -g @iot-app-kit/tools-iottwinmaker@alpha
 ```
 
 You should now be able to run the following from anywhere on your machine:
 ```
 tmdt -h
 ```
+## Setting up TMDT using GitHub (Development)
+First clone the latest tip of this tool:
+```
+git clone https://github.com/awslabs/iot-app-kit.git --depth 1 && cd iot-app-kit
+```
 
+Install any node dependencies and navigate to the `tools-iottwinmaker` directory:
+```
+npm install && cd packages/tools-iottwinmaker
+```
+
+Build the package:
+```
+npm run build
+```
+
+This will build a node executable named `tmdt_local` on your machine. Run the following from the tmdt directory to verify if it was installed correctly.
+```
+./tmdt_local -h
+```
+
+If this command ran successfully without error, `tmdt` properly installed locally. You can now `./tmdt_local [command] [parameters]` to run any of the 3 commands below.
 ___
 
 

@@ -146,6 +146,51 @@ async function createS3Bucket(s3BucketName: string, region: string): Promise<voi
   console.log(`S3 Bucket created: ${createBucketResponse.Location}`);
 }
 
+// Enable access logging for the source bucket and save logs in the target bucket
+const enableAccessLogging = async (sourceBucketName: string, targetBucketName: string): Promise<boolean> => {
+  try {
+    // Step 1 - Grant Log Delivery group permission to write log to the target bucket
+    await grantPermissionsToWriteLogs(targetBucketName);
+    // Step 2 - Enable logging on the source bucket
+    await putBucketLogging(sourceBucketName, targetBucketName);
+  } catch (error) {
+    return false;
+  }
+  return true;
+};
+
+// Grant Log Delivery group permission to write log to the target bucket
+const grantPermissionsToWriteLogs = async (bucketName: string): Promise<boolean> => {
+  try {
+    await aws().s3.putBucketAcl({
+      Bucket: bucketName,
+      GrantReadACP: 'URI=http://acs.amazonaws.com/groups/s3/LogDelivery',
+      GrantWrite: 'URI=http://acs.amazonaws.com/groups/s3/LogDelivery',
+    });
+  } catch (error) {
+    return false;
+  }
+  return true;
+};
+
+// Enable logging on the source bucket
+const putBucketLogging = async (sourceBucketName: string, targetBucketName: string): Promise<boolean> => {
+  try {
+    await aws().s3.putBucketLogging({
+      Bucket: sourceBucketName,
+      BucketLoggingStatus: {
+        LoggingEnabled: {
+          TargetBucket: targetBucketName,
+          TargetPrefix: 'logs/',
+        },
+      },
+    });
+  } catch (error) {
+    return false;
+  }
+  return true;
+};
+
 /**
  * Helper function during workspace creation to create workspace S3 bucket, configure CORS policy, and enable bucket logging
  * @param workspaceId workspaceId used as part identifier for the bucket name
@@ -176,20 +221,7 @@ async function createWorkspaceS3Bucket(workspaceId: string, accountId: string, r
   const s3LoggingBucketName = `${s3BucketName}-logs`;
   await createS3Bucket(s3LoggingBucketName, region);
   console.log('Enabling access logging for workspace S3 Bucket...');
-  await aws().s3.putBucketAcl({
-    Bucket: s3LoggingBucketName,
-    GrantReadACP: 'URI=http://acs.amazonaws.com/groups/s3/LogDelivery',
-    GrantWrite: 'URI=http://acs.amazonaws.com/groups/s3/LogDelivery',
-  });
-  await aws().s3.putBucketLogging({
-    Bucket: s3BucketName,
-    BucketLoggingStatus: {
-      LoggingEnabled: {
-        TargetBucket: s3LoggingBucketName,
-        TargetPrefix: 'logs/',
-      },
-    },
-  });
+  await enableAccessLogging(s3BucketName, s3LoggingBucketName);
   console.log('Access logging enabled.');
   return { s3BucketName, s3BucketArn: `arn:aws:s3:::${s3BucketName}` };
 }
