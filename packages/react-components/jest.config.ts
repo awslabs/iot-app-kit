@@ -18,8 +18,7 @@ const config = {
   setupFilesAfterEnv: [...reactConfig.setupFilesAfterEnv, '<rootDir>/jest-setup.js'],
   coveragePathIgnorePatterns: [
     '<rootDir>/src/components/knowledge-graph/KnowledgeGraphPanel.tsx',
-    '<rootDir>/src/components/chart/hooks/useTrendCursorsEvents.ts',
+    '<rootDir>/src/components/chart/trendCursor/mouseEvents/useTrendCursorsEvents.ts',
   ],
 };
-
 export default config;
