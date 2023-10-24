@@ -5,10 +5,12 @@ import {
   DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
   DEFAULT_PARENT_RELATIONSHIP_NAME,
   NODE_COMPONENT_TYPE_ID,
+  componentTypeToId,
 } from '../../common/entityModelConstants';
-import { KnownComponentType } from '../../interfaces';
+import { ISubModelRefComponent, KnownComponentType } from '../../interfaces';
 
 import { isValidSceneNodeEntity, processQueries } from './processQueries';
+import { SubModelRefComponentProperty } from './subModelRefComponent';
 
 jest.mock('../mathUtils', () => ({
   generateUUID: jest.fn(() => 'random-uuid'),
@@ -29,8 +31,10 @@ describe('isValidSceneNodeEntity', () => {
 
 describe('processQueries', () => {
   const executeQuery = jest.fn();
+  const getSceneEntity = jest.fn();
   const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
     kgModule: { executeQuery },
+    getSceneEntity,
   };
 
   const mockRows = [
@@ -132,6 +136,69 @@ describe('processQueries', () => {
     expect(executeQuery).toBeCalledTimes(2);
     expect(executeQuery).toBeCalledWith({ queryStatement: 'random query 1' });
     expect(executeQuery).toBeCalledWith({ queryStatement: 'random query 2' });
+  });
+
+  it('should return expected sub model ref node', async () => {
+    const parentRef = 'model-parent';
+
+    const rows = [
+      {
+        rowData: [
+          {
+            entityId: 'id1',
+            components: [
+              {
+                componentTypeId: NODE_COMPONENT_TYPE_ID,
+                properties: [
+                  { propertyName: 'name', propertyValue: 'name1' },
+                  { propertyName: 'transform_position', propertyValue: [3, 3, 3] },
+                ],
+              },
+              {
+                componentTypeId: componentTypeToId.SubModelRef,
+                properties: [{ propertyName: 'selector', propertyValue: 'selector1' }],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        rowData: [
+          {
+            entityId: parentRef,
+            components: [
+              {
+                componentTypeId: NODE_COMPONENT_TYPE_ID,
+                properties: [{ propertyName: 'name', propertyValue: 'name1' }],
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    executeQuery.mockResolvedValue({ rows: rows });
+    getSceneEntity.mockResolvedValue({
+      components: {
+        SubModelRef: {
+          properties: {
+            [SubModelRefComponentProperty.ParentRef]: {
+              value: {
+                relationshipValue: {
+                  targetEntityId: parentRef,
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const nodes = await processQueries(['random query']);
+
+    expect(nodes.length).toEqual(2);
+    expect(nodes[0].parentRef).toEqual(parentRef);
+    expect((nodes[0].components[0] as ISubModelRefComponent).parentRef).toEqual(parentRef);
+    expect(nodes[0].transform.position).toEqual([0, 0, 0]);
   });
 
   it('should return expected nodes', async () => {

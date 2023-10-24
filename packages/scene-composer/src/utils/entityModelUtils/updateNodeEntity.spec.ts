@@ -11,9 +11,10 @@ import { updateTagEntityComponent } from './tagComponent';
 import { updateOverlayEntityComponent } from './overlayComponent';
 import { updateCameraEntityComponent } from './cameraComponent';
 import { updateMotionIndicatorEntityComponent } from './motionIndicatorComponent';
-import { updateModelRefComponent } from './modelRefComponent';
+import { updateModelRefEntityComponent } from './modelRefComponent';
 import { updateModelShaderEntityComponent } from './modelShaderComponent';
 import { updateLightEntityComponent } from './lightComponent';
+import { updateSubModelRefEntityComponent } from './subModelRefComponent';
 
 jest.mock('./nodeComponent', () => ({
   updateNodeEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.node' }),
@@ -31,13 +32,16 @@ jest.mock('./motionIndicatorComponent', () => ({
   updateMotionIndicatorEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.motionIndicator' }),
 }));
 jest.mock('./modelRefComponent', () => ({
-  updateModelRefComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.modelRef' }),
+  updateModelRefEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.modelRef' }),
 }));
 jest.mock('./modelShaderComponent', () => ({
   updateModelShaderEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.modelShader' }),
 }));
 jest.mock('./lightComponent', () => ({
   updateLightEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.light' }),
+}));
+jest.mock('./subModelRefComponent', () => ({
+  updateSubModelRefEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.subModelRef' }),
 }));
 
 describe('updateEntity', () => {
@@ -54,8 +58,8 @@ describe('updateEntity', () => {
   it('should call update entity with only node component', async () => {
     await updateEntity(defaultNode);
 
-    expect(updateSceneEntity).toHaveBeenCalledTimes(1);
-    expect(updateSceneEntity).toHaveBeenCalledWith({
+    expect(updateSceneEntity).toBeCalledTimes(1);
+    expect(updateSceneEntity).toBeCalledWith({
       workspaceId: undefined,
       entityId: defaultNode.ref,
       entityName: defaultNode.name + '_' + defaultNode.ref,
@@ -64,10 +68,10 @@ describe('updateEntity', () => {
       },
     });
 
-    expect(updateNodeEntityComponent).toHaveBeenCalledTimes(1);
-    expect(updateNodeEntityComponent).toHaveBeenCalledWith(defaultNode, undefined, undefined);
-    expect(updateTagEntityComponent).not.toHaveBeenCalled();
-    expect(updateOverlayEntityComponent).not.toHaveBeenCalled();
+    expect(updateNodeEntityComponent).toBeCalledTimes(1);
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, undefined);
+    expect(updateTagEntityComponent).not.toBeCalled();
+    expect(updateOverlayEntityComponent).not.toBeCalled();
   });
 
   it('should call update entity to update multiple components', async () => {
@@ -78,11 +82,16 @@ describe('updateEntity', () => {
     const modelRef = { type: KnownComponentType.ModelRef, ref: 'modelref-ref' };
     const modelShader = { type: KnownComponentType.ModelShader, ref: 'modelshader-ref' };
     const light = { type: KnownComponentType.Light, ref: 'light-ref' };
+    const subModelRef = { type: KnownComponentType.SubModelRef, ref: 'subModelref-ref' };
 
-    await updateEntity(defaultNode, [tag, overlay, camera, motionIndicator, modelRef, modelShader, light], 'UPDATE');
+    await updateEntity(
+      defaultNode,
+      [tag, overlay, camera, motionIndicator, modelRef, modelShader, light, subModelRef],
+      'UPDATE',
+    );
 
-    expect(updateSceneEntity).toHaveBeenCalledTimes(1);
-    expect(updateSceneEntity).toHaveBeenCalledWith({
+    expect(updateSceneEntity).toBeCalledTimes(1);
+    expect(updateSceneEntity).toBeCalledWith({
       workspaceId: undefined,
       entityId: defaultNode.ref,
       entityName: defaultNode.name + '_' + defaultNode.ref,
@@ -95,25 +104,28 @@ describe('updateEntity', () => {
         ModelRef: { componentTypeId: '3d.modelRef' },
         ModelShader: { componentTypeId: '3d.modelShader' },
         Light: { componentTypeId: '3d.light' },
+        SubModelRef: { componentTypeId: '3d.subModelRef' },
       },
     });
 
-    expect(updateNodeEntityComponent).toHaveBeenCalledTimes(1);
-    expect(updateNodeEntityComponent).toHaveBeenCalledWith(defaultNode, undefined, 'UPDATE');
-    expect(updateTagEntityComponent).toHaveBeenCalledTimes(1);
-    expect(updateTagEntityComponent).toHaveBeenCalledWith(tag);
-    expect(updateOverlayEntityComponent).toHaveBeenCalledTimes(1);
-    expect(updateOverlayEntityComponent).toHaveBeenCalledWith(overlay);
-    expect(updateCameraEntityComponent).toHaveBeenCalledTimes(1);
-    expect(updateCameraEntityComponent).toHaveBeenCalledWith(camera);
-    expect(updateMotionIndicatorEntityComponent).toHaveBeenCalledTimes(1);
-    expect(updateMotionIndicatorEntityComponent).toHaveBeenCalledWith(motionIndicator);
-    expect(updateModelRefComponent).toHaveBeenCalledTimes(1);
-    expect(updateModelRefComponent).toHaveBeenCalledWith(modelRef);
-    expect(updateModelShaderEntityComponent).toHaveBeenCalledTimes(1);
-    expect(updateModelShaderEntityComponent).toHaveBeenCalledWith(modelShader);
-    expect(updateLightEntityComponent).toHaveBeenCalledTimes(1);
-    expect(updateLightEntityComponent).toHaveBeenCalledWith(light);
+    expect(updateNodeEntityComponent).toBeCalledTimes(1);
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, 'UPDATE');
+    expect(updateTagEntityComponent).toBeCalledTimes(1);
+    expect(updateTagEntityComponent).toBeCalledWith(tag);
+    expect(updateOverlayEntityComponent).toBeCalledTimes(1);
+    expect(updateOverlayEntityComponent).toBeCalledWith(overlay);
+    expect(updateCameraEntityComponent).toBeCalledTimes(1);
+    expect(updateCameraEntityComponent).toBeCalledWith(camera);
+    expect(updateMotionIndicatorEntityComponent).toBeCalledTimes(1);
+    expect(updateMotionIndicatorEntityComponent).toBeCalledWith(motionIndicator);
+    expect(updateModelRefEntityComponent).toBeCalledTimes(1);
+    expect(updateModelRefEntityComponent).toBeCalledWith(modelRef);
+    expect(updateModelShaderEntityComponent).toBeCalledTimes(1);
+    expect(updateModelShaderEntityComponent).toBeCalledWith(modelShader);
+    expect(updateLightEntityComponent).toBeCalledTimes(1);
+    expect(updateLightEntityComponent).toBeCalledWith(light);
+    expect(updateSubModelRefEntityComponent).toBeCalledTimes(1);
+    expect(updateSubModelRefEntityComponent).toBeCalledWith(subModelRef);
   });
 
   it('should call update entity to update tag component', async () => {
@@ -121,8 +133,8 @@ describe('updateEntity', () => {
 
     await updateEntity(defaultNode, [compToUpdate], 'UPDATE');
 
-    expect(updateSceneEntity).toHaveBeenCalledTimes(1);
-    expect(updateSceneEntity).toHaveBeenCalledWith({
+    expect(updateSceneEntity).toBeCalledTimes(1);
+    expect(updateSceneEntity).toBeCalledWith({
       workspaceId: undefined,
       entityId: defaultNode.ref,
       entityName: defaultNode.name + '_' + defaultNode.ref,
@@ -132,11 +144,11 @@ describe('updateEntity', () => {
       },
     });
 
-    expect(updateNodeEntityComponent).toHaveBeenCalledTimes(1);
-    expect(updateNodeEntityComponent).toHaveBeenCalledWith(defaultNode, undefined, 'UPDATE');
-    expect(updateTagEntityComponent).toHaveBeenCalledTimes(1);
-    expect(updateTagEntityComponent).toHaveBeenCalledWith(compToUpdate);
-    expect(updateOverlayEntityComponent).not.toHaveBeenCalled();
+    expect(updateNodeEntityComponent).toBeCalledTimes(1);
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, 'UPDATE');
+    expect(updateTagEntityComponent).toBeCalledTimes(1);
+    expect(updateTagEntityComponent).toBeCalledWith(compToUpdate);
+    expect(updateOverlayEntityComponent).not.toBeCalled();
   });
 
   it('should call update entity to update overlay component', async () => {
@@ -144,8 +156,8 @@ describe('updateEntity', () => {
 
     await updateEntity(defaultNode, [compToUpdate], 'UPDATE');
 
-    expect(updateSceneEntity).toHaveBeenCalledTimes(1);
-    expect(updateSceneEntity).toHaveBeenCalledWith({
+    expect(updateSceneEntity).toBeCalledTimes(1);
+    expect(updateSceneEntity).toBeCalledWith({
       workspaceId: undefined,
       entityId: defaultNode.ref,
       entityName: defaultNode.name + '_' + defaultNode.ref,
@@ -155,11 +167,11 @@ describe('updateEntity', () => {
       },
     });
 
-    expect(updateNodeEntityComponent).toHaveBeenCalledTimes(1);
-    expect(updateNodeEntityComponent).toHaveBeenCalledWith(defaultNode, undefined, 'UPDATE');
-    expect(updateOverlayEntityComponent).toHaveBeenCalledTimes(1);
-    expect(updateOverlayEntityComponent).toHaveBeenCalledWith(compToUpdate);
-    expect(updateTagEntityComponent).not.toHaveBeenCalled();
+    expect(updateNodeEntityComponent).toBeCalledTimes(1);
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, 'UPDATE');
+    expect(updateOverlayEntityComponent).toBeCalledTimes(1);
+    expect(updateOverlayEntityComponent).toBeCalledWith(compToUpdate);
+    expect(updateTagEntityComponent).not.toBeCalled();
   });
 
   it('should call update entity without entity binding component', async () => {
@@ -167,8 +179,8 @@ describe('updateEntity', () => {
 
     await updateEntity(defaultNode, [compToUpdate], 'UPDATE');
 
-    expect(updateSceneEntity).toHaveBeenCalledTimes(1);
-    expect(updateSceneEntity).toHaveBeenCalledWith({
+    expect(updateSceneEntity).toBeCalledTimes(1);
+    expect(updateSceneEntity).toBeCalledWith({
       workspaceId: undefined,
       entityId: defaultNode.ref,
       entityName: defaultNode.name + '_' + defaultNode.ref,
@@ -177,10 +189,10 @@ describe('updateEntity', () => {
       },
     });
 
-    expect(updateNodeEntityComponent).toHaveBeenCalledTimes(1);
-    expect(updateNodeEntityComponent).toHaveBeenCalledWith(defaultNode, undefined, 'UPDATE');
-    expect(updateOverlayEntityComponent).not.toHaveBeenCalled();
-    expect(updateTagEntityComponent).not.toHaveBeenCalled();
+    expect(updateNodeEntityComponent).toBeCalledTimes(1);
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, 'UPDATE');
+    expect(updateOverlayEntityComponent).not.toBeCalled();
+    expect(updateTagEntityComponent).not.toBeCalled();
   });
 
   it('should call update entity to delete tag component', async () => {
@@ -188,8 +200,8 @@ describe('updateEntity', () => {
 
     await updateEntity(defaultNode, [compToUpdate], 'DELETE');
 
-    expect(updateSceneEntity).toHaveBeenCalledTimes(1);
-    expect(updateSceneEntity).toHaveBeenCalledWith({
+    expect(updateSceneEntity).toBeCalledTimes(1);
+    expect(updateSceneEntity).toBeCalledWith({
       workspaceId: undefined,
       entityId: defaultNode.ref,
       entityName: defaultNode.name + '_' + defaultNode.ref,
@@ -199,9 +211,9 @@ describe('updateEntity', () => {
       },
     });
 
-    expect(updateNodeEntityComponent).toHaveBeenCalledTimes(1);
-    expect(updateNodeEntityComponent).toHaveBeenCalledWith(defaultNode, undefined, 'DELETE');
-    expect(updateOverlayEntityComponent).not.toHaveBeenCalled();
-    expect(updateTagEntityComponent).not.toHaveBeenCalled();
+    expect(updateNodeEntityComponent).toBeCalledTimes(1);
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, 'DELETE');
+    expect(updateOverlayEntityComponent).not.toBeCalled();
+    expect(updateTagEntityComponent).not.toBeCalled();
   });
 });

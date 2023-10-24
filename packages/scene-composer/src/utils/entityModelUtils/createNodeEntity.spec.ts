@@ -9,10 +9,11 @@ import { createTagEntityComponent } from './tagComponent';
 import { createOverlayEntityComponent } from './overlayComponent';
 import { createCameraEntityComponent } from './cameraComponent';
 import { createMotionIndicatorEntityComponent } from './motionIndicatorComponent';
-import { createModelRefComponent } from './modelRefComponent';
+import { createModelRefEntityComponent } from './modelRefComponent';
 import { createNodeEntity } from './createNodeEntity';
 import { createModelShaderEntityComponent } from './modelShaderComponent';
 import { createLightEntityComponent } from './lightComponent';
+import { createSubModelRefEntityComponent } from './subModelRefComponent';
 
 jest.mock('./nodeComponent', () => ({
   createNodeEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.node' }),
@@ -30,13 +31,16 @@ jest.mock('./motionIndicatorComponent', () => ({
   createMotionIndicatorEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.motionIndicator' }),
 }));
 jest.mock('./modelRefComponent', () => ({
-  createModelRefComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.modelRef' }),
+  createModelRefEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.modelRef' }),
 }));
 jest.mock('./modelShaderComponent', () => ({
   createModelShaderEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.modelShader' }),
 }));
 jest.mock('./lightComponent', () => ({
   createLightEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.light' }),
+}));
+jest.mock('./subModelRefComponent', () => ({
+  createSubModelRefEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.subModelRef' }),
 }));
 
 describe('createNodeEntity', () => {
@@ -53,8 +57,8 @@ describe('createNodeEntity', () => {
   it('should call create entity with only node component', async () => {
     await createNodeEntity(defaultNode, 'parent', 'layer');
 
-    expect(createSceneEntity).toHaveBeenCalledTimes(1);
-    expect(createSceneEntity).toHaveBeenCalledWith({
+    expect(createSceneEntity).toBeCalledTimes(1);
+    expect(createSceneEntity).toBeCalledWith({
       workspaceId: undefined,
       entityId: defaultNode.ref,
       entityName: defaultNode.name + '_' + defaultNode.ref,
@@ -64,8 +68,8 @@ describe('createNodeEntity', () => {
       },
     });
 
-    expect(createNodeEntityComponent).toHaveBeenCalledTimes(1);
-    expect(createNodeEntityComponent).toHaveBeenCalledWith(defaultNode, 'layer');
+    expect(createNodeEntityComponent).toBeCalledTimes(1);
+    expect(createNodeEntityComponent).toBeCalledWith(defaultNode, 'layer');
   });
 
   it('should call create entity to create multiple components', async () => {
@@ -76,12 +80,17 @@ describe('createNodeEntity', () => {
     const modelRef = { type: KnownComponentType.ModelRef, ref: 'modelref-ref' };
     const modelShader = { type: KnownComponentType.ModelShader, ref: 'modelShader-ref' };
     const light = { type: KnownComponentType.Light, ref: 'light-ref' };
-    const node = { ...defaultNode, components: [tag, overlay, camera, motionIndicator, modelRef, modelShader, light] };
+    const subModelRef = { type: KnownComponentType.SubModelRef, ref: 'subModelref-ref' };
+
+    const node = {
+      ...defaultNode,
+      components: [tag, overlay, camera, motionIndicator, modelRef, modelShader, light, subModelRef],
+    };
 
     await createNodeEntity(node, 'parent', 'layer');
 
-    expect(createSceneEntity).toHaveBeenCalledTimes(1);
-    expect(createSceneEntity).toHaveBeenCalledWith({
+    expect(createSceneEntity).toBeCalledTimes(1);
+    expect(createSceneEntity).toBeCalledWith({
       workspaceId: undefined,
       entityId: defaultNode.ref,
       entityName: defaultNode.name + '_' + defaultNode.ref,
@@ -95,24 +104,27 @@ describe('createNodeEntity', () => {
         ModelRef: { componentTypeId: '3d.modelRef' },
         ModelShader: { componentTypeId: '3d.modelShader' },
         Light: { componentTypeId: '3d.light' },
+        SubModelRef: { componentTypeId: '3d.subModelRef' },
       },
     });
 
-    expect(createNodeEntityComponent).toHaveBeenCalledTimes(1);
-    expect(createNodeEntityComponent).toHaveBeenCalledWith(node, 'layer');
-    expect(createTagEntityComponent).toHaveBeenCalledTimes(1);
-    expect(createTagEntityComponent).toHaveBeenCalledWith(tag);
-    expect(createOverlayEntityComponent).toHaveBeenCalledTimes(1);
-    expect(createOverlayEntityComponent).toHaveBeenCalledWith(overlay);
-    expect(createCameraEntityComponent).toHaveBeenCalledTimes(1);
-    expect(createCameraEntityComponent).toHaveBeenCalledWith(camera);
-    expect(createMotionIndicatorEntityComponent).toHaveBeenCalledTimes(1);
-    expect(createMotionIndicatorEntityComponent).toHaveBeenCalledWith(motionIndicator);
-    expect(createModelRefComponent).toHaveBeenCalledTimes(1);
-    expect(createModelRefComponent).toHaveBeenCalledWith(modelRef);
-    expect(createModelShaderEntityComponent).toHaveBeenCalledTimes(1);
-    expect(createModelShaderEntityComponent).toHaveBeenCalledWith(modelShader);
-    expect(createLightEntityComponent).toHaveBeenCalledTimes(1);
-    expect(createLightEntityComponent).toHaveBeenCalledWith(light);
+    expect(createNodeEntityComponent).toBeCalledTimes(1);
+    expect(createNodeEntityComponent).toBeCalledWith(node, 'layer');
+    expect(createTagEntityComponent).toBeCalledTimes(1);
+    expect(createTagEntityComponent).toBeCalledWith(tag);
+    expect(createOverlayEntityComponent).toBeCalledTimes(1);
+    expect(createOverlayEntityComponent).toBeCalledWith(overlay);
+    expect(createCameraEntityComponent).toBeCalledTimes(1);
+    expect(createCameraEntityComponent).toBeCalledWith(camera);
+    expect(createMotionIndicatorEntityComponent).toBeCalledTimes(1);
+    expect(createMotionIndicatorEntityComponent).toBeCalledWith(motionIndicator);
+    expect(createModelRefEntityComponent).toBeCalledTimes(1);
+    expect(createModelRefEntityComponent).toBeCalledWith(modelRef);
+    expect(createModelShaderEntityComponent).toBeCalledTimes(1);
+    expect(createModelShaderEntityComponent).toBeCalledWith(modelShader);
+    expect(createLightEntityComponent).toBeCalledTimes(1);
+    expect(createLightEntityComponent).toBeCalledWith(light);
+    expect(createSubModelRefEntityComponent).toBeCalledTimes(1);
+    expect(createSubModelRefEntityComponent).toBeCalledWith(subModelRef);
   });
 });

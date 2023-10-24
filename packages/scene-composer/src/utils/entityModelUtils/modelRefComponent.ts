@@ -15,7 +15,7 @@ enum ModelRefComponentProperty {
   ReceiveShadow = 'receiveShadow',
 }
 
-export const createModelRefComponent = (model: IModelRefComponent): ComponentRequest => {
+export const createModelRefEntityComponent = (model: IModelRefComponent): ComponentRequest => {
   const comp: ComponentRequest = {
     componentTypeId: componentTypeToId[KnownComponentType.ModelRef],
     properties: {
@@ -63,8 +63,8 @@ export const createModelRefComponent = (model: IModelRefComponent): ComponentReq
   return comp;
 };
 
-export const updateModelRefComponent = (model: IModelRefComponent): ComponentUpdateRequest => {
-  const request = createModelRefComponent(model);
+export const updateModelRefEntityComponent = (model: IModelRefComponent): ComponentUpdateRequest => {
+  const request = createModelRefEntityComponent(model);
   return {
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,
