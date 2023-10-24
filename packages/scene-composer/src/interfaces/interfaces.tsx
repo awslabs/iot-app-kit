@@ -74,6 +74,9 @@ export enum KnownSceneProperty {
   SceneRootEntityId = 'sceneRootEntityId',
   TagCustomColors = 'tagCustomColors',
   FogSettings = 'fogSettings',
+  SceneBackgroundSettings = 'sceneBackgroundSettings',
+  FogCustomColors = 'fogCustomColors',
+  BackgroundCustomColors = 'backgroundCustomColors',
 }
 
 /************************************************
@@ -144,7 +147,11 @@ export interface StyleTarget {
 }
 
 export interface IFogSettings {
-  colorHex: number;
+  color: string;
   near: number;
   far: number;
+}
+
+export interface ISceneBackgroundSetting {
+  color?: string;
 }

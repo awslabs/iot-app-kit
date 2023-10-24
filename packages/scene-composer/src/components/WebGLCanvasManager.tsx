@@ -27,6 +27,7 @@ import EntityGroup from './three-fiber/EntityGroup';
 import { EditorMainCamera } from './three-fiber/EditorCamera';
 import { EditorTransformControls } from './three-fiber/EditorTransformControls';
 import { SceneInfoView } from './three-fiber/SceneInfoView';
+import SceneBackground from './three-fiber/SceneBackground';
 import IntlProvider from './IntlProvider';
 import { SceneLayers } from './SceneLayers';
 
@@ -88,7 +89,12 @@ export const WebGLCanvasManager: React.FC = () => {
 
   return (
     <React.Fragment>
-      {sceneAppearanceEnabled && <Fog />}
+      {sceneAppearanceEnabled && (
+        <React.Fragment>
+          <Fog />
+          <SceneBackground />
+        </React.Fragment>
+      )}
       <EditorMainCamera />
       {environmentPreset && environmentPreset in presets && (
         <Environment preset={environmentPreset} extensions={envLoaderExtension} />

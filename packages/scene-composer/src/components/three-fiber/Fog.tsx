@@ -15,9 +15,7 @@ const Fog: FC = () => {
 
   useEffect(() => {
     scene.fog =
-      fogSettings && fogSettings.colorHex
-        ? new THREE.Fog(fogSettings.colorHex, fogSettings.near, fogSettings.far)
-        : null;
+      fogSettings && fogSettings.color ? new THREE.Fog(fogSettings.color, fogSettings.near, fogSettings.far) : null;
   }, [scene, fogSettings]);
 
   return null;

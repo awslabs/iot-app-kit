@@ -1,5 +1,5 @@
 import wrapper from '@awsui/components-react/test-utils/dom';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import React from 'react';
 
 import { useStore } from '../../../store';
@@ -31,12 +31,14 @@ describe('FogSettingsEditor', () => {
     const checkbox = polarisWrapper.findCheckbox();
 
     expect(checkbox).toBeDefined();
-    console.log('checkbox: ', checkbox);
+
     // click checkbox should update store
-    checkbox?.findNativeInput().click();
+    act(() => {
+      checkbox?.findNativeInput().click();
+    });
     expect(setScenePropertyMock).toBeCalledTimes(1);
     expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.FogSettings, {
-      colorHex: 0xcccccc,
+      color: '#cccccc',
       near: 1,
       far: 1000,
     });
@@ -44,7 +46,7 @@ describe('FogSettingsEditor', () => {
 
   it('should clear fogsettings when unchecked', async () => {
     getScenePropertyMock.mockReturnValue({
-      colorHex: 0xcccccc,
+      color: '#cccccc',
       near: 1,
       far: 1000,
     });
@@ -56,14 +58,16 @@ describe('FogSettingsEditor', () => {
     expect(checkbox).toBeDefined();
 
     // click checkbox should update store
-    checkbox?.findNativeInput().click();
+    act(() => {
+      checkbox?.findNativeInput().click();
+    });
     expect(setScenePropertyMock).toBeCalledTimes(1);
     expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.FogSettings, undefined);
   });
 
   it('should update fog when near changes', async () => {
     getScenePropertyMock.mockReturnValue({
-      colorHex: 0xcccccc,
+      color: '#cccccc',
       near: 1,
       far: 1000,
     });
@@ -77,9 +81,10 @@ describe('FogSettingsEditor', () => {
     nearInput!.focus();
     nearInput!.setInputValue('2');
     nearInput!.blur();
+
     expect(setScenePropertyMock).toBeCalledTimes(1);
     expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.FogSettings, {
-      colorHex: 0xcccccc,
+      color: '#cccccc',
       near: 2,
       far: 1000,
     });
@@ -87,7 +92,7 @@ describe('FogSettingsEditor', () => {
 
   it('should update fog when far changes', async () => {
     getScenePropertyMock.mockReturnValue({
-      colorHex: 0xcccccc,
+      color: '#cccccc',
       near: 1,
       far: 1000,
     });
@@ -103,7 +108,7 @@ describe('FogSettingsEditor', () => {
     farInput!.blur();
     expect(setScenePropertyMock).toBeCalledTimes(1);
     expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.FogSettings, {
-      colorHex: 0xcccccc,
+      color: '#cccccc',
       near: 1,
       far: 2000,
     });
@@ -112,18 +117,15 @@ describe('FogSettingsEditor', () => {
   it('should update fog when colors changes', async () => {
     getScenePropertyMock.mockImplementation((property: string) => {
       if (property === KnownSceneProperty.FogSettings) {
-        console.log('getting fog setting');
         return {
-          colorHex: 0xcccccc,
+          color: '#cccccc',
           near: 1,
           far: 1000,
         };
       } else if (property === KnownSceneProperty.TagCustomColors) {
-        console.log('getting custom colors setting');
         const customColors: string[] = [];
         return customColors;
       }
-      console.log('got wrong thing: ', property);
     });
     useStore('default').setState(baseState);
     const { container } = render(<FogSettingsEditor />);
@@ -138,7 +140,7 @@ describe('FogSettingsEditor', () => {
     colorInput!.blur();
     expect(setScenePropertyMock).toBeCalledTimes(2);
     expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.FogSettings, {
-      colorHex: 0xffffff,
+      color: '#FFFFFF',
       near: 1,
       far: 1000,
     });
