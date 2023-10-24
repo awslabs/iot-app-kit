@@ -1,42 +1,47 @@
-import { useRef } from 'react';
 import { calculateXFromTimestamp } from '../calculations/calculations';
 
 import { TrendCursorProps } from '../types';
 import { onResizeUpdateTrendCursorYValues } from './updateYValues';
 import { calculateSeriesMakers } from '../calculations/calculateSeriesMakers';
+import { useEffect, useRef } from 'react';
+import { delayedRender } from '../../utils/useDelayedRender';
 
 const useHandleResize = ({ size, series, graphic, setGraphic, chartRef, visualization }: TrendCursorProps) => {
-  const prevSize = useRef(size);
-  // to avoid unnecessary re-rendering
-  if (size.width !== prevSize.current.width || size.height !== prevSize.current.height) {
-    const newG = graphic.map((g) => {
-      // splitting into two separate if block to avoid calculations when not necessary
+  const graphicRef = useRef(graphic);
+  const seriesRef = useRef(series);
+  const sizeRef = useRef(size);
+  const visualizationRef = useRef(visualization);
+  const sizeString = JSON.stringify(size);
 
-      // if height has changed, update Y values
-      if (size.height !== prevSize.current.height) {
+  useEffect(() => {
+    graphicRef.current = graphic;
+    seriesRef.current = series;
+    sizeRef.current = size;
+    visualizationRef.current = visualization;
+  }, [graphic, series, size, visualization]);
+
+  useEffect(() => {
+    const update = () => {
+      const newG = graphicRef.current.map((g) => {
         // updating the series line marker's y value
-        const { trendCursorsSeriesMakersInPixels } = calculateSeriesMakers(
-          series,
+        const { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue } = calculateSeriesMakers(
+          seriesRef.current,
           g.timestampInMs,
           chartRef,
-          visualization
+          visualizationRef.current
         );
-
+        g.yAxisMarkerValue = trendCursorsSeriesMakersValue;
         // update line height and markers
-        g.children = onResizeUpdateTrendCursorYValues(g.children, trendCursorsSeriesMakersInPixels, size);
-      }
-
-      // if width has changed, update X values
-      if (size.width !== prevSize.current.width) {
+        g.children = onResizeUpdateTrendCursorYValues(g.children, trendCursorsSeriesMakersInPixels, sizeRef.current);
         // updating x of the graphic
         g.x = calculateXFromTimestamp(g.timestampInMs, chartRef);
-      }
+        return g;
+      });
 
-      return g;
-    });
-    setGraphic([...newG]);
-    prevSize.current = size;
-  }
+      setGraphic([...newG]);
+    };
+    delayedRender({ updateFunction: update });
+  }, [chartRef, setGraphic, sizeString]);
 };
 
 export default useHandleResize;

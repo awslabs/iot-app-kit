@@ -17,7 +17,9 @@ export const onResizeUpdateTrendCursorYValues = (
       if (index === 0) {
         (((lineElement ?? {}) as GraphicComponentZRPathOption).shape ?? {}).y2 = size.height - DEFAULT_MARGIN;
       } else {
-        lineElement.y = size.height - DEFAULT_MARGIN - 6;
+        // refer to the creation of the line graphic the height is the size minus top and bottom white space
+        (((lineElement ?? {}) as GraphicComponentZRPathOption).shape ?? {}).height =
+          size.height - DEFAULT_MARGIN * 2 + 6;
       }
       return lineElement;
     }
