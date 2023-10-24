@@ -36,6 +36,12 @@
     "versionup:major": "turbo run version --no-git-tag-version major",
     "prepare": "husky install"
   },
+  "dependencies": {
+    "@cloudscape-design/collection-hooks": "1.0.22",
+    "@cloudscape-design/components": "3.0.415",
+    "@cloudscape-design/design-tokens": "3.0.15",
+    "@cloudscape-design/global-styles": "1.0.12"
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.6.7",
     "@commitlint/config-conventional": "^17.6.5",
