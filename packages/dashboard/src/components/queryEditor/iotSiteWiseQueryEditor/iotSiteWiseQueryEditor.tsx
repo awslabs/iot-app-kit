@@ -1,14 +1,14 @@
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import Tabs from '@cloudscape-design/components/tabs';
 import React from 'react';
 
 import { ModeledDataStreamQueryEditor } from './modeledDataStreamQueryEditor';
 import { UnmodeledDataStreamQueryEditor } from './unmodeledDataStreamExplorer';
-import { querySelectionConverter } from './querySelectionConverter';
+import { QueryExtender } from './queryExtender';
 import type { ModeledDataStream } from './modeledDataStreamQueryEditor/modeledDataStreamExplorer/types';
 import type { UnmodeledDataStream } from './unmodeledDataStreamExplorer/types';
 import { useQuery } from '../useQuery';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 
 export interface IoTSiteWiseQueryEditorProps {
   onUpdateQuery: ReturnType<typeof useQuery>[1];
@@ -23,65 +23,19 @@ export function IoTSiteWiseQueryEditor({
 }: IoTSiteWiseQueryEditorProps) {
   function handleClickAddModeledDataStreams(newModeledDataStreams: ModeledDataStream[]) {
     onUpdateQuery((currentQuery) => {
-      const currentModeledDataStreams: Pick<ModeledDataStream, 'assetId' | 'propertyId'>[] = currentQuery
-        ? currentQuery.assets?.flatMap(({ assetId, properties }) =>
-            properties.map(({ propertyId }) => ({ assetId, propertyId }))
-          ) ?? []
-        : [];
+      const queryExtender = new QueryExtender(currentQuery);
+      const updatedQuery = queryExtender.extendAssetQueries(newModeledDataStreams);
 
-      const updatedModeledDataStreams = [...currentModeledDataStreams];
-
-      newModeledDataStreams.forEach((newModeledDataStream) => {
-        if (
-          !updatedModeledDataStreams.some(
-            (modeledDataStream) =>
-              modeledDataStream.assetId === newModeledDataStream.assetId &&
-              modeledDataStream.propertyId === newModeledDataStream.propertyId
-          )
-        ) {
-          updatedModeledDataStreams.push(newModeledDataStream);
-        }
-      });
-
-      const newQuery = querySelectionConverter.toQuery({
-        modeledDataStreams: updatedModeledDataStreams as ModeledDataStream[],
-        unmodeledDataStreams: [],
-      });
-
-      return {
-        ...currentQuery,
-        assets: newQuery.assets,
-      };
+      return updatedQuery;
     });
   }
 
   function handleClickAddUnmodeledDataStreams(newUnmodeledDataStreams: UnmodeledDataStream[]) {
     onUpdateQuery((currentQuery) => {
-      const currentUnmodeledDataStreams: Pick<UnmodeledDataStream, 'propertyAlias'>[] = currentQuery
-        ? currentQuery.properties ?? []
-        : [];
+      const queryExtender = new QueryExtender(currentQuery);
+      const updatedQuery = queryExtender.extendPropertyAliasQueries(newUnmodeledDataStreams);
 
-      const updatedUnmodeledDataStreams = [...currentUnmodeledDataStreams];
-
-      newUnmodeledDataStreams.forEach((newUnmodeledDataStream) => {
-        if (
-          !updatedUnmodeledDataStreams.some(
-            (unmodeledDataStream) => unmodeledDataStream.propertyAlias === newUnmodeledDataStream.propertyAlias
-          )
-        ) {
-          updatedUnmodeledDataStreams.push(newUnmodeledDataStream);
-        }
-      });
-
-      const newQuery = querySelectionConverter.toQuery({
-        modeledDataStreams: [],
-        unmodeledDataStreams: updatedUnmodeledDataStreams as UnmodeledDataStream[],
-      });
-
-      return {
-        ...currentQuery,
-        properties: newQuery.properties,
-      };
+      return updatedQuery;
     });
   }
 
