@@ -68,6 +68,13 @@ export const IconPicker = ({
     else setNumRows(totalPages); // restore default when no text in search field.
   }, [filteringText]);
 
+  useEffect(() => {
+    setIcon({
+      prefix: selectedIcon.prefix as IconPrefix,
+      iconName: selectedIcon.iconName as IconName,
+    });
+  }, [selectedIcon]);
+
   const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, clientHeight, scrollHeight } = event.currentTarget;
     if (scrollTop + clientHeight === scrollHeight && numRows < totalPages) {
