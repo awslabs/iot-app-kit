@@ -21,9 +21,9 @@
 }
 
 .bottom {
-  top: 120%;
+  top: 115%;
   left: 50%;
-  transform: translateX(-50%) translateY(0);
+  transform: translateX(-50%) translateY(10px);
 }
 
 .left {
