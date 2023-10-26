@@ -114,7 +114,7 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
             styledAssetQuery?.properties?.map((property) => {
               if (property.propertyAlias === propertyAlias) {
                 const visible = property.visible !== undefined ? !property.visible : false;
-                return visible ? property : { ...property, visible: false };
+                return { ...property, visible };
               } else {
                 return property;
               }
