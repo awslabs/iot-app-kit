@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.3.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v9.2.0...tools-iottwinmaker-v9.3.0) (2023-10-26)
+
+
+### Bug Fixes
+
+* added proper error handling for S3 Bucket ACL issues found by customer, updated README ([bbc0aa3](https://github.com/awslabs/iot-app-kit/commit/bbc0aa388041a76b0c79e6202c44431eeae4a9af))
+
 ## [9.2.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v9.1.0...tools-iottwinmaker-v9.2.0) (2023-10-17)
 
 

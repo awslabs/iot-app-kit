@@ -1,5 +1,41 @@
 # Changelog
 
+## [9.3.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.2.0...dashboard-v9.3.0) (2023-10-26)
+
+
+### Features
+
+* add line style thickness per property ([fb19652](https://github.com/awslabs/iot-app-kit/commit/fb196521ba7b35019828e1c9f2c4383841e4620b))
+* added line style customization per property ([abe942f](https://github.com/awslabs/iot-app-kit/commit/abe942f7a95458087cd1f7075091ee3acca41ada))
+* added widget text in the widget panel [#2036](https://github.com/awslabs/iot-app-kit/issues/2036) ([a46da1d](https://github.com/awslabs/iot-app-kit/commit/a46da1dc2166913bfc9ba81d5eec4388d17399d8))
+* decimal round of in resource table ([a5da972](https://github.com/awslabs/iot-app-kit/commit/a5da9726649ca81a578efd365ba05d0dbe302b55))
+* handle long properties name in properties section in config panel [#1984](https://github.com/awslabs/iot-app-kit/issues/1984) ([fda011f](https://github.com/awslabs/iot-app-kit/commit/fda011f83e610a14cd6115ebf6aaf88b32589091))
+
+
+### Bug Fixes
+
+* **dashboard:** tc sync is broken in prod ([c357902](https://github.com/awslabs/iot-app-kit/commit/c3579027e3bb3e38af4042bc6749ffb648a62e71))
+* do not override selected data stream preferences ([02b80fe](https://github.com/awslabs/iot-app-kit/commit/02b80fed798ad859a1e5aa0993ea479aa48e0b38))
+* **react-components:** pagination over time + tooltip ([ff052c9](https://github.com/awslabs/iot-app-kit/commit/ff052c94fa9f57ac8138d025301a384ab217b258))
+* **react-components:** toggle legend hides container ([8d0ae53](https://github.com/awslabs/iot-app-kit/commit/8d0ae53981698bc8121cb0e40831b9d61e693075))
+* **react-component:** updating TC to have a drag area instead of just drag on the line ([05068bd](https://github.com/awslabs/iot-app-kit/commit/05068bddfd3a7ff0876550a11263496765b51080))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/core bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/core-util bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/react-components bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.2.0 to 9.3.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/testing-util bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/ts-config bumped from 9.2.0 to 9.3.0
+    * eslint-config-iot-app-kit bumped from 9.2.0 to 9.3.0
+
 ## [9.2.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.1.0...dashboard-v9.2.0) (2023-10-17)
 
 

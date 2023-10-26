@@ -1,5 +1,19 @@
 # Changelog
 
+## [9.3.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v9.2.0...core-util-v9.3.0) (2023-10-26)
+
+
+### Features
+
+* decimal round of in resource table ([a5da972](https://github.com/awslabs/iot-app-kit/commit/a5da9726649ca81a578efd365ba05d0dbe302b55))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.0.0 to 9.3.0
+
 ## [9.2.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v9.1.0...core-util-v9.2.0) (2023-10-17)
 
 
