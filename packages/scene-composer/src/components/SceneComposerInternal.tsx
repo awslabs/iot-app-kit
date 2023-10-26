@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useReducer } from 'react';
+import React, { useCallback, useMemo, useReducer, useRef } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { applyMode, Mode } from '@awsui/global-styles';
+import { Mode } from '@awsui/global-styles';
 import { cloneDeep } from 'lodash';
 import { useViewport } from '@iot-app-kit/react-components';
 
@@ -8,6 +8,7 @@ import { SCENE_BODY_CLASS } from '../common/constants';
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
 import LogProvider from '../logger/react-logger/log-provider';
 import { GlobalStyles } from '../GlobalStyles';
+import useAwsLightDarkModes from '../hooks/useAwsLightDarkModes';
 import { KnownComponentType, SceneComposerInternalProps, StyleTarget } from '../interfaces';
 import { materialReducer, initialMaterialMaps, addMaterial, removeMaterial, backUpOriginalMaterial } from '../reducers';
 import { useStore } from '../store';
@@ -28,6 +29,7 @@ export const SceneComposerInternal: React.FC<SceneComposerInternalProps> = ({
   config,
   ...props
 }: SceneComposerInternalProps) => {
+  const sceneComposerInternalRef = useRef<HTMLDivElement>(null);
   const currentSceneComposerId = useMemo(() => sceneComposerId ?? generateUUID(), [sceneComposerId]);
   const { viewport } = useViewport();
 
@@ -39,25 +41,26 @@ export const SceneComposerInternal: React.FC<SceneComposerInternalProps> = ({
   // label body as being used by the scene. this allows other components to identify it vs. other page components
   document.body.className = document.body.className + ' ' + SCENE_BODY_CLASS;
 
-  useEffect(() => {
-    if (config.colorTheme === 'light') {
-      applyMode(Mode.Light);
-    } else {
-      applyMode(Mode.Dark);
-    }
-  }, [config.colorTheme]);
+  useAwsLightDarkModes(sceneComposerInternalRef, config.colorTheme === 'light' ? Mode.Light : Mode.Dark);
 
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <LogProvider namespace='SceneComposerInternal' logger={config.logger} ErrorView={ErrorFallback} onError={onError}>
-        <IntlProvider locale={config.locale}>
-          <sceneComposerIdContext.Provider value={currentSceneComposerId}>
-            <StateManager config={config} {...props} viewport={props.viewport || viewport} />
-          </sceneComposerIdContext.Provider>
-        </IntlProvider>
-      </LogProvider>
-    </ThemeProvider>
+    <div ref={sceneComposerInternalRef} style={{ minHeight: '100%', minWidth: '100%', height: '100%', width: '100%' }}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <LogProvider
+          namespace='SceneComposerInternal'
+          logger={config.logger}
+          ErrorView={ErrorFallback}
+          onError={onError}
+        >
+          <IntlProvider locale={config.locale}>
+            <sceneComposerIdContext.Provider value={currentSceneComposerId}>
+              <StateManager config={config} {...props} viewport={props.viewport || viewport} />
+            </sceneComposerIdContext.Provider>
+          </IntlProvider>
+        </LogProvider>
+      </ThemeProvider>
+    </div>
   );
 };
 

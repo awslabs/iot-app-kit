@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { computeMikkTSpaceTangents } from 'three/examples/jsm/utils/BufferGeometryUtils';
 
 const useOverwriteRaycaster: (
   object: THREE.Object3D | undefined,
