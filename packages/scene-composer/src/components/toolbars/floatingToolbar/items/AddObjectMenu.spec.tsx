@@ -119,6 +119,7 @@ describe('AddObjectMenu', () => {
 
   it('should call appendSceneNode when adding a tag', () => {
     const anchorComponent: IAnchorComponent = {
+      icon: 'Info',
       type: 'Tag',
     };
 

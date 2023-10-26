@@ -3,6 +3,7 @@ import { defineMessages, MessageDescriptor, useIntl } from 'react-intl';
 import * as THREE from 'three';
 import { IconProps } from '@awsui/components-react';
 
+import { getSceneResourceDefaultValue } from '../../../../utils/sceneResourceUtils';
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../common/constants';
 import {
   COMPOSER_FEATURES,
@@ -15,6 +16,7 @@ import {
   IMotionIndicatorComponent,
   ISceneNode,
   KnownComponentType,
+  SceneResourceType,
 } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component, LightType, ModelType } from '../../../../models/SceneModels';
@@ -175,7 +177,9 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
   }, [selectedSceneNodeRef, selectedSceneNode]);
 
   const handleAddAnchor = useCallback(() => {
+    const type = SceneResourceType.Icon;
     const anchorComponent: IAnchorComponent = {
+      icon: getSceneResourceDefaultValue(type),
       type: 'Tag',
     };
     const node = {
