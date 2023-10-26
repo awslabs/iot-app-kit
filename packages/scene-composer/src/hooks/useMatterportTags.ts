@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { Color } from 'three';
+import { isEmpty } from 'lodash';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import {
@@ -119,7 +120,7 @@ const updateTag = (
   updateSceneNode(
     ref,
     {
-      name: item.label,
+      name: isEmpty(item.label) ? node.name : item.label,
       transform: {
         position: [item.anchorPosition.x, item.anchorPosition.y, item.anchorPosition.z],
       },

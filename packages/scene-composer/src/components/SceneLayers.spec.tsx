@@ -6,6 +6,7 @@ import { useStore } from '../store';
 import { processQueries } from '../utils/entityModelUtils/processQueries';
 import { KnownSceneProperty } from '../interfaces';
 import { LAYER_DEFAULT_REFRESH_INTERVAL } from '../utils/entityModelUtils/sceneLayerUtils';
+import { DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME } from '../common/entityModelConstants';
 
 import { SceneLayers } from './SceneLayers';
 
@@ -142,7 +143,10 @@ describe('SceneLayers', () => {
 
     expect(processQueries as jest.Mock).toBeCalledTimes(1);
     expect(processQueries as jest.Mock).toBeCalledWith(
-      [expect.stringContaining("AND e.entityId = 'layer1'")],
+      [
+        expect.stringContaining("AND e.entityId = 'layer1'"),
+        expect.stringContaining(`MATCH (binding)<-[r2:${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}]-(entity)-[r]->(e)`),
+      ],
       expect.anything(),
     );
     expect(renderSceneNodesFromLayersMock).not.toBeCalled();

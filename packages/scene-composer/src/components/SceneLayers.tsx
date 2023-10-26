@@ -28,12 +28,18 @@ export const SceneLayers: React.FC = () => {
     queryFn: async () => {
       const nodes = await processQueries(
         [
+          // Get node entities in the layer
           `SELECT entity, r, e
         FROM EntityGraph 
         MATCH (entity)-[r]->(e)
-        WHERE (r.relationshipName = '${DEFAULT_LAYER_RELATIONSHIP_NAME}'
-        AND e.entityId = '${layerId}')
-        OR r.relationshipName = '${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}'`,
+        WHERE r.relationshipName = '${DEFAULT_LAYER_RELATIONSHIP_NAME}'
+        AND e.entityId = '${layerId}'`,
+          // Get entityBinding for the nodes in the layer
+          `SELECT entity, r2, binding
+        FROM EntityGraph 
+        MATCH (binding)<-[r2:${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}]-(entity)-[r]->(e)
+        WHERE r.relationshipName = '${DEFAULT_LAYER_RELATIONSHIP_NAME}'
+        AND e.entityId = '${layerId}'`,
         ],
         (node) => (node.properties.layerIds = [...(node.properties.layerIds ?? []), layerId!]),
       );
