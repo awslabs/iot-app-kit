@@ -21,7 +21,7 @@ import {
   StatusEyeHidden,
   StatusEyeVisible,
 } from '~/customization/propertiesSections/propertiesAndAlarmsSettings/icons';
-import { Tooltip } from '@iot-app-kit/react-components/src';
+import { Tooltip } from '@iot-app-kit/react-components';
 import { LineStyleDropdown } from '../components/lineStyleDropdown';
 import { LineThicknessDropdown } from '../components/lineThicknessDropdown';
 
