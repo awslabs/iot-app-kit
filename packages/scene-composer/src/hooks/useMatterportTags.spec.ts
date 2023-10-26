@@ -195,6 +195,23 @@ ${mattertagItem.description}`,
     );
   });
 
+  it('should update matterport mattertag node name correctly when label is empty', () => {
+    const { handleUpdateMatterportTag } = renderHook(() => useMatterportTags()).result.current;
+
+    handleUpdateMatterportTag({
+      ref: '',
+      node: { ...testInternalNode, name: 'random' },
+      item: { ...mattertagItem, label: '' },
+    });
+    expect(updateSceneNodeInternal).toBeCalledWith(
+      '',
+      expect.objectContaining({
+        name: 'random',
+      }),
+      false,
+    );
+  });
+
   it('should delete matterport mattertag or tag', () => {
     const { handleRemoveMatterportTag } = renderHook(() => useMatterportTags()).result.current;
 

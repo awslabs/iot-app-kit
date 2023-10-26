@@ -76,7 +76,7 @@ export const createNodeEntity = async (
           break;
 
         default:
-          throw new Error('Component type not supported');
+          throw new Error(`Component type not supported: ${compToBeCreated.type}`);
       }
 
       if (comp) {
