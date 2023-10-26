@@ -1,4 +1,4 @@
-import { DurationViewport, Viewport } from '@iot-app-kit/core/src';
+import { DurationViewport, Viewport } from '@iot-app-kit/core';
 import { parseDuration } from '../../../../utils/time';
 
 export const isDurationViewport = (viewport: Viewport): viewport is DurationViewport =>
