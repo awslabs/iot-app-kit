@@ -1,25 +1,14 @@
-import type { FC } from 'react';
-import React, { useCallback, useEffect, useState } from 'react';
-
+import Box from '@cloudscape-design/components/box';
+import Button from '@cloudscape-design/components/button';
+import Input, { type InputProps } from '@cloudscape-design/components/input';
+import Select, { type SelectProps } from '@cloudscape-design/components/select';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import type { ComparisonOperator, Threshold, ThresholdValue } from '@iot-app-kit/core';
-import type { InputProps, SelectProps } from '@cloudscape-design/components';
-import { Box, Button, Input, Select, SpaceBetween } from '@cloudscape-design/components';
+import React, { useCallback, useEffect, useState, type FC } from 'react';
 
 import { DEFAULT_THRESHOLD_COLOR, OPS_ALLOWED_WITH_STRING } from './defaultValues';
 import ColorPicker from '../shared/colorPicker';
 import type { ThresholdWithId } from '~/customization/settings';
-
-import * as awsui from '@cloudscape-design/design-tokens';
-
-import './thresholdComponent.css';
-
-const defaultMessages = {
-  if: 'If',
-  title: 'Threshold',
-  containsLabel: 'Contains',
-  thresholdPlaceHolder: 'Threshold value',
-  showAs: 'show as',
-};
 
 export const ThresholdComponent: FC<{
   threshold: ThresholdWithId;
@@ -68,37 +57,29 @@ export const ThresholdComponent: FC<{
   };
 
   return (
-    <div className='threshold-display' data-test-id='threshold-component'>
-      <div className='threshold-display-summary'>
-        <SpaceBetween size='xxxs'>
-          <Box padding={{ top: 'xxs' }}>
-            <div className='threshold-configuration' style={{ gap: awsui.spaceScaledS }}>
-              <Box variant='span'>{defaultMessages.if}</Box>
-              <Select
-                expandToViewport={true}
-                options={comparisonOptions}
-                selectedOption={selectedOption}
-                onChange={onUpdateComparator}
-                data-test-id='threshold-component-operator-select'
-              />
-              <Input
-                value={`${displayValue}`}
-                placeholder='Threshold value'
-                onChange={onUpdateThresholdValue}
-                data-test-id='threshold-component-value-input'
-                invalid={!validValue}
-              />
-              {defaultMessages.showAs}
-              <ColorPicker
-                color={color || DEFAULT_THRESHOLD_COLOR}
-                updateColor={onUpdateColor}
-                data-test-id='threshold-component-color-picker'
-              />
-            </div>
-          </Box>
-        </SpaceBetween>
-      </div>
+    <SpaceBetween direction='horizontal' size='xs' alignItems='center' data-test-id='threshold-component'>
+      <Box variant='span'>If</Box>
+      <Select
+        expandToViewport={true}
+        options={comparisonOptions}
+        selectedOption={selectedOption}
+        onChange={onUpdateComparator}
+        data-test-id='threshold-component-operator-select'
+      />
+      <Input
+        value={`${displayValue}`}
+        placeholder='Threshold value'
+        onChange={onUpdateThresholdValue}
+        data-test-id='threshold-component-value-input'
+        invalid={!validValue}
+      />
+      <Box variant='span'>show</Box>
+      <ColorPicker
+        color={color || DEFAULT_THRESHOLD_COLOR}
+        updateColor={onUpdateColor}
+        data-test-id='threshold-component-color-picker'
+      />
       <Button iconName='remove' variant='icon' onClick={onDelete} data-test-id='threshold-component-delete-button' />
-    </div>
+    </SpaceBetween>
   );
 };
