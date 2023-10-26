@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.3.0...root-v9.4.0) (2023-10-26)
+
+
+### Features
+
+* **component:** allow disable/enable layer auto refresh ([5278b9c](https://github.com/awslabs/iot-app-kit/commit/5278b9c8eafb01510484b75cebd10e05bb921421))
+
+
+### Bug Fixes
+
+* broken tooltip imports ([8a25332](https://github.com/awslabs/iot-app-kit/commit/8a25332379e647911504cd75ff913f6b911a43c4))
+
 ## [9.3.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.2.0...root-v9.3.0) (2023-10-26)
 
 

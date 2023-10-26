@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.3.0...scene-composer-v9.4.0) (2023-10-26)
+
+
+### Features
+
+* **component:** allow disable/enable layer auto refresh ([5278b9c](https://github.com/awslabs/iot-app-kit/commit/5278b9c8eafb01510484b75cebd10e05bb921421))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.3.0 to 9.4.0
+    * @iot-app-kit/react-components bumped from 9.3.0 to 9.4.0
+    * @iot-app-kit/related-table bumped from 9.3.0 to 9.4.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.3.0 to 9.4.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 9.3.0 to 9.4.0
+
 ## [9.3.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.2.0...scene-composer-v9.3.0) (2023-10-26)
 
 
