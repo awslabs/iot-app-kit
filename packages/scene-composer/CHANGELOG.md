@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.3.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.2.0...scene-composer-v9.3.0) (2023-10-26)
+
+
+### Features
+
+* **component:** utils to handle light component in entity ([26a1494](https://github.com/awslabs/iot-app-kit/commit/26a1494e5787a54f1292408f69ecac514100704e))
+* **composer:** append scene node action creates entity for dynamic scene ([4ebe88a](https://github.com/awslabs/iot-app-kit/commit/4ebe88a6db092e4943db702c90961cf57fb100a3))
+* **composer:** support tag custom icon in entity ([dc07a1d](https://github.com/awslabs/iot-app-kit/commit/dc07a1dc3a2634b4d62de334b42499cd2e6f3060))
+* **composer:** utils to handle subModelRef component in entity ([d425c57](https://github.com/awslabs/iot-app-kit/commit/d425c5706790575dda50be733fd5a618cbafff0e))
+* **scene:** add fog settings to scene ([78c6e75](https://github.com/awslabs/iot-app-kit/commit/78c6e756ff7acfeace2be2473ae6c4defcb94af6))
+* **scene:** enable scene backgrounds ([e630ff2](https://github.com/awslabs/iot-app-kit/commit/e630ff21ef69010e1ac1cac705460e581c0310eb))
+
+
+### Bug Fixes
+
+* **composer:** custom tag rendered slightly off the center ([0cecac1](https://github.com/awslabs/iot-app-kit/commit/0cecac14f2ff201f3f5eb16446b7aab43acf10ce))
+* **composer:** update Polaris package version ([592c435](https://github.com/awslabs/iot-app-kit/commit/592c4359e325eb4149a0f872b30f87a0305feb5b))
+* **scene composer:** restoring dark mode in stotybook ([94e9ac4](https://github.com/awslabs/iot-app-kit/commit/94e9ac4e48762d5389c1fead82938d5ed90857a3))
+* **scene composer:** show correct Icon field for tags with Custom Style ([a2239b8](https://github.com/awslabs/iot-app-kit/commit/a2239b86f31fcfcf138a4e7b2305f80958baa641))
+* **scene-composer:** add scroll bar to show all tag icons by default ([15c5dee](https://github.com/awslabs/iot-app-kit/commit/15c5deef876eb6af9d4332f3944aeead31412a59))
+* **scene-composer:** restore the grid line colors ([be53320](https://github.com/awslabs/iot-app-kit/commit/be53320c4b553f26d3470dd9bf701fa45b85fd7c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/react-components bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/related-table bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.2.0 to 9.3.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 9.2.0 to 9.3.0
+
 ## [9.2.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.1.0...scene-composer-v9.2.0) (2023-10-17)
 
 

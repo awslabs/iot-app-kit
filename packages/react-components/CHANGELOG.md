@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [9.3.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.2.0...react-components-v9.3.0) (2023-10-26)
+
+
+### Features
+
+* charts legend resize drag handle improvements [#2055](https://github.com/awslabs/iot-app-kit/issues/2055) ([0c69b75](https://github.com/awslabs/iot-app-kit/commit/0c69b755e8b1200238dcaac90a44ad07ab222b23))
+* decimal round of in resource table ([a5da972](https://github.com/awslabs/iot-app-kit/commit/a5da9726649ca81a578efd365ba05d0dbe302b55))
+* **react-components:** refactoring echarts ([83e505f](https://github.com/awslabs/iot-app-kit/commit/83e505ffaa9d31fe476be4d7f8029b5ae7c5a3ea))
+
+
+### Bug Fixes
+
+* **react-components:** fixing the prod issue of dashboard throwing exception ([7ecd252](https://github.com/awslabs/iot-app-kit/commit/7ecd2526ed5c07f793ec5e97b1d3eb5595e67a7d))
+* **react-components:** hitbox spans entire pagination button ([6a5b2f8](https://github.com/awslabs/iot-app-kit/commit/6a5b2f8eaf237edc4aaae414765f5f186ce09c6a))
+* **react-components:** pagination over time + tooltip ([ff052c9](https://github.com/awslabs/iot-app-kit/commit/ff052c94fa9f57ac8138d025301a384ab217b258))
+* **react-components:** toggle legend hides container ([8d0ae53](https://github.com/awslabs/iot-app-kit/commit/8d0ae53981698bc8121cb0e40831b9d61e693075))
+* **react-component:** updating TC to have a drag area instead of just drag on the line ([05068bd](https://github.com/awslabs/iot-app-kit/commit/05068bddfd3a7ff0876550a11263496765b51080))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/core bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/core-util bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.2.0 to 9.3.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/testing-util bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/ts-config bumped from 9.2.0 to 9.3.0
+    * eslint-config-iot-app-kit bumped from 9.2.0 to 9.3.0
+
 ## [9.2.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.1.0...react-components-v9.2.0) (2023-10-17)
 
 

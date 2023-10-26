@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.3.0](https://github.com/awslabs/iot-app-kit/compare/core-v9.2.0...core-v9.3.0) (2023-10-26)
+
+
+### Bug Fixes
+
+* synchronize intervals when new intervals are created ([cbc0fa6](https://github.com/awslabs/iot-app-kit/commit/cbc0fa69c0aac46f2e63386568a23c4c485c7beb))
+* synchronize requests after switching tabs ([14f89d9](https://github.com/awslabs/iot-app-kit/commit/14f89d982887db3cd61886c32ec2aa27997f8964))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.2.0 to 9.3.0
+    * @iot-app-kit/ts-config bumped from 9.2.0 to 9.3.0
+    * eslint-config-iot-app-kit bumped from 9.2.0 to 9.3.0
+
 ## [9.2.0](https://github.com/awslabs/iot-app-kit/compare/core-v9.1.0...core-v9.2.0) (2023-10-17)
 
 

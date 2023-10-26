@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.3.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.2.0...root-v9.3.0) (2023-10-26)
+
+
+### Features
+
+* add line style thickness per property ([fb19652](https://github.com/awslabs/iot-app-kit/commit/fb196521ba7b35019828e1c9f2c4383841e4620b))
+* added line style customization per property ([abe942f](https://github.com/awslabs/iot-app-kit/commit/abe942f7a95458087cd1f7075091ee3acca41ada))
+* added widget text in the widget panel [#2036](https://github.com/awslabs/iot-app-kit/issues/2036) ([a46da1d](https://github.com/awslabs/iot-app-kit/commit/a46da1dc2166913bfc9ba81d5eec4388d17399d8))
+* charts legend resize drag handle improvements [#2055](https://github.com/awslabs/iot-app-kit/issues/2055) ([0c69b75](https://github.com/awslabs/iot-app-kit/commit/0c69b755e8b1200238dcaac90a44ad07ab222b23))
+* **component:** utils to handle light component in entity ([26a1494](https://github.com/awslabs/iot-app-kit/commit/26a1494e5787a54f1292408f69ecac514100704e))
+* **composer:** append scene node action creates entity for dynamic scene ([4ebe88a](https://github.com/awslabs/iot-app-kit/commit/4ebe88a6db092e4943db702c90961cf57fb100a3))
+* **composer:** support tag custom icon in entity ([dc07a1d](https://github.com/awslabs/iot-app-kit/commit/dc07a1dc3a2634b4d62de334b42499cd2e6f3060))
+* **composer:** utils to handle subModelRef component in entity ([d425c57](https://github.com/awslabs/iot-app-kit/commit/d425c5706790575dda50be733fd5a618cbafff0e))
+* decimal round of in resource table ([a5da972](https://github.com/awslabs/iot-app-kit/commit/a5da9726649ca81a578efd365ba05d0dbe302b55))
+* handle long properties name in properties section in config panel [#1984](https://github.com/awslabs/iot-app-kit/issues/1984) ([fda011f](https://github.com/awslabs/iot-app-kit/commit/fda011f83e610a14cd6115ebf6aaf88b32589091))
+* **react-components:** refactoring echarts ([83e505f](https://github.com/awslabs/iot-app-kit/commit/83e505ffaa9d31fe476be4d7f8029b5ae7c5a3ea))
+* **scene:** add fog settings to scene ([78c6e75](https://github.com/awslabs/iot-app-kit/commit/78c6e756ff7acfeace2be2473ae6c4defcb94af6))
+* **scene:** enable scene backgrounds ([e630ff2](https://github.com/awslabs/iot-app-kit/commit/e630ff21ef69010e1ac1cac705460e581c0310eb))
+
+
+### Bug Fixes
+
+* added proper error handling for S3 Bucket ACL issues found by customer, updated README ([bbc0aa3](https://github.com/awslabs/iot-app-kit/commit/bbc0aa388041a76b0c79e6202c44431eeae4a9af))
+* cloudscape dependency resolution failure ([7b13ed4](https://github.com/awslabs/iot-app-kit/commit/7b13ed40026182e900f654688dfa696111fd5944))
+* **composer:** custom tag rendered slightly off the center ([0cecac1](https://github.com/awslabs/iot-app-kit/commit/0cecac14f2ff201f3f5eb16446b7aab43acf10ce))
+* **composer:** update Polaris package version ([592c435](https://github.com/awslabs/iot-app-kit/commit/592c4359e325eb4149a0f872b30f87a0305feb5b))
+* **dashboard:** tc sync is broken in prod ([c357902](https://github.com/awslabs/iot-app-kit/commit/c3579027e3bb3e38af4042bc6749ffb648a62e71))
+* do not override selected data stream preferences ([02b80fe](https://github.com/awslabs/iot-app-kit/commit/02b80fed798ad859a1e5aa0993ea479aa48e0b38))
+* **react-components:** fixing the prod issue of dashboard throwing exception ([7ecd252](https://github.com/awslabs/iot-app-kit/commit/7ecd2526ed5c07f793ec5e97b1d3eb5595e67a7d))
+* **react-components:** hitbox spans entire pagination button ([6a5b2f8](https://github.com/awslabs/iot-app-kit/commit/6a5b2f8eaf237edc4aaae414765f5f186ce09c6a))
+* **react-components:** pagination over time + tooltip ([ff052c9](https://github.com/awslabs/iot-app-kit/commit/ff052c94fa9f57ac8138d025301a384ab217b258))
+* **react-components:** toggle legend hides container ([8d0ae53](https://github.com/awslabs/iot-app-kit/commit/8d0ae53981698bc8121cb0e40831b9d61e693075))
+* **react-component:** updating TC to have a drag area instead of just drag on the line ([05068bd](https://github.com/awslabs/iot-app-kit/commit/05068bddfd3a7ff0876550a11263496765b51080))
+* **scene composer:** restoring dark mode in stotybook ([94e9ac4](https://github.com/awslabs/iot-app-kit/commit/94e9ac4e48762d5389c1fead82938d5ed90857a3))
+* **scene composer:** show correct Icon field for tags with Custom Style ([a2239b8](https://github.com/awslabs/iot-app-kit/commit/a2239b86f31fcfcf138a4e7b2305f80958baa641))
+* **scene-composer:** add scroll bar to show all tag icons by default ([15c5dee](https://github.com/awslabs/iot-app-kit/commit/15c5deef876eb6af9d4332f3944aeead31412a59))
+* **scene-composer:** restore the grid line colors ([be53320](https://github.com/awslabs/iot-app-kit/commit/be53320c4b553f26d3470dd9bf701fa45b85fd7c))
+* synchronize intervals when new intervals are created ([cbc0fa6](https://github.com/awslabs/iot-app-kit/commit/cbc0fa69c0aac46f2e63386568a23c4c485c7beb))
+* synchronize requests after switching tabs ([14f89d9](https://github.com/awslabs/iot-app-kit/commit/14f89d982887db3cd61886c32ec2aa27997f8964))
+
 ## [9.2.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.1.0...root-v9.2.0) (2023-10-17)
 
 
