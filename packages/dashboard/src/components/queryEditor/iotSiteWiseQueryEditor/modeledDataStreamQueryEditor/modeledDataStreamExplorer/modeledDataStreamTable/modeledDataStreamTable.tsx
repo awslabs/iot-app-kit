@@ -69,6 +69,16 @@ export function ModeledDataStreamTable({
     }
   );
 
+  const paginationPropsWithAriaLabels = {
+    ...paginationProps,
+    ariaLabels: {
+      nextPageLabel: 'Next page',
+      paginationLabel: 'Modeled DataStream Table pagination',
+      previousPageLabel: 'Previous page',
+      pageLabel: (pageNumber: number) => `Page ${pageNumber}`,
+    },
+  };
+
   return (
     <Table
       {...collectionProps}
@@ -110,13 +120,16 @@ export function ModeledDataStreamTable({
           </SpaceBetween>
         </Box>
       }
-      pagination={<ModeledDataStreamTablePagination {...paginationProps} />}
+      pagination={<ModeledDataStreamTablePagination {...paginationPropsWithAriaLabels} />}
       preferences={<ModeledDataStreamTablePreferences preferences={preferences} updatePreferences={setPreferences} />}
       ariaLabels={{
         itemSelectionLabel: (isNotSelected, modeledDataStream) =>
           isNotSelected
             ? `Select modeled data stream ${modeledDataStream.name}`
             : `Deselect modeled data stream ${modeledDataStream.name}`,
+
+        allItemsSelectionLabel: (isNotSelected) =>
+          isNotSelected ? `Select modeled data stream` : `Deselect modeled data stream`,
       }}
     />
   );
