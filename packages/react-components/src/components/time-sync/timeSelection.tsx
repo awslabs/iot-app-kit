@@ -112,7 +112,9 @@ export const TimeSelection = ({ isPaginationEnabled }: { isPaginationEnabled?: b
           <Tooltip
             content={`Move back ${viewport && 'duration' in viewport ? viewport.duration : 'selected range'}`}
             position='bottom'
-            children={<Button iconName='caret-left-filled' onClick={handlePaginateBackward} />}
+            children={
+              <Button iconName='caret-left-filled' onClick={handlePaginateBackward} ariaLabel='Move backward' />
+            }
           />
         )}
 
@@ -130,7 +132,7 @@ export const TimeSelection = ({ isPaginationEnabled }: { isPaginationEnabled?: b
           <Tooltip
             content={`Move forward ${viewport && 'duration' in viewport ? viewport.duration : 'selected range'}`}
             position='bottom'
-            children={<Button iconName='caret-right-filled' onClick={handlePaginateForward} />}
+            children={<Button iconName='caret-right-filled' onClick={handlePaginateForward} ariaLabel='Move forward' />}
           />
         )}
       </SpaceBetween>
