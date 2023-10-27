@@ -47,6 +47,7 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
               variant='icon'
               onClick={props.onCollapsedPanelClick}
               data-testid={`expanded-${props.side}-panel-button`}
+              ariaLabel={`Collapse panel ${props.side}`}
             />
           </Box>
           <Box float={iconSide} padding={{ [iconSide]: 'xs', vertical: 'xs' }}>
