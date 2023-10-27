@@ -62,7 +62,12 @@ const Actions: React.FC<ActionsProps> = ({
         {onSave && <Button onClick={handleOnSave}>Save</Button>}
         {editable && <Button onClick={handleOnReadOnly}>{readOnly ? 'Edit' : 'Preview'}</Button>}
         {editable && !readOnly && (
-          <Button onClick={() => setDashboardSettingsVisible(true)} iconName='settings' variant='icon' />
+          <Button
+            onClick={() => setDashboardSettingsVisible(true)}
+            iconName='settings'
+            variant='icon'
+            ariaLabel='Settings'
+          />
         )}
         <DashboardSettings isVisible={dashboardSettingsVisible} onClose={handleOnClose} />
       </SpaceBetween>
