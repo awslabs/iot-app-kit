@@ -11,6 +11,7 @@ import { isDefined } from '~/util/isDefined';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import './component.css';
+import WidgetTile from '~/components/widgets/tile/tile';
 
 const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const { viewport } = useViewport();
@@ -35,7 +36,11 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const aggregation = getAggregation(widget);
 
   if (shouldShowEmptyState) {
-    return <StatusWidgetEmptyStateComponent />;
+    return (
+      <WidgetTile widget={widget} removeable>
+        <StatusWidgetEmptyStateComponent />
+      </WidgetTile>
+    );
   }
 
   const settings = pickBy(

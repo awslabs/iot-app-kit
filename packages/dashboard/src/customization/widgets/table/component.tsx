@@ -16,6 +16,7 @@ import { DEFAULT_PREFERENCES, collectionPreferencesProps, PROPERTY_FILTERING } f
 import { TABLE_OVERFLOW_HEIGHT, TABLE_WIDGET_MAX_HEIGHT } from '../constants';
 import { onUpdateWidgetsAction } from '~/store/actions';
 import { useTableItems } from './useTableItems';
+import WidgetTile from '~/components/widgets/tile/tile';
 
 export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
   {
@@ -70,40 +71,42 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   };
 
   return (
-    <div
-      data-testid='table-widget-component'
-      onMouseDown={handleMouseDown}
-      style={{
-        maxHeight: chartSize.height > TABLE_WIDGET_MAX_HEIGHT ? `${TABLE_WIDGET_MAX_HEIGHT}px` : chartSize.height,
-        overflow: chartSize.height > TABLE_OVERFLOW_HEIGHT ? 'auto' : 'scroll',
-      }}
-    >
-      <Table
-        resizableColumns
-        key={key}
-        queries={queries}
-        viewport={viewport}
-        columnDefinitions={DEFAULT_TABLE_COLUMN_DEFINITIONS}
-        items={items}
-        thresholds={thresholds}
-        significantDigits={significantDigits}
-        sortingDisabled
-        stickyHeader
-        pageSize={widget.properties.pageSize ?? DEFAULT_PREFERENCES.pageSize}
-        paginationEnabled
-        empty={<EmptyTableComponent />}
-        preferences={
-          !readOnly && (
-            <CollectionPreferences
-              {...collectionPreferencesProps}
-              preferences={{ pageSize: widget.properties.pageSize ?? DEFAULT_PREFERENCES.pageSize }}
-              onConfirm={({ detail }) => setPreferences(detail)}
-            />
-          )
-        }
-        propertyFiltering={PROPERTY_FILTERING}
-      />
-    </div>
+    <WidgetTile widget={widget} removeable>
+      <div
+        data-testid='table-widget-component'
+        onMouseDown={handleMouseDown}
+        style={{
+          maxHeight: chartSize.height > TABLE_WIDGET_MAX_HEIGHT ? `${TABLE_WIDGET_MAX_HEIGHT}px` : chartSize.height,
+          overflow: chartSize.height > TABLE_OVERFLOW_HEIGHT ? 'auto' : 'scroll',
+        }}
+      >
+        <Table
+          resizableColumns
+          key={key}
+          queries={queries}
+          viewport={viewport}
+          columnDefinitions={DEFAULT_TABLE_COLUMN_DEFINITIONS}
+          items={items}
+          thresholds={thresholds}
+          significantDigits={significantDigits}
+          sortingDisabled
+          stickyHeader
+          pageSize={widget.properties.pageSize ?? DEFAULT_PREFERENCES.pageSize}
+          paginationEnabled
+          empty={<EmptyTableComponent />}
+          preferences={
+            !readOnly && (
+              <CollectionPreferences
+                {...collectionPreferencesProps}
+                preferences={{ pageSize: widget.properties.pageSize ?? DEFAULT_PREFERENCES.pageSize }}
+                onConfirm={({ detail }) => setPreferences(detail)}
+              />
+            )
+          }
+          propertyFiltering={PROPERTY_FILTERING}
+        />
+      </div>
+    </WidgetTile>
   );
 };
 
