@@ -29,6 +29,7 @@ import useMatterportViewer from '../../../../hooks/useMatterportViewer';
 import { createNodeWithTransform, findComponentByType, isEnvironmentNode } from '../../../../utils/nodeUtils';
 import { FLOATING_TOOLBAR_VERTICAL_ORIENTATION_BUFFER } from '../FloatingToolbar';
 import { TOOLBAR_ITEM_CONTAINER_HEIGHT } from '../../common/styledComponents';
+import { isDynamicScene } from '../../../../utils/entityModelUtils/sceneUtils';
 
 // Note: ObjectType String is used to record metric. DO NOT change existing ids unless it's necessary.
 enum ObjectTypes {
@@ -87,12 +88,15 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
     (state) => state.getEditorConfig().showAssetBrowserCallback,
   );
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const document = useStore(sceneComposerId)((state) => state.document);
   const nodeMap = useStore(sceneComposerId)((state) => state.document.nodeMap);
   const { setAddingWidget, getObject3DBySceneNodeRef } = useEditorState(sceneComposerId);
   const { enableMatterportViewer } = useMatterportViewer();
   const enhancedEditingEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.ENHANCED_EDITING];
   const { formatMessage } = useIntl();
   const { activeCameraSettings, mainCameraObject } = useActiveCamera();
+  const dynamicSceneEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicScene];
+
   const selectedSceneNode = useMemo(() => {
     return getSceneNodeByRef(selectedSceneNodeRef);
   }, [getSceneNodeByRef, selectedSceneNodeRef]);
@@ -246,7 +250,8 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
       const node = {
         name: `Camera${currentCount}`,
         components: [cameraComponent],
-        parentRef: getRefForParenting(),
+        // Use correct parentRef when dynamic scene supports parent-child relationship
+        parentRef: dynamicSceneEnabled && isDynamicScene(document) ? undefined : getRefForParenting(),
       } as unknown as ISceneNodeInternal;
 
       let physicalParentNode: ISceneNodeInternal | undefined = getSceneNodeByRef(node.parentRef);

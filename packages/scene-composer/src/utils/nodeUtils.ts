@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 import { IModelRefComponentInternal, ISceneComponentInternal, ISceneNodeInternal } from '../store';
 import { AddingWidgetInfo, KnownComponentType } from '../interfaces';
-import { ModelType } from '../models/SceneModels';
+import { ModelType, Vector3 } from '../models/SceneModels';
 import { ITransformInternal } from '../store/internalInterfaces';
 
 /**
@@ -39,6 +39,11 @@ export type Transform = {
   position: THREE.Vector3;
   rotation: THREE.Euler;
   scale: THREE.Vector3;
+};
+
+export const getFinalNodeScale = (node: ISceneNodeInternal | undefined, worldScale: THREE.Vector3): Vector3 => {
+  // Scale of Tag component is independent of its ancestors, therefore keep its original value.
+  return node && findComponentByType(node, KnownComponentType.Tag) ? node.transform.scale : worldScale.toArray();
 };
 
 /**
@@ -92,11 +97,7 @@ export const getFinalNodeTransform = (
 
   const finalTransform = getFinalTransform(transform, parent);
 
-  // Scale of Tag component is independent of its ancestors, therefore keep its original value.
-  const finalScale =
-    object && findComponentByType(object, KnownComponentType.Tag)
-      ? object.transform.scale
-      : finalTransform.scale.toArray();
+  const finalScale = getFinalNodeScale(object, finalTransform.scale);
 
   return {
     position: finalTransform.position.toArray(),

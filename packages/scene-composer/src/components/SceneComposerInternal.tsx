@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useReducer, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { Mode } from '@awsui/global-styles';
 import { cloneDeep } from 'lodash';
@@ -38,8 +38,14 @@ export const SceneComposerInternal: React.FC<SceneComposerInternalProps> = ({
   // Assuming we only have dark or light...
   const theme = config.colorTheme ?? config.colorTheme === 'light' ? lightTheme : darkTheme;
 
-  // label body as being used by the scene. this allows other components to identify it vs. other page components
-  document.body.className = document.body.className + ' ' + SCENE_BODY_CLASS;
+  useEffect(() => {
+    // label body as being used by the scene. this allows other components to identify it vs. other page components
+    document.body.classList.add(SCENE_BODY_CLASS);
+
+    return () => {
+      document.body.classList.remove(SCENE_BODY_CLASS);
+    };
+  }, []);
 
   useAwsLightDarkModes(sceneComposerInternalRef, config.colorTheme === 'light' ? Mode.Light : Mode.Dark);
 
