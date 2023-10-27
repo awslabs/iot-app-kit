@@ -2,8 +2,15 @@ import { isDataBindingTemplate } from '@iot-app-kit/source-iottwinmaker';
 import { isEmpty } from 'lodash';
 import { GetState, SetState } from 'zustand';
 import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
+import { Euler, Quaternion, Vector3 } from 'three';
 
-import { IOverlaySettings, ISceneNode, KnownComponentType, KnownSceneProperty } from '../../interfaces';
+import {
+  COMPOSER_FEATURES,
+  IOverlaySettings,
+  ISceneNode,
+  KnownComponentType,
+  KnownSceneProperty,
+} from '../../interfaces';
 import DebugLogger from '../../logger/DebugLogger';
 import { Component } from '../../models/SceneModels';
 import { containsMatchingEntityComponent } from '../../utils/dataBindingUtils';
@@ -29,6 +36,8 @@ import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity'
 import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
 import { isDynamicNode, isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
 import { createNodeEntity } from '../../utils/entityModelUtils/createNodeEntity';
+import { findComponentByType, getFinalNodeScale } from '../../utils/nodeUtils';
+import { getGlobalSettings } from '../../common/GlobalSettings';
 
 const LOG = new DebugLogger('stateStore');
 
@@ -154,10 +163,43 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
 
       // Add the node to the state
       set((draft) => {
-        if (isDynamicScene(draft.document) && !isDynamicNode(node)) {
-          const layerId = draft.document.properties![KnownSceneProperty.LayerIds][0];
+        const dynamicSceneEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicScene];
+
+        if (dynamicSceneEnabled && isDynamicScene(draft.document) && !isDynamicNode(node)) {
           // Default to the first layer for now. Handle adding to current layer when supporting adding layer.
-          createNodeEntity(node, draft.document.properties![KnownSceneProperty.SceneRootEntityId], layerId)
+          const layerId = draft.document.properties![KnownSceneProperty.LayerIds][0];
+
+          // Reparent the node to root since hierarchy relationship is not supported yet
+          const nodeTransform = node.transform;
+          const parent = get().getObject3DBySceneNodeRef(node.parentRef);
+          if (node.parentRef && parent && !findComponentByType(node, KnownComponentType.SubModelRef)) {
+            node.parentRef = undefined;
+
+            nodeTransform.position = parent
+              .localToWorld(
+                new Vector3(nodeTransform.position[0], nodeTransform.position[1], nodeTransform.position[2]),
+              )
+              .toArray();
+            nodeTransform.scale = getFinalNodeScale(
+              node,
+              new Vector3(nodeTransform.scale[0], nodeTransform.scale[1], nodeTransform.scale[2]).multiply(
+                parent.getWorldScale(new Vector3()),
+              ),
+            );
+
+            // Directly use parent's world rotation since a new node will have no local rotation for existing cases.
+            nodeTransform.rotation = new Vector3()
+              .setFromEuler(new Euler().setFromQuaternion(parent.getWorldQuaternion(new Quaternion())))
+              .toArray();
+
+            node.transform = nodeTransform;
+          }
+
+          createNodeEntity(
+            node,
+            node.parentRef ?? draft.document.properties![KnownSceneProperty.SceneRootEntityId],
+            layerId,
+          )
             .then(() => {
               // Add the node to the state after successful entity creation
               get().appendSceneNodeInternal(
