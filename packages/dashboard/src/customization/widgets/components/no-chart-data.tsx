@@ -1,12 +1,7 @@
 import React from 'react';
 
 import { Box, SpaceBetween } from '@cloudscape-design/components';
-import {
-  borderRadiusContainer,
-  colorBorderDividerDefault,
-  colorTextLayoutToggle,
-  spaceStaticXxxs,
-} from '@cloudscape-design/design-tokens';
+import { colorTextLayoutToggle } from '@cloudscape-design/design-tokens';
 
 import './no-chart-data.css';
 
@@ -23,8 +18,6 @@ const NoChartData = ({ icon, emptyStateText }: NoChartDataProps) => {
       className='no-chart-data-empty-state'
       style={{
         backgroundColor: colorTextLayoutToggle,
-        border: `${spaceStaticXxxs} solid ${colorBorderDividerDefault}`,
-        borderRadius: borderRadiusContainer,
       }}
     >
       <Box textAlign='center'>
