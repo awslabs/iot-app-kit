@@ -52,10 +52,6 @@ export interface SceneViewerPropsShared {
    * Note: Need to provide a viewport to make it work.
    */
   queries?: TimeSeriesDataQuery[];
-  /**
-   * Specifies the time range of the dataStreams or the range to trigger the queries.
-   */
-  viewport?: Viewport;
 
   dataBindingTemplate?: IDataBindingTemplate;
 
@@ -87,6 +83,16 @@ export interface SceneViewerPropsShared {
    * When selectedDataBinding is set this is ignored in favor of focusing on the selected item.
    */
   activeCamera?: string;
+
+    // Use a conditional type to make viewport required when dataStreams are provided
+  dataStreamsCondition: {
+    dataStreams: DataStream[];
+      /**
+      * Specifies the time range of the dataStreams or the range to trigger the queries.
+      */
+    viewport: Viewport;
+  };
 }
 
-export type SceneViewerProps = SceneViewerPropsShared;
+export type SceneViewerProps = SceneViewerPropsShared['dataStreamsCondition'];
+
