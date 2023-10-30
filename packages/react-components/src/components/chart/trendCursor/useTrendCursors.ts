@@ -11,6 +11,7 @@ import { YAXisOption } from 'echarts/types/dist/shared';
 import { YAxisLegendOption } from '../types';
 import { useHandleYMinMax } from './yMinMax/useHandleYMinMax';
 import { useHandleSeries } from './series/useHandleSeries';
+import { KeyMap } from 'react-hotkeys';
 
 const useTrendCursors = ({
   chartRef,
@@ -65,11 +66,16 @@ const useTrendCursors = ({
 
   useHandleSeries({ graphic, setGraphic, chartRef, visualization, series });
 
-  const hotKeyHandlers = {
+  const trendCursorKeyMap: KeyMap = {
+    commandDown: { sequence: 't', action: 'keydown' },
+    commandUp: { sequence: 't', action: 'keyup' },
+  };
+
+  const trendCursorHandlers = {
     commandDown: () => setIsInCursorAddMode(true),
     commandUp: () => setIsInCursorAddMode(false),
   };
-  return { onContextMenuClickHandler, hotKeyHandlers, trendCursors: graphic };
+  return { onContextMenuClickHandler, trendCursorKeyMap, trendCursorHandlers, trendCursors: graphic };
 };
 
 export default useTrendCursors;
