@@ -24,6 +24,7 @@ const TestComponent = (object: { widget: LineWidget; isSelected: boolean }) => {
   const initialState: Partial<DashboardState> = {
     dashboardConfiguration: {
       widgets: [widget],
+      name: '',
     },
     selectedWidgets: isSelected ? [widget] : [],
   };

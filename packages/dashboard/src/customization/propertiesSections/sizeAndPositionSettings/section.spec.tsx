@@ -20,6 +20,7 @@ const widget: KPIWidget = {
 const state: Partial<DashboardState> = {
   dashboardConfiguration: {
     widgets: [widget],
+    name: '',
   },
   selectedWidgets: [widget],
 };

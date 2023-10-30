@@ -15,12 +15,6 @@
   box-sizing: initial;
 }
 
-.dashboard .divider {
-  width: 2px;
-  height: 70px;
-  background: var(--colors-light-grey);
-}
-
 .dashboard .display-area {
   height: 100%;
   width: 100%;

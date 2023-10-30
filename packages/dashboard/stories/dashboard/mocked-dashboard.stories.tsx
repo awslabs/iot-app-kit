@@ -27,6 +27,7 @@ const emptyDashboardConfiguration = {
     displaySettings,
     viewport,
     widgets: [],
+    name: '',
   },
   onSave: () => Promise.resolve(),
 };
@@ -48,6 +49,7 @@ const widgetDashboardConfiguration = {
         properties: {},
       },
     ],
+    name: 'EC2 test dashboard',
   },
   onSave: () => Promise.resolve(),
 };
