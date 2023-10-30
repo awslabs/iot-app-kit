@@ -6,8 +6,12 @@ import SpaceBetween from '@cloudscape-design/components/space-between';
 import {
   colorBackgroundCellShaded,
   colorBorderDividerDefault,
+  colorChartsLineGrid,
+  spaceScaledXs,
+  spaceScaledXxxl,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
+import { ContentLayout, Header } from '@cloudscape-design/components';
 
 import { selectedRect } from '~/util/select';
 
@@ -62,7 +66,16 @@ type InternalDashboardProperties = {
   propertiesPanel?: ReactNode;
 };
 
-const Divider = () => <div className='divider' />;
+const Divider = () => (
+  <div
+    style={{
+      width: spaceScaledXxxs,
+      height: spaceScaledXxxl,
+      margin: `0 ${spaceScaledXs}`,
+      background: colorChartsLineGrid,
+    }}
+  />
+);
 
 const defaultUserSelect: CSSProperties = { userSelect: 'initial' };
 const disabledUserSelect: CSSProperties = { userSelect: 'none' };
@@ -80,6 +93,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
    */
   const dashboardConfiguration = useSelector((state: DashboardState) => state.dashboardConfiguration);
   const dashboardWidgets = useSelector((state: DashboardState) => state.dashboardConfiguration.widgets);
+  const dashboardTitle = dashboardConfiguration.name ?? '';
   const grid = useSelector((state: DashboardState) => state.grid);
   const cellSize = useSelector((state: DashboardState) => state.grid.cellSize);
   const copiedWidgets = useSelector((state: DashboardState) => state.copiedWidgets);
@@ -217,56 +231,16 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
 
   const EditComponent = (
     <div className='dashboard' style={userSelect}>
-      <CustomDragLayer onDrag={(isDragging) => setUserSelect(isDragging ? disabledUserSelect : defaultUserSelect)} />
-      <div style={dashboardToolbarBottomBorder} className='dashboard-toolbar'>
-        <Box float='left' padding='xs'>
-          <ComponentPalette />
-        </Box>
-        <Box float='right' padding='xs'>
-          <SpaceBetween size='s' direction='horizontal'>
-            <TimeSelection isPaginationEnabled={true} />
-            <Divider key='2' />
-            <Actions
-              key='3'
-              readOnly={readOnly}
-              onSave={onSave}
-              dashboardConfiguration={dashboardConfiguration}
-              grid={grid}
-              significantDigits={significantDigits}
-              editable={editable}
-            />
-          </SpaceBetween>
-        </Box>
-      </div>
-      <ResizablePanes
-        leftPane={<QueryEditor iotSiteWiseClient={iotSiteWiseClient} iotTwinMakerClient={iotTwinMakerClient} />}
-        centerPane={
-          <div
-            className='display-area'
-            ref={(el) => setViewFrameElement(el || undefined)}
-            style={{ backgroundColor: colorBackgroundCellShaded }}
-          >
-            <GestureableGrid {...gridProps}>
-              <ContextMenu {...contextMenuProps} />
-              <Widgets {...widgetsProps} />
-              {!widgetLength && <DashboardEmptyState />}
-              {activeGesture === 'select' && <UserSelection {...selectionProps} />}
-            </GestureableGrid>
-            <WebglContext viewFrame={viewFrame} />
-          </div>
-        }
-        rightPane={propertiesPanel}
-      />
-    </div>
-  );
-  const ReadOnlyComponent = (
-    <div className='dashboard'>
-      <div style={dashboardToolbarBottomBorder} className='dashboard-toolbar-read-only'>
-        <Box float='right' padding='s'>
-          <SpaceBetween size='s' direction='horizontal'>
-            <TimeSelection />
-            {editable && (
-              <>
+      <ContentLayout
+        disableOverlap
+        header={
+          <Box padding={{ horizontal: 'l', top: 'm' }}>
+            <Box float='left'>
+              <Header variant='h1'>{dashboardTitle}</Header>
+            </Box>
+            <Box float='right'>
+              <SpaceBetween size='s' direction='horizontal'>
+                <TimeSelection isPaginationEnabled hideTitle />
                 <Divider key='2' />
                 <Actions
                   key='3'
@@ -277,21 +251,81 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
                   significantDigits={significantDigits}
                   editable={editable}
                 />
-              </>
-            )}
-          </SpaceBetween>
-        </Box>
-      </div>
-      <div
-        className='display-area'
-        ref={(el) => setViewFrameElement(el || undefined)}
-        style={{ backgroundColor: colorBackgroundCellShaded }}
+              </SpaceBetween>
+            </Box>
+          </Box>
+        }
       >
-        <ReadOnlyGrid {...grid}>
-          <Widgets {...widgetsProps} />
-        </ReadOnlyGrid>
-        <WebglContext viewFrame={viewFrame} />
-      </div>
+        <CustomDragLayer onDrag={(isDragging) => setUserSelect(isDragging ? disabledUserSelect : defaultUserSelect)} />
+        <div style={dashboardToolbarBottomBorder} className='dashboard-toolbar'>
+          <Box float='left' padding='xs'>
+            <ComponentPalette />
+          </Box>
+        </div>
+        <ResizablePanes
+          leftPane={<QueryEditor iotSiteWiseClient={iotSiteWiseClient} iotTwinMakerClient={iotTwinMakerClient} />}
+          centerPane={
+            <div
+              className='display-area'
+              ref={(el) => setViewFrameElement(el || undefined)}
+              style={{ backgroundColor: colorBackgroundCellShaded }}
+            >
+              <GestureableGrid {...gridProps}>
+                <ContextMenu {...contextMenuProps} />
+                <Widgets {...widgetsProps} />
+                {!widgetLength && <DashboardEmptyState />}
+                {activeGesture === 'select' && <UserSelection {...selectionProps} />}
+              </GestureableGrid>
+              <WebglContext viewFrame={viewFrame} />
+            </div>
+          }
+          rightPane={propertiesPanel}
+        />
+      </ContentLayout>
+    </div>
+  );
+  const ReadOnlyComponent = (
+    <div className='dashboard'>
+      <ContentLayout
+        disableOverlap
+        header={
+          <Box padding={{ horizontal: 's', top: 'm' }}>
+            <Box float='left'>
+              <Header variant='h1'>{dashboardTitle}</Header>
+            </Box>
+            <Box float='right'>
+              <SpaceBetween size='s' direction='horizontal'>
+                <TimeSelection hideTitle />
+                {editable && (
+                  <>
+                    <Divider key='2' />
+                    <Actions
+                      key='3'
+                      readOnly={readOnly}
+                      onSave={onSave}
+                      dashboardConfiguration={dashboardConfiguration}
+                      grid={grid}
+                      significantDigits={significantDigits}
+                      editable={editable}
+                    />
+                  </>
+                )}
+              </SpaceBetween>
+            </Box>
+          </Box>
+        }
+      >
+        <div
+          className='display-area'
+          ref={(el) => setViewFrameElement(el || undefined)}
+          style={{ backgroundColor: colorBackgroundCellShaded }}
+        >
+          <ReadOnlyGrid {...grid}>
+            <Widgets {...widgetsProps} />
+          </ReadOnlyGrid>
+          <WebglContext viewFrame={viewFrame} />
+        </div>
+      </ContentLayout>
     </div>
   );
 
