@@ -48,6 +48,7 @@ export type DashboardConfiguration<Properties extends Record<string, unknown> = 
   displaySettings: DashboardDisplaySettings;
   widgets: DashboardWidget<Properties>[];
   viewport: Viewport;
+  name: string;
 };
 
 export type DashboardWidgetsConfiguration<Properties extends Record<string, unknown> = Record<string, unknown>> = {
