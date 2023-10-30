@@ -32,7 +32,8 @@
     "test:watch": "jest --watch",
     "lint": "eslint . --max-warnings=0",
     "fix": "eslint --fix .",
-    "test:ui": "npx playwright test"
+    "test:ui": "npx playwright test",
+    "watch-dependencies": "npm exec turbowatch ./turbowatch.ts"
   },
   "devDependencies": {
     "@iot-app-kit/jest-config": "9.2.0",
@@ -118,6 +119,7 @@
     "react-popper": "^2.3.0",
     "react-use": "17.4.0",
     "tiny-invariant": "^1.3.1",
+    "turbowatch": "^2.29.4",
     "uuid": "^9.0.0"
   },
   "peerDependencies": {
