@@ -10,6 +10,9 @@ export const useViewportToMS = (viewport?: Viewport) => {
   useEffect(() => {
     let interval: NodeJS.Timer;
     if (viewport && isDurationViewport(viewport)) {
+      // Immediately change the viewport
+      setInMS(convertViewportToMs(viewport));
+
       interval = setInterval(() => {
         setInMS(convertViewportToMs(viewport));
       }, LIVE_MODE_REFRESH_RATE_MS);
