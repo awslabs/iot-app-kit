@@ -27,6 +27,7 @@ import { DEFAULT_CHART_VISUALIZATION } from './eChartsConstants';
 import { useDataZoom } from './hooks/useDataZoom';
 import { useViewport } from '../../hooks/useViewport';
 import { getXAxis } from './chartOptions/axes/xAxis';
+import { useHandleChartEvents } from './events/useHandleChartEvents';
 
 /**
  * Developer Notes:
@@ -84,14 +85,14 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   });
   const shouldShowYAxisLegend = yMins.length > 0 || yMaxs.length > 0;
 
-  const { handleContextMenu, showContextMenu, contextMenuPos, setShowContextMenu, keyMap } = useContextMenu();
+  const { handleContextMenu, showContextMenu, contextMenuPos, setShowContextMenu } = useContextMenu();
 
   const viewportInMs = useViewportToMS(utilizedViewport);
 
   const xAxis = getXAxis(options.axis);
 
   // this will handle all the Trend Cursors operations
-  const { onContextMenuClickHandler, trendCursors, hotKeyHandlers } = useTrendCursors({
+  const { onContextMenuClickHandler, trendCursors, trendCursorKeyMap, trendCursorHandlers } = useTrendCursors({
     chartRef,
     initialGraphic: options.graphic,
     size: { width: chartWidth, height },
@@ -125,11 +126,21 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   //handle dataZoom updates, which are dependent on user events and viewportInMS changes
   useDataZoom(chartRef, viewportInMs);
 
+  // handle chart event updates
+  const { chartEventsOptions, chartEventsKeyMap, chartEventsHandlers } = useHandleChartEvents(chartRef);
+
+  const toolTipOptions = {
+    ...convertedOptions.tooltip,
+    ...chartEventsOptions.tooltip,
+  };
+
   // set all the options on the echarts instance
   useEChartOptions(
     chartRef,
     {
       ...convertedOptions,
+      ...chartEventsOptions,
+      tooltip: toolTipOptions,
       series,
       yAxis,
       xAxis,
@@ -138,6 +149,16 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     },
     settings
   );
+
+  const hotKeyMap = {
+    ...trendCursorKeyMap,
+    ...chartEventsKeyMap,
+  };
+
+  const hotKeyHandlers = {
+    ...trendCursorHandlers,
+    ...chartEventsHandlers,
+  };
 
   return (
     <div className='base-chart-container'>
@@ -155,7 +176,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
         onResizeStart={(e) => e.stopPropagation()}
         onResizeStop={(e) => e.stopPropagation()}
       >
-        <HotKeys keyMap={keyMap} handlers={hotKeyHandlers} style={{ position: 'relative' }}>
+        <HotKeys keyMap={hotKeyMap} handlers={hotKeyHandlers} style={{ position: 'relative' }}>
           <div ref={ref} className='base-chart-element' style={{ height, width: chartWidth }} />
           {/*TODO: should not show when in dashboard */}
           {showContextMenu && (

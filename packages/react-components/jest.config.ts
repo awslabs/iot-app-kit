@@ -19,6 +19,7 @@ const config = {
   coveragePathIgnorePatterns: [
     '<rootDir>/src/components/knowledge-graph/KnowledgeGraphPanel.tsx',
     '<rootDir>/src/components/chart/trendCursor/mouseEvents/useTrendCursorsEvents.ts',
+    '<rootDir>/src/components/chart/events/useHandleChartEvents.ts',
   ],
 };
 export default config;
