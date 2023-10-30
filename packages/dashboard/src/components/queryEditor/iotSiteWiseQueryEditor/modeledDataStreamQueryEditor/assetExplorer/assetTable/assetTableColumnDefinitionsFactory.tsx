@@ -3,6 +3,7 @@ import { type TableProps } from '@cloudscape-design/components/table';
 import React from 'react';
 
 import type { AssetTableNameLinkProps } from './assetTableNameLink';
+import { getFormattedDateTime } from '~/components/util/dateTimeUtil';
 
 type AssetTableColumnDefinitions = TableProps<AssetSummary>['columnDefinitions'];
 
@@ -80,7 +81,7 @@ export class AssetTableColumnDefinitionsFactory {
     return {
       id: 'creationDate',
       header: 'Creation Date',
-      cell: ({ creationDate }) => creationDate?.toString() ?? '-',
+      cell: ({ creationDate }) => (creationDate ? getFormattedDateTime(creationDate) : '-'),
       sortingField: 'creationDate',
     };
   }
@@ -89,7 +90,7 @@ export class AssetTableColumnDefinitionsFactory {
     return {
       id: 'lastUpdateDate',
       header: 'Last Update Date',
-      cell: ({ lastUpdateDate }) => lastUpdateDate?.toString() ?? '-',
+      cell: ({ lastUpdateDate }) => (lastUpdateDate ? getFormattedDateTime(lastUpdateDate) : '-'),
       sortingField: 'lastUpdateDate',
     };
   }
