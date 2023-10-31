@@ -18,6 +18,7 @@ import { useExplorerPreferences } from '../../useExplorerPreferences';
 import { SUPPORTED_PAGE_SIZES } from '../../constants';
 import { useLatestValues } from '../../useLatestValues';
 import { DashboardState } from '~/store/state';
+import { getFormattedDateTimeFromEpoch } from '~/components/util/dateTimeUtil';
 
 export interface UnmodeledDataStreamTableProps {
   onClickAdd: (unmodeledDataStreams: UnmodeledDataStream[]) => void;
@@ -147,9 +148,9 @@ export function UnmodeledDataStreamTable({
           header: 'Latest value time',
           cell: ({ latestValueTime }) => {
             if (latestValueTime && isNumeric(latestValueTime)) {
-              return round(latestValueTime, significantDigits);
+              return getFormattedDateTimeFromEpoch(round(latestValueTime, significantDigits));
             }
-            return latestValueTime;
+            return getFormattedDateTimeFromEpoch(latestValueTime);
           },
           sortingField: 'latestValueTime',
         },
