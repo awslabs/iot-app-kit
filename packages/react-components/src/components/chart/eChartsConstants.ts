@@ -61,7 +61,7 @@ export const LIVE_MODE_REFRESH_RATE_MS = 1000;
 export const DEFAULT_PRECISION = 4;
 
 // resize constants
-export const CHART_RESIZE_INITIAL_FACTOR = 0.75;
+export const CHART_RESIZE_INITIAL_FACTOR = 0.7;
 export const CHART_RESIZE_MIN_FACTOR = 0.3;
 
 // this is an arbitrary value, so that user can almost "close" the legend section if they want to
@@ -76,3 +76,6 @@ export const DEEMPHASIZE_OPACITY = 0.25;
 // Zoom constants
 
 export const ECHARTS_ZOOM_DEBOUNCE_MS = 300;
+
+// legend constants
+export const LEGEND_NAME_MIN_WIDTH_FACTOR = 3.5;
