@@ -41,7 +41,7 @@
         "properties": {}
       },
       {
-        "name": "AIMIMATED_MIXER",
+        "name": "ANIMATED_MIXER",
         "transform": {
           "position": [
             -0.2548017433916856,
@@ -63,12 +63,12 @@
         "components": [
           {
             "type": "ModelRef",
-            "uri": "AIMIMATED_MIXER.gltf",
+            "uri": "ANIMATED_MIXER.gltf",
             "modelType": "GLTF"
           },
           {
             "currentAnimations": [],
-            "uri": "AIMIMATED_MIXER.gltf",
+            "uri": "ANIMATED_MIXER.gltf",
             "type": "Animation"
           }
         ],

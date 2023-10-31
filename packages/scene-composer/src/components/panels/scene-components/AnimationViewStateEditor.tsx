@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FormField, Button, SpaceBetween, Autosuggest } from '@awsui/components-react';
 import { useIntl } from 'react-intl';
 
@@ -18,74 +18,79 @@ export const AnimationViewStateEditor: React.FC<AnimationViewStateEditorProps> =
 }: AnimationViewStateEditorProps) => {
   const { formatMessage } = useIntl();
 
-  const [panelnumber, setPanelNumber] = useState(0);
   const sceneComposerId = useSceneComposerId();
   const { getObject3DBySceneNodeRef } = useEditorState(sceneComposerId);
   const object = getObject3DBySceneNodeRef(node.ref);
-  //Scene is the name of the object3d of the model as given by the gltfLoader
-  const animationList = object?.getObjectByName(animationObjectKey);
+  const animationObject3D = object?.getObjectByName(animationObjectKey);
   const [selectedAnimations, setSelectedAnimations] = useState<string[] | undefined>();
+  const animationPanelList = useRef<string[]>([]); // '' on end for next animation
 
   const animationOptions = useMemo(
     () =>
-      animationList?.animations.map((animation) => ({
+      animationObject3D?.animations.map((animation) => ({
         value: animation.name,
       })),
-    [animationList],
+    [animationObject3D],
   );
 
   const updateAnimations = useCallback(
-    (animation, i) => {
+    (animation: string, i: number) => {
       if (selectedAnimations) {
         const currentAnimations = [...selectedAnimations];
         currentAnimations[i] = animation;
         setSelectedAnimations(currentAnimations);
+        animationPanelList.current = [...currentAnimations, ''];
       }
     },
     [selectedAnimations],
   );
 
   const removeAnimation = useCallback(
-    (i) => {
+    (i: number) => {
       if (selectedAnimations) {
         const currentAnimations = [...selectedAnimations];
         currentAnimations.splice(i, 1);
         setSelectedAnimations(currentAnimations);
+        animationPanelList.current = [...currentAnimations, ''];
       }
     },
     [selectedAnimations],
   );
-  useEffect(() => {
-    const currentAnimations: string[] = [...animationComponent.currentAnimations] || [];
-    if (animationComponent.selector) {
-      if (animationComponent.selector > panelnumber) {
-        for (let i = panelnumber; i < animationComponent.selector; i++) {
-          currentAnimations.push('');
-          setPanelNumber(panelnumber + 1);
-        }
-      }
-    }
-    setSelectedAnimations(currentAnimations);
-  }, [node.ref, animationComponent.selector]);
 
   useEffect(() => {
-    if (selectedAnimations) {
+    const currentAnimations: string[] = [...animationComponent.currentAnimations] || [];
+    setSelectedAnimations(currentAnimations);
+    animationPanelList.current = [...currentAnimations, ''];
+  }, [node.ref]);
+
+  useEffect(() => {
+    if (selectedAnimations && selectedAnimations != animationComponent.currentAnimations) {
       onUpdate(selectedAnimations, node.ref, animationComponent);
     }
   }, [selectedAnimations]);
 
   return (
     <SpaceBetween size='xs'>
-      {selectedAnimations?.map((animation, i) => (
-        <FormField label={formatMessage({ defaultMessage: 'Choose Animations', description: 'FormField label' })}>
-          <Button variant='link' data-testid={'removeButton' + i} onClick={() => removeAnimation(i)}>
-            {formatMessage({
-              defaultMessage: 'remove',
-              description: 'label for the remove animation button',
-            })}
-          </Button>
+      {animationPanelList.current.map((animation, i) => (
+        <FormField
+          key={`${i}-formField`}
+          label={formatMessage({ defaultMessage: 'Choose Animations', description: 'FormField label' })}
+        >
+          {!!animation && (
+            <Button
+              key={`${i}-remove`}
+              variant='link'
+              data-testid={'removeButton' + i}
+              onClick={() => removeAnimation(i)}
+            >
+              {formatMessage({
+                defaultMessage: 'remove',
+                description: 'label for the remove animation button',
+              })}
+            </Button>
+          )}
           <Autosuggest
-            key={i}
+            key={`${i}-suggest`}
             onChange={({ detail }) => updateAnimations(detail.value, i)}
             value={animation}
             options={animationOptions}

@@ -50,32 +50,6 @@ exports[`AnimationViewStateEditor should update the correct animations and rende
       label="Choose Animations"
     >
       <div
-        data-mocked="Button"
-        data-testid="removeButton2"
-        variant="link"
-      >
-        remove
-      </div>
-      <div
-        arialabel="Autosuggest example with suggestions"
-        data-mocked="Autosuggest"
-        empty="No matches found"
-        placeholder="Enter Value"
-        value=""
-      />
-    </div>
-    <div
-      data-mocked="FormField"
-      label="Choose Animations"
-    >
-      <div
-        data-mocked="Button"
-        data-testid="removeButton3"
-        variant="link"
-      >
-        remove
-      </div>
-      <div
         arialabel="Autosuggest example with suggestions"
         data-mocked="Autosuggest"
         empty="No matches found"

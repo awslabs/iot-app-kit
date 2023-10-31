@@ -420,9 +420,8 @@ function createAnimationRefComponent(
   component: Component.Animation,
   _errorCollector?: ISerializationErrorDetails[],
 ): IAnimationComponentInternal | undefined {
-  const { selector, currentAnimations, uri, ...compProps } = component;
+  const { currentAnimations, uri, ...compProps } = component;
   return {
-    selector,
     ref: generateUUID(),
     currentAnimations,
     uri,

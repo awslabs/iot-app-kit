@@ -7,11 +7,12 @@ import { getGlobalSettings } from '../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
-import { IDataOverlayComponentInternal, useStore } from '../../store';
+import { IDataOverlayComponentInternal, IModelRefComponentInternal, useStore, useEditorState } from '../../store';
 import { IEntityBindingComponentInternal, IAnimationComponentInternal } from '../../store/internalInterfaces';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { ToolbarItem } from '../toolbars/common/ToolbarItem';
 import { ToolbarItemOptionRaw, ToolbarItemOptions } from '../toolbars/common/types';
+import { animationObjectKey } from '../three-fiber/AnimationComponent/AnimationComponent';
 
 interface AddComponentMenuProps {
   onSelect?: (selectedObject: ObjectTypes) => void;
@@ -50,10 +51,11 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
   const { formatMessage } = useIntl();
   const selectedSceneNode = getSceneNodeByRef(selectedSceneNodeRef);
   const AnimationComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Animations];
-  const animationComponent = findComponentByType(
-    selectedSceneNode,
-    KnownComponentType.Animation,
-  ) as IAnimationComponentInternal;
+  const { getObject3DBySceneNodeRef } = useEditorState(sceneComposerId);
+
+  const object3D = selectedSceneNode ? getObject3DBySceneNodeRef(selectedSceneNode.ref) : undefined;
+  const animationObject3D = object3D?.getObjectByName(animationObjectKey);
+  const canAnimate = animationObject3D ? animationObject3D?.animations.length > 0 : false;
 
   const isTagComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.Tag);
   const isOverlayComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.DataOverlay);
@@ -89,14 +91,15 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
         isDisabled: isEntityBindingComponent,
       },
     ];
-    const addAnimationItem = AnimationComponentEnabled
-      ? [
-          {
-            uuid: ObjectTypes.Animations,
-            isDisabled: false,
-          },
-        ]
-      : [];
+    const addAnimationItem =
+      AnimationComponentEnabled && canAnimate && !isAnimationComponent
+        ? [
+            {
+              uuid: ObjectTypes.Animations,
+              isDisabled: false,
+            },
+          ]
+        : [];
     return [
       {
         icon: { name: 'add-plus' as IconProps.Name },
@@ -113,6 +116,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
     isTagComponent,
     isAnimationComponent,
     AnimationComponentEnabled,
+    canAnimate,
   ]);
 
   const handleAddOverlay = useCallback(() => {
@@ -156,10 +160,16 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
   const handleAddAnimations = useCallback(() => {
     if (!selectedSceneNodeRef) return;
 
-    let selector = animationComponent.selector || 0;
-    selector = selector + 1;
-    const updatedComponent = { ...animationComponent, selector };
-    updateComponentInternal(selectedSceneNodeRef, updatedComponent);
+    const modelRefComponent = findComponentByType(selectedSceneNode, KnownComponentType.ModelRef);
+    if (modelRefComponent) {
+      const animationComponent: IAnimationComponentInternal = {
+        ref: THREE.MathUtils.generateUUID(),
+        currentAnimations: [],
+        type: KnownComponentType.Animation,
+        uri: (modelRefComponent as IModelRefComponentInternal).uri,
+      };
+      addComponentInternal(selectedSceneNodeRef, animationComponent);
+    }
   }, [selectedSceneNodeRef, selectedSceneNode]);
 
   return addComponentMenuItems.length > 1 ? (

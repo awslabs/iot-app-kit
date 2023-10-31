@@ -10,12 +10,17 @@ exports[`AnimationComponentEditor should render as expected 1`] = `
       label="Choose Animations"
     >
       <div
-        data-mocked="Button"
-        data-testid="removeButton0"
-        variant="link"
-      >
-        remove
-      </div>
+        arialabel="Autosuggest example with suggestions"
+        data-mocked="Autosuggest"
+        empty="No matches found"
+        placeholder="Enter Value"
+        value=""
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Choose Animations"
+    >
       <div
         arialabel="Autosuggest example with suggestions"
         data-mocked="Autosuggest"

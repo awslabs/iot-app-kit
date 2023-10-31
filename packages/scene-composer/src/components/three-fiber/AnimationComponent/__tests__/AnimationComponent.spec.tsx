@@ -48,7 +48,7 @@ describe('toggleIsAnimationPaused', () => {
 
 const mockNode = {
   ref: 'ce7802dd-477e-4bae-b787-374aea3fce77',
-  name: 'AIMIMATED_MIXER',
+  name: 'ANIMATED_MIXER',
   transform: {
     position: [-0.2548017433916856, 0.1565180250896893, 1.9222755178165505],
     rotation: [0, 0, 0],
@@ -60,14 +60,14 @@ const mockNode = {
     {
       ref: 'f7bdb4b0-8627-4c83-825e-bace9874bc08',
       type: 'ModelRef',
-      uri: 'AIMIMATED_MIXER.gltf',
+      uri: 'ANIMATED_MIXER.gltf',
       modelType: 'GLTF',
     },
     {
       selector: 1,
       ref: 'a2159735-991c-41da-a217-c39445a47b46',
       currentAnimations: ['Action.018'],
-      uri: 'AIMIMATED_MIXER.gltf',
+      uri: 'ANIMATED_MIXER.gltf',
       type: 'Animation',
     },
   ],
