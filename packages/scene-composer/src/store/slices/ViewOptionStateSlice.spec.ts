@@ -90,11 +90,16 @@ describe('createViewOptionStateSlice', () => {
     const set = jest.fn((callback) => callback(draft));
 
     const { setTagSettings } = createViewOptionStateSlice(set);
-    setTagSettings({ scale: 3.3, autoRescale: true });
+    setTagSettings({
+      scale: 3.3,
+      autoRescale: true,
+      enableOcclusion: false,
+    });
 
     expect(draft.lastOperation!).toEqual('setTagSettings');
     expect((draft.noHistoryStates.tagSettings as ITagSettings).scale).toEqual(3.3);
     expect((draft.noHistoryStates.tagSettings as ITagSettings).autoRescale).toBeTruthy();
+    expect((draft.noHistoryStates.tagSettings as ITagSettings).enableOcclusion).toBeFalsy();
   });
 
   it('should be able to set viewport', () => {

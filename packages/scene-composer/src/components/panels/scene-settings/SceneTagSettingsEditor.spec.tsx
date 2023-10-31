@@ -31,6 +31,7 @@ describe('SceneTagSettingsEditor', () => {
     isViewing: isViewingMock,
     noHistoryStates: {
       ...useStore('default').getState().noHistoryStates,
+      tagSettings: DEFAULT_TAG_GLOBAL_SETTINGS,
       setTagSettings: setTagSettingsMock,
     },
   };
@@ -224,6 +225,58 @@ describe('SceneTagSettingsEditor', () => {
     expect(setTagSettingsMock).toBeCalledWith({
       ...DEFAULT_TAG_GLOBAL_SETTINGS,
       scale: 3,
+    });
+  });
+
+  describe('Show tag through objects - enableOcclusion', () => {
+    it('should update view option with document settings', () => {
+      useStore('default').setState(baseState);
+      render(<SceneTagSettingsEditor />);
+
+      expect(baseState.noHistoryStates.tagSettings?.enableOcclusion).toBeFalsy();
+    });
+
+    it('should update tag settings when toggled', () => {
+      useStore('default').setState(baseState);
+      const { container } = render(<SceneTagSettingsEditor />);
+      const polarisWrapper = wrapper(container);
+      const toggle = polarisWrapper.findToggle();
+
+      expect(toggle).not.toBeNull();
+      expect(baseState.noHistoryStates.tagSettings?.enableOcclusion).toBeFalsy();
+
+      act(() => {
+        toggle!.findNativeInput().click();
+      });
+
+      expect(setScenePropertyMock).toBeCalledTimes(1);
+      expect(setTagSettingsMock).toBeCalledTimes(1);
+      expect(setTagSettingsMock).toBeCalledWith({
+        ...DEFAULT_TAG_GLOBAL_SETTINGS,
+        enableOcclusion: true,
+      });
+    });
+
+    it('should not update scene property when toggled in viewing mode', () => {
+      useStore('default').setState(baseState);
+      isViewingMock.mockReturnValue(true);
+      const { container } = render(<SceneTagSettingsEditor />);
+      const polarisWrapper = wrapper(container);
+      const toggle = polarisWrapper.findToggle();
+
+      expect(toggle).not.toBeNull();
+      expect(baseState.noHistoryStates.tagSettings?.enableOcclusion).toBeFalsy();
+
+      act(() => {
+        toggle!.findNativeInput().click();
+      });
+
+      expect(setScenePropertyMock).not.toBeCalled();
+      expect(setTagSettingsMock).toBeCalledTimes(1);
+      expect(setTagSettingsMock).toBeCalledWith({
+        ...DEFAULT_TAG_GLOBAL_SETTINGS,
+        enableOcclusion: true,
+      });
     });
   });
 });

@@ -3,6 +3,7 @@ import { KnownComponentType } from './components';
 export interface ITagSettings {
   scale: number;
   autoRescale: boolean;
+  enableOcclusion: boolean;
 }
 
 export interface IOverlaySettings {
