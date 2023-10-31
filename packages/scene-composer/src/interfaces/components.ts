@@ -52,7 +52,6 @@ export interface IAnchorComponent extends ISceneComponent {
 }
 
 export interface IAnimationComponent extends ISceneComponent {
-  selector?: number;
   uri: string;
   currentAnimations: string[];
 }

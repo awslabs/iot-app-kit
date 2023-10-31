@@ -37,6 +37,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
   const matterportEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Matterport];
   const overlayEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Overlay];
   const sceneAppearanceEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SceneAppearance];
+  const animationComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Animations];
   const dynamicSceneEnabled = useDynamicScene();
 
   const selectedEnvPreset = useStore(sceneComposerId)((state) =>
@@ -117,11 +118,15 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
             </Box>
           }
         >
-          <ComponentVisibilityToggle
-            componentType={KnownComponentType.Animation}
-            label={intl.formatMessage(visibilityToggleLabels[KnownComponentType.Animation])}
-          />
-          <Divider />
+          {animationComponentEnabled && (
+            <>
+              <ComponentVisibilityToggle
+                componentType={KnownComponentType.Animation}
+                label={intl.formatMessage(visibilityToggleLabels[KnownComponentType.Animation])}
+              />
+              <Divider />
+            </>
+          )}
           <ComponentVisibilityToggle
             componentType={KnownComponentType.MotionIndicator}
             label={intl.formatMessage(visibilityToggleLabels[KnownComponentType.MotionIndicator])}

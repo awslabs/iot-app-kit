@@ -152,7 +152,6 @@ export namespace Component {
   }
 
   export interface Animation extends IComponent {
-    selector?: number;
     uri: string;
     currentAnimations: string[];
   }

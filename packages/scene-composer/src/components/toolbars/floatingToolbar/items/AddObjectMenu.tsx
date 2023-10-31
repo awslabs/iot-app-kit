@@ -8,7 +8,6 @@ import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../common/constants';
 import {
   COMPOSER_FEATURES,
   IAnchorComponent,
-  IAnimationComponent,
   ICameraComponent,
   IDataOverlayComponent,
   ILightComponent,
@@ -288,17 +287,9 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
           uri: modelUri,
           modelType: modelType ?? ext.toUpperCase(),
         };
-        let animationComponent: IAnimationComponent | undefined = undefined;
-        if (ext.toUpperCase() == 'GLTF' && KnownComponentType.Animation) {
-          animationComponent = {
-            currentAnimations: [],
-            type: 'Animation',
-            uri: modelUri,
-          };
-        }
         const node = {
           name: filename,
-          components: animationComponent ? [gltfComponent, animationComponent] : [gltfComponent],
+          components: [gltfComponent],
           parentRef: mustBeRoot ? undefined : getRefForParenting(),
         } as unknown as ISceneNodeInternal;
         if (enhancedEditingEnabled && !modelType) {
