@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { Checkbox, FormField, Grid, Input } from '@awsui/components-react';
+import { Checkbox, FormField, Grid, Input, SpaceBetween, Toggle } from '@awsui/components-react';
 
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { useStore, useViewOptionState } from '../../../store';
@@ -96,45 +96,55 @@ export const SceneTagSettingsEditor: React.FC = () => {
 
   return (
     <React.Fragment>
-      <FormField label={intl.formatMessage({ defaultMessage: 'Scale', description: 'Form Field label' })}>
-        <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
-          <Input
-            value={String(internalScale)}
-            type='number'
-            onFocus={() => setFocusInput(true)}
-            onBlur={onInputBlur}
-            onChange={onInputChange}
-          />
-          <Checkbox
-            checked={tagSettings.autoRescale}
-            onChange={(e) => updateSettings({ autoRescale: e.detail.checked })}
-          >
-            {intl.formatMessage({ defaultMessage: 'Fixed scaling', description: 'checkbox label' })}
-          </Checkbox>
-        </Grid>
+      <SpaceBetween size='s'>
+        <FormField label={intl.formatMessage({ defaultMessage: 'Scale', description: 'Form Field label' })}>
+          <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
+            <Input
+              value={String(internalScale)}
+              type='number'
+              onFocus={() => setFocusInput(true)}
+              onBlur={onInputBlur}
+              onChange={onInputChange}
+            />
+            <Checkbox
+              checked={tagSettings.autoRescale}
+              onChange={(e) => updateSettings({ autoRescale: e.detail.checked })}
+            >
+              {intl.formatMessage({ defaultMessage: 'Fixed scaling', description: 'checkbox label' })}
+            </Checkbox>
+          </Grid>
 
-        {(focusInput || focusSlider) && (
-          <Slider
-            value={internalScale}
-            step={0.1}
-            min='0'
-            max='10'
-            onFocus={() => {
-              setFocusSlider(true);
-            }}
-            onBlur={() => {
-              setFocusSlider(false);
-            }}
-            onMouseUp={() => {
-              setDraggingSlider(false);
-            }}
-            onMouseDown={() => {
-              setDraggingSlider(true);
-            }}
-            onChange={onSliderChange}
-          />
-        )}
-      </FormField>
+          {(focusInput || focusSlider) && (
+            <Slider
+              value={internalScale}
+              step={0.1}
+              min='0'
+              max='10'
+              onFocus={() => {
+                setFocusSlider(true);
+              }}
+              onBlur={() => {
+                setFocusSlider(false);
+              }}
+              onMouseUp={() => {
+                setDraggingSlider(false);
+              }}
+              onMouseDown={() => {
+                setDraggingSlider(true);
+              }}
+              onChange={onSliderChange}
+            />
+          )}
+        </FormField>
+        <Toggle
+          checked={!tagSettings.enableOcclusion}
+          onChange={(event) => {
+            updateSettings({ enableOcclusion: !event.detail.checked });
+          }}
+        >
+          {intl.formatMessage({ description: 'Toggle label', defaultMessage: 'Show tag through objects' })}
+        </Toggle>
+      </SpaceBetween>
     </React.Fragment>
   );
 };

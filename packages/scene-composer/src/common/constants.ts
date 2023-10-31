@@ -131,6 +131,7 @@ export const DRACO_PATH = 'https://www.gstatic.com/draco/versioned/decoders/1.4.
 export const DEFAULT_TAG_GLOBAL_SETTINGS: ITagSettings = {
   autoRescale: false,
   scale: 1,
+  enableOcclusion: false,
 };
 
 export const DEFAULT_OVERLAY_GLOBAL_SETTINGS: IOverlaySettings = {

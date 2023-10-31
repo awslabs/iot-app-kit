@@ -82,8 +82,8 @@ export const OverlayPanelVisibilityToggle: React.FC = () => {
       <Toggle
         disabled={!hasOverlayPanel}
         checked={!!documentSettings.overlayPanelVisible}
-        onChange={() => {
-          updateSettings(!documentSettings.overlayPanelVisible);
+        onChange={(event) => {
+          updateSettings(event.detail.checked);
         }}
       >
         {formatMessage({ description: 'Toggle label', defaultMessage: 'Always on' })}

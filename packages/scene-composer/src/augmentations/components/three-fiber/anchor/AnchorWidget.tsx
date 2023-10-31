@@ -168,7 +168,8 @@ export function AsyncLoadedAnchorWidget({
     ];
 
     const isAlwaysVisible =
-      (node.properties.alwaysVisible === undefined ? true : node.properties.alwaysVisible) === true;
+      (node.properties.alwaysVisible === undefined ? !tagSettings.enableOcclusion : node.properties.alwaysVisible) ===
+      true;
     const iconStrings = [
       SelectedIconSvgString,
       InfoIconSvgString,
@@ -192,7 +193,14 @@ export function AsyncLoadedAnchorWidget({
       }
       return svgIconToWidgetSprite(iconString, iconStyle, iconStyle, isAlwaysVisible, !autoRescale);
     });
-  }, [autoRescale, CustomIconSvgString, visualRuleCustomColor, visualCustomIcon, newCustomIcon]);
+  }, [
+    autoRescale,
+    CustomIconSvgString,
+    visualRuleCustomColor,
+    visualCustomIcon,
+    newCustomIcon,
+    tagSettings.enableOcclusion,
+  ]);
 
   const isAnchor = (nodeRef?: string) => {
     const node = getSceneNodeByRef(nodeRef);
