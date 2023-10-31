@@ -4,6 +4,7 @@ import TextIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';
 import type { TextWidget } from '../types';
 import WidgetTile from '~/components/widgets/tile/tile';
+import { TEXT_WIDGET_INITIAL_HEIGHT, TEXT_WIDGET_INITIAL_WIDTH } from '../constants';
 
 export const textPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
@@ -21,8 +22,8 @@ export const textPlugin: DashboardPlugin = {
         value: '',
       }),
       initialSize: {
-        height: 50,
-        width: 150,
+        height: TEXT_WIDGET_INITIAL_HEIGHT,
+        width: TEXT_WIDGET_INITIAL_WIDTH,
       },
     });
   },
