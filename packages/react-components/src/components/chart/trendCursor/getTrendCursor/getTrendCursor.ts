@@ -22,6 +22,7 @@ export const getNewTrendCursor = ({
   timestamp,
   chartRef,
   visualization,
+  significantDigits,
 }: GetNewTrendCursorProps) => {
   const posX = e?.offsetX ?? x ?? 0;
   const uId = tcId ? tcId.split('trendCursor-')[1] : uuid();
@@ -32,7 +33,8 @@ export const getNewTrendCursor = ({
     series,
     timestampInMs,
     chartRef,
-    visualization
+    visualization,
+    significantDigits
   );
 
   // this check makes sure that the chart lines are rendered first and only then we render the TC markers

@@ -1,21 +1,16 @@
-import { SizeConfig, ViewportInMs, Visualization } from '../../types';
-import { Dispatch, MutableRefObject, SetStateAction, useRef } from 'react';
+import { SizeConfig, ViewportInMs } from '../../types';
+import { useRef } from 'react';
 import { calculateXFromTimestamp } from '../calculations/calculations';
 import { DEFAULT_MARGIN } from '../../eChartsConstants';
-import { ECharts, SeriesOption } from 'echarts';
-import { InternalGraphicComponentGroupOption } from '../types';
+import { handleChangeProps } from '../types';
 
 import { updateTrendCursorLineMarkers } from '../getTrendCursor/components/markers';
 import { calculateSeriesMakers } from '../calculations/calculateSeriesMakers';
+import { delayedRender } from '../../utils/useDelayedRender';
 
-interface handleViewportProps {
-  graphic: InternalGraphicComponentGroupOption[];
-  setGraphic: Dispatch<SetStateAction<InternalGraphicComponentGroupOption[]>>;
+interface handleViewportProps extends handleChangeProps {
   viewportInMs: ViewportInMs;
   size: SizeConfig;
-  series: SeriesOption[];
-  chartRef: MutableRefObject<ECharts | null>;
-  visualization: Visualization;
 }
 export const useHandleViewport = ({
   graphic,
@@ -25,6 +20,7 @@ export const useHandleViewport = ({
   chartRef,
   visualization,
   size,
+  significantDigits,
 }: handleViewportProps) => {
   const xAxisViewportInMsMinRef = useRef(viewportInMs.initial);
   const xAxisViewportInMsMaxRef = useRef(viewportInMs.end);
@@ -33,36 +29,39 @@ export const useHandleViewport = ({
     viewportInMs.end !== xAxisViewportInMsMaxRef.current ||
     viewportInMs.initial !== xAxisViewportInMsMinRef.current
   ) {
-    const newG = graphic.map((g) => {
-      // disabled during dragging, transition will be an empty array when user is dragging
+    const update = () => {
+      const newG = graphic.map((g) => {
+        // disabled during dragging, transition will be an empty array when user is dragging
 
-      const x = calculateXFromTimestamp(g.timestampInMs, chartRef);
+        const x = calculateXFromTimestamp(g.timestampInMs, chartRef);
 
-      if (x < DEFAULT_MARGIN || x > size.width - DEFAULT_MARGIN) {
-        // hiding the TC when it's beyond the viewport
-        g.ignore = true;
-      } else {
-        g.ignore = false;
-        // update the markers because the y value may scale as the input value changes
-        if (viewportInMs.isDurationViewport) {
+        if (x < DEFAULT_MARGIN || x > size.width - DEFAULT_MARGIN) {
+          // hiding the TC when it's beyond the viewport
+          g.ignore = true;
+        } else {
+          g.ignore = false;
+
           const { trendCursorsSeriesMakersValue, trendCursorsSeriesMakersInPixels } = calculateSeriesMakers(
             series,
             g.timestampInMs,
             chartRef,
-            visualization
+            visualization,
+            significantDigits
           );
           g.yAxisMarkerValue = trendCursorsSeriesMakersValue;
           g.children = updateTrendCursorLineMarkers(g.children, trendCursorsSeriesMakersInPixels);
+
+          // update the X in any case
+          g.x = x;
         }
+        return g;
+      });
+      setGraphic(newG);
+    };
 
-        // update the X in any case
-        g.x = x;
-      }
-      return g;
-    });
-
-    setGraphic(newG);
+    delayedRender({ updateFunction: update });
   }
+
   xAxisViewportInMsMinRef.current = viewportInMs.initial;
   xAxisViewportInMsMaxRef.current = viewportInMs.end;
 };
