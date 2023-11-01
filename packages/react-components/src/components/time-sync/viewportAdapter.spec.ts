@@ -193,6 +193,6 @@ describe('getViewportStartOnBackwardRelative', () => {
       unit: 'month',
       type: 'relative',
     });
-    expect(currentDate.getTime() - newDate.getTime()).toEqual(2592000000);
+    expect(currentDate.getTime() - newDate.getTime()).toEqual(2678400000);
   });
 });

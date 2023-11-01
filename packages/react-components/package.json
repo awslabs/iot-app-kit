@@ -94,6 +94,9 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
+    "@cloudscape-design/collection-hooks": "1.0.22",
+    "@cloudscape-design/components": "3.0.415",
+    "@cloudscape-design/design-tokens": "3.0.15",
     "@iot-app-kit/charts": "^2.1.1",
     "@iot-app-kit/charts-core": "^2.1.1",
     "@iot-app-kit/components": "9.4.0",
