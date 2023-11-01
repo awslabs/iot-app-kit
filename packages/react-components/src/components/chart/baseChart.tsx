@@ -102,6 +102,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     groupId: group,
     onContextMenu: handleContextMenu,
     visualization: options.defaultVisualizationType ?? DEFAULT_CHART_VISUALIZATION,
+    significantDigits: options.significantDigits,
     yAxisOptions: {
       yAxis,
       yMins,
@@ -145,7 +146,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
       yAxis,
       xAxis,
       graphic: trendCursors,
-      animation: false,
+      animation: !viewportInMs.isDurationViewport,
     },
     settings
   );

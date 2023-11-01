@@ -23,6 +23,7 @@ const useTrendCursorsEvents = ({
   groupId,
   onContextMenu,
   visualization,
+  significantDigits,
 }: UseEventsProps) => {
   // sync mode actions
   const addTrendCursorsToSyncState = useDataStore((state) => state.addTrendCursors);
@@ -37,9 +38,7 @@ const useTrendCursorsEvents = ({
   const setGraphicRef = useRef(setGraphic);
   const onContextMenuRef = useRef(onContextMenu);
   const visualizationRef = useRef(visualization);
-
-  const seriesDep = JSON.stringify(series);
-  const graphicDep = JSON.stringify(graphic);
+  const significantDigitsRef = useRef(significantDigits);
 
   // these properties will be updated in every render so that the event handlers below is not re-rendered everytime
   useEffect(() => {
@@ -50,9 +49,8 @@ const useTrendCursorsEvents = ({
     sizeRef.current = size;
     setGraphicRef.current = setGraphic;
     visualizationRef.current = visualization;
-    // disabling because graphics and series are stringified
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [seriesDep, size, isInCursorAddMode, setGraphic, isInSyncMode, graphicDep, visualization]);
+    significantDigitsRef.current = significantDigits;
+  }, [size, isInCursorAddMode, setGraphic, isInSyncMode, visualization, significantDigits, series, graphic]);
 
   // shared add function between the context menu and on click action
   const addNewTrendCursor = useCallback(
@@ -72,7 +70,8 @@ const useTrendCursorsEvents = ({
             series: seriesRef.current,
             x: posX,
             chartRef,
-            visualization,
+            visualization: visualizationRef.current,
+            significantDigits: significantDigitsRef.current,
           });
 
           if (newTc) {
@@ -81,9 +80,7 @@ const useTrendCursorsEvents = ({
         }
       }
     },
-    // ignoring because refs dont need to be in dependency array
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [groupId, visualization, addTrendCursorsToSyncState]
+    [chartRef, addTrendCursorsToSyncState, groupId]
   );
 
   // shared delete function between the context menu and on click actions
@@ -102,9 +99,7 @@ const useTrendCursorsEvents = ({
         setGraphicRef.current([...graphicRef.current]);
       }
     },
-    // ignoring because refs dont need to be in dependency array
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [groupId, deleteTrendCursorsInSyncState]
+    [deleteTrendCursorsInSyncState, groupId, chartRef]
   );
   const deleteTrendCursorByPosition = (clickedPosX: number) => {
     const timestampOfClick = calculateTimeStamp(clickedPosX, chartRef);
@@ -117,9 +112,7 @@ const useTrendCursorsEvents = ({
   useEffect(() => {
     const currentChart = chartRef.current;
 
-    // passing the function so that we can remove this specific behavior on re-render
     const mouseMoveEventHandler = () => mouseoverHandler(isInCursorAddModeRef.current, chartRef);
-    currentChart?.getZr().on('mousemove', mouseMoveEventHandler);
 
     // this handles all the clicks on the chart
     // this click would be either
@@ -138,13 +131,11 @@ const useTrendCursorsEvents = ({
       }
     };
 
-    currentChart?.getZr().on('click', clickEventHandler);
-
     // this is the ondrag handler of the trend cursor
     const dragEventHandler = (event: ElementEvent) => {
       // update user feedback
       event.stop();
-      currentChart?.getZr().setCursorStyle('grabbing');
+      chartRef.current?.getZr().setCursorStyle('grabbing');
 
       let graphicIndex = graphicRef.current.findIndex((g) => g.children[0].id === event.target.id);
 
@@ -177,13 +168,9 @@ const useTrendCursorsEvents = ({
       }
     };
 
-    currentChart?.getZr().on('drag', dragEventHandler);
-
     const contextMenuEventHandler = (event: ElementEvent) => {
       onContextMenuRef.current(event);
     };
-
-    currentChart?.getZr().on('contextmenu', contextMenuEventHandler);
 
     // Calculating delta in pixels between the initial interaction point vs the position of TC line
     // we need this to avoid snapping the TC line to the center of the point of the mouse's X
@@ -205,6 +192,11 @@ const useTrendCursorsEvents = ({
       setGraphicRef.current([...graphicRef.current]);
     };
 
+    // passing the function so that we can remove this specific behavior on re-render
+    currentChart?.getZr().on('click', clickEventHandler);
+    currentChart?.getZr().on('mousemove', mouseMoveEventHandler);
+    currentChart?.getZr().on('drag', dragEventHandler);
+    currentChart?.getZr().on('contextmenu', contextMenuEventHandler);
     currentChart?.getZr().on('dragstart', dragStartEventHandler);
 
     return () => {
@@ -215,9 +207,7 @@ const useTrendCursorsEvents = ({
       currentChart?.getZr()?.off('contextmenu', contextMenuEventHandler);
       currentChart?.getZr()?.off('dragstart', dragStartEventHandler);
     };
-    // ignoring because refs dont need to be in dependency array
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addNewTrendCursor, deleteTrendCursor, groupId, updateTrendCursorsInSyncState]);
+  }, [addNewTrendCursor, deleteTrendCursor, groupId, updateTrendCursorsInSyncState, chartRef]);
 
   const copyTrendCursorData = (posX: number) => {
     const timestampOfClick = calculateTimeStamp(posX, chartRef);

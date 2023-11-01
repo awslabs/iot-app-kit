@@ -1,7 +1,5 @@
-import { Visualization } from '../../types';
-import { InternalGraphicComponentGroupOption } from '../types';
-import { Dispatch, MutableRefObject, SetStateAction, useEffect, useRef } from 'react';
-import { ECharts, SeriesOption } from 'echarts';
+import { handleChangeProps } from '../types';
+import { useEffect, useRef } from 'react';
 import { calculateSeriesMakers } from '../calculations/calculateSeriesMakers';
 import { upsertTrendCursorLineMarkers } from '../getTrendCursor/components/markers';
 import { delayedRender } from '../../utils/useDelayedRender';
@@ -12,22 +10,19 @@ export const useHandleSeries = ({
   chartRef,
   visualization,
   series,
-}: {
-  graphic: InternalGraphicComponentGroupOption[];
-  setGraphic: Dispatch<SetStateAction<InternalGraphicComponentGroupOption[]>>;
-  chartRef: MutableRefObject<ECharts | null>;
-  visualization: Visualization;
-  series: SeriesOption[];
-}) => {
+  significantDigits,
+}: handleChangeProps) => {
   const seriesRef = useRef(series);
   const visualizationRef = useRef(visualization);
   const graphicRef = useRef(graphic);
+  const significantDigitsRef = useRef(significantDigits);
 
   useEffect(() => {
     graphicRef.current = graphic;
     visualizationRef.current = visualization;
     seriesRef.current = series;
-  }, [graphic, visualization, series]);
+    significantDigitsRef.current = significantDigits;
+  }, [graphic, visualization, series, significantDigits]);
 
   useEffect(() => {
     const update = () => {
@@ -36,7 +31,8 @@ export const useHandleSeries = ({
           seriesRef.current,
           g.timestampInMs,
           chartRef,
-          visualizationRef.current
+          visualizationRef.current,
+          significantDigitsRef.current
         );
 
         g.yAxisMarkerValue = trendCursorsSeriesMakersValue;
