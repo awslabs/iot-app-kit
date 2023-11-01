@@ -117,28 +117,7 @@ const convertAxis = (axis: ChartAxisOptions | undefined) => ({
   yMax: axis?.yMax,
 });
 
-const removeHiddenDataStreams = (widget: LineScatterChartWidget): LineScatterChartWidget => ({
-  ...widget,
-  properties: {
-    ...widget.properties,
-    queryConfig: {
-      ...widget.properties.queryConfig,
-      query: {
-        assets:
-          widget.properties.queryConfig?.query?.assets?.map((asset) => ({
-            ...asset,
-            properties: asset.properties.filter((property) => {
-              return property.visible !== false;
-            }),
-          })) || [],
-        properties: widget.properties.queryConfig?.query?.properties?.filter((property) => property.visible !== false),
-      },
-    },
-  },
-});
-
 const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widget) => {
-  const widgetToDisplay = removeHiddenDataStreams(widget);
   const { viewport } = useViewport();
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const chartSize = useChartSize(widget);
@@ -153,26 +132,13 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
     symbol,
     legend,
     significantDigits: widgetSignificantDigits,
-  } = widgetToDisplay.properties;
+  } = widget.properties;
 
   const query = queryConfig.query;
-  const filteredQuery = {
-    ...query,
-    assets:
-      query?.assets
-        ?.map((asset) => {
-          const { assetId, properties } = asset;
-          return {
-            assetId,
-            properties: properties.filter((p) => p.visible ?? true),
-          };
-        })
-        .filter((asset) => asset.properties.length > 0) ?? [],
-  };
 
-  const queries = useQueries(filteredQuery);
+  const queries = useQueries(query);
 
-  const styleSettings = useAdaptedStyleSettings({ line, symbol }, filteredQuery);
+  const styleSettings = useAdaptedStyleSettings({ line, symbol }, query);
 
   const aggregation = getAggregation(widget);
 
