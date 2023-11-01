@@ -62,18 +62,18 @@ export const useViewportData = ({
         );
 
         const flatDataPoint: CSVDownloadObject = {
-          id,
+          assetName: describedAssetsMap[assetPropId[0]]?.assetName,
+          propertyName: describedModelProperty?.name,
+          propertyAlias: isUnmodeledData ? id : describedModelProperty?.alias,
           value: yValue,
           unit,
-          timestamp: formatDate(new Date(xValue)),
-          aggregationType,
+          timestamp: new Date(xValue).toISOString(),
+          aggregationType: aggregationType,
           resolution,
+          dataType: describedModelProperty?.dataType,
+          dataQuality: 'GOOD',
           assetId: !isUnmodeledData ? assetPropId[0] : undefined,
           propertyId: !isUnmodeledData ? assetPropId[1] : undefined,
-          dataType: describedModelProperty?.dataType,
-          propertyName: describedModelProperty?.name,
-          assetName: describedAssetsMap[assetPropId[0]]?.assetName,
-          propertyAlias: describedModelProperty?.alias,
         };
 
         flattenedData.push(flatDataPoint);
