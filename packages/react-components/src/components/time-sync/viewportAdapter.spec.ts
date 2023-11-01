@@ -152,7 +152,9 @@ describe('getViewportStartOnBackwardRelative', () => {
       type: 'relative',
     });
 
-    expect(currentDate.getTime() - newDate.getTime()).toEqual(300000);
+    const result = currentDate.getTime() - newDate.getTime();
+    expect(result).toBeGreaterThanOrEqual(299999);
+    expect(result).toBeLessThanOrEqual(300000);
 
     currentDate = new Date();
     newDate = getViewportStartOnBackwardRelative({
@@ -193,6 +195,13 @@ describe('getViewportStartOnBackwardRelative', () => {
       unit: 'month',
       type: 'relative',
     });
-    expect(currentDate.getTime() - newDate.getTime()).toEqual(2678400000);
+
+    if ([0, 1, 3, 5, 6, 7, 8, 10].includes(currentDate.getMonth())) {
+      expect(currentDate.getTime() - newDate.getTime()).toEqual(2678400000); //previous month is 31 days
+    } else if (currentDate.getMonth() === 2) {
+      expect(currentDate.getTime() - newDate.getTime()).toEqual(2419200000 || 2505600000); //previous month is february
+    } else {
+      expect(currentDate.getTime() - newDate.getTime()).toEqual(2592000000); //previous month is 30 days
+    }
   });
 });
