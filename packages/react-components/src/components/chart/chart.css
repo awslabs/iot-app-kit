@@ -16,7 +16,8 @@
   bottom: 5%;
   right: 0;
   cursor: ew-resize;
-  border-right: 2px solid #e9ebed;
+  background-image: url("./svg/verticalSlider.svg");
+  border-left: 2px solid #e9ebed;
 }
 
 .base-chart-element {
