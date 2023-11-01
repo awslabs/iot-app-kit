@@ -25,11 +25,13 @@ const convertValueIntoPixels = (
   chartRef: MutableRefObject<ECharts | null>,
   seriesIndex: LineSeriesOption['yAxisIndex']
 ): number => chartRef.current?.convertToPixel({ yAxisIndex: seriesIndex }, value) ?? 0;
+
 export const calculateSeriesMakers = (
   series: SeriesOption[],
   timestampInMs: number,
   chartRef: MutableRefObject<ECharts | null>,
-  visualization: Visualization
+  visualization: Visualization,
+  significantDigits?: number
 ) => {
   const trendCursorsSeriesMakersInPixels: number[] = [];
   const trendCursorsSeriesMakersValue: number[] = [];
@@ -51,7 +53,7 @@ export const calculateSeriesMakers = (
       value = handleDataValueInterpolation({ visualization, data, timestampInMs, leftIndex, rightIndex });
     }
 
-    trendCursorsSeriesMakersValue[seriesIndex] = Number(value.toFixed(DEFAULT_PRECISION));
+    trendCursorsSeriesMakersValue[seriesIndex] = Number(value.toFixed(significantDigits ?? DEFAULT_PRECISION));
     // Converting the Y axis value to pixels
 
     trendCursorsSeriesMakersInPixels[seriesIndex] = convertValueIntoPixels(
