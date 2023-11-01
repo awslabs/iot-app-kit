@@ -1,8 +1,9 @@
 import { Primitive } from '@iot-app-kit/core';
+import { Quality } from '@aws-sdk/client-iotsitewise';
 
 export type CSVDownloadObject = {
-  id: string;
   timestamp: string;
+  dataQuality: Quality;
   value?: Primitive;
   unit?: string;
   aggregationType?: string;

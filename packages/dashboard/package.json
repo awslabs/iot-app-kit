@@ -109,6 +109,7 @@
     "aws-sdk-client-mock": "^3.0.0",
     "buffer": "^6.0.3",
     "is-hotkey": "^0.2.0",
+    "papaparse": "^5.4.1",
     "parse-duration": "^1.0.3",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
