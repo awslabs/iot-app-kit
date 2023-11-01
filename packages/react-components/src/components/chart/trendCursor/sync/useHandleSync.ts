@@ -15,6 +15,7 @@ const useHandleSync = ({
   size,
   groupId,
   visualization,
+  significantDigits,
 }: UseSyncProps) => {
   const syncedTrendCursors = useDataStore((state) => state.trendCursorGroups[groupId ?? '']);
 
@@ -39,6 +40,7 @@ const useHandleSync = ({
             x: calculateXFromTimestamp(timestamp, chartRef),
             chartRef,
             visualization,
+            significantDigits,
           });
           if (newTC) {
             graphic.push(newTC);
@@ -58,6 +60,7 @@ const useHandleSync = ({
             series,
             chartRef,
             visualization,
+            significantDigits,
           });
         });
         // moved the setGraphic to per operation, given adding new tc operation needed to updated with if not undefined check
