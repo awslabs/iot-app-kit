@@ -11,16 +11,11 @@ import {
   Input,
 } from '@cloudscape-design/components';
 import { spaceStaticXxs } from '@cloudscape-design/design-tokens';
-import { ClickDetail, NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 
 import ColorPicker from '../shared/colorPicker';
 import { LineStyles, StyledAssetPropertyQuery, YAxisOptions } from '~/customization/widgets/types';
 import { getPropertyDisplay } from './getPropertyDisplay';
 import type { AssetSummary } from '~/hooks/useAssetDescriptionQueries';
-import {
-  StatusEyeHidden,
-  StatusEyeVisible,
-} from '~/customization/propertiesSections/propertiesAndAlarmsSettings/icons';
 import { Tooltip } from '@iot-app-kit/react-components/src';
 import { LineStyleDropdown } from '../components/lineStyleDropdown';
 import { LineThicknessDropdown } from '../components/lineThicknessDropdown';
@@ -165,40 +160,21 @@ export type StyledPropertyComponentProps = {
   updateStyle: (newStyles: object) => void;
   assetSummary: AssetSummary;
   property: StyledAssetPropertyQuery;
-  onHideAssetQuery: () => void;
   onDeleteAssetQuery?: () => void;
   colorable: boolean;
-  isPropertyVisible: boolean;
 };
 
 export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
   assetSummary,
   property,
   updateStyle,
-  onHideAssetQuery,
   onDeleteAssetQuery,
   colorable,
-  isPropertyVisible,
 }) => {
   const { display, label } = getPropertyDisplay(property.propertyId, assetSummary);
-  const [onMouseOver, setOnMouseOver] = useState(false);
-  const isAssetQueryVisible = !onMouseOver ? isPropertyVisible : !isPropertyVisible;
-  const propertyVisibilityIcon = isAssetQueryVisible ? StatusEyeVisible : StatusEyeHidden;
+
   const labelRef = useRef<HTMLDivElement | null>(null);
   const [isNameTruncated, setIsNameTruncated] = useState(false);
-
-  const onToggleAssetQuery: NonCancelableEventHandler<ClickDetail> = (e) => {
-    e.stopPropagation();
-    onHideAssetQuery();
-  };
-
-  const handleMouseEnter = () => {
-    setOnMouseOver(true);
-  };
-
-  const handleMouseLeave = () => {
-    setOnMouseOver(false);
-  };
 
   const resetStyles = (styleToReset: object) => {
     updateStyle(styleToReset); // as we add more sections, reset style values here
@@ -220,11 +196,6 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
           {label}
         </div>
       </Tooltip>
-      <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        <Tooltip content={onMouseOver && isPropertyVisible ? 'hide' : 'unhide'} position='top'>
-          <Button onClick={onToggleAssetQuery} variant='icon' iconSvg={propertyVisibilityIcon} />
-        </Tooltip>
-      </div>
 
       <Button onClick={onDeleteAssetQuery} variant='icon' iconName='remove' />
     </SpaceBetween>
