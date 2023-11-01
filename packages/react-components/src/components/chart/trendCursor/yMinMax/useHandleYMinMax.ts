@@ -1,9 +1,8 @@
-import { Dispatch, MutableRefObject, SetStateAction, useEffect, useRef } from 'react';
-import { InternalGraphicComponentGroupOption } from '../types';
+import { useEffect, useRef } from 'react';
+import { handleChangeProps } from '../types';
 import { YAXisOption } from 'echarts/types/dist/shared';
-import { Visualization, YAxisLegendOption } from '../../types';
+import { YAxisLegendOption } from '../../types';
 import { calculateSeriesMakers } from '../calculations/calculateSeriesMakers';
-import { ECharts, SeriesOption } from 'echarts';
 import { updateTrendCursorLineMarkers } from '../getTrendCursor/components/markers';
 import { delayedRender } from '../../utils/useDelayedRender';
 
@@ -14,28 +13,26 @@ export const useHandleYMinMax = ({
   chartRef,
   visualization,
   series,
-}: {
+  significantDigits,
+}: handleChangeProps & {
   yAxisOptions: {
     yAxis: YAXisOption[];
     yMins: YAxisLegendOption[];
     yMaxs: YAxisLegendOption[];
   };
-  graphic: InternalGraphicComponentGroupOption[];
-  setGraphic: Dispatch<SetStateAction<InternalGraphicComponentGroupOption[]>>;
-  chartRef: MutableRefObject<ECharts | null>;
-  visualization: Visualization;
-  series: SeriesOption[];
 }) => {
   const seriesRef = useRef(series);
   const visualizationRef = useRef(visualization);
   const graphicRef = useRef(graphic);
+  const significantDigitsRef = useRef(significantDigits);
   const yAxisOptionsString = JSON.stringify(yAxisOptions);
 
   useEffect(() => {
     graphicRef.current = graphic;
     visualizationRef.current = visualization;
     seriesRef.current = series;
-  }, [graphic, visualization, series]);
+    significantDigitsRef.current = significantDigits;
+  }, [graphic, visualization, series, significantDigits]);
 
   useEffect(() => {
     const update = () => {
@@ -44,7 +41,8 @@ export const useHandleYMinMax = ({
           seriesRef.current,
           g.timestampInMs,
           chartRef,
-          visualizationRef.current
+          visualizationRef.current,
+          significantDigitsRef.current
         );
         g.yAxisMarkerValue = trendCursorsSeriesMakersValue;
         g.children = updateTrendCursorLineMarkers(g.children, trendCursorsSeriesMakersInPixels);

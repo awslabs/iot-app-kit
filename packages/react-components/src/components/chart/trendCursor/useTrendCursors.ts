@@ -11,6 +11,7 @@ import { YAXisOption } from 'echarts/types/dist/shared';
 import { YAxisLegendOption } from '../types';
 import { useHandleYMinMax } from './yMinMax/useHandleYMinMax';
 import { useHandleSeries } from './series/useHandleSeries';
+import { useHandleChartOptions } from './chartOptions/handleOptions';
 import { KeyMap } from 'react-hotkeys';
 
 const useTrendCursors = ({
@@ -24,6 +25,7 @@ const useTrendCursors = ({
   initialGraphic,
   visualization,
   yAxisOptions,
+  significantDigits,
 }: UseTrendCursorsProps & {
   yAxisOptions: {
     yAxis: YAXisOption[];
@@ -52,19 +54,32 @@ const useTrendCursors = ({
     groupId,
     onContextMenu,
     visualization,
+    significantDigits,
   });
 
   // for handling the resize of chart
-  useHandleResize({ series, size, graphic, setGraphic, chartRef, visualization });
+  useHandleResize({ series, size, graphic, setGraphic, chartRef, visualization, significantDigits });
 
   // handling the trend cursor sync mode
-  useHandleSync({ chartRef, isInSyncMode, graphic, setGraphic, series, size, groupId, visualization });
+  useHandleSync({
+    chartRef,
+    isInSyncMode,
+    graphic,
+    setGraphic,
+    series,
+    size,
+    groupId,
+    visualization,
+    significantDigits,
+  });
 
-  useHandleViewport({ graphic, setGraphic, viewportInMs, size, series, chartRef, visualization });
+  useHandleViewport({ graphic, setGraphic, chartRef, series, visualization, significantDigits, viewportInMs, size });
 
-  useHandleYMinMax({ yAxisOptions, graphic, setGraphic, chartRef, visualization, series });
+  useHandleYMinMax({ graphic, setGraphic, chartRef, series, visualization, significantDigits, yAxisOptions });
 
-  useHandleSeries({ graphic, setGraphic, chartRef, visualization, series });
+  useHandleSeries({ graphic, setGraphic, chartRef, series, visualization, significantDigits });
+
+  useHandleChartOptions({ graphic, setGraphic, chartRef, series, visualization, significantDigits });
 
   const trendCursorKeyMap: KeyMap = {
     commandDown: { sequence: 't', action: 'keydown' },
