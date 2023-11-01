@@ -6,11 +6,20 @@ import { calculateSeriesMakers } from '../calculations/calculateSeriesMakers';
 import { useEffect, useRef } from 'react';
 import { delayedRender } from '../../utils/useDelayedRender';
 
-const useHandleResize = ({ size, series, graphic, setGraphic, chartRef, visualization }: TrendCursorProps) => {
+const useHandleResize = ({
+  size,
+  series,
+  graphic,
+  setGraphic,
+  chartRef,
+  visualization,
+  significantDigits,
+}: TrendCursorProps) => {
   const graphicRef = useRef(graphic);
   const seriesRef = useRef(series);
   const sizeRef = useRef(size);
   const visualizationRef = useRef(visualization);
+  const significantDigitsRef = useRef(significantDigits);
   const sizeString = JSON.stringify(size);
 
   useEffect(() => {
@@ -18,7 +27,8 @@ const useHandleResize = ({ size, series, graphic, setGraphic, chartRef, visualiz
     seriesRef.current = series;
     sizeRef.current = size;
     visualizationRef.current = visualization;
-  }, [graphic, series, size, visualization]);
+    significantDigitsRef.current = significantDigits;
+  }, [graphic, series, significantDigits, size, visualization]);
 
   useEffect(() => {
     const update = () => {
@@ -28,7 +38,8 @@ const useHandleResize = ({ size, series, graphic, setGraphic, chartRef, visualiz
           seriesRef.current,
           g.timestampInMs,
           chartRef,
-          visualizationRef.current
+          visualizationRef.current,
+          significantDigitsRef.current
         );
         g.yAxisMarkerValue = trendCursorsSeriesMakersValue;
         // update line height and markers

@@ -21,6 +21,16 @@ export interface TrendCursorProps {
   groupId?: string;
   visualization: Visualization;
   chartRef: MutableRefObject<ECharts | null>;
+  significantDigits?: number;
+}
+
+export interface handleChangeProps {
+  graphic: InternalGraphicComponentGroupOption[];
+  setGraphic: Dispatch<SetStateAction<InternalGraphicComponentGroupOption[]>>;
+  series: SeriesOption[];
+  chartRef: MutableRefObject<ECharts | null>;
+  visualization: Visualization;
+  significantDigits?: number;
 }
 
 export interface UseEventsProps extends TrendCursorProps {
@@ -43,6 +53,7 @@ export interface UseTrendCursorsProps {
   groupId?: string;
   size: SizeConfig;
   visualization: Visualization;
+  significantDigits?: number;
 }
 
 export interface GetNewTrendCursorProps {
@@ -54,6 +65,7 @@ export interface GetNewTrendCursorProps {
   timestamp?: number;
   chartRef: MutableRefObject<ECharts | null>;
   visualization: Visualization;
+  significantDigits?: number;
 }
 
 export interface SyncChanges {
@@ -69,6 +81,7 @@ export interface ondragUpdateGraphicProps {
   series: SeriesOption[];
   chartRef: MutableRefObject<ECharts | null>;
   visualization: Visualization;
+  significantDigits?: number;
 }
 
 export interface ondragUpdateTrendCursorElementsProps {

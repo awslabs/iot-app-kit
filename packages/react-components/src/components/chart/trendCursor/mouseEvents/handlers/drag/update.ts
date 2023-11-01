@@ -51,13 +51,15 @@ export const onDragUpdateTrendCursor = ({
   size,
   chartRef,
   visualization,
+  significantDigits,
 }: ondragUpdateGraphicProps) => {
   // calculate the new Y for the series markers
   const { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue } = calculateSeriesMakers(
     series,
     timeInMs,
     chartRef,
-    visualization
+    visualization,
+    significantDigits
   );
 
   // this section updates the internal data of graphic, this data is used to render the legend component data
