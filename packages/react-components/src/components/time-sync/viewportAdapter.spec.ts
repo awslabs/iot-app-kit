@@ -2,7 +2,7 @@ import {
   dateRangeToViewport,
   viewportToDateRange,
   relativeOptions,
-  getViewportStartOnBackwardRelative,
+  getViewportDateRelativeToAbsolute,
 } from './viewportAdapter';
 
 describe('dateRangeToViewport', () => {
@@ -146,7 +146,7 @@ describe('viewportToDateRange', () => {
 describe('getViewportStartOnBackwardRelative', () => {
   it('can get the new start date when going back from a relative duration', () => {
     let currentDate = new Date();
-    let newDate = getViewportStartOnBackwardRelative({
+    let newDate = getViewportDateRelativeToAbsolute({
       amount: 5,
       unit: 'minute',
       type: 'relative',
@@ -157,7 +157,7 @@ describe('getViewportStartOnBackwardRelative', () => {
     expect(result).toBeLessThanOrEqual(300000);
 
     currentDate = new Date();
-    newDate = getViewportStartOnBackwardRelative({
+    newDate = getViewportDateRelativeToAbsolute({
       amount: 1,
       unit: 'hour',
       type: 'relative',
@@ -166,7 +166,7 @@ describe('getViewportStartOnBackwardRelative', () => {
     expect(currentDate.getTime() - newDate.getTime()).toEqual(3600000);
 
     currentDate = new Date();
-    newDate = getViewportStartOnBackwardRelative({
+    newDate = getViewportDateRelativeToAbsolute({
       amount: 30,
       unit: 'second',
       type: 'relative',
@@ -174,7 +174,7 @@ describe('getViewportStartOnBackwardRelative', () => {
     expect(currentDate.getTime() - newDate.getTime()).toEqual(30000);
 
     currentDate = new Date();
-    newDate = getViewportStartOnBackwardRelative({
+    newDate = getViewportDateRelativeToAbsolute({
       amount: 1,
       unit: 'day',
       type: 'relative',
@@ -182,7 +182,7 @@ describe('getViewportStartOnBackwardRelative', () => {
     expect(currentDate.getTime() - newDate.getTime()).toEqual(86400000);
 
     currentDate = new Date();
-    newDate = getViewportStartOnBackwardRelative({
+    newDate = getViewportDateRelativeToAbsolute({
       amount: 1,
       unit: 'week',
       type: 'relative',
@@ -190,7 +190,7 @@ describe('getViewportStartOnBackwardRelative', () => {
     expect(currentDate.getTime() - newDate.getTime()).toEqual(604800000);
 
     currentDate = new Date();
-    newDate = getViewportStartOnBackwardRelative({
+    newDate = getViewportDateRelativeToAbsolute({
       amount: 1,
       unit: 'month',
       type: 'relative',

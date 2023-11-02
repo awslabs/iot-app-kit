@@ -11,7 +11,7 @@ import {
   dateRangeToViewport,
   relativeOptions,
   viewportToDateRange,
-  getViewportStartOnBackwardRelative,
+  getViewportDateRelativeToAbsolute,
 } from './viewportAdapter';
 
 import { rangeValidator } from './rangeValidator';
@@ -87,6 +87,14 @@ export const TimeSelection = ({
         'date-picker'
       );
     }
+    if (value.type === 'relative') {
+      const newStart = new Date();
+      const newEnd = getViewportDateRelativeToAbsolute(value, true);
+      setViewport(
+        dateRangeToViewport({ startDate: newStart.toISOString(), endDate: newEnd.toISOString(), type: 'absolute' }),
+        'date-picker'
+      );
+    }
   };
 
   const handlePaginateBackward = () => {
@@ -101,7 +109,7 @@ export const TimeSelection = ({
       );
     } else if (value.type === 'relative') {
       const newEnd = new Date();
-      const newStart = getViewportStartOnBackwardRelative(value);
+      const newStart = getViewportDateRelativeToAbsolute(value);
       setViewport(
         dateRangeToViewport({ startDate: newStart.toISOString(), endDate: newEnd.toISOString(), type: 'absolute' }),
         'date-picker'
