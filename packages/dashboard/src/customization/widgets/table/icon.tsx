@@ -1,13 +1,10 @@
 import React from 'react';
-
 import { default as tableSvg } from './table.svg';
 import { default as tableSvgDark } from './table-dark.svg';
+import WidgetIcon from '../components/widgetIcon';
 
-const TableIcon: React.FC = () => (
-  <span>
-    <img src={tableSvg} alt='Table widget light icon' />
-    <img src={tableSvgDark} alt='Table widget dark icon' />
-  </span>
-);
+const TableIcon = () => {
+  return <WidgetIcon widget='Bar' defaultIcon={tableSvg} darkIcon={tableSvgDark} />;
+};
 
 export default TableIcon;
