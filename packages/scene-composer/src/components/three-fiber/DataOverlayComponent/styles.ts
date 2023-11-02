@@ -30,16 +30,6 @@ export const tmAnnotationContainer: CSSProperties = {
   paddingLeft: '12px',
   paddingRight: '12px',
 };
-export const tmCloseButtonDiv: CSSProperties = {
-  float: 'right',
-  marginTop: '8px',
-  marginRight: '8px',
-};
-export const tmCloseButton: CSSProperties = {
-  backgroundColor: 'transparent',
-  borderColor: 'transparent',
-  color: 'white',
-};
 
 // Overlay panel arrow
 export const tmArrow: CSSProperties = {
