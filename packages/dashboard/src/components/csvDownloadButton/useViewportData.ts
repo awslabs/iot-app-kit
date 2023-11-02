@@ -4,6 +4,8 @@ import { StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
 import { useAssetDescriptionMapQuery } from '~/hooks/useAssetDescriptionQueries';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { CSVDownloadObject } from './types';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { useDescribeUnmodeledTimeSeries } from './useDescribeUnmodeledTimeSeries';
 
 const DEFAULT_VIEWPORT = { duration: '10m' };
 
@@ -31,13 +33,15 @@ const isTimeWithinViewport = (dataPointTimestamp: number, viewport: Viewport, ti
 export const useViewportData = ({
   queryConfig,
   viewport: passedInViewport,
+  client,
 }: {
   queryConfig: StyledSiteWiseQueryConfig;
+  client: IoTSiteWiseClient;
   viewport?: Viewport;
 }) => {
   const queries = useQueries(queryConfig.query);
-
   const { dataStreams } = useTimeSeriesData({ queries });
+  const { unmodeledAssetDescription, isSuccess } = useDescribeUnmodeledTimeSeries(queryConfig, client);
 
   const describedAssetsMapQuery = useAssetDescriptionMapQuery(queryConfig.query);
   const describedAssetsMap = describedAssetsMapQuery.data ?? {};
@@ -58,22 +62,24 @@ export const useViewportData = ({
         const isUnmodeledData = queryConfig.query?.properties?.some((pr) => pr.propertyAlias === dataStream.id);
         const assetPropId = !isUnmodeledData ? dataStream.id.split('---') : []; // modeled datastream IDs follow the pattern {assetID}---{propertyID}
         const describedModelProperty = describedAssetsMap[assetPropId[0]]?.properties.find(
-          (p) => p.propertyId === assetPropId[1]
+          ({ propertyId }) => propertyId === assetPropId[1]
         );
+        const unmodeledDataStreamDescription = unmodeledAssetDescription.find(({ alias }) => alias === id);
 
         const flatDataPoint: CSVDownloadObject = {
           assetName: describedAssetsMap[assetPropId[0]]?.assetName,
           propertyName: describedModelProperty?.name,
-          propertyAlias: isUnmodeledData ? id : describedModelProperty?.alias,
+          propertyAlias: isUnmodeledData ? unmodeledDataStreamDescription?.alias : describedModelProperty?.alias,
           value: yValue,
           unit,
           timestamp: new Date(xValue).toISOString(),
           aggregationType: aggregationType,
           resolution,
-          dataType: describedModelProperty?.dataType,
+          dataType: isUnmodeledData ? unmodeledDataStreamDescription?.dataType : describedModelProperty?.dataType,
+          dataTypeSpec: isUnmodeledData ? unmodeledDataStreamDescription?.dataTypeSpec : undefined,
           dataQuality: 'GOOD',
-          assetId: !isUnmodeledData ? assetPropId[0] : undefined,
-          propertyId: !isUnmodeledData ? assetPropId[1] : undefined,
+          assetId: isUnmodeledData ? unmodeledDataStreamDescription?.assetId : assetPropId[0],
+          propertyId: isUnmodeledData ? undefined : assetPropId[1],
         };
 
         flattenedData.push(flatDataPoint);
@@ -91,5 +97,6 @@ export const useViewportData = ({
 
   return {
     fetchViewportData,
+    canDownloadData: !isSuccess || dataStreams.length === 0,
   };
 };
