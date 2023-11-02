@@ -32,7 +32,7 @@ const CSVDownloadButton = ({
   };
 
   return (
-    <Button iconName='download' variant='icon' onClick={onClickDownload} data-testid='custom-orange-button' {...rest} />
+    <Button iconName='download' variant='icon' onClick={onClickDownload} data-testid='csv-download-button' {...rest} />
   );
 };
 
