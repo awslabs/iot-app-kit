@@ -7,16 +7,7 @@ import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { applyDataBindingTemplate } from '../../../utils/dataBindingTemplateUtils';
 
 import { DataOverlayRows } from './DataOverlayRows';
-import {
-  tmAnnotationContainer,
-  tmArrow,
-  tmArrowInner,
-  tmArrowOuter,
-  tmCloseButton,
-  tmCloseButtonDiv,
-  tmContainer,
-  tmPanelContainer,
-} from './styles';
+import { tmAnnotationContainer, tmArrow, tmArrowInner, tmArrowOuter, tmContainer, tmPanelContainer } from './styles';
 
 export interface DataOverlayContainerProps {
   node: ISceneNodeInternal;
@@ -47,6 +38,8 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
   useEffect(() => {
     if (selectedSceneNodeRef === node.ref) {
       setVisible(true);
+    } else if (!isAnnotation && !componentVisible) {
+      setVisible(false);
     }
   }, [selectedSceneNodeRef, node.ref]);
 
@@ -54,7 +47,11 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
   // isPinned config can keep panel open initially.
   useEffect(() => {
     if (initialVisibilitySkipped.current) {
-      setVisible(componentVisible);
+      if (!isAnnotation && selectedSceneNodeRef === node.ref) {
+        setVisible(true);
+      } else {
+        setVisible(componentVisible);
+      }
     }
     initialVisibilitySkipped.current = true;
   }, [componentVisible]);
@@ -92,14 +89,6 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
     [selectedSceneNodeRef, node.ref, onWidgetClick],
   );
 
-  const onClickCloseButton = useCallback(
-    (e) => {
-      setVisible(false);
-      e.stopPropagation();
-    },
-    [setVisible],
-  );
-
   return visible ? (
     <>
       <div
@@ -107,13 +96,6 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
         onClick={onClickContainer}
         style={{ ...tmContainer, ...(isAnnotation ? tmAnnotationContainer : tmPanelContainer) }}
       >
-        {!isAnnotation && !componentVisible && (
-          <div style={tmCloseButtonDiv}>
-            <button style={tmCloseButton} onClick={onClickCloseButton}>
-              X
-            </button>
-          </div>
-        )}
         <DataOverlayRows component={component} />
         {subType == Component.DataOverlaySubType.OverlayPanel && (
           <div style={tmArrow}>
