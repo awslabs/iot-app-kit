@@ -1,13 +1,10 @@
 import React from 'react';
-
 import { default as lineSvg } from './line.svg';
 import { default as lineSvgDark } from './line-dark.svg';
+import WidgetIcon from '../components/widgetIcon';
 
-const LineIcon: React.FC = () => (
-  <span>
-    <img src={lineSvg} alt='Line widget light icon' />
-    <img src={lineSvgDark} alt='Line widget dark icon' />
-  </span>
-);
+const LineIcon = () => {
+  return <WidgetIcon widget='Line' defaultIcon={lineSvg} darkIcon={lineSvgDark} />;
+};
 
 export default LineIcon;
