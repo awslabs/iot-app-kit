@@ -8,7 +8,7 @@
 .palette-component-icon .tooltiptext {
   position: absolute;
   left: 50%;
-  top: 115%;
+  top: 105%;
   border-style: solid;
   z-index: 9;
   visibility: hidden;
@@ -44,16 +44,4 @@
 
 .palette-component-icon:hover .tooltiptext {
   visibility: visible;
-}
-
-.palette-component-icon img:nth-child(2) {
-  display: none;
-}
-
-.palette-component-icon:hover img:nth-child(1) {
-  display: none;
-}
-
-.palette-component-icon:hover img:nth-child(2) {
-  display: block;
 }

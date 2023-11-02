@@ -1,13 +1,10 @@
-import * as React from 'react';
-
+import React from 'react';
 import { default as timelineSvg } from './timeline.svg';
 import { default as timelineSvgDark } from './timeline-dark.svg';
+import WidgetIcon from '../components/widgetIcon';
 
-const TimelineIcon: React.FC = () => (
-  <span>
-    <img src={timelineSvg} alt='Timeline widget light icon' />
-    <img src={timelineSvgDark} alt='Timeline widget dark icon' />
-  </span>
-);
+const TimelineIcon = () => {
+  return <WidgetIcon widget='Timeline' defaultIcon={timelineSvg} darkIcon={timelineSvgDark} />;
+};
 
 export default TimelineIcon;

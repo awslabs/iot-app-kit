@@ -1,13 +1,10 @@
 import React from 'react';
-
 import { default as textSvg } from './text.svg';
 import { default as textSvgDark } from './text-dark.svg';
+import WidgetIcon from '../components/widgetIcon';
 
-const TextIcon: React.FC = () => (
-  <span>
-    <img src={textSvg} alt='Text widget light icon' />
-    <img src={textSvgDark} alt='Text widget dark icon' />
-  </span>
-);
+const TextIcon = () => {
+  return <WidgetIcon widget='Text' defaultIcon={textSvg} darkIcon={textSvgDark} />;
+};
 
 export default TextIcon;
