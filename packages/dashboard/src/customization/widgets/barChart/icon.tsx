@@ -1,12 +1,9 @@
 import React from 'react';
 import { default as barSvg } from './bar.svg';
 import { default as barSvgDark } from './bar-dark.svg';
+import WidgetIcon from '../components/widgetIcon';
 
-const BarIcon: React.FC = () => (
-  <span>
-    <img src={barSvg} alt='Bar widget light icon' />
-    <img src={barSvgDark} alt='Bar widget dark icon' />
-  </span>
-);
-
+const BarIcon = () => {
+  return <WidgetIcon widget='Bar' defaultIcon={barSvg} darkIcon={barSvgDark} />;
+};
 export default BarIcon;
