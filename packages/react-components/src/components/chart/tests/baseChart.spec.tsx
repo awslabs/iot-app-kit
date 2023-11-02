@@ -46,3 +46,37 @@ describe('Chart Component Testing', () => {
     expect(element).not.toBeNull();
   });
 });
+
+describe('Chart slider testing', () => {
+  it('should show resize slider when show legend feature is on', () => {
+    const options = {
+      queries: [],
+      aggregationType: 'average',
+      axis: { showY: true, showX: true, yMin: undefined, yMax: undefined },
+      legend: {},
+      gestures: false,
+      significantDigits: 4,
+      styleSettings: {},
+      thresholds: undefined,
+    };
+
+    const { container } = render(<Chart {...options} />);
+    expect(container.getElementsByClassName('react-resizable-handle-se').length).toBe(1);
+  });
+
+  it('should show resize slider when show legend feature is off', () => {
+    const options = {
+      queries: [],
+      aggregationType: 'average',
+      axis: { showY: true, showX: true, yMin: undefined, yMax: undefined },
+      legend: undefined,
+      gestures: false,
+      significantDigits: 4,
+      styleSettings: {},
+      thresholds: undefined,
+    };
+
+    const { container } = render(<Chart {...options} />);
+    expect(container.getElementsByClassName('react-resizable-handle-se').length).toBe(0);
+  });
+});
