@@ -39,7 +39,14 @@ import * as fsPromises from 'fs/promises';
 import { handler, Options } from './deploy';
 import * as fs from 'fs';
 import * as prompts from 'prompts';
-import { AttachRolePolicyCommand, CreatePolicyCommand, CreateRoleCommand, IAMClient } from '@aws-sdk/client-iam';
+import {
+  AttachRolePolicyCommand,
+  CreatePolicyCommand,
+  CreateRoleCommand,
+  GetRoleCommand,
+  IAMClient,
+  NoSuchEntityException,
+} from '@aws-sdk/client-iam';
 import { GetCallerIdentityCommand, STSClient } from '@aws-sdk/client-sts';
 
 jest.mock('fs', () => ({
@@ -124,6 +131,7 @@ it('creates new workspace when given workspace that does not exist and user prom
   s3Mock.on(PutBucketAclCommand).resolves({});
   s3Mock.on(PutBucketCorsCommand).resolves({});
   twinmakerMock.on(CreateWorkspaceCommand).resolves({ arn: '*' });
+  iamMock.on(GetRoleCommand).rejects(new NoSuchEntityException({ $metadata: {}, message: '' }));
   iamMock.on(CreateRoleCommand).resolves({ Role: fakeRole });
   iamMock.on(CreatePolicyCommand).resolves({ Policy: fakePolicy });
   iamMock.on(AttachRolePolicyCommand).resolves({});
@@ -145,6 +153,7 @@ it('creates new workspace when given workspace that does not exist and user prom
   expect(s3Mock.commandCalls(PutBucketCorsCommand).length).toBe(1);
   expect(twinmakerMock.commandCalls(GetWorkspaceCommand).length).toBe(4);
   expect(twinmakerMock.commandCalls(CreateWorkspaceCommand).length).toBe(1);
+  expect(iamMock.commandCalls(GetRoleCommand).length).toBe(2);
   expect(iamMock.commandCalls(CreateRoleCommand).length).toBe(2);
   expect(iamMock.commandCalls(CreatePolicyCommand).length).toBe(2);
   expect(iamMock.commandCalls(AttachRolePolicyCommand).length).toBe(2);

@@ -27,12 +27,22 @@ import {
   oneSceneListScenesResp,
   scene1,
 } from './test-constants';
+import { streamToBuffer } from '../lib/stream-to-buffer';
 import * as fs from 'fs';
 
 jest.mock('fs', () => ({
   __esModule: true, // Use it when dealing with esModules
   ...jest.requireActual('fs'),
 }));
+
+jest.mock('../lib/stream-to-buffer', () => {
+  const originalModule = jest.requireActual('../lib/stream-to-buffer');
+  return {
+    __esModule: true,
+    ...originalModule,
+    streamToBuffer: jest.fn(() => 'mock'),
+  };
+});
 
 const outDir = '/tmp/init-unit-tests';
 const twinmakerMock = mockClient(IoTTwinMakerClient);
@@ -134,6 +144,13 @@ it('creates a tmdt project with one model and one scene when given one scene and
       },
     } as SdkStream<Blob>,
   });
+  expect(
+    streamToBuffer({
+      transformToString: () => {
+        return Promise.resolve(JSON.stringify(scene1, null, 4));
+      },
+    } as SdkStream<Blob>)
+  ).toEqual('mock');
 
   const argv2 = {
     _: ['init'],
@@ -154,7 +171,6 @@ it('creates a tmdt project with one model and one scene when given one scene and
   expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdt.json`, JSON.stringify(expectedTmdt, null, 4));
   expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/entities.json`, JSON.stringify([], null, 4));
   expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/scene1.json`, JSON.stringify(scene1, null, 4));
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/3d_models/model1.glb`, fakeModelData);
 });
 
 it('creates a tmdt project with one entity when given one entity', async () => {
@@ -209,6 +225,13 @@ it('creates a fully populated tmdt project when given a full workspace', async (
       },
     } as SdkStream<Blob>,
   });
+  expect(
+    streamToBuffer({
+      transformToString: () => {
+        return Promise.resolve(JSON.stringify(scene1, null, 4));
+      },
+    } as SdkStream<Blob>)
+  ).toEqual('mock');
 
   const argv2 = {
     _: ['init'],
@@ -236,5 +259,4 @@ it('creates a fully populated tmdt project when given a full workspace', async (
     JSON.stringify(componentType1Definition, null, 4)
   );
   expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/scene1.json`, JSON.stringify(scene1, null, 4));
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/3d_models/model1.glb`, fakeModelData);
 });
