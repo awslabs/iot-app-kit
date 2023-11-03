@@ -36,6 +36,7 @@ import {
 } from '~/msw/handlers/iot-sitewise/constants';
 import { DEFAULT_REGION } from '~/msw/constants';
 import { paginatedListAssetsHandler } from '~/msw/handlers/iot-sitewise/listAssets/paginatedListAssetsHandler';
+import { MOCK_LINE_CHART_WIDGET } from '../../../testing/mocks';
 
 function TestQueryEditor() {
   return (
@@ -44,6 +45,7 @@ function TestQueryEditor() {
         dashboardConfiguration: {
           widgets: [],
         },
+        selectedWidgets: [MOCK_LINE_CHART_WIDGET],
       })}
     >
       <QueryClientProvider client={new QueryClient()}>
@@ -72,27 +74,46 @@ function TestQueryEditor() {
   );
 }
 
-describe.skip(QueryEditor, () => {
+describe(QueryEditor, () => {
   describe('default rendering', () => {
-    test('modeled tab renders as expected', () => {
+    test('browse tab within modeled tab renders as expected', () => {
       render(<TestQueryEditor />);
 
       expect(screen.getByRole('tab', { name: 'Modeled', selected: true })).toBeVisible();
       expect(screen.getByRole('tab', { name: 'Unmodeled', selected: false })).toBeVisible();
-      expect(screen.getByLabelText('Workspace')).toBeVisible();
-      expect(screen.getByText('Select a workspace.')).toBeVisible();
-      expect(screen.getByLabelText('Search query')).toBeVisible();
-      expect(screen.getByPlaceholderText('Enter a search query')).toBeVisible();
       expect(screen.getByRole('button', { name: 'Search' })).toBeVisible();
-      expect(screen.getByRole('heading', { name: 'Browse assets' })).toBeVisible();
-      expect(screen.getByText('Browse through your asset hierarchy and select an asset.')).toBeVisible();
+      expect(screen.getByText('Browse assets')).toBeVisible();
+      expect(
+        screen.getByText('Browse through your asset hierarchy and select an asset to view its associated data streams.')
+      ).toBeVisible();
       expect(screen.getByPlaceholderText('Filter assets by text, property, or value')).toBeVisible();
       expect(screen.getByText('Root')).toBeVisible();
-      expect(screen.getByRole('heading', { name: 'Modeled data streams' })).toBeVisible();
+      expect(screen.getByText('Modeled data streams')).toBeVisible();
       expect(screen.getByPlaceholderText('Filter modeled data streams by text, property, or value')).toBeVisible();
       expect(screen.getByRole('button', { name: 'Add' })).toBeVisible();
       expect(screen.getByText('No modeled data streams')).toBeVisible();
-      expect(screen.getByText('No modeled data streams found for selected asset.')).toBeVisible();
+      expect(screen.getByText('Select an asset to see its data streams.')).toBeVisible();
+    });
+
+    test('search tab within modeled tab renders as expected', async () => {
+      const user = userEvent.setup();
+      render(<TestQueryEditor />);
+
+      expect(screen.getByRole('tab', { name: 'Modeled', selected: true })).toBeVisible();
+      expect(screen.getByRole('tab', { name: 'Unmodeled', selected: false })).toBeVisible();
+
+      await user.click(screen.getByRole('button', { name: 'Search' }));
+
+      expect(screen.getByRole('button', { name: 'Browse' })).toBeVisible();
+      expect(screen.getByLabelText('Search query')).toBeVisible();
+      expect(screen.getByPlaceholderText('Enter a search query')).toBeVisible();
+      expect(screen.getByLabelText('Workspace')).toBeVisible();
+      expect(screen.getByText('Search for modeled data streams by name or by the associated asset.')).toBeVisible();
+      expect(screen.getByText('Modeled data streams')).toBeVisible();
+      expect(screen.getByPlaceholderText('Filter modeled data streams by text, property, or value')).toBeVisible();
+      expect(screen.getByRole('button', { name: 'Add' })).toBeVisible();
+      expect(screen.getByText('No modeled data streams')).toBeVisible();
+      expect(screen.getByText('Select an asset to see its data streams.')).toBeVisible();
     });
 
     test('unmodeled tab renders as expected', async () => {
@@ -107,7 +128,7 @@ describe.skip(QueryEditor, () => {
       expect(screen.getByText('Enter an alias prefix to filter the list of unmodeled data streams.')).toBeVisible();
       expect(screen.getByPlaceholderText('Enter an alias prefix')).toBeVisible();
       expect(screen.getByRole('button', { name: 'Search' })).toBeVisible();
-      expect(screen.getByRole('heading', { name: 'Unmodeled data streams' })).toBeVisible();
+      expect(screen.getByText('Unmodeled data streams')).toBeVisible();
       expect(screen.getByPlaceholderText('Filter unmodeled data streams by text, property, or value')).toBeVisible();
       expect(screen.getByRole('button', { name: 'Add' })).toBeVisible();
     });
@@ -137,23 +158,27 @@ describe.skip(QueryEditor, () => {
   });
 
   describe('adding data streams', () => {
-    test('modeled data streams add button is disabled when no data streams are selected', () => {
+    test('modeled data streams add and reset buttons are disabled when no data streams are selected', () => {
       render(<TestQueryEditor />);
 
       const addButton = screen.getByRole('button', { name: 'Add' });
+      const resetButton = screen.getByRole('button', { name: 'Reset' });
 
       expect(addButton).toBeDisabled();
+      expect(resetButton).toBeDisabled();
     });
 
-    test('unmodeled data streams add button is disabled when no data streams are selected', async () => {
+    test('unmodeled data streams add and reset buttons are disabled when no data streams are selected', async () => {
       const user = userEvent.setup();
       render(<TestQueryEditor />);
 
       await user.click(screen.getByRole('tab', { name: 'Unmodeled' }));
 
       const addButton = screen.getByRole('button', { name: 'Add' });
+      const resetButton = screen.getByRole('button', { name: 'Reset' });
 
       expect(addButton).toBeDisabled();
+      expect(resetButton).toBeDisabled();
     });
   });
 
@@ -162,7 +187,7 @@ describe.skip(QueryEditor, () => {
       const user = userEvent.setup();
       render(<TestQueryEditor />);
 
-      expect(screen.getByRole('heading', { name: 'Browse assets' })).toBeVisible();
+      expect(screen.getByText('Browse assets')).toBeVisible();
 
       const loadingMessage = screen.queryByText('Loading assets...');
 
@@ -240,18 +265,21 @@ describe.skip(QueryEditor, () => {
       expect(screen.getByText(PRODUCTION_RATE_ASSET_PROPERTY.name)).toBeVisible();
 
       expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Reset' })).toBeDisabled();
 
       await user.click(
         screen.getByRole('checkbox', { name: `Select modeled data stream ${COORDINATES_ASSET_PROPERTY.name}` })
       );
 
       expect(screen.getByRole('button', { name: 'Add' })).not.toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Reset' })).not.toBeDisabled();
 
       await user.click(
         screen.getByRole('checkbox', { name: `Select modeled data stream ${COORDINATES_ASSET_PROPERTY.name}` })
       );
 
       expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Reset' })).toBeDisabled();
     });
 
     test('asset selection is lost when clicking to view asset children', async () => {

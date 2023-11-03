@@ -36,6 +36,7 @@ export function UnmodeledDataStreamTable({
   hasNextPage,
 }: UnmodeledDataStreamTableProps) {
   const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
+  const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
   const [preferences, setPreferences] = useExplorerPreferences({
     defaultVisibleContent: ['propertyAlias', 'latestValue'],
     resourceName: 'unmodeled data stream',
@@ -116,7 +117,7 @@ export function UnmodeledDataStreamTable({
             </Button>
             <Button
               variant='primary'
-              disabled={collectionProps.selectedItems?.length === 0}
+              disabled={collectionProps.selectedItems?.length === 0 || selectedWidgets.length === 0}
               onClick={() => onClickAdd(collectionProps.selectedItems as unknown as UnmodeledDataStream[])}
             >
               Add
