@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Arguments, CommandBuilder } from 'yargs';
 
 import { getDefaultAwsClients as aws, initDefaultAwsClients } from '../lib/aws-clients';
@@ -11,6 +12,7 @@ import {
   GetComponentTypeCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
 import { verifyWorkspaceExists } from '../lib/utils';
+import { streamToBuffer } from '../lib/stream-to-buffer';
 
 export type Options = {
   region: string;
@@ -207,13 +209,13 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
         }
 
         const data = await aws().s3.getObject({ Bucket: s3bucket, Key: s3key });
-        const bodyContents = (await data.Body?.transformToString('utf-8')) as string;
+        const bodyContents = (await streamToBuffer(data.Body)) as Buffer;
         fs.writeFileSync(path.join(outDir, '3d_models', s3key), bodyContents);
         tmdt_config['models'].push(s3key);
 
         // handle binary data references in gltf files - https://www.khronos.org/files/gltf20-reference-guide.pdf
         if (s3key.endsWith('.gltf')) {
-          const gltfData = JSON.parse(bodyContents);
+          const gltfData = JSON.parse(bodyContents.toString('utf-8'));
           if (gltfData['buffers']) {
             for (const buffer of gltfData['buffers']) {
               if (!(buffer['uri'] as string).startsWith('data:')) {
@@ -226,7 +228,7 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
                   Bucket: binS3bucket,
                   Key: binS3key,
                 });
-                const binBodyContents = (await binData.Body?.transformToString('utf-8')) as string;
+                const binBodyContents = (await streamToBuffer(binData.Body)) as Buffer;
                 fs.writeFileSync(path.join(outDir, '3d_models', binS3key), binBodyContents);
                 tmdt_config['models'].push(binS3key);
               }
@@ -245,7 +247,7 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
                   Bucket: binS3bucket,
                   Key: binS3key,
                 });
-                const binBodyContents = (await binData.Body?.transformToString('utf-8')) as string;
+                const binBodyContents = (await streamToBuffer(binData.Body)) as Buffer;
                 fs.writeFileSync(path.join(outDir, '3d_models', binS3key), binBodyContents);
                 tmdt_config['models'].push(binS3key);
               }
