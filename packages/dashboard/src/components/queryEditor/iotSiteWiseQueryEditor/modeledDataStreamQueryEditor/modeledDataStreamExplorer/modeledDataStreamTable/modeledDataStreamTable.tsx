@@ -36,6 +36,7 @@ export function ModeledDataStreamTable({
   client,
 }: ModeledDataStreamTableProps) {
   const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
+  const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
 
   const [preferences, setPreferences] = useExplorerPreferences({
     defaultVisibleContent: ['name', 'latestValue'],
@@ -110,7 +111,7 @@ export function ModeledDataStreamTable({
             </Button>
             <Button
               variant='primary'
-              disabled={collectionProps.selectedItems?.length === 0}
+              disabled={collectionProps.selectedItems?.length === 0 || selectedWidgets.length === 0}
               onClick={() => {
                 onClickAddModeledDataStreams(collectionProps.selectedItems as unknown as ModeledDataStream[]);
               }}
