@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useRef } from 'react';
+import React, { ReactElement, useContext, useEffect, useRef } from 'react';
 import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { Group } from 'three';
@@ -8,6 +8,7 @@ import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IAnchorComponentInternal, IDataOverlayComponentInternal } from '../../../store/internalInterfaces';
 import { KnownComponentType } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
+import useSelectedNode from '../../../hooks/useSelectedNode';
 
 import { DataOverlayContainer } from './DataOverlayContainer';
 
@@ -18,6 +19,7 @@ export interface DataOverlayComponentProps {
 
 export const DataOverlayComponent = ({ node, component }: DataOverlayComponentProps): ReactElement => {
   const sceneComposerId = useContext(sceneComposerIdContext);
+  const { selectedSceneNodeRef } = useSelectedNode();
   const htmlRef = useRef<HTMLDivElement>(null);
   const groupRef = useRef<Group>(null);
 
@@ -30,6 +32,13 @@ export const DataOverlayComponent = ({ node, component }: DataOverlayComponentPr
     }
   };
 
+  // enforces a zIndex on the outer div of HTML to push the selected overlay to the front before other overlays
+  useEffect(() => {
+    if (htmlRef.current?.parentElement) {
+      htmlRef.current.parentElement.style.zIndex = node.ref == selectedSceneNodeRef ? '999' : '1';
+    }
+  }, [selectedSceneNodeRef, node]);
+
   useFrame(() => {
     if (!htmlRef.current || !groupRef.current) return;
     htmlRef.current.hidden = !groupRef.current.visible;
@@ -39,6 +48,7 @@ export const DataOverlayComponent = ({ node, component }: DataOverlayComponentPr
     <group ref={groupRef} userData={{ componentType: KnownComponentType.DataOverlay }}>
       <Html
         ref={htmlRef}
+        zIndexRange={[]} //This stops the r3f HTML from trying to set the z-index based on geometry
         className='tm-html-wrapper'
         // TODO: add position after finding proper way to always display overlay right above tag
         position={getOffsetFromTag()}

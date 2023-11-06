@@ -9,6 +9,7 @@ exports[`DataOverlayComponent should render the component correctly 1`] = `
       class="tm-html-wrapper"
       data-mocked="Html"
       style="top: -14px; transform: translate3d(-50%,-100%,0);"
+      zindexrange="[]"
     >
       <div
         data-testid="container"
