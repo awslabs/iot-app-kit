@@ -61,13 +61,7 @@ const messages: ViewportMessages = {
  * parent TimeSync and affect all other viewports in
  * that TimeSync group.
  */
-export const TimeSelection = ({
-  isPaginationEnabled,
-  hideTitle,
-}: {
-  isPaginationEnabled?: boolean;
-  hideTitle?: boolean;
-}) => {
+export const TimeSelection = ({ isPaginationEnabled }: { isPaginationEnabled?: boolean }) => {
   const { viewport, setViewport } = useViewport();
 
   const handleChangeDateRange: NonCancelableEventHandler<DateRangePickerProps.ChangeDetail> = (event) => {
@@ -120,7 +114,7 @@ export const TimeSelection = ({
   const { title, placeholder, dateRangeIncompleteError, dateRangeInvalidError, ...i18nStrings } = messages;
 
   return (
-    <FormField label={!hideTitle ? title : ''} data-testid='time-selection'>
+    <FormField label={title}>
       <SpaceBetween direction='horizontal' size='xxs'>
         {isPaginationEnabled && (
           <Tooltip
