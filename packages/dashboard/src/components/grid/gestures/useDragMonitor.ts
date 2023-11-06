@@ -3,7 +3,7 @@ import { ItemTypes } from '~/components/dragLayer/itemTypes';
 import { DragEvent } from './types';
 import { defaultDelta, deltaTracker, endTracker, startTracker } from './positionTracker';
 import { constrainPosition } from './constrainPosition';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export type DragMonitorProps = {
   dragStart: (e: DragEvent) => void;
@@ -33,6 +33,8 @@ export const useDragMonitor = ({
   enabled,
   dashboardGrid,
 }: DragMonitorProps) => {
+  const rafRef = useRef<number>();
+
   const [collected, dragRef] = useDrag(
     () => ({
       type: ItemTypes.Grid,
@@ -102,17 +104,25 @@ export const useDragMonitor = ({
         y: endTracker.getPosition().y + offset.y,
       };
 
-      drag({
-        target,
-        start: startTracker.getPosition(),
-        end: updatedEndPosition,
-        vector: offset,
-        union,
+      rafRef.current = requestAnimationFrame(() => {
+        drag({
+          target,
+          start: startTracker.getPosition(),
+          end: updatedEndPosition,
+          vector: offset,
+          union,
+        });
+        endTracker.setPosition(updatedEndPosition);
+        deltaTracker.setPosition(clientOffset);
+        setCancelClick(true);
       });
-      endTracker.setPosition(updatedEndPosition);
-      deltaTracker.setPosition(clientOffset);
-      setCancelClick(true);
     }
+
+    return () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDragging, clientOffset]);
 
