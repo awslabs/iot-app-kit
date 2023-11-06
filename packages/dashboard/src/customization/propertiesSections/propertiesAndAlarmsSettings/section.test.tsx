@@ -50,7 +50,6 @@ const MockWidget: QueryWidget = {
 const state: Partial<DashboardState> = {
   dashboardConfiguration: {
     widgets: [MockWidget],
-    name: '',
   },
   selectedWidgets: [MockWidget],
 };
