@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Box from '@cloudscape-design/components/box';
-import Icon from '@cloudscape-design/components/icon';
 import Button from '@cloudscape-design/components/button';
 
 import { spaceScaledXxs } from '@cloudscape-design/design-tokens';
@@ -15,6 +14,8 @@ import { useAssetModel } from '~/hooks/useAssetModel/useAssetModel';
 import { useAsset } from '../../../modeledDataStreamQueryEditor/assetExplorer/useAsset';
 import { useModalVisibility } from '~/hooks/useModalVisibility';
 import { ResetAssetModelModal } from './resetAssetModel/resetAssetModelModal';
+
+import { default as assetModelSvg } from './assetModelIcon.svg';
 
 import './assetModelSelected.css';
 
@@ -64,7 +65,7 @@ export const AssetModelSelected = ({
           gap: spaceScaledXxs,
         }}
       >
-        <Icon name='heart' />
+        <img src={assetModelSvg} alt='Selected asset model icon' />
         <VerticalDivider classNames={['reset-selected-asset-model-vertical-divider']} />
         <Box fontWeight='bold' variant='span'>
           Asset Model:
