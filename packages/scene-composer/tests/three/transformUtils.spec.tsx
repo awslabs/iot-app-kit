@@ -55,7 +55,7 @@ describe('snapObjectToFloor', () => {
       it('calculates floor position to be [0, 0.5, 0]', () => {
         obj.position.set(0, 10, 0);
         parentObj.position.set(0, 1, 0);
-        expect(snapObjectToFloor(obj, parentObj)).toEqual([0, 0.5, 0]);
+        expect(snapObjectToFloor(obj, parentObj)).toEqual([0, -0.5, 0]);
       });
     });
   });

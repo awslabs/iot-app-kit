@@ -158,6 +158,8 @@ export const DEFAULT_CAMERA_OPTIONS: Pick<THREE.PerspectiveCamera, 'far' | 'fov'
 export const DEFAULT_CAMERA_TARGET: Vector3 = [0, 0, 0];
 export const DEFAULT_TWEEN_DURATION = 500;
 
+export const FONT_AWESOME_PREFIX = 'fas';
+
 /******************************************************************************
  * Matterport Constants
  ******************************************************************************/
@@ -167,3 +169,4 @@ export const MATTERPORT_SECRET_ARN = 'MATTERPORT_SECRET_ARN';
 export const MATTERPORT_ACCESS_TOKEN = 'MATTERPORT_ACCESS_TOKEN';
 export const MATTERPORT_APPLICATION_KEY = 'MATTERPORT_APPLICATION_KEY';
 export const MATTERPORT_ERROR = 'MATTERPORT_ERROR';
+export const MATTERPORT_FONTID_PROPERTY = 'fontId';
