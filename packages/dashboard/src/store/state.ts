@@ -13,7 +13,7 @@ export type DashboardState<Properties extends Record<string, unknown> = Record<s
   selectedWidgets: DashboardWidget<Properties>[];
   copiedWidgets: DashboardWidget<Properties>[];
   pasteCounter: number;
-  dashboardConfiguration: { widgets: DashboardWidget<Properties>[]; name: string };
+  dashboardConfiguration: { widgets: DashboardWidget<Properties>[] };
   significantDigits: number;
 };
 
@@ -40,7 +40,6 @@ export const initialState: DashboardState = deepFreeze({
   pasteCounter: 0,
   dashboardConfiguration: {
     widgets: [],
-    name: '',
   },
   significantDigits: 4,
 });
