@@ -4,17 +4,25 @@ import { GRID_SIZE, gridUtil } from '../utils/grid';
 import { getBoundingBox } from '../utils/locator';
 
 const TEST_PAGE = '/iframe.html?id=dashboard-mocked-data--empty';
+const TEST_IFRAME = '#root';
+const COMPONENT_SELECTOR = '.dashboard';
 
 test('dashboard', async ({ page }) => {
   await page.goto(TEST_PAGE);
+  const frame = page.locator(TEST_IFRAME); // Need to go into frame otherwise the `locator` won't locate the selection.
 
-  await expect(page.getByTestId('time-selection')).toBeVisible();
+  // KPI will always show value shows value
+  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
 });
 
 test('dashboard drag and drop text widget', async ({ page }) => {
   await page.goto(TEST_PAGE);
+  const frame = page.locator(TEST_IFRAME); // Need to go into frame otherwise the `locator` won't locate the selection.
 
   const dragGenerator = dragAndDrop(page);
+
+  // KPI will always show value shows value
+  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
 
   const textWidget = page.getByRole('button', { name: 'add Text widget' });
   const gridArea = page.locator('#container');
@@ -28,8 +36,12 @@ test('dashboard drag and drop text widget', async ({ page }) => {
 
 test('dashboard resize, move, and select gestures', async ({ page }) => {
   await page.goto(TEST_PAGE);
+  const frame = page.locator(TEST_IFRAME); // Need to go into frame otherwise the `locator` won't locate the selection.
 
   const grid = gridUtil(page);
+
+  // KPI will always show value shows value
+  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
 
   const location1 = await grid.cellLocation(0, 0);
 
@@ -77,8 +89,12 @@ test('dashboard resize, move, and select gestures', async ({ page }) => {
 
 test('dashboard add and remove multiple widgets', async ({ page }) => {
   await page.goto(TEST_PAGE);
+  const frame = page.locator(TEST_IFRAME); // Need to go into frame otherwise the `locator` won't locate the selection.
 
   const grid = gridUtil(page);
+
+  // KPI will always show value shows value
+  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
 
   const location1 = await grid.cellLocation(0, 0);
   const location2 = await grid.cellLocation(5, 0);
@@ -108,14 +124,14 @@ test('dashboard add and remove multiple widgets', async ({ page }) => {
 
 test('pagination buttons', async ({ page }) => {
   await page.goto(TEST_PAGE);
+  const frame = page.locator(TEST_IFRAME); // Need to go into frame otherwise the `locator` won't locate the selection.
 
-  await expect(page.getByTestId('time-selection')).toBeVisible();
-
+  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
   const forwardBtn = await page.getByRole('button', {
     name: /paginate-foward/i,
   });
-  await expect(page.getByTestId('time-selection')).toBeVisible();
 
+  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
   const backBtn = await page.getByRole('button', {
     name: /paginate-backward/i,
   });

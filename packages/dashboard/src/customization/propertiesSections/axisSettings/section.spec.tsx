@@ -10,7 +10,6 @@ import { AxisSettingsConfiguration } from './index';
 const state: Partial<DashboardState> = {
   dashboardConfiguration: {
     widgets: [MOCK_LINE_CHART_WIDGET],
-    name: '',
   },
   selectedWidgets: [MOCK_LINE_CHART_WIDGET],
 };
