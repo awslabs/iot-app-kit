@@ -18,6 +18,7 @@ import { Component } from '../models/SceneModels';
 import { generateUUID } from '../utils/mathUtils';
 import { getGlobalSettings } from '../common/GlobalSettings';
 import { convertToIotTwinMakerNamespace } from '../utils/sceneResourceUtils';
+import { FONT_AWESOME_PREFIX, MATTERPORT_FONTID_PROPERTY } from '../common/constants';
 
 const getContentForOverlayComponent = (label: string, description: string): string => {
   // Do not change indentation as it affects rendering
@@ -56,6 +57,10 @@ const addTag = (
     chosenColor: tagStyleEnabled
       ? '#' + new Color(item.color.r, item.color.g, item.color.b).getHexString('srgb')
       : undefined,
+    customIcon:
+      tagStyleEnabled && MATTERPORT_FONTID_PROPERTY in item && !isEmpty(item.fontId)
+        ? { prefix: FONT_AWESOME_PREFIX, iconName: item.fontId }
+        : undefined,
   };
   const dataoverlayComponent = getNewDataOverlayComponent(item);
   const nodeRef = generateUUID();
@@ -93,12 +98,17 @@ const updateTag = (
     const chosenColor = shouldSyncTagStyle
       ? '#' + new Color(item.color.r, item.color.g, item.color.b).getHexString('srgb')
       : tag.chosenColor;
+    const customIcon =
+      shouldSyncTagStyle && MATTERPORT_FONTID_PROPERTY in item && !isEmpty(item.fontId)
+        ? { prefix: FONT_AWESOME_PREFIX, iconName: item.fontId }
+        : tag.customIcon;
 
     components[tagIndex] = {
       ...components[tagIndex],
       offset: [item.stemVector.x, item.stemVector.y, item.stemVector.z],
       icon,
       chosenColor,
+      customIcon,
     } as IAnchorComponentInternal;
   }
   const dataOverlayIndex = node.components.findIndex((elem) => elem.type === KnownComponentType.DataOverlay);

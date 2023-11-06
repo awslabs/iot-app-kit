@@ -8,6 +8,7 @@ exports[`LinearPlaneMotionIndicator should render correctly 1`] = `
       "_x": -1.5707963267948966,
       "_y": 0,
       "_z": 0,
+      "isEuler": true,
     }
   }
 >
