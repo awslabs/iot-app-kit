@@ -32,7 +32,7 @@ export const configureDashboardStore = (preloadedState?: RecursivePartial<Dashbo
 };
 
 export const toDashboardState = (dashboardConfiguration: DashboardConfiguration): RecursivePartial<DashboardState> => {
-  const { widgets, displaySettings, name } = dashboardConfiguration;
+  const { widgets, displaySettings } = dashboardConfiguration;
   const { numRows, numColumns, cellSize } = displaySettings;
 
   return {
@@ -44,7 +44,6 @@ export const toDashboardState = (dashboardConfiguration: DashboardConfiguration)
     },
     dashboardConfiguration: {
       widgets,
-      name,
     },
   };
 };

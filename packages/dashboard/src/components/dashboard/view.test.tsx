@@ -7,7 +7,7 @@ import DashboardView from './view';
 import React from 'react';
 
 it('renders', function () {
-  const { queryByText, queryByTestId } = render(
+  const { queryByText } = render(
     <DashboardView
       dashboardConfiguration={{
         displaySettings: {
@@ -15,7 +15,6 @@ it('renders', function () {
           numRows: 100,
         },
         widgets: [],
-        name: '',
         viewport: { duration: '5m' },
       }}
       clientConfiguration={{
@@ -27,6 +26,6 @@ it('renders', function () {
   );
 
   expect(queryByText(/component library/i)).not.toBeInTheDocument();
-  expect(queryByTestId(/dashboard-actions/i)).not.toBeInTheDocument();
-  expect(queryByTestId(/time-selection/i)).toBeInTheDocument();
+  expect(queryByText(/actions/i)).not.toBeInTheDocument();
+  expect(queryByText(/time machine/i)).toBeInTheDocument();
 });
