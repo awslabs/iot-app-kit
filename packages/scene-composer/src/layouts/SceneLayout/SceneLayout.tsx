@@ -35,8 +35,6 @@ import { Direction } from './components/utils';
 import ScenePanel from './components/ScenePanel';
 import CameraPreviewTrack from './components/CameraPreviewTrack';
 
-import { CanvasTestHook } from '../../utils/testUtils';
-
 const UnselectableCanvas = styled(Canvas)`
   user-select: none;
   background: ${({ theme }) => {
@@ -172,7 +170,6 @@ const SceneLayout: FC<SceneLayoutProps> = ({
                 <Suspense fallback={LoadingView}>
                   {!sceneLoaded ? null : (
                     <Fragment>
-                      <CanvasTestHook/>
                       <WebGLCanvasManager />
                       {shouldShowPreview && <CameraPreview track={renderDisplayRef} />}
                     </Fragment>
