@@ -75,6 +75,9 @@ export const useDragMonitor = ({
   const { isDragging, clientOffset } = collected;
 
   useEffect(() => {
+    // We capture the current animation frame to enable cleanup on unmount
+    let animationFrameId: number;
+
     if (isDragging && clientOffset) {
       if (!dashboardGrid) return;
       const constrainedOffset = constrainPosition({
@@ -102,17 +105,23 @@ export const useDragMonitor = ({
         y: endTracker.getPosition().y + offset.y,
       };
 
-      drag({
-        target,
-        start: startTracker.getPosition(),
-        end: updatedEndPosition,
-        vector: offset,
-        union,
+      animationFrameId = requestAnimationFrame(() => {
+        drag({
+          target,
+          start: startTracker.getPosition(),
+          end: updatedEndPosition,
+          vector: offset,
+          union,
+        });
+        endTracker.setPosition(updatedEndPosition);
+        deltaTracker.setPosition(clientOffset);
+        setCancelClick(true);
       });
-      endTracker.setPosition(updatedEndPosition);
-      deltaTracker.setPosition(clientOffset);
-      setCancelClick(true);
     }
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDragging, clientOffset]);
 
