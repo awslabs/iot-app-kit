@@ -15,11 +15,27 @@
   box-sizing: initial;
 }
 
+.dashboard .divider {
+  width: 2px;
+  height: 70px;
+  background: var(--colors-light-grey);
+}
+
 .dashboard .display-area {
   height: 100%;
   width: 100%;
   overflow: auto;
   position: relative;
+}
+
+.dashboard-toolbar-asset-model-selection-container {
+  /* temporary class for style patch while dashboard header is being fixed */
+  float: left;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  margin-top: 4px;
+  margin-left: 12px;
 }
 
 .dashboard .dashboard-toolbar,

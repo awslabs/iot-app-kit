@@ -1,15 +1,13 @@
 import React, { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { isEqual, pick } from 'lodash';
 
 import { useViewport } from '@iot-app-kit/react-components';
 import { Button, SpaceBetween, Box } from '@cloudscape-design/components';
-
 import { onToggleReadOnly } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
+import { isEqual, pick } from 'lodash';
 import { DashboardSave } from '~/types';
 import DashboardSettings from './settings';
-import CustomOrangeButton from '../customOrangeButton';
 
 const DEFAULT_VIEWPORT = { duration: '10m' };
 
@@ -58,10 +56,11 @@ const Actions: React.FC<ActionsProps> = ({
   };
 
   return (
-    <Box padding={{ top: 'xxs' }} data-testid='dashboard-actions'>
+    <>
+      <Box variant='awsui-key-label'>Actions</Box>
       <SpaceBetween size='s' direction='horizontal'>
         {onSave && <Button onClick={handleOnSave}>Save</Button>}
-        {editable && <CustomOrangeButton title={readOnly ? 'Edit' : 'Preview'} handleClick={handleOnReadOnly} />}
+        {editable && <Button onClick={handleOnReadOnly}>{readOnly ? 'Edit' : 'Preview'}</Button>}
         {editable && !readOnly && (
           <Button
             onClick={() => setDashboardSettingsVisible(true)}
@@ -72,7 +71,7 @@ const Actions: React.FC<ActionsProps> = ({
         )}
         <DashboardSettings isVisible={dashboardSettingsVisible} onClose={handleOnClose} />
       </SpaceBetween>
-    </Box>
+    </>
   );
 };
 
