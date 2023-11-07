@@ -111,7 +111,7 @@ export function ModeledDataStreamTable({
             </Button>
             <Button
               variant='primary'
-              disabled={collectionProps.selectedItems?.length === 0 || selectedWidgets.length === 0}
+              disabled={collectionProps.selectedItems?.length === 0 || selectedWidgets.length !== 1}
               onClick={() => {
                 onClickAddModeledDataStreams(collectionProps.selectedItems as unknown as ModeledDataStream[]);
               }}
