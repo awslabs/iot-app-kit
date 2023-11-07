@@ -52,14 +52,18 @@ export const useViewportData = ({
   const flattenDataPoints = async (dataStream: DataStream, timeOfRequestMS: number) => {
     const { id, unit, resolution, aggregationType, data } = dataStream;
     const isUnmodeledData = queryConfig.query?.properties?.some((pr) => pr.propertyAlias === id);
-    const { data: unmodeledDescribedTimeSeries } = isUnmodeledData
+    const { data: unmodeledDescribedTimeSeries, isError } = isUnmodeledData
       ? await getDescribedTimeSeries({
           client,
           alias: id,
         })
-      : { data: undefined };
+      : { data: undefined, isError: false };
 
-    return data.reduce((flattenedData: CSVDownloadObject[], currentDataPoint: DataPoint) => {
+    if (isError) {
+      return { flatPoints: [], isError };
+    }
+
+    const flatPoints = data.reduce((flattenedData: CSVDownloadObject[], currentDataPoint: DataPoint) => {
       const { x: xValue, y: yValue } = currentDataPoint;
       const pointWithinViewport = isTimeWithinViewport(xValue, viewport, timeOfRequestMS);
 
@@ -107,16 +111,23 @@ export const useViewportData = ({
       }
       return flattenedData;
     }, [] as CSVDownloadObject[]);
+
+    return { flatPoints, isError: false };
   };
 
   const fetchViewportData = async (timeOfRequestMS: number) => {
     const promises = dataStreams.map((dataStream: DataStream) => flattenDataPoints(dataStream, timeOfRequestMS));
     const flatData = await Promise.all(promises);
-    return flatData.flat(1);
+
+    const isError = flatData.some((point) => point.isError);
+    if (isError) {
+      return { data: undefined, isError: true };
+    }
+
+    return { data: flatData.map((d) => d.flatPoints).flat(1), isError: false };
   };
 
   return {
     fetchViewportData,
-    canDownloadData: dataStreams.length === 0,
   };
 };
