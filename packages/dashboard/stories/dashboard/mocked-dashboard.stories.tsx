@@ -1,17 +1,24 @@
-import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { createMockSiteWiseSDK, createMockIoTEventsSDK } from '@iot-app-kit/testing-util';
-
 import Dashboard from '../../src/components/dashboard';
 import { DashboardClientConfiguration } from '../../src/types';
+import { DEFAULT_REGION } from '~/msw/constants';
+import { worker } from '~/msw/browser';
 
+// Start mocked service worker for iot client calls
+worker.start();
+
+/**
+ * Data is mocked by the service worker started above.
+ * No need for real credentials, but the region must match.
+ */
 const clientConfiguration: DashboardClientConfiguration = {
-  iotSiteWiseClient: createMockSiteWiseSDK() as IoTSiteWiseClient,
-  iotEventsClient: createMockIoTEventsSDK(),
-  iotTwinMakerClient: new IoTTwinMakerClient({}),
+  awsCredentials: {
+    accessKeyId: '',
+    secretAccessKey: '',
+  },
+  awsRegion: DEFAULT_REGION,
 };
 
 const displaySettings = {

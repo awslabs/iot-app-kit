@@ -66,9 +66,12 @@ export const SITE_ASSET_MODEL = assetModelFactory.create({
   assetModelHierarchies: [PRODUCTION_LINE_ASSET_MODEL_HIERARCHY],
 });
 
-export const ASSET_MODELS = [
-  SITE_ASSET_MODEL,
-  PRODUCTION_LINE_ASSET_MODEL,
-  REACTOR_ASSET_MODEL,
-  STORAGE_TANK_ASSET_MODEL,
-];
+export const ASSET_MODELS = {
+  models: [SITE_ASSET_MODEL, PRODUCTION_LINE_ASSET_MODEL, REACTOR_ASSET_MODEL, STORAGE_TANK_ASSET_MODEL],
+  getAll: function () {
+    return this.models;
+  },
+  findByAssetModelId: function (assetModelId: string) {
+    return this.models.find((model) => model.assetModelId === assetModelId);
+  },
+};
