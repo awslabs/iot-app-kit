@@ -8,6 +8,7 @@ import { describeAssetModelHandler } from './iot-sitewise/handlers/describeAsset
 import { listAssetsHandler } from './iot-sitewise/handlers/listAssets/listAssetsHandler';
 import { listAssociatedAssetsHandler } from './iot-sitewise/handlers/listAssociatedAssets/listAssociatedAssetsHandler';
 import { listAssetModelsHandler } from './iot-sitewise/handlers/listAssetModels/listAssetModels';
+import { listAssetModelPropertiesHandler } from './iot-sitewise/handlers/listAssetModelProperties/listAssetModelProperties';
 
 export const handlers = [
   batchGetAssetPropertyAggregatesHandler(),
@@ -18,4 +19,5 @@ export const handlers = [
   listAssetsHandler(),
   listAssetModelsHandler(),
   listAssociatedAssetsHandler(),
+  listAssetModelPropertiesHandler(),
 ];

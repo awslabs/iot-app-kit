@@ -7,7 +7,7 @@ import { summarizeAssetModel } from '../../resources/assetModels/summarizeAssetM
 
 export function listAssetModelsHandler() {
   return rest.get(LIST_ASSET_MODELS_URL, (_req, res, ctx) => {
-    const assetModelSummaries = ASSET_MODELS.map(summarizeAssetModel);
+    const assetModelSummaries = ASSET_MODELS.getAll().map(summarizeAssetModel);
     const response: ListAssetModelsResponse = { assetModelSummaries };
 
     return res(ctx.delay(), ctx.status(200), ctx.json(response));
