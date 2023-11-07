@@ -24,12 +24,12 @@ export const getDescribedTimeSeries = async ({
 
   try {
     const data = await client.send(command);
-    return { data, isSuccess: true };
+    return { data, isError: false };
   } catch (error) {
     console.error(`Failed to get described time series. Error: ${error}`);
     console.info('Request input:');
     console.table(params);
 
-    throw error;
+    return { data: undefined, isError: true };
   }
 };
