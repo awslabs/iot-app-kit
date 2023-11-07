@@ -5,19 +5,21 @@ import { Button, ButtonProps } from '@cloudscape-design/components';
 import { unparse } from 'papaparse';
 import { StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
 import { useViewportData } from '~/components/csvDownloadButton/useViewportData';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 
 const CSVDownloadButton = ({
   queryConfig,
   fileName,
+  client,
   ...rest
-}: { queryConfig: StyledSiteWiseQueryConfig; fileName: string } & ButtonProps) => {
-  const { fetchViewportData } = useViewportData({ queryConfig });
+}: { queryConfig: StyledSiteWiseQueryConfig; client: IoTSiteWiseClient; fileName: string } & ButtonProps) => {
+  const { fetchViewportData } = useViewportData({ queryConfig, client });
 
-  const onClickDownload = () => {
+  const onClickDownload = async () => {
     const requestDateMS = Date.now();
     const requestDateString = new Date(requestDateMS).toISOString();
 
-    const data = fetchViewportData(requestDateMS);
+    const data = await fetchViewportData(requestDateMS);
     const stringCSVData = unparse(data);
 
     const file = new Blob([stringCSVData], { type: 'text/csv' });
