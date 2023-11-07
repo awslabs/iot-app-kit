@@ -117,7 +117,7 @@ export function UnmodeledDataStreamTable({
             </Button>
             <Button
               variant='primary'
-              disabled={collectionProps.selectedItems?.length === 0 || selectedWidgets.length === 0}
+              disabled={collectionProps.selectedItems?.length === 0 || selectedWidgets.length !== 1}
               onClick={() => onClickAdd(collectionProps.selectedItems as unknown as UnmodeledDataStream[])}
             >
               Add
