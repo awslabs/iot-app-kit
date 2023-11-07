@@ -4,6 +4,8 @@ import { StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
 import { useAssetDescriptionMapQuery } from '~/hooks/useAssetDescriptionQueries';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { CSVDownloadObject } from './types';
+import { IoTSiteWiseClient, Quality } from '@aws-sdk/client-iotsitewise';
+import { getDescribedTimeSeries } from './getDescribedTimeSeries';
 
 const DEFAULT_VIEWPORT = { duration: '10m' };
 
@@ -31,12 +33,13 @@ const isTimeWithinViewport = (dataPointTimestamp: number, viewport: Viewport, ti
 export const useViewportData = ({
   queryConfig,
   viewport: passedInViewport,
+  client,
 }: {
   queryConfig: StyledSiteWiseQueryConfig;
+  client: IoTSiteWiseClient;
   viewport?: Viewport;
 }) => {
   const queries = useQueries(queryConfig.query);
-
   const { dataStreams } = useTimeSeriesData({ queries });
 
   const describedAssetsMapQuery = useAssetDescriptionMapQuery(queryConfig.query);
@@ -46,8 +49,15 @@ export const useViewportData = ({
   const viewport = passedInViewport || injectedViewport || DEFAULT_VIEWPORT;
 
   // flatten all the data in a single dataStream into one array of CSVDownloadObject
-  const flattenDataPoints = (dataStream: DataStream, timeOfRequestMS: number) => {
+  const flattenDataPoints = async (dataStream: DataStream, timeOfRequestMS: number) => {
     const { id, unit, resolution, aggregationType, data } = dataStream;
+    const isUnmodeledData = queryConfig.query?.properties?.some((pr) => pr.propertyAlias === id);
+    const { data: unmodeledDescribedTimeSeries } = isUnmodeledData
+      ? await getDescribedTimeSeries({
+          client,
+          alias: id,
+        })
+      : { data: undefined };
 
     return data.reduce((flattenedData: CSVDownloadObject[], currentDataPoint: DataPoint) => {
       const { x: xValue, y: yValue } = currentDataPoint;
@@ -55,41 +65,58 @@ export const useViewportData = ({
 
       // do not include data point if it falls outside viewport range
       if (pointWithinViewport) {
-        const isUnmodeledData = queryConfig.query?.properties?.some((pr) => pr.propertyAlias === dataStream.id);
-        const assetPropId = !isUnmodeledData ? dataStream.id.split('---') : []; // modeled datastream IDs follow the pattern {assetID}---{propertyID}
-        const describedModelProperty = describedAssetsMap[assetPropId[0]]?.properties.find(
-          (p) => p.propertyId === assetPropId[1]
-        );
-
-        const flatDataPoint: CSVDownloadObject = {
-          assetName: describedAssetsMap[assetPropId[0]]?.assetName,
-          propertyName: describedModelProperty?.name,
-          propertyAlias: isUnmodeledData ? id : describedModelProperty?.alias,
+        const commonData = {
           value: yValue,
           unit,
           timestamp: new Date(xValue).toISOString(),
           aggregationType: aggregationType,
           resolution,
-          dataType: describedModelProperty?.dataType,
-          dataQuality: 'GOOD',
-          assetId: !isUnmodeledData ? assetPropId[0] : undefined,
-          propertyId: !isUnmodeledData ? assetPropId[1] : undefined,
+          dataQuality: Quality.GOOD,
         };
 
-        flattenedData.push(flatDataPoint);
+        if (isUnmodeledData) {
+          const unmodeledDataPoint: CSVDownloadObject = {
+            ...commonData,
+            propertyAlias: unmodeledDescribedTimeSeries?.alias,
+            dataType: unmodeledDescribedTimeSeries?.dataType,
+            dataTypeSpec: unmodeledDescribedTimeSeries?.dataTypeSpec,
+            assetId: unmodeledDescribedTimeSeries?.assetId,
+            propertyId: undefined,
+          };
+
+          flattenedData.push(unmodeledDataPoint);
+        } else {
+          const assetPropId = dataStream.id.split('---');
+          const describedModelProperty = describedAssetsMap[assetPropId[0]]?.properties.find(
+            ({ propertyId }) => propertyId === assetPropId[1]
+          );
+
+          const modeledDataPoint: CSVDownloadObject = {
+            ...commonData,
+            assetName: describedAssetsMap[assetPropId[0]]?.assetName,
+            propertyName: describedModelProperty?.name,
+            propertyAlias: describedModelProperty?.alias,
+            dataType: describedModelProperty?.dataType,
+            dataTypeSpec: undefined,
+            assetId: assetPropId[0],
+            propertyId: assetPropId[1],
+          };
+
+          flattenedData.push(modeledDataPoint);
+        }
       }
       return flattenedData;
     }, [] as CSVDownloadObject[]);
   };
 
-  const fetchViewportData = (timeOfRequestMS: number) => {
-    return dataStreams.reduce((flattenedStreams: CSVDownloadObject[], currentDataStream: DataStream) => {
-      flattenedStreams.push(...flattenDataPoints(currentDataStream, timeOfRequestMS));
-      return flattenedStreams;
-    }, [] as CSVDownloadObject[]);
+  const fetchViewportData = async (timeOfRequestMS: number) => {
+    const promises = dataStreams.map((dataStream: DataStream) => flattenDataPoints(dataStream, timeOfRequestMS));
+    const flatData = await Promise.all(promises);
+    return flatData.flat(1);
   };
 
   return {
     fetchViewportData,
+    canDownloadData: dataStreams.length === 0,
   };
 };
