@@ -13,5 +13,6 @@ export type CSVDownloadObject = {
   propertyAlias?: string;
   assetId?: string;
   dataType?: string;
+  dataTypeSpec?: string;
   propertyId?: string;
 };
