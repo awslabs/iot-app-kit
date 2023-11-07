@@ -1,15 +1,15 @@
 .dashboard-empty-state {
   position: fixed;
   top: 50%;
-  right: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border: dashed;
   height: 200px;
-  margin-top: -100px;
   width: 350px;
-  margin-right: -125px;
   text-align: center;
   font-size: 16px !important;
   font-weight: 600 !important;
+  pointer-events: none;
 }
 
 .dashboard-empty-state img {
