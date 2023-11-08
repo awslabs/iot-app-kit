@@ -3,6 +3,7 @@
   "include": [
     "src",
     "stories",
-    "tests"
+    "tests", 
+    "e2e/tests/utils/testUtils.ts"  
   ]
 }
