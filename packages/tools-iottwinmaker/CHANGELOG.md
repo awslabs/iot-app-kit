@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.5.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v9.4.0...tools-iottwinmaker-v9.5.0) (2023-11-08)
+
+
+### Bug Fixes
+
+* **TMDT:** change role name to match console, revert GLB code to fix bug, add error handling for IAM ([66f5d83](https://github.com/awslabs/iot-app-kit/commit/66f5d83d3800e07efd3e54b912dbfbbda4ea7f25))
+
 ## [9.4.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v9.3.0...tools-iottwinmaker-v9.4.0) (2023-10-26)
 
 
