@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import Dashboard from '../../src/components/dashboard';
+import Dashboard, { DashboardProperties } from '../../src/components/dashboard';
 import { DashboardClientConfiguration } from '../../src/types';
 import { DEFAULT_REGION } from '~/msw/constants';
 import { useWorker } from '~/msw/useWorker';
@@ -25,14 +25,17 @@ const displaySettings = {
 
 const viewport = { duration: '5m' };
 
-const emptyDashboardConfiguration = {
+const emptyDashboardConfiguration: DashboardProperties = {
   clientConfiguration,
   dashboardConfiguration: {
     displaySettings,
     viewport,
     widgets: [],
   },
-  onSave: () => Promise.resolve(),
+  onSave: async (dashboard) => {
+    window.localStorage.setItem('dashboard', JSON.stringify(dashboard));
+    Promise.resolve();
+  },
 };
 
 const widgetDashboardConfiguration = {
