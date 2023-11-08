@@ -202,3 +202,61 @@ it('selects the widgets that are pasted', () => {
     ])
   );
 });
+
+it('pastes a widget at right edge location', () => {
+  expect(
+    pasteWidgets(
+      setupDashboardState([MOCK_KPI_WIDGET], [MOCK_KPI_WIDGET]),
+      onPasteWidgetsAction({
+        position: { x: 1000, y: 1000 },
+      })
+    ).dashboardConfiguration.widgets
+  ).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        type: MOCK_KPI_WIDGET.type,
+        x: MOCK_KPI_WIDGET.x,
+        y: MOCK_KPI_WIDGET.y,
+      }),
+      expect.objectContaining({
+        type: MOCK_KPI_WIDGET.type,
+        x: 92,
+        y: 95,
+      }),
+    ])
+  );
+});
+
+it('pastes multiple widgets at right edge location', () => {
+  expect(
+    pasteWidgets(
+      setupDashboardState([MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET], [MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET]),
+      onPasteWidgetsAction({
+        position: { x: 1000, y: 1000 },
+      })
+    ).dashboardConfiguration.widgets
+  ).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        type: MOCK_KPI_WIDGET.type,
+        x: MOCK_KPI_WIDGET.x,
+        y: MOCK_KPI_WIDGET.y,
+      }),
+      expect.objectContaining({
+        type: MOCK_LINE_CHART_WIDGET.type,
+        x: MOCK_LINE_CHART_WIDGET.x,
+        y: MOCK_LINE_CHART_WIDGET.y,
+      }),
+      expect.objectContaining({
+        type: MOCK_KPI_WIDGET.type,
+        x: 90,
+        y: 93,
+      }),
+      expect.objectContaining({
+        type: MOCK_LINE_CHART_WIDGET.type,
+        x: 92,
+        y: 95,
+      }),
+    ])
+  );
+});
