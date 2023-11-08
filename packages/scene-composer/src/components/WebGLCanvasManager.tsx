@@ -47,7 +47,8 @@ export const WebGLCanvasManager: React.FC = () => {
   const { enableMatterportViewer } = useMatterportViewer();
   const { document, getSceneNodeByRef, getSceneProperty } = useSceneDocument(sceneComposerId);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
-  const { gl } = useThree();
+  const { gl, scene } = useThree();
+
   const domRef = useRef<HTMLElement>(gl.domElement.parentElement);
   const environmentPreset = getSceneProperty<string>(KnownSceneProperty.EnvironmentPreset);
   const rootNodeRefs = document.rootNodeRefs;

@@ -1,5 +1,28 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
+    "resolveJsonModule": true,
+    "noImplicitAny": false,
+    "plugins": [
+      {
+        "transform": "@formatjs/ts-transformer",
+        "import": "transform",
+        "type": "config",
+        "overrideIdFn": "[sha512:contenthash:base64:6]",
+        "ast": true
+      }
+    ]
+  },
+  "include": [
+    "./src",
+  ],
+  "exclude": [
+    "./src/**/*.spec.ts*"
+  ]
+}
+
+/*
+"compilerOptions": {
     "outDir": "./dist",
     "module": "ESNext",
     "lib": [
@@ -36,14 +59,4 @@
       }
     ]
   },
-  "include": [
-    "src",
-    "src/Global.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/**.spec.**",
-    "tests"
-  ]
-}
+  */

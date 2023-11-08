@@ -20,7 +20,7 @@ import {
   SettingsPanel,
   TopBar,
 } from '../../components/panels';
-import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
+import { sceneComposerIdContext, useSceneComposerId } from '../../common/sceneComposerIdContext';
 import { useSceneDocument, useStore } from '../../store';
 import LogProvider from '../../logger/react-logger/log-provider';
 import DefaultErrorFallback from '../../components/DefaultErrorFallback';
@@ -42,6 +42,38 @@ const UnselectableCanvas = styled(Canvas)`
   }};
   z-index: 0;
 `;
+
+const TestBootstrapper = ({ isLoaded }: { isLoaded: boolean }) => {
+  const sceneComposerId = useSceneComposerId();
+  const { scene, gl } = useThree();
+  useEffect(() => {
+    if (isLoaded) {
+      const customEvent = new CustomEvent('twinmaker:scene-loaded', {
+        detail: {
+          sceneComposerId,
+          scene,
+          gl,
+        },
+      });
+
+      console.log(customEvent, scene);
+
+      window.dispatchEvent(customEvent);
+    }
+
+    return () => {
+      const customEvent = new CustomEvent('twinmaker:scene-unloaded', {
+        detail: {
+          sceneComposerId,
+        },
+      });
+
+      window.dispatchEvent(customEvent);
+    };
+  }, [scene, gl, sceneComposerId]);
+
+  return null;
+};
 
 const R3FWrapper = (props: { matterportConfig?: MatterportConfig; children?: ReactNode; sceneLoaded?: boolean }) => {
   const { children, sceneLoaded, matterportConfig } = props;
@@ -167,6 +199,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
                 <CameraPreviewTrack ref={renderDisplayRef} title={selectedNode.selectedSceneNode?.name} />
               )}
               <R3FWrapper sceneLoaded={sceneLoaded} matterportConfig={externalLibraryConfig?.matterport}>
+                <TestBootstrapper isLoaded={!!sceneLoaded} />
                 <Suspense fallback={LoadingView}>
                   {!sceneLoaded ? null : (
                     <Fragment>

@@ -36,16 +36,20 @@
     }
   },
   "scripts": {
-    "build": "run-s compile",
+    "build": "npm run clean && npm run compile && npm run build:es && npm run build:cjs",
+    "build:es": "tsc -p ./tsconfig.build.json --outDir ./dist/es && npm run copy-assets:es",
+    "build:cjs": "tsc -p ./tsconfig.build.json --outDir ./dist/cjs --module CommonJS && npm run copy-assets:cjs",
     "build:watch": "node ./tools/watch-build.js",
     "dev": "npm-watch build",
     "clean": "rimraf dist ./build/* node_modules",
-    "compile": "run-s svglint extract-msgs convert-svg tsc copy-assets",
+    "compile": "run-s svglint extract-msgs convert-svg",
     "tsc": "tsc -p tsconfig.build.json",
     "tsc:watch": "tsc -p tsconfig.build.json --watch",
     "convert-svg": "npx @svgr/cli --out-dir src/assets/auto-gen/icons/ --typescript --index-template tools/index-template.js -- src/assets/icons/",
     "release": "run-s compile copy-assets",
     "copy-assets": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" dist/",
+    "copy-assets:es": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" dist/es/",
+    "copy-assets:cjs": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" dist/cjs/",
     "lint": "eslint . --max-warnings=510",
     "fix": "eslint --fix .",
     "test": "jest --config jest.config.ts --coverage --silent",
@@ -66,6 +70,8 @@
     "pack": "npm pack",
     "svglint": "svglint src/assets/**/*.svg",
     "test:ui": "npx playwright test",
+    "test:ui:reliability": "npx playwright test --repeat-each 10",
+    "test:ui:dev": "npx playwright test --ui",
     "test:ui-update": "npx playwright test --update-snapshots"
   },
   "peerDependencies": {

@@ -1,9 +1,8 @@
 {
-  "extends": "./tsconfig.build.json",
+  "extends": "@iot-app-kit/ts-config/react-library.json",
   "include": [
-    "src",
-    "stories",
-    "tests", 
-    "e2e/tests/utils/testUtils.ts"  
-  ]
+    "./src",
+    "./stories",
+    "./e2e"
+  ],
 }
