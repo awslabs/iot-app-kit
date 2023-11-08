@@ -13,6 +13,7 @@ const GridSelector = '#container';
 const WidgetSelectorMap = {
   kpi: 'add KPI widget',
   text: 'add Text widget',
+  line: 'add Line widget',
 };
 
 const SelectionAnchorMap = {
@@ -119,5 +120,11 @@ export const gridUtil = (page: Page) => {
      * @returns the user selection box.
      */
     selection: (): Locator => page.locator(SelectionSelector),
+    /**
+     * helper to get the grid area.
+     *
+     * @returns the grid area locator.
+     */
+    gridArea: (): Locator => gridArea,
   };
 };
