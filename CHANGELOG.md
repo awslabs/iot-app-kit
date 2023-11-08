@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.5.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.4.0...root-v9.5.0) (2023-11-08)
+
+
+### Features
+
+* **scene-composer:** support tag occlusion ([3764013](https://github.com/awslabs/iot-app-kit/commit/376401335e6c4d4646bfc49260e35a41a9a43646))
+
+
+### Bug Fixes
+
+* **composer:** get entityBinding in different query ([b4e4a22](https://github.com/awslabs/iot-app-kit/commit/b4e4a22cebeeb39027052c47bb8647bae836d3c2))
+* **composer:** persist new dynamic node world transform ([cb6704f](https://github.com/awslabs/iot-app-kit/commit/cb6704f5b8767bfacad8244415daa2283efd6250))
+* **composer:** tag style field is empty when creating a new tag instead of info ([595147b](https://github.com/awslabs/iot-app-kit/commit/595147bc564b9599598c93059bc6ccf62b2c2b7e))
+* **example:** roll back unneeded package json changes ([39f8324](https://github.com/awslabs/iot-app-kit/commit/39f8324495faba3717d29c6076cf5da97649b56c))
+* **react-components:** update viewportAdapter tests for month and minutes ([a269626](https://github.com/awslabs/iot-app-kit/commit/a269626bd3e78a8b5f515b8f3d590848e9f70725))
+* **scene-composer:** sync tag icon from Matterport ([e0aa7a7](https://github.com/awslabs/iot-app-kit/commit/e0aa7a72db0dc1bcbc3a9c7c7ae87e4b5c061b84))
+* **scene:** add overlay close button back ([24f0d94](https://github.com/awslabs/iot-app-kit/commit/24f0d9427a62ea7174983e10af75fe6f6dcb363a))
+* **Scene:** animation components added at correct time behind flag ([da149cc](https://github.com/awslabs/iot-app-kit/commit/da149cc5456f841a98581be82b792f52f062b85a))
+* **scene:** comment tweak ([234b703](https://github.com/awslabs/iot-app-kit/commit/234b703f8991166e831b385c2cdf6bfd8685fe2a))
+* **scene:** ensure the selected overlay is always the one at front ([7a15943](https://github.com/awslabs/iot-app-kit/commit/7a15943accdbae27059e043cf8a55dda525531c1))
+* **scene:** only show selected tags overlay ([20b7c57](https://github.com/awslabs/iot-app-kit/commit/20b7c578bd6b4e44bf11109e0f55f9212328b812))
+* **scene:** stop scene composer from forcing dark mode on page ([40ef97b](https://github.com/awslabs/iot-app-kit/commit/40ef97b4a6b2baa376fd129991b4672369631323))
+* **TMDT:** change role name to match console, revert GLB code to fix bug, add error handling for IAM ([66f5d83](https://github.com/awslabs/iot-app-kit/commit/66f5d83d3800e07efd3e54b912dbfbbda4ea7f25))
+
 ## [9.4.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.3.0...root-v9.4.0) (2023-10-26)
 
 
