@@ -12,7 +12,7 @@ const isQueryEmpty = (queryConfig: StyledSiteWiseQueryConfig) => {
   return !query?.assets.length && !query?.properties?.length && !query?.assetModels?.length;
 };
 
-const CSVDownloadButton = ({
+export const CSVDownloadButton = ({
   queryConfig,
   fileName,
   client,
@@ -35,7 +35,6 @@ const CSVDownloadButton = ({
     }
 
     const stringCSVData = unparse(data);
-
     const file = new Blob([stringCSVData], { type: 'text/csv' });
 
     // create Anchor element with download attribute, click on it, and then delete it
@@ -63,5 +62,3 @@ const CSVDownloadButton = ({
     />
   );
 };
-
-export default CSVDownloadButton;
