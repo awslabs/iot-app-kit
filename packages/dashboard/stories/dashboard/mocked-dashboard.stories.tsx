@@ -4,10 +4,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import Dashboard from '../../src/components/dashboard';
 import { DashboardClientConfiguration } from '../../src/types';
 import { DEFAULT_REGION } from '~/msw/constants';
-import { worker } from '~/msw/browser';
-
-// Start mocked service worker for iot client calls
-worker.start();
+import { useWorker } from '~/msw/useWorker';
 
 /**
  * Data is mocked by the service worker started above.
@@ -65,6 +62,13 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
+  // Applies to all stories under Mocked data
+  decorators: [
+    (Story) => {
+      useWorker();
+      return <Story />;
+    },
+  ],
 } as ComponentMeta<typeof Dashboard>;
 
 export const Empty: ComponentStory<typeof Dashboard> = () => <Dashboard {...emptyDashboardConfiguration} />;
