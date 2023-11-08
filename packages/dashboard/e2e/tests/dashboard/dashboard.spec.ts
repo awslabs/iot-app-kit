@@ -2,10 +2,7 @@ import { test, expect } from '@playwright/test';
 import { dragAndDrop } from '../utils/dragAndDrop';
 import { GRID_SIZE, gridUtil } from '../utils/grid';
 import { getBoundingBox } from '../utils/locator';
-
-const TEST_PAGE = '/iframe.html?id=dashboard-mocked-data--empty';
-const TEST_IFRAME = '#root';
-const COMPONENT_SELECTOR = '.dashboard';
+import { COMPONENT_SELECTOR, TEST_IFRAME, TEST_PAGE } from '../constants';
 
 test('dashboard', async ({ page }) => {
   await page.goto(TEST_PAGE);
