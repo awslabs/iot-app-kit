@@ -9,14 +9,6 @@ import { getDescribedTimeSeries } from './getDescribedTimeSeries';
 
 const DEFAULT_VIEWPORT = { duration: '10m' };
 
-// Format Date to be a string in format: "YYYY/MM/DD HH:MM:SS"
-export const formatDate = (date: Date) => {
-  const dateString = date.getFullYear().toString() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
-  const timeString = date.toTimeString().split(' ')[0];
-  const dateTime = dateString + ' ' + timeString;
-  return dateTime;
-};
-
 // Check if time is within passed in viewport OR within last x amount of time from request
 const isTimeWithinViewport = (dataPointTimestamp: number, viewport: Viewport, timeOfRequestMS: number) => {
   const currentPoint = new Date(dataPointTimestamp);
@@ -50,7 +42,7 @@ export const useViewportData = ({
 
   // flatten all the data in a single dataStream into one array of CSVDownloadObject
   const flattenDataPoints = async (dataStream: DataStream, timeOfRequestMS: number) => {
-    const { id, unit, resolution, aggregationType, data } = dataStream;
+    const { id, unit, resolution, aggregationType, data, error: dataStreamError } = dataStream;
     const isUnmodeledData = queryConfig.query?.properties?.some((pr) => pr.propertyAlias === id);
     const { data: unmodeledDescribedTimeSeries, isError } = isUnmodeledData
       ? await getDescribedTimeSeries({
@@ -59,7 +51,7 @@ export const useViewportData = ({
         })
       : { data: undefined, isError: false };
 
-    if (isError) {
+    if (isError || dataStreamError) {
       return { flatPoints: [], isError };
     }
 

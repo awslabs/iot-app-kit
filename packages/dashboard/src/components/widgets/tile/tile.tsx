@@ -21,7 +21,7 @@ import { DashboardState } from '~/store/state';
 
 import './tile.css';
 import { onChangeDashboardGridEnabledAction } from '~/store/actions';
-import CSVDownloadButton from '~/components/csvDownloadButton';
+import { CSVDownloadButton } from '~/components/csvDownloadButton';
 import { StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
 import { useGetConfigValue } from '@iot-app-kit/react-components';
 import { useClients } from '~/components/dashboard/clientContext';
