@@ -9,7 +9,7 @@ import { StyledPropertiesAlarmsSectionProps } from './sectionTypes';
 import { defaultOnDeleteQuery } from './onDeleteProperty';
 import { StyledAssetQuery } from '~/customization/widgets/types';
 import { useAssetModel } from '~/hooks/useAssetModel/useAssetModel';
-import { handleDeleteAssetModelProperty } from './handleDeleteAssetModelProperty';
+import { handleDeleteAssetModelProperty, handleHideAssetModelProperty } from './handleDeleteAssetModelProperty';
 
 const NoComponents = () => <Box variant='p'>No properties or alarms found</Box>;
 
@@ -109,6 +109,51 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
 
       updateSiteWiseAssetQuery(newQuery);
     };
+    const onHideAssetQuery = (updatedAssetId: string, updatedPropertyId: string) => {
+      const newQuery = {
+        ...styledAssetQuery,
+        assets:
+          styledAssetQuery?.assets?.map((asset) => {
+            if (asset.assetId === updatedAssetId) {
+              return {
+                ...asset,
+                properties: asset.properties.map((property) => {
+                  if (property.propertyId === updatedPropertyId) {
+                    const visible = property.visible !== undefined ? !property.visible : false;
+                    return { ...property, visible };
+                  } else {
+                    return property;
+                  }
+                }),
+              };
+            } else {
+              return asset;
+            }
+          }) ?? [],
+      };
+
+      updateSiteWiseAssetQuery(newQuery);
+    };
+
+    const onHidePropertyAliasQuery = (propertyAlias: string) => {
+      const newQuery = {
+        ...styledAssetQuery,
+        assets: styledAssetQuery?.assets || [],
+        properties:
+          (styledAssetQuery &&
+            styledAssetQuery?.properties?.map((property) => {
+              if (property.propertyAlias === propertyAlias) {
+                const visible = property.visible !== undefined ? !property.visible : false;
+                return { ...property, visible };
+              } else {
+                return property;
+              }
+            })) ??
+          [],
+      };
+
+      updateSiteWiseAssetQuery(newQuery);
+    };
 
     const modeled =
       styledAssetQuery?.assets?.flatMap(({ assetId, properties }) =>
@@ -128,6 +173,8 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
                 updateSiteWiseAssetQuery,
               })}
               colorable={colorable}
+              onHideAssetQuery={() => onHideAssetQuery(assetId, property.propertyId)}
+              isPropertyVisible={property.visible ?? true}
             />
           ) : null
         )
@@ -150,6 +197,10 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
               updateSiteWiseAssetQuery,
             })}
             colorable={colorable}
+            onHideAssetQuery={() => {
+              onHidePropertyAliasQuery(property.propertyAlias);
+            }}
+            isPropertyVisible={property.visible ?? true}
           />
         );
       }) ?? [];
@@ -194,6 +245,15 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
                 )
               }
               colorable={colorable}
+              isPropertyVisible={property.visible ?? true}
+              onHideAssetQuery={() => {
+                updateSiteWiseAssetQuery(
+                  handleHideAssetModelProperty(styledAssetQuery, {
+                    assetModelId,
+                    propertyId: property.propertyId,
+                  }) as StyledAssetQuery
+                );
+              }}
             />
           );
         })
