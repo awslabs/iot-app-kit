@@ -2,7 +2,6 @@ import React from 'react';
 
 import SpaceBetween from '@cloudscape-design/components/space-between';
 
-import { SizeAndPositionConfiguration } from '../sizeAndPositionSettings';
 import { AggregationsSettingsConfiguration } from '../aggregationSettings';
 import { AxisSettingsConfiguration } from '../axisSettings';
 import { SettingsConfiguration } from '../settings';
@@ -12,7 +11,6 @@ import { LineAndScatterStyleSettingsSection } from '../lineAndScatterStyleSettin
 export const StylesSection = () => (
   <div>
     <SpaceBetween size='xs' direction='vertical'>
-      <SizeAndPositionConfiguration />
       <LineAndScatterStyleSettingsSection />
       <AggregationsSettingsConfiguration />
       <AxisSettingsConfiguration />
