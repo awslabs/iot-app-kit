@@ -173,6 +173,17 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
           };
         })
         .filter((asset) => asset.properties.length > 0) ?? [],
+    assetModels:
+      query?.assetModels
+        ?.map((assetModel) => {
+          const { assetModelId, assetIds, properties } = assetModel;
+          return {
+            assetModelId,
+            assetIds,
+            properties: properties.filter((p) => p.visible ?? true),
+          };
+        })
+        .filter((assetModel) => assetModel.properties.length > 0) ?? [],
   };
 
   const queries = useQueries(filteredQuery);
