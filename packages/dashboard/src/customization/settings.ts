@@ -1,4 +1,6 @@
 import type { Threshold } from '@iot-app-kit/core';
+// FIXME: Export ThresholdStyleType from @iot-app-kit/react-components
+// eslint-disable-next-line no-restricted-imports
 import { ThresholdStyleType } from '@iot-app-kit/react-components/src/components/chart/types';
 
 export type SimpleFontSettings = {

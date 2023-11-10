@@ -14,7 +14,7 @@ import type {
   ListAssociatedAssetsCommandInput,
   ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
-import type { ErrorDetails } from '@iot-app-kit/core/src/common/types';
+import type { ErrorDetails } from '@iot-app-kit/core';
 
 export type SiteWiseAssetDataSource = {
   describeAsset: (input: DescribeAssetCommandInput) => Promise<DescribeAssetCommandOutput>;

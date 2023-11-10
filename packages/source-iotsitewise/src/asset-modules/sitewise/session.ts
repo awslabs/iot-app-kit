@@ -10,7 +10,7 @@ import type {
   SiteWiseAssetSessionInterface,
 } from './types';
 import type { AssetSummary, DescribeAssetModelResponse, AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
-import type { ErrorDetails } from '@iot-app-kit/core/src/common/types';
+import type { ErrorDetails } from '@iot-app-kit/core';
 
 export class SiteWiseAssetSession implements SiteWiseAssetSessionInterface {
   private processor: RequestProcessor;
