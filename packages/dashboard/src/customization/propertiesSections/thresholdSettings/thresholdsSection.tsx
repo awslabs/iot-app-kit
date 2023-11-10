@@ -16,6 +16,8 @@ import { ComparisonOperators } from './comparisonOperators';
 import { AnnotationsSettings } from './annotations';
 import { CancelableEventHandler, ClickDetail } from '@cloudscape-design/components/internal/events';
 import { ThresholdStyleSettings, convertOptionToThresholdStyle, styledOptions } from './thresholdStyle';
+// FIXME: Export ThresholdStyleType from @iot-app-kit/react-components
+// eslint-disable-next-line no-restricted-imports
 import { ThresholdStyleType } from '@iot-app-kit/react-components/src/components/chart/types';
 
 const ThresholdsExpandableSection: React.FC<React.PropsWithChildren<{ title: string }>> = ({ children, title }) => (

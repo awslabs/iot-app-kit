@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FormField, Select, SelectProps } from '@cloudscape-design/components';
 import { OptionDefinition } from '@cloudscape-design/components/internal/components/option/interfaces';
+// FIXME: Export ThresholdStyleType from @iot-app-kit/react-components
+// eslint-disable-next-line no-restricted-imports
 import { ThresholdStyleType } from '@iot-app-kit/react-components/src/components/chart/types';
 
 export type ThresholdStyleSettingsProps = {

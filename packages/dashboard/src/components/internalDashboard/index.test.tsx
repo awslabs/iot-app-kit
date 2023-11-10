@@ -11,6 +11,8 @@ import { DashboardWidgetsConfiguration } from '~/types';
 import { initialState } from '~/store/state';
 
 import { AppKitConfig } from '@iot-app-kit/react-components';
+// FIXME: Export DEFAULT_APP_KIT_CONFIG from @iot-app-kit/react-components
+// eslint-disable-next-line no-restricted-imports
 import { DEFAULT_APP_KIT_CONFIG } from '@iot-app-kit/react-components/src/components/iot-app-kit-config/defaultValues';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 

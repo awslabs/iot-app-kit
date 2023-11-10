@@ -6,7 +6,7 @@ import type {
 } from '@iot-app-kit/source-iotsitewise';
 import type { DashboardWidget } from '~/types';
 import type { AxisSettings, ComplexFontSettings, SimpleFontSettings, ThresholdWithId } from '../settings';
-import type { TableColumnDefinition, TableItem } from '@iot-app-kit/react-components/src';
+import type { TableColumnDefinition, TableItem } from '@iot-app-kit/react-components';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 
 export type QueryConfig<S, T> = {

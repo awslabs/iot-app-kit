@@ -48,6 +48,12 @@ module.exports = {
     'react/jsx-uses-react': 'error',
     'react/jsx-uses-vars': 'error',
     'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@iot-app-kit/**/src"]
+      }
+    ],
   },
   overrides: [
     {

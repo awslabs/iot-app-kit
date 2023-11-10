@@ -7,7 +7,7 @@ import type {
   SiteWiseAssetSessionInterface,
 } from './sitewise/types';
 import type { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
-import type { ErrorDetails } from '@iot-app-kit/core/src/common/types';
+import type { ErrorDetails } from '@iot-app-kit/core';
 
 export class MockSiteWiseAssetsReplayData {
   public models: Map<string, DescribeAssetModelResponse> = new Map<string, DescribeAssetModelResponse>();

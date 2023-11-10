@@ -2,6 +2,9 @@ import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Chart, useViewport } from '@iot-app-kit/react-components';
+// FIXME: Export ChartOptions from @iot-app-kit/react-components
+// FIXME: Export ChartStyleSettingsOptions from @iot-app-kit/react-components
+// eslint-disable-next-line no-restricted-imports
 import { ChartOptions, ChartStyleSettingsOptions } from '@iot-app-kit/react-components/src/components/chart/types';
 
 import type { DashboardState } from '~/store/state';

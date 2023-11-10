@@ -14,6 +14,8 @@ import type { DashboardState } from '../../store/state';
 import type { RecursivePartial } from '~/types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AppKitConfig } from '@iot-app-kit/react-components';
+// FIXME: Export DEFAULT_APP_KIT_CONFIG from @iot-app-kit/react-components
+// eslint-disable-next-line no-restricted-imports
 import { DEFAULT_APP_KIT_CONFIG } from '@iot-app-kit/react-components/src/components/iot-app-kit-config/defaultValues';
 
 const testQueryClient = new QueryClient({
