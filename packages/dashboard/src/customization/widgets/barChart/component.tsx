@@ -28,7 +28,12 @@ const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
   } = widget.properties;
 
   const queries = useQueries(queryConfig.query);
-  const key = createWidgetRenderKey(widget.id);
+  /**
+   * Adding query config to force re-render when adding or removing a datastream
+   * This is required to fix a positioning bug when adding the first datastream
+   * also a bug where removing the last datastream does not actually remove the bars.
+   */
+  const key = createWidgetRenderKey(widget.id) + JSON.stringify(queryConfig.query);
   const aggregation = getAggregation(widget);
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
   // there may be better ways to fix this, i.e. not have -44 and let the chart container  take its parent height,
