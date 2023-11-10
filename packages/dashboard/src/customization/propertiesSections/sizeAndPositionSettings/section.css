@@ -1,4 +1,0 @@
-.base-settings-grid {
-  display: grid;
-  grid-template-columns: repeat(2, max-content 1fr);
-}
