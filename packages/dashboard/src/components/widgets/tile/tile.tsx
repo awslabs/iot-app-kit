@@ -23,7 +23,6 @@ import './tile.css';
 import { onChangeDashboardGridEnabledAction } from '~/store/actions';
 import { CSVDownloadButton } from '~/components/csvDownloadButton';
 import { StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
-import { useGetConfigValue } from '@iot-app-kit/react-components';
 import { useClients } from '~/components/dashboard/clientContext';
 
 type DeletableTileActionProps = {
@@ -59,7 +58,6 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
   const [visible, setVisible] = useState(false);
   const { iotSiteWiseClient } = useClients();
   const { onDelete } = useDeleteWidgets();
-  const isCSVDownloadEnabled = useGetConfigValue('useCSVDownload');
 
   const isRemoveable = !isReadOnly && removeable;
   const headerVisible = !isReadOnly || title;
@@ -106,7 +104,7 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
             {title}
           </Box>
           <SpaceBetween size='s' direction='horizontal'>
-            {widget.type !== 'text' && isCSVDownloadEnabled && iotSiteWiseClient && (
+            {iotSiteWiseClient && widget.type !== 'text' && (
               <CSVDownloadButton
                 client={iotSiteWiseClient}
                 queryConfig={widget.properties.queryConfig as StyledSiteWiseQueryConfig}

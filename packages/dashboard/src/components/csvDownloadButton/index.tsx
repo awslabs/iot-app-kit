@@ -9,7 +9,7 @@ import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 
 const isQueryEmpty = (queryConfig: StyledSiteWiseQueryConfig) => {
   const query = queryConfig.query;
-  return !query?.assets.length && !query?.properties?.length && !query?.assetModels?.length;
+  return !query?.assets?.length && !query?.properties?.length && !query?.assetModels?.length;
 };
 
 export const CSVDownloadButton = ({
@@ -53,6 +53,7 @@ export const CSVDownloadButton = ({
 
   return (
     <Button
+      ariaLabel='download CSV'
       iconName='download'
       loading={isDownloading}
       variant='icon'
