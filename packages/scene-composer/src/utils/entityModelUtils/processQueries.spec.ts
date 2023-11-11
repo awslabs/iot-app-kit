@@ -198,7 +198,7 @@ describe('processQueries', () => {
     expect(nodes.length).toEqual(2);
     expect(nodes[0].parentRef).toEqual(parentRef);
     expect((nodes[0].components[0] as ISubModelRefComponent).parentRef).toEqual(parentRef);
-    expect(nodes[0].transform.position).toEqual([0, 0, 0]);
+    expect(nodes[0].transform.position).toEqual([3, 3, 3]);
   });
 
   it('should return expected nodes', async () => {

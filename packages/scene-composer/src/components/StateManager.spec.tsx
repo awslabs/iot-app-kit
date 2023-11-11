@@ -64,6 +64,7 @@ describe('StateManager', () => {
     getSceneProperty: jest.fn(),
   };
   const setViewportMock = jest.fn();
+  const setDataBindingQueryRefreshRateMock = jest.fn();
   const setAutoQueryEnabledMock = jest.fn();
   const createState = (connectionName: string) => ({
     ...baseState,
@@ -72,6 +73,7 @@ describe('StateManager', () => {
       connectionNameForMatterportViewer: connectionName,
       setConnectionNameForMatterportViewer: jest.fn(),
       setViewport: setViewportMock,
+      setDataBindingQueryRefreshRate: setDataBindingQueryRefreshRateMock,
       setAutoQueryEnabled: setAutoQueryEnabledMock,
     },
   });
@@ -576,6 +578,41 @@ describe('StateManager', () => {
     });
     expect(setViewportMock).toBeCalledTimes(2);
     expect(setViewportMock).toBeCalledWith(undefined);
+  });
+
+  it('should call setDataBindingQueryRefreshRate when changed', async () => {
+    useStore('default').setState(createState('random'));
+    let container;
+    await act(async () => {
+      container = create(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
+          config={{ dataBindingQueryRefreshRate: 6666 }}
+          onSceneUpdated={jest.fn()}
+          viewport={viewport}
+        />,
+      );
+      await flushPromises();
+    });
+    expect(setDataBindingQueryRefreshRateMock).toBeCalledTimes(1);
+    expect(setDataBindingQueryRefreshRateMock).toBeCalledWith(6666);
+
+    // setDataBindingQueryRefreshRate with undefined
+    await act(async () => {
+      container.update(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
+          config={sceneConfig}
+          onSceneUpdated={jest.fn()}
+          viewport={undefined}
+        />,
+      );
+      await flushPromises();
+    });
+    expect(setDataBindingQueryRefreshRateMock).toBeCalledTimes(2);
+    expect(setDataBindingQueryRefreshRateMock).toBeCalledWith(undefined);
   });
 
   it('should call setAutoQueryEnabled with true', async () => {

@@ -29,6 +29,8 @@ export type SceneComposerDocumentOperation =
   | 'renderSceneNodesFromLayers'
   | 'updateSceneNodeInternal'
   | 'updateSceneNodeInternalTransient'
+  | 'updateSceneNodeInternalBatch'
+  | 'updateSceneNodeInternalBatchTransient'
   | 'updateDocumentInternal'
   | 'removeSceneNode'
   | 'updateSceneRuleMapById'
@@ -42,6 +44,7 @@ export type SceneComposerDataOperation = 'setDataInput' | 'setDataBindingTemplat
 
 export type SceneComposerViewOptionOperation =
   | 'setViewport'
+  | 'setDataBindingQueryRefreshRate'
   | 'setAutoQueryEnabled'
   | 'toggleComponentVisibility'
   | 'setTagSettings'
@@ -61,6 +64,8 @@ export const SceneComposerOperationTypeMap: Record<SceneComposerOperation, Opera
   renderSceneNodesFromLayers: 'UPDATE_DOCUMENT',
   updateSceneNodeInternal: 'UPDATE_DOCUMENT',
   updateSceneNodeInternalTransient: 'TRANSIENT',
+  updateSceneNodeInternalBatch: 'UPDATE_DOCUMENT',
+  updateSceneNodeInternalBatchTransient: 'TRANSIENT',
   updateDocumentInternal: 'UPDATE_DOCUMENT',
   removeSceneNode: 'UPDATE_DOCUMENT',
   addComponentInternal: 'UPDATE_DOCUMENT',
@@ -96,6 +101,7 @@ export const SceneComposerOperationTypeMap: Record<SceneComposerOperation, Opera
   setDataBindingTemplate: 'TRANSIENT',
 
   setViewport: 'TRANSIENT',
+  setDataBindingQueryRefreshRate: 'TRANSIENT',
   setAutoQueryEnabled: 'TRANSIENT',
   toggleComponentVisibility: 'TRANSIENT',
   setTagSettings: 'TRANSIENT',

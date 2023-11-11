@@ -20,7 +20,12 @@ import { RootState } from '../Store';
 import { addComponentToComponentNodeMap, deleteComponentFromComponentNodeMap } from '../helpers/componentMapHelpers';
 import editorStateHelpers from '../helpers/editorStateHelpers';
 import interfaceHelpers from '../helpers/interfaceHelpers';
-import { appendSceneNode, removeNode, renderSceneNodesFromLayers } from '../helpers/sceneDocumentHelpers';
+import {
+  appendSceneNode,
+  removeNode,
+  renderSceneNodesFromLayers,
+  updateSceneNode,
+} from '../helpers/sceneDocumentHelpers';
 import serializationHelpers, { IDeserializeOptions } from '../helpers/serializationHelpers';
 import {
   DisplayMessageCategory,
@@ -59,6 +64,12 @@ export interface ISceneDocumentSlice {
     isTransient?: boolean,
     skipEntityUpdate?: boolean,
   ): void;
+  updateSceneNodeInternalBatch(
+    nodesMap: Record<string, RecursivePartial<ISceneNodeInternal>>,
+    isTransient?: boolean,
+    skipEntityUpdate?: boolean,
+  ): void;
+
   updateDocumentInternal(partial: RecursivePartial<Pick<ISceneDocumentInternal, 'unit'>>): void;
   listSceneRuleMapIds(): string[];
   getSceneRuleMapById(id?: string): Readonly<IRuleBasedMapInternal> | undefined;
@@ -235,43 +246,21 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
     },
 
     updateSceneNodeInternal: (ref, partial, isTransient, skipEntityUpdate) => {
-      const document = get().document;
-
       set((draft) => {
-        // update target node
-        mergeDeep(draft.document.nodeMap[ref], partial);
-
-        // Reorder logics
-        if ('parentRef' in partial) {
-          const nodeToMove = document.nodeMap[ref];
-
-          const oldParentRef = nodeToMove?.parentRef;
-          const oldParent = document.nodeMap[oldParentRef || ''];
-
-          const newParentRef = partial.parentRef;
-
-          // remove target node from old parent
-          if (!oldParentRef) {
-            draft.document.rootNodeRefs = document.rootNodeRefs.filter((root) => root !== ref);
-          } else {
-            draft.document.nodeMap[oldParentRef].childRefs = oldParent.childRefs.filter((child) => child !== ref);
-          }
-
-          // update new parent to have target node as child
-          if (!newParentRef) {
-            draft.document.rootNodeRefs.push(ref);
-          } else {
-            draft.document.nodeMap[newParentRef].childRefs.push(ref);
-          }
-        }
-
-        const updatedNode = draft.document.nodeMap[ref];
-        if (isDynamicNode(updatedNode) && !skipEntityUpdate) {
-          const compsToBeUpdated = !isEmpty(partial.components) ? updatedNode.components : undefined;
-          updateEntity(updatedNode, compsToBeUpdated);
-        }
+        updateSceneNode(draft, ref, partial, skipEntityUpdate);
 
         draft.lastOperation = isTransient ? 'updateSceneNodeInternalTransient' : 'updateSceneNodeInternal';
+      });
+    },
+
+    updateSceneNodeInternalBatch: (nodesMap, isTransient, skipEntityUpdate) => {
+      set((draft) => {
+        Object.keys(nodesMap).forEach((ref) => {
+          const partial = nodesMap[ref];
+          updateSceneNode(draft, ref, partial, skipEntityUpdate);
+        });
+
+        draft.lastOperation = isTransient ? 'updateSceneNodeInternalBatchTransient' : 'updateSceneNodeInternalBatch';
       });
     },
 
