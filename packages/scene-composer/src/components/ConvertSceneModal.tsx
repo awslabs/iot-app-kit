@@ -23,12 +23,18 @@ import { ConvertingProgress } from './ConvertingProgress';
 interface ConvertProgress {
   total: number;
   converted: number;
-  failedNodes: ISceneNodeInternal[];
-  succeededNodes: ISceneNodeInternal[];
+  failedNodes: {
+    node: ISceneNodeInternal;
+    error: string;
+  }[];
+  succeededNodes: Record<string, ISceneNodeInternal>;
 }
 interface ConvertResult {
-  failedNodes?: ISceneNodeInternal[];
-  succeededNodes?: ISceneNodeInternal[];
+  failedNodes?: {
+    node: ISceneNodeInternal;
+    error: string;
+  }[];
+  succeededNodes?: Record<string, ISceneNodeInternal>;
   errorMessage?: string;
 }
 
@@ -38,7 +44,7 @@ const ConvertSceneModal: React.FC = () => {
   const document = useStore(sceneComposerId)((state) => state.document);
 
   const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
-  const updateSceneNodeInternal = useStore(sceneComposerId)((state) => state.updateSceneNodeInternal);
+  const updateSceneNodeInternalBatch = useStore(sceneComposerId)((state) => state.updateSceneNodeInternalBatch);
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
 
   const sceneRootId = useStore(sceneComposerId)((state) =>
@@ -59,15 +65,30 @@ const ConvertSceneModal: React.FC = () => {
     setProgress(undefined);
   }, [setConvertSceneModalVisibility]);
 
+  const onResult = useCallback(
+    (progressLocal: ConvertProgress) => {
+      progressLocal.converted++;
+
+      if (progressLocal.converted === progressLocal.total) {
+        setProgress(undefined);
+        setResult({ failedNodes: progressLocal.failedNodes, succeededNodes: progressLocal.succeededNodes });
+        updateSceneNodeInternalBatch(progressLocal.succeededNodes, false, true);
+      } else {
+        setProgress({ ...progressLocal });
+      }
+    },
+    [setProgress, setResult, updateSceneNodeInternalBatch],
+  );
+
   const onConfirm = useCallback(async () => {
     try {
-      const progress: ConvertProgress = {
+      const progressLocal: ConvertProgress = {
         total: staticNodeCount(document.nodeMap),
         converted: 0,
-        succeededNodes: [],
+        succeededNodes: {},
         failedNodes: [],
       };
-      setProgress(progress);
+      setProgress(progressLocal);
 
       let layerId = sceneLayerIds?.at(0);
       let rootId = sceneRootId;
@@ -99,27 +120,12 @@ const ConvertSceneModal: React.FC = () => {
           layerId,
           getObject3DBySceneNodeRef,
           onSuccess: (convertedNode) => {
-            progress.converted++;
-            progress.succeededNodes.push(convertedNode);
-
-            if (progress.converted === progress.total) {
-              setProgress(undefined);
-              setResult({ failedNodes: progress.failedNodes, succeededNodes: progress.succeededNodes });
-            } else {
-              setProgress(progress);
-            }
-            updateSceneNodeInternal(convertedNode.ref, convertedNode, false, true);
+            progressLocal.succeededNodes[convertedNode.ref] = convertedNode;
+            onResult(progressLocal);
           },
-          onFailure: (convertedNode) => {
-            progress.converted++;
-            progress.failedNodes.push(convertedNode);
-
-            if (progress.converted === progress.total) {
-              setProgress(undefined);
-              setResult({ failedNodes: progress.failedNodes, succeededNodes: progress.succeededNodes });
-            } else {
-              setProgress(progress);
-            }
+          onFailure: (convertedNode, error) => {
+            progressLocal.failedNodes.push({ node: convertedNode, error: error.message });
+            onResult(progressLocal);
           },
         });
       }
@@ -127,7 +133,7 @@ const ConvertSceneModal: React.FC = () => {
       setProgress(undefined);
       setResult({ errorMessage: (e as Error).message });
     }
-  }, [document, sceneLayerIds, sceneRootId, setSceneProperty, updateSceneNodeInternal]);
+  }, [document, sceneLayerIds, sceneRootId, setSceneProperty, updateSceneNodeInternalBatch, setProgress]);
 
   return (
     <CenteredContainer
@@ -196,9 +202,9 @@ const ConvertSceneModal: React.FC = () => {
               </Box>
             )}
             {result.failedNodes &&
-              result.failedNodes.map((node) => (
+              result.failedNodes.map(({ node, error }) => (
                 <Box key={node.ref} padding={{ left: 's' }}>
-                  {node.name}
+                  {node.name} ({error})
                 </Box>
               ))}
           </Alert>

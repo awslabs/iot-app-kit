@@ -12,6 +12,7 @@ export interface DracoDecoderConfig {
 export interface SceneViewerConfig {
   dracoDecoder?: DracoDecoderConfig;
   locale?: string;
+  dataBindingQueryRefreshRate?: number; // in milliseconds
 }
 
 export interface MatterportConfig {

@@ -92,11 +92,6 @@ export const processQueries = async (
         nodeEntity.components?.[KnownComponentType.SubModelRef].properties?.[
           SubModelRefComponentProperty.ParentRef
         ].value?.relationshipValue?.targetEntityId;
-      node.transform = {
-        position: [0, 0, 0],
-        rotation: [0, 0, 0],
-        scale: [1, 1, 1],
-      };
       node.parentRef = subModelComp.parentRef;
     }
 

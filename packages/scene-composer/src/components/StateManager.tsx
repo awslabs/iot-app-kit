@@ -94,8 +94,13 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const matterportModelId = useStore(sceneComposerId)((state) =>
     state.getSceneProperty<string>(KnownSceneProperty.MatterportModelId),
   );
-  const { connectionNameForMatterportViewer, setConnectionNameForMatterportViewer, setViewport, setAutoQueryEnabled } =
-    useViewOptionState(sceneComposerId);
+  const {
+    connectionNameForMatterportViewer,
+    setConnectionNameForMatterportViewer,
+    setViewport,
+    setDataBindingQueryRefreshRate,
+    setAutoQueryEnabled,
+  } = useViewOptionState(sceneComposerId);
   const { enableMatterportViewer } = useMatterportViewer();
   const autoQueryEnabled = !!config?.featureConfig?.[COMPOSER_FEATURES.AutoQuery];
   const dataProviderRef = useRef<ProviderWithViewport<TimeSeriesData[]> | undefined>(undefined);
@@ -192,7 +197,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     if (config.featureConfig) {
       setFeatureConfig(config.featureConfig);
     }
-  }, [config]);
+  }, [config.featureConfig]);
 
   useEffect(() => {
     setAutoQueryEnabled(isViewing && autoQueryEnabled && !queries && !dataStreams);
@@ -341,7 +346,12 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   }, [viewport]);
 
   useEffect(() => {
+    setDataBindingQueryRefreshRate(config.dataBindingQueryRefreshRate);
+  }, [config.dataBindingQueryRefreshRate]);
+
+  useEffect(() => {
     if (queries && viewport) {
+      const refreshRate = config.dataBindingQueryRefreshRate ?? 5000;
       dataProviderRef.current = combineProviders(
         queries.map((query) =>
           query.build(sceneComposerId, {
@@ -349,7 +359,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
             settings: {
               // only support default settings for now until when customization is needed
               fetchFromStartToEnd: true,
-              refreshRate: (viewport as DurationViewport).duration ? 5000 : undefined,
+              refreshRate: (viewport as DurationViewport).duration ? refreshRate : undefined,
             },
           }),
         ),
@@ -367,7 +377,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       dataProviderRef.current?.unsubscribe();
       dataProviderRef.current = undefined;
     };
-  }, [queries, viewport]);
+  }, [queries, viewport, config.dataBindingQueryRefreshRate]);
 
   useEffect(() => {
     if (dataBindingTemplate) {

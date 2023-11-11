@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import flushPromises from 'flush-promises';
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
@@ -34,7 +34,7 @@ jest.mock('../utils/entityModelUtils/sceneUtils', () => ({
 describe('ConvertSceneModal', () => {
   const setConvertSceneModalVisibility = jest.fn();
   const setSceneProperty = jest.fn();
-  const updateSceneNodeInternal = jest.fn();
+  const updateSceneNodeInternalBatch = jest.fn();
   const getObject3DBySceneNodeRef = jest.fn();
   const getSceneProperty = jest.fn();
 
@@ -43,7 +43,7 @@ describe('ConvertSceneModal', () => {
     useStore('default').setState({
       setConvertSceneModalVisibility,
       setSceneProperty,
-      updateSceneNodeInternal,
+      updateSceneNodeInternalBatch,
       getObject3DBySceneNodeRef,
       getSceneProperty,
     });
@@ -192,18 +192,9 @@ describe('ConvertSceneModal', () => {
     await flushPromises();
 
     expect(convertAllNodesToEntities).toBeCalledTimes(1);
-    expect(updateSceneNodeInternal).toBeCalledTimes(2);
-    expect(updateSceneNodeInternal).toHaveBeenNthCalledWith(
-      1,
-      'success-1',
-      { ...defaultNode, ref: 'success-1' },
-      false,
-      true,
-    );
-    expect(updateSceneNodeInternal).toHaveBeenNthCalledWith(
-      2,
-      'success-2',
-      { ...defaultNode, ref: 'success-2' },
+    expect(updateSceneNodeInternalBatch).toBeCalledTimes(1);
+    expect(updateSceneNodeInternalBatch).toBeCalledWith(
+      { 'success-1': { ...defaultNode, ref: 'success-1' }, 'success-2': { ...defaultNode, ref: 'success-2' } },
       false,
       true,
     );
@@ -228,7 +219,7 @@ describe('ConvertSceneModal', () => {
     (convertAllNodesToEntities as jest.Mock).mockImplementation(({ onSuccess, onFailure }) => {
       act(() => {
         onSuccess({ ...defaultNode, ref: 'success-node-ref' });
-        onFailure({ ...defaultNode, ref: 'failure-node-ref', name: 'failure-node' });
+        onFailure({ ...defaultNode, ref: 'failure-node-ref', name: 'failure-node' }, new Error('convert failed'));
       });
     });
 
@@ -242,11 +233,9 @@ describe('ConvertSceneModal', () => {
     await flushPromises();
 
     expect(convertAllNodesToEntities).toBeCalledTimes(1);
-    expect(updateSceneNodeInternal).toBeCalledTimes(1);
-    expect(updateSceneNodeInternal).toHaveBeenNthCalledWith(
-      1,
-      'success-node-ref',
-      { ...defaultNode, ref: 'success-node-ref' },
+    expect(updateSceneNodeInternalBatch).toBeCalledTimes(1);
+    expect(updateSceneNodeInternalBatch).toBeCalledWith(
+      { 'success-node-ref': { ...defaultNode, ref: 'success-node-ref' } },
       false,
       true,
     );
@@ -256,7 +245,7 @@ describe('ConvertSceneModal', () => {
     });
 
     const errorMessage = queryByText('failure-node');
-    expect(errorMessage).toBeTruthy();
+    waitFor(() => expect(errorMessage).toBeTruthy());
 
     expect(container).toMatchSnapshot();
   });
@@ -273,7 +262,7 @@ describe('ConvertSceneModal', () => {
     await flushPromises();
 
     expect(convertAllNodesToEntities).not.toBeCalled();
-    expect(updateSceneNodeInternal).not.toBeCalled();
+    expect(updateSceneNodeInternalBatch).not.toBeCalled();
 
     act(() => {
       rerender(<ConvertSceneModal />);

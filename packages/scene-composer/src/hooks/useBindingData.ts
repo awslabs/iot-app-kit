@@ -26,6 +26,7 @@ const useBindingData = (
 
   const queries = useBindingQueries(bindings).queries;
   const viewport = useViewOptionState(sceneComposerId).viewport;
+  const refreshRate = useViewOptionState(sceneComposerId).dataBindingQueryRefreshRate ?? 5000;
   const autoQueryEnabled = useViewOptionState(sceneComposerId).autoQueryEnabled;
 
   const data = useRef<(Record<string, Primitive> | undefined)[] | undefined>(undefined);
@@ -47,7 +48,7 @@ const useBindingData = (
         settings: {
           // only support default settings for now until when customization is needed
           fetchFromStartToEnd: true,
-          refreshRate: (viewport as DurationViewport).duration ? 5000 : undefined,
+          refreshRate: (viewport as DurationViewport).duration ? refreshRate : undefined,
         },
       });
 
@@ -78,7 +79,7 @@ const useBindingData = (
     return () => {
       providers?.forEach((provider) => provider?.unsubscribe());
     };
-  }, [queries, autoQueryEnabled, viewport]);
+  }, [queries, autoQueryEnabled, viewport, refreshRate]);
 
   const result = useMemo(() => {
     return { data: data.current };

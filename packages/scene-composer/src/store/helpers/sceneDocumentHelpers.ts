@@ -1,4 +1,10 @@
+import { isEmpty } from 'lodash';
+
 import ILogger from '../../logger/ILogger';
+import { isDynamicNode } from '../../utils/entityModelUtils/sceneUtils';
+import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
+import { mergeDeep } from '../../utils/objectUtils';
+import { RecursivePartial } from '../../utils/typeUtils';
 import { RootState } from '../Store';
 import { ISceneDocumentInternal, ISceneNodeInternal } from '../internalInterfaces';
 
@@ -147,4 +153,47 @@ export const appendSceneNode = (draft: RootState, node: ISceneNodeInternal, disa
   }
 
   draft.lastOperation = 'appendSceneNodeInternal';
+};
+
+export const updateSceneNode = (
+  draft: RootState,
+  ref: string,
+  partial: RecursivePartial<ISceneNodeInternal>,
+  skipEntityUpdate?: boolean,
+): void => {
+  const nodeToMove = draft.document.nodeMap[ref];
+  const oldParentRef = nodeToMove?.parentRef;
+  const oldParent = draft.document.nodeMap[oldParentRef || ''];
+
+  // Ignore childRefs from partial since it's determined by parentRef and handled by this function
+  const filteredPartial = partial;
+  delete partial.childRefs;
+
+  // update target node
+  mergeDeep(draft.document.nodeMap[ref], filteredPartial);
+
+  // Reorder logics
+  if ('parentRef' in partial) {
+    const newParentRef = partial.parentRef;
+
+    // remove target node from old parent
+    if (!oldParentRef) {
+      draft.document.rootNodeRefs = draft.document.rootNodeRefs.filter((root) => root !== ref);
+    } else {
+      draft.document.nodeMap[oldParentRef].childRefs = oldParent.childRefs.filter((child) => child !== ref);
+    }
+
+    // update new parent to have target node as child
+    if (!newParentRef) {
+      draft.document.rootNodeRefs.push(ref);
+    } else {
+      draft.document.nodeMap[newParentRef].childRefs.push(ref);
+    }
+  }
+
+  const updatedNode = draft.document.nodeMap[ref];
+  if (isDynamicNode(updatedNode) && !skipEntityUpdate) {
+    const compsToBeUpdated = !isEmpty(partial.components) ? updatedNode.components : undefined;
+    updateEntity(updatedNode, compsToBeUpdated);
+  }
 };
