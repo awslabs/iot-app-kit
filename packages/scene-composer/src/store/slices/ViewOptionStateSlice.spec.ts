@@ -122,6 +122,26 @@ describe('createViewOptionStateSlice', () => {
     expect(draft.noHistoryStates.viewport).toBeUndefined();
   });
 
+  it('should be able to set data binding refresh rate', () => {
+    const draft = {
+      lastOperation: undefined,
+      noHistoryStates: { dataBindingQueryRefreshRate: undefined },
+    };
+
+    const set = jest.fn((callback) => callback(draft));
+
+    const { setDataBindingQueryRefreshRate } = createViewOptionStateSlice(set);
+    setDataBindingQueryRefreshRate(6666);
+
+    expect(draft.lastOperation!).toEqual('setDataBindingQueryRefreshRate');
+    expect(draft.noHistoryStates.dataBindingQueryRefreshRate).toEqual(6666);
+
+    setDataBindingQueryRefreshRate(undefined);
+
+    expect(draft.lastOperation!).toEqual('setDataBindingQueryRefreshRate');
+    expect(draft.noHistoryStates.dataBindingQueryRefreshRate).toBeUndefined();
+  });
+
   it('should be able to enable auto query', () => {
     const draft = {
       lastOperation: undefined,

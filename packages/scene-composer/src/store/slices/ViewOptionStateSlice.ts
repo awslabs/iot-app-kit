@@ -10,11 +10,13 @@ export interface IViewOptionStateSlice {
     [key in KnownComponentType | Component.DataOverlaySubType]: boolean;
   }>;
   viewport?: Viewport;
+  dataBindingQueryRefreshRate?: number;
   autoQueryEnabled?: boolean;
   tagSettings?: ITagSettings;
   connectionNameForMatterportViewer?: string;
 
   setViewport: (viewport?: Viewport) => void;
+  setDataBindingQueryRefreshRate: (dataBindingQueryRefreshRate?: number) => void;
   setAutoQueryEnabled: (autoQueryEnabled: boolean) => void;
   toggleComponentVisibility: (componentType: KnownComponentType | Component.DataOverlaySubType) => void;
   setTagSettings: (settings: ITagSettings) => void;
@@ -34,6 +36,12 @@ export const createViewOptionStateSlice = (set: SetState<RootState>): IViewOptio
     set((draft) => {
       draft.noHistoryStates.viewport = viewport;
       draft.lastOperation = 'setViewport';
+    });
+  },
+  setDataBindingQueryRefreshRate: (rate) => {
+    set((draft) => {
+      draft.noHistoryStates.dataBindingQueryRefreshRate = rate;
+      draft.lastOperation = 'setDataBindingQueryRefreshRate';
     });
   },
   setAutoQueryEnabled: (autoQueryEnabled) => {

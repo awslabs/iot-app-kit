@@ -186,6 +186,9 @@ exports[`ConvertSceneModal should render with converting scene failure 1`] = `
         padding="{\\"left\\":\\"s\\"}"
       >
         failure-node
+         (
+        convert failed
+        )
       </div>
     </div>
   </div>

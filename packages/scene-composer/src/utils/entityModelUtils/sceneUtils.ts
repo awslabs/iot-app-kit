@@ -12,8 +12,8 @@ import { getGlobalSettings } from '../../common/GlobalSettings';
 import { generateUUID } from '../mathUtils';
 import { ISceneDocumentInternal, ISceneNodeInternal } from '../../store';
 import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
-import { getFinalNodeTransform } from '../nodeUtils';
-import { KnownSceneProperty } from '../../interfaces';
+import { findComponentByType, getFinalNodeTransform } from '../nodeUtils';
+import { KnownComponentType, KnownSceneProperty } from '../../interfaces';
 
 import { createNodeEntity } from './createNodeEntity';
 
@@ -102,31 +102,82 @@ export const convertAllNodesToEntities = ({
   onSuccess?: (node: ISceneNodeInternal) => void;
   onFailure?: (node: ISceneNodeInternal, error: Error) => void;
 }): void => {
+  const subModelRequests: ISceneNodeInternal[] = [];
+
   Object.keys(document.nodeMap).forEach((nodeRef) => {
     const node = document.nodeMap[nodeRef];
     const object3D = getObject3DBySceneNodeRef(nodeRef);
 
-    if (!isDynamicNode(node) && object3D) {
-      // Use world transform before supporting hierarchy relationship
-      const worldTransform = getFinalNodeTransform(node, object3D, null);
-
-      const worldTransformNode: ISceneNodeInternal = {
-        ...node,
-        parentRef: undefined,
-        transform: worldTransform,
-        properties: {
-          ...node.properties,
-          [SceneNodeRuntimeProperty.LayerIds]: [layerId!],
-        },
-      };
-
-      createNodeEntity(worldTransformNode, sceneRootEntityId, layerId)
-        .then(() => {
-          onSuccess?.(worldTransformNode);
-        })
-        .catch((error) => {
-          onFailure?.(worldTransformNode, error);
-        });
+    if (isDynamicNode(node)) {
+      return;
     }
+
+    if (!object3D) {
+      onFailure?.(node, new Error('Object not found'));
+    } else {
+      // Create sub model nodes in the end to ensure their parents are created before them
+      if (findComponentByType(node, KnownComponentType.SubModelRef)) {
+        subModelRequests.push({
+          ...node,
+          properties: {
+            ...node.properties,
+            [SceneNodeRuntimeProperty.LayerIds]: [layerId!],
+          },
+        });
+      } else {
+        // Use world transform before supporting hierarchy relationship
+        const worldTransform = getFinalNodeTransform(node, object3D, null);
+
+        const worldTransformNode: ISceneNodeInternal = {
+          ...node,
+          parentRef: undefined,
+          transform: worldTransform,
+          properties: {
+            ...node.properties,
+            [SceneNodeRuntimeProperty.LayerIds]: [layerId!],
+          },
+        };
+
+        createNodeEntity(worldTransformNode, sceneRootEntityId, layerId)
+          .then(() => {
+            onSuccess?.(worldTransformNode);
+          })
+          .catch((error) => {
+            onFailure?.(worldTransformNode, error);
+          });
+      }
+    }
+  });
+
+  // Make sure the parent entity of sub model node is available before creating sub model entity
+  subModelRequests.forEach(async (req) => {
+    if (!req.parentRef) {
+      onFailure?.(req, new Error('No parentRef found'));
+      return;
+    }
+
+    let retryCounts = 0;
+    const interval = setInterval(async () => {
+      retryCounts++;
+      const res = await checkIfEntityAvailable(req.parentRef!, getGlobalSettings().twinMakerSceneMetadataModule!);
+      if (res) {
+        createNodeEntity(req, req.parentRef || sceneRootEntityId, layerId)
+          .then(() => {
+            onSuccess?.(req);
+          })
+          .catch((error) => {
+            onFailure?.(req, error);
+          });
+
+        clearInterval(interval);
+        return;
+      }
+
+      if (retryCounts > 3) {
+        clearInterval(interval);
+        onFailure?.(req, new Error('Parent entity does not exist in the workspace'));
+        return;
+      }
+    }, 1000);
   });
 };

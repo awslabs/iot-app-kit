@@ -3,7 +3,12 @@ import { cloneDeep } from 'lodash';
 import { ISceneDocumentInternal, ISceneNodeInternal, RootState } from '../..';
 import DebugLogger from '../../../logger/DebugLogger';
 import { ITransformInternal } from '../../internalInterfaces';
-import { appendSceneNode, removeNode, renderSceneNodesFromLayers } from '../sceneDocumentHelpers';
+import { appendSceneNode, removeNode, renderSceneNodesFromLayers, updateSceneNode } from '../sceneDocumentHelpers';
+import { mergeDeep } from '../../../utils/objectUtils';
+
+jest.mock('../../../utils/objectUtils', () => {
+  return { mergeDeep: jest.fn() };
+});
 
 const logger = new DebugLogger('stateStore');
 
@@ -251,6 +256,78 @@ describe('sceneDocumentHelpers', () => {
 
       expect(draft.lastOperation!).toEqual('appendSceneNodeInternal');
       expect(draft.selectedSceneNodeRef).toEqual('random');
+    });
+  });
+
+  describe('updateSceneNode', () => {
+    const document = {
+      nodeMap: {
+        testNode1: { ref: 'testNode1', childRefs: [], parentRef: 'testNode2', properties: {} },
+        testNode2: { ref: 'testNode2', childRefs: ['testNode1'], properties: {} },
+        testNode3: { ref: 'testNode3', childRefs: [], properties: {} },
+      },
+      rootNodeRefs: ['testNode2', 'testNode3'],
+    };
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it(`should be able to updateSceneNode with different parent`, () => {
+      // Arrange
+      const draft = { document: cloneDeep(document), lastOperation: undefined };
+
+      // Act
+      updateSceneNode(draft as unknown as RootState, 'testNode1', { parentRef: 'testNode3' });
+
+      // Assert
+      expect(mergeDeep).toBeCalledTimes(1);
+      expect(draft.document!).toEqual({
+        nodeMap: {
+          testNode1: expect.anything(), // mergeDeep is mock and not doing things, therefore not verify it
+          testNode2: { ref: 'testNode2', childRefs: [], properties: {} },
+          testNode3: { ref: 'testNode3', childRefs: ['testNode1'], properties: {} },
+        },
+        rootNodeRefs: ['testNode2', 'testNode3'],
+      });
+    });
+
+    it(`should be able to updateSceneNode from child to root`, () => {
+      // Arrange
+      const draft = { document: cloneDeep(document), lastOperation: undefined };
+
+      // Act
+      updateSceneNode(draft as unknown as RootState, 'testNode1', { parentRef: undefined });
+
+      // Assert
+      expect(mergeDeep).toBeCalledTimes(1);
+      expect(draft.document!).toEqual({
+        nodeMap: {
+          testNode1: expect.anything(), // mergeDeep is mock and not doing things, therefore not verify it
+          testNode2: { ref: 'testNode2', childRefs: [], properties: {} },
+          testNode3: { ref: 'testNode3', childRefs: [], properties: {} },
+        },
+        rootNodeRefs: ['testNode2', 'testNode3', 'testNode1'],
+      });
+    });
+
+    it(`should be able to updateSceneNode from root to child`, () => {
+      // Arrange
+      const draft = { document: cloneDeep(document), lastOperation: undefined };
+
+      // Act
+      updateSceneNode(draft as unknown as RootState, 'testNode3', { parentRef: 'testNode2' });
+
+      // Assert
+      expect(mergeDeep).toBeCalledTimes(1);
+      expect(draft.document!).toEqual({
+        nodeMap: {
+          testNode1: { ref: 'testNode1', childRefs: [], parentRef: 'testNode2', properties: {} },
+          testNode2: { ref: 'testNode2', childRefs: ['testNode1', 'testNode3'], properties: {} },
+          testNode3: expect.anything(), // mergeDeep is mock and not doing things, therefore not verify it
+        },
+        rootNodeRefs: ['testNode2'],
+      });
     });
   });
 });

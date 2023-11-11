@@ -4,7 +4,7 @@ import { Mesh, Vector3 } from 'three';
 
 import SubModelComponent from '..';
 import { ISceneNodeInternal, useEditorState } from '../../../../store';
-import { ISubModelRefComponent } from '../../../../interfaces';
+import { KnownComponentType } from '../../../../interfaces';
 
 jest.mock('../../../../common/sceneComposerIdContext', () => ({
   useSceneComposerId: jest.fn(() => 'composer'),
@@ -13,6 +13,7 @@ jest.mock('../../../../common/sceneComposerIdContext', () => ({
 jest.mock('../../../../store', () => {
   return {
     useEditorState: jest.fn(),
+    useSceneDocument: jest.fn().mockReturnValue({ document: {} }),
   };
 });
 
@@ -34,7 +35,7 @@ describe('<SubModelComponent />', () => {
     }));
     getObject3DBySceneNodeRef.mockImplementation(() => obj);
 
-    render(<SubModelComponent node={node} component={undefined as unknown as ISubModelRefComponent} />);
+    render(<SubModelComponent node={node} component={{ selector: 'abc', type: KnownComponentType.SubModelRef }} />);
 
     const { x, y, z } = obj.rotation;
 
