@@ -130,7 +130,6 @@ describe(`${PropertiesPanel.name}`, () => {
     await renderTestComponentAsync();
 
     expect(screen.getByText('Style')).toBeVisible();
-    expect(screen.getByText('Size and position')).toBeVisible();
     expect(screen.getByText('Axis')).toBeVisible();
     expect(screen.getByText('Settings')).toBeVisible();
   });
@@ -139,7 +138,6 @@ describe(`${PropertiesPanel.name}`, () => {
     await renderTestComponentAsync();
 
     expect(screen.getByText('Style')).toBeVisible();
-    expect(screen.getByText('Size and position')).toBeVisible();
     expect(screen.getByText('Axis')).toBeVisible();
     expect(screen.getByText('Settings')).toBeVisible();
   });
