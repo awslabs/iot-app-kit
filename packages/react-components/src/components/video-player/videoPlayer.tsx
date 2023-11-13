@@ -61,6 +61,8 @@ export const VideoPlayer = (props: IVideoPlayerProps) => {
   const [playbackMode, setPlaybackMode] = useState<typeof PLAYBACKMODE_ON_DEMAND | typeof PLAYBACKMODE_LIVE>(
     initialPlaybackMode
   );
+  const playbackModeRef = useRef({});
+  playbackModeRef.current = playbackMode;
   const [videoPlayer, setVideoPlayer] = useState<ReturnType<typeof videojs>>();
   const [videoErrorDialog, setVideoErrorDialog] = useState<ReturnType<ReturnType<typeof videojs>['createModal']>>();
   // Boolean flag to keep track if video is seeked by the user explicitly
@@ -69,27 +71,39 @@ export const VideoPlayer = (props: IVideoPlayerProps) => {
   const uploadLiveVideoTimer = 120000; // 2 minutes timer in milli seconds to trigger live video upload every 2 minutes
   const [currentOnDemandSource, setCurrentOnDemandSource] = useState<currentOnDemandSource>();
   let waitForLiveTimeout: ReturnType<typeof setTimeout> | undefined;
-  // Skip playback mode updates if it is manually toggled by user
-  const [togglingPlaybackMode, setTogglingPlaybackMode] = useState<boolean>(true);
   const [progressBar, setProgressBar] = useState<HTMLDivElement>();
   const [seekBar, setSeekBar] = useState<HTMLElement>();
   const [currentTimeIndicator, setCurrentTimeIndicator] = useState<HTMLElement>();
 
   useEffect(() => {
+    // Fired on video player mount
     setVideoPlayerStartAndEndTime(viewport, initialPlaybackMode);
     setPlayer();
     updateVideoSource();
+    return () => {
+      // Fired on video player unmount
+      if (videoPlayer) {
+        videoPlayer.dispose();
+      }
+      if (triggerLiveVideoRequesttimeout != null) {
+        clearTimeout(triggerLiveVideoRequesttimeout);
+      }
+      if (waitForLiveTimeout != null) {
+        clearTimeout(waitForLiveTimeout);
+      }
+    };
   }, []);
+
+  useEffect(() => {
+    const updatedPlaybackMode = 'start' in viewport && 'end' in viewport ? PLAYBACKMODE_ON_DEMAND : PLAYBACKMODE_LIVE;
+    setPlaybackMode(updatedPlaybackMode);
+    setVideoPlayerStartAndEndTime(viewport, updatedPlaybackMode);
+  }, [viewport]);
 
   useEffect(() => {
     if (!videoPlayer) return;
     updateVideoSource();
-  }, [videoPlayer]);
-
-  useEffect(() => {
-    if (!togglingPlaybackMode) setVideoPlayerStartAndEndTime(viewport, playbackMode);
-    updateVideoSource();
-  }, [togglingPlaybackMode]);
+  }, [videoPlayer, playbackMode, startTime, endTime]);
 
   const createPlayer = () => {
     return videojs.getPlayer(videoPlayerId) as unknown as VideoJsPlayer & { controlBar: ControlBar };
@@ -142,14 +156,14 @@ export const VideoPlayer = (props: IVideoPlayerProps) => {
   const togglePlaybackMode = () => {
     if (triggerLiveVideoRequesttimeout != null) clearTimeout(triggerLiveVideoRequesttimeout);
     if (waitForLiveTimeout != null) clearTimeout(waitForLiveTimeout);
-    const newPlaybackMode = playbackMode === PLAYBACKMODE_ON_DEMAND ? PLAYBACKMODE_LIVE : PLAYBACKMODE_ON_DEMAND;
+    const newPlaybackMode =
+      playbackModeRef.current === PLAYBACKMODE_ON_DEMAND ? PLAYBACKMODE_LIVE : PLAYBACKMODE_ON_DEMAND;
     // In case of video player initialized with live mode, set end time to now
     // This will play the video from the time it started till now when toggling to on-demand mode
     if ('duration' in viewport && newPlaybackMode === PLAYBACKMODE_ON_DEMAND) {
       setEndTime(new Date());
     }
     setPlaybackMode(newPlaybackMode);
-    setTogglingPlaybackMode(false);
   };
 
   const setLiveToggleButtonStyle = () => {
