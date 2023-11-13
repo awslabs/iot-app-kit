@@ -48,16 +48,3 @@ export const kvsStreamName = '<your-kvs-stream-name>';
  */
 export const videoEntityId = undefined;
 export const videoComponentName = undefined;
-
-/**
- * Specify time range for the video player
- */
-export const videoViewport: Viewport = {
-  // Live video playback - use duration
-  duration: '0',
-  // On-Demand video playback - specify start and end time for video
-  /*
-   start: new Date('<your-start-time>'),
-   end: new Date('<your-end-time>'),
-   */
-};
