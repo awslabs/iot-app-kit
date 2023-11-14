@@ -46,6 +46,12 @@ jest.mock('./scene-components/EntityBindingComponentEditor', () => ({
   ),
 }));
 
+jest.mock('./scene-components/PlaneGeometryComponentEditor', () => ({
+  PlaneGeometryComponentEditor: (props) => (
+    <div data-mocked='PlaneGeometryComponentEditor'>{JSON.stringify(props)}</div>
+  ),
+}));
+
 describe('ComponentEditor renders correct component', () => {
   it('render DefaultComponentEditor correctly', async () => {
     const { container } = render(

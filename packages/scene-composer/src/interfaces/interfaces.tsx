@@ -78,6 +78,7 @@ export enum KnownSceneProperty {
   FogCustomColors = 'fogCustomColors',
   BackgroundCustomColors = 'backgroundCustomColors',
   LayerDefaultRefreshInterval = 'layerDefaultRefreshInterval',
+  GeometryCustomColors = 'geometryCustomColors',
 }
 
 /************************************************

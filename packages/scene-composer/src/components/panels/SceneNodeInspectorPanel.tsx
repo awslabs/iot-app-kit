@@ -81,6 +81,10 @@ export const SceneNodeInspectorPanel: React.FC = () => {
       defaultMessage: 'Animation',
       description: 'Expandable Section title',
     },
+    [KnownComponentType.PlaneGeometry]: {
+      defaultMessage: 'Plane Geometry',
+      description: 'Expandable Section title',
+    },
   });
 
   log?.verbose('render inspect panel with selected scene node ', selectedSceneNodeRef, selectedSceneNode);

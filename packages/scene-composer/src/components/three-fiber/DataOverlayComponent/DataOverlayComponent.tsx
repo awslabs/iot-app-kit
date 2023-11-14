@@ -35,7 +35,7 @@ export const DataOverlayComponent = ({ node, component }: DataOverlayComponentPr
   // enforces a zIndex on outer div of r3f HTML to push the selected overlay to the front before other overlays
   useEffect(() => {
     if (htmlRef.current?.parentElement) {
-      htmlRef.current.parentElement.style.zIndex = node.ref == selectedSceneNodeRef ? '999' : '1';
+      htmlRef.current.parentElement.style.zIndex = node.ref === selectedSceneNodeRef ? '999' : '1';
     }
   }, [selectedSceneNodeRef, node]);
 

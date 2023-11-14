@@ -751,6 +751,10 @@
     "note": "select box option text value",
     "text": "Cast Shadow"
   },
+  "aiakkN": {
+    "note": "Form Field label",
+    "text": "Width"
+  },
   "ay/pmK": {
     "note": "Form field label",
     "text": "Constraints"
@@ -899,6 +903,10 @@
     "note": "Form button text",
     "text": "Fix view"
   },
+  "hiEi3h": {
+    "note": "Expandable Section title",
+    "text": "Plane Geometry"
+  },
   "ifspRT": {
     "note": "Expandable Section title",
     "text": "Model Shader"
@@ -967,6 +975,10 @@
     "note": "Menu Item",
     "text": "Add light"
   },
+  "lgxHg3": {
+    "note": "Form Field label",
+    "text": "Height"
+  },
   "lnTuMX": {
     "note": "label",
     "text": "Selected"
@@ -1002,6 +1014,10 @@
   "nhcDIE": {
     "note": "select box option text value",
     "text": "Receive Shadow"
+  },
+  "nml2b0": {
+    "note": "Menu Item label",
+    "text": "Ground Plane"
   },
   "nwQbTY": {
     "note": "Icon name label",
@@ -1074,6 +1090,10 @@
   "rBzizm": {
     "note": "label",
     "text": "Add speed rule"
+  },
+  "rC/6uY": {
+    "note": "Menu Item",
+    "text": "Add ground plane"
   },
   "rDIRVn": {
     "note": "Menu Item label",

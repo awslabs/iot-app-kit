@@ -8,6 +8,7 @@ import {
   ILightComponent,
   IModelRefComponent,
   IMotionIndicatorComponent,
+  IPlaneGeometryComponent,
   ISubModelRefComponent,
   KnownComponentType,
 } from '../../interfaces';
@@ -23,6 +24,7 @@ import { updateMotionIndicatorEntityComponent } from './motionIndicatorComponent
 import { updateModelShaderEntityComponent } from './modelShaderComponent';
 import { updateLightEntityComponent } from './lightComponent';
 import { updateSubModelRefEntityComponent } from './subModelRefComponent';
+import { updatePlaneGeometryEntityComponent } from './planeGeometryComponent';
 
 export const updateEntity = async (
   node: ISceneNodeInternal,
@@ -76,7 +78,9 @@ export const updateEntity = async (
           case KnownComponentType.SubModelRef:
             comp = updateSubModelRefEntityComponent(compToBeUpdated as ISubModelRefComponent);
             break;
-
+          case KnownComponentType.PlaneGeometry:
+            comp = updatePlaneGeometryEntityComponent(compToBeUpdated as IPlaneGeometryComponent);
+            break;
           default:
             throw new Error('Component type not supported');
         }

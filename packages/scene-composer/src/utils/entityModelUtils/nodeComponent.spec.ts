@@ -244,6 +244,23 @@ describe('parseNode', () => {
       },
     ],
   };
+  const planeGeometryComp = {
+    componentTypeId: componentTypeToId.PlaneGeometry,
+    properties: [
+      {
+        propertyName: 'width',
+        propertyValue: 1,
+      },
+      {
+        propertyName: 'height',
+        propertyValue: 2,
+      },
+      {
+        propertyName: 'color',
+        propertyValue: '#abcdef',
+      },
+    ],
+  };
 
   const nodeComp = {
     componentTypeId: NODE_COMPONENT_TYPE_ID,
@@ -320,6 +337,7 @@ describe('parseNode', () => {
           modelShaderComp,
           lightComp,
           subModelRefComp,
+          planeGeometryComp,
         ],
       },
       nodeComp,
@@ -349,6 +367,9 @@ describe('parseNode', () => {
       }),
       expect.objectContaining({
         type: KnownComponentType.SubModelRef,
+      }),
+      expect.objectContaining({
+        type: KnownComponentType.PlaneGeometry,
       }),
     ];
     expect(result?.components).toEqual(expectedComponents);

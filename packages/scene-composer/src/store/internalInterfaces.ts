@@ -25,6 +25,7 @@ import {
   ISubModelRefComponent,
   IDataOverlayComponent,
   IEntityBindingComponent,
+  IPlaneGeometryComponent,
 } from '../interfaces';
 import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../three/OrbitControls';
 import { PointerLockControls as PointerLockControlsImpl } from '../three/PointerLockControls';
@@ -132,6 +133,8 @@ export type IMotionIndicatorComponentInternal = ISceneComponentInternal & IMotio
 export type IDataOverlayComponentInternal = ISceneComponentInternal & IDataOverlayComponent;
 
 export type IEntityBindingComponentInternal = IDataBoundSceneComponentInternal & IEntityBindingComponent;
+
+export type IPlaneGeometryComponentInternal = ISceneComponentInternal & IPlaneGeometryComponent;
 
 /******************************************************************************
  * Type magic...

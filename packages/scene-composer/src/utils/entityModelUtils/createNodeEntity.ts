@@ -12,6 +12,7 @@ import {
   ILightComponent,
   IModelRefComponent,
   IMotionIndicatorComponent,
+  IPlaneGeometryComponent,
   ISubModelRefComponent,
   KnownComponentType,
 } from '../../interfaces';
@@ -26,6 +27,7 @@ import { createModelRefEntityComponent } from './modelRefComponent';
 import { createModelShaderEntityComponent } from './modelShaderComponent';
 import { createLightEntityComponent } from './lightComponent';
 import { createSubModelRefEntityComponent } from './subModelRefComponent';
+import { createPlaneGeometryEntityComponent } from './planeGeometryComponent';
 
 export const createNodeEntity = async (
   node: ISceneNodeInternal,
@@ -74,7 +76,9 @@ export const createNodeEntity = async (
         case KnownComponentType.SubModelRef:
           comp = createSubModelRefEntityComponent(compToBeCreated as ISubModelRefComponent);
           break;
-
+        case KnownComponentType.PlaneGeometry:
+          comp = createPlaneGeometryEntityComponent(compToBeCreated as IPlaneGeometryComponent);
+          break;
         default:
           throw new Error(`Component type not supported: ${compToBeCreated.type}`);
       }

@@ -142,7 +142,7 @@ export const WebGLCanvasManager: React.FC = () => {
               renderOrder={enableMatterportViewer ? 1 : undefined}
             >
               <planeGeometry args={[1000, 1000]} />
-              <meshBasicMaterial colorWrite={false} />
+              <meshBasicMaterial transparent={true} opacity={0} />
             </mesh>
             {enableMatterportViewer && <MatterportModel onClick={onClick} />}
           </React.Fragment>

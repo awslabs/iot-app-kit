@@ -14,6 +14,7 @@ import { createNodeEntity } from './createNodeEntity';
 import { createModelShaderEntityComponent } from './modelShaderComponent';
 import { createLightEntityComponent } from './lightComponent';
 import { createSubModelRefEntityComponent } from './subModelRefComponent';
+import { createPlaneGeometryEntityComponent } from './planeGeometryComponent';
 
 jest.mock('./nodeComponent', () => ({
   createNodeEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.node' }),
@@ -41,6 +42,9 @@ jest.mock('./lightComponent', () => ({
 }));
 jest.mock('./subModelRefComponent', () => ({
   createSubModelRefEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.subModelRef' }),
+}));
+jest.mock('./planeGeometryComponent', () => ({
+  createPlaneGeometryEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.planeGeometry' }),
 }));
 
 describe('createNodeEntity', () => {
@@ -81,10 +85,11 @@ describe('createNodeEntity', () => {
     const modelShader = { type: KnownComponentType.ModelShader, ref: 'modelShader-ref' };
     const light = { type: KnownComponentType.Light, ref: 'light-ref' };
     const subModelRef = { type: KnownComponentType.SubModelRef, ref: 'subModelref-ref' };
+    const planeGeometry = { type: KnownComponentType.PlaneGeometry, ref: 'planeGeometry-ref' };
 
     const node = {
       ...defaultNode,
-      components: [tag, overlay, camera, motionIndicator, modelRef, modelShader, light, subModelRef],
+      components: [tag, overlay, camera, motionIndicator, modelRef, modelShader, light, subModelRef, planeGeometry],
     };
 
     await createNodeEntity(node, 'parent', 'layer');
@@ -105,6 +110,7 @@ describe('createNodeEntity', () => {
         ModelShader: { componentTypeId: '3d.modelShader' },
         Light: { componentTypeId: '3d.light' },
         SubModelRef: { componentTypeId: '3d.subModelRef' },
+        PlaneGeometry: { componentTypeId: '3d.planeGeometry' },
       },
     });
 
@@ -126,5 +132,7 @@ describe('createNodeEntity', () => {
     expect(createLightEntityComponent).toBeCalledWith(light);
     expect(createSubModelRefEntityComponent).toBeCalledTimes(1);
     expect(createSubModelRefEntityComponent).toBeCalledWith(subModelRef);
+    expect(createPlaneGeometryEntityComponent).toBeCalledTimes(1);
+    expect(createPlaneGeometryEntityComponent).toBeCalledWith(planeGeometry);
   });
 });

@@ -34,6 +34,7 @@ import {
   ISubModelRefComponentInternal,
   SceneNodeRuntimeProperty,
   isISceneComponentInternal,
+  IPlaneGeometryComponentInternal,
 } from '../internalInterfaces';
 
 import { addComponentToComponentNodeMap } from './componentMapHelpers';
@@ -216,6 +217,10 @@ function createDataOverlayComponent(
   return Object.assign({}, { ref: generateUUID() }, { ...component });
 }
 
+function createPlaneGeometryComponent(component: Component.Plane): IPlaneGeometryComponentInternal | undefined {
+  return Object.assign({}, { ref: generateUUID() }, { ...component });
+}
+
 function createEntityBindingComponent(
   component: Component.EntityBindingComponent,
 ): IEntityBindingComponentInternal | undefined {
@@ -268,6 +273,9 @@ function deserializeComponent(
     }
     case Component.Type.EntityBinding: {
       return createEntityBindingComponent(component as Component.EntityBindingComponent);
+    }
+    case Component.Type.PlaneGeometry: {
+      return createPlaneGeometryComponent(component as Component.Plane);
     }
     default: {
       LOG.warn(`component not supported type[${component.type}]. It will be ignored.`);
@@ -779,6 +787,7 @@ export const exportsForTesting = {
   createDataOverlayComponent,
   createEntityBindingComponent,
   createAnimationRefComponent,
+  createPlaneGeometryComponent,
   deserializeComponent,
   parseSceneContent,
   createSceneNodeInternal,
