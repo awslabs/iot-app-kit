@@ -19,7 +19,7 @@ export function AssetModelPropertiesTablePreferences<P extends AllPreferences>({
 }: AssetModelPropertiesTablePreferencesProps<P>) {
   return (
     <CollectionPreferences
-      title='Asset preferences'
+      title='Asset model properties preferences'
       confirmLabel='Confirm'
       cancelLabel='Cancel'
       preferences={preferences}

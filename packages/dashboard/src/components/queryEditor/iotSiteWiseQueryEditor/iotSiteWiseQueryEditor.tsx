@@ -3,8 +3,6 @@ import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import Tabs from '@cloudscape-design/components/tabs';
 import React from 'react';
 
-import { useGetConfigValue } from '@iot-app-kit/react-components';
-
 import { ModeledDataStreamQueryEditor } from './modeledDataStreamQueryEditor';
 import { UnmodeledDataStreamQueryEditor } from './unmodeledDataStreamExplorer';
 import { QueryExtender } from './queryExtender';
@@ -24,8 +22,6 @@ export function IoTSiteWiseQueryEditor({
   iotSiteWiseClient,
   iotTwinMakerClient,
 }: IoTSiteWiseQueryEditorProps) {
-  const modelBasedQueryEnabled = useGetConfigValue('useModelBasedQuery');
-
   function handleClickAddModeledDataStreams(newModeledDataStreams: ModeledDataStream[]) {
     onUpdateQuery((currentQuery) => {
       const queryExtender = new QueryExtender(currentQuery);
@@ -64,13 +60,12 @@ export function IoTSiteWiseQueryEditor({
   };
 
   const assetModeledTab = {
-    label: 'Asset Model',
+    label: 'Dynamic assets',
     id: 'explore-asset-model-tab',
     content: <AssetModelDataStreamExplorer client={iotSiteWiseClient} />,
   };
 
-  const defaultTabs = [modeledTab, unmodeledTab];
-  const tabs = modelBasedQueryEnabled ? [...defaultTabs, assetModeledTab] : defaultTabs;
+  const defaultTabs = [modeledTab, unmodeledTab, assetModeledTab];
 
-  return <Tabs tabs={tabs} />;
+  return <Tabs tabs={defaultTabs} />;
 }

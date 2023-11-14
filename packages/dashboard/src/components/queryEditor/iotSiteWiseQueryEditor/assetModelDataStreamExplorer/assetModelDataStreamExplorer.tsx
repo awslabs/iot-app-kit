@@ -9,7 +9,6 @@ import { AssetModelPropertiesExplorer } from './assetModelPropertiesExplorer/ass
 import { createInitialAssetModelSummary, useSelectedAssetModel } from './useSelectedAssetModel';
 import { HorizontalDivider } from '~/components/divider/horizontalDivider';
 import { createInitialAssetModelProperties, useSelectedAssetModelProperties } from './useSelectedAssetModelProperties';
-import { AssetModelDataStreamSave } from './assetModelDataStreamSave';
 import { createInitialAsset, useSelectedAsset } from './useSelectedAsset';
 import { createAssetModelQuery } from './createAssetModelQuery';
 import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
@@ -79,12 +78,10 @@ export const AssetModelDataStreamExplorer = ({ client }: AssetModelDataStreamExp
             selectedAssetModelProperties={selectedAssetModelProperties}
             selectedAssetModel={selectedAssetModel}
             client={client}
+            onSave={onSave}
+            saveDisabled={!modelBasedWidgetsSelected}
             onSelect={(assetModelProperties) => selectAssetModelProperties(assetModelProperties)}
           />
-          <Box padding={{ top: 's' }}>
-            <HorizontalDivider />
-          </Box>
-          <AssetModelDataStreamSave onSave={onSave} disabled={!modelBasedWidgetsSelected} />
         </>
       )}
     </Box>

@@ -11,6 +11,8 @@ export interface AssetExplorerProps {
   selectedAssetModelProperties: SelectedAssetModelProperties;
   onSelect: (assetModelProperties: AssetModelPropertySummary[]) => void;
   isWithoutHeader?: boolean;
+  onSave?: () => void;
+  saveDisabled?: boolean;
   client: IoTSiteWiseClient;
 }
 
@@ -19,6 +21,8 @@ export const AssetModelPropertiesExplorer = ({
   selectedAssetModel,
   selectedAssetModelProperties,
   onSelect,
+  onSave,
+  saveDisabled,
 }: AssetExplorerProps) => {
   const assetModelId = selectedAssetModel?.id ?? '';
   const {
@@ -26,12 +30,11 @@ export const AssetModelPropertiesExplorer = ({
     hasNextPage = false,
     isFetching,
     isLoading,
-    // isError,
+    isError,
     fetchNextPage,
-    // refetch,
+    refetch,
   } = useAssetModelProperties({ client, assetModelId });
 
-  // TODO: implement empty state with error retry logic
   return (
     <AssetModelPropertiesTable
       onClickNextPage={fetchNextPage}
@@ -39,7 +42,11 @@ export const AssetModelPropertiesExplorer = ({
       assetModelProperties={assetModelPropertySummaries}
       selectedAssetModelProperties={selectedAssetModelProperties}
       isLoading={isLoading || isFetching}
+      isError={isError}
+      retry={refetch}
       hasNextPage={hasNextPage}
+      onSave={onSave}
+      saveDisabled={saveDisabled}
     />
   );
 };
