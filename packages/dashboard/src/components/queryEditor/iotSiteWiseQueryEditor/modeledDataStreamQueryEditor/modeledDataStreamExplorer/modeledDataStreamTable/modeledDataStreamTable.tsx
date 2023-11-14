@@ -2,9 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useCollection } from '@cloudscape-design/collection-hooks';
-import Button from '@cloudscape-design/components/button';
 import Table from '@cloudscape-design/components/table';
-import { Box, SpaceBetween } from '@cloudscape-design/components';
 
 import { useLatestValues } from '../../../useLatestValues';
 import { useExplorerPreferences } from '../../../useExplorerPreferences';
@@ -19,6 +17,7 @@ import { ModeledDataStreamTablePagination } from './modeledDataStreamTablePagina
 import { ModeledDataStreamTableHeader } from './modeledDataStreamTableHeader';
 import type { ModeledDataStream } from '../types';
 import { DashboardState } from '~/store/state';
+import { ResourceExplorerFooter } from '../../../footer/footer';
 
 export interface ModeledDataStreamTableProps {
   onClickAddModeledDataStreams: (modeledDataStreams: ModeledDataStream[]) => void;
@@ -104,22 +103,14 @@ export function ModeledDataStreamTable({
         />
       }
       footer={
-        <Box float='right'>
-          <SpaceBetween direction='horizontal' size='xs'>
-            <Button disabled={collectionProps.selectedItems?.length === 0} onClick={() => actions.setSelectedItems([])}>
-              Reset
-            </Button>
-            <Button
-              variant='primary'
-              disabled={collectionProps.selectedItems?.length === 0 || selectedWidgets.length !== 1}
-              onClick={() => {
-                onClickAddModeledDataStreams(collectionProps.selectedItems as unknown as ModeledDataStream[]);
-              }}
-            >
-              Add
-            </Button>
-          </SpaceBetween>
-        </Box>
+        <ResourceExplorerFooter
+          resetDisabled={collectionProps.selectedItems?.length === 0}
+          onReset={() => actions.setSelectedItems([])}
+          addDisabled={collectionProps.selectedItems?.length === 0 || selectedWidgets.length !== 1}
+          onAdd={() => {
+            onClickAddModeledDataStreams(collectionProps.selectedItems as unknown as ModeledDataStream[]);
+          }}
+        />
       }
       pagination={<ModeledDataStreamTablePagination {...paginationPropsWithAriaLabels} />}
       preferences={<ModeledDataStreamTablePreferences preferences={preferences} updatePreferences={setPreferences} />}

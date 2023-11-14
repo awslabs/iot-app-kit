@@ -2,16 +2,19 @@ import React from 'react';
 
 import Box from '@cloudscape-design/components/box';
 
-import CustomOrangeButton from '~/components/customOrangeButton';
+import Button from '@cloudscape-design/components/button';
 
 type AssetModelSaveOptions = {
   onSave: () => void;
+  disabled?: boolean;
 };
 
-export const AssetModelSave = ({ onSave }: AssetModelSaveOptions) => {
+export const AssetModelSave = ({ onSave, disabled }: AssetModelSaveOptions) => {
   return (
     <Box float='right'>
-      <CustomOrangeButton title='Save' handleClick={onSave} />
+      <Button disabled={disabled} onClick={onSave}>
+        Set asset model
+      </Button>
     </Box>
   );
 };

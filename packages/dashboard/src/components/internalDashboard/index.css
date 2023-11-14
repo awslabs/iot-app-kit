@@ -28,16 +28,6 @@
   position: relative;
 }
 
-.dashboard-toolbar-asset-model-selection-container {
-  /* temporary class for style patch while dashboard header is being fixed */
-  float: left;
-  display: flex;
-  height: 100%;
-  align-items: center;
-  margin-top: 4px;
-  margin-left: 12px;
-}
-
 .dashboard .dashboard-toolbar,
 .dashboard .dashboard-toolbar-read-only {
   background-color: var(--colors-white);

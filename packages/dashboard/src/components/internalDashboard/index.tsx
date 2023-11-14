@@ -263,9 +263,9 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
   const ReadOnlyComponent = (
     <div className='dashboard'>
       <div style={dashboardToolbarBottomBorder} className='dashboard-toolbar-read-only'>
-        <div className='dashboard-toolbar-asset-model-selection-container'>
+        <Box float='left' padding='s'>
           <AssetModelSelection client={iotSiteWiseClient} />
-        </div>
+        </Box>
         <Box float='right' padding='s'>
           <SpaceBetween size='s' direction='horizontal'>
             <TimeSelection />

@@ -8,7 +8,8 @@ import { spaceScaledXxs } from '@cloudscape-design/design-tokens';
 import { VerticalDivider } from '~/components/divider/verticalDivider';
 import { SelectedAssetModel } from '../../useSelectedAssetModel';
 import { AssetSummary, DescribeAssetCommandOutput, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { AssetForAssetModelSelect } from '../../assetsForAssetModelSelect/assetForAssetModelSelect';
+// import { AssetForAssetModelSelect } from '../../assetsForAssetModelSelect/assetForAssetModelSelect';
+import { AssetForAssetModelSelectForm } from '../../assetsForAssetModelSelect/assetForAssetModelSelectForm';
 import { SelectedAsset, UpdateSelectedAsset } from '../../useSelectedAsset';
 import { useAssetModel } from '~/hooks/useAssetModel/useAssetModel';
 import { useAsset } from '../../../modeledDataStreamQueryEditor/assetExplorer/useAsset';
@@ -68,7 +69,7 @@ export const AssetModelSelected = ({
         <img src={assetModelSvg} alt='Selected asset model icon' />
         <VerticalDivider classNames={['reset-selected-asset-model-vertical-divider']} />
         <Box fontWeight='bold' variant='span'>
-          Asset Model:
+          Asset model:
         </Box>
         <Box variant='span'>{assetModel?.assetModelName}</Box>
         <div className='reset-selected-asset-model-container'>
@@ -76,7 +77,7 @@ export const AssetModelSelected = ({
         </div>
       </div>
       <Box padding={{ top: 's' }}>
-        <AssetForAssetModelSelect
+        <AssetForAssetModelSelectForm
           assetModelId={selectedAssetModel?.id}
           selectedAsset={describedAssetToAssetSummary(asset)}
           onSelectAsset={setSelectedAsset}

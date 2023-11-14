@@ -5,12 +5,10 @@ import { isNumeric, round } from '@iot-app-kit/core-util';
 
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import Box from '@cloudscape-design/components/box';
-import Button from '@cloudscape-design/components/button';
 import CollectionPreferences from '@cloudscape-design/components/collection-preferences';
 import Header from '@cloudscape-design/components/header';
 import Pagination from '@cloudscape-design/components/pagination';
 import PropertyFilter from '@cloudscape-design/components/property-filter';
-import SpaceBetween from '@cloudscape-design/components/space-between';
 import Table from '@cloudscape-design/components/table';
 
 import type { UnmodeledDataStream } from '../types';
@@ -19,6 +17,7 @@ import { SUPPORTED_PAGE_SIZES } from '../../constants';
 import { useLatestValues } from '../../useLatestValues';
 import { DashboardState } from '~/store/state';
 import { getFormattedDateTimeFromEpoch } from '~/components/util/dateTimeUtil';
+import { ResourceExplorerFooter } from '../../footer/footer';
 
 export interface UnmodeledDataStreamTableProps {
   onClickAdd: (unmodeledDataStreams: UnmodeledDataStream[]) => void;
@@ -110,20 +109,12 @@ export function UnmodeledDataStreamTable({
         </Header>
       }
       footer={
-        <Box float='right'>
-          <SpaceBetween direction='horizontal' size='xs'>
-            <Button disabled={collectionProps.selectedItems?.length === 0} onClick={() => actions.setSelectedItems([])}>
-              Reset
-            </Button>
-            <Button
-              variant='primary'
-              disabled={collectionProps.selectedItems?.length === 0 || selectedWidgets.length !== 1}
-              onClick={() => onClickAdd(collectionProps.selectedItems as unknown as UnmodeledDataStream[])}
-            >
-              Add
-            </Button>
-          </SpaceBetween>
-        </Box>
+        <ResourceExplorerFooter
+          resetDisabled={collectionProps.selectedItems?.length === 0}
+          onReset={() => actions.setSelectedItems([])}
+          addDisabled={collectionProps.selectedItems?.length === 0 || selectedWidgets.length !== 1}
+          onAdd={() => onClickAdd(collectionProps.selectedItems as unknown as UnmodeledDataStream[])}
+        />
       }
       resizableColumns
       columnDefinitions={[
