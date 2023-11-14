@@ -1,8 +1,9 @@
 import React from 'react';
 
 import SpaceBetween from '@cloudscape-design/components/space-between';
+import Box from '@cloudscape-design/components/box';
+import Link from '@cloudscape-design/components/link';
 
-import { AssetModelSelectionNotice } from './assetModelSelectionNotice';
 import { AssetModelSelect } from './assetModelSelect';
 import { HorizontalDivider } from '~/components/divider/horizontalDivider';
 import { AssetModelSave } from './assetModelSave';
@@ -36,7 +37,13 @@ export const AssetModelSelection = ({
 
   return (
     <SpaceBetween size='s' direction='vertical'>
-      <AssetModelSelectionNotice />
+      <Box variant='p'>
+        Dynamic asset visualizations allow you to build one visualization to represent any asset of a specified asset
+        model.{' '}
+        <Link external href='https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-asset-models.html'>
+          Learn more
+        </Link>
+      </Box>
       <AssetModelSelect
         selectedAssetModel={currentSelectedAssetModel}
         onSelectAssetModel={selectCurrentAssetModel}
@@ -49,7 +56,7 @@ export const AssetModelSelection = ({
         client={client}
       />
       <HorizontalDivider />
-      <AssetModelSave onSave={onSave} />
+      <AssetModelSave disabled={!currentSelectedAssetModel} onSave={onSave} />
     </SpaceBetween>
   );
 };

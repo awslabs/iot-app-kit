@@ -15,6 +15,7 @@ import { AssetModelPropertiesTableHeader } from './assetModelPropertiesTableHead
 import { SelectedAssetModelProperties } from '../../useSelectedAssetModelProperties';
 import { useCustomCompareEffect } from 'react-use';
 import { isEqual } from 'lodash';
+import { ResourceExplorerFooter } from '../../../footer/footer';
 
 export interface AssetTableProps {
   onClickNextPage: () => void;
@@ -24,6 +25,10 @@ export interface AssetTableProps {
   isLoading: boolean;
   hasNextPage: boolean;
   isWithoutHeader?: boolean;
+  onSave?: () => void;
+  saveDisabled?: boolean;
+  isError: boolean;
+  retry: () => void;
 }
 
 export function AssetModelPropertiesTable({
@@ -33,6 +38,10 @@ export function AssetModelPropertiesTable({
   onSelectAssetModelProperties,
   isLoading,
   hasNextPage,
+  onSave,
+  saveDisabled,
+  isError,
+  retry,
 }: AssetTableProps) {
   const [preferences, updatePreferences] = useExplorerPreferences({
     defaultVisibleContent: ['name'],
@@ -72,7 +81,12 @@ export function AssetModelPropertiesTable({
   return (
     <Table
       {...collectionProps}
-      items={items}
+      /**
+       * retry button is part of the empty table state
+       * cloudscape doesn't have any native configuration option for
+       * triggering retries
+       */
+      items={isError ? [] : items}
       columnDefinitions={columnDefinitionFactory.create()}
       trackBy={({ id = '' }) => id}
       variant='embedded'
@@ -92,8 +106,16 @@ export function AssetModelPropertiesTable({
       stripedRows={preferences.stripedRows}
       visibleColumns={preferences.visibleContent}
       wrapLines={preferences.wrapLines}
-      empty={<AssetModelPropertiesTableEmptyState />}
+      empty={<AssetModelPropertiesTableEmptyState isError={isError} retry={retry} />}
       filter={<AssetModelPropertiesTablePropertyFilter {...propertyFilterProps} />}
+      footer={
+        <ResourceExplorerFooter
+          addDisabled={saveDisabled || collectionProps.selectedItems?.length === 0}
+          onAdd={onSave}
+          onReset={() => actions.setSelectedItems([])}
+          resetDisabled={collectionProps.selectedItems?.length === 0}
+        />
+      }
       header={
         <AssetModelPropertiesTableHeader
           selectedItemCount={collectionProps.selectedItems?.length}

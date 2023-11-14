@@ -31,7 +31,7 @@ export const ResetAssetModelModal = ({
           </SpaceBetween>
         </Box>
       }
-      header='Reset asset model?'
+      header='Reset asset model'
     >
       <Alert
         statusIconAriaLabel='Warning'
