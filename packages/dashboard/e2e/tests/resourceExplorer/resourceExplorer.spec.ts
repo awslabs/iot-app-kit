@@ -16,12 +16,6 @@ test('can load resource explorer', async ({ page }) => {
 
 test('can load configure a widget with an asset model', async ({ page }) => {
   await page.goto(TEST_PAGE);
-  await page.evaluate(() => {
-    // enable feature flag for model based query
-    window.localStorage.setItem('USE_MODEL_BASED_QUERY', 'true');
-  });
-  // need to reload the page so that local storage is applied.
-  await page.reload();
 
   const grid = gridUtil(page);
   const resourceExplorer = resourceExplorerUtil(page);

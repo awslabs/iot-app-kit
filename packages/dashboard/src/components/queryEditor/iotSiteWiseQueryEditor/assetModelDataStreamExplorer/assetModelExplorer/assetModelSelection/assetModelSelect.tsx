@@ -72,7 +72,7 @@ export const AssetModelSelect = ({ client, selectedAssetModel, onSelectAssetMode
   return (
     <FormField
       label='Asset model'
-      description='Once you have selected an asset model, you may add its properties to a chart.'
+      description='Select an asset model to add the associated properties into your dynamic display.'
     >
       <Select
         virtualScroll={assetModelOptions.length > 500}

@@ -12,7 +12,7 @@ export const AssetModelSelection = ({ client }: AssetModelSelectionOptions) => {
   const { assetModelId, assetIds, hasModelBasedQuery } = useModelBasedQuery();
   const selectedAssetId = assetIds?.at(0);
 
-  if (!hasModelBasedQuery || !assetModelId || !selectedAssetId) return null;
+  if (!hasModelBasedQuery || !assetModelId) return null;
 
   return <AssetModelSelect assetModelId={assetModelId} selectedAssetId={selectedAssetId} client={client} />;
 };

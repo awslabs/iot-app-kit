@@ -27,7 +27,7 @@ export const resourceExplorerUtil = (page: Page) => {
      * @returns void
      */
     selectAssetModel: async (label: string) => {
-      await frame.getByText('Select an asset model').click();
+      await frame.getByLabel('Asset model', { exact: true }).click();
       const searchBox = await frame.getByPlaceholder('Find an asset model');
       await searchBox.click();
       await searchBox.fill(label);
@@ -39,7 +39,7 @@ export const resourceExplorerUtil = (page: Page) => {
      * @returns void
      */
     selectAsset: async (label: string) => {
-      await frame.getByText('Select an asset').click();
+      await frame.getByLabel('Default asset').click();
       await frame.getByText(label).click();
     },
     /**
@@ -48,7 +48,7 @@ export const resourceExplorerUtil = (page: Page) => {
      * @returns void
      */
     saveAssetModel: async () => {
-      await frame.getByText('Save').click();
+      await frame.getByText('Set asset model').click();
     },
     /**
      * select an asset model property from the table

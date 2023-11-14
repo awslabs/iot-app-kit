@@ -33,8 +33,6 @@ export function useAssetModelProperties({ assetModelId, client }: UseAssetModelP
     staleTime: Infinity,
   });
 
-  // if (hasNextPage) fetchNextPage();
-
   const assetModelPropertySummaries = createNonNullableList(
     assetModelPropertyResponses.flatMap((res) => res.assetModelPropertySummaries)
   );
