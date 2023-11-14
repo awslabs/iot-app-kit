@@ -20,6 +20,7 @@ import { parseMotionIndicatorComp } from './motionIndicatorComponent';
 import { parseModelShaderComp } from './modelShaderComponent';
 import { parseLightComp } from './lightComponent';
 import { parseSubModelRefComp } from './subModelRefComponent';
+import { parsePlaneGeometryComp } from './planeGeometryComponent';
 
 enum NodeComponentProperty {
   Name = 'name',
@@ -189,7 +190,13 @@ const parseNodeComponents = (components: DocumentType): ISceneComponentInternal[
         }
         break;
       }
-
+      case componentTypeToId.PlaneGeometry: {
+        const planeGeometry = parsePlaneGeometryComp(comp);
+        if (planeGeometry) {
+          results.push(planeGeometry);
+        }
+        break;
+      }
       case NODE_COMPONENT_TYPE_ID:
         // Ignore node component
         break;

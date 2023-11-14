@@ -15,7 +15,7 @@ import CameraComponentEditor from './scene-components/CameraComponentEditor';
 import { DataOverlayComponentEditor } from './scene-components/DataOverlayComponentEditor';
 import { EntityBindingComponentEditor } from './scene-components/EntityBindingComponentEditor';
 import { AnimationComponentEditor } from './scene-components/AnimationComponentEditor';
-
+import { PlaneGeometryComponentEditor } from './scene-components/PlaneGeometryComponentEditor';
 export interface IComponentEditorProps {
   node: ISceneNodeInternal;
   component: ISceneComponentInternal;
@@ -61,6 +61,8 @@ export const ComponentEditor: React.FC<IComponentEditorProps> = ({ node, compone
       return <EntityBindingComponentEditor node={node} component={component as IEntityBindingComponentInternal} />;
     case KnownComponentType.Animation:
       return <AnimationComponentEditor node={node} component={component as IAnimationComponentInternal} />;
+    case KnownComponentType.PlaneGeometry:
+      return <PlaneGeometryComponentEditor node={node} component={component} />;
     default:
       return <DefaultComponentEditor node={node} component={component} />;
   }

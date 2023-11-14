@@ -24,6 +24,8 @@ import ColorOverlayComponent from '../ColorOverlayComponent';
 import SubModelComponent from '../SubModelComponent';
 import DataOverlayComponent from '../DataOverlayComponent';
 import AnimationComponent from '../AnimationComponent/AnimationComponent';
+import PlaneGeometryComponent from '../ModelGeometryComponents/PlaneGeometryComponent';
+import { IPlaneGeometryComponentInternal } from '../../../store/internalInterfaces';
 
 interface ComponentViewProps {
   component: ISceneComponentInternal;
@@ -56,6 +58,8 @@ const ComponentView = ({ component, node }: ComponentViewProps) => {
       return <AnimationComponent node={node} component={component as IAnimationComponentInternal} />;
     case KnownComponentType.DataOverlay:
       return <DataOverlayComponent node={node} component={component as IDataOverlayComponentInternal} />;
+    case KnownComponentType.PlaneGeometry:
+      return <PlaneGeometryComponent node={node} component={component as IPlaneGeometryComponentInternal} />;
     default:
       return <Fragment key={component.ref}></Fragment>;
   }

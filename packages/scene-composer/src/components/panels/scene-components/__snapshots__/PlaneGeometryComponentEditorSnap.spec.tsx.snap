@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlaneGeometryComponentEditor should render correctly 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Width"
+    >
+      <div
+        data-mocked="Input"
+        data-testid="plane-width-input"
+        type="number"
+        value="10"
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Height"
+    >
+      <div
+        data-mocked="Input"
+        data-testid="plane-height-input"
+        type="number"
+        value="20"
+      />
+    </div>
+    <div
+      id="ColorSelectorCombo"
+    >
+      [{"color":"#cccccc","customColors":[],"colorPickerLabel":"Color","customColorLabel":"Custom colors"},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`PlaneGeometryComponentEditor should render correctly with color 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Width"
+    >
+      <div
+        data-mocked="Input"
+        data-testid="plane-width-input"
+        type="number"
+        value="10"
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Height"
+    >
+      <div
+        data-mocked="Input"
+        data-testid="plane-height-input"
+        type="number"
+        value="20"
+      />
+    </div>
+    <div
+      id="ColorSelectorCombo"
+    >
+      [{"color":"#abcdef","customColors":[],"colorPickerLabel":"Color","customColorLabel":"Custom colors"},{}]
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlaneGeometryComponent should render 1`] = `
+<div>
+  <group
+    name="PLANE_GEOMETRY_COMPONENT_nodeRef"
+  >
+    <div
+      args="[10,20]"
+      data-mocked="Plane"
+    >
+      <meshbasicmaterial
+        color="#CCCCCC"
+        side="2"
+      />
+    </div>
+  </group>
+</div>
+`;
+
+exports[`PlaneGeometryComponent should render with predefined color 1`] = `
+<div>
+  <group
+    name="PLANE_GEOMETRY_COMPONENT_nodeRef"
+  >
+    <div
+      args="[10,20]"
+      data-mocked="Plane"
+    >
+      <meshbasicmaterial
+        color="#abcdef"
+        side="2"
+      />
+    </div>
+  </group>
+</div>
+`;

@@ -109,6 +109,16 @@ exports[`ComponentEditor renders correct component should render the "MotionIndi
 </div>
 `;
 
+exports[`ComponentEditor renders correct component should render the "PlaneGeometry" editor correctly 1`] = `
+<div>
+  <div
+    data-mocked="PlaneGeometryComponentEditor"
+  >
+    {"node":{},"component":{"ref":"refId","type":"PlaneGeometry"}}
+  </div>
+</div>
+`;
+
 exports[`ComponentEditor renders correct component should render the "SubModelRef" editor correctly 1`] = `
 <div>
   <div

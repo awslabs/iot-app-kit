@@ -18,6 +18,7 @@ export enum KnownComponentType {
   MotionIndicator = 'MotionIndicator',
   DataOverlay = 'DataOverlay',
   EntityBinding = 'EntityBinding',
+  PlaneGeometry = 'PlaneGeometry',
 }
 
 export interface ISceneComponent {
@@ -145,3 +146,5 @@ export interface IMotionIndicatorComponent extends ISceneComponent, SceneModels.
 export interface IDataOverlayComponent extends ISceneComponent, SceneModels.Component.DataOverlay {}
 
 export interface IEntityBindingComponent extends ISceneComponent, SceneModels.Component.EntityBindingComponent {}
+
+export interface IPlaneGeometryComponent extends ISceneComponent, SceneModels.Component.Plane {}

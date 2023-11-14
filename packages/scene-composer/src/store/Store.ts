@@ -24,6 +24,7 @@ import {
   IMotionIndicatorComponentInternal,
   IDataOverlayComponentInternal,
   IEntityBindingComponentInternal,
+  IPlaneGeometryComponentInternal,
 } from './internalInterfaces';
 
 export type {
@@ -42,6 +43,7 @@ export type {
   IMotionIndicatorComponentInternal,
   IDataOverlayComponentInternal,
   IEntityBindingComponentInternal,
+  IPlaneGeometryComponentInternal,
 };
 
 export interface ISharedState {

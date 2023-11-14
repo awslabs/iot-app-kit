@@ -123,6 +123,7 @@ export namespace Component {
     MotionIndicator = 'MotionIndicator',
     DataOverlay = 'DataOverlay',
     EntityBinding = 'EntityBinding',
+    PlaneGeometry = 'PlaneGeometry',
   }
 
   export interface IComponent {
@@ -277,5 +278,11 @@ export namespace Component {
   export interface Light extends IComponent {
     lightType: LightType;
     lightSettings: ILightSettings;
+  }
+
+  export interface Plane extends IComponent {
+    width: number;
+    height: number;
+    color?: string;
   }
 }

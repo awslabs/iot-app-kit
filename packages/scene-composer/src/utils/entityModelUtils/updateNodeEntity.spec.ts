@@ -15,6 +15,7 @@ import { updateModelRefEntityComponent } from './modelRefComponent';
 import { updateModelShaderEntityComponent } from './modelShaderComponent';
 import { updateLightEntityComponent } from './lightComponent';
 import { updateSubModelRefEntityComponent } from './subModelRefComponent';
+import { updatePlaneGeometryEntityComponent } from './planeGeometryComponent';
 
 jest.mock('./nodeComponent', () => ({
   updateNodeEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.node' }),
@@ -42,6 +43,9 @@ jest.mock('./lightComponent', () => ({
 }));
 jest.mock('./subModelRefComponent', () => ({
   updateSubModelRefEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.subModelRef' }),
+}));
+jest.mock('./planeGeometryComponent', () => ({
+  updatePlaneGeometryEntityComponent: jest.fn().mockReturnValue({ componentTypeId: '3d.planeGeometry' }),
 }));
 
 describe('updateEntity', () => {
@@ -83,10 +87,11 @@ describe('updateEntity', () => {
     const modelShader = { type: KnownComponentType.ModelShader, ref: 'modelshader-ref' };
     const light = { type: KnownComponentType.Light, ref: 'light-ref' };
     const subModelRef = { type: KnownComponentType.SubModelRef, ref: 'subModelref-ref' };
+    const planeGeometry = { type: KnownComponentType.PlaneGeometry, ref: 'planegeometry-ref' };
 
     await updateEntity(
       defaultNode,
-      [tag, overlay, camera, motionIndicator, modelRef, modelShader, light, subModelRef],
+      [tag, overlay, camera, motionIndicator, modelRef, modelShader, light, subModelRef, planeGeometry],
       'UPDATE',
     );
 
@@ -105,6 +110,7 @@ describe('updateEntity', () => {
         ModelShader: { componentTypeId: '3d.modelShader' },
         Light: { componentTypeId: '3d.light' },
         SubModelRef: { componentTypeId: '3d.subModelRef' },
+        PlaneGeometry: { componentTypeId: '3d.planeGeometry' },
       },
     });
 
@@ -126,6 +132,8 @@ describe('updateEntity', () => {
     expect(updateLightEntityComponent).toBeCalledWith(light);
     expect(updateSubModelRefEntityComponent).toBeCalledTimes(1);
     expect(updateSubModelRefEntityComponent).toBeCalledWith(subModelRef);
+    expect(updatePlaneGeometryEntityComponent).toBeCalledTimes(1);
+    expect(updatePlaneGeometryEntityComponent).toBeCalledWith(planeGeometry);
   });
 
   it('should call update entity to update tag component', async () => {
