@@ -7,6 +7,24 @@ import { StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
 import { useViewportData } from '~/components/csvDownloadButton/useViewportData';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 
+const EMPTY_DATA = [
+  {
+    timestamp: '',
+    dataQuality: '',
+    value: '',
+    unit: '',
+    aggregationType: '',
+    resolution: '',
+    propertyName: '',
+    assetName: '',
+    propertyAlias: '',
+    assetId: '',
+    dataType: '',
+    dataTypeSpec: '',
+    propertyId: '',
+  },
+];
+
 const isQueryEmpty = (queryConfig: StyledSiteWiseQueryConfig) => {
   const query = queryConfig.query;
   return !query?.assets?.length && !query?.properties?.length && !query?.assetModels?.length;
@@ -28,13 +46,13 @@ export const CSVDownloadButton = ({
 
     const { data, isError } = await fetchViewportData(requestDateMS);
 
-    if (isError || !data || data.length === 0) {
+    if (isError || !data) {
       isError && console.error('Unable to download CSV data');
       setIsDownloading(false);
       return;
     }
 
-    const stringCSVData = unparse(data);
+    const stringCSVData = data.length === 0 ? unparse(EMPTY_DATA) : unparse(data);
     const file = new Blob([stringCSVData], { type: 'text/csv' });
 
     // create Anchor element with download attribute, click on it, and then delete it

@@ -5,7 +5,8 @@ import React from 'react';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { CSVDownloadButton } from './index';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { StyledAssetQuery } from '~/customization/widgets/types';
+import { StyledAssetQuery, StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
+import { useViewportData } from './useViewportData';
 
 const testQueryClient = new QueryClient({
   defaultOptions: {
@@ -52,25 +53,25 @@ it('does not render button if query has no content', function () {
   expect(screen.queryByTestId(/csv-download-button/)).toBeNull();
 });
 
-it('does not create a file for download if data is empty', async function () {
+it('creates a file for download if data is empty', async function () {
+  global.URL.createObjectURL = jest.fn();
+  const mockClient = createMockSiteWiseSDK() as IoTSiteWiseClient;
+  const mockQueryConfig = {
+    source: 'iotsitewise',
+    query: {
+      ...MOCK_QUERY,
+    },
+  } as StyledSiteWiseQueryConfig;
   render(
     <QueryClientProvider client={testQueryClient}>
-      <CSVDownloadButton
-        queryConfig={{
-          source: 'iotsitewise',
-          query: {
-            ...MOCK_QUERY,
-          },
-        }}
-        fileName='csv-test'
-        client={createMockSiteWiseSDK() as IoTSiteWiseClient}
-      />
+      <CSVDownloadButton queryConfig={mockQueryConfig} fileName='csv-test' client={mockClient} />
     </QueryClientProvider>
   );
 
   const downloadButton = screen.queryByTestId(/csv-download-button/);
   downloadButton && fireEvent.click(downloadButton);
   const createElementSpyOn = jest.spyOn(document, 'createElement');
-  await waitFor(() => expect(mockFetchViewportData).toBeCalled());
-  await waitFor(() => expect(createElementSpyOn).not.toBeCalledWith('a'));
+  expect(useViewportData).toHaveBeenCalledWith({ queryConfig: mockQueryConfig, client: mockClient });
+  await waitFor(() => expect(mockFetchViewportData).toHaveBeenCalled());
+  await waitFor(() => expect(createElementSpyOn).toBeCalledWith('a'));
 });
