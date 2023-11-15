@@ -23,6 +23,14 @@ const sceneLoader = initialize({ ... }).s3SceneLoader('scene-id');
 />
 ```
 
+### Data bindings and rules
+
+When the widgets, like tag, motion indicator, overlay, etc, have configured with data binding (entityId, componentName, propertyName), the SceneViewer component will need to get the property values of the data bindings so that the widgets can change based on value changes.
+
+A `viewport` property will be required in this case so the SceneViewer can know the expected time range for the property values.
+
+`queries` or `dataStreams` props can also be passed in which return the property values to be used by data bindings. If they are not provided, the SceneViewer component will automatically fetch property values for each data bindings exist in the rendered scene.
+
 ## Properties
 
 The SceneViewer component contains the following properties that you can customize. 
@@ -49,13 +57,15 @@ The `meta` field of each stream is required to contain values for keys `entityId
 
 Type: `DataStream[]` defined in `@iot-app-kit/core`
 
+Note: This property needs to be used together with `viewport`.
+
 ### `queries`
 
 (Optional) Selects what data to be fetched. Learn more about queries, see [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md). 
 
 Type: `TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[]` defined in `@iot-app-kit/core`
 
-This property is used together with `viewport`.
+Note: This property needs to be used together with `viewport`.
 
 ### `viewport` 
 
@@ -63,7 +73,7 @@ This property is used together with `viewport`.
 
 Type: `Viewport` defined in `@iot-app-kit/core`
 
-This property is used together with `queires`.
+Note: This property is needed to make the data binding and rules work with property data. If `queires` or `dataStreams` are not provided, the property data will be fetched by the SceneViewer component.
 
 ### `dataBindingTemplate`
 
