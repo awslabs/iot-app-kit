@@ -1,16 +1,18 @@
 import { MutableRefObject, useCallback, useEffect, useState } from 'react';
-import { EChartsOption, EChartsType } from 'echarts';
+import { EChartsOption, EChartsType, ElementEvent } from 'echarts';
 import { KeyMap } from 'react-hotkeys';
 
 export const useHandleChartEvents = (chartRef: MutableRefObject<EChartsType | null>) => {
   const [chartEventsOptions, setChartEventsOptions] = useState<EChartsOption>({});
 
   const [shiftDown, setShiftDown] = useState(false);
-  const [mouseDown, setMouseDown] = useState(false);
-  const [prevIsGrabbing, setPrevIsGrabbing] = useState(false);
+  const [prevIsPanning, setPrevIsPanning] = useState(false);
+  const [isPanning, setIsPanning] = useState(false);
+  const [isBrushZooming, setIsBrushZooming] = useState(false);
 
-  // When dragging on the chart, turn off tooltip and set cursor to grabbing
-  const setOnDragStart = (chart: EChartsType | null) => {
+  // When panning on the chart, turn off tooltip and set cursor to grabbing
+  const setOnPanStart = (chart: EChartsType | null) => {
+    setIsPanning(true);
     setChartEventsOptions({
       tooltip: {
         show: false,
@@ -21,7 +23,8 @@ export const useHandleChartEvents = (chartRef: MutableRefObject<EChartsType | nu
 
   // When dragging is done turn back on the tooltip and set cursor to grab
   // Use when the shift key is still held down but mouse is up
-  const setOnDragEnd = (chart: EChartsType | null) => {
+  const setOnPanEnd = (chart: EChartsType | null) => {
+    setIsPanning(false);
     setChartEventsOptions({
       tooltip: {
         show: true,
@@ -36,14 +39,14 @@ export const useHandleChartEvents = (chartRef: MutableRefObject<EChartsType | nu
     (event?: KeyboardEvent) => {
       if (event) {
         setShiftDown(event.shiftKey);
-        if (mouseDown && shiftDown) {
-          setOnDragStart(chartRef.current);
+        if (isPanning) {
+          setOnPanStart(chartRef.current);
         } else if (shiftDown) {
           chartRef.current?.getZr().setCursorStyle('grab');
         }
       }
     },
-    [chartRef, mouseDown, shiftDown]
+    [chartRef, isPanning, shiftDown]
   );
 
   // When shift is released go back to the default cursor
@@ -75,10 +78,13 @@ export const useHandleChartEvents = (chartRef: MutableRefObject<EChartsType | nu
     // Define event handler function so that we can remove this specific behavior on re-render
 
     // When mouse is down only update when shift is also down
-    const mouseDownEventHandler = () => {
-      setMouseDown(true);
+    // if the brush zoom is selected, prevent event propagation
+    const mouseDownEventHandler = (e: ElementEvent) => {
       if (shiftDown) {
-        setOnDragStart(chart);
+        setOnPanStart(chart);
+      }
+      if (isBrushZooming) {
+        e.stop();
       }
     };
 
@@ -86,9 +92,8 @@ export const useHandleChartEvents = (chartRef: MutableRefObject<EChartsType | nu
 
     // When mouse is released only update when shift is also down
     const mouseUpEventHandler = () => {
-      setMouseDown(false);
       if (shiftDown) {
-        setOnDragEnd(chart);
+        setOnPanEnd(chart);
       }
     };
 
@@ -96,12 +101,10 @@ export const useHandleChartEvents = (chartRef: MutableRefObject<EChartsType | nu
 
     // Most important to update dragging events on mouse move
     const mouseMoveEventHandler = () => {
-      const isGrabbing = mouseDown && shiftDown;
-
       // Only update tooltip when state changed
       let stateChanged = false;
-      if (isGrabbing !== prevIsGrabbing) {
-        setPrevIsGrabbing(isGrabbing);
+      if (isPanning !== prevIsPanning) {
+        setPrevIsPanning(isPanning);
         stateChanged = true;
       } else {
         stateChanged = false;
@@ -109,27 +112,36 @@ export const useHandleChartEvents = (chartRef: MutableRefObject<EChartsType | nu
 
       // Overwrite cursor style on every move of the mouse
       // Update tooltip only once, on grab state change
-      if (isGrabbing) {
+      if (isPanning) {
+        setIsPanning(true);
         chart?.getZr().setCursorStyle('grabbing');
         if (stateChanged) {
-          setOnDragStart(chart);
+          setOnPanStart(chart);
         }
-      } else if (shiftDown) {
+      } else if (shiftDown && !isPanning) {
         chart?.getZr().setCursorStyle('grab');
         if (stateChanged) {
-          setOnDragEnd(chart);
+          setOnPanEnd(chart);
         }
       }
     };
 
     chart?.getZr().on('mousemove', mouseMoveEventHandler);
 
+    const zoomClickHandler = (e: unknown) => {
+      if (e && typeof e === 'object' && 'dataZoomSelectActive' in e) {
+        setIsBrushZooming(!!e.dataZoomSelectActive);
+      }
+    };
+    chart?.on('globalcursortaken', zoomClickHandler);
+
     return () => {
       chart?.getZr()?.off('mousemove', mouseMoveEventHandler);
       chart?.getZr()?.off('mouseup', mouseUpEventHandler);
       chart?.getZr()?.off('mousedown', mouseDownEventHandler);
+      chart?.off('globalcursortaken', zoomClickHandler);
     };
-  }, [chartRef, shiftDown, mouseDown, prevIsGrabbing]);
+  }, [chartRef, isBrushZooming, shiftDown, isPanning, prevIsPanning]);
 
   return { chartEventsOptions, chartEventsKeyMap, chartEventsHandlers };
 };
