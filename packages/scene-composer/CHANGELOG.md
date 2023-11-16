@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.6.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.5.0...scene-composer-v9.6.0) (2023-11-16)
+
+
+### Features
+
+* **composer:** enable auto query feature ([661af11](https://github.com/awslabs/iot-app-kit/commit/661af1188f690d6b2a33f26a6105b5fecdc539b9))
+* **scene:** add ground plane button ([c282c41](https://github.com/awslabs/iot-app-kit/commit/c282c41e5f96c403a7cbbea95dc5a759ab2d4193))
+
+
+### Bug Fixes
+
+* **composer:** bug fixes for dynamic scene ([10046da](https://github.com/awslabs/iot-app-kit/commit/10046daf2ef3ea2d161321a7794d019db3ccd76f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.5.0 to 9.6.0
+    * @iot-app-kit/react-components bumped from 9.5.0 to 9.6.0
+    * @iot-app-kit/related-table bumped from 9.5.0 to 9.6.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.5.0 to 9.6.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 9.5.0 to 9.6.0
+
 ## [9.5.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.4.0...scene-composer-v9.5.0) (2023-11-08)
 
 
