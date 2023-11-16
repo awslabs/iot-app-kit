@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.6.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.5.0...root-v9.6.0) (2023-11-16)
+
+
+### Features
+
+* **composer:** enable auto query feature ([661af11](https://github.com/awslabs/iot-app-kit/commit/661af1188f690d6b2a33f26a6105b5fecdc539b9))
+* **scene:** add ground plane button ([c282c41](https://github.com/awslabs/iot-app-kit/commit/c282c41e5f96c403a7cbbea95dc5a759ab2d4193))
+
+
+### Bug Fixes
+
+* **composer:** bug fixes for dynamic scene ([10046da](https://github.com/awslabs/iot-app-kit/commit/10046daf2ef3ea2d161321a7794d019db3ccd76f))
+* full UI test suite CI ([72fc3bd](https://github.com/awslabs/iot-app-kit/commit/72fc3bd3c1b4ba62ccda842c0f918d51ec9f4feb))
+* restrict [@iot-app-kit](https://github.com/iot-app-kit) imports ([780f404](https://github.com/awslabs/iot-app-kit/commit/780f404f20475dab7d0e21af271b5f3f98defee5))
+* update test run command for ui tests ([a5d0433](https://github.com/awslabs/iot-app-kit/commit/a5d043316bf32e0a97897af7d5c3c06ff33e8299))
+* **video-player:** toggle playback mode and update time range ([a033cb0](https://github.com/awslabs/iot-app-kit/commit/a033cb01824ccff6a63eb4e62d019b691b085a0a))
+
 ## [9.5.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.4.0...root-v9.5.0) (2023-11-08)
 
 
