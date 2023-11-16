@@ -23,7 +23,7 @@ import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
 import './chart.css';
 import { useContextMenu } from './contextMenu/useContextMenu';
 import { useViewportToMS } from './hooks/useViewportToMS';
-import { DEFAULT_CHART_VISUALIZATION } from './eChartsConstants';
+import { DEFAULT_CHART_VISUALIZATION, DEFAULT_TOOLBOX_CONFIG } from './eChartsConstants';
 import { useDataZoom } from './hooks/useDataZoom';
 import { useViewport } from '../../hooks/useViewport';
 import { getXAxis } from './chartOptions/axes/xAxis';
@@ -143,6 +143,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
       ...chartEventsOptions,
       tooltip: toolTipOptions,
       series,
+      toolbox: DEFAULT_TOOLBOX_CONFIG,
       yAxis,
       xAxis,
       graphic: trendCursors,

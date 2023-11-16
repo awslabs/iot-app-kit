@@ -1,10 +1,19 @@
 import type {
   DataZoomComponentOption,
   LegendComponentOption,
+  ToolboxComponentOption,
   TooltipComponentOption,
   XAXisComponentOption,
   YAXisComponentOption,
 } from 'echarts';
+
+export const DEFAULT_TOOLBOX_CONFIG: ToolboxComponentOption = {
+  show: true,
+  right: 30,
+  feature: {
+    dataZoom: { yAxisIndex: false, title: { back: 'Zoom\nreset' } },
+  },
+};
 
 export const DEFAULT_X_AXIS: XAXisComponentOption = {
   show: true,
