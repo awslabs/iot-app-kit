@@ -11,7 +11,10 @@ export const DEFAULT_TOOLBOX_CONFIG: ToolboxComponentOption = {
   show: true,
   right: 30,
   feature: {
-    dataZoom: { yAxisIndex: false, title: { back: 'Zoom\nreset' } },
+    dataZoom: { yAxisIndex: false, title: { back: 'Undo\nzoom' } },
+  },
+  iconStyle: {
+    borderColor: '#414d5c',
   },
 };
 
