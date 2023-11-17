@@ -17,6 +17,7 @@ describe('deleteNodeEntity', () => {
     expect(deleteSceneEntity).toBeCalledTimes(1);
     expect(deleteSceneEntity).toBeCalledWith({
       entityId: 'ref',
+      isRecursive: true,
     });
   });
 });
