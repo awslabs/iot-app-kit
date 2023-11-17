@@ -1,8 +1,16 @@
 import React from 'react';
+import { useMeasure } from 'react-use';
 
 import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Button from '@cloudscape-design/components/button';
+import {
+  colorBackgroundButtonNormalDefault,
+  colorBorderDividerDefault,
+  spaceStaticXxxs,
+} from '@cloudscape-design/design-tokens';
+import { STICKY_BUTTON_WIDTH_FACTOR } from '../constants';
+import './index.css';
 
 export type ResourceExplorerFooterOptions = {
   addDisabled?: boolean;
@@ -17,16 +25,28 @@ export const ResourceExplorerFooter = ({
   onAdd,
   onReset,
 }: ResourceExplorerFooterOptions) => {
+  const [componentRef, { width }] = useMeasure<HTMLDivElement>();
+  const stickyFooter = {
+    backgroundColor: colorBackgroundButtonNormalDefault,
+    bottom: spaceStaticXxxs,
+    width: width + STICKY_BUTTON_WIDTH_FACTOR,
+    borderTop: `${spaceStaticXxxs} solid ${colorBorderDividerDefault}`,
+  };
+
   return (
-    <Box float='right'>
-      <SpaceBetween direction='horizontal' size='xs'>
-        <Button disabled={resetDisabled} onClick={onReset}>
-          Reset
-        </Button>
-        <Button variant='primary' disabled={addDisabled} onClick={onAdd}>
-          Add
-        </Button>
-      </SpaceBetween>
-    </Box>
+    <div ref={componentRef}>
+      <div className='queryeditor-button-sticky' style={stickyFooter}>
+        <Box float='right' padding='xs'>
+          <SpaceBetween direction='horizontal' size='xs'>
+            <Button disabled={resetDisabled} onClick={onReset}>
+              Reset
+            </Button>
+            <Button variant='primary' disabled={addDisabled} onClick={onAdd}>
+              Add
+            </Button>
+          </SpaceBetween>
+        </Box>
+      </div>
+    </div>
   );
 };
