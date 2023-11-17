@@ -60,7 +60,7 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
   const { onDelete } = useDeleteWidgets();
 
   const isRemoveable = !isReadOnly && removeable;
-  const headerVisible = !isReadOnly || title;
+  const headerVisible = !isReadOnly || widget.type !== 'text';
 
   const handleDelete: CancelableEventHandler<ClickDetail> = (e) => {
     e.preventDefault();
