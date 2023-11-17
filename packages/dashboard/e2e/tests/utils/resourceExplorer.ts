@@ -1,11 +1,5 @@
 import { Page, expect } from '@playwright/test';
-import {
-  RESOURCE_EXPLORER_ICON,
-  RESOURCE_EXPLORER_FRAME,
-  MODELED_TAB,
-  UNMODELED_TAB,
-  ASSET_MODEL_TAB,
-} from '../constants';
+import { RESOURCE_EXPLORER_FRAME, MODELED_TAB, UNMODELED_TAB, ASSET_MODEL_TAB } from '../constants';
 
 const tabMap = {
   modeled: MODELED_TAB,
@@ -76,7 +70,6 @@ export const resourceExplorerUtil = (page: Page) => {
      * @returns void
      */
     open: async () => {
-      await frame.locator(RESOURCE_EXPLORER_ICON).click();
       await expect(page.getByText('Resource explorer')).toBeVisible();
     },
     /**
