@@ -11,6 +11,8 @@ import { onDragUpdateTrendCursor } from './handlers/drag/update';
 import { calculateTimeStamp } from '../calculations/timestamp';
 import { mouseoverHandler } from './handlers/mouseover';
 import { ElementEvent } from 'echarts';
+import { calculateSeriesMakers } from '../calculations/calculateSeriesMakers';
+import { onResizeUpdateTrendCursorYValues } from '../resize/updateYValues';
 
 const useTrendCursorsEvents = ({
   chartRef,
@@ -192,12 +194,35 @@ const useTrendCursorsEvents = ({
       setGraphicRef.current([...graphicRef.current]);
     };
 
+    // additional zoom handler, this is to avoid the "lag" because we throttle "datazoom" event when handling viewport
+    const zoomHandler = () => {
+      const newG = graphicRef.current.map((g) => {
+        // updating the series line marker's y value
+        const { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue } = calculateSeriesMakers(
+          seriesRef.current,
+          g.timestampInMs,
+          chartRef,
+          visualizationRef.current,
+          significantDigitsRef.current
+        );
+        g.yAxisMarkerValue = trendCursorsSeriesMakersValue;
+        // update line height and markers
+        g.children = onResizeUpdateTrendCursorYValues(g.children, trendCursorsSeriesMakersInPixels, sizeRef.current);
+        // updating x of the graphic
+        g.x = calculateXFromTimestamp(g.timestampInMs, chartRef);
+        return g;
+      });
+
+      setGraphic([...newG]);
+    };
+
     // passing the function so that we can remove this specific behavior on re-render
     currentChart?.getZr().on('click', clickEventHandler);
     currentChart?.getZr().on('mousemove', mouseMoveEventHandler);
     currentChart?.getZr().on('drag', dragEventHandler);
     currentChart?.getZr().on('contextmenu', contextMenuEventHandler);
     currentChart?.getZr().on('dragstart', dragStartEventHandler);
+    currentChart?.on('datazoom', zoomHandler);
 
     return () => {
       // passing the function so that it will NOT remove all event behaviour
@@ -206,8 +231,9 @@ const useTrendCursorsEvents = ({
       currentChart?.getZr()?.off('drag', dragEventHandler);
       currentChart?.getZr()?.off('contextmenu', contextMenuEventHandler);
       currentChart?.getZr()?.off('dragstart', dragStartEventHandler);
+      currentChart?.off('datazoom', zoomHandler);
     };
-  }, [addNewTrendCursor, deleteTrendCursor, groupId, updateTrendCursorsInSyncState, chartRef]);
+  }, [addNewTrendCursor, deleteTrendCursor, groupId, updateTrendCursorsInSyncState, chartRef, setGraphic]);
 
   const copyTrendCursorData = (posX: number) => {
     const timestampOfClick = calculateTimeStamp(posX, chartRef);
