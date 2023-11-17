@@ -83,7 +83,14 @@
   width: 15%;
   min-width: 0;
   height: 100%;
-  max-height: calc(100vh - var(--toolbar-overlay-height));
   z-index: var(--stack-order-grid-inputs);
   background-color: var(--colors-white);
+}
+
+.collapsible-panel-right {
+  max-height: calc(100vh - var(--right-toolbar-overlay-height));
+}
+
+.collapsible-panel-left {
+  max-height: calc(100vh - var(--left-toolbar-overlay-height));
 }
