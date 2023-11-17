@@ -1,12 +1,11 @@
 import React from 'react';
 
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { LineScatterChartWidget, LineStyles, SymbolStyles } from '~/customization/widgets/types';
 import { DashboardWidget } from '~/types';
-import { TypeSection } from './typeSection';
 import { TitleSection } from './titleSection';
 import { LineStyleSection } from './lineStyleSection';
-import { DataPointStyleSection } from './dataPointStyleSection';
 import { YAxisSection } from './yAxis';
 import { LegendSection } from './legendSection';
 import { AggregationAndResolutionSection } from './aggregationAndResolutionSection';
@@ -181,23 +180,15 @@ const RenderLineAndScatterStyleSettingsSection = ({
   const filteredAggregationOptions = getAggregationOptions(true, dataTypeSet, resolution);
 
   return (
-    <>
-      <TypeSection
-        type={connectionStyle}
-        updateType={(type) => updateConnectionStyle(type as LineStyles['connectionStyle'])}
-      />
+    <SpaceBetween size='s' direction='vertical'>
       <TitleSection title={title} updateTitle={updateTitle} />
-      <LineStyleSection
-        lineStyle={lineStyle}
-        lineThickness={lineThickness}
-        updatelineStyle={(style) => updateLineStyle(style as LineStyles['style'])}
-        updateLineThickness={(thickness) => {
-          updateLineThickness(thickness as LineStyles['thickness']);
-        }}
-      />
-      <DataPointStyleSection
-        dataPointStyle={dataPointStyle}
-        updateDataPointStyle={(dataPointStyle) => updateDataPointStyle(dataPointStyle as SymbolStyles['style'])}
+      <AggregationAndResolutionSection
+        aggregation={aggregationType}
+        resolution={resolution}
+        updateAggregation={(updatedAggregationType) => updateAggregation(updatedAggregationType as AggregateType)}
+        updateResolution={updateResolution}
+        resolutionOptions={filteredResolutionOptions}
+        aggregationOptions={filteredAggregationOptions}
       />
       <YAxisSection
         visible={axis?.yVisible ?? true}
@@ -207,16 +198,20 @@ const RenderLineAndScatterStyleSettingsSection = ({
         updateMin={(min) => updateAxis({ ...axis, yMin: min ?? undefined })}
         updateMax={(max) => updateAxis({ ...axis, yMax: max ?? undefined })}
       />
-      <AggregationAndResolutionSection
-        aggregation={aggregationType}
-        resolution={resolution}
-        updateAggregation={(updatedAggregationType) => updateAggregation(updatedAggregationType as AggregateType)}
-        updateResolution={updateResolution}
-        resolutionOptions={filteredResolutionOptions}
-        aggregationOptions={filteredAggregationOptions}
+      <LineStyleSection
+        lineType={connectionStyle}
+        lineStyle={lineStyle}
+        lineThickness={lineThickness}
+        dataPointStyle={dataPointStyle}
+        updatelineStyle={(style) => updateLineStyle(style as LineStyles['style'])}
+        updateLineThickness={(thickness) => {
+          updateLineThickness(thickness as LineStyles['thickness']);
+        }}
+        updateType={(type) => updateConnectionStyle(type as LineStyles['connectionStyle'])}
+        updateDataPointStyle={(dataPointStyle) => updateDataPointStyle(dataPointStyle as SymbolStyles['style'])}
       />
       <LegendSection visible={legendVisible} setVisible={updateLegendVisible} />
-    </>
+    </SpaceBetween>
   );
 };
 

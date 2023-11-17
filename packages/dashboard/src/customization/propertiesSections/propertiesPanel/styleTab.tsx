@@ -10,7 +10,7 @@ import { LineAndScatterStyleSettingsSection } from '../lineAndScatterStyleSettin
 
 export const StylesSection = () => (
   <div>
-    <SpaceBetween size='xs' direction='vertical'>
+    <SpaceBetween size='s' direction='vertical'>
       <LineAndScatterStyleSettingsSection />
       <AggregationsSettingsConfiguration />
       <AxisSettingsConfiguration />

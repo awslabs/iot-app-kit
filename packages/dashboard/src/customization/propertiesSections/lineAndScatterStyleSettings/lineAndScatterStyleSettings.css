@@ -1,0 +1,18 @@
+.accordian-header > div:first-child {
+  background-color: #f8f8f8;
+}
+
+.accordian-custom-header [class*="awsui_expand-button"] {
+  width: 100%;
+}
+
+.accordian-custom-header [class*="awsui_header-text"] {
+  flex-grow: 1;
+}
+
+/* yAxis header  */
+.yaxis-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
