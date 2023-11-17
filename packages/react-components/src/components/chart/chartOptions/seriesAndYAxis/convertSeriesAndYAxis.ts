@@ -94,6 +94,7 @@ const convertSeries = (
       width: scaledLineThickness,
       opacity,
     },
+    animation: false,
   } as SeriesOption;
 
   return addVisualizationSpecificOptions(visualizationType, genericSeries);
