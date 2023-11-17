@@ -18,4 +18,4 @@ export const TREND_CURSOR_CLOSE_GRAPHIC_INDEX = 2;
 export const TREND_CURSOR_LINE_MARKERS_GRAPHIC_INDEX = 3;
 export const TREND_CURSOR_DRAG_RECT_WIDTH = 60;
 
-export const FRAMES_TO_SKIP = 5;
+export const FRAMES_TO_SKIP = 2;
