@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { useViewport } from '@iot-app-kit/react-components';
 import { Button, SpaceBetween, Box } from '@cloudscape-design/components';
-import { onToggleReadOnly } from '~/store/actions';
+import { onSelectWidgetsAction, onToggleReadOnly } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
 import { isEqual, pick } from 'lodash';
 import { DashboardSave } from '~/types';
@@ -49,6 +49,12 @@ const Actions: React.FC<ActionsProps> = ({
 
   const handleOnReadOnly = () => {
     dispatch(onToggleReadOnly());
+    dispatch(
+      onSelectWidgetsAction({
+        widgets: [],
+        union: false,
+      })
+    );
   };
 
   const handleOnClose = () => {

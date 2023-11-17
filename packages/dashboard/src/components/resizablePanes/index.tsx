@@ -1,19 +1,15 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import type { MouseEvent, FC, ReactNode } from 'react';
-import { useSelector } from 'react-redux';
 
 import { spaceStaticXs } from '@cloudscape-design/design-tokens';
-import { DashboardState } from '~/store/state';
 import {
   LEFT_WIDTH_PERCENT,
-  RIGHT_WIDTH_PERCENT,
   MINIMUM_CENTER_PANE_WIDTH,
   MINIMUM_SIDE_PANE_WIDTH,
   DEFAULT_SIDE_PANE_WIDTH,
   DEFAULT_COLLAPSED_SIDE_PANE_WIDTH,
   MAXIMUM_PANES_PROPORTION,
   LEFT_WIDTH_PERCENT_STORAGE_KEY,
-  RIGHT_WIDTH_PERCENT_STORAGE_KEY,
   MINIMUM_LEFT_SIDE_PANE_WIDTH,
   MAXIMUM_LEFT_SIDE_PANE_WIDTH,
 } from './constants';
@@ -30,7 +26,6 @@ const getSessionStorageNumber = (key: string, fallback: number) => {
 };
 
 const getStoredLeftWidthPercent = () => getSessionStorageNumber(LEFT_WIDTH_PERCENT_STORAGE_KEY, LEFT_WIDTH_PERCENT);
-const getStoredRightWidthPercent = () => getSessionStorageNumber(RIGHT_WIDTH_PERCENT_STORAGE_KEY, RIGHT_WIDTH_PERCENT);
 
 type ResizablePanesProps = {
   leftPane: ReactNode;
@@ -45,7 +40,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
   const [pointerEvents, setPointerEvents] = useState<'auto' | 'none'>('auto');
 
   /** Currently active drag hangle during a drag, or null if not dragging */
-  const [currentDragHandle, setCurrentDragHandle] = useState<'left' | 'right' | null>(null);
+  const [currentDragHandle, setCurrentDragHandle] = useState<'left' | null>(null);
 
   /** Last seen mouse x position during a drag, in px from screen left side */
   const [lastSeenAtX, setLastSeenAtX] = useState<number | null>(null);
@@ -56,9 +51,8 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
   /** Current widths of the three panes, in px */
   const [leftPaneWidth, setLeftPaneWidth] = useState(DEFAULT_SIDE_PANE_WIDTH);
   const [rightPaneWidth, setRightPaneWidth] = useState(DEFAULT_SIDE_PANE_WIDTH);
-  const selectedWidget = useSelector((state: DashboardState) => state.selectedWidgets);
-  const [isRightPaneCollapsed, setRightPaneCollapsed] = useState(selectedWidget?.length === 0);
-  const [isLeftPaneCollapsed, setLeftPaneCollapsed] = useState(selectedWidget?.length === 0);
+  const [isRightPaneCollapsed, setRightPaneCollapsed] = useState(true);
+  const [isLeftPaneCollapsed, setLeftPaneCollapsed] = useState(false);
 
   useEffect(() => {
     // On initial load, attempt to get stored widths from sessionStorage.
@@ -69,7 +63,6 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
     if (!el) return;
 
     const storedLeftWidthPercent = getStoredLeftWidthPercent();
-    const storedRightWidthPercent = getStoredRightWidthPercent();
     const elementWidth = el.offsetWidth;
 
     if (storedLeftWidthPercent) {
@@ -80,16 +73,6 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
       const computedLeftPaneWidthWithMinimums =
         computedLeftPaneWidth > MINIMUM_SIDE_PANE_WIDTH ? computedLeftPaneWidth : MINIMUM_SIDE_PANE_WIDTH;
       setLeftPaneWidth(computedLeftPaneWidthWithMinimums);
-    }
-
-    if (storedRightWidthPercent) {
-      const storedRightWidth = elementWidth * storedRightWidthPercent;
-      setRightPaneWidth(storedRightWidth);
-    } else {
-      const computedRightPaneWidth = elementWidth * RIGHT_WIDTH_PERCENT;
-      const computedRightPaneWidthWithMinimums =
-        computedRightPaneWidth > MINIMUM_SIDE_PANE_WIDTH ? computedRightPaneWidth : MINIMUM_SIDE_PANE_WIDTH;
-      setRightPaneWidth(computedRightPaneWidthWithMinimums);
     }
   }, []);
 
@@ -112,8 +95,6 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
         setPointerEvents('none');
         if (target.classList.contains('iot-resizable-panes-handle-left')) {
           setCurrentDragHandle('left');
-        } else {
-          setCurrentDragHandle('right');
         }
       }
     }
@@ -149,21 +130,6 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
       const nextLeftPaneWidthPercent = nextLeftPaneWidth / elementWidth;
       sessionStorage.setItem(LEFT_WIDTH_PERCENT_STORAGE_KEY, nextLeftPaneWidthPercent.toString());
     }
-
-    if (currentDragHandle === 'right') {
-      const nextRightPaneWidth = rightPaneWidth - movedX;
-
-      // Stop drag when dragged pane runs into other pane
-      if (nextRightPaneWidth + leftPaneWidth >= elementWidth - MINIMUM_CENTER_PANE_WIDTH) {
-        cancelDrag();
-        return;
-      }
-
-      // Persist percentage with sessionStorage
-      setRightPaneWidth(nextRightPaneWidth);
-      const nextRightPaneWidthPercent = nextRightPaneWidth / elementWidth;
-      sessionStorage.setItem(RIGHT_WIDTH_PERCENT_STORAGE_KEY, nextRightPaneWidthPercent.toString());
-    }
   };
 
   const onHandleDragEnd = () => {
@@ -198,24 +164,18 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
 
     // Scale down the panes in proportion to their current size.
     const maybeNextLeftPaneWidth = elementWidth * nextLeftProportion;
-    const maybeNextRightPaneWidth = elementWidth * nextRightProportion;
 
     // If proportions are too high, or next pane width is larger than minimum
     // size, use minimum size as next pane width instead.
     const nextLeftPaneWidth =
       maybeNextLeftPaneWidth > MINIMUM_SIDE_PANE_WIDTH ? maybeNextLeftPaneWidth : MINIMUM_SIDE_PANE_WIDTH;
-    const nextRightPaneWidth =
-      maybeNextRightPaneWidth > MINIMUM_SIDE_PANE_WIDTH ? maybeNextRightPaneWidth : MINIMUM_SIDE_PANE_WIDTH;
 
     // Persist percentages with sessionStorage
-    const nextRightPaneWidthPercent = nextRightPaneWidth / elementWidth;
-    sessionStorage.setItem(RIGHT_WIDTH_PERCENT_STORAGE_KEY, nextRightPaneWidthPercent.toString());
     const nextLeftPaneWidthPercent = nextLeftPaneWidth / elementWidth;
     sessionStorage.setItem(LEFT_WIDTH_PERCENT_STORAGE_KEY, nextLeftPaneWidthPercent.toString());
 
     // Set pane widths
     setLeftPaneWidth(nextLeftPaneWidth);
-    setRightPaneWidth(nextRightPaneWidth);
   }, [rightPaneWidth, leftPaneWidth]);
 
   // expand and collapse left pane
@@ -243,7 +203,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
   useEffect(() => {
     window.addEventListener('resize', resizeSidePanes);
     return () => window.removeEventListener('resize', resizeSidePanes);
-  }, [leftPaneWidth, rightPaneWidth, resizeSidePanes]);
+  }, [leftPaneWidth, resizeSidePanes]);
 
   return (
     <div
