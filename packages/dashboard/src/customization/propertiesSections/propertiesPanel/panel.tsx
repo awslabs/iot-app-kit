@@ -17,7 +17,7 @@ export const PropertiesPanel = () => {
   const selection = useSelection();
 
   return selection ? (
-    <Box padding={{ horizontal: 'm', bottom: 'l' }}>
+    <Box>
       <Tabs
         disableContentPaddings
         tabs={[
