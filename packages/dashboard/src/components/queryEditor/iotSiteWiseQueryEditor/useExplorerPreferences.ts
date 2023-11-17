@@ -2,7 +2,7 @@ import { type CollectionPreferencesProps } from '@cloudscape-design/components/c
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 
 const DEFAULT_PREFERENCES = {
-  pageSize: 10,
+  pageSize: 250,
   wrapLines: true,
   stripedRows: false,
   stickyColumns: { first: 1 },
