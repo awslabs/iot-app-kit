@@ -1,13 +1,7 @@
 import React from 'react';
 import type { FC } from 'react';
 import { FormField, Select } from '@cloudscape-design/components';
-
-const defaultLineStyleOption = { label: 'Solid', value: 'solid' };
-const lineStyleOptions = [
-  defaultLineStyleOption,
-  { label: 'Dashed', value: 'dashed' },
-  { label: 'Dotted', value: 'dotted' },
-] as const;
+import { dropdownConsts } from './dropdownConstants';
 
 type LineStyleDropdownProps = {
   disabled?: boolean;
@@ -15,20 +9,22 @@ type LineStyleDropdownProps = {
   updatelineStyle: (lineStyle: string) => void;
 };
 
+const lineStyleData = dropdownConsts.lineStyle;
+
 export const LineStyleDropdown: FC<LineStyleDropdownProps> = ({ disabled = false, lineStyle, updatelineStyle }) => {
   return (
-    <FormField label='Style'>
+    <FormField label='Line style'>
       <Select
         disabled={disabled}
         selectedOption={
           // Find the line style option that matches the currently selected line style
-          lineStyleOptions.find(({ value }) => value === lineStyle) ?? null
+          lineStyleData.lineTypeOptions.find(({ value }) => value === lineStyle) ?? null
         }
         onChange={({ detail }) =>
           // Update the line style with the selected option value
-          updatelineStyle(detail.selectedOption.value ?? defaultLineStyleOption.value)
+          updatelineStyle(detail.selectedOption.value ?? lineStyleData.defaultValue.value)
         }
-        options={lineStyleOptions} // List of line style options
+        options={lineStyleData.lineTypeOptions} // List of line style options
       />
     </FormField>
   );

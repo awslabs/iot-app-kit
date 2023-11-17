@@ -10,7 +10,7 @@ import {
   FormField,
   Input,
 } from '@cloudscape-design/components';
-import { spaceStaticXxs } from '@cloudscape-design/design-tokens';
+import { spaceScaledXl, spaceStaticXxs } from '@cloudscape-design/design-tokens';
 import { ClickDetail, NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 
 import ColorPicker from '../shared/colorPicker';
@@ -22,10 +22,15 @@ import {
   StatusEyeVisible,
 } from '~/customization/propertiesSections/propertiesAndAlarmsSettings/icons';
 import { Tooltip } from '@iot-app-kit/react-components';
+import { LineTypeSection } from '../components/lineTypeDropdown';
 import { LineStyleDropdown } from '../components/lineStyleDropdown';
 import { LineThicknessDropdown } from '../components/lineThicknessDropdown';
 
 import './propertyComponent.css';
+
+const propertiesPadding = {
+  paddingLeft: spaceScaledXl,
+};
 
 const LineStylePropertyConfig = ({
   resetStyles,
@@ -38,6 +43,9 @@ const LineStylePropertyConfig = ({
 }) => {
   const [expanded, setExpanded] = useState(false);
   const [useGlobalStyle, setUseGlobalStyle] = useState<boolean>(!property.line?.style); //make useGlobalStyle true if no line style
+  const [connectionStyle, setConnectionStyle] = useState<LineStyles['connectionStyle']>(
+    property.line?.connectionStyle ?? 'linear'
+  );
   const [lineStyle, setLineStyle] = useState<LineStyles['style']>(property.line?.style ?? 'solid');
   const [lineThickness, setLinethickness] = useState<string | undefined>(property.line?.thickness?.toString() ?? '2');
 
@@ -45,46 +53,64 @@ const LineStylePropertyConfig = ({
 
   const onToggleUseGlobalStyles = (isChecked: boolean) => {
     setUseGlobalStyle(isChecked);
+    setConnectionStyle('linear');
     setLineStyle('solid');
     setLinethickness('2');
     if (isChecked) {
-      resetStyles({ line: { style: undefined, thickness: undefined } });
+      resetStyles({ line: { connectionStyle: undefined, style: undefined, thickness: undefined } });
     } else {
-      onUpdate({ line: { style: lineStyle, thickness: getLineThicknessNumber(lineThickness) } });
+      onUpdate({
+        line: { connectionStyle: connectionStyle, style: lineStyle, thickness: getLineThicknessNumber(lineThickness) },
+      });
     }
+  };
+
+  const updateConnectionStyle = (connectionStyle: LineStyles['connectionStyle']) => {
+    setConnectionStyle(connectionStyle);
+    onUpdate({ line: { connectionStyle, style: lineStyle, thickness: getLineThicknessNumber(lineThickness) } });
   };
 
   const updateLineStyle = (style: LineStyles['style']) => {
     setLineStyle(style);
-    onUpdate({ line: { style, thickness: getLineThicknessNumber(lineThickness) } });
+    onUpdate({ line: { connectionStyle: connectionStyle, style, thickness: getLineThicknessNumber(lineThickness) } });
   };
 
   const handleUpdateLineThickness = (thickness: string) => {
     setLinethickness(thickness);
-    onUpdate({ line: { style: lineStyle, thickness: getLineThicknessNumber(thickness) } });
+    onUpdate({
+      line: { connectionStyle: connectionStyle, style: lineStyle, thickness: getLineThicknessNumber(thickness) },
+    });
   };
 
   return (
     <ExpandableSection
       expanded={expanded}
       onChange={({ detail }) => setExpanded(detail.expanded)}
-      headerText='Line style'
+      headerText='Style'
+      variant='footer'
     >
-      <SpaceBetween size='m'>
-        <Checkbox onChange={({ detail }) => onToggleUseGlobalStyles(detail.checked)} checked={useGlobalStyle}>
-          Use default style
-        </Checkbox>
-        <LineStyleDropdown
-          disabled={useGlobalStyle}
-          lineStyle={lineStyle}
-          updatelineStyle={(style) => updateLineStyle(style as LineStyles['style'])}
-        />
-        <LineThicknessDropdown
-          disabled={useGlobalStyle}
-          lineThickness={lineThickness}
-          updateLineThickness={(thickness) => handleUpdateLineThickness(thickness)}
-        />
-      </SpaceBetween>
+      <div style={propertiesPadding}>
+        <SpaceBetween size='m'>
+          <Checkbox onChange={({ detail }) => onToggleUseGlobalStyles(detail.checked)} checked={useGlobalStyle}>
+            Use default style
+          </Checkbox>
+          <LineTypeSection
+            disabled={useGlobalStyle}
+            type={connectionStyle}
+            updateType={(type) => updateConnectionStyle(type as LineStyles['connectionStyle'])}
+          />
+          <LineStyleDropdown
+            disabled={useGlobalStyle}
+            lineStyle={lineStyle}
+            updatelineStyle={(style) => updateLineStyle(style as LineStyles['style'])}
+          />
+          <LineThicknessDropdown
+            disabled={useGlobalStyle}
+            lineThickness={lineThickness}
+            updateLineThickness={(thickness) => handleUpdateLineThickness(thickness)}
+          />
+        </SpaceBetween>
+      </div>
     </ExpandableSection>
   );
 };
@@ -122,41 +148,48 @@ const YAxisPropertyConfig = ({
   };
 
   return (
-    <ExpandableSection expanded={expanded} onChange={({ detail }) => setExpanded(detail.expanded)} headerText='Y-axis'>
-      <SpaceBetween size='m'>
-        <Checkbox onChange={({ detail }) => onToggleUseGlobalStyles(detail.checked)} checked={useGlobalStyle}>
-          Use default style
-        </Checkbox>
-        <Toggle checked={!!property.yAxis?.visible} onChange={({ detail }) => onToggleControls(detail.checked)}>
-          Show Y-axis controls
-        </Toggle>
-        <FormField description='Leave empty to auto-calculate based on all the values' label='Range'>
-          <SpaceBetween size='m' direction='horizontal'>
-            <SpaceBetween size='s' direction='horizontal'>
-              <label htmlFor='y-axis-min'>Min</label>
-              <Input
-                disabled={!property.yAxis?.visible}
-                placeholder='Auto'
-                controlId='y-axis-min'
-                value={`${property.yAxis?.yMin ?? ''}`}
-                type='number'
-                onChange={({ detail }) => onUpdateYAxis({ ...property.yAxis, yMin: numberOrUndefined(detail.value) })}
-              />
+    <ExpandableSection
+      expanded={expanded}
+      onChange={({ detail }) => setExpanded(detail.expanded)}
+      headerText='Y-axis'
+      variant='footer'
+    >
+      <div style={propertiesPadding}>
+        <SpaceBetween size='m'>
+          <Checkbox onChange={({ detail }) => onToggleUseGlobalStyles(detail.checked)} checked={useGlobalStyle}>
+            Use default style
+          </Checkbox>
+          <Toggle checked={!!property.yAxis?.visible} onChange={({ detail }) => onToggleControls(detail.checked)}>
+            Show Y-axis controls
+          </Toggle>
+          <FormField description='Leave empty to auto-calculate based on all the values' label='Range'>
+            <SpaceBetween size='m' direction='horizontal'>
+              <SpaceBetween size='s' direction='horizontal'>
+                <label htmlFor='y-axis-min'>Min</label>
+                <Input
+                  disabled={!property.yAxis?.visible}
+                  placeholder='Auto'
+                  controlId='y-axis-min'
+                  value={`${property.yAxis?.yMin ?? ''}`}
+                  type='number'
+                  onChange={({ detail }) => onUpdateYAxis({ ...property.yAxis, yMin: numberOrUndefined(detail.value) })}
+                />
+              </SpaceBetween>
+              <SpaceBetween size='s' direction='horizontal'>
+                <label htmlFor='y-axis-max'>Max</label>
+                <Input
+                  disabled={!property.yAxis?.visible}
+                  placeholder='Auto'
+                  controlId='y-axis-max'
+                  value={`${property.yAxis?.yMax ?? ''}`}
+                  type='number'
+                  onChange={({ detail }) => onUpdateYAxis({ ...property.yAxis, yMax: numberOrUndefined(detail.value) })}
+                />
+              </SpaceBetween>
             </SpaceBetween>
-            <SpaceBetween size='s' direction='horizontal'>
-              <label htmlFor='y-axis-max'>Max</label>
-              <Input
-                disabled={!property.yAxis?.visible}
-                placeholder='Auto'
-                controlId='y-axis-max'
-                value={`${property.yAxis?.yMax ?? ''}`}
-                type='number'
-                onChange={({ detail }) => onUpdateYAxis({ ...property.yAxis, yMax: numberOrUndefined(detail.value) })}
-              />
-            </SpaceBetween>
-          </SpaceBetween>
-        </FormField>
-      </SpaceBetween>
+          </FormField>
+        </SpaceBetween>
+      </div>
     </ExpandableSection>
   );
 };
@@ -235,7 +268,7 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
       <div className='property-display-summary'>
         <SpaceBetween size='xxxs'>
           <Box padding={{ top: 'xxs' }}>
-            <SpaceBetween size='xs' direction='horizontal'>
+            <SpaceBetween size='xs'>
               <ExpandableSection headerText={YAxisHeader}>
                 <div style={{ padding: '0 24px', backgroundColor: '#fbfbfb' }}>
                   <LineStylePropertyConfig resetStyles={resetStyles} onUpdate={updateStyle} property={property} />

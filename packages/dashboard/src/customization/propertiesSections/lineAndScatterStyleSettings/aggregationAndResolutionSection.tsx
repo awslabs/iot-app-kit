@@ -1,9 +1,10 @@
-import { SpaceBetween } from '@cloudscape-design/components';
+import { SpaceBetween, Box } from '@cloudscape-design/components';
 import ExpandableSection from '@cloudscape-design/components/expandable-section';
 import FormField from '@cloudscape-design/components/form-field';
 import Select, { SelectProps } from '@cloudscape-design/components/select';
 import type { FC } from 'react';
 import React from 'react';
+import './lineAndScatterStyleSettings.css';
 
 type AggregationAndResolutionSectionOptions = {
   aggregation: string | undefined;
@@ -26,35 +27,42 @@ export const AggregationAndResolutionSection: FC<AggregationAndResolutionSection
   const selectedAggregation = aggregationOptions.find(({ value }) => value === aggregation) ?? null;
 
   return (
-    <ExpandableSection headerText='Aggregation and resolution' defaultExpanded>
-      <SpaceBetween direction='vertical' size='s'>
-        <FormField label='Resolution'>
-          <Select
-            selectedOption={selectedResolution}
-            onChange={({
-              detail: {
-                selectedOption: { value: newResolution },
-              },
-            }) => {
-              updateResolution(newResolution);
-            }}
-            options={resolutionOptions}
-          />
-        </FormField>
-        <FormField label='Aggregation'>
-          <Select
-            selectedOption={selectedAggregation}
-            onChange={({
-              detail: {
-                selectedOption: { value: newAggregation },
-              },
-            }) => {
-              updateAggregation(newAggregation);
-            }}
-            options={aggregationOptions}
-          />
-        </FormField>
-      </SpaceBetween>
+    <ExpandableSection
+      className='accordian-header'
+      headerText='Resolution and Aggregation'
+      defaultExpanded
+      variant='footer'
+    >
+      <Box padding='s'>
+        <SpaceBetween direction='vertical' size='s'>
+          <FormField label='Resolution'>
+            <Select
+              selectedOption={selectedResolution}
+              onChange={({
+                detail: {
+                  selectedOption: { value: newResolution },
+                },
+              }) => {
+                updateResolution(newResolution);
+              }}
+              options={resolutionOptions}
+            />
+          </FormField>
+          <FormField label='Aggregation'>
+            <Select
+              selectedOption={selectedAggregation}
+              onChange={({
+                detail: {
+                  selectedOption: { value: newAggregation },
+                },
+              }) => {
+                updateAggregation(newAggregation);
+              }}
+              options={aggregationOptions}
+            />
+          </FormField>
+        </SpaceBetween>
+      </Box>
     </ExpandableSection>
   );
 };
