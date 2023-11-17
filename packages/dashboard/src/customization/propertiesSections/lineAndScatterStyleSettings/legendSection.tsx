@@ -1,8 +1,8 @@
 import { Box } from '@cloudscape-design/components';
 import Toggle from '@cloudscape-design/components/toggle';
+import { spaceScaledS } from '@cloudscape-design/design-tokens';
 import type { FC } from 'react';
 import React from 'react';
-
 import './legendSection.css';
 
 type LegendSectionOptions = {
@@ -10,9 +10,13 @@ type LegendSectionOptions = {
   setVisible: (visible: boolean) => void;
 };
 
+const legendPadding = {
+  padding: `0 ${spaceScaledS}`,
+};
+
 export const LegendSection: FC<LegendSectionOptions> = ({ visible, setVisible }) => {
   return (
-    <div className='legend-section-container'>
+    <div className='legend-section-container' style={legendPadding}>
       <Box variant='span' fontSize='heading-s' fontWeight='bold'>
         Legend
       </Box>

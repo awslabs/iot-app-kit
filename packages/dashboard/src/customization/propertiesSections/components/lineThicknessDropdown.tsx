@@ -2,13 +2,7 @@ import React from 'react';
 import type { FC } from 'react';
 
 import { FormField, Select } from '@cloudscape-design/components';
-
-const defaultLineThicknessOption = { label: 'Normal', value: '2' };
-const lineThicknessOptions = [
-  { label: 'Thin', value: '1' },
-  defaultLineThicknessOption,
-  { label: 'Thick', value: '5' },
-] as const;
+import { dropdownConsts } from './dropdownConstants';
 
 type LineThicknessDropdownProps = {
   disabled?: boolean;
@@ -16,19 +10,24 @@ type LineThicknessDropdownProps = {
   updateLineThickness: (lineStyle: string) => void;
 };
 
+const lineThicknessData = dropdownConsts.lineThickness;
+
 export const LineThicknessDropdown: FC<LineThicknessDropdownProps> = ({
   disabled = false,
   lineThickness,
   updateLineThickness,
 }) => {
   return (
-    <FormField label='Thickness'>
+    <FormField label='Line thickness'>
       <Select
         disabled={disabled}
-        selectedOption={lineThicknessOptions.find(({ value }) => value === lineThickness) ?? defaultLineThicknessOption}
-        options={lineThicknessOptions}
+        selectedOption={
+          lineThicknessData.lineThicknessOptions.find(({ value }) => value === lineThickness) ??
+          lineThicknessData.defaultValue
+        }
+        options={lineThicknessData.lineThicknessOptions}
         onChange={({ detail }) => {
-          updateLineThickness(detail.selectedOption.value ?? defaultLineThicknessOption.value);
+          updateLineThickness(detail.selectedOption.value ?? lineThicknessData.defaultValue.value);
         }}
       />
     </FormField>

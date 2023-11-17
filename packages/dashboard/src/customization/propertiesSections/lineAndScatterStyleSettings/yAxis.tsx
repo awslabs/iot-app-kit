@@ -1,4 +1,4 @@
-import { SpaceBetween } from '@cloudscape-design/components';
+import { Box } from '@cloudscape-design/components';
 import ExpandableSection from '@cloudscape-design/components/expandable-section';
 import FormField from '@cloudscape-design/components/form-field';
 import Input from '@cloudscape-design/components/input';
@@ -6,6 +6,7 @@ import Toggle from '@cloudscape-design/components/toggle';
 import type { FC } from 'react';
 import React from 'react';
 import { useExpandable } from '../shared/useExpandable';
+import './lineAndScatterStyleSettings.css';
 
 type YAxisSectionOptions = {
   visible: boolean;
@@ -44,34 +45,38 @@ export const YAxisSection: FC<YAxisSectionOptions> = ({ visible, min, max, setVi
 
   return (
     <ExpandableSection
+      className='accordian-header accordian-custom-header'
       expanded={expanded}
       onChange={(e) => setExpanded(e.detail.expanded)}
       headerText={
-        <SpaceBetween size='s' direction='horizontal'>
+        <div className='yaxis-header'>
           <div onClick={() => setExpanded(!expanded)}>Y-axis</div>
           <YAxisToggle setVisible={setVisible} visible={visible} />
-        </SpaceBetween>
+        </div>
       }
+      variant='footer'
     >
-      <FormField description='Leave empty to auto-calculate based on all the values' label='Range'>
-        <label htmlFor='y-axis-min'>Min</label>
-        <Input
-          placeholder='Auto'
-          controlId='y-axis-min'
-          value={`${min === null ? '' : min}`}
-          type='number'
-          onChange={({ detail }) => onSetRange(updateMin, detail.value)}
-        />
+      <Box padding='s'>
+        <FormField description='Leave empty to auto-calculate based on all the values' label='Range'>
+          <label htmlFor='y-axis-min'>Min</label>
+          <Input
+            placeholder='Auto'
+            controlId='y-axis-min'
+            value={`${min ?? ''}`}
+            type='number'
+            onChange={({ detail }) => onSetRange(updateMin, detail.value)}
+          />
 
-        <label htmlFor='y-axis-max'>Max</label>
-        <Input
-          placeholder='Auto'
-          controlId='y-axis-max'
-          value={`${max === null ? '' : max}`}
-          type='number'
-          onChange={({ detail }) => onSetRange(updateMax, detail.value)}
-        />
-      </FormField>
+          <label htmlFor='y-axis-max'>Max</label>
+          <Input
+            placeholder='Auto'
+            controlId='y-axis-max'
+            value={`${max ?? ''}`}
+            type='number'
+            onChange={({ detail }) => onSetRange(updateMax, detail.value)}
+          />
+        </FormField>
+      </Box>
     </ExpandableSection>
   );
 };
