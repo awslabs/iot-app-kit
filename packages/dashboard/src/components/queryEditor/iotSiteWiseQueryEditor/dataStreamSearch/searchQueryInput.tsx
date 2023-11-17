@@ -10,21 +10,21 @@ export interface SearchQueryInputProps {
 
 export function SearchQueryInput({ control }: SearchQueryInputProps) {
   const MIN_SEARCH_QUERY_LENGTH = 1;
-  const MAX_SEARCH_QUERY_LENGTH = 18;
+  const MAX_SEARCH_QUERY_LENGTH = 48;
 
   return (
     <Controller
       control={control}
       name='searchQuery'
       rules={{
-        required: 'Search query is required.',
+        required: 'Search query must be between 1 and 48 characters.',
         minLength: { value: MIN_SEARCH_QUERY_LENGTH, message: 'Search query is too short.' },
         maxLength: { value: MAX_SEARCH_QUERY_LENGTH, message: 'Search query is too long.' },
       }}
       render={({ field, fieldState }) => (
         <FormField
           label='Search query'
-          description='Enter a query to search for modeled data streams.'
+          description='Enter a query using character string or wildcard character % to search the data.'
           errorText={fieldState.error?.message}
           constraintText={`Must be between ${MIN_SEARCH_QUERY_LENGTH} and ${MAX_SEARCH_QUERY_LENGTH} characters.`}
         >
