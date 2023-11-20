@@ -4,7 +4,6 @@ import {
   changeDashboardCellSize,
   changeDashboardGridDragEnabled,
   changeDashboardHeight,
-  changeDashboardStretchToFit,
   changeDashboardWidth,
   copyWidgets,
   deleteWidgets,
@@ -38,10 +37,6 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'CHANGE_CELL_SIZE': {
       return changeDashboardCellSize(state, action);
-    }
-
-    case 'CHANGE_STRETCH_TO_FIT': {
-      return changeDashboardStretchToFit(state, action);
     }
 
     case 'CHANGE_ENABLED': {

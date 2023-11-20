@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Checkbox, Modal, SpaceBetween } from '@cloudscape-design/components';
+import { Box, Modal, SpaceBetween } from '@cloudscape-design/components';
 
 import LabeledInput from '../util/labeledInput';
 import { useGridSettings } from './useGridSettings';
@@ -16,12 +16,10 @@ const DashboardSettings: React.FC<DashboardSettingsProps> = ({ onClose, isVisibl
     rows,
     columns,
     cellSize,
-    stretchToFit,
     significantDigits,
     onChangeCellSize,
     onChangeNumberOfColumns,
     onChangeNumberOfRows,
-    onToggleStretchToFit,
     onChangeSignificantDigits,
   } = useGridSettings();
 
@@ -35,12 +33,8 @@ const DashboardSettings: React.FC<DashboardSettingsProps> = ({ onClose, isVisibl
             value={significantDigits.toFixed()}
             onChange={(event) => onChangeSignificantDigits(numberFromDetail(event))}
           />
-          <Checkbox onChange={({ detail }) => onToggleStretchToFit(detail.checked)} checked={stretchToFit}>
-            Stretch grid to fit screen size.
-          </Checkbox>
           <LabeledInput
             label='Cell Size'
-            disabled={stretchToFit}
             type='number'
             value={cellSize.toFixed()}
             onChange={(event) => onChangeCellSize(numberFromDetail(event))}
