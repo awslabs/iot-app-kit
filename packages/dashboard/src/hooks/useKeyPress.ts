@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { isHotkey } from 'is-hotkey';
 
-type KeyPressCallback = (e: KeyboardEvent) => void;
+type KeyPressCallback = (e: KeyboardEvent | ClipboardEvent) => void;
 type KeyPressOptions = {
   callback?: KeyPressCallback;
-  filter?: (e: KeyboardEvent) => boolean;
+  filter?: (e: KeyboardEvent | ClipboardEvent) => boolean;
 };
 
 /**
@@ -30,7 +30,7 @@ export const useKeyPress = (key: string, options?: KeyPressOptions | KeyPressCal
     callbackRef.current = callback;
   }, [callback]);
 
-  const callbackWrapper = useCallback((e: KeyboardEvent) => {
+  const callbackWrapper = useCallback((e: KeyboardEvent | ClipboardEvent) => {
     if (callbackRef.current) {
       callbackRef.current(e);
     }
@@ -39,13 +39,13 @@ export const useKeyPress = (key: string, options?: KeyPressOptions | KeyPressCal
   const [keyPressed, setKeyPressed] = useState<boolean>(false);
 
   const onKeyPress = useCallback(
-    (e: KeyboardEvent) => {
+    (e: KeyboardEvent | ClipboardEvent) => {
       const keyPressed =
         e.type === 'keydown' &&
         key
           .split(',')
           .map((k) => k.trim())
-          .some((k) => isHotkey(k, { byKey: true }, e));
+          .some((k) => isHotkey(k, { byKey: true }, e as KeyboardEvent));
       setKeyPressed(keyPressed);
 
       if (keyPressed && callback && filter && filter(e)) {
@@ -56,9 +56,13 @@ export const useKeyPress = (key: string, options?: KeyPressOptions | KeyPressCal
   );
 
   useEffect(() => {
+    window.addEventListener('copy', onKeyPress as EventListener);
+    window.addEventListener('paste', onKeyPress as EventListener);
     window.addEventListener('keydown', onKeyPress);
     window.addEventListener('keyup', onKeyPress);
     return () => {
+      window.removeEventListener('copy', onKeyPress as EventListener);
+      window.removeEventListener('paste', onKeyPress as EventListener);
       window.removeEventListener('keydown', onKeyPress);
       window.removeEventListener('keyup', onKeyPress);
     };

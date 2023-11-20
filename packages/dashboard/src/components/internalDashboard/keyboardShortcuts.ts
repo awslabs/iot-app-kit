@@ -69,7 +69,7 @@ export const useKeyboardShortcuts = ({ deleteWidgets: handleDeleteWidgetModal }:
    * the settings pane or a text area in a widget
    */
 
-  const keyPressFilter = (e: KeyboardEvent) =>
+  const keyPressFilter = (e: KeyboardEvent | ClipboardEvent) =>
     e.target !== null &&
     e.target instanceof Element &&
     (e.target.id === DASHBOARD_CONTAINER_ID || e.target === document.body);
