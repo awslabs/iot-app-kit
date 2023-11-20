@@ -32,7 +32,7 @@ export const GestureableGrid: React.FC<GesturableGridProps> = ({
   drop,
   children,
 }) => {
-  const { width, height, cellSize, stretchToFit, enabled } = grid;
+  const { width, height, cellSize, enabled } = grid;
 
   const { dragRef, dropRef, isOver, onPointerDown, onPointerUp } = useGridDragAndDrop({
     readOnly,
@@ -53,7 +53,6 @@ export const GestureableGrid: React.FC<GesturableGridProps> = ({
           cellSize={cellSize}
           showGuides={!readOnly}
           highlighted={isOver}
-          stretchToFit={stretchToFit}
           children={children}
         />
       </div>

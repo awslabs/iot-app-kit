@@ -7,7 +7,6 @@ export type DashboardState<Properties extends Record<string, unknown> = Record<s
     width: number;
     height: number;
     cellSize: number;
-    stretchToFit: boolean;
   };
   readOnly: boolean;
   selectedWidgets: DashboardWidget<Properties>[];
@@ -32,7 +31,6 @@ export const initialState: DashboardState = deepFreeze({
     width: 100,
     height: 100,
     cellSize: 20,
-    stretchToFit: false,
   },
   readOnly: false,
   selectedWidgets: [],
