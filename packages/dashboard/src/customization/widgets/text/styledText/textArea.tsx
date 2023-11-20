@@ -53,7 +53,7 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({ handleSetEdit, isUrl, .
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value.length]);
 
-  const filter = (e: KeyboardEvent) => e.target === ref.current;
+  const filter = (e: KeyboardEvent | ClipboardEvent) => e.target === ref.current;
   useKeyPress('mod+shift+l', {
     callback: () => {
       const updatedWidget: TextWidget = {
