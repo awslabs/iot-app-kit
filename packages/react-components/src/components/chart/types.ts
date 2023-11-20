@@ -101,4 +101,9 @@ export interface ViewportInMs {
   isDurationViewport: boolean;
 }
 
-export type YAxisLegendOption = { datastream: DataStream; value?: DataPoint; color: string; significantDigits: number };
+export type YAxisLegendOption = {
+  datastream: DataStream;
+  value?: DataPoint;
+  color?: string;
+  significantDigits: number;
+};

@@ -6,7 +6,7 @@ import { BarChart } from './barChart';
 
 const VIEWPORT = { duration: '5m' };
 
-const DATA_STREAM: DataStream = { id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
+const DATA_STREAM: DataStream = { id: 'abc-1', data: [], resolution: 0, name: 'my-name', color: 'black' };
 
 it('renders', async () => {
   const query = mockTimeSeriesDataQuery([

@@ -16,6 +16,7 @@ import type {
   StyleSettingsMap,
 } from '@iot-app-kit/core';
 import { ProviderStore } from './providerStore';
+import { useColoredDataStreams } from '../useColoredDataStreams';
 
 const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
   resolution: '0',
@@ -98,10 +99,14 @@ export const useTimeSeriesData = ({
     prevViewportRef.current = viewport;
   }, [viewport]);
 
-  const styledDataStreams = bindStylesToDataStreams({
+  const coloredDataStreams = useColoredDataStreams({
     dataStreams: timeSeriesData?.dataStreams || [],
     styleSettings: styles,
-    assignDefaultColors: false,
+  });
+
+  const styledDataStreams = bindStylesToDataStreams({
+    dataStreams: coloredDataStreams,
+    styleSettings: styles,
   });
 
   return { dataStreams: styledDataStreams, thresholds: timeSeriesData?.thresholds || [] };

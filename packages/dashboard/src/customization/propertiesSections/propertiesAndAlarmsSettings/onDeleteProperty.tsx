@@ -19,5 +19,5 @@ export const defaultOnDeleteQuery: OnDeleteAssetQuery =
 
     const properties = siteWiseAssetQuery?.properties?.filter((p) => p.propertyAlias !== propertyId) ?? [];
 
-    updateSiteWiseAssetQuery({ assets, properties });
+    updateSiteWiseAssetQuery({ ...siteWiseAssetQuery, assets, properties });
   };

@@ -10,7 +10,6 @@ import { convertStyles } from './style/convertStyles';
 import { convertThresholds } from './convertThresholds';
 import { useConvertedOptions } from './convertOptions';
 import { renderHook } from '@testing-library/react';
-import { colorPalette } from '@iot-app-kit/core-util';
 
 const MOCK_AXIS = {
   yAxisLabel: 'Y Value',
@@ -131,13 +130,13 @@ describe('testing converters', () => {
       styleSettings: { 'abc-1': { color: 'red' } },
       defaultVisualizationType: 'step-middle',
     } as const;
-    const datastream = { ...options, data: [], id: 'abc-1' };
+    const datastream = { ...options, data: [], id: 'abc-1', refId: 'abc-1' };
     const styles = convertStyles(chartOptions)(datastream);
     const convertedSeriesAndYAxisFunc = convertSeriesAndYAxis(styles);
     const result = convertedSeriesAndYAxisFunc(datastream);
 
     expect(result.series.data).toBeArrayOfSize(0);
-    expect(result).toHaveProperty('series.itemStyle.color', colorPalette[0]);
+    expect(result).toHaveProperty('series.itemStyle.color', 'red');
     expect(result).toHaveProperty('series.step', 'middle');
   });
 

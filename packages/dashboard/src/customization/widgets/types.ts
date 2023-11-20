@@ -92,7 +92,7 @@ export type SymbolStyles = {
 export type AssetPropertyStyles = LineAndScatterStyles & { yAxis?: YAxisOptions };
 export type StyledAssetPropertyQuery = AssetPropertyQuery & AssetPropertyStyles;
 export type StyledAssetQuery = {
-  assets: {
+  assets?: {
     assetId: SiteWiseAssetQuery['assets'][number]['assetId'];
     properties: StyledAssetPropertyQuery[];
   }[];
