@@ -1,11 +1,11 @@
 import type { StyleSettingsMap } from '@iot-app-kit/core';
 import { v4 as uuid } from 'uuid';
 import type { QueryWidget } from '../types';
-import { assignDefaultColor } from '@iot-app-kit/core-util';
 import { isDefined } from '~/util/isDefined';
 import { IoTSiteWiseDataStreamQuery } from '~/types';
 import { getCurrentAggregationResolution } from './widgetAggregationUtils';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { colorerFromStyleSettings } from './assetQuery/defaultColors';
 
 type Query = NonNullable<QueryWidget['properties']['queryConfig']['query']>;
 
@@ -41,21 +41,26 @@ const assignDefaults = (
   })),
 });
 
-const assignDefaultColors = (
-  styleSettings: StyleSettingsMap,
-  siteWiseQuery: Query,
-  colorIndexOffset = 0
-): StyleSettingsMap => {
+const assignDefaultColors = (styleSettings: StyleSettingsMap, siteWiseQuery: Query): StyleSettingsMap => {
   const assetRefIds =
     siteWiseQuery.assets?.flatMap((asset) => asset.properties.map(({ refId }) => refId)).filter(isDefined) ?? [];
   const propertyRefIds = siteWiseQuery.properties?.map(({ refId }) => refId).filter(isDefined) ?? [];
   const assetModelRefIds =
     siteWiseQuery.assetModels?.flatMap((asset) => asset.properties.map(({ refId }) => refId)).filter(isDefined) ?? [];
-  const refIds = [...assetRefIds, ...propertyRefIds, ...assetModelRefIds];
 
-  return refIds.reduce((acc: StyleSettingsMap, refId, index) => {
+  const refIds = [...assetRefIds, ...propertyRefIds, ...assetModelRefIds];
+  const applicableStyleSettings = Object.keys(styleSettings)
+    .filter((refId) => refIds.includes(refId))
+    .reduce<StyleSettingsMap>((acc, n) => {
+      acc[n] = styleSettings[n];
+      return acc;
+    }, {});
+
+  const assignDefaultColor = colorerFromStyleSettings(applicableStyleSettings);
+
+  return refIds.reduce((acc: StyleSettingsMap, refId) => {
     const existing = styleSettings[refId] || {};
-    acc[refId] = assignDefaultColor(existing, index + colorIndexOffset);
+    acc[refId] = assignDefaultColor(existing);
     return acc;
   }, {});
 };
