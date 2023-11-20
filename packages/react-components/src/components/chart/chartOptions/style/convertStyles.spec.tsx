@@ -1,11 +1,10 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react';
 import { getChartStyleSettingsFromMap, useChartStyleSettings } from './convertStyles';
-import { colorPalette } from '@iot-app-kit/core-util';
 import { ChartOptions } from '../../types';
 import { ChartStoreProvider } from '../../store';
 
-const DATA_STREAM = { id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
+const DATA_STREAM = { id: 'abc-1', data: [], resolution: 0, name: 'my-name', color: 'red' };
 const DATA_STREAM_WITH_REF = { id: 'abc-2', refId: 'custom', data: [], resolution: 0, name: 'my-name' };
 
 it('can get the correct style settings from the style settings map', () => {
@@ -29,7 +28,7 @@ it('converts default styles for all datastreams', () => {
 
   const mappedStyles = getStyles(DATA_STREAM);
   expect(mappedStyles).toHaveProperty('visualizationType', 'line');
-  expect(mappedStyles).toHaveProperty('color', colorPalette[0]);
+  expect(mappedStyles).toHaveProperty('color', 'red');
 });
 
 it('converts styles with custom options for all datastreams', () => {

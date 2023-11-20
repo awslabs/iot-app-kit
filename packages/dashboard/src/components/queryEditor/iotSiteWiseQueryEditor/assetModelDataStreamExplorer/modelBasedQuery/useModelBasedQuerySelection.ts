@@ -8,6 +8,25 @@ import { styledQueryWidgetOnDrop } from '~/components/queryEditor/useQuery';
 import { assignDefaultStyles } from '~/customization/widgets/utils/assignDefaultStyleSettings';
 import { IoTSiteWiseDataStreamQuery } from '~/types';
 
+const mergeAssetModelProperties = (
+  currentQuery: QueryConfigWidget['properties']['queryConfig']['query'],
+  updatedAssetModels: AssetModelQuery[] | undefined = []
+) => {
+  const currentAssetModels = currentQuery?.assetModels ?? [];
+  return updatedAssetModels.map((assetModel) => ({
+    ...assetModel,
+    properties: assetModel.properties.map((property) => {
+      const currentProperty = currentAssetModels
+        .find((currentAssetModel) => currentAssetModel.assetModelId === assetModel.assetModelId)
+        ?.properties.find((currentAssetModelProperty) => currentAssetModelProperty.propertyId === property.propertyId);
+      return {
+        ...currentProperty,
+        ...property,
+      };
+    }),
+  }));
+};
+
 export const useModelBasedQuerySelection = () => {
   const selection = useSelection({ filter: isQueryWidget });
 
@@ -41,7 +60,13 @@ export const useModelBasedQuerySelection = () => {
     // handle styled widget
     if (selectionType.value === 'xy-plot') {
       const styledQuery = styledQueryWidgetOnDrop(
-        { assetModels: updatedAssetModels },
+        {
+          ...compositeWidgetForAggregationInformation.properties.queryConfig.query,
+          assetModels: mergeAssetModelProperties(
+            compositeWidgetForAggregationInformation.properties.queryConfig.query,
+            updatedAssetModels
+          ),
+        },
         compositeWidgetForAggregationInformation
       );
       updatedProperties = {
@@ -63,7 +88,10 @@ export const useModelBasedQuerySelection = () => {
             ...compositeWidgetForAggregationInformation.properties.queryConfig,
             query: {
               ...compositeWidgetForAggregationInformation.properties.queryConfig.query,
-              assetModels: updatedAssetModels,
+              assetModels: mergeAssetModelProperties(
+                compositeWidgetForAggregationInformation.properties.queryConfig.query,
+                updatedAssetModels
+              ),
             },
           },
         },

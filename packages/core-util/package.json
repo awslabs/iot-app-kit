@@ -20,14 +20,25 @@
     "build:cjs": "tsc -p ./tsconfig.build.json --outDir ./dist/cjs --module CommonJS",
     "clean": "rm -rf dist",
     "lint": "eslint . --max-warnings=0",
-    "fix": "eslint --fix ."
+    "fix": "eslint --fix .",
+    "test": "npm run test:jest && npm run test:typescript",
+    "test:jest": "TZ=UTC jest",
+    "test:typescript": "tsc --noEmit"
   },
   "dependencies": {
     "@aws-sdk/client-iot-events": "3.354.0",
     "@aws-sdk/client-iotsitewise": "3.391.0",
-    "@iot-app-kit/core": "9.6.0"
+    "@iot-app-kit/core": "9.6.0",
+    "lodash.difference": "4.5.0"
   },
   "devDependencies": {
-    "@aws-sdk/types": "^3.310.0"
+    "@iot-app-kit/jest-config": "9.6.0",
+    "@iot-app-kit/ts-config": "9.6.0",
+    "@aws-sdk/types": "^3.310.0",
+    "@types/lodash.difference": "4.5.9",
+    "@types/jest": "^29.4.0",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "jest-extended": "^3.2.4"
   }
 }

@@ -38,8 +38,22 @@ it('returns time series data when the number of time series queries changes', ()
   const THRESHOLD_1: Threshold = { comparisonOperator: 'GT', value: 10, color: 'black' };
   const THRESHOLD_2: Threshold = { comparisonOperator: 'GT', value: 100, color: 'black' };
 
-  const DATA_STREAM_1: DataStream = { refId: 'red', id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
-  const DATA_STREAM_2: DataStream = { refId: 'red', id: 'abc-2', data: [], resolution: 0, name: 'my-name' };
+  const DATA_STREAM_1: DataStream = {
+    refId: 'red',
+    id: 'abc-1',
+    data: [],
+    resolution: 0,
+    name: 'my-name',
+    color: 'black',
+  };
+  const DATA_STREAM_2: DataStream = {
+    refId: 'red',
+    id: 'abc-2',
+    data: [],
+    resolution: 0,
+    name: 'my-name',
+    color: 'black',
+  };
 
   const QUERY_1 = { dataStreams: [DATA_STREAM_1], viewport: { duration: '5m' }, thresholds: [THRESHOLD_1] };
   const QUERY_2 = { dataStreams: [DATA_STREAM_2], viewport: { duration: '5m' }, thresholds: [THRESHOLD_2] };
@@ -70,8 +84,22 @@ it('returns time series data when the number of queries within one time series q
   const THRESHOLD_1: Threshold = { comparisonOperator: 'GT', value: 10, color: 'black' };
   const THRESHOLD_2: Threshold = { comparisonOperator: 'GT', value: 100, color: 'black' };
 
-  const DATA_STREAM_1: DataStream = { refId: 'red', id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
-  const DATA_STREAM_2: DataStream = { refId: 'red', id: 'abc-2', data: [], resolution: 0, name: 'my-name' };
+  const DATA_STREAM_1: DataStream = {
+    refId: 'red',
+    id: 'abc-1',
+    data: [],
+    resolution: 0,
+    name: 'my-name',
+    color: 'black',
+  };
+  const DATA_STREAM_2: DataStream = {
+    refId: 'red',
+    id: 'abc-2',
+    data: [],
+    resolution: 0,
+    name: 'my-name',
+    color: 'black',
+  };
 
   const QUERY_1 = { dataStreams: [DATA_STREAM_1], viewport: { duration: '5m' }, thresholds: [THRESHOLD_1] };
   const QUERY_2 = { dataStreams: [DATA_STREAM_2], viewport: { duration: '5m' }, thresholds: [THRESHOLD_2] };
@@ -124,8 +152,22 @@ it('binds style settings color to the data stream color', () => {
 it('combines multiple time series data results into a single time series data', () => {
   const THRESHOLD_1: Threshold = { comparisonOperator: 'GT', value: 10, color: 'black' };
   const THRESHOLD_2: Threshold = { comparisonOperator: 'GT', value: 100, color: 'black' };
-  const DATA_STREAM_1: DataStream = { refId: 'red', id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
-  const DATA_STREAM_2: DataStream = { refId: 'red', id: 'abc-2', data: [], resolution: 0, name: 'my-name' };
+  const DATA_STREAM_1: DataStream = {
+    refId: 'red',
+    id: 'abc-1',
+    data: [],
+    resolution: 0,
+    name: 'my-name',
+    color: 'black',
+  };
+  const DATA_STREAM_2: DataStream = {
+    refId: 'red',
+    id: 'abc-2',
+    data: [],
+    resolution: 0,
+    name: 'my-name',
+    color: 'black',
+  };
 
   const QUERY_RESPONSE: TimeSeriesData[] = [
     { dataStreams: [DATA_STREAM_1], viewport: { duration: '5m' }, thresholds: [THRESHOLD_1] },
@@ -150,8 +192,8 @@ it('combines multiple time series data results into a single time series data', 
 });
 
 it('returns data streams from multiple queries', () => {
-  const DATA_STREAM_1: DataStream = { id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
-  const DATA_STREAM_2: DataStream = { id: 'abc-2', data: [], resolution: 0, name: 'my-name-2' };
+  const DATA_STREAM_1: DataStream = { id: 'abc-1', data: [], resolution: 0, name: 'my-name', color: 'black' };
+  const DATA_STREAM_2: DataStream = { id: 'abc-2', data: [], resolution: 0, name: 'my-name-2', color: 'black' };
 
   const QUERY_RESPONSE_1: TimeSeriesData[] = [
     { dataStreams: [DATA_STREAM_1], viewport: { duration: '5m' }, thresholds: [] },

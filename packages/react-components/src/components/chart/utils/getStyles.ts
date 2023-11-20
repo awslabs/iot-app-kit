@@ -1,5 +1,4 @@
 import { ChartOptions, ChartStyleSettingsOptions } from '../types';
-import { getColor } from './getColor';
 
 export type Emphasis = 'none' | 'emphasize' | 'de-emphasize';
 
@@ -8,7 +7,7 @@ export const getStyles = (
   styleSettings?: ChartOptions['styleSettings']
 ): ChartStyleSettingsOptions | undefined => (refId && styleSettings ? styleSettings[refId] : undefined);
 
-type OptionalChartStyleSettingsOptions = Pick<ChartStyleSettingsOptions, 'symbolColor' | 'yAxis'>;
+type OptionalChartStyleSettingsOptions = Pick<ChartStyleSettingsOptions, 'symbolColor' | 'yAxis' | 'color'>;
 export type ChartStyleSettingsWithDefaults = Omit<
   Required<ChartStyleSettingsOptions>,
   keyof OptionalChartStyleSettingsOptions
@@ -16,13 +15,11 @@ export type ChartStyleSettingsWithDefaults = Omit<
   OptionalChartStyleSettingsOptions & { emphasis: Emphasis };
 
 export const getDefaultStyles = (
-  colorIndex?: number,
   defaultVisualizationType?: ChartStyleSettingsOptions['visualizationType'],
   significantDigits?: ChartStyleSettingsOptions['significantDigits']
 ): ChartStyleSettingsWithDefaults => {
   return {
     visualizationType: defaultVisualizationType ?? 'line',
-    color: getColor(colorIndex),
     symbol: 'circle',
     symbolSize: 4,
     symbolColor: undefined, // will use color if undefined
