@@ -40,7 +40,6 @@ export const toDashboardState = (dashboardConfiguration: DashboardConfiguration)
       height: numRows,
       width: numColumns,
       cellSize,
-      stretchToFit: !cellSize,
     },
     dashboardConfiguration: {
       widgets,

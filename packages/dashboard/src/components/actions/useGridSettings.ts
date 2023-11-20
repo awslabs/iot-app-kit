@@ -4,7 +4,6 @@ import { DashboardState } from '~/store/state';
 import {
   onChangeDashboardCellSizeAction,
   onChangeDashboardHeightAction,
-  onChangeDashboardStretchToFitAction,
   onChangeDashboardWidthAction,
 } from '~/store/actions';
 import { onUpdateSignificantDigitsAction } from '~/store/actions/updateSignificantDigits';
@@ -12,12 +11,9 @@ import { onUpdateSignificantDigitsAction } from '~/store/actions/updateSignifica
 export const useGridSettings = () => {
   const dispatch = useDispatch();
 
-  const { width, height, cellSize, stretchToFit } = useSelector((state: DashboardState) => state.grid);
+  const { width, height, cellSize } = useSelector((state: DashboardState) => state.grid);
   const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
-  const onToggleStretchToFit = (updatedStretchToFit: boolean) => {
-    dispatch(onChangeDashboardStretchToFitAction({ stretchToFit: updatedStretchToFit }));
-  };
   const onChangeNumberOfColumns = (columns: number) => {
     dispatch(onChangeDashboardWidthAction({ width: columns }));
   };
@@ -35,9 +31,7 @@ export const useGridSettings = () => {
     rows: height,
     columns: width,
     cellSize,
-    stretchToFit,
     significantDigits,
-    onToggleStretchToFit,
     onChangeCellSize,
     onChangeNumberOfColumns,
     onChangeNumberOfRows,
