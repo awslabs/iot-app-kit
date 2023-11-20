@@ -7,6 +7,4 @@ it('can change a grid property', () => {
   expect(changeGridProperty(initialState, 'width', 10).grid.width).toEqual(10);
 
   expect(changeGridProperty(initialState, 'height', 10).grid.height).toEqual(10);
-
-  expect(changeGridProperty(initialState, 'stretchToFit', true).grid.stretchToFit).toEqual(true);
 });

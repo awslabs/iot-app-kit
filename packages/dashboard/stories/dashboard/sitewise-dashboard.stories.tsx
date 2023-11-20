@@ -38,8 +38,8 @@ const args: DashboardProperties = {
   clientConfiguration,
   dashboardConfiguration: {
     displaySettings: {
-      numColumns: 55,
-      numRows: 55,
+      numColumns: 100,
+      numRows: 100,
     },
     widgets: [],
     viewport: { duration: '10m' },

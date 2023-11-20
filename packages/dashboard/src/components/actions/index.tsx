@@ -39,7 +39,7 @@ const Actions: React.FC<ActionsProps> = ({
       displaySettings: {
         numColumns: grid.width,
         numRows: grid.height,
-        cellSize: grid.stretchToFit ? undefined : grid.cellSize,
+        cellSize: grid.cellSize,
         significantDigits,
       },
       ...dashboardConfiguration,
@@ -81,7 +81,7 @@ const Actions: React.FC<ActionsProps> = ({
   );
 };
 
-const gridAsComparable = (grid: DashboardState['grid']) => pick(grid, ['height', 'width', 'cellSize', 'stretchToFit']);
+const gridAsComparable = (grid: DashboardState['grid']) => pick(grid, ['height', 'width', 'cellSize']);
 const actionsComparator = (a: Readonly<ActionsProps>, b: Readonly<ActionsProps>): boolean => {
   const gridIsSame = isEqual(gridAsComparable(a.grid), gridAsComparable(b.grid));
   const dashboardConfigurationIsSame = isEqual(a.dashboardConfiguration, b.dashboardConfiguration);

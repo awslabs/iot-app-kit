@@ -35,13 +35,13 @@ jest.mock('../../store/actions', () => {
 it.skip('saves when the save button is pressed with default grid settings provided', function () {
   const onSave = jest.fn().mockImplementation(() => Promise.resolve());
 
-  const getState = (stretchToFit: boolean) => ({
+  const getState = () => ({
     ...initialState,
-    grid: { ...initialState.grid, width: 100, height: 100, cellSize: 20, stretchToFit },
+    grid: { ...initialState.grid, width: 100, height: 100, cellSize: 20 },
   });
 
   const { rerender } = render(
-    <Provider store={configureDashboardStore(getState(false))}>
+    <Provider store={configureDashboardStore(getState())}>
       <DndProvider
         backend={TouchBackend}
         options={{
@@ -69,7 +69,7 @@ it.skip('saves when the save button is pressed with default grid settings provid
   );
 
   rerender(
-    <Provider store={configureDashboardStore(getState(true))}>
+    <Provider store={configureDashboardStore(getState())}>
       <DndProvider
         backend={TouchBackend}
         options={{
