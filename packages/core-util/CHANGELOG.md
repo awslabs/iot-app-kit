@@ -1,5 +1,22 @@
 # Changelog
 
+## [9.7.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v9.6.0...core-util-v9.7.0) (2023-11-21)
+
+
+### Bug Fixes
+
+* bugfix for overlapping colors in color palette ([7b4c95b](https://github.com/awslabs/iot-app-kit/commit/7b4c95b45866548f85b10fee3167a35354d73cfb))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.6.0 to 9.7.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/ts-config bumped from 9.6.0 to 9.7.0
+
 ## [9.6.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v9.5.0...core-util-v9.6.0) (2023-11-16)
 
 

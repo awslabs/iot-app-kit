@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [9.7.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.6.0...react-components-v9.7.0) (2023-11-21)
+
+
+### Features
+
+* charts legend resize drag-handle improvements [#2055](https://github.com/awslabs/iot-app-kit/issues/2055) ([9e9db52](https://github.com/awslabs/iot-app-kit/commit/9e9db524cf1b403c9a64c631751ff862349b7ad2))
+* **dashboard:** add model based query support ([b95b60c](https://github.com/awslabs/iot-app-kit/commit/b95b60ccf074069268a8d71071067cfbd8265a20))
+* **dashboard:** gated CSV download button ([645fb1c](https://github.com/awslabs/iot-app-kit/commit/645fb1cc3fdac5e27369a6ee538e0677ab4eb8b3))
+* header design update ([700a913](https://github.com/awslabs/iot-app-kit/commit/700a91366ba57d7f6ca4b2058ee308a7317db9eb))
+* **react-components:** adding significant digits to trendcursors ([ef4c987](https://github.com/awslabs/iot-app-kit/commit/ef4c987f5142a7be0ec22aae49a31397999b45e2))
+* **react-components:** brush zoom ([bddb7e1](https://github.com/awslabs/iot-app-kit/commit/bddb7e1e7b18a2179678fd6bee6a50d0a978d26d))
+* updated the chart legend ux [#1930](https://github.com/awslabs/iot-app-kit/issues/1930) ([68b8618](https://github.com/awslabs/iot-app-kit/commit/68b8618226c5f9ab0c5da64f7ad9210459809232))
+
+
+### Bug Fixes
+
+* bugfix for overlapping colors in color palette ([7b4c95b](https://github.com/awslabs/iot-app-kit/commit/7b4c95b45866548f85b10fee3167a35354d73cfb))
+* chart gesture performance ([cdd52c6](https://github.com/awslabs/iot-app-kit/commit/cdd52c627e99f4e712475b90d2869b16a5684038))
+* download button and zoom undo button ([a60a81b](https://github.com/awslabs/iot-app-kit/commit/a60a81b6f6e64b3113b14edcf6efe9fe82ef47f7))
+* immediately change the line chart viewport when updating relative time range ([5ebb2f1](https://github.com/awslabs/iot-app-kit/commit/5ebb2f1597595bf66c63850835e2a64752e4ef9b))
+* immediately change the line chart viewport when updating relative time range ([95b5b7d](https://github.com/awslabs/iot-app-kit/commit/95b5b7d80914a757613c3263f7bf0218acb355b4))
+* **react-components:** adding handling of Yminmax for TC and fixing styling issues ([1581b9f](https://github.com/awslabs/iot-app-kit/commit/1581b9fb7cb77037fa830eaba07155aa253cfa33))
+* **react-components:** echarts grab on canvas update cursor and tooltip ([bfef4e8](https://github.com/awslabs/iot-app-kit/commit/bfef4e878e9a47a9ed1f578767a04b03e6bc8a5e))
+* **react-components:** pagination can move forward on first click from relative range ([fcb04f7](https://github.com/awslabs/iot-app-kit/commit/fcb04f73c3bf3af8a467169a3e9cbd6a6743d462))
+* **react-components:** removing animation for series lines ([b245995](https://github.com/awslabs/iot-app-kit/commit/b245995766c4f2b83bca219e9d8e6f806912cd6c))
+* ungate CSV download feature ([ec11c82](https://github.com/awslabs/iot-app-kit/commit/ec11c82c1b2932a5f7f28d9394f469cac6d68f97))
+* updated the wcag compliance for dashboard resource explorer pane [#2173](https://github.com/awslabs/iot-app-kit/issues/2173) ([26bd618](https://github.com/awslabs/iot-app-kit/commit/26bd6181e4c507360247d6a7cddee7db0ba2c5bd))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/core bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/core-util bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.6.0 to 9.7.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/testing-util bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/ts-config bumped from 9.6.0 to 9.7.0
+    * eslint-config-iot-app-kit bumped from 9.6.0 to 9.7.0
+
 ## [9.6.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.5.0...react-components-v9.6.0) (2023-11-16)
 
 

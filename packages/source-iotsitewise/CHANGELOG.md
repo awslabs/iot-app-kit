@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.7.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v9.6.0...source-iotsitewise-v9.7.0) (2023-11-21)
+
+
+### Features
+
+* **dashboard:** add model based query support ([b95b60c](https://github.com/awslabs/iot-app-kit/commit/b95b60ccf074069268a8d71071067cfbd8265a20))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/core-util bumped from 9.6.0 to 9.7.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/testing-util bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/ts-config bumped from 9.6.0 to 9.7.0
+    * eslint-config-iot-app-kit bumped from 9.6.0 to 9.7.0
+
 ## [9.6.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v9.5.0...source-iotsitewise-v9.6.0) (2023-11-16)
 
 
