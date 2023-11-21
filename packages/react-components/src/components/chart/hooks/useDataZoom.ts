@@ -1,11 +1,10 @@
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef } from 'react';
 import { useViewport } from '../../../hooks/useViewport';
 import { DataZoomComponentOption, EChartsType } from 'echarts';
 import { ECHARTS_GESTURE } from '../../../common/constants';
-import { DEFAULT_DATA_ZOOM, ECHARTS_ZOOM_DEBOUNCE_MS } from '../eChartsConstants';
+import { DEFAULT_DATA_ZOOM } from '../eChartsConstants';
 import { ViewportInMs } from '../types';
 import { Viewport } from '@iot-app-kit/core';
-import throttle from 'lodash.throttle';
 
 // known bug with zooming into live data https://github.com/apache/echarts/issues/11679
 // this function will prevent the data from moving if we are zoomed in
@@ -24,47 +23,44 @@ const onDataZoomEvent = (chart: EChartsType, setViewport: (viewport: Viewport, l
 // This hook handles all of the viewport related things, including:
 // panning, zooming, live mode
 export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, viewportInMs: ViewportInMs) => {
-  const { lastUpdatedBy, setViewport } = useViewport();
-  const [isScrolling, setIsScrolling] = useState(false);
+  const { setViewport } = useViewport();
 
-  const viewportInMsRef = useRef(viewportInMs);
-  useEffect(() => {
-    viewportInMsRef.current = viewportInMs;
-  }, [viewportInMs]);
+  const isViewportChangeAnimationPausedRef = useRef(false);
+  const pauseViewportChangeAnimation = () => (isViewportChangeAnimationPausedRef.current = true);
+  const unpauseViewportChangeAnimation = () => (isViewportChangeAnimationPausedRef.current = false);
 
-  // handle live mode + pagination
+  // Animate viewport changes
   useEffect(() => {
     const chart = chartRef.current;
-    if (chart && !isScrolling) {
-      if (viewportInMs.isDurationViewport) {
-        // live mode
-        setIsScrolling(false);
-      }
-      chart.setOption({
+    const isViewportChangeAnimationPaused = isViewportChangeAnimationPausedRef.current;
+
+    if (!isViewportChangeAnimationPaused) {
+      chart?.setOption({
         dataZoom: { ...DEFAULT_DATA_ZOOM, startValue: viewportInMs.initial, endValue: viewportInMs.end },
       });
     }
-    // ignoring because refs dont need to be in dependency array
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [viewportInMs, isScrolling, lastUpdatedBy]);
+  }, [chartRef, isViewportChangeAnimationPausedRef, viewportInMs.initial, viewportInMs.end]);
 
-  // create listener for DataZoom events so that all charts can sync up
+  // Subscribe to events
   useEffect(() => {
-    const chart = chartRef?.current;
-    if (chart) {
-      chart.on('dataZoom', () => {
-        throttle(() => {
-          setIsScrolling(true);
-          onDataZoomEvent(chart, setViewport);
-          setIsScrolling(false); //allow for pagination after gesture, will enter the correct branch in above useEffect
-        }, ECHARTS_ZOOM_DEBOUNCE_MS)();
+    const chart = chartRef.current;
+    let frame: number;
+
+    chart?.on('dataZoom', () => {
+      pauseViewportChangeAnimation();
+
+      // Synchronize animation with refresh rate
+      frame = requestAnimationFrame(() => {
+        onDataZoomEvent(chart, setViewport);
       });
-    }
+    });
+
+    chart?.on('finished', unpauseViewportChangeAnimation);
 
     return () => {
       chart?.off('dataZoom');
+      chart?.off('finished', unpauseViewportChangeAnimation);
+      cancelAnimationFrame(frame);
     };
-    // ignoring because refs dont need to be in dependency array
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setViewport]);
+  }, [setViewport, chartRef, isViewportChangeAnimationPausedRef]);
 };
