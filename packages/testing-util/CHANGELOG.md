@@ -1,5 +1,19 @@
 # Changelog
 
+## [9.7.0](https://github.com/awslabs/iot-app-kit/compare/testing-util-v9.6.0...testing-util-v9.7.0) (2023-11-21)
+
+
+### Miscellaneous Chores
+
+* **testing-util:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.6.0 to 9.7.0
+
 ## [9.6.0](https://github.com/awslabs/iot-app-kit/compare/testing-util-v9.5.0...testing-util-v9.6.0) (2023-11-16)
 
 

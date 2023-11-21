@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.7.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.6.0...scene-composer-v9.7.0) (2023-11-21)
+
+
+### Bug Fixes
+
+* **composer:** cannot delete node entity with child ([a7976bb](https://github.com/awslabs/iot-app-kit/commit/a7976bb55afbc83d0fd3848ef1eb1fd6a81dedbc))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/react-components bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/related-table bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.6.0 to 9.7.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 9.6.0 to 9.7.0
+
 ## [9.6.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.5.0...scene-composer-v9.6.0) (2023-11-16)
 
 

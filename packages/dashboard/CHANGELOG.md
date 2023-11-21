@@ -1,5 +1,85 @@
 # Changelog
 
+## [9.7.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.6.0...dashboard-v9.7.0) (2023-11-21)
+
+
+### Features
+
+* added date time formatter in resource explorer table [#2140](https://github.com/awslabs/iot-app-kit/issues/2140) ([10137b7](https://github.com/awslabs/iot-app-kit/commit/10137b780ec3ac1fb3f1dc5d120493345ce20e1a))
+* added delete option for empty widget [#2139](https://github.com/awslabs/iot-app-kit/issues/2139) ([bbab890](https://github.com/awslabs/iot-app-kit/commit/bbab89048dc5b43fd92670c7df98bd38043bbe40))
+* **dashboard:** add e2e tests ([a52242e](https://github.com/awslabs/iot-app-kit/commit/a52242e3e687e899058e8477852228dde791dff7))
+* **dashboard:** add model based query support ([b95b60c](https://github.com/awslabs/iot-app-kit/commit/b95b60ccf074069268a8d71071067cfbd8265a20))
+* **dashboard:** adding watch mode for dashboard ([bc6fd3a](https://github.com/awslabs/iot-app-kit/commit/bc6fd3aaaa3354d555e644653d4a5081066aa747))
+* **dashboard:** csv data hook ([33379af](https://github.com/awslabs/iot-app-kit/commit/33379af40ab79a79ac755be3a7f22f6701129ef6))
+* **dashboard:** fit and finish for model-based-queries ([1a2bbaf](https://github.com/awslabs/iot-app-kit/commit/1a2bbaf32f58930f89a123684d55fdafb315a9bd))
+* **dashboard:** gated CSV download button ([645fb1c](https://github.com/awslabs/iot-app-kit/commit/645fb1cc3fdac5e27369a6ee538e0677ab4eb8b3))
+* **dashboard:** json to csv package ([918515d](https://github.com/awslabs/iot-app-kit/commit/918515d698ce63de3e3aea486c1ff5c69a4b6ee7))
+* **dashboard:** move mock service worker to mock storybook story ([aae9f2b](https://github.com/awslabs/iot-app-kit/commit/aae9f2b2ab0c69417d346dd38515647c6ce43362))
+* **dashboard:** query for describing unmodeled data stream ([2d1226d](https://github.com/awslabs/iot-app-kit/commit/2d1226dcc00fd8f4d138151d0aeb4a494d5e119c))
+* disable add button when more than one widgets are selected [#2115](https://github.com/awslabs/iot-app-kit/issues/2115) ([c1ec145](https://github.com/awslabs/iot-app-kit/commit/c1ec145eb1cf1a4595124f5602eb2f1feee305e0))
+* disable add button when no widget and propertyselected [#2115](https://github.com/awslabs/iot-app-kit/issues/2115) ([276309b](https://github.com/awslabs/iot-app-kit/commit/276309b8934b7b97228e8829c1c9047343c0d968))
+* draw box align with mouse pointer [#2137](https://github.com/awslabs/iot-app-kit/issues/2137) ([a93613a](https://github.com/awslabs/iot-app-kit/commit/a93613ab95c91aed374d2812e098bcc07b1bc46b))
+* fake sitewise ([5fc9557](https://github.com/awslabs/iot-app-kit/commit/5fc9557d46fc3ed193862940ee058fd0e49f33e4))
+* fixed the add and reset buttons to bottom right [#2114](https://github.com/awslabs/iot-app-kit/issues/2114) ([15108b0](https://github.com/awslabs/iot-app-kit/commit/15108b058302a775b0b9a332d0ff901f81f2e676))
+* format latest value time in resource explorer [#2140](https://github.com/awslabs/iot-app-kit/issues/2140) ([51be7da](https://github.com/awslabs/iot-app-kit/commit/51be7da3db56e4641526bb4333a622ae8c93e5df))
+* header design update ([700a913](https://github.com/awslabs/iot-app-kit/commit/700a91366ba57d7f6ca4b2058ee308a7317db9eb))
+* remove stretch to fit from dashboard [#2255](https://github.com/awslabs/iot-app-kit/issues/2255) ([e8d7778](https://github.com/awslabs/iot-app-kit/commit/e8d77786719cb30c462f1cf67f2fbfc388189490))
+* widget configuration improvements, per property, and general UX [#2243](https://github.com/awslabs/iot-app-kit/issues/2243) ([94f0490](https://github.com/awslabs/iot-app-kit/commit/94f04906d35b814ce6393e2873f9ffd9c905e0b9))
+
+
+### Bug Fixes
+
+* add tests for CSV ([28c6ca9](https://github.com/awslabs/iot-app-kit/commit/28c6ca94b6efe55b33a30cd2106f4d5536f8a556))
+* better disabled states and error handling CSV ([3bae192](https://github.com/awslabs/iot-app-kit/commit/3bae19293b7bedd0dcbfafc999cd6ed1e611dccc))
+* bugfix for overlapping colors in color palette ([7b4c95b](https://github.com/awslabs/iot-app-kit/commit/7b4c95b45866548f85b10fee3167a35354d73cfb))
+* change test id for download button ([88c16b9](https://github.com/awslabs/iot-app-kit/commit/88c16b9b1ca12dca37a910b0ce4d226838fd261c))
+* copy paste issue on macos [#2136](https://github.com/awslabs/iot-app-kit/issues/2136) ([b7e8574](https://github.com/awslabs/iot-app-kit/commit/b7e8574d1f3d627694f0b0962565266d2b6ab8dc))
+* **dashboard:** bugfix for barchart positioning ([16babf6](https://github.com/awslabs/iot-app-kit/commit/16babf6667c886597d527534ddd7e9b355e2f988))
+* **dashboard:** conditionally start msw for mocked data stories ([b9fb349](https://github.com/awslabs/iot-app-kit/commit/b9fb349546ddc1bca9b2dbc0d934f5769836ae91))
+* **dashboard:** csv  will download if viewport has no data ([b0cbbad](https://github.com/awslabs/iot-app-kit/commit/b0cbbad5348d4000674cf0e2b1d20e2782428b41))
+* **dashboard:** remove hide/show from dashboard definition and config panel ([1919341](https://github.com/awslabs/iot-app-kit/commit/191934129f1c64ca52bb5333d882421aeeab91b0))
+* **dashboard:** toggle from hide to show for unmodeled datastreams ([cea7c30](https://github.com/awslabs/iot-app-kit/commit/cea7c30cce8fa685cd9a0a9a8077c4e1d6b9ec4f))
+* **dashboard:** update styling for model based query editor ([cb0d969](https://github.com/awslabs/iot-app-kit/commit/cb0d969e528b74c3c7d429a7b4a3335e004af9d0))
+* download button and zoom undo button ([a60a81b](https://github.com/awslabs/iot-app-kit/commit/a60a81b6f6e64b3113b14edcf6efe9fe82ef47f7))
+* increase the text widget initial size ([7d7918d](https://github.com/awslabs/iot-app-kit/commit/7d7918d50b10b04f75e0d9265da111a06c482600))
+* missing raect key internal space between ([9cbb214](https://github.com/awslabs/iot-app-kit/commit/9cbb214035f1434719cbbb94ac0360103fb232c6))
+* pagination default pagesize is set to 250 and error message update [#2242](https://github.com/awslabs/iot-app-kit/issues/2242) ([3a2d632](https://github.com/awslabs/iot-app-kit/commit/3a2d632e8430fb837656a43b030ef6eb35468417))
+* panel resizing issue fix [#2256](https://github.com/awslabs/iot-app-kit/issues/2256) ([21dcb51](https://github.com/awslabs/iot-app-kit/commit/21dcb51fd8b05f4df4b5a8c4d6097ac97073d922))
+* pasting at the edge of dashboard should paste widget within the grid [#2141](https://github.com/awslabs/iot-app-kit/issues/2141) ([ad1dde7](https://github.com/awslabs/iot-app-kit/commit/ad1dde7282983d7d6710c25b2399851c0ad03df7))
+* remove size and position settings - [#2249](https://github.com/awslabs/iot-app-kit/issues/2249) ([276a1a1](https://github.com/awslabs/iot-app-kit/commit/276a1a1540087f6c3cc4e8c4c41cd2c7695f10a6))
+* remove widget panel from text widget ([0620284](https://github.com/awslabs/iot-app-kit/commit/06202847ff980b851bf8ff836ebb2a239c3d00e7))
+* twitchy widget icons [#2143](https://github.com/awslabs/iot-app-kit/issues/2143) ([60e7ad3](https://github.com/awslabs/iot-app-kit/commit/60e7ad306fb184e0be0be0ee9e56e4a6a988c073))
+* ungate CSV download feature ([ec11c82](https://github.com/awslabs/iot-app-kit/commit/ec11c82c1b2932a5f7f28d9394f469cac6d68f97))
+* unit test fail fix - [#2249](https://github.com/awslabs/iot-app-kit/issues/2249) ([b3a574c](https://github.com/awslabs/iot-app-kit/commit/b3a574c7d443d893aece711813265d94a0ef5ee6))
+* updated the wcag compliance for dashboard resource explorer pane [#2173](https://github.com/awslabs/iot-app-kit/issues/2173) ([26bd618](https://github.com/awslabs/iot-app-kit/commit/26bd6181e4c507360247d6a7cddee7db0ba2c5bd))
+
+
+### Performance Improvements
+
+* use requestAnimationFrame when dragging widgets on the dashboard ([ef3fc4e](https://github.com/awslabs/iot-app-kit/commit/ef3fc4ec1fed1cefa2f8cc58084b1d968eb1a08f))
+
+
+### Reverts
+
+* filter query on asset models ([c5aa946](https://github.com/awslabs/iot-app-kit/commit/c5aa946584194110cac9313e3150644951635e9c))
+* reverting fix(dashboard): remove hide/show from dashboard definition and config panel ([7f63922](https://github.com/awslabs/iot-app-kit/commit/7f6392213d525ec3f5c7534b61323dfc896d112e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/core bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/core-util bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/react-components bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.6.0 to 9.7.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/testing-util bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/ts-config bumped from 9.6.0 to 9.7.0
+    * eslint-config-iot-app-kit bumped from 9.6.0 to 9.7.0
+
 ## [9.6.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.5.0...dashboard-v9.6.0) (2023-11-16)
 
 

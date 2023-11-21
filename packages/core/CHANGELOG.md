@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.7.0](https://github.com/awslabs/iot-app-kit/compare/core-v9.6.0...core-v9.7.0) (2023-11-21)
+
+
+### Features
+
+* experimental plugins registry; logger and metrics recorder plugins ([95b904f](https://github.com/awslabs/iot-app-kit/commit/95b904f281a860b04e145229c7c70fe4be08cba5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.6.0 to 9.7.0
+    * @iot-app-kit/ts-config bumped from 9.6.0 to 9.7.0
+    * eslint-config-iot-app-kit bumped from 9.6.0 to 9.7.0
+
 ## [9.6.0](https://github.com/awslabs/iot-app-kit/compare/core-v9.5.0...core-v9.6.0) (2023-11-16)
 
 
