@@ -1,7 +1,7 @@
 /**
  * Log represents a single event message to record.
  */
-type Log = {
+export type Log = {
   /**
    * Additional contexts to include.
    */
