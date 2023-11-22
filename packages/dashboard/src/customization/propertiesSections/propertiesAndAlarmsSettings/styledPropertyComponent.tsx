@@ -257,11 +257,16 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
       </Tooltip>
       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <Tooltip content={onMouseOver && isPropertyVisible ? 'hide' : 'unhide'} position='top'>
-          <Button onClick={onToggleAssetQuery} variant='icon' iconSvg={propertyVisibilityIcon} />
+          <Button
+            ariaLabel='hide un-hide property'
+            onClick={onToggleAssetQuery}
+            variant='icon'
+            iconSvg={propertyVisibilityIcon}
+          />
         </Tooltip>
       </div>
 
-      <Button onClick={onDeleteAssetQuery} variant='icon' iconName='remove' />
+      <Button ariaLabel='delete property' onClick={onDeleteAssetQuery} variant='icon' iconName='remove' />
     </SpaceBetween>
   );
 
