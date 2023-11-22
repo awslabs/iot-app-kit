@@ -81,7 +81,6 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
 
   return (
     <div
-      role='widget'
       aria-description='widget tile'
       className='widget-tile'
       style={{
