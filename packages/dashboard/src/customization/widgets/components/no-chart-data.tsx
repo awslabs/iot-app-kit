@@ -13,7 +13,6 @@ interface NoChartDataProps {
 const NoChartData = ({ icon, emptyStateText }: NoChartDataProps) => {
   return (
     <div
-      role='empty widget'
       aria-description='empty widget tile'
       className='no-chart-data-empty-state'
       style={{
