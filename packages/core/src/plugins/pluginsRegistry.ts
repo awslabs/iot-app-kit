@@ -1,44 +1,66 @@
 import type { LoggerSettings } from './loggerSettings';
 import type { MetricsRecorderSettings } from './metricsRecorderSettings';
 
+interface PluginsRegistry {
+  logger: LoggerSettings;
+  metricsRecorder: MetricsRecorderSettings;
+}
+
 /**
  * Internal object to hold all of the plugins.
  *
  * @emarks Not exported to encapsulate the registry
  */
-const pluginsRegistry: {
-  loggerSettings?: LoggerSettings;
-  metricsRecorderSettings?: MetricsRecorderSettings;
-} = {};
-
-/**
- * Register a Logger for logging AppKit logs.
- * @param param0 settings for Logger
- * @alpha
- */
-export const registerLogger = (settings: LoggerSettings) => {
-  pluginsRegistry.loggerSettings = settings;
+const pluginsRegistry: PluginsRegistry = {
+  logger: {
+    provider: () => undefined,
+  },
+  metricsRecorder: {
+    provider: () => undefined,
+  },
 };
 
 /**
- * Return the registered Logger.
- * @returns the registered Logger.
- * @alpha
+ * Registers a plugin under a namespace.
+ * @param namespace the namespace to register the plugin
+ * @param pluginSetting the setting object of the plugin to register
+ *
+ * @example
+ * // example of a registration and usage of metricsRecorder plugin
+ * registerPlugin('metricsRecorder', {
+ *   provider: () => ({
+ *     // record and console log all metrics
+ *     record: (metric) => {
+ *       console.log(metric);
+ *     },
+ *   }),
+ * });
  */
-export const getLogger = () => pluginsRegistry.loggerSettings?.provider();
+export function registerPlugin<
+  Namespace extends keyof PluginsRegistry,
+  PluginSetting extends PluginsRegistry[Namespace]
+>(namespace: Namespace, pluginSetting: PluginSetting): void {
+  pluginsRegistry[namespace] = pluginSetting;
+}
 
 /**
- * Register a MetricsRecorder for recording AppKit metrics.
- * @param param0 settings for MetricsRecorder
- * @alpha
+ * Returns the plugin of the given namespace.
+ * @param namespace the namespace of the plugin to retrieve
+ * @returns the plugin matching the given namespace
+ *
+ * @example
+ * // example of getting metricsRecorder plugin
+ * const metricsRecorder = getPlugin('metricsRecorder');
+ *
+ * metricsRecorder?.record({
+ *   metricName: 'test',
+ *   metricValue: 123
+ * });
  */
-export const registerMetricsRecorder = (settings: MetricsRecorderSettings) => {
-  pluginsRegistry.metricsRecorderSettings = settings;
-};
+export function getPlugin<Namespace extends keyof PluginsRegistry>(
+  namespace: Namespace
+): ReturnType<PluginsRegistry[Namespace]['provider']> {
+  const plugin = pluginsRegistry[namespace].provider() as ReturnType<PluginsRegistry[Namespace]['provider']>;
 
-/**
- * Return the registered MetricsRecorder.
- * @returns the registered MetricsRecorder.
- * @alpha
- */
-export const getMetricsRecorder = () => pluginsRegistry.metricsRecorderSettings?.provider();
+  return plugin;
+}

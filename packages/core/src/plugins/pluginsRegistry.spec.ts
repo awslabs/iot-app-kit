@@ -1,6 +1,6 @@
 import type { Logger } from '../logger/logger.interface';
-import type { MetricsRecorder } from '../metric-recorder/metricsRecorder.interface';
-import { getLogger, getMetricsRecorder, registerLogger, registerMetricsRecorder } from './pluginsRegistry';
+import type { MetricsRecorder } from '../metricRecorder/metricsRecorder.interface';
+import { registerPlugin, getPlugin } from './pluginsRegistry';
 
 describe('Logger registry', () => {
   class MockLogClient implements Logger {
@@ -10,7 +10,7 @@ describe('Logger registry', () => {
   }
 
   test('does not provide logger by default', () => {
-    const logger = getLogger();
+    const logger = getPlugin('logger');
 
     expect(logger).toBeUndefined();
   });
@@ -19,10 +19,10 @@ describe('Logger registry', () => {
     const mockLogClient = new MockLogClient();
     const mockProvider = jest.fn().mockReturnValue(mockLogClient);
 
-    registerLogger({
+    registerPlugin('logger', {
       provider: mockProvider,
     });
-    const logger = getLogger();
+    const logger = getPlugin('logger');
 
     expect(logger).toBe(mockLogClient);
     expect(mockProvider).toBeCalled();
@@ -35,7 +35,7 @@ describe('MetricsRecorder registry', () => {
   }
 
   test('does not provide MetricsRecorder by default', () => {
-    const metricsRecorder = getMetricsRecorder();
+    const metricsRecorder = getPlugin('metricsRecorder');
 
     expect(metricsRecorder).toBeUndefined();
   });
@@ -44,10 +44,10 @@ describe('MetricsRecorder registry', () => {
     const mockMetricsRecorder = new MockMetricsRecorder();
     const mockProvider = jest.fn().mockReturnValue(mockMetricsRecorder);
 
-    registerMetricsRecorder({
+    registerPlugin('metricsRecorder', {
       provider: mockProvider,
     });
-    const metricsRecorder = getMetricsRecorder();
+    const metricsRecorder = getPlugin('metricsRecorder');
 
     expect(metricsRecorder).toBe(mockMetricsRecorder);
     expect(mockProvider).toBeCalled();

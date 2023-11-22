@@ -38,7 +38,7 @@
  *   metricValue: 2,
  * };
  */
-type Metric = {
+export type Metric = {
   /**
    * Additional contexts to separate the metricName.
    */
