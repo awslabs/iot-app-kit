@@ -276,7 +276,7 @@ describe('expand functionality', () => {
 describe('error handling', () => {
   const replayData = new MockSiteWiseAssetsReplayData();
 
-  const error = { msg: 'id not found', type: 'ResourceNotFoundException', status: '404' };
+  const error = { msg: 'id not found', type: 'ResourceNotFoundException', status: 'ResourceNotFoundException' };
 
   replayData.addErrors([error]);
 

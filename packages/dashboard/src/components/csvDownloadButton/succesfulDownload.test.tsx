@@ -58,7 +58,7 @@ it('renders a working download button if query has content', function () {
           },
         }}
         fileName='csv-test'
-        client={createMockSiteWiseSDK() as IoTSiteWiseClient}
+        client={createMockSiteWiseSDK() as unknown as IoTSiteWiseClient}
       />
     </QueryClientProvider>
   );
@@ -70,7 +70,7 @@ it('renders a working download button if query has content', function () {
 
 it('creates a file for download if query has content', async function () {
   global.URL.createObjectURL = jest.fn();
-  const mockClient = createMockSiteWiseSDK() as IoTSiteWiseClient;
+  const mockClient = createMockSiteWiseSDK() as unknown as IoTSiteWiseClient;
   const mockQueryConfig = {
     source: 'iotsitewise',
     query: {

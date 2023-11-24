@@ -4,11 +4,13 @@ import {
   type AssetProperty,
   type DescribeAssetResponse,
   type IoTSiteWiseClient,
+  AssetPropertySummary,
+  AssetModelPropertySummary,
 } from '@aws-sdk/client-iotsitewise';
 import type { SiteWiseAssetQuery, SiteWisePropertyAliasQuery } from '@iot-app-kit/source-iotsitewise';
 import { useQuery } from '@tanstack/react-query';
-
 import { useClients } from '~/components/dashboard/clientContext';
+import { listAssetPropertiesWithComposite } from './listAssetPropertiesWithAssetDescription';
 
 export type PropertySummary = {
   propertyId: AssetProperty['id'];
@@ -97,6 +99,77 @@ export const useAssetDescriptionMapQuery = (
       }, {}) ?? {},
   });
 };
+
+// new call beyond this point
+
+const listAssetProperties = (client: IoTSiteWiseClient, assetId: string) => {
+  return new listAssetPropertiesWithComposite({ assetId, client }).send();
+};
+
+const listPropertiesSiteWiseAssetQuery = async (
+  client: IoTSiteWiseClient,
+  siteWiseQuery: Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>
+) =>
+  Promise.all(
+    siteWiseQuery.assets?.map(({ assetId }: { assetId: string }) => listAssetProperties(client, assetId)) ?? []
+  );
+
+const newMapPropertySummary = ({
+  id,
+  unit,
+  alias,
+  path,
+  dataType,
+}: AssetModelPropertySummary & AssetPropertySummary): PropertySummary => ({
+  propertyId: id,
+  name: path?.[path.length - 1].name,
+  unit,
+  dataType,
+  alias,
+});
+
+const mapListAssetPropertiesToAssetSummary = (
+  n: (AssetModelPropertySummary & AssetPropertySummary)[],
+  assetId: string,
+  assetName: string | undefined
+): AssetSummary => {
+  return {
+    assetId: assetId,
+    assetName: assetName,
+    properties: n.map(newMapPropertySummary) ?? [],
+    alarms: [],
+  };
+};
+
+export const useListAssetPropertiesMapQuery = (
+  siteWiseQuery: Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery> | undefined
+) => {
+  const { iotSiteWiseClient } = useClients();
+  const fetchSiteWiseAssetQueryDescription = async () => {
+    if (!iotSiteWiseClient || !siteWiseQuery) return [];
+    return listPropertiesSiteWiseAssetQuery(iotSiteWiseClient, siteWiseQuery);
+  };
+
+  return useQuery({
+    queryKey: [
+      ...ASSET_DESCRIPTION_QUERY_KEY,
+      'assetDescriptionsMap',
+      ...(siteWiseQuery?.assets?.map((a) => a.assetId) ?? []),
+    ],
+    queryFn: () => fetchSiteWiseAssetQueryDescription(),
+    select: (data) =>
+      data?.reduce<Record<string, AssetSummary>>((acc, n) => {
+        const assetId = n.at(0)?.path?.at(0)?.id;
+        if (assetId) {
+          const assetName = n.at(0)?.path?.at(0)?.name;
+          acc[assetId] = mapListAssetPropertiesToAssetSummary(n, assetId, assetName);
+        }
+        return acc;
+      }, {}) ?? {},
+  });
+};
+
+//dead code?? Please let me know if we should remove in PR review
 
 export const useAssetDescriptionQuery = (assetId: string | undefined) => {
   const { iotSiteWiseClient } = useClients();

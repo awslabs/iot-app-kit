@@ -1,5 +1,9 @@
 import { rest } from 'msw';
-import { type ListTimeSeriesRequest, type ListTimeSeriesResponse } from '@aws-sdk/client-iotsitewise';
+import {
+  ListTimeSeriesType,
+  type ListTimeSeriesRequest,
+  type ListTimeSeriesResponse,
+} from '@aws-sdk/client-iotsitewise';
 import { SITEWISE_CONTROL_PLANE_API_BASE_URL } from '../../constants';
 
 import { TIME_SERIES_SUMMARIES } from '../../resources/timeSeries';
@@ -11,7 +15,7 @@ export function listTimeSeriesHandler() {
     const aliasPrefix: ListTimeSeriesRequest['aliasPrefix'] = req.url.searchParams.get('aliasPrefix') ?? undefined;
     const assetId: ListTimeSeriesRequest['assetId'] = req.url.searchParams.get('assetId') ?? undefined;
     const timeSeriesType: ListTimeSeriesRequest['timeSeriesType'] =
-      req.url.searchParams.get('timeSeriesType') ?? undefined;
+      (req.url.searchParams.get('timeSeriesType') as ListTimeSeriesType) ?? undefined;
 
     if (timeSeriesType === 'ASSOCIATED' && !assetId) {
       return res(ctx.status(400));

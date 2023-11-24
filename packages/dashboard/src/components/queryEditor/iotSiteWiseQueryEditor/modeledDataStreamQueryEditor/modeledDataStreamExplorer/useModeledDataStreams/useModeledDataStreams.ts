@@ -2,22 +2,24 @@ import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 
-import { ListModeledDataStreamsRequest } from './listModeledDataStreamsRequest';
+import { listModeledDataStreamsRequestWithCompositeModels } from './listModeledDataStreamsRequestWithCompositeModels';
+// import { ListModeledDataStreamsRequest } from './listModeledDataStreamsRequest';
 import { ModeledDataStreamCacheKeyFactory } from './modeledDataStreamCacheKeyFactory';
+import { SelectedAsset } from '../../types';
 
 export interface UseModeledDataStreamsProps {
-  assetIds: string[];
+  assetProps: SelectedAsset[];
   client: IoTSiteWiseClient;
 }
 
-export function useModeledDataStreams({ assetIds, client }: UseModeledDataStreamsProps) {
+export function useModeledDataStreams({ assetProps, client }: UseModeledDataStreamsProps) {
   const cacheKeyFactory = new ModeledDataStreamCacheKeyFactory();
   const queries =
     useQueries({
-      queries: assetIds.map((assetId) => ({
-        // we store the descriptions in the cache using the assetId as the key
-        queryKey: cacheKeyFactory.create(assetId),
-        queryFn: createQueryFn(client),
+      queries: assetProps.map((selectedAsset) => ({
+        // we store the descriptions in the cache using the {assetID, assetModelId} as the key
+        queryKey: cacheKeyFactory.create(selectedAsset),
+        queryFn: createCompositeQueryFn(client),
       })),
     }) ?? [];
 
@@ -27,16 +29,30 @@ export function useModeledDataStreams({ assetIds, client }: UseModeledDataStream
   return { assetProperties, isFetching };
 }
 
-function createQueryFn(client: IoTSiteWiseClient) {
+function createCompositeQueryFn(client: IoTSiteWiseClient) {
   return async function ({
-    queryKey: [{ assetId }],
+    queryKey: [{ selectedAsset }],
     signal,
   }: QueryFunctionContext<ReturnType<ModeledDataStreamCacheKeyFactory['create']>>) {
-    invariant(assetId, 'Expected assetId to be defined as required by the enabled flag.');
-
-    const request = new ListModeledDataStreamsRequest({ assetId, client, signal });
+    invariant(selectedAsset, 'Expected assetProp to be defined as required by the enabled flag.');
+    const request = new listModeledDataStreamsRequestWithCompositeModels({ selectedAsset, client, signal });
     const response = await request.send();
 
     return response;
   };
 }
+
+// function createQueryFn(client: IoTSiteWiseClient) {
+//   return async function ({
+//     queryKey: [{ selectedAsset }],
+//     signal,
+//   }: QueryFunctionContext<ReturnType<ModeledDataStreamCacheKeyFactory['create']>>) {
+//     invariant(selectedAsset, 'Expected assetProp to be defined as required by the enabled flag.');
+
+//     const assetId = selectedAsset.assetId;
+//     const request = new ListModeledDataStreamsRequest({ assetId, client, signal });
+//     const response = await request.send();
+
+//     return response;
+//   };
+// }

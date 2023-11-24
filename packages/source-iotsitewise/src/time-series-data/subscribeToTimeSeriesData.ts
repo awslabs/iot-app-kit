@@ -16,6 +16,7 @@ export const subscribeToTimeSeriesData =
   ({ queries, request }: DataModuleSubscription<SiteWiseDataStreamQuery>, callback: (data: TimeSeriesData) => void) => {
     const store = new CreateTimeSeriesDataStore({
       initialState: {
+        assetModelProperties: [],
         dataStreams: [],
         thresholds: [],
         assetModels: {},
@@ -36,10 +37,14 @@ export const subscribeToTimeSeriesData =
       (async () => {
         for await (const response of fetchAssetModelsFromQuery({ queries, assetModuleSession })) {
           const assetModels = 'assetModels' in response && response.assetModels;
+          const assetModelProperties = 'assetModelProperties' in response && response.assetModelProperties;
           const errors = 'errors' in response && response.errors;
 
           if (assetModels) {
             store.appendTimeSeriesData({ assetModels });
+          }
+          if (assetModelProperties) {
+            store.appendTimeSeriesData({ assetModelProperties });
           }
 
           if (errors) {

@@ -36,6 +36,7 @@ export class GetAssetModelPropertiesRequest {
       assetModelId,
       nextToken,
       maxResults: 250,
+      filter: 'ALL',
     });
 
     return command;

@@ -55,7 +55,11 @@ export function ModeledDataStreamQueryEditor({
           <ModeledDataStreamExplorer
             client={iotSiteWiseClient}
             onClickAddModeledDataStreams={onClickAdd}
-            selectedAssetId={selectedAsset?.id}
+            selectedAsset={
+              selectedAsset?.id && selectedAsset?.assetModelId
+                ? { assetId: selectedAsset.id, assetModelId: selectedAsset.assetModelId }
+                : undefined
+            }
           />
         </>
       ) : (

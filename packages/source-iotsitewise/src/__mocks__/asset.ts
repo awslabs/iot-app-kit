@@ -2,7 +2,7 @@ import {
   AssetState
 } from "@aws-sdk/client-iotsitewise";
 import { ASSET_MODEL_ID } from "./assetModel";
-import type { AssetSummary, DescribeAssetModelResponse, DescribeAssetResponse } from "@aws-sdk/client-iotsitewise";
+import type { AssetSummary, DescribeAssetModelResponse, DescribeAssetResponse, ListAssetModelPropertiesResponse, ListAssetPropertiesResponse, PropertyDataType } from "@aws-sdk/client-iotsitewise";
 
 export const ASSET_SUMMARY: AssetSummary = {
   id: 'some-asset-id',
@@ -66,8 +66,8 @@ export const sampleAssetDescription: DescribeAssetResponse = {
 };
 
 export const createAssetResponse = ({
- assetId,
- assetModelId,
+  assetId,
+  assetModelId,
 }: {
   assetId: string;
   assetModelId: string;
@@ -112,3 +112,29 @@ export const createAssetModelResponse = ({
   assetModelArn: undefined,
 });
 
+export const createListAssetPropertiesResponse = ({
+  propertyId,
+  assetId,
+  propertyName = 'property-name',
+}: {
+  propertyId: string;
+  assetId: string;
+  propertyName: string;
+}): ListAssetPropertiesResponse => ({
+  assetPropertySummaries: [{
+    id: propertyId, unit: 'm/s', path: [{ id: assetId, name: `${assetId}-name` }, { id: assetId, name: propertyName }
+    ],
+  }],
+});
+
+export const createListAssetModelPropertiesResponse = ({
+  propertyId,
+  propertyName = 'property-name',
+}: {
+  propertyId: string;
+  propertyName: string;
+}): ListAssetModelPropertiesResponse => ({
+  assetModelPropertySummaries: [{
+    id: propertyId, name: propertyName, unit: 'm/s', dataType: 'DOUBLE' as PropertyDataType, type: undefined,
+  }],
+});

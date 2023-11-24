@@ -45,7 +45,7 @@ it('does not render button if query has no content', function () {
           query: MOCK_EMPTY_QUERY,
         }}
         fileName='csv-test'
-        client={createMockSiteWiseSDK() as IoTSiteWiseClient}
+        client={createMockSiteWiseSDK() as unknown as IoTSiteWiseClient}
       />
     </QueryClientProvider>
   );
@@ -55,7 +55,7 @@ it('does not render button if query has no content', function () {
 
 it('creates a file for download if data is empty', async function () {
   global.URL.createObjectURL = jest.fn();
-  const mockClient = createMockSiteWiseSDK() as IoTSiteWiseClient;
+  const mockClient = createMockSiteWiseSDK() as unknown as IoTSiteWiseClient;
   const mockQueryConfig = {
     source: 'iotsitewise',
     query: {

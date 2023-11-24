@@ -73,7 +73,7 @@ it('given query with modeled data it returns a list of CSVObjects', async () => 
       useViewportData({
         viewport: { start: new Date(1699554901783), end: new Date(1699555901883) },
         queryConfig: mockQueryConfig,
-        client: createMockSiteWiseSDK() as IoTSiteWiseClient,
+        client: createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
       }),
     { wrapper: ({ children }) => <QueryClientProvider client={MOCK_QUERY_CLIENT}>{children}</QueryClientProvider> }
   );
@@ -104,7 +104,7 @@ it('given empty query it returns an empty list ofCSVObjects', async () => {
       useViewportData({
         viewport: { start: new Date(1699554901783), end: new Date(1699555901883) },
         queryConfig: mockQueryConfig,
-        client: createMockSiteWiseSDK() as IoTSiteWiseClient,
+        client: createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
       }),
     { wrapper: ({ children }) => <QueryClientProvider client={MOCK_QUERY_CLIENT}>{children}</QueryClientProvider> }
   );

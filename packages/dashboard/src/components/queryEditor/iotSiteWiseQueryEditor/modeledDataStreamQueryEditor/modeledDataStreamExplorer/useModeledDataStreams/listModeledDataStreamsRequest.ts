@@ -66,7 +66,7 @@ export class ListModeledDataStreamsRequest {
         id: propertyId = DEFAULT_STRING,
         name = DEFAULT_STRING,
         unit = DEFAULT_STRING,
-        dataType = DEFAULT_STRING,
+        dataType = undefined as NonNullable<undefined>,
         dataTypeSpec = DEFAULT_STRING,
       }) => ({
         assetId,

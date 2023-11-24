@@ -4,22 +4,23 @@ import React from 'react';
 import { useModeledDataStreams } from './useModeledDataStreams';
 import { ModeledDataStreamTable } from './modeledDataStreamTable';
 import type { ModeledDataStream } from './types';
+import { SelectedAsset } from '../types';
 
 export interface ModeledDataStreamExplorerProps {
   onClickAddModeledDataStreams: (modeledDataStreams: ModeledDataStream[]) => void;
-  selectedAssetId?: string;
+  selectedAsset?: SelectedAsset;
   dataStreams?: ModeledDataStream[];
   client: IoTSiteWiseClient;
 }
 
 export function ModeledDataStreamExplorer({
   onClickAddModeledDataStreams,
-  selectedAssetId,
+  selectedAsset,
   dataStreams,
   client,
 }: ModeledDataStreamExplorerProps) {
   const { assetProperties, isFetching: isFetchingAssetProperties } = useModeledDataStreams({
-    assetIds: selectedAssetId ? [selectedAssetId] : [],
+    assetProps: selectedAsset ? [selectedAsset] : [],
     client,
   });
 
@@ -27,7 +28,7 @@ export function ModeledDataStreamExplorer({
     <ModeledDataStreamTable
       onClickAddModeledDataStreams={onClickAddModeledDataStreams}
       modeledDataStreams={dataStreams ?? assetProperties}
-      selectedAssetId={selectedAssetId}
+      selectedAsset={selectedAsset}
       isLoading={isFetchingAssetProperties}
       client={client}
     />

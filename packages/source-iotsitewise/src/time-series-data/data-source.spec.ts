@@ -583,7 +583,7 @@ describe('e2e through data-module', () => {
         expect.objectContaining({
           dataStreams: [
             expect.objectContaining({
-              error: { msg: 'assetId 1 not found', status: '404' },
+              error: { msg: 'assetId 1 not found', status: 'ResourceNotFoundException' },
             }),
           ],
         })
@@ -628,7 +628,7 @@ describe('e2e through data-module', () => {
         expect.objectContaining({
           dataStreams: [
             expect.objectContaining({
-              error: { msg: 'assetId 1 not found', status: '404' },
+              error: { msg: 'assetId 1 not found', status: 'ResourceNotFoundException' },
             }),
           ],
         })

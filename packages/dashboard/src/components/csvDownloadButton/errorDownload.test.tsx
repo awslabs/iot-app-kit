@@ -43,7 +43,7 @@ it('console an errors if data has errors', async function () {
           },
         }}
         fileName='csv-test'
-        client={createMockSiteWiseSDK() as IoTSiteWiseClient}
+        client={createMockSiteWiseSDK() as unknown as IoTSiteWiseClient}
       />
     </QueryClientProvider>
   );
@@ -67,7 +67,7 @@ it('does not create a file for download if data has errors', async function () {
           },
         }}
         fileName='csv-test'
-        client={createMockSiteWiseSDK() as IoTSiteWiseClient}
+        client={createMockSiteWiseSDK() as unknown as IoTSiteWiseClient}
       />
     </QueryClientProvider>
   );
