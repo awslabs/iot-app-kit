@@ -70,6 +70,10 @@ export class SiteWiseAssetSession implements SiteWiseAssetSessionInterface {
     return lastValueFrom(this._requestRootAssets());
   }
 
+  fetchListAssetModelPropertiesWithCompsiteModels(input: { assetId: string; assetModelId: string }) {
+    return this.processor.getAssetModelPropertiesWithCompositeModels(input);
+  }
+
   requestAssetHierarchy(
     query: AssetHierarchyQuery,
     observer: {

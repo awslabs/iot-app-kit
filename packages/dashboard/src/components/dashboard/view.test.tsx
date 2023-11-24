@@ -19,7 +19,7 @@ it('renders', function () {
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: createMockSiteWiseSDK() as IoTSiteWiseClient,
+        iotSiteWiseClient: createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
         iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
       }}
     />

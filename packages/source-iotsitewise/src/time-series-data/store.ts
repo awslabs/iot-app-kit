@@ -3,6 +3,7 @@ import { completeDataStreams } from '../completeDataStreams';
 import type { Threshold, DataStream, ErrorDetails, TimeSeriesData, Viewport } from '@iot-app-kit/core';
 import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import type { Alarms } from '../alarms/iotevents';
+import { ModeledDataStream } from '../asset-modules/listAssetModelPropertiesWithCompositeModels';
 
 export type TimeSeriesDataStore = {
   dataStreams: DataStream[];
@@ -11,6 +12,7 @@ export type TimeSeriesDataStore = {
   assetModels: Record<string, DescribeAssetModelResponse>;
   alarms: Alarms;
   errors: Record<string, ErrorDetails>;
+  assetModelProperties: ModeledDataStream[];
 };
 
 export class CreateTimeSeriesDataStore {
@@ -29,13 +31,14 @@ export class CreateTimeSeriesDataStore {
   }
 
   update() {
-    const { thresholds, viewport, alarms, assetModels, dataStreams } = this.state;
+    const { thresholds, viewport, alarms, assetModels, dataStreams, assetModelProperties } = this.state; //add assetProeprties
 
     this.callback({
       dataStreams: completeDataStreams({
         dataStreams,
         assetModels,
         alarms,
+        assetModelProperties,
       }),
       viewport,
       thresholds,
@@ -43,7 +46,7 @@ export class CreateTimeSeriesDataStore {
   }
 
   appendTimeSeriesData(updatedState: Partial<TimeSeriesDataStore>): void {
-    const { thresholds, dataStreams, ...rest } = updatedState;
+    const { thresholds, dataStreams, assetModelProperties, ...rest } = updatedState;
 
     const newDataStreams = (dataStreams as DataStream[])?.filter(
       (dataStream) => !this.state.dataStreams.map(({ id }) => id).includes(dataStream.id)
@@ -61,6 +64,15 @@ export class CreateTimeSeriesDataStore {
       }),
       ...(newDataStreams || []),
     ];
+
+    const oldAssetModelProps = this.state.assetModelProperties ?? [];
+
+    const newAssetModelProperties = assetModelProperties?.filter(
+      (assetModelProperty) =>
+        !oldAssetModelProps?.map(({ propertyId }) => propertyId).includes(assetModelProperty.propertyId)
+    );
+
+    this.state.assetModelProperties = [...oldAssetModelProps, ...(newAssetModelProperties || [])];
 
     this.state.thresholds = [...this.state.thresholds, ...(thresholds || [])];
 

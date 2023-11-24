@@ -1,6 +1,8 @@
+import { SelectedAsset } from '../../types';
+
 export class ModeledDataStreamCacheKeyFactory {
-  public create(assetId: string) {
-    const cacheKey = [{ resource: 'modeled data stream', assetId }] as const;
+  public create(selectedAsset: SelectedAsset) {
+    const cacheKey = [{ resource: 'modeled data stream', selectedAsset }] as const;
 
     return cacheKey;
   }

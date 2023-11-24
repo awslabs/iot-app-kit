@@ -1,4 +1,4 @@
-import { type TimeSeriesSummary } from '@aws-sdk/client-iotsitewise';
+import { PropertyDataType, type TimeSeriesSummary } from '@aws-sdk/client-iotsitewise';
 import { v4 as uuid } from 'uuid';
 
 type AssociatedTimeSeriesSummary = TimeSeriesSummary & Required<Pick<TimeSeriesSummary, 'assetId' | 'propertyId'>>;
@@ -55,7 +55,7 @@ export class TimeSeriesSummaryFactory {
     const timeSeriesArn = `arn:aws:iotsitewise:us-east-1:123456789012:time-series/${timeSeriesId}`;
     const timeSeriesCreationDate = new Date();
     const timeSeriesLastUpdateDate = new Date();
-    const dataType = 'DOUBLE';
+    const dataType = 'DOUBLE' as PropertyDataType;
     const defaults = { timeSeriesArn, timeSeriesId, timeSeriesCreationDate, timeSeriesLastUpdateDate, dataType };
 
     return defaults;

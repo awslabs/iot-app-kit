@@ -71,7 +71,7 @@ export const AssetModelSelected = ({
         <Box fontWeight='bold' variant='span'>
           Asset model:
         </Box>
-        <Box variant='span'>{assetModel?.assetModelName}</Box>
+        <Box variant='span'>{assetModel?.at(0)?.path?.[0].name}</Box>
         <div className='reset-selected-asset-model-container'>
           <Button onClick={onShow}>Reset</Button>
         </div>

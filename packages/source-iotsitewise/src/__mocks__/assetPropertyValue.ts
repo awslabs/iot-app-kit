@@ -1,7 +1,8 @@
 import {
+  BatchGetAssetPropertyValueHistoryErrorCode,
   Quality,
 } from '@aws-sdk/client-iotsitewise';
-import type { AssetPropertyValue, GetAssetPropertyAggregatesResponse, GetAssetPropertyValueHistoryResponse, GetAssetPropertyValueResponse, BatchGetAssetPropertyValueHistoryResponse, BatchGetAssetPropertyAggregatesResponse, BatchGetAssetPropertyValueResponse } from "@aws-sdk/client-iotsitewise";
+import type { AssetPropertyValue, GetAssetPropertyAggregatesResponse, GetAssetPropertyValueHistoryResponse, GetAssetPropertyValueResponse, BatchGetAssetPropertyValueHistoryResponse, BatchGetAssetPropertyAggregatesResponse, BatchGetAssetPropertyValueResponse, BatchGetAssetPropertyValueHistoryErrorEntry } from "@aws-sdk/client-iotsitewise";
 
 /**
  * Mocks, related to a SiteWise Assert property value
@@ -117,10 +118,10 @@ export const BATCH_ASSET_PROPERTY_VALUE_HISTORY: BatchGetAssetPropertyValueHisto
   skippedEntries: [],
 };
 
-export const BATCH_ASSET_PROPERTY_ERROR_ENTRY = {
+export const BATCH_ASSET_PROPERTY_ERROR_ENTRY: BatchGetAssetPropertyValueHistoryErrorEntry = {
   entryId: '0-0',
   errorMessage: 'assetId 1 not found',
-  errorCode: '404',
+  errorCode: BatchGetAssetPropertyValueHistoryErrorCode.ResourceNotFoundException,
 };
 
 export const BATCH_ASSET_PROPERTY_ERROR: BatchGetAssetPropertyValueHistoryResponse = {

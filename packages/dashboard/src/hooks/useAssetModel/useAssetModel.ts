@@ -2,8 +2,8 @@ import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 import { AssetModelCacheKeyFactory } from './assetModelCacheKeyFactory';
-import { DescribeAssetModelRequest } from './describeAssetModelRequest';
 import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
+import { listAssetModelPropertiesRequest } from './listAssetModelPropertiesRequest';
 
 type SingleAssetRequest = {
   assetModelId?: string;
@@ -31,7 +31,7 @@ export function useAssetModel({ assetModelId, assetModelIds, client }: UseAssetM
         // we need assetId and hierarchyId to make a successful request
         enabled: isEnabled(id),
         queryKey: cacheKeyFactory.create(id),
-        queryFn: createQueryFn(client),
+        queryFn: createModelPropertyQueryFn(client),
       })),
     }) ?? [];
 
@@ -51,14 +51,28 @@ function isEnabled(assetModelId: string | undefined): assetModelId is string {
   return Boolean(assetModelId);
 }
 
-function createQueryFn(client: IoTSiteWiseClient) {
+// function createQueryFn(client: IoTSiteWiseClient) {
+//   return async function ({
+//     queryKey: [{ assetModelId }],
+//     signal,
+//   }: QueryFunctionContext<ReturnType<AssetModelCacheKeyFactory['create']>>) {
+//     invariant(isEnabled(assetModelId), 'Expected asset model ID to be defined as required by the enabled flag.');
+
+//     const request = new DescribeAssetModelRequest({ assetModelId, client, signal });
+//     const response = await request.send();
+
+//     return response;
+//   };
+// }
+
+function createModelPropertyQueryFn(client: IoTSiteWiseClient) {
   return async function ({
     queryKey: [{ assetModelId }],
     signal,
   }: QueryFunctionContext<ReturnType<AssetModelCacheKeyFactory['create']>>) {
     invariant(isEnabled(assetModelId), 'Expected asset model ID to be defined as required by the enabled flag.');
 
-    const request = new DescribeAssetModelRequest({ assetModelId, client, signal });
+    const request = new listAssetModelPropertiesRequest({ assetModelId, client, signal });
     const response = await request.send();
 
     return response;

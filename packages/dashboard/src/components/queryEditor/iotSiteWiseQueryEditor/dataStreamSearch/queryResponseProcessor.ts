@@ -43,7 +43,7 @@ export class QueryResponseProcessor {
       propertyId: rowData[MODEL_MAP.propertyId],
       name: rowData[MODEL_MAP.propertyName],
       unit: '',
-      dataType: '',
+      dataType: undefined as NonNullable<undefined>,
       dataTypeSpec: '',
     };
 

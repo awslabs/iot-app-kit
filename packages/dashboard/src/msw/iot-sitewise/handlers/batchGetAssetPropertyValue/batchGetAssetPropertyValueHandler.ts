@@ -8,6 +8,7 @@ import {
   type AssetPropertyValue,
   type AggregatedValue,
   type AggregateType,
+  Quality,
 } from '@aws-sdk/client-iotsitewise';
 import { faker } from '@faker-js/faker';
 import { rest } from 'msw';
@@ -42,7 +43,7 @@ export class AggregatedValueFactory {
   }
 
   #createDefaults() {
-    const quality = 'GOOD';
+    const quality = 'GOOD' as Quality;
     const timestamp = Date.now() as unknown as AggregatedValue['timestamp'];
     const defaults = { quality, timestamp };
 
@@ -106,7 +107,7 @@ export class AssetPropertyValueFactory {
   }
 
   #createDefaults() {
-    const quality = 'GOOD';
+    const quality = 'GOOD' as Quality;
     const timestamp = { timeInSeconds: Date.now() };
     const defaults = { quality, timestamp };
 

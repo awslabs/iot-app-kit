@@ -1,11 +1,17 @@
 import { fetchAssetModelsFromQuery } from './fetchAssetModelsFromQuery';
-import { ALARM_ASSET_ID, ALARM_STATE_PROPERTY_ID, ASSET_MODEL_WITH_ALARM } from '../../__mocks__';
+import {
+  ALARM_ASSET_ID,
+  ALARM_LIST_ASSET_MODEL_PROP_RESPONSE,
+  ALARM_LIST_ASSET_PROP_RESPONSE,
+  ALARM_STATE_PROPERTY_ID,
+  ASSET_MODEL_WITH_ALARM,
+} from '../../__mocks__';
 import { createSiteWiseAssetDataSource } from '../asset-data-source';
 import { SiteWiseAssetModule } from '../sitewise/siteWiseAssetModule';
 import type { SiteWiseAssetDataSource } from '../sitewise/types';
 import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
-const getAssetModule = ({ siteWiseApiOverride } = { siteWiseApiOverride: {} }) => {
+export const getAssetModule = ({ siteWiseApiOverride } = { siteWiseApiOverride: {} }) => {
   const siteWiseClient = createMockSiteWiseSDK(siteWiseApiOverride);
 
   const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(siteWiseClient);
@@ -20,8 +26,12 @@ it('correctly parses query and yields asset models', async () => {
     assetModelId: ASSET_MODEL_WITH_ALARM.assetModelId,
   });
   const describeAssetModel = jest.fn().mockResolvedValue(ASSET_MODEL_WITH_ALARM);
+  const listAssetProperties = jest.fn().mockResolvedValue(ALARM_LIST_ASSET_PROP_RESPONSE);
+  const listAssetModelProperties = jest.fn().mockResolvedValue(ALARM_LIST_ASSET_MODEL_PROP_RESPONSE);
 
-  const { assetModule } = getAssetModule({ siteWiseApiOverride: { describeAsset, describeAssetModel } });
+  const { assetModule } = getAssetModule({
+    siteWiseApiOverride: { describeAsset, describeAssetModel, listAssetProperties, listAssetModelProperties },
+  });
   const assetModuleSession = assetModule.startSession();
 
   const assetModels = fetchAssetModelsFromQuery({
@@ -38,15 +48,9 @@ it('correctly parses query and yields asset models', async () => {
     assetModuleSession,
   });
 
-  expect(await assetModels.next()).toEqual(
-    expect.objectContaining({
-      value: {
-        assetModels: {
-          'alarm-asset-id': ASSET_MODEL_WITH_ALARM,
-        },
-      },
-    })
-  );
+  const nextAssetModel = await assetModels.next();
+
+  expect(nextAssetModel.value.assetModels).toEqual({ 'alarm-asset-id': ASSET_MODEL_WITH_ALARM });
 });
 
 it('does not return alarms for property alias query', async () => {

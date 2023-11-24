@@ -16,6 +16,7 @@ import type {
   ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
 import type { HierarchyAssetSummaryList, SiteWiseAssetDataSource } from './types';
+import { ModeledDataStream } from '../listAssetModelPropertiesWithCompositeModels';
 
 it('initializes', () => {
   expect(() => {
@@ -26,6 +27,10 @@ it('initializes', () => {
 const createMockSiteWiseAssetDataSource = (): SiteWiseAssetDataSource => {
   return {
     describeAsset: (): Promise<DescribeAssetCommandOutput> => {
+      throw 'No Calls Expected';
+    },
+
+    getListAssetModelPropertiesWithCompositeModels: (): Promise<ModeledDataStream[]> => {
       throw 'No Calls Expected';
     },
 

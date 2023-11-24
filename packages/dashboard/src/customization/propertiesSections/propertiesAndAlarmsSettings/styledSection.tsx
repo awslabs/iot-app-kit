@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { AssetSummary, useAssetDescriptionMapQuery } from '~/hooks/useAssetDescriptionQueries';
+import { AssetSummary, useListAssetPropertiesMapQuery } from '~/hooks/useAssetDescriptionQueries';
 import { isJust } from '~/util/maybe';
 import { SelectOneWidget } from '../shared/selectOneWidget';
 import SpaceBetween from '@cloudscape-design/components/space-between';
@@ -37,7 +37,8 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
   const mustEditAsSingle = !editablePropertiesAndAlarms;
 
   const styledAssetQuery = (editablePropertiesAndAlarms && queryConfig.value.query) || undefined;
-  const describedAssetsMapQuery = useAssetDescriptionMapQuery(styledAssetQuery);
+
+  const describedAssetsMapQuery = useListAssetPropertiesMapQuery(styledAssetQuery);
   const describedAssetsMap = describedAssetsMapQuery.data ?? {};
 
   const assetModelIds = (styledAssetQuery?.assetModels ?? []).map(({ assetModelId }) => assetModelId);
@@ -208,14 +209,14 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
     const assetModeled =
       styledAssetQuery?.assetModels?.flatMap(({ assetModelId, properties }) =>
         properties.map((property) => {
-          const assetModel = assetModels?.find((assetModel) => assetModel.assetModelId === assetModelId);
+          const assetModel = assetModels?.at(0); //we dont support multiselect right now, so this will always be correct
           if (!assetModel) return null;
 
           const convertedAssetSummary: AssetSummary = {
             assetId: assetModelId,
-            assetName: assetModel.assetModelName,
+            assetName: assetModel.at(0)?.path?.[0].name,
             properties:
-              assetModel.assetModelProperties?.map((a) => ({
+              assetModel.map((a) => ({
                 propertyId: a.id,
                 name: a.name,
                 unit: a.unit,

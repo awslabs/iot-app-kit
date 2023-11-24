@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { AssetSummary, useAssetDescriptionMapQuery } from '~/hooks/useAssetDescriptionQueries';
+import { AssetSummary, useListAssetPropertiesMapQuery } from '~/hooks/useAssetDescriptionQueries';
 import { PropertyComponent } from './propertyComponent';
 import { isJust } from '~/util/maybe';
 import { SelectOneWidget } from '../shared/selectOneWidget';
@@ -44,7 +44,7 @@ export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = 
   const mustEditAsSingle = !editablePropertiesAndAlarms || !editableStyleSettings;
 
   const siteWiseAssetQuery = (editablePropertiesAndAlarms && queryConfig.value.query) || undefined;
-  const describedAssetsMapQuery = useAssetDescriptionMapQuery(siteWiseAssetQuery);
+  const describedAssetsMapQuery = useListAssetPropertiesMapQuery(siteWiseAssetQuery);
   const describedAssetsMap = describedAssetsMapQuery.data ?? {};
 
   const assetModelIds = (siteWiseAssetQuery?.assetModels ?? []).map(({ assetModelId }) => assetModelId);
@@ -117,14 +117,14 @@ export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = 
     const assetModeled =
       siteWiseAssetQuery?.assetModels?.flatMap(({ assetModelId, properties }) =>
         properties.map(({ propertyId, refId = propertyId }) => {
-          const assetModel = assetModels?.find((assetModel) => assetModel.assetModelId === assetModelId);
+          const assetModel = assetModels?.at(0); //we dont support multiselect right now, so this will always be correct
           if (!assetModel) return null;
 
           const convertedAssetSummary: AssetSummary = {
             assetId: assetModelId,
-            assetName: assetModel.assetModelName,
+            assetName: assetModel.at(0)?.path?.[0].name,
             properties:
-              assetModel.assetModelProperties?.map((a) => ({
+              assetModel.map((a) => ({
                 propertyId: a.id,
                 name: a.name,
                 unit: a.unit,

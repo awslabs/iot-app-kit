@@ -7,6 +7,7 @@ import {
   ALARM,
 } from '../../__mocks__/alarm';
 import type { DataStream } from '@iot-app-kit/core';
+import { PropertyDataType } from '@aws-sdk/client-iotsitewise';
 
 const PROPERTY_STREAM = {
   id: 'alarm-asset-id---input-property-id',
@@ -34,22 +35,31 @@ const PROPERTY_STREAM = {
 it('completes an asset model property stream', () => {
   const expectedMetaData = {
     name: 'test',
-    dataType: 'BOOLEAN',
+    dataType: 'BOOLEAN' as PropertyDataType,
     unit: 'test',
   };
+
+  const modelProps = ASSET_MODEL_WITH_ALARM.assetModelProperties?.map((property) => {
+    if (property.id === INPUT_PROPERTY_ID) {
+      return { ...property, ...expectedMetaData };
+    }
+
+    return property;
+  });
 
   expect(
     completePropertyStream({
       assetModel: {
         ...ASSET_MODEL_WITH_ALARM,
-        assetModelProperties: ASSET_MODEL_WITH_ALARM.assetModelProperties?.map((property) => {
-          if (property.id === INPUT_PROPERTY_ID) {
-            return { ...property, ...expectedMetaData };
-          }
-
-          return property;
-        }),
+        assetModelProperties: modelProps,
       },
+      assetModelProperties: (modelProps ?? []).map(() => ({
+        propertyId: INPUT_PROPERTY_ID,
+        assetId: ALARM_ASSET_ID,
+        assetName: 'NAME',
+        dataTypeSpec: 'somespec',
+        ...expectedMetaData,
+      })),
       assetId: ALARM_ASSET_ID,
       propertyId: INPUT_PROPERTY_ID,
       dataStream: {
@@ -70,6 +80,15 @@ it('appends associated stream if alarm on property created', () => {
   expect(
     completePropertyStream({
       assetModel: ASSET_MODEL_WITH_ALARM,
+      assetModelProperties: (ASSET_MODEL_WITH_ALARM.assetModelProperties ?? []).map(({ unit, name, dataType }) => ({
+        propertyId: INPUT_PROPERTY_ID,
+        assetId: ALARM_ASSET_ID,
+        assetName: 'NAME',
+        dataTypeSpec: 'somespec',
+        name: name ?? 'test',
+        dataType: dataType ?? 'BOOLEAN',
+        unit: unit ?? 'test',
+      })),
       assetId: ALARM_ASSET_ID,
       propertyId: INPUT_PROPERTY_ID,
       dataStream: PROPERTY_STREAM,
@@ -90,6 +109,7 @@ it('returns undefined when no asset model', () => {
   expect(
     completePropertyStream({
       assetId: ALARM_ASSET_ID,
+      assetModelProperties: [],
       propertyId: INPUT_PROPERTY_ID,
       dataStream: TIME_SERIES_DATA_WITH_ALARMS.dataStreams[0],
       alarms: {},
@@ -101,6 +121,7 @@ it('returns undefined when property not found in asset model', () => {
   expect(
     completePropertyStream({
       assetModel: ASSET_MODEL_WITH_ALARM,
+      assetModelProperties: [],
       assetId: ALARM_ASSET_ID,
       propertyId: 'non-existent---property',
       dataStream: TIME_SERIES_DATA_WITH_ALARMS.dataStreams[0],
