@@ -18,10 +18,11 @@ import { ModeledDataStreamTableHeader } from './modeledDataStreamTableHeader';
 import type { ModeledDataStream } from '../types';
 import { DashboardState } from '~/store/state';
 import { ResourceExplorerFooter } from '../../../footer/footer';
+import { SelectedAsset } from '../../types';
 
 export interface ModeledDataStreamTableProps {
   onClickAddModeledDataStreams: (modeledDataStreams: ModeledDataStream[]) => void;
-  selectedAssetId?: string;
+  selectedAsset?: SelectedAsset;
   modeledDataStreams: ModeledDataStream[];
   isLoading: boolean;
   client: IoTSiteWiseClient;
@@ -29,7 +30,7 @@ export interface ModeledDataStreamTableProps {
 
 export function ModeledDataStreamTable({
   onClickAddModeledDataStreams,
-  selectedAssetId,
+  selectedAsset,
   modeledDataStreams,
   isLoading,
   client,
@@ -94,7 +95,7 @@ export function ModeledDataStreamTable({
       stripedRows={preferences.stripedRows}
       wrapLines={preferences.wrapLines}
       stickyColumns={preferences.stickyColumns}
-      empty={<ModeledDataStreamTableEmptyState isAssetSelected={selectedAssetId != null} />}
+      empty={<ModeledDataStreamTableEmptyState isAssetSelected={selectedAsset != null} />}
       filter={<ModeledDataStreamTablePropertyFilter {...propertyFilterProps} />}
       header={
         <ModeledDataStreamTableHeader

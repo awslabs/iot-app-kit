@@ -2,7 +2,7 @@ import { ALARM_STATUS } from '../alarms/iotevents/constants';
 import { COMPARISON_OPERATOR } from '@synchro-charts/core';
 import { STATUS_ICON_TYPE } from '@iot-app-kit/core';
 import type { DescribeAlarmModelResponse } from "@aws-sdk/client-iot-events";
-import type { DescribeAssetModelResponse, AssetPropertyValue, BatchGetAssetPropertyValueHistoryResponse } from "@aws-sdk/client-iotsitewise";
+import type { DescribeAssetModelResponse, AssetPropertyValue, BatchGetAssetPropertyValueHistoryResponse, PropertyDataType, AssetModelProperty } from "@aws-sdk/client-iotsitewise";
 import type { TimeSeriesData } from "@iot-app-kit/core";
 import type { Alarm } from "../alarms/iotevents";
 
@@ -59,7 +59,7 @@ export const ALARM_MODEL: DescribeAlarmModelResponse = {
 };
 
 export const ALARM_TYPE_PROPERTY = {
-  dataType: 'STRING',
+  dataType: 'STRING' as PropertyDataType,
   id: 'alarm-type-id',
   name: 'AWS/ALARM_TYPE',
   type: {
@@ -70,7 +70,7 @@ export const ALARM_TYPE_PROPERTY = {
 };
 
 export const ALARM_STATE_PROPERTY = {
-  dataType: 'STRUCT',
+  dataType: 'STRUCT' as PropertyDataType,
   dataTypeSpec: 'AWS/ALARM_STATE',
   id: ALARM_STATE_PROPERTY_ID,
   name: 'AWS/ALARM_STATE',
@@ -80,7 +80,7 @@ export const ALARM_STATE_PROPERTY = {
 };
 
 export const ALARM_SOURCE_PROPERTY = {
-  dataType: 'STRING',
+  dataType: 'STRING' as PropertyDataType,
   id: ALARM_SOURCE_PROPERTY_ID,
   name: 'AWS/ALARM_SOURCE',
   type: {
@@ -113,7 +113,7 @@ export const ASSET_MODEL_WITH_ALARM: DescribeAssetModelResponse = {
   assetModelName: 'testAssetModel',
   assetModelProperties: [
     {
-      dataType: 'INTEGER',
+      dataType: 'INTEGER' as PropertyDataType,
       id: INPUT_PROPERTY_ID,
       name: 'inputProperty',
       type: {
@@ -122,7 +122,7 @@ export const ASSET_MODEL_WITH_ALARM: DescribeAssetModelResponse = {
       unit: 'Celsius'
     },
     {
-      dataType: 'INTEGER',
+      dataType: 'INTEGER' as PropertyDataType,
       id: THRESHOLD_PROPERTY_ID,
       name: 'thresholdProperty',
       type: {
@@ -130,7 +130,7 @@ export const ASSET_MODEL_WITH_ALARM: DescribeAssetModelResponse = {
       },
       unit: 'Celsius'
     },
-  ],
+  ] as AssetModelProperty[],
   assetModelStatus: {
     state: 'ACTIVE'
   }
@@ -277,13 +277,14 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
   dataStreams: [{
     id: 'alarm-asset-id---alarm-state-property-id',
     streamType: 'ALARM',
+    aggregationType: undefined,
     name: 'test',
     resolution: 0,
     refId: undefined,
     isRefreshing: false,
     isLoading: false,
     error: undefined,
-    dataType: 'NUMBER',
+    dataType: 'NUMBER' as PropertyDataType,
     data: [
       {
         x: 1000000,
@@ -320,3 +321,32 @@ export const CACHED_ALARM_MODEL = {
   severity: 1,
   thresholdPropertyId: '$sitewise.assetModel.`asset-model-with-alarms`.`threshold-property-id`.propertyValue.value',
 };
+
+
+export const ALARM_LIST_ASSET_PROP_RESPONSE = ({
+  assetPropertySummaries: [
+    { id: INPUT_PROPERTY_ID, unit: 'Celsius', path: [{ id: ALARM_ASSET_ID, name: `${ALARM_ASSET_ID}-name` }, { id: ALARM_ASSET_ID, name: 'inputProperty' }] },
+    { id: THRESHOLD_PROPERTY_ID, unit: 'Celsius', path: [{ id: ALARM_ASSET_ID, name: `${ALARM_ASSET_ID}-name` }, { id: ALARM_ASSET_ID, name: 'thresholdProperty' }] }
+  ],
+});
+
+export const ALARM_LIST_ASSET_MODEL_PROP_RESPONSE = ({
+  assetModelPropertySummaries: [{
+    dataType: 'INTEGER' as PropertyDataType,
+    id: INPUT_PROPERTY_ID,
+    name: 'inputProperty',
+    type: {
+      measurement: {}
+    },
+    unit: 'Celsius'
+  },
+  {
+    dataType: 'INTEGER' as PropertyDataType,
+    id: THRESHOLD_PROPERTY_ID,
+    name: 'thresholdProperty',
+    type: {
+      measurement: {}
+    },
+    unit: 'Celsius'
+  }],
+});

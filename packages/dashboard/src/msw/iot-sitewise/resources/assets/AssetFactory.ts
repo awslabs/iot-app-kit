@@ -1,6 +1,7 @@
 import { v4 as uuid } from 'uuid';
 
 import type { Asset, AssetModel } from '../types';
+import { AssetState } from '@aws-sdk/client-iotsitewise';
 
 export class AssetFactory {
   readonly #assetModel: AssetModel;
@@ -32,7 +33,7 @@ export class AssetFactory {
     const assetCreationDate = new Date();
     const assetLastUpdateDate = new Date();
     const assetStatus = {
-      state: 'ACTIVE',
+      state: 'ACTIVE' as AssetState,
     };
     const defaults = {
       assetId,

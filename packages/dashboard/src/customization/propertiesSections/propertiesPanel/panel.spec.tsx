@@ -83,7 +83,7 @@ const renderTestComponentAsync = async (options?: SetupStoreOptions): Promise<Re
   const describeAsset = jest.fn().mockImplementation(() => Promise.resolve(mockAssetDescription));
 
   const clientContext: DashboardIotSiteWiseClients = {
-    iotSiteWiseClient: createMockSiteWiseSDK({ describeAsset }) as IoTSiteWiseClient,
+    iotSiteWiseClient: createMockSiteWiseSDK({ describeAsset }) as unknown as IoTSiteWiseClient,
     iotEventsClient: createMockIoTEventsSDK(),
     iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
   };

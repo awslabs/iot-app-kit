@@ -1,7 +1,7 @@
 import { Viewport, parseDuration, DataStream, DataPoint } from '@iot-app-kit/core';
 import { useTimeSeriesData, useViewport } from '@iot-app-kit/react-components';
 import { StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
-import { useAssetDescriptionMapQuery } from '~/hooks/useAssetDescriptionQueries';
+import { useListAssetPropertiesMapQuery } from '~/hooks/useAssetDescriptionQueries';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { CSVDownloadObject } from './types';
 import { IoTSiteWiseClient, Quality } from '@aws-sdk/client-iotsitewise';
@@ -34,7 +34,7 @@ export const useViewportData = ({
   const queries = useQueries(queryConfig.query);
   const { dataStreams } = useTimeSeriesData({ queries });
 
-  const describedAssetsMapQuery = useAssetDescriptionMapQuery(queryConfig.query);
+  const describedAssetsMapQuery = useListAssetPropertiesMapQuery(queryConfig.query);
   const describedAssetsMap = describedAssetsMapQuery.data ?? {};
 
   const { viewport: injectedViewport } = useViewport();

@@ -19,6 +19,7 @@ import type {
   ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
 import type { SiteWiseAssetDataSource } from './sitewise/types';
+import { ListAssetModelPropertiesWithCompositeModels } from './listAssetModelPropertiesWithCompositeModels';
 
 export const createSiteWiseAssetDataSource = (api: IoTSiteWiseClient): SiteWiseAssetDataSource => {
   return {
@@ -40,6 +41,11 @@ export const createSiteWiseAssetDataSource = (api: IoTSiteWiseClient): SiteWiseA
 
     listAssociatedAssets: (input: ListAssociatedAssetsCommandInput): Promise<ListAssociatedAssetsCommandOutput> => {
       return api.send(new ListAssociatedAssetsCommand(input));
+    },
+
+    getListAssetModelPropertiesWithCompositeModels: (input: { assetId: string; assetModelId: string }) => {
+      const request = new ListAssetModelPropertiesWithCompositeModels({ client: api, selectedAsset: input });
+      return request.send();
     },
   };
 };

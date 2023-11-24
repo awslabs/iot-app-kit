@@ -20,7 +20,7 @@ it('renders', function () {
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: createMockSiteWiseSDK() as IoTSiteWiseClient,
+        iotSiteWiseClient: createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
         iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
       }}
     />
@@ -45,7 +45,7 @@ it('renders in readonly initially', function () {
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: createMockSiteWiseSDK() as IoTSiteWiseClient,
+        iotSiteWiseClient: createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
         iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
       }}
       initialViewMode='preview'

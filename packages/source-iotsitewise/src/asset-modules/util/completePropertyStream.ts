@@ -3,6 +3,7 @@ import { StreamType } from '@synchro-charts/core';
 import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import type { DataStream } from '@iot-app-kit/core';
 import type { Alarms } from '../../alarms/iotevents';
+import { ModeledDataStream } from '../listAssetModelPropertiesWithCompositeModels';
 
 export const completePropertyStream = ({
   assetModel,
@@ -10,20 +11,20 @@ export const completePropertyStream = ({
   propertyId,
   dataStream,
   alarms,
+  assetModelProperties,
 }: {
   assetModel?: DescribeAssetModelResponse;
   assetId: string;
   propertyId: string;
   dataStream: DataStream;
   alarms: Alarms;
+  assetModelProperties: ModeledDataStream[];
 }): DataStream | undefined => {
   if (!assetModel) {
     return;
   }
 
-  const { assetModelProperties } = assetModel;
-
-  const property = assetModelProperties?.find(({ id }) => id === propertyId);
+  const property = assetModelProperties?.find(({ propertyId: id }) => id === propertyId);
 
   if (!property) {
     return;

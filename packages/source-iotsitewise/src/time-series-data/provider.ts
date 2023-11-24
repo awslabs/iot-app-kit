@@ -20,13 +20,12 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData[]
   public session: SiteWiseComponentSession;
 
   public input: DataModuleSubscription<SiteWiseDataStreamQuery>;
-
   constructor(session: SiteWiseComponentSession, input: DataModuleSubscription<SiteWiseDataStreamQuery>) {
     this.session = session;
     this.input = input;
   }
 
-  subscribe(observer: ProviderObserver<TimeSeriesData[]>) {
+  async subscribe(observer: ProviderObserver<TimeSeriesData[]>) {
     const { session } = this;
 
     const { update, unsubscribe } = subscribeToTimeSeriesData(
