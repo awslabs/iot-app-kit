@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.8.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.7.0...root-v9.8.0) (2023-11-25)
+
+
+### Features
+
+* **dashboard:** composite model api calls and updated SDK ([9c23a38](https://github.com/awslabs/iot-app-kit/commit/9c23a383a46895bab05eccc265dc61318c767b49))
+
+
+### Bug Fixes
+
+* added experimental plugin exports ([4e44dbd](https://github.com/awslabs/iot-app-kit/commit/4e44dbd83c5734facfe342162ebac8a3fc3a1575))
+
 ## [9.7.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.6.0...root-v9.7.0) (2023-11-21)
 
 
