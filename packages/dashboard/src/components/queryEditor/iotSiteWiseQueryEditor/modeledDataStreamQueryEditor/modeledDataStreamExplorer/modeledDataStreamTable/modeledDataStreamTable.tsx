@@ -20,6 +20,7 @@ import type { ModeledDataStream } from '../types';
 import { DashboardState } from '~/store/state';
 import { ResourceExplorerFooter } from '../../../footer/footer';
 import { SelectedAsset } from '../../types';
+import { ResourceExplorerErrorState } from '../../components/resourceExplorerErrorState';
 
 export interface ModeledDataStreamTableProps {
   onClickAddModeledDataStreams: (modeledDataStreams: ModeledDataStream[]) => void;
@@ -27,8 +28,10 @@ export interface ModeledDataStreamTableProps {
   selectedAsset?: SelectedAsset;
   modeledDataStreams: ModeledDataStream[];
   isLoading: boolean;
+  isError: boolean;
   client: IoTSiteWiseClient;
   hasNextPage?: boolean;
+  modeledDataStreamsTitle?: string;
 }
 
 export function ModeledDataStreamTable({
@@ -37,8 +40,10 @@ export function ModeledDataStreamTable({
   selectedAsset,
   modeledDataStreams,
   isLoading,
+  isError,
   client,
   hasNextPage,
+  modeledDataStreamsTitle,
 }: ModeledDataStreamTableProps) {
   const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
@@ -91,6 +96,10 @@ export function ModeledDataStreamTable({
       pageLabel: (pageNumber: number) => `Page ${pageNumber}`,
     },
   };
+
+  if (isError) {
+    return <ResourceExplorerErrorState title={modeledDataStreamsTitle} />;
+  }
 
   return (
     <Table

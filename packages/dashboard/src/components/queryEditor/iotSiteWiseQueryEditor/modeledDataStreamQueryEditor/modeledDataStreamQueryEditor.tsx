@@ -39,7 +39,7 @@ export function ModeledDataStreamQueryEditor({
       ? searchFieldValues.workspace.value
       : undefined;
 
-  const { modeledDataStreams, hasNextPage, isFetching, fetchNextPage } = useSearch({
+  const { modeledDataStreams, hasNextPage, isFetching, fetchNextPage, isError } = useSearch({
     workspaceId: workspaceId ?? '',
     client: iotTwinMakerClient,
     searchQuery: searchFieldValues.searchQuery,
@@ -72,6 +72,8 @@ export function ModeledDataStreamQueryEditor({
             dataStreams={modeledDataStreams}
             onClickAddModeledDataStreams={onClickAdd}
             onClickNextPage={fetchNextPage}
+            isSearchError={isError}
+            searchQuery={searchFieldValues.searchQuery}
           />
         </>
       )}
