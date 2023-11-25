@@ -2,8 +2,6 @@ export const LEFT_WIDTH_PERCENT = 0.2;
 
 export const MINIMUM_CENTER_PANE_WIDTH = 100;
 
-export const MINIMUM_SIDE_PANE_WIDTH = 100;
-
 export const DEFAULT_SIDE_PANE_WIDTH = 500;
 
 export const MINIMUM_LEFT_SIDE_PANE_WIDTH = 300;
