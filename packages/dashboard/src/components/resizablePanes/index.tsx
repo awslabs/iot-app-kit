@@ -5,7 +5,6 @@ import { spaceStaticXs } from '@cloudscape-design/design-tokens';
 import {
   LEFT_WIDTH_PERCENT,
   MINIMUM_CENTER_PANE_WIDTH,
-  MINIMUM_SIDE_PANE_WIDTH,
   DEFAULT_SIDE_PANE_WIDTH,
   DEFAULT_COLLAPSED_SIDE_PANE_WIDTH,
   MAXIMUM_PANES_PROPORTION,
@@ -67,11 +66,12 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
 
     if (storedLeftWidthPercent) {
       const storedLeftWidth = elementWidth * storedLeftWidthPercent;
-      setLeftPaneWidth(storedLeftWidth);
+      setLeftPaneWidth(storedLeftWidth > DEFAULT_SIDE_PANE_WIDTH ? storedLeftWidth : DEFAULT_SIDE_PANE_WIDTH);
     } else {
       const computedLeftPaneWidth = elementWidth * LEFT_WIDTH_PERCENT;
       const computedLeftPaneWidthWithMinimums =
-        computedLeftPaneWidth > MINIMUM_SIDE_PANE_WIDTH ? computedLeftPaneWidth : MINIMUM_SIDE_PANE_WIDTH;
+        computedLeftPaneWidth > DEFAULT_SIDE_PANE_WIDTH ? computedLeftPaneWidth : DEFAULT_SIDE_PANE_WIDTH;
+
       setLeftPaneWidth(computedLeftPaneWidthWithMinimums);
     }
   }, []);
@@ -168,7 +168,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
     // If proportions are too high, or next pane width is larger than minimum
     // size, use minimum size as next pane width instead.
     const nextLeftPaneWidth =
-      maybeNextLeftPaneWidth > MINIMUM_SIDE_PANE_WIDTH ? maybeNextLeftPaneWidth : MINIMUM_SIDE_PANE_WIDTH;
+      maybeNextLeftPaneWidth > DEFAULT_SIDE_PANE_WIDTH ? maybeNextLeftPaneWidth : DEFAULT_SIDE_PANE_WIDTH;
 
     // Persist percentages with sessionStorage
     const nextLeftPaneWidthPercent = nextLeftPaneWidth / elementWidth;
@@ -183,6 +183,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
     if (isLeftPaneCollapsed) {
       setLeftPaneWidth(DEFAULT_SIDE_PANE_WIDTH);
       setLeftPaneCollapsed(false);
+      resizeSidePanes();
     } else {
       setLeftPaneWidth(DEFAULT_COLLAPSED_SIDE_PANE_WIDTH);
       setLeftPaneCollapsed(true);
