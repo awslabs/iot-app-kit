@@ -25,8 +25,9 @@ export function useModeledDataStreams({ assetProps, client }: UseModeledDataStre
 
   const assetProperties = queries.flatMap(({ data = [] }) => data);
   const isFetching = queries.some(({ isFetching }) => isFetching);
+  const isError = queries.some(({ isError }) => isError);
 
-  return { assetProperties, isFetching };
+  return { assetProperties, isFetching, isError };
 }
 
 function createCompositeQueryFn(client: IoTSiteWiseClient) {

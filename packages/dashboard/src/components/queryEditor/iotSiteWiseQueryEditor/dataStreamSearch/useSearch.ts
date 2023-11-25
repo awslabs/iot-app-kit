@@ -21,7 +21,7 @@ interface UseSearchProps {
 
 /** Use to send a search request. */
 export function useSearch({ workspaceId, searchQuery, client }: UseSearchProps) {
-  const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery({
+  const { data, hasNextPage, isFetching, fetchNextPage, isError } = useInfiniteQuery({
     enabled: searchQuery !== '',
     queryKey: CACHE_KEYS.search({ workspaceId, searchQuery }),
     queryFn: createQueryFn(client),
@@ -30,7 +30,7 @@ export function useSearch({ workspaceId, searchQuery, client }: UseSearchProps) 
 
   const modeledDataStreams = data?.pages.flatMap(({ modeledDataStreams }) => modeledDataStreams) ?? [];
 
-  return { modeledDataStreams, hasNextPage, isFetching, fetchNextPage };
+  return { modeledDataStreams, hasNextPage, isFetching, fetchNextPage, isError };
 }
 
 function createQueryFn(client: IoTTwinMakerClient) {
