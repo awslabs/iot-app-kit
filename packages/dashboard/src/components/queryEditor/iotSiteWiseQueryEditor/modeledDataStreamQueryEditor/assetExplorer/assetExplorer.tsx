@@ -19,6 +19,7 @@ export function AssetExplorer({ onSelect, isWithoutHeader, client }: AssetExplor
     isFetching,
     fetchNextPage,
     hasNextPage = false,
+    isError,
   } = useAssets({
     assetId: parentAssetId,
     client,
@@ -32,6 +33,7 @@ export function AssetExplorer({ onSelect, isWithoutHeader, client }: AssetExplor
       onClickNextPage={fetchNextPage}
       onSelectAsset={onSelect}
       isLoading={isFetching}
+      isError={isError}
       isWithoutHeader={isWithoutHeader}
       client={client}
       hasNextPage={hasNextPage}

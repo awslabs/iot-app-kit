@@ -14,6 +14,8 @@ export interface ModeledDataStreamExplorerProps {
   client: IoTSiteWiseClient;
   hasNextPage?: boolean;
   isFetching?: boolean;
+  isSearchError?: boolean;
+  searchQuery?: string;
 }
 
 export function ModeledDataStreamExplorer({
@@ -24,11 +26,18 @@ export function ModeledDataStreamExplorer({
   client,
   hasNextPage,
   isFetching,
+  isSearchError,
+  searchQuery,
 }: ModeledDataStreamExplorerProps) {
-  const { assetProperties, isFetching: isFetchingAssetProperties } = useModeledDataStreams({
+  const {
+    assetProperties,
+    isFetching: isFetchingAssetProperties,
+    isError: isAssetPropertiesError,
+  } = useModeledDataStreams({
     assetProps: selectedAsset ? [selectedAsset] : [],
     client,
   });
+  const modeledDataStreamsTitle = isSearchError ? `Search result for "${searchQuery}" (0)` : 'Modeled data streams (0)';
 
   return (
     <ModeledDataStreamTable
@@ -37,7 +46,9 @@ export function ModeledDataStreamExplorer({
       modeledDataStreams={dataStreams ?? assetProperties}
       selectedAsset={selectedAsset}
       isLoading={isFetching ?? isFetchingAssetProperties}
+      isError={isSearchError ?? isAssetPropertiesError}
       client={client}
+      modeledDataStreamsTitle={modeledDataStreamsTitle}
       hasNextPage={hasNextPage}
     />
   );

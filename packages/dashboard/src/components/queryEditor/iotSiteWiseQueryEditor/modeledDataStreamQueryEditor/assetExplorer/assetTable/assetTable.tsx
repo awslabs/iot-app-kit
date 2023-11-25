@@ -12,6 +12,7 @@ import { AssetTableColumnDefinitionsFactory } from './assetTableColumnDefinition
 import { AssetTableNameLink } from './assetTableNameLink';
 import { AssetTableHierarchyPath } from './assetTableHierarchyPath';
 import { useExplorerPreferences } from '../../../useExplorerPreferences';
+import { ResourceExplorerErrorState } from '../../components/resourceExplorerErrorState';
 
 export interface AssetTableProps {
   parentAssetId?: string;
@@ -20,6 +21,7 @@ export interface AssetTableProps {
   onSelectAsset: (asset?: AssetSummary) => void;
   assets: AssetSummary[];
   isLoading: boolean;
+  isError: boolean;
   hasNextPage: boolean;
   isWithoutHeader?: boolean;
   client: IoTSiteWiseClient;
@@ -32,6 +34,7 @@ export function AssetTable({
   onClickNextPage,
   onSelectAsset,
   isLoading,
+  isError,
   hasNextPage,
   isWithoutHeader,
   client,
@@ -73,6 +76,10 @@ export function AssetTable({
     NameLink: AssetTableNameLink,
     onClickNameLink: handleClickAsset,
   });
+
+  if (isError) {
+    return <ResourceExplorerErrorState title='Browse assets (0)' />;
+  }
 
   return (
     <Table
