@@ -1,5 +1,28 @@
 # Changelog
 
+## [9.8.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.7.0...dashboard-v9.8.0) (2023-11-25)
+
+
+### Features
+
+* **dashboard:** composite model api calls and updated SDK ([9c23a38](https://github.com/awslabs/iot-app-kit/commit/9c23a383a46895bab05eccc265dc61318c767b49))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.7.0 to 9.8.0
+    * @iot-app-kit/core bumped from 9.7.0 to 9.8.0
+    * @iot-app-kit/core-util bumped from 9.7.0 to 9.8.0
+    * @iot-app-kit/react-components bumped from 9.7.0 to 9.8.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.7.0 to 9.8.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.7.0 to 9.8.0
+    * @iot-app-kit/testing-util bumped from 9.7.0 to 9.8.0
+    * @iot-app-kit/ts-config bumped from 9.7.0 to 9.8.0
+    * eslint-config-iot-app-kit bumped from 9.7.0 to 9.8.0
+
 ## [9.7.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.6.0...dashboard-v9.7.0) (2023-11-21)
 
 
