@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { isFunction } from 'lodash';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import Table from '@cloudscape-design/components/table';
@@ -22,18 +23,22 @@ import { SelectedAsset } from '../../types';
 
 export interface ModeledDataStreamTableProps {
   onClickAddModeledDataStreams: (modeledDataStreams: ModeledDataStream[]) => void;
+  onClickNextPage?: () => void;
   selectedAsset?: SelectedAsset;
   modeledDataStreams: ModeledDataStream[];
   isLoading: boolean;
   client: IoTSiteWiseClient;
+  hasNextPage?: boolean;
 }
 
 export function ModeledDataStreamTable({
   onClickAddModeledDataStreams,
+  onClickNextPage,
   selectedAsset,
   modeledDataStreams,
   isLoading,
   client,
+  hasNextPage,
 }: ModeledDataStreamTableProps) {
   const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
@@ -70,8 +75,15 @@ export function ModeledDataStreamTable({
     }
   );
 
+  const handleClickNextPage = () => {
+    if (isFunction(onClickNextPage)) {
+      onClickNextPage();
+    }
+  };
+
   const paginationPropsWithAriaLabels = {
     ...paginationProps,
+    openEnd: hasNextPage,
     ariaLabels: {
       nextPageLabel: 'Next page',
       paginationLabel: 'Modeled DataStream Table pagination',
@@ -113,7 +125,9 @@ export function ModeledDataStreamTable({
           }}
         />
       }
-      pagination={<ModeledDataStreamTablePagination {...paginationPropsWithAriaLabels} />}
+      pagination={
+        <ModeledDataStreamTablePagination {...paginationPropsWithAriaLabels} onNextPageClick={handleClickNextPage} />
+      }
       preferences={<ModeledDataStreamTablePreferences preferences={preferences} updatePreferences={setPreferences} />}
       ariaLabels={{
         itemSelectionLabel: (isNotSelected, modeledDataStream) =>
