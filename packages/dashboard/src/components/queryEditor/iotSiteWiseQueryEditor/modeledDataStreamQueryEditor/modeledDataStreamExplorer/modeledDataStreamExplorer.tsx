@@ -8,16 +8,22 @@ import { SelectedAsset } from '../types';
 
 export interface ModeledDataStreamExplorerProps {
   onClickAddModeledDataStreams: (modeledDataStreams: ModeledDataStream[]) => void;
+  onClickNextPage?: () => void;
   selectedAsset?: SelectedAsset;
   dataStreams?: ModeledDataStream[];
   client: IoTSiteWiseClient;
+  hasNextPage?: boolean;
+  isFetching?: boolean;
 }
 
 export function ModeledDataStreamExplorer({
   onClickAddModeledDataStreams,
+  onClickNextPage,
   selectedAsset,
   dataStreams,
   client,
+  hasNextPage,
+  isFetching,
 }: ModeledDataStreamExplorerProps) {
   const { assetProperties, isFetching: isFetchingAssetProperties } = useModeledDataStreams({
     assetProps: selectedAsset ? [selectedAsset] : [],
@@ -27,10 +33,12 @@ export function ModeledDataStreamExplorer({
   return (
     <ModeledDataStreamTable
       onClickAddModeledDataStreams={onClickAddModeledDataStreams}
+      onClickNextPage={onClickNextPage}
       modeledDataStreams={dataStreams ?? assetProperties}
       selectedAsset={selectedAsset}
-      isLoading={isFetchingAssetProperties}
+      isLoading={isFetching ?? isFetchingAssetProperties}
       client={client}
+      hasNextPage={hasNextPage}
     />
   );
 }
