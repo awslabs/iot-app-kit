@@ -1,4 +1,5 @@
 import React from 'react';
+import type { MouseEvent } from 'react';
 import {
   useECharts,
   useResizeableEChart,
@@ -162,6 +163,16 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     ...chartEventsHandlers,
   };
 
+  const handleMouseDown = (e: MouseEvent) => {
+    const target = e.target;
+
+    /* Condition to check localName of Canvas to stop onMouseDouwn event 
+      propagation to fix widget dragging or moving issue while panning on chart */
+    if (target instanceof Element && target.localName === 'canvas') {
+      e.stopPropagation();
+    }
+  };
+
   return (
     <div className='base-chart-container'>
       <div className='base-chart-left-legend' ref={leftLegendRef}>
@@ -184,7 +195,12 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
         onResizeStop={(e) => e.stopPropagation()}
       >
         <HotKeys keyMap={hotKeyMap} handlers={hotKeyHandlers} style={{ position: 'relative' }}>
-          <div ref={ref} className='base-chart-element' style={{ height, width: chartWidth }} />
+          <div
+            ref={ref}
+            onMouseDown={handleMouseDown}
+            className='base-chart-element'
+            style={{ height, width: chartWidth }}
+          />
           {/*TODO: should not show when in dashboard */}
           {showContextMenu && (
             <ChartContextMenu
