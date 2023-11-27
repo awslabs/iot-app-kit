@@ -158,9 +158,10 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
 
     const modeled =
       styledAssetQuery?.assets?.flatMap(({ assetId, properties }) =>
-        properties.map((property) =>
+        properties.map((property, index) =>
           describedAssetsMap[assetId] ? (
             <StyledPropertyComponent
+              index={index}
               key={`${assetId}-${property.propertyId}`}
               assetSummary={describedAssetsMap[assetId]}
               property={property}
@@ -182,9 +183,10 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
       ) ?? [];
 
     const unmodeled =
-      styledAssetQuery?.properties?.map((property) => {
+      styledAssetQuery?.properties?.map((property, index) => {
         return (
           <StyledPropertyComponent
+            index={index}
             key={property.propertyAlias}
             assetSummary={{ assetId: '', assetName: '', properties: [], alarms: [] }}
             property={{ ...property, propertyId: property.propertyAlias }}
@@ -208,7 +210,7 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
 
     const assetModeled =
       styledAssetQuery?.assetModels?.flatMap(({ assetModelId, properties }) =>
-        properties.map((property) => {
+        properties.map((property, index) => {
           const assetModel = assetModels?.at(0); //we dont support multiselect right now, so this will always be correct
           if (!assetModel) return null;
 
@@ -228,6 +230,7 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
 
           return (
             <StyledPropertyComponent
+              index={index}
               key={`${assetModelId}-${property.propertyId}`}
               assetSummary={convertedAssetSummary}
               property={property}

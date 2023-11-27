@@ -29,7 +29,8 @@ export const Tooltip = ({
     borderRadius: spaceStaticXs,
     border: `${spaceStaticXxxs} solid ${colorBackgroundHomeHeader}`,
     maxWidth: `${MAX_TOOLTIP_WIDTH}px`,
-    ...(isContentWrapped && { width: `${MAX_TOOLTIP_WIDTH}px`, bottom: `${TOP_TOOLTIP_MARGIN}%` }),
+    ...(isContentWrapped && { width: `${MAX_TOOLTIP_WIDTH}px` }),
+    ...(isContentWrapped && position !== 'bottom' ? { bottom: `${TOP_TOOLTIP_MARGIN}%` } : ''),
   };
 
   const handleMouseEnter = () => {
