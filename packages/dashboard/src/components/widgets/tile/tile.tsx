@@ -2,7 +2,6 @@ import React, { PropsWithChildren, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Box from '@cloudscape-design/components/box';
-import SpaceBetween from '@cloudscape-design/components/space-between';
 import Button from '@cloudscape-design/components/button';
 import {
   colorBorderDividerDefault,
@@ -100,10 +99,12 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
             borderBottom: `2px solid ${colorBorderDividerDefault}`,
           }}
         >
-          <Box variant='h1' fontSize='body-m'>
-            {title}
-          </Box>
-          <SpaceBetween size='s' direction='horizontal'>
+          <div className='widget-tile-header' title={title}>
+            <Box variant='h1' fontSize='body-m'>
+              {title}
+            </Box>
+          </div>
+          <div className='tile-button-contianer'>
             {iotSiteWiseClient && widget.type !== 'text' && (
               <CSVDownloadButton
                 client={iotSiteWiseClient}
@@ -132,7 +133,7 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
               handleCancel={handleCloseModal}
               handleSubmit={handleSubmit}
             />
-          </SpaceBetween>
+          </div>
         </div>
       )}
       <div className='widget-tile-body'>{children}</div>

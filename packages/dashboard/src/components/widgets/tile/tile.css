@@ -14,3 +14,17 @@
   width: 100%;
   height: 2px;
 }
+
+.widget-tile-header {
+  overflow: hidden;
+}
+
+.widget-tile-header h1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tile-button-contianer {
+  display: flex;
+}
