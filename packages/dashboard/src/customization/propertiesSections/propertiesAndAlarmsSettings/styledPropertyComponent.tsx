@@ -195,6 +195,7 @@ const YAxisPropertyConfig = ({
 };
 
 export type StyledPropertyComponentProps = {
+  index: number;
   updateStyle: (newStyles: object) => void;
   assetSummary: AssetSummary;
   property: StyledAssetPropertyQuery;
@@ -205,6 +206,7 @@ export type StyledPropertyComponentProps = {
 };
 
 export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
+  index,
   assetSummary,
   property,
   updateStyle,
@@ -248,7 +250,7 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
       {colorable && display === 'property' && (
         <ColorPicker color={property.color || ''} updateColor={(newColor) => updateStyle({ color: newColor })} />
       )}
-      <Tooltip content={isNameTruncated ? label : ''} position='top'>
+      <Tooltip content={isNameTruncated ? label : ''} position={index == 0 ? 'bottom' : 'top'}>
         <div className='property-display-label' style={{ marginBlock: spaceStaticXxs }} ref={labelRef}>
           {label}
         </div>
