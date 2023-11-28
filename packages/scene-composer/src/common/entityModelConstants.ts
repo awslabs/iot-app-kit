@@ -21,6 +21,7 @@ export const componentTypeToId: Record<KnownComponentType, string> = {
 };
 export const DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME = 'isVisualOf';
 export const DEFAULT_PARENT_RELATIONSHIP_NAME = 'isChildOf';
+export const SUB_MODEL_REF_PARENT_RELATIONSHIP_NAME = 'parentRef';
 export const DEFAULT_NODE_COMPONENT_NAME = 'Node';
 export const SCENE_ROOT_ENTITY_ID = 'SCENES_EntityId';
 export const SCENE_ROOT_ENTITY_NAME = '$SCENES';

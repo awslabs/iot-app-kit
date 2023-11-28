@@ -6,6 +6,7 @@ import { sceneId, componentTypeQueries, entityQueries, dataBindingTemplate } fro
 import './SceneViewer.scss';
 
 const sceneLoader = dataSource.s3SceneLoader(sceneId);
+const sceneMetadataModule = dataSource.sceneMetadataModule(sceneId);
 
 const queries = [
   ...componentTypeQueries.map((q) => dataSource.query.timeSeriesData(q)),
@@ -30,6 +31,7 @@ const SceneViewer: FC<SceneViewerProps> = ({ onSelectionChanged, onWidgetClick }
           },
         }}
         onSelectionChanged={onSelectionChanged}
+        sceneMetadataModule={sceneMetadataModule}
         onWidgetClick={onWidgetClick}
         queries={queries}
         dataBindingTemplate={dataBindingTemplate}

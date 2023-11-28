@@ -5,12 +5,12 @@ import {
   DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
   DEFAULT_PARENT_RELATIONSHIP_NAME,
   NODE_COMPONENT_TYPE_ID,
+  SUB_MODEL_REF_PARENT_RELATIONSHIP_NAME,
   componentTypeToId,
 } from '../../common/entityModelConstants';
 import { ISubModelRefComponent, KnownComponentType } from '../../interfaces';
 
 import { isValidSceneNodeEntity, processQueries } from './processQueries';
-import { SubModelRefComponentProperty } from './subModelRefComponent';
 
 jest.mock('../mathUtils', () => ({
   generateUUID: jest.fn(() => 'random-uuid'),
@@ -31,10 +31,8 @@ describe('isValidSceneNodeEntity', () => {
 
 describe('processQueries', () => {
   const executeQuery = jest.fn();
-  const getSceneEntity = jest.fn();
   const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
     kgModule: { executeQuery },
-    getSceneEntity,
   };
 
   const mockRows = [
@@ -160,6 +158,11 @@ describe('processQueries', () => {
               },
             ],
           },
+          {
+            relationshipName: SUB_MODEL_REF_PARENT_RELATIONSHIP_NAME,
+            sourceEntityId: 'id1',
+            targetEntityId: parentRef,
+          },
         ],
       },
       {
@@ -177,21 +180,6 @@ describe('processQueries', () => {
       },
     ];
     executeQuery.mockResolvedValue({ rows: rows });
-    getSceneEntity.mockResolvedValue({
-      components: {
-        SubModelRef: {
-          properties: {
-            [SubModelRefComponentProperty.ParentRef]: {
-              value: {
-                relationshipValue: {
-                  targetEntityId: parentRef,
-                },
-              },
-            },
-          },
-        },
-      },
-    });
 
     const nodes = await processQueries(['random query']);
 

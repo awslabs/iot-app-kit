@@ -7,13 +7,13 @@ import {
   DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
   DEFAULT_PARENT_RELATIONSHIP_NAME,
   NODE_COMPONENT_TYPE_ID,
+  SUB_MODEL_REF_PARENT_RELATIONSHIP_NAME,
 } from '../../common/entityModelConstants';
 import { IEntityBindingComponentInternal, ISceneNodeInternal, ISubModelRefComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
 import { findComponentByType } from '../nodeUtils';
 
 import { parseNode } from './nodeComponent';
-import { SubModelRefComponentProperty } from './subModelRefComponent';
 
 export const isValidSceneNodeEntity = (entity: DocumentType): boolean => {
   return !!(entity && entity['entityId'] && entity['components'] && entity['components'].length > 0);
@@ -62,6 +62,15 @@ export const processQueries = async (
     if (relationship && relationship['sourceEntityId'] == entityId) {
       if (relationship['relationshipName'] === DEFAULT_PARENT_RELATIONSHIP_NAME) {
         sceneNodes[entityId].parentRef = relationship['targetEntityId'];
+      } else if (relationship['relationshipName'] === SUB_MODEL_REF_PARENT_RELATIONSHIP_NAME) {
+        sceneNodes[entityId].parentRef = relationship['targetEntityId'];
+
+        const subModelComp = findComponentByType(sceneNodes[entityId], KnownComponentType.SubModelRef) as
+          | ISubModelRefComponentInternal
+          | undefined;
+        if (subModelComp && !subModelComp.parentRef) {
+          subModelComp.parentRef = relationship['targetEntityId'];
+        }
       } else if (relationship['relationshipName'] === DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME) {
         const entityBinding: IEntityBindingComponentInternal = {
           ref: generateUUID(),
@@ -81,19 +90,6 @@ export const processQueries = async (
   // Remove any nonexist parents and post process the nodes
   for (const node of Object.values(sceneNodes)) {
     postProcessNode?.(node);
-
-    // Fetch parentRef for SubModelRef node
-    const subModelComp = findComponentByType(node, KnownComponentType.SubModelRef) as
-      | ISubModelRefComponentInternal
-      | undefined;
-    if (subModelComp && !subModelComp.parentRef) {
-      const nodeEntity = await sceneMetadataModule.getSceneEntity({ entityId: node.ref });
-      subModelComp.parentRef =
-        nodeEntity.components?.[KnownComponentType.SubModelRef].properties?.[
-          SubModelRefComponentProperty.ParentRef
-        ].value?.relationshipValue?.targetEntityId;
-      node.parentRef = subModelComp.parentRef;
-    }
 
     if (node.parentRef && !sceneNodes[node.parentRef]) {
       node.parentRef = undefined;

@@ -9,6 +9,7 @@ import { KnownSceneProperty } from '../interfaces';
 import {
   DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
   DEFAULT_LAYER_RELATIONSHIP_NAME,
+  SUB_MODEL_REF_PARENT_RELATIONSHIP_NAME,
 } from '../common/entityModelConstants';
 
 export const SceneLayers: React.FC = () => {
@@ -34,12 +35,14 @@ export const SceneLayers: React.FC = () => {
         MATCH (entity)-[r]->(e)
         WHERE r.relationshipName = '${DEFAULT_LAYER_RELATIONSHIP_NAME}'
         AND e.entityId = '${layerId}'`,
-          // Get entityBinding for the nodes in the layer
+          // Get entityBinding and subModel parentRef for the nodes in the layer
           `SELECT entity, r2, binding
         FROM EntityGraph 
-        MATCH (binding)<-[r2:${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}]-(entity)-[r]->(e)
+        MATCH (binding)<-[r2]-(entity)-[r]->(e)
         WHERE r.relationshipName = '${DEFAULT_LAYER_RELATIONSHIP_NAME}'
-        AND e.entityId = '${layerId}'`,
+        AND e.entityId = '${layerId}'
+        AND (r2.relationshipName = '${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}'
+        OR r2.relationshipName = '${SUB_MODEL_REF_PARENT_RELATIONSHIP_NAME}')`,
         ],
         (node) => (node.properties.layerIds = [...(node.properties.layerIds ?? []), layerId!]),
       );
