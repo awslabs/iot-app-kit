@@ -145,7 +145,7 @@ describe('SceneLayers', () => {
     expect(processQueries as jest.Mock).toBeCalledWith(
       [
         expect.stringContaining("AND e.entityId = 'layer1'"),
-        expect.stringContaining(`MATCH (binding)<-[r2:${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}]-(entity)-[r]->(e)`),
+        expect.stringContaining(`MATCH (binding)<-[r2]-(entity)-[r]->(e)`),
       ],
       expect.anything(),
     );
