@@ -126,8 +126,13 @@ const useTrendCursorsEvents = ({
   // standalone mode --> updates the local state
   useEffect(() => {
     const currentChart = chartRef.current;
+    if (isInCursorAddModeRef.current && graphicRef.current.length < MAX_TREND_CURSORS) {
+      chartRef.current?.getZr().setCursorStyle('crosshair');
+    } else {
+      chartRef.current?.getZr().setCursorStyle('default'); // in case we get out of add mode and mouse does not move, switch back to default cursor
+    }
 
-    const mouseMoveEventHandler = () => mouseoverHandler(isInCursorAddModeRef.current, chartRef);
+    const mouseMoveEventHandler = () => mouseoverHandler(isInCursorAddModeRef.current, graphicRef.current, chartRef);
 
     // this handles all the clicks on the chart
     // this click would be either
@@ -246,7 +251,15 @@ const useTrendCursorsEvents = ({
       currentChart?.getZr()?.off('dragstart', dragStartEventHandler);
       currentChart?.off('datazoom', zoomHandler);
     };
-  }, [addNewTrendCursor, deleteTrendCursor, groupId, updateTrendCursorsInSyncState, chartRef, setGraphic]);
+  }, [
+    addNewTrendCursor,
+    deleteTrendCursor,
+    groupId,
+    updateTrendCursorsInSyncState,
+    chartRef,
+    setGraphic,
+    isInCursorAddMode,
+  ]);
 
   const copyTrendCursorData = (posX: number) => {
     const timestampOfClick = calculateTimeStamp(posX, chartRef);
