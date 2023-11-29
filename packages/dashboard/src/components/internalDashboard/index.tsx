@@ -225,7 +225,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
         </Box>
         <Box float='right' padding='xs'>
           <SpaceBetween size='s' direction='horizontal'>
-            <TimeSelection isPaginationEnabled={true} />
+            <TimeSelection isPaginationEnabled />
             <Divider key='2' />
             <Actions
               key='3'
@@ -268,7 +268,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
         </Box>
         <Box float='right' padding='s'>
           <SpaceBetween size='s' direction='horizontal'>
-            <TimeSelection />
+            <TimeSelection isPaginationEnabled />
             {editable && (
               <>
                 <Divider key='2' />
