@@ -1,30 +1,25 @@
-import { useThree } from '@react-three/fiber';
-import { Object3D, Vector3 } from 'three';
-
-import { sceneComposerIdContext } from '../../../src/common/sceneComposerIdContext';
+import { Object3D } from 'three';
 
 export default class R3FTestHarness {
-  sceneComposerId;
+  testScene;
 
-  constructor(id) {
-    this.sceneComposerId = id;
+  constructor(scene: Object3D) {
+    this.testScene = scene;
   }
 
-  // TODO: fill in function typescript helpers
-
   // Get Scene
-  // get getScene() {
-  //   return this.testScene;
-  // }
+  get getScene() {
+    return this.testScene;
+  }
 
   // Get Object
   /*
    * Returns scene object
    * `name` as string
    */
-  // getObjectByName(name: string) {
-  //   return this.testScene.getObjectByName(name)
-  // }
+  getObjecByName(name: string) {
+    return this.testScene.getObjectByName(name)
+  }
 
   // Look At Object
   /*

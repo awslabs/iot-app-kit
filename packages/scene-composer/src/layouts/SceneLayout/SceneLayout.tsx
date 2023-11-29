@@ -43,11 +43,15 @@ const UnselectableCanvas = styled(Canvas)`
   z-index: 0;
 `;
 
+// TODO: set to only execute when triggered by specific event from testing framework
 const TestBootstrapper = ({ isLoaded }: { isLoaded: boolean }) => {
   const sceneComposerId = useSceneComposerId();
   const { scene, gl } = useThree();
+
   useEffect(() => {
     if (isLoaded) {
+      // setup window global variables
+      // use this cusom event to setup notifications to gra
       const customEvent = new CustomEvent('twinmaker:scene-loaded', {
         detail: {
           sceneComposerId,
@@ -55,9 +59,7 @@ const TestBootstrapper = ({ isLoaded }: { isLoaded: boolean }) => {
           gl,
         },
       });
-
       console.log(customEvent, scene);
-
       window.dispatchEvent(customEvent);
     }
 
