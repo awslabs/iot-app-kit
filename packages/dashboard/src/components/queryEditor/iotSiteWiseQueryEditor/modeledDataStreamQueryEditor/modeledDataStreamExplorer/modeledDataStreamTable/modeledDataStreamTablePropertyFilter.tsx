@@ -52,7 +52,7 @@ export function ModeledDataStreamTablePropertyFilter(props: ModeledDataStreamPro
       filteringFinishedText='End of results'
       filteringEmpty='No suggestions found'
       i18nStrings={{
-        filteringAriaLabel: 'your choice',
+        filteringAriaLabel: 'Filter modeled data streams by text, property, or value',
         dismissAriaLabel: 'Dismiss',
         filteringPlaceholder: 'Filter modeled data streams by text, property, or value',
         groupValuesText: 'Values',
