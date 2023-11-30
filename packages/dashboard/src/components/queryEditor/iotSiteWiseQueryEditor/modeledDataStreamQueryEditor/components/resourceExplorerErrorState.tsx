@@ -7,7 +7,13 @@ export const ResourceExplorerErrorState = ({ title }: { title?: string }) => {
     <Box variant='h3'>
       <SpaceBetween size='s'>
         {title && <label> {title}</label>}
-        <Alert dismissible statusIconAriaLabel='Error' type='error' header='an error has occurred.' />
+        <Alert
+          dismissible
+          statusIconAriaLabel='Error'
+          type='error'
+          header='an error has occurred.'
+          dismissAriaLabel='cancel'
+        />
       </SpaceBetween>
     </Box>
   );
