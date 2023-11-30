@@ -12,6 +12,7 @@ import {
   spaceScaledM,
 } from '@cloudscape-design/design-tokens';
 import { CancelableEventHandler, ClickDetail } from '@cloudscape-design/components/internal/events';
+import { getPlugin } from '@iot-app-kit/core';
 
 import { DashboardWidget } from '~/types';
 import { useDeleteWidgets } from '~/hooks/useDeleteWidgets';
@@ -57,6 +58,7 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
   const [visible, setVisible] = useState(false);
   const { iotSiteWiseClient } = useClients();
   const { onDelete } = useDeleteWidgets();
+  const metricsRecorder = getPlugin('metricsRecorder');
 
   const isRemoveable = !isReadOnly && removeable;
   const headerVisible = !isReadOnly || widget.type !== 'text';
@@ -74,9 +76,18 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
   };
 
   const handleSubmit = () => {
+    const widgetType = widget.type;
     onDelete(widget);
     dispatch(onChangeDashboardGridEnabledAction({ enabled: true }));
     setVisible(false);
+
+    metricsRecorder?.record({
+      contexts: {
+        widgetType,
+      },
+      metricName: 'DashboardWidgetDelete',
+      metricValue: 1,
+    });
   };
 
   return (

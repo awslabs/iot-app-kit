@@ -48,6 +48,7 @@
     }
   },
   "devDependencies": {
+    "@iot-app-kit/core": "9.8.0",
     "@iot-app-kit/jest-config": "9.8.0",
     "@iot-app-kit/source-iotsitewise": "9.8.0",
     "@iot-app-kit/testing-util": "9.8.0",

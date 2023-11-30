@@ -1,4 +1,5 @@
 import React from 'react';
+import { registerPlugin } from '@iot-app-kit/core';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import Dashboard, { DashboardProperties } from '../../src/components/dashboard';
@@ -58,6 +59,12 @@ const widgetDashboardConfiguration = {
   },
   onSave: () => Promise.resolve(),
 };
+
+registerPlugin('metricsRecorder', {
+  provider: () => ({
+    record: (...args) => console.log('record metric:', ...args),
+  }),
+});
 
 export default {
   title: 'Dashboard/Mocked data',
