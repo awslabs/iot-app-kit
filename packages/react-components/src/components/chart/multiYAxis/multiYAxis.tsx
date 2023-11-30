@@ -2,16 +2,17 @@ import React from 'react';
 
 import { spaceScaledXs } from '@cloudscape-design/design-tokens';
 
+import { DataStream } from '@iot-app-kit/core';
+
 import { YAxisLegend } from './yAxisMenu';
 import { DEFAULT_MARGIN, MULTI_Y_AXIS_LEGEND_WIDTH } from '../eChartsConstants';
-import { YAxisLegendOption } from '../types';
+import { useCustomYAxis } from './useCustomYAxis';
 
 import './multiYAxis.css';
 
 type MultiYAxisLegendOptions = {
   height: number;
-  yMax: YAxisLegendOption[];
-  yMin: YAxisLegendOption[];
+  datastreams: DataStream[];
 };
 /**
  *
@@ -20,9 +21,13 @@ type MultiYAxisLegendOptions = {
  *  yMin: list of YAxisLegendOption for the min values of a datastream with a custom yAxis
  *  yMax: list of YAxisLegendOption for the max values of a datastream with a custom yAxis
  */
-export const MultiYAxisLegend = ({ height, yMax, yMin }: MultiYAxisLegendOptions) => {
+export const MultiYAxisLegend = ({ height, datastreams }: MultiYAxisLegendOptions) => {
+  const { yMax, yMin } = useCustomYAxis(datastreams);
+
   const marginHeight = DEFAULT_MARGIN * 2;
   const maxHeight = (height - marginHeight) / 2;
+
+  if (yMax.length === 0 || yMin.length === 0) return null;
   return (
     <div
       className='multi-y-axis-legend'

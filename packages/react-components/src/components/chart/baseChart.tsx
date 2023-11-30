@@ -17,7 +17,6 @@ import { Resizable } from 'react-resizable';
 import Legend from './legend/legend';
 import { useChartStyleSettings } from './chartOptions/style/convertStyles';
 import ChartContextMenu, { Action } from './contextMenu/ChartContextMenu';
-import { useChartId } from './hooks/useChartId';
 import { useChartSetOptionSettings } from './chartOptions/useChartSetOptionSettings';
 import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
 
@@ -54,8 +53,6 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
 
   const { group } = useViewport();
 
-  const chartId = useChartId(options.id);
-
   // convert TimeSeriesDataQuery to TimeSeriesData
   const {
     isLoading,
@@ -79,12 +76,11 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   const [styleSettingsMap] = useChartStyleSettings(dataStreams, options);
 
   // adapt datastreams into echarts series and yAxis data
-  const { series, yAxis, yMins, yMaxs } = useSeriesAndYAxis(dataStreams, {
+  const { series, yAxis } = useSeriesAndYAxis(dataStreams, {
     styleSettings: styleSettingsMap,
     axis: options.axis,
     thresholds: allThresholds,
   });
-  const shouldShowYAxisLegend = yMins.length > 0 || yMaxs.length > 0;
 
   const { handleContextMenu, showContextMenu, contextMenuPos, setShowContextMenu } = useContextMenu();
 
@@ -98,7 +94,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     initialGraphic: options.graphic,
     size: { width: chartWidth, height },
     series,
-    chartId,
+    chartId: options.id,
     viewportInMs,
     groupId: group,
     onContextMenu: handleContextMenu,
@@ -106,8 +102,6 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     significantDigits: options.significantDigits,
     yAxisOptions: {
       yAxis,
-      yMins,
-      yMaxs,
     },
   });
 
@@ -149,6 +143,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
       xAxis,
       graphic: trendCursors,
       animation: !viewportInMs.isDurationViewport,
+      appKitChartId: options.id,
     },
     settings
   );
@@ -176,7 +171,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   return (
     <div className='base-chart-container'>
       <div className='base-chart-left-legend' ref={leftLegendRef}>
-        {shouldShowYAxisLegend && <MultiYAxisLegend height={height} yMax={yMaxs} yMin={yMins} />}
+        <MultiYAxisLegend datastreams={dataStreams} height={height} />
       </div>
       <Resizable
         height={height}
