@@ -190,7 +190,7 @@ export function UnmodeledDataStreamTable({
           filteringFinishedText='End of results'
           filteringEmpty='No suggestions found'
           i18nStrings={{
-            filteringAriaLabel: 'your choice',
+            filteringAriaLabel: 'Filter unmodeled data streams by text, property, or value',
             dismissAriaLabel: 'Dismiss',
             filteringPlaceholder: 'Filter unmodeled data streams by text, property, or value',
             groupValuesText: 'Values',

@@ -10,7 +10,7 @@ export interface AssetTableNameLinkProps {
 export function AssetTableNameLink({ assetId, assetName, updateParentAssetId }: AssetTableNameLinkProps) {
   return (
     <Link
-      ariaLabel='List child assets'
+      ariaLabel={`List child assets of ${assetName}`}
       onFollow={(event) => {
         event.preventDefault();
         updateParentAssetId(assetId);

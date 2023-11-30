@@ -22,7 +22,7 @@ export function AssetModelPropertiesTablePropertyFilter(props: AssetModelPropert
       filteringFinishedText='End of results'
       filteringEmpty='No suggestions found'
       i18nStrings={{
-        filteringAriaLabel: 'your choice',
+        filteringAriaLabel: 'Filter asset model properties by text, property, or value',
         dismissAriaLabel: 'Dismiss',
         filteringPlaceholder: 'Filter asset model properties by text, property, or value',
         groupValuesText: 'Values',

@@ -28,7 +28,7 @@ export function AssetTablePropertyFilter(props: AssetTablePropertyFilterProps) {
       filteringFinishedText='End of results'
       filteringEmpty='No suggestions found'
       i18nStrings={{
-        filteringAriaLabel: 'your choice',
+        filteringAriaLabel: 'Filter assets by text, property, or value',
         dismissAriaLabel: 'Dismiss',
         filteringPlaceholder: 'Filter assets by text, property, or value',
         groupValuesText: 'Values',
