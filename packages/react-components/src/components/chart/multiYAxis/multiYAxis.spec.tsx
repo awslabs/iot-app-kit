@@ -15,27 +15,29 @@ const DATA_STREAM: DataStream = {
   resolution: 0,
   name: 'my-name',
 };
-const yMins = [
-  {
-    datastream: DATA_STREAM,
-    color: '#fcba03',
-    value: DATA_STREAM.data[0],
-    significantDigits: 4,
-  },
-];
-const yMaxs = [
-  {
-    datastream: DATA_STREAM,
-    color: '#20d91a',
-    value: DATA_STREAM.data[1],
-    significantDigits: 4,
-  },
-];
+
+const setupStore = () => {
+  const { result: setYMax } = renderHook(() => useChartStore((state) => state.setYMax));
+  const { result: setYMin } = renderHook(() => useChartStore((state) => state.setYMin));
+  act(() => {
+    setYMax.current(DATA_STREAM.id, { value: 1 });
+    setYMin.current(DATA_STREAM.id, { value: 0 });
+  });
+};
+const teardownStore = () => {
+  const { result: clearYAxis } = renderHook(() => useChartStore((state) => state.clearYAxis));
+  act(() => {
+    clearYAxis.current(DATA_STREAM.id);
+  });
+};
 
 describe('MultiYAxisLegend', () => {
+  beforeEach(setupStore);
+  afterEach(teardownStore);
+
   it('renders a ymin legend and a ymax legend', () => {
     act(() => {
-      render(<MultiYAxisLegend height={1000} yMax={[]} yMin={[]} />);
+      render(<MultiYAxisLegend height={1000} datastreams={[DATA_STREAM]} />);
     });
     act(() => {
       expect(screen.getByText('Y-Min')).not.toBeNull();
@@ -45,7 +47,7 @@ describe('MultiYAxisLegend', () => {
 
   it('renders a ymin and ymax options', () => {
     act(() => {
-      render(<MultiYAxisLegend height={1000} yMax={yMaxs} yMin={yMins} />);
+      render(<MultiYAxisLegend height={1000} datastreams={[DATA_STREAM]} />);
     });
     act(() => {
       screen.getByText('Y-Min').click();
@@ -59,7 +61,7 @@ describe('MultiYAxisLegend', () => {
 
   it('highlights a datastream on hover', () => {
     act(() => {
-      render(<MultiYAxisLegend height={1000} yMax={yMaxs} yMin={yMins} />);
+      render(<MultiYAxisLegend height={1000} datastreams={[DATA_STREAM]} />);
     });
     act(() => {
       screen.getByText('Y-Min').click();

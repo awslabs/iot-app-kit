@@ -23,7 +23,7 @@ import { isDataStreamInList } from '../../../utils/isDataStreamInList';
 import { YAxisLegendOption } from '../types';
 import './yAxisMenu.css';
 
-const getValue = (value: Primitive, significantDigits: number) =>
+const getValue = (value: Primitive, significantDigits = 4) =>
   isNumeric(value) ? `${round(value, significantDigits)}` : value.toString();
 
 const MENU_OFFSET = 5;
@@ -90,7 +90,7 @@ export const YAxisLegend = ({ maxHeight, label, axes, menuPosition }: YAxisLegen
           styles={{
             padding: `${spaceScaledXs} ${spaceScaledS}`,
           }}
-          key={datastream.id}
+          key={datastream?.id}
           iconStart={() => <ColorIcon color={color} />}
           onPointerEnter={() => {
             highlightDataStream(datastream);
@@ -98,15 +98,15 @@ export const YAxisLegend = ({ maxHeight, label, axes, menuPosition }: YAxisLegen
           onPointerLeave={() => {
             unHighlightDataStream(datastream);
           }}
-          iconEnd={() => <span className='axis-menu-option-value'>{datastream.unit}</span>}
+          iconEnd={() => <span className='axis-menu-option-value'>{datastream?.unit}</span>}
           highlighted={isDataStreamHighlighted(datastream)}
         >
           <div
-            title={value ? getValue(value.y, significantDigits) : 'No visible data points'}
+            title={value ? getValue(value, significantDigits) : 'No visible data points'}
             className='axis-menu-option-value'
           >
-            {value ? (
-              <Value value={value.y} precision={significantDigits} />
+            {value != null ? (
+              <Value value={value} precision={significantDigits} />
             ) : (
               <Box color='text-status-inactive' fontSize='body-s' variant='p'>
                 No data

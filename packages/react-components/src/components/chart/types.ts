@@ -1,4 +1,4 @@
-import { DataPoint, DataStream, Threshold, ThresholdSettings, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
+import { DataStream, Primitive, Threshold, ThresholdSettings, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
 import { OptionId } from 'echarts/types/src/util/types';
 import { InternalGraphicComponentGroupOption } from './trendCursor/types';
 
@@ -102,8 +102,8 @@ export interface ViewportInMs {
 }
 
 export type YAxisLegendOption = {
-  datastream: DataStream;
-  value?: DataPoint;
+  datastream?: DataStream;
+  value?: Primitive;
   color?: string;
-  significantDigits: number;
+  significantDigits?: number;
 };
