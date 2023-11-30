@@ -6,9 +6,10 @@ import { SearchFields } from './types';
 
 export interface SearchQueryInputProps {
   control: Control<SearchFields>;
+  disabled?: boolean;
 }
 
-export function SearchQueryInput({ control }: SearchQueryInputProps) {
+export const SearchQueryInput = ({ control, disabled }: SearchQueryInputProps) => {
   const MIN_SEARCH_QUERY_LENGTH = 1;
   const MAX_SEARCH_QUERY_LENGTH = 48;
 
@@ -29,6 +30,7 @@ export function SearchQueryInput({ control }: SearchQueryInputProps) {
           constraintText={`Must be between ${MIN_SEARCH_QUERY_LENGTH} and ${MAX_SEARCH_QUERY_LENGTH} characters.`}
         >
           <Input
+            disabled={disabled}
             placeholder='Enter a search query'
             value={field.value}
             onChange={({ detail: { value } }) => field.onChange(value)}
@@ -37,4 +39,4 @@ export function SearchQueryInput({ control }: SearchQueryInputProps) {
       )}
     />
   );
-}
+};
