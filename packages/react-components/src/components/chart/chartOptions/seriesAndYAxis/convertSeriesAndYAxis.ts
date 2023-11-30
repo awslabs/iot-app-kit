@@ -1,14 +1,14 @@
 import { DataPoint, DataStream, Threshold } from '@iot-app-kit/core';
 import { BarSeriesOption, SeriesOption, YAXisComponentOption } from 'echarts';
 
-import maxBy from 'lodash.maxby';
-import minBy from 'lodash.minby';
+// import maxBy from 'lodash.maxby';
+// import minBy from 'lodash.minby';
 
 import {
   ChartAxisOptions,
   ChartStyleSettingsOptions,
   Visualization,
-  YAxisLegendOption,
+  // YAxisLegendOption,
   YAxisOptions,
 } from '../../types';
 import { convertDataPoint } from '../convertDataPoint';
@@ -18,10 +18,7 @@ import { convertThresholds } from '../convertThresholds';
 import { ChartStyleSettingsWithDefaults } from '../../utils/getStyles';
 import { DEEMPHASIZE_OPACITY, EMPHASIZE_SCALE_CONSTANT } from '../../eChartsConstants';
 import { padYAxis, validateValue } from '../axes/padYAxis';
-
-const yAxisLegendGenerator =
-  (options: Pick<YAxisLegendOption, 'datastream' | 'color' | 'significantDigits'>) =>
-  (value?: DataPoint): YAxisLegendOption => ({ ...options, value });
+import { GenericSeries } from '../../../../echarts/types';
 
 export const dataValue = (point: DataPoint) => point.y;
 
@@ -70,6 +67,7 @@ const convertSeries = (
     lineStyle,
     lineThickness,
     emphasis,
+    significantDigits,
   }: ChartStyleSettingsWithDefaults
 ) => {
   const opacity = emphasis === 'de-emphasize' ? DEEMPHASIZE_OPACITY : 1;
@@ -95,7 +93,9 @@ const convertSeries = (
       opacity,
     },
     animation: false,
-  } as SeriesOption;
+    appKitSignificantDigits: significantDigits,
+    appKitColor: color,
+  } as GenericSeries;
 
   return addVisualizationSpecificOptions(visualizationType, genericSeries);
 };
@@ -128,19 +128,9 @@ export const convertSeriesAndYAxis = (styles: ChartStyleSettingsWithDefaults) =>
   const series = convertSeries(datastream, styles);
   const yAxis = convertYAxis(styles);
 
-  const { color, significantDigits } = styles;
-  const { data } = datastream;
-
-  const toYAxisLegend = yAxisLegendGenerator({ datastream, color, significantDigits });
-
-  const yMax = maxBy(data, dataValue);
-  const yMin = minBy(data, dataValue);
-
   return {
     series,
     yAxis,
-    yMin: toYAxisLegend(yMin),
-    yMax: toYAxisLegend(yMax),
   };
 };
 
@@ -154,8 +144,6 @@ type SeriesAndYAxis = ReturnType<ReturnType<typeof convertSeriesAndYAxis>>;
 type ReducedSeriesAndYAxis = {
   series: SeriesAndYAxis['series'][];
   yAxis: NonNullable<SeriesAndYAxis['yAxis']>[];
-  yMins: NonNullable<SeriesAndYAxis['yMin']>[];
-  yMaxs: NonNullable<SeriesAndYAxis['yMax']>[];
 };
 
 /**
@@ -168,7 +156,7 @@ type ReducedSeriesAndYAxis = {
  */
 export const reduceSeriesAndYAxis = (
   acc: ReducedSeriesAndYAxis,
-  { series, yAxis, yMin, yMax }: SeriesAndYAxis
+  { series, yAxis }: SeriesAndYAxis
 ): ReducedSeriesAndYAxis => {
   /**
    * Link series to the y axis if it has one
@@ -179,14 +167,6 @@ export const reduceSeriesAndYAxis = (
   return {
     series: [...acc.series, addYAxisIndex(series, yAxisIndex)],
     yAxis: yAxis ? [...acc.yAxis, yAxis] : [...acc.yAxis],
-    yMins:
-      yAxis && yMin
-        ? [...acc.yMins, { ...yMin, value: yAxis.min ? { x: 0, y: yAxis.min as number } : yMin.value }]
-        : [...acc.yMins],
-    yMaxs:
-      yAxis && yMax
-        ? [...acc.yMaxs, { ...yMax, value: yAxis.max ? { x: 0, y: yAxis.max as number } : yMax.value }]
-        : [...acc.yMaxs],
   };
 };
 
@@ -212,13 +192,13 @@ export const useSeriesAndYAxis = (
   const convertedThresholds = convertThresholds(thresholds);
   const getStyles = getChartStyleSettingsFromMap(styleSettings);
 
-  const { series, yAxis, yMaxs, yMins } = datastreams
+  const { series, yAxis } = datastreams
     .map((datastream) => convertSeriesAndYAxis(getStyles(datastream))(datastream))
-    .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis, yMins: [], yMaxs: [] });
+    .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis });
 
   let paddedYAxis: NonNullable<YAXisComponentOption | undefined>[] = yAxis;
 
-  if (yMins.length === 0 && yMaxs.length === 0 && yAxis.length === 1) {
+  if (yAxis.length === 1) {
     const yAxisLabel: YAxisOptions = {
       yMin: validateValue(yAxis[0].min?.toString()),
       yMax: validateValue(yAxis[0].max?.toString()),
@@ -242,7 +222,5 @@ export const useSeriesAndYAxis = (
     yAxis: allSeriesEmpty
       ? paddedYAxis.map((yaxis) => ({ ...yaxis, min: yaxis.min ?? 0, max: yaxis.max ?? 10000 }))
       : paddedYAxis,
-    yMaxs,
-    yMins,
   };
 };

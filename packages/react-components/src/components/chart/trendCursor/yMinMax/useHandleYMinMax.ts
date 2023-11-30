@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { handleChangeProps } from '../types';
 import { YAXisOption } from 'echarts/types/dist/shared';
-import { YAxisLegendOption } from '../../types';
 import { calculateSeriesMakers } from '../calculations/calculateSeriesMakers';
 import { updateTrendCursorLineMarkers } from '../getTrendCursor/components/markers';
 import { delayedRender } from '../../utils/useDelayedRender';
@@ -17,8 +16,6 @@ export const useHandleYMinMax = ({
 }: handleChangeProps & {
   yAxisOptions: {
     yAxis: YAXisOption[];
-    yMins: YAxisLegendOption[];
-    yMaxs: YAxisLegendOption[];
   };
 }) => {
   const seriesRef = useRef(series);

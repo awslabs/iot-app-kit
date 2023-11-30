@@ -97,7 +97,7 @@ export class listModeledDataStreamsRequestWithCompositeModels {
     assetProperties: AssetPropertySummary[];
     assetModelPropertiesMap: { [x: string]: AssetModelPropertySummary };
   }): ModeledDataStream[] {
-    const allProperties = assetProperties.map((assetSummary) => {
+    const allProperties: (AssetPropertySummary & AssetModelPropertySummary)[] = assetProperties.map((assetSummary) => {
       const modelSummary = assetModelPropertiesMap[assetSummary.id ?? ''];
       return {
         ...modelSummary,

@@ -8,7 +8,6 @@ import { useHandleViewport } from './viewport/useHandleViewport';
 import { DEBUG_TREND_CURSORS } from './constants';
 import { UseTrendCursorsProps } from './types';
 import { YAXisOption } from 'echarts/types/dist/shared';
-import { YAxisLegendOption } from '../types';
 import { useHandleYMinMax } from './yMinMax/useHandleYMinMax';
 import { useHandleSeries } from './series/useHandleSeries';
 import { useHandleChartOptions } from './chartOptions/handleOptions';
@@ -29,8 +28,6 @@ const useTrendCursors = ({
 }: UseTrendCursorsProps & {
   yAxisOptions: {
     yAxis: YAXisOption[];
-    yMins: YAxisLegendOption[];
-    yMaxs: YAxisLegendOption[];
   };
 }) => {
   if (DEBUG_TREND_CURSORS) {
