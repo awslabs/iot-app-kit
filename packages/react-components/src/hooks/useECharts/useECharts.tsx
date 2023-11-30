@@ -1,6 +1,9 @@
 import { useRef, useEffect } from 'react';
 import { init } from 'echarts';
 import type { ECharts } from 'echarts';
+import { configureEchartsPlugins } from '../../echarts';
+
+configureEchartsPlugins();
 
 export interface EChartsWrapperProps {
   theme?: string;
