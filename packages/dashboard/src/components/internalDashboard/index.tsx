@@ -1,5 +1,6 @@
 import React, { CSSProperties, ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getPlugin } from '@iot-app-kit/core';
 import { WebglContext, TrendCursorSync, TimeSync, TimeSelection } from '@iot-app-kit/react-components';
 import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
@@ -93,12 +94,15 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
 
   const dispatch = useDispatch();
 
-  const createWidgets = (widgets: DashboardWidget[]) =>
+  const metricsRecorder = getPlugin('metricsRecorder');
+
+  const createWidgets = (widgets: DashboardWidget[]) => {
     dispatch(
       onCreateWidgetsAction({
         widgets,
       })
     );
+  };
 
   const copyWidgets = () => {
     dispatch(
@@ -168,6 +172,15 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
       z: 0,
     };
     createWidgets([widget]);
+
+    const widgetType = widget.type;
+    metricsRecorder?.record({
+      contexts: {
+        widgetType,
+      },
+      metricName: 'DashboardWidgetAdd',
+      metricValue: 1,
+    });
   };
 
   /**
