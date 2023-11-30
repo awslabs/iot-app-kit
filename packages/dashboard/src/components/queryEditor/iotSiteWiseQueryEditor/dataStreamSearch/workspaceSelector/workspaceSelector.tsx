@@ -2,7 +2,7 @@ import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import FormField from '@cloudscape-design/components/form-field';
 import Select, { type SelectProps } from '@cloudscape-design/components/select';
 import { type useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Controller, type Control } from 'react-hook-form';
 
 import { useWorkspaces } from './useWorkspaces';
@@ -15,11 +15,16 @@ type TanstackStatusType = ReturnType<typeof useQuery>['status'];
 export interface WorkspaceSelectorProps {
   control: Control<SearchFields>;
   client: IoTTwinMakerClient;
+  OnGettingError: (isError: boolean) => void;
 }
 
-export function WorkspaceSelector({ control, client }: WorkspaceSelectorProps) {
+export const WorkspaceSelector = ({ control, client, OnGettingError }: WorkspaceSelectorProps) => {
   const { workspaces, status } = useWorkspaces({ client });
   const workspaceOptions = createWorkspaceOptions(workspaces);
+
+  useEffect(() => {
+    OnGettingError(status === 'error');
+  }, [status, OnGettingError]);
 
   return (
     <Controller
@@ -33,6 +38,7 @@ export function WorkspaceSelector({ control, client }: WorkspaceSelectorProps) {
           errorText={fieldState.error?.message}
         >
           <Select
+            disabled={status == 'error'}
             options={workspaceOptions}
             selectedOption={field.value}
             onChange={({ detail }) => field.onChange(detail.selectedOption)}
@@ -45,7 +51,7 @@ export function WorkspaceSelector({ control, client }: WorkspaceSelectorProps) {
       )}
     />
   );
-}
+};
 
 function createWorkspaceOptions(workspaces: NonNullable<ReturnType<typeof useWorkspaces>['workspaces']>) {
   const workspaceOptionFactory = new WorkspaceOptionFactory();
