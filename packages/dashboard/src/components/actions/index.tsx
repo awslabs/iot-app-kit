@@ -1,6 +1,7 @@
 import React, { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { getPlugin } from '@iot-app-kit/core';
 import { useViewport } from '@iot-app-kit/react-components';
 import { Button, SpaceBetween, Box } from '@cloudscape-design/components';
 import { onSelectWidgetsAction, onToggleReadOnly } from '~/store/actions';
@@ -33,6 +34,8 @@ const Actions: React.FC<ActionsProps> = ({
 
   const { viewport } = useViewport();
 
+  const metricsRecorder = getPlugin('metricsRecorder');
+
   const handleOnSave = () => {
     if (!onSave) return;
     onSave({
@@ -45,6 +48,11 @@ const Actions: React.FC<ActionsProps> = ({
       ...dashboardConfiguration,
       viewport: viewport ?? DEFAULT_VIEWPORT,
     });
+
+    metricsRecorder?.record({
+      metricName: 'DashboardSave',
+      metricValue: 1,
+    });
   };
 
   const handleOnReadOnly = () => {
@@ -55,10 +63,21 @@ const Actions: React.FC<ActionsProps> = ({
         union: false,
       })
     );
+
+    metricsRecorder?.record({
+      // When it is readOnly, it is toggled to Edit; Preview otherwise
+      metricName: readOnly ? 'DashboardEdit' : 'DashboardPreview',
+      metricValue: 1,
+    });
   };
 
-  const handleOnClose = () => {
-    setDashboardSettingsVisible(false);
+  const setSettingVisibility = (visibility: boolean) => {
+    setDashboardSettingsVisible(visibility);
+
+    metricsRecorder?.record({
+      metricName: visibility ? 'DashboardSettingOpen' : 'DashboardSettingClose',
+      metricValue: 1,
+    });
   };
 
   return (
@@ -68,14 +87,9 @@ const Actions: React.FC<ActionsProps> = ({
         {onSave && <Button onClick={handleOnSave}>Save</Button>}
         {editable && <Button onClick={handleOnReadOnly}>{readOnly ? 'Edit' : 'Preview'}</Button>}
         {editable && !readOnly && (
-          <Button
-            onClick={() => setDashboardSettingsVisible(true)}
-            iconName='settings'
-            variant='icon'
-            ariaLabel='Settings'
-          />
+          <Button onClick={() => setSettingVisibility(true)} iconName='settings' variant='icon' ariaLabel='Settings' />
         )}
-        <DashboardSettings isVisible={dashboardSettingsVisible} onClose={handleOnClose} />
+        <DashboardSettings isVisible={dashboardSettingsVisible} onClose={() => setSettingVisibility(false)} />
       </SpaceBetween>
     </>
   );
