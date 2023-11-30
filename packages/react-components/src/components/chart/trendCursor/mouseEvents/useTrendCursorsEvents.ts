@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
+import { getPlugin } from '@iot-app-kit/core';
 import { calculateNearestTcIndex, calculateXFromTimestamp, formatCopyData } from '../calculations/calculations';
 import { v4 as uuid } from 'uuid';
 import { getNewTrendCursor } from '../getTrendCursor/getTrendCursor';
@@ -80,6 +81,12 @@ const useTrendCursorsEvents = ({
             setGraphicRef.current([...graphicRef.current, newTc]);
           }
         }
+
+        const metricsRecorder = getPlugin('metricsRecorder');
+        metricsRecorder?.record({
+          metricName: 'TrendCursorAdd',
+          metricValue: 1,
+        });
       }
     },
     [chartRef, addTrendCursorsToSyncState, groupId]
@@ -100,6 +107,12 @@ const useTrendCursorsEvents = ({
         graphicRef.current.splice(toBeDeletedGraphicIndex, 1);
         setGraphicRef.current([...graphicRef.current]);
       }
+
+      const metricsRecorder = getPlugin('metricsRecorder');
+      metricsRecorder?.record({
+        metricName: 'TrendCursorDelete',
+        metricValue: 1,
+      });
     },
     [deleteTrendCursorsInSyncState, groupId, chartRef]
   );
