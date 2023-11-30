@@ -16,7 +16,7 @@ export const DEFAULT_TABLE_CELL_MESSAGES: TableCellMessages = {
 };
 
 export const DEFAULT_PROPERTY_FILTER_MESSAGES: PropertyFilterMessages = {
-  filteringAriaLabel: 'your choice',
+  filteringAriaLabel: 'Search table',
   dismissAriaLabel: 'Dismiss',
   filteringPlaceholder: 'Search',
   groupValuesText: 'Values',
