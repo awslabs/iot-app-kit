@@ -20,10 +20,15 @@
   justify-content: end;
 }
 
-.color-picker-container {
+.color-picker {
   width: 2.28rem;
   height: 1.57rem;
   border-radius: 0.57rem;
+}
+
+.color-picker:focus {
+  outline: 2px solid #06f;
+  outline-offset: 1.5px; /* added extra half pixel incase outline color and color picked are similar */
 }
 
 /* hide default color input */
@@ -38,4 +43,14 @@
   display: flex;
   align-items: center;
   height: 100%;
+}
+
+/* removes the color input box in Chrome */
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+}
+
+/* removes the color input box in Edge/Firefox */
+input[type="color"]::-moz-color-swatch {
+  border: none;
 }
