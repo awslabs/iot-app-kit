@@ -8,16 +8,17 @@ const ColorPicker: FC<{ color: string; updateColor: (newColor: string) => void }
   ...other
 }) => {
   return (
-    <div className='color-picker-container' style={{ backgroundColor: color }} {...other}>
-      <input
-        aria-label='color picker'
-        type='color'
-        value={color}
-        onChange={(e) => {
-          updateColor(e.target.value);
-        }}
-      />
-    </div>
+    <input
+      aria-label='color picker'
+      type='color'
+      value={color}
+      onChange={(e) => {
+        updateColor(e.target.value);
+      }}
+      className='color-picker'
+      style={{ backgroundColor: color }}
+      {...other}
+    />
   );
 };
 
