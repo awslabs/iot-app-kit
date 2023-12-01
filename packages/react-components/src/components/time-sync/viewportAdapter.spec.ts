@@ -144,6 +144,8 @@ describe('viewportToDateRange', () => {
 });
 
 describe('getViewportStartOnBackwardRelative', () => {
+  jest.useFakeTimers().setSystemTime(new Date(2023, 11, 24).getTime());
+
   it('can get the new start date when going back from a relative duration', () => {
     let currentDate = new Date();
     let newDate = getViewportDateRelativeToAbsolute({
@@ -153,8 +155,7 @@ describe('getViewportStartOnBackwardRelative', () => {
     });
 
     const result = currentDate.getTime() - newDate.getTime();
-    expect(result).toBeGreaterThanOrEqual(299999);
-    expect(result).toBeLessThanOrEqual(300000);
+    expect(result).toEqual(300000);
 
     currentDate = new Date();
     newDate = getViewportDateRelativeToAbsolute({
@@ -195,13 +196,8 @@ describe('getViewportStartOnBackwardRelative', () => {
       unit: 'month',
       type: 'relative',
     });
+    expect(currentDate.getTime() - newDate.getTime()).toEqual(2592000000); //previous month is 30 days
 
-    if ([0, 1, 3, 5, 6, 7, 8, 10].includes(currentDate.getMonth())) {
-      expect(currentDate.getTime() - newDate.getTime()).toEqual(2678400000); //previous month is 31 days
-    } else if (currentDate.getMonth() === 2) {
-      expect(currentDate.getTime() - newDate.getTime()).toEqual(2419200000 || 2505600000); //previous month is february
-    } else {
-      expect(currentDate.getTime() - newDate.getTime()).toEqual(2592000000); //previous month is 30 days
-    }
+    jest.useRealTimers();
   });
 });
