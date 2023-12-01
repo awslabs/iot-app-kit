@@ -78,7 +78,7 @@ const convertSeries = (
 
   const genericSeries = {
     id,
-    name: name,
+    name: name ?? id,
     data: data.map(convertDataPoint),
     type: convertVisualizationType(visualizationType),
     step: convertStep(visualizationType),

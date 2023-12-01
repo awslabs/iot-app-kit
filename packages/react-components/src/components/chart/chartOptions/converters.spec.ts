@@ -184,7 +184,8 @@ describe('testing converters', () => {
     const result = convertedSeriesAndYAxisFunc(datastream);
 
     expect(result.series.data).toBeArrayOfSize(0);
-    expect(result.series.name).toBeUndefined();
+    // series name should fallback to id if no name is present
+    expect(result.series.name).toEqual('abc-1');
     expect(result).toHaveProperty('series.step', false);
   });
 
