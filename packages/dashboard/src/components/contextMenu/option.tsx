@@ -36,11 +36,13 @@ const ContextMenuOption: React.FC<ContextMenuOptionProps> = ({ disabled, text, h
 
   const disabledStyle = { color: colorBackgroundControlDisabled, cursor: 'not-allowed' };
   return (
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <li
       onKeyDown={(e) => {
         if (disabled || !isHotkey('enter', e)) return;
         action();
       }}
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
       onClick={() => {
         if (disabled) return;
