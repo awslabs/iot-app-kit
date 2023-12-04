@@ -1,0 +1,18 @@
+{
+    "extends": "@iot-app-kit/ts-config/base.json",
+    "compilerOptions": {
+        "outDir": "dist",
+        "jsx": "react",
+        "experimentalDecorators": true,
+        "esModuleInterop": true,
+        "isolatedModules": false
+    },
+    "include": ["src/**/*"],
+    "exclude": [
+        "src/__mocks__",
+        "src/setupTests.ts",
+        "src/**/*.test.*",
+        "src/**/*.stories.*",
+        "src/**/*.spec.*"
+    ]
+}
