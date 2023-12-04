@@ -29,11 +29,11 @@ const PaletteComponent: React.FC<PaletteComponentProps> = ({ componentTag, name,
   );
 
   return (
-    <div ref={node}>
+    <li ref={node}>
       <div aria-label={`add ${name} widget`} role='button' ref={dragRef}>
         <PaletteComponentIcon widgetName={name} Icon={IconComponent} />
       </div>
-    </div>
+    </li>
   );
 };
 
