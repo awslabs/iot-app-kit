@@ -13,40 +13,24 @@ interface SceneLoadedEvent extends Event {
   detail: SceneLoadedEventDetail;
 }
 
-const setupScene = async (pageToLoad: any, pageScene: string, callback)=> {
+const setupScene = async (pageToLoad: any, pageScene: string, callback: (detail) => any) => {
   await pageToLoad.goto(pageScene);
+  await pageToLoad.exposeFunction('callback', callback);
   const frame = pageToLoad.locator(TEST_IFRAME);
 
-  const sceneId = await frame.evaluate(async () => {
+  return await frame.evaluate(async () => {
     return await new Promise((res, rej) => {
       const timer = setTimeout(
         () => rej(new Error('Timeout, twinmaker:scene-loaded was not reached in reasonable time.')),
-        20000,
+        10000,
       );
-
-      window.addEventListener('twinmaker:scene-loaded', (evt: Event) => {
+      return window.addEventListener('twinmaker:scene-loaded', async (evt: Event) => {
         const { detail } = evt as SceneLoadedEvent;
-        const { sceneComposerId, scene, gl } = detail;
-        (window as any)['__twinmaker_tests'] = (window as any)['__twinmaker_tests'] || {};
-        (window as any)['__twinmaker_tests'][sceneComposerId] = { scene, gl };
-
         clearTimeout(timer);
-        res(sceneComposerId);
+        res(await callback(detail));
       });
     });
   });
-
-  const scene = await frame.evaluate((_element: HTMLElement, sceneId: string) => {
-    return Promise.resolve<Scene>((window as any)['__twinmaker_tests'][sceneId].scene);
-  }, sceneId);
-
-  const getByName = await frame.evaluate((_element: HTMLElement, sceneId: string) => {
-    // return Promise.resolve<Scene>((window as any)['__twinmaker_tests'][sceneId].scene.getObjecByName);
-    const test = (window as any)['__twinmaker_tests'][sceneId].scene.id;
-    console.log('playwright getByName: ', test)
-  }, sceneId);
-
-  // return scene;
 };
 
 test('load scene', async ({ page }) => {
@@ -63,23 +47,24 @@ test('visual regression', async ({ page }) => {
 
 test.describe('scene composer', () => {
   test('get scene', async ({ page }) => {
-    const scene: Scene = await setupScene(page, LOCAL_SCENE);
-    expect(scene.type).toEqual('Scene');
+    const getSceneType = (detail) => {
+      return detail?.scene?.type;
+    };
+    const sceneType = await setupScene(page, LOCAL_SCENE, getSceneType);
+    expect(sceneType).toEqual('Scene');
   });
 
-  // TODO: setup get object by some other means
   test('get object by name', async ({ page }) => {
-    // wrap in frame.evaluate with awaits like in setup()
-    const test = (scene) => {
-      const harness = new R3FTestHarness(scene);
-      const object3D = !!harness.testScene.getObjectByName;
-      console.log('playwright: ', object3D)
-    // expect(harness).toBeTruthy();
+    const getByName = (detail) => {
+      const getObjectByName = !!detail.scene.getObjectByName
+      console.log('is there a getObjectByName function? ', !!detail.scene.getObjectByName);
+      // console.log('is there a Pallet Jack? ', !!detail.scene.getObjectByName('Pallet Jack'));
+      // const result = harness.getObjecByName('MainEditorCamera') // if using LOCAL_SCENE
+      // const pallet = scene.getObjectByName('PalletJack') // if using LOCAL_SCENE_2
+      return getObjectByName;
     };
-    // const result = harness.getObjecByName('MainEditorCamera')
-
-    // const scene: Scene = await setupScene(page, LOCAL_SCENE_2, test);
-    await setupScene(page, LOCAL_SCENE_2, test);
+    const getObjectByName = await setupScene(page, LOCAL_SCENE_2, getByName);
+    expect(getObjectByName).toBeFalsy()
   });
 
   // test('delete object', async({page}) => {

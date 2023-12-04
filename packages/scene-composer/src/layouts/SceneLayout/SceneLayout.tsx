@@ -1,4 +1,4 @@
-import React, { FC, Fragment, ReactNode, Suspense, useContext, useEffect, useMemo, useRef } from 'react';
+import React, { FC, Fragment, ReactNode, Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import styled, { ThemeContext } from 'styled-components';
 import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
@@ -35,6 +35,8 @@ import { Direction } from './components/utils';
 import ScenePanel from './components/ScenePanel';
 import CameraPreviewTrack from './components/CameraPreviewTrack';
 
+import useProgress from '../../components/three-fiber/hooks/useProgress';
+
 const UnselectableCanvas = styled(Canvas)`
   user-select: none;
   background: ${({ theme }) => {
@@ -43,15 +45,11 @@ const UnselectableCanvas = styled(Canvas)`
   z-index: 0;
 `;
 
-// TODO: set to only execute when triggered by specific event from testing framework
 const TestBootstrapper = ({ isLoaded }: { isLoaded: boolean }) => {
   const sceneComposerId = useSceneComposerId();
   const { scene, gl } = useThree();
-
   useEffect(() => {
     if (isLoaded) {
-      // setup window global variables
-      // use this cusom event to setup notifications to gra
       const customEvent = new CustomEvent('twinmaker:scene-loaded', {
         detail: {
           sceneComposerId,
@@ -59,7 +57,6 @@ const TestBootstrapper = ({ isLoaded }: { isLoaded: boolean }) => {
           gl,
         },
       });
-      console.log(customEvent, scene);
       window.dispatchEvent(customEvent);
     }
 
@@ -74,7 +71,7 @@ const TestBootstrapper = ({ isLoaded }: { isLoaded: boolean }) => {
     };
   }, [scene, gl, sceneComposerId]);
 
-  return null;
+  return <></>;
 };
 
 const R3FWrapper = (props: { matterportConfig?: MatterportConfig; children?: ReactNode; sceneLoaded?: boolean }) => {
@@ -148,9 +145,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
   const intl = useIntl();
   const { sceneLoaded } = useSceneDocument(sceneComposerId);
-
   const renderDisplayRef = useRef<HTMLDivElement>(null!);
-
   const selectedNode = useSelectedNode();
 
   const shouldShowPreview = useMemo(() => {
@@ -185,7 +180,10 @@ const SceneLayout: FC<SceneLayoutProps> = ({
       ),
     },
   };
-
+  // const sceneReady = useProgress().active
+  // if (sceneReady) {
+  //   console.log('it ready') // confirmed this is right BEFORE it loads
+  // }
   const leftPanel = <ScenePanel {...leftPanelEditModeProps} />;
   const viewingModeScenePanel = <ScenePanel {...leftPanelViewModeProps} />;
   const rightPanel = <ScenePanel {...rightPanelProps} />;
