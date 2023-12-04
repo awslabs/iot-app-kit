@@ -85,7 +85,9 @@ export const MenuOption: React.FC<PropsWithChildren<MenuOptionProps>> = ({
 
   const disabledStyle = { color: colorBackgroundControlDisabled, cursor: 'not-allowed' };
   return (
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <li
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
       onKeyDown={handleAction}
       onClick={handleAction}

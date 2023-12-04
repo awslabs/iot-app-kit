@@ -207,6 +207,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
   }, [leftPaneWidth, resizeSidePanes]);
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
       className='iot-resizable-panes'
       ref={panes}
@@ -229,6 +230,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
 
       <div
         className={!isLeftPaneCollapsed ? 'iot-resizable-panes-handle iot-resizable-panes-handle-left' : ''}
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       />
 
@@ -238,6 +240,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
 
       <div
         className={!isRightPaneCollapsed ? 'iot-resizable-panes-handle iot-resizable-panes-handle-right' : ''}
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       />
 
