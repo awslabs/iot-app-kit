@@ -22,7 +22,7 @@ const ButtonWithState: FC<ButtonWithStateProps> = ({
   ...others // passing other attributes like data-test-id
 }) => {
   return (
-    <div
+    <button
       role='checkbox'
       aria-checked={checked}
       {...others}
@@ -30,7 +30,7 @@ const ButtonWithState: FC<ButtonWithStateProps> = ({
       onClick={onToggle}
     >
       {children}
-    </div>
+    </button>
   );
 };
 
