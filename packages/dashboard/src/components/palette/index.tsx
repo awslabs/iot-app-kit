@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import SpaceBetween from '@cloudscape-design/components/space-between';
 import {
   colorBorderDividerDefault,
   colorTextBodyDefault,
@@ -37,14 +36,14 @@ const Palette = () => {
     <div className='widget-panel' style={palettePadding}>
       <h4 style={widgetFont}>Widgets</h4>
       <Divider />
-      <SpaceBetween size='xxxs' direction='horizontal'>
+      <ul className='component-palette-widgets'>
         {ComponentLibraryComponentOrdering.map((widgetType) => {
           const [name, iconComponent] = ComponentLibraryComponentMap[widgetType];
           return (
             <PaletteComponent key={widgetType} componentTag={widgetType} name={name} IconComponent={iconComponent} />
           );
         })}
-      </SpaceBetween>
+      </ul>
     </div>
   );
 };
