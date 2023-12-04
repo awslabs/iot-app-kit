@@ -32,6 +32,7 @@ const DeletableTileAction = ({ handleDelete }: DeletableTileActionProps) => {
   };
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div onMouseDown={handleMouseDown}>
       <Button onClick={handleDelete} ariaLabel='delete widget' variant='icon' iconName='close' />
     </div>

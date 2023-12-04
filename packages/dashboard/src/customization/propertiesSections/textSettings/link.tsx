@@ -25,6 +25,7 @@ const LinkSettings: FC<LinkSettingsProps> = ({ href = '', updateHref, isUrl = fa
     <div className='expandable-section-header'>
       <SpaceBetween size='m' direction='horizontal'>
         <span>{defaultMessages.title}</span>
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
         <div onClick={(e) => e.stopPropagation()}>
           <Toggle
             checked={isUrl}

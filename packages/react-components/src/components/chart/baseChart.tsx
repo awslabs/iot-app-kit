@@ -210,6 +210,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
           <div className='base-chart-left-legend' ref={leftLegendRef}>
             <MultiYAxisLegend datastreams={dataStreams} height={chartHeight} />
           </div>
+          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
           <div
             ref={ref}
             onMouseDown={handleMouseDown}
