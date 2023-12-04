@@ -51,6 +51,7 @@ export const Tooltip = ({
     <div className='tooltip-container' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {children}
       {content && (
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <span
           className={`tooltip-text ${position}`}
           style={{

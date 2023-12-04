@@ -57,7 +57,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
 
-    /* Condition to check table column resizer className to stop onMouseDouwn event 
+    /* Condition to check table column resizer className to stop onMouseDouwn event
       propagation to fix widget dragging issue while column resizing */
     if (target.className.includes('resizer')) {
       e.stopPropagation();
@@ -74,6 +74,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
 
   return (
     <WidgetTile widget={widget} removeable>
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         data-testid='table-widget-component'
         onMouseDown={handleMouseDown}
