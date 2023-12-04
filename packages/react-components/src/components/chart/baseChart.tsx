@@ -142,7 +142,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
       yAxis,
       xAxis,
       graphic: trendCursors,
-      animation: !viewportInMs.isDurationViewport,
+      animation: false,
       appKitChartId: options.id,
     },
     settings
@@ -161,7 +161,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   const handleMouseDown = (e: MouseEvent) => {
     const target = e.target;
 
-    /* Condition to check localName of Canvas to stop onMouseDouwn event 
+    /* Condition to check localName of Canvas to stop onMouseDouwn event
       propagation to fix widget dragging or moving issue while panning on chart */
     if (target instanceof Element && target.localName === 'canvas') {
       e.stopPropagation();
