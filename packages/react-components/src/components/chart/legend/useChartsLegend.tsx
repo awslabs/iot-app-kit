@@ -34,6 +34,7 @@ const LegendCell = (e: { datastream: DataStream; lineColor: string; name: string
   };
 
   const [lineIcon] = useHover((isHovering) => (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
       style={{
         backgroundColor: isHovering ? colorBackgroundDropdownItemHover : undefined,

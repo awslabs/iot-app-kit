@@ -22,6 +22,7 @@ const ExpandableSectionHeader: FC<PropsWithChildren<ExpandableSectionHeaderProps
       {children}
       {onClickButton && (
         <span className='expandable-section-header-icon'>
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div onClick={handleClickButton}>
             <Icon variant={buttonEnabled ? 'normal' : 'disabled'} name={iconName} />
           </div>
