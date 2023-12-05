@@ -8,6 +8,7 @@ export const PLAYBACKMODE_ON_DEMAND = 'ON_DEMAND';
 
 export const videoJsOptions = {
   autoplay: true,
+  muted: true,
   controls: true,
   fill: true,
   liveui: true,
