@@ -15,7 +15,7 @@ import type {
   ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
 import type { ErrorDetails } from '@iot-app-kit/core';
-import { ListAssetModelPropertiesWithCompositeModels } from '../listAssetModelPropertiesWithCompositeModels';
+import { ModeledDataStream } from '../describeModeledDataStreamRequest/types';
 
 export type SiteWiseAssetDataSource = {
   describeAsset: (input: DescribeAssetCommandInput) => Promise<DescribeAssetCommandOutput>;
@@ -23,10 +23,11 @@ export type SiteWiseAssetDataSource = {
   describeAssetModel: (input: DescribeAssetModelCommandInput) => Promise<DescribeAssetModelCommandOutput>;
   listAssets: (input: ListAssetsCommandInput) => Promise<ListAssetsCommandOutput>;
   listAssociatedAssets: (input: ListAssociatedAssetsCommandInput) => Promise<ListAssociatedAssetsCommandOutput>;
-  getListAssetModelPropertiesWithCompositeModels: (input: {
+  describeModeledDataStream: (input: {
+    assetPropertyId: string;
     assetId: string;
     assetModelId: string;
-  }) => ReturnType<ListAssetModelPropertiesWithCompositeModels['send']>;
+  }) => Promise<ModeledDataStream | undefined | never>;
 };
 
 export type AssetSummaryQuery = {
