@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { isFunction } from 'lodash';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
@@ -79,6 +79,20 @@ export function ModeledDataStreamTable({
       sorting: {},
     }
   );
+
+  /**
+   * Reset selected items if the user changes the asset
+   * to avoid confusing add UX
+   */
+  useEffect(() => {
+    actions.setSelectedItems([]);
+    /**
+     * adding actions as a dependency causes
+     * the hook to run on every change becuase useCollection
+     * returns a new action reference
+     */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedAsset]);
 
   const handleClickNextPage = () => {
     if (isFunction(onClickNextPage)) {
