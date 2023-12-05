@@ -5,6 +5,7 @@ import type { Threshold } from '@iot-app-kit/core';
 describe('TimeSeriesDataStore', () => {
   const initStore = () => {
     const initialState = {
+      modeledDataStreams: [],
       dataStreams: [],
       thresholds: [],
       assetModels: {},

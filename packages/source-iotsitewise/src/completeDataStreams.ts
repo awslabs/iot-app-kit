@@ -4,21 +4,21 @@ import { completeAlarmStream } from './alarms/iotevents/util/completeAlarmStream
 import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import type { DataStream } from '@iot-app-kit/core';
 import type { Alarms } from './alarms/iotevents';
-import { ModeledDataStream } from './asset-modules/listAssetModelPropertiesWithCompositeModels';
+import type { ModeledDataStream } from './asset-modules/describeModeledDataStreamRequest/types';
 
 /**
  * Get completed data streams by merging together the data streams with the asset models and alarms.
  */
 export const completeDataStreams = ({
+  modeledDataStreams,
   dataStreams,
   assetModels,
   alarms,
-  assetModelProperties,
 }: {
+  modeledDataStreams: ModeledDataStream[];
   dataStreams: DataStream[];
   assetModels: Record<string, DescribeAssetModelResponse>;
   alarms: Alarms;
-  assetModelProperties: ModeledDataStream[];
 }): DataStream[] => {
   return dataStreams.map((dataStream) => {
     const propertyInfo = fromId(dataStream.id);
@@ -33,12 +33,12 @@ export const completeDataStreams = ({
     const assetModel = assetModels[assetId];
 
     const propertyStream = completePropertyStream({
+      modeledDataStreams,
       assetModel,
       dataStream,
       assetId,
       propertyId,
       alarms,
-      assetModelProperties,
     });
     const alarmPropertyStream = completeAlarmStream({ assetModel, propertyId, dataStream });
 

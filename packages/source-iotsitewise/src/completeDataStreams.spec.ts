@@ -12,7 +12,7 @@ import {
 } from './__mocks__/alarm';
 import type { DataStream } from '@iot-app-kit/core';
 import type { AssetModelProperty, PropertyDataType } from '@aws-sdk/client-iotsitewise';
-import { ModeledDataStream } from './asset-modules/listAssetModelPropertiesWithCompositeModels';
+import type { ModeledDataStream } from './asset-modules/describeModeledDataStreamRequest/types';
 
 const STRING_INFO_1 = {
   id: 'some-string-info',
@@ -46,14 +46,14 @@ const DATA_STREAM_2: DataStream = {
 };
 
 it('returns empty array when provided no data streams or asset models', () => {
-  expect(completeDataStreams({ dataStreams: [], assetModelProperties: [], assetModels: {}, alarms: {} })).toBeEmpty();
+  expect(completeDataStreams({ dataStreams: [], modeledDataStreams: [], assetModels: {}, alarms: {} })).toBeEmpty();
 });
 
 it('returns the provided data stream when no asset models are given', () => {
   expect(
     completeDataStreams({
       dataStreams: [DATA_STREAM, DATA_STREAM_2],
-      assetModelProperties: [],
+      modeledDataStreams: [],
       assetModels: {},
       alarms: {},
     })
@@ -80,7 +80,7 @@ it('returns data stream when provided alarm stream but no alarms', () => {
 
   const alarms = {};
 
-  expect(completeDataStreams({ dataStreams: [alarmStream], assetModelProperties: [], assetModels, alarms })).toEqual([
+  expect(completeDataStreams({ dataStreams: [alarmStream], modeledDataStreams: [], assetModels, alarms })).toEqual([
     {
       ...alarmStream,
       name: 'test',
@@ -115,7 +115,7 @@ it('parses alarm stream and sets streamType to ALARM when corresponding alarm pr
 
   const alarms = { [alarmStreamId]: ALARM };
 
-  expect(completeDataStreams({ dataStreams: [alarmStream], assetModelProperties: [], assetModels, alarms })).toEqual([
+  expect(completeDataStreams({ dataStreams: [alarmStream], modeledDataStreams: [], assetModels, alarms })).toEqual([
     expect.objectContaining({
       streamType: 'ALARM',
       data: [
@@ -174,7 +174,7 @@ it('associates alarms stream with input property stream', () => {
   expect(
     completeDataStreams({
       dataStreams: [alarmStream, inputPropertyStream],
-      assetModelProperties: [
+      modeledDataStreams: [
         {
           assetId,
           assetName: 'name',
@@ -234,7 +234,7 @@ it('returns data stream with property name and unit from asset model property', 
     completeDataStreams({
       dataStreams: [dataStream],
       assetModels,
-      assetModelProperties: [
+      modeledDataStreams: [
         {
           assetId,
           assetName: 'name',
@@ -286,7 +286,7 @@ describe('parses data type correctly', () => {
     expect(
       completeDataStreams({
         dataStreams: [dataStream],
-        assetModelProperties: [
+        modeledDataStreams: [
           {
             assetId,
             assetName: 'name',
@@ -326,7 +326,7 @@ describe('parses data type correctly', () => {
     expect(
       completeDataStreams({
         dataStreams: [dataStream],
-        assetModelProperties: [
+        modeledDataStreams: [
           {
             assetId,
             assetName: 'name',
@@ -366,7 +366,7 @@ describe('parses data type correctly', () => {
     expect(
       completeDataStreams({
         dataStreams: [dataStream],
-        assetModelProperties: [
+        modeledDataStreams: [
           {
             assetId,
             assetName: 'name',
@@ -406,7 +406,7 @@ describe('parses data type correctly', () => {
     expect(
       completeDataStreams({
         dataStreams: [dataStream],
-        assetModelProperties: [
+        modeledDataStreams: [
           { ...property, assetId, propertyId, assetName: '', dataTypeSpec: 'a' } as ModeledDataStream,
         ],
         assetModels,

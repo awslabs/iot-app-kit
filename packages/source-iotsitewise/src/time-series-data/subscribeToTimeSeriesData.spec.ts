@@ -150,7 +150,7 @@ it('provides time series data from iotsitewise', async () => {
   await flushPromises();
 
   // fetches the asset summary
-  expect(describeAsset).toBeCalledTimes(1);
+  expect(describeAsset).toBeCalledTimes(2);
   expect(describeAsset).toBeCalledWith({ assetId: ASSET_ID });
 
   // fetches the asset model
@@ -266,7 +266,7 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
   await flushPromises();
 
   // fetches the asset summary
-  expect(describeAsset).toBeCalledTimes(1);
+  expect(describeAsset).toBeCalledTimes(2);
   expect(describeAsset).toBeCalledWith({ assetId: ASSET_ID });
 
   // fetches the asset model
@@ -367,7 +367,7 @@ it('provides alarm data from iot-events', async () => {
   await flushPromises();
 
   // fetches the asset summary
-  expect(describeAsset).toBeCalledTimes(1);
+  expect(describeAsset).toBeCalledTimes(2);
   expect(describeAsset).toBeCalledWith(expect.objectContaining({ assetId: ALARM_ASSET_ID }));
 
   // fetches the asset model
@@ -479,7 +479,7 @@ it('provides alarm data from iot-events when subscription is updated', async () 
   await flushPromises();
 
   // fetches the asset summary
-  expect(describeAsset).toBeCalledTimes(1);
+  expect(describeAsset).toBeCalledTimes(2);
   expect(describeAsset).toBeCalledWith(expect.objectContaining({ assetId: ALARM_ASSET_ID }));
 
   // fetches the asset model
