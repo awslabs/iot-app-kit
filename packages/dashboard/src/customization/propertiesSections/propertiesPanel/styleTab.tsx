@@ -7,10 +7,12 @@ import { AxisSettingsConfiguration } from '../axisSettings';
 import { SettingsConfiguration } from '../settings';
 import { TextSettingsConfiguration } from '../textSettings';
 import { LineAndScatterStyleSettingsSection } from '../lineAndScatterStyleSettings/section';
+import { WidgetTitle } from '../widgetTitle';
 
 export const StylesSection = () => (
   <div>
     <SpaceBetween size='s' direction='vertical'>
+      <WidgetTitle />
       <LineAndScatterStyleSettingsSection />
       <AggregationsSettingsConfiguration />
       <AxisSettingsConfiguration />

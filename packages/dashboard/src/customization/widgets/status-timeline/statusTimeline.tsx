@@ -17,6 +17,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) =
   const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
   const {
+    title,
     queryConfig,
     styleSettings,
     axis,
@@ -33,7 +34,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) =
   const isEmptyWidget = queries.length === 0;
   if (isEmptyWidget) {
     return (
-      <WidgetTile widget={widget} removeable>
+      <WidgetTile widget={widget} removeable title={title}>
         <NoChartData
           icon={timelineSvgDark}
           emptyStateText='Browse and select to add your asset properties in your line widget.'
@@ -43,7 +44,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) =
   }
 
   return (
-    <WidgetTile widget={widget} removeable key={key}>
+    <WidgetTile widget={widget} removeable title={title} key={key}>
       <StatusTimeline
         queries={queries}
         viewport={viewport}

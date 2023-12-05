@@ -26,6 +26,7 @@ export type QueryProperties = {
 };
 
 export type KPIProperties = QueryProperties & {
+  title?: string;
   primaryFont: SimpleFontSettings;
   secondaryFont: SimpleFontSettings;
   showValue?: boolean;
@@ -39,6 +40,7 @@ export type KPIProperties = QueryProperties & {
 export type KPIPropertiesKeys = keyof KPIProperties;
 
 export type StatusProperties = QueryProperties & {
+  title?: string;
   primaryFont: SimpleFontSettings;
   secondaryFont: SimpleFontSettings;
   showValue?: boolean;
@@ -52,6 +54,7 @@ export type StatusProperties = QueryProperties & {
 export type StatusPropertiesKeys = keyof StatusProperties;
 
 export type StatusTimelineProperties = QueryProperties & {
+  title?: string;
   thresholds?: ThresholdWithId[];
   thresholdSettings?: ThresholdSettings;
   axis?: AxisSettings;
@@ -138,6 +141,7 @@ export type LineScatterChartProperties = LineAndScatterStyles & {
 export type LineScatterChartPropertiesKeys = keyof LineScatterChartProperties;
 
 export type BarChartProperties = QueryProperties & {
+  title?: string;
   thresholds?: ThresholdWithId[];
   thresholdSettings?: ThresholdSettings;
   axis?: AxisSettings;
@@ -148,6 +152,7 @@ export type BarChartProperties = QueryProperties & {
 export type BarChartPropertiesKeys = keyof BarChartProperties;
 
 export type TableProperties = QueryProperties & {
+  title?: string;
   thresholds?: ThresholdWithId[];
   fontSettings?: ComplexFontSettings;
   items?: TableItem[];

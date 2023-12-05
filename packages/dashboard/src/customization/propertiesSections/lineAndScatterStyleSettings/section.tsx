@@ -4,7 +4,6 @@ import SpaceBetween from '@cloudscape-design/components/space-between';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { LineScatterChartWidget, LineStyles, SymbolStyles } from '~/customization/widgets/types';
 import { DashboardWidget } from '~/types';
-import { TitleSection } from './titleSection';
 import { LineStyleSection } from './lineStyleSection';
 import { YAxisSection } from './yAxis';
 import { LegendSection } from './legendSection';
@@ -32,14 +31,6 @@ const RenderLineAndScatterStyleSettingsSection = ({
         ...properties.line,
         connectionStyle: updatedConnectionStyle,
       },
-    })
-  );
-
-  const [titleMaybe, updateTitle] = useProperty(
-    (properties) => properties.title,
-    (properties, updatedTitle) => ({
-      ...properties,
-      title: updatedTitle,
     })
   );
 
@@ -164,7 +155,6 @@ const RenderLineAndScatterStyleSettingsSection = ({
   );
 
   const connectionStyle = maybeWithDefault(undefined, connectionStyleMaybe);
-  const title = maybeWithDefault(undefined, titleMaybe);
   const lineStyle = maybeWithDefault(undefined, lineStyleMaybe);
   const lineThickness = maybeWithDefault(undefined, lineThicknessMaybe);
   const dataPointStyle = maybeWithDefault(undefined, dataPointStyleMaybe);
@@ -181,7 +171,6 @@ const RenderLineAndScatterStyleSettingsSection = ({
 
   return (
     <SpaceBetween size='s' direction='vertical'>
-      <TitleSection title={title} updateTitle={updateTitle} />
       <AggregationAndResolutionSection
         aggregation={aggregationType}
         resolution={resolution}
