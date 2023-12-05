@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.9.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.8.0...scene-composer-v9.9.0) (2023-12-05)
+
+
+### Bug Fixes
+
+* **composer:** improve load sub model latency ([23ad9ad](https://github.com/awslabs/iot-app-kit/commit/23ad9ada3b89295b66738cdfc297dc6e0bf72a03))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/react-components bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/related-table bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.8.0 to 9.9.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 9.8.0 to 9.9.0
+
 ## [9.8.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.7.0...scene-composer-v9.8.0) (2023-11-25)
 
 

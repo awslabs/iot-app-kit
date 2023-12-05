@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [9.9.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.8.0...react-components-v9.9.0) (2023-12-05)
+
+
+### Bug Fixes
+
+* accessible property filter labels ([30554a1](https://github.com/awslabs/iot-app-kit/commit/30554a1f59f2462b1a5334424866f67ee4507455))
+* fixed property section tooltip gets cut off if property has longer name [#2293](https://github.com/awslabs/iot-app-kit/issues/2293) ([e496e4d](https://github.com/awslabs/iot-app-kit/commit/e496e4d52c566cab3e17e332ef3b587cd9fcc094))
+* panning on chart widget moving [#2294](https://github.com/awslabs/iot-app-kit/issues/2294) ([9cefd9a](https://github.com/awslabs/iot-app-kit/commit/9cefd9a2107465ccde1468f1e0e2a271b0d30381))
+* **react-components:** add echarts extension for handling custom-y-axis ([b481beb](https://github.com/awslabs/iot-app-kit/commit/b481beb1e5a9a014a688d264aa3cb3addc4f51c7))
+* **react-components:** add fallback for property name to id ([a1024d4](https://github.com/awslabs/iot-app-kit/commit/a1024d459fd24d8c7056326706b41ff505eb41ec))
+* **react-components:** mock date in viewport adapter date tests ([06200dd](https://github.com/awslabs/iot-app-kit/commit/06200dda24e5956c6db0a2b4bfe750cdf53c8592))
+* remove line chart tweening animation ([d9e894b](https://github.com/awslabs/iot-app-kit/commit/d9e894b0f651ad24dce87d7f7c4dbe28f43f43e0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/core bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/core-util bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.8.0 to 9.9.0
+  * devDependencies
+    * @iot-app-kit/core bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/jest-config bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/testing-util bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/ts-config bumped from 9.8.0 to 9.9.0
+    * eslint-config-iot-app-kit bumped from 9.8.0 to 9.9.0
+
 ## [9.8.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.7.0...react-components-v9.8.0) (2023-11-25)
 
 
