@@ -103,7 +103,7 @@
     "@aws-sdk/client-iottwinmaker": "3.354.0",
     "@iot-app-kit/charts-core": "^2.1.1",
     "@iot-app-kit/components": "9.8.0",
-    "@iot-app-kit/core": "9.8.0",
+    "@iot-app-kit/core": "9.9.0",
     "@iot-app-kit/core-util": "9.8.0",
     "@iot-app-kit/react-components": "9.8.0",
     "@iot-app-kit/source-iotsitewise": "9.8.0",

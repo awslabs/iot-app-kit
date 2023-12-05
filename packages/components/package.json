@@ -57,7 +57,7 @@
     "@awsui/collection-hooks": "^1.0.51",
     "@awsui/components-react": "^3.0.0",
     "@awsui/design-tokens": "^3.0.41",
-    "@iot-app-kit/core": "9.8.0",
+    "@iot-app-kit/core": "9.9.0",
     "@iot-app-kit/related-table": "9.8.0",
     "@stencil/core": "^2.7.0",
     "@synchro-charts/core": "7.2.0",

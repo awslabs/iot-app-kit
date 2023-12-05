@@ -57,7 +57,7 @@
     "@aws-sdk/client-s3": "3.335.0",
     "@aws-sdk/client-secrets-manager": "3.353.0",
     "@aws-sdk/url-parser": "3.374.0",
-    "@iot-app-kit/core": "9.8.0",
+    "@iot-app-kit/core": "9.9.0",
     "@tanstack/query-core": "^4.29.15",
     "lodash": "^4.17.21",
     "rxjs": "^7.8.1"
