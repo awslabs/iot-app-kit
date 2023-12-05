@@ -35,8 +35,6 @@ import { Direction } from './components/utils';
 import ScenePanel from './components/ScenePanel';
 import CameraPreviewTrack from './components/CameraPreviewTrack';
 
-import useProgress from '../../components/three-fiber/hooks/useProgress';
-
 const UnselectableCanvas = styled(Canvas)`
   user-select: none;
   background: ${({ theme }) => {
@@ -45,11 +43,11 @@ const UnselectableCanvas = styled(Canvas)`
   z-index: 0;
 `;
 
-const TestBootstrapper = ({ isLoaded }: { isLoaded: boolean }) => {
+const TestBootstrapper = () => {
   const sceneComposerId = useSceneComposerId();
   const { scene, gl } = useThree();
   useEffect(() => {
-    if (isLoaded) {
+      // console.log('in SceneLayout: ', scene.getObjectByName('PalletJack'));
       const customEvent = new CustomEvent('twinmaker:scene-loaded', {
         detail: {
           sceneComposerId,
@@ -58,7 +56,6 @@ const TestBootstrapper = ({ isLoaded }: { isLoaded: boolean }) => {
         },
       });
       window.dispatchEvent(customEvent);
-    }
 
     return () => {
       const customEvent = new CustomEvent('twinmaker:scene-unloaded', {
@@ -180,10 +177,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
       ),
     },
   };
-  // const sceneReady = useProgress().active
-  // if (sceneReady) {
-  //   console.log('it ready') // confirmed this is right BEFORE it loads
-  // }
+
   const leftPanel = <ScenePanel {...leftPanelEditModeProps} />;
   const viewingModeScenePanel = <ScenePanel {...leftPanelViewModeProps} />;
   const rightPanel = <ScenePanel {...rightPanelProps} />;
@@ -199,7 +193,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
                 <CameraPreviewTrack ref={renderDisplayRef} title={selectedNode.selectedSceneNode?.name} />
               )}
               <R3FWrapper sceneLoaded={sceneLoaded} matterportConfig={externalLibraryConfig?.matterport}>
-                <TestBootstrapper isLoaded={!!sceneLoaded} />
+                {sceneLoaded === true && <TestBootstrapper/>}
                 <Suspense fallback={LoadingView}>
                   {!sceneLoaded ? null : (
                     <Fragment>
