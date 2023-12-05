@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.9.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.8.0...root-v9.9.0) (2023-12-05)
+
+
+### Features
+
+* added the error state for resource explorer tables [#2242](https://github.com/awslabs/iot-app-kit/issues/2242) ([351e142](https://github.com/awslabs/iot-app-kit/commit/351e1420508c37dddb37fb2fe9f2225c51365760))
+* added title in bar and status timeline [#2312](https://github.com/awslabs/iot-app-kit/issues/2312) ([c6ea993](https://github.com/awslabs/iot-app-kit/commit/c6ea993c9d50bcd5fe75c7a5ec424d158fdf9c85))
+* missing empty state for workspaces dropdown [#2305](https://github.com/awslabs/iot-app-kit/issues/2305) ([11edf2d](https://github.com/awslabs/iot-app-kit/commit/11edf2d01a4c6406810efbdc1977f2c10e379506))
+
+
+### Bug Fixes
+
+* accessibility fixes ([4caa534](https://github.com/awslabs/iot-app-kit/commit/4caa53433d3d9df858ee25d71d3b92b93cdf7617))
+* accessible property filter labels ([30554a1](https://github.com/awslabs/iot-app-kit/commit/30554a1f59f2462b1a5334424866f67ee4507455))
+* **composer:** improve load sub model latency ([23ad9ad](https://github.com/awslabs/iot-app-kit/commit/23ad9ada3b89295b66738cdfc297dc6e0bf72a03))
+* **dashboard:** bold, italics, underline interactable by keyboard ([ccba8c6](https://github.com/awslabs/iot-app-kit/commit/ccba8c6433967e40b07a6ed78568a8d580def221))
+* fixed property section tooltip gets cut off if property has longer name [#2293](https://github.com/awslabs/iot-app-kit/issues/2293) ([e496e4d](https://github.com/awslabs/iot-app-kit/commit/e496e4d52c566cab3e17e332ef3b587cd9fcc094))
+* missing pagination handling for searched model data [#1994](https://github.com/awslabs/iot-app-kit/issues/1994) ([81d5269](https://github.com/awslabs/iot-app-kit/commit/81d5269a0bd0349d95b2495330401623afd5b5b0))
+* panning on chart widget moving [#2294](https://github.com/awslabs/iot-app-kit/issues/2294) ([9cefd9a](https://github.com/awslabs/iot-app-kit/commit/9cefd9a2107465ccde1468f1e0e2a271b0d30381))
+* **react-components:** add echarts extension for handling custom-y-axis ([b481beb](https://github.com/awslabs/iot-app-kit/commit/b481beb1e5a9a014a688d264aa3cb3addc4f51c7))
+* **react-components:** add fallback for property name to id ([a1024d4](https://github.com/awslabs/iot-app-kit/commit/a1024d459fd24d8c7056326706b41ff505eb41ec))
+* **react-components:** mock date in viewport adapter date tests ([06200dd](https://github.com/awslabs/iot-app-kit/commit/06200dda24e5956c6db0a2b4bfe750cdf53c8592))
+* remove line chart tweening animation ([d9e894b](https://github.com/awslabs/iot-app-kit/commit/d9e894b0f651ad24dce87d7f7c4dbe28f43f43e0))
+* resolved delete button invisible issue [#2164](https://github.com/awslabs/iot-app-kit/issues/2164) ([3ec8743](https://github.com/awslabs/iot-app-kit/commit/3ec8743115848175682e5a8c80bf605d6a2669a7))
+* time machine enable in edit and preview mode ([c30d68b](https://github.com/awslabs/iot-app-kit/commit/c30d68b65dbf4003bc19220fa97a0b9b4b4dac40))
+* updated the resource explorer default width [#2292](https://github.com/awslabs/iot-app-kit/issues/2292) ([149ec60](https://github.com/awslabs/iot-app-kit/commit/149ec60e9055851ca8d7abdd787f2762cdcfc8ea))
+
 ## [9.8.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.7.0...root-v9.8.0) (2023-11-25)
 
 

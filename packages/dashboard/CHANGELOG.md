@@ -1,5 +1,43 @@
 # Changelog
 
+## [9.9.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.8.0...dashboard-v9.9.0) (2023-12-05)
+
+
+### Features
+
+* added the error state for resource explorer tables [#2242](https://github.com/awslabs/iot-app-kit/issues/2242) ([351e142](https://github.com/awslabs/iot-app-kit/commit/351e1420508c37dddb37fb2fe9f2225c51365760))
+* added title in bar and status timeline [#2312](https://github.com/awslabs/iot-app-kit/issues/2312) ([c6ea993](https://github.com/awslabs/iot-app-kit/commit/c6ea993c9d50bcd5fe75c7a5ec424d158fdf9c85))
+* missing empty state for workspaces dropdown [#2305](https://github.com/awslabs/iot-app-kit/issues/2305) ([11edf2d](https://github.com/awslabs/iot-app-kit/commit/11edf2d01a4c6406810efbdc1977f2c10e379506))
+
+
+### Bug Fixes
+
+* accessibility fixes ([4caa534](https://github.com/awslabs/iot-app-kit/commit/4caa53433d3d9df858ee25d71d3b92b93cdf7617))
+* accessible property filter labels ([30554a1](https://github.com/awslabs/iot-app-kit/commit/30554a1f59f2462b1a5334424866f67ee4507455))
+* **dashboard:** bold, italics, underline interactable by keyboard ([ccba8c6](https://github.com/awslabs/iot-app-kit/commit/ccba8c6433967e40b07a6ed78568a8d580def221))
+* fixed property section tooltip gets cut off if property has longer name [#2293](https://github.com/awslabs/iot-app-kit/issues/2293) ([e496e4d](https://github.com/awslabs/iot-app-kit/commit/e496e4d52c566cab3e17e332ef3b587cd9fcc094))
+* missing pagination handling for searched model data [#1994](https://github.com/awslabs/iot-app-kit/issues/1994) ([81d5269](https://github.com/awslabs/iot-app-kit/commit/81d5269a0bd0349d95b2495330401623afd5b5b0))
+* **react-components:** add echarts extension for handling custom-y-axis ([b481beb](https://github.com/awslabs/iot-app-kit/commit/b481beb1e5a9a014a688d264aa3cb3addc4f51c7))
+* resolved delete button invisible issue [#2164](https://github.com/awslabs/iot-app-kit/issues/2164) ([3ec8743](https://github.com/awslabs/iot-app-kit/commit/3ec8743115848175682e5a8c80bf605d6a2669a7))
+* time machine enable in edit and preview mode ([c30d68b](https://github.com/awslabs/iot-app-kit/commit/c30d68b65dbf4003bc19220fa97a0b9b4b4dac40))
+* updated the resource explorer default width [#2292](https://github.com/awslabs/iot-app-kit/issues/2292) ([149ec60](https://github.com/awslabs/iot-app-kit/commit/149ec60e9055851ca8d7abdd787f2762cdcfc8ea))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/core bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/core-util bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/react-components bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.8.0 to 9.9.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/testing-util bumped from 9.8.0 to 9.9.0
+    * @iot-app-kit/ts-config bumped from 9.8.0 to 9.9.0
+    * eslint-config-iot-app-kit bumped from 9.8.0 to 9.9.0
+
 ## [9.8.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.7.0...dashboard-v9.8.0) (2023-11-25)
 
 
