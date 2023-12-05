@@ -82,8 +82,8 @@ export class RequestProcessor {
     this.assetSummaryWorkers.subscribe(assetSummaryRequest, observer);
   }
 
-  async getAssetModelPropertiesWithCompositeModels(input: { assetId: string; assetModelId: string }) {
-    return this.api.getListAssetModelPropertiesWithCompositeModels(input);
+  async describeModeledDataStream(input: { assetPropertyId: string; assetId: string; assetModelId: string }) {
+    return this.api.describeModeledDataStream(input);
   }
 
   private assetPropertyValueWorkerFactory(

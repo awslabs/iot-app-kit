@@ -16,16 +16,15 @@ import type { SiteWiseDataStreamQuery } from './types';
  */
 export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData[]> {
   private update: (subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>) => void = () => {};
-
   public session: SiteWiseComponentSession;
-
   public input: DataModuleSubscription<SiteWiseDataStreamQuery>;
+
   constructor(session: SiteWiseComponentSession, input: DataModuleSubscription<SiteWiseDataStreamQuery>) {
     this.session = session;
     this.input = input;
   }
 
-  async subscribe(observer: ProviderObserver<TimeSeriesData[]>) {
+  subscribe(observer: ProviderObserver<TimeSeriesData[]>) {
     const { session } = this;
 
     const { update, unsubscribe } = subscribeToTimeSeriesData(

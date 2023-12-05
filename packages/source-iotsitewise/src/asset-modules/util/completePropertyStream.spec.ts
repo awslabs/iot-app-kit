@@ -53,7 +53,7 @@ it('completes an asset model property stream', () => {
         ...ASSET_MODEL_WITH_ALARM,
         assetModelProperties: modelProps,
       },
-      assetModelProperties: (modelProps ?? []).map(() => ({
+      modeledDataStreams: (modelProps ?? []).map(() => ({
         propertyId: INPUT_PROPERTY_ID,
         assetId: ALARM_ASSET_ID,
         assetName: 'NAME',
@@ -80,7 +80,7 @@ it('appends associated stream if alarm on property created', () => {
   expect(
     completePropertyStream({
       assetModel: ASSET_MODEL_WITH_ALARM,
-      assetModelProperties: (ASSET_MODEL_WITH_ALARM.assetModelProperties ?? []).map(({ unit, name, dataType }) => ({
+      modeledDataStreams: (ASSET_MODEL_WITH_ALARM.assetModelProperties ?? []).map(({ unit, name, dataType }) => ({
         propertyId: INPUT_PROPERTY_ID,
         assetId: ALARM_ASSET_ID,
         assetName: 'NAME',
@@ -109,7 +109,7 @@ it('returns undefined when no asset model', () => {
   expect(
     completePropertyStream({
       assetId: ALARM_ASSET_ID,
-      assetModelProperties: [],
+      modeledDataStreams: [],
       propertyId: INPUT_PROPERTY_ID,
       dataStream: TIME_SERIES_DATA_WITH_ALARMS.dataStreams[0],
       alarms: {},
@@ -121,7 +121,7 @@ it('returns undefined when property not found in asset model', () => {
   expect(
     completePropertyStream({
       assetModel: ASSET_MODEL_WITH_ALARM,
-      assetModelProperties: [],
+      modeledDataStreams: [],
       assetId: ALARM_ASSET_ID,
       propertyId: 'non-existent---property',
       dataStream: TIME_SERIES_DATA_WITH_ALARMS.dataStreams[0],
