@@ -17,6 +17,7 @@ import type {
 } from '@iot-app-kit/core';
 import { ProviderStore } from './providerStore';
 import { useColoredDataStreams } from '../useColoredDataStreams';
+import { SiteWiseAssetQuery, SiteWisePropertyAliasQuery } from '@iot-app-kit/source-iotsitewise';
 
 const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
   resolution: '0',
@@ -55,7 +56,37 @@ export const useTimeSeriesData = ({
   const prevViewportRef = useRef<undefined | Viewport>(undefined);
   const providerIdRef = useRef<undefined | string>(undefined);
 
-  const queriesString = queries.map((query) => query.toQueryString()).join();
+  const scrubbedQueries = queries
+    .map((query) => query.toQueryString())
+    .map(
+      (queryString) =>
+        JSON.parse(queryString) as unknown as {
+          source?: string;
+          queryType?: string;
+          query: Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>;
+        }
+    )
+    .map(({ source, queryType, query }) => ({
+      source,
+      queryType,
+      query: {
+        assets: query.assets?.map(({ assetId, properties }) => ({
+          assetId,
+          properties: properties.map(({ propertyId, aggregationType, resolution }) => ({
+            propertyId,
+            aggregationType,
+            resolution,
+          })),
+        })),
+        properties: query.properties?.map(({ propertyAlias, resolution, aggregationType }) => ({
+          propertyAlias,
+          aggregationType,
+          resolution,
+        })),
+      },
+    }));
+
+  const queriesString = JSON.stringify(scrubbedQueries);
 
   useEffect(() => {
     const id = uuid();
