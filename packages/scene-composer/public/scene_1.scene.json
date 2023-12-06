@@ -17,6 +17,14 @@
           "sel_comp"
         ]
       }
+    },
+    "fogSettings": {
+      "color": "#dddddd",
+      "near": 10,
+      "far": 1000
+    },
+    "sceneBackgroundSettings": {
+      "color": "#0000ff"
     }
   },
   "nodes": [

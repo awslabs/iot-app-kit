@@ -1,12 +1,14 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { FormField, Input, SpaceBetween } from '@awsui/components-react';
+import { Button, Checkbox, FormField, Input, SpaceBetween } from '@awsui/components-react';
 import { useIntl } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';
-import { KnownSceneProperty } from '../../../interfaces';
+import { getGlobalSettings } from '../../../common/GlobalSettings';
+import { COMPOSER_FEATURES, KnownSceneProperty } from '../../../interfaces';
 import { IPlaneGeometryComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
+import { parseS3BucketFromArn } from '../../../utils/pathUtils';
 
 export type IPlaneGeometryComponentEditorProps = IComponentEditorProps;
 
@@ -14,6 +16,7 @@ export const PlaneGeometryComponentEditor: React.FC<IPlaneGeometryComponentEdito
   node,
   component,
 }: IPlaneGeometryComponentEditorProps) => {
+  const texturesEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Textures];
   const sceneComposerId = useContext(sceneComposerIdContext);
   const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
   const planeGeometryComponent = component as IPlaneGeometryComponentInternal;
@@ -23,10 +26,15 @@ export const PlaneGeometryComponentEditor: React.FC<IPlaneGeometryComponentEdito
     state.getSceneProperty<string[]>(KnownSceneProperty.GeometryCustomColors, []),
   );
   const setGeometryColorsSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
+  const showAssetBrowserCallback = useStore(sceneComposerId)(
+    (state) => state.getEditorConfig().showAssetBrowserCallback,
+  );
 
   const [internalWidth, setInternalWidth] = useState(planeGeometryComponent.width);
   const [internalHeight, setInternalHeight] = useState(planeGeometryComponent.height);
   const [internalColor, setInternalColor] = useState(planeGeometryComponent.color || '#cccccc');
+  const [internalUri, setInternalUri] = useState(planeGeometryComponent.textureUri || '');
+  const [internalGroundPlane, setInternalGroundPlane] = useState(planeGeometryComponent.isGroundPlane || false);
 
   const onUpdateCallback = useCallback(
     (componentPartial: IPlaneGeometryComponentInternal, replace?: boolean) => {
@@ -72,6 +80,43 @@ export const PlaneGeometryComponentEditor: React.FC<IPlaneGeometryComponentEdito
     [internalHeight],
   );
 
+  const onTextureSelectClick = useCallback(() => {
+    if (showAssetBrowserCallback) {
+      showAssetBrowserCallback((s3BucketArn, contentLocation) => {
+        let textureUri: string;
+        if (s3BucketArn === null) {
+          // This should be used for local testing only
+          textureUri = contentLocation;
+        } else {
+          textureUri = `s3://${parseS3BucketFromArn(s3BucketArn)}/${contentLocation}`;
+        }
+
+        setInternalUri(textureUri);
+        const { color: _color, ...otherComponentProps } = planeGeometryComponent;
+        const updatedComponent = { ...otherComponentProps, textureUri };
+        onUpdateCallback(updatedComponent, true);
+      });
+    } else {
+      console.info('No asset browser available');
+    }
+  }, [planeGeometryComponent]);
+
+  const onTextureRemoveClick = useCallback(() => {
+    setInternalUri('');
+    const { textureUri: _textureUri, ...otherComponentProps } = planeGeometryComponent;
+    const updatedComponent = { ...otherComponentProps, color: internalColor };
+    onUpdateCallback(updatedComponent, true);
+  }, [planeGeometryComponent, internalColor]);
+
+  const onGroundPlaneChecked = useCallback(
+    (checked: boolean) => {
+      setInternalGroundPlane(checked);
+      const updatedComponent = { ...planeGeometryComponent, isGroundPlane: checked };
+      onUpdateCallback(updatedComponent, true);
+    },
+    [planeGeometryComponent],
+  );
+
   return (
     <SpaceBetween size='s'>
       <FormField label={intl.formatMessage({ defaultMessage: 'Width', description: 'Form Field label' })}>
@@ -98,16 +143,38 @@ export const PlaneGeometryComponentEditor: React.FC<IPlaneGeometryComponentEdito
           }}
         />
       </FormField>
-      <ColorSelectorCombo
-        color={internalColor}
-        onSelectColor={(pickedColor) => onColorChange(pickedColor)}
-        onUpdateCustomColors={(chosenCustomColors) =>
-          setGeometryColorsSceneProperty(KnownSceneProperty.GeometryCustomColors, chosenCustomColors)
-        }
-        customColors={geometryColors}
-        colorPickerLabel={intl.formatMessage({ defaultMessage: 'Color', description: 'Color' })}
-        customColorLabel={intl.formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}
-      />
+      {!planeGeometryComponent.textureUri && (
+        <ColorSelectorCombo
+          color={internalColor}
+          onSelectColor={(pickedColor) => onColorChange(pickedColor)}
+          onUpdateCustomColors={(chosenCustomColors) =>
+            setGeometryColorsSceneProperty(KnownSceneProperty.GeometryCustomColors, chosenCustomColors)
+          }
+          customColors={geometryColors}
+          colorPickerLabel={intl.formatMessage({ defaultMessage: 'Color', description: 'Color' })}
+          customColorLabel={intl.formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}
+        />
+      )}
+      {texturesEnabled && (
+        <SpaceBetween size='s' direction='horizontal'>
+          <Button data-testid='select-texture-button' onClick={onTextureSelectClick}>
+            {intl.formatMessage({ defaultMessage: 'Select Texture', description: 'select texture Button Text' })}
+          </Button>
+          {internalUri && (
+            <Button data-testid='remove-texture-button' onClick={onTextureRemoveClick}>
+              {intl.formatMessage({ defaultMessage: 'Remove Texture', description: 'remove texture Button Text' })}
+            </Button>
+          )}
+          <Input value={internalUri} disabled />
+        </SpaceBetween>
+      )}
+      <FormField label={intl.formatMessage({ defaultMessage: 'Ground Plane', description: 'Form Field label' })}>
+        <Checkbox
+          data-testid='ground-plane-checkbox'
+          checked={internalGroundPlane}
+          onChange={({ detail }) => onGroundPlaneChecked(detail.checked)}
+        />
+      </FormField>
     </SpaceBetween>
   );
 };

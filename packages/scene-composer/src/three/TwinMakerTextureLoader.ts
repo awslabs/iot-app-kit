@@ -43,11 +43,6 @@ export class TwinMakerTextureLoader extends THREE.Loader {
       const texture = new THREE.Texture(imageBitmap);
       texture.needsUpdate = true;
 
-      // https://threejs.org/docs/#api/en/textures/Texture.flipY
-      if (this.options.imageOrientation === 'flipY') {
-        texture.flipY = true;
-      }
-
       // From @types/three, the response type is "string | ArrayBuffer", but the THREE.TextureLoader
       // returns THREE.Texture , so we need to cast here.
       _onLoadTexture(texture as any);

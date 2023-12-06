@@ -6,6 +6,7 @@ import { Viewport } from '@iot-app-kit/core';
 import { TimeSync, TimeSelection } from '@iot-app-kit/react-components';
 
 import {
+  AssetBrowserResultCallback,
   COMPOSER_FEATURES,
   ExternalLibraryConfig,
   ISceneDocumentSnapshot,
@@ -13,6 +14,7 @@ import {
   OperationMode,
   SceneComposerInternal,
   SceneViewerPropsShared,
+  ShowAssetBrowserCallback,
 } from '../../src';
 import { convertDataInputToDataStreams, getTestDataInputContinuous } from '../../tests/testData';
 
@@ -49,6 +51,7 @@ interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManager
   onSceneUpdated?: OnSceneUpdateCallback;
   viewportDurationSecs?: number;
   queriesJSON?: string;
+  showAssetBrowserCallback: ShowAssetBrowserCallback;
 }
 
 const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
@@ -67,6 +70,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   matterportApplicationKey,
   viewportDurationSecs,
   queriesJSON,
+  showAssetBrowserCallback: actionRecorderShowAssetBrowserCallback,
   ...props
 }: SceneComposerWrapperProps) => {
   const duration = viewportDurationSecs ? viewportDurationSecs : 300; //default 5 minutes
@@ -125,6 +129,18 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     onSceneUpdated(sceneSnapshot);
   }, []);
 
+  const mockAssetBrowserCallback: ShowAssetBrowserCallback = useCallback(
+    (cb: AssetBrowserResultCallback) => {
+      actionRecorderShowAssetBrowserCallback(cb);
+      if (source == 'local') {
+        cb(null, 'PALLET_JACK.glb');
+      } else {
+        cb(null, 'CookieFactoryMixer.glb'); // Update the string to a model available in your S3 bucket
+      }
+    },
+    [source],
+  );
+
   if (loader) {
     return (
       <TimeSync group='scene-composer' initialViewport={viewport}>
@@ -140,13 +156,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
               valueDataBindingProviders={bindingProvider}
               onSceneUpdated={handleSceneUpdated}
               dataStreams={source === 'local' ? convertDataInputToDataStreams(getTestDataInputContinuous()) : undefined}
-              showAssetBrowserCallback={(cb) => {
-                if (source == 'local') {
-                  cb(null, 'PALLET_JACK.glb');
-                } else {
-                  cb(null, 'CookieFactoryMixer.glb'); // Update the string to a model available in your S3 bucket
-                }
-              }}
+              showAssetBrowserCallback={mockAssetBrowserCallback}
               {...props}
             />
           </SceneComposerContainer>

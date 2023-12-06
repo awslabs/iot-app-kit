@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { SceneViewerPropsShared } from '../../src';
+import { SceneViewerPropsShared, COMPOSER_FEATURES } from '../../src';
 
 import { ThemeManagerProps } from './theme-manager';
 import SceneComposerWrapper from './scene-composer';
@@ -12,7 +12,7 @@ export interface StorybookSceneViewerProps extends SceneViewerPropsShared, Theme
   sceneId?: string;
   awsCredentials?: any;
   workspaceId?: string;
-  features?: string[];
+  features?: COMPOSER_FEATURES[];
   locale: string;
 }
 
