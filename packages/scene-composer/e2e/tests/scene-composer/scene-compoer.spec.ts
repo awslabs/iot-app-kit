@@ -44,6 +44,27 @@ const getScene = async (
   return scene;
 };
 
+const getObject = async (scene: { getObjectByName: (arg0: string) => { (): any; new(): any; isObject3D: any; }; }, name: string) => {
+  return scene.getObjectByName(name).isObject3D;
+};
+
+const playwrightHelper = async ({...props}) => {
+  const {page, sceneId, callback} = props;  
+  await page.evaluate(async ({ sceneId, callbackString, SomeClass }) => {
+    const { scene } = (window as any)['__twinmaker_tests'][sceneId];
+    if (!scene) {
+      throw new Error('Scene is not loaded')
+    }
+    const Boop = eval('window.SomeClass = ' + SomeClass);
+      const harness = await new Boop(scene);
+      // return harness.getObjecByName('PalletJack');
+      console.log('palletjack: ', harness.getObjecByName('PalletJack'))
+    const cb = new Function(`return (${callbackString}).apply(null, arguments)`);
+    return await cb(scene, 'PalletJack');
+  }, { sceneId: sceneId, callbackString: callback.toString(), SomeClass: R3FTestHarness.toString() });
+  
+}
+
 test('load scene', async ({ page }) => {
   const scenePage = await page.goto(LOCAL_SCENE);
   expect(scenePage).toBeDefined();
@@ -72,21 +93,24 @@ test.describe('scene composer', () => {
     const sceneId = await sceneLoaded(frame);
     await getScene(frame, sceneId); // used to enforce waiting for scene to load
 
-    // convert to harness
-    const getObject = async (scene: { getObjectByName: (arg0: string) => { (): any; new(): any; isObject3D: any; }; }, name: string) => {
-        return scene.getObjectByName(name).isObject3D;
-    };
-
-    const palletJack = await page.evaluate(async ({ sceneId, callbackString }) => {
+    const palletJack = await page.evaluate(
+      async ({ sceneId, SomeClass }) => {
         const { scene } = (window as any)['__twinmaker_tests'][sceneId];
         if (!scene) {
-          throw new Error('Scene is not loaded')
+          throw new Error('Scene is not loaded');
         }
-        const cb = new Function(`return (${callbackString}).apply(null, arguments)`);
-        return await cb(scene, 'PalletJack');
-    }, { sceneId, callbackString: getObject.toString() });
+        const Boop = eval('window.SomeClass = ' + SomeClass);
+        const harness = await new Boop(scene);
+        return harness.getObjecByName('PalletJack');
+      },
+      { sceneId, SomeClass: R3FTestHarness.toString() },
+    );
+    // const callback = () => {console.log('TACO TIME')}
+    // const palletJack = await playwrightHelper({page, sceneId, callback})
 
-    expect(palletJack).toBeTruthy()
+    expect(palletJack.isObject3D).toBeTruthy();
+    expect(palletJack.type).toEqual('Group');
+    expect(palletJack.visible).toBeTruthy();
   });
 
   // test('delete object', async({page}) => {

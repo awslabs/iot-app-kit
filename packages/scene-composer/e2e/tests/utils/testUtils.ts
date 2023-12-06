@@ -17,9 +17,12 @@ export default class R3FTestHarness {
    * Returns scene object
    * `name` as string
    */
-  getObjecByName(name: string) {
+  async getObjecByName(name: string) {
     return this.testScene.getObjectByName(name)
   }
+  // getObjecByName = async (name: string) => {
+  //   return this.testScene.getObjectByName(name)
+  // }
 
   // Look At Object
   /*
