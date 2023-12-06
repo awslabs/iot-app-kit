@@ -2,36 +2,16 @@
 
 exports[`PlaneGeometryComponent should render 1`] = `
 <div>
-  <group
-    name="PLANE_GEOMETRY_COMPONENT_nodeRef"
-  >
-    <div
-      args="[10,20]"
-      data-mocked="Plane"
-    >
-      <meshbasicmaterial
-        color="#CCCCCC"
-        side="2"
+  <group>
+    <mesh>
+      <planegeometry
+        args="10,20"
+        attach="geometry"
       />
-    </div>
-  </group>
-</div>
-`;
-
-exports[`PlaneGeometryComponent should render with predefined color 1`] = `
-<div>
-  <group
-    name="PLANE_GEOMETRY_COMPONENT_nodeRef"
-  >
-    <div
-      args="[10,20]"
-      data-mocked="Plane"
-    >
-      <meshbasicmaterial
-        color="#abcdef"
-        side="2"
+      <meshstandardmaterial
+        color="undefined"
       />
-    </div>
+    </mesh>
   </group>
 </div>
 `;

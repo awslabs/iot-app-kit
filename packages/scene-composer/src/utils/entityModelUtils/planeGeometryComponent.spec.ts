@@ -20,15 +20,17 @@ const coloredPlane: IPlaneGeometryComponent = {
   color: '#abcdef',
 };
 
+const texturedGroundPlane: IPlaneGeometryComponent = {
+  type: KnownComponentType.PlaneGeometry,
+  width: 10,
+  height: 20,
+  textureUri: 'filepath',
+  isGroundPlane: true,
+};
+
 describe('createPlaneGeometryEntityComponent', () => {
   it('should return expected plane with no color', () => {
-    expect(
-      createPlaneGeometryEntityComponent({
-        type: KnownComponentType.PlaneGeometry,
-        width: 10,
-        height: 20,
-      }),
-    ).toEqual({
+    expect(createPlaneGeometryEntityComponent(plane)).toEqual({
       componentTypeId: componentTypeToId[KnownComponentType.PlaneGeometry],
       properties: {
         width: {
@@ -45,15 +47,8 @@ describe('createPlaneGeometryEntityComponent', () => {
     });
   });
 
-  it('should return expected plane with no color', () => {
-    expect(
-      createPlaneGeometryEntityComponent({
-        type: KnownComponentType.PlaneGeometry,
-        width: 10,
-        height: 20,
-        color: '#abcdef',
-      }),
-    ).toEqual({
+  it('should return expected plane with color', () => {
+    expect(createPlaneGeometryEntityComponent(coloredPlane)).toEqual({
       componentTypeId: componentTypeToId[KnownComponentType.PlaneGeometry],
       properties: {
         width: {
@@ -69,6 +64,34 @@ describe('createPlaneGeometryEntityComponent', () => {
         color: {
           value: {
             stringValue: '#abcdef',
+          },
+        },
+      },
+    });
+  });
+
+  it('should return expected plane with texture', () => {
+    expect(createPlaneGeometryEntityComponent(texturedGroundPlane)).toEqual({
+      componentTypeId: componentTypeToId[KnownComponentType.PlaneGeometry],
+      properties: {
+        width: {
+          value: {
+            doubleValue: 10,
+          },
+        },
+        height: {
+          value: {
+            doubleValue: 20,
+          },
+        },
+        textureUri: {
+          value: {
+            stringValue: 'filepath',
+          },
+        },
+        isGroundPlane: {
+          value: {
+            booleanValue: true,
           },
         },
       },
@@ -111,6 +134,34 @@ describe('createPlaneGeometryEntityComponent', () => {
           color: {
             value: {
               stringValue: '#abcdef',
+            },
+          },
+        }),
+      });
+    });
+
+    it('should return expected textured ground plane', () => {
+      expect(updatePlaneGeometryEntityComponent(texturedGroundPlane)).toEqual({
+        componentTypeId: componentTypeToId[KnownComponentType.PlaneGeometry],
+        propertyUpdates: expect.objectContaining({
+          width: {
+            value: {
+              doubleValue: 10,
+            },
+          },
+          height: {
+            value: {
+              doubleValue: 20,
+            },
+          },
+          textureUri: {
+            value: {
+              stringValue: 'filepath',
+            },
+          },
+          isGroundPlane: {
+            value: {
+              booleanValue: true,
             },
           },
         }),
@@ -160,6 +211,34 @@ describe('createPlaneGeometryEntityComponent', () => {
       ).toEqual({
         ref: expect.any(String),
         ...coloredPlane,
+      });
+    });
+
+    it('should parse to expected textured ground plane component', () => {
+      expect(
+        parsePlaneGeometryComp({
+          properties: [
+            {
+              propertyName: 'width',
+              propertyValue: 10,
+            },
+            {
+              propertyName: 'height',
+              propertyValue: 20,
+            },
+            {
+              propertyName: 'textureUri',
+              propertyValue: 'filepath',
+            },
+            {
+              propertyName: 'isGroundPlane',
+              propertyValue: true,
+            },
+          ],
+        }),
+      ).toEqual({
+        ref: expect.any(String),
+        ...texturedGroundPlane,
       });
     });
 

@@ -59,6 +59,10 @@
     "note": "Menu Item",
     "text": "Rotate object"
   },
+  "051ah6": {
+    "note": "select texture Button Text",
+    "text": "Select Texture"
+  },
   "07ZORc": {
     "note": "Toggle label",
     "text": "Always on"
@@ -1035,6 +1039,10 @@
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Linear Plane"
   },
+  "oEnP1z": {
+    "note": "Form Field label",
+    "text": "Ground Plane"
+  },
   "oRdrN4": {
     "note": "Menu Item",
     "text": "Remove overlay"
@@ -1126,6 +1134,10 @@
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
     "text": "centimeters"
+  },
+  "sevj7L": {
+    "note": "remove texture Button Text",
+    "text": "Remove Texture"
   },
   "skIt5u": {
     "note": "Menu Item",

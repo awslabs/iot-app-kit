@@ -32,6 +32,31 @@ exports[`PlaneGeometryComponentEditor should render correctly 1`] = `
     >
       [{"color":"#cccccc","customColors":[],"colorPickerLabel":"Color","customColorLabel":"Custom colors"},{}]
     </div>
+    <div
+      data-mocked="SpaceBetween"
+      direction="horizontal"
+    >
+      <div
+        data-mocked="Button"
+        data-testid="select-texture-button"
+      >
+        Select Texture
+      </div>
+      <div
+        data-mocked="Input"
+        disabled=""
+        value=""
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Ground Plane"
+    >
+      <div
+        data-mocked="Checkbox"
+        data-testid="ground-plane-checkbox"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -67,6 +92,93 @@ exports[`PlaneGeometryComponentEditor should render correctly with color 1`] = `
       id="ColorSelectorCombo"
     >
       [{"color":"#abcdef","customColors":[],"colorPickerLabel":"Color","customColorLabel":"Custom colors"},{}]
+    </div>
+    <div
+      data-mocked="SpaceBetween"
+      direction="horizontal"
+    >
+      <div
+        data-mocked="Button"
+        data-testid="select-texture-button"
+      >
+        Select Texture
+      </div>
+      <div
+        data-mocked="Input"
+        disabled=""
+        value=""
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Ground Plane"
+    >
+      <div
+        data-mocked="Checkbox"
+        data-testid="ground-plane-checkbox"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`PlaneGeometryComponentEditor should render correctly with textured ground plane 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Width"
+    >
+      <div
+        data-mocked="Input"
+        data-testid="plane-width-input"
+        type="number"
+        value="10"
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Height"
+    >
+      <div
+        data-mocked="Input"
+        data-testid="plane-height-input"
+        type="number"
+        value="20"
+      />
+    </div>
+    <div
+      data-mocked="SpaceBetween"
+      direction="horizontal"
+    >
+      <div
+        data-mocked="Button"
+        data-testid="select-texture-button"
+      >
+        Select Texture
+      </div>
+      <div
+        data-mocked="Button"
+        data-testid="remove-texture-button"
+      >
+        Remove Texture
+      </div>
+      <div
+        data-mocked="Input"
+        disabled=""
+        value="filepath"
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Ground Plane"
+    >
+      <div
+        data-mocked="Checkbox"
+        data-testid="ground-plane-checkbox"
+      />
     </div>
   </div>
 </div>

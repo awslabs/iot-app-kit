@@ -156,4 +156,5 @@ export interface IFogSettings {
 
 export interface ISceneBackgroundSetting {
   color?: string;
+  textureUri?: string;
 }

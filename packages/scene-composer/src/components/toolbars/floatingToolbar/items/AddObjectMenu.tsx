@@ -320,6 +320,7 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
       width: 1000,
       height: 1000,
       color: 'green',
+      isGroundPlane: true,
     };
     const node = {
       name: 'Ground Plane',
