@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [9.9.1](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.9.0...react-components-v9.9.1) (2023-12-06)
+
+
+### Bug Fixes
+
+* update dependency to not include styles ([e09651e](https://github.com/awslabs/iot-app-kit/commit/e09651e5c065458a269d8d95d1c9c959c5f95ace))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.9.0 to 9.9.1
+    * @iot-app-kit/core bumped from 9.9.0 to 9.9.1
+    * @iot-app-kit/core-util bumped from 9.9.0 to 9.9.1
+    * @iot-app-kit/source-iottwinmaker bumped from 9.9.0 to 9.9.1
+  * devDependencies
+    * @iot-app-kit/core bumped from 9.9.0 to 9.9.1
+    * @iot-app-kit/jest-config bumped from 9.9.0 to 9.9.1
+    * @iot-app-kit/source-iotsitewise bumped from 9.9.0 to 9.9.1
+    * @iot-app-kit/testing-util bumped from 9.9.0 to 9.9.1
+    * @iot-app-kit/ts-config bumped from 9.9.0 to 9.9.1
+    * eslint-config-iot-app-kit bumped from 9.9.0 to 9.9.1
+
 ## [9.9.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.8.0...react-components-v9.9.0) (2023-12-05)
 
 

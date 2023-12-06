@@ -1,5 +1,30 @@
 # Changelog
 
+## [9.9.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.9.0...dashboard-v9.9.1) (2023-12-06)
+
+
+### Bug Fixes
+
+* **dashboard:** clear selected properties on asset change ([05f0374](https://github.com/awslabs/iot-app-kit/commit/05f037402d785d9f6d449c88170f2ad91f2735d9))
+* **dashboard:** listAssetPropertiesCall for msw + path objects for all assetModels ([b207547](https://github.com/awslabs/iot-app-kit/commit/b20754707774e19e107f1378cecaaba38384e4b3))
+* **dashboard:** refactor component library to use list elements ([71a0b29](https://github.com/awslabs/iot-app-kit/commit/71a0b29e2b37685c5fcaa861a3c31291018e65ec))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.9.0 to 9.9.1
+    * @iot-app-kit/core bumped from 9.9.0 to 9.9.1
+    * @iot-app-kit/core-util bumped from 9.9.0 to 9.9.1
+    * @iot-app-kit/react-components bumped from 9.9.0 to 9.9.1
+    * @iot-app-kit/source-iotsitewise bumped from 9.9.0 to 9.9.1
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.9.0 to 9.9.1
+    * @iot-app-kit/testing-util bumped from 9.9.0 to 9.9.1
+    * @iot-app-kit/ts-config bumped from 9.9.0 to 9.9.1
+    * eslint-config-iot-app-kit bumped from 9.9.0 to 9.9.1
+
 ## [9.9.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.8.0...dashboard-v9.9.0) (2023-12-05)
 
 
