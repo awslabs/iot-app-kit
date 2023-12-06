@@ -134,7 +134,11 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
             overlaySettings.overlayPanelVisible;
         }
 
-        draft.sceneLoaded = true;
+        const dynamicSceneEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicScene];
+
+        if (!dynamicSceneEnabled || !isDynamicScene(result.document)) {
+          draft.sceneLoaded = true;
+        }
         draft.lastOperation = 'loadScene';
       });
 
@@ -241,6 +245,7 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
 
         renderSceneNodesFromLayers(nodes, layerId, document, LOG);
 
+        draft.sceneLoaded = true;
         draft.lastOperation = 'renderSceneNodesFromLayers';
       });
     },

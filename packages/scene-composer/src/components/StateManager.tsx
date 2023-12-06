@@ -11,12 +11,15 @@ import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useSta
 import * as THREE from 'three';
 
 import {
+  getMatterportSdk,
   setDracoDecoder,
   setFeatureConfig,
   setGetSceneObjectFunction,
   setLocale,
   setMetricRecorder,
   setTwinMakerSceneMetadataModule,
+  subscribe,
+  unsubscribe,
 } from '../common/GlobalSettings';
 import {
   MATTERPORT_ACCESS_TOKEN,
@@ -105,6 +108,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const autoQueryEnabled = !!config?.featureConfig?.[COMPOSER_FEATURES.AutoQuery];
   const dataProviderRef = useRef<ProviderWithViewport<TimeSeriesData[]> | undefined>(undefined);
   const prevSelection = useRef<string | undefined>(undefined);
+  const [matterportReady, setMatterportReady] = useState<boolean>(false);
 
   const convertSceneModalVisible = useStore(sceneComposerId)((state) => !!state.convertSceneModalVisible);
 
@@ -150,6 +154,18 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       });
     }
   }, [sceneLoaded]);
+
+  useEffect(() => {
+    const onMatterportSdkUpdated = () => {
+      const isReady = !!getMatterportSdk(sceneComposerId);
+      setMatterportReady(isReady);
+    };
+    subscribe(onMatterportSdkUpdated);
+
+    return () => {
+      unsubscribe(onMatterportSdkUpdated);
+    };
+  }, []);
 
   useEffect(() => {
     if (!selectedDataBinding) {
@@ -305,14 +321,14 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   }, [sceneContent]);
 
   useEffect(() => {
-    if (onSceneLoaded && sceneLoaded) {
+    if (onSceneLoaded && sceneLoaded && (!enableMatterportViewer || matterportReady)) {
       // Delay the event handler to let other components finish loading, otherwise the consumer side will
       // fail to update scene states
       setTimeout(() => {
         onSceneLoaded();
       }, 1);
     }
-  }, [sceneLoaded, onSceneLoaded]);
+  }, [sceneLoaded, onSceneLoaded, enableMatterportViewer, matterportReady]);
 
   // Subscribe to store update
   useEffect(() => {

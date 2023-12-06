@@ -5,6 +5,7 @@ import { Canvas, ThreeEvent } from '@react-three/fiber';
 import { useContextBridge } from '@react-three/drei/core/useContextBridge';
 import { MatterportViewer, MpSdk } from '@matterport/r3f/dist';
 import { isEmpty } from 'lodash';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { setMatterportSdk } from '../../common/GlobalSettings';
 import LoggingContext from '../../logger/react-logger/contexts/logging';
@@ -30,10 +31,14 @@ import useMatterportViewer from '../../hooks/useMatterportViewer';
 import useSelectedNode from '../../hooks/useSelectedNode';
 import { findComponentByType } from '../../utils/nodeUtils';
 import ConvertSceneModal from '../../components/ConvertSceneModal';
+import useDynamicScene from '../../hooks/useDynamicScene';
+import { SceneLayers } from '../../components/SceneLayers';
 
 import { Direction } from './components/utils';
 import ScenePanel from './components/ScenePanel';
 import CameraPreviewTrack from './components/CameraPreviewTrack';
+
+const queryClient = new QueryClient();
 
 const UnselectableCanvas = styled(Canvas)`
   user-select: none;
@@ -123,6 +128,8 @@ const SceneLayout: FC<SceneLayoutProps> = ({
     return isViewing ? false : !!findComponentByType(selectedNode.selectedSceneNode, KnownComponentType.Camera);
   }, [selectedNode]);
 
+  const dynamicSceneEnabled = useDynamicScene();
+
   const leftPanelEditModeProps = {
     direction: Direction.Left,
     panels: {
@@ -163,6 +170,12 @@ const SceneLayout: FC<SceneLayoutProps> = ({
           <LogProvider namespace='SceneLayout' ErrorView={DefaultErrorFallback}>
             <FloatingToolbar isViewing={isViewing} />
             <ContextBridge>
+              {dynamicSceneEnabled && (
+                <QueryClientProvider client={queryClient}>
+                  <SceneLayers />
+                </QueryClientProvider>
+              )}
+
               {shouldShowPreview && (
                 <CameraPreviewTrack ref={renderDisplayRef} title={selectedNode.selectedSceneNode?.name} />
               )}
