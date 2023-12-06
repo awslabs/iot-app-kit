@@ -19,7 +19,6 @@ export const useVisualizedDataStreams = (queries: TimeSeriesDataQuery[], passedI
     queries,
     settings: {
       fetchFromStartToEnd: true,
-      fetchMostRecentBeforeStart: true,
     },
   });
 
