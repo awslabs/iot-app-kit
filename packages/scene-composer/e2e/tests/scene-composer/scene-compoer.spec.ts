@@ -13,8 +13,8 @@ interface SceneLoadedEvent extends Event {
   detail: SceneLoadedEventDetail;
 }
 
-const setSceneId = async (frame: Locator): Promise<string> => {
-  const sceneId: string = await frame.evaluate(async () => {
+const sceneLoaded = async (host: Locator): Promise<string> => {
+  const sceneId: string = await host.evaluate(async () => {
     return await new Promise((res, rej) => {
       const timer = setTimeout(
         () => rej(new Error('Timeout, twinmaker:scene-loaded was not reached in reasonable time.')),
@@ -60,7 +60,7 @@ test.describe('scene composer', () => {
   test('get scene', async ({ page }) => {
     await page.goto(LOCAL_SCENE);
     const frame = page.locator(TEST_IFRAME);
-    const sceneId = await setSceneId(frame);
+    const sceneId = await sceneLoaded(frame);
     const scene = await getScene(frame, sceneId);
     expect(sceneId).toEqual('motion-indicator-view-options');
     expect(scene.type).toEqual('Scene');
@@ -69,20 +69,24 @@ test.describe('scene composer', () => {
   test('get object by name', async ({ page }) => {
     await page.goto(LOCAL_SCENE_2);
     const frame = page.locator(TEST_IFRAME);
-    const sceneId = await setSceneId(frame);
-    const scene = await getScene(frame, sceneId);
-    const taco = async (scene?: any) => {
-        console.log('TACO TACO TACO: ', scene.getObjectByName('PalletJack').isObject3D);
+    const sceneId = await sceneLoaded(frame);
+    await getScene(frame, sceneId); // used to enforce waiting for scene to load
+
+    // convert to harness
+    const getObject = async (scene: { getObjectByName: (arg0: string) => { (): any; new(): any; isObject3D: any; }; }, name: string) => {
+        return scene.getObjectByName(name).isObject3D;
     };
 
-    await page.evaluate(async ({ sceneId, callbackString }) => {
+    const palletJack = await page.evaluate(async ({ sceneId, callbackString }) => {
         const { scene } = (window as any)['__twinmaker_tests'][sceneId];
-        // console.log('In callback: ', sceneId, callbackString);
+        if (!scene) {
+          throw new Error('Scene is not loaded')
+        }
         const cb = new Function(`return (${callbackString}).apply(null, arguments)`);
-        // console.log('Callback is: ', cb);
-        await cb(scene);
-    }, { sceneId, callbackString: taco.toString() });
+        return await cb(scene, 'PalletJack');
+    }, { sceneId, callbackString: getObject.toString() });
 
+    expect(palletJack).toBeTruthy()
   });
 
   // test('delete object', async({page}) => {
