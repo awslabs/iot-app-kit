@@ -7,6 +7,17 @@ const LOCAL_SCENE = '/iframe.html?args=&id=tests-scene-viewer--motion-indicator'
 const LOCAL_SCENE_2 = '/iframe.html?args=&id=developer-scene-composer--local-scene';
 const CANVAS = '#tm-scene-unselectable-canvas';
 
+declare global {
+  interface Window { 
+    __twinmaker_tests: {
+      [key: string]: {
+        scene: Scene, 
+        gl: WebGLRenderer
+      }
+    }
+  }
+}
+
 type SceneLoadedEventDetail = { sceneComposerId: string; scene: Scene; gl: WebGLRenderer };
 
 interface SceneLoadedEvent extends Event {
@@ -24,8 +35,8 @@ const sceneLoaded = async (host: Locator): Promise<string> => {
       window.addEventListener('twinmaker:scene-loaded', (evt: Event) => {
         const { detail } = evt as SceneLoadedEvent;
         const { sceneComposerId, scene, gl } = detail;
-        (window as any)['__twinmaker_tests'] = (window as any)['__twinmaker_tests'] || {};
-        (window as any)['__twinmaker_tests'][sceneComposerId] = { scene, gl };
+        (window)['__twinmaker_tests'] = (window)['__twinmaker_tests'] || {};
+        (window)['__twinmaker_tests'][(sceneComposerId)] = { scene, gl };
         clearTimeout(timer);
         res(sceneComposerId);
       });
@@ -34,35 +45,30 @@ const sceneLoaded = async (host: Locator): Promise<string> => {
   return sceneId;
 };
 
-const getScene = async (
-  frame: { evaluate: (arg0: (_element: HTMLElement, sceneId: string) => Promise<Scene>, arg1: any) => any },
-  sceneId: string,
-) => {
+const getScene = async (frame: Locator, sceneId: string ) => {
   const scene = await frame.evaluate((_element: HTMLElement, sceneId: string) => {
-    return Promise.resolve<Scene>((window as any)['__twinmaker_tests'][sceneId].scene);
+    return Promise.resolve<Scene>((window)['__twinmaker_tests'][sceneId].scene);
   }, sceneId);
   return scene;
 };
 
-const getObject = async (scene: { getObjectByName: (arg0: string) => { (): any; new(): any; isObject3D: any; }; }, name: string) => {
-  return scene.getObjectByName(name).isObject3D;
-};
-
+type evaluateProps = {
+  sceneId: string, 
+  callbackString: string, 
+  TMHarnessClass: string
+}
 const playwrightHelper = async ({...props}) => {
   const {page, sceneId, callback} = props;  
-  await page.evaluate(async ({ sceneId, callbackString, SomeClass }) => {
-    const { scene } = (window as any)['__twinmaker_tests'][sceneId];
+  return await page.evaluate(async ({ sceneId, callbackString, TMHarnessClass }: evaluateProps) => {
+    const { scene } = (window)['__twinmaker_tests'][sceneId];
     if (!scene) {
       throw new Error('Scene is not loaded')
     }
-    const Boop = eval('window.SomeClass = ' + SomeClass);
-      const harness = await new Boop(scene);
-      // return harness.getObjecByName('PalletJack');
-      console.log('palletjack: ', harness.getObjecByName('PalletJack'))
+    const HarnessClass = eval('window.TMHarnessClass = ' + TMHarnessClass);
+    const harness = await new HarnessClass(scene);
     const cb = new Function(`return (${callbackString}).apply(null, arguments)`);
-    return await cb(scene, 'PalletJack');
-  }, { sceneId: sceneId, callbackString: callback.toString(), SomeClass: R3FTestHarness.toString() });
-  
+    return await cb(harness);
+  }, { sceneId: sceneId, callbackString: callback.toString(), TMHarnessClass: R3FTestHarness.toString() });
 }
 
 test('load scene', async ({ page }) => {
@@ -91,31 +97,33 @@ test.describe('scene composer', () => {
     await page.goto(LOCAL_SCENE_2);
     const frame = page.locator(TEST_IFRAME);
     const sceneId = await sceneLoaded(frame);
-    await getScene(frame, sceneId); // used to enforce waiting for scene to load
-
-    const palletJack = await page.evaluate(
-      async ({ sceneId, SomeClass }) => {
-        const { scene } = (window as any)['__twinmaker_tests'][sceneId];
-        if (!scene) {
-          throw new Error('Scene is not loaded');
-        }
-        const Boop = eval('window.SomeClass = ' + SomeClass);
-        const harness = await new Boop(scene);
-        return harness.getObjecByName('PalletJack');
-      },
-      { sceneId, SomeClass: R3FTestHarness.toString() },
-    );
-    // const callback = () => {console.log('TACO TIME')}
-    // const palletJack = await playwrightHelper({page, sceneId, callback})
+    await getScene(frame, sceneId); 
+    const callback = async (harness: R3FTestHarness) => { return await harness.getObjecByName('PalletJack')};
+    const palletJack = await playwrightHelper({page, sceneId, callback})
 
     expect(palletJack.isObject3D).toBeTruthy();
     expect(palletJack.type).toEqual('Group');
     expect(palletJack.visible).toBeTruthy();
   });
 
-  // test('delete object', async({page}) => {
+  test('delete object', async({page}) => {
+    await page.goto(LOCAL_SCENE_2);
+    const frame = page.locator(TEST_IFRAME);
+    const sceneId = await sceneLoaded(frame);
+    await getScene(frame, sceneId); 
+    const callback = async (harness: R3FTestHarness) => { return await harness.getObjecByName('PalletJack')};
+    const palletJack = await playwrightHelper({page, sceneId, callback})
 
-  // });
+    expect(palletJack.isObject3D).toBeTruthy();
+
+    // const callback2 = async (harness: R3FTestHarness) => { return await harness.deleteObject(palletJack)};
+    // await playwrightHelper({page, sceneId, callback2})
+
+    // await getScene(frame, sceneId);    
+    // const palletJackDeleted = await playwrightHelper({page, sceneId, callback})
+    // console.log('palletJackDeleted: ', palletJackDeleted)
+    // expect(palletJackDeleted).toBeFalsy();
+  });
 
   // test('scale object', async({page}) => {
 

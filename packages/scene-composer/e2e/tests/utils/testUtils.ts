@@ -20,9 +20,6 @@ export default class R3FTestHarness {
   async getObjecByName(name: string) {
     return this.testScene.getObjectByName(name)
   }
-  // getObjecByName = async (name: string) => {
-  //   return this.testScene.getObjectByName(name)
-  // }
 
   // Look At Object
   /*
@@ -38,9 +35,10 @@ export default class R3FTestHarness {
   /*
    * Remove object from scene
    */
-  //   deleteObject(obj: Object3D) {
-  //     // return this.testScene.remove(obj)
-  // };
+    deleteObject(obj: Object3D) {
+      console.log('in harness: ', obj)
+      return this.testScene.remove(obj)
+  };
 
   // Scale Object
   /*
