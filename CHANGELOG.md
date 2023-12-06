@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.9.1](https://github.com/awslabs/iot-app-kit/compare/root-v9.9.0...root-v9.9.1) (2023-12-06)
+
+
+### Bug Fixes
+
+* bump charts core version ([fba03c6](https://github.com/awslabs/iot-app-kit/commit/fba03c600f2e1dc3c5bd199b658174e5de2dcd95))
+* **dashboard:** clear selected properties on asset change ([05f0374](https://github.com/awslabs/iot-app-kit/commit/05f037402d785d9f6d449c88170f2ad91f2735d9))
+* **dashboard:** listAssetPropertiesCall for msw + path objects for all assetModels ([b207547](https://github.com/awslabs/iot-app-kit/commit/b20754707774e19e107f1378cecaaba38384e4b3))
+* **dashboard:** refactor component library to use list elements ([71a0b29](https://github.com/awslabs/iot-app-kit/commit/71a0b29e2b37685c5fcaa861a3c31291018e65ec))
+* missed rebase markers ([b9e158a](https://github.com/awslabs/iot-app-kit/commit/b9e158a1c723e5f5bd1438d54841737f742c27c9))
+* update dependency to not include styles ([e09651e](https://github.com/awslabs/iot-app-kit/commit/e09651e5c065458a269d8d95d1c9c959c5f95ace))
+
 ## [9.9.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.8.0...root-v9.9.0) (2023-12-05)
 
 
