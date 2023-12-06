@@ -4,7 +4,7 @@ import flushPromises from 'flush-promises';
 import { Object3D, Vector3 } from 'three';
 
 import { IAnchorComponentInternal, IDataOverlayComponentInternal, ISceneNodeInternal } from '..';
-import { COMPOSER_FEATURES, KnownComponentType, KnownSceneProperty, setFeatureConfig } from '../..';
+import { COMPOSER_FEATURES, IErrorDetails, KnownComponentType, KnownSceneProperty, setFeatureConfig } from '../..';
 import { Component } from '../../models/SceneModels';
 import { containsMatchingEntityComponent } from '../../utils/dataBindingUtils';
 import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity';
@@ -50,17 +50,19 @@ describe('createSceneDocumentSlice', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+
+    setFeatureConfig({});
   });
 
   [true, false].forEach((hasErrors) => {
     it(`should load a scene ${hasErrors ? 'with' : 'without'} errors and default document`, () => {
       // Arrange
       const deserializeResult = {
-        document: hasErrors ? undefined : 'This is a mock document',
-        errors: hasErrors ? [{ category: 'Error', message: 'test Error' }] : [],
+        document: hasErrors ? undefined : defaultDocumentSliceState,
+        errors: hasErrors ? [{ category: 'Error', message: 'test Error' } as unknown as IErrorDetails] : [],
       };
-      jest.spyOn(serializationHelpers.document, 'deserialize').mockReturnValue(deserializeResult as any);
-      const draft = { lastOperation: undefined, document: deserializeResult.document };
+      jest.spyOn(serializationHelpers.document, 'deserialize').mockReturnValue(deserializeResult);
+      const draft = { lastOperation: undefined, document: deserializeResult.document, sceneLoaded: false };
       const getReturn = { resetEditorState: jest.fn(), addMessages: jest.fn() };
       const get = jest.fn().mockReturnValue(getReturn); // fake out get call
       const set = jest.fn((callback) => callback(draft));
@@ -72,6 +74,7 @@ describe('createSceneDocumentSlice', () => {
 
       // Assert
       expect(draft.lastOperation!).toEqual('loadScene');
+      expect(draft.sceneLoaded).toBeTruthy();
       expect(get).toBeCalledTimes(hasErrors ? 2 : 1);
       expect(getReturn.resetEditorState).toBeCalled();
       if (hasErrors) {
@@ -123,6 +126,70 @@ describe('createSceneDocumentSlice', () => {
     expect(get).toBeCalledTimes(1);
     expect(draft.document).toEqual(deserializeResult.document);
     expect(draft.noHistoryStates.componentVisibilities[Component.DataOverlaySubType.OverlayPanel]).toEqual(true);
+  });
+
+  it('should load a scene and not set sceneLoaded flag for dynamic scene when feature enabled', () => {
+    // Arrange
+    const deserializeResult = {
+      document: {
+        ...defaultDocumentSliceState,
+        properties: {
+          [KnownSceneProperty.SceneRootEntityId]: 'root-id',
+          [KnownSceneProperty.LayerIds]: ['layer-id'],
+        },
+      },
+      errors: [],
+    };
+    jest.spyOn(serializationHelpers.document, 'deserialize').mockReturnValue(deserializeResult);
+    const draft = {
+      lastOperation: undefined,
+      sceneLoaded: false,
+    };
+    const set = jest.fn((callback) => callback(draft));
+    const get = jest.fn(); // fake out get call
+    const getReturn = { resetEditorState: jest.fn(), addMessages: jest.fn() };
+    get.mockReturnValue(getReturn);
+    setFeatureConfig({ [COMPOSER_FEATURES.DynamicScene]: true });
+
+    // Act
+    const { loadScene } = createSceneDocumentSlice(set, get);
+    loadScene('sceneContent');
+
+    // Assert
+    expect(draft.lastOperation!).toEqual('loadScene');
+    expect(draft.sceneLoaded).toBeFalsy();
+  });
+
+  it('should load a scene and set sceneLoaded flag to true for dynamic scene when feature disabled', () => {
+    // Arrange
+    const deserializeResult = {
+      document: {
+        ...defaultDocumentSliceState,
+        properties: {
+          [KnownSceneProperty.SceneRootEntityId]: 'root-id',
+          [KnownSceneProperty.LayerIds]: ['layer-id'],
+        },
+      },
+      errors: [],
+    };
+    jest.spyOn(serializationHelpers.document, 'deserialize').mockReturnValue(deserializeResult);
+    const draft = {
+      lastOperation: undefined,
+      sceneLoaded: false,
+    };
+    const set = jest.fn((callback) => callback(draft));
+    const get = jest.fn(); // fake out get call
+    const getReturn = { resetEditorState: jest.fn(), addMessages: jest.fn() };
+    get.mockReturnValue(getReturn);
+    setFeatureConfig({ [COMPOSER_FEATURES.DynamicScene]: false });
+
+    // Act
+    const { loadScene } = createSceneDocumentSlice(set, get);
+    loadScene('sceneContent');
+
+    // Assert
+    expect(draft.lastOperation!).toEqual('loadScene');
+    expect(draft.sceneLoaded).toBeTruthy();
   });
 
   it(`should getSceneNodeByRef`, () => {
@@ -449,7 +516,7 @@ describe('createSceneDocumentSlice', () => {
         nodeMap: {},
         componentNodeMap: {},
       };
-      const draft = { lastOperation: undefined, document };
+      const draft = { lastOperation: undefined, document, sceneLoaded: false };
       const get = jest.fn();
       const set = jest.fn((callback) => callback(draft));
 
@@ -459,6 +526,7 @@ describe('createSceneDocumentSlice', () => {
       renderSceneNodesFromLayers([], 'layer');
 
       expect(draft.lastOperation).toEqual('renderSceneNodesFromLayers');
+      expect(draft.sceneLoaded).toBeTruthy();
     });
   });
 

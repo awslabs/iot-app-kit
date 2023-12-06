@@ -4,7 +4,6 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { GizmoHelper, GizmoViewport } from '@react-three/drei';
 import { ThreeEvent, useThree } from '@react-three/fiber';
 import { MatterportModel } from '@matterport/r3f/dist';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { KnownSceneProperty, COMPOSER_FEATURES } from '../interfaces';
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
@@ -18,7 +17,6 @@ import { getIntersectionTransform } from '../utils/raycastUtils';
 import { createNodeWithPositionAndNormal } from '../utils/nodeUtils';
 import { EnvironmentLoadingManager } from '../common/loadingManagers';
 import useMatterportViewer from '../hooks/useMatterportViewer';
-import useDynamicScene from '../hooks/useDynamicScene';
 
 import Environment, { presets } from './three-fiber/Environment';
 import Fog from './three-fiber/Fog';
@@ -29,9 +27,6 @@ import { EditorTransformControls } from './three-fiber/EditorTransformControls';
 import { SceneInfoView } from './three-fiber/SceneInfoView';
 import SceneBackground from './three-fiber/SceneBackground';
 import IntlProvider from './IntlProvider';
-import { SceneLayers } from './SceneLayers';
-
-const queryClient = new QueryClient();
 
 const GIZMO_MARGIN: [number, number] = [72, 72];
 
@@ -52,7 +47,6 @@ export const WebGLCanvasManager: React.FC = () => {
   const domRef = useRef<HTMLElement>(gl.domElement.parentElement);
   const environmentPreset = getSceneProperty<string>(KnownSceneProperty.EnvironmentPreset);
   const rootNodeRefs = document.rootNodeRefs;
-  const dynamicSceneEnabled = useDynamicScene();
 
   const editingTargetPlaneRef = useRef(null);
   const gridHelperRef = useRef<THREE.GridHelper>(null);
@@ -98,11 +92,6 @@ export const WebGLCanvasManager: React.FC = () => {
       <EditorMainCamera />
       {environmentPreset && environmentPreset in presets && (
         <Environment preset={environmentPreset} extensions={envLoaderExtension} />
-      )}
-      {dynamicSceneEnabled && (
-        <QueryClientProvider client={queryClient}>
-          <SceneLayers />
-        </QueryClientProvider>
       )}
       <group name={ROOT_OBJECT_3D_NAME} dispose={null}>
         {rootNodeRefs &&
