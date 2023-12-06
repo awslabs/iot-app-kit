@@ -21,9 +21,6 @@ import { DashboardState } from '~/store/state';
 
 import './tile.css';
 import { onChangeDashboardGridEnabledAction } from '~/store/actions';
-import { CSVDownloadButton } from '~/components/csvDownloadButton';
-import { StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
-import { useClients } from '~/components/dashboard/clientContext';
 
 type DeletableTileActionProps = {
   handleDelete: CancelableEventHandler<ClickDetail>;
@@ -56,7 +53,6 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
   const isReadOnly = useSelector((state: DashboardState) => state.readOnly);
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const { iotSiteWiseClient } = useClients();
   const { onDelete } = useDeleteWidgets();
   const metricsRecorder = getPlugin('metricsRecorder');
 
@@ -115,13 +111,6 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
             </Box>
           </div>
           <div className='tile-button-contianer'>
-            {iotSiteWiseClient && widget.type !== 'text' && (
-              <CSVDownloadButton
-                client={iotSiteWiseClient}
-                queryConfig={widget.properties.queryConfig as StyledSiteWiseQueryConfig}
-                fileName={`${widget.properties.title ?? widget.type}`}
-              />
-            )}
             {isRemoveable && <DeletableTileAction handleDelete={handleDelete} />}
             <ConfirmDeleteModal
               visible={visible}
