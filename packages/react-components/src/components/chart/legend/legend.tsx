@@ -28,7 +28,7 @@ const Legend = (legendOptions: {
         items={items}
         stickyColumns={{ first: 1, last: 0 }}
         stickyHeader
-        trackBy='name'
+        trackBy='id'
         variant='embedded'
         preferences={<></>}
         contentDensity='compact'
