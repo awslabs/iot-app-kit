@@ -22,6 +22,7 @@ import { ResourceExplorerFooter } from '../../../footer/footer';
 import { SelectedAsset } from '../../types';
 import { ResourceExplorerErrorState } from '../../components/resourceExplorerErrorState';
 import { getPlugin } from '@iot-app-kit/core';
+import { isInValidProperty } from './util/resourceExplorerTableLabels';
 
 export interface ModeledDataStreamTableProps {
   onClickAddModeledDataStreams: (modeledDataStreams: ModeledDataStream[]) => void;
@@ -113,6 +114,18 @@ export function ModeledDataStreamTable({
     },
   };
 
+  const propertySelectionLabel = (selectedItems: ModeledDataStream[], modeledDataStream: ModeledDataStream) => {
+    const isPropertySelected = selectedItems?.find((item) => item.propertyId === modeledDataStream.propertyId);
+
+    if (isInValidProperty(modeledDataStream.dataType, selectedWidgets?.at(0)?.type)) {
+      return `${modeledDataStream.dataType} data not supported for the selected widget`;
+    } else if (!isPropertySelected) {
+      return `Select modeled data stream ${modeledDataStream.name}`;
+    } else {
+      return `Deselect modeled data stream ${modeledDataStream.name}`;
+    }
+  };
+
   if (isError) {
     return <ResourceExplorerErrorState title={modeledDataStreamsTitle} />;
   }
@@ -132,6 +145,7 @@ export function ModeledDataStreamTable({
       stripedRows={preferences.stripedRows}
       wrapLines={preferences.wrapLines}
       stickyColumns={preferences.stickyColumns}
+      isItemDisabled={(item) => isInValidProperty(item.dataType, selectedWidgets?.at(0)?.type)}
       empty={<ModeledDataStreamTableEmptyState isAssetSelected={selectedAsset != null} />}
       filter={<ModeledDataStreamTablePropertyFilter {...propertyFilterProps} />}
       header={
@@ -159,13 +173,11 @@ export function ModeledDataStreamTable({
       }
       preferences={<ModeledDataStreamTablePreferences preferences={preferences} updatePreferences={setPreferences} />}
       ariaLabels={{
-        itemSelectionLabel: (isNotSelected, modeledDataStream) =>
-          isNotSelected
-            ? `Select modeled data stream ${modeledDataStream.name}`
-            : `Deselect modeled data stream ${modeledDataStream.name}`,
+        itemSelectionLabel: ({ selectedItems }, modeledDataStream) =>
+          propertySelectionLabel([...selectedItems], modeledDataStream),
 
-        allItemsSelectionLabel: (isNotSelected) =>
-          isNotSelected ? `Select modeled data stream` : `Deselect modeled data stream`,
+        allItemsSelectionLabel: ({ selectedItems }) =>
+          selectedItems.length !== items.length ? 'Select modeled data stream' : 'Deselect modeled data stream',
       }}
     />
   );
