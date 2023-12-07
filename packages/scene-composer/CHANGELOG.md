@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.11.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.10.0...scene-composer-v9.11.0) (2023-12-07)
+
+
+### Miscellaneous Chores
+
+* **scene-composer:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.10.0 to 9.11.0
+    * @iot-app-kit/react-components bumped from 9.10.0 to 9.11.0
+    * @iot-app-kit/related-table bumped from 9.10.0 to 9.11.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.10.0 to 9.11.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 9.10.0 to 9.11.0
+
 ## [9.10.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.9.1...scene-composer-v9.10.0) (2023-12-07)
 
 

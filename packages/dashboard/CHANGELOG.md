@@ -1,5 +1,28 @@
 # Changelog
 
+## [9.11.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.10.0...dashboard-v9.11.0) (2023-12-07)
+
+
+### Miscellaneous Chores
+
+* **dashboard:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.10.0 to 9.11.0
+    * @iot-app-kit/core bumped from 9.10.0 to 9.11.0
+    * @iot-app-kit/core-util bumped from 9.10.0 to 9.11.0
+    * @iot-app-kit/react-components bumped from 9.10.0 to 9.11.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.10.0 to 9.11.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.10.0 to 9.11.0
+    * @iot-app-kit/testing-util bumped from 9.10.0 to 9.11.0
+    * @iot-app-kit/ts-config bumped from 9.10.0 to 9.11.0
+    * eslint-config-iot-app-kit bumped from 9.10.0 to 9.11.0
+
 ## [9.10.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.9.1...dashboard-v9.10.0) (2023-12-07)
 
 

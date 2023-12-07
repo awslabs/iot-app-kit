@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.11.0](https://github.com/awslabs/iot-app-kit/compare/core-v9.10.0...core-v9.11.0) (2023-12-07)
+
+
+### Bug Fixes
+
+* **core:** increase cache and min request interval to prevent making many requests for near now data ([403fec9](https://github.com/awslabs/iot-app-kit/commit/403fec94c16a68adbae04134dc4ee69bedb4f4d6))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.10.0 to 9.11.0
+    * @iot-app-kit/ts-config bumped from 9.10.0 to 9.11.0
+    * eslint-config-iot-app-kit bumped from 9.10.0 to 9.11.0
+
 ## [9.10.0](https://github.com/awslabs/iot-app-kit/compare/core-v9.9.1...core-v9.10.0) (2023-12-07)
 
 

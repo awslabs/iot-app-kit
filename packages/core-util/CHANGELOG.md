@@ -1,5 +1,22 @@
 # Changelog
 
+## [9.11.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v9.10.0...core-util-v9.11.0) (2023-12-07)
+
+
+### Miscellaneous Chores
+
+* **core-util:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.10.0 to 9.11.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.10.0 to 9.11.0
+    * @iot-app-kit/ts-config bumped from 9.10.0 to 9.11.0
+
 ## [9.10.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v9.9.1...core-util-v9.10.0) (2023-12-07)
 
 
