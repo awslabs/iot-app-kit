@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.11.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v9.10.0...source-iotsitewise-v9.11.0) (2023-12-07)
+
+
+### Bug Fixes
+
+* grab asset composite property correctly ([1c57017](https://github.com/awslabs/iot-app-kit/commit/1c57017f3b3c78c62fc3a3cdfc6f4fa01a09f745))
+* prevent fetching ([85a7b35](https://github.com/awslabs/iot-app-kit/commit/85a7b35f9b5303fe037de5636a75827335ffdaba))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.10.0 to 9.11.0
+    * @iot-app-kit/core-util bumped from 9.10.0 to 9.11.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.10.0 to 9.11.0
+    * @iot-app-kit/testing-util bumped from 9.10.0 to 9.11.0
+    * @iot-app-kit/ts-config bumped from 9.10.0 to 9.11.0
+    * eslint-config-iot-app-kit bumped from 9.10.0 to 9.11.0
+
 ## [9.10.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v9.9.1...source-iotsitewise-v9.10.0) (2023-12-07)
 
 

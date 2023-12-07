@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.11.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.10.0...root-v9.11.0) (2023-12-07)
+
+
+### Features
+
+* adding feature toggle system implementation ([6df3ea0](https://github.com/awslabs/iot-app-kit/commit/6df3ea053ef27a104424d8cb2b12eb0271d4b2f3))
+
+
+### Bug Fixes
+
+* **core:** increase cache and min request interval to prevent making many requests for near now data ([403fec9](https://github.com/awslabs/iot-app-kit/commit/403fec94c16a68adbae04134dc4ee69bedb4f4d6))
+* grab asset composite property correctly ([1c57017](https://github.com/awslabs/iot-app-kit/commit/1c57017f3b3c78c62fc3a3cdfc6f4fa01a09f745))
+* prevent fetching ([85a7b35](https://github.com/awslabs/iot-app-kit/commit/85a7b35f9b5303fe037de5636a75827335ffdaba))
+* use datastream id as legend table row key ([b4c11bc](https://github.com/awslabs/iot-app-kit/commit/b4c11bcd40400d4f7eae680d5ab521f00b638f64))
+
 ## [9.10.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.9.1...root-v9.10.0) (2023-12-07)
 
 
