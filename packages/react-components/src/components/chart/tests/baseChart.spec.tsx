@@ -3,6 +3,7 @@ import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { DataStream } from '@iot-app-kit/core';
 import { Chart } from '../index';
 import { render } from '@testing-library/react';
+import { ChartLegend } from '../types';
 
 const VIEWPORT = { duration: '5m' };
 
@@ -53,7 +54,16 @@ describe('Chart slider testing', () => {
       queries: [],
       aggregationType: 'average',
       axis: { showY: true, showX: true, yMin: undefined, yMax: undefined },
-      legend: {},
+      legend: {
+        visible: true,
+        position: 'left' as keyof ChartLegend['position'],
+        width: '30%',
+        height: '30%',
+        visibleContent: {
+          unit: true,
+          asset: true,
+        },
+      },
       gestures: false,
       significantDigits: 4,
       styleSettings: {},
@@ -69,7 +79,16 @@ describe('Chart slider testing', () => {
       queries: [],
       aggregationType: 'average',
       axis: { showY: true, showX: true, yMin: undefined, yMax: undefined },
-      legend: undefined,
+      legend: {
+        visible: false,
+        position: 'bottom' as keyof ChartLegend['position'],
+        width: '30%',
+        height: '30%',
+        visibleContent: {
+          unit: true,
+          asset: true,
+        },
+      },
       gestures: false,
       significantDigits: 4,
       styleSettings: {},
