@@ -25,8 +25,14 @@ const MOCK_DATA_POINTS = [
   { x: 1634005300000, y: 50 },
 ];
 const MOCK_LEGEND: ChartLegend = {
-  backgroundColor: 'white',
-  position: 'top',
+  visible: true,
+  position: 'right',
+  width: '30%',
+  height: '30%',
+  visibleContent: {
+    unit: true,
+    asset: true,
+  },
 };
 const DATA_STREAM = { id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
 const VIEWPORT = { duration: '5m' };
@@ -101,7 +107,6 @@ describe('testing converters', () => {
 
     expect(convertedLegend).toHaveProperty('show', true);
     expect(convertedLegend).toHaveProperty('orient', 'horizontal');
-    expect(convertedLegend).toHaveProperty('backgroundColor', 'white');
   });
 
   it('converts chart options to echarts options', async () => {
