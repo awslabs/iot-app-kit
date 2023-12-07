@@ -13,9 +13,13 @@ export type ChartAxisOptions = YAxisOptions & {
   showX?: boolean;
 };
 
+type ChartLegendContent = 'unit' | 'asset' | 'visibility';
 export type ChartLegend = {
-  backgroundColor?: string;
-  position?: 'top' | 'bottom';
+  visible?: boolean;
+  position?: 'left' | 'bottom' | 'right';
+  height?: string;
+  width?: string;
+  visibleContent?: { [key in ChartLegendContent]?: boolean };
 };
 
 export type SimpleFontSettings = {

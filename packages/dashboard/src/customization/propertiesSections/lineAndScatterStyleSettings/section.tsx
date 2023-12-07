@@ -2,7 +2,7 @@ import React from 'react';
 
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
-import { LineScatterChartWidget, LineStyles, SymbolStyles } from '~/customization/widgets/types';
+import { ChartLegend, LineScatterChartWidget, LineStyles, SymbolStyles } from '~/customization/widgets/types';
 import { DashboardWidget } from '~/types';
 import { LineStyleSection } from './lineStyleSection';
 import { YAxisSection } from './yAxis';
@@ -154,12 +154,24 @@ const RenderLineAndScatterStyleSettingsSection = ({
     })
   );
 
+  const [legendPositionMaybe, updateLegendPosition] = useProperty(
+    (properties) => properties.legend?.position,
+    (properties, updatedLegendPositon) => ({
+      ...properties,
+      legend: {
+        ...properties.legend,
+        position: updatedLegendPositon,
+      },
+    })
+  );
+
   const connectionStyle = maybeWithDefault(undefined, connectionStyleMaybe);
   const lineStyle = maybeWithDefault(undefined, lineStyleMaybe);
   const lineThickness = maybeWithDefault(undefined, lineThicknessMaybe);
   const dataPointStyle = maybeWithDefault(undefined, dataPointStyleMaybe);
   const axis = maybeWithDefault(undefined, axisMaybe);
-  const legendVisible = maybeWithDefault(true, legendVisibleMaybe) ?? true;
+  const legendVisible = maybeWithDefault(undefined, legendVisibleMaybe);
+  const legendPosition = maybeWithDefault(undefined, legendPositionMaybe);
 
   const aggregationType = maybeWithDefault(undefined, aggregationMaybe);
   const resolution = maybeWithDefault(undefined, resolutionMaybe);
@@ -199,7 +211,12 @@ const RenderLineAndScatterStyleSettingsSection = ({
         updateType={(type) => updateConnectionStyle(type as LineStyles['connectionStyle'])}
         updateDataPointStyle={(dataPointStyle) => updateDataPointStyle(dataPointStyle as SymbolStyles['style'])}
       />
-      <LegendSection visible={legendVisible} setVisible={updateLegendVisible} />
+      <LegendSection
+        visible={legendVisible}
+        position={legendPosition}
+        setVisible={updateLegendVisible}
+        setAlignment={(position) => updateLegendPosition(position as ChartLegend['position'])}
+      />
     </SpaceBetween>
   );
 };

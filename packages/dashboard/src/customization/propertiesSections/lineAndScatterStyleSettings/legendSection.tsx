@@ -1,33 +1,31 @@
-import { Box } from '@cloudscape-design/components';
-import Toggle from '@cloudscape-design/components/toggle';
-import { spaceScaledS } from '@cloudscape-design/design-tokens';
 import type { FC } from 'react';
 import React from 'react';
 import './legendSection.css';
+import StyleExpandableSection from '../shared/styleExpandableSection/styleExpandableSection';
+import { AlignmentDropdown } from '../components/alignmentDropdown';
+import Box from '@cloudscape-design/components/box';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 
 type LegendSectionOptions = {
-  visible: boolean;
+  disabled?: boolean;
+  visible?: boolean;
+  position?: string;
   setVisible: (visible: boolean) => void;
+  setAlignment: (position: string) => void;
 };
 
-const legendPadding = {
-  padding: `0 ${spaceScaledS}`,
-};
+export const LegendSection: FC<LegendSectionOptions> = ({ visible, position, setVisible, setAlignment }) => {
+  const handleType = (position: string) => {
+    setAlignment(position);
+  };
 
-export const LegendSection: FC<LegendSectionOptions> = ({ visible, setVisible }) => {
   return (
-    <div className='legend-section-container' style={legendPadding}>
-      <Box variant='span' fontSize='heading-s' fontWeight='bold'>
-        Legend
+    <StyleExpandableSection header='Legend' visible={visible} setVisible={setVisible}>
+      <Box padding='s'>
+        <SpaceBetween size='m'>
+          <AlignmentDropdown position={position} onTypeChange={handleType} />
+        </SpaceBetween>
       </Box>
-      <Toggle
-        onChange={(e) => {
-          setVisible(e.detail.checked);
-        }}
-        checked={visible}
-      >
-        View on chart
-      </Toggle>
-    </div>
+    </StyleExpandableSection>
   );
 };
