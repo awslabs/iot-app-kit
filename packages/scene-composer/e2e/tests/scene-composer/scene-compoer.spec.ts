@@ -1,6 +1,7 @@
 import { test, expect, Locator } from '@playwright/test';
-import { Scene, WebGLRenderer } from 'three';
+import { Object3D, Scene, Vector3, WebGLRenderer } from 'three';
 import R3FTestHarness from '../utils/testUtils';
+import { useStore } from '../../../src/store/Store';
 
 const TEST_IFRAME = '#root';
 const LOCAL_SCENE = '/iframe.html?args=&id=tests-scene-viewer--motion-indicator';
@@ -67,7 +68,7 @@ const playwrightHelper = async ({...props}) => {
     const HarnessClass = eval('window.TMHarnessClass = ' + TMHarnessClass);
     const harness = await new HarnessClass(scene);
     const cb = new Function(`return (${callbackString}).apply(null, arguments)`);
-    return await cb(harness);
+    return await cb(harness, sceneId);
   }, { sceneId: sceneId, callbackString: callback.toString(), TMHarnessClass: R3FTestHarness.toString() });
 }
 
@@ -106,47 +107,56 @@ test.describe('scene composer', () => {
     expect(palletJack.visible).toBeTruthy();
   });
 
-  test('delete object', async({page}) => {
+  test('select object', async({page}) => {
     await page.goto(LOCAL_SCENE_2);
     const frame = page.locator(TEST_IFRAME);
     const sceneId = await sceneLoaded(frame);
     await getScene(frame, sceneId); 
+    // find object
     const callback = async (harness: R3FTestHarness) => { return await harness.getObjecByName('PalletJack')};
     const palletJack = await playwrightHelper({page, sceneId, callback})
-
-    expect(palletJack.isObject3D).toBeTruthy();
-
-    // const callback2 = async (harness: R3FTestHarness) => { return await harness.deleteObject(palletJack)};
+    // const setCameraTarget = useStore(sceneId).getState().setCameraTarget;
+    // setCameraTarget(palletJack.userData.componentRef, 'teleport');
+    // const callback2 = async (harness: R3FTestHarness) => { return await harness.lookAtRef(palletJack.userData.componentRef)};
     // await playwrightHelper({page, sceneId, callback2})
-
-    // await getScene(frame, sceneId);    
-    // const palletJackDeleted = await playwrightHelper({page, sceneId, callback})
-    // console.log('palletJackDeleted: ', palletJackDeleted)
-    // expect(palletJackDeleted).toBeFalsy();
+    // lookAt object
+    // validate that object is selected in inspector panel
   });
 
   // test('scale object', async({page}) => {
-
+  //   await page.goto(LOCAL_SCENE_2);
+  //   const frame = page.locator(TEST_IFRAME);
+  //   const sceneId = await sceneLoaded(frame);
+  //   await getScene(frame, sceneId); 
+  //   // find object
+  //   // grab scale
+  //   // select object in scene
+  //   // modify scale in inspector panel
+  //   // assert new scale 
   // });
 
   // test('rotate object', async({page}) => {
-
+  //   await page.goto(LOCAL_SCENE_2);
+  //   const frame = page.locator(TEST_IFRAME);
+  //   const sceneId = await sceneLoaded(frame);
+  //   await getScene(frame, sceneId); 
+  //   // find object
+  //   // grab rotation
+  //   // select object in scene
+  //   // modify rotation in inspector panel
+  //   // assert new rotation 
   // });
 
   // test('move object', async({page}) => {
-
-  // });
-
-  // test('move object', async({page}) => {
-
-  // });
-
-  // test('select object', async({page}) => {
-
-  // });
-
-  // test('click object', async({page}) => {
-
+  //   await page.goto(LOCAL_SCENE_2);
+  //   const frame = page.locator(TEST_IFRAME);
+  //   const sceneId = await sceneLoaded(frame);
+  //   await getScene(frame, sceneId); 
+  //   // find object
+  //   // grab position
+  //   // select object in scene
+  //   // modify position in inspector panel
+  //   // assert new position 
   // });
 
   // test('add tag', async({page}) => {

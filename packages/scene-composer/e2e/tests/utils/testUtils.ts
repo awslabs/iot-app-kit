@@ -1,15 +1,18 @@
 import { Object3D } from 'three';
+import { useStore } from '../../../src/store/Store';
 
 export default class R3FTestHarness {
-  testScene;
+  scene;
+  sceneId;
 
-  constructor(scene: Object3D) {
-    this.testScene = scene;
+  constructor(scene: Object3D, sceneId: string) {
+    this.scene = scene;
+    this.sceneId = sceneId;
   }
 
   // Get Scene
   get getScene() {
-    return this.testScene;
+    return this.scene;
   }
 
   // Get Object
@@ -18,7 +21,7 @@ export default class R3FTestHarness {
    * `name` as string
    */
   async getObjecByName(name: string) {
-    return this.testScene.getObjectByName(name)
+    return this.scene.getObjectByName(name)
   }
 
   // Look At Object
@@ -27,27 +30,19 @@ export default class R3FTestHarness {
 
   */
   // lookAtRef(ref: string) {
-  //   const setCameraTarget = useStore(this.sceneComposerId).getState().setCameraTarget;
+  //   console.log('in lookAtRef')
+  //   const setCameraTarget = useStore(this.sceneId).getState().setCameraTarget;
   //   setCameraTarget(ref, 'teleport');
   // };
-
-  // Delete Object
-  /*
-   * Remove object from scene
-   */
-    deleteObject(obj: Object3D) {
-      console.log('in harness: ', obj)
-      return this.testScene.remove(obj)
-  };
 
   // Scale Object
   /*
    * Modify scale of object on x, y, z props
    * Takes `scale` prop as Vector3 object
    */
-  //   scaleObject(scale: THREE.Vector3) {
+  //   scaleObject(obj: Object3D, scale: THREE.Vector3) {
   //     console.log('implement scaleObject')
-  //     return this.testScene.scale()
+  //     return obj.scale = scale;
   // };
 
   // Rotate Object
