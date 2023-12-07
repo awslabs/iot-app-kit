@@ -7,13 +7,19 @@ import {
 } from '../../components/chart/eChartsConstants';
 import { ResizeCallbackData } from 'react-resizable';
 import { useMeasure } from 'react-use';
-import { ChartLegend } from '../../components/chart/types';
 
-const getChartWidth = (width: number, staticWidth: number, rightLegend?: ChartLegend) => {
+const getChartWidth = (width: number, staticWidth: number, rightLegend?: boolean) => {
   if (!rightLegend) {
     return width - staticWidth;
   }
   return width * CHART_RESIZE_INITIAL_FACTOR - staticWidth;
+};
+
+const getChartHeight = (height: number, rightLegend?: boolean) => {
+  if (!rightLegend) {
+    return height;
+  }
+  return height * CHART_RESIZE_INITIAL_FACTOR;
 };
 
 /**
@@ -34,19 +40,23 @@ const getChartWidth = (width: number, staticWidth: number, rightLegend?: ChartLe
 export const useResizeableEChart = (
   chartRef: MutableRefObject<ECharts | null>,
   size: { width: number; height: number },
-  rightLegend?: ChartLegend
+  rightLegend?: boolean,
+  isBottomAligned?: boolean
 ) => {
   const { width, height } = size;
   const [leftLegendRef, { width: leftLegendWidth }] = useMeasure<HTMLDivElement>();
   const [chartWidth, setChartWidth] = useState(getChartWidth(width, leftLegendWidth));
+  const [chartHeight, setChartHeight] = useState(getChartHeight(height));
   const rightLegendWidth = rightLegend ? width - leftLegendWidth - chartWidth : 0;
+  const rightLegendHeight = rightLegend ? height - chartHeight : 0;
 
   const onResize = (_event: SyntheticEvent, data: ResizeCallbackData) => {
     _event.stopPropagation();
+
     if (!rightLegend) {
-      setChartWidth(width - leftLegendWidth);
+      isBottomAligned ? setChartHeight(height) : setChartWidth(width - leftLegendWidth);
     } else {
-      setChartWidth(data.size.width);
+      isBottomAligned ? setChartHeight(data.size.height) : setChartWidth(data.size.width);
     }
   };
 
@@ -55,23 +65,28 @@ export const useResizeableEChart = (
   }, [width, leftLegendWidth, rightLegend]);
 
   useEffect(() => {
+    setChartHeight(getChartHeight(height, rightLegend));
+  }, [height, rightLegend]);
+
+  useEffect(() => {
     const chart = chartRef.current;
-    chart?.resize({ width: chartWidth, height: height });
-  }, [chartRef, height, chartWidth]);
+    chart?.resize({ width: isBottomAligned ? width : chartWidth, height: isBottomAligned ? chartHeight : height });
+  }, [chartRef, chartHeight, chartWidth, isBottomAligned, height, width]);
 
   const minConstraints: [number, number] = useMemo(() => {
-    return [width * CHART_RESIZE_MIN_FACTOR, height];
+    return [width * CHART_RESIZE_MIN_FACTOR, height * CHART_RESIZE_MIN_FACTOR];
   }, [width, height]);
 
   const maxConstraints: [number, number] = useMemo(() => {
-    return [width * CHART_RESIZE_MAX_FACTOR, height];
+    return [width * CHART_RESIZE_MAX_FACTOR, height * CHART_RESIZE_MAX_FACTOR];
   }, [width, height]);
 
   return {
-    height,
-    chartWidth,
+    chartWidth: isBottomAligned ? width : chartWidth,
+    chartHeight: isBottomAligned ? chartHeight : height,
     leftLegendWidth,
-    rightLegendWidth,
+    rightLegendWidth: isBottomAligned ? width : rightLegendWidth,
+    rightLegendHeight: isBottomAligned ? rightLegendHeight : height,
     onResize,
     minConstraints,
     maxConstraints,
