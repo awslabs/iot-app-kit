@@ -26,6 +26,7 @@ export const PropertiesPanel = () => {
           {
             label: 'Properties',
             id: 'properties',
+            disabled: isJust(selection.type) && selection.type.value === 'text',
             content: (
               <SpaceBetween size='xs' direction='vertical'>
                 <PropertiesAndAlarmsSettingsConfiguration />
