@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.10.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.9.1...scene-composer-v9.10.0) (2023-12-07)
+
+
+### Bug Fixes
+
+* **composer:** trigger onSceneLoaded after dynamic scene is loaded ([4c9453a](https://github.com/awslabs/iot-app-kit/commit/4c9453a12211a878a850d71eee7cb8bd3d4a5fe3))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.9.1 to 9.10.0
+    * @iot-app-kit/react-components bumped from 9.9.1 to 9.10.0
+    * @iot-app-kit/related-table bumped from 9.9.1 to 9.10.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.9.1 to 9.10.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 9.9.1 to 9.10.0
+
 ## [9.9.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.9.0...scene-composer-v9.9.1) (2023-12-06)
 
 

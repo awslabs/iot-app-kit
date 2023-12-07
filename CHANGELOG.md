@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.10.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.9.1...root-v9.10.0) (2023-12-07)
+
+
+### Features
+
+* tabs on config panel present that are unusable [#2308](https://github.com/awslabs/iot-app-kit/issues/2308) ([9f0b63d](https://github.com/awslabs/iot-app-kit/commit/9f0b63d81446a1fce4a4635804cff9a6c06c9387))
+
+
+### Bug Fixes
+
+* **composer:** trigger onSceneLoaded after dynamic scene is loaded ([4c9453a](https://github.com/awslabs/iot-app-kit/commit/4c9453a12211a878a850d71eee7cb8bd3d4a5fe3))
+* **dashboard:** color picker has keyboard focus and can be interacted with ([1e4547e](https://github.com/awslabs/iot-app-kit/commit/1e4547e3aa2bc521c315391cabac569beab10508))
+* **react-components:** trendcursor hotkey indicates addition state ([c9d34e0](https://github.com/awslabs/iot-app-kit/commit/c9d34e0ef4ba891522336f05718d1808442949e3))
+* updates for performance issues ([8863b9a](https://github.com/awslabs/iot-app-kit/commit/8863b9a80d7a8284aa4732ed25298d165a769ea9))
+
 ## [9.9.1](https://github.com/awslabs/iot-app-kit/compare/root-v9.9.0...root-v9.9.1) (2023-12-06)
 
 
