@@ -25,7 +25,6 @@ const LegendCell = (e: { datastream: DataStream; lineColor: string; name: string
   const isDataStreamHighlighted = isDataStreamInList(highlightedDataStreams);
   const nameRef = useRef<HTMLDivElement | null>(null);
   const isNameTruncated = nameRef.current?.scrollWidth && nameRef.current?.scrollWidth > nameRef.current?.clientWidth;
-
   const toggleHighlighted = () => {
     if (isDataStreamHighlighted(datastream)) {
       unHighlightDataStream(datastream);
@@ -85,7 +84,7 @@ const useChartsLegend = ({
 }) => {
   const legendColumnDefinition = {
     id: 'Legends',
-    header: <div className='base-chart-legend-col-header'>Properties</div>,
+    header: <div className='base-chart-legend-col-header'>Data streams</div>,
     cell: (e: { datastream: DataStream; lineColor: string; name: string; width: number }) => <LegendCell {...e} />,
     isRowHeader: true,
   };

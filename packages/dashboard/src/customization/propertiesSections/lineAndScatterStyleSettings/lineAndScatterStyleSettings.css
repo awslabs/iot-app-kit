@@ -2,12 +2,13 @@
   background-color: #f8f8f8;
 }
 
-.accordian-custom-header [class*="awsui_expand-button"] {
+.accordian-header [class*="awsui_expand-button"] {
+  padding-left: 0.5rem;
   width: 100%;
 }
 
-.accordian-custom-header [class*="awsui_header-text"] {
-  flex-grow: 1;
+.accordian-header [class*="awsui_header-text"] {
+  width: 100%;
 }
 
 /* yAxis header  */

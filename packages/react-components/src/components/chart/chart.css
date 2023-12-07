@@ -9,15 +9,28 @@
   background-repeat: no-repeat;
   background-origin: content-box;
   box-sizing: border-box;
-  background-position: right;
 }
 
 .react-resizable-handle-se {
   bottom: 5%;
   right: 0;
   cursor: ew-resize;
-  background-image: url("./assets/verticalSlider.svg");
+  background-image: url("./assets/horizontalSliderIcon.svg");
+  background-position: center;
   border-left: 2px solid #e9ebed;
+}
+
+.bottom-position .react-resizable-handle-se {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  z-index: 99;
+  height: 20px;
+  cursor: ns-resize;
+  background-image: url("./assets/verticalSliderIcon.svg");
+  border: unset;
+  border-top: 2px solid #e9ebed;
 }
 
 .base-chart-element {
@@ -25,8 +38,28 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.base-chart-container {
+.base-chart-container,
+.chart-rightlegend-container {
   display: flex;
+}
+
+.base-chart-container.left-position {
+  flex-direction: row-reverse;
+}
+
+.left-position .chart-rightlegend-container {
+  padding-left: 20px;
+}
+
+.base-chart-container.bottom-position {
+  flex-direction: column;
+}
+
+.left-position .react-resizable-handle-se {
+  right: unset;
+  left: -15px;
+  border: unset;
+  border-right: 2px solid #e9ebed;
 }
 
 .base-chart-left-legend {

@@ -37,6 +37,7 @@ export type KPIProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
   significantDigits?: number;
 };
+
 export type KPIPropertiesKeys = keyof KPIProperties;
 
 export type StatusProperties = QueryProperties & {
@@ -51,6 +52,7 @@ export type StatusProperties = QueryProperties & {
   backgroundColor?: string;
   significantDigits?: number;
 };
+
 export type StatusPropertiesKeys = keyof StatusProperties;
 
 export type StatusTimelineProperties = QueryProperties & {
@@ -60,6 +62,7 @@ export type StatusTimelineProperties = QueryProperties & {
   axis?: AxisSettings;
   significantDigits?: number;
 };
+
 export type StatusTimelinePropertiesKeys = keyof StatusTimelineProperties;
 
 export type LineAndScatterStyles = {
@@ -71,12 +74,14 @@ export type LineAndScatterStyles = {
   resolution?: string;
   visible?: boolean; // defaults to true
 };
+
 export type LineStyles = {
   connectionStyle?: 'none' | 'linear' | 'curve' | 'step-start' | 'step-middle' | 'step-end';
   style?: 'solid' | 'dotted' | 'dashed';
   thickness?: number;
   color?: string;
 };
+
 export type SymbolStyles = {
   visible?: boolean;
   style?:
@@ -92,8 +97,10 @@ export type SymbolStyles = {
   color?: string;
   size?: number;
 };
+
 export type AssetPropertyStyles = LineAndScatterStyles & { yAxis?: YAxisOptions };
 export type StyledAssetPropertyQuery = AssetPropertyQuery & AssetPropertyStyles;
+
 export type StyledAssetQuery = {
   assets?: {
     assetId: SiteWiseAssetQuery['assets'][number]['assetId'];
@@ -111,21 +118,30 @@ export type ThresholdStyleType = {
   visible?: boolean;
   fill?: string;
 };
+
 export type StyledThreshold = Threshold & ThresholdStyleType;
 
 type YAxisRange = {
   yMin?: number;
   yMax?: number;
 };
+
 export type YAxisOptions = YAxisRange & {
   visible?: boolean;
 };
+
 export type ChartAxisOptions = YAxisRange & {
   yVisible?: boolean;
   xVisible?: boolean;
 };
-type ChartLegend = {
+
+type ChartLegendContent = 'unit' | 'asset';
+export type ChartLegend = {
   visible?: boolean;
+  position?: 'left' | 'bottom' | 'right';
+  height?: string;
+  width?: string;
+  visibleContent?: { [key in ChartLegendContent]?: boolean };
 };
 
 export type StyledSiteWiseQueryConfig = QueryConfig<'iotsitewise', StyledAssetQuery | undefined>;
@@ -149,6 +165,7 @@ export type BarChartProperties = QueryProperties & {
   resolution?: string;
   aggregationType?: AggregateType;
 };
+
 export type BarChartPropertiesKeys = keyof BarChartProperties;
 
 export type TableProperties = QueryProperties & {
@@ -160,6 +177,7 @@ export type TableProperties = QueryProperties & {
   significantDigits?: number;
   pageSize?: number;
 };
+
 export type TablePropertiesKeys = keyof TableProperties;
 
 export type TextProperties = {

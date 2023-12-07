@@ -10,6 +10,5 @@ export const convertLegend = (legend: ChartOptions['legend']): LegendComponentOp
   return {
     ...DEFAULT_LEGEND,
     ...configuredPosition,
-    backgroundColor: legend?.backgroundColor,
   };
 };
