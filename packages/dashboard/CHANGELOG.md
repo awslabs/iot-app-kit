@@ -1,5 +1,34 @@
 # Changelog
 
+## [9.10.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.9.1...dashboard-v9.10.0) (2023-12-07)
+
+
+### Features
+
+* tabs on config panel present that are unusable [#2308](https://github.com/awslabs/iot-app-kit/issues/2308) ([9f0b63d](https://github.com/awslabs/iot-app-kit/commit/9f0b63d81446a1fce4a4635804cff9a6c06c9387))
+
+
+### Bug Fixes
+
+* **dashboard:** color picker has keyboard focus and can be interacted with ([1e4547e](https://github.com/awslabs/iot-app-kit/commit/1e4547e3aa2bc521c315391cabac569beab10508))
+* updates for performance issues ([8863b9a](https://github.com/awslabs/iot-app-kit/commit/8863b9a80d7a8284aa4732ed25298d165a769ea9))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.9.1 to 9.10.0
+    * @iot-app-kit/core bumped from 9.9.1 to 9.10.0
+    * @iot-app-kit/core-util bumped from 9.9.1 to 9.10.0
+    * @iot-app-kit/react-components bumped from 9.9.1 to 9.10.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.9.1 to 9.10.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.9.1 to 9.10.0
+    * @iot-app-kit/testing-util bumped from 9.9.1 to 9.10.0
+    * @iot-app-kit/ts-config bumped from 9.9.1 to 9.10.0
+    * eslint-config-iot-app-kit bumped from 9.9.1 to 9.10.0
+
 ## [9.9.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.9.0...dashboard-v9.9.1) (2023-12-06)
 
 
