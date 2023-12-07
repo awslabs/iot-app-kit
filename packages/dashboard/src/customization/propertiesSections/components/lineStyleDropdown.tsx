@@ -1,7 +1,7 @@
 import React from 'react';
 import type { FC } from 'react';
 import { FormField, Select } from '@cloudscape-design/components';
-import { dropdownConsts } from './dropdownConstants';
+import { dropdownConsts } from '../constants';
 
 type LineStyleDropdownProps = {
   disabled?: boolean;

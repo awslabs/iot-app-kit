@@ -54,3 +54,9 @@ input[type="color"]::-webkit-color-swatch {
 input[type="color"]::-moz-color-swatch {
   border: none;
 }
+
+.expand-header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}

@@ -33,6 +33,13 @@ export const lineScatterChartPlugin: DashboardPlugin = {
         },
         legend: {
           visible: true,
+          position: 'right',
+          width: '30%',
+          height: '30%',
+          visibleContent: {
+            unit: true,
+            asset: true,
+          },
         },
       }),
       initialSize: {

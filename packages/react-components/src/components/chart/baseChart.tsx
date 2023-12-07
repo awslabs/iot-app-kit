@@ -13,7 +13,7 @@ import { useConvertedOptions } from './chartOptions/convertOptions';
 import { useSeriesAndYAxis } from './chartOptions/seriesAndYAxis/convertSeriesAndYAxis';
 import { HotKeys } from 'react-hotkeys';
 import { useTrendCursors } from './trendCursor';
-import { Resizable } from 'react-resizable';
+import { Resizable, ResizeHandle } from 'react-resizable';
 import Legend from './legend/legend';
 import { useChartStyleSettings } from './chartOptions/style/convertStyles';
 import ChartContextMenu, { Action } from './contextMenu/ChartContextMenu';
@@ -62,9 +62,19 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   } = useVisualizedDataStreams(queries, viewport);
   const allThresholds = [...queryThresholds, ...(options.thresholds ?? [])];
 
+  const isBottomAligned = options.legend?.position === 'bottom';
+
   // Setup resize container and calculate size for echarts
-  const { height, chartWidth, rightLegendWidth, onResize, minConstraints, maxConstraints, leftLegendRef } =
-    useResizeableEChart(chartRef, size, options.legend);
+  const {
+    chartWidth,
+    chartHeight,
+    rightLegendWidth,
+    rightLegendHeight,
+    onResize,
+    minConstraints,
+    maxConstraints,
+    leftLegendRef,
+  } = useResizeableEChart(chartRef, size, options.legend?.visible, isBottomAligned);
 
   // apply group to echarts
   useGroupableEChart(chartRef, group);
@@ -92,7 +102,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   const { onContextMenuClickHandler, trendCursors, trendCursorKeyMap, trendCursorHandlers } = useTrendCursors({
     chartRef,
     initialGraphic: options.graphic,
-    size: { width: chartWidth, height },
+    size: { width: chartWidth, height: chartHeight },
     series,
     chartId: options.id,
     viewportInMs,
@@ -167,34 +177,47 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
       e.stopPropagation();
     }
   };
+  const setHandles = (position: string): ResizeHandle[] => {
+    switch (position) {
+      case 'left':
+      case 'bottom':
+        return ['sw'];
+      default:
+        return ['se'];
+    }
+  };
 
   return (
-    <div className='base-chart-container'>
-      <div className='base-chart-left-legend' ref={leftLegendRef}>
-        <MultiYAxisLegend datastreams={dataStreams} height={height} />
-      </div>
+    <div className={`base-chart-container ${options.legend?.position}-position`}>
       <Resizable
-        height={height}
+        height={chartHeight}
         width={chartWidth}
         onResize={onResize}
-        axis='x'
+        axis={`${isBottomAligned ? 'y' : 'x'}`}
         minConstraints={minConstraints}
         maxConstraints={maxConstraints}
         handle={
           <span
-            className={options.legend && 'react-resizable-handle react-resizable-handle-se'}
+            className={options.legend?.visible ? 'react-resizable-handle react-resizable-handle-se' : ''}
             data-gesture='resize'
           />
         }
         onResizeStart={(e) => e.stopPropagation()}
         onResizeStop={(e) => e.stopPropagation()}
+        resizeHandles={[...setHandles(options.legend?.position || 'right')]}
       >
-        <HotKeys keyMap={hotKeyMap} handlers={hotKeyHandlers} style={{ position: 'relative' }}>
+        <HotKeys keyMap={hotKeyMap} handlers={hotKeyHandlers} className='chart-rightlegend-container'>
+          <div className='base-chart-left-legend' ref={leftLegendRef}>
+            <MultiYAxisLegend datastreams={dataStreams} height={chartHeight} />
+          </div>
           <div
             ref={ref}
             onMouseDown={handleMouseDown}
             className='base-chart-element'
-            style={{ height, width: chartWidth }}
+            style={{
+              height: chartHeight,
+              width: chartWidth,
+            }}
           />
           {/*TODO: should not show when in dashboard */}
           {showContextMenu && (
@@ -207,8 +230,13 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
           )}
         </HotKeys>
       </Resizable>
-      {options.legend && (
-        <div style={{ height, width: rightLegendWidth }}>
+      {options.legend?.visible && (
+        <div
+          style={{
+            height: rightLegendHeight,
+            width: rightLegendWidth,
+          }}
+        >
           <Legend series={series} graphic={trendCursors} datastreams={dataStreams} width={rightLegendWidth} />
         </div>
       )}

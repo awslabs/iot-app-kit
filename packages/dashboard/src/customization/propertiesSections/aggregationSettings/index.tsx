@@ -1,5 +1,4 @@
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import { type SelectProps } from '@cloudscape-design/components/select';
 import React from 'react';
 
 import { AggregationAndResolutionSection } from '../lineAndScatterStyleSettings/aggregationAndResolutionSection';
@@ -11,25 +10,10 @@ import { type FilterPredicate, PropertyLens } from '~/customization/propertiesSe
 import { type DashboardWidget } from '~/types';
 
 import { isJust, maybeWithDefault } from '~/util/maybe';
+import { BAR_AGGREGATION_OPTIONS, BAR_RESOLUTION_OPTIONS } from '../constants';
+
 const isOnlyRawData: readonly string[] = ['status-timeline', 'table', 'kpi', 'status'];
 const isOnlyAggregated: readonly string[] = ['bar-chart'];
-
-export const RESOLUTION_OPTIONS: SelectProps.Option[] = [
-  { label: '1 min', value: '1m' },
-  { label: '15 min', value: '15m' },
-  { label: '1 hour', value: '1h' },
-  { label: '1 day', value: '1d' },
-  { label: 'Autoselect', value: undefined },
-];
-
-export const AGGREGATION_OPTIONS: SelectProps.Option[] = [
-  { label: 'Average', value: AggregateType.AVERAGE },
-  { label: 'Count', value: AggregateType.COUNT },
-  { label: 'Maximum', value: AggregateType.MAXIMUM },
-  { label: 'Minimum', value: AggregateType.MINIMUM },
-  { label: 'Standard deviation', value: AggregateType.STANDARD_DEVIATION },
-  { label: 'Sum', value: AggregateType.SUM },
-];
 
 // TODO: Fix lying type
 export const isOnlyRawDataWidget = (widget: DashboardWidget): widget is LineScatterChartWidget =>
@@ -102,8 +86,8 @@ const RenderAggregationsPropertiesSection = ({
       resolution={resolution}
       updateAggregation={(updatedAggregationType) => updateAggregation(updatedAggregationType as AggregateType)}
       updateResolution={updateResolution}
-      resolutionOptions={RESOLUTION_OPTIONS}
-      aggregationOptions={AGGREGATION_OPTIONS}
+      resolutionOptions={BAR_RESOLUTION_OPTIONS}
+      aggregationOptions={BAR_AGGREGATION_OPTIONS}
     />
   );
 };
