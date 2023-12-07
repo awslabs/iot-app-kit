@@ -71,11 +71,13 @@ export class DescribeModeledDataStreamRequest {
       return assetProperty;
     }
 
-    const assetCompositeModelProperty = asset.assetCompositeModels?.find(({ properties = [] }) => {
+    const assetCompositeModel = asset.assetCompositeModels?.find(({ properties = [] }) => {
       return properties?.find(({ id }) => {
         return id === assetPropertyId;
       });
     });
+
+    const assetCompositeModelProperty = assetCompositeModel?.properties?.find(({ id }) => id === assetPropertyId);
 
     if (assetCompositeModelProperty) {
       return assetCompositeModelProperty;
