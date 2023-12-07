@@ -1,9 +1,10 @@
 import {
-  DescribeAssetCommandOutput,
-  ListAssetModelPropertiesCommandOutput,
-  ListAssetPropertiesCommandOutput,
+  type DescribeAssetCommandOutput,
+  type ListAssetModelPropertiesCommandOutput,
+  type ListAssetPropertiesCommandOutput,
   type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
+
 import { DescribeModeledDataStreamRequest } from './describeModeledDataStreamRequest';
 
 describe(DescribeModeledDataStreamRequest, () => {
@@ -14,8 +15,23 @@ describe(DescribeModeledDataStreamRequest, () => {
     expect(request).not.toBeNull();
   });
 
+  it('throws an error when DescribeAsset fails', async () => {
+    const client = {
+      send: jest.fn().mockRejectedValue(new Error()),
+    } as unknown as IoTSiteWiseClient;
+    const request = new DescribeModeledDataStreamRequest(client);
+
+    await expect(
+      request.send({
+        assetPropertyId: '',
+        assetId: '',
+        assetModelId: '',
+      })
+    ).rejects.toThrowError();
+  });
+
   it('returns a modeled data stream from an asset', async () => {
-    const fakeDescribeAssetCommandOutput: DescribeAssetCommandOutput = {
+    const fakeDescribeAssetCommandOutput = {
       assetId: '456',
       assetModelId: '789',
       assetArn: '',
@@ -35,20 +51,27 @@ describe(DescribeModeledDataStreamRequest, () => {
         state: 'ACTIVE',
       },
       $metadata: {},
-    };
+    } satisfies DescribeAssetCommandOutput;
 
     const client = {
       send: jest.fn().mockResolvedValueOnce(fakeDescribeAssetCommandOutput),
     } as unknown as IoTSiteWiseClient;
     const request = new DescribeModeledDataStreamRequest(client);
 
-    const response = await request.send({
-      assetPropertyId: '123',
-      assetId: '456',
-      assetModelId: '789',
+    const modeledDataStream = await request.send({
+      assetPropertyId: fakeDescribeAssetCommandOutput.assetProperties[0].id,
+      assetId: fakeDescribeAssetCommandOutput.assetId,
+      assetModelId: fakeDescribeAssetCommandOutput.assetModelId,
     });
 
-    expect(response).not.toBeUndefined();
+    expect(modeledDataStream).toEqual({
+      assetId: fakeDescribeAssetCommandOutput.assetId,
+      assetName: fakeDescribeAssetCommandOutput.assetName,
+      dataType: fakeDescribeAssetCommandOutput.assetProperties[0].dataType,
+      id: fakeDescribeAssetCommandOutput.assetProperties[0].id,
+      name: fakeDescribeAssetCommandOutput.assetProperties[0].name,
+      propertyId: fakeDescribeAssetCommandOutput.assetProperties[0].id,
+    });
   });
 
   it('returns a cached modeled data stream from an asset', async () => {
@@ -188,6 +211,15 @@ describe(DescribeModeledDataStreamRequest, () => {
       assetModelId: '789',
     });
 
+    expect(response).toEqual({
+      assetId: '456',
+      assetName: 'asset',
+      name: 'composite model property',
+      dataType: 'DOUBLE',
+      id: 'xyz',
+      propertyId: 'xyz',
+    });
+
     expect(response).not.toBeUndefined();
   });
 
@@ -256,6 +288,77 @@ describe(DescribeModeledDataStreamRequest, () => {
     });
 
     expect(response).not.toBeUndefined();
+  });
+
+  it('throw error if ListAssetProperties fails', async () => {
+    const fakeDescribeAssetCommandOutput: DescribeAssetCommandOutput = {
+      assetId: '456',
+      assetModelId: '789',
+      assetArn: '',
+      assetCompositeModels: [],
+      assetProperties: [],
+      assetName: 'asset',
+      assetCreationDate: new Date(0),
+      assetLastUpdateDate: new Date(0),
+      assetHierarchies: [],
+      assetStatus: {
+        state: 'ACTIVE',
+      },
+      $metadata: {},
+    };
+
+    const client = {
+      send: jest.fn().mockResolvedValueOnce(fakeDescribeAssetCommandOutput).mockRejectedValue(new Error()),
+    } as unknown as IoTSiteWiseClient;
+    const request = new DescribeModeledDataStreamRequest(client);
+
+    await expect(
+      request.send({
+        assetPropertyId: 'asdf',
+        assetId: '456',
+        assetModelId: '789',
+      })
+    ).rejects.toThrowError();
+  });
+
+  it('throws error if ListAssetModelProperties fails', async () => {
+    const fakeDescribeAssetCommandOutput: DescribeAssetCommandOutput = {
+      assetId: '456',
+      assetModelId: '789',
+      assetArn: '',
+      assetCompositeModels: [],
+      assetProperties: [],
+      assetName: 'asset',
+      assetCreationDate: new Date(0),
+      assetLastUpdateDate: new Date(0),
+      assetHierarchies: [],
+      assetStatus: {
+        state: 'ACTIVE',
+      },
+      $metadata: {},
+    };
+
+    const fakeListAssetPropertiesCommandOutput: ListAssetPropertiesCommandOutput = {
+      assetPropertySummaries: [],
+      $metadata: {},
+    };
+
+    const client = {
+      send: jest
+        .fn()
+        .mockResolvedValueOnce(fakeDescribeAssetCommandOutput)
+        .mockResolvedValueOnce(fakeListAssetPropertiesCommandOutput)
+        .mockRejectedValue(new Error()),
+    } as unknown as IoTSiteWiseClient;
+    const request = new DescribeModeledDataStreamRequest(client);
+
+    await expect(
+      request.send({
+        assetPropertyId: 'asdf',
+        assetId: '456',
+        assetModelId: '789',
+      })
+    ).rejects.toThrowError();
   });
 
   it('returns cached properties from list calls', async () => {
