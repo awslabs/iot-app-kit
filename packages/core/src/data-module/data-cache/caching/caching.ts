@@ -27,7 +27,7 @@ const TOO_CLOSE_MS = MINUTE_IN_MS;
 // Don't request anything with less than a second - SiteWise API will return 400
 // as it will think the start and the end date are the same if they are not
 // far enough apart.
-const MINIMUM_INTERVAL = SECOND_IN_MS;
+const MINIMUM_INTERVAL = SECOND_IN_MS * 3;
 
 /**
  * Combine Short Intervals

@@ -987,7 +987,7 @@ describe('request scheduler', () => {
         queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { duration: 900000 },
-          settings: { fetchFromStartToEnd: true, refreshRate: SECOND_IN_MS * 0.1 },
+          settings: { fetchFromStartToEnd: true, refreshRate: SECOND_IN_MS * 1.5 },
         },
       },
       timeSeriesCallback
@@ -995,13 +995,13 @@ describe('request scheduler', () => {
 
     await flushPromises();
     timeSeriesCallback.mockClear();
-    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
+    jest.advanceTimersByTime(SECOND_IN_MS * 1.51);
 
     await flushPromises();
     expect(timeSeriesCallback).toBeCalledTimes(2);
 
     timeSeriesCallback.mockClear();
-    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
+    jest.advanceTimersByTime(SECOND_IN_MS * 1.51);
 
     await flushPromises();
     expect(timeSeriesCallback).toBeCalledTimes(2);
@@ -1105,7 +1105,7 @@ describe('request scheduler', () => {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
           settings: {
             fetchMostRecentBeforeEnd: true,
-            refreshRate: SECOND_IN_MS * 0.1,
+            refreshRate: SECOND_IN_MS * 1.5,
           },
         },
       },
@@ -1118,21 +1118,21 @@ describe('request scheduler', () => {
       request: {
         viewport: { duration: MINUTE_IN_MS },
         settings: {
-          refreshRate: SECOND_IN_MS * 0.1,
+          refreshRate: SECOND_IN_MS * 1.5,
           fetchFromStartToEnd: true,
         },
       },
     });
     timeSeriesCallback.mockClear();
 
-    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
+    jest.advanceTimersByTime(SECOND_IN_MS * 1.51);
     await flushPromises();
     expect(timeSeriesCallback).toBeCalledTimes(2);
 
     await flushPromises();
     timeSeriesCallback.mockClear();
 
-    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
+    jest.advanceTimersByTime(SECOND_IN_MS * 1.51);
     await flushPromises();
 
     expect(timeSeriesCallback).toBeCalledTimes(2);
@@ -1233,12 +1233,12 @@ describe('request scheduler', () => {
     await update({
       request: {
         viewport: { start: START, end: END },
-        settings: { refreshRate: SECOND_IN_MS * 0.1, fetchFromStartToEnd: true },
+        settings: { refreshRate: SECOND_IN_MS * 1.5, fetchFromStartToEnd: true },
       },
     });
     timeSeriesCallback.mockClear();
 
-    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
+    jest.advanceTimersByTime(SECOND_IN_MS * 1.51);
     await flushPromises();
 
     expect(timeSeriesCallback).toBeCalledTimes(2);
