@@ -10,10 +10,10 @@ interface CacheItem {
   assetModelProperties: AssetModelProperty[];
   nextToken: string | undefined;
 }
-type Cache = Record<AssetModelId, CacheItem>;
+type AssetModelPropertyCache = Record<AssetModelId, CacheItem>;
 
-export class SearchAssetModelPropertyRequest {
-  #cache: Cache = {};
+export class SearchAssetModelPropertyListsRequest {
+  #cache: AssetModelPropertyCache = {};
   #client: IoTSiteWiseClient;
 
   constructor(client: IoTSiteWiseClient) {
@@ -94,9 +94,10 @@ export class SearchAssetModelPropertyRequest {
     return command;
   }
 
-  #handleError(error: unknown) {
-    console.error(`Failed to list asset model properties. Error: ${error}`);
+  #handleError(error: unknown): never {
+    const errorMessage = `Failed to search asset model property lists. Error: ${error}`;
+    console.error(errorMessage);
 
-    throw error;
+    throw new Error(errorMessage);
   }
 }

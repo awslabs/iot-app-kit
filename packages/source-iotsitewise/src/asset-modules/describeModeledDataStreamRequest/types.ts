@@ -1,4 +1,5 @@
 import {
+  type DescribeAssetCommandOutput,
   type ListAssetPropertiesCommandOutput,
   type ListAssetModelPropertiesCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
@@ -12,6 +13,8 @@ export type ModeledDataStream = {
   dataType?: string;
   dataTypeSpec?: string;
 };
+
+export type Asset = NonNullable<DescribeAssetCommandOutput>;
 
 export type AssetPropertyId = string;
 
