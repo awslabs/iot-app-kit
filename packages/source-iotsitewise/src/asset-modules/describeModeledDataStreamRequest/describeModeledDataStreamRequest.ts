@@ -1,18 +1,34 @@
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 
-import { FindModeledDataStreamRequest } from './findModeledDataStreamRequest';
-import { SearchModeledDataStreamRequest } from './searchModeledDataStreamRequest';
-import type { AssetId, AssetModelId, AssetPropertyId, ModeledDataStream } from './types';
+import { DescribeAssetRequest } from './describeAssetRequest';
+import { SearchAssetPropertyRequest } from './searchAssetPropertyRequest';
+import type { Asset, AssetId, AssetModelId, AssetPropertyId, ModeledDataStream } from './types';
 
+/**
+ * Creates a request to return the metadata for a modeled data stream.
+ *
+ * @remarks
+ *
+ * The created request is optimized to reduce the number of requests send using
+ * caching of requests and optimistic control flow.
+ */
 export class DescribeModeledDataStreamRequest {
-  #findModeledDataStreamRequest: FindModeledDataStreamRequest;
-  #searchModeledDataStreamRequest: SearchModeledDataStreamRequest;
+  #describeAssetRequest: DescribeAssetRequest;
+  #searchAssetPropertyRequest: SearchAssetPropertyRequest;
 
   constructor(client: IoTSiteWiseClient) {
-    this.#findModeledDataStreamRequest = new FindModeledDataStreamRequest(client);
-    this.#searchModeledDataStreamRequest = new SearchModeledDataStreamRequest(client);
+    this.#describeAssetRequest = new DescribeAssetRequest(client);
+    this.#searchAssetPropertyRequest = new SearchAssetPropertyRequest(client);
   }
 
+  /**
+   * Initiate the request to describe a modeled data stream.
+   *
+   * @remarks
+   *
+   * The request returns undefined if any exceptions are thrown to handle
+   * failures gracefully.
+   */
   public async send({
     assetPropertyId,
     assetId,
@@ -21,9 +37,9 @@ export class DescribeModeledDataStreamRequest {
     assetPropertyId: AssetPropertyId;
     assetId: AssetId;
     assetModelId: AssetModelId;
-  }): Promise<ModeledDataStream | undefined | never> {
+  }): Promise<ModeledDataStream | undefined> {
     try {
-      const asset = await this.#findModeledDataStreamRequest.send(assetId);
+      const asset = await this.#describeAssetRequest.send(assetId);
       const assetPropertyOnAsset = this.#findAssetPropertyOnAsset({ assetPropertyId, asset });
 
       if (assetPropertyOnAsset) {
@@ -37,15 +53,15 @@ export class DescribeModeledDataStreamRequest {
         return modeledDataStream;
       }
 
-      const foundAssetProperty = await this.#searchModeledDataStreamRequest.send({
+      const searchedAssetProperty = await this.#searchAssetPropertyRequest.send({
         assetPropertyId,
         assetId,
         assetModelId,
       });
 
-      if (foundAssetProperty) {
+      if (searchedAssetProperty) {
         const modeledDataStream = {
-          ...foundAssetProperty,
+          ...searchedAssetProperty,
           assetId,
           propertyId: assetPropertyId,
           assetName: asset.assetName,
@@ -54,39 +70,36 @@ export class DescribeModeledDataStreamRequest {
         return modeledDataStream;
       }
     } catch (error) {
-      this.#handleError(error);
+      return this.#handleError(error);
     }
   }
 
   #findAssetPropertyOnAsset({
     assetPropertyId,
-    asset,
+    asset: { assetProperties = [], assetCompositeModels = [] },
   }: {
     assetPropertyId: AssetPropertyId;
-    asset: Awaited<ReturnType<FindModeledDataStreamRequest['send']>>;
+    asset: Asset;
   }) {
-    const assetProperty = asset.assetProperties?.find(({ id }) => id === assetPropertyId);
+    const assetProperty = assetProperties.find(({ id }) => id === assetPropertyId);
 
     if (assetProperty) {
       return assetProperty;
     }
 
-    const assetCompositeModel = asset.assetCompositeModels?.find(({ properties = [] }) => {
-      return properties?.find(({ id }) => {
-        return id === assetPropertyId;
-      });
-    });
-
-    const assetCompositeModelProperty = assetCompositeModel?.properties?.find(({ id }) => id === assetPropertyId);
+    const assetCompositeModelProperty = assetCompositeModels
+      .flatMap(({ properties = [] }) => properties)
+      .find(({ id }) => id === assetPropertyId);
 
     if (assetCompositeModelProperty) {
       return assetCompositeModelProperty;
     }
   }
 
-  #handleError(error: unknown): never {
-    console.error(`Failed to describe modeled data stream. Error: ${error}`);
+  #handleError(error: unknown): undefined {
+    const errorMessage = `Failed to describe modeled data stream. Error: ${error}`;
+    console.error(errorMessage);
 
-    throw error;
+    return undefined;
   }
 }
