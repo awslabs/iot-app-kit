@@ -18,6 +18,7 @@ import { useLatestValues } from '../../useLatestValues';
 import { DashboardState } from '~/store/state';
 import { getFormattedDateTimeFromEpoch } from '~/components/util/dateTimeUtil';
 import { ResourceExplorerFooter } from '../../footer/footer';
+import { getPlugin } from '@iot-app-kit/core';
 
 export interface UnmodeledDataStreamTableProps {
   onClickAdd: (unmodeledDataStreams: UnmodeledDataStream[]) => void;
@@ -34,6 +35,7 @@ export function UnmodeledDataStreamTable({
   client,
   hasNextPage,
 }: UnmodeledDataStreamTableProps) {
+  const metricsRecorder = getPlugin('metricsRecorder');
   const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
   const [preferences, setPreferences] = useExplorerPreferences({
@@ -113,7 +115,13 @@ export function UnmodeledDataStreamTable({
           resetDisabled={collectionProps.selectedItems?.length === 0}
           onReset={() => actions.setSelectedItems([])}
           addDisabled={collectionProps.selectedItems?.length === 0 || selectedWidgets.length !== 1}
-          onAdd={() => onClickAdd(collectionProps.selectedItems as unknown as UnmodeledDataStream[])}
+          onAdd={() => {
+            onClickAdd(collectionProps.selectedItems as unknown as UnmodeledDataStream[]);
+            metricsRecorder?.record({
+              metricName: 'UnmodeledDataStreamAdd',
+              metricValue: 1,
+            });
+          }}
         />
       }
       resizableColumns
