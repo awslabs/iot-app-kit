@@ -15,12 +15,14 @@ import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
 import { getAssetModelQueryInformation } from './getAssetModelQueryInformation';
 import { useModelBasedQuery } from './modelBasedQuery/useModelBasedQuery';
 import { useModelBasedQuerySelection } from './modelBasedQuery/useModelBasedQuerySelection';
+import { getPlugin } from '@iot-app-kit/core';
 
 export interface AssetModelDataStreamExplorerProps {
   client: IoTSiteWiseClient;
 }
 
 export const AssetModelDataStreamExplorer = ({ client }: AssetModelDataStreamExplorerProps) => {
+  const metricsRecorder = getPlugin('metricsRecorder');
   const { assetModelId, assetIds, clearModelBasedWidgets, updateSelectedAsset } = useModelBasedQuery();
   const { assetModels, updateAssetModels, modelBasedWidgetsSelected } = useModelBasedQuerySelection();
 
@@ -56,6 +58,10 @@ export const AssetModelDataStreamExplorer = ({ client }: AssetModelDataStreamExp
           assetModelPropertyIds: createNonNullableList(selectedAssetModelProperties.map(({ id }) => id)),
         })
       );
+      metricsRecorder?.record({
+        metricName: 'AssetModelDataStreamAdd',
+        metricValue: 1,
+      });
     }
   };
 

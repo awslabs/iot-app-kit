@@ -21,6 +21,7 @@ import { DashboardState } from '~/store/state';
 import { ResourceExplorerFooter } from '../../../footer/footer';
 import { SelectedAsset } from '../../types';
 import { ResourceExplorerErrorState } from '../../components/resourceExplorerErrorState';
+import { getPlugin } from '@iot-app-kit/core';
 
 export interface ModeledDataStreamTableProps {
   onClickAddModeledDataStreams: (modeledDataStreams: ModeledDataStream[]) => void;
@@ -45,6 +46,7 @@ export function ModeledDataStreamTable({
   hasNextPage,
   modeledDataStreamsTitle,
 }: ModeledDataStreamTableProps) {
+  const metricsRecorder = getPlugin('metricsRecorder');
   const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
 
@@ -145,6 +147,10 @@ export function ModeledDataStreamTable({
           addDisabled={collectionProps.selectedItems?.length === 0 || selectedWidgets.length !== 1}
           onAdd={() => {
             onClickAddModeledDataStreams(collectionProps.selectedItems as unknown as ModeledDataStream[]);
+            metricsRecorder?.record({
+              metricName: 'ModeledDataStreamAdd',
+              metricValue: 1,
+            });
           }}
         />
       }
