@@ -3,7 +3,7 @@ import { isDefined } from '../../common/predicates';
 import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import type { ErrorDetails } from '@iot-app-kit/core';
 import type { SiteWiseDataStreamQuery } from '../../time-series-data/types';
-import type { ModeledDataStream } from '../describeModeledDataStreamRequest/types';
+import type { ModeledDataStream } from '../describeModeledDataStreamRequest';
 
 export async function* fetchAssetModelsFromQuery({
   queries,
