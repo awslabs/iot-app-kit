@@ -201,3 +201,83 @@ describe('getViewportStartOnBackwardRelative', () => {
     jest.useRealTimers();
   });
 });
+
+describe('getViewportStartOnBackwardRelative on first backward click', () => {
+  jest.useFakeTimers().setSystemTime(new Date(2023, 11, 24).getTime());
+
+  it('can get the new start date from current range when going back from a relative duration', () => {
+    let currentDate = new Date();
+    let newDate = getViewportDateRelativeToAbsolute(
+      {
+        amount: 5,
+        unit: 'minute',
+        type: 'relative',
+      },
+      true
+    );
+
+    const result = currentDate.getTime() - newDate.getTime();
+    expect(result).toEqual(600000);
+
+    currentDate = new Date();
+    newDate = getViewportDateRelativeToAbsolute(
+      {
+        amount: 1,
+        unit: 'hour',
+        type: 'relative',
+      },
+      true
+    );
+
+    expect(currentDate.getTime() - newDate.getTime()).toEqual(7200000);
+
+    currentDate = new Date();
+    newDate = getViewportDateRelativeToAbsolute(
+      {
+        amount: 30,
+        unit: 'second',
+        type: 'relative',
+      },
+      true
+    );
+    expect(currentDate.getTime() - newDate.getTime()).toEqual(60000);
+
+    currentDate = new Date();
+    newDate = getViewportDateRelativeToAbsolute(
+      {
+        amount: 1,
+        unit: 'day',
+        type: 'relative',
+      },
+      true
+    );
+    expect(currentDate.getTime() - newDate.getTime()).toEqual(172800000);
+
+    currentDate = new Date();
+    newDate = getViewportDateRelativeToAbsolute(
+      {
+        amount: 1,
+        unit: 'week',
+        type: 'relative',
+      },
+      true
+    );
+    expect(currentDate.getTime() - newDate.getTime()).toEqual(1209600000);
+
+    currentDate = new Date();
+    newDate = getViewportDateRelativeToAbsolute(
+      {
+        amount: 1,
+        unit: 'month',
+        type: 'relative',
+      },
+      true
+    );
+
+    const previousMonthDays = new Date(newDate.getFullYear(), newDate.getMonth() - 1, 0).getDate(); //calculating no of days for previous month of current range
+    const timeGap = previousMonthDays === 30 ? 5184000000 : 5270400000;
+    expect(currentDate.getTime() - newDate.getTime()).toEqual(timeGap);
+
+    jest.useRealTimers();
+  });
+});

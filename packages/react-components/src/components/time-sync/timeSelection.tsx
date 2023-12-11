@@ -83,7 +83,7 @@ export const TimeSelection = ({ isPaginationEnabled }: { isPaginationEnabled?: b
     }
     if (value.type === 'relative') {
       const newStart = new Date();
-      const newEnd = getViewportDateRelativeToAbsolute(value, true);
+      const newEnd = getViewportDateRelativeToAbsolute(value, false, true);
       setViewport(
         dateRangeToViewport({ startDate: newStart.toISOString(), endDate: newEnd.toISOString(), type: 'absolute' }),
         'date-picker'
@@ -102,8 +102,8 @@ export const TimeSelection = ({ isPaginationEnabled }: { isPaginationEnabled?: b
         'date-picker'
       );
     } else if (value.type === 'relative') {
-      const newEnd = new Date();
-      const newStart = getViewportDateRelativeToAbsolute(value);
+      const newEnd = getViewportDateRelativeToAbsolute(value);
+      const newStart = getViewportDateRelativeToAbsolute(value, true);
       setViewport(
         dateRangeToViewport({ startDate: newStart.toISOString(), endDate: newEnd.toISOString(), type: 'absolute' }),
         'date-picker'
