@@ -1,103 +1,53 @@
-import {
-  ListAssetPropertiesCommand,
-  type IoTSiteWiseClient,
-  type ListAssetPropertiesCommandInput,
-} from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWiseClient, type AssetPropertySummary } from '@aws-sdk/client-iotsitewise';
 
-import type { AssetId, AssetProperty, AssetPropertyId } from './types';
-
-interface CacheItem {
-  assetProperties: AssetProperty[];
-  nextToken: string | undefined;
-}
-type Cache = Record<AssetId, CacheItem>;
+import { SearchAssetPropertyListsRequest } from './searchAssetPropertyListsRequest';
+import { SearchAssetModelPropertyListsRequest } from './searchAssetModelPropertyListsRequest';
+import type { AssetId, AssetModelId, AssetPropertyId } from './types';
 
 export class SearchAssetPropertyRequest {
-  #cache: Cache = {};
-  #client: IoTSiteWiseClient;
+  #searchAssetPropertyListsRequest: SearchAssetPropertyListsRequest;
+  #searchAssetModelPropertyListsRequest: SearchAssetModelPropertyListsRequest;
 
   constructor(client: IoTSiteWiseClient) {
-    this.#client = client;
+    this.#searchAssetPropertyListsRequest = new SearchAssetPropertyListsRequest(client);
+    this.#searchAssetModelPropertyListsRequest = new SearchAssetModelPropertyListsRequest(client);
   }
 
   public async send({
     assetPropertyId,
     assetId,
+    assetModelId,
   }: {
     assetPropertyId: AssetPropertyId;
     assetId: AssetId;
-  }): Promise<AssetProperty | undefined | never> {
-    // see if asset property is cached
-    if (this.#cache[assetId]?.assetProperties) {
-      const foundAssetProperty = this.#findAssetProperty({
-        assetPropertyId,
-        assetProperties: this.#cache[assetId].assetProperties,
+    assetModelId: AssetModelId;
+  }): Promise<AssetPropertySummary | undefined | never> {
+    try {
+      // We need both the asset property and the asset model property to get the complete asset property.
+      const assetProperty = await this.#searchAssetPropertyListsRequest.send({ assetPropertyId, assetId });
+      const assetModelProperty = await this.#searchAssetModelPropertyListsRequest.send({
+        assetModelPropertyId: assetPropertyId,
+        assetModelId,
       });
 
-      if (foundAssetProperty) {
-        return foundAssetProperty;
+      if (assetProperty && assetModelProperty) {
+        // Asset properties may override asset model properties, so we merge it second.
+        const completeAssetProperty = {
+          ...assetModelProperty,
+          ...assetProperty,
+        };
+
+        return completeAssetProperty;
       }
-    }
-
-    // asset property does not exist
-    if (this.#cache[assetId]?.assetProperties && !this.#cache[assetId].nextToken) {
-      return undefined;
-    }
-
-    try {
-      do {
-        const command = this.#createCommand({ assetId, nextToken: this.#cache[assetId]?.nextToken });
-        const { assetPropertySummaries: newAssetProperties = [], nextToken: newNextToken } = await this.#client.send(
-          command
-        );
-
-        if (this.#cache[assetId]) {
-          this.#cache[assetId].assetProperties.push(...newAssetProperties);
-          this.#cache[assetId].nextToken = newNextToken;
-        } else {
-          this.#cache[assetId] = {
-            assetProperties: newAssetProperties,
-            nextToken: newNextToken,
-          };
-        }
-
-        const foundAssetProperty = this.#findAssetProperty({
-          assetPropertyId,
-          assetProperties: this.#cache[assetId].assetProperties,
-        });
-
-        if (foundAssetProperty) {
-          return foundAssetProperty;
-        }
-      } while (this.#cache[assetId].nextToken);
     } catch (error) {
       this.#handleError(error);
     }
   }
 
-  #findAssetProperty({
-    assetPropertyId,
-    assetProperties,
-  }: {
-    assetPropertyId: AssetPropertyId;
-    assetProperties: AssetProperty[];
-  }): AssetProperty | undefined {
-    const assetProperty = assetProperties.find(({ id }) => id === assetPropertyId);
-
-    return assetProperty;
-  }
-
-  #createCommand(input: Pick<ListAssetPropertiesCommandInput, 'assetId' | 'nextToken'>) {
-    const FILTER = 'ALL';
-    const MAX_RESULTS = 250;
-    const command = new ListAssetPropertiesCommand({ ...input, filter: FILTER, maxResults: MAX_RESULTS });
-
-    return command;
-  }
-
   #handleError(error: unknown): never {
-    console.error(`Failed to list asset properties. Error: ${error}`);
+    const errorMessage = `Failed to search for asset property. Error: ${error}`;
+    console.error(errorMessage);
 
-    throw error;
+    throw new Error(errorMessage);
   }
 }

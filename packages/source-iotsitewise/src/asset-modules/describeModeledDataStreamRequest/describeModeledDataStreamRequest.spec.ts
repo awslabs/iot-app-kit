@@ -15,19 +15,19 @@ describe(DescribeModeledDataStreamRequest, () => {
     expect(request).not.toBeNull();
   });
 
-  it('throws an error when DescribeAsset fails', async () => {
+  it('returns undefined if DescribeAsset fails', async () => {
     const client = {
       send: jest.fn().mockRejectedValue(new Error()),
     } as unknown as IoTSiteWiseClient;
     const request = new DescribeModeledDataStreamRequest(client);
 
-    await expect(
-      request.send({
-        assetPropertyId: '',
-        assetId: '',
-        assetModelId: '',
-      })
-    ).rejects.toThrowError();
+    const modeledDataStream = await request.send({
+      assetPropertyId: '',
+      assetId: '',
+      assetModelId: '',
+    });
+
+    expect(modeledDataStream).toBeUndefined();
   });
 
   it('returns a modeled data stream from an asset', async () => {
@@ -290,7 +290,7 @@ describe(DescribeModeledDataStreamRequest, () => {
     expect(response).not.toBeUndefined();
   });
 
-  it('throw error if ListAssetProperties fails', async () => {
+  it('return undefined if ListAssetProperties fails', async () => {
     const fakeDescribeAssetCommandOutput: DescribeAssetCommandOutput = {
       assetId: '456',
       assetModelId: '789',
@@ -312,16 +312,16 @@ describe(DescribeModeledDataStreamRequest, () => {
     } as unknown as IoTSiteWiseClient;
     const request = new DescribeModeledDataStreamRequest(client);
 
-    await expect(
-      request.send({
-        assetPropertyId: 'asdf',
-        assetId: '456',
-        assetModelId: '789',
-      })
-    ).rejects.toThrowError();
+    const modeledDataStream = await request.send({
+      assetPropertyId: 'asdf',
+      assetId: '456',
+      assetModelId: '789',
+    });
+
+    expect(modeledDataStream).toBeUndefined();
   });
 
-  it('throws error if ListAssetModelProperties fails', async () => {
+  it('returns undefined if ListAssetModelProperties fails', async () => {
     const fakeDescribeAssetCommandOutput: DescribeAssetCommandOutput = {
       assetId: '456',
       assetModelId: '789',
@@ -352,13 +352,13 @@ describe(DescribeModeledDataStreamRequest, () => {
     } as unknown as IoTSiteWiseClient;
     const request = new DescribeModeledDataStreamRequest(client);
 
-    await expect(
-      request.send({
-        assetPropertyId: 'asdf',
-        assetId: '456',
-        assetModelId: '789',
-      })
-    ).rejects.toThrowError();
+    const modeledDataStream = await request.send({
+      assetPropertyId: 'asdf',
+      assetId: '456',
+      assetModelId: '789',
+    });
+
+    expect(modeledDataStream).toBeUndefined();
   });
 
   it('returns cached properties from list calls', async () => {
