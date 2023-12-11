@@ -3,7 +3,7 @@ import { StreamType } from '@synchro-charts/core';
 import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import type { DataStream } from '@iot-app-kit/core';
 import type { Alarms } from '../../alarms/iotevents';
-import { ModeledDataStream } from '../describeModeledDataStreamRequest/types';
+import type { ModeledDataStream } from '../describeModeledDataStreamRequest';
 
 export const completePropertyStream = ({
   modeledDataStreams,
