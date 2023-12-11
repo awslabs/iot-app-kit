@@ -122,30 +122,32 @@ export const viewportToDateRange = (viewport?: Viewport): DateRangePickerProps.V
 
 export const getViewportDateRelativeToAbsolute = (
   value: DateRangePickerProps.RelativeValue,
+  relativeBackwardClick?: boolean,
   forward?: boolean
 ): Date => {
   const newEnd = new Date();
+  const durationRange = relativeBackwardClick ? -2 : -1;
   switch (value.unit) {
     case 'second':
-      newEnd.setSeconds(newEnd.getSeconds() + value.amount * (forward ? 1 : -1));
+      newEnd.setSeconds(newEnd.getSeconds() + value.amount * (forward ? 1 : durationRange));
       break;
     case 'minute':
-      newEnd.setMinutes(newEnd.getMinutes() + value.amount * (forward ? 1 : -1));
+      newEnd.setMinutes(newEnd.getMinutes() + value.amount * (forward ? 1 : durationRange));
       break;
     case 'hour':
-      newEnd.setHours(newEnd.getHours() + value.amount * (forward ? 1 : -1));
+      newEnd.setHours(newEnd.getHours() + value.amount * (forward ? 1 : durationRange));
       break;
     case 'day':
-      newEnd.setDate(newEnd.getDate() + value.amount * (forward ? 1 : -1));
+      newEnd.setDate(newEnd.getDate() + value.amount * (forward ? 1 : durationRange));
       break;
     case 'week':
-      newEnd.setDate(newEnd.getDate() + 7 * (value.amount * (forward ? 1 : -1)));
+      newEnd.setDate(newEnd.getDate() + 7 * (value.amount * (forward ? 1 : durationRange)));
       break;
     case 'month':
-      newEnd.setMonth(newEnd.getMonth() + value.amount * (forward ? 1 : -1));
+      newEnd.setMonth(newEnd.getMonth() + value.amount * (forward ? 1 : durationRange));
       break;
     case 'year':
-      newEnd.setFullYear(newEnd.getFullYear() + value.amount * (forward ? 1 : -1));
+      newEnd.setFullYear(newEnd.getFullYear() + value.amount * (forward ? 1 : durationRange));
       break;
   }
   return newEnd;
