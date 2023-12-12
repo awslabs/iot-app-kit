@@ -1,4 +1,4 @@
-import { type ListAssetsResponse } from '@aws-sdk/client-iotsitewise';
+import { type AssetSummary, type ListAssetsResponse } from '@aws-sdk/client-iotsitewise';
 import { rest } from 'msw';
 
 import { LIST_ASSETS_URL } from './constants';
@@ -7,11 +7,19 @@ import { summarizeAsset } from '../../resources/assets/summarizeAssetDescription
 
 export function listAssetsHandler() {
   return rest.get(LIST_ASSETS_URL, (_req, res, ctx) => {
-    const rootAssets = ASSET_HIERARCHY.getRootAssets();
-    const rootAssetSummaries = rootAssets.map(summarizeAsset);
+    const url = new URL(_req.url);
+    const assetModelId = url.searchParams.get('assetModelId');
+    let assetSummaries: AssetSummary[] = [];
+    if (assetModelId) {
+      const assets = ASSET_HIERARCHY.getAssetsByAssetModelId(assetModelId);
+      assetSummaries = assets.map(summarizeAsset);
+    } else {
+      const rootAssets = ASSET_HIERARCHY.getRootAssets();
+      assetSummaries = rootAssets.map(summarizeAsset);
+    }
 
     const response: ListAssetsResponse = {
-      assetSummaries: rootAssetSummaries,
+      assetSummaries: assetSummaries,
       nextToken: undefined,
     };
 
