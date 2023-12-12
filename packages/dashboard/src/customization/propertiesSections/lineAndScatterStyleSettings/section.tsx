@@ -15,6 +15,7 @@ import { useWidgetDataTypeSet } from '~/hooks/useWidgetDataTypeSet';
 import { applyAggregationToQuery } from '~/customization/widgets/utils/assetQuery/applyAggregationToQuery';
 import { applyResolutionToQuery } from '~/customization/widgets/utils/assetQuery/applyResolutionToQuery';
 import { PropertyLens } from '~/customization/propertiesSection';
+import { getPlugin } from '@iot-app-kit/core';
 
 const isLineAndScatterWidget = (w: DashboardWidget): w is LineScatterChartWidget => w.type === 'xy-plot';
 
@@ -23,6 +24,15 @@ const RenderLineAndScatterStyleSettingsSection = ({
 }: {
   useProperty: PropertyLens<LineScatterChartWidget>;
 }) => {
+  const metricsRecorder = getPlugin('metricsRecorder');
+  const logCustomYAxis = (contexts: Record<string, string> | undefined) => {
+    metricsRecorder?.record({
+      contexts,
+      metricName: 'CustomYAxisChanged',
+      metricValue: 1,
+    });
+  };
+
   const [connectionStyleMaybe, updateConnectionStyle] = useProperty(
     (properties) => properties.line?.connectionStyle,
     (properties, updatedConnectionStyle) => ({
@@ -181,6 +191,27 @@ const RenderLineAndScatterStyleSettingsSection = ({
   const filteredResolutionOptions = getResolutionOptions(true);
   const filteredAggregationOptions = getAggregationOptions(true, dataTypeSet, resolution);
 
+  const handleSetVisible = (visible: boolean) => {
+    updateAxis({ ...axis, yVisible: visible });
+    logCustomYAxis({
+      visible: `${visible}`,
+    });
+  };
+
+  const handleUpdateMin = (min: number | null) => {
+    updateAxis({ ...axis, yMin: min ?? undefined });
+    logCustomYAxis({
+      min: `${min}`,
+    });
+  };
+
+  const handleUpdateMax = (max: number | null) => {
+    updateAxis({ ...axis, yMax: max ?? undefined });
+    logCustomYAxis({
+      max: `${max}`,
+    });
+  };
+
   return (
     <SpaceBetween size='s' direction='vertical'>
       <AggregationAndResolutionSection
@@ -195,9 +226,9 @@ const RenderLineAndScatterStyleSettingsSection = ({
         visible={axis?.yVisible ?? true}
         min={axis?.yMin ?? null}
         max={axis?.yMax ?? null}
-        setVisible={(visible) => updateAxis({ ...axis, yVisible: visible })}
-        updateMin={(min) => updateAxis({ ...axis, yMin: min ?? undefined })}
-        updateMax={(max) => updateAxis({ ...axis, yMax: max ?? undefined })}
+        setVisible={handleSetVisible}
+        updateMin={handleUpdateMin}
+        updateMax={handleUpdateMax}
       />
       <LineStyleSection
         lineType={connectionStyle}
