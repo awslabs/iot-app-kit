@@ -12,22 +12,26 @@ export class AssetFactory {
 
   public create({ assetName }: Pick<Asset, 'assetName'>): Asset {
     const asset = {
-      ...this.#createDefaults(),
+      ...this.#createDefaults(assetName),
       assetName,
     };
 
     return asset;
   }
 
-  #createDefaults() {
+  #createDefaults(assetName: string | undefined) {
     const assetId = uuid();
     const assetArn = `arn:aws:iotsitewise:us-east-1:123456789012:asset/${assetId}`;
     const assetModelId = this.#assetModel.assetModelId;
     const assetProperties =
       this.#assetModel.assetModelProperties?.map(({ id, name, dataType }) => ({
         id,
-        name,
-        dataType,
+        name: name,
+        dataType: dataType,
+        path: [
+          { id: assetId, name: assetName ?? '' },
+          { id: id, name: name },
+        ],
       })) ?? [];
     const assetHierarchies = this.#assetModel.assetModelHierarchies;
     const assetCreationDate = new Date();
