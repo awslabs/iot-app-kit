@@ -27,6 +27,11 @@ class AssetHierarchyClient {
     return rootAssets;
   }
 
+  public getAssetsByAssetModelId(assetModelId: string): Asset[] {
+    const assetList = this.#searchByAssetModelId(assetModelId, this.#assetHierarchy);
+    return assetList;
+  }
+
   public findAssetById(assetId: string): Asset | undefined {
     const node = this.#searchById(assetId, this.#assetHierarchy);
     const asset = node?.asset;
@@ -67,6 +72,20 @@ class AssetHierarchyClient {
         }
       }
     }
+  }
+
+  #searchByAssetModelId(assetModelId: string, assetHierarchy: AssetHierarchy, assetList?: Asset[]) {
+    const assetsMatchingModelIdList = assetList ? assetList : [];
+    for (const node of assetHierarchy) {
+      if (node.asset.assetModelId === assetModelId) {
+        assetsMatchingModelIdList.push(node.asset);
+      }
+
+      if (node.children) {
+        this.#searchByAssetModelId(assetModelId, node.children, assetsMatchingModelIdList);
+      }
+    }
+    return assetsMatchingModelIdList;
   }
 
   #searchParentById(
