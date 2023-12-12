@@ -7,7 +7,7 @@
 }
 
 .widget-tile-body {
-  display: flex;
+  display: grid;
   flex: 1;
 }
 
