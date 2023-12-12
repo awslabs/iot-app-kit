@@ -3,7 +3,8 @@ import { ItemTypes } from '~/components/dragLayer/itemTypes';
 import { DragEvent } from './types';
 import { defaultDelta, deltaTracker, endTracker, startTracker } from './positionTracker';
 import { constrainPosition } from './constrainPosition';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import { Animator } from '~/util/animate';
 
 export type DragMonitorProps = {
   dragStart: (e: DragEvent) => void;
@@ -33,6 +34,8 @@ export const useDragMonitor = ({
   enabled,
   dashboardGrid,
 }: DragMonitorProps) => {
+  const animator = useMemo(() => new Animator(), []);
+
   const [collected, dragRef] = useDrag(
     () => ({
       type: ItemTypes.Grid,
@@ -105,7 +108,7 @@ export const useDragMonitor = ({
         y: endTracker.getPosition().y + offset.y,
       };
 
-      animationFrameId = requestAnimationFrame(() => {
+      animationFrameId = animator.animate(() => {
         drag({
           target,
           start: startTracker.getPosition(),
