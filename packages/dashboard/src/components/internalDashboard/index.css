@@ -90,6 +90,7 @@
 
 .collapsible-panel-right {
   max-height: calc(100vh - var(--right-toolbar-overlay-height));
+  border-left: 2px solid var(--colors-grey-border);
 }
 
 .collapsible-panel-left {
