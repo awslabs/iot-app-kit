@@ -133,6 +133,7 @@ export function AssetModelPropertiesTable({
         <AssetModelPropertiesTablePreferences preferences={preferences} updatePreferences={updatePreferences} />
       }
       ariaLabels={{
+        resizerRoleDescription: 'Resize button',
         itemSelectionLabel: (isNotSelected, assetModelProperty) =>
           isNotSelected
             ? `Select asset model property ${assetModelProperty.name}`
