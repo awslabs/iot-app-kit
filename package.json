@@ -39,7 +39,7 @@
   "dependencies": {
     "@cloudscape-design/component-toolkit": "1.0.0-beta.26",
     "@cloudscape-design/collection-hooks": "1.0.22",
-    "@cloudscape-design/components": "3.0.415",
+    "@cloudscape-design/components": "3.0.421",
     "@cloudscape-design/design-tokens": "3.0.15",
     "@cloudscape-design/global-styles": "1.0.12"
   },
