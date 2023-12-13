@@ -8,7 +8,6 @@ import {
   BATCH_ASSET_PROPERTY_AGGREGATES,
 } from '../../__mocks__/assetPropertyValue';
 import { toId } from '../util/dataStreamId';
-import { MAX_BATCH_RESULTS } from './batch';
 import flushPromises from 'flush-promises';
 import { HOUR_IN_MS } from '../util/timeConstants';
 import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
@@ -58,7 +57,8 @@ describe('getHistoricalPropertyDataPoints', () => {
   it('batches and paginates', async () => {
     const batchGetAssetPropertyValueHistory = jest
       .fn()
-      .mockResolvedValue({ ...BATCH_ASSET_PROPERTY_VALUE_HISTORY, nextToken: 'nextToken' });
+      .mockResolvedValueOnce({ ...BATCH_ASSET_PROPERTY_VALUE_HISTORY, nextToken: 'nextToken' })
+      .mockResolvedValue({ ...BATCH_ASSET_PROPERTY_VALUE_HISTORY });
     const assetId1 = 'some-asset-id-1';
     const propertyId1 = 'some-property-id-1';
 
@@ -94,13 +94,11 @@ describe('getHistoricalPropertyDataPoints', () => {
       requestInformations: [requestInformation1],
       onSuccess,
       onError,
-      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
     });
     client.getHistoricalPropertyDataPoints({
       requestInformations: [requestInformation2],
       onSuccess,
       onError,
-      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
     });
 
     await flushPromises();
@@ -211,7 +209,6 @@ describe('getHistoricalPropertyDataPoints', () => {
       requestInformations: [requestInformation1],
       onSuccess,
       onError,
-      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
     });
 
     await flushPromises();
@@ -541,7 +538,8 @@ describe('getAggregatedPropertyDataPoints', () => {
   it('batches and paginates', async () => {
     const batchGetAssetPropertyAggregates = jest
       .fn()
-      .mockResolvedValue({ ...BATCH_ASSET_PROPERTY_AGGREGATES, nextToken: 'nextToken' });
+      .mockResolvedValueOnce({ ...BATCH_ASSET_PROPERTY_AGGREGATES, nextToken: 'nextToken' })
+      .mockResolvedValue({ ...BATCH_ASSET_PROPERTY_AGGREGATES });
     const assetId1 = 'some-asset-id-1';
     const propertyId1 = 'some-property-id-1';
 
@@ -580,13 +578,11 @@ describe('getAggregatedPropertyDataPoints', () => {
       requestInformations: [requestInformation1],
       onSuccess,
       onError,
-      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
     });
     client.getAggregatedPropertyDataPoints({
       requestInformations: [requestInformation2],
       onSuccess,
       onError,
-      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
     });
 
     await flushPromises();
@@ -716,7 +712,6 @@ describe('getAggregatedPropertyDataPoints', () => {
       requestInformations: [requestInformation1],
       onSuccess,
       onError,
-      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
     });
 
     await flushPromises();
