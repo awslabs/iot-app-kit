@@ -175,7 +175,7 @@ export function ModeledDataStreamTable({
       ariaLabels={{
         itemSelectionLabel: ({ selectedItems }, modeledDataStream) =>
           propertySelectionLabel([...selectedItems], modeledDataStream),
-
+        resizerRoleDescription: 'Resize button',
         allItemsSelectionLabel: ({ selectedItems }) =>
           selectedItems.length !== items.length ? 'Select modeled data stream' : 'Deselect modeled data stream',
       }}

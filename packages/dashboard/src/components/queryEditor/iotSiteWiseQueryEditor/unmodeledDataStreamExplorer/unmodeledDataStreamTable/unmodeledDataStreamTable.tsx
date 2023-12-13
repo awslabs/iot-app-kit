@@ -270,6 +270,11 @@ export function UnmodeledDataStreamTable({
           }}
         />
       }
+      ariaLabels={{
+        resizerRoleDescription: 'Resize button',
+        allItemsSelectionLabel: ({ selectedItems }) =>
+          selectedItems.length !== items.length ? 'Select unmodeled data stream' : 'Deselect unmodeled data stream',
+      }}
     />
   );
 }
