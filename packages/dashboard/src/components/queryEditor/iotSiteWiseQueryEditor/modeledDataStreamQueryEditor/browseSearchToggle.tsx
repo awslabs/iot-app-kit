@@ -1,5 +1,4 @@
 import SegmentedControl from '@cloudscape-design/components/segmented-control';
-import { getPlugin } from '@iot-app-kit/core';
 import React, { useState } from 'react';
 
 export const BROWSE_SEGMENT_ID = 'browse-assets';
@@ -13,21 +12,10 @@ export interface BrowseSearchToggleProps {
 }
 
 export function BrowseSearchToggle({ selectedSegment, onChange }: BrowseSearchToggleProps) {
-  const metricsRecorder = getPlugin('metricsRecorder');
-  const handleChangeSegment = (segment: SegmentId) => {
-    onChange(selectedSegment);
-    metricsRecorder?.record({
-      contexts: {
-        searchBy: segment,
-      },
-      metricName: 'ModeledDataStreamSearchChanged',
-      metricValue: 1,
-    });
-  };
   return (
     <SegmentedControl
       selectedId={selectedSegment}
-      onChange={({ detail: { selectedId: selectedSegment } }) => handleChangeSegment(selectedSegment as SegmentId)}
+      onChange={({ detail: { selectedId: selectedSegment } }) => onChange(selectedSegment as SegmentId)}
       options={[
         { text: 'Browse', id: BROWSE_SEGMENT_ID },
         { text: 'Search', id: SEARCH_SEGMENT_ID },
