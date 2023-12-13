@@ -128,6 +128,7 @@ export function AssetTable({
       }
       preferences={<AssetTablePreferences preferences={preferences} updatePreferences={updatePreferences} />}
       ariaLabels={{
+        resizerRoleDescription: 'Resize button',
         itemSelectionLabel: (isNotSelected, asset) =>
           isNotSelected ? `Select asset ${asset.name}` : `Deselect asset ${asset.name}`,
       }}
