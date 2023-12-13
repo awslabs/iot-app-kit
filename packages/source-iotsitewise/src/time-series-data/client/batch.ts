@@ -1,8 +1,8 @@
 // current maximum batch size when using batch APIs
-export const MAX_BATCH_RESULTS = 4000;
+// export const MAX_BATCH_RESULTS = 4000;
 
 // current batch API entry limit
-export const MAX_BATCH_ENTRIES = 16;
+// export const MAX_BATCH_ENTRIES = 16;
 
 // use -1 to represent a batch with no max result limit
 export const NO_LIMIT_BATCH = -1;
@@ -14,7 +14,10 @@ export const NO_LIMIT_BATCH = -1;
  * @param entries
  * @returns buckets: [BatchHistoricalEntry[], number | undefined][]
  */
-export const createEntryBatches = <T extends { maxResults?: number }>(entries: T[]): [T[], number][] => {
+export const createEntryBatches = <T extends { maxResults?: number }>(
+  entries: T[],
+  batchSize: number
+): [T[], number][] => {
   const buckets: { [key: number]: T[] } = {};
 
   entries.forEach((entry) => {
@@ -27,55 +30,29 @@ export const createEntryBatches = <T extends { maxResults?: number }>(entries: T
     }
   });
 
-  // chunk buckets that are larger than MAX_BATCH_ENTRIES
   return Object.keys(buckets)
     .map((key) => {
       const maxEntryResults = Number(key);
       const bucket = buckets[maxEntryResults];
 
-      return chunkBatch(bucket).map((chunk): [T[], number] => [
-        chunk,
-        maxEntryResults === NO_LIMIT_BATCH ? NO_LIMIT_BATCH : chunk.length * maxEntryResults,
-      ]);
+      return chunkBatch(bucket, batchSize).map((chunk): [T[], number] => [chunk, maxEntryResults]);
     })
     .flat();
 };
 
 /**
- * calculate the required size of the next batch
- */
-export const calculateNextBatchSize = ({
-  maxResults,
-  dataPointsFetched,
-}: {
-  maxResults: number;
-  dataPointsFetched: number;
-}) => (maxResults === NO_LIMIT_BATCH ? MAX_BATCH_RESULTS : Math.min(maxResults - dataPointsFetched, MAX_BATCH_RESULTS));
-
-/**
  * check if batch still needs to be paginated.
  */
-export const shouldFetchNextBatch = ({
-  nextToken,
-  maxResults,
-  dataPointsFetched,
-}: {
-  nextToken: string | undefined;
-  maxResults: number;
-  dataPointsFetched?: number;
-}) =>
-  !!nextToken &&
-  (maxResults === NO_LIMIT_BATCH ||
-    (dataPointsFetched !== null && dataPointsFetched !== undefined && dataPointsFetched < maxResults));
+export const shouldFetchNextBatch = ({ nextToken }: { nextToken: string | undefined }) => !!nextToken;
 
 /**
  * chunk batches by MAX_BATCH_ENTRIES
  */
-const chunkBatch = <T>(batch: T[]): T[][] => {
+const chunkBatch = <T>(batch: T[], batchSize: number): T[][] => {
   const chunks = [];
 
-  for (let i = 0; i < batch.length; i += MAX_BATCH_ENTRIES) {
-    chunks.push(batch.slice(i, i + MAX_BATCH_ENTRIES));
+  for (let i = 0; i < batch.length; i += batchSize) {
+    chunks.push(batch.slice(i, i + batchSize));
   }
 
   return chunks;
