@@ -98,7 +98,13 @@ export const ThresholdComponent: FC<{
           </Box>
         </SpaceBetween>
       </div>
-      <Button iconName='remove' variant='icon' onClick={onDelete} data-test-id='threshold-component-delete-button' />
+      <Button
+        ariaLabel='delete threshold'
+        iconName='remove'
+        variant='icon'
+        onClick={onDelete}
+        data-test-id='threshold-component-delete-button'
+      />
     </div>
   );
 };
