@@ -30,13 +30,13 @@ jobs:
       - name: test UI
         run:
           npm run test:ui -w @iot-app-kit/dashboard && npm run test:ui -w @iot-app-kit/react-components
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: Playwright failed test-results
           path: packages/**/test-results
           retention-days: 30
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report
