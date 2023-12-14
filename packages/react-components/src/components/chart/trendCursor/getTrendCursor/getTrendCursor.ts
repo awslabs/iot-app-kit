@@ -23,6 +23,7 @@ export const getNewTrendCursor = ({
   chartRef,
   visualization,
   significantDigits,
+  color,
 }: GetNewTrendCursorProps) => {
   const posX = e?.offsetX ?? x ?? 0;
   const uId = tcId ? tcId.split('trendCursor-')[1] : uuid();
@@ -51,6 +52,7 @@ export const getNewTrendCursor = ({
     timestampInMs,
     yAxisMarkerValue: trendCursorsSeriesMakersValue,
     x: boundedX,
+    color,
     // update the Y of the series markers
     //   childIndex --> purpose
     // -----------------------------
@@ -60,7 +62,7 @@ export const getNewTrendCursor = ({
     // from index 3 --> series markers
     children: [
       addTCLine(uId, size),
-      addTCHeader(uId, timestampInMs),
+      addTCHeader(uId, timestampInMs, color),
       addTCDeleteButton(uId),
       ...addTCMarkers(uId, trendCursorsSeriesMakersInPixels, series),
     ],

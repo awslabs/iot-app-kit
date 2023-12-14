@@ -27,6 +27,7 @@ const useTrendCursorsEvents = ({
   onContextMenu,
   visualization,
   significantDigits,
+  getColor,
 }: UseEventsProps) => {
   // sync mode actions
   const addTrendCursorsToSyncState = useDataStore((state) => state.addTrendCursors);
@@ -75,6 +76,7 @@ const useTrendCursorsEvents = ({
             chartRef,
             visualization: visualizationRef.current,
             significantDigits: significantDigitsRef.current,
+            color: getColor(),
           });
 
           if (newTc) {
@@ -89,7 +91,7 @@ const useTrendCursorsEvents = ({
         });
       }
     },
-    [chartRef, addTrendCursorsToSyncState, groupId]
+    [chartRef, addTrendCursorsToSyncState, groupId, getColor]
   );
 
   // shared delete function between the context menu and on click actions

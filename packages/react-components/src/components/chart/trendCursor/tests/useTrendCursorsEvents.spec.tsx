@@ -6,6 +6,7 @@ import { useECharts } from '../../../../hooks/useECharts';
 import React from 'react';
 import { DEFAULT_CHART_VISUALIZATION } from '../../eChartsConstants';
 import { InternalGraphicComponentGroupOption } from '../types';
+import { Colorizer } from '@iot-app-kit/core-util';
 
 describe('useTrendCursorsEvents', () => {
   const { result } = renderHook(() => useECharts('dark'));
@@ -25,6 +26,7 @@ describe('useTrendCursorsEvents', () => {
         isInSyncMode: false,
         onContextMenu: jest.fn(),
         visualization: DEFAULT_CHART_VISUALIZATION,
+        getColor: Colorizer().next,
       })
     );
 
@@ -44,6 +46,7 @@ describe('useTrendCursorsEvents', () => {
         isInSyncMode: false,
         onContextMenu: jest.fn(),
         visualization: DEFAULT_CHART_VISUALIZATION,
+        getColor: Colorizer().next,
       })
     );
 
