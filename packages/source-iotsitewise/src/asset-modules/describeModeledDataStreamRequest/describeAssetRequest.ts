@@ -1,11 +1,17 @@
-import { DescribeAssetCommand, type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  DescribeAssetCommand,
+  type DescribeAssetCommandOutput,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 
 import type { Asset, AssetId } from './types';
 
 type AssetCache = Record<AssetId, Asset>;
+type PendingRequestCache = Record<AssetId, Promise<DescribeAssetCommandOutput>>;
 
 export class DescribeAssetRequest {
-  #cache: AssetCache = {};
+  #assetCache: AssetCache = {};
+  #pendingRequestCache: PendingRequestCache = {};
   #client: IoTSiteWiseClient;
 
   constructor(client: IoTSiteWiseClient) {
@@ -13,18 +19,35 @@ export class DescribeAssetRequest {
   }
 
   public async send(assetId: AssetId): Promise<Asset | never> {
-    const cachedAsset = this.#cache[assetId];
+    const cachedAsset = this.#assetCache[assetId];
 
     if (cachedAsset) {
       return cachedAsset;
     }
 
-    const command = this.#createCommand(assetId);
+    const cachedRequest = this.#pendingRequestCache[assetId];
 
     try {
-      const asset = await this.#client.send(command);
+      // If several requests for the same asset happen at the same time, we
+      // prevent duplication of requests by reusing a cached pending promise.
+      if (cachedRequest) {
+        const asset = await cachedRequest;
+
+        this.#cacheAsset(assetId, asset);
+        this.#deletePendingRequest(assetId);
+
+        return asset;
+      }
+
+      const command = this.#createCommand(assetId);
+      const request = this.#client.send(command);
+
+      this.#cachePendingRequest(assetId, request);
+
+      const asset = await request;
 
       this.#cacheAsset(assetId, asset);
+      this.#deletePendingRequest(assetId);
 
       return asset;
     } catch (error) {
@@ -39,7 +62,15 @@ export class DescribeAssetRequest {
   }
 
   #cacheAsset(assetId: AssetId, asset: Asset): void {
-    this.#cache[assetId] = asset;
+    this.#assetCache[assetId] = asset;
+  }
+
+  #cachePendingRequest(assetId: AssetId, request: Promise<DescribeAssetCommandOutput>) {
+    this.#pendingRequestCache[assetId] = request;
+  }
+
+  #deletePendingRequest(assetId: AssetId): void {
+    delete this.#pendingRequestCache[assetId];
   }
 
   #handleError(error: unknown): never {

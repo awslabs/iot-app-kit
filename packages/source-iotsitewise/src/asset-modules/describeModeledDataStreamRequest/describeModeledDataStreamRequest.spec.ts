@@ -117,6 +117,50 @@ describe(DescribeModeledDataStreamRequest, () => {
     expect(client.send).toHaveBeenCalledOnce();
   });
 
+  it('does not call DescribeAsset multiple times when called simultaneously', () => {
+    const fakeDescribeAssetCommandOutput: DescribeAssetCommandOutput = {
+      assetId: '456',
+      assetModelId: '789',
+      assetArn: '',
+      assetCompositeModels: [],
+      assetProperties: [
+        {
+          id: '123',
+          name: 'asset property',
+          dataType: 'DOUBLE',
+        },
+      ],
+      assetName: 'asset',
+      assetCreationDate: new Date(0),
+      assetLastUpdateDate: new Date(0),
+      assetHierarchies: [],
+      assetStatus: {
+        state: 'ACTIVE',
+      },
+      $metadata: {},
+    };
+
+    const client = {
+      send: jest.fn().mockResolvedValueOnce(fakeDescribeAssetCommandOutput),
+    } as unknown as IoTSiteWiseClient;
+    const request = new DescribeModeledDataStreamRequest(client);
+
+    // We simulate simultaneous requests by not awaiting their completion
+    request.send({
+      assetPropertyId: '123',
+      assetId: '456',
+      assetModelId: '789',
+    });
+
+    request.send({
+      assetPropertyId: '123',
+      assetId: '456',
+      assetModelId: '789',
+    });
+
+    expect(client.send).toHaveBeenCalledOnce();
+  });
+
   it('returns a different modeled data stream from a cached asset without making another request', async () => {
     const fakeDescribeAssetCommandOutput: DescribeAssetCommandOutput = {
       assetId: '456',
