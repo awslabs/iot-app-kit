@@ -1,3 +1,4 @@
+import { Colorizer } from '@iot-app-kit/core-util';
 import useDataStore from '../../../store';
 import useHandleResize from './resize/useHandleResize';
 import useHandleSync from './sync/useHandleSync';
@@ -12,6 +13,8 @@ import { useHandleYMinMax } from './yMinMax/useHandleYMinMax';
 import { useHandleSeries } from './series/useHandleSeries';
 import { useHandleChartOptions } from './chartOptions/handleOptions';
 import { KeyMap } from 'react-hotkeys';
+
+const TRENDCURSOR_COLOR_PALETTE = ['#7492e7', '#da7596', '#2ea597', '#a783e1', '#e07941'];
 
 const useTrendCursors = ({
   chartRef,
@@ -39,6 +42,10 @@ const useTrendCursors = ({
   const [graphic, setGraphic] = useState(initialGraphic ?? []);
   const [isInCursorAddMode, setIsInCursorAddMode] = useState(false);
 
+  const colorer = Colorizer(TRENDCURSOR_COLOR_PALETTE);
+  const existingColors = graphic.map((g) => g.color).filter((color): color is string => color != null);
+  colorer.remove(existingColors);
+
   // hook for handling all user events
   const { onContextMenuClickHandler } = useTrendCursorsEvents({
     chartRef,
@@ -52,6 +59,7 @@ const useTrendCursors = ({
     onContextMenu,
     visualization,
     significantDigits,
+    getColor: colorer.next,
   });
 
   // for handling the resize of chart
@@ -68,6 +76,7 @@ const useTrendCursors = ({
     groupId,
     visualization,
     significantDigits,
+    getColor: colorer.next,
   });
 
   useHandleViewport({ graphic, setGraphic, chartRef, series, visualization, significantDigits, viewportInMs, size });
@@ -87,7 +96,10 @@ const useTrendCursors = ({
     commandDown: () => setIsInCursorAddMode(true),
     commandUp: () => setIsInCursorAddMode(false),
   };
-  return { onContextMenuClickHandler, trendCursorKeyMap, trendCursorHandlers, trendCursors: graphic };
+
+  const orderedTrendCursors = graphic.sort((a, b) => a.timestampInMs - b.timestampInMs);
+
+  return { onContextMenuClickHandler, trendCursorKeyMap, trendCursorHandlers, trendCursors: orderedTrendCursors };
 };
 
 export default useTrendCursors;
