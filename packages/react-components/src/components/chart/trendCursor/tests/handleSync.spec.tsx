@@ -6,6 +6,7 @@ import useDataStore from '../../../../store';
 import { useECharts } from '../../../../hooks/useECharts';
 import { DEFAULT_CHART_VISUALIZATION } from '../../eChartsConstants';
 import { InternalGraphicComponentGroupOption } from '../types';
+import { Colorizer } from '@iot-app-kit/core-util';
 
 describe('handleSync', () => {
   const setGraphicStub = jest.fn();
@@ -29,6 +30,7 @@ describe('handleSync', () => {
       useHandleSync({
         chartRef: result.current.chartRef,
         ...useSyncProps,
+        getColor: Colorizer().next,
       })
     );
 
@@ -59,6 +61,7 @@ describe('handleSync', () => {
             children: [{}, {}, {}, {}],
           } as InternalGraphicComponentGroupOption,
         ],
+        getColor: Colorizer().next,
       })
     );
 
@@ -91,6 +94,7 @@ describe('handleSync', () => {
             children: [{}, {}, {}, {}],
           } as InternalGraphicComponentGroupOption,
         ],
+        getColor: Colorizer().next,
       })
     );
 

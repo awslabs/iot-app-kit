@@ -21,13 +21,23 @@ const onDragUpdateTrendCursorLine = (elements: GraphicComponentElementOption[]) 
 };
 const onDragUpdateTrendCursorHeaderText = (elements: GraphicComponentElementOption[], timeInMs: number) => {
   const headerGraphic = elements[TREND_CURSOR_HEADER_GRAPHIC_INDEX];
+  headerGraphic.x = 0;
+
+  const children = headerGraphic.children ?? [];
+  const textGraphic = children.find((c) => c.type === 'text');
+  const restGraphic = children.filter((c) => c.type !== 'text');
+  if (!textGraphic) return headerGraphic;
+
   // update the timestamp on the header
-  (headerGraphic as GraphicComponentTextOption).style = {
-    ...(headerGraphic as GraphicComponentTextOption).style,
+  (textGraphic as GraphicComponentTextOption).style = {
+    ...(textGraphic as GraphicComponentTextOption).style,
     text: getTrendCursorHeaderTimestampText(timeInMs),
   };
-  headerGraphic.x = 0;
-  return headerGraphic;
+
+  return {
+    ...headerGraphic,
+    children: [textGraphic, ...restGraphic],
+  };
 };
 export const onDragUpdateTrendCursorElements = ({
   elements,

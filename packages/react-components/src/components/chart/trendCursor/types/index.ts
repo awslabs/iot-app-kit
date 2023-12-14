@@ -11,6 +11,7 @@ export type InternalGraphicComponentGroupOption = {
   timestampInMs: number;
   yAxisMarkerValue: number[];
   dragDeltaInPixels?: number;
+  color?: string;
 } & GraphicComponentGroupOption;
 
 export interface TrendCursorProps {
@@ -37,10 +38,12 @@ export interface UseEventsProps extends TrendCursorProps {
   isInCursorAddMode: boolean;
   isInSyncMode: boolean;
   onContextMenu: (e: ElementEvent) => void;
+  getColor: () => string | undefined;
 }
 
 export interface UseSyncProps extends TrendCursorProps {
   isInSyncMode: boolean;
+  getColor: () => string | undefined;
 }
 
 export interface UseTrendCursorsProps {
@@ -66,6 +69,7 @@ export interface GetNewTrendCursorProps {
   chartRef: MutableRefObject<ECharts | null>;
   visualization: Visualization;
   significantDigits?: number;
+  color?: string;
 }
 
 export interface SyncChanges {

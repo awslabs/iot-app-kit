@@ -113,7 +113,7 @@ describe('Testing getNewTrendCursor file', () => {
     });
     it('addTCHeader', () => {
       const newTTCHeader = addTCHeader('ID', 0);
-      expect(newTTCHeader.id).toBe('text-ID');
+      expect(newTTCHeader.id).toBe('header-ID');
     });
     it('addTCDeleteButton', () => {
       const newTCDeleteButton = addTCDeleteButton('ID');
