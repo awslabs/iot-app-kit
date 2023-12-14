@@ -16,6 +16,7 @@ const useHandleSync = ({
   groupId,
   visualization,
   significantDigits,
+  getColor,
 }: UseSyncProps) => {
   const syncedTrendCursors = useDataStore((state) => state.trendCursorGroups[groupId ?? '']);
 
@@ -41,6 +42,7 @@ const useHandleSync = ({
             chartRef,
             visualization,
             significantDigits,
+            color: getColor(),
           });
           if (newTC) {
             graphic.push(newTC);

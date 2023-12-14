@@ -46,16 +46,7 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({ id, signific
             viewport={viewport ?? VIEWPORT}
             queries={[MOCK_TIME_SERIES_DATA_QUERY]}
             theme='light'
-            thresholds={[
-              {
-                value: 10,
-                color: '#eb4034',
-                comparisonOperator: 'GT',
-                visible: true,
-                fill: 'asdf',
-              },
-            ]}
-            legend={{}}
+            legend={{ visible: true }}
           />
         ))}
       </div>
@@ -106,7 +97,7 @@ export const SiteWiseConnectedBaseChartExample: ComponentStory<FC<StoryInputs>> 
             viewport={viewport ?? { duration: '5m' }}
             queries={[getTimeSeriesDataQuery()]}
             theme='light'
-            legend={{}}
+            legend={{ visible: true }}
           />
         ))}
       </div>

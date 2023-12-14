@@ -56,3 +56,8 @@
   flex-direction: column;
   align-items: center;
 }
+
+.base-chart-legend-tc-header-color {
+  width: 100%;
+  height: 4px;
+}
