@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { TableProps } from '@cloudscape-design/components/table/interfaces';
-import { GraphicComponentTextOption } from 'echarts/types/src/component/graphic/GraphicModel';
+import {
+  GraphicComponentGroupOption,
+  GraphicComponentTextOption,
+} from 'echarts/types/src/component/graphic/GraphicModel';
 import { SeriesOption } from 'echarts';
 import { LineSeriesOption } from 'echarts/types/src/chart/line/LineSeries';
 import { DataStream } from '@iot-app-kit/core';
@@ -105,11 +108,16 @@ const useChartsLegend = ({
     );
   };
 
-  const getHeaderNode = (g: InternalGraphicComponentGroupOption) => (
-    <div className='base-chart-legend-tc-header-container'>
-      <div>{getTcHeader((g.children[1] as GraphicComponentTextOption)?.style?.text ?? '')}</div>
-    </div>
-  );
+  const getHeaderNode = (g: InternalGraphicComponentGroupOption) => {
+    const headerGroup = g.children[1] as GraphicComponentGroupOption;
+    const text = headerGroup.children.find((c) => c.type === 'text') as GraphicComponentTextOption;
+    return (
+      <div className='base-chart-legend-tc-header-container'>
+        <div>{getTcHeader(text?.style?.text ?? '')}</div>
+        <div className='base-chart-legend-tc-header-color' style={{ backgroundColor: g.color }} />
+      </div>
+    );
+  };
 
   const [columnDefinitions, setColumnDefinitions] = useState<Array<TableProps.ColumnDefinition<object>>>([
     legendColumnDefinition,
