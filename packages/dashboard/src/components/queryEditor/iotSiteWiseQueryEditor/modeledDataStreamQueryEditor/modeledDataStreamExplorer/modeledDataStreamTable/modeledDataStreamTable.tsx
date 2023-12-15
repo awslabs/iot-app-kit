@@ -147,7 +147,7 @@ export function ModeledDataStreamTable({
       stickyColumns={preferences.stickyColumns}
       isItemDisabled={(item) => isInValidProperty(item.dataType, selectedWidgets?.at(0)?.type)}
       empty={<ModeledDataStreamTableEmptyState isAssetSelected={selectedAsset != null} />}
-      filter={<ModeledDataStreamTablePropertyFilter {...propertyFilterProps} />}
+      filter={modeledDataStreams.length > 0 && <ModeledDataStreamTablePropertyFilter {...propertyFilterProps} />}
       header={
         <ModeledDataStreamTableHeader
           selectedItemCount={collectionProps.selectedItems?.length}

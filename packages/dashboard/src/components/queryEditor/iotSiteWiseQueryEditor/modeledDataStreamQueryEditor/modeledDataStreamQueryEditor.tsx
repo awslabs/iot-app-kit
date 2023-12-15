@@ -52,29 +52,34 @@ export function ModeledDataStreamQueryEditor({
       {selectedSegment === BROWSE_SEGMENT_ID ? (
         <>
           <AssetExplorer client={iotSiteWiseClient} onSelect={handleOnSelectAsset} />
-          <ModeledDataStreamExplorer
-            client={iotSiteWiseClient}
-            onClickAddModeledDataStreams={onClickAdd}
-            selectedAsset={
-              selectedAsset?.id && selectedAsset?.assetModelId
-                ? { assetId: selectedAsset.id, assetModelId: selectedAsset.assetModelId }
-                : undefined
-            }
-          />
+          <br />
+          {selectedAsset != null && (
+            <ModeledDataStreamExplorer
+              client={iotSiteWiseClient}
+              onClickAddModeledDataStreams={onClickAdd}
+              selectedAsset={
+                selectedAsset?.id && selectedAsset?.assetModelId
+                  ? { assetId: selectedAsset.id, assetModelId: selectedAsset.assetModelId }
+                  : undefined
+              }
+            />
+          )}
         </>
       ) : (
         <>
           <DataStreamSearch onSubmit={setSearchFieldValues} client={iotTwinMakerClient} />
-          <ModeledDataStreamExplorer
-            hasNextPage={hasNextPage}
-            isFetching={isFetching}
-            client={iotSiteWiseClient}
-            dataStreams={modeledDataStreams}
-            onClickAddModeledDataStreams={onClickAdd}
-            onClickNextPage={fetchNextPage}
-            isSearchError={isError}
-            searchQuery={searchFieldValues.searchQuery}
-          />
+          {searchFieldValues.searchQuery.length > 0 && (
+            <ModeledDataStreamExplorer
+              hasNextPage={hasNextPage}
+              isFetching={isFetching}
+              client={iotSiteWiseClient}
+              dataStreams={modeledDataStreams}
+              onClickAddModeledDataStreams={onClickAdd}
+              onClickNextPage={fetchNextPage}
+              isSearchError={isError}
+              searchQuery={searchFieldValues.searchQuery}
+            />
+          )}
         </>
       )}
     </Box>
