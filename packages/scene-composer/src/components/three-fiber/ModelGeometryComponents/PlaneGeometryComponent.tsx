@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import React, { useRef, useEffect, useState } from 'react';
-import { createPortal, ThreeEvent, useFrame, useThree } from '@react-three/fiber';
+import { ThreeEvent, useFrame } from '@react-three/fiber';
 import { Plane } from '@react-three/drei';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
@@ -23,8 +23,6 @@ const PlaneGeometryComponent: React.FC<PlaneGeometryComponentProps> = ({
   const { isEditing, addingWidget } = useEditorState(sceneComposerId);
   const { handleAddWidget } = useAddWidget();
   const { loadTextureOnMesh, clearTextureOnMesh } = useTwinMakerTextureLoader();
-  const scene = useThree((state) => state.scene);
-  const camera = useThree((state) => state.camera);
   const [meshId, setMeshId] = useState('');
   const [dirtyTexture, setDirtyTexture] = useState(false);
 
@@ -61,33 +59,12 @@ const PlaneGeometryComponent: React.FC<PlaneGeometryComponentProps> = ({
     } else if (component.textureUri && !!loadTextureOnMesh) {
       setDirtyTexture(true);
     }
-  }, [meshId, component.textureUri, loadTextureOnMesh, clearTextureOnMesh]);
+  }, [component.textureUri, loadTextureOnMesh, clearTextureOnMesh]);
 
-  return component.isGroundPlane ? (
-    createPortal(
-      <group
-        name={getComponentGroupName(node.ref, 'PLANE_GEOMETRY')}
-        parent={scene}
-        position={node.transform.position}
-        rotation={new THREE.Euler(...node.transform.rotation, 'XYZ')}
-        scale={node.transform.scale}
-      >
-        <Plane
-          args={[component.width, component.height]}
-          ref={meshRef}
-          onClick={onClick}
-          userData={{ nodeRef: node.ref }}
-        >
-          <meshStandardMaterial color={component.color ? component.color : 'undefined'} side={THREE.DoubleSide} />
-        </Plane>
-      </group>,
-      scene,
-      { camera },
-    )
-  ) : (
+  return (
     <group name={getComponentGroupName(node.ref, 'PLANE_GEOMETRY')}>
       <Plane args={[component.width, component.height]} ref={meshRef} onClick={onClick}>
-        <meshStandardMaterial color={component.color ? component.color : 'undefined'} />
+        <meshStandardMaterial color={component.color ? component.color : undefined} />
       </Plane>
     </group>
   );

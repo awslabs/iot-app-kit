@@ -285,6 +285,5 @@ export namespace Component {
     height: number;
     color?: string;
     textureUri?: string;
-    isGroundPlane?: boolean;
   }
 }

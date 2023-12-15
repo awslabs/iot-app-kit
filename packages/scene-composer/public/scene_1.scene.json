@@ -24,7 +24,11 @@
       "far": 1000
     },
     "sceneBackgroundSettings": {
-      "color": "#0000ff"
+      "color": "#2a2e33"
+    },
+    "groundPlaneSettings": {
+      "color": "#00ff00",
+      "opacity": 1
     }
   },
   "nodes": [

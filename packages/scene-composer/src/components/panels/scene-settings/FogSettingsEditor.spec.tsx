@@ -23,18 +23,18 @@ describe('FogSettingsEditor', () => {
     jest.clearAllMocks();
   });
 
-  it('should save fogsettings when checked', async () => {
+  it('should save fogsettings when enabled', async () => {
     getScenePropertyMock.mockReturnValue(undefined);
     useStore('default').setState(baseState);
     const { container } = render(<FogSettingsEditor />);
     const polarisWrapper = wrapper(container);
-    const checkbox = polarisWrapper.findCheckbox();
+    const toggle = polarisWrapper.findToggle();
 
-    expect(checkbox).toBeDefined();
+    expect(toggle).toBeDefined();
 
-    // click checkbox should update store
+    // click should update store
     act(() => {
-      checkbox?.findNativeInput().click();
+      toggle?.findNativeInput().click();
     });
     expect(setScenePropertyMock).toBeCalledTimes(1);
     expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.FogSettings, {
@@ -44,7 +44,7 @@ describe('FogSettingsEditor', () => {
     });
   });
 
-  it('should clear fogsettings when unchecked', async () => {
+  it('should clear fogsettings when untoggled', async () => {
     getScenePropertyMock.mockReturnValue({
       color: '#cccccc',
       near: 1,
@@ -53,13 +53,13 @@ describe('FogSettingsEditor', () => {
     useStore('default').setState(baseState);
     const { container } = render(<FogSettingsEditor />);
     const polarisWrapper = wrapper(container);
-    const checkbox = polarisWrapper.findCheckbox();
+    const toggle = polarisWrapper.findToggle();
 
-    expect(checkbox).toBeDefined();
+    expect(toggle).toBeDefined();
 
-    // click checkbox should update store
+    // click should update store
     act(() => {
-      checkbox?.findNativeInput().click();
+      toggle?.findNativeInput().click();
     });
     expect(setScenePropertyMock).toBeCalledTimes(1);
     expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.FogSettings, undefined);
@@ -134,7 +134,6 @@ describe('FogSettingsEditor', () => {
 
     expect(colorInput).toBeDefined();
 
-    // click checkbox should update store
     colorInput!.focus();
     colorInput!.setInputValue('#FFFFFF');
     colorInput!.blur();

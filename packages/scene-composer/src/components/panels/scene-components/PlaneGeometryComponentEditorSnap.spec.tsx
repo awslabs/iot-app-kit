@@ -34,13 +34,12 @@ describe('PlaneGeometryComponentEditor', () => {
     color: '#abcdef',
   };
 
-  const componentWithTexturedGroundPlane: IPlaneGeometryComponentInternal = {
+  const componentWithTexturedPlane: IPlaneGeometryComponentInternal = {
     ...mockComponent,
     type: KnownComponentType.PlaneGeometry,
     width: 10,
     height: 20,
     textureUri: 'filepath',
-    isGroundPlane: true,
   };
 
   const updateComponentInternalFn = jest.fn();
@@ -78,7 +77,7 @@ describe('PlaneGeometryComponentEditor', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('should render correctly with textured ground plane', () => {
+  it('should render correctly with textured plane', () => {
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfig });
 
@@ -86,8 +85,8 @@ describe('PlaneGeometryComponentEditor', () => {
 
     const { container } = render(
       <PlaneGeometryComponentEditor
-        node={{ ...mockNode, components: [componentWithTexturedGroundPlane] }}
-        component={componentWithTexturedGroundPlane}
+        node={{ ...mockNode, components: [componentWithTexturedPlane] }}
+        component={componentWithTexturedPlane}
       />,
     );
     expect(container).toMatchSnapshot();

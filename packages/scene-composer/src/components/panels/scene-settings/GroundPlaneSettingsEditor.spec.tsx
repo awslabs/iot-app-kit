@@ -6,7 +6,7 @@ import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { useStore } from '../../../store';
 import { KnownSceneProperty, COMPOSER_FEATURES } from '../../../interfaces';
 
-import { SceneBackgroundSettingsEditor } from './SceneBackgroundSettingsEditor';
+import { GroundPlaneSettingsEditor } from './GroundPlaneSettingsEditor';
 
 jest.mock('../../../common/GlobalSettings');
 
@@ -14,7 +14,7 @@ jest.mock('@awsui/components-react', () => ({
   ...jest.requireActual('@awsui/components-react'),
 }));
 
-describe('SceneBackgroundSettingsEditor', () => {
+describe('GroundPlaneSettingsEditor', () => {
   const setScenePropertyMock = jest.fn();
   const getScenePropertyMock = jest.fn();
   const showAssetBrowserCallbackMock = jest.fn();
@@ -33,27 +33,14 @@ describe('SceneBackgroundSettingsEditor', () => {
     jest.clearAllMocks();
   });
 
-  it('should save background on clean scene', () => {
-    getScenePropertyMock.mockReturnValue(undefined);
-    const globalSettingsMock = getGlobalSettings as jest.Mock;
-    globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
-    useStore('default').setState(baseState);
-
-    render(<SceneBackgroundSettingsEditor />);
-
-    expect(setScenePropertyMock).toBeCalledTimes(1);
-    expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.SceneBackgroundSettings, {
-      color: '#2a2e33',
-    });
-  });
-
   it('should update background when colors changes', () => {
     getScenePropertyMock.mockImplementation((property: string) => {
-      if (property === KnownSceneProperty.SceneBackgroundSettings) {
+      if (property === KnownSceneProperty.GroundPlaneSettings) {
         return {
           color: '#cccccc',
+          opacity: 1,
         };
-      } else if (property === KnownSceneProperty.BackgroundCustomColors) {
+      } else if (property === KnownSceneProperty.GroundCustomColors) {
         const customColors: string[] = [];
         return customColors;
       }
@@ -61,7 +48,7 @@ describe('SceneBackgroundSettingsEditor', () => {
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
     useStore('default').setState(baseState);
-    const { container } = render(<SceneBackgroundSettingsEditor />);
+    const { container } = render(<GroundPlaneSettingsEditor />);
     const polarisWrapper = wrapper(container);
     const colorInput = polarisWrapper.findInput('[data-testid="hexcode"]');
 
@@ -72,14 +59,16 @@ describe('SceneBackgroundSettingsEditor', () => {
     colorInput!.setInputValue('#FFFFFF');
     colorInput!.blur();
     expect(setScenePropertyMock).toBeCalledTimes(2);
-    expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.SceneBackgroundSettings, {
+    expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.GroundPlaneSettings, {
       color: '#FFFFFF',
+      opacity: 1,
     });
   });
 
   it('should open asset browser when select texture clicked and set texture uri', () => {
     getScenePropertyMock.mockReturnValue({
       color: '#cccccc',
+      opacity: 1,
     });
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
@@ -87,7 +76,7 @@ describe('SceneBackgroundSettingsEditor', () => {
       cb(null, 'c:\file.jpg');
     });
     useStore('default').setState(baseState);
-    const { container } = render(<SceneBackgroundSettingsEditor />);
+    const { container } = render(<GroundPlaneSettingsEditor />);
     const polarisWrapper = wrapper(container);
     const selectTextureButton = polarisWrapper.findButton('[data-testid="select-texture-button"]');
 
@@ -98,19 +87,21 @@ describe('SceneBackgroundSettingsEditor', () => {
       selectTextureButton!.click();
     });
     expect(showAssetBrowserCallbackMock).toBeCalledTimes(1);
-    expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.SceneBackgroundSettings, {
+    expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.GroundPlaneSettings, {
       textureUri: 'c:\file.jpg',
+      opacity: 1,
     });
   });
 
   it('should remove texture uri', () => {
     getScenePropertyMock.mockReturnValue({
       textureUri: 'filepath',
+      opacity: 1,
     });
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
     useStore('default').setState(baseState);
-    const { container } = render(<SceneBackgroundSettingsEditor />);
+    const { container } = render(<GroundPlaneSettingsEditor />);
     const polarisWrapper = wrapper(container);
     const removeTextureButton = polarisWrapper.findButton('[data-testid="remove-texture-button"]');
 
@@ -120,8 +111,34 @@ describe('SceneBackgroundSettingsEditor', () => {
     act(() => {
       removeTextureButton!.click();
     });
-    expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.SceneBackgroundSettings, {
-      color: '#2a2e33',
+    expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.GroundPlaneSettings, {
+      color: '#00FF00',
+      opacity: 1,
+    });
+  });
+
+  it('should update opacity', () => {
+    getScenePropertyMock.mockReturnValue({
+      textureUri: 'filepath',
+      opacity: 0,
+    });
+    const globalSettingsMock = getGlobalSettings as jest.Mock;
+    globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
+    useStore('default').setState(baseState);
+    const { container } = render(<GroundPlaneSettingsEditor />);
+    const polarisWrapper = wrapper(container);
+    const opacityInput = polarisWrapper.findInput('[data-testid="ground-plane-opacity-input"]');
+
+    expect(opacityInput).toBeDefined();
+
+    // click checkbox should update store
+    opacityInput!.focus();
+    opacityInput!.setInputValue('100'); //input is in percent
+    opacityInput!.blur();
+
+    expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.GroundPlaneSettings, {
+      textureUri: 'filepath',
+      opacity: 1,
     });
   });
 });

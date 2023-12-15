@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { render } from '@testing-library/react';
 import ReactThreeTestRenderer from '@react-three/test-renderer';
-import { Scene, Camera, Mesh, Texture, MeshStandardMaterial } from 'three';
-import { useThree, useFrame } from '@react-three/fiber';
+import { Mesh, Texture, MeshStandardMaterial } from 'three';
+import { useFrame } from '@react-three/fiber';
 jest.useFakeTimers();
 
 import { KnownComponentType } from '../../../interfaces';
@@ -28,7 +28,6 @@ jest.mock('@react-three/fiber', () => {
   const originalModule = jest.requireActual('@react-three/fiber');
   return {
     ...originalModule,
-    useThree: jest.fn(),
     useFrame: jest.fn(),
   };
 });
@@ -72,11 +71,6 @@ jest.mock('../../../store/', () => ({
 const mockHandleAddWidget = jest.fn();
 
 describe('PlaneGeometryComponent', () => {
-  const mockThreeStates = {
-    camera: new Camera(),
-    scene: new Scene(),
-  };
-
   const baseNode: ISceneNodeInternal = {
     ref: 'mock-node',
     name: 'mock-node',
@@ -112,7 +106,6 @@ describe('PlaneGeometryComponent', () => {
 
   const setup = () => {
     jest.resetAllMocks();
-    (useThree as jest.Mock).mockReturnValue(mockThreeStates);
     (useFrame as jest.Mock).mockImplementation((cb) => cb());
     (useTwinMakerTextureLoader as jest.Mock).mockImplementation(() => ({
       loadTextureOnMesh: mockLoadTexture,

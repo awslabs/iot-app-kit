@@ -25,7 +25,6 @@ const texturedGroundPlane: IPlaneGeometryComponent = {
   width: 10,
   height: 20,
   textureUri: 'filepath',
-  isGroundPlane: true,
 };
 
 describe('createPlaneGeometryEntityComponent', () => {
@@ -87,11 +86,6 @@ describe('createPlaneGeometryEntityComponent', () => {
         textureUri: {
           value: {
             stringValue: 'filepath',
-          },
-        },
-        isGroundPlane: {
-          value: {
-            booleanValue: true,
           },
         },
       },
@@ -159,11 +153,6 @@ describe('createPlaneGeometryEntityComponent', () => {
               stringValue: 'filepath',
             },
           },
-          isGroundPlane: {
-            value: {
-              booleanValue: true,
-            },
-          },
         }),
       });
     });
@@ -229,10 +218,6 @@ describe('createPlaneGeometryEntityComponent', () => {
             {
               propertyName: 'textureUri',
               propertyValue: 'filepath',
-            },
-            {
-              propertyName: 'isGroundPlane',
-              propertyValue: true,
             },
           ],
         }),

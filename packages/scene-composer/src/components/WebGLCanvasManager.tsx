@@ -20,6 +20,7 @@ import useMatterportViewer from '../hooks/useMatterportViewer';
 
 import Environment, { presets } from './three-fiber/Environment';
 import Fog from './three-fiber/Fog';
+import GroundPlane from './three-fiber/GroundPlane';
 import { StatsWindow } from './three-fiber/StatsWindow';
 import EntityGroup from './three-fiber/EntityGroup';
 import { EditorMainCamera } from './three-fiber/EditorCamera';
@@ -48,7 +49,6 @@ export const WebGLCanvasManager: React.FC = () => {
   const environmentPreset = getSceneProperty<string>(KnownSceneProperty.EnvironmentPreset);
   const rootNodeRefs = document.rootNodeRefs;
 
-  const editingTargetPlaneRef = useRef(null);
   const gridHelperRef = useRef<THREE.GridHelper>(null);
 
   const MAX_CLICK_DISTANCE = 2;
@@ -100,6 +100,7 @@ export const WebGLCanvasManager: React.FC = () => {
             return node && <EntityGroup key={rootNodeRef} node={node} />;
           })}
       </group>
+      <GroundPlane />
       {isEditing() && (
         <React.Fragment>
           <EditorTransformControls />
@@ -116,6 +117,7 @@ export const WebGLCanvasManager: React.FC = () => {
           <React.Fragment>
             <gridHelper
               ref={gridHelperRef}
+              position={new THREE.Vector3(0, 0.001, 0)}
               args={[
                 1000 /* size */,
                 500 /* grid# */,
@@ -123,16 +125,6 @@ export const WebGLCanvasManager: React.FC = () => {
                 hexColorFromDesignToken(awsui.colorTextInputDisabled) /* grid color */,
               ]}
             />
-            <mesh
-              ref={editingTargetPlaneRef}
-              name='Ground'
-              rotation={[THREE.MathUtils.degToRad(270), 0, 0]}
-              onClick={onClick}
-              renderOrder={enableMatterportViewer ? 1 : undefined}
-            >
-              <planeGeometry args={[1000, 1000]} />
-              <meshBasicMaterial transparent={true} opacity={0} />
-            </mesh>
             {enableMatterportViewer && <MatterportModel onClick={onClick} />}
           </React.Fragment>
           <IntlProvider locale={getGlobalSettings().locale}>

@@ -11,7 +11,6 @@ enum PlaneGeometryComponentProperty {
   Height = 'height',
   Color = 'color',
   TextureUri = 'textureUri',
-  IsGroundPlane = 'isGroundPlane',
 }
 
 export const createPlaneGeometryEntityComponent = (geometry: IPlaneGeometryComponent): ComponentRequest => {
@@ -42,13 +41,6 @@ export const createPlaneGeometryEntityComponent = (geometry: IPlaneGeometryCompo
     comp.properties![PlaneGeometryComponentProperty.TextureUri] = {
       value: {
         stringValue: geometry.textureUri,
-      },
-    };
-  }
-  if (geometry.isGroundPlane) {
-    comp.properties![PlaneGeometryComponentProperty.IsGroundPlane] = {
-      value: {
-        booleanValue: geometry.isGroundPlane,
       },
     };
   }
@@ -83,9 +75,6 @@ export const parsePlaneGeometryComp = (geometry: DocumentType): IPlaneGeometryCo
       ?.propertyValue,
     textureUri: geometry?.['properties'].find((mp) => mp['propertyName'] === PlaneGeometryComponentProperty.TextureUri)
       ?.propertyValue,
-    isGroundPlane: geometry?.['properties'].find(
-      (mp) => mp['propertyName'] === PlaneGeometryComponentProperty.IsGroundPlane,
-    )?.propertyValue,
   };
   return planeGeometryComponent;
 };

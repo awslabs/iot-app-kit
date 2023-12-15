@@ -455,6 +455,10 @@
     "note": "Placeholder",
     "text": "Choose a speed value"
   },
+  "KCtA9Z": {
+    "note": "Form Field label",
+    "text": "Opacity %"
+  },
   "Kchdc4": {
     "note": "Placeholder",
     "text": "Choose a rule"
@@ -519,10 +523,6 @@
     "note": "Form field errorText",
     "text": "FOV cannot be less than 10"
   },
-  "NZvDHt": {
-    "note": "checkbox label",
-    "text": "Enable Fog"
-  },
   "Nj6Ob1": {
     "note": "Select Color type option",
     "text": "Define arrow color"
@@ -538,6 +538,10 @@
   "OUX68J": {
     "note": "Menu Item",
     "text": "Pan"
+  },
+  "OgfeEl": {
+    "note": "Toggle label",
+    "text": "Enable Fog"
   },
   "OpGIbY": {
     "note": "Scene Icon types in a dropdown menu",
@@ -634,10 +638,6 @@
   "T1kJTq": {
     "note": "label",
     "text": "Select color"
-  },
-  "TWQfaz": {
-    "note": "checkbox label",
-    "text": "Enable Background"
   },
   "TZDmnV": {
     "note": "label for when the user searches for a nonexistent animation",
@@ -931,6 +931,10 @@
     "note": "Button text for color opacity percentage",
     "text": "Opacity : {opacityPercentage, number, percent}"
   },
+  "k0JbYO": {
+    "note": "Form Field label",
+    "text": "Scene Background"
+  },
   "k5xCpx": {
     "note": "Form field label",
     "text": "FOV"
@@ -1019,10 +1023,6 @@
     "note": "select box option text value",
     "text": "Receive Shadow"
   },
-  "nml2b0": {
-    "note": "Menu Item label",
-    "text": "Ground Plane"
-  },
   "nwQbTY": {
     "note": "Icon name label",
     "text": "Video icon"
@@ -1098,10 +1098,6 @@
   "rBzizm": {
     "note": "label",
     "text": "Add speed rule"
-  },
-  "rC/6uY": {
-    "note": "Menu Item",
-    "text": "Add ground plane"
   },
   "rDIRVn": {
     "note": "Menu Item label",

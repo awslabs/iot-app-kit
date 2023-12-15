@@ -48,15 +48,6 @@ exports[`PlaneGeometryComponentEditor should render correctly 1`] = `
         value=""
       />
     </div>
-    <div
-      data-mocked="FormField"
-      label="Ground Plane"
-    >
-      <div
-        data-mocked="Checkbox"
-        data-testid="ground-plane-checkbox"
-      />
-    </div>
   </div>
 </div>
 `;
@@ -109,20 +100,11 @@ exports[`PlaneGeometryComponentEditor should render correctly with color 1`] = `
         value=""
       />
     </div>
-    <div
-      data-mocked="FormField"
-      label="Ground Plane"
-    >
-      <div
-        data-mocked="Checkbox"
-        data-testid="ground-plane-checkbox"
-      />
-    </div>
   </div>
 </div>
 `;
 
-exports[`PlaneGeometryComponentEditor should render correctly with textured ground plane 1`] = `
+exports[`PlaneGeometryComponentEditor should render correctly with textured plane 1`] = `
 <div>
   <div
     data-mocked="SpaceBetween"
@@ -169,15 +151,6 @@ exports[`PlaneGeometryComponentEditor should render correctly with textured grou
         data-mocked="Input"
         disabled=""
         value="filepath"
-      />
-    </div>
-    <div
-      data-mocked="FormField"
-      label="Ground Plane"
-    >
-      <div
-        data-mocked="Checkbox"
-        data-testid="ground-plane-checkbox"
       />
     </div>
   </div>
