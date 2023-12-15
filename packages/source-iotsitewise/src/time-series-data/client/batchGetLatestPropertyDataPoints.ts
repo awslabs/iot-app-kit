@@ -3,7 +3,7 @@ import { toDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
 import { fromId } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
-import { createEntryBatches, shouldFetchNextBatch } from './batch';
+import { createEntryBatches, shouldFetchNextBatch, NO_LIMIT_BATCH } from './batch';
 import { deduplicateBatch } from '../util/deduplication';
 import type {
   BatchGetAssetPropertyValueErrorEntry,
@@ -27,8 +27,6 @@ type BatchEntryCallbackCache = {
     onSuccess: (entry: BatchGetAssetPropertyValueSuccessEntry) => void;
   };
 };
-
-const BATCH_SIZE = 128;
 
 /**
  *  This API currently does not paginate and nextToken will always be null. However, once
@@ -101,7 +99,7 @@ const sendRequest = ({
       errorEntries?.forEach((entry) => entry.entryId && callbackCache[entry.entryId]?.onError(entry));
       successEntries?.forEach((entry) => entry.entryId && callbackCache[entry.entryId]?.onSuccess(entry));
 
-      if (shouldFetchNextBatch({ nextToken })) {
+      if (shouldFetchNextBatch({ nextToken, maxResults: NO_LIMIT_BATCH })) {
         sendRequest({
           client,
           batch,
@@ -119,7 +117,7 @@ const batchGetLatestPropertyDataPointsForProperty = ({
   client: IoTSiteWiseClient;
   entries: BatchLatestEntry[];
 }) =>
-  createEntryBatches<BatchLatestEntry>(entries, BATCH_SIZE)
+  createEntryBatches<BatchLatestEntry>(entries)
     .filter((batch) => batch.length > 0) // filter out empty batches
     .map(([batch], requestIndex) => sendRequest({ client, batch, requestIndex }));
 
