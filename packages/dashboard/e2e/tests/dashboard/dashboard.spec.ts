@@ -6,10 +6,8 @@ import { COMPONENT_SELECTOR, TEST_IFRAME, TEST_PAGE } from '../constants';
 
 test('dashboard', async ({ page }) => {
   await page.goto(TEST_PAGE);
-  const frame = page.locator(TEST_IFRAME); // Need to go into frame otherwise the `locator` won't locate the selection.
 
-  // KPI will always show value shows value
-  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
+  await expect(page.getByTestId('time-selection')).toBeVisible();
 });
 
 // TODO: fix these tests (failure due to stetchToFit removal from dashboard)
@@ -88,12 +86,8 @@ test.skip('dashboard resize, move, and select gestures', async ({ page }) => {
 
 test('dashboard add and remove multiple widgets', async ({ page }) => {
   await page.goto(TEST_PAGE);
-  const frame = page.locator(TEST_IFRAME); // Need to go into frame otherwise the `locator` won't locate the selection.
 
   const grid = gridUtil(page);
-
-  // KPI will always show value shows value
-  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
 
   const location1 = await grid.cellLocation(0, 0);
   const location2 = await grid.cellLocation(1, 0);
@@ -123,14 +117,14 @@ test('dashboard add and remove multiple widgets', async ({ page }) => {
 
 test('pagination buttons', async ({ page }) => {
   await page.goto(TEST_PAGE);
-  const frame = page.locator(TEST_IFRAME); // Need to go into frame otherwise the `locator` won't locate the selection.
 
-  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
+  await expect(page.getByTestId('time-selection')).toBeVisible();
+
   const forwardBtn = await page.getByRole('button', {
     name: /paginate-foward/i,
   });
+  await expect(page.getByTestId('time-selection')).toBeVisible();
 
-  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
   const backBtn = await page.getByRole('button', {
     name: /paginate-backward/i,
   });
