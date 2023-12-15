@@ -14,12 +14,14 @@ export type LatestPropertyParams = {
 
 export type HistoricalPropertyParams = {
   requestInformations: RequestInformationAndRange[];
+  maxResults?: number;
   onError: ErrorCallback;
   onSuccess: OnSuccessCallback;
 };
 
 export type AggregatedPropertyParams = {
   requestInformations: RequestInformationAndRange[];
+  maxResults?: number;
   onError: ErrorCallback;
   onSuccess: OnSuccessCallback;
 };
