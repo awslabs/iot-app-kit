@@ -7,6 +7,7 @@ import { WorkspaceSelector } from './workspaceSelector';
 import { SearchQueryInput } from './searchQueryInput';
 import type { SearchFields } from './types';
 import { WorkspaceErrorState } from './workspaceErrorState';
+import { getPlugin } from '@iot-app-kit/core';
 
 export interface DataStreamSearchProps {
   client: IoTTwinMakerClient;
@@ -14,6 +15,7 @@ export interface DataStreamSearchProps {
 }
 
 export const DataStreamSearch = ({ onSubmit, client }: DataStreamSearchProps) => {
+  const metricsRecorder = getPlugin('metricsRecorder');
   const { control, handleSubmit } = useForm<SearchFields>({
     defaultValues: { workspace: null, searchQuery: '' },
   });
@@ -35,6 +37,11 @@ export const DataStreamSearch = ({ onSubmit, client }: DataStreamSearchProps) =>
           void handleSubmit((data) => {
             onSubmit(data);
           })();
+
+          metricsRecorder?.record({
+            metricName: 'ModeledDataStreamSearch',
+            metricValue: 1,
+          });
         }}
       >
         <Form
