@@ -9,7 +9,7 @@ import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
 import { parseDuration } from '@iot-app-kit/core';
 import { fromId } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
-import { createEntryBatches, shouldFetchNextBatch } from './batch';
+import { createEntryBatches, calculateNextBatchSize, shouldFetchNextBatch } from './batch';
 import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
 import { deduplicateBatch } from '../util/deduplication';
 import type {
@@ -35,25 +35,26 @@ type BatchEntryCallbackCache = {
   };
 };
 
-const BATCH_SIZE = 16;
-const ENTRY_SIZE = 4_000;
-
 const sendRequest = ({
   client,
   batch,
   maxResults,
   requestIndex, // used to create and regenerate (for paginating) a unique entryId
   nextToken: prevToken,
+  dataPointsFetched = 0, // track number of data points fetched so far
 }: {
   client: IoTSiteWiseClient;
   batch: BatchAggregatedEntry[];
   maxResults: number;
   requestIndex: number;
   nextToken?: string;
+  dataPointsFetched?: number;
 }) => {
   // callback cache makes it convenient to capture request data in a closure.
   // the cache exposes methods that only require batch response entry as an argument.
   const callbackCache: BatchEntryCallbackCache = {};
+
+  const batchSize = calculateNextBatchSize({ maxResults, dataPointsFetched });
 
   client
     .send(
@@ -108,7 +109,7 @@ const sendRequest = ({
             timeOrdering: TimeOrdering.DESCENDING,
           };
         }),
-        maxResults,
+        maxResults: batchSize,
         nextToken: prevToken,
       })
     )
@@ -121,13 +122,17 @@ const sendRequest = ({
       errorEntries?.forEach((entry) => entry.entryId && callbackCache[entry.entryId]?.onError(entry));
       successEntries?.forEach((entry) => entry.entryId && callbackCache[entry.entryId]?.onSuccess(entry));
 
-      if (shouldFetchNextBatch({ nextToken })) {
+      // increment number of data points fetched
+      dataPointsFetched += batchSize;
+
+      if (shouldFetchNextBatch({ nextToken, maxResults, dataPointsFetched })) {
         sendRequest({
           client,
           batch,
           maxResults,
           requestIndex,
           nextToken,
+          dataPointsFetched,
         });
       }
     });
@@ -140,7 +145,7 @@ const batchGetAggregatedPropertyDataPointsForProperty = ({
   client: IoTSiteWiseClient;
   entries: BatchAggregatedEntry[];
 }) =>
-  createEntryBatches<BatchAggregatedEntry>(entries, BATCH_SIZE)
+  createEntryBatches<BatchAggregatedEntry>(entries)
     .filter((batch) => batch.length > 0) // filter out empty batches
     .map(([batch, maxResults], requestIndex) => sendRequest({ client, batch, maxResults, requestIndex }));
 
@@ -154,7 +159,7 @@ export const batchGetAggregatedPropertyDataPoints = ({
   const entries: BatchAggregatedEntry[] = [];
 
   // fan out params into individual entries, handling fetchMostRecentBeforeStart
-  params.forEach(({ requestInformations, onSuccess, onError }) => {
+  params.forEach(({ requestInformations, maxResults, onSuccess, onError }) => {
     requestInformations
       .filter(({ resolution }) => resolution !== '0')
       .forEach((requestInformation) => {
@@ -162,7 +167,7 @@ export const batchGetAggregatedPropertyDataPoints = ({
 
         entries.push({
           requestInformation,
-          maxResults: fetchMostRecentBeforeStart ? 1 : ENTRY_SIZE,
+          maxResults: fetchMostRecentBeforeStart ? 1 : maxResults,
           onSuccess,
           onError,
           requestStart: fetchMostRecentBeforeStart ? new Date(0, 0, 0) : start,
