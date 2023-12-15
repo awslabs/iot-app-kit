@@ -57,6 +57,7 @@ const widgetDashboardConfiguration = {
       },
     ],
   },
+  name: 'EC2 test dashboard',
   onSave: () => Promise.resolve(),
 };
 

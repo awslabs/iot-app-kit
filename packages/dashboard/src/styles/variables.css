@@ -37,8 +37,8 @@
   --size-asset-ghost-width: 300px;
   --radius-context-menu: 3px;
   --radius-component-palette-icon: 8px;
-  --right-toolbar-overlay-height: 116px;
-  --left-toolbar-overlay-height: 136px;
+  --dashboard-header-height: 72px;
+  --toolbar-overlay-height: 160px;
   --button-action-gap: 0.5rem;
   --colors-background-button: #f90;
   --colors-button-hover: #ec7211;
