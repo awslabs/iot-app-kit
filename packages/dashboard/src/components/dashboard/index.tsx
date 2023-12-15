@@ -26,6 +26,7 @@ export type DashboardProperties = {
   clientConfiguration: DashboardClientConfiguration;
   dashboardConfiguration: DashboardConfiguration;
   initialViewMode?: 'preview' | 'edit';
+  name?: string;
 };
 
 const Dashboard: React.FC<DashboardProperties> = ({
@@ -33,6 +34,7 @@ const Dashboard: React.FC<DashboardProperties> = ({
   clientConfiguration,
   dashboardConfiguration,
   initialViewMode,
+  name,
 }) => {
   useDashboardPlugins();
   useDashboardViewport(dashboardConfiguration.viewport);
@@ -50,7 +52,7 @@ const Dashboard: React.FC<DashboardProperties> = ({
                 enableKeyboardEvents: true,
               }}
             >
-              <InternalDashboard onSave={onSave} editable={true} propertiesPanel={<PropertiesPanel />} />
+              <InternalDashboard onSave={onSave} editable={true} name={name} propertiesPanel={<PropertiesPanel />} />
             </DndProvider>
           </Provider>
           <ReactQueryDevtools initialIsOpen={false} />

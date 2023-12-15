@@ -12,6 +12,7 @@ export type AssetForAssetModelSelectOptions = {
   selectedAsset?: SelectedAsset;
   onSelectAsset: (assetSummary: AssetSummary | undefined) => void;
   client: IoTSiteWiseClient;
+  controlId?: string;
 };
 
 const getStatus = ({
@@ -42,6 +43,7 @@ export const AssetForAssetModelSelect = ({
   assetModelId,
   selectedAsset,
   onSelectAsset,
+  controlId,
 }: AssetForAssetModelSelectOptions) => {
   const {
     assetSummaries,
@@ -76,6 +78,7 @@ export const AssetForAssetModelSelect = ({
 
   return (
     <Select
+      controlId={controlId}
       virtualScroll={assetOptions.length > 500}
       disabled={!isEnabled(assetModelId)}
       selectedOption={selectedAssetOption}

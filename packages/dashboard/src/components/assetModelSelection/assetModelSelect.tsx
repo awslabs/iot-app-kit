@@ -11,8 +11,16 @@ type AssetModelSelectOptions = {
   client: IoTSiteWiseClient;
   assetModelId: string;
   selectedAssetId?: string;
+  hideTitle?: boolean;
+  controlId?: string;
 };
-export const AssetModelSelect = ({ client, assetModelId, selectedAssetId }: AssetModelSelectOptions) => {
+export const AssetModelSelect = ({
+  client,
+  assetModelId,
+  selectedAssetId,
+  hideTitle = false,
+  controlId,
+}: AssetModelSelectOptions) => {
   const { updateSelectedAsset } = useModelBasedQuery();
 
   const { assetSummaries } = useAssetsForAssetModel({ assetModelId, client, fetchAll: true });
@@ -20,12 +28,13 @@ export const AssetModelSelect = ({ client, assetModelId, selectedAssetId }: Asse
   const selectedAsset = assetSummaries.find(({ id }) => id === selectedAssetId);
 
   return (
-    <FormField label='Asset'>
+    <FormField label={`${!hideTitle ? 'Asset' : ''}`}>
       <AssetForAssetModelSelect
         assetModelId={assetModelId}
         selectedAsset={selectedAsset}
         onSelectAsset={updateSelectedAsset}
         client={client}
+        controlId={controlId}
       />
     </FormField>
   );
