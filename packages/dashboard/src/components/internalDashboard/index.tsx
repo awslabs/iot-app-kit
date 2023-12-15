@@ -1,14 +1,14 @@
 import React, { CSSProperties, ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPlugin } from '@iot-app-kit/core';
-import { WebglContext, TrendCursorSync, TimeSync, TimeSelection } from '@iot-app-kit/react-components';
+import { WebglContext, TrendCursorSync, TimeSync } from '@iot-app-kit/react-components';
 import Box from '@cloudscape-design/components/box';
-import SpaceBetween from '@cloudscape-design/components/space-between';
 import {
   colorBackgroundCellShaded,
   colorBorderDividerDefault,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
+import { ContentLayout } from '@cloudscape-design/components';
 
 import { selectedRect } from '~/util/select';
 
@@ -22,7 +22,6 @@ import Widgets from '../widgets/list';
 import UserSelection from '../userSelection';
 import ComponentPalette from '../palette';
 import CustomDragLayer from '../dragLayer';
-import Actions from '../actions';
 import { QueryEditor } from '../queryEditor';
 import { useClients } from '../dashboard/clientContext';
 import DashboardEmptyState from './dashboardEmptyState';
@@ -54,6 +53,8 @@ import type { DashboardState } from '~/store/state';
 import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import ConfirmDeleteModal from '../confirmDeleteModal';
 import { AssetModelSelection } from '../assetModelSelection/assetModelSelection';
+import { useModelBasedQuery } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/modelBasedQuery/useModelBasedQuery';
+import DashboardHeader from './dashboardHeader';
 
 import '@iot-app-kit/components/styles.css';
 import './index.css';
@@ -61,15 +62,14 @@ import './index.css';
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
   editable?: boolean;
+  name?: string;
   propertiesPanel?: ReactNode;
 };
-
-const Divider = () => <div className='divider' />;
 
 const defaultUserSelect: CSSProperties = { userSelect: 'initial' };
 const disabledUserSelect: CSSProperties = { userSelect: 'none' };
 
-const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, editable, propertiesPanel }) => {
+const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, editable, name, propertiesPanel }) => {
   const { iotSiteWiseClient, iotTwinMakerClient } = useClients();
 
   /**
@@ -88,6 +88,9 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const selectedWidgets = useSelectedWidgets();
   const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
+  const { assetModelId, hasModelBasedQuery } = useModelBasedQuery();
+
+  const hasValidAssetModelData = !!(hasModelBasedQuery && assetModelId);
 
   const [viewFrame, setViewFrameElement] = useState<HTMLDivElement | undefined>(undefined);
   const [visible, setVisible] = useState<boolean>(false);
@@ -230,86 +233,84 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
   }
 
   const EditComponent = (
-    <div className='dashboard' style={userSelect}>
-      <CustomDragLayer onDrag={(isDragging) => setUserSelect(isDragging ? disabledUserSelect : defaultUserSelect)} />
-      <div style={dashboardToolbarBottomBorder} className='dashboard-toolbar'>
-        <Box float='left' padding='xs'>
-          <ComponentPalette />
-        </Box>
-        <Box float='right' padding='xs'>
-          <SpaceBetween size='s' direction='horizontal'>
-            <TimeSelection isPaginationEnabled />
-            <Divider key='2' />
-            <Actions
-              key='3'
-              readOnly={readOnly}
-              onSave={onSave}
-              dashboardConfiguration={dashboardConfiguration}
-              grid={grid}
-              significantDigits={significantDigits}
-              editable={editable}
-            />
-          </SpaceBetween>
-        </Box>
+    <ContentLayout
+      disableOverlap
+      header={
+        <DashboardHeader
+          name={name}
+          editable={editable}
+          readOnly={readOnly}
+          dashboardConfiguration={dashboardConfiguration}
+          grid={grid}
+          significantDigits={significantDigits}
+          onSave={onSave}
+        />
+      }
+    >
+      <div className='dashboard' style={userSelect}>
+        <CustomDragLayer onDrag={(isDragging) => setUserSelect(isDragging ? disabledUserSelect : defaultUserSelect)} />
+        <div style={dashboardToolbarBottomBorder} className='dashboard-toolbar'>
+          <Box float='left' padding='s'>
+            <ComponentPalette />
+          </Box>
+        </div>
+        <ResizablePanes
+          leftPane={<QueryEditor iotSiteWiseClient={iotSiteWiseClient} iotTwinMakerClient={iotTwinMakerClient} />}
+          centerPane={
+            <div
+              className='display-area'
+              ref={(el) => setViewFrameElement(el || undefined)}
+              style={{ backgroundColor: colorBackgroundCellShaded }}
+            >
+              <GestureableGrid {...gridProps}>
+                <ContextMenu {...contextMenuProps} />
+                <Widgets {...widgetsProps} />
+                {!widgetLength && <DashboardEmptyState />}
+                {activeGesture === 'select' && <UserSelection {...selectionProps} />}
+              </GestureableGrid>
+              <WebglContext viewFrame={viewFrame} />
+            </div>
+          }
+          rightPane={propertiesPanel}
+        />
       </div>
-      <ResizablePanes
-        leftPane={<QueryEditor iotSiteWiseClient={iotSiteWiseClient} iotTwinMakerClient={iotTwinMakerClient} />}
-        centerPane={
-          <div
-            className='display-area'
-            ref={(el) => setViewFrameElement(el || undefined)}
-            style={{ backgroundColor: colorBackgroundCellShaded }}
-          >
-            <GestureableGrid {...gridProps}>
-              <ContextMenu {...contextMenuProps} />
-              <Widgets {...widgetsProps} />
-              {!widgetLength && <DashboardEmptyState />}
-              {activeGesture === 'select' && <UserSelection {...selectionProps} />}
-            </GestureableGrid>
-            <WebglContext viewFrame={viewFrame} />
-          </div>
-        }
-        rightPane={propertiesPanel}
-      />
-    </div>
+    </ContentLayout>
   );
   const ReadOnlyComponent = (
-    <div className='dashboard'>
-      <div style={dashboardToolbarBottomBorder} className='dashboard-toolbar-read-only'>
-        <Box float='left' padding='s'>
-          <AssetModelSelection client={iotSiteWiseClient} />
-        </Box>
-        <Box float='right' padding='s'>
-          <SpaceBetween size='s' direction='horizontal'>
-            <TimeSelection isPaginationEnabled />
-            {editable && (
-              <>
-                <Divider key='2' />
-                <Actions
-                  key='3'
-                  readOnly={readOnly}
-                  onSave={onSave}
-                  dashboardConfiguration={dashboardConfiguration}
-                  grid={grid}
-                  significantDigits={significantDigits}
-                  editable={editable}
-                />
-              </>
-            )}
-          </SpaceBetween>
-        </Box>
+    <ContentLayout
+      disableOverlap
+      header={
+        <DashboardHeader
+          name={name}
+          editable={editable}
+          readOnly={readOnly}
+          dashboardConfiguration={dashboardConfiguration}
+          grid={grid}
+          significantDigits={significantDigits}
+          onSave={onSave}
+        />
+      }
+    >
+      <div className='dashboard'>
+        {hasValidAssetModelData && (
+          <div style={dashboardToolbarBottomBorder} className='dashboard-toolbar-read-only'>
+            <Box float='left' padding='s'>
+              <AssetModelSelection client={iotSiteWiseClient} />
+            </Box>
+          </div>
+        )}
+        <div
+          className='display-area'
+          ref={(el) => setViewFrameElement(el || undefined)}
+          style={{ backgroundColor: colorBackgroundCellShaded }}
+        >
+          <ReadOnlyGrid {...grid}>
+            <Widgets {...widgetsProps} />
+          </ReadOnlyGrid>
+          <WebglContext viewFrame={viewFrame} />
+        </div>
       </div>
-      <div
-        className='display-area'
-        ref={(el) => setViewFrameElement(el || undefined)}
-        style={{ backgroundColor: colorBackgroundCellShaded }}
-      >
-        <ReadOnlyGrid {...grid}>
-          <Widgets {...widgetsProps} />
-        </ReadOnlyGrid>
-        <WebglContext viewFrame={viewFrame} />
-      </div>
-    </div>
+    </ContentLayout>
   );
 
   return (

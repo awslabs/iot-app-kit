@@ -1,7 +1,7 @@
 @import '../../styles/variables.css';
 
 .dashboard {
-  height: 100vh;
+  height: calc(100vh - var(--dashboard-header-height));
   display: flex;
   flex-direction: column;
 
@@ -33,11 +33,7 @@
   background-color: var(--colors-white);
 }
 
-.dashboard .dashboard-toolbar-read-only {
-  display: inline;
-}
-
-.dashboard .dashboard-toolbar {
+.dashboard .dashboard-toolbar .dashboard-toolbar-read-only {
   display: grid;
   grid-template-columns: auto max-content;
   grid-template-rows: auto;
@@ -84,15 +80,11 @@
   width: 15%;
   min-width: 0;
   height: 100%;
+  max-height: calc(100vh - var(--toolbar-overlay-height));
   z-index: var(--stack-order-grid-inputs);
   background-color: var(--colors-white);
 }
 
 .collapsible-panel-right {
-  max-height: calc(100vh - var(--right-toolbar-overlay-height));
   border-left: 2px solid var(--colors-grey-border);
-}
-
-.collapsible-panel-left {
-  max-height: calc(100vh - var(--left-toolbar-overlay-height));
 }
