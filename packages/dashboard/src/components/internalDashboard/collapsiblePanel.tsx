@@ -5,6 +5,7 @@ import {
   colorBackgroundButtonPrimaryDefault,
   colorBorderDividerDefault,
   spaceContainerHorizontal,
+  spaceStaticL,
   spaceStaticXxxs,
 } from '@cloudscape-design/design-tokens';
 import Box, { BoxProps } from '@cloudscape-design/components/box';
@@ -60,7 +61,9 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
           </Box>
         </Box>
       </div>
-      <div className='collapsible-panel-content'>{props.panelContent}</div>
+      <div className='collapsible-panel-content' style={{ paddingBottom: spaceStaticL }}>
+        {props.panelContent}
+      </div>
     </div>
   );
 

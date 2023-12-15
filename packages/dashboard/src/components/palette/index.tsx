@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import {
   colorBorderDividerDefault,
   colorTextBodyDefault,
-  spaceFieldHorizontal,
   spaceScaledS,
   spaceScaledXxxs,
   spaceStaticXxl,
@@ -13,11 +12,6 @@ import {
 } from '~/customization/componentLibraryComponentMap';
 import PaletteComponent from './component';
 import './index.css';
-
-/* added left padding as per UX and top padding for positioning Icons Vertically centre */
-const palettePadding = {
-  padding: `${spaceFieldHorizontal} ${0} ${0} ${spaceFieldHorizontal}`,
-};
 
 const widgetFont = {
   color: colorTextBodyDefault,
@@ -33,7 +27,7 @@ const Divider = () => <div style={divider} />;
 
 const Palette = () => {
   return (
-    <div className='widget-panel' style={palettePadding}>
+    <div className='widget-panel'>
       <h4 style={widgetFont}>Widgets</h4>
       <Divider />
       <ul className='component-palette-widgets'>

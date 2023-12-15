@@ -1,14 +1,16 @@
 import React, { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { isEqual, pick } from 'lodash';
 
 import { getPlugin } from '@iot-app-kit/core';
 import { useViewport } from '@iot-app-kit/react-components';
 import { Button, SpaceBetween, Box } from '@cloudscape-design/components';
+
 import { onSelectWidgetsAction, onToggleReadOnly } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
-import { isEqual, pick } from 'lodash';
 import { DashboardSave } from '~/types';
 import DashboardSettings from './settings';
+import CustomOrangeButton from '../customOrangeButton';
 
 const DEFAULT_VIEWPORT = { duration: '10m' };
 
@@ -81,11 +83,10 @@ const Actions: React.FC<ActionsProps> = ({
   };
 
   return (
-    <>
-      <Box variant='awsui-key-label'>Actions</Box>
+    <Box padding={{ top: 'xxs' }} data-testid='dashboard-actions'>
       <SpaceBetween size='s' direction='horizontal'>
         {onSave && <Button onClick={handleOnSave}>Save</Button>}
-        {editable && <Button onClick={handleOnReadOnly}>{readOnly ? 'Edit' : 'Preview'}</Button>}
+        {editable && <CustomOrangeButton title={readOnly ? 'Edit' : 'Preview'} handleClick={handleOnReadOnly} />}
         {editable && !readOnly && (
           <Button
             onClick={() => setSettingVisibility(true)}
@@ -96,15 +97,16 @@ const Actions: React.FC<ActionsProps> = ({
         )}
         <DashboardSettings isVisible={dashboardSettingsVisible} onClose={() => setSettingVisibility(false)} />
       </SpaceBetween>
-    </>
+    </Box>
   );
 };
 
 const gridAsComparable = (grid: DashboardState['grid']) => pick(grid, ['height', 'width', 'cellSize']);
 const actionsComparator = (a: Readonly<ActionsProps>, b: Readonly<ActionsProps>): boolean => {
+  const readOnlyIsSame = a.readOnly === b.readOnly;
   const gridIsSame = isEqual(gridAsComparable(a.grid), gridAsComparable(b.grid));
   const dashboardConfigurationIsSame = isEqual(a.dashboardConfiguration, b.dashboardConfiguration);
-  return gridIsSame && dashboardConfigurationIsSame;
+  return gridIsSame && dashboardConfigurationIsSame && readOnlyIsSame;
 };
 
 export default memo(Actions, actionsComparator);
