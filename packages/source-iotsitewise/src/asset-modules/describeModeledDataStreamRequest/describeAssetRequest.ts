@@ -77,6 +77,8 @@ export class DescribeAssetRequest {
     const errorMessage = `Failed to describe asset. Error: ${error}`;
     console.error(errorMessage);
 
+    // TODO: delete pending request
+    // TODO: handle retryable errors
     throw new Error(errorMessage);
   }
 }
