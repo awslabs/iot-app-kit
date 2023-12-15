@@ -1,6 +1,6 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { Button, Checkbox, FormField, Input, SpaceBetween } from '@awsui/components-react';
+import { Button, FormField, Input, SpaceBetween } from '@awsui/components-react';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
@@ -26,114 +26,98 @@ export const SceneBackgroundSettingsEditor: React.FC = () => {
     (state) => state.getEditorConfig().showAssetBrowserCallback,
   );
 
-  const [backgroundEnabled, setBackgroundEnabled] = useState(!!backgroundSettings);
-  const [internalColor, setInternalColor] = useState(backgroundSettings?.color || '#cccccc');
+  const [internalColor, setInternalColor] = useState(backgroundSettings?.color || '#2a2e33');
   const [internalUri, setInternalUri] = useState(backgroundSettings?.textureUri || '');
   const backgroundColors = useStore(sceneComposerId)((state) =>
     state.getSceneProperty<string[]>(KnownSceneProperty.BackgroundCustomColors, []),
   );
   const setBackgroundColorsSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
 
-  const onToggleBackground = useCallback(
-    (checked: boolean) => {
-      if (checked) {
-        internalUri
-          ? setSceneProperty(KnownSceneProperty.SceneBackgroundSettings, {
-              textureUri: internalUri,
-            })
-          : setSceneProperty(KnownSceneProperty.SceneBackgroundSettings, {
-              color: internalColor,
-            });
-      } else {
-        setSceneProperty(KnownSceneProperty.SceneBackgroundSettings, undefined);
-      }
-      setBackgroundEnabled(checked);
-    },
-    [backgroundSettings, internalColor],
-  );
+  //set default
+  useEffect(() => {
+    if (!backgroundSettings?.color && !backgroundSettings?.textureUri) {
+      setSceneProperty(KnownSceneProperty.SceneBackgroundSettings, {
+        color: internalColor,
+      });
+    }
+  }, [backgroundSettings]);
 
   const onColorChange = useCallback(
     (color: string) => {
       if (color !== internalColor) {
         setInternalColor(color);
-        if (backgroundEnabled) {
-          setSceneProperty(KnownSceneProperty.SceneBackgroundSettings, {
-            color: color,
-          });
-        }
+        setSceneProperty(KnownSceneProperty.SceneBackgroundSettings, {
+          color: color,
+        });
       }
     },
-    [backgroundEnabled, internalColor],
+    [internalColor],
   );
 
   const onTextureSelectClick = useCallback(() => {
     if (showAssetBrowserCallback) {
       showAssetBrowserCallback((s3BucketArn, contentLocation) => {
-        let textureUri: string;
+        let localTextureUri: string;
         if (s3BucketArn === null) {
           // This should be used for local testing only
-          textureUri = contentLocation;
+          localTextureUri = contentLocation;
         } else {
-          textureUri = `s3://${parseS3BucketFromArn(s3BucketArn)}/${contentLocation}`;
+          localTextureUri = `s3://${parseS3BucketFromArn(s3BucketArn)}/${contentLocation}`;
         }
 
-        setInternalUri(textureUri);
-        if (backgroundEnabled) {
-          setSceneProperty(KnownSceneProperty.SceneBackgroundSettings, {
-            textureUri: textureUri,
-          });
-        }
+        setInternalUri(localTextureUri);
+        setSceneProperty(KnownSceneProperty.SceneBackgroundSettings, {
+          textureUri: localTextureUri,
+        });
       });
     } else {
       console.info('No asset browser available');
     }
-  }, [backgroundEnabled]);
+  }, []);
 
   const onTextureRemoveClick = useCallback(() => {
     setInternalUri('');
-    if (backgroundEnabled) {
-      setSceneProperty(KnownSceneProperty.SceneBackgroundSettings, {
-        color: internalColor,
-      });
-    }
-  }, [backgroundEnabled, internalColor]);
+    setSceneProperty(KnownSceneProperty.SceneBackgroundSettings, {
+      color: internalColor,
+    });
+  }, [internalColor]);
 
   return (
     <React.Fragment>
-      <SpaceBetween size='s'>
-        <Checkbox
-          data-testid='enable-background-checkbox'
-          checked={!!backgroundSettings}
-          onChange={(e) => onToggleBackground(e.detail.checked)}
-        >
-          {intl.formatMessage({ defaultMessage: 'Enable Background', description: 'checkbox label' })}
-        </Checkbox>
-        {!!backgroundSettings && (!backgroundSettings.textureUri || !texturesEnabled) && (
-          <ColorSelectorCombo
-            color={internalColor}
-            onSelectColor={(pickedColor) => onColorChange(pickedColor)}
-            onUpdateCustomColors={(chosenCustomColors) =>
-              setBackgroundColorsSceneProperty(KnownSceneProperty.BackgroundCustomColors, chosenCustomColors)
-            }
-            customColors={backgroundColors}
-            colorPickerLabel={intl.formatMessage({ defaultMessage: 'Color', description: 'Color' })}
-            customColorLabel={intl.formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}
-          />
-        )}
-        {!!backgroundSettings && texturesEnabled && (
-          <SpaceBetween size='s' direction='horizontal'>
-            <Button data-testid='select-texture-button' onClick={onTextureSelectClick}>
-              {intl.formatMessage({ defaultMessage: 'Select Texture', description: 'select texture Button Text' })}
-            </Button>
-            {internalUri && (
-              <Button data-testid='remove-texture-button' onClick={onTextureRemoveClick}>
-                {intl.formatMessage({ defaultMessage: 'Remove Texture', description: 'remove texture Button Text' })}
-              </Button>
-            )}
-            <Input value={internalUri} disabled />
-          </SpaceBetween>
-        )}
-      </SpaceBetween>
+      <FormField label={intl.formatMessage({ defaultMessage: 'Scene Background', description: 'Form Field label' })}>
+        <SpaceBetween size='s' direction='vertical'>
+          {!!backgroundSettings && (!backgroundSettings.textureUri || !texturesEnabled) && (
+            <ColorSelectorCombo
+              color={internalColor}
+              onSelectColor={(pickedColor) => onColorChange(pickedColor)}
+              onUpdateCustomColors={(chosenCustomColors) =>
+                setBackgroundColorsSceneProperty(KnownSceneProperty.BackgroundCustomColors, chosenCustomColors)
+              }
+              customColors={backgroundColors}
+              colorPickerLabel={intl.formatMessage({ defaultMessage: 'Color', description: 'Color' })}
+              customColorLabel={intl.formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}
+            />
+          )}
+          {!!backgroundSettings && texturesEnabled && (
+            <SpaceBetween size='s' direction='vertical'>
+              <SpaceBetween size='s' direction='horizontal'>
+                <Button data-testid='select-texture-button' onClick={onTextureSelectClick}>
+                  {intl.formatMessage({ defaultMessage: 'Select Texture', description: 'select texture Button Text' })}
+                </Button>
+                {internalUri && (
+                  <Button data-testid='remove-texture-button' onClick={onTextureRemoveClick}>
+                    {intl.formatMessage({
+                      defaultMessage: 'Remove Texture',
+                      description: 'remove texture Button Text',
+                    })}
+                  </Button>
+                )}
+              </SpaceBetween>
+              {internalUri && <Input value={internalUri} disabled />}
+            </SpaceBetween>
+          )}
+        </SpaceBetween>
+      </FormField>
     </React.Fragment>
   );
 };

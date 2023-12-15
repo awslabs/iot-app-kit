@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { Checkbox, FormField, Input, SpaceBetween } from '@awsui/components-react';
+import { FormField, Input, SpaceBetween, Toggle } from '@awsui/components-react';
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IFogSettings, KnownSceneProperty } from '../../../interfaces';
@@ -41,7 +41,7 @@ export const FogSettingsEditor: React.FC = () => {
       }
       setFogEnabled(checked);
     },
-    [fogSettings, internalColor, internalNearDistance, internalFarDistance],
+    [internalColor, internalNearDistance, internalFarDistance],
   );
 
   const onInputBlur = useCallback(() => {
@@ -72,7 +72,10 @@ export const FogSettingsEditor: React.FC = () => {
 
   const onNearChange = useCallback(
     (event) => {
-      const value = Number(event.detail.value);
+      let value = Number(event.detail.value);
+      if (value < 0) {
+        value = 0;
+      }
       if (value !== internalNearDistance) {
         setInternalNearDistance(value);
       }
@@ -82,7 +85,10 @@ export const FogSettingsEditor: React.FC = () => {
 
   const onFarChange = useCallback(
     (event) => {
-      const value = Number(event.detail.value);
+      let value = Number(event.detail.value);
+      if (value < 0) {
+        value = 0;
+      }
       if (value !== internalFarDistance) {
         setInternalFarDistance(value);
       }
@@ -93,13 +99,9 @@ export const FogSettingsEditor: React.FC = () => {
   return (
     <React.Fragment>
       <SpaceBetween size='s'>
-        <Checkbox
-          data-testid='enable-fog-checkbox'
-          checked={!!fogSettings}
-          onChange={(e) => onToggleFog(e.detail.checked)}
-        >
-          {intl.formatMessage({ defaultMessage: 'Enable Fog', description: 'checkbox label' })}
-        </Checkbox>
+        <Toggle data-testid='enable-fog-toggle' checked={!!fogSettings} onChange={(e) => onToggleFog(e.detail.checked)}>
+          {intl.formatMessage({ description: 'Toggle label', defaultMessage: 'Enable Fog' })}
+        </Toggle>
         {!!fogSettings && (
           <>
             <ColorSelectorCombo

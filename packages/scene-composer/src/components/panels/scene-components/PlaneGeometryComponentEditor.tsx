@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { Button, Checkbox, FormField, Input, SpaceBetween } from '@awsui/components-react';
+import { Button, FormField, Input, SpaceBetween } from '@awsui/components-react';
 import { useIntl } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';
@@ -34,7 +34,6 @@ export const PlaneGeometryComponentEditor: React.FC<IPlaneGeometryComponentEdito
   const [internalHeight, setInternalHeight] = useState(planeGeometryComponent.height);
   const [internalColor, setInternalColor] = useState(planeGeometryComponent.color || '#cccccc');
   const [internalUri, setInternalUri] = useState(planeGeometryComponent.textureUri || '');
-  const [internalGroundPlane, setInternalGroundPlane] = useState(planeGeometryComponent.isGroundPlane || false);
 
   const onUpdateCallback = useCallback(
     (componentPartial: IPlaneGeometryComponentInternal, replace?: boolean) => {
@@ -83,17 +82,17 @@ export const PlaneGeometryComponentEditor: React.FC<IPlaneGeometryComponentEdito
   const onTextureSelectClick = useCallback(() => {
     if (showAssetBrowserCallback) {
       showAssetBrowserCallback((s3BucketArn, contentLocation) => {
-        let textureUri: string;
+        let localTextureUri: string;
         if (s3BucketArn === null) {
           // This should be used for local testing only
-          textureUri = contentLocation;
+          localTextureUri = contentLocation;
         } else {
-          textureUri = `s3://${parseS3BucketFromArn(s3BucketArn)}/${contentLocation}`;
+          localTextureUri = `s3://${parseS3BucketFromArn(s3BucketArn)}/${contentLocation}`;
         }
 
-        setInternalUri(textureUri);
+        setInternalUri(localTextureUri);
         const { color: _color, ...otherComponentProps } = planeGeometryComponent;
-        const updatedComponent = { ...otherComponentProps, textureUri };
+        const updatedComponent = { ...otherComponentProps, textureUri: localTextureUri };
         onUpdateCallback(updatedComponent, true);
       });
     } else {
@@ -107,15 +106,6 @@ export const PlaneGeometryComponentEditor: React.FC<IPlaneGeometryComponentEdito
     const updatedComponent = { ...otherComponentProps, color: internalColor };
     onUpdateCallback(updatedComponent, true);
   }, [planeGeometryComponent, internalColor]);
-
-  const onGroundPlaneChecked = useCallback(
-    (checked: boolean) => {
-      setInternalGroundPlane(checked);
-      const updatedComponent = { ...planeGeometryComponent, isGroundPlane: checked };
-      onUpdateCallback(updatedComponent, true);
-    },
-    [planeGeometryComponent],
-  );
 
   return (
     <SpaceBetween size='s'>
@@ -168,13 +158,6 @@ export const PlaneGeometryComponentEditor: React.FC<IPlaneGeometryComponentEdito
           <Input value={internalUri} disabled />
         </SpaceBetween>
       )}
-      <FormField label={intl.formatMessage({ defaultMessage: 'Ground Plane', description: 'Form Field label' })}>
-        <Checkbox
-          data-testid='ground-plane-checkbox'
-          checked={internalGroundPlane}
-          onChange={({ detail }) => onGroundPlaneChecked(detail.checked)}
-        />
-      </FormField>
     </SpaceBetween>
   );
 };

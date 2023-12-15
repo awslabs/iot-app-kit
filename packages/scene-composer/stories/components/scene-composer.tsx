@@ -132,7 +132,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   const mockAssetBrowserCallback: ShowAssetBrowserCallback = useCallback(
     (cb: AssetBrowserResultCallback) => {
       actionRecorderShowAssetBrowserCallback(cb);
-      if (source == 'local') {
+      if (source === 'local') {
         cb(null, 'PALLET_JACK.glb');
       } else {
         cb(null, 'CookieFactoryMixer.glb'); // Update the string to a model available in your S3 bucket

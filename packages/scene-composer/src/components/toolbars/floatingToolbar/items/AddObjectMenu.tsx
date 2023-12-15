@@ -16,7 +16,6 @@ import {
   ISceneNode,
   KnownComponentType,
   SceneResourceType,
-  IPlaneGeometryComponent,
 } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component, LightType, ModelType } from '../../../../models/SceneModels';
@@ -44,7 +43,6 @@ enum ObjectTypes {
   Light = 'add-object-light',
   ViewCamera = 'add-object-view-camera',
   Annotation = 'add-object-annotation',
-  GroundPlane = 'add-object-ground-plane',
 }
 
 type AddObjectMenuItem = ToolbarItemOptions & {
@@ -62,7 +60,6 @@ const labelStrings: { [key in ObjectTypes]: MessageDescriptor } = defineMessages
   [ObjectTypes.MotionIndicator]: { defaultMessage: 'Motion indicator', description: 'Menu Item label' },
   [ObjectTypes.ViewCamera]: { defaultMessage: 'Camera', description: 'Menu Item label' },
   [ObjectTypes.Annotation]: { defaultMessage: 'Annotation', description: 'Menu Item label' },
-  [ObjectTypes.GroundPlane]: { defaultMessage: 'Ground Plane', description: 'Menu Item label' },
 });
 
 const textStrings = defineMessages({
@@ -75,7 +72,6 @@ const textStrings = defineMessages({
   [ObjectTypes.MotionIndicator]: { defaultMessage: 'Add motion indicator', description: 'Menu Item' },
   [ObjectTypes.ViewCamera]: { defaultMessage: 'Add camera from current view', description: 'Menu Item' },
   [ObjectTypes.Annotation]: { defaultMessage: 'Add annotation', description: 'Menu Item' },
-  [ObjectTypes.GroundPlane]: { defaultMessage: 'Add ground plane', description: 'Menu Item' },
 });
 
 interface AddObjectMenuProps {
@@ -168,10 +164,6 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
         },
         {
           uuid: ObjectTypes.MotionIndicator,
-        },
-        {
-          uuid: ObjectTypes.GroundPlane,
-          feature: { name: COMPOSER_FEATURES.SceneAppearance },
         },
       ].map(mapToMenuItem),
     [
@@ -314,28 +306,6 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
     }
   };
 
-  const handleAddGroundPlane = () => {
-    const planeComponent: IPlaneGeometryComponent = {
-      type: 'PlaneGeometry',
-      width: 1000,
-      height: 1000,
-      color: 'green',
-      isGroundPlane: true,
-    };
-    const node = {
-      name: 'Ground Plane',
-      components: [planeComponent],
-      parentRef: undefined, //force to root
-    } as unknown as ISceneNodeInternal;
-    const newNode = createNodeWithTransform(
-      node,
-      new THREE.Vector3(0, -0.001, 0), //position
-      new THREE.Euler(Math.PI / 2, 0, 0), //rotation on X 90 degrees to place in X-Z plane instead of X-Y plane
-      new THREE.Vector3(1, 1, 1), //scale
-    );
-    appendSceneNode(newNode);
-  };
-
   const handleAddMotionIndicator = () => {
     const motionIndicatorComponent: IMotionIndicatorComponent = {
       type: 'MotionIndicator',
@@ -421,9 +391,6 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
             break;
           case ObjectTypes.Annotation:
             handleAddOverlay(Component.DataOverlaySubType.TextAnnotation);
-            break;
-          case ObjectTypes.GroundPlane:
-            handleAddGroundPlane();
             break;
         }
 

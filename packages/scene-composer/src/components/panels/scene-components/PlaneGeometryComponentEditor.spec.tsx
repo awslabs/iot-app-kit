@@ -31,13 +31,12 @@ describe('PlaneGeometryComponentEditor', () => {
     color: '#abcdef',
   };
 
-  const componentWithTexturedGroundPlane: IPlaneGeometryComponentInternal = {
+  const componentWithTexturedPlane: IPlaneGeometryComponentInternal = {
     ...mockComponent,
     type: KnownComponentType.PlaneGeometry,
     width: 10,
     height: 20,
     textureUri: 'filepath',
-    isGroundPlane: true,
   };
 
   const mockFeatureConfigOn = { [COMPOSER_FEATURES.Textures]: true };
@@ -159,8 +158,8 @@ describe('PlaneGeometryComponentEditor', () => {
     useStore('default').setState(baseState);
     const { container } = render(
       <PlaneGeometryComponentEditor
-        node={{ ...mockNode, components: [componentWithTexturedGroundPlane] }}
-        component={componentWithTexturedGroundPlane}
+        node={{ ...mockNode, components: [componentWithTexturedPlane] }}
+        component={componentWithTexturedPlane}
       />,
     );
     const polarisWrapper = wrapper(container);
@@ -174,32 +173,7 @@ describe('PlaneGeometryComponentEditor', () => {
     });
 
     expect(updateComponentInternalFn).toBeCalledTimes(1);
-    const { textureUri: _textureUri, ...otherComponentProps } = componentWithTexturedGroundPlane;
+    const { textureUri: _textureUri, ...otherComponentProps } = componentWithTexturedPlane;
     expect(updateComponentInternalFn).toBeCalledWith(mockNode.ref, { ...otherComponentProps, color: '#cccccc' }, true);
-  });
-
-  it('should toggle ground plane status', () => {
-    const globalSettingsMock = getGlobalSettings as jest.Mock;
-    globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
-    useStore('default').setState(baseState);
-    const { container } = render(
-      <PlaneGeometryComponentEditor node={{ ...mockNode, components: [component] }} component={component} />,
-    );
-    const polarisWrapper = wrapper(container);
-    const groundPlaneCheckBox = polarisWrapper.findCheckbox('[data-testid="ground-plane-checkbox"]');
-
-    expect(groundPlaneCheckBox).toBeDefined();
-
-    // click checkbox should update store
-    act(() => {
-      groundPlaneCheckBox?.findNativeInput().click();
-    });
-    expect(updateComponentInternalFn).toBeCalledTimes(1);
-    expect(updateComponentInternalFn).toBeCalledWith(mockNode.ref, { ...component, isGroundPlane: true }, true);
-
-    act(() => {
-      groundPlaneCheckBox?.findNativeInput().click();
-    });
-    expect(updateComponentInternalFn).toBeCalledWith(mockNode.ref, { ...component, isGroundPlane: false }, true);
   });
 });

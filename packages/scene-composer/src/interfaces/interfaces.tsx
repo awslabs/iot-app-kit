@@ -75,10 +75,12 @@ export enum KnownSceneProperty {
   TagCustomColors = 'tagCustomColors',
   FogSettings = 'fogSettings',
   SceneBackgroundSettings = 'sceneBackgroundSettings',
+  GroundPlaneSettings = 'groundPlaneSettings',
   FogCustomColors = 'fogCustomColors',
   BackgroundCustomColors = 'backgroundCustomColors',
   LayerDefaultRefreshInterval = 'layerDefaultRefreshInterval',
   GeometryCustomColors = 'geometryCustomColors',
+  GroundCustomColors = 'groundCustomColors,',
 }
 
 /************************************************
@@ -157,4 +159,10 @@ export interface IFogSettings {
 export interface ISceneBackgroundSetting {
   color?: string;
   textureUri?: string;
+}
+
+export interface IGroundPlaneSettings {
+  color?: string;
+  textureUri?: string;
+  opacity: number;
 }

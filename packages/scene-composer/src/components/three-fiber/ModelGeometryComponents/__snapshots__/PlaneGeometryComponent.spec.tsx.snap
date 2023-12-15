@@ -8,9 +8,7 @@ exports[`PlaneGeometryComponent should render 1`] = `
         args="10,20"
         attach="geometry"
       />
-      <meshstandardmaterial
-        color="undefined"
-      />
+      <meshstandardmaterial />
     </mesh>
   </group>
 </div>

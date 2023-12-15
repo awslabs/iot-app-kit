@@ -20,6 +20,7 @@ import { OverlayPanelVisibilityToggle } from './scene-settings/OverlayPanelVisib
 import { ConvertSceneSettings } from './scene-settings/ConvertSceneSettings';
 import { FogSettingsEditor } from './scene-settings/FogSettingsEditor';
 import { SceneBackgroundSettingsEditor } from './scene-settings/SceneBackgroundSettingsEditor';
+import { GroundPlaneSettingsEditor } from './scene-settings/GroundPlaneSettingsEditor';
 export interface SettingsPanelProps {
   valueDataBindingProvider?: IValueDataBindingProvider;
 }
@@ -189,6 +190,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
               <React.Fragment>
                 <FogSettingsEditor />
                 <SceneBackgroundSettingsEditor />
+                <GroundPlaneSettingsEditor />
               </React.Fragment>
             )}
           </SpaceBetween>

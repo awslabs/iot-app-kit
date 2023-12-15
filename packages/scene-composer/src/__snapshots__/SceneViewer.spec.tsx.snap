@@ -19,7 +19,7 @@ exports[`SceneViewer should render correctly 1`] = `
   data-testid="webgl-root"
 >
   <div
-    config="{\\"mode\\":\\"Viewing\\",\\"featureConfig\\":{\\"SceneHierarchySearch\\":true,\\"SceneHierarchyReorder\\":true,\\"SubModelSelection\\":true,\\"ENHANCED_EDITING\\":true,\\"CameraView\\":true,\\"OpacityRule\\":true,\\"Overlay\\":true,\\"TagResize\\":true,\\"Matterport\\":true,\\"TagStyle\\":true,\\"AutoQuery\\":true}}"
+    config="{\\"mode\\":\\"Viewing\\",\\"featureConfig\\":{\\"SceneHierarchySearch\\":true,\\"SceneHierarchyReorder\\":true,\\"SubModelSelection\\":true,\\"ENHANCED_EDITING\\":true,\\"CameraView\\":true,\\"OpacityRule\\":true,\\"Overlay\\":true,\\"TagResize\\":true,\\"Matterport\\":true,\\"TagStyle\\":true,\\"AutoQuery\\":true,\\"SceneAppearance\\":true}}"
     data-mocked="SceneComposerInternal"
     onSceneLoaded={[Function]}
     sceneComposerId="123"
