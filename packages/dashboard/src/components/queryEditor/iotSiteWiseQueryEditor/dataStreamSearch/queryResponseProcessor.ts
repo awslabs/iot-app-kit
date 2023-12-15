@@ -25,15 +25,14 @@ export class QueryResponseProcessor {
   static #convertResponseToModeledDataStreams(
     rows: NonNullable<ExecuteQueryCommandOutput['rows']>
   ): ModeledDataStream[] {
-    const modeledDataStreams = rows.map((row) => {
-      const rowAsModel: Model = row.rowData as unknown as Model;
-
-      const modeledDataStream = this.#convertRowToModeledDataStream(rowAsModel);
-
-      return modeledDataStream;
-    });
-
-    return modeledDataStreams;
+    return (
+      rows
+        // Filter out any invalid rows. Situation has occured where `null` was being returned for propertyId and propertyName which causes downstream bugs.
+        .filter(
+          (row) => row.rowData && row.rowData.length === 4 && row.rowData.every((cell) => typeof cell === 'string')
+        )
+        .map((row) => this.#convertRowToModeledDataStream(row.rowData as Model))
+    );
   }
 
   static #convertRowToModeledDataStream(rowData: Model): ModeledDataStream {
