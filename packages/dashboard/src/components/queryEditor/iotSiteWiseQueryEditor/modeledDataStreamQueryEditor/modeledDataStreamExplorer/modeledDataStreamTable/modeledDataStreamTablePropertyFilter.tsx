@@ -44,43 +44,46 @@ type ModeledDataStreamPropertyFilterProps = Omit<PropertyFilterProps, 'i18nStrin
 
 export function ModeledDataStreamTablePropertyFilter(props: ModeledDataStreamPropertyFilterProps) {
   return (
-    <PropertyFilter
-      {...props}
-      filteringLoadingText='Loading suggestions'
-      filteringErrorText='Error fetching suggestions.'
-      filteringRecoveryText='Retry'
-      filteringFinishedText='End of results'
-      filteringEmpty='No suggestions found'
-      i18nStrings={{
-        filteringAriaLabel: 'Filter modeled data streams by text, property, or value',
-        dismissAriaLabel: 'Dismiss',
-        filteringPlaceholder: 'Filter modeled data streams by text, property, or value',
-        groupValuesText: 'Values',
-        groupPropertiesText: 'Properties',
-        operatorsText: 'Operators',
-        operationAndText: 'and',
-        operationOrText: 'or',
-        operatorLessText: 'Less than',
-        operatorLessOrEqualText: 'Less than or equal',
-        operatorGreaterText: 'Greater than',
-        operatorGreaterOrEqualText: 'Greater than or equal',
-        operatorContainsText: 'Contains',
-        operatorDoesNotContainText: 'Does not contain',
-        operatorEqualsText: 'Equals',
-        operatorDoesNotEqualText: 'Does not equal',
-        editTokenHeader: 'Edit filter',
-        propertyText: 'Property',
-        operatorText: 'Operator',
-        valueText: 'Value',
-        cancelActionText: 'Cancel',
-        applyActionText: 'Apply',
-        allPropertiesLabel: 'All properties',
-        tokenLimitShowMore: 'Show more',
-        tokenLimitShowFewer: 'Show fewer',
-        clearFiltersText: 'Clear filters',
-        removeTokenButtonAriaLabel: (token) => `Remove token ${token.propertyKey} ${token.operator} ${token.value}`,
-        enteredTextLabel: (text) => `Use: "${text}"`,
-      }}
-    />
+    <>
+      <strong>Filter by:</strong>
+      <PropertyFilter
+        {...props}
+        filteringLoadingText='Loading suggestions'
+        filteringErrorText='Error fetching suggestions.'
+        filteringRecoveryText='Retry'
+        filteringFinishedText='End of results'
+        filteringEmpty='No suggestions found'
+        i18nStrings={{
+          filteringAriaLabel: 'Filter modeled data streams by text, property, or value',
+          dismissAriaLabel: 'Dismiss',
+          filteringPlaceholder: 'Filter modeled data streams by text, property, or value',
+          groupValuesText: 'Values',
+          groupPropertiesText: 'Properties',
+          operatorsText: 'Operators',
+          operationAndText: 'and',
+          operationOrText: 'or',
+          operatorLessText: 'Less than',
+          operatorLessOrEqualText: 'Less than or equal',
+          operatorGreaterText: 'Greater than',
+          operatorGreaterOrEqualText: 'Greater than or equal',
+          operatorContainsText: 'Contains',
+          operatorDoesNotContainText: 'Does not contain',
+          operatorEqualsText: 'Equals',
+          operatorDoesNotEqualText: 'Does not equal',
+          editTokenHeader: 'Edit filter',
+          propertyText: 'Property',
+          operatorText: 'Operator',
+          valueText: 'Value',
+          cancelActionText: 'Cancel',
+          applyActionText: 'Apply',
+          allPropertiesLabel: 'All properties',
+          tokenLimitShowMore: 'Show more',
+          tokenLimitShowFewer: 'Show fewer',
+          clearFiltersText: 'Clear filters',
+          removeTokenButtonAriaLabel: (token) => `Remove token ${token.propertyKey} ${token.operator} ${token.value}`,
+          enteredTextLabel: (text) => `Use: "${text}"`,
+        }}
+      />
+    </>
   );
 }
