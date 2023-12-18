@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.12.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.11.0...scene-composer-v9.12.0) (2023-12-18)
+
+
+### Features
+
+* **scene:** move add ground plane to settings ([3b0c59b](https://github.com/awslabs/iot-app-kit/commit/3b0c59b13243892a657f8ed975448babe7a6caec))
+* **scene:** textures for backgrounds and planes ([0b2104a](https://github.com/awslabs/iot-app-kit/commit/0b2104ae299f899b88ac4d77696b075793ceed1d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/react-components bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/related-table bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.11.0 to 9.12.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 9.11.0 to 9.12.0
+
 ## [9.11.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.10.0...scene-composer-v9.11.0) (2023-12-07)
 
 
