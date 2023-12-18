@@ -4,6 +4,7 @@ import { invalidate, ThreeEvent, useFrame, useThree } from '@react-three/fiber';
 import { SkeletonUtils } from 'three-stdlib';
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 
+import { MAX_CLICK_DISTANCE } from '../../../common/constants';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { Vector3, KnownComponentType } from '../../../interfaces';
 import { IModelRefComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../store';
@@ -54,8 +55,6 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   const { getSceneNodeByRef } = useStore(sceneComposerId)((state) => state);
   const { isEditing, addingWidget, setAddingWidget, cursorLookAt, cursorVisible, setCursorVisible } =
     useEditorState(sceneComposerId);
-
-  const MAX_CLICK_DISTANCE = 2;
 
   useEffect(() => {
     setCursorVisible(hiddenWhileImmersive || !!addingWidget);
@@ -177,10 +176,8 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   };
 
   const onClick = (e: ThreeEvent<MouseEvent>) => {
-    if (e.delta <= MAX_CLICK_DISTANCE) {
-      if (isEditing() && addingWidget) {
-        handleAddWidget(e);
-      }
+    if (e.delta <= MAX_CLICK_DISTANCE && isEditing() && addingWidget) {
+      handleAddWidget(e);
     }
   };
 

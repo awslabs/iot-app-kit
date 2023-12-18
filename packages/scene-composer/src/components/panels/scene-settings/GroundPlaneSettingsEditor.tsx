@@ -54,13 +54,7 @@ export const GroundPlaneSettingsEditor: React.FC = () => {
 
   const onOpacityChange = useCallback(
     (event) => {
-      let value = Number(event.detail.value);
-      value = value / 100; //convert from percentage
-      if (value > 1) {
-        value = 1;
-      } else if (value < 0) {
-        value = 0;
-      }
+      const value = Math.min(1, Math.max(0, Number(event.detail.value) / 100));
       if (value !== internalOpacity) {
         setInternalOpacity(value);
       }

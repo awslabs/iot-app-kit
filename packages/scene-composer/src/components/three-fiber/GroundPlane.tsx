@@ -5,6 +5,7 @@ import { Plane } from '@react-three/drei';
 
 import { IGroundPlaneSettings, KnownSceneProperty } from '../../interfaces';
 import { useSceneComposerId } from '../../common/sceneComposerIdContext';
+import { MAX_CLICK_DISTANCE } from '../../common/constants';
 import useAddWidget from '../../hooks/useAddWidget';
 import useMatterportViewer from '../../hooks/useMatterportViewer';
 import useTwinMakerTextureLoader from '../../hooks/useTwinMakerTextureLoader';
@@ -25,13 +26,9 @@ const GroundPlane: React.FC = () => {
   const [meshId, setMeshId] = useState('');
   const [dirtyTexture, setDirtyTexture] = useState(false);
 
-  const MAX_CLICK_DISTANCE = 2;
-
   const onClick = (e: ThreeEvent<MouseEvent>) => {
-    if (e.delta <= MAX_CLICK_DISTANCE) {
-      if (isEditing() && addingWidget) {
-        handleAddWidget(e);
-      }
+    if (e.delta <= MAX_CLICK_DISTANCE && isEditing() && addingWidget) {
+      handleAddWidget(e);
     }
   };
 
