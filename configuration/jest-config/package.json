@@ -5,5 +5,8 @@
   "private": true,
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "test": ""
   }
 }

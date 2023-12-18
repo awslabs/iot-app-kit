@@ -26,5 +26,8 @@
   ],
   "devDependencies": {
     "eslint-import-resolver-typescript": "^3.6.0"
+  },
+  "scripts": {
+    "test": ""
   }
 }

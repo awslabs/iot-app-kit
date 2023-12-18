@@ -1,3 +1,3 @@
-export { RequestVideoUpload } from './requestVideoUpload';
-export { VideoPlayer } from './videoPlayer';
+export * from './requestVideoUpload';
+export * from './videoPlayer';
 export type { IVideoPlayerProps } from './types';

@@ -111,8 +111,7 @@ export const mockTimeSeriesDataQueryLiveStreamAggregated = ({
       color: 'black',
       isLoading: true,
       dataType,
-      data: [],
-      aggregates: { [resolution]: [requests[i].createDataPoint(new Date())] },
+      data: [requests[i].createDataPoint(new Date())],
       resolution,
       ...rest,
     };
@@ -138,9 +137,7 @@ export const mockTimeSeriesDataQueryLiveStreamAggregated = ({
             dataStreams = dataStreams.map((dataStream, i) => ({
               ...dataStream,
               isLoading: false,
-              aggregates: {
-                [resolution]: [...(dataStream.aggregates?.[resolution] || []), requests[i].createDataPoint(new Date())],
-              },
+              data: [...dataStream.data, requests[i].createDataPoint(new Date())],
             }));
 
             next([

@@ -6,5 +6,8 @@
   "files": [
     "base.json",
     "react-library.json"
-  ]
+  ],
+  "scripts": {
+    "test": ""
+  }
 }

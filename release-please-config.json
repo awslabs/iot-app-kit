@@ -44,6 +44,9 @@
     },
     "configuration/eslint-config": {
       "component": "eslint-config"
+    },
+    "doc-site": {
+      "component": "doc-site"
     }
   },
   "bootstrap-sha": "c37aa7eb3279cf1cbd4653291b7f000f47f7d67c",
@@ -71,7 +74,8 @@
         "core-util",
         "jest-config",
         "ts-config",
-        "eslint-config"
+        "eslint-config",
+        "doc-site"
       ]
     }
   ],

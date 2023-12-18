@@ -11,6 +11,7 @@
     "npm": ">=8.7.0"
   },
   "workspaces": [
+    "examples/*",
     "packages/*",
     "configuration/*",
     "doc-site"
