@@ -10,7 +10,7 @@ import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLoggin
 import { useEditorState, useSceneDocument, useStore } from '../store';
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
 import { hexColorFromDesignToken } from '../utils/styleUtils';
-import { Layers, ROOT_OBJECT_3D_NAME } from '../common/constants';
+import { Layers, ROOT_OBJECT_3D_NAME, MAX_CLICK_DISTANCE } from '../common/constants';
 import { getGlobalSettings } from '../common/GlobalSettings';
 import { ViewCursorWidget } from '../augmentations/components/three-fiber/viewpoint/ViewCursorWidget';
 import { getIntersectionTransform } from '../utils/raycastUtils';
@@ -51,8 +51,6 @@ export const WebGLCanvasManager: React.FC = () => {
 
   const gridHelperRef = useRef<THREE.GridHelper>(null);
 
-  const MAX_CLICK_DISTANCE = 2;
-
   useEffect(() => {
     if (!!environmentPreset && !(environmentPreset in presets)) {
       log?.error('Environment preset must be one of: ' + Object.keys(presets).join(', '));
@@ -60,16 +58,14 @@ export const WebGLCanvasManager: React.FC = () => {
   }, [environmentPreset]);
 
   const onClick = (e: ThreeEvent<MouseEvent>) => {
-    if (e.delta <= MAX_CLICK_DISTANCE) {
-      if (addingWidget && e.intersections.length > 0) {
-        const { position } = getIntersectionTransform(e.intersections[0]);
-        const newWidgetNode = createNodeWithPositionAndNormal(addingWidget, position, new THREE.Vector3());
+    if (e.delta <= MAX_CLICK_DISTANCE && addingWidget && e.intersections.length > 0) {
+      const { position } = getIntersectionTransform(e.intersections[0]);
+      const newWidgetNode = createNodeWithPositionAndNormal(addingWidget, position, new THREE.Vector3());
 
-        setAddingWidget(undefined);
-        appendSceneNode(newWidgetNode);
+      setAddingWidget(undefined);
+      appendSceneNode(newWidgetNode);
 
-        e.stopPropagation();
-      }
+      e.stopPropagation();
     }
   };
 

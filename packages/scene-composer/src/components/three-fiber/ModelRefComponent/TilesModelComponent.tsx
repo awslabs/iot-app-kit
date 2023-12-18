@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThreeEvent, useFrame } from '@react-three/fiber';
 
+import { MAX_CLICK_DISTANCE } from '../../../common/constants';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { IModelRefComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../store';
 import { getComponentGroupName } from '../../../utils/objectThreeUtils';
@@ -62,13 +63,9 @@ export const TilesModelComponent: React.FC<TilesModelProps> = ({ node, component
     }
   };
 
-  const MAX_CLICK_DISTANCE = 2;
-
   const onClick = (e: ThreeEvent<MouseEvent>) => {
-    if (e.delta <= MAX_CLICK_DISTANCE) {
-      if (isEditing() && addingWidget) {
-        handleAddWidget(e);
-      }
+    if (e.delta <= MAX_CLICK_DISTANCE && isEditing() && addingWidget) {
+      handleAddWidget(e);
     }
   };
 

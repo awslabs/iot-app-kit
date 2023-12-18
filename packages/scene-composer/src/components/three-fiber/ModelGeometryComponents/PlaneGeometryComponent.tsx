@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { ThreeEvent, useFrame } from '@react-three/fiber';
 import { Plane } from '@react-three/drei';
 
+import { MAX_CLICK_DISTANCE } from '../../../common/constants';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import useAddWidget from '../../../hooks/useAddWidget';
 import useTwinMakerTextureLoader from '../../../hooks/useTwinMakerTextureLoader';
@@ -26,13 +27,9 @@ const PlaneGeometryComponent: React.FC<PlaneGeometryComponentProps> = ({
   const [meshId, setMeshId] = useState('');
   const [dirtyTexture, setDirtyTexture] = useState(false);
 
-  const MAX_CLICK_DISTANCE = 2;
-
   const onClick = (e: ThreeEvent<MouseEvent>) => {
-    if (e.delta <= MAX_CLICK_DISTANCE) {
-      if (isEditing() && addingWidget) {
-        handleAddWidget(e);
-      }
+    if (e.delta <= MAX_CLICK_DISTANCE && isEditing() && addingWidget) {
+      handleAddWidget(e);
     }
   };
 
@@ -64,7 +61,7 @@ const PlaneGeometryComponent: React.FC<PlaneGeometryComponentProps> = ({
   return (
     <group name={getComponentGroupName(node.ref, 'PLANE_GEOMETRY')}>
       <Plane args={[component.width, component.height]} ref={meshRef} onClick={onClick}>
-        <meshStandardMaterial color={component.color ? component.color : undefined} />
+        <meshStandardMaterial color={component.color} />
       </Plane>
     </group>
   );

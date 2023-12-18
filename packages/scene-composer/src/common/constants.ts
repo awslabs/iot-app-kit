@@ -56,6 +56,8 @@ export const DEFAULT_DATA_BINDING_TEMPLATE_COMPONENT_NAME = 'sel_comp';
  ******************************************************************************/
 export const DEFAULT_DISTANCE_UNIT: DistanceUnit = 'meters';
 
+export const MAX_CLICK_DISTANCE = 2;
+
 export const ROOT_OBJECT_3D_NAME = 'ROOT';
 
 export const DEFAULT_COLOR_MAPS = [
