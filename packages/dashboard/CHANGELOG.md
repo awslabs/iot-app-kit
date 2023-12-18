@@ -1,5 +1,53 @@
 # Changelog
 
+## [9.12.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.11.0...dashboard-v9.12.0) (2023-12-18)
+
+
+### Features
+
+* chat legend enhancement [#2277](https://github.com/awslabs/iot-app-kit/issues/2277) ([b1ca8ae](https://github.com/awslabs/iot-app-kit/commit/b1ca8aeda126f09f371e23133fa600d5b56c9b21))
+* **dashboard:** add logging for custom y-axis ([582fddf](https://github.com/awslabs/iot-app-kit/commit/582fddfa3ccca07e2ffd2b51047d989685a5940c))
+* **dashboard:** add logging for query editor ([d115606](https://github.com/awslabs/iot-app-kit/commit/d115606d2e974e1fcdd9111d6c470b97589280cc))
+* **dashboard:** add metrics for query editor usage ([e8ac4f9](https://github.com/awslabs/iot-app-kit/commit/e8ac4f9c7a47d9f776ef057cb2c5cf13628b78e9))
+* fix tabs on config panel present that are unusable [#2308](https://github.com/awslabs/iot-app-kit/issues/2308) ([4d3b6d5](https://github.com/awslabs/iot-app-kit/commit/4d3b6d5fea6b271bfdbce13679b0fa4b4d0cdf60))
+* lint accessibility ([0db36ef](https://github.com/awslabs/iot-app-kit/commit/0db36ef6a07fe5e0709d17081dffa7d23669e2fe))
+* **ResourceExplorer:** hide properties table when not needed to be displayed ([bcf36b1](https://github.com/awslabs/iot-app-kit/commit/bcf36b1080393ba0d5126d79e38b373ffcbd2442))
+* xy-plot & bar-chart allow only numerical datatypes [#1952](https://github.com/awslabs/iot-app-kit/issues/1952) ([10b057a](https://github.com/awslabs/iot-app-kit/commit/10b057a1e088ad9ecdc710af73dfd947398659f3))
+
+
+### Bug Fixes
+
+* add left border to configuration panel ([7f684d1](https://github.com/awslabs/iot-app-kit/commit/7f684d17b2945f67982474ad9d36beaa966999f0))
+* added aria label to dashboard threshold delete button ([ff94bb0](https://github.com/awslabs/iot-app-kit/commit/ff94bb0e5c367ec02a572938a08dcf859e4820f5))
+* bar chart break due to css property of line chart ([512e48c](https://github.com/awslabs/iot-app-kit/commit/512e48c5f61e7ac8b09a25551702136f0a01c918))
+* broken search results disabled state ([38ef2be](https://github.com/awslabs/iot-app-kit/commit/38ef2beb9d7673e8cc0438424631343d5a4eb3ca))
+* dashboard settings to set correct columns and rows [#2313](https://github.com/awslabs/iot-app-kit/issues/2313) ([cd952c5](https://github.com/awslabs/iot-app-kit/commit/cd952c5e6462fa25350ccc28eb261a70bfa29d98))
+* **dashboard:** modeled datastreams are displayed in msw ([a2833a1](https://github.com/awslabs/iot-app-kit/commit/a2833a174ccb8f66b547451f92ff2b6c6194beca))
+* **dashboard:** use more descriptive name for the settings label ([2d0b36c](https://github.com/awslabs/iot-app-kit/commit/2d0b36c29cad264f45f3e7178dcd3c296692c69e))
+* **ResourceExplorer:** filter out invalid twinmaker execute query search results ([e616be4](https://github.com/awslabs/iot-app-kit/commit/e616be4c6d8e2d8a01b5ba931a57307ea8b7f307))
+* table resize button aria label ([1618d50](https://github.com/awslabs/iot-app-kit/commit/1618d50a713cb1be8b9a74899144ca92cd9ec5f1))
+
+
+### Performance Improvements
+
+* initial Animator implementation ([3b30cd2](https://github.com/awslabs/iot-app-kit/commit/3b30cd2c236704145ac29b2cf0222a28de9a0959))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/core bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/core-util bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/react-components bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.11.0 to 9.12.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/testing-util bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/ts-config bumped from 9.11.0 to 9.12.0
+    * eslint-config-iot-app-kit bumped from 9.11.0 to 9.12.0
+
 ## [9.11.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.10.0...dashboard-v9.11.0) (2023-12-07)
 
 

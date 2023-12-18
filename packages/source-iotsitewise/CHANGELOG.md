@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.12.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v9.11.0...source-iotsitewise-v9.12.0) (2023-12-18)
+
+
+### Performance Improvements
+
+* increase batch size ([1fefe81](https://github.com/awslabs/iot-app-kit/commit/1fefe81cecf8bbeffebb5e89b73cab3494beba21))
+* prevent duplication of simultaneous data stream metadata requests ([bfbe7b2](https://github.com/awslabs/iot-app-kit/commit/bfbe7b23c968e367423cf8a81504e2773e5460bc))
+
+
+### Reverts
+
+* "perf: increase batch size" ([636a539](https://github.com/awslabs/iot-app-kit/commit/636a539fcba8c62871b1b60b117ab2881124ac81))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/core-util bumped from 9.11.0 to 9.12.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/testing-util bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/ts-config bumped from 9.11.0 to 9.12.0
+    * eslint-config-iot-app-kit bumped from 9.11.0 to 9.12.0
+
 ## [9.11.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v9.10.0...source-iotsitewise-v9.11.0) (2023-12-07)
 
 

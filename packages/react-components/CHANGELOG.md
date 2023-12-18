@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [9.12.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.11.0...react-components-v9.12.0) (2023-12-18)
+
+
+### Features
+
+* chat legend enhancement [#2277](https://github.com/awslabs/iot-app-kit/issues/2277) ([b1ca8ae](https://github.com/awslabs/iot-app-kit/commit/b1ca8aeda126f09f371e23133fa600d5b56c9b21))
+* **dashboard:** add colors to trendcursors ([a890c7d](https://github.com/awslabs/iot-app-kit/commit/a890c7db39df1a836312ac4050c41e2f4fdd9f4a))
+* first click on paginate timeline should move backward from current time duration ([5f9aa42](https://github.com/awslabs/iot-app-kit/commit/5f9aa42aef52d1bade596d0b8cfa1d58d51cce52))
+* lint accessibility ([0db36ef](https://github.com/awslabs/iot-app-kit/commit/0db36ef6a07fe5e0709d17081dffa7d23669e2fe))
+
+
+### Bug Fixes
+
+* table resize button aria label ([1618d50](https://github.com/awslabs/iot-app-kit/commit/1618d50a713cb1be8b9a74899144ca92cd9ec5f1))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/core bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/core-util bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.11.0 to 9.12.0
+  * devDependencies
+    * @iot-app-kit/core bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/jest-config bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/testing-util bumped from 9.11.0 to 9.12.0
+    * @iot-app-kit/ts-config bumped from 9.11.0 to 9.12.0
+    * eslint-config-iot-app-kit bumped from 9.11.0 to 9.12.0
+
 ## [9.11.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.10.0...react-components-v9.11.0) (2023-12-07)
 
 
