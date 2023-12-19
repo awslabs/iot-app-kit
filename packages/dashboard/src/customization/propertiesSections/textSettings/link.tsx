@@ -50,7 +50,12 @@ const LinkSettings: FC<LinkSettingsProps> = ({ href = '', updateHref, isUrl = fa
       <div className='link-configuration' style={{ gap: awsui.spaceScaledS }}>
         <label className='section-item-label'>{defaultMessages.url}</label>
         <div className='link-input'>
-          <Input value={href} onChange={onLinkTextChange} data-test-id='text-widget-link-input' />
+          <Input
+            ariaLabel='text widget link input'
+            value={href}
+            onChange={onLinkTextChange}
+            data-test-id='text-widget-link-input'
+          />
         </div>
       </div>
     </ExpandableSection>
