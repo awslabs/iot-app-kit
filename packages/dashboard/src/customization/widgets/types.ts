@@ -133,6 +133,7 @@ export type YAxisOptions = YAxisRange & {
 export type ChartAxisOptions = YAxisRange & {
   yVisible?: boolean;
   xVisible?: boolean;
+  yLabel?: string;
 };
 
 type ChartLegendContent = 'unit' | 'asset';
