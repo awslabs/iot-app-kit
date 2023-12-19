@@ -115,6 +115,7 @@ const convertAxis = (axis: ChartAxisOptions | undefined) => ({
   showX: axis?.xVisible,
   yMin: axis?.yMin,
   yMax: axis?.yMax,
+  yLabel: axis?.yLabel,
 });
 
 const removeHiddenDataStreams = (widget: LineScatterChartWidget): LineScatterChartWidget => ({

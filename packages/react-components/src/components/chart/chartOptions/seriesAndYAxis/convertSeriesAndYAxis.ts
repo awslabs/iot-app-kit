@@ -110,7 +110,7 @@ const convertYAxis = ({ color, yAxis }: ChartStyleSettingsOptions): YAXisCompone
      */
     show: true,
     axisLabel: { show: false },
-    name: yAxis.yAxisLabel,
+    name: yAxis.yLabel,
     min: yAxis.yMin,
     max: yAxis.yMax,
     alignTicks: true,
