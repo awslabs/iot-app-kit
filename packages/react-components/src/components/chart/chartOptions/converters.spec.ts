@@ -48,28 +48,28 @@ describe('testing converters', () => {
   it('converts axis to eCharts axis', async () => {
     [
       {
-        yAxisLabel: 'Y Value',
+        yLabel: 'Y Value',
         yMin: 0,
         yMax: 100,
         showY: true,
         showX: true,
       },
       {
-        yAxisLabel: 'Y Value',
+        yLabel: 'Y Value',
         yMin: 0,
         yMax: 100,
         showY: false,
         showX: false,
       },
       {
-        yAxisLabel: 'Y Value',
+        yLabel: 'Y Value',
         yMin: 0,
         yMax: 100,
         showY: true,
         showX: false,
       },
       {
-        yAxisLabel: 'Y Value',
+        yLabel: 'Y Value',
         yMin: 0,
         yMax: 100,
         showY: false,
@@ -79,7 +79,7 @@ describe('testing converters', () => {
       const convertedYAxis = convertYAxis(axis_values);
 
       expect(convertedYAxis).toHaveProperty('type', 'value');
-      expect(convertedYAxis).toHaveProperty('name', axis_values.yAxisLabel);
+      expect(convertedYAxis).toHaveProperty('name', axis_values.yLabel);
       expect(convertedYAxis).toHaveProperty('show', axis_values.showY);
     });
   });

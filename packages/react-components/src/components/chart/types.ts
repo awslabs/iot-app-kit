@@ -3,7 +3,7 @@ import { OptionId } from 'echarts/types/src/util/types';
 import { InternalGraphicComponentGroupOption } from './trendCursor/types';
 
 export type YAxisOptions = {
-  yAxisLabel?: string;
+  yLabel?: string;
   yMin?: number;
   yMax?: number;
 };
