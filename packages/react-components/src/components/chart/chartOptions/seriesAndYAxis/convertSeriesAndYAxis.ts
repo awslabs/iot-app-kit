@@ -1,23 +1,13 @@
 import { DataPoint, DataStream, Threshold } from '@iot-app-kit/core';
 import { BarSeriesOption, SeriesOption, YAXisComponentOption } from 'echarts';
 
-// import maxBy from 'lodash.maxby';
-// import minBy from 'lodash.minby';
-
-import {
-  ChartAxisOptions,
-  ChartStyleSettingsOptions,
-  Visualization,
-  // YAxisLegendOption,
-  YAxisOptions,
-} from '../../types';
+import { ChartAxisOptions, ChartStyleSettingsOptions, Visualization } from '../../types';
 import { convertDataPoint } from '../convertDataPoint';
 import { StyleSettingsMap, getChartStyleSettingsFromMap } from '../style/convertStyles';
 import { convertYAxis as convertChartYAxis } from '../axes/yAxis';
 import { convertThresholds } from '../convertThresholds';
 import { ChartStyleSettingsWithDefaults } from '../../utils/getStyles';
 import { DEEMPHASIZE_OPACITY, EMPHASIZE_SCALE_CONSTANT } from '../../eChartsConstants';
-import { padYAxis, validateValue } from '../axes/padYAxis';
 import { GenericSeries } from '../../../../echarts/types';
 
 export const dataValue = (point: DataPoint) => point.y;
@@ -196,31 +186,13 @@ export const useSeriesAndYAxis = (
     .map((datastream) => convertSeriesAndYAxis(getStyles(datastream))(datastream))
     .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis });
 
-  let paddedYAxis: NonNullable<YAXisComponentOption | undefined>[] = yAxis;
-
-  if (yAxis.length === 1) {
-    const yAxisLabel: YAxisOptions = {
-      yMin: validateValue(yAxis[0].min?.toString()),
-      yMax: validateValue(yAxis[0].max?.toString()),
-    };
-    const [min, max] = padYAxis(yAxisLabel, thresholds, datastreams);
-    paddedYAxis = [{ ...yAxis[0], min, max }];
-  }
-
   if (series.length > 0) {
     series[0].markArea = convertedThresholds.markArea;
     series[0].markLine = convertedThresholds.markLine;
   }
 
-  const allSeriesEmpty = series.every((series: SeriesOption) => {
-    const data = series.data as Array<number[]>;
-    return data?.length === 0;
-  });
-
   return {
     series,
-    yAxis: allSeriesEmpty
-      ? paddedYAxis.map((yaxis) => ({ ...yaxis, min: yaxis.min ?? 0, max: yaxis.max ?? 10000 }))
-      : paddedYAxis,
+    yAxis,
   };
 };
