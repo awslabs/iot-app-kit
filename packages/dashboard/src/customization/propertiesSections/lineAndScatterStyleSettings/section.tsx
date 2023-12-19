@@ -212,6 +212,13 @@ const RenderLineAndScatterStyleSettingsSection = ({
     });
   };
 
+  const handleUpdateYLabel = (yLabel: string | null) => {
+    updateAxis({ ...axis, yLabel: yLabel ?? undefined });
+    logCustomYAxis({
+      yLabel: `${yLabel}`,
+    });
+  };
+
   return (
     <SpaceBetween size='s' direction='vertical'>
       <AggregationAndResolutionSection
@@ -226,9 +233,11 @@ const RenderLineAndScatterStyleSettingsSection = ({
         visible={axis?.yVisible ?? true}
         min={axis?.yMin ?? null}
         max={axis?.yMax ?? null}
+        yLabel={axis?.yLabel ?? null}
         setVisible={handleSetVisible}
         updateMin={handleUpdateMin}
         updateMax={handleUpdateMax}
+        updateYLabel={handleUpdateYLabel}
       />
       <LineStyleSection
         lineType={connectionStyle}

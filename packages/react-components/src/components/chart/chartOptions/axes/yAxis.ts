@@ -4,7 +4,7 @@ import { DEFAULT_Y_AXIS } from '../../eChartsConstants';
 
 export const convertYAxis = (axis: ChartAxisOptions | undefined): YAXisComponentOption => ({
   ...DEFAULT_Y_AXIS,
-  name: axis?.yAxisLabel,
+  name: axis?.yLabel,
   show: axis?.showY ?? DEFAULT_Y_AXIS.show,
   min: axis?.yMin ?? undefined,
   max: axis?.yMax ?? undefined,
@@ -12,4 +12,6 @@ export const convertYAxis = (axis: ChartAxisOptions | undefined): YAXisComponent
     hideOverlap: true,
     color: '#5f6b7a',
   },
+  nameLocation: 'middle',
+  nameGap: 30,
 });
