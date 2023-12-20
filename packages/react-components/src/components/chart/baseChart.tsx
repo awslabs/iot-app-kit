@@ -28,6 +28,8 @@ import { useViewport } from '../../hooks/useViewport';
 import { getXAxis } from './chartOptions/axes/xAxis';
 import { useHandleChartEvents } from './events/useHandleChartEvents';
 import { TREND_CURSOR_KEY_MAP } from './trendCursor/constants';
+import { useGetConfigValue } from '../../store';
+import TanstackLegend from './legend/tanstackLegend';
 
 /**
  * Developer Notes:
@@ -52,6 +54,8 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   const { ref, chartRef } = useECharts(options?.theme);
 
   const { group } = useViewport();
+
+  const showTanstackTable = useGetConfigValue('showTanstackTable');
 
   // convert TimeSeriesDataQuery to TimeSeriesData
   const {
@@ -238,7 +242,12 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
             width: rightLegendWidth,
           }}
         >
-          <Legend series={series} graphic={trendCursors} datastreams={dataStreams} width={rightLegendWidth} />
+          {/* TODO: Need to remove cloudscape table after new tanstack table approved and make tanstack table as default */}
+          {showTanstackTable ? (
+            <TanstackLegend series={series} graphic={trendCursors} datastreams={dataStreams} width={rightLegendWidth} />
+          ) : (
+            <Legend series={series} graphic={trendCursors} datastreams={dataStreams} width={rightLegendWidth} />
+          )}
         </div>
       )}
     </div>
