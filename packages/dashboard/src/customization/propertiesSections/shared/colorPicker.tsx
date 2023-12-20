@@ -2,13 +2,15 @@ import React from 'react';
 import './styles.css';
 import type { FC } from 'react';
 
-const ColorPicker: FC<{ color: string; updateColor: (newColor: string) => void }> = ({
+const ColorPicker: FC<{ id?: string; color: string; updateColor: (newColor: string) => void }> = ({
+  id,
   color,
   updateColor,
   ...other
 }) => {
   return (
     <input
+      id={id}
       aria-label='color picker'
       type='color'
       value={color}
