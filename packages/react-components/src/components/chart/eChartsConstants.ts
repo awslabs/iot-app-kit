@@ -91,3 +91,5 @@ export const ECHARTS_ZOOM_DEBOUNCE_MS = 300;
 
 // legend constants
 export const LEGEND_NAME_MIN_WIDTH_FACTOR = 3.5;
+
+export const PERFORMANCE_MODE_THRESHOLD = 4000;
