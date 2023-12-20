@@ -23,7 +23,7 @@ export const useVisualizedDataStreams = (queries: TimeSeriesDataQuery[], passedI
   });
 
   // Line | Scatter | Bar charts do not support alarm streams.
-  const dataStreamsWithoutAlarms = useMemo(() => dataStreams.filter(isNotAlarmStream), [dataStreams]);
+  const dataStreamsWithoutAlarms = dataStreams.filter(isNotAlarmStream);
 
   const hasError = useMemo(() => dataStreamsWithoutAlarms.some(dataStreamHasError), [dataStreamsWithoutAlarms]);
 
