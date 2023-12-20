@@ -58,11 +58,14 @@ const convertSeries = (
     lineThickness,
     emphasis,
     significantDigits,
-  }: ChartStyleSettingsWithDefaults
+  }: ChartStyleSettingsWithDefaults,
+  { performanceMode }: { performanceMode?: boolean }
 ) => {
   const opacity = emphasis === 'de-emphasize' ? DEEMPHASIZE_OPACITY : 1;
   const scaledSymbolSize = emphasis === 'emphasize' ? symbolSize + EMPHASIZE_SCALE_CONSTANT : symbolSize;
   const scaledLineThickness = emphasis === 'emphasize' ? lineThickness + EMPHASIZE_SCALE_CONSTANT : lineThickness;
+
+  const symbolStyle = visualizationType !== 'scatter' && performanceMode ? 'none' : symbol;
 
   const genericSeries = {
     id,
@@ -70,7 +73,7 @@ const convertSeries = (
     data: data.map(convertDataPoint),
     type: convertVisualizationType(visualizationType),
     step: convertStep(visualizationType),
-    symbol,
+    symbol: symbolStyle,
     symbolSize: scaledSymbolSize,
     itemStyle: {
       color: symbolColor ?? color,
@@ -114,15 +117,20 @@ const convertYAxis = ({ color, yAxis }: ChartStyleSettingsOptions): YAXisCompone
 /**
  * converts series and yAxis together using the same style settings
  */
-export const convertSeriesAndYAxis = (styles: ChartStyleSettingsWithDefaults) => (datastream: DataStream) => {
-  const series = convertSeries(datastream, styles);
-  const yAxis = convertYAxis(styles);
+export const convertSeriesAndYAxis =
+  (
+    styles: ChartStyleSettingsWithDefaults,
+    { performanceMode }: { performanceMode?: boolean } = { performanceMode: false }
+  ) =>
+  (datastream: DataStream) => {
+    const series = convertSeries(datastream, styles, { performanceMode });
+    const yAxis = convertYAxis(styles);
 
-  return {
-    series,
-    yAxis,
+    return {
+      series,
+      yAxis,
+    };
   };
-};
 
 const addYAxisIndex = <T extends SeriesOption>(series: T, yAxisIndex = 0): T => ({
   ...series,
@@ -176,14 +184,15 @@ export const useSeriesAndYAxis = (
     styleSettings,
     axis,
     thresholds,
-  }: { styleSettings: StyleSettingsMap; thresholds: Threshold[]; axis?: ChartAxisOptions }
+    performanceMode,
+  }: { styleSettings: StyleSettingsMap; thresholds: Threshold[]; axis?: ChartAxisOptions; performanceMode?: boolean }
 ) => {
   const defaultYAxis: YAXisComponentOption[] = [convertChartYAxis(axis)];
   const convertedThresholds = convertThresholds(thresholds);
   const getStyles = getChartStyleSettingsFromMap(styleSettings);
 
   const { series, yAxis } = datastreams
-    .map((datastream) => convertSeriesAndYAxis(getStyles(datastream))(datastream))
+    .map((datastream) => convertSeriesAndYAxis(getStyles(datastream), { performanceMode })(datastream))
     .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis });
 
   if (series.length > 0) {
