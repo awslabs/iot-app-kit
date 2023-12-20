@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { DataStream, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
+import { DataStream, TimeSeriesDataQuery, Viewport, getVisibleData } from '@iot-app-kit/core';
 import { useTimeSeriesData } from '../../../hooks/useTimeSeriesData';
 import { useViewport } from '../../../hooks/useViewport';
 import { DEFAULT_VIEWPORT, StreamType } from '../../../common/constants';
@@ -32,11 +32,14 @@ export const useVisualizedDataStreams = (queries: TimeSeriesDataQuery[], passedI
     [hasError, dataStreamsWithoutAlarms]
   );
 
+  const visibleData = dataStreamsWithoutAlarms.flatMap(({ data }) => getVisibleData(data, utilizedViewport, false));
+
   return {
     hasError,
     isLoading,
     dataStreams: dataStreamsWithoutAlarms,
     thresholds,
     utilizedViewport,
+    visibleData,
   };
 };

@@ -23,7 +23,7 @@ import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
 import './chart.css';
 import { useContextMenu } from './contextMenu/useContextMenu';
 import { useViewportToMS } from './hooks/useViewportToMS';
-import { DEFAULT_CHART_VISUALIZATION, DEFAULT_TOOLBOX_CONFIG } from './eChartsConstants';
+import { DEFAULT_CHART_VISUALIZATION, DEFAULT_TOOLBOX_CONFIG, PERFORMANCE_MODE_THRESHOLD } from './eChartsConstants';
 import { useDataZoom } from './hooks/useDataZoom';
 import { useViewport } from '../../hooks/useViewport';
 import { getXAxis } from './chartOptions/axes/xAxis';
@@ -59,6 +59,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     dataStreams,
     thresholds: queryThresholds,
     utilizedViewport,
+    visibleData,
   } = useVisualizedDataStreams(queries, viewport);
   const allThresholds = [...queryThresholds, ...(options.thresholds ?? [])];
 
@@ -85,11 +86,13 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   // calculate style settings for all datastreams
   const [styleSettingsMap] = useChartStyleSettings(dataStreams, options);
 
+  const performanceMode = visibleData.length > PERFORMANCE_MODE_THRESHOLD;
   // adapt datastreams into echarts series and yAxis data
   const { series, yAxis } = useSeriesAndYAxis(dataStreams, {
     styleSettings: styleSettingsMap,
     axis: options.axis,
     thresholds: allThresholds,
+    performanceMode,
   });
 
   const { handleContextMenu, showContextMenu, contextMenuPos, setShowContextMenu } = useContextMenu();
