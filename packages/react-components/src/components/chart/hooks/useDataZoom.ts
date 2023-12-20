@@ -1,66 +1,131 @@
-import { MutableRefObject, useEffect, useRef } from 'react';
-import { useViewport } from '../../../hooks/useViewport';
-import { DataZoomComponentOption, EChartsType } from 'echarts';
-import { ECHARTS_GESTURE } from '../../../common/constants';
-import { DEFAULT_DATA_ZOOM } from '../eChartsConstants';
-import { ViewportInMs } from '../types';
 import { Viewport } from '@iot-app-kit/core';
+import { DataZoomComponentOption, EChartsType } from 'echarts';
+import { MutableRefObject, useEffect, useReducer } from 'react';
+import { useViewport } from '../../../hooks/useViewport';
+import { ECHARTS_GESTURE } from '../../../common/constants';
+import { DEFAULT_DATA_ZOOM, LIVE_MODE_REFRESH_RATE_MS } from '../eChartsConstants';
+import { convertViewportToMs } from '../trendCursor/calculations/viewport';
 
-// known bug with zooming into live data https://github.com/apache/echarts/issues/11679
-// this function will prevent the data from moving if we are zoomed in
-const onDataZoomEvent = (chart: EChartsType, setViewport: (viewport: Viewport, lastUpdatedBy?: string) => void) => {
-  if (chart) {
-    const allDataZooms = chart.getOption().dataZoom as DataZoomComponentOption[];
-    if (allDataZooms.length) {
-      setViewport(
-        { start: new Date(allDataZooms[0].startValue || 0), end: new Date(allDataZooms[0].endValue || 0) },
-        ECHARTS_GESTURE
-      );
-    }
+type ValidOption = {
+  startValue: number;
+  endValue: number;
+};
+const isValidZoomOption = (option: DataZoomComponentOption | undefined): option is ValidOption =>
+  option != null &&
+  option.startValue != null &&
+  option.endValue != null &&
+  typeof option.startValue === 'number' &&
+  typeof option.endValue === 'number';
+
+type ViewportMode = 'live' | 'static';
+const getViewportMode = (convertedViewport: ReturnType<typeof convertViewportToMs>): ViewportMode =>
+  convertedViewport.isDurationViewport ? 'live' : 'static';
+
+type TickState = {
+  mode: ViewportMode;
+  viewport: Viewport | undefined;
+  convertedViewport: ReturnType<typeof convertViewportToMs>;
+};
+type TickAction = { type: 'tick' } | { type: 'syncViewport'; payload: Viewport | undefined };
+const stateFromViewport = (viewport: Viewport | undefined) => {
+  const convertedViewport = convertViewportToMs(viewport);
+  return {
+    mode: getViewportMode(convertedViewport),
+    convertedViewport,
+    viewport,
+  };
+};
+const reducer = (state: TickState, action: TickAction): TickState => {
+  if (action.type === 'tick') {
+    return {
+      ...state,
+      mode: 'live',
+      convertedViewport: convertViewportToMs(state.viewport),
+    };
+  } else if (action.type === 'syncViewport') {
+    return stateFromViewport(action.payload);
   }
+  return state;
 };
 
-// This hook handles all of the viewport related things, including:
-// panning, zooming, live mode
-export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, viewportInMs: ViewportInMs) => {
-  const { setViewport } = useViewport();
+export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, viewport: Viewport | undefined) => {
+  const { setViewport, lastUpdatedBy } = useViewport();
+  const [{ mode, convertedViewport }, dispatch] = useReducer(reducer, stateFromViewport(viewport));
 
-  const isViewportChangeAnimationPausedRef = useRef(false);
-  const pauseViewportChangeAnimation = () => (isViewportChangeAnimationPausedRef.current = true);
-  const unpauseViewportChangeAnimation = () => (isViewportChangeAnimationPausedRef.current = false);
-
-  // Animate viewport changes
+  /**
+   * mode will be used to start the tick interval again
+   * once the user sets the viewport back to relative
+   * we also need to update the viewport incase the user
+   * sets it from the chart prop or viewport picker
+   */
   useEffect(() => {
-    const chart = chartRef.current;
-    const isViewportChangeAnimationPaused = isViewportChangeAnimationPausedRef.current;
+    dispatch({ type: 'syncViewport', payload: viewport });
+  }, [viewport]);
 
-    if (!isViewportChangeAnimationPaused) {
-      chart?.setOption({
-        dataZoom: { ...DEFAULT_DATA_ZOOM, startValue: viewportInMs.initial, endValue: viewportInMs.end },
-      });
-    }
-  }, [chartRef, isViewportChangeAnimationPausedRef, viewportInMs.initial, viewportInMs.end]);
-
-  // Subscribe to events
   useEffect(() => {
     const chart = chartRef.current;
     let frame: number;
+    let interval: NodeJS.Timer;
 
-    chart?.on('dataZoom', () => {
-      pauseViewportChangeAnimation();
+    /**
+     * Sync the viewport of the chart from manual data zoom gestures
+     * to the viewport context
+     */
+    const handleZoom = () => {
+      // clear the viewport tick interval
+      clearInterval(interval);
+
+      if (!chart) return;
 
       // Synchronize animation with refresh rate
       frame = requestAnimationFrame(() => {
-        onDataZoomEvent(chart, setViewport);
+        // there should only be 1 datazoom option for the x axis
+        const dataZoomOptions = chart.getOption().dataZoom as DataZoomComponentOption[];
+        const horizontalZoom = dataZoomOptions.at(0);
+        if (!isValidZoomOption(horizontalZoom)) return;
+        setViewport(
+          { start: new Date(horizontalZoom.startValue), end: new Date(horizontalZoom.endValue) },
+          ECHARTS_GESTURE
+        );
       });
-    });
+    };
 
-    chart?.on('finished', unpauseViewportChangeAnimation);
+    chart?.on('dataZoom', handleZoom);
+
+    if (mode === 'live') {
+      interval = setInterval(() => {
+        // clear any pending manual zoom gestures
+        cancelAnimationFrame(frame);
+
+        dispatch({ type: 'tick' });
+      }, LIVE_MODE_REFRESH_RATE_MS);
+    }
 
     return () => {
-      chart?.off('dataZoom');
-      chart?.off('finished', unpauseViewportChangeAnimation);
+      chart?.off('dataZoom', handleZoom);
       cancelAnimationFrame(frame);
+      clearInterval(interval);
     };
-  }, [setViewport, chartRef, isViewportChangeAnimationPausedRef]);
+  }, [chartRef, mode, dispatch, setViewport]);
+
+  // Animate viewport changes based on the tick interval
+  useEffect(() => {
+    const { isDurationViewport, initial, end } = convertedViewport;
+    const chart = chartRef.current;
+    /**
+     * only update the zoom imperatively if we are in live mode
+     * or the date picker picks a new viewport
+     *
+     * It is possible that we have a duration viewport + echarts-gesture combo
+     * so we are explicitly denying echarts-gesture
+     */
+    const shouldUpdate = chart != null || isDurationViewport || lastUpdatedBy === 'date-picker';
+    if (!shouldUpdate || lastUpdatedBy === 'echarts-gesture') return;
+
+    chart?.setOption({
+      dataZoom: { ...DEFAULT_DATA_ZOOM, startValue: initial, endValue: end },
+    });
+  }, [chartRef, convertedViewport, lastUpdatedBy]);
+
+  return convertedViewport;
 };
