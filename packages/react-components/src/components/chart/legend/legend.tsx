@@ -1,12 +1,13 @@
 import React from 'react';
 import { Table } from '@cloudscape-design/components';
-import useChartsLegend from './useChartsLegend';
-import { SeriesOption } from 'echarts';
-
-import './legend.css';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import { DataStream } from '@iot-app-kit/core';
+
+import { SeriesOption } from 'echarts';
+import useChartsLegend from './useChartsLegend';
+
 import { InternalGraphicComponentGroupOption } from '../trendCursor/types';
+import './legend.css';
 
 const Legend = (legendOptions: {
   datastreams: DataStream[];
