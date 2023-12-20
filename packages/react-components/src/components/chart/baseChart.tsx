@@ -22,7 +22,7 @@ import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
 
 import './chart.css';
 import { useContextMenu } from './contextMenu/useContextMenu';
-import { useViewportToMS } from './hooks/useViewportToMS';
+// import { useViewportToMS } from './hooks/useViewportToMS';
 import { DEFAULT_CHART_VISUALIZATION, DEFAULT_TOOLBOX_CONFIG, PERFORMANCE_MODE_THRESHOLD } from './eChartsConstants';
 import { useDataZoom } from './hooks/useDataZoom';
 import { useViewport } from '../../hooks/useViewport';
@@ -97,7 +97,8 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
 
   const { handleContextMenu, showContextMenu, contextMenuPos, setShowContextMenu } = useContextMenu();
 
-  const viewportInMs = useViewportToMS(utilizedViewport);
+  //handle dataZoom updates, which are dependent on user events and viewportInMS changes
+  const viewportInMs = useDataZoom(chartRef, utilizedViewport);
 
   const xAxis = getXAxis(options.axis);
 
@@ -131,9 +132,6 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
 
   // determine the set option settings
   const settings = useChartSetOptionSettings(dataStreams);
-
-  //handle dataZoom updates, which are dependent on user events and viewportInMS changes
-  useDataZoom(chartRef, viewportInMs);
 
   // handle chart event updates
   const { chartEventsOptions, chartEventsKeyMap, chartEventsHandlers } = useHandleChartEvents(chartRef);
