@@ -52,6 +52,7 @@ export const DEFAULT_GRID = {
 
 export const DEFAULT_TOOLTIP: TooltipComponentOption = {
   trigger: 'axis',
+  confine: true,
 };
 
 export const DEFAULT_DATA_ZOOM: DataZoomComponentOption = {
