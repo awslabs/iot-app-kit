@@ -1,9 +1,11 @@
 import React from 'react';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { DataStream } from '@iot-app-kit/core';
-import { Chart } from '../index';
 import { render } from '@testing-library/react';
+import { ColumnDef } from '@tanstack/react-table';
+import { Chart } from '../index';
 import { ChartLegend } from '../types';
+import { TanstackTable } from '../legend/tanstackTable';
 
 const VIEWPORT = { duration: '5m' };
 
@@ -97,5 +99,27 @@ describe('Chart slider testing', () => {
 
     const { container } = render(<Chart {...options} />);
     expect(container.getElementsByClassName('react-resizable-handle-se').length).toBe(0);
+  });
+});
+
+describe('Tanstack Table testing', () => {
+  it('table renders', () => {
+    const mockData = [
+      { id: 1, name: 'Item 1' },
+      { id: 2, name: 'Item 2' },
+    ];
+    const mockColumnDefinitions = [
+      { header: 'Name', accessor: 'name' },
+      { header: 'Value', accessor: 'value' },
+    ];
+    const { container } = render(
+      <TanstackTable
+        data={...mockData}
+        columnDefinitions={mockColumnDefinitions as ColumnDef<object, string>[]}
+        stickyColumns={{ first: 1 }}
+        stickyHeader
+      />
+    );
+    expect(container.getElementsByClassName('tanstack-table-container').length).toBe(1);
   });
 });
