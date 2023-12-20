@@ -85,8 +85,8 @@ const TextSettings: FC<TextSettingsProps> = ({
   return (
     <ExpandableSection headerText={defaultMessages.title} defaultExpanded>
       <div className='text-configuration' style={{ gap: awsui.spaceScaledS }}>
-        <label>{defaultMessages.color}</label>
-        <ColorPicker color={fontColor} updateColor={updateFontColor} />
+        <label htmlFor='text-color-picker'>{defaultMessages.color}</label>
+        <ColorPicker id='text-color-picker' color={fontColor} updateColor={updateFontColor} />
 
         <label>{defaultMessages.style}</label>
         <SpaceBetween size='xxs' direction='horizontal'>
