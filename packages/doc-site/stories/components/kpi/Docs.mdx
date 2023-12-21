@@ -1,0 +1,162 @@
+import { Canvas, Meta, Story } from '@storybook/blocks';
+
+import * as KpiStories from './Kpi.stories';
+
+# KPI
+
+The Key Performance Indicator (KPI) component provides a compact representation when you need an overview of your asset properties. This overview gives you the most critical insights into the overall performance of your devices, equipment, or processes. With the KPI, you can interact with IoT data from one or more data sources.
+
+<Canvas sourceState="none"  of={KpiStories.Standard} />
+
+## Properties
+
+The KPI component contains the following properties that you can customize.
+
+### `viewport`
+
+(Optional) Specifies the interval of time the widget visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
+If there is no ViewportManager, and no `viewport` defined, the default viewport will be `{ duration: '10d' }`.
+
+[Learn about the viewport](/docs/core-viewport--docs).
+
+Type: Object
+
+### `thresholds`
+
+(Optional) Thresholds define rules which effect how the data is visualized based on whether the data breaches the threshold.
+
+[Learn more about thresholds](/docs/core-thresholds--docs#thresholds).
+
+### `query`
+
+The query which specify the time series data to visualize.
+
+[Learn more about time series data queries](/docs/core-time-series-data--docs).
+
+Type: Object
+
+### `settings`
+
+(Optional) Settings to customize the appearance of the widget.
+
+Type: Object
+
+The settings object contains the following properties:
+
+- `showTimestamp`
+
+  (Optional) whether to display the timestamp of the data being displayed. Defaults to true.
+
+  Type: Boolean
+
+- `showName`
+
+  (Optional) whether to display the name of the data being displayed. Defaults to true.
+
+  Type: Boolean
+
+- `showIcon`
+
+  (Optional) whether to display the icon if present. Defaults to true
+
+  Type: Boolean
+
+- `showUnit`
+
+  (Optional) whether to display the unit if present. Defaults to true
+
+  Type: Boolean
+
+- `fontSize`
+
+  (Optional) font size in pixels for the value. Defaults to 30.
+
+  Type: Number
+
+- `secondaryFontSize`
+
+  (Optional) font size in pixels for the title. Defaults to 15.
+
+  Type: Number
+
+- `color`
+
+  (Optional) color to display value. Defaults to black. Is overriden by thresholds and alarms. Must be a css string.
+
+  Type: String
+
+### `styles`
+
+(Optional) A map of `refId` to style settings for the component. [Learn more about reference IDs here](/docs/core-styles--docs).
+
+The KPI provides the following style settings that you can customize:
+
+* `name`
+
+    (Optional) Specify a name to replace the name of the data set given by its source.
+
+    Type: String
+
+* `unit`
+
+    (Optional) The unit given to the data (for example, `"m/s"` and `"count"`).
+
+    Type: String
+
+* `detailedName`
+
+    (Optional) A detailed name that is presented in the tooltip.
+
+    Type: String
+
+
+__Example usage__:
+
+```jsx
+<KPI
+  query={
+    query.timeSeriesData({
+      assets: [{
+        assetId: 'id',
+        properties: [{ propertyId: 'property', refId: 'my-property' }]
+      }]
+    })
+ }
+
+ styles={{ 'my-property': { name: 'My Cool Property' }}}
+/>
+
+```
+
+__Properties__:
+
+* `name`
+
+    (Optional) Specify a name to replace the name of the data set given by its source.
+
+    Type: String
+
+* `unit`
+
+    (Optional) The unit given to the data (for example, `"m/s"` and `"count"`).
+
+    Type: String
+
+* `detailedName`
+
+    (Optional) A detailed name that is presented in the tooltip.
+
+    Type: String
+
+<Meta of={KpiStories} />
+
+# Examples
+
+## Empty
+<Canvas sourceState="none"   of={KpiStories.Empty} />
+
+## Loading
+<Canvas sourceState="none"  of={KpiStories.Loading} />
+
+# Error
+<Canvas sourceState="none"   of={KpiStories.Error} />
