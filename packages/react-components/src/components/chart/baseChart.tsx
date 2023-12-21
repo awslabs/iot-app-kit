@@ -22,7 +22,6 @@ import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
 
 import './chart.css';
 import { useContextMenu } from './contextMenu/useContextMenu';
-// import { useViewportToMS } from './hooks/useViewportToMS';
 import { DEFAULT_CHART_VISUALIZATION, DEFAULT_TOOLBOX_CONFIG, PERFORMANCE_MODE_THRESHOLD } from './eChartsConstants';
 import { useDataZoom } from './hooks/useDataZoom';
 import { useViewport } from '../../hooks/useViewport';
