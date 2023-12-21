@@ -108,7 +108,7 @@ export class AssetPropertyValueFactory {
 
   #createDefaults() {
     const quality = 'GOOD' as Quality;
-    const timestamp = { timeInSeconds: Date.now() };
+    const timestamp = { timeInSeconds: Math.floor(Date.now() / 1000) };
     const defaults = { quality, timestamp };
 
     return defaults;
@@ -155,7 +155,7 @@ export function batchGetAssetPropertyValueHistoryHandler() {
           .map((date) => {
             const assetPropertyValue = factory.createIntegerAssetPropertyValue({
               timestamp: {
-                timeInSeconds: date.getTime(),
+                timeInSeconds: Math.floor(date.getTime() / 1000),
               },
             });
 
