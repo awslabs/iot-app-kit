@@ -1,0 +1,36 @@
+{
+  "name": "@iot-app-kit/doc-site",
+  "version": "9.11.0",
+  "private": true,
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.6.6",
+    "@storybook/addon-interactions": "^7.6.6",
+    "@storybook/addon-links": "^7.6.6",
+    "@storybook/addon-onboarding": "^1.0.10",
+    "@storybook/addons": "^7.6.6",
+    "@storybook/blocks": "^7.6.6",
+    "@storybook/preset-scss": "^1.0.3",
+    "@storybook/react": "^7.6.6",
+    "@storybook/react-webpack5": "^7.6.6",
+    "@storybook/test": "^7.6.6",
+    "@storybook/theming": "^7.6.6",
+    "eslint-config-iot-app-kit": "^9.11.0",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.6.6"
+  },
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "start": "storybook dev -p 6006",
+    "build": "storybook build",
+    "lint": "eslint  --max-warnings=0",
+    "fix": "eslint --fix "
+  },
+  "dependencies": {
+    "@iot-app-kit/core": "^9.11.0",
+    "@iot-app-kit/react-components": "^9.11.0",
+    "@iot-app-kit/testing-util": "^9.11.0"
+  }
+}
