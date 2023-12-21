@@ -1,0 +1,48 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Core/Styles" />
+
+# Styles
+
+The `styles` property is present across many IoT App Kit visualizations that utilize `queries` to provided data to the widget.
+
+`Styles` enable the ability to customize certain settings such as the display name, color, etc., from your data streams within your widget.
+
+For example, suppose we had a bar chart, and we want to display "Windmill 2000", you could visualize the wattage output with a line chart as follows:
+
+```
+<LineChart
+  queries={[
+    query.timeSeriesData({
+      assets: [{
+        assetId: 'windmill-asset-2000',
+        properties: [{ propertyId: 'wattage' }]
+      }]
+    })
+ ]}
+/>
+```
+
+Awesome! Though what if we want to display the wattage output as not the default blue hue, but as orange?
+
+We can go ahead and add two new pieces to our line chart to achieve this:
+
+1. Add a `refId` with a name of our choosing. For this example, we are using 'wattage-styles'
+2. Add the `styles` property, which maps the name we picked to the styles we want to associate with
+
+```
+<LineChart
+  queries={[
+    query.timeSeriesData({
+      assets: [{
+        assetId: 'windmill-asset-2000',
+        properties: [{ propertyId: 'wattage', refId: 'wattage-styles' }]
+      }]
+    })
+ ]}
+
+  styles={{ 'wattage-styles': { color: 'orange' } }}
+/>
+```
+
+This will now give us the wattage output, with the orange coloring as we desired.

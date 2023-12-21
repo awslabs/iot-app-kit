@@ -1,0 +1,58 @@
+import { Canvas, Meta, Story } from '@storybook/blocks';
+import * as TrendCursorSyncStories from './TrendCursorSync.stories';
+
+<Meta of={TrendCursorSyncStories} />
+
+
+# Trend Cusror Sync component
+The `<TrendCursorSync />` is a component of IoT App Kit which enables the synchronization of trend cursors between all of your IoT App Kit Charts, enabling use cases such as synchronizing trend cursors across components in one or more groups.
+
+Synchronization is based on the timestamp i.e when you add a trendcursor it is for a given timestamp
+
+## Demo
+
+<Canvas sourceState="none" of={TrendCursorSyncStories.Standard} />
+
+**📈👆 Interact with the chart!**
+
+**_Add a trendcursor_:** click on the zoom reset icon in the top right corner of the chart. OR hold t key and click on the chart where you want a trend cursor.
+Adding to one Chart will add a trendcursor in all the other charts which are under the same "group".
+
+**_Move a trendcursor_:** grab a trendcursor and move is across the chart, observe how moving in one moves the exact same trendcursor in another.
+
+
+## How to use
+
+To utilize the `<TrendCursorSync />`, simply wrap the components which you want to share trendcursors with the `<TrendCursorSync />` as shown below:
+Chart components do NOT have to be immediate children, but all the charts which are within the same `<TrendCursorSync>` component will be part of the same group
+
+*** Note: the `<TrendCursorSync>` should be a child of the `<TimeSync>` component
+
+```jsx
+import { TimeSync, Chart, TrendCursorSync } from '@iot-app-kit/react-components';
+
+<TimeSync>
+  <TrendCursorSync>
+    <Chart queries={[]}/>
+    <Chart queries={[]}/>
+  </TrendCursorSync>
+</TimeSync>
+```
+
+OR
+
+```jsx
+import { TimeSync, Chart, TrendCursorSync } from '@iot-app-kit/react-components';
+
+<TimeSync>
+  <TrendCursorSync>
+    <div>
+      .
+      .
+      .
+      <Chart queries={[]}/>
+      <Chart queries={[]}/>
+    </div>
+  </TrendCursorSync>
+</TimeSync>
+```
