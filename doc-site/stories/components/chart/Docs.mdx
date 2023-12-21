@@ -1,0 +1,350 @@
+import { Canvas, Meta, Story } from '@storybook/blocks';
+
+import * as ChartStories from './Chart.stories';
+
+<Meta of={ChartStories} />
+
+# Chart
+
+The chart component provides a way to visualize and navigate time series data from one or more [data sources](/docs/core-datasources--docs).
+
+Chart supports a rich set of features including trend cursors, thresholds, high performance live-streaming and smooth syncing across other IoT App Kit components.
+
+This component can be used to draw both line (step-up, step-down, step-mid etc.)and scatter charts
+
+## Demo
+
+<Canvas sourceState="none" of={ChartStories.Standard} />
+
+**📈👆 Interact with the chart!**
+
+**_Pan_**: hold shift, click and drag within the data-visualization area of the chart.
+
+**_Zoom in_**: you can zoom in by scrolling up on the chart OR clicking on the zoom icon on the top tight corner of the chart and select the desired window.
+
+**_Zoom out:_** you can zoom out by scrolling down on the chart.
+
+**_Restrict time span_:** click on the zoom icon in the top right corner of the chart and drag through the interval of time you wish to restrict the viewport to.
+
+**_Reset time span_:** click on the zoom reset icon in the top right corner of the chart.
+
+**_Resize chart width_:** hold the divider between the chart and the legend section and move it horizontally.
+
+**_Add a trendcursor_:** click on the zoom reset icon in the top right corner of the chart. OR hold t key and click on the chart where you want a trend cursor
+
+**_Delete a trendcursor_:** click on the zoom reset icon in the top right corner of the chart.
+
+**_Copy a trendcursor's data_:** click on the zoom reset icon in the top right corner of the chart.
+
+## Basic usage
+
+
+```jsx
+import { Chart } from '@iot-app-kit/react-components';
+
+const Page = () => (
+  <div>
+    <Chart queries={[/** add your queries here *//]} />
+  </div>
+);
+```
+
+## Properties
+
+The Chart component contains the following properties.
+
+
+### `queries`
+
+The queries which specify the time series data to visualize. This is the only required property
+
+[Learn more about time series data queries](/docs/core-time-series-data--docs).
+
+Type: Array
+
+
+### `defaultVisualizationType`
+
+(Optional) specifies the visualization type for the chart.
+
+Default value: `'line'`
+
+Type: one of `'line' | 'bar' | 'scatter' | 'step-start' | 'step-middle' | 'step-end'`
+
+
+### `size`
+
+(Optional) Specifies the height and width of the chart component. this height and width is including the legend section when turned on.
+
+Default value: `{ width: 500, height: 500 }`
+
+Type: Object `{ width: Number, height: Number }`
+
+
+### `styleSettings`
+
+(Optional) This is an object which groups all the styling options available for the chart
+
+Type: Object
+
+__Properties__:
+
+- `visualizationType`
+
+  (Optional) this is the same the defaultVisualization field
+
+  Default value: `'line'`
+
+  Type: one of `'line' | 'bar' | 'scatter' | 'step-start' | 'step-middle' | 'step-end'`
+
+- `color`
+
+- `symbol`
+
+  (Optional) this is the symbol style which marks the data points
+
+  Default value: `'circle'`
+
+  Type: one of `'emptyCircle' | 'circle' | 'rect' | 'roundRect' | 'triangle' | 'diamond' | 'pin' | 'arrow' | 'none'`
+
+- `symbolColor`
+
+  (Optional) this specifies the data point symbol color. can be the color name or a hex value
+
+  Default value: `'none'`
+
+  Type: String
+
+- `symbolSize`
+
+  (Optional) this specifies the data point marker symbol size.
+
+  Default value: `''`
+
+  Type: Number
+
+- `lineStyle`
+
+  (Optional) this specifies the line style when the visualization is not `scatter`
+
+  Default value: `'solid'`
+
+  Type: one of `'solid' | 'dotted' | 'dashed'`
+
+
+- `lineThickness`
+
+  (Optional) this specifies the thickness of the line draw between the data points.
+
+  Default value: `''`
+
+  Type: Number
+
+- `yAxis`
+
+  (Optional) this specifies the following properties
+
+  Type: Object
+
+  __Properties__:
+
+  - `yAxisLabel`
+
+    (Optional) this specifies any label to be shown for the yAxis
+
+    Default value: `undefined`
+
+    Type: String
+
+
+  - `yMin`
+
+    (Optional) specifies the minimum value for the yAxis, the data below this will be hidden
+
+    Default value: `undefined`
+
+    Type: Number
+
+  - `yMax`
+
+    (Optional) specifies the maximum value for the yAxis, the data above this will be hidden
+
+    Default value: `undefined`
+
+    Type: Number
+
+    (Optional)
+
+- `significantDigits`
+
+  (Optional) this specifies the number of significant digits to be shown of the data
+
+  Default value: `4`
+
+  Type: Number
+
+
+
+
+### `viewport`
+
+(Optional) Specifies the interval of time the widget visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
+If there is no ViewportManager, and no `viewport` defined, the default viewport will be `{ duration: '10s' }`.
+
+[Learn about the viewport](/docs/core-viewport--docs).
+
+Type: Object
+
+### `thresholds`
+
+(Optional) Thresholds define rules which effect how the data is visualized based on whether the data breaches the threshold.
+
+[Learn more about thresholds](/docs/core-thresholds--docs#thresholds).
+
+### `thresholdSettings`
+
+(Optional) Customize settings on how thresholds are visualized within the widget. Defaults to `{ colorBreachedData: true }`
+
+[Learn more about thresholds settings](/docs/core-thresholds--docs#thresholdsettings).
+
+Type: Object
+
+
+### `aggregationType`
+
+(Optional) specifies the data aggregation window.
+
+Default value: `undefined`
+
+Type: String
+
+### `gestures`
+
+(Optional) Specifies whether gestures (pan, zoom and restrict time-span) are enabled. Defaults to `true`.
+
+### `axis`
+
+(Optional) Specifies x and y-axis related settings. Defaults to .
+
+Default value: `{ showX: true, showY: true, yAxisLabel: undefined }`
+
+__Example usage__:
+```jsx
+import { Chart } from '@iot-app-kit/react-components';
+const otherFields = {};
+<Chart axis={{ showX: false, showY: true }} {...otherFields} />
+```
+
+__Properties__:
+
+- `showX`
+
+  (Optional) Setting to determine whether we show the x-axis. Defaults to true.
+
+  Type: Boolean
+
+- `showY`
+
+  (Optional) Setting to determine whether we show the y-axis and the horizontal grid lines. Defaults to true.
+
+  Type: Boolean
+
+- `yAxisLabel`
+
+  (Optional) The y-axis label content. Defaults to empty.
+
+  Type: String
+
+### `backgroundColor`
+
+(Optional) Specifies the background color of the chart.
+
+Default value: `undefined`
+
+Type: String
+
+### `fontSettings`
+
+(Optional) Specifies the chart's font color and font size.
+
+Default value: `undefined`
+
+__Properties__:
+
+- `fontColor`
+  (Optional) Specifies the chart's font color.
+
+  Default value: `undefined`
+
+  Type: String
+
+- `fontSize`
+
+  (Optional) Specifies the chart's font size.
+
+  Default value: `undefined`
+
+  Type: Number
+
+### `significantDigits`
+
+(Optional) this specifies the number of significant digits to be shown of the data
+
+Default value: `4`
+
+Type: Number
+
+
+### `theme`
+
+(Optional) this specifies either to use light or dark theme
+
+Default value: `light`
+
+Type: one of `'light' | 'dark'`
+
+
+### `id`
+
+(Optional) this specifies a **unique** id for the chart
+
+Default value: `undefined`
+
+Type: String
+
+
+### `titleText`
+
+(Optional) this specifies a title for the chart
+
+Default value: `undefined`
+
+Type: String
+
+
+
+### `legend`
+
+(Optional) Specifies the color and position of the legend section
+
+Default value: `undefined`
+
+__Properties__:
+
+- `backgroundColor`
+
+  (Optional) Specifies the background color of the legend sections, can be either a color name or its hex value.
+
+  Default value: `'undefined'`
+
+  Type: String
+
+
+
+- `position[WIP]`
+
+  (Optional) Specifies the position of the legend w.r.t the chart
+
+  Default value: `'right'`
+
+  Type: one of `'top' | 'bottom' | 'left', 'right'`

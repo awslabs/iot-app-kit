@@ -13,7 +13,8 @@
   "workspaces": [
     "examples/*",
     "packages/*",
-    "configuration/*"
+    "configuration/*",
+    "doc-site"
   ],
   "scripts": {
     "install-ws": "npm install --workspaces --include-workspace-root",

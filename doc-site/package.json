@@ -1,0 +1,39 @@
+{
+  "name": "@iot-app-kit/doc-site",
+  "private": true,
+  "version": "9.11.0",
+  "scripts": {
+    "start": "storybook dev -p 6006",
+    "build": "storybook build",
+    "lint": "eslint . --max-warnings=0",
+    "fix": "eslint --fix ."
+  },
+  "dependencies": {
+    "@iot-app-kit/core": "^9.11.0",
+    "@iot-app-kit/dashboard": "^9.11.0",
+    "@iot-app-kit/react-components": "^9.11.0",
+    "@iot-app-kit/testing-util": "^9.11.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.21.0",
+    "@iot-app-kit/ts-config": "^9.11.0",
+    "@storybook/addon-essentials": "^7.0.0-rc.5",
+    "@storybook/addon-interactions": "^7.0.0-rc.5",
+    "@storybook/addon-links": "^7.0.0-rc.5",
+    "@storybook/blocks": "^7.0.0-rc.5",
+    "@storybook/preset-scss": "^1.0.3",
+    "@storybook/react": "^7.0.0-rc.5",
+    "@storybook/react-webpack5": "^7.0.0-rc.5",
+    "@storybook/testing-library": "^0.0.14-next.1",
+    "css-loader": "^6.8.1",
+    "eslint-config-iot-app-kit": "^9.11.0",
+    "prop-types": "^15.8.1",
+    "sass-loader": "^13.3.2",
+    "storybook": "^7.0.0-rc.5",
+    "style-loader": "^3.3.3"
+  }
+}

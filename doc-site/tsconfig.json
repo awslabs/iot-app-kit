@@ -1,0 +1,6 @@
+{
+  "extends": "@iot-app-kit/ts-config/react-library.json",
+  "include": [
+    "./stories"
+  ]
+}

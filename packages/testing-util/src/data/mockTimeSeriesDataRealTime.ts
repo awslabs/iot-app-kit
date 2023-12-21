@@ -137,6 +137,8 @@ export const mockTimeSeriesDataQueryLiveStreamAggregated = ({
             dataStreams = dataStreams.map((dataStream, i) => ({
               ...dataStream,
               isLoading: false,
+              aggregationType: 'AVERAGE',
+              dataType: 'NUMBER',
               data: [...dataStream.data, requests[i].createDataPoint(new Date())],
             }));
 
