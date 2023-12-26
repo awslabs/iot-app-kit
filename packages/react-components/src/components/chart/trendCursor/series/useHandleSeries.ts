@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import { calculateSeriesMakers } from '../calculations/calculateSeriesMakers';
 import { upsertTrendCursorLineMarkers } from '../getTrendCursor/components/markers';
 import { delayedRender } from '../../utils/useDelayedRender';
+import { LineSeriesOption } from 'echarts';
 
 export const useHandleSeries = ({
   graphic,
@@ -16,6 +17,7 @@ export const useHandleSeries = ({
   const visualizationRef = useRef(visualization);
   const graphicRef = useRef(graphic);
   const significantDigitsRef = useRef(significantDigits);
+  const hiddenSeriesCount = series.filter((s) => (s as LineSeriesOption).lineStyle?.opacity === 0).length;
 
   useEffect(() => {
     graphicRef.current = graphic;
@@ -44,5 +46,5 @@ export const useHandleSeries = ({
     };
 
     delayedRender({ updateFunction: update });
-  }, [chartRef, series.length, setGraphic]);
+  }, [chartRef, series.length, hiddenSeriesCount, setGraphic]);
 };

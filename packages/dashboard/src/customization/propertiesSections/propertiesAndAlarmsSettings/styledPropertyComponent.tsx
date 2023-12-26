@@ -11,16 +11,11 @@ import {
   Input,
 } from '@cloudscape-design/components';
 import { spaceScaledXl, spaceStaticXxs } from '@cloudscape-design/design-tokens';
-import { ClickDetail, NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 
 import ColorPicker from '../shared/colorPicker';
 import { LineStyles, StyledAssetPropertyQuery, YAxisOptions } from '~/customization/widgets/types';
 import { getPropertyDisplay } from './getPropertyDisplay';
 import type { AssetSummary } from '~/hooks/useAssetDescriptionQueries';
-import {
-  StatusEyeHidden,
-  StatusEyeVisible,
-} from '~/customization/propertiesSections/propertiesAndAlarmsSettings/icons';
 import { Tooltip } from '@iot-app-kit/react-components';
 import { LineTypeSection } from '../components/lineTypeDropdown';
 import { LineStyleDropdown } from '../components/lineStyleDropdown';
@@ -199,10 +194,8 @@ export type StyledPropertyComponentProps = {
   updateStyle: (newStyles: object) => void;
   assetSummary: AssetSummary;
   property: StyledAssetPropertyQuery;
-  onHideAssetQuery: () => void;
   onDeleteAssetQuery?: () => void;
   colorable: boolean;
-  isPropertyVisible: boolean;
 };
 
 export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
@@ -210,31 +203,12 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
   assetSummary,
   property,
   updateStyle,
-  onHideAssetQuery,
   onDeleteAssetQuery,
   colorable,
-  isPropertyVisible,
 }) => {
   const { display, label } = getPropertyDisplay(property.propertyId, assetSummary);
-  const [onMouseOver, setOnMouseOver] = useState(false);
-  const isAssetQueryVisible = !onMouseOver ? isPropertyVisible : !isPropertyVisible;
-  const propertyVisibilityIcon = isAssetQueryVisible ? StatusEyeVisible : StatusEyeHidden;
   const labelRef = useRef<HTMLDivElement | null>(null);
   const [isNameTruncated, setIsNameTruncated] = useState(false);
-
-  const onToggleAssetQuery: NonCancelableEventHandler<ClickDetail> = (e) => {
-    e.stopPropagation();
-    onHideAssetQuery();
-  };
-
-  const handleMouseEnter = () => {
-    setOnMouseOver(true);
-  };
-
-  const handleMouseLeave = () => {
-    setOnMouseOver(false);
-  };
-
   const resetStyles = (styleToReset: object) => {
     updateStyle(styleToReset); // as we add more sections, reset style values here
   };
@@ -246,45 +220,34 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
   }, [label]);
 
   const YAxisHeader = (
-    <SpaceBetween size='s' direction='horizontal'>
-      {colorable && display === 'property' && (
-        <ColorPicker color={property.color || ''} updateColor={(newColor) => updateStyle({ color: newColor })} />
-      )}
-      <Tooltip content={isNameTruncated ? label : ''} position={index == 0 ? 'bottom' : 'top'}>
-        <div className='property-display-label' style={{ marginBlock: spaceStaticXxs }} ref={labelRef}>
-          {label}
-        </div>
-      </Tooltip>
-      <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        <Tooltip content={onMouseOver && isPropertyVisible ? 'hide' : 'unhide'} position='top'>
-          <Button
-            ariaLabel='hide un-hide property'
-            onClick={onToggleAssetQuery}
-            variant='icon'
-            iconSvg={propertyVisibilityIcon}
-          />
+    <div style={{ display: 'flex', width: '100%' }}>
+      <SpaceBetween size='s' direction='horizontal'>
+        {colorable && display === 'property' && (
+          <ColorPicker color={property.color || ''} updateColor={(newColor) => updateStyle({ color: newColor })} />
+        )}
+        <Tooltip content={isNameTruncated ? label : ''} position={index == 0 ? 'bottom' : 'top'}>
+          <div className='property-display-label' style={{ marginBlock: spaceStaticXxs }} ref={labelRef}>
+            {label}
+          </div>
         </Tooltip>
-      </div>
-
-      <Button ariaLabel='delete property' onClick={onDeleteAssetQuery} variant='icon' iconName='remove' />
-    </SpaceBetween>
+        <div style={{ float: 'right' }}>
+          <Button ariaLabel='delete property' onClick={onDeleteAssetQuery} variant='icon' iconName='remove' />
+        </div>
+      </SpaceBetween>
+    </div>
   );
 
   return (
     <div className='property-display'>
       <div className='property-display-summary'>
-        <SpaceBetween size='xxxs'>
-          <Box padding={{ top: 'xxs' }}>
-            <SpaceBetween size='xs'>
-              <ExpandableSection headerText={YAxisHeader}>
-                <div style={{ padding: '0 24px', backgroundColor: '#fbfbfb' }}>
-                  <LineStylePropertyConfig resetStyles={resetStyles} onUpdate={updateStyle} property={property} />
-                  <YAxisPropertyConfig resetStyles={resetStyles} onUpdate={updateStyle} property={property} />
-                </div>
-              </ExpandableSection>
-            </SpaceBetween>
-          </Box>
-        </SpaceBetween>
+        <Box color='text-body-secondary'>
+          <ExpandableSection headerText={YAxisHeader} disableContentPaddings={true}>
+            <div style={{ padding: '0 24px', backgroundColor: '#fbfbfb' }}>
+              <LineStylePropertyConfig resetStyles={resetStyles} onUpdate={updateStyle} property={property} />
+              <YAxisPropertyConfig resetStyles={resetStyles} onUpdate={updateStyle} property={property} />
+            </div>
+          </ExpandableSection>
+        </Box>
       </div>
     </div>
   );

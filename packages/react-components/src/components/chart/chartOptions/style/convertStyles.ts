@@ -14,14 +14,22 @@ export const convertStyles =
     styleSettings,
     significantDigits,
     emphasis,
-  }: ConvertChartOptions & { emphasis?: Emphasis }) =>
+    hidden,
+  }: ConvertChartOptions & { emphasis?: Emphasis } & { hidden?: boolean }) =>
   ({ refId, color }: DataStream): ChartStyleSettingsWithDefaults => {
     const defaultStyles = getDefaultStyles(defaultVisualizationType, significantDigits);
     const userDefinedStyles = getStyles(refId, styleSettings);
 
     const emphasisWithDefault = emphasis ?? 'none';
+    const hiddenWithDefault = hidden ?? false;
 
-    return merge(defaultStyles, { color }, userDefinedStyles, { emphasis: emphasisWithDefault });
+    return merge(
+      defaultStyles,
+      { color },
+      userDefinedStyles,
+      { emphasis: emphasisWithDefault },
+      { hidden: hiddenWithDefault }
+    );
   };
 
 export type StyleSettingsMap = {
@@ -47,6 +55,9 @@ export const useChartStyleSettings = (datastreams: DataStream[], chartOptions: C
   const highlightedDataStreams = useChartStore((state) => state.highlightedDataStreams);
   const isDataStreamHighlighted = isDataStreamInList(highlightedDataStreams);
 
+  const hiddenDataStreams = useChartStore((state) => state.hiddenDataStreams);
+  const isDataStreamHidden = isDataStreamInList(hiddenDataStreams);
+
   const datastreamDeps = JSON.stringify(datastreams.map(({ id, refId }) => `${id}-${refId}`));
   const optionsDeps = JSON.stringify(chartOptions);
 
@@ -57,7 +68,8 @@ export const useChartStyleSettings = (datastreams: DataStream[], chartOptions: C
     const map = datastreams.reduce<StyleSettingsMap>((styleMap, datastream) => {
       const isDatastreamHighlighted = isDataStreamHighlighted(datastream);
       const emphasis: Emphasis = shouldUseEmphasis ? (isDatastreamHighlighted ? 'emphasize' : 'de-emphasize') : 'none';
-      styleMap[datastream.id] = convertStyles({ ...chartOptions, emphasis })(datastream);
+      const isDatastreamHidden = isDataStreamHidden(datastream);
+      styleMap[datastream.id] = convertStyles({ ...chartOptions, emphasis, hidden: isDatastreamHidden })(datastream);
       return styleMap;
     }, {});
     return [map, getChartStyleSettingsFromMap(map)] as const;

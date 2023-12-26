@@ -58,13 +58,16 @@ const convertSeries = (
     lineThickness,
     emphasis,
     significantDigits,
+    hidden,
   }: ChartStyleSettingsWithDefaults,
   { performanceMode }: { performanceMode?: boolean }
 ) => {
-  const opacity = emphasis === 'de-emphasize' ? DEEMPHASIZE_OPACITY : 1;
+  let opacity = emphasis === 'de-emphasize' ? DEEMPHASIZE_OPACITY : 1;
+  if (hidden) {
+    opacity = 0;
+  }
   const scaledSymbolSize = emphasis === 'emphasize' ? symbolSize + EMPHASIZE_SCALE_CONSTANT : symbolSize;
   const scaledLineThickness = emphasis === 'emphasize' ? lineThickness + EMPHASIZE_SCALE_CONSTANT : lineThickness;
-
   const symbolStyle = visualizationType !== 'scatter' && performanceMode ? 'none' : symbol;
 
   const genericSeries = {
