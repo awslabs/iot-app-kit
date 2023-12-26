@@ -20,6 +20,7 @@ import '../../styles/variables.css';
 import { queryClient } from '~/data/query-client';
 import { PropertiesPanel } from '~/customization/propertiesSections';
 import { useDashboardViewport } from '~/hooks/useDashboardViewport';
+import { FpsView } from 'react-fps';
 
 export type DashboardProperties = {
   onSave: DashboardSave;
@@ -28,6 +29,7 @@ export type DashboardProperties = {
   initialViewMode?: 'preview' | 'edit';
   name?: string;
 };
+const showFPSMonitor = localStorage.getItem('DASHBOARD_SHOW_FPS');
 
 const Dashboard: React.FC<DashboardProperties> = ({
   onSave,
@@ -41,24 +43,27 @@ const Dashboard: React.FC<DashboardProperties> = ({
 
   const readOnly = initialViewMode && initialViewMode === 'preview';
   return (
-    <ClientContext.Provider value={getClients(clientConfiguration)}>
-      <QueryContext.Provider value={getQueries(clientConfiguration)}>
-        <QueryClientProvider client={queryClient}>
-          <Provider store={configureDashboardStore({ ...toDashboardState(dashboardConfiguration), readOnly })}>
-            <DndProvider
-              backend={TouchBackend}
-              options={{
-                enableMouseEvents: true,
-                enableKeyboardEvents: true,
-              }}
-            >
-              <InternalDashboard onSave={onSave} editable={true} name={name} propertiesPanel={<PropertiesPanel />} />
-            </DndProvider>
-          </Provider>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </QueryContext.Provider>
-    </ClientContext.Provider>
+    <>
+      {showFPSMonitor && <FpsView height={50} width={80} />}
+      <ClientContext.Provider value={getClients(clientConfiguration)}>
+        <QueryContext.Provider value={getQueries(clientConfiguration)}>
+          <QueryClientProvider client={queryClient}>
+            <Provider store={configureDashboardStore({ ...toDashboardState(dashboardConfiguration), readOnly })}>
+              <DndProvider
+                backend={TouchBackend}
+                options={{
+                  enableMouseEvents: true,
+                  enableKeyboardEvents: true,
+                }}
+              >
+                <InternalDashboard onSave={onSave} editable={true} name={name} propertiesPanel={<PropertiesPanel />} />
+              </DndProvider>
+            </Provider>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </QueryContext.Provider>
+      </ClientContext.Provider>
+    </>
   );
 };
 
