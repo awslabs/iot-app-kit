@@ -19,6 +19,7 @@ import { DashboardState } from '~/store/state';
 import { getFormattedDateTimeFromEpoch } from '~/components/util/dateTimeUtil';
 import { ResourceExplorerFooter } from '../../footer/footer';
 import { getPlugin } from '@iot-app-kit/core';
+import { disableAdd } from '~/components/queryEditor/iotSiteWiseQueryEditor/footer/disableAdd';
 
 export interface UnmodeledDataStreamTableProps {
   onClickAdd: (unmodeledDataStreams: UnmodeledDataStream[]) => void;
@@ -114,7 +115,7 @@ export function UnmodeledDataStreamTable({
         <ResourceExplorerFooter
           resetDisabled={collectionProps.selectedItems?.length === 0}
           onReset={() => actions.setSelectedItems([])}
-          addDisabled={collectionProps.selectedItems?.length === 0 || selectedWidgets.length !== 1}
+          addDisabled={disableAdd(selectedWidgets, collectionProps.selectedItems?.length)}
           onAdd={() => {
             onClickAdd(collectionProps.selectedItems as unknown as UnmodeledDataStream[]);
             metricsRecorder?.record({
