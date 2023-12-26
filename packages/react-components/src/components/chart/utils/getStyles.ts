@@ -12,7 +12,7 @@ export type ChartStyleSettingsWithDefaults = Omit<
   Required<ChartStyleSettingsOptions>,
   keyof OptionalChartStyleSettingsOptions
 > &
-  OptionalChartStyleSettingsOptions & { emphasis: Emphasis };
+  OptionalChartStyleSettingsOptions & { emphasis: Emphasis; hidden: boolean };
 
 export const getDefaultStyles = (
   defaultVisualizationType?: ChartStyleSettingsOptions['visualizationType'],
@@ -28,5 +28,6 @@ export const getDefaultStyles = (
     yAxis: undefined,
     significantDigits: significantDigits ?? 4,
     emphasis: 'none',
+    hidden: false,
   };
 };

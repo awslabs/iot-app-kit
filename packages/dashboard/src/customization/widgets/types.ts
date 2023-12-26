@@ -72,7 +72,6 @@ export type LineAndScatterStyles = {
   line?: LineStyles;
   aggregationType?: AggregateType;
   resolution?: string;
-  visible?: boolean; // defaults to true
 };
 
 export type LineStyles = {
