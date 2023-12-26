@@ -19,6 +19,9 @@ import { useChartStore } from '../store';
 import { isDataStreamInList } from '../../../utils/isDataStreamInList';
 import { InternalGraphicComponentGroupOption } from '../trendCursor/types';
 import { LEGEND_NAME_MIN_WIDTH_FACTOR } from '../eChartsConstants';
+import Hide from './hide.svg';
+import Show from './show.svg';
+import Button from '@cloudscape-design/components/button';
 
 const LegendCell = (e: { datastream: DataStream; lineColor: string; name: string; width: number }) => {
   const { datastream, lineColor, name, width } = e;
@@ -35,16 +38,44 @@ const LegendCell = (e: { datastream: DataStream; lineColor: string; name: string
       highlightDataStream(datastream);
     }
   };
+  const hideDataStream = useChartStore((state) => state.hideDataStream);
+  const unHideDataStream = useChartStore((state) => state.unHideDataStream);
+  const hiddenDataStreams = useChartStore((state) => state.hiddenDataStreams);
+  const isDataStreamHidden = isDataStreamInList(hiddenDataStreams);
+  const propertyVisibilityIcon = isDataStreamHidden(datastream) ? (
+    <img alt='hide property' src={Hide}></img>
+  ) : (
+    <img alt='show property' src={Show}></img>
+  );
+
+  const toggleVisibility = () => {
+    if (isDataStreamHidden(datastream)) {
+      unHideDataStream(datastream);
+    } else {
+      if (isDataStreamHighlighted(datastream)) {
+        unHighlightDataStream(datastream);
+      }
+      hideDataStream(datastream);
+    }
+  };
 
   const [lineIcon] = useHover((isHovering) => (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
       style={{
-        backgroundColor: isHovering ? colorBackgroundDropdownItemHover : undefined,
+        backgroundColor: isHovering ? colorBackgroundDropdownItemHover : 'white', //white background color matches surroundings to display that it is diabled
         borderRadius: borderRadiusDropdown,
       }}
-      className='base-chart-legend-row-line-container'
+      className={`base-chart-legend-row-line-container ${isDataStreamHidden(datastream) ? 'disabled' : ''}`}
       onClick={toggleHighlighted}
+      aria-disabled={isDataStreamHidden(datastream)}
+      title={
+        isDataStreamHighlighted(datastream)
+          ? `Un-Highlight ${datastream.name} Proprerty`
+          : `Highlight ${datastream.name} Property`
+      }
+      role='button'
+      tabIndex={isDataStreamHidden(datastream) ? -1 : 0}
     >
       <div
         className={`base-chart-legend-row-line-ind ${
@@ -57,11 +88,31 @@ const LegendCell = (e: { datastream: DataStream; lineColor: string; name: string
     </div>
   ));
 
+  const [hideShowButton] = useHover((isHovering) => (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+    <div
+      style={{
+        backgroundColor: isHovering ? colorBackgroundDropdownItemHover : undefined,
+        borderRadius: borderRadiusDropdown,
+      }}
+      className='base-chart-legend-row-line-container'
+    >
+      <div
+        title={
+          isDataStreamHidden(datastream) ? `Show ${datastream.name} Proprerty` : `Hide ${datastream.name} Property`
+        }
+      >
+        <Button onClick={toggleVisibility} variant='icon' iconSvg={propertyVisibilityIcon} />
+      </div>
+    </div>
+  ));
+
   return (
     <div className='base-chart-legend-row-data-container'>
+      {hideShowButton}
       {lineIcon}
       <div
-        className='base-chart-legend-row-data'
+        className={`base-chart-legend-row-data ${isDataStreamHidden(datastream) ? 'hidden-legend' : ''}`}
         style={{
           marginBlock: spaceStaticXxs,
           minWidth: `${width / LEGEND_NAME_MIN_WIDTH_FACTOR}px`,
@@ -127,13 +178,24 @@ const useChartsLegend = ({
   const graphicDeps = JSON.stringify(graphic);
   const seriesDeps = JSON.stringify(series);
 
+  const TcCell = (e: { datastream: DataStream; tc: { [id: string]: number } }, id: string) => {
+    const { datastream } = e;
+    const hiddenDataStreams = useChartStore((state) => state.hiddenDataStreams);
+    const isDataStreamHidden = isDataStreamInList(hiddenDataStreams);
+    return (
+      <>
+        <div className={isDataStreamHidden(datastream) ? 'hidden-legend' : ''}>{e.tc[id]}</div>
+      </>
+    );
+  };
+
   useEffect(() => {
     const tcColumnDefinitions = graphic.map((g) => {
       const id = g.id as string;
       return {
         id,
         header: getHeaderNode(g),
-        cell: (e: { [x: string]: number }) => e[id],
+        cell: (e: { datastream: DataStream; tc: { [id: string]: number } }) => TcCell(e, id),
         sortingField: id,
       };
     });
@@ -151,7 +213,7 @@ const useChartsLegend = ({
         lineColor: (lineItem as LineSeriesOption)?.lineStyle?.color ?? '',
         datastream: datastreams.find((ds) => lineItem.id === ds.id),
         width: width,
-        ...values,
+        tc: values,
       };
     });
 

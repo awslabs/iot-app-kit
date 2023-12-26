@@ -30,11 +30,13 @@ export const mockSeries = [
     symbolSize: 4,
     itemStyle: {
       color: '#2ea597',
+      opacity: 1,
     },
     lineStyle: {
       color: '#2ea597',
       type: 'solid',
       width: 2,
+      opacity: 1,
     },
     yAxisIndex: 0,
   },
@@ -120,7 +122,7 @@ describe('Testing getNewTrendCursor file', () => {
       expect(newTCDeleteButton.id).toBe('delete-button-ID');
     });
     it('addTCMarkers', () => {
-      const newTCMarker = addTCMarkers('ID', [200], []);
+      const newTCMarker = addTCMarkers('ID', [200], mockSeries);
       expect(newTCMarker[0].id).toBe('circle-0-ID');
     });
   });

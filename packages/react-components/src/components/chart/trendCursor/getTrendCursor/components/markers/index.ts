@@ -21,7 +21,7 @@ const addTCMarker = ({
   return {
     id: `circle-${index}-${uId}`,
     type: 'circle',
-    ignore: false,
+    ignore: (series[index] as LineSeriesOption).lineStyle?.opacity === 0,
     z: TREND_CURSOR_Z_INDEX + 1,
     y: markerValueInPixel,
     shape: {
@@ -94,6 +94,7 @@ export const addTCMarkers = (uId: string, yAxisMarkers: number[], series: Series
     type: 'circle',
     z: TREND_CURSOR_Z_INDEX + 1,
     y: marker,
+    ignore: (series[index] as LineSeriesOption).lineStyle?.opacity === 0,
     shape: {
       r: TREND_CURSOR_MARKER_RADIUS,
     },

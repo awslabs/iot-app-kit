@@ -16,7 +16,7 @@
 
 .base-chart-legend-row-data-container {
   display: grid;
-  grid-template-columns: max-content 1fr;
+  grid-template-columns: auto max-content 1fr;
 }
 
 .base-chart-legend-row-line-ind {
@@ -60,4 +60,19 @@
 .base-chart-legend-tc-header-color {
   width: 100%;
   height: 4px;
+}
+
+.base-chart-legend-row-svg-container {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.hidden-legend {
+  /* gray that passes accebility contrast */
+  color: #888;
+}
+
+.disabled {
+  pointer-events: none;
 }
