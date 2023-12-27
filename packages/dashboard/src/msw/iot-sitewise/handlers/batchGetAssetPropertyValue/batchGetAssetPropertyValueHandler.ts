@@ -137,6 +137,16 @@ export function batchGetAssetPropertyValueHandler() {
   );
 }
 
+function parseTimeInSecondsDate(date: number | Date) {
+  // Parse date into Date object
+  if (typeof date === 'number') {
+    // date in type number are expressed in seconds
+    date = new Date(date * 1000);
+  }
+
+  return date;
+}
+
 export function batchGetAssetPropertyValueHistoryHandler() {
   return rest.post(BATCH_GET_ASSET_PROPERTY_VALUE_HISTORY_URL, async (req, res, ctx) => {
     const { entries = [], maxResults = 20_000 } = await req.json<BatchGetAssetPropertyValueHistoryRequest>();
@@ -144,24 +154,32 @@ export function batchGetAssetPropertyValueHistoryHandler() {
 
     const factory = new AssetPropertyValueFactory();
     const response: BatchGetAssetPropertyValueHistoryResponse = {
-      successEntries: entries.map(({ entryId, startDate = 0, endDate = Date.now() }) => ({
-        entryId,
-        assetPropertyValueHistory: faker.date
-          .betweens({
-            from: startDate,
-            to: endDate,
-            count: maxResultsPerEntry,
-          })
-          .map((date) => {
-            const assetPropertyValue = factory.createIntegerAssetPropertyValue({
-              timestamp: {
-                timeInSeconds: Math.floor(date.getTime() / 1000),
-              },
-            });
+      successEntries: entries.map(({ entryId, startDate = 0, endDate = Date.now() / 1000 }) => {
+        // Parse startDate into common Date object
+        startDate = parseTimeInSecondsDate(startDate);
+        // Parse endDate into common Date object
+        endDate = parseTimeInSecondsDate(endDate);
 
-            return assetPropertyValue;
-          }),
-      })),
+        return {
+          entryId,
+          assetPropertyValueHistory: faker.date
+            .betweens({
+              from: startDate,
+              to: endDate,
+              count: maxResultsPerEntry,
+            })
+            .map((date) => {
+              const assetPropertyValue = factory.createIntegerAssetPropertyValue({
+                timestamp: {
+                  timeInSeconds: Math.floor(date.getTime() / 1000),
+                  offsetInNanos: Math.floor(date.getTime() % 1000),
+                },
+              });
+
+              return assetPropertyValue;
+            }),
+        };
+      }),
       skippedEntries: [],
       errorEntries: [],
     };
