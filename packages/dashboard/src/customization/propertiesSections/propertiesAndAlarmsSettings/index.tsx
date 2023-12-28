@@ -7,6 +7,7 @@ import { GeneralPropertiesAlarmsSection } from './section';
 import { StyledPropertiesAlarmsSection } from './styledSection';
 import { PropertyLens } from '~/customization/propertiesSection';
 import { useClients } from '~/components/dashboard/clientContext';
+import { spaceScaledXs } from '@cloudscape-design/design-tokens';
 
 // exclude table because it is handled specially
 const isQueryWidgetExcludesTable = (w: DashboardWidget): w is QueryWidget =>
@@ -88,8 +89,12 @@ const RenderPropertiesSectionForTables = ({ useProperty }: { useProperty: Proper
   );
 };
 
+const propertiesAndAlarmSettingstyle = {
+  padding: spaceScaledXs,
+};
+
 export const PropertiesAndAlarmsSettingsConfiguration: React.FC = () => (
-  <>
+  <div style={propertiesAndAlarmSettingstyle}>
     <PropertiesSection
       isVisible={isStyledWidget}
       render={({ useProperty }) => <RenderPropertiesSectionWithStyledQuery useProperty={useProperty} />}
@@ -102,5 +107,5 @@ export const PropertiesAndAlarmsSettingsConfiguration: React.FC = () => (
       isVisible={isTableWidget}
       render={({ useProperty }) => <RenderPropertiesSectionForTables useProperty={useProperty} />}
     />
-  </>
+  </div>
 );

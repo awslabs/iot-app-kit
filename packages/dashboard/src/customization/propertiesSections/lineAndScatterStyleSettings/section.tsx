@@ -1,6 +1,4 @@
 import React from 'react';
-
-import SpaceBetween from '@cloudscape-design/components/space-between';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { ChartLegend, LineScatterChartWidget, LineStyles, SymbolStyles } from '~/customization/widgets/types';
 import { DashboardWidget } from '~/types';
@@ -220,7 +218,7 @@ const RenderLineAndScatterStyleSettingsSection = ({
   };
 
   return (
-    <SpaceBetween size='s' direction='vertical'>
+    <>
       <AggregationAndResolutionSection
         aggregation={aggregationType}
         resolution={resolution}
@@ -257,7 +255,7 @@ const RenderLineAndScatterStyleSettingsSection = ({
         setVisible={updateLegendVisible}
         setAlignment={(position) => updateLegendPosition(position as ChartLegend['position'])}
       />
-    </SpaceBetween>
+    </>
   );
 };
 

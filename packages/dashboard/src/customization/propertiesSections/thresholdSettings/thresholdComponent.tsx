@@ -94,17 +94,17 @@ export const ThresholdComponent: FC<{
                 updateColor={onUpdateColor}
                 data-test-id='threshold-component-color-picker'
               />
+              <Button
+                ariaLabel='delete threshold'
+                iconName='remove'
+                variant='icon'
+                onClick={onDelete}
+                data-test-id='threshold-component-delete-button'
+              />
             </div>
           </Box>
         </SpaceBetween>
       </div>
-      <Button
-        ariaLabel='delete threshold'
-        iconName='remove'
-        variant='icon'
-        onClick={onDelete}
-        data-test-id='threshold-component-delete-button'
-      />
     </div>
   );
 };

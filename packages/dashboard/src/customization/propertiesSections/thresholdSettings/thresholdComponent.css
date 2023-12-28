@@ -10,6 +10,6 @@
 
 .threshold-configuration {
   display: grid;
-  grid-template-columns: max-content 1fr 1fr 60px 0.5fr;
+  grid-template-columns: max-content 1fr 1fr 60px 0.5fr 0.3fr;
   align-items: center;
 }
