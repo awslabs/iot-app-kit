@@ -18,9 +18,11 @@ import { ThresholdStyleSettings, convertOptionToThresholdStyle, styledOptions } 
 // FIXME: Export ThresholdStyleType from @iot-app-kit/react-components
 // eslint-disable-next-line no-restricted-imports
 import { ThresholdStyleType } from '@iot-app-kit/react-components/src/components/chart/types';
+import '../propertiesSectionsStyle.css';
+import { spaceScaledXs } from '@cloudscape-design/design-tokens';
 
 const ThresholdsExpandableSection: React.FC<React.PropsWithChildren<{ title: string }>> = ({ children, title }) => (
-  <ExpandableSection headerText={title} defaultExpanded>
+  <ExpandableSection className='accordian-header' headerText={title} defaultExpanded>
     <SpaceBetween size='m' direction='vertical'>
       {children}
     </SpaceBetween>
@@ -195,16 +197,23 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
           handleUpdateStyledThresholds([...styledThresholdsValue, newStyledThreshold]);
         }
       };
+
+      const thresholdComponentStyle = {
+        padding: spaceScaledXs,
+      };
+
       const thresholdsComponent = (
-        <SpaceBetween size='m' direction='vertical'>
-          {styledThresholdsEnabled && hideThresholdsToggle}
-          <ThresholdsList
-            thresholds={thresholdsEnabled ? thresholdsValue : styledThresholdsEnabled ? styledThresholdsValue : []}
-            updateThresholds={thresholdsEnabled ? updateThresholds : handleUpdateStyledThresholds}
-            comparisonOperators={comparisonOperators}
-          />
-          <Button onClick={onAddNewThreshold}>Add a threshold</Button>
-        </SpaceBetween>
+        <div style={thresholdComponentStyle}>
+          <SpaceBetween size='m' direction='vertical'>
+            {styledThresholdsEnabled && hideThresholdsToggle}
+            <ThresholdsList
+              thresholds={thresholdsEnabled ? thresholdsValue : styledThresholdsEnabled ? styledThresholdsValue : []}
+              updateThresholds={thresholdsEnabled ? updateThresholds : handleUpdateStyledThresholds}
+              comparisonOperators={comparisonOperators}
+            />
+            <Button onClick={onAddNewThreshold}>Add a threshold</Button>
+          </SpaceBetween>
+        </div>
       );
       return thresholdsComponent;
     }
@@ -261,7 +270,7 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
   const thresholdsStyleComponent = renderThresholdStyle();
 
   return (
-    <>
+    <div className='remove-scroll'>
       <ThresholdsExpandableSection title='Thresholds'>{thresholdsComponent}</ThresholdsExpandableSection>
       {annotationsComponent && (
         <ThresholdsExpandableSection title='Threshold style'>{annotationsComponent}</ThresholdsExpandableSection>
@@ -269,7 +278,7 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
       {thresholdsStyleComponent && (
         <ThresholdsExpandableSection title='Threshold style'>{thresholdsStyleComponent}</ThresholdsExpandableSection>
       )}
-    </>
+    </div>
   );
 };
 
