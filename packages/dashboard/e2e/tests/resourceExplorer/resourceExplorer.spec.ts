@@ -49,5 +49,5 @@ test('can load configure a widget with an asset model', async ({ page }) => {
   // check that widget is not in empty state
   await expect(page.getByText(WIDGET_EMPTY_STATE_TEXT)).not.toBeVisible();
   // check that property is visible in legend
-  // await expect(grid.gridArea().getByText('Coordinates')).toBeVisible();
+  await expect(grid.gridArea().getByText('Coordinates')).toBeVisible();
 });
