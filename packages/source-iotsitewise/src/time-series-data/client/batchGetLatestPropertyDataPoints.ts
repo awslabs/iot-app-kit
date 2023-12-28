@@ -9,8 +9,9 @@ import type {
   BatchGetAssetPropertyValueErrorEntry,
   BatchGetAssetPropertyValueSuccessEntry,
 } from '@aws-sdk/client-iotsitewise';
-import type { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
+import { type OnSuccessCallback, type ErrorCallback, type RequestInformationAndRange } from '@iot-app-kit/core';
 import type { LatestPropertyParams } from './client';
+import { withinLatestPropertyDataThreshold } from './withinLatestPropertyDataThreshold';
 
 export type BatchLatestEntry = {
   requestInformation: RequestInformationAndRange;
@@ -133,7 +134,10 @@ export const batchGetLatestPropertyDataPoints = ({
   // fan out params into individual entries, handling fetchMostRecentBeforeStart
   params.forEach(({ requestInformations, onSuccess, onError }) => {
     requestInformations
-      .filter(({ resolution, fetchMostRecentBeforeEnd }) => resolution === '0' && fetchMostRecentBeforeEnd)
+      .filter(
+        ({ end, fetchMostRecentBeforeEnd, resolution }) =>
+          resolution === '0' && withinLatestPropertyDataThreshold(end) && fetchMostRecentBeforeEnd
+      )
       .forEach((requestInformation) => {
         const { end } = requestInformation;
 

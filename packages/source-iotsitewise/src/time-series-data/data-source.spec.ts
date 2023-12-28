@@ -90,6 +90,9 @@ describe('initiateRequest', () => {
   });
 
   describe('fetch latest before end', () => {
+    const start = new Date(2000, 0, 0);
+    const end = new Date(2001, 0, 0);
+
     it('gets latest value for multiple properties', async () => {
       const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
       const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
@@ -116,15 +119,15 @@ describe('initiateRequest', () => {
         [
           {
             id: toId({ assetId: ASSET_ID, propertyId: PROPERTY_1 }),
-            start: new Date(),
-            end: new Date(),
+            start,
+            end,
             resolution: '0',
             fetchMostRecentBeforeEnd: true,
           },
           {
             id: toId({ assetId: ASSET_ID, propertyId: PROPERTY_2 }),
-            start: new Date(),
-            end: new Date(),
+            start,
+            end,
             resolution: '0',
             fetchMostRecentBeforeEnd: true,
           },
@@ -136,23 +139,6 @@ describe('initiateRequest', () => {
       expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
 
       expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
-        expect.objectContaining({
-          entries: expect.arrayContaining([
-            expect.objectContaining({
-              assetId: ASSET_ID,
-              propertyId: PROPERTY_2,
-            }),
-            expect.objectContaining({
-              assetId: ASSET_ID,
-              propertyId: PROPERTY_2,
-            }),
-          ]),
-        })
-      );
-
-      expect(batchGetAssetPropertyValue).toBeCalledTimes(1);
-
-      expect(batchGetAssetPropertyValue).toBeCalledWith(
         expect.objectContaining({
           entries: expect.arrayContaining([
             expect.objectContaining({
@@ -198,15 +184,15 @@ describe('initiateRequest', () => {
         [
           {
             id: toId({ assetId: ASSET_1, propertyId: PROPERTY_1 }),
-            start: new Date(),
-            end: new Date(),
+            start,
+            end,
             resolution: '0',
             fetchMostRecentBeforeEnd: true,
           },
           {
             id: toId({ assetId: ASSET_2, propertyId: PROPERTY_2 }),
-            start: new Date(),
-            end: new Date(),
+            start,
+            end,
             resolution: '0',
             fetchMostRecentBeforeEnd: true,
           },
@@ -218,23 +204,6 @@ describe('initiateRequest', () => {
       expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
 
       expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
-        expect.objectContaining({
-          entries: expect.arrayContaining([
-            expect.objectContaining({
-              assetId: ASSET_1,
-              propertyId: PROPERTY_1,
-            }),
-            expect.objectContaining({
-              assetId: ASSET_2,
-              propertyId: PROPERTY_2,
-            }),
-          ]),
-        })
-      );
-
-      expect(batchGetAssetPropertyValue).toBeCalledTimes(1);
-
-      expect(batchGetAssetPropertyValue).toBeCalledWith(
         expect.objectContaining({
           entries: expect.arrayContaining([
             expect.objectContaining({
@@ -595,10 +564,9 @@ describe('e2e through data-module', () => {
 
   describe('fetching latest value', () => {
     it('reports error occurred on request initiation', async () => {
-      const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
       const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
 
-      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory, batchGetAssetPropertyValue });
+      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValue });
       const dataSource = createDataSource(mockSDK);
       const dataModule = new TimeSeriesDataModule(dataSource);
 
@@ -614,7 +582,7 @@ describe('e2e through data-module', () => {
             } as SiteWiseDataStreamQuery,
           ],
           request: {
-            viewport: { start: new Date(2000, 0, 0), end: new Date(2000, 0, 0, 1) },
+            viewport: { start: new Date(2000, 0, 0), end: new Date() },
             settings: { fetchMostRecentBeforeEnd: true, resolution: '0' },
           },
         },
@@ -623,7 +591,7 @@ describe('e2e through data-module', () => {
 
       await flushPromises();
 
-      expect(timeSeriesCallback).toBeCalledTimes(3);
+      expect(timeSeriesCallback).toBeCalledTimes(2);
       expect(timeSeriesCallback).toHaveBeenCalledWith(
         expect.objectContaining({
           dataStreams: [

@@ -315,7 +315,7 @@ describe('getLatestPropertyDataPoint', () => {
     const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
 
     const startDate = new Date(2000, 0, 0);
-    const endDate = new Date(2001, 0, 0);
+    const endDate = new Date();
     const resolution = '0';
 
     const requestInformation1 = {
@@ -433,7 +433,7 @@ describe('getLatestPropertyDataPoint', () => {
     const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
 
     const startDate = new Date(2000, 0, 0);
-    const endDate = new Date(2001, 0, 0);
+    const endDate = new Date();
     const resolution = '0';
 
     const requestInformation1 = {
@@ -795,7 +795,7 @@ describe('batch duration', () => {
     const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
 
     const startDate = new Date(2000, 0, 0);
-    const endDate = new Date(2001, 0, 0);
+    const endDate = new Date();
     const resolution = '0';
 
     const requestInformation = {
@@ -859,7 +859,7 @@ describe('batch duration', () => {
     const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }), { batchDuration: 100 });
 
     const startDate = new Date(2000, 0, 0);
-    const endDate = new Date(2001, 0, 0);
+    const endDate = new Date();
     const resolution = '0';
 
     const requestInformation = {
@@ -938,7 +938,7 @@ describe('batch deduplication', () => {
     const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
 
     const startDate = new Date(2000, 0, 0);
-    const endDate = new Date(2001, 0, 0);
+    const endDate = new Date();
     const resolution = '0';
 
     const requestInformation = {
@@ -986,7 +986,7 @@ describe('batch deduplication', () => {
     const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
 
     const startDate = new Date(2000, 0, 0);
-    const endDate = new Date(2001, 0, 0);
+    const endDate = new Date();
     const resolution = '0';
 
     // queue two requests in the same batch
