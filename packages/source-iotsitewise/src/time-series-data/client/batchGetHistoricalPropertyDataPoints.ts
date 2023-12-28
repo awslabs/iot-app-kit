@@ -10,8 +10,9 @@ import type {
   BatchGetAssetPropertyValueHistoryErrorEntry,
   BatchGetAssetPropertyValueHistorySuccessEntry,
 } from '@aws-sdk/client-iotsitewise';
-import type { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
+import { type OnSuccessCallback, type ErrorCallback, type RequestInformationAndRange } from '@iot-app-kit/core';
 import type { HistoricalPropertyParams } from './client';
+import { withinLatestPropertyDataThreshold } from './withinLatestPropertyDataThreshold';
 
 export type BatchHistoricalEntry = {
   requestInformation: RequestInformationAndRange;
@@ -141,6 +142,21 @@ const batchGetHistoricalPropertyDataPointsForProperty = ({
     .filter((batch) => batch.length > 0) // filter out empty batches
     .map(([batch, maxResults], requestIndex) => sendRequest({ client, batch, maxResults, requestIndex }));
 
+const shouldAcceptRequest = ({
+  end,
+  fetchFromStartToEnd,
+  fetchMostRecentBeforeStart,
+  fetchMostRecentBeforeEnd,
+  resolution,
+}: RequestInformationAndRange) => {
+  return (
+    resolution === '0' &&
+    ((!withinLatestPropertyDataThreshold(end) && fetchMostRecentBeforeEnd) ||
+      fetchFromStartToEnd ||
+      fetchMostRecentBeforeStart)
+  );
+};
+
 export const batchGetHistoricalPropertyDataPoints = ({
   params,
   client,
@@ -152,20 +168,20 @@ export const batchGetHistoricalPropertyDataPoints = ({
 
   // fan out params into individual entries, handling fetchMostRecentBeforeStart
   params.forEach(({ requestInformations, maxResults, onSuccess, onError }) => {
-    requestInformations
-      .filter(({ resolution }) => resolution === '0')
-      .forEach((requestInformation) => {
-        const { fetchMostRecentBeforeStart, start, end } = requestInformation;
+    requestInformations.filter(shouldAcceptRequest).forEach((requestInformation) => {
+      const { fetchMostRecentBeforeStart, fetchMostRecentBeforeEnd, start, end } = requestInformation;
 
-        entries.push({
-          requestInformation,
-          maxResults: fetchMostRecentBeforeStart ? 1 : maxResults,
-          onSuccess,
-          onError,
-          requestStart: fetchMostRecentBeforeStart ? new Date(0, 0, 0) : start,
-          requestEnd: fetchMostRecentBeforeStart ? start : end,
-        });
+      const isMostRecent = fetchMostRecentBeforeStart || fetchMostRecentBeforeEnd;
+
+      entries.push({
+        requestInformation,
+        maxResults: isMostRecent ? 1 : maxResults,
+        onSuccess,
+        onError,
+        requestStart: isMostRecent ? new Date(0, 0, 0) : start,
+        requestEnd: fetchMostRecentBeforeStart ? start : end,
       });
+    });
   });
 
   // sort entries to ensure earliest data is fetched first because batch API has a property limit
