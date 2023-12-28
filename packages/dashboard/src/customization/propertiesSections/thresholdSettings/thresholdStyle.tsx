@@ -4,6 +4,7 @@ import { OptionDefinition } from '@cloudscape-design/components/internal/compone
 // FIXME: Export ThresholdStyleType from @iot-app-kit/react-components
 // eslint-disable-next-line no-restricted-imports
 import { ThresholdStyleType } from '@iot-app-kit/react-components/src/components/chart/types';
+import { spaceScaledXs } from '@cloudscape-design/design-tokens';
 
 export type ThresholdStyleSettingsProps = {
   thresholdStyle: ThresholdStyleType;
@@ -59,6 +60,10 @@ const convertThresholdStyleToOption = (thresholdStyle: ThresholdStyleType): Opti
   }
 };
 
+const style = {
+  padding: spaceScaledXs,
+};
+
 export const ThresholdStyleSettings: React.FC<ThresholdStyleSettingsProps> = ({
   thresholdStyle,
   updateAllThresholdStyles,
@@ -68,17 +73,19 @@ export const ThresholdStyleSettings: React.FC<ThresholdStyleSettingsProps> = ({
   );
 
   return (
-    <FormField label='Show thresholds'>
-      <Select
-        onChange={({ detail }) => {
-          setSelectedOption(detail.selectedOption);
-          const thresholdStyle = convertOptionToThresholdStyle(detail.selectedOption);
-          // Update styles of all thresholds
-          updateAllThresholdStyles(thresholdStyle);
-        }}
-        options={styledOptions}
-        selectedOption={selectedOption}
-      />
-    </FormField>
+    <div style={style}>
+      <FormField label='Show thresholds'>
+        <Select
+          onChange={({ detail }) => {
+            setSelectedOption(detail.selectedOption);
+            const thresholdStyle = convertOptionToThresholdStyle(detail.selectedOption);
+            // Update styles of all thresholds
+            updateAllThresholdStyles(thresholdStyle);
+          }}
+          options={styledOptions}
+          selectedOption={selectedOption}
+        />
+      </FormField>
+    </div>
   );
 };
