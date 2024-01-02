@@ -1,8 +1,10 @@
-// current maximum batch size when using batch APIs
-export const MAX_BATCH_RESULTS = 4000;
-
-// current batch API entry limit
-export const MAX_BATCH_ENTRIES = 16;
+import {
+  MAX_AGGREGATED_DATA_POINTS,
+  MAX_AGGREGATED_REQUEST_ENTRIES,
+  MAX_RAW_HISTORICAL_DATA_POINTS,
+  MAX_RAW_HISTORICAL_REQUEST_ENTRIES,
+  MAX_RAW_LATEST_REQUEST_ENTRIES,
+} from './constants';
 
 // use -1 to represent a batch with no max result limit
 export const NO_LIMIT_BATCH = -1;
@@ -14,8 +16,8 @@ export const NO_LIMIT_BATCH = -1;
  * @param entries
  * @returns buckets: [BatchHistoricalEntry[], number | undefined][]
  */
-export const createEntryBatches = <T extends { maxResults?: number }>(entries: T[]): [T[], number][] => {
-  const buckets: { [key: number]: T[] } = {};
+export function createRawLatestEntryBatches<T extends { maxResults?: number }>(entries: T[]): [T[], number][] {
+  const buckets: Record<number, T[]> = {};
 
   entries.forEach((entry) => {
     const maxEntryResults = entry.maxResults || NO_LIMIT_BATCH;
@@ -33,24 +35,91 @@ export const createEntryBatches = <T extends { maxResults?: number }>(entries: T
       const maxEntryResults = Number(key);
       const bucket = buckets[maxEntryResults];
 
-      return chunkBatch(bucket).map((chunk): [T[], number] => [
+      return chunkRawLatestBatch(bucket).map((chunk): [T[], number] => [
         chunk,
         maxEntryResults === NO_LIMIT_BATCH ? NO_LIMIT_BATCH : chunk.length * maxEntryResults,
       ]);
     })
     .flat();
-};
+}
 
-/**
- * calculate the required size of the next batch
- */
-export const calculateNextBatchSize = ({
+export function createRawHistoricalEntryBatches<T extends { maxResults?: number }>(entries: T[]): [T[], number][] {
+  const buckets: Record<number, T[]> = {};
+
+  entries.forEach((entry) => {
+    const maxEntryResults = entry.maxResults || NO_LIMIT_BATCH;
+
+    if (buckets[maxEntryResults]) {
+      buckets[maxEntryResults] = buckets[maxEntryResults].concat([entry]);
+    } else {
+      buckets[maxEntryResults] = [entry];
+    }
+  });
+
+  // chunk buckets that are larger than MAX_BATCH_ENTRIES
+  return Object.keys(buckets)
+    .map((key) => {
+      const maxEntryResults = Number(key);
+      const bucket = buckets[maxEntryResults];
+
+      return chunkRawHistoricalBatch(bucket).map((chunk): [T[], number] => [
+        chunk,
+        maxEntryResults === NO_LIMIT_BATCH ? NO_LIMIT_BATCH : chunk.length * maxEntryResults,
+      ]);
+    })
+    .flat();
+}
+
+export function createAggregateEntryBatches<T extends { maxResults?: number }>(entries: T[]): [T[], number][] {
+  const buckets: Record<number, T[]> = {};
+
+  entries.forEach((entry) => {
+    const maxEntryResults = entry.maxResults || NO_LIMIT_BATCH;
+
+    if (buckets[maxEntryResults]) {
+      buckets[maxEntryResults] = buckets[maxEntryResults].concat([entry]);
+    } else {
+      buckets[maxEntryResults] = [entry];
+    }
+  });
+
+  // chunk buckets that are larger than MAX_BATCH_ENTRIES
+  return Object.keys(buckets)
+    .map((key) => {
+      const maxEntryResults = Number(key);
+      const bucket = buckets[maxEntryResults];
+
+      return chunkAggregatedBatch(bucket).map((chunk): [T[], number] => [
+        chunk,
+        maxEntryResults === NO_LIMIT_BATCH ? NO_LIMIT_BATCH : chunk.length * maxEntryResults,
+      ]);
+    })
+    .flat();
+}
+
+export function calculateNextRawHistoricalBatchSize({
   maxResults,
   dataPointsFetched,
 }: {
   maxResults: number;
   dataPointsFetched: number;
-}) => (maxResults === NO_LIMIT_BATCH ? MAX_BATCH_RESULTS : Math.min(maxResults - dataPointsFetched, MAX_BATCH_RESULTS));
+}) {
+  return maxResults === NO_LIMIT_BATCH
+    ? MAX_RAW_HISTORICAL_DATA_POINTS
+    : Math.min(maxResults - dataPointsFetched, MAX_RAW_HISTORICAL_DATA_POINTS);
+}
+
+export function calculateNextAggregatedBatchSize({
+  maxResults,
+  dataPointsFetched,
+}: {
+  maxResults: number;
+  dataPointsFetched: number;
+}) {
+  return maxResults === NO_LIMIT_BATCH
+    ? MAX_AGGREGATED_DATA_POINTS
+    : Math.min(maxResults - dataPointsFetched, MAX_AGGREGATED_DATA_POINTS);
+}
 
 /**
  * check if batch still needs to be paginated.
@@ -68,15 +137,32 @@ export const shouldFetchNextBatch = ({
   (maxResults === NO_LIMIT_BATCH ||
     (dataPointsFetched !== null && dataPointsFetched !== undefined && dataPointsFetched < maxResults));
 
-/**
- * chunk batches by MAX_BATCH_ENTRIES
- */
-const chunkBatch = <T>(batch: T[]): T[][] => {
+function chunkRawLatestBatch<T>(batch: T[]): T[][] {
   const chunks = [];
 
-  for (let i = 0; i < batch.length; i += MAX_BATCH_ENTRIES) {
-    chunks.push(batch.slice(i, i + MAX_BATCH_ENTRIES));
+  for (let i = 0; i < batch.length; i += MAX_RAW_LATEST_REQUEST_ENTRIES) {
+    chunks.push(batch.slice(i, i + MAX_RAW_LATEST_REQUEST_ENTRIES));
   }
 
   return chunks;
-};
+}
+
+function chunkRawHistoricalBatch<T>(batch: T[]): T[][] {
+  const chunks = [];
+
+  for (let i = 0; i < batch.length; i += MAX_RAW_HISTORICAL_REQUEST_ENTRIES) {
+    chunks.push(batch.slice(i, i + MAX_RAW_HISTORICAL_REQUEST_ENTRIES));
+  }
+
+  return chunks;
+}
+
+function chunkAggregatedBatch<T>(batch: T[]): T[][] {
+  const chunks = [];
+
+  for (let i = 0; i < batch.length; i += MAX_AGGREGATED_REQUEST_ENTRIES) {
+    chunks.push(batch.slice(i, i + MAX_AGGREGATED_REQUEST_ENTRIES));
+  }
+
+  return chunks;
+}
