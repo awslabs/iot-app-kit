@@ -8,7 +8,7 @@ import {
   BATCH_ASSET_PROPERTY_AGGREGATES,
 } from '../../__mocks__/assetPropertyValue';
 import { toId } from '../util/dataStreamId';
-import { MAX_BATCH_RESULTS } from './batch';
+import { MAX_AGGREGATED_DATA_POINTS, MAX_RAW_HISTORICAL_DATA_POINTS } from './constants';
 import flushPromises from 'flush-promises';
 import { HOUR_IN_MS } from '../util/timeConstants';
 import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
@@ -94,13 +94,13 @@ describe('getHistoricalPropertyDataPoints', () => {
       requestInformations: [requestInformation1],
       onSuccess,
       onError,
-      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
+      maxResults: MAX_RAW_HISTORICAL_DATA_POINTS,
     });
     client.getHistoricalPropertyDataPoints({
       requestInformations: [requestInformation2],
       onSuccess,
       onError,
-      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
+      maxResults: MAX_RAW_HISTORICAL_DATA_POINTS, // ensure pagination happens exactly once,
     });
 
     await flushPromises();
@@ -211,7 +211,7 @@ describe('getHistoricalPropertyDataPoints', () => {
       requestInformations: [requestInformation1],
       onSuccess,
       onError,
-      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
+      maxResults: MAX_RAW_HISTORICAL_DATA_POINTS, // ensure pagination happens exactly once
     });
 
     await flushPromises();
@@ -580,13 +580,13 @@ describe('getAggregatedPropertyDataPoints', () => {
       requestInformations: [requestInformation1],
       onSuccess,
       onError,
-      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
+      maxResults: MAX_AGGREGATED_DATA_POINTS, // ensure pagination happens exactly once
     });
     client.getAggregatedPropertyDataPoints({
       requestInformations: [requestInformation2],
       onSuccess,
       onError,
-      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
+      maxResults: MAX_AGGREGATED_DATA_POINTS, // ensure pagination happens exactly once
     });
 
     await flushPromises();
@@ -716,7 +716,7 @@ describe('getAggregatedPropertyDataPoints', () => {
       requestInformations: [requestInformation1],
       onSuccess,
       onError,
-      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
+      maxResults: MAX_AGGREGATED_DATA_POINTS, // ensure pagination happens exactly once
     });
 
     await flushPromises();
