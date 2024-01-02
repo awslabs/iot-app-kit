@@ -25,6 +25,7 @@ export const Main: ComponentStory<typeof TrendCursorSync> = () => (
       viewport={VIEWPORT}
       queries={[MOCK_TIME_SERIES_DATA_QUERY]}
       size={{ width: 800, height: 500 }}
+      onChartOptionsChange={jest.fn()}
       theme='light'
     />
   </TrendCursorSync>
@@ -42,6 +43,7 @@ export const MultipleTimeSyncs: ComponentStory<typeof TrendCursorSync> = () => (
             viewport={VIEWPORT}
             queries={[MOCK_TIME_SERIES_DATA_QUERY]}
             size={{ width: 800, height: 500 }}
+            onChartOptionsChange={jest.fn()}
             theme='light'
           />
         ))}

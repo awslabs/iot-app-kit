@@ -25,6 +25,7 @@ describe('TrendCursorSync', () => {
           viewport={mockViewport}
           queries={[mockQuery]}
           size={{ width: 800, height: 500 }}
+          onChartOptionsChange={jest.fn()}
           theme='light'
           id='chart1'
         />
@@ -40,6 +41,7 @@ describe('TrendCursorSync', () => {
           viewport={mockViewport}
           queries={[mockQuery]}
           size={{ width: 800, height: 500 }}
+          onChartOptionsChange={jest.fn()}
           theme='light'
           id='chart1'
         />
@@ -47,6 +49,7 @@ describe('TrendCursorSync', () => {
           viewport={mockViewport}
           queries={[mockQuery]}
           size={{ width: 800, height: 500 }}
+          onChartOptionsChange={jest.fn()}
           theme='light'
           id='chart1'
         />

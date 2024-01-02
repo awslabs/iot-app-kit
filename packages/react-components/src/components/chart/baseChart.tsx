@@ -41,6 +41,7 @@ import './chart.css';
 const BaseChart = ({
   viewport,
   queries,
+  onChartOptionsChange,
   size = { width: 500, height: 500 },
   ...options
 }: ChartOptions) => {
@@ -89,8 +90,9 @@ const BaseChart = ({
   } = useResizeableEChart(
     chartRef,
     size,
-    options.legend?.visible,
-    isBottomAligned
+    options.legend,
+    isBottomAligned,
+    onChartOptionsChange
   );
 
   const {
