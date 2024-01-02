@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, MutableRefObject } from 'react';
 import { init } from 'echarts';
 import type { ECharts } from 'echarts';
 import { configureEchartsPlugins } from '../../echarts';
@@ -33,3 +33,5 @@ export const useECharts = (theme?: string) => {
 
   return { chartRef, ref };
 };
+
+export type ChartRef = MutableRefObject<ECharts | null>;

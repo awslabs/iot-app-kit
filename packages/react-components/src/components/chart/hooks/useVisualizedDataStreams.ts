@@ -33,29 +33,26 @@ export const useVisualizedDataStreams = (
     },
   });
 
-  // Line | Scatter | Bar charts do not support alarm streams.
-  const dataStreamsWithoutAlarms = dataStreams.filter(isNotAlarmStream);
+  return useMemo(() => {
+    // Line | Scatter | Bar charts do not support alarm streams.
+    const dataStreamsWithoutAlarms = dataStreams.filter(isNotAlarmStream);
 
-  const hasError = useMemo(
-    () => dataStreamsWithoutAlarms.some(dataStreamHasError),
-    [dataStreamsWithoutAlarms]
-  );
+    const hasError = dataStreamsWithoutAlarms.some(dataStreamHasError);
 
-  const isLoading = useMemo(
-    () => !hasError && dataStreamsWithoutAlarms.some(dataStreamIsLoading),
-    [hasError, dataStreamsWithoutAlarms]
-  );
+    const isLoading =
+      !hasError && dataStreamsWithoutAlarms.some(dataStreamIsLoading);
 
-  const visibleData = dataStreamsWithoutAlarms.flatMap(({ data }) =>
-    getVisibleData(data, utilizedViewport, false)
-  );
+    const visibleData = dataStreamsWithoutAlarms.flatMap(({ data }) =>
+      getVisibleData(data, utilizedViewport, false)
+    );
 
-  return {
-    hasError,
-    isLoading,
-    dataStreams: dataStreamsWithoutAlarms,
-    thresholds,
-    utilizedViewport,
-    visibleData,
-  };
+    return {
+      hasError,
+      isLoading,
+      dataStreams: dataStreamsWithoutAlarms,
+      thresholds,
+      utilizedViewport,
+      visibleData,
+    };
+  }, [dataStreams, thresholds, utilizedViewport]);
 };

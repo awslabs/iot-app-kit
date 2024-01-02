@@ -5,6 +5,7 @@ import type {
   TooltipComponentOption,
   XAXisComponentOption,
   YAXisComponentOption,
+  EChartsOption,
 } from 'echarts';
 
 export const DEFAULT_TOOLBOX_CONFIG: ToolboxComponentOption = {
@@ -16,12 +17,6 @@ export const DEFAULT_TOOLBOX_CONFIG: ToolboxComponentOption = {
   iconStyle: {
     borderColor: '#414d5c',
   },
-};
-
-export const DEFAULT_X_AXIS: XAXisComponentOption = {
-  show: true,
-  type: 'time',
-  splitNumber: 5,
 };
 
 export const DEFAULT_Y_AXIS: YAXisComponentOption = {
@@ -64,6 +59,25 @@ export const DEFAULT_DATA_ZOOM: DataZoomComponentOption = {
 };
 
 export const DEFAULT_X_AXIS_ID = 'default-x-Axis';
+export const DEFAULT_X_AXIS: XAXisComponentOption = {
+  id: DEFAULT_X_AXIS_ID,
+  show: true,
+  type: 'time' as const,
+  axisLabel: {
+    hideOverlap: true,
+    color: '#5f6b7a',
+  },
+  axisLine: {
+    lineStyle: {
+      color: '#e9ebed',
+      width: 2,
+    },
+  },
+  splitNumber: 6,
+  // hardcoding the x axis so that all viewport logic is managed exclusively by useDataZoom hooks
+  min: 0,
+  max: 4102513200000, // Jan 01 2100 19:00:00 UTC
+};
 
 export const DEFAULT_CHART_VISUALIZATION = 'line' as const;
 // this is the chart live mode refresh rate, this should be inline with the animation props
@@ -94,3 +108,19 @@ export const ECHARTS_ZOOM_DEBOUNCE_MS = 300;
 export const LEGEND_NAME_MIN_WIDTH_FACTOR = 3.5;
 
 export const PERFORMANCE_MODE_THRESHOLD = 4000;
+
+export const DEFAULT_CHART_OPTION: EChartsOption = {
+  aria: {
+    enabled: true,
+  },
+  title: {
+    top: 10,
+  },
+  dataZoom: DEFAULT_DATA_ZOOM,
+  animation: false,
+  toolbox: DEFAULT_TOOLBOX_CONFIG,
+  xAxis: DEFAULT_X_AXIS,
+  yAxis: [DEFAULT_Y_AXIS],
+  grid: DEFAULT_GRID,
+  tooltip: DEFAULT_TOOLTIP,
+};

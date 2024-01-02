@@ -8,15 +8,20 @@ import { ChartOptions, Visualization } from '../../src/components/chart/types';
 const chartTypes: Visualization[] = [
   'line',
   'scatter',
-  'step-start',
-  'step-middle',
   'step-end',
+  'step-middle',
+  'step-start',
 ]; // removing bar for now
 export default {
   title: 'Widgets/Base Chart',
   component: Chart,
   argTypes: {
+    showAllVisualizationTypes: {
+      control: { type: 'boolean' },
+      defaultValue: false,
+    },
     id: { control: { type: 'text' }, defaultValue: undefined },
+    titleText: { control: { type: 'text' }, defaultValue: undefined },
     defaultVisualizationType: {
       control: 'select',
       options: chartTypes,
@@ -28,13 +33,15 @@ export default {
       defaultValue: { width: 800, height: 500 },
     },
     styleSettings: { control: { type: 'object' }, defaultValue: undefined },
+    axis: { control: { type: 'object' }, defaultValue: undefined },
+    thresholds: { control: { type: 'object' }, defaultValue: [] },
   },
   parameters: {
     layout: 'fullscreen',
   },
 } as ComponentMeta<typeof Chart>;
 
-type StoryInputs = ChartOptions;
+type StoryInputs = ChartOptions & { showAllVisualizationTypes: boolean };
 
 export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
   id,
@@ -45,7 +52,7 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
   const { viewport } = useViewport();
 
   return (
-    <TimeSync>
+    <TimeSync initialViewport={VIEWPORT}>
       <div id='story-container' style={{ width: '100vw', height: '100vh' }}>
         <TimeSelection />
         <br />
@@ -70,7 +77,17 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
 
 export const SiteWiseConnectedBaseChartExample: ComponentStory<
   FC<StoryInputs>
-> = ({ id, significantDigits, size, styleSettings }) => {
+> = ({
+  showAllVisualizationTypes,
+  id,
+  significantDigits,
+  titleText,
+  defaultVisualizationType,
+  size,
+  styleSettings,
+  axis,
+  thresholds,
+}) => {
   const { viewport } = useViewport();
 
   if (!queryConfigured()) {
@@ -92,25 +109,37 @@ export const SiteWiseConnectedBaseChartExample: ComponentStory<
     );
   }
 
+  const options = {
+    id,
+    titleText,
+    defaultVisualizationType,
+    significantDigits,
+    size,
+    styleSettings,
+    viewport,
+    theme: 'light',
+    legend: { visible: true },
+    axis,
+    thresholds,
+  };
+
   return (
     <TimeSync>
       <div id='story-container' style={{ width: '100vw', height: '100vh' }}>
         <TimeSelection />
         <br />
-        {chartTypes.map((chartType, index) => (
-          <Chart
-            key={index}
-            id={id}
-            defaultVisualizationType={chartType}
-            significantDigits={significantDigits}
-            size={size}
-            styleSettings={styleSettings}
-            viewport={viewport ?? { duration: '5m' }}
-            queries={[getTimeSeriesDataQuery()]}
-            theme='light'
-            legend={{ visible: true }}
-          />
-        ))}
+        {showAllVisualizationTypes ? (
+          chartTypes.map((chartType, index) => (
+            <Chart
+              {...options}
+              key={index}
+              defaultVisualizationType={chartType}
+              queries={[getTimeSeriesDataQuery()]}
+            />
+          ))
+        ) : (
+          <Chart {...options} queries={[getTimeSeriesDataQuery()]} />
+        )}
       </div>
     </TimeSync>
   );

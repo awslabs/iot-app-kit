@@ -31,8 +31,8 @@ const useColorMap = ({
 
   const activeStreams = dataStreams.map(({ id }) => id);
   const colorMappedStreams = Object.keys(colorMap.current);
-  const zombieColors = difference(colorMappedStreams, activeStreams);
-  colorer.current.add(zombieColors);
+  const colorsNotInUse = difference(colorMappedStreams, activeStreams);
+  colorer.current.add(colorsNotInUse);
 
   const getColor = (id: string) => {
     if (id in colorMap.current) {
