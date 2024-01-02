@@ -1,11 +1,7 @@
 import React, { CSSProperties, ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPlugin } from '@iot-app-kit/core';
-import {
-  WebglContext,
-  TrendCursorSync,
-  TimeSync,
-} from '@iot-app-kit/react-components';
+import { WebglContext, TimeSync } from '@iot-app-kit/react-components';
 import Box from '@cloudscape-design/components/box';
 import {
   colorBackgroundCellShaded,
@@ -356,33 +352,31 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
 
   return (
     <TimeSync initialViewport={{ duration: '5m' }} group='dashboard-timesync'>
-      <TrendCursorSync>
-        {readOnly ? ReadOnlyComponent : EditComponent}
-        <ConfirmDeleteModal
-          visible={visible}
-          headerTitle={`Delete selected widget${
-            selectedWidgets.length > 1 ? 's' : ''
-          }?`}
-          cancelTitle='Cancel'
-          submitTitle='Delete'
-          description={
-            <Box>
-              <Box variant='p'>
-                {`Are you sure you want to delete the selected widget${
-                  selectedWidgets.length > 1 ? 's' : ''
-                }? You'll lose all the progress you made to the
-                          widget${selectedWidgets.length > 1 ? 's' : ''}`}
-              </Box>
-              <Box variant='p' padding={{ top: 'm' }}>
-                You cannot undo this action.
-              </Box>
+      {readOnly ? ReadOnlyComponent : EditComponent}
+      <ConfirmDeleteModal
+        visible={visible}
+        headerTitle={`Delete selected widget${
+          selectedWidgets.length > 1 ? 's' : ''
+        }?`}
+        cancelTitle='Cancel'
+        submitTitle='Delete'
+        description={
+          <Box>
+            <Box variant='p'>
+              {`Are you sure you want to delete the selected widget${
+                selectedWidgets.length > 1 ? 's' : ''
+              }? You'll lose all the progress you made to the
+                        widget${selectedWidgets.length > 1 ? 's' : ''}`}
             </Box>
-          }
-          handleDismiss={() => setVisible(false)}
-          handleCancel={() => setVisible(false)}
-          handleSubmit={onDelete}
-        />
-      </TrendCursorSync>
+            <Box variant='p' padding={{ top: 'm' }}>
+              You cannot undo this action.
+            </Box>
+          </Box>
+        }
+        handleDismiss={() => setVisible(false)}
+        handleCancel={() => setVisible(false)}
+        handleSubmit={onDelete}
+      />
     </TimeSync>
   );
 };

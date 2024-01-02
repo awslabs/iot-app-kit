@@ -7,9 +7,9 @@ import {
   DEFAULT_DATA_ZOOM,
   LIVE_MODE_REFRESH_RATE_MS,
 } from '../eChartsConstants';
-import { convertViewportToMs } from '../trendCursor/calculations/viewport';
 import { DEFAULT_VIEWPORT } from '../../time-sync';
 import { useEffectOnce } from 'react-use';
+import { convertViewportToMs } from '../viewport/convertViewportToMs';
 
 type ValidOption = {
   startValue: number;

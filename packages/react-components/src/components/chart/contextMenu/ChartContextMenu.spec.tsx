@@ -1,93 +1,99 @@
-import { beforeEach, describe, expect } from '@jest/globals';
-import { fireEvent, render, RenderResult } from '@testing-library/react';
-import React from 'react';
+import React, { useRef } from 'react';
+import { describe } from '@jest/globals';
+import {
+  RenderResult,
+  act,
+  fireEvent,
+  render,
+  screen,
+} from '@testing-library/react';
+
 import ChartContextMenu from './ChartContextMenu';
 
-import { InternalGraphicComponentGroupOption } from '../trendCursor/types';
+type ActionStub = jest.Mock;
+
+const TestChartContextMenu = ({
+  action1,
+  action2,
+}: {
+  action1: ActionStub;
+  action2: ActionStub;
+}) => {
+  const trigger = useRef(null);
+  return (
+    <div>
+      <div id='trigger' ref={trigger}></div>
+      <ChartContextMenu
+        targetTrigger={trigger}
+        options={[
+          {
+            label: 'Action 1',
+            action: (offsetX) => action1(offsetX),
+          },
+          {
+            label: 'Action 2',
+            action: (offsetX) => action2(offsetX),
+          },
+        ]}
+      />
+    </div>
+  );
+};
 
 describe('ChartContextMenu', () => {
-  const menuOptionClickHandler = jest.fn();
-  const onOutSideClickHandler = jest.fn();
+  const action1Stub = jest.fn();
+  const action2Stub = jest.fn();
+
   let component: RenderResult;
+  let trigger: Element;
   beforeEach(() => {
     component = render(
-      <ChartContextMenu
-        menuOptionClickHandler={menuOptionClickHandler}
-        onOutSideClickHandler={onOutSideClickHandler}
-        position={{ x: 100, y: 100 }}
-        trendCursors={[{} as InternalGraphicComponentGroupOption]}
-      />
+      <TestChartContextMenu action1={action1Stub} action2={action2Stub} />
     );
+    const triggerElement = component.baseElement.querySelector('#trigger');
+    if (!triggerElement) {
+      throw new Error('triggerElement could not be found for test.');
+    }
+    trigger = triggerElement;
   });
 
   it('renders', () => {
-    expect(component).not.toBeNull();
+    act(() => {
+      fireEvent(trigger, new Event('contextmenu'));
+    });
+
+    expect(screen.getByText('Action 1')).not.toBeNull();
+    expect(component.baseElement.querySelector('.chart-menu')).not.toBeNull();
   });
 
-  it('menuOptionClickHandler should be called with add when "Add trend cursor" is clicked', () => {
-    const { getByText } = component;
-    const clickIndicator = getByText('Add trend cursor');
-    fireEvent.click(clickIndicator);
-    expect(menuOptionClickHandler).toBeCalledWith(
-      expect.objectContaining({
-        action: 'add',
-      })
-    );
+  it('does not show options when hidden', () => {
+    expect(component.baseElement.querySelector('.chart-menu')).toBeNull();
   });
 
-  it('menuOptionClickHandler should be called with delete when "Delete trend cursor" is clicked', () => {
-    const { getByText } = component;
-    const clickIndicator = getByText('Delete trend cursor');
-    fireEvent.click(clickIndicator);
-    expect(menuOptionClickHandler).toBeCalledWith(
-      expect.objectContaining({
-        action: 'delete',
-      })
-    );
+  it('calls an action when clicked', () => {
+    act(() => {
+      fireEvent(trigger, new Event('contextmenu'));
+    });
+    act(() => {
+      screen.getByText('Action 1').click();
+    });
+
+    expect(action1Stub).toBeCalled();
+
+    expect(component.baseElement.querySelector('.chart-menu')).toBeNull();
   });
 
-  it('menuOptionClickHandler should be called with copy when "Copy to clipboard" is clicked', () => {
-    const { getByText } = component;
-    const clickIndicator = getByText('Copy to clipboard');
-    fireEvent.click(clickIndicator);
-    expect(menuOptionClickHandler).toBeCalledWith(
-      expect.objectContaining({
-        action: 'copy',
-      })
-    );
-  });
+  it('closes when a user presses escape', () => {
+    act(() => {
+      fireEvent(trigger, new Event('contextmenu'));
+    });
 
-  it('menuOptionClickHandler cannot be called with delete when graphic.length  is <= 0', () => {
-    const { getAllByText } = render(
-      <ChartContextMenu
-        menuOptionClickHandler={menuOptionClickHandler}
-        onOutSideClickHandler={onOutSideClickHandler}
-        position={{ x: 100, y: 100 }}
-        trendCursors={[]}
-      />
-    );
-    const clickIndicator = getAllByText('Delete trend cursor')[0];
-    fireEvent.click(clickIndicator);
-    expect(menuOptionClickHandler).not.toBeCalledWith();
-  });
+    expect(screen.getByText('Action 1')).not.toBeNull();
 
-  it('menuOptionClickHandler cannot be called with add when graphic.length > 5', () => {
-    const { getAllByText } = render(
-      <ChartContextMenu
-        menuOptionClickHandler={menuOptionClickHandler}
-        onOutSideClickHandler={onOutSideClickHandler}
-        position={{ x: 100, y: 100 }}
-        trendCursors={[
-          {} as InternalGraphicComponentGroupOption,
-          {} as InternalGraphicComponentGroupOption,
-          {} as InternalGraphicComponentGroupOption,
-          {} as InternalGraphicComponentGroupOption,
-          {} as InternalGraphicComponentGroupOption,
-        ]}
-      />
-    );
-    const clickIndicator = getAllByText('Add trend cursor')[0];
-    fireEvent.click(clickIndicator);
-    expect(menuOptionClickHandler).not.toBeCalledWith();
+    act(() => {
+      fireEvent.keyDown(component.baseElement, { key: 'escape' });
+    });
+
+    expect(component.baseElement.querySelector('.chart-menu')).toBeNull();
   });
 });

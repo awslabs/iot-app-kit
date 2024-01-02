@@ -1,55 +1,81 @@
-import React from 'react';
-import { Menu, MenuOption } from '../../menu';
+import React, { useEffect, useState } from 'react';
+import { Menu, MenuOptionProps } from '../../menu';
 
 import { CONTEXT_MENU_Z_INDEX } from '../eChartsConstants';
-import { MAX_TREND_CURSORS } from '../trendCursor/constants';
-import { InternalGraphicComponentGroupOption } from '../trendCursor/types';
 
-export type Action = 'add' | 'delete' | 'copy';
+type ContextMenuAction = (offsetX: number) => void;
+type ContextMenuOption = Omit<
+  MenuOptionProps,
+  'onClick' | 'onKeyboardEnter' | 'action'
+> & {
+  onClick?: ContextMenuAction;
+  onKeyboardEnter?: ContextMenuAction;
+  action?: ContextMenuAction;
+};
+
 interface ChartContextMenu {
-  position: { x: number; y: number };
-  menuOptionClickHandler: ({
-    action,
-    e,
-  }: {
-    action: Action;
-    e: React.MouseEvent;
-  }) => void;
-  onOutSideClickHandler: (e: PointerEvent) => void;
-  trendCursors: InternalGraphicComponentGroupOption[];
+  targetTrigger: React.RefObject<HTMLDivElement>;
+  options?: ContextMenuOption[];
 }
 const ChartContextMenu = ({
-  position,
-  menuOptionClickHandler,
-  onOutSideClickHandler,
-  trendCursors,
+  targetTrigger,
+  options = [],
 }: ChartContextMenu) => {
+  const [showContextMenu, setShowContextMenu] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  useEffect(() => {
+    const element = targetTrigger.current;
+    if (!element) return;
+    const handleContextMenu = (e: MouseEvent) => {
+      e.stopPropagation();
+      e.preventDefault();
+      setShowContextMenu(true);
+      setPosition({ x: e.offsetX, y: e.offsetY });
+    };
+    const handleCloseMenu = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === 'escape') {
+        setShowContextMenu(false);
+      }
+    };
+    element.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('keydown', handleCloseMenu);
+
+    return () => {
+      element.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('keydown', handleCloseMenu);
+    };
+  }, [targetTrigger]);
+
+  if (!showContextMenu || options.length === 0) return null;
+
+  const handleAction = (cb?: ContextMenuAction) => () => {
+    if (!cb) return;
+    setShowContextMenu(false);
+    cb(position.x);
+  };
+
+  const mappedOptions = options.map((o) => ({
+    ...o,
+    onClick: handleAction(o.onClick),
+    onKeyboardEnter: handleAction(o.onKeyboardEnter),
+    action: handleAction(o.action),
+  }));
+
   return (
     <Menu
+      classNames='chart-menu'
       styles={{
         position: 'absolute',
         top: `${position.y}px`,
         left: `${position.x}px`,
         zIndex: CONTEXT_MENU_Z_INDEX,
       }}
-      onClickOutside={onOutSideClickHandler}
-    >
-      <MenuOption
-        label='Add trend cursor'
-        onClick={(e) => menuOptionClickHandler({ action: 'add', e })}
-        disabled={trendCursors.length >= MAX_TREND_CURSORS}
-      />
-      <MenuOption
-        label='Copy to clipboard'
-        onClick={(e) => menuOptionClickHandler({ action: 'copy', e })}
-        disabled={trendCursors.length === 0}
-      />
-      <MenuOption
-        label='Delete trend cursor'
-        onClick={(e) => menuOptionClickHandler({ action: 'delete', e })}
-        disabled={trendCursors.length === 0}
-      />
-    </Menu>
+      onClickOutside={() => {
+        // only triggers outside of the chart ref
+        setShowContextMenu(false);
+      }}
+      options={mappedOptions}
+    />
   );
 };
 
