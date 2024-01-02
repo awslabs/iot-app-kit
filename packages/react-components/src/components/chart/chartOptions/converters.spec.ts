@@ -1,14 +1,10 @@
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { ChartLegend } from '../types';
 import { convertYAxis } from './axes/yAxis';
-import { convertDataPoint } from './convertDataPoint';
-import { convertGrid } from './convertGrid';
-import { convertLegend } from './convertLegend';
 import { convertSeriesAndYAxis } from './seriesAndYAxis/convertSeriesAndYAxis';
-import { convertTooltip } from './convertTooltip';
 import { convertStyles } from './style/convertStyles';
 import { convertThresholds } from './convertThresholds';
-import { useConvertedOptions } from './convertOptions';
+import { useTooltip } from './convertTooltip';
 import { renderHook } from '@testing-library/react';
 
 const MOCK_AXIS = {
@@ -18,12 +14,6 @@ const MOCK_AXIS = {
   showY: true,
   showX: true,
 };
-const MOCK_DATA_POINTS = [
-  { x: 1630005300000, y: 100 },
-  { x: 1634005300000, y: 50 },
-  { x: 1630005300000, y: 100 },
-  { x: 1634005300000, y: 50 },
-];
 const MOCK_LEGEND: ChartLegend = {
   visible: true,
   position: 'right',
@@ -84,47 +74,6 @@ describe('testing converters', () => {
     });
   });
 
-  it('converts data points to echarts data points', async () => {
-    const convertedDataPoints = MOCK_DATA_POINTS.map(convertDataPoint);
-    expect(convertedDataPoints).toStrictEqual([
-      [1630005300000, 100],
-      [1634005300000, 50],
-      [1630005300000, 100],
-      [1634005300000, 50],
-    ]);
-  });
-
-  it('converts grid to echarts grid', async () => {
-    const convertedGrid = convertGrid(MOCK_LEGEND);
-
-    expect(convertedGrid).toHaveProperty('bottom', 50);
-    expect(convertedGrid).toHaveProperty('top', 50);
-    expect(convertedGrid).toHaveProperty('containLabel');
-  });
-
-  it('converts legend to echarts legend', async () => {
-    const convertedLegend = convertLegend(MOCK_LEGEND);
-
-    expect(convertedLegend).toHaveProperty('show', true);
-    expect(convertedLegend).toHaveProperty('orient', 'horizontal');
-  });
-
-  it('converts chart options to echarts options', async () => {
-    const { result } = renderHook(() =>
-      useConvertedOptions({
-        options: {
-          backgroundColor: 'white',
-          axis: MOCK_AXIS,
-          legend: MOCK_LEGEND,
-          significantDigits: 2,
-        },
-        series: [],
-      })
-    );
-
-    expect(result.current).toHaveProperty('backgroundColor', 'white');
-    expect(result.current).toHaveProperty('grid.bottom', 50);
-  });
   it('converts empty series data to echarts data', async () => {
     const options = {
       resolution: 0,
@@ -145,32 +94,20 @@ describe('testing converters', () => {
     const convertedSeriesAndYAxisFunc = convertSeriesAndYAxis(styles);
     const result = convertedSeriesAndYAxisFunc(datastream);
 
-    expect(result.series.data).toBeArrayOfSize(0);
     expect(result).toHaveProperty('series.itemStyle.color', 'red');
     expect(result).toHaveProperty('series.step', 'middle');
   });
 
   it('converts non empty series data to echarts data', async () => {
-    const options = {
-      resolution: 0,
-      queries: [QUERIES],
-      seriesLength: 1,
-      backgroundColor: 'white',
-      axis: MOCK_AXIS,
-      legend: MOCK_LEGEND,
-      significantDigits: 2,
-    };
     const chartOptions = {
       defaultVisualizationType: 'step-start',
       styleSettings: { 'abc-1': { color: 'red' } },
     } as const;
-    const datastream = { ...options, data: [], id: 'abc-1' };
-    const styles = convertStyles(chartOptions)(datastream);
+    const datastream = { id: 'abc-1' };
+    const styles = convertStyles(chartOptions)({});
     const convertedSeriesAndYAxisFunc = convertSeriesAndYAxis(styles);
     const result = convertedSeriesAndYAxisFunc(datastream);
 
-    expect(result.series.data).toBeArrayOfSize(0);
-    expect(result).toHaveProperty('series.data', []);
     expect(result).toHaveProperty('series.step', 'start');
   });
 
@@ -189,32 +126,27 @@ describe('testing converters', () => {
       styleSettings: { 'abc-1': { color: 'red' } },
     } as const;
     const datastream = { ...options, data: [], id: 'abc-1' };
-    const styles = convertStyles(chartOptions)(datastream);
+    const styles = convertStyles(chartOptions)({});
     const convertedSeriesAndYAxisFunc = convertSeriesAndYAxis(styles);
     const result = convertedSeriesAndYAxisFunc(datastream);
 
-    expect(result.series.data).toBeArrayOfSize(0);
     // series name should fallback to id if no name is present
     expect(result.series.name).toEqual('abc-1');
     expect(result).toHaveProperty('series.step', false);
   });
 
   it('converts tooltip', async () => {
-    const convertedTooltip = convertTooltip(2);
-
-    expect(convertedTooltip).toHaveProperty('trigger', 'axis');
+    const { result } = renderHook(() => useTooltip(2));
+    const convertedTooltip = result.current;
     expect(convertedTooltip.valueFormatter).toBeFunction();
-
     const valueFormatter = convertedTooltip.valueFormatter;
     if (valueFormatter) expect(valueFormatter(300)).toBe('300');
   });
 
   it('converts tooltip with value array', async () => {
-    const convertedTooltip = convertTooltip(2);
-
-    expect(convertedTooltip).toHaveProperty('trigger', 'axis');
+    const { result } = renderHook(() => useTooltip(2));
+    const convertedTooltip = result.current;
     expect(convertedTooltip.valueFormatter).toBeFunction();
-
     const valueFormatter = convertedTooltip.valueFormatter;
     if (valueFormatter)
       expect(valueFormatter([300, 10, 20000])).toBe('300, 10, 20000');

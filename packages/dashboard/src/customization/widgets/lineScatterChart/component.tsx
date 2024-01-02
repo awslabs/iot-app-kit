@@ -122,13 +122,21 @@ const mapStyledAssetPropertyToChartStyleSettings = (
   };
 };
 
-const convertAxis = (axis: ChartAxisOptions | undefined) => ({
-  showY: axis?.yVisible,
-  showX: axis?.xVisible,
-  yMin: axis?.yMin,
-  yMax: axis?.yMax,
-  yLabel: axis?.yLabel,
-});
+// memoizing so any change to the chart does not cause the axis to create a new reference
+const useConvertedAxis = (axis: ChartAxisOptions | undefined = {}) => {
+  const { yVisible, xVisible, yMax, yMin, yLabel } = axis;
+
+  return useMemo(
+    () => ({
+      showY: yVisible,
+      showX: xVisible,
+      yMin: yMin,
+      yMax: yMax,
+      yLabel: yLabel,
+    }),
+    [yVisible, xVisible, yMax, yMin, yLabel]
+  );
+};
 
 const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   widget
@@ -162,6 +170,8 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   const significantDigits =
     widgetSignificantDigits ?? dashboardSignificantDigits;
 
+  const convertedAxis = useConvertedAxis(axis);
+
   // there may be better ways to fix this, i.e. not have -44 and let the chart container  take its parent height,
   // the problem is that the Resizable component needs a "height" to be provided,
   // so not entirely sure if we can have a mechanism where the container auto adjusts the height
@@ -186,7 +196,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
         queries={queries}
         viewport={viewport}
         gestures={readOnly}
-        axis={convertAxis(axis)}
+        axis={convertedAxis}
         aggregationType={aggregateToString(aggregation)}
         styleSettings={styleSettings}
         thresholds={thresholds}
