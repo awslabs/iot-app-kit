@@ -49,6 +49,7 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
   significantDigits,
   size,
   styleSettings,
+  legend,
 }) => {
   const { viewport } = useViewport();
 
@@ -69,7 +70,7 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
             viewport={viewport ?? VIEWPORT}
             queries={[MOCK_TIME_SERIES_DATA_QUERY]}
             theme='light'
-            legend={{ visible: true }}
+            legend={legend}
           />
         ))}
       </div>

@@ -1,17 +1,13 @@
 import React from 'react';
 import type { MouseEvent } from 'react';
-import { SeriesOption } from 'echarts';
 import { useECharts, useResizeableEChart } from '../../hooks/useECharts';
 import { ChartOptions } from './types';
 import { useVisualizedDataStreams } from './hooks/useVisualizedDataStreams';
 import { HotKeys } from 'react-hotkeys';
-import { useTrendCursors } from './trendCursor';
 import { Resizable, ResizeHandle } from 'react-resizable';
 import Legend from './legend/table';
-import ChartContextMenu, { Action } from './contextMenu/ChartContextMenu';
+import ChartContextMenu from './contextMenu/ChartContextMenu';
 import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
-import { useContextMenu } from './contextMenu/useContextMenu';
-import { DEFAULT_CHART_VISUALIZATION } from './eChartsConstants';
 import { useDataZoom } from './hooks/useDataZoom';
 import { useViewport } from '../../hooks/useViewport';
 import { useHandleChartEvents } from './events/useHandleChartEvents';
@@ -19,6 +15,7 @@ import { useChartDataset } from './chartOptions/useChartDataset';
 import { useChartConfiguration } from './chartOptions/useChartConfiguration';
 
 import './chart.css';
+import { useTrendCursors } from '../../echarts/extensions/trendCursors';
 
 /**
  * Developer Notes:
@@ -50,25 +47,26 @@ const BaseChart = ({
 
   const { group } = useViewport();
 
-  // convert TimeSeriesDataQuery to TimeSeriesData
   const {
-    isLoading,
-    dataStreams,
-    thresholds: queryThresholds,
-    utilizedViewport,
-    visibleData,
-  } = useVisualizedDataStreams(queries, viewport);
+    handleAddTrendCursor,
+    handleDeleteTrendCursor,
+    handleCopyTrendCursor,
+    trendCursors,
+    trendCursorValues,
+  } = useTrendCursors({ group, chartRef, id: options.id });
+
+  // convert TimeSeriesDataQuery to TimeSeriesData
+  const { isLoading, dataStreams, thresholds, utilizedViewport, visibleData } =
+    useVisualizedDataStreams(queries, viewport);
 
   //handle dataZoom updates, which are dependent on user events and viewportInMS changes
-  const viewportInMs = useDataZoom(chartRef, utilizedViewport);
+  useDataZoom(chartRef, utilizedViewport);
 
-  const allThresholds = [...queryThresholds, ...(options.thresholds ?? [])];
-
-  const { series, yAxis } = useChartConfiguration(chartRef, {
+  const { dataStreamMetaData } = useChartConfiguration(chartRef, {
     group,
     isLoading,
     dataStreams,
-    thresholds: allThresholds,
+    thresholds,
     visibleData,
     ...options,
   });
@@ -95,69 +93,15 @@ const BaseChart = ({
     onChartOptionsChange
   );
 
-  const {
-    handleContextMenu,
-    showContextMenu,
-    contextMenuPos,
-    setShowContextMenu,
-  } = useContextMenu();
-
-  // trendcursors relies on the old implementation of series option which had data points in the option
-  const mappedSeries = series.map(({ id: seriesId, ...options }) => {
-    const dataPoints =
-      dataStreams.find(({ id: dataStreamId }) => dataStreamId === seriesId)
-        ?.data ?? [];
-    const data = dataPoints.map(({ x, y }) => [x, y]);
-
-    return {
-      ...options,
-      data,
-    } as SeriesOption;
-  });
-  // this will handle all the Trend Cursors operations
-  const {
-    onContextMenuClickHandler,
-    trendCursors,
-    trendCursorKeyMap,
-    trendCursorHandlers,
-  } = useTrendCursors({
-    chartRef,
-    initialGraphic: options.graphic,
-    size: { width: chartWidth, height: chartHeight },
-    series: mappedSeries,
-    chartId: options.id,
-    viewportInMs,
-    groupId: group,
-    onContextMenu: handleContextMenu,
-    visualization:
-      options.defaultVisualizationType ?? DEFAULT_CHART_VISUALIZATION,
-    significantDigits: options.significantDigits,
-    yAxisOptions: {
-      yAxis,
-    },
-  });
-
-  const menuOptionClickHandler = ({
-    action,
-  }: {
-    action: Action;
-    e: React.MouseEvent;
-  }) => {
-    onContextMenuClickHandler({ action, posX: contextMenuPos.x });
-    setShowContextMenu(false);
-  };
-
   // handle chart event updates
   const { chartEventsKeyMap, chartEventsHandlers } =
     useHandleChartEvents(chartRef);
 
   const hotKeyMap = {
-    ...trendCursorKeyMap,
     ...chartEventsKeyMap,
   };
 
   const hotKeyHandlers = {
-    ...trendCursorHandlers,
     ...chartEventsHandlers,
   };
 
@@ -224,14 +168,26 @@ const BaseChart = ({
             }}
           />
           {/*TODO: should not show when in dashboard */}
-          {showContextMenu && (
-            <ChartContextMenu
-              position={{ x: contextMenuPos.x, y: contextMenuPos.y }}
-              onOutSideClickHandler={() => setShowContextMenu(false)}
-              menuOptionClickHandler={menuOptionClickHandler}
-              trendCursors={trendCursors}
-            />
-          )}
+          <ChartContextMenu
+            targetTrigger={ref}
+            options={[
+              {
+                label: 'Add trend cursor',
+                action: (offsetX) => handleAddTrendCursor(offsetX),
+                disabled: trendCursors.length > 4,
+              },
+              {
+                label: 'Copy trend cursor',
+                action: (offsetX) => handleCopyTrendCursor(offsetX),
+                disabled: trendCursors.length === 0,
+              },
+              {
+                label: 'Delete trend cursor',
+                action: (offsetX) => handleDeleteTrendCursor(offsetX),
+                disabled: trendCursors.length === 0,
+              },
+            ]}
+          />
         </HotKeys>
       </Resizable>
       {options.legend?.visible && (
@@ -243,9 +199,10 @@ const BaseChart = ({
         >
           <Legend
             {...options.legend}
-            series={series}
-            graphic={trendCursors}
-            datastreams={dataStreams}
+            chartId={options.id}
+            datastreams={dataStreamMetaData}
+            trendCursors={trendCursors}
+            trendCursorValues={trendCursorValues}
             width={rightLegendWidth.toString()}
           />
         </div>

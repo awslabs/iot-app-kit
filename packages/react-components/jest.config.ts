@@ -24,6 +24,9 @@ const config = {
     '<rootDir>/src/components/knowledge-graph/KnowledgeGraphPanel.tsx',
     '<rootDir>/src/components/chart/trendCursor/mouseEvents/useTrendCursorsEvents.ts',
     '<rootDir>/src/components/chart/events/useHandleChartEvents.ts',
+    '<rootDir>/src/echarts/extensions/trendCursors/view/*',
+    '<rootDir>/src/echarts/extensions/trendCursors/echartsActions/extension.ts',
+    '<rootDir>/src/echarts/extensions/trendCursors/lifeCycle.ts',
   ],
 };
 export default config;

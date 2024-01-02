@@ -21,5 +21,9 @@ export const TrendCursorCell = ({
 
   const value = trendCursorValue === undefined ? '-' : trendCursorValue;
 
-  return <div className={!isVisible ? 'hidden-legend' : ''}>{value}</div>;
+  return (
+    <div className={`trend-cursor-value ${!isVisible ? 'hidden-legend' : ''}`}>
+      {value}
+    </div>
+  );
 };

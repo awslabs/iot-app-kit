@@ -1,8 +1,11 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { createTrendCursorsSlice, TrendCursorsState } from './trendCusorSlice';
 import { ConfigState, createConfigSlice, Flags } from './config';
 import { ChartStoreState, createChartStoresSlice } from './chartStoreSlice';
+import {
+  createTrendCursorsSlice,
+  TrendCursorsState,
+} from '../echarts/extensions/trendCursors/store';
 
 export type StateData = TrendCursorsState & ConfigState & ChartStoreState;
 const useDataStore = create<StateData>()(
