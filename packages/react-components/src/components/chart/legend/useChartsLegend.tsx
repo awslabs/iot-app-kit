@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { TableProps } from '@cloudscape-design/components/table/interfaces';
 import {
   GraphicComponentGroupOption,
@@ -22,6 +22,7 @@ import { LEGEND_NAME_MIN_WIDTH_FACTOR } from '../eChartsConstants';
 import Hide from './hide.svg';
 import Show from './show.svg';
 import Button from '@cloudscape-design/components/button';
+import isEqual from 'lodash.isequal';
 
 const LegendCell = (e: {
   datastream: DataStream;
@@ -30,16 +31,22 @@ const LegendCell = (e: {
   width: number;
 }) => {
   const { datastream, lineColor, name, width } = e;
-  const highlightDataStream = useChartStore(
-    (state) => state.highlightDataStream
+  const { highlightDataStream, unHighlightDataStream } = useChartStore(
+    (state) => ({
+      highlightDataStream: state.highlightDataStream,
+      unHighlightDataStream: state.unHighlightDataStream,
+    }),
+    isEqual
   );
-  const unHighlightDataStream = useChartStore(
-    (state) => state.unHighlightDataStream
+  const { highlightedDataStreams } = useChartStore(
+    (state) => ({ highlightedDataStreams: state.highlightedDataStreams }),
+    isEqual
   );
-  const highlightedDataStreams = useChartStore(
-    (state) => state.highlightedDataStreams
+  const isDataStreamHighlighted = useCallback(
+    (datastream: DataStream) =>
+      isDataStreamInList(highlightedDataStreams)(datastream),
+    [highlightedDataStreams]
   );
-  const isDataStreamHighlighted = isDataStreamInList(highlightedDataStreams);
   const nameRef = useRef<HTMLDivElement | null>(null);
   const isNameTruncated =
     nameRef.current?.scrollWidth &&
@@ -51,10 +58,22 @@ const LegendCell = (e: {
       highlightDataStream(datastream);
     }
   };
-  const hideDataStream = useChartStore((state) => state.hideDataStream);
-  const unHideDataStream = useChartStore((state) => state.unHideDataStream);
-  const hiddenDataStreams = useChartStore((state) => state.hiddenDataStreams);
-  const isDataStreamHidden = isDataStreamInList(hiddenDataStreams);
+  const { hideDataStream, unHideDataStream } = useChartStore(
+    (state) => ({
+      hideDataStream: state.hideDataStream,
+      unHideDataStream: state.unHideDataStream,
+    }),
+    isEqual
+  );
+  const { hiddenDataStreams } = useChartStore(
+    (state) => ({ hiddenDataStreams: state.hiddenDataStreams }),
+    isEqual
+  );
+  const isDataStreamHidden = useCallback(
+    (datastream: DataStream) =>
+      isDataStreamInList(hiddenDataStreams)(datastream),
+    [hiddenDataStreams]
+  );
   const propertyVisibilityIcon = isDataStreamHidden(datastream) ? (
     <img alt='hide property' src={Hide}></img>
   ) : (
@@ -88,8 +107,8 @@ const LegendCell = (e: {
       aria-disabled={isDataStreamHidden(datastream)}
       title={
         isDataStreamHighlighted(datastream)
-          ? `Un-Highlight ${datastream.name} Proprerty`
-          : `Highlight ${datastream.name} Property`
+          ? `Un-Highlight ${datastream?.name ?? ''} Proprerty`
+          : `Highlight ${datastream?.name ?? ''} Property`
       }
       role='button'
       tabIndex={isDataStreamHidden(datastream) ? -1 : 0}
@@ -121,8 +140,8 @@ const LegendCell = (e: {
       <div
         title={
           isDataStreamHidden(datastream)
-            ? `Show ${datastream.name} Proprerty`
-            : `Hide ${datastream.name} Property`
+            ? `Show ${datastream?.name ?? ''} Proprerty`
+            : `Hide ${datastream?.name ?? ''} Property`
         }
       >
         <Button

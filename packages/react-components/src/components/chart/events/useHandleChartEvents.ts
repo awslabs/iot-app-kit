@@ -1,14 +1,10 @@
 import { MutableRefObject, useCallback, useEffect, useState } from 'react';
-import { EChartsOption, EChartsType, ElementEvent } from 'echarts';
+import { EChartsType, ElementEvent } from 'echarts';
 import { KeyMap } from 'react-hotkeys';
 
 export const useHandleChartEvents = (
   chartRef: MutableRefObject<EChartsType | null>
 ) => {
-  const [chartEventsOptions, setChartEventsOptions] = useState<EChartsOption>(
-    {}
-  );
-
   const [shiftDown, setShiftDown] = useState(false);
   const [prevIsPanning, setPrevIsPanning] = useState(false);
   const [isPanning, setIsPanning] = useState(false);
@@ -17,7 +13,7 @@ export const useHandleChartEvents = (
   // When panning on the chart, turn off tooltip and set cursor to grabbing
   const setOnPanStart = (chart: EChartsType | null) => {
     setIsPanning(true);
-    setChartEventsOptions({
+    chart?.setOption({
       tooltip: {
         show: false,
       },
@@ -29,7 +25,7 @@ export const useHandleChartEvents = (
   // Use when the shift key is still held down but mouse is up
   const setOnPanEnd = (chart: EChartsType | null) => {
     setIsPanning(false);
-    setChartEventsOptions({
+    chart?.setOption({
       tooltip: {
         show: true,
       },
@@ -147,9 +143,5 @@ export const useHandleChartEvents = (
     };
   }, [chartRef, isBrushZooming, shiftDown, isPanning, prevIsPanning]);
 
-  return {
-    chartEventsOptions,
-    chartEventsKeyMap,
-    chartEventsHandlers,
-  };
+  return { chartEventsKeyMap, chartEventsHandlers };
 };

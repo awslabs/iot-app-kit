@@ -2,7 +2,7 @@ import { TooltipComponentOption } from 'echarts';
 import { isNumeric, round } from '@iot-app-kit/core-util';
 
 import { ChartOptions } from '../types';
-import { DEFAULT_TOOLTIP } from '../eChartsConstants';
+import { useMemo } from 'react';
 
 const formatValue =
   (significantDigits: ChartOptions['significantDigits']) =>
@@ -13,13 +13,17 @@ const formatValue =
       ? `${round(value, significantDigits)}`
       : value;
 
-export const convertTooltip = (
+export const useTooltip = (
   significantDigits: ChartOptions['significantDigits']
-): TooltipComponentOption => ({
-  ...DEFAULT_TOOLTIP,
-  valueFormatter: (value) => {
-    if (Array.isArray(value))
-      return value.map(formatValue(significantDigits)).join(', ');
-    return formatValue(significantDigits)(value);
-  },
-});
+) => {
+  return useMemo<TooltipComponentOption>(
+    () => ({
+      valueFormatter: (value) => {
+        if (Array.isArray(value))
+          return value.map(formatValue(significantDigits)).join(', ');
+        return formatValue(significantDigits)(value);
+      },
+    }),
+    [significantDigits]
+  );
+};

@@ -8,12 +8,14 @@ export const bindStylesToDataStreams = ({
   dataStreams: DataStream[];
   styleSettings?: StyleSettingsMap;
 }): DataStream[] => {
-  return dataStreams.map((dataStream) =>
+  return dataStreams.map(bindStyleToDataStream(styleSettings));
+};
+
+export const bindStyleToDataStream =
+  (styleSettings?: StyleSettingsMap) => (dataStream: DataStream) =>
     styleSettings == null || dataStream.refId == null
       ? dataStream
       : {
           ...dataStream,
           ...styleSettings[dataStream.refId],
-        }
-  );
-};
+        };

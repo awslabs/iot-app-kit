@@ -1,38 +1,26 @@
 import React from 'react';
 import type { MouseEvent } from 'react';
-import {
-  useECharts,
-  useResizeableEChart,
-  useGroupableEChart,
-  useLoadableEChart,
-  useEChartOptions,
-} from '../../hooks/useECharts';
+import { SeriesOption } from 'echarts';
+import { useECharts, useResizeableEChart } from '../../hooks/useECharts';
 import { ChartOptions } from './types';
 import { useVisualizedDataStreams } from './hooks/useVisualizedDataStreams';
-import { useConvertedOptions } from './chartOptions/convertOptions';
-import { useSeriesAndYAxis } from './chartOptions/seriesAndYAxis/convertSeriesAndYAxis';
 import { HotKeys } from 'react-hotkeys';
 import { useTrendCursors } from './trendCursor';
 import { Resizable, ResizeHandle } from 'react-resizable';
 import Legend from './legend/legend';
-import { useChartStyleSettings } from './chartOptions/style/convertStyles';
 import ChartContextMenu, { Action } from './contextMenu/ChartContextMenu';
-import { useChartSetOptionSettings } from './chartOptions/useChartSetOptionSettings';
 import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
-
-import './chart.css';
 import { useContextMenu } from './contextMenu/useContextMenu';
-import {
-  DEFAULT_CHART_VISUALIZATION,
-  DEFAULT_TOOLBOX_CONFIG,
-  PERFORMANCE_MODE_THRESHOLD,
-} from './eChartsConstants';
+import { DEFAULT_CHART_VISUALIZATION } from './eChartsConstants';
 import { useDataZoom } from './hooks/useDataZoom';
 import { useViewport } from '../../hooks/useViewport';
-import { getXAxis } from './chartOptions/axes/xAxis';
+import { useHandleChartEvents } from './events/useHandleChartEvents';
 import { useGetConfigValue } from '../../store';
 import TanstackLegend from './legend/tanstackLegend';
-import { useHandleChartEvents } from './events/useHandleChartEvents';
+import { useChartDataset } from './chartOptions/useChartDataset';
+import { useChartConfiguration } from './chartOptions/useChartConfiguration';
+
+import './chart.css';
 
 /**
  * Developer Notes:
@@ -73,7 +61,22 @@ const BaseChart = ({
     utilizedViewport,
     visibleData,
   } = useVisualizedDataStreams(queries, viewport);
+
+  //handle dataZoom updates, which are dependent on user events and viewportInMS changes
+  const viewportInMs = useDataZoom(chartRef, utilizedViewport);
+
   const allThresholds = [...queryThresholds, ...(options.thresholds ?? [])];
+
+  const { series, yAxis } = useChartConfiguration(chartRef, {
+    group,
+    isLoading,
+    dataStreams,
+    thresholds: allThresholds,
+    visibleData,
+    ...options,
+  });
+
+  useChartDataset(chartRef, dataStreams);
 
   const isBottomAligned = options.legend?.position === 'bottom';
 
@@ -94,24 +97,6 @@ const BaseChart = ({
     isBottomAligned
   );
 
-  // apply group to echarts
-  useGroupableEChart(chartRef, group);
-
-  // apply loading animation to echarts
-  useLoadableEChart(chartRef, isLoading);
-
-  // calculate style settings for all datastreams
-  const [styleSettingsMap] = useChartStyleSettings(dataStreams, options);
-
-  const performanceMode = visibleData.length > PERFORMANCE_MODE_THRESHOLD;
-  // adapt datastreams into echarts series and yAxis data
-  const { series, yAxis } = useSeriesAndYAxis(dataStreams, {
-    styleSettings: styleSettingsMap,
-    axis: options.axis,
-    thresholds: allThresholds,
-    performanceMode,
-  });
-
   const {
     handleContextMenu,
     showContextMenu,
@@ -119,11 +104,18 @@ const BaseChart = ({
     setShowContextMenu,
   } = useContextMenu();
 
-  //handle dataZoom updates, which are dependent on user events and viewportInMS changes
-  const viewportInMs = useDataZoom(chartRef, utilizedViewport);
+  // trendcursors relies on the old implementation of series option which had data points in the option
+  const mappedSeries = series.map(({ id: seriesId, ...options }) => {
+    const dataPoints =
+      dataStreams.find(({ id: dataStreamId }) => dataStreamId === seriesId)
+        ?.data ?? [];
+    const data = dataPoints.map(({ x, y }) => [x, y]);
 
-  const xAxis = getXAxis(options.axis);
-
+    return {
+      ...options,
+      data,
+    } as SeriesOption;
+  });
   // this will handle all the Trend Cursors operations
   const {
     onContextMenuClickHandler,
@@ -134,7 +126,7 @@ const BaseChart = ({
     chartRef,
     initialGraphic: options.graphic,
     size: { width: chartWidth, height: chartHeight },
-    series,
+    series: mappedSeries,
     chartId: options.id,
     viewportInMs,
     groupId: group,
@@ -157,41 +149,9 @@ const BaseChart = ({
     setShowContextMenu(false);
   };
 
-  // adapt chart options into echarts options
-  const convertedOptions = useConvertedOptions({
-    series,
-    options,
-  });
-
-  // determine the set option settings
-  const settings = useChartSetOptionSettings(dataStreams);
-
   // handle chart event updates
-  const { chartEventsOptions, chartEventsKeyMap, chartEventsHandlers } =
+  const { chartEventsKeyMap, chartEventsHandlers } =
     useHandleChartEvents(chartRef);
-
-  const toolTipOptions = {
-    ...convertedOptions.tooltip,
-    ...chartEventsOptions.tooltip,
-  };
-
-  // set all the options on the echarts instance
-  useEChartOptions(
-    chartRef,
-    {
-      ...convertedOptions,
-      ...chartEventsOptions,
-      tooltip: toolTipOptions,
-      series,
-      toolbox: DEFAULT_TOOLBOX_CONFIG,
-      yAxis,
-      xAxis,
-      graphic: trendCursors,
-      animation: false,
-      appKitChartId: options.id,
-    },
-    settings
-  );
 
   const hotKeyMap = {
     ...trendCursorKeyMap,

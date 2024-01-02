@@ -1,24 +1,28 @@
 import { DataPoint, DataStream, Threshold } from '@iot-app-kit/core';
 import { BarSeriesOption, SeriesOption, YAXisComponentOption } from 'echarts';
+import isEqual from 'lodash.isequal';
 
 import {
   ChartAxisOptions,
+  ChartOptions,
   ChartStyleSettingsOptions,
   Visualization,
 } from '../../types';
-import { convertDataPoint } from '../convertDataPoint';
-import {
-  StyleSettingsMap,
-  getChartStyleSettingsFromMap,
-} from '../style/convertStyles';
+import { convertStyles } from '../style/convertStyles';
 import { convertYAxis as convertChartYAxis } from '../axes/yAxis';
 import { convertThresholds } from '../convertThresholds';
-import { ChartStyleSettingsWithDefaults } from '../../utils/getStyles';
+import {
+  ChartStyleSettingsWithDefaults,
+  Emphasis,
+} from '../../utils/getStyles';
 import {
   DEEMPHASIZE_OPACITY,
   EMPHASIZE_SCALE_CONSTANT,
 } from '../../eChartsConstants';
 import { GenericSeries } from '../../../../echarts/types';
+import { useCallback, useMemo } from 'react';
+import { useChartStore } from '../../store';
+import { isDataStreamInList } from '../../../../utils/isDataStreamInList';
 
 export const dataValue = (point: DataPoint) => point.y;
 
@@ -66,7 +70,7 @@ const addVisualizationSpecificOptions = (
 };
 
 const convertSeries = (
-  { data, id, name }: DataStream,
+  { id, name }: Pick<DataStream, 'id' | 'name'>,
   {
     visualizationType,
     color,
@@ -79,7 +83,7 @@ const convertSeries = (
     significantDigits,
     hidden,
   }: ChartStyleSettingsWithDefaults,
-  { performanceMode }: { performanceMode?: boolean }
+  { performanceMode, index }: { performanceMode?: boolean; index?: number }
 ) => {
   let opacity = emphasis === 'de-emphasize' ? DEEMPHASIZE_OPACITY : 1;
   if (hidden) {
@@ -99,7 +103,7 @@ const convertSeries = (
   const genericSeries = {
     id,
     name: name ?? id,
-    data: data.map(convertDataPoint),
+    datasetIndex: index,
     type: convertVisualizationType(visualizationType),
     step: convertStep(visualizationType),
     symbol: symbolStyle,
@@ -152,12 +156,16 @@ const convertYAxis = ({
 export const convertSeriesAndYAxis =
   (
     styles: ChartStyleSettingsWithDefaults,
-    { performanceMode }: { performanceMode?: boolean } = {
+    { performanceMode, index }: { performanceMode?: boolean; index: number } = {
       performanceMode: false,
+      index: 0,
     }
   ) =>
-  (datastream: DataStream) => {
-    const series = convertSeries(datastream, styles, { performanceMode });
+  (datastream: Pick<DataStream, 'id' | 'name'>) => {
+    const series = convertSeries(datastream, styles, {
+      performanceMode,
+      index,
+    });
     const yAxis = convertYAxis(styles);
 
     return {
@@ -205,6 +213,8 @@ export const reduceSeriesAndYAxis = (
   };
 };
 
+type DataStreamInfo = Pick<DataStream, 'id' | 'name' | 'refId' | 'color'>;
+
 /**
  *
  * @param chartRef echarts reference
@@ -216,38 +226,99 @@ export const reduceSeriesAndYAxis = (
  * @returns { series, yAxis } converted series options and converted yAxis options
  */
 export const useSeriesAndYAxis = (
-  datastreams: DataStream[],
+  datastreams: DataStreamInfo[],
   {
+    defaultVisualizationType,
+    significantDigits,
     styleSettings,
     axis,
     thresholds,
     performanceMode,
-  }: {
-    styleSettings: StyleSettingsMap;
+  }: Pick<
+    ChartOptions,
+    'defaultVisualizationType' | 'styleSettings' | 'significantDigits'
+  > & {
     thresholds: Threshold[];
     axis?: ChartAxisOptions;
     performanceMode?: boolean;
   }
 ) => {
-  const defaultYAxis: YAXisComponentOption[] = [convertChartYAxis(axis)];
-  const convertedThresholds = convertThresholds(thresholds);
-  const getStyles = getChartStyleSettingsFromMap(styleSettings);
+  const { highlightedDataStreams } = useChartStore(
+    (state) => ({ highlightedDataStreams: state.highlightedDataStreams }),
+    isEqual
+  );
+  const isDataStreamHighlighted = useCallback(
+    (datastream: DataStreamInfo) =>
+      isDataStreamInList(highlightedDataStreams)(datastream),
+    [highlightedDataStreams]
+  );
 
-  const { series, yAxis } = datastreams
-    .map((datastream) =>
-      convertSeriesAndYAxis(getStyles(datastream), { performanceMode })(
-        datastream
-      )
-    )
-    .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis });
+  const { hiddenDataStreams } = useChartStore(
+    (state) => ({ hiddenDataStreams: state.hiddenDataStreams }),
+    isEqual
+  );
+  const isDataStreamHidden = useCallback(
+    (datastream: DataStreamInfo) =>
+      isDataStreamInList(hiddenDataStreams)(datastream),
+    [hiddenDataStreams]
+  );
 
-  if (series.length > 0) {
-    series[0].markArea = convertedThresholds.markArea;
-    series[0].markLine = convertedThresholds.markLine;
-  }
+  return useMemo(() => {
+    const defaultYAxis: YAXisComponentOption[] = [convertChartYAxis(axis)];
+    const convertedThresholds = convertThresholds(thresholds);
 
-  return {
-    series,
-    yAxis,
-  };
+    const shouldUseEmphasis = highlightedDataStreams.length > 0;
+
+    /**
+     * converting series styling and yAxis configuration
+     * options for echarts the series is associated
+     * with the dataset by index. Since both are
+     * mapped from the datastream, they will
+     * be in the same array order
+     */
+    const { series, yAxis } = datastreams
+      .map((datastream, index) => {
+        const isDatastreamHighlighted = isDataStreamHighlighted(datastream);
+        const emphasis: Emphasis = shouldUseEmphasis
+          ? isDatastreamHighlighted
+            ? 'emphasize'
+            : 'de-emphasize'
+          : 'none';
+        const hidden = isDataStreamHidden(datastream);
+        const chartStylesWithDefaults = convertStyles({
+          styleSettings,
+          significantDigits,
+          defaultVisualizationType,
+          emphasis,
+          hidden,
+        })(datastream);
+
+        return convertSeriesAndYAxis(chartStylesWithDefaults, {
+          performanceMode,
+          index,
+        })(datastream);
+      })
+      .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis });
+
+    if (series.length > 0) {
+      series[0].markArea = convertedThresholds.markArea;
+      series[0].markLine = convertedThresholds.markLine;
+    }
+
+    return {
+      series,
+      yAxis,
+    };
+  }, [
+    datastreams,
+    defaultVisualizationType,
+    axis,
+    significantDigits,
+    styleSettings,
+    performanceMode,
+    thresholds,
+    highlightedDataStreams,
+    isDataStreamHighlighted,
+    isDataStreamHidden,
+  ]);
 };
