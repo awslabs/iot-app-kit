@@ -109,6 +109,7 @@ export type ChartOptions = {
   theme?: string;
   id?: string;
   titleText?: string;
+  onChartOptionsChange?: (options: Pick<ChartOptions, 'legend'>) => void;
 };
 
 export interface ViewportInMs {
