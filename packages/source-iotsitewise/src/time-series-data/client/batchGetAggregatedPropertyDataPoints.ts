@@ -9,7 +9,7 @@ import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
 import { parseDuration } from '@iot-app-kit/core';
 import { fromId } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
-import { createEntryBatches, calculateNextBatchSize, shouldFetchNextBatch } from './batch';
+import { createAggregateEntryBatches, calculateNextAggregatedBatchSize, shouldFetchNextBatch } from './batch';
 import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
 import { deduplicateBatch } from '../util/deduplication';
 import type {
@@ -54,7 +54,7 @@ const sendRequest = ({
   // the cache exposes methods that only require batch response entry as an argument.
   const callbackCache: BatchEntryCallbackCache = {};
 
-  const batchSize = calculateNextBatchSize({ maxResults, dataPointsFetched });
+  const batchSize = calculateNextAggregatedBatchSize({ maxResults, dataPointsFetched });
 
   client
     .send(
@@ -145,7 +145,7 @@ const batchGetAggregatedPropertyDataPointsForProperty = ({
   client: IoTSiteWiseClient;
   entries: BatchAggregatedEntry[];
 }) =>
-  createEntryBatches<BatchAggregatedEntry>(entries)
+  createAggregateEntryBatches<BatchAggregatedEntry>(entries)
     .filter((batch) => batch.length > 0) // filter out empty batches
     .map(([batch, maxResults], requestIndex) => sendRequest({ client, batch, maxResults, requestIndex }));
 
