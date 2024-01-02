@@ -3,7 +3,7 @@ import { toDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
 import { fromId } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
-import { createEntryBatches, calculateNextBatchSize, shouldFetchNextBatch } from './batch';
+import { createRawHistoricalEntryBatches, calculateNextRawHistoricalBatchSize, shouldFetchNextBatch } from './batch';
 import { deduplicateBatch } from '../util/deduplication';
 import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
 import type {
@@ -49,7 +49,7 @@ const sendRequest = ({
   // the cache exposes methods that only require batch response entry as an argument.
   const callbackCache: BatchEntryCallbackCache = {};
 
-  const batchSize = calculateNextBatchSize({ maxResults, dataPointsFetched });
+  const batchSize = calculateNextRawHistoricalBatchSize({ maxResults, dataPointsFetched });
 
   client
     .send(
@@ -138,7 +138,7 @@ const batchGetHistoricalPropertyDataPointsForProperty = ({
   client: IoTSiteWiseClient;
   entries: BatchHistoricalEntry[];
 }) =>
-  createEntryBatches<BatchHistoricalEntry>(entries)
+  createRawHistoricalEntryBatches<BatchHistoricalEntry>(entries)
     .filter((batch) => batch.length > 0) // filter out empty batches
     .map(([batch, maxResults], requestIndex) => sendRequest({ client, batch, maxResults, requestIndex }));
 

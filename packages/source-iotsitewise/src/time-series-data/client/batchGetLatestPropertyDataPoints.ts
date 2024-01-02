@@ -3,7 +3,7 @@ import { toDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
 import { fromId } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
-import { createEntryBatches, shouldFetchNextBatch, NO_LIMIT_BATCH } from './batch';
+import { createRawLatestEntryBatches, shouldFetchNextBatch, NO_LIMIT_BATCH } from './batch';
 import { deduplicateBatch } from '../util/deduplication';
 import type {
   BatchGetAssetPropertyValueErrorEntry,
@@ -118,7 +118,7 @@ const batchGetLatestPropertyDataPointsForProperty = ({
   client: IoTSiteWiseClient;
   entries: BatchLatestEntry[];
 }) =>
-  createEntryBatches<BatchLatestEntry>(entries)
+  createRawLatestEntryBatches<BatchLatestEntry>(entries)
     .filter((batch) => batch.length > 0) // filter out empty batches
     .map(([batch], requestIndex) => sendRequest({ client, batch, requestIndex }));
 
