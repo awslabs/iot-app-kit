@@ -20,6 +20,9 @@ jest.mock('echarts', () => ({
   registerTheme: jest.fn(),
   connect: jest.fn(),
   disconnect: jest.fn(),
+  graphic: jest.fn(),
+  ComponentView: jest.fn(),
+  ComponentModel: jest.fn(),
 }));
 
 afterAll(() => {

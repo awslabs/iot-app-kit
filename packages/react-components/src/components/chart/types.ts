@@ -7,7 +7,6 @@ import {
   Viewport,
 } from '@iot-app-kit/core';
 import { OptionId } from 'echarts/types/src/util/types';
-import { InternalGraphicComponentGroupOption } from './trendCursor/types';
 
 export type YAxisOptions = {
   yLabel?: string;
@@ -105,7 +104,6 @@ export type ChartOptions = {
   fontSettings?: SimpleFontSettings;
   legend?: ChartLegend;
   significantDigits?: number;
-  graphic?: InternalGraphicComponentGroupOption[];
   theme?: string;
   id?: string;
   titleText?: string;

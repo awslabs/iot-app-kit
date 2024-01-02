@@ -19,6 +19,8 @@ import {
   PERFORMANCE_MODE_THRESHOLD,
 } from '../eChartsConstants';
 import { useSeriesAndYAxis } from './seriesAndYAxis/convertSeriesAndYAxis';
+import { SeriesOption } from 'echarts';
+import { GenericSeries } from '../../../echarts/types';
 
 const useTitle = ({
   titleText,
@@ -36,7 +38,40 @@ const useTitle = ({
 };
 
 const toDataStreamIdentifiers = (dataStreams: DataStream[]) =>
-  dataStreams.map(({ id, name, color, refId }) => ({ id, name, color, refId }));
+  dataStreams.map(
+    ({ id, name, color, refId, dataType, detailedName, unit }) => ({
+      id,
+      name,
+      color,
+      refId,
+      dataType,
+      detailedName,
+      unit,
+    })
+  );
+
+const toDataStreamMetaData = (
+  datastreams: ReturnType<typeof toDataStreamIdentifiers>,
+  series: SeriesOption[]
+) => {
+  return datastreams.map(
+    ({ id, name, color, dataType, refId, detailedName, unit }) => {
+      const foundSeries = series.find(
+        ({ id: seriesId }) => seriesId === id
+      ) ?? { appKitColor: color };
+      const colorUsed = (foundSeries as GenericSeries).appKitColor;
+      return {
+        id,
+        name,
+        refId,
+        color: colorUsed,
+        dataType,
+        detailedName,
+        unit,
+      };
+    }
+  );
+};
 
 type ChartConfigurationOptions = Pick<
   ChartOptions,
@@ -87,6 +122,11 @@ export const useChartConfiguration = (
   const [dataSteamIdentifiers, setDataStreamIdentifiers] = useState(
     toDataStreamIdentifiers(dataStreams)
   );
+
+  const [dataStreamMetaData, setDataStreamMetaData] = useState(
+    toDataStreamMetaData(dataSteamIdentifiers, [])
+  );
+
   useEffect(() => {
     const mappedDataStreams = toDataStreamIdentifiers(dataStreams);
     if (isEqual(mappedDataStreams, dataSteamIdentifiers)) return;
@@ -153,6 +193,8 @@ export const useChartConfiguration = (
       : { replaceMerge: ['series'] };
     previousDataStreamIdentifiers.current = dataSteamIdentifiers;
 
+    setDataStreamMetaData(toDataStreamMetaData(dataSteamIdentifiers, series));
+
     chart.setOption(
       {
         appKitChartId: id,
@@ -179,5 +221,5 @@ export const useChartConfiguration = (
     dataSteamIdentifiers,
   ]);
 
-  return { series, yAxis };
+  return { series, yAxis, dataStreamMetaData };
 };

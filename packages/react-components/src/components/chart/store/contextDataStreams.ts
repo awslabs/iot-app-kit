@@ -41,6 +41,10 @@ export const createDataStreamsSlice: StateCreator<DataStreamsState> = (
       if (!datastream) return state;
       return {
         hiddenDataStreams: [...state.hiddenDataStreams, datastream],
+        /**
+         * unhighlight the datastream if it's hidden so it does not
+         * make the other streams de-emphasized
+         */
         highlightedDataStreams: state.highlightedDataStreams.filter(
           ({ id }) => id !== datastream.id
         ),
