@@ -3,7 +3,7 @@ import useDataStore from '../../../store';
 import useHandleResize from './resize/useHandleResize';
 import useHandleSync from './sync/useHandleSync';
 import useTrendCursorsEvents from './mouseEvents/useTrendCursorsEvents';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHandleViewport } from './viewport/useHandleViewport';
 
 import { DEBUG_TREND_CURSORS } from './constants';
@@ -149,6 +149,14 @@ const useTrendCursors = ({
   const orderedTrendCursors = graphic.sort(
     (a, b) => a.timestampInMs - b.timestampInMs
   );
+
+  // removed from the chart configuration because it will be refactored into echarts in an upcoming PR
+  // will only live here temporarily
+  useEffect(() => {
+    chartRef.current?.setOption({
+      graphic: orderedTrendCursors,
+    });
+  }, [chartRef, orderedTrendCursors]);
 
   return {
     onContextMenuClickHandler,

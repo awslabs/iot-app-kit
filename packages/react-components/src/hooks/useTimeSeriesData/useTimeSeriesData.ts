@@ -1,10 +1,9 @@
 import { useEffect, useState, useRef } from 'react';
 import { combineProviders } from '@iot-app-kit/core';
-import { v4 as uuid } from 'uuid';
-import { bindStylesToDataStreams } from '../utils/bindStylesToDataStreams';
-import { combineTimeSeriesData } from '../utils/combineTimeSeriesData';
-
-import { useViewport } from '../useViewport';
+import {
+  SiteWiseAssetQuery,
+  SiteWisePropertyAliasQuery,
+} from '@iot-app-kit/source-iotsitewise';
 import type {
   Viewport,
   DataStream,
@@ -15,12 +14,13 @@ import type {
   TimeSeriesDataRequestSettings,
   StyleSettingsMap,
 } from '@iot-app-kit/core';
+import { v4 as uuid } from 'uuid';
+import { combineTimeSeriesData } from '../utils/combineTimeSeriesData';
+
+import { useViewport } from '../useViewport';
 import { ProviderStore } from './providerStore';
-import { useColoredDataStreams } from '../useColoredDataStreams';
-import {
-  SiteWiseAssetQuery,
-  SiteWisePropertyAliasQuery,
-} from '@iot-app-kit/source-iotsitewise';
+import { useDataStreamStyler } from '../useColoredDataStreams/useDataStreamColorer';
+import isEqual from 'lodash.isequal';
 
 const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
   resolution: '0',
@@ -51,9 +51,18 @@ export const useTimeSeriesData = ({
   settings?: TimeSeriesDataRequestSettings;
   styles?: StyleSettingsMap;
 }): { dataStreams: DataStream[]; thresholds: Threshold[] } => {
-  const [timeSeriesData, setTimeSeriesData] = useState<
-    TimeSeriesData | undefined
-  >(undefined);
+  const previousStyles = useRef(styles);
+  const { styleDatastreams } = useDataStreamStyler(styles);
+
+  const [dataStreams, setDataStreams] = useState<DataStream[]>([]);
+  const [thresholds, setThresholds] = useState<Threshold[]>([]);
+
+  // re-style query if the style settings have changed
+  useEffect(() => {
+    if (isEqual(previousStyles.current, styles)) return;
+    previousStyles.current = styles;
+    setDataStreams(styleDatastreams(dataStreams));
+  }, [previousStyles, styles, styleDatastreams, setDataStreams, dataStreams]);
 
   const { viewport: injectedViewport } = useViewport();
   const viewport = passedInViewport || injectedViewport || DEFAULT_VIEWPORT;
@@ -114,15 +123,14 @@ export const useTimeSeriesData = ({
 
     provider.subscribe({
       next: (timeSeriesDataCollection: TimeSeriesData[]) => {
-        const timeSeriesData = combineTimeSeriesData(
-          timeSeriesDataCollection,
-          viewport
-        );
+        const {
+          dataStreams: combinedDataStreams,
+          thresholds: combinedThresholds,
+        } = combineTimeSeriesData(timeSeriesDataCollection, viewport);
 
-        setTimeSeriesData({
-          ...timeSeriesData,
-          viewport,
-        });
+        previousStyles.current = styles;
+        setDataStreams(styleDatastreams(combinedDataStreams));
+        setThresholds(combinedThresholds);
       },
     });
 
@@ -143,18 +151,5 @@ export const useTimeSeriesData = ({
     prevViewportRef.current = viewport;
   }, [viewport]);
 
-  const coloredDataStreams = useColoredDataStreams({
-    dataStreams: timeSeriesData?.dataStreams || [],
-    styleSettings: styles,
-  });
-
-  const styledDataStreams = bindStylesToDataStreams({
-    dataStreams: coloredDataStreams,
-    styleSettings: styles,
-  });
-
-  return {
-    dataStreams: styledDataStreams,
-    thresholds: timeSeriesData?.thresholds || [],
-  };
+  return { dataStreams, thresholds };
 };
