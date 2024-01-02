@@ -46,6 +46,7 @@ describe('Chart Component Testing', () => {
     const element = render(
       <Chart
         queries={[query]}
+        onChartOptionsChange={jest.fn()}
         viewport={VIEWPORT}
         size={{ width: 500, height: 500 }}
       />
@@ -57,6 +58,7 @@ describe('Chart Component Testing', () => {
     const element = render(
       <Chart
         queries={[mockQuery]}
+        onChartOptionsChange={jest.fn()}
         viewport={VIEWPORT}
         size={{ width: 500, height: 500 }}
       />
@@ -81,6 +83,7 @@ describe('Chart slider testing', () => {
           asset: true,
         },
       },
+      onChartOptionsChange: jest.fn(),
       gestures: false,
       significantDigits: 4,
       styleSettings: {},
@@ -108,6 +111,7 @@ describe('Chart slider testing', () => {
           asset: true,
         },
       },
+      onChartOptionsChange: jest.fn(),
       gestures: false,
       significantDigits: 4,
       styleSettings: {},

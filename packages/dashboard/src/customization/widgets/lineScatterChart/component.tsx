@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Chart, useViewport } from '@iot-app-kit/react-components';
 // FIXME: Export ChartOptions from @iot-app-kit/react-components
@@ -28,6 +28,7 @@ import NoChartData from '../components/no-chart-data';
 import { default as lineSvgDark } from './line-dark.svg';
 import { IoTSiteWiseDataStreamQuery } from '~/types';
 import { assetModelQueryToSiteWiseAssetQuery } from '../utils/assetModelQueryToAssetQuery';
+import { onUpdateWidgetsAction } from '~/store/actions';
 
 const mapConnectionStyleToVisualizationType = (
   connectionStyle: LineStyles['connectionStyle']
@@ -142,6 +143,8 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   widget
 ) => {
   const { viewport } = useViewport();
+  const dispatch = useDispatch();
+
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const chartSize = useChartSize(widget);
   const dashboardSignificantDigits = useSelector(
@@ -175,8 +178,25 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   // there may be better ways to fix this, i.e. not have -44 and let the chart container  take its parent height,
   // the problem is that the Resizable component needs a "height" to be provided,
   // so not entirely sure if we can have a mechanism where the container auto adjusts the height
-  // the 44 is from the widget tile header's height
-  const size = { width: chartSize.width, height: chartSize.height - 44 };
+  // the 52 is from the widget tile header's height and top, bottom boder lines height
+  // the 8 is from the left and right border lines width
+  const size = { width: chartSize.width - 8, height: chartSize.height - 52 };
+
+  const onChartOptionsChange = (options: Pick<ChartOptions, 'legend'>) => {
+    dispatch(
+      onUpdateWidgetsAction({
+        widgets: [
+          {
+            ...widget,
+            properties: {
+              ...widget.properties,
+              legend: { ...legend, ...options.legend },
+            },
+          },
+        ],
+      })
+    );
+  };
 
   const isEmptyWidget = queries.length === 0;
   if (isEmptyWidget) {
@@ -203,6 +223,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
         significantDigits={significantDigits}
         size={size}
         legend={legend}
+        onChartOptionsChange={onChartOptionsChange}
         defaultVisualizationType={mapConnectionStyleToVisualizationType(
           line?.connectionStyle
         )}

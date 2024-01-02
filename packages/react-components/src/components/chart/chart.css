@@ -60,7 +60,7 @@
 
 .left-position .react-resizable-handle-se {
   right: unset;
-  left: -15px;
+  left: 0;
   border: unset;
   border-right: 2px solid #e9ebed;
   border-left: 1px solid #e9ebed;
