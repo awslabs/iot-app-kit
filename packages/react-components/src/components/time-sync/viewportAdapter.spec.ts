@@ -285,10 +285,7 @@ describe('viewportAdapter', () => {
         },
         true
       );
-
-      const previousMonthDays = new Date(newDate.getFullYear(), newDate.getMonth() - 1, 0).getDate(); //calculating no of days for previous month of current range
-      const timeGap = previousMonthDays === 30 ? 5184000000 : 5270400000;
-      expect(currentDate.getTime() - newDate.getTime()).toEqual(timeGap);
+      expect(currentDate.getTime() - newDate.getTime()).toEqual(5270400000);
     });
   });
 });
