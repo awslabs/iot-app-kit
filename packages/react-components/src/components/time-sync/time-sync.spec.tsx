@@ -52,7 +52,7 @@ describe('updates to viewport group', () => {
     );
 
     expect(update).toBeCalledTimes(1);
-    expect(update).toBeCalledWith(GROUP, VIEWPORT);
+    expect(update).toBeCalledWith(GROUP, VIEWPORT, undefined);
   });
 
   it('sets viewport for group when previously undefined to the default viewport when no initial viewport provided', () => {
@@ -61,7 +61,7 @@ describe('updates to viewport group', () => {
     render(<TimeSync group={GROUP}>'</TimeSync>);
 
     expect(update).toBeCalledTimes(1);
-    expect(update).toBeCalledWith(GROUP, { duration: '10m' });
+    expect(update).toBeCalledWith(GROUP, { duration: '10m' }, undefined);
   });
 });
 
