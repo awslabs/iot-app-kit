@@ -34,7 +34,7 @@ const Actions: React.FC<ActionsProps> = ({
   const [dashboardSettingsVisible, setDashboardSettingsVisible] = useState(false);
   const dispatch = useDispatch();
 
-  const { viewport, setViewport } = useViewport();
+  const { viewport } = useViewport();
 
   const metricsRecorder = getPlugin('metricsRecorder');
 
@@ -58,7 +58,6 @@ const Actions: React.FC<ActionsProps> = ({
   };
 
   const handleOnReadOnly = () => {
-    if (viewport) setViewport(viewport); // hack to ensure that the viewport lastupdatedby is always wiped between modes
     dispatch(onToggleReadOnly());
     dispatch(
       onSelectWidgetsAction({
