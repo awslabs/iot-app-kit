@@ -1,10 +1,12 @@
-import { Viewport } from '@iot-app-kit/core';
+import { MutableRefObject, useCallback, useEffect, useReducer } from 'react';
 import { DataZoomComponentOption, EChartsType } from 'echarts';
-import { MutableRefObject, useEffect, useReducer } from 'react';
+import { Viewport, viewportManager } from '@iot-app-kit/core';
 import { useViewport } from '../../../hooks/useViewport';
 import { ECHARTS_GESTURE } from '../../../common/constants';
 import { DEFAULT_DATA_ZOOM, LIVE_MODE_REFRESH_RATE_MS } from '../eChartsConstants';
 import { convertViewportToMs } from '../trendCursor/calculations/viewport';
+import { DEFAULT_VIEWPORT } from '../../time-sync';
+import { useEffectOnce } from 'react-use';
 
 type ValidOption = {
   startValue: number;
@@ -26,7 +28,7 @@ type TickState = {
   viewport: Viewport | undefined;
   convertedViewport: ReturnType<typeof convertViewportToMs>;
 };
-type TickAction = { type: 'tick' } | { type: 'syncViewport'; payload: Viewport | undefined };
+type TickAction = { type: 'tick' } | { type: 'pause' } | { type: 'updateViewport'; viewport: Viewport | undefined };
 const stateFromViewport = (viewport: Viewport | undefined) => {
   const convertedViewport = convertViewportToMs(viewport);
   return {
@@ -42,25 +44,63 @@ const reducer = (state: TickState, action: TickAction): TickState => {
       mode: 'live',
       convertedViewport: convertViewportToMs(state.viewport),
     };
-  } else if (action.type === 'syncViewport') {
-    return stateFromViewport(action.payload);
+  } else if (action.type === 'pause') {
+    return {
+      ...state,
+      mode: 'static',
+    };
+  } else if (action.type === 'updateViewport') {
+    return stateFromViewport(action.viewport);
   }
   return state;
 };
 
 export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, viewport: Viewport | undefined) => {
-  const { setViewport, lastUpdatedBy } = useViewport();
+  const { setViewport, group } = useViewport();
   const [{ mode, convertedViewport }, dispatch] = useReducer(reducer, stateFromViewport(viewport));
 
   /**
-   * mode will be used to start the tick interval again
-   * once the user sets the viewport back to relative
-   * we also need to update the viewport incase the user
-   * sets it from the chart prop or viewport picker
+   * function for setting the dataZoom chart option on the echart instance
    */
-  useEffect(() => {
-    dispatch({ type: 'syncViewport', payload: viewport });
-  }, [viewport]);
+  const zoomChart = useCallback(
+    ({ startValue, endValue }: { startValue: number; endValue: number }) => {
+      const chart = chartRef.current;
+
+      chart?.setOption({
+        dataZoom: { ...DEFAULT_DATA_ZOOM, startValue, endValue },
+      });
+    },
+    [chartRef]
+  );
+
+  /**
+   * callback function for the viewport group subscription
+   */
+  const handleViewportUpdate = useCallback(
+    (updatedViewport: Viewport, topic?: string) => {
+      /**
+       * we do not need to update the dataZoom if the event originated from
+       * echarts since that is handled internally by echarts
+       */
+      if (topic === ECHARTS_GESTURE) return;
+
+      const { initial, end } = convertViewportToMs(updatedViewport);
+
+      /**
+       * update the current viewport in the reducer
+       * this ensures that the mode is up-to-date
+       * in the event that the user changes from static -> live
+       * this will restart the tick interval
+       *
+       * this also ensures that the duration is up-to-date
+       * in the event that the user changes from for eg. 1min -> 10min
+       */
+      dispatch({ type: 'updateViewport', viewport: updatedViewport });
+
+      zoomChart({ startValue: initial, endValue: end });
+    },
+    [dispatch, zoomChart]
+  );
 
   useEffect(() => {
     const chart = chartRef.current;
@@ -74,6 +114,7 @@ export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, view
     const handleZoom = () => {
       // clear the viewport tick interval
       clearInterval(interval);
+      dispatch({ type: 'pause' });
 
       if (!chart) return;
 
@@ -108,24 +149,36 @@ export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, view
     };
   }, [chartRef, mode, dispatch, setViewport]);
 
-  // Animate viewport changes based on the tick interval
+  /**
+   * Handle setting the dataZoom for the chart
+   * based on the tick interval
+   * convertedViewport is updated in the setInterval loop above
+   * as part of the tick action
+   */
   useEffect(() => {
     const { isDurationViewport, initial, end } = convertedViewport;
-    const chart = chartRef.current;
-    /**
-     * only update the zoom imperatively if we are in live mode
-     * or the date picker picks a new viewport
-     *
-     * It is possible that we have a duration viewport + echarts-gesture combo
-     * so we are explicitly denying echarts-gesture
-     */
-    const shouldUpdate = chart != null || isDurationViewport || lastUpdatedBy === 'date-picker';
-    if (!shouldUpdate || lastUpdatedBy === 'echarts-gesture') return;
 
-    chart?.setOption({
-      dataZoom: { ...DEFAULT_DATA_ZOOM, startValue: initial, endValue: end },
-    });
-  }, [chartRef, convertedViewport, lastUpdatedBy]);
+    if (!isDurationViewport) return;
+
+    zoomChart({ startValue: initial, endValue: end });
+  }, [zoomChart, convertedViewport]);
+
+  /**
+   * any change to the viewport that is not an echarts gesture is synced
+   * to the chart dataZoom
+   */
+  useEffect(() => {
+    const { unsubscribe } = viewportManager.subscribe(group, handleViewportUpdate);
+    return unsubscribe;
+  }, [handleViewportUpdate, group]);
+
+  /**
+   * ensure the chart is zoomed to the current viewport before it
+   * can start reacting to events
+   */
+  useEffectOnce(() => {
+    handleViewportUpdate(viewport ?? DEFAULT_VIEWPORT);
+  });
 
   return convertedViewport;
 };
