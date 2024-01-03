@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 import type { Viewport } from '../data-module/data-cache/requestTypes';
 
-type ViewportListener = (viewport: Viewport) => void;
+type ViewportListener = (viewport: Viewport, topic?: string) => void;
 
 const listenerMap: Map<string, Map<string, ViewportListener>> = new Map();
 const viewportMap: Map<string, Viewport> = new Map();
@@ -28,7 +28,7 @@ export const viewportManager = {
    */
   subscribe: (
     viewportGroup: string,
-    viewportListener: (viewport: Viewport) => void
+    viewportListener: ViewportListener
   ): {
     unsubscribe: () => void;
     viewport: Viewport | null;
@@ -47,13 +47,13 @@ export const viewportManager = {
       },
     };
   },
-  update: (viewportGroup: string, viewport: Viewport): void => {
+  update: (viewportGroup: string, viewport: Viewport, topic?: string): void => {
     viewportMap.set(viewportGroup, viewport);
     const listeners = listenerMap.get(viewportGroup);
     if (!listeners) return;
     // broadcast update to all listeners within the group
     for (const [, viewportListener] of listeners) {
-      viewportListener(viewport);
+      viewportListener(viewport, topic);
     }
   },
 };

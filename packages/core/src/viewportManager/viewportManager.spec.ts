@@ -15,7 +15,7 @@ it('broadcast updates to viewport group', () => {
   const listener = jest.fn();
   viewportManager.subscribe('some-group', listener);
   viewportManager.update('some-group', VIEWPORT);
-  expect(listener).toHaveBeenLastCalledWith(VIEWPORT);
+  expect(listener).toHaveBeenLastCalledWith(VIEWPORT, undefined);
 });
 
 it('returns current viewport for group is returned upon initial subscription', () => {
@@ -49,8 +49,8 @@ it('broadcasts viewports to multiple listeners', () => {
   viewportManager.subscribe('some-group', listener2);
   viewportManager.update('some-group', VIEWPORT);
 
-  expect(listener).toHaveBeenLastCalledWith(VIEWPORT);
-  expect(listener2).toHaveBeenLastCalledWith(VIEWPORT);
+  expect(listener).toHaveBeenLastCalledWith(VIEWPORT, undefined);
+  expect(listener2).toHaveBeenLastCalledWith(VIEWPORT, undefined);
 });
 
 it('does not broadcast updates to a unsubscribed listener', () => {
@@ -70,4 +70,13 @@ it('does not broadcast updates to a listener after reset is called', () => {
   viewportManager.update('some-group', VIEWPORT);
 
   expect(listener).not.toHaveBeenCalled();
+});
+
+it('can broadcast with a topic', () => {
+  const listener = jest.fn();
+  viewportManager.subscribe('some-group', listener);
+
+  viewportManager.update('some-group', VIEWPORT, 'some-topic');
+
+  expect(listener).toHaveBeenLastCalledWith(VIEWPORT, 'some-topic');
 });
