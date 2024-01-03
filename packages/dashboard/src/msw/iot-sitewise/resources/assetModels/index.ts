@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { AssetModelFactory } from './AssetModelFactory';
+import { AssetModelCompositeModel } from '@aws-sdk/client-iotsitewise';
 
 const reactorAssetModelId = uuid();
 const reactorAssetModelTemperatureId = uuid();
@@ -8,6 +9,27 @@ const reactorAssetModelMinTemperatureId = uuid();
 const reactorAssetModelPressureId = uuid();
 const reactorAssetModelMaxPressureId = uuid();
 const reactorAssetModelMinPressureId = uuid();
+const compositeModelId = uuid();
+const compositeAttributeId = uuid();
+
+const assetModelCompositeModels: AssetModelCompositeModel[] = [
+  {
+    id: compositeModelId,
+    name: 'site-composite',
+    type: 'composite-model',
+    properties: [
+      {
+        name: 'status (composite)',
+        dataType: 'INTEGER',
+        type: {},
+        path: [
+          { id: compositeModelId, name: 'site-composite' },
+          { id: compositeAttributeId, name: 'status (composite)' },
+        ],
+      },
+    ],
+  },
+];
 
 const assetModelFactory = new AssetModelFactory();
 export const REACTOR_ASSET_MODEL = assetModelFactory.create({
@@ -144,6 +166,7 @@ export const STORAGE_TANK_ASSET_MODEL_HIERARCHY = {
 export const PRODUCTION_LINE_ASSET_MODEL = assetModelFactory.create({
   assetModelName: 'Production Line',
   assetModelDescription: 'Production Line Asset Model',
+  assetModelCompositeModels: assetModelCompositeModels,
   assetModelHierarchies: [REACTOR_ASSET_MODEL_HIERARCHY, STORAGE_TANK_ASSET_MODEL_HIERARCHY],
 });
 
@@ -192,6 +215,7 @@ export const SITE_ASSET_MODEL = assetModelFactory.create({
     },
   ],
   assetModelHierarchies: [PRODUCTION_LINE_ASSET_MODEL_HIERARCHY],
+  assetModelCompositeModels: assetModelCompositeModels,
 });
 
 export const ASSET_MODELS = {

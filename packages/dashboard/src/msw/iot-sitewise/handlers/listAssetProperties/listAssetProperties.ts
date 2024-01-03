@@ -12,8 +12,11 @@ export function listAssetPropertiesHandler() {
       return res(ctx.status(404));
     }
 
+    const properties = asset.assetProperties;
+    asset.assetCompositeModels?.forEach((model) => model.properties?.forEach((property) => properties?.push(property)));
+
     const response: ListAssetPropertiesResponse = {
-      assetPropertySummaries: asset.assetProperties,
+      assetPropertySummaries: properties,
     };
 
     return res(ctx.delay(), ctx.status(200), ctx.json(response));

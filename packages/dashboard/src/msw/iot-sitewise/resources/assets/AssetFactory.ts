@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 
 import type { Asset, AssetModel } from '../types';
-import { AssetState } from '@aws-sdk/client-iotsitewise';
+import { AssetCompositeModel, AssetState, AssetProperty } from '@aws-sdk/client-iotsitewise';
 
 export class AssetFactory {
   readonly #assetModel: AssetModel;
@@ -33,6 +33,18 @@ export class AssetFactory {
           { id: id, name: name },
         ],
       })) ?? [];
+
+    const assetCompositeModels: AssetCompositeModel[] =
+      this.#assetModel.assetModelCompositeModels?.map(({ id, name, type, properties }) => ({
+        id,
+        name,
+        type,
+        properties: (properties as AssetProperty[]).map((property) => ({
+          ...property,
+          path: [{ id: assetId, name: assetName ?? '' }, { ...property.path?.at(1) }],
+        })),
+      })) ?? [];
+
     const assetHierarchies = this.#assetModel.assetModelHierarchies;
     const assetCreationDate = new Date();
     const assetLastUpdateDate = new Date();
@@ -48,6 +60,7 @@ export class AssetFactory {
       assetCreationDate,
       assetLastUpdateDate,
       assetStatus,
+      assetCompositeModels,
     };
 
     return defaults;
