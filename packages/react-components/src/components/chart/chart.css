@@ -41,6 +41,7 @@
 .base-chart-container,
 .chart-rightlegend-container {
   display: flex;
+  outline: none;
 }
 
 .base-chart-container.left-position {
