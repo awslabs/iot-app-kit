@@ -52,28 +52,30 @@ export const getChartStyleSettingsFromMap =
  * @returns [StyleSettingsMap, (datastream: DataStream) => ChartStyleSettingsOptions]
  */
 export const useChartStyleSettings = (datastreams: DataStream[], chartOptions: ConvertChartOptions) => {
+  // read from store
   const highlightedDataStreams = useChartStore((state) => state.highlightedDataStreams);
-  const isDataStreamHighlighted = isDataStreamInList(highlightedDataStreams);
-
   const hiddenDataStreams = useChartStore((state) => state.hiddenDataStreams);
-  const isDataStreamHidden = isDataStreamInList(hiddenDataStreams);
 
+  // dependencies converted to string
+  // useEffect performs an equal check on the previous and current values , for object it check the reference
+  // if the reference has changed i.e. new element but has the same value, the useEffect is triggered, to avoid this
+  // strings are used to compare
   const datastreamDeps = JSON.stringify(datastreams.map(({ id, refId }) => `${id}-${refId}`));
-  const optionsDeps = JSON.stringify(chartOptions);
+  const { defaultVisualizationType, styleSettings, significantDigits } = chartOptions;
+  const usedOptions = { defaultVisualizationType, styleSettings, significantDigits };
+  const optionsDeps = JSON.stringify(usedOptions);
+  const shouldUseEmphasis = highlightedDataStreams.length > 0;
 
   return useMemo(() => {
     // Use to see if we should emphasize / de-emphasize trends
-    const shouldUseEmphasis = highlightedDataStreams.length > 0;
-
     const map = datastreams.reduce<StyleSettingsMap>((styleMap, datastream) => {
-      const isDatastreamHighlighted = isDataStreamHighlighted(datastream);
+      const isDatastreamHighlighted = isDataStreamInList(highlightedDataStreams)(datastream);
       const emphasis: Emphasis = shouldUseEmphasis ? (isDatastreamHighlighted ? 'emphasize' : 'de-emphasize') : 'none';
-      const isDatastreamHidden = isDataStreamHidden(datastream);
+      const isDatastreamHidden = isDataStreamInList(hiddenDataStreams)(datastream);
       styleMap[datastream.id] = convertStyles({ ...chartOptions, emphasis, hidden: isDatastreamHidden })(datastream);
       return styleMap;
     }, {});
     return [map, getChartStyleSettingsFromMap(map)] as const;
-    // disabling because dataStreams and options are stringified
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [datastreamDeps, optionsDeps, highlightedDataStreams, isDataStreamHighlighted]);
+  }, [datastreamDeps, optionsDeps, shouldUseEmphasis, highlightedDataStreams, hiddenDataStreams]);
 };
