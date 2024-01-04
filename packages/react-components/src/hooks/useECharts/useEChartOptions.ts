@@ -15,7 +15,11 @@ export const useEChartOptions = (
   option: EChartsOption,
   settings?: SetOptionOpts
 ) => {
+  const optionString = JSON.stringify(option);
+  const settingsString = JSON.stringify(settings);
+
   useEffect(() => {
     chartRef.current?.setOption(option, settings);
-  }, [chartRef, option, settings]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chartRef, optionString, settingsString]);
 };

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect, disconnect, type ECharts } from 'echarts';
 
 /**
@@ -15,6 +15,5 @@ export const useGroupableEChart = (chartRef: React.MutableRefObject<ECharts | nu
       disconnect(groupId);
       connect(groupId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [groupId]);
+  }, [chartRef, groupId]);
 };
