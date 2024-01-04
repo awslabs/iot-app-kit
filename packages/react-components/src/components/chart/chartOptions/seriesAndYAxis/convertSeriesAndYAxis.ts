@@ -9,6 +9,7 @@ import { convertThresholds } from '../convertThresholds';
 import { ChartStyleSettingsWithDefaults } from '../../utils/getStyles';
 import { DEEMPHASIZE_OPACITY, EMPHASIZE_SCALE_CONSTANT } from '../../eChartsConstants';
 import { GenericSeries } from '../../../../echarts/types';
+import { useMemo } from 'react';
 
 export const dataValue = (point: DataPoint) => point.y;
 
@@ -190,13 +191,26 @@ export const useSeriesAndYAxis = (
     performanceMode,
   }: { styleSettings: StyleSettingsMap; thresholds: Threshold[]; axis?: ChartAxisOptions; performanceMode?: boolean }
 ) => {
-  const defaultYAxis: YAXisComponentOption[] = [convertChartYAxis(axis)];
+  const axisString = JSON.stringify(axis);
+  const defaultYAxis: YAXisComponentOption[] = useMemo(
+    () => [convertChartYAxis(axis)],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [axisString]
+  );
   const convertedThresholds = convertThresholds(thresholds);
-  const getStyles = getChartStyleSettingsFromMap(styleSettings);
 
-  const { series, yAxis } = datastreams
-    .map((datastream) => convertSeriesAndYAxis(getStyles(datastream), { performanceMode })(datastream))
-    .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis });
+  // Dependency string
+  const datastreamString = JSON.stringify(datastreams);
+  const getStylesString = JSON.stringify(styleSettings);
+
+  const { series, yAxis } = useMemo(() => {
+    return datastreams
+      .map((datastream) =>
+        convertSeriesAndYAxis(getChartStyleSettingsFromMap(styleSettings)(datastream), { performanceMode })(datastream)
+      )
+      .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [datastreamString, defaultYAxis, getStylesString, performanceMode]);
 
   if (series.length > 0) {
     series[0].markArea = convertedThresholds.markArea;
