@@ -22,12 +22,12 @@ import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
 
 import './chart.css';
 import { useContextMenu } from './contextMenu/useContextMenu';
-import { DEFAULT_CHART_VISUALIZATION, DEFAULT_TOOLBOX_CONFIG } from './eChartsConstants';
+// import { useViewportToMS } from './hooks/useViewportToMS';
+import { DEFAULT_CHART_VISUALIZATION, DEFAULT_TOOLBOX_CONFIG, PERFORMANCE_MODE_THRESHOLD } from './eChartsConstants';
 import { useDataZoom } from './hooks/useDataZoom';
 import { useViewport } from '../../hooks/useViewport';
 import { getXAxis } from './chartOptions/axes/xAxis';
 import { useHandleChartEvents } from './events/useHandleChartEvents';
-import { TREND_CURSOR_KEY_MAP } from './trendCursor/constants';
 import { useGetConfigValue } from '../../store';
 import TanstackLegend from './legend/tanstackLegend';
 
@@ -63,9 +63,8 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     dataStreams,
     thresholds: queryThresholds,
     utilizedViewport,
-    performanceMode,
+    visibleData,
   } = useVisualizedDataStreams(queries, viewport);
-
   const allThresholds = [...queryThresholds, ...(options.thresholds ?? [])];
 
   const isBottomAligned = options.legend?.position === 'bottom';
@@ -91,6 +90,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   // calculate style settings for all datastreams
   const [styleSettingsMap] = useChartStyleSettings(dataStreams, options);
 
+  const performanceMode = visibleData.length > PERFORMANCE_MODE_THRESHOLD;
   // adapt datastreams into echarts series and yAxis data
   const { series, yAxis } = useSeriesAndYAxis(dataStreams, {
     styleSettings: styleSettingsMap,
@@ -107,7 +107,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   const xAxis = getXAxis(options.axis);
 
   // this will handle all the Trend Cursors operations
-  const { onContextMenuClickHandler, trendCursors, trendCursorHandlers } = useTrendCursors({
+  const { onContextMenuClickHandler, trendCursors, trendCursorKeyMap, trendCursorHandlers } = useTrendCursors({
     chartRef,
     initialGraphic: options.graphic,
     size: { width: chartWidth, height: chartHeight },
@@ -158,12 +158,13 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
       xAxis,
       graphic: trendCursors,
       animation: false,
+      appKitChartId: options.id,
     },
     settings
   );
 
   const hotKeyMap = {
-    ...TREND_CURSOR_KEY_MAP,
+    ...trendCursorKeyMap,
     ...chartEventsKeyMap,
   };
 

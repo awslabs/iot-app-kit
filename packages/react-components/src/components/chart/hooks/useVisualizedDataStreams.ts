@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { DataStream, TimeSeriesDataQuery, Viewport, getVisibleData } from '@iot-app-kit/core';
 import { useTimeSeriesData } from '../../../hooks/useTimeSeriesData';
 import { useViewport } from '../../../hooks/useViewport';
 import { DEFAULT_VIEWPORT, StreamType } from '../../../common/constants';
-import { PERFORMANCE_MODE_THRESHOLD } from '../eChartsConstants';
 
 const isNotAlarmStream = ({ streamType }: DataStream) => streamType !== StreamType.ALARM;
 const dataStreamIsLoading = ({ isLoading }: DataStream) => isLoading;
@@ -23,38 +22,17 @@ export const useVisualizedDataStreams = (queries: TimeSeriesDataQuery[], passedI
     },
   });
 
-  // dependencies converted to string
-  // useEffect performs an equal check on the previous and current values , for object it check the reference
-  // if the reference has changed i.e. new element but has the same value, the useEffect is triggered, to avoid this
-  // strings are used to compare
-  const dataString = JSON.stringify(dataStreams);
-  const thresholdsString = JSON.stringify(thresholds);
-  const utilizedString = JSON.stringify(utilizedViewport);
+  // Line | Scatter | Bar charts do not support alarm streams.
+  const dataStreamsWithoutAlarms = dataStreams.filter(isNotAlarmStream);
 
-  // utilizing state to make sure these values are updated only on change else
-  // creating a new object will trigger the useEffect in every cycle
-  const [dataStreamsWithoutAlarms, setDataStreamsWithoutAlarms] = useState(dataStreams);
-  const [hasError, setHasError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [performanceMode, setPerformanceMode] = useState(false);
+  const hasError = useMemo(() => dataStreamsWithoutAlarms.some(dataStreamHasError), [dataStreamsWithoutAlarms]);
 
-  useEffect(() => {
-    const dataWOAlarms = dataStreams.filter(isNotAlarmStream) as DataStream[];
-    setDataStreamsWithoutAlarms(dataWOAlarms);
+  const isLoading = useMemo(
+    () => !hasError && dataStreamsWithoutAlarms.some(dataStreamIsLoading),
+    [hasError, dataStreamsWithoutAlarms]
+  );
 
-    const hasErrorLocal = dataWOAlarms.some(dataStreamHasError);
-    const isLoadingLocal = !hasErrorLocal && dataWOAlarms.some(dataStreamIsLoading);
-    setHasError(hasErrorLocal);
-    setIsLoading(isLoadingLocal);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataString, thresholdsString]);
-
-  useEffect(() => {
-    const visibleData = dataStreamsWithoutAlarms.flatMap(({ data }) => getVisibleData(data, utilizedViewport, false));
-    const performanceModeLocal = visibleData.length > PERFORMANCE_MODE_THRESHOLD;
-    setPerformanceMode(performanceModeLocal);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataStreamsWithoutAlarms, utilizedString]);
+  const visibleData = dataStreamsWithoutAlarms.flatMap(({ data }) => getVisibleData(data, utilizedViewport, false));
 
   return {
     hasError,
@@ -62,6 +40,6 @@ export const useVisualizedDataStreams = (queries: TimeSeriesDataQuery[], passedI
     dataStreams: dataStreamsWithoutAlarms,
     thresholds,
     utilizedViewport,
-    performanceMode,
+    visibleData,
   };
 };
