@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.13.0](https://github.com/awslabs/iot-app-kit/compare/core-v9.12.0...core-v9.13.0) (2024-01-05)
+
+
+### Bug Fixes
+
+* fix data-zoom behavior for base chart ([0c66a80](https://github.com/awslabs/iot-app-kit/commit/0c66a8016e2aa827ad3093c3ef89d6437e014d18))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.12.0 to 9.13.0
+    * @iot-app-kit/ts-config bumped from 9.12.0 to 9.13.0
+    * eslint-config-iot-app-kit bumped from 9.12.0 to 9.13.0
+
 ## [9.12.0](https://github.com/awslabs/iot-app-kit/compare/core-v9.11.0...core-v9.12.0) (2023-12-18)
 
 

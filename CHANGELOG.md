@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.13.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.12.0...root-v9.13.0) (2024-01-05)
+
+
+### Features
+
+* **doc-site:** adding doc-site ([743ca50](https://github.com/awslabs/iot-app-kit/commit/743ca509649a31f11334fbbd2785cce1dbb4b735))
+* legend table is implemeted using tanstack table ([c92533a](https://github.com/awslabs/iot-app-kit/commit/c92533a342c95618d6dcf7d2a13bdad204bb01de))
+* **react-components:** adding a fps display ([48cd9ef](https://github.com/awslabs/iot-app-kit/commit/48cd9efa3e5823086f0b7695886e934cc9303216))
+* **react-components:** hide/show properties from legend ([e666cf1](https://github.com/awslabs/iot-app-kit/commit/e666cf1cfba8343d1a5bbb0f38a4341969a18575))
+* **ResourceExplorer:** hide properties table when not needed to be displayed ([0fca5e9](https://github.com/awslabs/iot-app-kit/commit/0fca5e9089ac7af52e1d31b2143acb121cb7869b))
+* xy-plot y axis lable changes [#2378](https://github.com/awslabs/iot-app-kit/issues/2378) ([48389c3](https://github.com/awslabs/iot-app-kit/commit/48389c3e59305525b11b63233c3a79d4a8e3a78d))
+
+
+### Bug Fixes
+
+* added aria-label to the config panel text link control for accessibility [#2362](https://github.com/awslabs/iot-app-kit/issues/2362) ([a6f9c22](https://github.com/awslabs/iot-app-kit/commit/a6f9c22e40660e8e30f3b1f65f71f968dc4a0cac))
+* **dashboard:** composite model tests run correctly ([d2cbaaf](https://github.com/awslabs/iot-app-kit/commit/d2cbaafef6639b84a8762dda9fccf3d3e86fbefd))
+* **dashboard:** for kpi/status disable add of RE when an property is already added ([eff3282](https://github.com/awslabs/iot-app-kit/commit/eff328273955d5e8a4ae815e03855aae6c48e162))
+* **dashboard:** increase width of property label in config panel to span width of panel ([642f7c6](https://github.com/awslabs/iot-app-kit/commit/642f7c6ad5b50d20009ba21067255aab1e8d4780))
+* **dashboard:** padding for tabs in config panel + remove scroll in threshold panel ([d3f969c](https://github.com/awslabs/iot-app-kit/commit/d3f969c092a271e7b26289d0160e0c4901282b1e))
+* fix data-zoom behavior for base chart ([0c66a80](https://github.com/awslabs/iot-app-kit/commit/0c66a8016e2aa827ad3093c3ef89d6437e014d18))
+* msw batchGetAssetPropertyValueHandler response timeInSeconds values ([5869a00](https://github.com/awslabs/iot-app-kit/commit/5869a009550399ab73b882e2f253aa9c10ec1179))
+* msw batchGetAssetPropertyValueHistoryHandler timestamp ([ccf21a7](https://github.com/awslabs/iot-app-kit/commit/ccf21a73a1391ac9da3ccceb18916897ef51066e))
+* programatically linked the color-picker id with color label in configPanelText [#2361](https://github.com/awslabs/iot-app-kit/issues/2361) ([ab05475](https://github.com/awslabs/iot-app-kit/commit/ab0547539bb9b47130c66c0520d7c0bce9cf5aee))
+* **react-components:** clear ymin and ymax was getting emitted on every loop ([8609a48](https://github.com/awslabs/iot-app-kit/commit/8609a487a1b7ba9d4884750a6e6ee8819873a4b1))
+* **react-components:** confining tootip to the chart area ([1bff986](https://github.com/awslabs/iot-app-kit/commit/1bff986999dc88a261caed22c3a77aab892219ad))
+* **react-components:** performance fixes for chart component ([403f2bf](https://github.com/awslabs/iot-app-kit/commit/403f2bf6beea75e1e1668e33c60a6149ef1b5436))
+* **react-components:** remove data points after a threshold ([cd6a189](https://github.com/awslabs/iot-app-kit/commit/cd6a18913d2c0f3fb8b066dffbdf48f38d6955e4))
+* **react-components:** remove padded y axis code ([7e3d365](https://github.com/awslabs/iot-app-kit/commit/7e3d365d07dd4b074c6dda6d2934b7cb05fcde55))
+* **react-components:** remove secondary selection state when using TCs or gestures ([3ba4e6a](https://github.com/awslabs/iot-app-kit/commit/3ba4e6a1cc0c2a7fd48eb130f3b72262fcd97ad5))
+* **react-components:** updates for x-axis panning performance ([07a7624](https://github.com/awslabs/iot-app-kit/commit/07a7624d77962c38e7457abea1602082ebf2f5a3))
+* relative month test ([5c6e262](https://github.com/awslabs/iot-app-kit/commit/5c6e262b16b8a739c4a4d9e823453094242c67d9))
+
+
+### Performance Improvements
+
+* improve raw batching ([263282d](https://github.com/awslabs/iot-app-kit/commit/263282d751d334745ddc3079d6a8959b5cf1e6d9))
+* increase batch entry and result size ([cf5e978](https://github.com/awslabs/iot-app-kit/commit/cf5e9785418c801e89cc2afa2a626e16547a8a7c))
+
 ## [9.12.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.11.0...root-v9.12.0) (2023-12-18)
 
 
