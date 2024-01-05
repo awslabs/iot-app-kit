@@ -1,5 +1,6 @@
 import minBy from 'lodash.minby';
 import maxBy from 'lodash.maxby';
+import isEqual from 'lodash.isequal';
 
 import LineSeriesModel from 'echarts/types/src/chart/line/LineSeries';
 import { hasCustomYAxis } from './yAxisPredicates';
@@ -20,6 +21,10 @@ export const handleSetYAxis = (model: LineSeriesModel) => {
 
   if (!store) return;
 
+  const state = store.getState();
+
+  if (!state) return;
+
   if (hasCustomYAxis(option)) {
     const significantDigits = (option as GenericSeries).appKitSignificantDigits;
     const color = (option as GenericSeries).appKitColor;
@@ -35,9 +40,19 @@ export const handleSetYAxis = (model: LineSeriesModel) => {
       significantDigits,
     };
 
-    store.getState().setYMax(id, { ...valuePartial, value: max });
-    store.getState().setYMin(id, { ...valuePartial, value: min });
+    const newMax = { ...valuePartial, value: max };
+    const newMin = { ...valuePartial, value: min };
+
+    // set state only if something has changed
+    if (!isEqual(newMax, state.yMaxes[id])) {
+      state.setYMax(id, newMax);
+    }
+    if (!isEqual(newMin, state.yMins[id])) {
+      state.setYMin(id, newMin);
+    }
   } else {
-    store.getState().clearYAxis(id);
+    if (!isEqual(undefined, state.yMaxes[id]) || !isEqual(undefined, state.yMins[id])) {
+      store.getState().clearYAxis(id);
+    }
   }
 };
