@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [9.13.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.12.0...react-components-v9.13.0) (2024-01-05)
+
+
+### Features
+
+* legend table is implemeted using tanstack table ([c92533a](https://github.com/awslabs/iot-app-kit/commit/c92533a342c95618d6dcf7d2a13bdad204bb01de))
+* **react-components:** hide/show properties from legend ([e666cf1](https://github.com/awslabs/iot-app-kit/commit/e666cf1cfba8343d1a5bbb0f38a4341969a18575))
+* **ResourceExplorer:** hide properties table when not needed to be displayed ([0fca5e9](https://github.com/awslabs/iot-app-kit/commit/0fca5e9089ac7af52e1d31b2143acb121cb7869b))
+* xy-plot y axis lable changes [#2378](https://github.com/awslabs/iot-app-kit/issues/2378) ([48389c3](https://github.com/awslabs/iot-app-kit/commit/48389c3e59305525b11b63233c3a79d4a8e3a78d))
+
+
+### Bug Fixes
+
+* fix data-zoom behavior for base chart ([0c66a80](https://github.com/awslabs/iot-app-kit/commit/0c66a8016e2aa827ad3093c3ef89d6437e014d18))
+* **react-components:** clear ymin and ymax was getting emitted on every loop ([8609a48](https://github.com/awslabs/iot-app-kit/commit/8609a487a1b7ba9d4884750a6e6ee8819873a4b1))
+* **react-components:** confining tootip to the chart area ([1bff986](https://github.com/awslabs/iot-app-kit/commit/1bff986999dc88a261caed22c3a77aab892219ad))
+* **react-components:** performance fixes for chart component ([403f2bf](https://github.com/awslabs/iot-app-kit/commit/403f2bf6beea75e1e1668e33c60a6149ef1b5436))
+* **react-components:** remove data points after a threshold ([cd6a189](https://github.com/awslabs/iot-app-kit/commit/cd6a18913d2c0f3fb8b066dffbdf48f38d6955e4))
+* **react-components:** remove padded y axis code ([7e3d365](https://github.com/awslabs/iot-app-kit/commit/7e3d365d07dd4b074c6dda6d2934b7cb05fcde55))
+* **react-components:** remove secondary selection state when using TCs or gestures ([3ba4e6a](https://github.com/awslabs/iot-app-kit/commit/3ba4e6a1cc0c2a7fd48eb130f3b72262fcd97ad5))
+* **react-components:** updates for x-axis panning performance ([07a7624](https://github.com/awslabs/iot-app-kit/commit/07a7624d77962c38e7457abea1602082ebf2f5a3))
+* relative month test ([5c6e262](https://github.com/awslabs/iot-app-kit/commit/5c6e262b16b8a739c4a4d9e823453094242c67d9))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.12.0 to 9.13.0
+    * @iot-app-kit/core bumped from 9.12.0 to 9.13.0
+    * @iot-app-kit/core-util bumped from 9.12.0 to 9.13.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.12.0 to 9.13.0
+  * devDependencies
+    * @iot-app-kit/core bumped from 9.12.0 to 9.13.0
+    * @iot-app-kit/jest-config bumped from 9.12.0 to 9.13.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.12.0 to 9.13.0
+    * @iot-app-kit/testing-util bumped from 9.12.0 to 9.13.0
+    * @iot-app-kit/ts-config bumped from 9.12.0 to 9.13.0
+    * eslint-config-iot-app-kit bumped from 9.12.0 to 9.13.0
+
 ## [9.12.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.11.0...react-components-v9.12.0) (2023-12-18)
 
 
