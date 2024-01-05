@@ -23,9 +23,8 @@ export const useConvertedOptions = ({
   options: ConvertChartOptions;
   series: SeriesOption[];
 }): EChartsOption => {
-  const { backgroundColor, significantDigits, titleText, legend } = options;
+  const { backgroundColor, significantDigits, titleText } = options;
   const text = series.length === 0 ? 'No data present' : titleText ?? '';
-
   return useMemo(
     () => ({
       aria: {
@@ -36,9 +35,9 @@ export const useConvertedOptions = ({
         top: 10,
       },
       backgroundColor,
-      grid: convertGrid(legend),
+      grid: convertGrid(options.legend),
       tooltip: convertTooltip(significantDigits),
     }),
-    [backgroundColor, significantDigits, text, legend]
+    [backgroundColor, significantDigits, text, options.legend]
   );
 };
