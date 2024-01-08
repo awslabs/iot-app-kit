@@ -283,6 +283,7 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
     refId: undefined,
     isRefreshing: false,
     isLoading: false,
+    numOutgoingRequests: -1,
     error: undefined,
     dataType: 'NUMBER' as PropertyDataType,
     data: [

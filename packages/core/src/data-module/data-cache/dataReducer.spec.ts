@@ -345,7 +345,7 @@ it('sets an error message for a previously loaded state', () => {
 it('sets the data when a success action occurs with aggregated data', () => {
   const ID = 'my-id';
   const RESOLUTION = SECOND_IN_MS;
-
+  const outGoingrequests = 0;
   const INITIAL_STATE = {
     [ID]: {
       resolutions: {
@@ -359,6 +359,7 @@ it('sets the data when a success action occurs with aggregated data', () => {
             dataCache: EMPTY_CACHE,
             requestCache: EMPTY_CACHE,
             aggregationType: AGGREGATE_TYPE,
+            numOutgoingRequests: outGoingrequests,
           },
         },
       },
@@ -392,7 +393,8 @@ it('sets the data when a success action occurs with aggregated data', () => {
       aggregationType: AGGREGATE_TYPE,
       error: undefined,
       isLoading: false,
-      isRefreshing: true,
+      isRefreshing: false,
+      numOutgoingRequests: -1,
       requestHistory: [
         expect.objectContaining({
           end: expect.any(Date),
@@ -766,6 +768,8 @@ it('merges data into existing data cache', () => {
     { x: new Date(2003, 8, 0).getTime(), y: 100 },
   ];
 
+  const outGoingrequests = 0;
+
   const INITIAL_STATE: DataStreamsStore = {
     [ID]: {
       resolutions: {
@@ -775,6 +779,7 @@ it('merges data into existing data cache', () => {
             resolution: SECOND_IN_MS,
             isLoading: true,
             isRefreshing: true,
+            numOutgoingRequests: outGoingrequests,
             requestHistory: [
               {
                 start: new Date(2000, 0, 0),
@@ -839,6 +844,7 @@ it('merges data into existing data cache', () => {
     dataType: 'NUMBER',
     name: 'some name',
     error: undefined,
+    numOutgoingRequests: -1,
     dataCache: {
       intervals: [[DATE_ONE, DATE_FOUR]],
       items: [
@@ -920,6 +926,7 @@ it('merges data into existing data cache', () => {
 describe('requests to different resolutions', () => {
   it('it leaves existing resolution untouched on success, registering different resolution separately', () => {
     const ID = 'my-id';
+    const outGoingrequests = 0;
     const INITIAL_STATE = {
       [ID]: {
         resolutions: {
@@ -933,6 +940,7 @@ describe('requests to different resolutions', () => {
               requestCache: EMPTY_CACHE,
               requestHistory: [],
               aggregationType: AGGREGATE_TYPE,
+              numOutgoingRequests: outGoingrequests,
             },
           },
         },
@@ -957,6 +965,7 @@ describe('requests to different resolutions', () => {
       resolution: '500ms',
       start: NEW_FIRST_DATE,
       end: NEW_LAST_DATE,
+      getDataStreamStore,
       fetchFromStartToEnd: true,
       aggregationType: AGGREGATE_TYPE,
     };
@@ -985,6 +994,7 @@ describe('requests to different resolutions', () => {
               aggregationType: AGGREGATE_TYPE,
               isLoading: false,
               isRefreshing: false,
+              numOutgoingRequests: -1,
               error: undefined,
               dataType: 'NUMBER',
               name: 'some name',
@@ -1020,6 +1030,7 @@ describe('requests to different resolutions', () => {
 
   it('it leaves existing resolution untouched on error, registering different resolution separately', () => {
     const ID = 'my-id';
+    const outGoingrequests = 0;
     const INITIAL_STATE = {
       [ID]: {
         resolutions: {
@@ -1033,6 +1044,7 @@ describe('requests to different resolutions', () => {
               requestCache: EMPTY_CACHE,
               requestHistory: [],
               aggregationType: AGGREGATE_TYPE,
+              numOutgoingRequests: outGoingrequests,
             },
           },
         },
@@ -1068,7 +1080,7 @@ describe('requests to different resolutions', () => {
     expect(newState?.[ID]?.resolutions?.[SECOND_IN_MS]).toBe(
       INITIAL_STATE[ID]['resolutions'][SECOND_IN_MS]
     );
-
+    outGoingrequests;
     expect(newState?.[ID]?.resolutions?.[RESOLUTION]?.[AGGREGATE_TYPE]).toEqual(
       {
         id: ID,
@@ -1077,6 +1089,7 @@ describe('requests to different resolutions', () => {
         error: ERROR,
         isLoading: false,
         isRefreshing: false,
+        numOutgoingRequests: -1,
         requestHistory: [
           {
             start: NEW_FIRST_DATE,

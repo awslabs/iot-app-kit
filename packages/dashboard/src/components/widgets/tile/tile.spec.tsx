@@ -100,4 +100,59 @@ describe('WidgetTile', () => {
       container.querySelector('[aria-label="delete widget"]')
     ).not.toBeInTheDocument();
   });
+
+  it('should render secondary loading indicator on isRefreshing after 3 sec', function () {
+    jest.useFakeTimers();
+    render(
+      <Provider
+        store={configureDashboardStore({
+          dashboardConfiguration: {
+            widgets: [MOCK_LINE_CHART_WIDGET],
+          },
+        })}
+      >
+        <WidgetTile
+          widget={MOCK_LINE_CHART_WIDGET}
+          isLoading={false}
+          isRefreshing={true}
+        >
+          <div>test-content</div>
+        </WidgetTile>
+        ;
+      </Provider>
+    );
+
+    expect(screen.queryByTestId('loading')).toBeNull();
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(screen.queryByTestId('loading')).not.toBeNull();
+
+    jest.useRealTimers();
+  });
+
+  it('should not render secondary loading indicator while isLoading is true', function () {
+    render(
+      <Provider
+        store={configureDashboardStore({
+          dashboardConfiguration: {
+            widgets: [MOCK_LINE_CHART_WIDGET],
+          },
+        })}
+      >
+        <WidgetTile
+          widget={MOCK_LINE_CHART_WIDGET}
+          isLoading={true}
+          isRefreshing={true}
+        >
+          <div>test-content</div>
+        </WidgetTile>
+        ;
+      </Provider>
+    );
+
+    expect(screen.queryByTestId('loading')).toBeNull();
+  });
 });

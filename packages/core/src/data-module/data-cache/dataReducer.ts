@@ -17,6 +17,7 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
   state: DataStreamsStore = {},
   action: AsyncActions
 ): DataStreamsStore => {
+  let outGoingrequests = 0;
   switch (action.type) {
     case REQUEST: {
       const {
@@ -67,7 +68,8 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
           : requestCache,
         id,
         isLoading,
-        isRefreshing: !!streamStore?.isRefreshing,
+        isRefreshing: true,
+        numOutgoingRequests: ++outGoingrequests,
       };
 
       const newResolutions =
@@ -84,7 +86,6 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
         numericResolution === 0
           ? { ...state[id]?.rawData, ...newStreamStore }
           : state[id]?.rawData || undefined;
-
       return {
         ...state,
         [id]: {
@@ -154,6 +155,8 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data, ...restOfDataStream } = dataStream;
 
+      const noOfOutGoingrequest = --outGoingrequests;
+
       const newStreamStore = {
         ...streamStore,
         ...restOfDataStream,
@@ -171,8 +174,9 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
           : requestCache,
         dataCache: updatedDataCache,
         isLoading: false,
-        isRefreshing: !!restOfDataStream.isRefreshing,
         error: undefined,
+        numOutgoingRequests: noOfOutGoingrequest,
+        isRefreshing: noOfOutGoingrequest > 0,
       };
 
       const newResolutions =
@@ -189,7 +193,6 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
         dataStream.resolution === 0
           ? { ...state[id]?.rawData, ...newStreamStore }
           : state[id]?.rawData || undefined;
-
       return {
         ...state,
         [id]: {
@@ -221,6 +224,7 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
         error,
         isLoading: false,
         isRefreshing: false,
+        numOutgoingRequests: --outGoingrequests,
       };
 
       const newResolutions = aggregationType

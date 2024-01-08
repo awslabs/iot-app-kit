@@ -27,6 +27,9 @@ import { onChangeDashboardGridEnabledAction } from '~/store/actions';
 import { CSVDownloadButton } from '~/components/csvDownloadButton';
 import { StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
 import { useClients } from '~/components/dashboard/clientContext';
+import { Spinner } from '@cloudscape-design/components';
+import { IS_REFRESHING_DELAY } from './contants';
+import useIsRefreshing from '~/customization/hooks/useIsRefreshing';
 
 type DeletableTileActionProps = {
   handleDelete: CancelableEventHandler<ClickDetail>;
@@ -54,6 +57,8 @@ export type WidgetTileProps = PropsWithChildren<{
   widget: DashboardWidget;
   title?: string;
   removeable?: boolean;
+  isRefreshing?: boolean;
+  isLoading?: boolean;
 }>;
 
 /**
@@ -66,6 +71,8 @@ const WidgetTile: React.FC<WidgetTileProps> = ({
   widget,
   title,
   removeable,
+  isRefreshing = false,
+  isLoading,
 }) => {
   const isReadOnly = useSelector((state: DashboardState) => state.readOnly);
   const dispatch = useDispatch();
@@ -104,6 +111,8 @@ const WidgetTile: React.FC<WidgetTileProps> = ({
     });
   };
 
+  const delayLoading = useIsRefreshing(isRefreshing, IS_REFRESHING_DELAY);
+
   return (
     <div
       aria-description='widget tile'
@@ -129,6 +138,9 @@ const WidgetTile: React.FC<WidgetTileProps> = ({
             </Box>
           </div>
           <div className='tile-button-contianer'>
+            <Box padding='xxs'>
+              {!isLoading && delayLoading && <Spinner data-testid='loading' />}
+            </Box>
             {widget.type !== 'text' && iotSiteWiseClient && (
               <CSVDownloadButton
                 fileName={`${widget.properties.title ?? widget.type}`}

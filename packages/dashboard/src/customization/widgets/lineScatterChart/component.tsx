@@ -1,7 +1,11 @@
 import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Chart, useViewport } from '@iot-app-kit/react-components';
+import {
+  Chart,
+  useViewport,
+  useVisualizedDataStreams,
+} from '@iot-app-kit/react-components';
 // FIXME: Export ChartOptions from @iot-app-kit/react-components
 // FIXME: Export ChartStyleSettingsOptions from @iot-app-kit/react-components
 // eslint-disable-next-line no-restricted-imports
@@ -174,6 +178,10 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
     widgetSignificantDigits ?? dashboardSignificantDigits;
 
   const convertedAxis = useConvertedAxis(axis);
+  const { isRefreshing, isLoading } = useVisualizedDataStreams(
+    queries,
+    viewport
+  );
 
   // there may be better ways to fix this, i.e. not have -44 and let the chart container  take its parent height,
   // the problem is that the Resizable component needs a "height" to be provided,
@@ -211,7 +219,13 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   }
 
   return (
-    <WidgetTile widget={widget} removeable title={title}>
+    <WidgetTile
+      widget={widget}
+      removeable
+      title={title}
+      isRefreshing={isRefreshing}
+      isLoading={isLoading}
+    >
       <Chart
         queries={queries}
         viewport={viewport}

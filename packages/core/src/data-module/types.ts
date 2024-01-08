@@ -104,6 +104,7 @@ export interface DataStream<T extends Primitive = Primitive>
   associatedStreams?: StreamAssociation[];
   isLoading?: boolean;
   isRefreshing?: boolean;
+  numOutgoingRequests?: number;
 }
 
 export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
