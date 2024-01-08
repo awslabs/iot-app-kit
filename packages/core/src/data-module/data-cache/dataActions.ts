@@ -1,6 +1,11 @@
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import type { Action, Dispatch } from 'redux';
-import type { DataStreamId, Resolution, DataStream, RequestInformationAndRange } from '../types';
+import type {
+  DataStreamId,
+  Resolution,
+  DataStream,
+  RequestInformationAndRange,
+} from '../types';
 import type { ErrorDetails } from '../../common/types';
 
 /**
@@ -23,14 +28,17 @@ export interface RequestData extends Action<'REQUEST'> {
 
 export type OnRequest = (payload: RequestData['payload']) => [Date, Date][];
 
-export const onRequestAction = (payload: RequestData['payload']): RequestData => ({
+export const onRequestAction = (
+  payload: RequestData['payload']
+): RequestData => ({
   type: REQUEST,
   payload,
 });
 
-export const onRequest = (payload: RequestData['payload']) => (dispatch: Dispatch) => {
-  dispatch(onRequestAction(payload));
-};
+export const onRequest =
+  (payload: RequestData['payload']) => (dispatch: Dispatch) => {
+    dispatch(onRequestAction(payload));
+  };
 
 /**
  * On Error
@@ -63,7 +71,12 @@ export const onErrorAction = (
 });
 
 export const onError =
-  (id: DataStreamId, resolution: Resolution, error: ErrorDetails, aggregationType?: AggregateType) =>
+  (
+    id: DataStreamId,
+    resolution: Resolution,
+    error: ErrorDetails,
+    aggregationType?: AggregateType
+  ) =>
   (dispatch: Dispatch) => {
     dispatch(onErrorAction(id, resolution, error, aggregationType));
   };
@@ -101,7 +114,13 @@ export const onSuccessAction = (
 });
 
 export const onSuccess =
-  (id: DataStreamId, data: DataStream, first: Date, last: Date, requestInformation: RequestInformationAndRange) =>
+  (
+    id: DataStreamId,
+    data: DataStream,
+    first: Date,
+    last: Date,
+    requestInformation: RequestInformationAndRange
+  ) =>
   (dispatch: Dispatch) => {
     dispatch(onSuccessAction(id, data, first, last, requestInformation));
   };

@@ -1,6 +1,8 @@
 import React from 'react';
 
-import DynamicWidgetComponent, { getDragLayerProps } from '../../widgets/dynamicWidget';
+import DynamicWidgetComponent, {
+  getDragLayerProps,
+} from '../../widgets/dynamicWidget';
 import { useSelector } from 'react-redux';
 import { widgetCreator } from '~/store/actions/createWidget/presets';
 
@@ -14,7 +16,10 @@ export type DragLayerWidgetProps = {
   messageOverrides: DashboardMessages;
 };
 
-const DragLayerWidget: React.FC<DragLayerWidgetProps> = ({ componentTag, messageOverrides }) => {
+const DragLayerWidget: React.FC<DragLayerWidgetProps> = ({
+  componentTag,
+  messageOverrides,
+}) => {
   const grid = useSelector((state: DashboardState) => state.grid);
 
   const widgetPreset = widgetCreator(grid)(componentTag);
@@ -29,7 +34,10 @@ const DragLayerWidget: React.FC<DragLayerWidgetProps> = ({ componentTag, message
   return (
     <div style={styles} className='drag-layer-widget'>
       <DynamicWidgetComponent
-        {...getDragLayerProps({ widget: widgetPreset, widgetsMessages: messageOverrides.widgets })}
+        {...getDragLayerProps({
+          widget: widgetPreset,
+          widgetsMessages: messageOverrides.widgets,
+        })}
       />
     </div>
   );

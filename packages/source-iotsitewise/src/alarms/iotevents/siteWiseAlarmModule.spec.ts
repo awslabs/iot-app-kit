@@ -15,17 +15,25 @@ import {
 import { SiteWiseAssetModule } from '../../asset-modules';
 import { createSiteWiseAssetDataSource } from '../../asset-modules/asset-data-source';
 import type { SiteWiseAssetDataSource } from '../../asset-modules';
-import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+import {
+  createMockIoTEventsSDK,
+  createMockSiteWiseSDK,
+} from '@iot-app-kit/testing-util';
 
 const initAlarmModule = (
-  { siteWiseApiOverride = {}, eventsApiOverride = {} } = { siteWiseApiOverride: {}, eventsApiOverride: {} }
+  { siteWiseApiOverride = {}, eventsApiOverride = {} } = {
+    siteWiseApiOverride: {},
+    eventsApiOverride: {},
+  }
 ) => {
   const getAlarmModel = jest.fn().mockResolvedValue(ALARM_MODEL);
   const describeAsset = jest.fn().mockResolvedValue({
     id: ALARM_ASSET_ID,
     assetModelId: ASSET_MODEL_WITH_ALARM.assetModelId,
   });
-  const describeAssetModel = jest.fn().mockResolvedValue(ASSET_MODEL_WITH_ALARM);
+  const describeAssetModel = jest
+    .fn()
+    .mockResolvedValue(ASSET_MODEL_WITH_ALARM);
   const getAssetPropertyValue = jest
     .fn()
     .mockResolvedValueOnce({
@@ -37,17 +45,20 @@ const initAlarmModule = (
     .mockResolvedValueOnce({
       propertyValue: THRESHOLD_PROPERTY_VALUE,
     });
-  const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(ALARM_PROPERTY_VALUE_HISTORY);
+  const batchGetAssetPropertyValueHistory = jest
+    .fn()
+    .mockResolvedValue(ALARM_PROPERTY_VALUE_HISTORY);
 
-  const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(
-    createMockSiteWiseSDK({
-      describeAsset,
-      describeAssetModel,
-      getAssetPropertyValue,
-      batchGetAssetPropertyValueHistory,
-      ...siteWiseApiOverride,
-    })
-  );
+  const assetDataSource: SiteWiseAssetDataSource =
+    createSiteWiseAssetDataSource(
+      createMockSiteWiseSDK({
+        describeAsset,
+        describeAssetModel,
+        getAssetPropertyValue,
+        batchGetAssetPropertyValueHistory,
+        ...siteWiseApiOverride,
+      })
+    );
   const siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
   const alarmModule = new SiteWiseAlarmModule(
     createMockIoTEventsSDK({
@@ -63,7 +74,9 @@ const initAlarmModule = (
 it('can get alarm model', async () => {
   const { alarmModule } = initAlarmModule();
 
-  expect(await alarmModule.getAlarmModel(ALARM_MODEL_NAME)).toEqual(CACHED_ALARM_MODEL);
+  expect(await alarmModule.getAlarmModel(ALARM_MODEL_NAME)).toEqual(
+    CACHED_ALARM_MODEL
+  );
 });
 
 it('can get alarm', async () => {

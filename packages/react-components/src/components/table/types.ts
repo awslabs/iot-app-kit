@@ -32,7 +32,11 @@ export type CellItem = {
 
 export type TableItemHydrated = { [k: string]: CellItem };
 
-export interface TableColumnDefinition extends Omit<CloudscapeTableProps.ColumnDefinition<TableItemHydrated>, 'cell'> {
+export interface TableColumnDefinition
+  extends Omit<
+    CloudscapeTableProps.ColumnDefinition<TableItemHydrated>,
+    'cell'
+  > {
   formatter?: (data: Primitive) => Primitive;
   key: string;
 }
@@ -44,7 +48,8 @@ export type CellProps = {
   threshold: Threshold;
 };
 
-export interface TableProps extends Omit<CloudscapeTableProps<TableItemHydrated>, 'columnDefinitions'> {
+export interface TableProps
+  extends Omit<CloudscapeTableProps<TableItemHydrated>, 'columnDefinitions'> {
   columnDefinitions: TableColumnDefinition[];
   sorting?: UseCollectionOptions<TableItemHydrated>['sorting'];
   propertyFiltering?: UseCollectionOptions<TableItemHydrated>['propertyFiltering'];

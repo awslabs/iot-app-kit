@@ -1,11 +1,22 @@
-import { ListAssetModelsCommand, type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  ListAssetModelsCommand,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 
 export class GetAssetModelsRequest {
   readonly #command: ListAssetModelsCommand;
   readonly #client: IoTSiteWiseClient;
   readonly #signal: AbortSignal | undefined;
 
-  constructor({ nextToken, client, signal }: { nextToken?: string; client: IoTSiteWiseClient; signal?: AbortSignal }) {
+  constructor({
+    nextToken,
+    client,
+    signal,
+  }: {
+    nextToken?: string;
+    client: IoTSiteWiseClient;
+    signal?: AbortSignal;
+  }) {
     this.#command = this.#createCommand(nextToken);
     this.#client = client;
     this.#signal = signal;
@@ -13,7 +24,9 @@ export class GetAssetModelsRequest {
 
   public async send() {
     try {
-      const response = await this.#client.send(this.#command, { abortSignal: this.#signal });
+      const response = await this.#client.send(this.#command, {
+        abortSignal: this.#signal,
+      });
 
       return response;
     } catch (error) {

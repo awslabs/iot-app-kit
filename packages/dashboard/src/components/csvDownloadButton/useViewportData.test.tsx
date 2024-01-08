@@ -3,7 +3,10 @@ import { server } from '~/msw/server';
 import { useViewportData } from './useViewportData';
 import { useTimeSeriesData } from '@iot-app-kit/react-components';
 import { renderHook, waitFor } from '@testing-library/react';
-import { StyledAssetQuery, StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
+import {
+  StyledAssetQuery,
+  StyledSiteWiseQueryConfig,
+} from '~/customization/widgets/types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import { DataStream } from '@iot-app-kit/core';
@@ -16,7 +19,9 @@ const PROPERTY_ID_2 = 'some-property-id-2';
 const ALIAS_1 = '/aws/windfarm/0/turbine/0/temperature';
 
 const MOCK_QUERY: StyledAssetQuery = {
-  assets: [{ assetId: ASSET_ID_1, properties: [{ propertyId: PROPERTY_ID_1 }] }],
+  assets: [
+    { assetId: ASSET_ID_1, properties: [{ propertyId: PROPERTY_ID_1 }] },
+  ],
   properties: [{ propertyAlias: ALIAS_1 }],
 };
 
@@ -53,12 +58,16 @@ jest.mock('@iot-app-kit/react-components', () => {
   const original = jest.requireActual('@iot-app-kit/react-components');
   return {
     ...original,
-    useTimeSeriesData: jest.fn(() => ({ dataStreams: [DATA_STREAM_1, DATA_STREAM_2] })),
+    useTimeSeriesData: jest.fn(() => ({
+      dataStreams: [DATA_STREAM_1, DATA_STREAM_2],
+    })),
   };
 });
 
 it('given query with modeled data it returns a list of CSVObjects', async () => {
-  (useTimeSeriesData as jest.Mock).mockImplementation(jest.fn(() => ({ dataStreams: [DATA_STREAM_1, DATA_STREAM_2] })));
+  (useTimeSeriesData as jest.Mock).mockImplementation(
+    jest.fn(() => ({ dataStreams: [DATA_STREAM_1, DATA_STREAM_2] }))
+  );
   server.use(describeTimeSeriesHandler());
 
   const mockQueryConfig = {
@@ -71,11 +80,20 @@ it('given query with modeled data it returns a list of CSVObjects', async () => 
   const { result } = renderHook(
     () =>
       useViewportData({
-        viewport: { start: new Date(1699554901783), end: new Date(1699555901883) },
+        viewport: {
+          start: new Date(1699554901783),
+          end: new Date(1699555901883),
+        },
         queryConfig: mockQueryConfig,
         client: createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
       }),
-    { wrapper: ({ children }) => <QueryClientProvider client={MOCK_QUERY_CLIENT}>{children}</QueryClientProvider> }
+    {
+      wrapper: ({ children }) => (
+        <QueryClientProvider client={MOCK_QUERY_CLIENT}>
+          {children}
+        </QueryClientProvider>
+      ),
+    }
   );
   await waitFor(() => expect(useTimeSeriesData).toBeCalled());
   const { fetchViewportData } = result.current;
@@ -92,7 +110,9 @@ it('given query with modeled data it returns a list of CSVObjects', async () => 
 });
 
 it('given empty query it returns an empty list ofCSVObjects', async () => {
-  (useTimeSeriesData as jest.Mock).mockImplementation(jest.fn(() => ({ dataStreams: [] })));
+  (useTimeSeriesData as jest.Mock).mockImplementation(
+    jest.fn(() => ({ dataStreams: [] }))
+  );
 
   const mockQueryConfig = {
     source: 'iotsitewise',
@@ -102,11 +122,20 @@ it('given empty query it returns an empty list ofCSVObjects', async () => {
   const { result } = renderHook(
     () =>
       useViewportData({
-        viewport: { start: new Date(1699554901783), end: new Date(1699555901883) },
+        viewport: {
+          start: new Date(1699554901783),
+          end: new Date(1699555901883),
+        },
         queryConfig: mockQueryConfig,
         client: createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
       }),
-    { wrapper: ({ children }) => <QueryClientProvider client={MOCK_QUERY_CLIENT}>{children}</QueryClientProvider> }
+    {
+      wrapper: ({ children }) => (
+        <QueryClientProvider client={MOCK_QUERY_CLIENT}>
+          {children}
+        </QueryClientProvider>
+      ),
+    }
   );
 
   await waitFor(() => expect(useTimeSeriesData).toBeCalled());

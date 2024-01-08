@@ -11,7 +11,10 @@ import {
 import { getFormattedDateTime } from './dateTimeUtils';
 import type { VideoTimeRanges, VideoTimeRangesWithSource } from '../types';
 
-export const getCurrentTimeIndicator = (currentTimeIndicatorId: string, startTimestamp: number) => {
+export const getCurrentTimeIndicator = (
+  currentTimeIndicatorId: string,
+  startTimestamp: number
+) => {
   return `<div class='currentTimeIndicator' id='${currentTimeIndicatorId}' style='${currentTimeStyle}'>${getFormattedDateTime(
     new Date(startTimestamp)
   )}</div>`;
@@ -29,9 +32,13 @@ export const getTimelineForProgressBar = (
     timerangesWithSource,
     startTimestamp,
     endTimestamp
-  )}${getDisplayForVideoOnEdge(timerangesForVideoOnEdge, startTimestamp, endTimestamp)}${getVideoProgressHolder(
-    playProgressId
-  )}${getStartTimeIndicator(startTimestamp)}${getEndTimeIndicator(endTimestamp)}</div>`;
+  )}${getDisplayForVideoOnEdge(
+    timerangesForVideoOnEdge,
+    startTimestamp,
+    endTimestamp
+  )}${getVideoProgressHolder(playProgressId)}${getStartTimeIndicator(
+    startTimestamp
+  )}${getEndTimeIndicator(endTimestamp)}</div>`;
 };
 
 export const getStartTimeIndicator = (startTimestamp: number) => {
@@ -41,7 +48,9 @@ export const getStartTimeIndicator = (startTimestamp: number) => {
 };
 
 export const getEndTimeIndicator = (endTimestamp: number) => {
-  return `<div class='endTimeIndicator' style='${endTimeStyle}'>${getFormattedDateTime(new Date(endTimestamp))}</div>`;
+  return `<div class='endTimeIndicator' style='${endTimeStyle}'>${getFormattedDateTime(
+    new Date(endTimestamp)
+  )}</div>`;
 };
 
 export const getVideoProgressHolder = (playProgressId: string) => {

@@ -1,5 +1,8 @@
 import { render } from '@testing-library/react';
-import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+import {
+  createMockIoTEventsSDK,
+  createMockSiteWiseSDK,
+} from '@iot-app-kit/testing-util';
 
 import Dashboard from './index';
 import React from 'react';
@@ -20,8 +23,11 @@ it('renders', function () {
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
+        iotSiteWiseClient:
+          createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
+        iotTwinMakerClient: {
+          send: jest.fn(),
+        } as unknown as IoTTwinMakerClient,
       }}
     />
   );
@@ -45,8 +51,11 @@ it('renders in readonly initially', function () {
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
+        iotSiteWiseClient:
+          createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
+        iotTwinMakerClient: {
+          send: jest.fn(),
+        } as unknown as IoTTwinMakerClient,
       }}
       initialViewMode='preview'
     />
@@ -73,7 +82,9 @@ it('renders dashboard name', function () {
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
         iotSiteWiseClient: createMockSiteWiseSDK() as IoTSiteWiseClient,
-        iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
+        iotTwinMakerClient: {
+          send: jest.fn(),
+        } as unknown as IoTTwinMakerClient,
       }}
     />
   );
@@ -96,7 +107,9 @@ it('renders without dashboard name', function () {
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
         iotSiteWiseClient: createMockSiteWiseSDK() as IoTSiteWiseClient,
-        iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
+        iotTwinMakerClient: {
+          send: jest.fn(),
+        } as unknown as IoTTwinMakerClient,
       }}
     />
   );

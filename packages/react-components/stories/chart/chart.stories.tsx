@@ -1,16 +1,32 @@
 import React from 'react';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
-import { MOCK_TIME_SERIES_DATA_QUERY, MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY, VIEWPORT } from './mock-data';
+import {
+  MOCK_TIME_SERIES_DATA_QUERY,
+  MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY,
+  VIEWPORT,
+} from './mock-data';
 // Should be part of the public API, i.e. exported from src
-import { LineChart, ScatterChart, BarChart, StatusTimeline, WebglContext, TimeSync, useViewport } from '../../src';
+import {
+  LineChart,
+  ScatterChart,
+  BarChart,
+  StatusTimeline,
+  WebglContext,
+  TimeSync,
+  useViewport,
+} from '../../src';
 
 const ViewportConsumer = () => {
   const { viewport, setViewport } = useViewport();
 
   const chooseRandomViewport = () => {
     setViewport({
-      start: new Date(new Date(1900, 0, 0).getTime() + 1000000000000 * Math.random()),
-      end: new Date(new Date(2000, 0, 0).getTime() + 1000000000000 * Math.random()),
+      start: new Date(
+        new Date(1900, 0, 0).getTime() + 1000000000000 * Math.random()
+      ),
+      end: new Date(
+        new Date(2000, 0, 0).getTime() + 1000000000000 * Math.random()
+      ),
     });
   };
 
@@ -59,7 +75,10 @@ export const MultipleBarChartExample: ComponentStory<typeof LineChart> = () => {
 export const ScatterChartExample: ComponentStory<typeof ScatterChart> = () => {
   return (
     <div id='story-container' style={{ width: '500px', height: '300px' }}>
-      <ScatterChart viewport={VIEWPORT} queries={[MOCK_TIME_SERIES_DATA_QUERY]} />
+      <ScatterChart
+        viewport={VIEWPORT}
+        queries={[MOCK_TIME_SERIES_DATA_QUERY]}
+      />
       <WebglContext />
     </div>
   );
@@ -68,16 +87,24 @@ export const ScatterChartExample: ComponentStory<typeof ScatterChart> = () => {
 export const BarChartExample: ComponentStory<typeof BarChart> = () => {
   return (
     <div id='story-container' style={{ width: '500px', height: '300px' }}>
-      <BarChart viewport={VIEWPORT} queries={[MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY]} />
+      <BarChart
+        viewport={VIEWPORT}
+        queries={[MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY]}
+      />
       <WebglContext />
     </div>
   );
 };
 
-export const StatusTimelineExample: ComponentStory<typeof StatusTimeline> = () => {
+export const StatusTimelineExample: ComponentStory<
+  typeof StatusTimeline
+> = () => {
   return (
     <div id='story-container' style={{ width: '500px', height: '300px' }}>
-      <StatusTimeline viewport={VIEWPORT} queries={[MOCK_TIME_SERIES_DATA_QUERY]} />
+      <StatusTimeline
+        viewport={VIEWPORT}
+        queries={[MOCK_TIME_SERIES_DATA_QUERY]}
+      />
       <WebglContext />
     </div>
   );

@@ -28,7 +28,10 @@ export function ModeledDataStreamTablePreferences<P extends AllPreferences>({
       }}
       pageSizePreference={{
         title: 'Select page size',
-        options: SUPPORTED_PAGE_SIZES.map((size) => ({ value: size, label: size.toString() })),
+        options: SUPPORTED_PAGE_SIZES.map((size) => ({
+          value: size,
+          label: size.toString(),
+        })),
       }}
       wrapLinesPreference={{
         label: 'Wrap lines',

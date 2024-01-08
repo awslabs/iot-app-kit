@@ -4,7 +4,10 @@ import type { BatchAggregatedEntry } from '../client/batchGetAggregatedPropertyD
 import type { BatchHistoricalEntry } from '../client/batchGetHistoricalPropertyDataPoints';
 import type { BatchLatestEntry } from '../client/batchGetLatestPropertyDataPoints';
 
-export type Entry = BatchAggregatedEntry | BatchHistoricalEntry | BatchLatestEntry;
+export type Entry =
+  | BatchAggregatedEntry
+  | BatchHistoricalEntry
+  | BatchLatestEntry;
 
 /**
  * Given a batch, or array of entries, deduplicate the batch.

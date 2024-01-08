@@ -22,7 +22,11 @@ export const getBestStreamStore = (
   const resolutionStreamStore = store[dataStreamId]?.resolutions;
   const rawDataStreamStore = store[dataStreamId]?.rawData;
 
-  if (requestResolution === 0 && rawDataStreamStore && !rawDataStreamStore.isLoading) {
+  if (
+    requestResolution === 0 &&
+    rawDataStreamStore &&
+    !rawDataStreamStore.isLoading
+  ) {
     return rawDataStreamStore;
   }
 
@@ -35,7 +39,9 @@ export const getBestStreamStore = (
     .sort(ascendingSort)
     .filter((res) => res >= requestResolution);
 
-  const streamStores = resolutions.map((res) => resolutionStreamStore[res]?.[requestAggregation]).filter(isDefined);
+  const streamStores = resolutions
+    .map((res) => resolutionStreamStore[res]?.[requestAggregation])
+    .filter(isDefined);
 
   const closestAvailableData = streamStores.find(
     ({ error, isLoading }: DataStreamStore) => error == null && !isLoading
@@ -43,13 +49,16 @@ export const getBestStreamStore = (
 
   // If the exact store is present and is not in a loading state, return it!
   // This is because we want to display an error if it occurs on our requested resolution.
-  const exactStore = resolutions[0] === requestResolution ? streamStores[0] : undefined;
+  const exactStore =
+    resolutions[0] === requestResolution ? streamStores[0] : undefined;
   if (exactStore && !exactStore.isLoading) {
     return exactStore;
   }
 
   return (
     closestAvailableData ||
-    (requestAggregation ? resolutionStreamStore[requestResolution]?.[requestAggregation] : undefined)
+    (requestAggregation
+      ? resolutionStreamStore[requestResolution]?.[requestAggregation]
+      : undefined)
   );
 };

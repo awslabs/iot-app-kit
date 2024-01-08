@@ -21,7 +21,10 @@ import {
 type PartialAggregatedValue = Partial<Omit<AggregatedValue, 'value'>>;
 
 export class AggregatedValueFactory {
-  public create(aggregateType: AggregateType, partialAggregatedValue: PartialAggregatedValue = {}): AggregatedValue {
+  public create(
+    aggregateType: AggregateType,
+    partialAggregatedValue: PartialAggregatedValue = {}
+  ): AggregatedValue {
     const aggregateTypeMap = {
       AVERAGE: 'average',
       COUNT: 'count',
@@ -35,7 +38,10 @@ export class AggregatedValueFactory {
       ...this.#createDefaults(),
       ...partialAggregatedValue,
       value: {
-        [aggregateTypeMap[aggregateType]]: faker.number.float({ min: 0, max: 100 }),
+        [aggregateTypeMap[aggregateType]]: faker.number.float({
+          min: 0,
+          max: 100,
+        }),
       },
     };
 
@@ -68,7 +74,9 @@ export class AssetPropertyValueFactory {
     return assetPropertyValue;
   }
 
-  public createDoubleAssetPropertyValue(partialAssetPropertyValue: PartialAssetPropertyValue = {}): AssetPropertyValue {
+  public createDoubleAssetPropertyValue(
+    partialAssetPropertyValue: PartialAssetPropertyValue = {}
+  ): AssetPropertyValue {
     const assetPropertyValue = {
       ...this.#createDefaults(),
       ...partialAssetPropertyValue,
@@ -94,7 +102,9 @@ export class AssetPropertyValueFactory {
     return assetPropertyValue;
   }
 
-  public createStringAssetPropertyValue(partialAssetPropertyValue: PartialAssetPropertyValue = {}): AssetPropertyValue {
+  public createStringAssetPropertyValue(
+    partialAssetPropertyValue: PartialAssetPropertyValue = {}
+  ): AssetPropertyValue {
     const assetPropertyValue = {
       ...this.#createDefaults(),
       ...partialAssetPropertyValue,
@@ -116,25 +126,27 @@ export class AssetPropertyValueFactory {
 }
 
 export function batchGetAssetPropertyValueHandler() {
-  return rest.post<BatchGetAssetPropertyValueRequest, Record<string, string>, BatchGetAssetPropertyValueResponse>(
-    BATCH_GET_ASSET_PROPERTY_VALUE_URL,
-    async (req, res, ctx) => {
-      const { entries = [] } = await req.json<BatchGetAssetPropertyValueRequest>();
+  return rest.post<
+    BatchGetAssetPropertyValueRequest,
+    Record<string, string>,
+    BatchGetAssetPropertyValueResponse
+  >(BATCH_GET_ASSET_PROPERTY_VALUE_URL, async (req, res, ctx) => {
+    const { entries = [] } =
+      await req.json<BatchGetAssetPropertyValueRequest>();
 
-      const factory = new AssetPropertyValueFactory();
-      const response = {
-        successEntries: entries.map(({ entryId }) => ({
-          entryId,
-          assetPropertyValue: factory.createIntegerAssetPropertyValue(),
-        })),
-        skippedEntries: [],
-        errorEntries: [],
-        nextToken: undefined,
-      } satisfies BatchGetAssetPropertyValueResponse;
+    const factory = new AssetPropertyValueFactory();
+    const response = {
+      successEntries: entries.map(({ entryId }) => ({
+        entryId,
+        assetPropertyValue: factory.createIntegerAssetPropertyValue(),
+      })),
+      skippedEntries: [],
+      errorEntries: [],
+      nextToken: undefined,
+    } satisfies BatchGetAssetPropertyValueResponse;
 
-      return res(ctx.delay(), ctx.status(200), ctx.json(response));
-    }
-  );
+    return res(ctx.delay(), ctx.status(200), ctx.json(response));
+  });
 }
 
 function parseTimeInSecondsDate(date: number | Date) {
@@ -148,71 +160,97 @@ function parseTimeInSecondsDate(date: number | Date) {
 }
 
 export function batchGetAssetPropertyValueHistoryHandler() {
-  return rest.post(BATCH_GET_ASSET_PROPERTY_VALUE_HISTORY_URL, async (req, res, ctx) => {
-    const { entries = [], maxResults = 20_000 } = await req.json<BatchGetAssetPropertyValueHistoryRequest>();
-    const maxResultsPerEntry = Math.floor(maxResults / entries.length);
+  return rest.post(
+    BATCH_GET_ASSET_PROPERTY_VALUE_HISTORY_URL,
+    async (req, res, ctx) => {
+      const { entries = [], maxResults = 20_000 } =
+        await req.json<BatchGetAssetPropertyValueHistoryRequest>();
+      const maxResultsPerEntry = Math.floor(maxResults / entries.length);
 
-    const factory = new AssetPropertyValueFactory();
-    const response: BatchGetAssetPropertyValueHistoryResponse = {
-      successEntries: entries.map(({ entryId, startDate = 0, endDate = Date.now() / 1000 }) => {
-        // Parse startDate into common Date object
-        startDate = parseTimeInSecondsDate(startDate);
-        // Parse endDate into common Date object
-        endDate = parseTimeInSecondsDate(endDate);
+      const factory = new AssetPropertyValueFactory();
+      const response: BatchGetAssetPropertyValueHistoryResponse = {
+        successEntries: entries.map(
+          ({ entryId, startDate = 0, endDate = Date.now() / 1000 }) => {
+            // Parse startDate into common Date object
+            startDate = parseTimeInSecondsDate(startDate);
+            // Parse endDate into common Date object
+            endDate = parseTimeInSecondsDate(endDate);
 
-        return {
-          entryId,
-          assetPropertyValueHistory: faker.date
-            .betweens({
-              from: startDate,
-              to: endDate,
-              count: maxResultsPerEntry,
-            })
-            .map((date) => {
-              const assetPropertyValue = factory.createIntegerAssetPropertyValue({
-                timestamp: {
-                  timeInSeconds: Math.floor(date.getTime() / 1000),
-                  offsetInNanos: Math.floor(date.getTime() % 1000),
-                },
-              });
+            return {
+              entryId,
+              assetPropertyValueHistory: faker.date
+                .betweens({
+                  from: startDate,
+                  to: endDate,
+                  count: maxResultsPerEntry,
+                })
+                .map((date) => {
+                  const assetPropertyValue =
+                    factory.createIntegerAssetPropertyValue({
+                      timestamp: {
+                        timeInSeconds: Math.floor(date.getTime() / 1000),
+                        offsetInNanos: Math.floor(date.getTime() % 1000),
+                      },
+                    });
 
-              return assetPropertyValue;
-            }),
-        };
-      }),
-      skippedEntries: [],
-      errorEntries: [],
-    };
+                  return assetPropertyValue;
+                }),
+            };
+          }
+        ),
+        skippedEntries: [],
+        errorEntries: [],
+      };
 
-    return res(ctx.delay(), ctx.status(200), ctx.json(response));
-  });
+      return res(ctx.delay(), ctx.status(200), ctx.json(response));
+    }
+  );
 }
 
 export function batchGetAssetPropertyAggregatesHandler() {
-  return rest.post(BATCH_GET_ASSET_PROPERTY_AGGREGATES_URL, async (req, res, ctx) => {
-    const { entries = [], maxResults = 4000 } = await req.json<BatchGetAssetPropertyAggregatesRequest>();
-    const maxResultsPerEntry = Math.floor(maxResults / entries.length);
-    const factory = new AggregatedValueFactory();
+  return rest.post(
+    BATCH_GET_ASSET_PROPERTY_AGGREGATES_URL,
+    async (req, res, ctx) => {
+      const { entries = [], maxResults = 4000 } =
+        await req.json<BatchGetAssetPropertyAggregatesRequest>();
+      const maxResultsPerEntry = Math.floor(maxResults / entries.length);
+      const factory = new AggregatedValueFactory();
 
-    const response: BatchGetAssetPropertyAggregatesResponse = {
-      successEntries: entries.map(({ entryId, startDate = 0, endDate = Date.now(), aggregateTypes = ['AVERAGE'] }) => {
-        return {
-          entryId,
-          aggregatedValues: faker.date
-            .betweens({ from: startDate, to: endDate, count: maxResultsPerEntry })
-            .map((date) => {
-              const aggregatedValue = factory.create(aggregateTypes[0] as AggregateType, {
-                timestamp: date.getTime() as unknown as AggregatedValue['timestamp'],
-              });
+      const response: BatchGetAssetPropertyAggregatesResponse = {
+        successEntries: entries.map(
+          ({
+            entryId,
+            startDate = 0,
+            endDate = Date.now(),
+            aggregateTypes = ['AVERAGE'],
+          }) => {
+            return {
+              entryId,
+              aggregatedValues: faker.date
+                .betweens({
+                  from: startDate,
+                  to: endDate,
+                  count: maxResultsPerEntry,
+                })
+                .map((date) => {
+                  const aggregatedValue = factory.create(
+                    aggregateTypes[0] as AggregateType,
+                    {
+                      timestamp:
+                        date.getTime() as unknown as AggregatedValue['timestamp'],
+                    }
+                  );
 
-              return aggregatedValue;
-            }),
-        };
-      }),
-      skippedEntries: [],
-      errorEntries: [],
-    };
+                  return aggregatedValue;
+                }),
+            };
+          }
+        ),
+        skippedEntries: [],
+        errorEntries: [],
+      };
 
-    return res(ctx.delay(), ctx.status(200), ctx.json(response));
-  });
+      return res(ctx.delay(), ctx.status(200), ctx.json(response));
+    }
+  );
 }

@@ -46,8 +46,13 @@ async function recursiveDeleteEntities(workspaceId: string, entityId: string) {
     filters,
   });
   let numTries = 0;
-  while (resp['entitySummaries'] != undefined && resp['entitySummaries'].length > 0) {
-    console.log(`Waiting for children of ${entityId} to finish deleting. ${resp['entitySummaries'].length} remaining.`);
+  while (
+    resp['entitySummaries'] != undefined &&
+    resp['entitySummaries'].length > 0
+  ) {
+    console.log(
+      `Waiting for children of ${entityId} to finish deleting. ${resp['entitySummaries'].length} remaining.`
+    );
     const prevRemaining = resp['entitySummaries'].length;
     await delay(2000);
     resp = await aws().tm.listEntities({
@@ -55,7 +60,10 @@ async function recursiveDeleteEntities(workspaceId: string, entityId: string) {
       filters,
     });
     // we want to prevent an endless loop if there is an internal error that the script cannot detect
-    if (resp['entitySummaries'] != undefined && resp['entitySummaries'].length == prevRemaining) {
+    if (
+      resp['entitySummaries'] != undefined &&
+      resp['entitySummaries'].length == prevRemaining
+    ) {
       // we introduce a limit to the number of tries when our entitySummary length has not changed
       if (numTries++ > 15) {
         throw 'Encountered Exception While Deleting Entities. Please check console for more details and retry.';
@@ -91,7 +99,10 @@ async function deleteEntities(workspaceId: string) {
  * Deletes all entities in workspace using service side recursion
  * @param workspaceId TM workspace
  */
-async function deleteEntitiesWithServiceRecursion(workspaceId: string, nonDryRun: boolean) {
+async function deleteEntitiesWithServiceRecursion(
+  workspaceId: string,
+  nonDryRun: boolean
+) {
   const filters: ListEntitiesFilter[] = [{ parentEntityId: '$ROOT' }];
 
   // for each child of $ROOT call delete with service-side recursive deletion flag set to true
@@ -141,7 +152,9 @@ async function deleteEntitiesWithServiceRecursion(workspaceId: string, nonDryRun
     }
 
     if (total_entities_remaining > 0) {
-      console.log(`waiting for entities to finish deleting... (${total_entities_remaining} remaining)`);
+      console.log(
+        `waiting for entities to finish deleting... (${total_entities_remaining} remaining)`
+      );
       await delay(5000); // call throttling
     }
   }
@@ -183,7 +196,8 @@ async function updateEntity(
   },
   parentEntityUpdate?: ParentEntityUpdateRequest
 ) {
-  let state_transition_error = 'Cannot update Entity when it is in CREATING state';
+  let state_transition_error =
+    'Cannot update Entity when it is in CREATING state';
   console.log(`updating entity: ${entityId}`);
   while (entity_in_state_transition(state_transition_error)) {
     try {
@@ -198,7 +212,11 @@ async function updateEntity(
       break; // fixed this bug from python version
     } catch (e) {
       state_transition_error = String(e);
-      if (state_transition_error.indexOf('cannot be created as it already exists') > -1) {
+      if (
+        state_transition_error.indexOf(
+          'cannot be created as it already exists'
+        ) > -1
+      ) {
         // pass
       } else if (entity_in_state_transition(state_transition_error)) {
         console.log(

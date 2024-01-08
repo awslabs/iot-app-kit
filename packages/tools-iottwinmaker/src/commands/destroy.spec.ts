@@ -43,7 +43,9 @@ beforeEach(() => {
 });
 
 it('throws error when given workspace that does not exist', async () => {
-  twinmakerMock.on(GetWorkspaceCommand).rejects(new ResourceNotFoundException({ $metadata: {}, message: '' }));
+  twinmakerMock
+    .on(GetWorkspaceCommand)
+    .rejects(new ResourceNotFoundException({ $metadata: {}, message: '' }));
 
   const argv2 = {
     _: ['destroy'],
@@ -75,7 +77,9 @@ it("exits without deleting anything when not given 'Y' input", async () => {
 it('deletes nothing when given an empty workspace', async () => {
   prompts.inject(['Y']);
   twinmakerMock.on(GetWorkspaceCommand).resolves({});
-  twinmakerMock.on(ListComponentTypesCommand).resolves(emptyListComponentTypesResp);
+  twinmakerMock
+    .on(ListComponentTypesCommand)
+    .resolves(emptyListComponentTypesResp);
   twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
   twinmakerMock.on(ListScenesCommand).resolves(emptyListScenesResp);
 
@@ -95,8 +99,13 @@ it('deletes nothing when given an empty workspace', async () => {
 it('deletes 1 entity when given a workspace with 1 entity', async () => {
   prompts.inject(['Y']);
   twinmakerMock.on(GetWorkspaceCommand).resolves({});
-  twinmakerMock.on(ListComponentTypesCommand).resolves(emptyListComponentTypesResp);
-  twinmakerMock.on(ListEntitiesCommand).resolvesOnce(oneEntityListEntitiesResp).resolves(emptyListEntitiesResp);
+  twinmakerMock
+    .on(ListComponentTypesCommand)
+    .resolves(emptyListComponentTypesResp);
+  twinmakerMock
+    .on(ListEntitiesCommand)
+    .resolvesOnce(oneEntityListEntitiesResp)
+    .resolves(emptyListEntitiesResp);
   twinmakerMock.on(ListScenesCommand).resolves(emptyListScenesResp);
 
   const argv2 = {
@@ -108,7 +117,9 @@ it('deletes 1 entity when given a workspace with 1 entity', async () => {
   } as Arguments<Options>;
   expect(await handler(argv2)).toBe(0);
   expect(twinmakerMock.commandCalls(DeleteEntityCommand).length).toBe(1);
-  expect(twinmakerMock.commandCalls(DeleteEntityCommand)[0].args[0].input).toStrictEqual({
+  expect(
+    twinmakerMock.commandCalls(DeleteEntityCommand)[0].args[0].input
+  ).toStrictEqual({
     workspaceId: workspaceId,
     entityId: getEntity1Resp.entityId,
     isRecursive: true,
@@ -137,7 +148,9 @@ it('deletes 1 component type when given a workspace with 1 component type', asyn
   expect(await handler(argv2)).toBe(0);
   expect(twinmakerMock.commandCalls(DeleteEntityCommand).length).toBe(0);
   expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(1);
-  expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand)[0].args[0].input).toStrictEqual({
+  expect(
+    twinmakerMock.commandCalls(DeleteComponentTypeCommand)[0].args[0].input
+  ).toStrictEqual({
     workspaceId: workspaceId,
     componentTypeId: getComponentType1Resp.componentTypeId,
   });
@@ -147,9 +160,14 @@ it('deletes 1 component type when given a workspace with 1 component type', asyn
 it('deletes 1 scene when given a workspace with 1 scene', async () => {
   prompts.inject(['Y']);
   twinmakerMock.on(GetWorkspaceCommand).resolves({});
-  twinmakerMock.on(ListComponentTypesCommand).resolves(emptyListComponentTypesResp);
+  twinmakerMock
+    .on(ListComponentTypesCommand)
+    .resolves(emptyListComponentTypesResp);
   twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
-  twinmakerMock.on(ListScenesCommand).resolvesOnce(oneSceneListScenesResp).resolves(emptyListScenesResp);
+  twinmakerMock
+    .on(ListScenesCommand)
+    .resolvesOnce(oneSceneListScenesResp)
+    .resolves(emptyListScenesResp);
 
   const argv2 = {
     _: ['destroy'],
@@ -162,7 +180,9 @@ it('deletes 1 scene when given a workspace with 1 scene', async () => {
   expect(twinmakerMock.commandCalls(DeleteEntityCommand).length).toBe(0);
   expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(0);
   expect(twinmakerMock.commandCalls(DeleteSceneCommand).length).toBe(1);
-  expect(twinmakerMock.commandCalls(DeleteSceneCommand)[0].args[0].input).toStrictEqual({
+  expect(
+    twinmakerMock.commandCalls(DeleteSceneCommand)[0].args[0].input
+  ).toStrictEqual({
     workspaceId: workspaceId,
     sceneId: oneSceneListScenesResp.sceneSummaries![0].sceneId,
   });
@@ -175,8 +195,14 @@ it('deletes all twinmaker resources when given a populated workspace', async () 
     .on(ListComponentTypesCommand)
     .resolvesOnce(oneCtListComponentTypesResp)
     .resolves(emptyListComponentTypesResp);
-  twinmakerMock.on(ListEntitiesCommand).resolvesOnce(oneEntityListEntitiesResp).resolves(emptyListEntitiesResp);
-  twinmakerMock.on(ListScenesCommand).resolvesOnce(oneSceneListScenesResp).resolves(emptyListScenesResp);
+  twinmakerMock
+    .on(ListEntitiesCommand)
+    .resolvesOnce(oneEntityListEntitiesResp)
+    .resolves(emptyListEntitiesResp);
+  twinmakerMock
+    .on(ListScenesCommand)
+    .resolvesOnce(oneSceneListScenesResp)
+    .resolves(emptyListScenesResp);
 
   const argv2 = {
     _: ['destroy'],
@@ -187,18 +213,24 @@ it('deletes all twinmaker resources when given a populated workspace', async () 
   } as Arguments<Options>;
   expect(await handler(argv2)).toBe(0);
   expect(twinmakerMock.commandCalls(DeleteEntityCommand).length).toBe(1);
-  expect(twinmakerMock.commandCalls(DeleteEntityCommand)[0].args[0].input).toStrictEqual({
+  expect(
+    twinmakerMock.commandCalls(DeleteEntityCommand)[0].args[0].input
+  ).toStrictEqual({
     workspaceId: workspaceId,
     entityId: getEntity1Resp.entityId,
     isRecursive: true,
   });
   expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(1);
-  expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand)[0].args[0].input).toStrictEqual({
+  expect(
+    twinmakerMock.commandCalls(DeleteComponentTypeCommand)[0].args[0].input
+  ).toStrictEqual({
     workspaceId: workspaceId,
     componentTypeId: getComponentType1Resp.componentTypeId,
   });
   expect(twinmakerMock.commandCalls(DeleteSceneCommand).length).toBe(1);
-  expect(twinmakerMock.commandCalls(DeleteSceneCommand)[0].args[0].input).toStrictEqual({
+  expect(
+    twinmakerMock.commandCalls(DeleteSceneCommand)[0].args[0].input
+  ).toStrictEqual({
     workspaceId: workspaceId,
     sceneId: oneSceneListScenesResp.sceneSummaries![0].sceneId,
   });
@@ -212,13 +244,19 @@ it('deletes all twinmaker resources, s3 bucket, and workspace when given delete-
     .on(ListComponentTypesCommand)
     .resolvesOnce(oneCtListComponentTypesResp)
     .resolves(emptyListComponentTypesResp);
-  twinmakerMock.on(ListEntitiesCommand).resolvesOnce(oneEntityListEntitiesResp).resolves(emptyListEntitiesResp);
-  twinmakerMock.on(ListScenesCommand).resolvesOnce(oneSceneListScenesResp).resolves(emptyListScenesResp);
+  twinmakerMock
+    .on(ListEntitiesCommand)
+    .resolvesOnce(oneEntityListEntitiesResp)
+    .resolves(emptyListEntitiesResp);
+  twinmakerMock
+    .on(ListScenesCommand)
+    .resolvesOnce(oneSceneListScenesResp)
+    .resolves(emptyListScenesResp);
   twinmakerMock.on(DeleteWorkspaceCommand).resolves({});
   // assume the workspace bucket has logging enabled
-  s3Mock
-    .on(GetBucketLoggingCommand)
-    .resolves({ LoggingEnabled: { TargetBucket: 'fakeUrl', TargetPrefix: 'fakePrefix' } });
+  s3Mock.on(GetBucketLoggingCommand).resolves({
+    LoggingEnabled: { TargetBucket: 'fakeUrl', TargetPrefix: 'fakePrefix' },
+  });
   s3Mock.on(ListObjectVersionsCommand).resolves({});
   s3Mock.on(ListObjectsV2Command).resolves({});
   s3Mock.on(DeleteObjectCommand).resolves({});
@@ -234,18 +272,24 @@ it('deletes all twinmaker resources, s3 bucket, and workspace when given delete-
   } as Arguments<Options>;
   expect(await handler(argv2)).toBe(0);
   expect(twinmakerMock.commandCalls(DeleteEntityCommand).length).toBe(1);
-  expect(twinmakerMock.commandCalls(DeleteEntityCommand)[0].args[0].input).toStrictEqual({
+  expect(
+    twinmakerMock.commandCalls(DeleteEntityCommand)[0].args[0].input
+  ).toStrictEqual({
     workspaceId: workspaceId,
     entityId: getEntity1Resp.entityId,
     isRecursive: true,
   });
   expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(1);
-  expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand)[0].args[0].input).toStrictEqual({
+  expect(
+    twinmakerMock.commandCalls(DeleteComponentTypeCommand)[0].args[0].input
+  ).toStrictEqual({
     workspaceId: workspaceId,
     componentTypeId: getComponentType1Resp.componentTypeId,
   });
   expect(twinmakerMock.commandCalls(DeleteSceneCommand).length).toBe(1);
-  expect(twinmakerMock.commandCalls(DeleteSceneCommand)[0].args[0].input).toStrictEqual({
+  expect(
+    twinmakerMock.commandCalls(DeleteSceneCommand)[0].args[0].input
+  ).toStrictEqual({
     workspaceId: workspaceId,
     sceneId: oneSceneListScenesResp.sceneSummaries![0].sceneId,
   });
@@ -263,12 +307,18 @@ it('does not delete any resources if nonDryRun flag is false', async () => {
     .on(ListComponentTypesCommand)
     .resolvesOnce(oneCtListComponentTypesResp)
     .resolves(emptyListComponentTypesResp);
-  twinmakerMock.on(ListEntitiesCommand).resolvesOnce(oneEntityListEntitiesResp).resolves(emptyListEntitiesResp);
-  twinmakerMock.on(ListScenesCommand).resolvesOnce(oneSceneListScenesResp).resolves(emptyListScenesResp);
+  twinmakerMock
+    .on(ListEntitiesCommand)
+    .resolvesOnce(oneEntityListEntitiesResp)
+    .resolves(emptyListEntitiesResp);
+  twinmakerMock
+    .on(ListScenesCommand)
+    .resolvesOnce(oneSceneListScenesResp)
+    .resolves(emptyListScenesResp);
   // assume the workspace bucket has logging enabled
-  s3Mock
-    .on(GetBucketLoggingCommand)
-    .resolves({ LoggingEnabled: { TargetBucket: 'fakeUrl', TargetPrefix: 'fakePrefix' } });
+  s3Mock.on(GetBucketLoggingCommand).resolves({
+    LoggingEnabled: { TargetBucket: 'fakeUrl', TargetPrefix: 'fakePrefix' },
+  });
   s3Mock.on(ListObjectVersionsCommand).resolves({});
   s3Mock.on(ListObjectsV2Command).resolves({});
 

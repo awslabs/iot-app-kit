@@ -35,12 +35,18 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
   const iconName = `angle-${props.side}` as IconProps.Name;
 
   const Divider = () => (
-    <div className='collapsible-panel-vertical-divider' style={{ backgroundColor: colorBorderDividerDefault }} />
+    <div
+      className='collapsible-panel-vertical-divider'
+      style={{ backgroundColor: colorBorderDividerDefault }}
+    />
   );
 
   const expandedPanel = (
     <div className='collapsible-panel'>
-      <div className='collapsible-panel-header-container' style={{ borderColor: colorBorderDividerDefault }}>
+      <div
+        className='collapsible-panel-header-container'
+        style={{ borderColor: colorBorderDividerDefault }}
+      >
         <Box>
           <Box float={iconSide} padding={{ [iconSide]: 'xs', vertical: 'xs' }}>
             <Button
@@ -61,7 +67,10 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
           </Box>
         </Box>
       </div>
-      <div className='collapsible-panel-content' style={{ paddingBottom: spaceStaticL }}>
+      <div
+        className='collapsible-panel-content'
+        style={{ paddingBottom: spaceStaticL }}
+      >
         {props.panelContent}
       </div>
     </div>
@@ -81,7 +90,11 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
         className='side_panels_collapsed_style'
         onClick={props.onCollapsedPanelClick}
       >
-        <img src={props.icon} alt={props.icon} data-testid={`collapsed-${props.side}-panel-icon`} />
+        <img
+          src={props.icon}
+          alt={props.icon}
+          data-testid={`collapsed-${props.side}-panel-icon`}
+        />
       </div>
     </Tooltip>
   );
@@ -90,7 +103,9 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
     <div
       className={`collapsible-panel collapsible-panel-${props.side}`}
       style={{
-        width: props.isPanelCollapsed ? `${DEFAULT_COLLAPSED_SIDE_PANE_WIDTH}px` : `${props.panelWidth}px`,
+        width: props.isPanelCollapsed
+          ? `${DEFAULT_COLLAPSED_SIDE_PANE_WIDTH}px`
+          : `${props.panelWidth}px`,
         ...(props.isPanelCollapsed && {
           [`border${borderSide}`]: `${spaceStaticXxxs} solid ${colorBorderDividerDefault}`,
         }),

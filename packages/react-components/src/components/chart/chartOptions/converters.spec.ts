@@ -112,7 +112,12 @@ describe('testing converters', () => {
   it('converts chart options to echarts options', async () => {
     const { result } = renderHook(() =>
       useConvertedOptions({
-        options: { backgroundColor: 'white', axis: MOCK_AXIS, legend: MOCK_LEGEND, significantDigits: 2 },
+        options: {
+          backgroundColor: 'white',
+          axis: MOCK_AXIS,
+          legend: MOCK_LEGEND,
+          significantDigits: 2,
+        },
         series: [],
       })
     );
@@ -211,7 +216,8 @@ describe('testing converters', () => {
     expect(convertedTooltip.valueFormatter).toBeFunction();
 
     const valueFormatter = convertedTooltip.valueFormatter;
-    if (valueFormatter) expect(valueFormatter([300, 10, 20000])).toBe('300, 10, 20000');
+    if (valueFormatter)
+      expect(valueFormatter([300, 10, 20000])).toBe('300, 10, 20000');
   });
 });
 
@@ -245,8 +251,14 @@ it('converts thresholds to echarts markLine and markArea', async () => {
 
   expect(convertedThresholds).toHaveProperty('markArea.data[0][0].yAxis', 10);
   expect(convertedThresholds).toHaveProperty('markArea.data[0][1].yAxis', 10);
-  expect(convertedThresholds).toHaveProperty('markArea.data[1][0].yAxis', undefined);
+  expect(convertedThresholds).toHaveProperty(
+    'markArea.data[1][0].yAxis',
+    undefined
+  );
   expect(convertedThresholds).toHaveProperty('markArea.data[1][1].yAxis', 15);
   expect(convertedThresholds).toHaveProperty('markArea.data[2][0].yAxis', 5);
-  expect(convertedThresholds).toHaveProperty('markArea.data[2][1].yAxis', undefined);
+  expect(convertedThresholds).toHaveProperty(
+    'markArea.data[2][1].yAxis',
+    undefined
+  );
 });

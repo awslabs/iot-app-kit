@@ -23,7 +23,11 @@ export const AssetModelSelect = ({
 }: AssetModelSelectOptions) => {
   const { updateSelectedAsset } = useModelBasedQuery();
 
-  const { assetSummaries } = useAssetsForAssetModel({ assetModelId, client, fetchAll: true });
+  const { assetSummaries } = useAssetsForAssetModel({
+    assetModelId,
+    client,
+    fetchAll: true,
+  });
 
   const selectedAsset = assetSummaries.find(({ id }) => id === selectedAssetId);
 

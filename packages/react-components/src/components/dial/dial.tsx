@@ -45,14 +45,27 @@ export const Dial = ({
   // if using echarts then echarts gesture overrides passed in viewport
   // else explicitly passed in viewport overrides viewport group
   const utilizedViewport =
-    (lastUpdatedBy === ECHARTS_GESTURE ? viewport : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
+    (lastUpdatedBy === ECHARTS_GESTURE
+      ? viewport
+      : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
 
-  const { propertyPoint, alarmPoint, alarmThreshold, propertyThreshold, alarmStream, propertyStream } =
-    widgetPropertiesFromInputs({ dataStreams, thresholds, viewport: utilizedViewport });
+  const {
+    propertyPoint,
+    alarmPoint,
+    alarmThreshold,
+    propertyThreshold,
+    alarmStream,
+    propertyStream,
+  } = widgetPropertiesFromInputs({
+    dataStreams,
+    thresholds,
+    viewport: utilizedViewport,
+  });
 
   const name = propertyStream?.name || alarmStream?.name;
   const unit = propertyStream?.unit || alarmStream?.unit;
-  const color = alarmThreshold?.color || propertyThreshold?.color || propertyStream?.color;
+  const color =
+    alarmThreshold?.color || propertyThreshold?.color || propertyStream?.color;
 
   return (
     <DialBase

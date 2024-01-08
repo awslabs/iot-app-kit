@@ -11,18 +11,26 @@ type LineStyleDropdownProps = {
 
 const lineStyleData = dropdownConsts.lineStyle;
 
-export const LineStyleDropdown: FC<LineStyleDropdownProps> = ({ disabled = false, lineStyle, updatelineStyle }) => {
+export const LineStyleDropdown: FC<LineStyleDropdownProps> = ({
+  disabled = false,
+  lineStyle,
+  updatelineStyle,
+}) => {
   return (
     <FormField label='Line style'>
       <Select
         disabled={disabled}
         selectedOption={
           // Find the line style option that matches the currently selected line style
-          lineStyleData.lineTypeOptions.find(({ value }) => value === lineStyle) ?? null
+          lineStyleData.lineTypeOptions.find(
+            ({ value }) => value === lineStyle
+          ) ?? null
         }
         onChange={({ detail }) =>
           // Update the line style with the selected option value
-          updatelineStyle(detail.selectedOption.value ?? lineStyleData.defaultValue.value)
+          updatelineStyle(
+            detail.selectedOption.value ?? lineStyleData.defaultValue.value
+          )
         }
         options={lineStyleData.lineTypeOptions} // List of line style options
       />

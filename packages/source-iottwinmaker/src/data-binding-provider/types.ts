@@ -1,4 +1,9 @@
-import { DataBase, DataRequest, Query, TimeSeriesData } from '@iot-app-kit/core';
+import {
+  DataBase,
+  DataRequest,
+  Query,
+  TimeSeriesData,
+} from '@iot-app-kit/core';
 
 export interface ITwinMakerEntityDataBindingContext {
   entityId: string;
@@ -10,7 +15,9 @@ export interface ITwinMakerEntityBinding {
   entityId: string;
 }
 
-export type ITwinMakerDataBindingContext = ITwinMakerEntityDataBindingContext | ITwinMakerEntityBinding;
+export type ITwinMakerDataBindingContext =
+  | ITwinMakerEntityDataBindingContext
+  | ITwinMakerEntityBinding;
 export interface IValueDataBinding {
   dataBindingContext?: ITwinMakerDataBindingContext;
   isStaticData?: boolean;
@@ -38,7 +45,9 @@ export interface IValueDataBindingProviderState {
   errors?: Partial<Record<errorType, boolean>>;
 }
 
-export type OnStateChangedListener = (state: IValueDataBindingProviderState) => void;
+export type OnStateChangedListener = (
+  state: IValueDataBindingProviderState
+) => void;
 
 /**
  * TODO: this design does not decouple the state provider and the UI as they
@@ -62,7 +71,10 @@ export interface IValueDataBindingStore {
   /**
    * Update selection to get the updated field definitions
    */
-  updateSelection(fieldName: string, selected: IDataFieldOption): Promise<IValueDataBindingProviderState>;
+  updateSelection(
+    fieldName: string,
+    selected: IDataFieldOption
+  ): Promise<IValueDataBindingProviderState>;
   /**
    * Create the ValueDataBinding of the current selection or undefined if the selection is invalid
    */
@@ -75,7 +87,9 @@ export interface IValueDataBindingStore {
 
 export interface IValueDataBindingProvider {
   createStore(isDataBindingTemplateProvider: boolean): IValueDataBindingStore;
-  createQuery(dataBinding: IValueDataBinding): Query<TimeSeriesData[] | DataBase[], DataRequest> | undefined;
+  createQuery(
+    dataBinding: IValueDataBinding
+  ): Query<TimeSeriesData[] | DataBase[], DataRequest> | undefined;
 }
 
 /************************************************

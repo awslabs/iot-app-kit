@@ -14,28 +14,48 @@ export const filterTimerangesForVideoOnEdge = (
   const timerangesForVideoOnEdge: VideoTimeRanges = [];
   timerangesForVideoOnEdgeRaw.forEach((edgeVideo) => {
     // Find the appropriate video section from available videos based on the edge information for merging
-    let kvsVideo = timerangesWithSource.find((x) => x.start >= edgeVideo.start && x.end <= edgeVideo.end);
+    let kvsVideo = timerangesWithSource.find(
+      (x) => x.start >= edgeVideo.start && x.end <= edgeVideo.end
+    );
     if (kvsVideo === undefined) {
       kvsVideo = timerangesWithSource.find(
-        (x) => x.start < edgeVideo.start && x.end <= edgeVideo.end && x.end > edgeVideo.start
+        (x) =>
+          x.start < edgeVideo.start &&
+          x.end <= edgeVideo.end &&
+          x.end > edgeVideo.start
       );
     }
     if (kvsVideo === undefined) {
       kvsVideo = timerangesWithSource.find(
-        (x) => x.start >= edgeVideo.start && x.end > edgeVideo.end && x.start < edgeVideo.end
+        (x) =>
+          x.start >= edgeVideo.start &&
+          x.end > edgeVideo.end &&
+          x.start < edgeVideo.end
       );
     }
     if (kvsVideo) {
       if (kvsVideo.start > edgeVideo.start) {
-        timerangesForVideoOnEdge.push({ start: edgeVideo.start, end: kvsVideo.start });
+        timerangesForVideoOnEdge.push({
+          start: edgeVideo.start,
+          end: kvsVideo.start,
+        });
         if (kvsVideo.end < edgeVideo.end) {
-          timerangesForVideoOnEdge.push({ start: kvsVideo.end, end: edgeVideo.end });
+          timerangesForVideoOnEdge.push({
+            start: kvsVideo.end,
+            end: edgeVideo.end,
+          });
         }
       } else if (kvsVideo.end < edgeVideo.end) {
-        timerangesForVideoOnEdge.push({ start: kvsVideo.end, end: edgeVideo.end });
+        timerangesForVideoOnEdge.push({
+          start: kvsVideo.end,
+          end: edgeVideo.end,
+        });
       }
     } else {
-      timerangesForVideoOnEdge.push({ start: edgeVideo.start, end: edgeVideo.end });
+      timerangesForVideoOnEdge.push({
+        start: edgeVideo.start,
+        end: edgeVideo.end,
+      });
     }
   });
   return timerangesForVideoOnEdge;

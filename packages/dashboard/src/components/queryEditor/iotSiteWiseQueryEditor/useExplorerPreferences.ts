@@ -14,7 +14,10 @@ export interface UseExplorerPreferencesOptions {
 }
 
 /** Use to store <Explorer /> component preferences in local storage. */
-export function useExplorerPreferences({ defaultVisibleContent, resourceName }: UseExplorerPreferencesOptions) {
+export function useExplorerPreferences({
+  defaultVisibleContent,
+  resourceName,
+}: UseExplorerPreferencesOptions) {
   const initializer = {
     ...DEFAULT_PREFERENCES,
     visibleContent: defaultVisibleContent,
@@ -22,7 +25,10 @@ export function useExplorerPreferences({ defaultVisibleContent, resourceName }: 
 
   // the storage name is unique to the resource name
   const storageKey = `${resourceName}-preferences`;
-  const [preferences = initializer, setPreferences] = useLocalStorage(storageKey, initializer);
+  const [preferences = initializer, setPreferences] = useLocalStorage(
+    storageKey,
+    initializer
+  );
 
   return [preferences, setPreferences] as const;
 }

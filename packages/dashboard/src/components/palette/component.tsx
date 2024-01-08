@@ -12,7 +12,11 @@ type PaletteComponentProps = {
   IconComponent: React.FC;
 };
 
-const PaletteComponent: React.FC<PaletteComponentProps> = ({ componentTag, name, IconComponent }) => {
+const PaletteComponent: React.FC<PaletteComponentProps> = ({
+  componentTag,
+  name,
+  IconComponent,
+}) => {
   const node = useRef(null);
 
   const [_, dragRef] = useDrag(
@@ -21,7 +25,9 @@ const PaletteComponent: React.FC<PaletteComponentProps> = ({ componentTag, name,
       item: (): ComponentPaletteDraggable => {
         return {
           componentTag,
-          rect: node.current ? (node.current as Element).getBoundingClientRect() : null, // Used to determine the cursor offset from the upper left corner on drop
+          rect: node.current
+            ? (node.current as Element).getBoundingClientRect()
+            : null, // Used to determine the cursor offset from the upper left corner on drop
         };
       },
     }),

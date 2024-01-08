@@ -1,7 +1,11 @@
 import { createMockTwinMakerSDK } from '../__mocks__/iottwinmakerSDK';
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 import { EntityPropertyBindingProviderStore } from './EntityPropertyBindingProviderStore';
-import { IDataBindingConfig, IDataFieldOption, IValueDataBindingProviderState } from './types';
+import {
+  IDataBindingConfig,
+  IDataFieldOption,
+  IValueDataBindingProviderState,
+} from './types';
 import flushPromises from 'flush-promises';
 
 describe('EntityPropertyBindingProviderStore', () => {
@@ -14,7 +18,10 @@ describe('EntityPropertyBindingProviderStore', () => {
   const mockWorkspaceId = 'ws-id';
   let metadataModule = new TwinMakerMetadataModule(mockWorkspaceId, tmClient);
 
-  const mapToKV = (key: string): IDataFieldOption => ({ label: key + '-name', value: key + '-id' });
+  const mapToKV = (key: string): IDataFieldOption => ({
+    label: key + '-name',
+    value: key + '-id',
+  });
 
   const mockEntityDataFieldOptions = [
     { label: 'e3-name', value: 'e3' },
@@ -53,7 +60,10 @@ describe('EntityPropertyBindingProviderStore', () => {
         componentTypeId: 'mock-componentTypeId',
         properties: {
           alarm_key: { value: { stringValue: 'mock-alarm-key' } },
-          alarm_id: { definition: { isTimeSeries: false }, value: { stringValue: 'mock-alarm-id' } },
+          alarm_id: {
+            definition: { isTimeSeries: false },
+            value: { stringValue: 'mock-alarm-id' },
+          },
         },
       },
     },
@@ -82,7 +92,9 @@ describe('EntityPropertyBindingProviderStore', () => {
 
     await flushPromises();
 
-    expect(updatedState!.definitions[0].options).toStrictEqual(mockEntityDataFieldOptions);
+    expect(updatedState!.definitions[0].options).toStrictEqual(
+      mockEntityDataFieldOptions
+    );
     expect(result.selectedOptions).toStrictEqual([
       { value: 'entity-option-1', label: 'entity-option-1' },
       { value: 'component-3', label: 'component-3' },
@@ -104,11 +116,17 @@ describe('EntityPropertyBindingProviderStore', () => {
   });
 
   it('should fetching entity summary and call onError if failed', async () => {
-    listEntities.mockRejectedValueOnce({ message: 'mock error message.', name: 'error name' });
+    listEntities.mockRejectedValueOnce({
+      message: 'mock error message.',
+      name: 'error name',
+    });
 
     const mockOnError = jest.fn();
     metadataModule = new TwinMakerMetadataModule(mockWorkspaceId, tmClient);
-    providerStore = new EntityPropertyBindingProviderStore({ metadataModule, onError: mockOnError });
+    providerStore = new EntityPropertyBindingProviderStore({
+      metadataModule,
+      onError: mockOnError,
+    });
 
     await flushPromises();
 
@@ -135,10 +153,16 @@ describe('EntityPropertyBindingProviderStore', () => {
 
   it('should fetching entity and call onError if failed', async () => {
     listEntities.mockResolvedValue(mockEntitySummary);
-    getEntity.mockRejectedValue({ message: 'mock error message.', name: 'error name' });
+    getEntity.mockRejectedValue({
+      message: 'mock error message.',
+      name: 'error name',
+    });
     const mockOnError = jest.fn();
     metadataModule = new TwinMakerMetadataModule(mockWorkspaceId, tmClient);
-    providerStore = new EntityPropertyBindingProviderStore({ metadataModule, onError: mockOnError });
+    providerStore = new EntityPropertyBindingProviderStore({
+      metadataModule,
+      onError: mockOnError,
+    });
 
     providerStore.setBinding('a', mockDataBindingInput);
 
@@ -168,9 +192,10 @@ describe('EntityPropertyBindingProviderStore', () => {
 
     await flushPromises();
 
-    expect(mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0].selectedOptions[0].value).toBe(
-      'entity-option-1'
-    );
+    expect(
+      mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0]
+        .selectedOptions[0].value
+    ).toBe('entity-option-1');
   });
 
   it('should set property option state to disabled if component is not selected', async () => {
@@ -181,12 +206,18 @@ describe('EntityPropertyBindingProviderStore', () => {
 
     await flushPromises();
 
-    expect(mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0].definitions[2].state).toBe('disabled');
+    expect(
+      mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0]
+        .definitions[2].state
+    ).toBe('disabled');
   });
 
   it('should receive invalid entity id error when selection is updated with wrong entityId', async () => {
     getEntity.mockRejectedValue('error');
-    const state = await providerStore.updateSelection('entityId', { value: 'wrong', label: 'wrong' });
+    const state = await providerStore.updateSelection('entityId', {
+      value: 'wrong',
+      label: 'wrong',
+    });
 
     expect(state.errors?.invalidEntityId).toBeTruthy();
   });
@@ -195,9 +226,15 @@ describe('EntityPropertyBindingProviderStore', () => {
     const mockOnChange = jest.fn();
     providerStore.setOnStateChangedListener(mockOnChange);
 
-    await providerStore.updateSelection('entityId', { value: 'e3', label: 'e3-name' });
+    await providerStore.updateSelection('entityId', {
+      value: 'e3',
+      label: 'e3-name',
+    });
 
-    expect(mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0].selectedOptions[0].value).toBe('e3');
+    expect(
+      mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0]
+        .selectedOptions[0].value
+    ).toBe('e3');
   });
 
   it('should update selectedOptions when entity selection is changed', async () => {
@@ -217,17 +254,33 @@ describe('EntityPropertyBindingProviderStore', () => {
 
     await flushPromises();
 
-    await providerStore.updateSelection('entityId', { value: 'entity-option-1', label: 'entity-option-1' });
+    await providerStore.updateSelection('entityId', {
+      value: 'entity-option-1',
+      label: 'entity-option-1',
+    });
 
-    expect(mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0].selectedOptions[0].value).toBe(
-      'entity-option-1'
-    );
+    expect(
+      mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0]
+        .selectedOptions[0].value
+    ).toBe('entity-option-1');
 
-    await providerStore.updateSelection('componentName', { value: 'component-3', label: 'component-3' });
-    expect(mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0].selectedOptions[1].value).toBe('component-3');
+    await providerStore.updateSelection('componentName', {
+      value: 'component-3',
+      label: 'component-3',
+    });
+    expect(
+      mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0]
+        .selectedOptions[1].value
+    ).toBe('component-3');
 
-    await providerStore.updateSelection('propertyName', { value: 'alarm_key', label: 'alarm_key' });
-    expect(mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0].selectedOptions[2].value).toBe('alarm_key');
+    await providerStore.updateSelection('propertyName', {
+      value: 'alarm_key',
+      label: 'alarm_key',
+    });
+    expect(
+      mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0]
+        .selectedOptions[2].value
+    ).toBe('alarm_key');
   });
 
   it('should create a correct data binding object when createBinding is called with timeseries property', async () => {
@@ -250,7 +303,10 @@ describe('EntityPropertyBindingProviderStore', () => {
   it('should create a correct data binding object when createBinding is called with non timeseries property', async () => {
     providerStore.setBinding('a', {
       ...mockDataBindingInput,
-      dataBindingContext: { ...mockDataBindingInput.dataBindingContext, propertyName: 'alarm_id' },
+      dataBindingContext: {
+        ...mockDataBindingInput.dataBindingContext,
+        propertyName: 'alarm_id',
+      },
     });
 
     await flushPromises();
@@ -268,7 +324,9 @@ describe('EntityPropertyBindingProviderStore', () => {
   });
 
   it('should create a correct data binding object when createBinding is called with partial binding', async () => {
-    providerStore.setBinding('a', { dataBindingContext: { entityId: 'entity-option-1' } });
+    providerStore.setBinding('a', {
+      dataBindingContext: { entityId: 'entity-option-1' },
+    });
 
     await flushPromises();
 

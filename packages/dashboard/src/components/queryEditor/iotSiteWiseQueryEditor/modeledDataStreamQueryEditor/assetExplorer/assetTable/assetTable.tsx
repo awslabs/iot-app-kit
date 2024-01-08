@@ -1,4 +1,7 @@
-import { type AssetSummary, type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  type AssetSummary,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import Table from '@cloudscape-design/components/table';
 import React from 'react';
@@ -7,7 +10,10 @@ import { AssetTableEmptyState } from './assetTableEmptyState';
 import { AssetTableHeader } from './assetTableHeader';
 import { AssetTablePagination } from './assetTablePagination';
 import { AssetTablePreferences } from './assetTablePreferences';
-import { AssetTablePropertyFilter, ASSET_TABLE_FILTERING_PROPERTIES } from './assetTablePropertyFilter';
+import {
+  AssetTablePropertyFilter,
+  ASSET_TABLE_FILTERING_PROPERTIES,
+} from './assetTablePropertyFilter';
 import { AssetTableColumnDefinitionsFactory } from './assetTableColumnDefinitionsFactory';
 import { AssetTableNameLink } from './assetTableNameLink';
 import { AssetTableHierarchyPath } from './assetTableHierarchyPath';
@@ -44,7 +50,13 @@ export function AssetTable({
     resourceName: 'asset',
   });
 
-  const { items, collectionProps, paginationProps, propertyFilterProps, actions } = useCollection(assets, {
+  const {
+    items,
+    collectionProps,
+    paginationProps,
+    propertyFilterProps,
+    actions,
+  } = useCollection(assets, {
     propertyFiltering: {
       filteringProperties: ASSET_TABLE_FILTERING_PROPERTIES,
     },
@@ -115,7 +127,11 @@ export function AssetTable({
               totalItemCount={collectionProps.totalItemsCount ?? 0}
             />
           )}
-          <AssetTableHierarchyPath client={client} parentAssetId={parentAssetId} onClickAssetName={onClickAsset} />
+          <AssetTableHierarchyPath
+            client={client}
+            parentAssetId={parentAssetId}
+            onClickAssetName={onClickAsset}
+          />
         </>
       }
       pagination={
@@ -126,11 +142,18 @@ export function AssetTable({
           onNextPageClick={handleClickNextPage}
         />
       }
-      preferences={<AssetTablePreferences preferences={preferences} updatePreferences={updatePreferences} />}
+      preferences={
+        <AssetTablePreferences
+          preferences={preferences}
+          updatePreferences={updatePreferences}
+        />
+      }
       ariaLabels={{
         resizerRoleDescription: 'Resize button',
         itemSelectionLabel: (isNotSelected, asset) =>
-          isNotSelected ? `Select asset ${asset.name}` : `Deselect asset ${asset.name}`,
+          isNotSelected
+            ? `Select asset ${asset.name}`
+            : `Deselect asset ${asset.name}`,
       }}
     />
   );

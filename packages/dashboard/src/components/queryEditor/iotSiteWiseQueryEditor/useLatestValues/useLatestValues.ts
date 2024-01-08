@@ -20,7 +20,11 @@ export interface UseLatestValueProps {
 }
 
 /** Regularly poll for and use the latest value for a given list of asset properties. */
-export function useLatestValues({ dataStreams, isEnabled, client }: UseLatestValueProps) {
+export function useLatestValues({
+  dataStreams,
+  isEnabled,
+  client,
+}: UseLatestValueProps) {
   // Prepare asset properties for batch requests
   const cacheKeyFactory = new LatestValueCacheKeyFactory();
   const batchFactory = new BatchFactory(dataStreams);
@@ -38,10 +42,15 @@ export function useLatestValues({ dataStreams, isEnabled, client }: UseLatestVal
 
   const latestValueMaps = queries
     .map(({ data: latestValueMap }) => latestValueMap)
-    .filter((latestValueMap): latestValueMap is LatestValueMap => Boolean(latestValueMap));
-  const latestValueMap = latestValueMaps.reduce<LatestValueMap>((acc, currentLatestValueMap) => {
-    return { ...acc, ...currentLatestValueMap };
-  }, {});
+    .filter((latestValueMap): latestValueMap is LatestValueMap =>
+      Boolean(latestValueMap)
+    );
+  const latestValueMap = latestValueMaps.reduce<LatestValueMap>(
+    (acc, currentLatestValueMap) => {
+      return { ...acc, ...currentLatestValueMap };
+    },
+    {}
+  );
 
   function getLatestValue(dataStream: ModeledDataStream | UnmodeledDataStream) {
     const entryIdFactory = new EntryIdFactory(dataStream);
@@ -59,7 +68,11 @@ function createQueryFn(client: IoTSiteWiseClient) {
     queryKey: [{ entries = [] }],
     signal,
   }: QueryFunctionContext<ReturnType<LatestValueCacheKeyFactory['create']>>) {
-    const request = new BatchGetLatestValuesRequest({ client, entries, signal });
+    const request = new BatchGetLatestValuesRequest({
+      client,
+      entries,
+      signal,
+    });
     const response = await request.send();
     const latestValueMapFactory = new LatestValueMapFactory(response);
     const latestValueMap = latestValueMapFactory.create();

@@ -12,8 +12,10 @@ describe(Animator, () => {
   });
 
   it('executes the animation at 60fps', () => {
-    // @ts-expect-error number is not a timeout
-    jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => setTimeout(() => cb(), MS_PER_FRAME + 1));
+    jest
+      .spyOn(window, 'requestAnimationFrame')
+      // @ts-expect-error number is not a timeout
+      .mockImplementation((cb) => setTimeout(() => cb(), MS_PER_FRAME + 1));
     const animator = new Animator();
     const animation = jest.fn();
 
@@ -34,8 +36,10 @@ describe(Animator, () => {
 
   it('does not execute the animation faster than 60fps', () => {
     const lessThan60fps = MS_PER_FRAME - 1;
-    // @ts-expect-error number is not a timeout
-    jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => setTimeout(() => cb(), lessThan60fps));
+    jest
+      .spyOn(window, 'requestAnimationFrame')
+      // @ts-expect-error number is not a timeout
+      .mockImplementation((cb) => setTimeout(() => cb(), lessThan60fps));
     const animator = new Animator();
     const animation = jest.fn();
 

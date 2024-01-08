@@ -6,7 +6,9 @@ export class HierarchyPathCacheKeyFactory {
   }
 
   create() {
-    const cacheKey = [{ resource: 'hierarchy path', assetId: this.#assetId }] as const;
+    const cacheKey = [
+      { resource: 'hierarchy path', assetId: this.#assetId },
+    ] as const;
 
     return cacheKey;
   }

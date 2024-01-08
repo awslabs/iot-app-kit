@@ -10,7 +10,12 @@ import type {
 
 /** converts the TimeInNanos to milliseconds */
 const toTimestamp = (time: TimeInNanos | undefined): number =>
-  (time && Math.floor((time.timeInSeconds || 0) * SECOND_IN_MS + (time.offsetInNanos || 0) * NANO_SECOND_IN_MS)) || 0;
+  (time &&
+    Math.floor(
+      (time.timeInSeconds || 0) * SECOND_IN_MS +
+        (time.offsetInNanos || 0) * NANO_SECOND_IN_MS
+    )) ||
+  0;
 
 /**
  * Extracts the value out of a SiteWise Model Variant
@@ -42,13 +47,17 @@ export const toValue = (variant: Variant | undefined): Primitive => {
     return booleanValue.toString();
   }
 
-  throw new Error('Expected value to have at least one property value, but instead it has none!');
+  throw new Error(
+    'Expected value to have at least one property value, but instead it has none!'
+  );
 };
 
 /**
  * Converts a SiteWise response for data into a data point understood by IoT App Kit.
  */
-export const toDataPoint = (assetPropertyValue: AssetPropertyValue | undefined): DataPoint | undefined => {
+export const toDataPoint = (
+  assetPropertyValue: AssetPropertyValue | undefined
+): DataPoint | undefined => {
   if (assetPropertyValue == null) {
     return undefined;
   }
@@ -66,7 +75,14 @@ export const toDataPoint = (assetPropertyValue: AssetPropertyValue | undefined):
 };
 
 // TODO: support outputting multiple sets of DataStream for multiple aggregate types.
-const aggregateToValue = ({ average, count, maximum, minimum, sum, standardDeviation }: Aggregates): number => {
+const aggregateToValue = ({
+  average,
+  count,
+  maximum,
+  minimum,
+  sum,
+  standardDeviation,
+}: Aggregates): number => {
   if (average != null) {
     return average;
   }
@@ -91,7 +107,9 @@ const aggregateToValue = ({ average, count, maximum, minimum, sum, standardDevia
     return standardDeviation;
   }
 
-  throw new Error('Expected there to be a valid aggregate contained in `Aggregates`');
+  throw new Error(
+    'Expected there to be a valid aggregate contained in `Aggregates`'
+  );
 };
 
 /**
@@ -110,7 +128,10 @@ const getAggregateTimestamp = (timestamp?: Date) => {
  *
  * Converts an `AggregatedValue` to the data point view model
  */
-export const aggregateToDataPoint = ({ timestamp, value }: AggregatedValue): DataPoint<number> => ({
+export const aggregateToDataPoint = ({
+  timestamp,
+  value,
+}: AggregatedValue): DataPoint<number> => ({
   x: getAggregateTimestamp(timestamp),
   y: aggregateToValue(value as Aggregates),
 });

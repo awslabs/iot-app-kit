@@ -1,6 +1,7 @@
 import { type WorkspaceSummary } from '@aws-sdk/client-iottwinmaker';
 
-type PartialWorkspaceSummary = Partial<WorkspaceSummary> & Required<Pick<WorkspaceSummary, 'workspaceId'>>;
+type PartialWorkspaceSummary = Partial<WorkspaceSummary> &
+  Required<Pick<WorkspaceSummary, 'workspaceId'>>;
 
 export class WorkspaceSummaryFactory {
   public create(partialSummary: PartialWorkspaceSummary): WorkspaceSummary {
@@ -17,7 +18,13 @@ export class WorkspaceSummaryFactory {
     const description = '';
     const creationDateTime = new Date();
     const updateDateTime = new Date();
-    const defaults = { arn, workspaceId, creationDateTime, updateDateTime, description };
+    const defaults = {
+      arn,
+      workspaceId,
+      creationDateTime,
+      updateDateTime,
+      description,
+    };
 
     return defaults;
   }

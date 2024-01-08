@@ -1,12 +1,24 @@
-import { DescribeAssetResponse, PropertyDataType } from '@aws-sdk/client-iotsitewise';
+import {
+  DescribeAssetResponse,
+  PropertyDataType,
+} from '@aws-sdk/client-iotsitewise';
 
 export const mockAssetDescription: DescribeAssetResponse = {
   assetModelId: 'mock-asset-model-id',
   assetName: 'Mock Asset',
   assetId: 'mock-id',
   assetProperties: [
-    { name: 'property one', id: 'property-1', dataType: PropertyDataType.DOUBLE, alias: 'P1' },
-    { name: 'property two', id: 'property-2', dataType: PropertyDataType.STRING },
+    {
+      name: 'property one',
+      id: 'property-1',
+      dataType: PropertyDataType.DOUBLE,
+      alias: 'P1',
+    },
+    {
+      name: 'property two',
+      id: 'property-2',
+      dataType: PropertyDataType.STRING,
+    },
   ],
   assetCompositeModels: [
     {

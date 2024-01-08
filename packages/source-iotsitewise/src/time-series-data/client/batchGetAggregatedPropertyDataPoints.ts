@@ -9,14 +9,22 @@ import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
 import { parseDuration } from '@iot-app-kit/core';
 import { fromId } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
-import { createAggregateEntryBatches, calculateNextAggregatedBatchSize, shouldFetchNextBatch } from './batch';
+import {
+  createAggregateEntryBatches,
+  calculateNextAggregatedBatchSize,
+  shouldFetchNextBatch,
+} from './batch';
 import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
 import { deduplicateBatch } from '../util/deduplication';
 import type {
   BatchGetAssetPropertyAggregatesErrorEntry,
   BatchGetAssetPropertyAggregatesSuccessEntry,
 } from '@aws-sdk/client-iotsitewise';
-import type { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
+import type {
+  OnSuccessCallback,
+  ErrorCallback,
+  RequestInformationAndRange,
+} from '@iot-app-kit/core';
 import type { AggregatedPropertyParams } from './client';
 
 export type BatchAggregatedEntry = {
@@ -54,13 +62,22 @@ const sendRequest = ({
   // the cache exposes methods that only require batch response entry as an argument.
   const callbackCache: BatchEntryCallbackCache = {};
 
-  const batchSize = calculateNextAggregatedBatchSize({ maxResults, dataPointsFetched });
+  const batchSize = calculateNextAggregatedBatchSize({
+    maxResults,
+    dataPointsFetched,
+  });
 
   client
     .send(
       new BatchGetAssetPropertyAggregatesCommand({
         entries: deduplicateBatch(batch).map((entry, entryIndex) => {
-          const { requestInformation, onError, onSuccess, requestStart, requestEnd } = entry;
+          const {
+            requestInformation,
+            onError,
+            onSuccess,
+            requestStart,
+            requestEnd,
+          } = entry;
           const { id, resolution, aggregationType } = requestInformation;
 
           // use 2D array indices as entryIDs to guarantee uniqueness
@@ -69,7 +86,10 @@ const sendRequest = ({
 
           // save request entry data in functional closure.
           callbackCache[entryId] = {
-            onError: ({ errorMessage: msg = 'batch aggregate error', errorCode: status }) => {
+            onError: ({
+              errorMessage: msg = 'batch aggregate error',
+              errorCode: status,
+            }) => {
               onError({
                 id,
                 resolution: parseDuration(resolution),
@@ -84,7 +104,9 @@ const sendRequest = ({
                     dataStreamFromSiteWise({
                       ...fromId(id),
                       dataPoints: aggregatedValues
-                        .map((aggregatedValue) => aggregateToDataPoint(aggregatedValue))
+                        .map((aggregatedValue) =>
+                          aggregateToDataPoint(aggregatedValue)
+                        )
                         .filter(isDefined),
                       resolution: RESOLUTION_TO_MS_MAPPING[resolution],
                       aggregationType: aggregationType,
@@ -101,7 +123,9 @@ const sendRequest = ({
           // BatchGetAssetPropertyValueAggregatesEntry
           return {
             ...fromId(requestInformation.id),
-            aggregateTypes: [requestInformation.aggregationType as AggregateType],
+            aggregateTypes: [
+              requestInformation.aggregationType as AggregateType,
+            ],
             resolution,
             startDate: requestStart,
             endDate: requestEnd,
@@ -119,8 +143,13 @@ const sendRequest = ({
       // execute the correct callback for each entry
       // empty entries and entries that don't exist in the cache are ignored.
       // TODO: implement retries for retry-able batch errors
-      errorEntries?.forEach((entry) => entry.entryId && callbackCache[entry.entryId]?.onError(entry));
-      successEntries?.forEach((entry) => entry.entryId && callbackCache[entry.entryId]?.onSuccess(entry));
+      errorEntries?.forEach(
+        (entry) => entry.entryId && callbackCache[entry.entryId]?.onError(entry)
+      );
+      successEntries?.forEach(
+        (entry) =>
+          entry.entryId && callbackCache[entry.entryId]?.onSuccess(entry)
+      );
 
       // increment number of data points fetched
       dataPointsFetched += batchSize;
@@ -147,7 +176,9 @@ const batchGetAggregatedPropertyDataPointsForProperty = ({
 }) =>
   createAggregateEntryBatches<BatchAggregatedEntry>(entries)
     .filter((batch) => batch.length > 0) // filter out empty batches
-    .map(([batch, maxResults], requestIndex) => sendRequest({ client, batch, maxResults, requestIndex }));
+    .map(([batch, maxResults], requestIndex) =>
+      sendRequest({ client, batch, maxResults, requestIndex })
+    );
 
 export const batchGetAggregatedPropertyDataPoints = ({
   params,
@@ -177,7 +208,11 @@ export const batchGetAggregatedPropertyDataPoints = ({
   });
 
   // sort entries to ensure earliest data is fetched first because batch API has a property limit
-  entries.sort((a, b) => b.requestInformation.start.getTime() - a.requestInformation.start.getTime());
+  entries.sort(
+    (a, b) =>
+      b.requestInformation.start.getTime() -
+      a.requestInformation.start.getTime()
+  );
 
   if (entries.length > 0) {
     batchGetAggregatedPropertyDataPointsForProperty({

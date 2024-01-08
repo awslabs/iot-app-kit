@@ -302,19 +302,31 @@ describe(DescribeModeledDataStreamRequest, () => {
       $metadata: {},
     };
 
-    const fakeListAssetPropertiesCommandOutput: ListAssetPropertiesCommandOutput = {
-      assetPropertySummaries: [{ id: '123' }, { id: 'xyz' }, { id: 'asdf' }],
-      $metadata: {},
-    };
+    const fakeListAssetPropertiesCommandOutput: ListAssetPropertiesCommandOutput =
+      {
+        assetPropertySummaries: [{ id: '123' }, { id: 'xyz' }, { id: 'asdf' }],
+        $metadata: {},
+      };
 
-    const fakeListAssetModelPropertiesCommandOutput: ListAssetModelPropertiesCommandOutput = {
-      assetModelPropertySummaries: [
-        { id: '123', name: 'asset property', dataType: 'DOUBLE', type: {} },
-        { id: 'xyz', name: 'composite model property', dataType: 'DOUBLE', type: {} },
-        { id: 'asdf', name: 'nested composite model property', dataType: 'DOUBLE', type: {} },
-      ],
-      $metadata: {},
-    };
+    const fakeListAssetModelPropertiesCommandOutput: ListAssetModelPropertiesCommandOutput =
+      {
+        assetModelPropertySummaries: [
+          { id: '123', name: 'asset property', dataType: 'DOUBLE', type: {} },
+          {
+            id: 'xyz',
+            name: 'composite model property',
+            dataType: 'DOUBLE',
+            type: {},
+          },
+          {
+            id: 'asdf',
+            name: 'nested composite model property',
+            dataType: 'DOUBLE',
+            type: {},
+          },
+        ],
+        $metadata: {},
+      };
 
     const client = {
       send: jest
@@ -352,7 +364,10 @@ describe(DescribeModeledDataStreamRequest, () => {
     };
 
     const client = {
-      send: jest.fn().mockResolvedValueOnce(fakeDescribeAssetCommandOutput).mockRejectedValue(new Error()),
+      send: jest
+        .fn()
+        .mockResolvedValueOnce(fakeDescribeAssetCommandOutput)
+        .mockRejectedValue(new Error()),
     } as unknown as IoTSiteWiseClient;
     const request = new DescribeModeledDataStreamRequest(client);
 
@@ -382,10 +397,11 @@ describe(DescribeModeledDataStreamRequest, () => {
       $metadata: {},
     };
 
-    const fakeListAssetPropertiesCommandOutput: ListAssetPropertiesCommandOutput = {
-      assetPropertySummaries: [],
-      $metadata: {},
-    };
+    const fakeListAssetPropertiesCommandOutput: ListAssetPropertiesCommandOutput =
+      {
+        assetPropertySummaries: [],
+        $metadata: {},
+      };
 
     const client = {
       send: jest
@@ -440,20 +456,42 @@ describe(DescribeModeledDataStreamRequest, () => {
       $metadata: {},
     };
 
-    const fakeListAssetPropertiesCommandOutput: ListAssetPropertiesCommandOutput = {
-      assetPropertySummaries: [{ id: '123' }, { id: 'xyz' }, { id: 'asdf' }, { id: 'poiu' }],
-      $metadata: {},
-    };
+    const fakeListAssetPropertiesCommandOutput: ListAssetPropertiesCommandOutput =
+      {
+        assetPropertySummaries: [
+          { id: '123' },
+          { id: 'xyz' },
+          { id: 'asdf' },
+          { id: 'poiu' },
+        ],
+        $metadata: {},
+      };
 
-    const fakeListAssetModelPropertiesCommandOutput: ListAssetModelPropertiesCommandOutput = {
-      assetModelPropertySummaries: [
-        { id: '123', name: 'asset property', dataType: 'DOUBLE', type: {} },
-        { id: 'xyz', name: 'composite model property', dataType: 'DOUBLE', type: {} },
-        { id: 'asdf', name: 'nested composite model property 1', dataType: 'DOUBLE', type: {} },
-        { id: 'poiu', name: 'nested composite model property 2', dataType: 'DOUBLE', type: {} },
-      ],
-      $metadata: {},
-    };
+    const fakeListAssetModelPropertiesCommandOutput: ListAssetModelPropertiesCommandOutput =
+      {
+        assetModelPropertySummaries: [
+          { id: '123', name: 'asset property', dataType: 'DOUBLE', type: {} },
+          {
+            id: 'xyz',
+            name: 'composite model property',
+            dataType: 'DOUBLE',
+            type: {},
+          },
+          {
+            id: 'asdf',
+            name: 'nested composite model property 1',
+            dataType: 'DOUBLE',
+            type: {},
+          },
+          {
+            id: 'poiu',
+            name: 'nested composite model property 2',
+            dataType: 'DOUBLE',
+            type: {},
+          },
+        ],
+        $metadata: {},
+      };
 
     const client = {
       send: jest
@@ -514,33 +552,52 @@ describe(DescribeModeledDataStreamRequest, () => {
       $metadata: {},
     };
 
-    const fakeListAssetPropertiesCommandOutputPage1: ListAssetPropertiesCommandOutput = {
-      assetPropertySummaries: [{ id: '123' }, { id: 'xyz' }, { id: 'asdf' }],
-      $metadata: {},
-      nextToken: '123',
-    };
+    const fakeListAssetPropertiesCommandOutputPage1: ListAssetPropertiesCommandOutput =
+      {
+        assetPropertySummaries: [{ id: '123' }, { id: 'xyz' }, { id: 'asdf' }],
+        $metadata: {},
+        nextToken: '123',
+      };
 
-    const fakeListAssetPropertiesCommandOutputPage2: ListAssetPropertiesCommandOutput = {
-      assetPropertySummaries: [{ id: 'zxcv' }],
-      $metadata: {},
-    };
+    const fakeListAssetPropertiesCommandOutputPage2: ListAssetPropertiesCommandOutput =
+      {
+        assetPropertySummaries: [{ id: 'zxcv' }],
+        $metadata: {},
+      };
 
-    const fakeListAssetModelPropertiesCommandOutputPage1: ListAssetModelPropertiesCommandOutput = {
-      assetModelPropertySummaries: [
-        { id: '123', name: 'asset property', dataType: 'DOUBLE', type: {} },
-        { id: 'xyz', name: 'composite model property', dataType: 'DOUBLE', type: {} },
-        { id: 'asdf', name: 'nested composite model property', dataType: 'DOUBLE', type: {} },
-      ],
-      $metadata: {},
-      nextToken: '123',
-    };
+    const fakeListAssetModelPropertiesCommandOutputPage1: ListAssetModelPropertiesCommandOutput =
+      {
+        assetModelPropertySummaries: [
+          { id: '123', name: 'asset property', dataType: 'DOUBLE', type: {} },
+          {
+            id: 'xyz',
+            name: 'composite model property',
+            dataType: 'DOUBLE',
+            type: {},
+          },
+          {
+            id: 'asdf',
+            name: 'nested composite model property',
+            dataType: 'DOUBLE',
+            type: {},
+          },
+        ],
+        $metadata: {},
+        nextToken: '123',
+      };
 
-    const fakeListAssetModelPropertiesCommandOutputPage2: ListAssetModelPropertiesCommandOutput = {
-      assetModelPropertySummaries: [
-        { id: 'zxcv', name: 'nested composite model property', dataType: 'DOUBLE', type: {} },
-      ],
-      $metadata: {},
-    };
+    const fakeListAssetModelPropertiesCommandOutputPage2: ListAssetModelPropertiesCommandOutput =
+      {
+        assetModelPropertySummaries: [
+          {
+            id: 'zxcv',
+            name: 'nested composite model property',
+            dataType: 'DOUBLE',
+            type: {},
+          },
+        ],
+        $metadata: {},
+      };
 
     const client = {
       send: jest
@@ -597,21 +654,33 @@ describe(DescribeModeledDataStreamRequest, () => {
       $metadata: {},
     };
 
-    const fakeListAssetPropertiesCommandOutputPage1: ListAssetPropertiesCommandOutput = {
-      assetPropertySummaries: [{ id: '123' }, { id: 'xyz' }, { id: 'asdf' }],
-      $metadata: {},
-      nextToken: '123',
-    };
+    const fakeListAssetPropertiesCommandOutputPage1: ListAssetPropertiesCommandOutput =
+      {
+        assetPropertySummaries: [{ id: '123' }, { id: 'xyz' }, { id: 'asdf' }],
+        $metadata: {},
+        nextToken: '123',
+      };
 
-    const fakeListAssetModelPropertiesCommandOutputPage1: ListAssetModelPropertiesCommandOutput = {
-      assetModelPropertySummaries: [
-        { id: '123', name: 'asset property', dataType: 'DOUBLE', type: {} },
-        { id: 'xyz', name: 'composite model property', dataType: 'DOUBLE', type: {} },
-        { id: 'asdf', name: 'nested composite model property', dataType: 'DOUBLE', type: {} },
-      ],
-      $metadata: {},
-      nextToken: '123',
-    };
+    const fakeListAssetModelPropertiesCommandOutputPage1: ListAssetModelPropertiesCommandOutput =
+      {
+        assetModelPropertySummaries: [
+          { id: '123', name: 'asset property', dataType: 'DOUBLE', type: {} },
+          {
+            id: 'xyz',
+            name: 'composite model property',
+            dataType: 'DOUBLE',
+            type: {},
+          },
+          {
+            id: 'asdf',
+            name: 'nested composite model property',
+            dataType: 'DOUBLE',
+            type: {},
+          },
+        ],
+        $metadata: {},
+        nextToken: '123',
+      };
 
     const client = {
       send: jest
@@ -668,33 +737,52 @@ describe(DescribeModeledDataStreamRequest, () => {
       $metadata: {},
     };
 
-    const fakeListAssetPropertiesCommandOutputPage1: ListAssetPropertiesCommandOutput = {
-      assetPropertySummaries: [{ id: '123' }, { id: 'xyz' }, { id: 'asdf' }],
-      $metadata: {},
-      nextToken: '123',
-    };
+    const fakeListAssetPropertiesCommandOutputPage1: ListAssetPropertiesCommandOutput =
+      {
+        assetPropertySummaries: [{ id: '123' }, { id: 'xyz' }, { id: 'asdf' }],
+        $metadata: {},
+        nextToken: '123',
+      };
 
-    const fakeListAssetPropertiesCommandOutputPage2: ListAssetPropertiesCommandOutput = {
-      assetPropertySummaries: [{ id: 'zxcv' }],
-      $metadata: {},
-    };
+    const fakeListAssetPropertiesCommandOutputPage2: ListAssetPropertiesCommandOutput =
+      {
+        assetPropertySummaries: [{ id: 'zxcv' }],
+        $metadata: {},
+      };
 
-    const fakeListAssetModelPropertiesCommandOutputPage1: ListAssetModelPropertiesCommandOutput = {
-      assetModelPropertySummaries: [
-        { id: '123', name: 'asset property', dataType: 'DOUBLE', type: {} },
-        { id: 'xyz', name: 'composite model property', dataType: 'DOUBLE', type: {} },
-        { id: 'asdf', name: 'nested composite model property', dataType: 'DOUBLE', type: {} },
-      ],
-      $metadata: {},
-      nextToken: '123',
-    };
+    const fakeListAssetModelPropertiesCommandOutputPage1: ListAssetModelPropertiesCommandOutput =
+      {
+        assetModelPropertySummaries: [
+          { id: '123', name: 'asset property', dataType: 'DOUBLE', type: {} },
+          {
+            id: 'xyz',
+            name: 'composite model property',
+            dataType: 'DOUBLE',
+            type: {},
+          },
+          {
+            id: 'asdf',
+            name: 'nested composite model property',
+            dataType: 'DOUBLE',
+            type: {},
+          },
+        ],
+        $metadata: {},
+        nextToken: '123',
+      };
 
-    const fakeListAssetModelPropertiesCommandOutputPage2: ListAssetModelPropertiesCommandOutput = {
-      assetModelPropertySummaries: [
-        { id: 'zxcv', name: 'nested composite model property', dataType: 'DOUBLE', type: {} },
-      ],
-      $metadata: {},
-    };
+    const fakeListAssetModelPropertiesCommandOutputPage2: ListAssetModelPropertiesCommandOutput =
+      {
+        assetModelPropertySummaries: [
+          {
+            id: 'zxcv',
+            name: 'nested composite model property',
+            dataType: 'DOUBLE',
+            type: {},
+          },
+        ],
+        $metadata: {},
+      };
 
     const client = {
       send: jest
@@ -763,19 +851,31 @@ describe(DescribeModeledDataStreamRequest, () => {
       $metadata: {},
     };
 
-    const fakeListAssetPropertiesCommandOutputPage1: ListAssetPropertiesCommandOutput = {
-      assetPropertySummaries: [{ id: '123' }, { id: 'xyz' }, { id: 'asdf' }],
-      $metadata: {},
-    };
+    const fakeListAssetPropertiesCommandOutputPage1: ListAssetPropertiesCommandOutput =
+      {
+        assetPropertySummaries: [{ id: '123' }, { id: 'xyz' }, { id: 'asdf' }],
+        $metadata: {},
+      };
 
-    const fakeListAssetModelPropertiesCommandOutputPage1: ListAssetModelPropertiesCommandOutput = {
-      assetModelPropertySummaries: [
-        { id: '123', name: 'asset property', dataType: 'DOUBLE', type: {} },
-        { id: 'xyz', name: 'composite model property', dataType: 'DOUBLE', type: {} },
-        { id: 'asdf', name: 'nested composite model property', dataType: 'DOUBLE', type: {} },
-      ],
-      $metadata: {},
-    };
+    const fakeListAssetModelPropertiesCommandOutputPage1: ListAssetModelPropertiesCommandOutput =
+      {
+        assetModelPropertySummaries: [
+          { id: '123', name: 'asset property', dataType: 'DOUBLE', type: {} },
+          {
+            id: 'xyz',
+            name: 'composite model property',
+            dataType: 'DOUBLE',
+            type: {},
+          },
+          {
+            id: 'asdf',
+            name: 'nested composite model property',
+            dataType: 'DOUBLE',
+            type: {},
+          },
+        ],
+        $metadata: {},
+      };
 
     const client = {
       send: jest

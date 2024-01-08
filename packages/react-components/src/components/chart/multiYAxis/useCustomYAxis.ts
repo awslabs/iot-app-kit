@@ -9,7 +9,11 @@ type HandleMapOptionsProps = {
   datastreams: DataStream[];
 };
 
-const handleMapOptions = ({ map, handleClear, datastreams }: HandleMapOptionsProps) =>
+const handleMapOptions = ({
+  map,
+  handleClear,
+  datastreams,
+}: HandleMapOptionsProps) =>
   Object.entries(map).map(([datastreamId, value]) => {
     const datastream = datastreams.find(({ id }) => id === datastreamId);
     if (!datastream) handleClear(datastreamId);
@@ -24,9 +28,17 @@ export const useCustomYAxis = (datastreams: DataStream[]) => {
   const yMins = useChartStore((state) => state.yMins);
   const handleClear = useChartStore((state) => state.clearYAxis);
 
-  const yMax: YAxisLegendOption[] = handleMapOptions({ map: yMaxes, datastreams, handleClear });
+  const yMax: YAxisLegendOption[] = handleMapOptions({
+    map: yMaxes,
+    datastreams,
+    handleClear,
+  });
 
-  const yMin: YAxisLegendOption[] = handleMapOptions({ map: yMins, datastreams, handleClear });
+  const yMin: YAxisLegendOption[] = handleMapOptions({
+    map: yMins,
+    datastreams,
+    handleClear,
+  });
 
   return {
     yMax,

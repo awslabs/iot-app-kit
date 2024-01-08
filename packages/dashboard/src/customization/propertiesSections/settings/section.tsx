@@ -1,6 +1,11 @@
 import React from 'react';
 
-import { ExpandableSection, Input, InputProps, SpaceBetween } from '@cloudscape-design/components';
+import {
+  ExpandableSection,
+  Input,
+  InputProps,
+  SpaceBetween,
+} from '@cloudscape-design/components';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 
 import * as awsui from '@cloudscape-design/design-tokens';
@@ -17,8 +22,12 @@ export const SettingsSection = ({
   significantDigits: number | undefined;
   updateSignificantDigits: (newValue: number | undefined) => void;
 }) => {
-  const onSignificantDigitsChange: NonCancelableEventHandler<InputProps.ChangeDetail> = (event) => {
-    updateSignificantDigits(isNumeric(event.detail.value) ? numberFromDetail(event) : undefined);
+  const onSignificantDigitsChange: NonCancelableEventHandler<
+    InputProps.ChangeDetail
+  > = (event) => {
+    updateSignificantDigits(
+      isNumeric(event.detail.value) ? numberFromDetail(event) : undefined
+    );
   };
 
   const sectionStyle = {
@@ -28,7 +37,10 @@ export const SettingsSection = ({
     <div style={sectionStyle}>
       <ExpandableSection headerText='Settings' defaultExpanded>
         <SpaceBetween size='m' direction='vertical'>
-          <div className='settings-property-label' style={{ gap: awsui.spaceScaledS }}>
+          <div
+            className='settings-property-label'
+            style={{ gap: awsui.spaceScaledS }}
+          >
             <label htmlFor='decimal-places'>Decimal places</label>
             <div className='settings-property-label-control'>
               <Input

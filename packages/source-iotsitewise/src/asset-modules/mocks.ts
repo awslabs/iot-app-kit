@@ -6,33 +6,60 @@ import type {
   SiteWiseAssetModuleInterface,
   SiteWiseAssetSessionInterface,
 } from './sitewise/types';
-import type { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import type {
+  AssetPropertyValue,
+  AssetSummary,
+  DescribeAssetModelResponse,
+} from '@aws-sdk/client-iotsitewise';
 import type { ErrorDetails } from '@iot-app-kit/core';
 
 export class MockSiteWiseAssetsReplayData {
-  public models: Map<string, DescribeAssetModelResponse> = new Map<string, DescribeAssetModelResponse>();
-  public hierarchies: Map<string, HierarchyAssetSummaryList> = new Map<string, HierarchyAssetSummaryList>();
-  public properties: Map<string, AssetPropertyValue> = new Map<string, AssetPropertyValue>();
+  public models: Map<string, DescribeAssetModelResponse> = new Map<
+    string,
+    DescribeAssetModelResponse
+  >();
+  public hierarchies: Map<string, HierarchyAssetSummaryList> = new Map<
+    string,
+    HierarchyAssetSummaryList
+  >();
+  public properties: Map<string, AssetPropertyValue> = new Map<
+    string,
+    AssetPropertyValue
+  >();
   public assets: Map<string, AssetSummary> = new Map<string, AssetSummary>();
   public errors: ErrorDetails[] = [];
 
   public addAssetModels(newModels: DescribeAssetModelResponse[]) {
-    newModels.forEach((model) => this.models.set(model.assetModelId as string, model));
+    newModels.forEach((model) =>
+      this.models.set(model.assetModelId as string, model)
+    );
   }
 
   public addAssetSummaries(newAssetSummaries: AssetSummary[]) {
-    newAssetSummaries.forEach((summary) => this.assets.set(summary.id as string, summary));
+    newAssetSummaries.forEach((summary) =>
+      this.assets.set(summary.id as string, summary)
+    );
   }
 
-  public addAssetPropertyValues(propertyValue: { assetId: string; propertyId: string; value: AssetPropertyValue }) {
-    this.properties.set(propertyValue.assetId + ':' + propertyValue.propertyId, propertyValue.value);
+  public addAssetPropertyValues(propertyValue: {
+    assetId: string;
+    propertyId: string;
+    value: AssetPropertyValue;
+  }) {
+    this.properties.set(
+      propertyValue.assetId + ':' + propertyValue.propertyId,
+      propertyValue.value
+    );
   }
 
   public addHierarchyAssetSummaryList(
     query: AssetHierarchyQuery,
     newHierarchyAssetSummaryList: HierarchyAssetSummaryList
   ) {
-    this.hierarchies.set(assetHierarchyQueryKey(query), newHierarchyAssetSummaryList);
+    this.hierarchies.set(
+      assetHierarchyQueryKey(query),
+      newHierarchyAssetSummaryList
+    );
   }
 
   public addErrors(errors: ErrorDetails[]) {
@@ -47,7 +74,9 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
     this.replayData = replayData;
   }
 
-  private _requestAssetSummary(query: { assetId: string }): Observable<AssetSummary> {
+  private _requestAssetSummary(query: {
+    assetId: string;
+  }): Observable<AssetSummary> {
     return new Observable<AssetSummary>((observer) => {
       if (this.replayData.errors.length > 0) {
         observer.error(this.replayData.errors);
@@ -69,7 +98,9 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
     return lastValueFrom(this._requestAssetSummary(query));
   }
 
-  _requestAssetModel(query: { assetModelId: string }): Observable<DescribeAssetModelResponse> {
+  _requestAssetModel(query: {
+    assetModelId: string;
+  }): Observable<DescribeAssetModelResponse> {
     return new Observable<DescribeAssetModelResponse>((observer) => {
       observer.next(this.replayData.models.get(query.assetModelId));
     });
@@ -83,13 +114,20 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
   ): Subscription {
     return this._requestAssetModel(query).subscribe(observer);
   }
-  fetchAssetModel(query: { assetModelId: string }): Promise<DescribeAssetModelResponse> {
+  fetchAssetModel(query: {
+    assetModelId: string;
+  }): Promise<DescribeAssetModelResponse> {
     return lastValueFrom(this._requestAssetModel(query));
   }
 
-  _requestAssetPropertyValue(query: { assetId: string; propertyId: string }): Observable<AssetPropertyValue> {
+  _requestAssetPropertyValue(query: {
+    assetId: string;
+    propertyId: string;
+  }): Observable<AssetPropertyValue> {
     return new Observable<AssetPropertyValue>((observer) => {
-      observer.next(this.replayData.properties.get(query.assetId + ':' + query.propertyId));
+      observer.next(
+        this.replayData.properties.get(query.assetId + ':' + query.propertyId)
+      );
     });
   }
   requestAssetPropertyValue(
@@ -101,7 +139,10 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
   ): Subscription {
     return this._requestAssetPropertyValue(query).subscribe(observer);
   }
-  fetchAssetPropertyValue(query: { assetId: string; propertyId: string }): Promise<AssetPropertyValue> {
+  fetchAssetPropertyValue(query: {
+    assetId: string;
+    propertyId: string;
+  }): Promise<AssetPropertyValue> {
     return lastValueFrom(this._requestAssetPropertyValue(query));
   }
 
@@ -113,7 +154,9 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
       if (this.replayData.errors.length > 0) {
         observer.error(this.replayData.errors);
       } else {
-        observer.next(this.replayData.hierarchies.get(assetHierarchyQueryKey(query)));
+        observer.next(
+          this.replayData.hierarchies.get(assetHierarchyQueryKey(query))
+        );
       }
     });
   }
@@ -138,7 +181,11 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
       if (this.replayData.errors.length > 0) {
         observer.error(this.replayData.errors);
       } else {
-        observer.next(this.replayData.hierarchies.get(assetHierarchyQueryKey({ assetHierarchyId: HIERARCHY_ROOT_ID })));
+        observer.next(
+          this.replayData.hierarchies.get(
+            assetHierarchyQueryKey({ assetHierarchyId: HIERARCHY_ROOT_ID })
+          )
+        );
       }
     });
   }

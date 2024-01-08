@@ -27,7 +27,10 @@ function componentsNeedUpdates(
         const values = componentUpdates[key];
         const oldValues = oldComponents[key];
         // first check if the ComponentUpdateRequest description or componentTypeId differ
-        if (values.componentTypeId == oldValues.componentTypeId && values.description == oldValues.description) {
+        if (
+          values.componentTypeId == oldValues.componentTypeId &&
+          values.description == oldValues.description
+        ) {
           const newProperties = values.properties;
           const oldProperties = oldValues.properties;
           for (const propertyKey in newProperties) {
@@ -41,8 +44,12 @@ function componentsNeedUpdates(
               }
               // compare the PropertyRequest values/Definitions and PropertyResponse values/Definitions
               if (
-                JSON.stringify(newProperty.value) != JSON.stringify(oldProperty.value) ||
-                !propertyDefinitionIsEqual(newProperty.definition, oldProperty.definition)
+                JSON.stringify(newProperty.value) !=
+                  JSON.stringify(oldProperty.value) ||
+                !propertyDefinitionIsEqual(
+                  newProperty.definition,
+                  oldProperty.definition
+                )
               ) {
                 // PropertyRequest does not match
                 return true;
@@ -88,14 +95,18 @@ function propertyDefinitionIsEqual(
       'isTimeSeries',
     ];
     for (const key of keys) {
-      if (newDefinition[key] != undefined && newDefinition[key] != oldDefinition[key]) {
+      if (
+        newDefinition[key] != undefined &&
+        newDefinition[key] != oldDefinition[key]
+      ) {
         return false;
       }
     }
     // Does defaultValue need update?
     if (
       newDefinition.defaultValue != undefined &&
-      JSON.stringify(newDefinition.defaultValue) != JSON.stringify(oldDefinition.defaultValue)
+      JSON.stringify(newDefinition.defaultValue) !=
+        JSON.stringify(oldDefinition.defaultValue)
     ) {
       return false;
     }
@@ -107,14 +118,19 @@ function propertyDefinitionIsEqual(
       } else {
         for (const key in newDefinition.configuration) {
           // if any key-value pair in the NEW configuration does not match (NOT strict equality)
-          if (newDefinition.configuration[key] != oldDefinition.configuration[key]) {
+          if (
+            newDefinition.configuration[key] != oldDefinition.configuration[key]
+          ) {
             return false;
           }
         }
       }
     }
     // does dataType need update?
-    if (newDefinition.dataType != undefined && !dataTypeIsEqual(newDefinition.dataType, oldDefinition.dataType)) {
+    if (
+      newDefinition.dataType != undefined &&
+      !dataTypeIsEqual(newDefinition.dataType, oldDefinition.dataType)
+    ) {
       return false;
     }
   }
@@ -131,14 +147,20 @@ function propertyDefinitionIsEqual(
  * @param oldDataType - existing entity's data type
  * @returns true if oldDataType does not need update, and false otherwise
  */
-function dataTypeIsEqual(newDataType: DataType | undefined, oldDataType: DataType | undefined): boolean {
+function dataTypeIsEqual(
+  newDataType: DataType | undefined,
+  oldDataType: DataType | undefined
+): boolean {
   if (newDataType != undefined && oldDataType != undefined) {
     // Does type need update?
     if (newDataType.type != oldDataType.type) {
       return false;
       // Does unitOfMeasure need update?
     }
-    if (newDataType.unitOfMeasure != undefined && newDataType.unitOfMeasure != oldDataType.unitOfMeasure) {
+    if (
+      newDataType.unitOfMeasure != undefined &&
+      newDataType.unitOfMeasure != oldDataType.unitOfMeasure
+    ) {
       return false;
       // Does allowedValues need update?
     }
@@ -149,7 +171,10 @@ function dataTypeIsEqual(newDataType: DataType | undefined, oldDataType: DataTyp
           return false;
         }
         // if any new value changed from old allowedValue, we need update
-        if (JSON.stringify(value) != JSON.stringify(oldDataType.allowedValues[index])) {
+        if (
+          JSON.stringify(value) !=
+          JSON.stringify(oldDataType.allowedValues[index])
+        ) {
           return false;
         }
       }
@@ -159,18 +184,23 @@ function dataTypeIsEqual(newDataType: DataType | undefined, oldDataType: DataTyp
       // If either relationshipType or targetComponentTypeId are defined and different, we need update
       if (
         newDataType.relationship.relationshipType != undefined &&
-        newDataType.relationship.relationshipType != oldDataType.relationship?.relationshipType
+        newDataType.relationship.relationshipType !=
+          oldDataType.relationship?.relationshipType
       ) {
         return false;
       } else if (
         newDataType.relationship.targetComponentTypeId != undefined &&
-        newDataType.relationship.targetComponentTypeId != oldDataType.relationship?.targetComponentTypeId
+        newDataType.relationship.targetComponentTypeId !=
+          oldDataType.relationship?.targetComponentTypeId
       ) {
         return false;
       }
       // Does nestedType need update?
     }
-    if (newDataType.nestedType != undefined && !dataTypeIsEqual(newDataType.nestedType, oldDataType.nestedType)) {
+    if (
+      newDataType.nestedType != undefined &&
+      !dataTypeIsEqual(newDataType.nestedType, oldDataType.nestedType)
+    ) {
       return false;
     }
     // If all of the above checks passed, we do not need update

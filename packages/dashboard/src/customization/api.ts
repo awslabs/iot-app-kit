@@ -1,5 +1,8 @@
 import React from 'react';
-import { ComponentLibraryComponentMap, ComponentLibraryComponentOrdering } from './componentLibraryComponentMap';
+import {
+  ComponentLibraryComponentMap,
+  ComponentLibraryComponentOrdering,
+} from './componentLibraryComponentMap';
 import { WidgetComponentMap } from './widgetComponentMap';
 import { WidgetPropertiesGeneratorMap } from './widgetPropertiesGeneratorMap';
 import type { DashboardWidget } from '~/types';
@@ -19,7 +22,10 @@ type WidgetRegistrationOptions<T extends DashboardWidget> = {
   properties?: () => T['properties'];
   initialSize?: Pick<DashboardWidget, 'height' | 'width'>;
 };
-type RegisterWidget = <T extends DashboardWidget>(type: string, options: WidgetRegistrationOptions<T>) => void;
+type RegisterWidget = <T extends DashboardWidget>(
+  type: string,
+  options: WidgetRegistrationOptions<T>
+) => void;
 
 /**
  * function to register a new widget type in the dashboard
@@ -71,7 +77,9 @@ const resetMaps = () => {
 };
 
 export const useDashboardPlugins = () => {
-  const hasSymbolLibraryFeatureFlag = useHasFeatureFlag('ENABLE_SYMBOL_LIBRARY');
+  const hasSymbolLibraryFeatureFlag = useHasFeatureFlag(
+    'ENABLE_SYMBOL_LIBRARY'
+  );
   resetMaps();
   plugins.forEach((plugin) => plugin.install({ registerWidget }));
   if (hasSymbolLibraryFeatureFlag) {

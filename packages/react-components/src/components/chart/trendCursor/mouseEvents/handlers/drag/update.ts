@@ -8,18 +8,26 @@ import {
   TREND_CURSOR_LINE_GRAPHIC_INDEX,
 } from '../../../constants';
 import { setXWithBounds } from '../../../calculations/calculations';
-import { ondragUpdateGraphicProps, ondragUpdateTrendCursorElementsProps } from '../../../types';
+import {
+  ondragUpdateGraphicProps,
+  ondragUpdateTrendCursorElementsProps,
+} from '../../../types';
 import { updateTrendCursorLineMarkers } from '../../../getTrendCursor/components/markers';
 import { getTrendCursorHeaderTimestampText } from '../../../calculations/timestamp';
 import { calculateSeriesMakers } from '../../../calculations/calculateSeriesMakers';
 
-const onDragUpdateTrendCursorLine = (elements: GraphicComponentElementOption[]) => {
+const onDragUpdateTrendCursorLine = (
+  elements: GraphicComponentElementOption[]
+) => {
   // specifically setting the line graphic x value to 0 so that it follows the parent's X
   const lineGraphic = elements[TREND_CURSOR_LINE_GRAPHIC_INDEX];
   lineGraphic.x = 0;
   return lineGraphic;
 };
-const onDragUpdateTrendCursorHeaderText = (elements: GraphicComponentElementOption[], timeInMs: number) => {
+const onDragUpdateTrendCursorHeaderText = (
+  elements: GraphicComponentElementOption[],
+  timeInMs: number
+) => {
   const headerGraphic = elements[TREND_CURSOR_HEADER_GRAPHIC_INDEX];
   headerGraphic.x = 0;
 
@@ -47,10 +55,10 @@ export const onDragUpdateTrendCursorElements = ({
   return [
     onDragUpdateTrendCursorLine(elements),
     onDragUpdateTrendCursorHeaderText(elements, timeInMs),
-    ...updateTrendCursorLineMarkers(elements, trendCursorsSeriesMakersInPixels).slice(
-      TREND_CURSOR_CLOSE_GRAPHIC_INDEX,
-      elements.length
-    ),
+    ...updateTrendCursorLineMarkers(
+      elements,
+      trendCursorsSeriesMakersInPixels
+    ).slice(TREND_CURSOR_CLOSE_GRAPHIC_INDEX, elements.length),
   ];
 };
 export const onDragUpdateTrendCursor = ({
@@ -64,13 +72,14 @@ export const onDragUpdateTrendCursor = ({
   significantDigits,
 }: ondragUpdateGraphicProps) => {
   // calculate the new Y for the series markers
-  const { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue } = calculateSeriesMakers(
-    series,
-    timeInMs,
-    chartRef,
-    visualization,
-    significantDigits
-  );
+  const { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue } =
+    calculateSeriesMakers(
+      series,
+      timeInMs,
+      chartRef,
+      visualization,
+      significantDigits
+    );
 
   // this section updates the internal data of graphic, this data is used to render the legend component data
   // update the X value of the TC

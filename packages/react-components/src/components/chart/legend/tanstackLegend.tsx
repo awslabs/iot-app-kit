@@ -16,13 +16,17 @@ type legendOptions = {
 };
 
 const TanstackLegend = (legendOptions: legendOptions) => {
-  const { items: allItemsTanstack, columnDefinitions: columnDefinitionsTanstack } =
-    useChartsLegendTanstack(legendOptions);
+  const {
+    items: allItemsTanstack,
+    columnDefinitions: columnDefinitionsTanstack,
+  } = useChartsLegendTanstack(legendOptions);
 
   return (
     <TanstackTable
       data={allItemsTanstack}
-      columnDefinitions={columnDefinitionsTanstack as ColumnDef<object, string>[]}
+      columnDefinitions={
+        columnDefinitionsTanstack as ColumnDef<object, string>[]
+      }
       stickyColumns={{ first: 1 }}
       stickyHeader
     />

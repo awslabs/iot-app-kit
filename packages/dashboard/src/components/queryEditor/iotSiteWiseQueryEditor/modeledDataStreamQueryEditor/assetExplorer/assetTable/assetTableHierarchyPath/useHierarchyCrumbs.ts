@@ -1,4 +1,7 @@
-import { type AssetSummary, type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  type AssetSummary,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import { useQuery, type QueryFunctionContext } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 
@@ -13,7 +16,10 @@ export interface UseHierarchyCrumbsProps {
 }
 
 /** Use the hierarchy path for an asset with a given asset ID. */
-export function useHierarchyCrumbs({ assetId, client }: UseHierarchyCrumbsProps) {
+export function useHierarchyCrumbs({
+  assetId,
+  client,
+}: UseHierarchyCrumbsProps) {
   const { asset: { assetName = '' } = {} } = useAsset({ assetId, client });
   const cacheKeyFactory = new HierarchyPathCacheKeyFactory(assetId);
 
@@ -27,8 +33,11 @@ export function useHierarchyCrumbs({ assetId, client }: UseHierarchyCrumbsProps)
   });
 
   const loadingCrumb = isFetching ? [{ href: '', text: 'Loading...' }] : [];
-  const ancestorCrumbs = !isFetching ? [{ href: '', text: 'Root' }, ...crumbs] : [];
-  const parentAssetCrumb = !isFetching && assetId ? [{ href: assetId, text: assetName }] : [];
+  const ancestorCrumbs = !isFetching
+    ? [{ href: '', text: 'Root' }, ...crumbs]
+    : [];
+  const parentAssetCrumb =
+    !isFetching && assetId ? [{ href: assetId, text: assetName }] : [];
 
   const hierarchyPathCrumbs: { href: string; text: string }[] = [
     ...loadingCrumb,
@@ -48,7 +57,10 @@ function createQueryFn(client: IoTSiteWiseClient) {
     queryKey: [{ assetId }],
     signal,
   }: QueryFunctionContext<ReturnType<HierarchyPathCacheKeyFactory['create']>>) {
-    invariant(isEnabled(assetId), 'Expected assetId to be defined given the enabled condition.');
+    invariant(
+      isEnabled(assetId),
+      'Expected assetId to be defined given the enabled condition.'
+    );
 
     const request = new ListParentAssetsRequest({ assetId, client, signal });
     const response = await request.send();
@@ -57,8 +69,13 @@ function createQueryFn(client: IoTSiteWiseClient) {
   };
 }
 
-function transformAssetsToCrumbs(assets: AssetSummary[]): { href: string; text: string }[] {
-  const crumbs = assets.map(({ id = '', name = '' }) => ({ href: id, text: name }));
+function transformAssetsToCrumbs(
+  assets: AssetSummary[]
+): { href: string; text: string }[] {
+  const crumbs = assets.map(({ id = '', name = '' }) => ({
+    href: id,
+    text: name,
+  }));
 
   return crumbs;
 }

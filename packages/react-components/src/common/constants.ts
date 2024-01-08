@@ -87,6 +87,9 @@ export enum TREND_TYPE {
 
 export const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
 
-export const DEFAULT_LEGEND: LegendConfig = { position: LEGEND_POSITION.BOTTOM, width: 0 };
+export const DEFAULT_LEGEND: LegendConfig = {
+  position: LEGEND_POSITION.BOTTOM,
+  width: 0,
+};
 
 export const ECHARTS_GESTURE = 'echarts-gesture';

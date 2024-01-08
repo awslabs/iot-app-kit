@@ -19,11 +19,27 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
 ): DataStreamsStore => {
   switch (action.type) {
     case REQUEST: {
-      const { id, resolution, aggregationType, start, end, fetchFromStartToEnd } = action.payload;
-      const streamStore = getDataStreamStore(id, resolution, state, aggregationType);
-      const dataCache = streamStore != null ? streamStore.dataCache : EMPTY_CACHE;
-      const requestCache = streamStore != null ? streamStore.requestCache : EMPTY_CACHE;
-      const existingRequestHistory = streamStore ? streamStore.requestHistory : [];
+      const {
+        id,
+        resolution,
+        aggregationType,
+        start,
+        end,
+        fetchFromStartToEnd,
+      } = action.payload;
+      const streamStore = getDataStreamStore(
+        id,
+        resolution,
+        state,
+        aggregationType
+      );
+      const dataCache =
+        streamStore != null ? streamStore.dataCache : EMPTY_CACHE;
+      const requestCache =
+        streamStore != null ? streamStore.requestCache : EMPTY_CACHE;
+      const existingRequestHistory = streamStore
+        ? streamStore.requestHistory
+        : [];
 
       // We only consider it loading if data has not been requested before, or if it's already loading.
       const isLoading = streamStore == null || streamStore.isLoading;
@@ -65,7 +81,9 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
             }
           : state[id]?.resolutions || undefined;
       const newRawData =
-        numericResolution === 0 ? { ...state[id]?.rawData, ...newStreamStore } : state[id]?.rawData || undefined;
+        numericResolution === 0
+          ? { ...state[id]?.rawData, ...newStreamStore }
+          : state[id]?.rawData || undefined;
 
       return {
         ...state,
@@ -78,13 +96,29 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
     }
 
     case SUCCESS: {
-      const { id, data: dataStream, first, last, requestInformation } = action.payload;
-      const { aggregationType, fetchFromStartToEnd, fetchMostRecentBeforeEnd, fetchMostRecentBeforeStart } =
-        requestInformation;
-      const streamStore = getDataStreamStore(id, dataStream.resolution, state, aggregationType);
+      const {
+        id,
+        data: dataStream,
+        first,
+        last,
+        requestInformation,
+      } = action.payload;
+      const {
+        aggregationType,
+        fetchFromStartToEnd,
+        fetchMostRecentBeforeEnd,
+        fetchMostRecentBeforeStart,
+      } = requestInformation;
+      const streamStore = getDataStreamStore(
+        id,
+        dataStream.resolution,
+        state,
+        aggregationType
+      );
       // Updating request cache is a hack to deal with latest value update
       // TODO: clean this to one single source of truth cache
-      const requestCache = streamStore != null ? streamStore.requestCache : EMPTY_CACHE;
+      const requestCache =
+        streamStore != null ? streamStore.requestCache : EMPTY_CACHE;
 
       // We always want data in ascending order in the cache
       const sortedData = dataStream.data.sort((a, b) => a.x - b.x);
@@ -99,7 +133,10 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
 
       // start the interval from the returned data point to avoid over-caching
       // if there is no data point it's fine to cache the entire interval
-      if ((fetchMostRecentBeforeStart || fetchMostRecentBeforeEnd) && sortedData.length > 0) {
+      if (
+        (fetchMostRecentBeforeStart || fetchMostRecentBeforeEnd) &&
+        sortedData.length > 0
+      ) {
         intervalStart = new Date(sortedData[0].x);
       }
 
@@ -110,7 +147,9 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
         cache: (streamStore && streamStore.dataCache) || EMPTY_CACHE,
       });
 
-      const existingRequestHistory = streamStore ? streamStore.requestHistory : [];
+      const existingRequestHistory = streamStore
+        ? streamStore.requestHistory
+        : [];
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data, ...restOfDataStream } = dataStream;
@@ -147,7 +186,9 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
             }
           : state[id]?.resolutions || undefined;
       const newRawData =
-        dataStream.resolution === 0 ? { ...state[id]?.rawData, ...newStreamStore } : state[id]?.rawData || undefined;
+        dataStream.resolution === 0
+          ? { ...state[id]?.rawData, ...newStreamStore }
+          : state[id]?.rawData || undefined;
 
       return {
         ...state,
@@ -162,7 +203,12 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
     case ERROR: {
       const { id, error, resolution, aggregationType } = action.payload;
 
-      const streamStore = getDataStreamStore(id, resolution, state, aggregationType);
+      const streamStore = getDataStreamStore(
+        id,
+        resolution,
+        state,
+        aggregationType
+      );
 
       const newStreamStore = {
         ...streamStore,

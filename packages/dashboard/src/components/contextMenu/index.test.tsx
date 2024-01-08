@@ -19,7 +19,10 @@ const renderContextMenu = (args: ContextMenuProps, open?: boolean) => {
   act(() => {
     const { container } = render(
       <Provider store={configureDashboardStore()}>
-        <div id={DASHBOARD_CONTAINER_ID} style={{ height: '1000px', width: '1000px' }}>
+        <div
+          id={DASHBOARD_CONTAINER_ID}
+          style={{ height: '1000px', width: '1000px' }}
+        >
           <ContextMenu {...args} />
         </div>
       </Provider>

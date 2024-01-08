@@ -3,7 +3,10 @@ import React from 'react';
 import { AssetModelSelection } from './assetModelSelection/assetModelSelection';
 import { AssetModelSelected } from './assetModelSelection/assetModelSelected';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { SelectedAssetModel, UpdateSelectedAssetModel } from '../useSelectedAssetModel';
+import {
+  SelectedAssetModel,
+  UpdateSelectedAssetModel,
+} from '../useSelectedAssetModel';
 import { SelectedAsset, UpdateSelectedAsset } from '../useSelectedAsset';
 
 type AssetModelExplorerOptions = {

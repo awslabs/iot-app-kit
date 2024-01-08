@@ -1,18 +1,30 @@
-import { getDefaultAwsClients as aws, initDefaultAwsClients } from '../../src/lib/aws-clients';
+import {
+  getDefaultAwsClients as aws,
+  initDefaultAwsClients,
+} from '../../src/lib/aws-clients';
 import { Arguments } from 'yargs';
 import * as deploy from '../../src/commands/deploy';
 import * as init from '../../src/commands/init';
 import * as destroy from '../../src/commands/destroy';
 import * as fs from 'fs';
 import * as constants from './basic-functional-constants';
-import { twinMakerAssumeRolePolicy, twinMakerPermissionPolicy } from './basic-functional-iam';
-import { ComponentTypeSummary, GetComponentTypeCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import {
+  twinMakerAssumeRolePolicy,
+  twinMakerPermissionPolicy,
+} from './basic-functional-iam';
+import {
+  ComponentTypeSummary,
+  GetComponentTypeCommandOutput,
+} from '@aws-sdk/client-iottwinmaker';
 import { DeleteObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import * as path from 'path';
 import { EntitySummary } from '@aws-sdk/client-iottwinmaker/dist-types/models/models_0';
 import { delay } from '../../src/lib/utils';
 import * as prompts from 'prompts';
-import { componentType1Input, expectedTmdt } from './basic-functional-constants';
+import {
+  componentType1Input,
+  expectedTmdt,
+} from './basic-functional-constants';
 
 // Ensure destroy always operates
 prompts.inject(['Y', 'Y']);
@@ -35,7 +47,9 @@ test('basic functional test', async () => {
   const model2S3Location = `s3://${workspaceS3BucketName}/${constants.model2FileName}`;
 
   // 1. Clean up pre-existing resources, if any
-  console.log('Deleting test IAM role, s3 bucket, and workspace if they exist.');
+  console.log(
+    'Deleting test IAM role, s3 bucket, and workspace if they exist.'
+  );
   try {
     await aws().tm.getWorkspace({ workspaceId: constants.workspaceId });
     console.log('Workspace exists, nuking it.');
@@ -101,8 +115,14 @@ test('basic functional test', async () => {
       AssumeRolePolicyDocument: JSON.stringify(twinMakerAssumeRolePolicy),
     });
     let twinMakerPolicyString = JSON.stringify(twinMakerPermissionPolicy);
-    twinMakerPolicyString = twinMakerPolicyString.replace('__S3_ARN_STAR__', `${workspaceS3BucketArn}/*`);
-    twinMakerPolicyString = twinMakerPolicyString.replace('__S3_ARN_STANDARD__', workspaceS3BucketArn);
+    twinMakerPolicyString = twinMakerPolicyString.replace(
+      '__S3_ARN_STAR__',
+      `${workspaceS3BucketArn}/*`
+    );
+    twinMakerPolicyString = twinMakerPolicyString.replace(
+      '__S3_ARN_STANDARD__',
+      workspaceS3BucketArn
+    );
     twinMakerPolicyString = twinMakerPolicyString.replace(
       '__S3_ARN_FOR_DELETE__',
       `${workspaceS3BucketArn}/DO_NOT_DELETE_WORKSPACE_*`
@@ -123,9 +143,14 @@ test('basic functional test', async () => {
       s3Location: workspaceS3BucketArn,
       role: twinMakerRoleArn,
     });
-    console.log(`Uploading scene 1 definition file to s3 bucket: ${workspaceS3BucketName}`);
+    console.log(
+      `Uploading scene 1 definition file to s3 bucket: ${workspaceS3BucketName}`
+    );
     const scene1Definition = JSON.parse(
-      fs.readFileSync(path.join(constants.localResourcesDir, constants.scene1FileName), constants.jsonEncoding)
+      fs.readFileSync(
+        path.join(constants.localResourcesDir, constants.scene1FileName),
+        constants.jsonEncoding
+      )
     );
     scene1Definition['nodes'][0]['components'][0]['uri'] = model1S3Location;
     const scene1UploadParams = {
@@ -135,16 +160,23 @@ test('basic functional test', async () => {
     };
     await aws().s3.send(new PutObjectCommand(scene1UploadParams));
     constants.scene1Input['contentLocation'] = scene1S3Location;
-    console.log(`Uploading model 1 glb file to s3 bucket: ${workspaceS3BucketName}`);
+    console.log(
+      `Uploading model 1 glb file to s3 bucket: ${workspaceS3BucketName}`
+    );
     const model1UploadParams = {
       Bucket: workspaceS3BucketName,
       Key: constants.model1FileName,
-      Body: fs.createReadStream(path.join(constants.localResourcesDir, constants.model1FileName)),
+      Body: fs.createReadStream(
+        path.join(constants.localResourcesDir, constants.model1FileName)
+      ),
     };
     await aws().s3.send(new PutObjectCommand(model1UploadParams));
     console.log('Successfully set up test resources.');
   } catch (e) {
-    console.error('Error while setting up test resources, please check logs, clean up, and restart test. \n', e);
+    console.error(
+      'Error while setting up test resources, please check logs, clean up, and restart test. \n',
+      e
+    );
     throw e;
   }
 
@@ -156,12 +188,17 @@ test('basic functional test', async () => {
     await aws().tm.createEntity(constants.entity1Input);
     console.log('Successfully set up first round of TwinMaker resources.');
   } catch (e) {
-    console.error('Error while creating TwinMaker resources, please check logs, clean up, and restart test. \n', e);
+    console.error(
+      'Error while creating TwinMaker resources, please check logs, clean up, and restart test. \n',
+      e
+    );
     throw e;
   }
 
   // 4. Init tmdt project
-  console.log(`Using init to initialize tmdt project in dir: ${constants.tmdtDirectory}`);
+  console.log(
+    `Using init to initialize tmdt project in dir: ${constants.tmdtDirectory}`
+  );
   argv2 = {
     _: ['init'],
     $0: 'tmdt_local',
@@ -172,62 +209,108 @@ test('basic functional test', async () => {
   expect(await init.handler(argv2)).toBe(0);
 
   // 5. Validate tmdt definition
-  console.log(`Init succeeded, validating tmdt definition in dir: ${constants.tmdtDirectory}`);
+  console.log(
+    `Init succeeded, validating tmdt definition in dir: ${constants.tmdtDirectory}`
+  );
   const tmdtDefinition1 = JSON.parse(
-    fs.readFileSync(path.join(constants.tmdtDirectory, 'tmdt.json'), constants.jsonEncoding)
+    fs.readFileSync(
+      path.join(constants.tmdtDirectory, 'tmdt.json'),
+      constants.jsonEncoding
+    )
   );
-  expect(tmdtDefinition1['component_types']).toStrictEqual(expectedTmdt['component_types']);
+  expect(tmdtDefinition1['component_types']).toStrictEqual(
+    expectedTmdt['component_types']
+  );
   const ct1Definition = JSON.parse(
-    fs.readFileSync(path.join(constants.tmdtDirectory, 'testComponentType1.json'), constants.jsonEncoding)
+    fs.readFileSync(
+      path.join(constants.tmdtDirectory, 'testComponentType1.json'),
+      constants.jsonEncoding
+    )
   );
-  expect(ct1Definition['componentTypeId']).toStrictEqual(componentType1Input.componentTypeId);
+  expect(ct1Definition['componentTypeId']).toStrictEqual(
+    componentType1Input.componentTypeId
+  );
   expect(tmdtDefinition1['scenes']).toStrictEqual(expectedTmdt['scenes']);
   const scene1Definition = JSON.parse(
-    fs.readFileSync(path.join(constants.tmdtDirectory, 'testScene1.json'), constants.jsonEncoding)
+    fs.readFileSync(
+      path.join(constants.tmdtDirectory, 'testScene1.json'),
+      constants.jsonEncoding
+    )
   );
-  expect(scene1Definition['nodes'][0]['name']).toStrictEqual('CookieFactoryMixer');
+  expect(scene1Definition['nodes'][0]['name']).toStrictEqual(
+    'CookieFactoryMixer'
+  );
   expect(tmdtDefinition1['models']).toStrictEqual(expectedTmdt['models']);
   expect(tmdtDefinition1['entities']).toStrictEqual(expectedTmdt['entities']);
-  expect(fs.existsSync(path.join(constants.tmdtDirectory, 'entities.json'))).toBeTruthy();
+  expect(
+    fs.existsSync(path.join(constants.tmdtDirectory, 'entities.json'))
+  ).toBeTruthy();
   const entities1Definition = JSON.parse(
-    fs.readFileSync(path.join(constants.tmdtDirectory, 'entities.json'), constants.jsonEncoding)
+    fs.readFileSync(
+      path.join(constants.tmdtDirectory, 'entities.json'),
+      constants.jsonEncoding
+    )
   );
   expect(entities1Definition[0]['entityName']).toStrictEqual('testEntity1');
   console.log('tmdt definition validated successfully');
 
   // 6. Update tmdt definition, add resources
-  console.log(`Updating tmdt definition in dir: ${constants.tmdtDirectory} and adding resources`);
+  console.log(
+    `Updating tmdt definition in dir: ${constants.tmdtDirectory} and adding resources`
+  );
   fs.copyFileSync(
     path.join(constants.localResourcesDir, constants.model2FileName),
     path.join(constants.tmdtDirectory, `3d_models/${constants.model2FileName}`)
   );
   const scene2Definition = JSON.parse(
-    fs.readFileSync(path.join(constants.localResourcesDir, constants.scene2FileName), constants.jsonEncoding)
+    fs.readFileSync(
+      path.join(constants.localResourcesDir, constants.scene2FileName),
+      constants.jsonEncoding
+    )
   );
   scene2Definition['nodes'][0]['components'][0]['uri'] = model1S3Location;
   scene2Definition['nodes'][1]['components'][0]['uri'] = model2S3Location;
-  fs.writeFileSync(path.join(constants.tmdtDirectory, constants.scene2FileName), JSON.stringify(scene2Definition));
+  fs.writeFileSync(
+    path.join(constants.tmdtDirectory, constants.scene2FileName),
+    JSON.stringify(scene2Definition)
+  );
   fs.writeFileSync(
     path.join(constants.tmdtDirectory, `${constants.componentType2Name}.json`),
     JSON.stringify(constants.componentType2)
   );
   const entities = JSON.parse(
-    fs.readFileSync(path.join(constants.tmdtDirectory, constants.entitiesFile), constants.jsonEncoding)
+    fs.readFileSync(
+      path.join(constants.tmdtDirectory, constants.entitiesFile),
+      constants.jsonEncoding
+    )
   );
   const entity1Id = entities[0].entityId;
   entities.push(constants.entity2Definition);
-  fs.writeFileSync(path.join(constants.tmdtDirectory, 'entities.json'), JSON.stringify(entities));
-  const tmdtDefinition = JSON.parse(
-    fs.readFileSync(path.join(constants.tmdtDirectory, constants.tmdtFile), constants.jsonEncoding)
+  fs.writeFileSync(
+    path.join(constants.tmdtDirectory, 'entities.json'),
+    JSON.stringify(entities)
   );
-  tmdtDefinition['component_types'].push(`${constants.componentType2Name}.json`);
+  const tmdtDefinition = JSON.parse(
+    fs.readFileSync(
+      path.join(constants.tmdtDirectory, constants.tmdtFile),
+      constants.jsonEncoding
+    )
+  );
+  tmdtDefinition['component_types'].push(
+    `${constants.componentType2Name}.json`
+  );
   tmdtDefinition['scenes'].push(constants.scene2FileName);
   tmdtDefinition['models'].push(constants.model2FileName);
-  fs.writeFileSync(path.join(constants.tmdtDirectory, constants.tmdtFile), JSON.stringify(tmdtDefinition));
+  fs.writeFileSync(
+    path.join(constants.tmdtDirectory, constants.tmdtFile),
+    JSON.stringify(tmdtDefinition)
+  );
   console.log('tmdt definition updated');
 
   // 7. Deploy to workspace
-  console.log(`Deploying updated tmdt project to workspace: ${constants.workspaceId}`);
+  console.log(
+    `Deploying updated tmdt project to workspace: ${constants.workspaceId}`
+  );
   argv2 = {
     _: ['deploy'],
     $0: 'tmdt_local',
@@ -238,21 +321,29 @@ test('basic functional test', async () => {
   expect(await deploy.handler(argv2)).toBe(0);
 
   // 8. Validate resources were created
-  console.log(`Verifying TwinMaker resource in dir: ${constants.tmdtDirectory}`);
+  console.log(
+    `Verifying TwinMaker resource in dir: ${constants.tmdtDirectory}`
+  );
   // Verify Component Types
-  const componentType1Result: GetComponentTypeCommandOutput = await aws().tm.getComponentType({
-    workspaceId: constants.workspaceId,
-    componentTypeId: constants.componentType1Input.componentTypeId,
-  });
-  expect(componentType1Result.componentTypeId).toEqual(constants.componentType1Input.componentTypeId);
+  const componentType1Result: GetComponentTypeCommandOutput =
+    await aws().tm.getComponentType({
+      workspaceId: constants.workspaceId,
+      componentTypeId: constants.componentType1Input.componentTypeId,
+    });
+  expect(componentType1Result.componentTypeId).toEqual(
+    constants.componentType1Input.componentTypeId
+  );
   expect(componentType1Result.status).toMatchObject({
     state: constants.resourceActiveState,
   });
-  const componentType2Result: GetComponentTypeCommandOutput = await aws().tm.getComponentType({
-    workspaceId: constants.workspaceId,
-    componentTypeId: constants.componentType2.componentTypeId,
-  });
-  expect(componentType2Result.componentTypeId).toEqual(constants.componentType2.componentTypeId);
+  const componentType2Result: GetComponentTypeCommandOutput =
+    await aws().tm.getComponentType({
+      workspaceId: constants.workspaceId,
+      componentTypeId: constants.componentType2.componentTypeId,
+    });
+  expect(componentType2Result.componentTypeId).toEqual(
+    constants.componentType2.componentTypeId
+  );
   expect(componentType2Result.status).toMatchObject({
     state: constants.resourceActiveState,
   });
@@ -266,7 +357,8 @@ test('basic functional test', async () => {
   expect(entity1Result.status).toBeTruthy();
   expect(entity1Result.status?.state).toBe(constants.resourceActiveState);
   const listEntitiesResult: EntitySummary[] =
-    (await aws().tm.listEntities({ workspaceId: constants.workspaceId })).entitySummaries || [];
+    (await aws().tm.listEntities({ workspaceId: constants.workspaceId }))
+      .entitySummaries || [];
   listEntitiesResult.forEach(function (entity) {
     if (entity.entityName === constants.entity2Definition.entityName) {
       expect(entity.status?.state).toBe(constants.resourceActiveState);
@@ -285,8 +377,12 @@ test('basic functional test', async () => {
   if (scene1S3Response.Body == undefined) {
     throw new Error(`Error reading from s3 Bucket: ${workspaceS3BucketArn}`);
   }
-  const scene1JsonResult = JSON.parse(await scene1S3Response.Body.transformToString(constants.jsonEncoding));
-  expect(scene1JsonResult.nodes[0].name).toBe(constants.model1FileName.replace('.glb', ''));
+  const scene1JsonResult = JSON.parse(
+    await scene1S3Response.Body.transformToString(constants.jsonEncoding)
+  );
+  expect(scene1JsonResult.nodes[0].name).toBe(
+    constants.model1FileName.replace('.glb', '')
+  );
   const scene2Result = await aws().tm.getScene({
     workspaceId: constants.workspaceId,
     sceneId: constants.scene2FileName.replace('.json', ''),
@@ -301,13 +397,19 @@ test('basic functional test', async () => {
   if (scene2S3Response.Body == undefined) {
     throw new Error(`Error reading from s3 Bucket: ${workspaceS3BucketArn}`);
   }
-  const scene2JsonResult = JSON.parse(await scene2S3Response.Body.transformToString(constants.jsonEncoding));
+  const scene2JsonResult = JSON.parse(
+    await scene2S3Response.Body.transformToString(constants.jsonEncoding)
+  );
   const scene2ModelNames: string[] = [];
   scene2JsonResult.nodes.forEach(function (model: { name: string }) {
     scene2ModelNames.push(model.name);
   });
-  expect(scene2ModelNames).toContain(constants.model1FileName.replace('.glb', ''));
-  expect(scene2ModelNames).toContain(constants.model2FileName.replace('.glb', ''));
+  expect(scene2ModelNames).toContain(
+    constants.model1FileName.replace('.glb', '')
+  );
+  expect(scene2ModelNames).toContain(
+    constants.model2FileName.replace('.glb', '')
+  );
   // Verify Models
   const model1S3Response = await aws().s3.getObject({
     Bucket: workspaceS3BucketName,
@@ -319,7 +421,9 @@ test('basic functional test', async () => {
     Key: constants.model2FileName,
   });
   expect(model2S3Response).toHaveProperty('Body');
-  console.log('TwinMaker resources verified, deploy successfully created resources.');
+  console.log(
+    'TwinMaker resources verified, deploy successfully created resources.'
+  );
 
   // 9. Destroy workspace
   console.log(`Nuking workspace: ${constants.workspaceId}`);
@@ -333,10 +437,17 @@ test('basic functional test', async () => {
 
   // 10. Validate destroy
   console.log('Validating destroy cleared all TwinMaker resources.');
-  expect((await aws().tm.listEntities({ workspaceId: constants.workspaceId })).entitySummaries).toMatchObject([]);
-  expect((await aws().tm.listScenes({ workspaceId: constants.workspaceId })).sceneSummaries).toMatchObject([]);
+  expect(
+    (await aws().tm.listEntities({ workspaceId: constants.workspaceId }))
+      .entitySummaries
+  ).toMatchObject([]);
+  expect(
+    (await aws().tm.listScenes({ workspaceId: constants.workspaceId }))
+      .sceneSummaries
+  ).toMatchObject([]);
   const listComponentTypesResult: ComponentTypeSummary[] =
-    (await aws().tm.listComponentTypes({ workspaceId: constants.workspaceId })).componentTypeSummaries || [];
+    (await aws().tm.listComponentTypes({ workspaceId: constants.workspaceId }))
+      .componentTypeSummaries || [];
   listComponentTypesResult.forEach(function (componentType) {
     expect(componentType.componentTypeId?.includes('com.amazon')).toBeTruthy();
   });

@@ -19,7 +19,9 @@ export namespace Components {
         "filterEnabled": boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
-        "onSelectionChange": (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
+        "onSelectionChange": (
+    event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>
+  ) => void;
         "paginationEnabled": boolean;
         "query": TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
         "selectionType"?: TableProps.SelectionType;
@@ -43,8 +45,12 @@ export namespace Components {
         "loading": boolean;
         "loadingText": string;
         "onExpandChildren": (node: ITreeNode<any>) => void;
-        "onSelectionChange": (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
-        "onSortingChange": (event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>) => void;
+        "onSelectionChange": (
+    event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>
+  ) => void;
+        "onSortingChange": (
+    event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>
+  ) => void;
         "resizableColumns": boolean;
         "selectionType": TableProps.SelectionType;
         "sortingDisabled": boolean;
@@ -100,7 +106,9 @@ declare namespace LocalJSX {
         "filterEnabled"?: boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
-        "onSelectionChange"?: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
+        "onSelectionChange"?: (
+    event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>
+  ) => void;
         "paginationEnabled"?: boolean;
         "query"?: TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
         "selectionType"?: TableProps.SelectionType;
@@ -124,8 +132,12 @@ declare namespace LocalJSX {
         "loading"?: boolean;
         "loadingText"?: string;
         "onExpandChildren"?: (node: ITreeNode<any>) => void;
-        "onSelectionChange"?: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
-        "onSortingChange"?: (event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>) => void;
+        "onSelectionChange"?: (
+    event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>
+  ) => void;
+        "onSortingChange"?: (
+    event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>
+  ) => void;
         "resizableColumns"?: boolean;
         "selectionType"?: TableProps.SelectionType;
         "sortingDisabled"?: boolean;

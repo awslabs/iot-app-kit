@@ -17,26 +17,52 @@ export type IntervalStructure<T> = {
  */
 type CompareFn<T> = (a: T, b: T) => number;
 
-const toObjectNotation = ([start, end]: Interval): IntervalSE => ({ start, end });
-const toIntervalNotation = ({ start, end }: IntervalSE): Interval => [start, end] as Interval;
+const toObjectNotation = ([start, end]: Interval): IntervalSE => ({
+  start,
+  end,
+});
+const toIntervalNotation = ({ start, end }: IntervalSE): Interval =>
+  [start, end] as Interval;
 
-const isBeforeInterval = ([_, aEnd]: Interval, [bStart]: Interval): boolean => aEnd < bStart;
-const isAfterInterval = ([aStart]: Interval, [_, bEnd]: Interval): boolean => aStart > bEnd;
-const isIntersecting = (a: Interval, b: Interval): boolean => !isBeforeInterval(a, b) && !isAfterInterval(a, b);
+const isBeforeInterval = ([_, aEnd]: Interval, [bStart]: Interval): boolean =>
+  aEnd < bStart;
+const isAfterInterval = ([aStart]: Interval, [_, bEnd]: Interval): boolean =>
+  aStart > bEnd;
+const isIntersecting = (a: Interval, b: Interval): boolean =>
+  !isBeforeInterval(a, b) && !isAfterInterval(a, b);
 
-export const isContained = <T>(structure: IntervalStructure<T>, interval: Interval): boolean =>
-  structure.intervals.some(([start, end]) => start <= interval[0] && end >= interval[1]);
+export const isContained = <T>(
+  structure: IntervalStructure<T>,
+  interval: Interval
+): boolean =>
+  structure.intervals.some(
+    ([start, end]) => start <= interval[0] && end >= interval[1]
+  );
 
-export const intersect = (aIntervals: Interval[], bIntervals: Interval[]): Interval[] => {
+export const intersect = (
+  aIntervals: Interval[],
+  bIntervals: Interval[]
+): Interval[] => {
   const intersectedIntervals = simplify(
-    intersectFn(aIntervals.map(toObjectNotation), bIntervals.map(toObjectNotation))
+    intersectFn(
+      aIntervals.map(toObjectNotation),
+      bIntervals.map(toObjectNotation)
+    )
   );
   return intersectedIntervals.map(toIntervalNotation);
 };
 
-export const subtractIntervals = (interval: Interval, intervals: Interval[]): Interval[] => {
-  const sortedIntervals = intervals.sort((i1, i2) => i1[0] - i2[0]).map(toObjectNotation);
-  const subtractedIntervals = substract([toObjectNotation(interval)], simplify(sortedIntervals));
+export const subtractIntervals = (
+  interval: Interval,
+  intervals: Interval[]
+): Interval[] => {
+  const sortedIntervals = intervals
+    .sort((i1, i2) => i1[0] - i2[0])
+    .map(toObjectNotation);
+  const subtractedIntervals = substract(
+    [toObjectNotation(interval)],
+    simplify(sortedIntervals)
+  );
   return simplify(subtractedIntervals)
     .filter((inter) => inter.start < inter.end)
     .map(toIntervalNotation);
@@ -71,7 +97,11 @@ const uniqByKeepLast = <T>(data: T[][], key: string) => {
  *
  * If `aItems` and `bItems` have overlap, always take the items specified in `aItems`
  */
-export const mergeItems = <T>(aItems: T[], bItems: T[], compare: CompareFn<T>) => {
+export const mergeItems = <T>(
+  aItems: T[],
+  bItems: T[],
+  compare: CompareFn<T>
+) => {
   // Empty items edge cases
   if (aItems.length === 0) {
     return bItems;
@@ -87,21 +117,32 @@ export const mergeItems = <T>(aItems: T[], bItems: T[], compare: CompareFn<T>) =
     return [...aItems, ...bItems];
   }
   // Fully contained edge cases
-  if (compare(aItems[0], bItems[0]) <= 0 && compare(aItems[aItems.length - 1], bItems[bItems.length - 1]) >= 0) {
+  if (
+    compare(aItems[0], bItems[0]) <= 0 &&
+    compare(aItems[aItems.length - 1], bItems[bItems.length - 1]) >= 0
+  ) {
     // `aItems` fully contains `bItems`
     return aItems;
   }
-  if (compare(bItems[0], aItems[0]) <= 0 && compare(bItems[bItems.length - 1], aItems[aItems.length - 1]) >= 0) {
+  if (
+    compare(bItems[0], aItems[0]) <= 0 &&
+    compare(bItems[bItems.length - 1], aItems[aItems.length - 1]) >= 0
+  ) {
     // `bItems` fully contains `aItems`
     const itemsBeforeA = bItems.filter((item) => compare(item, aItems[0]) < 0);
-    const itemsAfterA = bItems.filter((item) => compare(item, aItems[aItems.length - 1]) > 0);
+    const itemsAfterA = bItems.filter(
+      (item) => compare(item, aItems[aItems.length - 1]) > 0
+    );
     return [...itemsBeforeA, ...aItems, ...itemsAfterA];
   }
 
   // Merge items
   if (compare(aItems[0], bItems[0]) < 0) {
     // `aItems` interval begins before `bItems`
-    return [...aItems, ...bItems.filter((x) => compare(x, aItems[aItems.length - 1]) > 0)];
+    return [
+      ...aItems,
+      ...bItems.filter((x) => compare(x, aItems[aItems.length - 1]) > 0),
+    ];
   }
   // `bItems` interval begins before `aItems`
   return [...bItems.filter((x) => compare(x, aItems[0]) < 0), ...aItems];
@@ -122,8 +163,14 @@ export const addInterval = <T>(
 
   // Combine all overlapping intervals into a single interval
   const combinedInterval = overlappingIntervals.reduce(
-    (mergedInterval: Interval, { interval: currInterval }: { interval: Interval; index: number }) =>
-      [Math.min(mergedInterval[0], currInterval[0]), Math.max(mergedInterval[1], currInterval[1])] as Interval,
+    (
+      mergedInterval: Interval,
+      { interval: currInterval }: { interval: Interval; index: number }
+    ) =>
+      [
+        Math.min(mergedInterval[0], currInterval[0]),
+        Math.max(mergedInterval[1], currInterval[1]),
+      ] as Interval,
     interval
   );
 
@@ -142,7 +189,11 @@ export const addInterval = <T>(
 
   // Apply update
   const updatedIntervals = [...intervalStructure.intervals];
-  updatedIntervals.splice(insertIndex, overlappingIntervals.length, combinedInterval);
+  updatedIntervals.splice(
+    insertIndex,
+    overlappingIntervals.length,
+    combinedInterval
+  );
   const updatedItems = [...intervalStructure.items];
   updatedItems.splice(insertIndex, overlappingIntervals.length, combinedItems);
 

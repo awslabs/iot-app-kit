@@ -43,7 +43,10 @@ export class QueryStatementFactory {
   }
 
   #replaceWildcardCharacters(searchQuery: string): string {
-    const searchQueryWithValidWildcardCharacters = searchQuery.replaceAll('*', '%');
+    const searchQueryWithValidWildcardCharacters = searchQuery.replaceAll(
+      '*',
+      '%'
+    );
 
     return searchQueryWithValidWildcardCharacters;
   }

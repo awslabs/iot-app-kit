@@ -14,7 +14,11 @@ type ResizeHooksProps = {
   cellSize: DashboardState['grid']['cellSize'];
 };
 
-export const useResizeGestures = ({ setActiveGesture, selectedWidgets, cellSize }: ResizeHooksProps) => {
+export const useResizeGestures = ({
+  setActiveGesture,
+  selectedWidgets,
+  cellSize,
+}: ResizeHooksProps) => {
   const dispatch = useDispatch();
 
   const resizeWidgets = useCallback(

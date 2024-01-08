@@ -96,6 +96,8 @@ describe('WidgetTile', () => {
       </Provider>
     );
 
-    expect(container.querySelector('[aria-label="delete widget"]')).not.toBeInTheDocument();
+    expect(
+      container.querySelector('[aria-label="delete widget"]')
+    ).not.toBeInTheDocument();
   });
 });

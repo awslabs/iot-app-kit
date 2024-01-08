@@ -38,7 +38,10 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
           <Box padding={{ top: 'xxs' }}>
             <SpaceBetween size='xs' direction='horizontal'>
               {colorable && display === 'property' && (
-                <ColorPicker color={color || ''} updateColor={onUpdatePropertyColor} />
+                <ColorPicker
+                  color={color || ''}
+                  updateColor={onUpdatePropertyColor}
+                />
               )}
               {label}
             </SpaceBetween>

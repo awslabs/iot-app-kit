@@ -82,6 +82,10 @@ export default {
   ],
 } as ComponentMeta<typeof Dashboard>;
 
-export const Empty: ComponentStory<typeof Dashboard> = () => <Dashboard {...emptyDashboardConfiguration} />;
+export const Empty: ComponentStory<typeof Dashboard> = () => (
+  <Dashboard {...emptyDashboardConfiguration} />
+);
 
-export const SingleWidget: ComponentStory<typeof Dashboard> = () => <Dashboard {...widgetDashboardConfiguration} />;
+export const SingleWidget: ComponentStory<typeof Dashboard> = () => (
+  <Dashboard {...widgetDashboardConfiguration} />
+);

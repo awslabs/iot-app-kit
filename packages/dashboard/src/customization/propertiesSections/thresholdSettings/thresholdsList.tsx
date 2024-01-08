@@ -11,7 +11,9 @@ const NoThresholds = () => <Box />;
 type ThresholdsListProps = {
   thresholds: (ThresholdWithId & StyledThreshold)[];
   comparisonOperators: ComparisonOperators;
-  updateThresholds?: (newValue: (ThresholdWithId & StyledThreshold)[] | undefined) => void;
+  updateThresholds?: (
+    newValue: (ThresholdWithId & StyledThreshold)[] | undefined
+  ) => void;
 };
 export const ThresholdsList: React.FC<ThresholdsListProps> = ({
   thresholds,
@@ -37,27 +39,30 @@ export const ThresholdsList: React.FC<ThresholdsListProps> = ({
     }
   };
 
-  const handleUpdateThresholdValue = (threshold: ThresholdWithId) => (value: ThresholdWithId['value']) => {
-    onUpdateThreshold({
-      ...threshold,
-      value,
-    });
-  };
+  const handleUpdateThresholdValue =
+    (threshold: ThresholdWithId) => (value: ThresholdWithId['value']) => {
+      onUpdateThreshold({
+        ...threshold,
+        value,
+      });
+    };
 
   const handleUpdateComparisonOperator =
-    (threshold: ThresholdWithId) => (comparisonOperator: ThresholdWithId['comparisonOperator']) => {
+    (threshold: ThresholdWithId) =>
+    (comparisonOperator: ThresholdWithId['comparisonOperator']) => {
       onUpdateThreshold({
         ...threshold,
         comparisonOperator,
       });
     };
 
-  const handleUpdateThresholdColor = (threshold: ThresholdWithId) => (color: ThresholdWithId['color']) => {
-    onUpdateThreshold({
-      ...threshold,
-      color,
-    });
-  };
+  const handleUpdateThresholdColor =
+    (threshold: ThresholdWithId) => (color: ThresholdWithId['color']) => {
+      onUpdateThreshold({
+        ...threshold,
+        color,
+      });
+    };
 
   const thresholdsComponents = thresholds.map((threshold) => {
     return (

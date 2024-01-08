@@ -9,7 +9,9 @@ import { initialState } from '~/store/state';
 
 const TestProvider: React.FC<{
   children: ReactNode;
-}> = ({ children }) => <Provider store={configureDashboardStore(initialState)}>{children}</Provider>;
+}> = ({ children }) => (
+  <Provider store={configureDashboardStore(initialState)}>{children}</Provider>
+);
 
 it('has initial values', () => {
   const { result } = renderHook(() => useGridSettings(), {

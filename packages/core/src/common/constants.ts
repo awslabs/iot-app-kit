@@ -1,4 +1,9 @@
-import type { ComparisonOperator, DataType, StatusIconType, StreamType } from '../data-module/types';
+import type {
+  ComparisonOperator,
+  DataType,
+  StatusIconType,
+  StreamType,
+} from '../data-module/types';
 
 export const DATA_TYPE: { [dataType in DataType]: DataType } = {
   NUMBER: 'NUMBER',
@@ -12,7 +17,9 @@ export const STREAM_TYPE: { [streamType in StreamType]: StreamType } = {
   ALARM_THRESHOLD: 'ALARM_THRESHOLD',
 };
 
-export const COMPARISON_OPERATOR: { [comparisonOperator in ComparisonOperator]: ComparisonOperator } = {
+export const COMPARISON_OPERATOR: {
+  [comparisonOperator in ComparisonOperator]: ComparisonOperator;
+} = {
   LT: 'LT',
   GT: 'GT',
   LTE: 'LTE',
@@ -21,7 +28,9 @@ export const COMPARISON_OPERATOR: { [comparisonOperator in ComparisonOperator]: 
   CONTAINS: 'CONTAINS',
 };
 
-export const STATUS_ICON_TYPE: { [statusIconType in StatusIconType]: StatusIconType } = {
+export const STATUS_ICON_TYPE: {
+  [statusIconType in StatusIconType]: StatusIconType;
+} = {
   error: 'error',
   active: 'active',
   normal: 'normal',

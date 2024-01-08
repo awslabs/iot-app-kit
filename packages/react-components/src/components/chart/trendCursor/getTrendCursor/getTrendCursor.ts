@@ -30,13 +30,14 @@ export const getNewTrendCursor = ({
   const timestampInMs = timestamp ?? calculateTimeStamp(posX, chartRef);
   const boundedX = setXWithBounds(size, posX);
 
-  const { trendCursorsSeriesMakersValue, trendCursorsSeriesMakersInPixels } = calculateSeriesMakers(
-    series,
-    timestampInMs,
-    chartRef,
-    visualization,
-    significantDigits
-  );
+  const { trendCursorsSeriesMakersValue, trendCursorsSeriesMakersInPixels } =
+    calculateSeriesMakers(
+      series,
+      timestampInMs,
+      chartRef,
+      visualization,
+      significantDigits
+    );
 
   // this check makes sure that the chart lines are rendered first and only then we render the TC markers
   // this avoids the re-render issue because of changing key on change in query

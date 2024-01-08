@@ -3,7 +3,10 @@ import { DataZoomComponentOption, EChartsType } from 'echarts';
 import { Viewport, viewportManager } from '@iot-app-kit/core';
 import { useViewport } from '../../../hooks/useViewport';
 import { ECHARTS_GESTURE } from '../../../common/constants';
-import { DEFAULT_DATA_ZOOM, LIVE_MODE_REFRESH_RATE_MS } from '../eChartsConstants';
+import {
+  DEFAULT_DATA_ZOOM,
+  LIVE_MODE_REFRESH_RATE_MS,
+} from '../eChartsConstants';
 import { convertViewportToMs } from '../trendCursor/calculations/viewport';
 import { DEFAULT_VIEWPORT } from '../../time-sync';
 import { useEffectOnce } from 'react-use';
@@ -12,7 +15,9 @@ type ValidOption = {
   startValue: number;
   endValue: number;
 };
-const isValidZoomOption = (option: DataZoomComponentOption | undefined): option is ValidOption =>
+const isValidZoomOption = (
+  option: DataZoomComponentOption | undefined
+): option is ValidOption =>
   option != null &&
   option.startValue != null &&
   option.endValue != null &&
@@ -20,15 +25,19 @@ const isValidZoomOption = (option: DataZoomComponentOption | undefined): option 
   typeof option.endValue === 'number';
 
 type ViewportMode = 'live' | 'static';
-const getViewportMode = (convertedViewport: ReturnType<typeof convertViewportToMs>): ViewportMode =>
-  convertedViewport.isDurationViewport ? 'live' : 'static';
+const getViewportMode = (
+  convertedViewport: ReturnType<typeof convertViewportToMs>
+): ViewportMode => (convertedViewport.isDurationViewport ? 'live' : 'static');
 
 type TickState = {
   mode: ViewportMode;
   viewport: Viewport | undefined;
   convertedViewport: ReturnType<typeof convertViewportToMs>;
 };
-type TickAction = { type: 'tick' } | { type: 'pause' } | { type: 'updateViewport'; viewport: Viewport | undefined };
+type TickAction =
+  | { type: 'tick' }
+  | { type: 'pause' }
+  | { type: 'updateViewport'; viewport: Viewport | undefined };
 const stateFromViewport = (viewport: Viewport | undefined) => {
   const convertedViewport = convertViewportToMs(viewport);
   return {
@@ -55,9 +64,15 @@ const reducer = (state: TickState, action: TickAction): TickState => {
   return state;
 };
 
-export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, viewport: Viewport | undefined) => {
+export const useDataZoom = (
+  chartRef: MutableRefObject<EChartsType | null>,
+  viewport: Viewport | undefined
+) => {
   const { setViewport, group } = useViewport();
-  const [{ mode, convertedViewport }, dispatch] = useReducer(reducer, stateFromViewport(viewport));
+  const [{ mode, convertedViewport }, dispatch] = useReducer(
+    reducer,
+    stateFromViewport(viewport)
+  );
 
   /**
    * function for setting the dataZoom chart option on the echart instance
@@ -121,11 +136,15 @@ export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, view
       // Synchronize animation with refresh rate
       frame = requestAnimationFrame(() => {
         // there should only be 1 datazoom option for the x axis
-        const dataZoomOptions = chart.getOption().dataZoom as DataZoomComponentOption[];
+        const dataZoomOptions = chart.getOption()
+          .dataZoom as DataZoomComponentOption[];
         const horizontalZoom = dataZoomOptions.at(0);
         if (!isValidZoomOption(horizontalZoom)) return;
         setViewport(
-          { start: new Date(horizontalZoom.startValue), end: new Date(horizontalZoom.endValue) },
+          {
+            start: new Date(horizontalZoom.startValue),
+            end: new Date(horizontalZoom.endValue),
+          },
           ECHARTS_GESTURE
         );
       });
@@ -168,7 +187,10 @@ export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, view
    * to the chart dataZoom
    */
   useEffect(() => {
-    const { unsubscribe } = viewportManager.subscribe(group, handleViewportUpdate);
+    const { unsubscribe } = viewportManager.subscribe(
+      group,
+      handleViewportUpdate
+    );
     return unsubscribe;
   }, [handleViewportUpdate, group]);
 

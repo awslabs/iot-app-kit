@@ -1,6 +1,11 @@
 import Button from '@awsui/components-react/button';
 import React, { ReactNode, memo } from 'react';
-import { EmptySpace, LeftPad, Wrapper, ButtonWrapper } from './Common/StyledComponents';
+import {
+  EmptySpace,
+  LeftPad,
+  Wrapper,
+  ButtonWrapper,
+} from './Common/StyledComponents';
 import { ExpandableTableNodeStatus, ITreeNode } from '../Model/TreeNode';
 import { createPrefixLines, Theme } from './Common/TreeLines';
 import { THEME } from '../config';
@@ -23,7 +28,10 @@ export interface ButtonWithTreeLinesProps<T> {
 
 function createToggleButton<T>(props: ButtonWithTreeLinesProps<T>) {
   const { node, onClick, alwaysExpanded } = props;
-  const icon = node.isExpanded() || alwaysExpanded ? 'treeview-collapse' : 'treeview-expand';
+  const icon =
+    node.isExpanded() || alwaysExpanded
+      ? 'treeview-collapse'
+      : 'treeview-expand';
   return node.getChildren().length > 0 || node.hasChildren ? (
     <ButtonWrapper>
       <Button
@@ -38,9 +46,13 @@ function createToggleButton<T>(props: ButtonWithTreeLinesProps<T>) {
   );
 }
 
-export const ButtonWithTreeLines = memo(function ButtonWithTreeLinesComp<T>(props: ButtonWithTreeLinesProps<T>) {
+export const ButtonWithTreeLines = memo(function ButtonWithTreeLinesComp<T>(
+  props: ButtonWithTreeLinesProps<T>
+) {
   const { node, content, alwaysExpanded } = props;
-  const leftPadLength = node.getPrefix().length ? MARGIN_LEFT_REM_MULTIPLICATOR * (node.getPrefix().length - 1) : 0;
+  const leftPadLength = node.getPrefix().length
+    ? MARGIN_LEFT_REM_MULTIPLICATOR * (node.getPrefix().length - 1)
+    : 0;
   return (
     <Wrapper height={TABLE_ROW_HEIGHT_PERCENT + WRAPPER_EXTRA_HEIGHT_PERCENT}>
       <LeftPad length={leftPadLength}>

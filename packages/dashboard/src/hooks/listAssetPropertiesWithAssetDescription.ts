@@ -13,12 +13,22 @@ import { Paginator } from '@aws-sdk/types';
 import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
 
 export class listAssetPropertiesWithComposite {
-  readonly #listAssetPropertyPaginator: Paginator<ListAssetPropertiesCommandOutput | undefined>;
+  readonly #listAssetPropertyPaginator: Paginator<
+    ListAssetPropertiesCommandOutput | undefined
+  >;
   #signal: AbortSignal | undefined;
   #client: IoTSiteWiseClient;
   readonly #describeAssetCommand: DescribeAssetCommand;
 
-  constructor({ assetId, client, signal }: { assetId: string; client: IoTSiteWiseClient; signal?: AbortSignal }) {
+  constructor({
+    assetId,
+    client,
+    signal,
+  }: {
+    assetId: string;
+    client: IoTSiteWiseClient;
+    signal?: AbortSignal;
+  }) {
     this.#listAssetPropertyPaginator = this.#createAssetPropertyPaginator(
       { client },
       { assetId: assetId, filter: 'ALL' }
@@ -41,17 +51,25 @@ export class listAssetPropertiesWithComposite {
       }
 
       //get assetModelId
-      const { assetModelId } = await this.#client.send(this.#describeAssetCommand, {
-        abortSignal: this.#signal,
-      });
+      const { assetModelId } = await this.#client.send(
+        this.#describeAssetCommand,
+        {
+          abortSignal: this.#signal,
+        }
+      );
 
       // get all AssetModelProperties for dataType
-      const listAssetModelPropertiesPaginator = this.#createAssetModelPropertyPaginator(
-        { client: this.#client },
-        { assetModelId, filter: 'ALL' }
-      );
-      const assetModelPropertiesMap: { [x: string]: AssetModelPropertySummary } = {};
-      for await (const { assetModelPropertySummaries = [] } of listAssetModelPropertiesPaginator) {
+      const listAssetModelPropertiesPaginator =
+        this.#createAssetModelPropertyPaginator(
+          { client: this.#client },
+          { assetModelId, filter: 'ALL' }
+        );
+      const assetModelPropertiesMap: {
+        [x: string]: AssetModelPropertySummary;
+      } = {};
+      for await (const {
+        assetModelPropertySummaries = [],
+      } of listAssetModelPropertiesPaginator) {
         if (this.#signal?.aborted) {
           break;
         }
@@ -85,7 +103,10 @@ export class listAssetPropertiesWithComposite {
     paginatorConfig: IoTSiteWisePaginationConfiguration,
     commandParams: ListAssetPropertiesCommandInput
   ) {
-    const paginator = paginateListAssetProperties(paginatorConfig, commandParams);
+    const paginator = paginateListAssetProperties(
+      paginatorConfig,
+      commandParams
+    );
     return paginator;
   }
 
@@ -93,7 +114,10 @@ export class listAssetPropertiesWithComposite {
     paginatorConfig: IoTSiteWisePaginationConfiguration,
     commandParams: ListAssetModelPropertiesCommandInput
   ) {
-    const paginator = paginateListAssetModelProperties(paginatorConfig, commandParams);
+    const paginator = paginateListAssetModelProperties(
+      paginatorConfig,
+      commandParams
+    );
     return paginator;
   }
 

@@ -5,7 +5,9 @@ import { MOCK_KPI_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
 import type { DashboardState } from '../../state';
 import type { DashboardWidget } from '~/types';
 
-const setupDashboardState = (widgets: DashboardWidget[] = []): DashboardState => ({
+const setupDashboardState = (
+  widgets: DashboardWidget[] = []
+): DashboardState => ({
   ...initialState,
   dashboardConfiguration: {
     ...initialState.dashboardConfiguration,

@@ -15,7 +15,9 @@ import WidgetTile from '~/components/widgets/tile';
 const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
   const { viewport } = useViewport();
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
-  const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
+  const dashboardSignificantDigits = useSelector(
+    (state: DashboardState) => state.significantDigits
+  );
   const chartSize = useChartSize(widget);
 
   const {
@@ -34,9 +36,11 @@ const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
    * This is required to fix a positioning bug when adding the first datastream
    * also a bug where removing the last datastream does not actually remove the bars.
    */
-  const key = createWidgetRenderKey(widget.id) + JSON.stringify(queryConfig.query);
+  const key =
+    createWidgetRenderKey(widget.id) + JSON.stringify(queryConfig.query);
   const aggregation = getAggregation(widget);
-  const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
+  const significantDigits =
+    widgetSignificantDigits ?? dashboardSignificantDigits;
   // there may be better ways to fix this, i.e. not have -44 and let the chart container  take its parent height,
   // the problem is that the Resizable component needs a "height" to be provided,
   // so not entirely sure if we can have a mechanism where the container auto adjusts the height

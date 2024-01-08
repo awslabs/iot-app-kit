@@ -36,5 +36,13 @@ export function useAssets({ assetId, client }: UseAssetsOptions) {
   const fetchNextPage = assetId ? () => undefined : fetchNextPageRootAssets;
   const hasNextPage = assetId ? false : hasNextPageRootAssets;
 
-  return { assets, isError, isFetching, isLoading, isSuccess, fetchNextPage, hasNextPage };
+  return {
+    assets,
+    isError,
+    isFetching,
+    isLoading,
+    isSuccess,
+    fetchNextPage,
+    hasNextPage,
+  };
 }

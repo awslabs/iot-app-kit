@@ -46,7 +46,9 @@ export const MOCK_KPI_WIDGET: KPIWidget = {
         assets: [
           {
             assetId: DEMO_TURBINE_ASSET_1,
-            properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 }],
+            properties: [
+              { resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 },
+            ],
           },
         ],
       },
@@ -72,7 +74,11 @@ export const MOCK_SCATTER_CHART_WIDGET: LineScatterChartWidget = {
           {
             assetId: DEMO_TURBINE_ASSET_1,
             properties: [
-              { resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3, line: { connectionStyle: 'none' } },
+              {
+                resolution: '0',
+                propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3,
+                line: { connectionStyle: 'none' },
+              },
             ],
           },
         ],
@@ -211,23 +217,48 @@ export const MockWidgetFactory = {
   getRectangleWidget: createMockWidget(MOCK_RECTANGLE_WIDGET),
 };
 
-export const getRandomWidget = (partialWidget?: Partial<DashboardWidget>): DashboardWidget => {
+export const getRandomWidget = (
+  partialWidget?: Partial<DashboardWidget>
+): DashboardWidget => {
   switch (random(0, 4)) {
     default:
     case 0:
-      return MockWidgetFactory.getKpiWidget({ height: 10, width: 30, ...partialWidget });
+      return MockWidgetFactory.getKpiWidget({
+        height: 10,
+        width: 30,
+        ...partialWidget,
+      });
     case 1:
-      return MockWidgetFactory.getScatterChartWidget({ height: 20, width: 30, ...partialWidget });
+      return MockWidgetFactory.getScatterChartWidget({
+        height: 20,
+        width: 30,
+        ...partialWidget,
+      });
     case 2:
-      return MockWidgetFactory.getLineChartWidget({ height: 20, width: 30, ...partialWidget });
+      return MockWidgetFactory.getLineChartWidget({
+        height: 20,
+        width: 30,
+        ...partialWidget,
+      });
     case 3:
-      return MockWidgetFactory.getStatusTimelineWidget({ height: 20, width: 30, ...partialWidget });
+      return MockWidgetFactory.getStatusTimelineWidget({
+        height: 20,
+        width: 30,
+        ...partialWidget,
+      });
     case 4:
-      return MockWidgetFactory.getRectangleWidget({ height: 20, width: 30, ...partialWidget });
+      return MockWidgetFactory.getRectangleWidget({
+        height: 20,
+        width: 30,
+        ...partialWidget,
+      });
   }
 };
 
-export const MOCK_EMPTY_DASHBOARD: DashboardWidgetsConfiguration = { viewport: { duration: '5m' }, widgets: [] };
+export const MOCK_EMPTY_DASHBOARD: DashboardWidgetsConfiguration = {
+  viewport: { duration: '5m' },
+  widgets: [],
+};
 
 export const createMockDashboard = (
   partialDashboard?: Partial<DashboardWidgetsConfiguration>

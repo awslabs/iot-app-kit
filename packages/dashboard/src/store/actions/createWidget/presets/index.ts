@@ -16,7 +16,8 @@ export const widgetCreator =
 
     const { properties, initialSize } = WidgetPropertiesGeneratorMap[type];
 
-    const { width: widgetPixelWidth, height: widgetPixelHeight } = initialSize || { height: 150, width: 150 };
+    const { width: widgetPixelWidth, height: widgetPixelHeight } =
+      initialSize || { height: 150, width: 150 };
 
     const preset = {
       id: nanoid(),

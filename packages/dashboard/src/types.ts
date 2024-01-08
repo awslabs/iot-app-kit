@@ -29,11 +29,17 @@ export type IoTSiteWiseDataStreamQuery = Partial<
   SiteWiseAssetQuery & SiteWisePropertyAliasQuery & SiteWiseAssetModelQuery
 >;
 
-export type DashboardClientConfiguration = DashboardIotSiteWiseClients | DashboardClientCredentials;
+export type DashboardClientConfiguration =
+  | DashboardIotSiteWiseClients
+  | DashboardClientCredentials;
 
-export type DashboardSave = (dashboardConfiguration: DashboardConfiguration) => Promise<void>;
+export type DashboardSave = (
+  dashboardConfiguration: DashboardConfiguration
+) => Promise<void>;
 
-export type DashboardWidget<Properties extends Record<string, unknown> = Record<string, unknown>> = {
+export type DashboardWidget<
+  Properties extends Record<string, unknown> = Record<string, unknown>
+> = {
   type: string;
   id: string;
   x: number;
@@ -51,13 +57,17 @@ export type DashboardDisplaySettings = {
   significantDigits?: number;
 };
 
-export type DashboardConfiguration<Properties extends Record<string, unknown> = Record<string, unknown>> = {
+export type DashboardConfiguration<
+  Properties extends Record<string, unknown> = Record<string, unknown>
+> = {
   displaySettings: DashboardDisplaySettings;
   widgets: DashboardWidget<Properties>[];
   viewport: Viewport;
 };
 
-export type DashboardWidgetsConfiguration<Properties extends Record<string, unknown> = Record<string, unknown>> = {
+export type DashboardWidgetsConfiguration<
+  Properties extends Record<string, unknown> = Record<string, unknown>
+> = {
   widgets: DashboardWidget<Properties>[];
   viewport: Viewport;
 };
@@ -82,5 +92,8 @@ export type RecursivePartial<T> = {
     : T[P];
 };
 
-export type PickRequiredOptional<T, TRequired extends keyof T, TOptional extends keyof T> = Pick<T, TRequired> &
-  RecursivePartial<Pick<T, TOptional>>;
+export type PickRequiredOptional<
+  T,
+  TRequired extends keyof T,
+  TOptional extends keyof T
+> = Pick<T, TRequired> & RecursivePartial<Pick<T, TOptional>>;

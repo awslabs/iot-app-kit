@@ -6,7 +6,10 @@ import { Quality, type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { CSVDownloadButton } from './index';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useViewportData } from './useViewportData';
-import { StyledAssetQuery, StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
+import {
+  StyledAssetQuery,
+  StyledSiteWiseQueryConfig,
+} from '~/customization/widgets/types';
 
 const testQueryClient = new QueryClient({
   defaultOptions: {
@@ -40,7 +43,10 @@ const MOCK_CSV_OBJECT_1 = {
 };
 
 const mockFetchViewportData = jest.fn(() =>
-  Promise.resolve({ isError: false, data: [MOCK_CSV_OBJECT_1, MOCK_CSV_OBJECT_1] })
+  Promise.resolve({
+    isError: false,
+    data: [MOCK_CSV_OBJECT_1, MOCK_CSV_OBJECT_1],
+  })
 );
 jest.mock('./useViewportData', () => ({
   useViewportData: jest.fn(() => ({
@@ -79,14 +85,21 @@ it('creates a file for download if query has content', async function () {
   } as StyledSiteWiseQueryConfig;
   render(
     <QueryClientProvider client={testQueryClient}>
-      <CSVDownloadButton queryConfig={mockQueryConfig} fileName='csv-test' client={mockClient} />
+      <CSVDownloadButton
+        queryConfig={mockQueryConfig}
+        fileName='csv-test'
+        client={mockClient}
+      />
     </QueryClientProvider>
   );
 
   const downloadButton = screen.queryByTestId(/csv-download-button/);
   downloadButton && fireEvent.click(downloadButton);
   const createElementSpyOn = jest.spyOn(document, 'createElement');
-  expect(useViewportData).toHaveBeenCalledWith({ queryConfig: mockQueryConfig, client: mockClient });
+  expect(useViewportData).toHaveBeenCalledWith({
+    queryConfig: mockQueryConfig,
+    client: mockClient,
+  });
   await waitFor(() => expect(mockFetchViewportData).toHaveBeenCalled());
   await waitFor(() => expect(createElementSpyOn).toBeCalledWith('a'));
 });

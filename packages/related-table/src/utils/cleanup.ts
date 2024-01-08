@@ -1,6 +1,10 @@
 import { ITreeNode, TreeMap } from '../Model/TreeNode';
 
-const removeNode = <T>(node: ITreeNode<T>, keyPropertyName: string, treeMap: TreeMap<T>) => {
+const removeNode = <T>(
+  node: ITreeNode<T>,
+  keyPropertyName: string,
+  treeMap: TreeMap<T>
+) => {
   const key = (node as any)[keyPropertyName];
 
   if (node.getParent()) {
@@ -12,12 +16,18 @@ const removeNode = <T>(node: ITreeNode<T>, keyPropertyName: string, treeMap: Tre
     node.setParentNode(undefined);
   }
 
-  node.getChildren().forEach((child) => removeNode(child, keyPropertyName, treeMap));
+  node
+    .getChildren()
+    .forEach((child) => removeNode(child, keyPropertyName, treeMap));
   node.removeAllChildren();
   treeMap.delete(key);
 };
 
-export function cleanupTree<T>(keyPropertyName: string, treeMap: TreeMap<T>, staleNodeKeys: Set<string>) {
+export function cleanupTree<T>(
+  keyPropertyName: string,
+  treeMap: TreeMap<T>,
+  staleNodeKeys: Set<string>
+) {
   staleNodeKeys.forEach((key) => {
     const node = treeMap.get(key);
     if (node) {

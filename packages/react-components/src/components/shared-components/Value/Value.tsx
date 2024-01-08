@@ -2,11 +2,11 @@ import React from 'react';
 import type { Primitive } from '@iot-app-kit/core';
 import { round } from '@iot-app-kit/core-util';
 
-export const Value: React.FC<{ value?: Primitive; unit?: string; precision?: number }> = ({
-  value,
-  unit,
-  precision,
-}) => {
+export const Value: React.FC<{
+  value?: Primitive;
+  unit?: string;
+  precision?: number;
+}> = ({ value, unit, precision }) => {
   if (value == null) {
     return <span data-testid='no-value-present'>-</span>;
   }

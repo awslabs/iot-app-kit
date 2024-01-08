@@ -10,7 +10,14 @@ export type SizedGridProps = GridProps;
  * Consumed by the editor dashboard and readonly dashboard.
  *
  */
-export const SizedGrid: React.FC<SizedGridProps> = ({ width, height, cellSize, showGuides, highlighted, children }) => {
+export const SizedGrid: React.FC<SizedGridProps> = ({
+  width,
+  height,
+  cellSize,
+  showGuides,
+  highlighted,
+  children,
+}) => {
   const gridComponent = (
     <Grid
       width={width}

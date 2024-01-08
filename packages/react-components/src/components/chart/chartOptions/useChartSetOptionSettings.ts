@@ -17,7 +17,10 @@ export const useChartSetOptionSettings = (datastreams: DataStream[]) => {
      * https://echarts.apache.org/en/api.html#echartsInstance.setOption
      *
      */
-    const settings = datastreamsDepsRef.current !== datastreamsDeps ? { replaceMerge: ['series'] } : undefined;
+    const settings =
+      datastreamsDepsRef.current !== datastreamsDeps
+        ? { replaceMerge: ['series'] }
+        : undefined;
     datastreamsDepsRef.current = datastreamsDeps;
     return { ...settings, lazyUpdate: true };
   }, [datastreamsDeps]);

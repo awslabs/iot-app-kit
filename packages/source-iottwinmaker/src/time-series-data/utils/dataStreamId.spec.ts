@@ -1,7 +1,13 @@
 import { toDataStreamId, fromDataStreamId } from './dataStreamId';
 
-const mockIdOutput = '{"componentName":"comp-1","entityId":"entity-1","propertyName":"prop-1","workspaceId":"ws-1"}';
-const mockIdInput = { workspaceId: 'ws-1', entityId: 'entity-1', componentName: 'comp-1', propertyName: 'prop-1' };
+const mockIdOutput =
+  '{"componentName":"comp-1","entityId":"entity-1","propertyName":"prop-1","workspaceId":"ws-1"}';
+const mockIdInput = {
+  workspaceId: 'ws-1',
+  entityId: 'entity-1',
+  componentName: 'comp-1',
+  propertyName: 'prop-1',
+};
 
 describe('toDataStreamId', () => {
   it('should converts the same id values to the same data stream id', () => {

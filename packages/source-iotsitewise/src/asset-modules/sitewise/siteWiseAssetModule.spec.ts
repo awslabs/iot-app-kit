@@ -6,7 +6,9 @@ import type { SiteWiseAssetDataSource } from './types';
 import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
 it('initializes', () => {
-  expect(() => new SiteWiseAssetModule({} as SiteWiseAssetDataSource)).not.toThrowError();
+  expect(
+    () => new SiteWiseAssetModule({} as SiteWiseAssetDataSource)
+  ).not.toThrowError();
 });
 
 describe('startSession', () => {
@@ -27,7 +29,9 @@ describe('fetchAsset', () => {
     );
 
     const session = module.startSession();
-    const assetSummary = await session.fetchAssetSummary({ assetId: DESCRIBE_ASSET_RESPONSE.assetId as string });
+    const assetSummary = await session.fetchAssetSummary({
+      assetId: DESCRIBE_ASSET_RESPONSE.assetId as string,
+    });
     expect(assetSummary).toEqual(ASSET_SUMMARY);
   });
 
@@ -45,13 +49,19 @@ describe('fetchAsset', () => {
     const session = module.startSession();
     await session.fetchAssetSummary({ assetId: ASSET_SUMMARY.id as string });
     describeAsset.mockReset();
-    const assetSummary = await session.fetchAssetSummary({ assetId: ASSET_SUMMARY.id as string });
+    const assetSummary = await session.fetchAssetSummary({
+      assetId: ASSET_SUMMARY.id as string,
+    });
     expect(assetSummary).toEqual(ASSET_SUMMARY);
     expect(describeAsset).not.toBeCalled();
   });
 
   it('throws error when API returns an error', async () => {
-    const ERROR = { message: 'id not found', name: 'ResourceNotFoundException', $metadata: { httpStatusCode: 404 } };
+    const ERROR = {
+      message: 'id not found',
+      name: 'ResourceNotFoundException',
+      $metadata: { httpStatusCode: 404 },
+    };
     const describeAsset = jest.fn().mockRejectedValue(ERROR);
 
     const module = new SiteWiseAssetModule(
@@ -64,7 +74,9 @@ describe('fetchAsset', () => {
 
     const session = module.startSession();
 
-    await expect(session.fetchAssetSummary({ assetId: ASSET_SUMMARY.id as string })).rejects.toEqual({
+    await expect(
+      session.fetchAssetSummary({ assetId: ASSET_SUMMARY.id as string })
+    ).rejects.toEqual({
       msg: ERROR.message,
       type: ERROR.name,
       status: ERROR.$metadata.httpStatusCode,
@@ -83,7 +95,9 @@ describe('fetchAssetModel', () => {
     );
 
     const session = module.startSession();
-    const assetModel = await session.fetchAssetModel({ assetModelId: ASSET_MODEL.assetModelId as string });
+    const assetModel = await session.fetchAssetModel({
+      assetModelId: ASSET_MODEL.assetModelId as string,
+    });
     expect(assetModel).toEqual(ASSET_MODEL);
   });
 });

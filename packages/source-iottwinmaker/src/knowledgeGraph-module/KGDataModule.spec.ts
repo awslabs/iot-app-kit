@@ -53,7 +53,8 @@ describe('executeQuery', () => {
 
   it('should get a valid response', async () => {
     const result = await kgMetadataModule.executeQuery({
-      queryStatement: "SELECT e.entityName FROM EntityGraph MATCH (e) WHERE e.entityName LIKE 'room_%'",
+      queryStatement:
+        "SELECT e.entityName FROM EntityGraph MATCH (e) WHERE e.entityName LIKE 'room_%'",
     });
 
     expect(executeQuery).toBeCalledTimes(1);
@@ -62,7 +63,8 @@ describe('executeQuery', () => {
 
   it('should get a valid response', async () => {
     const result = await kgMetadataModule.executeQuery({
-      queryStatement: "SELECT e.entityName FROM EntityGraph MATCH (e) WHERE e.entityName LIKE 'room_%'",
+      queryStatement:
+        "SELECT e.entityName FROM EntityGraph MATCH (e) WHERE e.entityName LIKE 'room_%'",
       resultsPerPage: 1,
     });
 
@@ -72,7 +74,8 @@ describe('executeQuery', () => {
 
   it('should get a valid response', async () => {
     const result = await kgMetadataModule.executeQuery({
-      queryStatement: "SELECT e.entityName FROM EntityGraph MATCH (e) WHERE e.entityName LIKE 'room_%'",
+      queryStatement:
+        "SELECT e.entityName FROM EntityGraph MATCH (e) WHERE e.entityName LIKE 'room_%'",
       maxPagesCount: 1,
     });
 
@@ -82,7 +85,8 @@ describe('executeQuery', () => {
 
   it('should get a valid response', async () => {
     const result = await kgMetadataModule.executeQuery({
-      queryStatement: "SELECT e.entityName FROM EntityGraph MATCH (e) WHERE e.entityName LIKE 'room_%'",
+      queryStatement:
+        "SELECT e.entityName FROM EntityGraph MATCH (e) WHERE e.entityName LIKE 'room_%'",
       resultsPerPage: 1,
       maxPagesCount: 2,
     });
@@ -96,7 +100,8 @@ describe('executeQuery', () => {
 
     try {
       await kgMetadataModule.executeQuery({
-        queryStatement: "SELECT e.entityName FROM EntityGraph MATCH (e) WHERE e.entityName LIKE 'room_%'",
+        queryStatement:
+          "SELECT e.entityName FROM EntityGraph MATCH (e) WHERE e.entityName LIKE 'room_%'",
         resultsPerPage: 1,
         maxPagesCount: 2,
       });

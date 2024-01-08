@@ -9,8 +9,12 @@ export interface TrendCursorProps {
 }
 
 export const TrendCursorSync: React.FC<TrendCursorProps> = ({ children }) => {
-  const addTrendCursorsGroup = useDataStore((state) => state.addTrendCursorsGroup);
-  const deleteTrendCursorsGroup = useDataStore((state) => state.deleteTrendCursorsGroup);
+  const addTrendCursorsGroup = useDataStore(
+    (state) => state.addTrendCursorsGroup
+  );
+  const deleteTrendCursorsGroup = useDataStore(
+    (state) => state.deleteTrendCursorsGroup
+  );
   const { group } = useViewport();
 
   useEffect(() => {

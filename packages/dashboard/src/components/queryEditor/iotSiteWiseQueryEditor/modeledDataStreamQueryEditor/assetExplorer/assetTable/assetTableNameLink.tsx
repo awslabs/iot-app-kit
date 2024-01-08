@@ -7,7 +7,11 @@ export interface AssetTableNameLinkProps {
   updateParentAssetId: (assetId?: string) => void;
 }
 
-export function AssetTableNameLink({ assetId, assetName, updateParentAssetId }: AssetTableNameLinkProps) {
+export function AssetTableNameLink({
+  assetId,
+  assetName,
+  updateParentAssetId,
+}: AssetTableNameLinkProps) {
   return (
     <Link
       ariaLabel={`List child assets of ${assetName}`}

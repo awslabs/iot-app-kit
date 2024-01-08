@@ -1,5 +1,8 @@
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import type { TimeSeriesDataRequest, Viewport } from './data-cache/requestTypes';
+import type {
+  TimeSeriesDataRequest,
+  Viewport,
+} from './data-cache/requestTypes';
 import type { CacheSettings } from './data-cache/types';
 import type { ErrorDetails, Threshold } from '../common/types';
 
@@ -16,7 +19,8 @@ export type DataPointBase<T extends Primitive = Primitive> = {
   y: T;
 };
 
-export interface DataPoint<T extends Primitive = Primitive> extends DataPointBase<T> {
+export interface DataPoint<T extends Primitive = Primitive>
+  extends DataPointBase<T> {
   x: Timestamp;
 }
 
@@ -51,15 +55,31 @@ export type RequestInformation = {
   // Mechanism to associate some information about how the request should be made
   meta?: Record<string, string | number | boolean>;
 };
-export type RequestInformationAndRange = RequestInformation & { start: Date; end: Date };
+export type RequestInformationAndRange = RequestInformation & {
+  start: Date;
+  end: Date;
+};
 
 export type DataType = 'NUMBER' | 'STRING' | 'BOOLEAN';
 
 export type StreamType = 'ALARM' | 'ANOMALY' | 'ALARM_THRESHOLD';
 
-export type ComparisonOperator = 'LT' | 'GT' | 'LTE' | 'GTE' | 'EQ' | 'CONTAINS';
+export type ComparisonOperator =
+  | 'LT'
+  | 'GT'
+  | 'LTE'
+  | 'GTE'
+  | 'EQ'
+  | 'CONTAINS';
 
-export type StatusIconType = 'error' | 'active' | 'normal' | 'acknowledged' | 'snoozed' | 'disabled' | 'latched';
+export type StatusIconType =
+  | 'error'
+  | 'active'
+  | 'normal'
+  | 'acknowledged'
+  | 'snoozed'
+  | 'disabled'
+  | 'latched';
 
 export interface DataStreamBase<T extends Primitive = Primitive> {
   data: DataPointBase<T>[];
@@ -69,7 +89,8 @@ export interface DataStreamBase<T extends Primitive = Primitive> {
   meta?: Record<string, string | number | boolean>;
 }
 
-export interface DataStream<T extends Primitive = Primitive> extends DataStreamBase<T> {
+export interface DataStream<T extends Primitive = Primitive>
+  extends DataStreamBase<T> {
   id: DataStreamId;
   data: DataPoint<T>[];
   resolution: number;
@@ -86,7 +107,10 @@ export interface DataStream<T extends Primitive = Primitive> extends DataStreamB
 }
 
 export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
-  initiateRequest: (request: DataSourceRequest<Query>, requestInformations: RequestInformationAndRange[]) => void;
+  initiateRequest: (
+    request: DataSourceRequest<Query>,
+    requestInformations: RequestInformationAndRange[]
+  ) => void;
   getRequestsFromQuery: ({
     query,
     request,
@@ -96,7 +120,10 @@ export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
   }) => Promise<RequestInformation[]>;
 };
 
-export type DataStreamCallback = (dataStreams: DataStream[], requestInformation: RequestInformationAndRange) => void;
+export type DataStreamCallback = (
+  dataStreams: DataStream[],
+  requestInformation: RequestInformationAndRange
+) => void;
 export type OnSuccessCallback = (
   dataStreams: DataStream[],
   requestInformation: RequestInformationAndRange,
@@ -112,7 +139,8 @@ export type QuerySubscription<Query extends DataStreamQuery> = {
   fulfill: () => void;
 };
 
-export type Subscription<Query extends DataStreamQuery = AnyDataStreamQuery> = QuerySubscription<Query>;
+export type Subscription<Query extends DataStreamQuery = AnyDataStreamQuery> =
+  QuerySubscription<Query>;
 
 export type DataModuleSubscription<Query extends DataStreamQuery> = {
   request: TimeSeriesDataRequest;
@@ -137,7 +165,9 @@ export type ErrorCallback = ({
   aggregationType?: AggregateType;
 }) => void;
 
-export type SubscriptionUpdate<Query extends DataStreamQuery> = Partial<Omit<Subscription<Query>, 'emit'>>;
+export type SubscriptionUpdate<Query extends DataStreamQuery> = Partial<
+  Omit<Subscription<Query>, 'emit'>
+>;
 
 export type DataSourceRequest<Query extends DataStreamQuery> = {
   request: TimeSeriesDataRequest;

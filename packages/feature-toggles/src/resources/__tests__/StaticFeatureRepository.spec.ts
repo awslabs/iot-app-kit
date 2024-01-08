@@ -1,4 +1,6 @@
-import StaticFeatureRepository, { StaticFeatures } from '../StaticFeatureRepository';
+import StaticFeatureRepository, {
+  StaticFeatures,
+} from '../StaticFeatureRepository';
 describe('StaticFeatureRepository', () => {
   it('should respond with value true for available feature', async () => {
     const features: StaticFeatures = {

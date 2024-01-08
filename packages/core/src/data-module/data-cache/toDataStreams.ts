@@ -25,7 +25,10 @@ export const toDataStreams = ({
       requestCache: _requestCache,
       requestHistory: _requestHistory,
       ...restOfStream
-    } = (aggregationType && (resolutionStreamStore[parsedResolution]?.[aggregationType] as DataStreamStore)) ||
+    } = (aggregationType &&
+      (resolutionStreamStore[parsedResolution]?.[
+        aggregationType
+      ] as DataStreamStore)) ||
     rawDataStreamStore ||
     {};
 

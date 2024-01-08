@@ -5,6 +5,12 @@ import type { SiteWiseAssetDataSource } from './types';
 
 it('initializes', () => {
   expect(
-    () => new SiteWiseAssetSession(new RequestProcessor({} as SiteWiseAssetDataSource, new SiteWiseAssetCache()))
+    () =>
+      new SiteWiseAssetSession(
+        new RequestProcessor(
+          {} as SiteWiseAssetDataSource,
+          new SiteWiseAssetCache()
+        )
+      )
   ).not.toThrowError();
 });

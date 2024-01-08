@@ -10,7 +10,10 @@ export class IotResourceExplorerDemo {
   private query: SiteWiseQuery;
 
   componentWillLoad() {
-    const { query } = initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' });
+    const { query } = initialize({
+      awsCredentials: getEnvCredentials(),
+      awsRegion: 'us-east-1',
+    });
     this.query = query;
   }
 

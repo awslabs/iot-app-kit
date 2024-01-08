@@ -1,5 +1,8 @@
 import React, { FC } from 'react';
-import { AssetSummary, useListAssetPropertiesMapQuery } from '~/hooks/useAssetDescriptionQueries';
+import {
+  AssetSummary,
+  useListAssetPropertiesMapQuery,
+} from '~/hooks/useAssetDescriptionQueries';
 import { PropertyComponent } from './propertyComponent';
 import { isJust } from '~/util/maybe';
 import { SelectOneWidget } from '../shared/selectOneWidget';
@@ -13,7 +16,9 @@ import { handleRemoveAssetModelProperty } from './handleDeleteAssetModelProperty
 
 const NoComponents = () => <Box variant='p'>No properties or alarms found</Box>;
 
-export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({
+export const GeneralPropertiesAlarmsSection: FC<
+  PropertiesAlarmsSectionProps
+> = ({
   onDeleteAssetQuery = defaultOnDeleteQuery,
   queryConfig,
   updateQueryConfig,
@@ -41,13 +46,18 @@ export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = 
    * to edit the selection in bulk. They will always be defined
    * if the selection only contains 1 widget
    */
-  const mustEditAsSingle = !editablePropertiesAndAlarms || !editableStyleSettings;
+  const mustEditAsSingle =
+    !editablePropertiesAndAlarms || !editableStyleSettings;
 
-  const siteWiseAssetQuery = (editablePropertiesAndAlarms && queryConfig.value.query) || undefined;
-  const describedAssetsMapQuery = useListAssetPropertiesMapQuery(siteWiseAssetQuery);
+  const siteWiseAssetQuery =
+    (editablePropertiesAndAlarms && queryConfig.value.query) || undefined;
+  const describedAssetsMapQuery =
+    useListAssetPropertiesMapQuery(siteWiseAssetQuery);
   const describedAssetsMap = describedAssetsMapQuery.data ?? {};
 
-  const assetModelIds = (siteWiseAssetQuery?.assetModels ?? []).map(({ assetModelId }) => assetModelId);
+  const assetModelIds = (siteWiseAssetQuery?.assetModels ?? []).map(
+    ({ assetModelId }) => assetModelId
+  );
   const { assetModels } = useAssetModel({ assetModelIds, client });
 
   const getComponents = () => {
@@ -96,23 +106,30 @@ export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = 
       ) ?? [];
 
     const unmodeled =
-      siteWiseAssetQuery?.properties?.map(({ propertyAlias, refId = propertyAlias }) => (
-        <PropertyComponent
-          key={propertyAlias}
-          propertyId={propertyAlias}
-          refId={refId}
-          assetSummary={{ assetId: '', assetName: '', properties: [], alarms: [] }}
-          styleSettings={styleSettingsValue}
-          onDeleteAssetQuery={onDeleteAssetQuery({
-            siteWiseAssetQuery: siteWiseAssetQuery,
-            assetId: '',
-            propertyId: propertyAlias,
-            updateSiteWiseAssetQuery,
-          })}
-          onUpdatePropertyColor={onUpdatePropertyColor(refId)}
-          colorable={colorable}
-        />
-      )) ?? [];
+      siteWiseAssetQuery?.properties?.map(
+        ({ propertyAlias, refId = propertyAlias }) => (
+          <PropertyComponent
+            key={propertyAlias}
+            propertyId={propertyAlias}
+            refId={refId}
+            assetSummary={{
+              assetId: '',
+              assetName: '',
+              properties: [],
+              alarms: [],
+            }}
+            styleSettings={styleSettingsValue}
+            onDeleteAssetQuery={onDeleteAssetQuery({
+              siteWiseAssetQuery: siteWiseAssetQuery,
+              assetId: '',
+              propertyId: propertyAlias,
+              updateSiteWiseAssetQuery,
+            })}
+            onUpdatePropertyColor={onUpdatePropertyColor(refId)}
+            colorable={colorable}
+          />
+        )
+      ) ?? [];
 
     const assetModeled =
       siteWiseAssetQuery?.assetModels?.flatMap(({ assetModelId, properties }) =>

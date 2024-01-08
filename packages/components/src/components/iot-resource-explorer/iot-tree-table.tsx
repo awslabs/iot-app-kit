@@ -39,9 +39,13 @@ export class IotTreeTable {
   @Prop() sortingDisabled: boolean;
   @Prop() ariaLabels: TableProps.AriaLabels<unknown>;
 
-  @Prop() onSelectionChange: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
+  @Prop() onSelectionChange: (
+    event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>
+  ) => void;
   @Prop() onExpandChildren: (node: ITreeNode<any>) => void;
-  @Prop() onSortingChange: (event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>) => void;
+  @Prop() onSortingChange: (
+    event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>
+  ) => void;
   private root: Root;
 
   componentDidLoad() {
@@ -72,7 +76,11 @@ export class IotTreeTable {
 
       expandChildren: this.onExpandChildren,
       onSortingChange: this.onSortingChange,
-      onSelectionChange: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => {
+      onSelectionChange: (
+        event: NonCancelableCustomEvent<
+          TableProps.SelectionChangeDetail<unknown>
+        >
+      ) => {
         this.selectedItems = event.detail.selectedItems;
         if (this.onSelectionChange) {
           this.onSelectionChange(event);
@@ -80,7 +88,9 @@ export class IotTreeTable {
       },
     } as unknown as RelatedTableExtendedProps<unknown>;
 
-    this.root.render(createElement(RelatedTableWithCollectionHooks, attributes));
+    this.root.render(
+      createElement(RelatedTableWithCollectionHooks, attributes)
+    );
   }
 
   render() {

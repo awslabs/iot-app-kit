@@ -17,12 +17,17 @@ it('should render RequestVideoUpload Button', () => {
 });
 
 it('should trigger video upload request', () => {
-  const { container } = render(<RequestVideoUpload videoData={mockVideoData} />);
+  const { container } = render(
+    <RequestVideoUpload videoData={mockVideoData} />
+  );
   const uiComponentWrapper = wrapper(container as HTMLElement);
 
   expect(screen.queryByTestId('video-upload-request-button')).toBeDefined();
 
-  const dateRangePicker = uiComponentWrapper?.findContainer()?.findContent()?.findDateRangePicker();
+  const dateRangePicker = uiComponentWrapper
+    ?.findContainer()
+    ?.findContent()
+    ?.findDateRangePicker();
   dateRangePicker?.openDropdown();
   const dropDown = dateRangePicker?.findDropdown();
 

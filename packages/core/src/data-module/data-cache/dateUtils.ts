@@ -10,7 +10,9 @@ export const getDateInterval = (viewport: Viewport): DateInterval => {
   const start = isHistoricalViewport(viewport)
     ? new Date(viewport.start)
     : new Date(Date.now() - parseDuration(viewport.duration));
-  const end = isHistoricalViewport(viewport) ? new Date(viewport.end) : new Date();
+  const end = isHistoricalViewport(viewport)
+    ? new Date(viewport.end)
+    : new Date();
   return {
     start,
     end,

@@ -27,14 +27,21 @@ it('renders', () => {
 
 it('renders toggles for both X and Y axis', async () => {
   const elem = render(<TestComponent />).baseElement;
-  expect(elem.querySelector('[data-test-id="axis-setting-x-toggle"]')).toBeTruthy();
-  expect(elem.querySelector('[data-test-id="axis-setting-y-toggle"]')).toBeTruthy();
+  expect(
+    elem.querySelector('[data-test-id="axis-setting-x-toggle"]')
+  ).toBeTruthy();
+  expect(
+    elem.querySelector('[data-test-id="axis-setting-y-toggle"]')
+  ).toBeTruthy();
 });
 
 it('renders label input for Y axis', () => {
   const elem = render(<TestComponent />).baseElement;
-  expect(elem.querySelector('[data-test-id="axis-setting-y-label-content"]')?.textContent).toMatch(
-    DefaultDashboardMessages.sidePanel.axisMessages.yLabelContent
-  );
-  expect(elem.querySelector('[data-test-id="axis-setting-y-label-input"]')).toBeTruthy();
+  expect(
+    elem.querySelector('[data-test-id="axis-setting-y-label-content"]')
+      ?.textContent
+  ).toMatch(DefaultDashboardMessages.sidePanel.axisMessages.yLabelContent);
+  expect(
+    elem.querySelector('[data-test-id="axis-setting-y-label-input"]')
+  ).toBeTruthy();
 });

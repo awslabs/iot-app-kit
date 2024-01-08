@@ -15,7 +15,10 @@ type PaletteComponentIconProps = {
   Icon: React.FC;
   widgetName: string;
 };
-const PaletteComponentIcon: React.FC<PaletteComponentIconProps> = ({ Icon, widgetName }) => {
+const PaletteComponentIcon: React.FC<PaletteComponentIconProps> = ({
+  Icon,
+  widgetName,
+}) => {
   const tooltipStyle = {
     fontSize: spaceScaledM,
     color: colorBackgroundHomeHeader,

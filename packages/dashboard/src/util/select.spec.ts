@@ -15,7 +15,15 @@ describe('getSelectedIds', () => {
   it('returns id of widget that is contained within the selected rectangle', () => {
     expect(
       getSelectedWidgetIds({
-        dashboardWidgets: [MockWidgetFactory.getLineChartWidget({ x: 5, y: 5, width: 1, height: 1, id: 'some-id' })],
+        dashboardWidgets: [
+          MockWidgetFactory.getLineChartWidget({
+            x: 5,
+            y: 5,
+            width: 1,
+            height: 1,
+            id: 'some-id',
+          }),
+        ],
         cellSize: 10,
         selectedRect: { x: 0, y: 0, width: 100, height: 100 },
       })
@@ -25,7 +33,15 @@ describe('getSelectedIds', () => {
   it('returns id of widget that overlaps the selected rectangle', () => {
     expect(
       getSelectedWidgetIds({
-        dashboardWidgets: [MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, id: 'some-id' })],
+        dashboardWidgets: [
+          MockWidgetFactory.getLineChartWidget({
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+            id: 'some-id',
+          }),
+        ],
         cellSize: 10,
         selectedRect: { x: 10, y: 10, width: 10, height: 10 },
       })
@@ -35,7 +51,15 @@ describe('getSelectedIds', () => {
   it('returns no ids when the widgets are not overlapping the selected rectangle', () => {
     expect(
       getSelectedWidgetIds({
-        dashboardWidgets: [MockWidgetFactory.getLineChartWidget({ x: 0, y: 0, width: 1, height: 1, id: 'some-id' })],
+        dashboardWidgets: [
+          MockWidgetFactory.getLineChartWidget({
+            x: 0,
+            y: 0,
+            width: 1,
+            height: 1,
+            id: 'some-id',
+          }),
+        ],
         cellSize: 5,
         selectedRect: { x: 10, y: 10, width: 10, height: 10 },
       })
@@ -46,8 +70,20 @@ describe('getSelectedIds', () => {
     expect(
       getSelectedWidgetIds({
         dashboardWidgets: [
-          MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, id: 'some-id' }),
-          MockWidgetFactory.getLineChartWidget({ x: 50, y: 50, width: 1, height: 1, id: 'some-id-2' }),
+          MockWidgetFactory.getLineChartWidget({
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+            id: 'some-id',
+          }),
+          MockWidgetFactory.getLineChartWidget({
+            x: 50,
+            y: 50,
+            width: 1,
+            height: 1,
+            id: 'some-id-2',
+          }),
         ],
         cellSize: 10,
         selectedRect: { x: 10, y: 10, width: 10, height: 10 },
@@ -61,8 +97,20 @@ describe('pointSelect', () => {
     expect(
       pointSelect({
         dashboardWidgets: [
-          MockWidgetFactory.getLineChartWidget({ x: 10, y: 10, width: 1, height: 1, id: 'some-id' }),
-          MockWidgetFactory.getLineChartWidget({ x: 50, y: 50, width: 1, height: 1, id: 'some-id-2' }),
+          MockWidgetFactory.getLineChartWidget({
+            x: 10,
+            y: 10,
+            width: 1,
+            height: 1,
+            id: 'some-id',
+          }),
+          MockWidgetFactory.getLineChartWidget({
+            x: 50,
+            y: 50,
+            width: 1,
+            height: 1,
+            id: 'some-id-2',
+          }),
         ],
         cellSize: 10,
         position: { x: 0, y: 0 },
@@ -74,8 +122,20 @@ describe('pointSelect', () => {
     expect(
       pointSelect({
         dashboardWidgets: [
-          MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, id: 'some-id' }),
-          MockWidgetFactory.getLineChartWidget({ x: 50, y: 50, width: 1, height: 1, id: 'some-id-2' }),
+          MockWidgetFactory.getLineChartWidget({
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+            id: 'some-id',
+          }),
+          MockWidgetFactory.getLineChartWidget({
+            x: 50,
+            y: 50,
+            width: 1,
+            height: 1,
+            id: 'some-id-2',
+          }),
         ],
         cellSize: 10,
         position: { x: 15, y: 15 },
@@ -85,8 +145,20 @@ describe('pointSelect', () => {
     expect(
       pointSelect({
         dashboardWidgets: [
-          MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, id: 'some-id' }),
-          MockWidgetFactory.getLineChartWidget({ x: 50, y: 50, width: 1, height: 1, id: 'some-id-2' }),
+          MockWidgetFactory.getLineChartWidget({
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+            id: 'some-id',
+          }),
+          MockWidgetFactory.getLineChartWidget({
+            x: 50,
+            y: 50,
+            width: 1,
+            height: 1,
+            id: 'some-id-2',
+          }),
         ],
         cellSize: 10,
         position: { x: 505, y: 505 },
@@ -98,8 +170,22 @@ describe('pointSelect', () => {
     expect(
       pointSelect({
         dashboardWidgets: [
-          MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, z: 0, id: 'some-id' }),
-          MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, z: 1, id: 'some-id-2' }),
+          MockWidgetFactory.getLineChartWidget({
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+            z: 0,
+            id: 'some-id',
+          }),
+          MockWidgetFactory.getLineChartWidget({
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+            z: 1,
+            id: 'some-id-2',
+          }),
         ],
         cellSize: 10,
         position: { x: 15, y: 15 },

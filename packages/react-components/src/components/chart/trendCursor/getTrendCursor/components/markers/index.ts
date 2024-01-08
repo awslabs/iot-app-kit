@@ -44,8 +44,15 @@ export const updateTrendCursorLineMarkers = (
   //            TREND_CURSOR_HEADER_GRAPHIC_INDEX       --> TC header
   //            TREND_CURSOR_CLOSE_GRAPHIC_INDEX        --> close button
   // from index TREND_CURSOR_LINE_MARKERS_GRAPHIC_INDEX --> series markers
-  for (let i = TREND_CURSOR_LINE_MARKERS_GRAPHIC_INDEX; i < elements.length; i++) {
-    elements[i].y = trendCursorsSeriesMakersInPixels[i - TREND_CURSOR_LINE_MARKERS_GRAPHIC_INDEX];
+  for (
+    let i = TREND_CURSOR_LINE_MARKERS_GRAPHIC_INDEX;
+    i < elements.length;
+    i++
+  ) {
+    elements[i].y =
+      trendCursorsSeriesMakersInPixels[
+        i - TREND_CURSOR_LINE_MARKERS_GRAPHIC_INDEX
+      ];
   }
   return elements;
 };
@@ -56,10 +63,15 @@ export const upsertTrendCursorLineMarkers = (
   series: SeriesOption[]
 ) => {
   // read all the non-marker elements
-  const newElements = [...elements.slice(0, TREND_CURSOR_LINE_MARKERS_GRAPHIC_INDEX)];
+  const newElements = [
+    ...elements.slice(0, TREND_CURSOR_LINE_MARKERS_GRAPHIC_INDEX),
+  ];
 
   // read the unique Id from the delete button, which is in the format delete-button-uuid
-  const uId = elements[TREND_CURSOR_CLOSE_GRAPHIC_INDEX].id?.toString().split('delete-button-')[1] ?? '';
+  const uId =
+    elements[TREND_CURSOR_CLOSE_GRAPHIC_INDEX].id
+      ?.toString()
+      .split('delete-button-')[1] ?? '';
   // add the new markers
   for (let i = 0; i < trendCursorsSeriesMakersInPixels.length; i++) {
     newElements.push(
@@ -88,7 +100,11 @@ export const upsertTrendCursorLineMarkers = (
   return newElements;
 };
 
-export const addTCMarkers = (uId: string, yAxisMarkers: number[], series: SeriesOption[]) =>
+export const addTCMarkers = (
+  uId: string,
+  yAxisMarkers: number[],
+  series: SeriesOption[]
+) =>
   yAxisMarkers.map((marker, index) => ({
     id: `circle-${index}-${uId}`,
     type: 'circle',

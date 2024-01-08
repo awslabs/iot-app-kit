@@ -68,7 +68,9 @@ const treeTableSpecPage = async () => {
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const treeTable = page.doc.createElement('iot-tree-table') as CustomHTMLElement<Components.IotTreeTable>;
+  const treeTable = page.doc.createElement(
+    'iot-tree-table'
+  ) as CustomHTMLElement<Components.IotTreeTable>;
   const props: Partial<Components.IotTreeTable> = {
     items,
     collectionOptions,

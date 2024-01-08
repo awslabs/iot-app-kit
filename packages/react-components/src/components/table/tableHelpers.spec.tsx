@@ -13,7 +13,10 @@ describe('getDefaultColumnDefinitions', () => {
     ];
 
     const columnDefs = getDefaultColumnDefinitions(userColumnDefinitions);
-    expect(columnDefs[0]).toMatchObject({ cell: expect.toBeFunction(), header: 'Header' });
+    expect(columnDefs[0]).toMatchObject({
+      cell: expect.toBeFunction(),
+      header: 'Header',
+    });
   });
 });
 
@@ -28,7 +31,9 @@ describe('default cell function', () => {
       header: 'Not Exist',
     },
   ];
-  const [firstColumnDef, secondColumnDef] = getDefaultColumnDefinitions(userColumnDefinitions);
+  const [firstColumnDef, secondColumnDef] = getDefaultColumnDefinitions(
+    userColumnDefinitions
+  );
 
   it("returns item's value", () => {
     const item: TableItemHydrated = {

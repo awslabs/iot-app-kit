@@ -1,1 +1,4 @@
-export { ModeledDataStreamTable, type ModeledDataStreamTableProps } from './modeledDataStreamTable';
+export {
+  ModeledDataStreamTable,
+  type ModeledDataStreamTableProps,
+} from './modeledDataStreamTable';

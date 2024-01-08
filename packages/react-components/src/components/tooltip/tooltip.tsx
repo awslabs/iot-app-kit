@@ -8,7 +8,11 @@ import {
   spaceStaticXs,
   spaceStaticXxxs,
 } from '@cloudscape-design/design-tokens';
-import { MAX_TOOLTIP_WIDTH, TOP_TOOLTIP_MARGIN, WRAPPED_TOOLTIP_WIDTH } from './constants';
+import {
+  MAX_TOOLTIP_WIDTH,
+  TOP_TOOLTIP_MARGIN,
+  WRAPPED_TOOLTIP_WIDTH,
+} from './constants';
 
 export const Tooltip = ({
   content,
@@ -30,12 +34,16 @@ export const Tooltip = ({
     border: `${spaceStaticXxxs} solid ${colorBackgroundHomeHeader}`,
     maxWidth: `${MAX_TOOLTIP_WIDTH}px`,
     ...(isContentWrapped && { width: `${MAX_TOOLTIP_WIDTH}px` }),
-    ...(isContentWrapped && position !== 'bottom' ? { bottom: `${TOP_TOOLTIP_MARGIN}%` } : ''),
+    ...(isContentWrapped && position !== 'bottom'
+      ? { bottom: `${TOP_TOOLTIP_MARGIN}%` }
+      : ''),
   };
 
   const handleMouseEnter = () => {
     if (contentRef.current) {
-      setIsContentWrapped(contentRef.current.clientWidth > WRAPPED_TOOLTIP_WIDTH);
+      setIsContentWrapped(
+        contentRef.current.clientWidth > WRAPPED_TOOLTIP_WIDTH
+      );
     }
   };
 
@@ -48,7 +56,11 @@ export const Tooltip = ({
   };
 
   return (
-    <div className='tooltip-container' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div
+      className='tooltip-container'
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {children}
       {content && (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions

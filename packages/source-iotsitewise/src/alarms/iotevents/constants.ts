@@ -14,7 +14,9 @@ export const ALARM_STATUS = {
 
 export const AWSUI_RED_600 = '#d13212';
 
-export const ALARM_STATUS_MAP: { [status: string]: { color: string; icon: StatusIcon; severity: number } } = {
+export const ALARM_STATUS_MAP: {
+  [status: string]: { color: string; icon: StatusIcon; severity: number };
+} = {
   [ALARM_STATUS.ACTIVE]: {
     color: AWSUI_RED_600,
     icon: StatusIcon.ACTIVE,
@@ -47,7 +49,9 @@ export const ALARM_STATUS_MAP: { [status: string]: { color: string; icon: Status
   },
 } as const;
 
-export const SynchroChartsToIoTEventsComparisonOperator: { [key: string]: ComparisonOperator } = {
+export const SynchroChartsToIoTEventsComparisonOperator: {
+  [key: string]: ComparisonOperator;
+} = {
   [COMPARISON_OPERATOR.GREATER_THAN]: ComparisonOperator.GREATER,
   [COMPARISON_OPERATOR.GREATER_THAN_EQUAL]: ComparisonOperator.GREATER_OR_EQUAL,
   [COMPARISON_OPERATOR.LESS_THAN]: ComparisonOperator.LESS,
@@ -56,7 +60,9 @@ export const SynchroChartsToIoTEventsComparisonOperator: { [key: string]: Compar
   NEQ: ComparisonOperator.NOT_EQUAL,
 };
 
-export const IoTEventsToSynchroChartsComparisonOperator: { [key: string]: COMPARISON_OPERATOR | 'NEQ' } = {
+export const IoTEventsToSynchroChartsComparisonOperator: {
+  [key: string]: COMPARISON_OPERATOR | 'NEQ';
+} = {
   [ComparisonOperator.GREATER]: COMPARISON_OPERATOR.GREATER_THAN,
   [ComparisonOperator.GREATER_OR_EQUAL]: COMPARISON_OPERATOR.GREATER_THAN_EQUAL,
   [ComparisonOperator.LESS]: COMPARISON_OPERATOR.LESS_THAN,

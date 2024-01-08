@@ -205,7 +205,8 @@ export const DefaultDashboardMessages: DashboardMessages = {
     customRelativeRangeOptionLabel: 'Custom range',
     customRelativeRangeOptionDescription: 'Set a custom range in the past',
     customRelativeRangeUnitLabel: 'Unit of time',
-    dateTimeConstraintText: 'For date, use YYYY/MM/DD. For time, use 24 hr format.',
+    dateTimeConstraintText:
+      'For date, use YYYY/MM/DD. For time, use 24 hr format.',
     relativeModeTitle: 'Relative range',
     absoluteModeTitle: 'Absolute range',
     relativeRangeSelectionHeading: 'Choose a range',
@@ -221,11 +222,14 @@ export const DefaultDashboardMessages: DashboardMessages = {
       return `Last ${e.amount} ${e.unit}s`;
     },
     formatUnit: (e, n) => (1 === n ? e : `${e}s`),
-    dateRangeIncompleteError: 'The selected date range is incomplete. Select a start and end date for the date range.',
-    dateRangeInvalidError: 'The selected date range is invalid. The start date must be before the end date.',
+    dateRangeIncompleteError:
+      'The selected date range is incomplete. Select a start and end date for the date range.',
+    dateRangeInvalidError:
+      'The selected date range is invalid. The start date must be before the end date.',
   },
   resourceExplorer: {
-    explorerEmptyLabel: 'No resources found. Please provide an asset tree query from source-iotsitewise.',
+    explorerEmptyLabel:
+      'No resources found. Please provide an asset tree query from source-iotsitewise.',
     panelEmptyLabel: 'Asset has no properties or child assets.',
     rootAssetsHeader: 'Root Assets',
     childAssetsHeader: 'Child Assets',

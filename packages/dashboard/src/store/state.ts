@@ -1,7 +1,9 @@
 import type { DashboardWidget } from '~/types';
 import { deepFreeze } from '~/util/deepFreeze';
 
-export type DashboardState<Properties extends Record<string, unknown> = Record<string, unknown>> = {
+export type DashboardState<
+  Properties extends Record<string, unknown> = Record<string, unknown>
+> = {
   grid: {
     enabled: boolean;
     width: number;

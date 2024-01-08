@@ -5,7 +5,9 @@ interface ModeledDataStreamTableEmptyStateProps {
   isAssetSelected: boolean;
 }
 
-export function ModeledDataStreamTableEmptyState({ isAssetSelected }: ModeledDataStreamTableEmptyStateProps) {
+export function ModeledDataStreamTableEmptyState({
+  isAssetSelected,
+}: ModeledDataStreamTableEmptyStateProps) {
   return (
     <Box textAlign='center' color='inherit'>
       <b>No modeled data streams</b>

@@ -18,14 +18,20 @@ describe('completeDataStreams', () => {
   };
 
   it('should not change dataStream when dataType is not defined', () => {
-    expect(completeDataStreams({ dataStreams: [stream], entities: {} })).toEqual([stream]);
+    expect(
+      completeDataStreams({ dataStreams: [stream], entities: {} })
+    ).toEqual([stream]);
   });
 
   it('should add extra value to dataStream when dataType is defined', () => {
     const entity = {
       components: {
         'comp-1': {
-          properties: { 'prop-1': { definition: { dataType: { unitOfMeasure: 'm', type: 'INTEGER' } } } },
+          properties: {
+            'prop-1': {
+              definition: { dataType: { unitOfMeasure: 'm', type: 'INTEGER' } },
+            },
+          },
         },
       },
     } as unknown as GetEntityResponse;

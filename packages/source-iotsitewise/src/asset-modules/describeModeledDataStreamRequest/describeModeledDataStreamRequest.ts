@@ -2,7 +2,13 @@ import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 
 import { DescribeAssetRequest } from './describeAssetRequest';
 import { SearchAssetPropertyRequest } from './searchAssetPropertyRequest';
-import type { Asset, AssetId, AssetModelId, AssetPropertyId, ModeledDataStream } from './types';
+import type {
+  Asset,
+  AssetId,
+  AssetModelId,
+  AssetPropertyId,
+  ModeledDataStream,
+} from './types';
 
 /**
  * Creates a request to return the metadata for a modeled data stream.
@@ -40,7 +46,10 @@ export class DescribeModeledDataStreamRequest {
   }): Promise<ModeledDataStream | undefined> {
     try {
       const asset = await this.#describeAssetRequest.send(assetId);
-      const assetPropertyOnAsset = this.#findAssetPropertyOnAsset({ assetPropertyId, asset });
+      const assetPropertyOnAsset = this.#findAssetPropertyOnAsset({
+        assetPropertyId,
+        asset,
+      });
 
       if (assetPropertyOnAsset) {
         const modeledDataStream = {
@@ -53,11 +62,13 @@ export class DescribeModeledDataStreamRequest {
         return modeledDataStream;
       }
 
-      const searchedAssetProperty = await this.#searchAssetPropertyRequest.send({
-        assetPropertyId,
-        assetId,
-        assetModelId,
-      });
+      const searchedAssetProperty = await this.#searchAssetPropertyRequest.send(
+        {
+          assetPropertyId,
+          assetId,
+          assetModelId,
+        }
+      );
 
       if (searchedAssetProperty) {
         const modeledDataStream = {
@@ -81,7 +92,9 @@ export class DescribeModeledDataStreamRequest {
     assetPropertyId: AssetPropertyId;
     asset: Asset;
   }) {
-    const assetProperty = assetProperties.find(({ id }) => id === assetPropertyId);
+    const assetProperty = assetProperties.find(
+      ({ id }) => id === assetPropertyId
+    );
 
     if (assetProperty) {
       return assetProperty;

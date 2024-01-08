@@ -21,7 +21,9 @@ export const sitewiseSdk = ({
     credentials,
   });
 
-export const getSiteWiseClient = (input: SiteWiseDataSourceInitalization): IoTSiteWiseClient => {
+export const getSiteWiseClient = (
+  input: SiteWiseDataSourceInitalization
+): IoTSiteWiseClient => {
   const { iotSiteWiseClient, awsCredentials, awsRegion } = input;
 
   if (iotSiteWiseClient) {

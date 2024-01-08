@@ -35,7 +35,9 @@ export const getVisibleData = <T extends Primitive>(
   const start = isHistoricalViewport(viewport)
     ? new Date(viewport.start)
     : new Date(Date.now() - parseDuration(viewport.duration));
-  const end = isHistoricalViewport(viewport) ? new Date(viewport.end) : new Date();
+  const end = isHistoricalViewport(viewport)
+    ? new Date(viewport.end)
+    : new Date();
 
   // If there is no data
   if (data.length === 0) {
@@ -52,8 +54,14 @@ export const getVisibleData = <T extends Primitive>(
 
   // Otherwise return all the data within the viewport, plus an additional single data point that falls outside of
   // the viewport in either direction.
-  const startIndex = Math.max(pointBisector.left(data, start) - (includeBoundaryPoints ? 1 : 0), 0);
-  const endIndex = Math.min(pointBisector.right(data, end) - (includeBoundaryPoints ? 0 : 1), data.length - 1);
+  const startIndex = Math.max(
+    pointBisector.left(data, start) - (includeBoundaryPoints ? 1 : 0),
+    0
+  );
+  const endIndex = Math.min(
+    pointBisector.right(data, end) - (includeBoundaryPoints ? 0 : 1),
+    data.length - 1
+  );
   return data.slice(startIndex, endIndex + 1);
 };
 
@@ -62,7 +70,10 @@ export const getVisibleData = <T extends Primitive>(
  *
  * Assumes data is ordered chronologically.
  */
-export const getDataBeforeDate = <T extends Primitive>(data: DataPoint<T>[], date: Date): DataPoint<T>[] => {
+export const getDataBeforeDate = <T extends Primitive>(
+  data: DataPoint<T>[],
+  date: Date
+): DataPoint<T>[] => {
   // If there is no data
   if (data.length === 0) {
     return [];
@@ -74,6 +85,9 @@ export const getDataBeforeDate = <T extends Primitive>(data: DataPoint<T>[], dat
 
   // Otherwise return all the data within the viewport, plus an additional single data point that falls outside of
   // the viewport in either direction.
-  const endIndex = Math.min(pointBisector.right(data, date) - 1, data.length - 1);
+  const endIndex = Math.min(
+    pointBisector.right(data, date) - 1,
+    data.length - 1
+  );
   return data.slice(0, endIndex + 1);
 };

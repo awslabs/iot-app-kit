@@ -7,7 +7,13 @@ import { InternalGraphicComponentGroupOption } from '../trendCursor/types';
 export type Action = 'add' | 'delete' | 'copy';
 interface ChartContextMenu {
   position: { x: number; y: number };
-  menuOptionClickHandler: ({ action, e }: { action: Action; e: React.MouseEvent }) => void;
+  menuOptionClickHandler: ({
+    action,
+    e,
+  }: {
+    action: Action;
+    e: React.MouseEvent;
+  }) => void;
   onOutSideClickHandler: (e: PointerEvent) => void;
   trendCursors: InternalGraphicComponentGroupOption[];
 }
@@ -19,7 +25,11 @@ const ChartContextMenu = ({
 }: ChartContextMenu) => {
   return (
     <Menu
-      styles={{ position: 'absolute', top: `${position.y}px`, left: `${position.x}px` }}
+      styles={{
+        position: 'absolute',
+        top: `${position.y}px`,
+        left: `${position.x}px`,
+      }}
       onClickOutside={onOutSideClickHandler}
     >
       <MenuOption

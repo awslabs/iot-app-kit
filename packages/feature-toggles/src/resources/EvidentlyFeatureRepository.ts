@@ -1,4 +1,7 @@
-import Evidently, { ClientConfiguration, EvaluateFeatureRequest } from 'aws-sdk/clients/evidently';
+import Evidently, {
+  ClientConfiguration,
+  EvaluateFeatureRequest,
+} from 'aws-sdk/clients/evidently';
 import IFeature from '../models/feature';
 import IFeatureRepository from './IFeatureRepository';
 import { Memoize } from 'typescript-memoize';
@@ -6,7 +9,11 @@ import { Memoize } from 'typescript-memoize';
 export default class EvidentlyFeatureRepository implements IFeatureRepository {
   private client: Evidently;
 
-  constructor(private project: string, private entityId: string, options: ClientConfiguration) {
+  constructor(
+    private project: string,
+    private entityId: string,
+    options: ClientConfiguration
+  ) {
     this.client = new Evidently(options);
   }
 

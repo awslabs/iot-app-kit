@@ -1,6 +1,11 @@
 import React from 'react';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
-import { ChartLegend, LineScatterChartWidget, LineStyles, SymbolStyles } from '~/customization/widgets/types';
+import {
+  ChartLegend,
+  LineScatterChartWidget,
+  LineStyles,
+  SymbolStyles,
+} from '~/customization/widgets/types';
 import { DashboardWidget } from '~/types';
 import { LineStyleSection } from './lineStyleSection';
 import { YAxisSection } from './yAxis';
@@ -8,14 +13,19 @@ import { LegendSection } from './legendSection';
 import { AggregationAndResolutionSection } from './aggregationAndResolutionSection';
 import { isJust, maybeWithDefault } from '~/util/maybe';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import { getAggregationOptions, getResolutionOptions } from '../aggregationSettings/helpers';
+import {
+  getAggregationOptions,
+  getResolutionOptions,
+} from '../aggregationSettings/helpers';
 import { useWidgetDataTypeSet } from '~/hooks/useWidgetDataTypeSet';
 import { applyAggregationToQuery } from '~/customization/widgets/utils/assetQuery/applyAggregationToQuery';
 import { applyResolutionToQuery } from '~/customization/widgets/utils/assetQuery/applyResolutionToQuery';
 import { PropertyLens } from '~/customization/propertiesSection';
 import { getPlugin } from '@iot-app-kit/core';
 
-const isLineAndScatterWidget = (w: DashboardWidget): w is LineScatterChartWidget => w.type === 'xy-plot';
+const isLineAndScatterWidget = (
+  w: DashboardWidget
+): w is LineScatterChartWidget => w.type === 'xy-plot';
 
 const RenderLineAndScatterStyleSettingsSection = ({
   useProperty,
@@ -102,7 +112,10 @@ const RenderLineAndScatterStyleSettingsSection = ({
       queryConfig: {
         ...properties.queryConfig,
         query: properties.queryConfig.query
-          ? applyAggregationToQuery(properties.queryConfig.query, updatedAggregationType)
+          ? applyAggregationToQuery(
+              properties.queryConfig.query,
+              updatedAggregationType
+            )
           : undefined,
       },
       aggregationType: updatedAggregationType,
@@ -113,7 +126,9 @@ const RenderLineAndScatterStyleSettingsSection = ({
     ({ resolution }) => resolution,
     (properties, updatedResolution) => {
       // We get the current aggregation and don't change it if it's already set.
-      let updatedAggregationType: AggregateType | undefined = isJust(aggregationMaybe)
+      let updatedAggregationType: AggregateType | undefined = isJust(
+        aggregationMaybe
+      )
         ? aggregationMaybe.value
         : undefined;
 
@@ -134,7 +149,10 @@ const RenderLineAndScatterStyleSettingsSection = ({
 
       const updatedQuery = properties.queryConfig.query
         ? applyResolutionToQuery(
-            applyResolutionToQuery(properties.queryConfig.query, updatedAggregationType),
+            applyResolutionToQuery(
+              properties.queryConfig.query,
+              updatedAggregationType
+            ),
             updatedResolution
           )
         : undefined;
@@ -187,7 +205,11 @@ const RenderLineAndScatterStyleSettingsSection = ({
 
   const dataTypeSet = useWidgetDataTypeSet(assetQuery ?? { assets: [] });
   const filteredResolutionOptions = getResolutionOptions(true);
-  const filteredAggregationOptions = getAggregationOptions(true, dataTypeSet, resolution);
+  const filteredAggregationOptions = getAggregationOptions(
+    true,
+    dataTypeSet,
+    resolution
+  );
 
   const handleSetVisible = (visible: boolean) => {
     updateAxis({ ...axis, yVisible: visible });
@@ -222,7 +244,9 @@ const RenderLineAndScatterStyleSettingsSection = ({
       <AggregationAndResolutionSection
         aggregation={aggregationType}
         resolution={resolution}
-        updateAggregation={(updatedAggregationType) => updateAggregation(updatedAggregationType as AggregateType)}
+        updateAggregation={(updatedAggregationType) =>
+          updateAggregation(updatedAggregationType as AggregateType)
+        }
         updateResolution={updateResolution}
         resolutionOptions={filteredResolutionOptions}
         aggregationOptions={filteredAggregationOptions}
@@ -242,18 +266,26 @@ const RenderLineAndScatterStyleSettingsSection = ({
         lineStyle={lineStyle}
         lineThickness={lineThickness}
         dataPointStyle={dataPointStyle}
-        updatelineStyle={(style) => updateLineStyle(style as LineStyles['style'])}
+        updatelineStyle={(style) =>
+          updateLineStyle(style as LineStyles['style'])
+        }
         updateLineThickness={(thickness) => {
           updateLineThickness(thickness as LineStyles['thickness']);
         }}
-        updateType={(type) => updateConnectionStyle(type as LineStyles['connectionStyle'])}
-        updateDataPointStyle={(dataPointStyle) => updateDataPointStyle(dataPointStyle as SymbolStyles['style'])}
+        updateType={(type) =>
+          updateConnectionStyle(type as LineStyles['connectionStyle'])
+        }
+        updateDataPointStyle={(dataPointStyle) =>
+          updateDataPointStyle(dataPointStyle as SymbolStyles['style'])
+        }
       />
       <LegendSection
         visible={legendVisible}
         position={legendPosition}
         setVisible={updateLegendVisible}
-        setAlignment={(position) => updateLegendPosition(position as ChartLegend['position'])}
+        setAlignment={(position) =>
+          updateLegendPosition(position as ChartLegend['position'])
+        }
       />
     </>
   );
@@ -262,6 +294,8 @@ const RenderLineAndScatterStyleSettingsSection = ({
 export const LineAndScatterStyleSettingsSection: React.FC = () => (
   <PropertiesSection
     isVisible={isLineAndScatterWidget}
-    render={({ useProperty }) => <RenderLineAndScatterStyleSettingsSection useProperty={useProperty} />}
+    render={({ useProperty }) => (
+      <RenderLineAndScatterStyleSettingsSection useProperty={useProperty} />
+    )}
   />
 );

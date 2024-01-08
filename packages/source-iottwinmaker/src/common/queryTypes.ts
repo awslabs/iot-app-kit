@@ -24,6 +24,10 @@ export interface TwinMakerComponentHistoryQuery extends TwinMakerBaseQuery {
   componentTypeId: string;
 }
 
-export type TwinMakerHistoryQuery = TwinMakerEntityHistoryQuery | TwinMakerComponentHistoryQuery;
+export type TwinMakerHistoryQuery =
+  | TwinMakerEntityHistoryQuery
+  | TwinMakerComponentHistoryQuery;
 export type TwinMakerPropertyValueQuery = TwinMakerEntityPropertyValueQuery;
-export type TwinMakerQuery = TwinMakerHistoryQuery | TwinMakerPropertyValueQuery;
+export type TwinMakerQuery =
+  | TwinMakerHistoryQuery
+  | TwinMakerPropertyValueQuery;

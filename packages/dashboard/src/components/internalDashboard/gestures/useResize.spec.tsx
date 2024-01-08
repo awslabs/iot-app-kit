@@ -27,7 +27,9 @@ beforeEach(() => {
 const TestProvider: React.FC<{
   storeArgs?: RecursivePartial<DashboardState>;
   children: ReactNode;
-}> = ({ storeArgs, children }) => <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>;
+}> = ({ storeArgs, children }) => (
+  <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>
+);
 
 it('sets the gesture to resize when performing a resize gesture', () => {
   const setActiveGesture = jest.fn();
@@ -51,7 +53,10 @@ it('sets the gesture to resize when performing a resize gesture', () => {
 });
 
 it('dispatches the resize action on gesture resize update and end', () => {
-  (onResizeWidgetsAction as jest.Mock).mockImplementation(() => ({ type: '', payload: {} }));
+  (onResizeWidgetsAction as jest.Mock).mockImplementation(() => ({
+    type: '',
+    payload: {},
+  }));
 
   const setActiveGesture = jest.fn();
 
@@ -105,7 +110,10 @@ it('dispatches the resize action on gesture resize update and end', () => {
 });
 
 it('doesnt dispatch the resize action on gesture resize update and end if there is no anchor', () => {
-  (onResizeWidgetsAction as jest.Mock).mockImplementation(() => ({ type: '', payload: {} }));
+  (onResizeWidgetsAction as jest.Mock).mockImplementation(() => ({
+    type: '',
+    payload: {},
+  }));
 
   const setActiveGesture = jest.fn();
 

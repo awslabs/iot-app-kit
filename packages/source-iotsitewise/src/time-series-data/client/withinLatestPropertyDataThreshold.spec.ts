@@ -1,4 +1,7 @@
-import { RAW_DATA_RECENCY_THRESHOLD, withinLatestPropertyDataThreshold } from './withinLatestPropertyDataThreshold';
+import {
+  RAW_DATA_RECENCY_THRESHOLD,
+  withinLatestPropertyDataThreshold,
+} from './withinLatestPropertyDataThreshold';
 
 describe('withinLatestPropertyDataThreshold', () => {
   test('returns true if the date is within the threshold', () => {

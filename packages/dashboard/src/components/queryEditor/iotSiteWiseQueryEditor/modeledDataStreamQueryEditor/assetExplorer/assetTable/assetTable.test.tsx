@@ -32,9 +32,15 @@ describe('AssetTableColumnDefinitionsFactory', () => {
       expect(columnDefinitions.some((def) => def.id === 'arn')).toBe(true);
       expect(columnDefinitions.some((def) => def.id === 'id')).toBe(true);
       expect(columnDefinitions.some((def) => def.id === 'name')).toBe(true);
-      expect(columnDefinitions.some((def) => def.id === 'description')).toBe(true);
-      expect(columnDefinitions.some((def) => def.id === 'creationDate')).toBe(true);
-      expect(columnDefinitions.some((def) => def.id === 'lastUpdateDate')).toBe(true);
+      expect(columnDefinitions.some((def) => def.id === 'description')).toBe(
+        true
+      );
+      expect(columnDefinitions.some((def) => def.id === 'creationDate')).toBe(
+        true
+      );
+      expect(columnDefinitions.some((def) => def.id === 'lastUpdateDate')).toBe(
+        true
+      );
     });
   });
 });

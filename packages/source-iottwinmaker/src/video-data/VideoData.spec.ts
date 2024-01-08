@@ -34,9 +34,10 @@ describe('Test VideoData class', () => {
   });
 
   const getHLSStreamingSessionURL = jest.fn();
-  const kinesisVideoArchivedMediaClientMock = createMockKinesisVideoArchivedMediaSDK({
-    getHLSStreamingSessionURL,
-  });
+  const kinesisVideoArchivedMediaClientMock =
+    createMockKinesisVideoArchivedMediaSDK({
+      getHLSStreamingSessionURL,
+    });
 
   const batchPutAssetPropertyValue = jest.fn();
   const getAssetPropertyValue = jest.fn();
@@ -92,58 +93,86 @@ describe('Test VideoData class', () => {
 
   it('Test successful triggerOnDemandVideoUploadRequest()', async () => {
     expect(() =>
-      videoDataSimpleMode.triggerOnDemandVideoUploadRequest(new Date().toISOString(), new Date().toISOString())
+      videoDataSimpleMode.triggerOnDemandVideoUploadRequest(
+        new Date().toISOString(),
+        new Date().toISOString()
+      )
     ).not.toThrow();
   });
 
   it('Fetch KVS stream source for LIVE playback - Simple Mode', async () => {
-    getHLSStreamingSessionURL.mockResolvedValue(mockLiveGetHLSStreamingSessionURLResponse);
-    const response = await videoDataSimpleMode.getKvsStreamSrc(PLAYBACKMODE_LIVE);
+    getHLSStreamingSessionURL.mockResolvedValue(
+      mockLiveGetHLSStreamingSessionURLResponse
+    );
+    const response = await videoDataSimpleMode.getKvsStreamSrc(
+      PLAYBACKMODE_LIVE
+    );
     expect(response).toEqual(mockLiveURL);
   });
 
   it('Fetch KVS stream source for ON_DEMAND playback - Simple Mode', async () => {
-    getHLSStreamingSessionURL.mockResolvedValue(mockOnDemandGetHLSStreamingSessionURLResponse);
-    const response = await videoDataSimpleMode.getKvsStreamSrc(PLAYBACKMODE_ON_DEMAND);
+    getHLSStreamingSessionURL.mockResolvedValue(
+      mockOnDemandGetHLSStreamingSessionURLResponse
+    );
+    const response = await videoDataSimpleMode.getKvsStreamSrc(
+      PLAYBACKMODE_ON_DEMAND
+    );
     expect(response).toEqual(mockOnDemandURL);
   });
 
   it('Fetch KVS stream source for LIVE playback - EdgeVideo Component', async () => {
-    getHLSStreamingSessionURL.mockResolvedValue(mockLiveGetHLSStreamingSessionURLResponse);
+    getHLSStreamingSessionURL.mockResolvedValue(
+      mockLiveGetHLSStreamingSessionURLResponse
+    );
     getEntity.mockResolvedValue(mockEdgeVideoEntity);
     const response = await videoData.getKvsStreamSrc(PLAYBACKMODE_LIVE);
     expect(response).toEqual(mockLiveURL);
   });
 
   it('Fetch KVS stream source for ON_DEMAND playback - EdgeVideo Component', async () => {
-    getHLSStreamingSessionURL.mockResolvedValue(mockOnDemandGetHLSStreamingSessionURLResponse);
+    getHLSStreamingSessionURL.mockResolvedValue(
+      mockOnDemandGetHLSStreamingSessionURLResponse
+    );
     getEntity.mockResolvedValue(mockEdgeVideoEntity);
     const response = await videoData.getKvsStreamSrc(PLAYBACKMODE_ON_DEMAND);
     expect(response).toEqual(mockOnDemandURL);
   });
 
   it('Fetch KVS stream source for LIVE playback - KVS Component', async () => {
-    getHLSStreamingSessionURL.mockResolvedValue(mockLiveGetHLSStreamingSessionURLResponse);
+    getHLSStreamingSessionURL.mockResolvedValue(
+      mockLiveGetHLSStreamingSessionURLResponse
+    );
     getEntity.mockResolvedValue(mockKVSEntity);
     const response = await videoData.getKvsStreamSrc(PLAYBACKMODE_LIVE);
     expect(response).toEqual(mockLiveURL);
   });
 
   it('Fetch KVS stream source for ON_DEMAND playback - KVS Component', async () => {
-    getHLSStreamingSessionURL.mockResolvedValue(mockOnDemandGetHLSStreamingSessionURLResponse);
+    getHLSStreamingSessionURL.mockResolvedValue(
+      mockOnDemandGetHLSStreamingSessionURLResponse
+    );
     getEntity.mockResolvedValue(mockKVSEntity);
     const response = await videoData.getKvsStreamSrc(PLAYBACKMODE_ON_DEMAND);
     expect(response).toEqual(mockOnDemandURL);
   });
 
   it('Get available time ranges when video is available', async () => {
-    getHLSStreamingSessionURL.mockResolvedValue(mockOnDemandGetHLSStreamingSessionURLResponse);
+    getHLSStreamingSessionURL.mockResolvedValue(
+      mockOnDemandGetHLSStreamingSessionURLResponse
+    );
     getEntity.mockResolvedValue(mockEdgeVideoEntity);
     getPropertyValueHistory.mockResolvedValue(mockCachedVideoAgeOutOnEdge);
     getPropertyValueHistory.mockResolvedValue(mockVideoUploadedTimeRange);
-    getInterpolatedAssetPropertyValues.mockResolvedValue(mockGetInterpolatedAssetPropertyValuesResponse);
-    const kvsStreamSrc = await videoData.getKvsStreamSrc(PLAYBACKMODE_ON_DEMAND);
-    const response = await videoData.getAvailableTimeRanges(new Date(1630005300000), new Date(1630005900000));
+    getInterpolatedAssetPropertyValues.mockResolvedValue(
+      mockGetInterpolatedAssetPropertyValuesResponse
+    );
+    const kvsStreamSrc = await videoData.getKvsStreamSrc(
+      PLAYBACKMODE_ON_DEMAND
+    );
+    const response = await videoData.getAvailableTimeRanges(
+      new Date(1630005300000),
+      new Date(1630005900000)
+    );
     expect(kvsStreamSrc).toEqual(mockOnDemandURL);
     expect(response).toEqual(mockGetAvailableTimeRangeResponse);
   });

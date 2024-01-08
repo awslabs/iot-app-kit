@@ -1,5 +1,10 @@
 import { Arguments } from 'yargs';
-import { workspaceId, s3BucketArn, s3ContentLocationBase, workspaceBucket } from './test-utils';
+import {
+  workspaceId,
+  s3BucketArn,
+  s3ContentLocationBase,
+  workspaceBucket,
+} from './test-utils';
 import { mockClient } from 'aws-sdk-client-mock';
 import {
   CreateComponentTypeCommand,
@@ -76,7 +81,9 @@ it('throws error when given tmdt project that does not exist', async () => {
     'workspace-id': 'irrelevant',
     dir: 'i-do-not-exist',
   } as Arguments<Options>;
-  await expect(handler(argv2)).rejects.toThrow(Error('TDMK.json does not exist. Please run tmdt init first.'));
+  await expect(handler(argv2)).rejects.toThrow(
+    Error('TDMK.json does not exist. Please run tmdt init first.')
+  );
 });
 
 it('deploys nothing when given an empty tmdt project', async () => {
@@ -117,7 +124,9 @@ it('creates new workspace when given workspace that does not exist and user prom
     }
   });
   prompts.inject(['Y']);
-  stsMock.on(GetCallerIdentityCommand).resolves({ Account: 'fakeAccountId', Arn: 'fakeAccountArn' });
+  stsMock
+    .on(GetCallerIdentityCommand)
+    .resolves({ Account: 'fakeAccountId', Arn: 'fakeAccountArn' });
   twinmakerMock
     .on(GetWorkspaceCommand)
     .rejectsOnce(new ResourceNotFoundException({ $metadata: {}, message: '' }))
@@ -131,7 +140,9 @@ it('creates new workspace when given workspace that does not exist and user prom
   s3Mock.on(PutBucketAclCommand).resolves({});
   s3Mock.on(PutBucketCorsCommand).resolves({});
   twinmakerMock.on(CreateWorkspaceCommand).resolves({ arn: '*' });
-  iamMock.on(GetRoleCommand).rejects(new NoSuchEntityException({ $metadata: {}, message: '' }));
+  iamMock
+    .on(GetRoleCommand)
+    .rejects(new NoSuchEntityException({ $metadata: {}, message: '' }));
   iamMock.on(CreateRoleCommand).resolves({ Role: fakeRole });
   iamMock.on(CreatePolicyCommand).resolves({ Policy: fakePolicy });
   iamMock.on(AttachRolePolicyCommand).resolves({});
@@ -189,7 +200,9 @@ it('deploys successfully when given a tmdt project with one component type', asy
   } as Arguments<Options>;
   expect(await handler(argv2)).toBe(0);
   expect(twinmakerMock.commandCalls(CreateComponentTypeCommand).length).toBe(1);
-  expect(twinmakerMock.commandCalls(CreateComponentTypeCommand)[0].args[0].input).toStrictEqual({
+  expect(
+    twinmakerMock.commandCalls(CreateComponentTypeCommand)[0].args[0].input
+  ).toStrictEqual({
     workspaceId: workspaceId,
     ...componentType1Definition,
   });
@@ -233,7 +246,9 @@ it('deploys successfully when given a tmdt project with one scene with one model
   expect(twinmakerMock.commandCalls(CreateComponentTypeCommand).length).toBe(0);
   expect(twinmakerMock.commandCalls(CreateEntityCommand).length).toBe(0);
   expect(twinmakerMock.commandCalls(CreateSceneCommand).length).toBe(1);
-  expect(twinmakerMock.commandCalls(CreateSceneCommand)[0].args[0].input).toStrictEqual({
+  expect(
+    twinmakerMock.commandCalls(CreateSceneCommand)[0].args[0].input
+  ).toStrictEqual({
     workspaceId: workspaceId,
     sceneId: 'scene1',
     contentLocation: `${s3ContentLocationBase}scene1.json`,
@@ -283,7 +298,9 @@ it('deploys successfully when given a tmdt project with one entity', async () =>
   expect(await handler(argv2)).toBe(0);
   expect(twinmakerMock.commandCalls(CreateComponentTypeCommand).length).toBe(0);
   expect(twinmakerMock.commandCalls(CreateEntityCommand).length).toBe(1);
-  expect(twinmakerMock.commandCalls(CreateEntityCommand)[0].args[0].input).toStrictEqual({
+  expect(
+    twinmakerMock.commandCalls(CreateEntityCommand)[0].args[0].input
+  ).toStrictEqual({
     workspaceId: workspaceId,
     isProcessed: true,
     ...entity1Definition,
@@ -322,7 +339,9 @@ it('deploys successfully when a component type has an inherited property by remo
   expect(await handler(argv2)).toBe(0);
   expect(twinmakerMock.commandCalls(CreateComponentTypeCommand).length).toBe(1);
   // the expected modifiedComponentType input should have its property removed
-  expect(twinmakerMock.commandCalls(CreateComponentTypeCommand)[0].args[0].input).toStrictEqual({
+  expect(
+    twinmakerMock.commandCalls(CreateComponentTypeCommand)[0].args[0].input
+  ).toStrictEqual({
     workspaceId: workspaceId,
     ...modifiedComponentTypeWithInheritedProperty,
   });
@@ -361,7 +380,9 @@ it('deploys successfully when a component type has an inherited property with de
   expect(await handler(argv2)).toBe(0);
   expect(twinmakerMock.commandCalls(CreateComponentTypeCommand).length).toBe(1);
   // the expected modifiedComponentType input should have the property only contain the defaultValue
-  expect(twinmakerMock.commandCalls(CreateComponentTypeCommand)[0].args[0].input).toStrictEqual({
+  expect(
+    twinmakerMock.commandCalls(CreateComponentTypeCommand)[0].args[0].input
+  ).toStrictEqual({
     workspaceId: workspaceId,
     ...modifiedComponentTypeWithDefaultValue,
   });

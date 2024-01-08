@@ -1,18 +1,26 @@
-import PropertyFilter, { type PropertyFilterProps } from '@cloudscape-design/components/property-filter';
+import PropertyFilter, {
+  type PropertyFilterProps,
+} from '@cloudscape-design/components/property-filter';
 import React from 'react';
 
-export const ASSET_MODEL_PROPERTIES_TABLE_FILTERING_PROPERTIES: PropertyFilterProps['filteringProperties'] = [
-  {
-    key: 'name',
-    propertyLabel: 'Name',
-    groupValuesLabel: 'Property names',
-    operators: ['=', '!=', ':', '!:'],
-  },
-];
+export const ASSET_MODEL_PROPERTIES_TABLE_FILTERING_PROPERTIES: PropertyFilterProps['filteringProperties'] =
+  [
+    {
+      key: 'name',
+      propertyLabel: 'Name',
+      groupValuesLabel: 'Property names',
+      operators: ['=', '!=', ':', '!:'],
+    },
+  ];
 
-export type AssetModelPropertiesTablePropertyFilterProps = Omit<PropertyFilterProps, 'i18nStrings'>;
+export type AssetModelPropertiesTablePropertyFilterProps = Omit<
+  PropertyFilterProps,
+  'i18nStrings'
+>;
 
-export function AssetModelPropertiesTablePropertyFilter(props: AssetModelPropertiesTablePropertyFilterProps) {
+export function AssetModelPropertiesTablePropertyFilter(
+  props: AssetModelPropertiesTablePropertyFilterProps
+) {
   return (
     <PropertyFilter
       {...props}
@@ -22,9 +30,11 @@ export function AssetModelPropertiesTablePropertyFilter(props: AssetModelPropert
       filteringFinishedText='End of results'
       filteringEmpty='No suggestions found'
       i18nStrings={{
-        filteringAriaLabel: 'Filter asset model properties by text, property, or value',
+        filteringAriaLabel:
+          'Filter asset model properties by text, property, or value',
         dismissAriaLabel: 'Dismiss',
-        filteringPlaceholder: 'Filter asset model properties by text, property, or value',
+        filteringPlaceholder:
+          'Filter asset model properties by text, property, or value',
         groupValuesText: 'Values',
         groupPropertiesText: 'Properties',
         operatorsText: 'Operators',
@@ -48,7 +58,8 @@ export function AssetModelPropertiesTablePropertyFilter(props: AssetModelPropert
         tokenLimitShowMore: 'Show more',
         tokenLimitShowFewer: 'Show fewer',
         clearFiltersText: 'Clear filters',
-        removeTokenButtonAriaLabel: (token) => `Remove token ${token.propertyKey} ${token.operator} ${token.value}`,
+        removeTokenButtonAriaLabel: (token) =>
+          `Remove token ${token.propertyKey} ${token.operator} ${token.value}`,
         enteredTextLabel: (text) => `Use: "${text}"`,
       }}
     />

@@ -23,7 +23,10 @@ export default {
     showTimestamp: { control: { type: 'boolean' } },
     showUnit: { control: { type: 'boolean' } },
     isLoading: { control: { type: 'boolean' } },
-    propertyPoint: { control: { type: 'object' }, defaultValue: { x: 123123213, y: 100 } },
+    propertyPoint: {
+      control: { type: 'object' },
+      defaultValue: { x: 123123213, y: 100 },
+    },
     alarmPoint: { control: { type: 'object' } },
     fontSize: { control: { type: 'number' } },
     secondaryFontSize: { control: { type: 'number' } },
@@ -33,7 +36,10 @@ export default {
   },
 } as ComponentMeta<typeof KpiBase>;
 
-type StoryInputs = KPISettings & { alarmPoint?: DataPoint; propertyPoint?: DataPoint };
+type StoryInputs = KPISettings & {
+  alarmPoint?: DataPoint;
+  propertyPoint?: DataPoint;
+};
 
 export const Main: ComponentStory<FC<StoryInputs>> = ({
   showName,
@@ -42,4 +48,15 @@ export const Main: ComponentStory<FC<StoryInputs>> = ({
   fontSize,
   secondaryFontSize,
   ...args
-}) => <KpiBase {...args} settings={{ showName, showUnit, showTimestamp, fontSize, secondaryFontSize }} />;
+}) => (
+  <KpiBase
+    {...args}
+    settings={{
+      showName,
+      showUnit,
+      showTimestamp,
+      fontSize,
+      secondaryFontSize,
+    }}
+  />
+);

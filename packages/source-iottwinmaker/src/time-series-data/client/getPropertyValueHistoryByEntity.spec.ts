@@ -141,7 +141,10 @@ describe('getPropertyValueHistoryByEntity', () => {
       workspaceId: streamIdComponents1.workspaceId,
       entityId: streamIdComponents1.entityId,
       componentName: streamIdComponents1.componentName,
-      selectedProperties: [streamIdComponents1.propertyName, streamIdComponents2.propertyName],
+      selectedProperties: [
+        streamIdComponents1.propertyName,
+        streamIdComponents2.propertyName,
+      ],
       orderByTime: 'ASCENDING',
       startTime: start.toISOString(),
       endTime: end.toISOString(),
@@ -283,6 +286,8 @@ describe('getPropertyValueHistoryByEntity', () => {
       client: tmClient,
     });
     expect(onError).toBeCalledTimes(1);
-    expect(onError).toBeCalledWith(expect.objectContaining({ error: mockErrorDetails }));
+    expect(onError).toBeCalledWith(
+      expect.objectContaining({ error: mockErrorDetails })
+    );
   });
 });

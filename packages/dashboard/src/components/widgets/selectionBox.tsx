@@ -13,7 +13,11 @@ export type SelectionBoxProps = {
   dragEnabled: boolean;
 };
 
-const SelectionBox: React.FC<SelectionBoxProps> = ({ selectedWidgets, cellSize, dragEnabled }) => {
+const SelectionBox: React.FC<SelectionBoxProps> = ({
+  selectedWidgets,
+  cellSize,
+  dragEnabled,
+}) => {
   const { selectionBoxLayer, selectionGestureLayer } = useLayers();
 
   const rect = getSelectionBox(selectedWidgets);
@@ -37,7 +41,9 @@ const SelectionBox: React.FC<SelectionBoxProps> = ({ selectedWidgets, cellSize, 
         }}
       ></div>
       <div
-        className={`selection-box ${!dragEnabled ? 'selection-box-disabled' : ''}`}
+        className={`selection-box ${
+          !dragEnabled ? 'selection-box-disabled' : ''
+        }`}
         style={{
           top: `${cellSize * y}px`,
           left: `${cellSize * x}px`,

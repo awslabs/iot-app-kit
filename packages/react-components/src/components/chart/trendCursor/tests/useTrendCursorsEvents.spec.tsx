@@ -11,7 +11,14 @@ import { Colorizer } from '@iot-app-kit/core-util';
 describe('useTrendCursorsEvents', () => {
   const { result } = renderHook(() => useECharts('dark'));
 
-  render(<div ref={result.current.ref} className='base-chart-element' data-testid='blah' style={mockSize} />);
+  render(
+    <div
+      ref={result.current.ref}
+      className='base-chart-element'
+      data-testid='blah'
+      style={mockSize}
+    />
+  );
 
   it('when there are no user event, set state should not be called', () => {
     const mockSetGraphic = jest.fn();
@@ -50,7 +57,10 @@ describe('useTrendCursorsEvents', () => {
       })
     );
 
-    hook.result.current.onContextMenuClickHandler({ action: 'delete', posX: 100 });
+    hook.result.current.onContextMenuClickHandler({
+      action: 'delete',
+      posX: 100,
+    });
     expect(mockSetGraphic).toBeCalled();
   });
 });

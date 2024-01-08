@@ -25,4 +25,5 @@
  * type guards.
  *
  */
-export const isDefined = <T>(value: T | null | undefined): value is T => value != null;
+export const isDefined = <T>(value: T | null | undefined): value is T =>
+  value != null;

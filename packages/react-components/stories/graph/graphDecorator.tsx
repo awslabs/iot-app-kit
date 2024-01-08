@@ -1,5 +1,8 @@
 import React from 'react';
-import { context, KnowledgeGraphContext } from '../../src/components/knowledge-graph/StateManager';
+import {
+  context,
+  KnowledgeGraphContext,
+} from '../../src/components/knowledge-graph/StateManager';
 import { IntlProvider } from 'react-intl';
 import { useParameter } from '@storybook/addons';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

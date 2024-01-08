@@ -4,7 +4,10 @@ import { Provider } from 'react-redux';
 
 import { configureDashboardStore } from '~/store';
 import { useLayers } from './useLayers';
-import { MockDashboardFactory, MockWidgetFactory } from '../../../testing/mocks';
+import {
+  MockDashboardFactory,
+  MockWidgetFactory,
+} from '../../../testing/mocks';
 import type { ReactNode } from 'react';
 import type { RecursivePartial } from '~/types';
 import type { DashboardState } from '~/store/state';
@@ -12,18 +15,26 @@ import type { DashboardState } from '~/store/state';
 const TestProvider: React.FC<{
   storeArgs?: RecursivePartial<DashboardState>;
   children: ReactNode;
-}> = ({ storeArgs, children }) => <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>;
+}> = ({ storeArgs, children }) => (
+  <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>
+);
 
 it('has default layers', () => {
-  const { result } = renderHook(() => useLayers(), { wrapper: ({ children }) => <TestProvider children={children} /> });
+  const { result } = renderHook(() => useLayers(), {
+    wrapper: ({ children }) => <TestProvider children={children} />,
+  });
 
   expect(result.current.selectionBoxLayer).toBeGreaterThan(0);
   expect(result.current.userSelectionLayer).toBeGreaterThan(0);
   expect(result.current.contextMenuLayer).toBeGreaterThan(0);
   expect(result.current.selectionGestureLayer).toBeLessThan(0);
 
-  expect(result.current.userSelectionLayer).toBeGreaterThan(result.current.selectionBoxLayer);
-  expect(result.current.contextMenuLayer).toBeGreaterThan(result.current.userSelectionLayer);
+  expect(result.current.userSelectionLayer).toBeGreaterThan(
+    result.current.selectionBoxLayer
+  );
+  expect(result.current.contextMenuLayer).toBeGreaterThan(
+    result.current.userSelectionLayer
+  );
 });
 
 it('has updates the layers to be greater than the highest widget in the dashboard configuration', () => {
@@ -37,7 +48,12 @@ it('has updates the layers to be greater than the highest widget in the dashboar
     ],
   });
   const { result } = renderHook(() => useLayers(), {
-    wrapper: ({ children }) => <TestProvider storeArgs={{ dashboardConfiguration }} children={children} />,
+    wrapper: ({ children }) => (
+      <TestProvider
+        storeArgs={{ dashboardConfiguration }}
+        children={children}
+      />
+    ),
   });
 
   expect(result.current.selectionBoxLayer).toBeGreaterThan(zTest);
@@ -45,6 +61,10 @@ it('has updates the layers to be greater than the highest widget in the dashboar
   expect(result.current.contextMenuLayer).toBeGreaterThan(zTest);
   expect(result.current.selectionGestureLayer).toBeLessThan(zTest);
 
-  expect(result.current.userSelectionLayer).toBeGreaterThan(result.current.selectionBoxLayer);
-  expect(result.current.contextMenuLayer).toBeGreaterThan(result.current.userSelectionLayer);
+  expect(result.current.userSelectionLayer).toBeGreaterThan(
+    result.current.selectionBoxLayer
+  );
+  expect(result.current.contextMenuLayer).toBeGreaterThan(
+    result.current.userSelectionLayer
+  );
 });

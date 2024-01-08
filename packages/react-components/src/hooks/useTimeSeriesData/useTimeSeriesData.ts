@@ -17,7 +17,10 @@ import type {
 } from '@iot-app-kit/core';
 import { ProviderStore } from './providerStore';
 import { useColoredDataStreams } from '../useColoredDataStreams';
-import { SiteWiseAssetQuery, SiteWisePropertyAliasQuery } from '@iot-app-kit/source-iotsitewise';
+import {
+  SiteWiseAssetQuery,
+  SiteWisePropertyAliasQuery,
+} from '@iot-app-kit/source-iotsitewise';
 
 const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
   resolution: '0',
@@ -48,7 +51,9 @@ export const useTimeSeriesData = ({
   settings?: TimeSeriesDataRequestSettings;
   styles?: StyleSettingsMap;
 }): { dataStreams: DataStream[]; thresholds: Threshold[] } => {
-  const [timeSeriesData, setTimeSeriesData] = useState<TimeSeriesData | undefined>(undefined);
+  const [timeSeriesData, setTimeSeriesData] = useState<
+    TimeSeriesData | undefined
+  >(undefined);
 
   const { viewport: injectedViewport } = useViewport();
   const viewport = passedInViewport || injectedViewport || DEFAULT_VIEWPORT;
@@ -72,17 +77,21 @@ export const useTimeSeriesData = ({
       query: {
         assets: query.assets?.map(({ assetId, properties }) => ({
           assetId,
-          properties: properties.map(({ propertyId, aggregationType, resolution }) => ({
-            propertyId,
+          properties: properties.map(
+            ({ propertyId, aggregationType, resolution }) => ({
+              propertyId,
+              aggregationType,
+              resolution,
+            })
+          ),
+        })),
+        properties: query.properties?.map(
+          ({ propertyAlias, resolution, aggregationType }) => ({
+            propertyAlias,
             aggregationType,
             resolution,
-          })),
-        })),
-        properties: query.properties?.map(({ propertyAlias, resolution, aggregationType }) => ({
-          propertyAlias,
-          aggregationType,
-          resolution,
-        })),
+          })
+        ),
       },
     }));
 
@@ -105,7 +114,10 @@ export const useTimeSeriesData = ({
 
     provider.subscribe({
       next: (timeSeriesDataCollection: TimeSeriesData[]) => {
-        const timeSeriesData = combineTimeSeriesData(timeSeriesDataCollection, viewport);
+        const timeSeriesData = combineTimeSeriesData(
+          timeSeriesDataCollection,
+          viewport
+        );
 
         setTimeSeriesData({
           ...timeSeriesData,
@@ -122,7 +134,8 @@ export const useTimeSeriesData = ({
 
   useEffect(() => {
     if (prevViewportRef.current != null) {
-      const provider = providerIdRef.current && ProviderStore.get(providerIdRef.current);
+      const provider =
+        providerIdRef.current && ProviderStore.get(providerIdRef.current);
       if (provider) {
         provider.updateViewport(viewport);
       }
@@ -140,5 +153,8 @@ export const useTimeSeriesData = ({
     styleSettings: styles,
   });
 
-  return { dataStreams: styledDataStreams, thresholds: timeSeriesData?.thresholds || [] };
+  return {
+    dataStreams: styledDataStreams,
+    thresholds: timeSeriesData?.thresholds || [],
+  };
 };

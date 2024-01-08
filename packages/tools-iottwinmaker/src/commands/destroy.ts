@@ -1,11 +1,17 @@
 import type { Arguments, CommandBuilder } from 'yargs';
 import { prompt } from 'prompts';
-import { getDefaultAwsClients as aws, initDefaultAwsClients } from '../lib/aws-clients';
+import {
+  getDefaultAwsClients as aws,
+  initDefaultAwsClients,
+} from '../lib/aws-clients';
 import { deleteComponentTypes } from '../lib/component-type';
 import { deleteScenes } from '../lib/scene';
 import { deleteEntitiesWithServiceRecursion } from '../lib/entity';
 import { verifyWorkspaceExists } from '../lib/utils';
-import { deleteWorkspaceBucketAndLogs, deleteWorkspace } from '../lib/workspace';
+import {
+  deleteWorkspaceBucketAndLogs,
+  deleteWorkspace,
+} from '../lib/workspace';
 
 export type Options = {
   'workspace-id': string;
@@ -39,7 +45,8 @@ export const builder: CommandBuilder<Options> = (yargs) =>
     'delete-s3-bucket': {
       type: 'boolean',
       require: false,
-      description: 'Specify if workspace s3 Bucket, its contents, and any associated logging bucket should be deleted.',
+      description:
+        'Specify if workspace s3 Bucket, its contents, and any associated logging bucket should be deleted.',
       implies: 'delete-workspace',
       default: false,
     },
@@ -114,7 +121,9 @@ export const handler = async (argv: Arguments<Options>) => {
         // delete the workspace
         console.log('========= Workspace =========');
         // first retrieve s3 and role information before workspace deletion
-        const { s3Location, role } = await aws().tm.getWorkspace({ workspaceId });
+        const { s3Location, role } = await aws().tm.getWorkspace({
+          workspaceId,
+        });
         // s3Location format: arn:aws:s3:::{s3BucketName}
         const s3BucketName = s3Location?.split(':').pop();
         // role format: arn:aws:iam::accountID:role/{roleName}
@@ -132,9 +141,13 @@ export const handler = async (argv: Arguments<Options>) => {
       }
 
       if (!nonDryRun) {
-        console.log('\n[Completed] Dry run finished. Please use --nonDryRun flag to delete resources shown.');
+        console.log(
+          '\n[Completed] Dry run finished. Please use --nonDryRun flag to delete resources shown.'
+        );
       } else {
-        console.log(`\n[Completed] All specified resources have been deleted from ${workspaceId}.`);
+        console.log(
+          `\n[Completed] All specified resources have been deleted from ${workspaceId}.`
+        );
       }
     } else {
       console.log("'Y' not entered, cancelling execution.");

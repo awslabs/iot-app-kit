@@ -12,7 +12,10 @@ export interface UseModeledDataStreamsProps {
   client: IoTSiteWiseClient;
 }
 
-export function useModeledDataStreams({ assetProps, client }: UseModeledDataStreamsProps) {
+export function useModeledDataStreams({
+  assetProps,
+  client,
+}: UseModeledDataStreamsProps) {
   const cacheKeyFactory = new ModeledDataStreamCacheKeyFactory();
   const queries =
     useQueries({
@@ -34,9 +37,18 @@ function createCompositeQueryFn(client: IoTSiteWiseClient) {
   return async function ({
     queryKey: [{ selectedAsset }],
     signal,
-  }: QueryFunctionContext<ReturnType<ModeledDataStreamCacheKeyFactory['create']>>) {
-    invariant(selectedAsset, 'Expected assetProp to be defined as required by the enabled flag.');
-    const request = new listModeledDataStreamsRequestWithCompositeModels({ selectedAsset, client, signal });
+  }: QueryFunctionContext<
+    ReturnType<ModeledDataStreamCacheKeyFactory['create']>
+  >) {
+    invariant(
+      selectedAsset,
+      'Expected assetProp to be defined as required by the enabled flag.'
+    );
+    const request = new listModeledDataStreamsRequestWithCompositeModels({
+      selectedAsset,
+      client,
+      signal,
+    });
     const response = await request.send();
 
     return response;

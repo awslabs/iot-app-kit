@@ -6,7 +6,9 @@ export class ChildAssetCacheKeyFactory {
   }
 
   create(hierarchyId: string) {
-    const cacheKey = [{ resource: 'child asset', assetId: this.#assetId, hierarchyId }] as const;
+    const cacheKey = [
+      { resource: 'child asset', assetId: this.#assetId, hierarchyId },
+    ] as const;
 
     return cacheKey;
   }

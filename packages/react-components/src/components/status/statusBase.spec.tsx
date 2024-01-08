@@ -25,14 +25,26 @@ describe('unit', () => {
 
   it('renders unit when showUnit is true and provided a property point', () => {
     const someUnit = 'some-Unit';
-    render(<StatusBase unit={someUnit} propertyPoint={point} settings={{ showUnit: true }} />);
+    render(
+      <StatusBase
+        unit={someUnit}
+        propertyPoint={point}
+        settings={{ showUnit: true }}
+      />
+    );
 
     expect(screen.queryByText(someUnit)).not.toBeNull();
   });
 
   it('does not render unit when showUnit is true and provided a alarm point', () => {
     const someUnit = 'some-Unit';
-    render(<StatusBase unit={someUnit} alarmPoint={point} settings={{ showUnit: true }} />);
+    render(
+      <StatusBase
+        unit={someUnit}
+        alarmPoint={point}
+        settings={{ showUnit: true }}
+      />
+    );
 
     expect(screen.queryByText(someUnit)).toBeNull();
   });
@@ -46,7 +58,13 @@ describe('unit', () => {
 
   it('does not render unit when showUnit is false', () => {
     const someUnit = 'some-Unit';
-    render(<StatusBase unit={someUnit} settings={{ showUnit: false }} propertyPoint={point} />);
+    render(
+      <StatusBase
+        unit={someUnit}
+        settings={{ showUnit: false }}
+        propertyPoint={point}
+      />
+    );
 
     expect(screen.queryByText(someUnit)).toBeNull();
   });
@@ -55,13 +73,23 @@ describe('unit', () => {
 describe('property value', () => {
   it('renders property points y value', () => {
     const Y_VALUE = 123445;
-    render(<StatusBase propertyPoint={{ x: new Date().getTime(), y: Y_VALUE }} settings={{ showName: false }} />);
+    render(
+      <StatusBase
+        propertyPoint={{ x: new Date().getTime(), y: Y_VALUE }}
+        settings={{ showName: false }}
+      />
+    );
     expect(screen.queryByText(Y_VALUE)).not.toBeNull();
   });
 
   it('renders alarm points y value', () => {
     const Y_VALUE = 123445;
-    render(<StatusBase alarmPoint={{ x: new Date().getTime(), y: Y_VALUE }} settings={{ showName: false }} />);
+    render(
+      <StatusBase
+        alarmPoint={{ x: new Date().getTime(), y: Y_VALUE }}
+        settings={{ showName: false }}
+      />
+    );
     expect(screen.queryByText(Y_VALUE)).not.toBeNull();
   });
 
@@ -111,7 +139,13 @@ describe('loading', () => {
   });
 
   it('does not render icon while loading when showIcon is true', () => {
-    render(<StatusBase isLoading icon={StatusIconType.ACTIVE} settings={{ showIcon: true }} />);
+    render(
+      <StatusBase
+        isLoading
+        icon={StatusIconType.ACTIVE}
+        settings={{ showIcon: true }}
+      />
+    );
     expect(screen.queryByTestId('status-icon-active')).toBeNull();
   });
 

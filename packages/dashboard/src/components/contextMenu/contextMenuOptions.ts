@@ -31,14 +31,18 @@ export type ContextMenuConfigurationProps = {
   };
 };
 
-type OptionCreator = (props: ContextMenuConfigurationProps) => ContextMenuOptionConfiguration;
+type OptionCreator = (
+  props: ContextMenuConfigurationProps
+) => ContextMenuOptionConfiguration;
 
 type ContextMenuConfigurationCreator = {
   id: string;
   options: OptionCreator[];
 };
 
-const createCopyOption: OptionCreator = (props: ContextMenuConfigurationProps): ContextMenuOptionConfiguration => {
+const createCopyOption: OptionCreator = (
+  props: ContextMenuConfigurationProps
+): ContextMenuOptionConfiguration => {
   const { actions, messages, state } = props;
   return {
     id: 'copy',
@@ -49,7 +53,9 @@ const createCopyOption: OptionCreator = (props: ContextMenuConfigurationProps): 
   };
 };
 
-const createPasteOption: OptionCreator = (props: ContextMenuConfigurationProps): ContextMenuOptionConfiguration => {
+const createPasteOption: OptionCreator = (
+  props: ContextMenuConfigurationProps
+): ContextMenuOptionConfiguration => {
   const { actions, messages, state } = props;
   return {
     id: 'paste',
@@ -60,7 +66,9 @@ const createPasteOption: OptionCreator = (props: ContextMenuConfigurationProps):
   };
 };
 
-const createDeleteOption: OptionCreator = (props: ContextMenuConfigurationProps): ContextMenuOptionConfiguration => {
+const createDeleteOption: OptionCreator = (
+  props: ContextMenuConfigurationProps
+): ContextMenuOptionConfiguration => {
   const { actions, messages, state } = props;
   return {
     id: 'delete',
@@ -107,7 +115,9 @@ const configuration: ContextMenuConfigurationCreator[] = [
   },
 ];
 
-export const createContextMenuOptions = (props: ContextMenuConfigurationProps): ContextMenuConfiguration =>
+export const createContextMenuOptions = (
+  props: ContextMenuConfigurationProps
+): ContextMenuConfiguration =>
   configuration.map((section) => ({
     ...section,
     options: section.options.map((createOption) => createOption(props)),

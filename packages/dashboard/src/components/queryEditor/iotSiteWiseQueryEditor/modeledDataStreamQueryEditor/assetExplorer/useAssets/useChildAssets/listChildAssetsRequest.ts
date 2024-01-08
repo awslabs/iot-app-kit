@@ -1,4 +1,7 @@
-import { paginateListAssociatedAssets, type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  paginateListAssociatedAssets,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 
 export class ListChildAssetsRequest {
   readonly #MAX_CHILD_ASSETS_PAGE_SIZE = 250;
@@ -23,7 +26,11 @@ export class ListChildAssetsRequest {
     this.#hierarchyId = hierarchyId;
     this.#paginator = paginateListAssociatedAssets(
       { pageSize: this.#MAX_CHILD_ASSETS_PAGE_SIZE, client },
-      { assetId, hierarchyId, traversalDirection: this.#CHILD_ASSETS_LIST_TRAVERSAL_DIRECTION }
+      {
+        assetId,
+        hierarchyId,
+        traversalDirection: this.#CHILD_ASSETS_LIST_TRAVERSAL_DIRECTION,
+      }
     );
     this.#signal = signal;
   }

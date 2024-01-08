@@ -9,7 +9,9 @@ import type { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 describe('subscribeToTimeSeriesData', () => {
   const tmClient = new IoTTwinMakerClient({});
   const metadataModule = new TwinMakerMetadataModule('ws-1', tmClient);
-  const dataModule = new TimeSeriesDataModule(createDataSource(metadataModule, tmClient));
+  const dataModule = new TimeSeriesDataModule(
+    createDataSource(metadataModule, tmClient)
+  );
   const mockUpdate = jest.fn();
   const mockUnsubscribe = jest.fn();
 
@@ -22,11 +24,15 @@ describe('subscribeToTimeSeriesData', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.spyOn(dataModule, 'subscribeToDataStreams').mockImplementation((_input, cb) => {
-      cb({ dataStreams: [], viewport: { duration: '5m' }, thresholds: [] });
-      return { update: mockUpdate, unsubscribe: mockUnsubscribe };
-    });
-    jest.spyOn(metadataModule, 'fetchEntity').mockResolvedValue({ entityId: 'entity-1' } as GetEntityResponse);
+    jest
+      .spyOn(dataModule, 'subscribeToDataStreams')
+      .mockImplementation((_input, cb) => {
+        cb({ dataStreams: [], viewport: { duration: '5m' }, thresholds: [] });
+        return { update: mockUpdate, unsubscribe: mockUnsubscribe };
+      });
+    jest
+      .spyOn(metadataModule, 'fetchEntity')
+      .mockResolvedValue({ entityId: 'entity-1' } as GetEntityResponse);
   });
 
   it('should not fetch entity when queries is empty', () => {
@@ -40,11 +46,16 @@ describe('subscribeToTimeSeriesData', () => {
   it('should fetch entity when queries is defined properly', async () => {
     const subscribe = subscribeToTimeSeriesData(metadataModule, dataModule);
     const cb = jest.fn();
-    subscribe({ queries: [query], request: { viewport: { duration: '5m' } } }, cb);
+    subscribe(
+      { queries: [query], request: { viewport: { duration: '5m' } } },
+      cb
+    );
 
     expect(metadataModule.fetchEntity).toBeCalledTimes(1);
     expect(cb).toBeCalledTimes(1);
-    expect(cb).toBeCalledWith(expect.objectContaining({ dataStreams: [], viewport: { duration: '5m' } }));
+    expect(cb).toBeCalledWith(
+      expect.objectContaining({ dataStreams: [], viewport: { duration: '5m' } })
+    );
 
     await flushPromises();
 
@@ -54,7 +65,10 @@ describe('subscribeToTimeSeriesData', () => {
   it('should call unsubscribe coorrectly', () => {
     const subscribe = subscribeToTimeSeriesData(metadataModule, dataModule);
     const cb = jest.fn();
-    const { unsubscribe } = subscribe({ queries: [], request: { viewport: { duration: '5m' } } }, cb);
+    const { unsubscribe } = subscribe(
+      { queries: [], request: { viewport: { duration: '5m' } } },
+      cb
+    );
 
     unsubscribe();
 
@@ -64,7 +78,10 @@ describe('subscribeToTimeSeriesData', () => {
   it('should update as expected', async () => {
     const subscribe = subscribeToTimeSeriesData(metadataModule, dataModule);
     const cb = jest.fn();
-    const { update } = subscribe({ queries: [query], request: { viewport: { duration: '5m' } } }, cb);
+    const { update } = subscribe(
+      { queries: [query], request: { viewport: { duration: '5m' } } },
+      cb
+    );
 
     expect(metadataModule.fetchEntity).toBeCalledTimes(1);
 

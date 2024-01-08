@@ -6,7 +6,12 @@ import { EChartsOption, SeriesOption } from 'echarts';
 
 type ConvertChartOptions = Pick<
   ChartOptions,
-  'backgroundColor' | 'axis' | 'gestures' | 'legend' | 'significantDigits' | 'titleText'
+  | 'backgroundColor'
+  | 'axis'
+  | 'gestures'
+  | 'legend'
+  | 'significantDigits'
+  | 'titleText'
 >;
 
 /**

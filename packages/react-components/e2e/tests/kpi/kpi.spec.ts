@@ -13,7 +13,9 @@ test('kpi', async ({ page }) => {
   // KPI will always show value shows value
   await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('100');
   await page.evaluate(() => document.fonts.ready);
-  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot('default.png');
+  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot(
+    'default.png'
+  );
 
   // unit will display
   const unit = 'mph';
@@ -32,7 +34,9 @@ test('kpi', async ({ page }) => {
   // displays as loading
   await page.goto(`${TEST_PAGE}&args=isLoading:true`);
   await page.evaluate(() => document.fonts.ready);
-  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot('loading.png');
+  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot(
+    'loading.png'
+  );
 
   // error will display
   const errorMsg = 'my-custom-error-msg';
@@ -44,7 +48,9 @@ test('kpi', async ({ page }) => {
   // font-sizes can be customized
   await page.goto(`${TEST_PAGE}&args=fontSize:70;secondaryFontSize:30`);
   await page.evaluate(() => document.fonts.ready);
-  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot('custom-font-sizes.png');
+  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot(
+    'custom-font-sizes.png'
+  );
 
   // displays icon
   await page.goto(`${TEST_PAGE}&args=icon:acknowledged`);
@@ -54,5 +60,7 @@ test('kpi', async ({ page }) => {
   // displays empty state
   await page.goto(`${TEST_PAGE}&args=propertyPoint:!null`);
   await page.evaluate(() => document.fonts.ready);
-  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot('empty-state.png');
+  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot(
+    'empty-state.png'
+  );
 });

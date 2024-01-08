@@ -31,7 +31,12 @@ type tanstackTableOptions = {
   stickyHeader?: boolean;
 };
 
-export const TanstackTable = ({ data, columnDefinitions, stickyColumns, stickyHeader }: tanstackTableOptions) => {
+export const TanstackTable = ({
+  data,
+  columnDefinitions,
+  stickyColumns,
+  stickyHeader,
+}: tanstackTableOptions) => {
   const columns: ColumnDef<object, string>[] = [...columnDefinitions];
   const [sorting, setSorting] = useState<SortingState>([]);
   const sortingIcons = {
@@ -54,14 +59,20 @@ export const TanstackTable = ({ data, columnDefinitions, stickyColumns, stickyHe
 
   return (
     <div className='tanstack-table-container'>
-      <table className='tanstack-table' style={{ color: colorBackgroundLayoutToggleActive }}>
+      <table
+        className='tanstack-table'
+        style={{ color: colorBackgroundLayoutToggleActive }}
+      >
         <thead>
           {legendData.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header, i) => (
                 <th
-                  className={`tanstack-table-header-divider ${stickyHeader && 'tanstack-table-sticky-header'} ${
-                    stickyColumns?.first === i + 1 && 'tanstack-table-sticky-column'
+                  className={`tanstack-table-header-divider ${
+                    stickyHeader && 'tanstack-table-sticky-header'
+                  } ${
+                    stickyColumns?.first === i + 1 &&
+                    'tanstack-table-sticky-column'
                   }`}
                   key={header.id}
                   style={{
@@ -78,24 +89,40 @@ export const TanstackTable = ({ data, columnDefinitions, stickyColumns, stickyHe
                       {...(stickyColumns?.first !== i + 1 && {
                         className: 'tanstack-table-nonsticky-column-header',
                       })}
-                      style={{ ...(stickyColumns?.first !== i + 1 && { padding: `0px ${spaceStaticXs}` }) }}
+                      style={{
+                        ...(stickyColumns?.first !== i + 1 && {
+                          padding: `0px ${spaceStaticXs}`,
+                        }),
+                      }}
                     >
-                      {flexRender(header.column.columnDef.header, header.getContext())}
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                       {{
                         asc: (
                           <span style={sortingIcons}>
-                            <img alt='sorted asending' src={AscendingIcon}></img>
+                            <img
+                              alt='sorted asending'
+                              src={AscendingIcon}
+                            ></img>
                           </span>
                         ),
                         desc: (
                           <span style={sortingIcons}>
-                            <img alt='sorted desending' src={DescendingIcon}></img>
+                            <img
+                              alt='sorted desending'
+                              src={DescendingIcon}
+                            ></img>
                           </span>
                         ),
                       }[header.column.getIsSorted() as string] ??
                         (stickyColumns?.first !== i + 1 && (
                           <span style={{ ...sortingIcons }}>
-                            <img alt='desending not active' src={SortingIcon}></img>
+                            <img
+                              alt='desending not active'
+                              src={SortingIcon}
+                            ></img>
                           </span>
                         ))}
                     </div>
@@ -112,7 +139,9 @@ export const TanstackTable = ({ data, columnDefinitions, stickyColumns, stickyHe
                 <td
                   key={cell.id}
                   className={
-                    stickyColumns?.first === i + 1 ? 'tanstack-table-sticky-column-body' : 'tanstack-table-body'
+                    stickyColumns?.first === i + 1
+                      ? 'tanstack-table-sticky-column-body'
+                      : 'tanstack-table-body'
                   }
                   style={{
                     borderBottom: `1px solid ${colorBorderButtonPrimaryDisabled}`,

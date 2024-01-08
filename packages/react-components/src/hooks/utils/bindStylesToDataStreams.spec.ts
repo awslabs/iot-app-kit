@@ -55,7 +55,10 @@ it('associates styles to corresponding data stream for multiple data streams', (
         { ...DATA_STREAM, refId: 'someStyle' },
         { ...DATA_STREAM_2, refId: 'someStyle2' },
       ],
-      styleSettings: { someStyle: { color: 'red' }, someStyle2: { color: 'blue' } },
+      styleSettings: {
+        someStyle: { color: 'red' },
+        someStyle2: { color: 'blue' },
+      },
     })
   ).toEqual([
     { ...DATA_STREAM, refId: 'someStyle', color: 'red' },

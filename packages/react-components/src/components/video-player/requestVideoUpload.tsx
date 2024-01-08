@@ -1,11 +1,21 @@
-import { Button, DateRangePicker, SpaceBetween } from '@cloudscape-design/components';
+import {
+  Button,
+  DateRangePicker,
+  SpaceBetween,
+} from '@cloudscape-design/components';
 import React, { Component } from 'react';
 import { i18nStrings, requestVideoButtonLabel } from './constants';
 import { getStartAndEndTimeFromRange } from './utils/dateRangeUtils';
 import type { DateRangePickerProps } from '@cloudscape-design/components';
-import type { IVideoUploadRequestProps, IVideoUploadRequestState } from './types';
+import type {
+  IVideoUploadRequestProps,
+  IVideoUploadRequestState,
+} from './types';
 
-export class RequestVideoUpload extends Component<IVideoUploadRequestProps, IVideoUploadRequestState> {
+export class RequestVideoUpload extends Component<
+  IVideoUploadRequestProps,
+  IVideoUploadRequestState
+> {
   private uploadStartTime = '';
   private uploadEndTime = '';
 
@@ -16,13 +26,19 @@ export class RequestVideoUpload extends Component<IVideoUploadRequestProps, IVid
 
   // Set the start and end time for the video upload request
   setUploadDateRange = (
-    newDateRange: DateRangePickerProps.AbsoluteValue | DateRangePickerProps.RelativeValue | undefined
+    newDateRange:
+      | DateRangePickerProps.AbsoluteValue
+      | DateRangePickerProps.RelativeValue
+      | undefined
   ) => {
     this.setState({
       videoUploadDateRange: newDateRange,
     });
 
-    const newUploadTimeFromRange = getStartAndEndTimeFromRange(newDateRange, new Date());
+    const newUploadTimeFromRange = getStartAndEndTimeFromRange(
+      newDateRange,
+      new Date()
+    );
     if (newUploadTimeFromRange) {
       this.uploadStartTime = newUploadTimeFromRange.startTime as string;
       this.uploadEndTime = newUploadTimeFromRange.endTime;
@@ -68,7 +84,9 @@ export class RequestVideoUpload extends Component<IVideoUploadRequestProps, IVid
               }
             }}
             value={
-              this.state.videoUploadDateRange as DateRangePickerProps.RelativeValue | DateRangePickerProps.AbsoluteValue
+              this.state.videoUploadDateRange as
+                | DateRangePickerProps.RelativeValue
+                | DateRangePickerProps.AbsoluteValue
             }
             placeholder='Select a date and time range'
           />
@@ -76,7 +94,10 @@ export class RequestVideoUpload extends Component<IVideoUploadRequestProps, IVid
             data-testid='video-upload-request-button'
             variant='normal'
             onClick={() =>
-              this.props.videoData.triggerOnDemandVideoUploadRequest(this.uploadStartTime, this.uploadEndTime)
+              this.props.videoData.triggerOnDemandVideoUploadRequest(
+                this.uploadStartTime,
+                this.uploadEndTime
+              )
             }
           >
             {requestVideoButtonLabel}

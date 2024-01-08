@@ -19,7 +19,9 @@ describe('CollapsiblePanel', () => {
   it('should open collapsed panel when icon is clicked', async () => {
     const side = 'right';
     let isPanelCollapsed = true;
-    const onCollapsedPanelClick = jest.fn().mockImplementation(() => (isPanelCollapsed = !isPanelCollapsed));
+    const onCollapsedPanelClick = jest
+      .fn()
+      .mockImplementation(() => (isPanelCollapsed = !isPanelCollapsed));
     const collapsedElement = (
       <CollapsiblePanel
         isPanelCollapsed={isPanelCollapsed}
@@ -49,7 +51,9 @@ describe('CollapsiblePanel', () => {
   it('should close expanded panel when button is clicked', async () => {
     const side = 'left';
     let isPanelCollapsed = false;
-    const onCollapsedPanelClick = jest.fn().mockImplementation(() => (isPanelCollapsed = !isPanelCollapsed));
+    const onCollapsedPanelClick = jest
+      .fn()
+      .mockImplementation(() => (isPanelCollapsed = !isPanelCollapsed));
     const collapsedElement = (
       <CollapsiblePanel
         isPanelCollapsed={isPanelCollapsed}

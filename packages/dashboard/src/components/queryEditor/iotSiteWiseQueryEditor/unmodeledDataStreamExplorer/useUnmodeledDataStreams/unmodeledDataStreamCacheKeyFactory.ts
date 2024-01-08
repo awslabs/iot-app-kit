@@ -6,7 +6,9 @@ export class UnmodeledDataStreamCacheKeyFactory {
   }
 
   public create() {
-    const cacheKey = [{ resource: 'unmodeled data stream', aliasPrefix: this.#aliasPrefix }] as const;
+    const cacheKey = [
+      { resource: 'unmodeled data stream', aliasPrefix: this.#aliasPrefix },
+    ] as const;
 
     return cacheKey;
   }

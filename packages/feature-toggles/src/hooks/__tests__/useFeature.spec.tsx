@@ -37,8 +37,14 @@ describe('useFeature', () => {
     const { getByTestId } = render(<FeatureToggledComponent />);
     const sut = getByTestId('feature-toggle-component');
 
-    await waitFor(() => expect(sut.getAttribute('data-loading')).toEqual('true'));
-    await waitFor(() => expect(sut.textContent).toEqual(JSON.stringify(mockFeature)));
-    await waitFor(() => expect(sut.getAttribute('data-loading')).toEqual('false'));
+    await waitFor(() =>
+      expect(sut.getAttribute('data-loading')).toEqual('true')
+    );
+    await waitFor(() =>
+      expect(sut.textContent).toEqual(JSON.stringify(mockFeature))
+    );
+    await waitFor(() =>
+      expect(sut.getAttribute('data-loading')).toEqual('false')
+    );
   });
 });

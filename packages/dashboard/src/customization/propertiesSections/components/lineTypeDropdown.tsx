@@ -12,13 +12,24 @@ type TypeSectionOptions = {
 
 const dropdownData = dropdownConsts.lineType;
 
-export const LineTypeSection: FC<TypeSectionOptions> = ({ disabled = false, type, updateType }) => {
+export const LineTypeSection: FC<TypeSectionOptions> = ({
+  disabled = false,
+  type,
+  updateType,
+}) => {
   return (
     <FormField label='Line type'>
       <Select
         disabled={disabled}
-        selectedOption={dropdownData.lineTypeOptions.find(({ value }) => value === type) ?? null}
-        onChange={({ detail }) => updateType(detail.selectedOption.value ?? dropdownData.defaultValue.value)}
+        selectedOption={
+          dropdownData.lineTypeOptions.find(({ value }) => value === type) ??
+          null
+        }
+        onChange={({ detail }) =>
+          updateType(
+            detail.selectedOption.value ?? dropdownData.defaultValue.value
+          )
+        }
         options={dropdownData.lineTypeOptions}
       />
     </FormField>

@@ -1,4 +1,7 @@
-import { AssetPropertySummary, AssetModelPropertySummary } from '@aws-sdk/client-iotsitewise';
+import {
+  AssetPropertySummary,
+  AssetModelPropertySummary,
+} from '@aws-sdk/client-iotsitewise';
 
 type ExtendedAssetPropertySummaryProperty = {
   externalId?: string;
@@ -10,9 +13,11 @@ type ExtendedAssetPropertySummaryProperty = {
   ];
 };
 
-export type NewAssetPropertySummary = AssetPropertySummary & ExtendedAssetPropertySummaryProperty;
+export type NewAssetPropertySummary = AssetPropertySummary &
+  ExtendedAssetPropertySummaryProperty;
 
-export type NewAssetModelPropertySummary = AssetModelPropertySummary & ExtendedAssetPropertySummaryProperty;
+export type NewAssetModelPropertySummary = AssetModelPropertySummary &
+  ExtendedAssetPropertySummaryProperty;
 export type NewListAssetPropertiesCommandOutput = {
   assetPropertySummaries: NewAssetPropertySummary[] | undefined;
 };

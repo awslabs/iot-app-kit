@@ -31,7 +31,8 @@ const Actions: React.FC<ActionsProps> = ({
   readOnly,
   onSave,
 }) => {
-  const [dashboardSettingsVisible, setDashboardSettingsVisible] = useState(false);
+  const [dashboardSettingsVisible, setDashboardSettingsVisible] =
+    useState(false);
   const dispatch = useDispatch();
 
   const { viewport } = useViewport();
@@ -86,7 +87,12 @@ const Actions: React.FC<ActionsProps> = ({
     <Box padding={{ top: 'xxs' }} data-testid='dashboard-actions'>
       <SpaceBetween size='s' direction='horizontal'>
         {onSave && <Button onClick={handleOnSave}>Save</Button>}
-        {editable && <CustomOrangeButton title={readOnly ? 'Edit' : 'Preview'} handleClick={handleOnReadOnly} />}
+        {editable && (
+          <CustomOrangeButton
+            title={readOnly ? 'Edit' : 'Preview'}
+            handleClick={handleOnReadOnly}
+          />
+        )}
         {editable && !readOnly && (
           <Button
             onClick={() => setSettingVisibility(true)}
@@ -95,17 +101,30 @@ const Actions: React.FC<ActionsProps> = ({
             ariaLabel='Dashboard settings'
           />
         )}
-        <DashboardSettings isVisible={dashboardSettingsVisible} onClose={() => setSettingVisibility(false)} />
+        <DashboardSettings
+          isVisible={dashboardSettingsVisible}
+          onClose={() => setSettingVisibility(false)}
+        />
       </SpaceBetween>
     </Box>
   );
 };
 
-const gridAsComparable = (grid: DashboardState['grid']) => pick(grid, ['height', 'width', 'cellSize']);
-const actionsComparator = (a: Readonly<ActionsProps>, b: Readonly<ActionsProps>): boolean => {
+const gridAsComparable = (grid: DashboardState['grid']) =>
+  pick(grid, ['height', 'width', 'cellSize']);
+const actionsComparator = (
+  a: Readonly<ActionsProps>,
+  b: Readonly<ActionsProps>
+): boolean => {
   const readOnlyIsSame = a.readOnly === b.readOnly;
-  const gridIsSame = isEqual(gridAsComparable(a.grid), gridAsComparable(b.grid));
-  const dashboardConfigurationIsSame = isEqual(a.dashboardConfiguration, b.dashboardConfiguration);
+  const gridIsSame = isEqual(
+    gridAsComparable(a.grid),
+    gridAsComparable(b.grid)
+  );
+  const dashboardConfigurationIsSame = isEqual(
+    a.dashboardConfiguration,
+    b.dashboardConfiguration
+  );
   return gridIsSame && dashboardConfigurationIsSame && readOnlyIsSame;
 };
 

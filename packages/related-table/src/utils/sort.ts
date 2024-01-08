@@ -27,13 +27,18 @@ export const sortTree = <T>(
 ) => {
   const { sortingColumn } = sortState;
   if (sortingColumn && sortingColumn.sortingField) {
-    const columnDefinition = columnsDefinitions.find((column) => column.sortingField === sortingColumn.sortingField);
+    const columnDefinition = columnsDefinitions.find(
+      (column) => column.sortingField === sortingColumn.sortingField
+    );
     const direction = sortState.isDescending ? -1 : 1;
     const comparator =
-      columnDefinition?.sortingComparator || defaultComparator(sortState.sortingColumn.sortingField as keyof T);
+      columnDefinition?.sortingComparator ||
+      defaultComparator(sortState.sortingColumn.sortingField as keyof T);
 
     tree
       .sort((a: T, b: T) => comparator(a, b) * direction)
-      .forEach((node) => sortTree(node.getChildren(), sortState, columnsDefinitions));
+      .forEach((node) =>
+        sortTree(node.getChildren(), sortState, columnsDefinitions)
+      );
   }
 };

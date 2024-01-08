@@ -99,13 +99,22 @@ describe('createRawLatestEntryBatches', () => {
 
     expect(batches).toEqual(
       expect.arrayContaining([
-        [entries.slice(0, MAX_RAW_LATEST_REQUEST_ENTRIES), MAX_RAW_LATEST_REQUEST_ENTRIES * entrySize],
         [
-          entries.slice(MAX_RAW_LATEST_REQUEST_ENTRIES, 2 * MAX_RAW_LATEST_REQUEST_ENTRIES),
+          entries.slice(0, MAX_RAW_LATEST_REQUEST_ENTRIES),
           MAX_RAW_LATEST_REQUEST_ENTRIES * entrySize,
         ],
         [
-          entries.slice(MAX_RAW_LATEST_REQUEST_ENTRIES * 2, MAX_RAW_LATEST_REQUEST_ENTRIES * 3),
+          entries.slice(
+            MAX_RAW_LATEST_REQUEST_ENTRIES,
+            2 * MAX_RAW_LATEST_REQUEST_ENTRIES
+          ),
+          MAX_RAW_LATEST_REQUEST_ENTRIES * entrySize,
+        ],
+        [
+          entries.slice(
+            MAX_RAW_LATEST_REQUEST_ENTRIES * 2,
+            MAX_RAW_LATEST_REQUEST_ENTRIES * 3
+          ),
           MAX_RAW_LATEST_REQUEST_ENTRIES * entrySize,
         ],
         [[entries[MAX_RAW_LATEST_REQUEST_ENTRIES * 3]], 10],
@@ -189,10 +198,12 @@ describe('createRawHistoricalEntryBatches', () => {
     const entrySize = 2000;
 
     const entries = [
-      ...[...Array(MAX_RAW_HISTORICAL_REQUEST_ENTRIES * 3)].map((_args, index) => ({
-        id: String(index),
-        maxResults: entrySize,
-      })),
+      ...[...Array(MAX_RAW_HISTORICAL_REQUEST_ENTRIES * 3)].map(
+        (_args, index) => ({
+          id: String(index),
+          maxResults: entrySize,
+        })
+      ),
       {
         id: 'abc',
         maxResults: 10,
@@ -203,13 +214,22 @@ describe('createRawHistoricalEntryBatches', () => {
 
     expect(batches).toEqual(
       expect.arrayContaining([
-        [entries.slice(0, MAX_RAW_HISTORICAL_REQUEST_ENTRIES), MAX_RAW_HISTORICAL_REQUEST_ENTRIES * entrySize],
         [
-          entries.slice(MAX_RAW_HISTORICAL_REQUEST_ENTRIES, 2 * MAX_RAW_HISTORICAL_REQUEST_ENTRIES),
+          entries.slice(0, MAX_RAW_HISTORICAL_REQUEST_ENTRIES),
           MAX_RAW_HISTORICAL_REQUEST_ENTRIES * entrySize,
         ],
         [
-          entries.slice(MAX_RAW_HISTORICAL_REQUEST_ENTRIES * 2, MAX_RAW_HISTORICAL_REQUEST_ENTRIES * 3),
+          entries.slice(
+            MAX_RAW_HISTORICAL_REQUEST_ENTRIES,
+            2 * MAX_RAW_HISTORICAL_REQUEST_ENTRIES
+          ),
+          MAX_RAW_HISTORICAL_REQUEST_ENTRIES * entrySize,
+        ],
+        [
+          entries.slice(
+            MAX_RAW_HISTORICAL_REQUEST_ENTRIES * 2,
+            MAX_RAW_HISTORICAL_REQUEST_ENTRIES * 3
+          ),
           MAX_RAW_HISTORICAL_REQUEST_ENTRIES * entrySize,
         ],
         [[entries[MAX_RAW_HISTORICAL_REQUEST_ENTRIES * 3]], 10],
@@ -307,13 +327,22 @@ describe('createAggregateEntryBatches', () => {
 
     expect(batches).toEqual(
       expect.arrayContaining([
-        [entries.slice(0, MAX_AGGREGATED_REQUEST_ENTRIES), MAX_AGGREGATED_REQUEST_ENTRIES * entrySize],
         [
-          entries.slice(MAX_AGGREGATED_REQUEST_ENTRIES, 2 * MAX_AGGREGATED_REQUEST_ENTRIES),
+          entries.slice(0, MAX_AGGREGATED_REQUEST_ENTRIES),
           MAX_AGGREGATED_REQUEST_ENTRIES * entrySize,
         ],
         [
-          entries.slice(MAX_AGGREGATED_REQUEST_ENTRIES * 2, MAX_AGGREGATED_REQUEST_ENTRIES * 3),
+          entries.slice(
+            MAX_AGGREGATED_REQUEST_ENTRIES,
+            2 * MAX_AGGREGATED_REQUEST_ENTRIES
+          ),
+          MAX_AGGREGATED_REQUEST_ENTRIES * entrySize,
+        ],
+        [
+          entries.slice(
+            MAX_AGGREGATED_REQUEST_ENTRIES * 2,
+            MAX_AGGREGATED_REQUEST_ENTRIES * 3
+          ),
           MAX_AGGREGATED_REQUEST_ENTRIES * entrySize,
         ],
         [[entries[MAX_AGGREGATED_REQUEST_ENTRIES * 3]], 10],
@@ -329,23 +358,35 @@ describe('createAggregateEntryBatches', () => {
 
 describe('calculateNextRawHistoricalBatchSize', () => {
   it('returns the correct max batch size for no limit batches', () => {
-    expect(calculateNextRawHistoricalBatchSize({ maxResults: NO_LIMIT_BATCH, dataPointsFetched: 0 })).toBe(
-      MAX_RAW_HISTORICAL_DATA_POINTS
-    );
-    expect(calculateNextRawHistoricalBatchSize({ maxResults: NO_LIMIT_BATCH, dataPointsFetched: 100000 })).toBe(
-      MAX_RAW_HISTORICAL_DATA_POINTS
-    );
+    expect(
+      calculateNextRawHistoricalBatchSize({
+        maxResults: NO_LIMIT_BATCH,
+        dataPointsFetched: 0,
+      })
+    ).toBe(MAX_RAW_HISTORICAL_DATA_POINTS);
+    expect(
+      calculateNextRawHistoricalBatchSize({
+        maxResults: NO_LIMIT_BATCH,
+        dataPointsFetched: 100000,
+      })
+    ).toBe(MAX_RAW_HISTORICAL_DATA_POINTS);
   });
 
   it('returns the correct max batch size when specified and need to fetch more than MAX_RAW_HISTORICAL_DATA_POINTS', () => {
     expect(
-      calculateNextRawHistoricalBatchSize({ maxResults: MAX_RAW_HISTORICAL_DATA_POINTS * 3, dataPointsFetched: 0 })
+      calculateNextRawHistoricalBatchSize({
+        maxResults: MAX_RAW_HISTORICAL_DATA_POINTS * 3,
+        dataPointsFetched: 0,
+      })
     ).toBe(MAX_RAW_HISTORICAL_DATA_POINTS);
   });
 
   it('returns the correct max batch size when specified and need to fetch less than MAX_RAW_HISTORICAL_DATA_POINTS', () => {
     expect(
-      calculateNextRawHistoricalBatchSize({ maxResults: MAX_RAW_HISTORICAL_DATA_POINTS / 2, dataPointsFetched: 0 })
+      calculateNextRawHistoricalBatchSize({
+        maxResults: MAX_RAW_HISTORICAL_DATA_POINTS / 2,
+        dataPointsFetched: 0,
+      })
     ).toBe(MAX_RAW_HISTORICAL_DATA_POINTS / 2);
     expect(
       calculateNextRawHistoricalBatchSize({
@@ -358,24 +399,36 @@ describe('calculateNextRawHistoricalBatchSize', () => {
 
 describe('calculateNextAggregatedBatchSize', () => {
   it('returns the correct max batch size for no limit batches', () => {
-    expect(calculateNextAggregatedBatchSize({ maxResults: NO_LIMIT_BATCH, dataPointsFetched: 0 })).toBe(
-      MAX_AGGREGATED_DATA_POINTS
-    );
-    expect(calculateNextAggregatedBatchSize({ maxResults: NO_LIMIT_BATCH, dataPointsFetched: 100000 })).toBe(
-      MAX_AGGREGATED_DATA_POINTS
-    );
+    expect(
+      calculateNextAggregatedBatchSize({
+        maxResults: NO_LIMIT_BATCH,
+        dataPointsFetched: 0,
+      })
+    ).toBe(MAX_AGGREGATED_DATA_POINTS);
+    expect(
+      calculateNextAggregatedBatchSize({
+        maxResults: NO_LIMIT_BATCH,
+        dataPointsFetched: 100000,
+      })
+    ).toBe(MAX_AGGREGATED_DATA_POINTS);
   });
 
   it('returns the correct max batch size when specified and need to fetch more than MAX_AGGREGATED_DATA_POINTS', () => {
-    expect(calculateNextAggregatedBatchSize({ maxResults: MAX_AGGREGATED_DATA_POINTS * 3, dataPointsFetched: 0 })).toBe(
-      MAX_AGGREGATED_DATA_POINTS
-    );
+    expect(
+      calculateNextAggregatedBatchSize({
+        maxResults: MAX_AGGREGATED_DATA_POINTS * 3,
+        dataPointsFetched: 0,
+      })
+    ).toBe(MAX_AGGREGATED_DATA_POINTS);
   });
 
   it('returns the correct max batch size when specified and need to fetch less than MAX_AGGREGATED_DATA_POINTS', () => {
-    expect(calculateNextAggregatedBatchSize({ maxResults: MAX_AGGREGATED_DATA_POINTS / 2, dataPointsFetched: 0 })).toBe(
-      MAX_AGGREGATED_DATA_POINTS / 2
-    );
+    expect(
+      calculateNextAggregatedBatchSize({
+        maxResults: MAX_AGGREGATED_DATA_POINTS / 2,
+        dataPointsFetched: 0,
+      })
+    ).toBe(MAX_AGGREGATED_DATA_POINTS / 2);
     expect(
       calculateNextAggregatedBatchSize({
         maxResults: MAX_AGGREGATED_DATA_POINTS,
@@ -387,23 +440,63 @@ describe('calculateNextAggregatedBatchSize', () => {
 
 describe('shouldFetchNextBatch', () => {
   it('returns true if next token exists and batch has no limit', () => {
-    expect(shouldFetchNextBatch({ nextToken: '123', maxResults: NO_LIMIT_BATCH, dataPointsFetched: 0 })).toBe(true);
-    expect(shouldFetchNextBatch({ nextToken: '123', maxResults: NO_LIMIT_BATCH, dataPointsFetched: 500000 })).toBe(
-      true
-    );
+    expect(
+      shouldFetchNextBatch({
+        nextToken: '123',
+        maxResults: NO_LIMIT_BATCH,
+        dataPointsFetched: 0,
+      })
+    ).toBe(true);
+    expect(
+      shouldFetchNextBatch({
+        nextToken: '123',
+        maxResults: NO_LIMIT_BATCH,
+        dataPointsFetched: 500000,
+      })
+    ).toBe(true);
   });
 
   it('returns true if next token exists and there is still data that needs to be fetched', () => {
-    expect(shouldFetchNextBatch({ nextToken: '123', maxResults: 3000, dataPointsFetched: 0 })).toBe(true);
-    expect(shouldFetchNextBatch({ nextToken: '123', maxResults: 10000, dataPointsFetched: 9999 })).toBe(true);
+    expect(
+      shouldFetchNextBatch({
+        nextToken: '123',
+        maxResults: 3000,
+        dataPointsFetched: 0,
+      })
+    ).toBe(true);
+    expect(
+      shouldFetchNextBatch({
+        nextToken: '123',
+        maxResults: 10000,
+        dataPointsFetched: 9999,
+      })
+    ).toBe(true);
   });
 
   it('returns false if next token exists but data points have already been fetched', () => {
-    expect(shouldFetchNextBatch({ nextToken: '123', maxResults: 3000, dataPointsFetched: 3000 })).toBe(false);
-    expect(shouldFetchNextBatch({ nextToken: '123', maxResults: 0, dataPointsFetched: 0 })).toBe(false);
+    expect(
+      shouldFetchNextBatch({
+        nextToken: '123',
+        maxResults: 3000,
+        dataPointsFetched: 3000,
+      })
+    ).toBe(false);
+    expect(
+      shouldFetchNextBatch({
+        nextToken: '123',
+        maxResults: 0,
+        dataPointsFetched: 0,
+      })
+    ).toBe(false);
   });
 
   it('returns false if next token does not exist', () => {
-    expect(shouldFetchNextBatch({ nextToken: undefined, maxResults: 3000, dataPointsFetched: 0 })).toBe(false);
+    expect(
+      shouldFetchNextBatch({
+        nextToken: undefined,
+        maxResults: 3000,
+        dataPointsFetched: 0,
+      })
+    ).toBe(false);
   });
 });

@@ -60,7 +60,9 @@ export function registerPlugin<
 export function getPlugin<Namespace extends keyof PluginsRegistry>(
   namespace: Namespace
 ): ReturnType<PluginsRegistry[Namespace]['provider']> {
-  const plugin = pluginsRegistry[namespace].provider() as ReturnType<PluginsRegistry[Namespace]['provider']>;
+  const plugin = pluginsRegistry[namespace].provider() as ReturnType<
+    PluginsRegistry[Namespace]['provider']
+  >;
 
   return plugin;
 }

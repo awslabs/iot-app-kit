@@ -12,10 +12,13 @@ const LIST_TIME_SERIES_URL = `${SITEWISE_CONTROL_PLANE_API_BASE_URL}/time-series
 
 export function listTimeSeriesHandler() {
   return rest.get(LIST_TIME_SERIES_URL, (req, res, ctx) => {
-    const aliasPrefix: ListTimeSeriesRequest['aliasPrefix'] = req.url.searchParams.get('aliasPrefix') ?? undefined;
-    const assetId: ListTimeSeriesRequest['assetId'] = req.url.searchParams.get('assetId') ?? undefined;
+    const aliasPrefix: ListTimeSeriesRequest['aliasPrefix'] =
+      req.url.searchParams.get('aliasPrefix') ?? undefined;
+    const assetId: ListTimeSeriesRequest['assetId'] =
+      req.url.searchParams.get('assetId') ?? undefined;
     const timeSeriesType: ListTimeSeriesRequest['timeSeriesType'] =
-      (req.url.searchParams.get('timeSeriesType') as ListTimeSeriesType) ?? undefined;
+      (req.url.searchParams.get('timeSeriesType') as ListTimeSeriesType) ??
+      undefined;
 
     if (timeSeriesType === 'ASSOCIATED' && !assetId) {
       return res(ctx.status(400));

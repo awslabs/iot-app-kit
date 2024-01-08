@@ -11,8 +11,12 @@ import { onUpdateSignificantDigitsAction } from '~/store/actions/updateSignifica
 export const useGridSettings = () => {
   const dispatch = useDispatch();
 
-  const { width, height, cellSize } = useSelector((state: DashboardState) => state.grid);
-  const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
+  const { width, height, cellSize } = useSelector(
+    (state: DashboardState) => state.grid
+  );
+  const significantDigits = useSelector(
+    (state: DashboardState) => state.significantDigits
+  );
 
   const onChangeNumberOfColumns = (columns: number) => {
     dispatch(onChangeDashboardWidthAction({ width: columns }));
@@ -24,7 +28,11 @@ export const useGridSettings = () => {
     dispatch(onChangeDashboardCellSizeAction({ cellSize: updatedCellSize }));
   };
   const onChangeSignificantDigits = (updatedSignificantDigits: number) => {
-    dispatch(onUpdateSignificantDigitsAction({ significantDigits: updatedSignificantDigits }));
+    dispatch(
+      onUpdateSignificantDigitsAction({
+        significantDigits: updatedSignificantDigits,
+      })
+    );
   };
 
   return {

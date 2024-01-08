@@ -32,7 +32,10 @@ import {
   ALARM_LIST_ASSET_MODEL_PROP_RESPONSE,
 } from '../__mocks__/alarm';
 import type { SiteWiseAssetDataSource } from '../asset-modules';
-import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+import {
+  createMockIoTEventsSDK,
+  createMockSiteWiseSDK,
+} from '@iot-app-kit/testing-util';
 
 const initializeSubscribeToTimeSeriesData = ({
   ioTSiteWiseClient,
@@ -41,19 +44,34 @@ const initializeSubscribeToTimeSeriesData = ({
   ioTSiteWiseClient: IoTSiteWiseClient;
   ioTEventsClient?: IoTEventsClient;
 }) => {
-  const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(ioTSiteWiseClient);
+  const assetDataSource: SiteWiseAssetDataSource =
+    createSiteWiseAssetDataSource(ioTSiteWiseClient);
   const siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
   const siteWiseAssetModuleSession = siteWiseAssetModule.startSession();
-  const dataModule = new TimeSeriesDataModule(createDataSource(ioTSiteWiseClient));
-  const siteWiseAlarmModule = new SiteWiseAlarmModule(ioTEventsClient || createMockIoTEventsSDK(), siteWiseAssetModule);
+  const dataModule = new TimeSeriesDataModule(
+    createDataSource(ioTSiteWiseClient)
+  );
+  const siteWiseAlarmModule = new SiteWiseAlarmModule(
+    ioTEventsClient || createMockIoTEventsSDK(),
+    siteWiseAssetModule
+  );
 
-  return subscribeToTimeSeriesData(dataModule, siteWiseAssetModuleSession, siteWiseAlarmModule);
+  return subscribeToTimeSeriesData(
+    dataModule,
+    siteWiseAssetModuleSession,
+    siteWiseAlarmModule
+  );
 };
 
 it('does not emit any data streams when empty query is subscribed to', async () => {
-  const subscribe = initializeSubscribeToTimeSeriesData({ ioTSiteWiseClient: createMockSiteWiseSDK() });
+  const subscribe = initializeSubscribeToTimeSeriesData({
+    ioTSiteWiseClient: createMockSiteWiseSDK(),
+  });
   const cb = jest.fn();
-  const { unsubscribe } = subscribe({ queries: [], request: { viewport: { duration: '5m' } } }, cb);
+  const { unsubscribe } = subscribe(
+    { queries: [], request: { viewport: { duration: '5m' } } },
+    cb
+  );
 
   await flushPromises();
 
@@ -62,11 +80,17 @@ it('does not emit any data streams when empty query is subscribed to', async () 
 });
 
 it('unsubscribes', () => {
-  const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(createMockSiteWiseSDK());
+  const assetDataSource: SiteWiseAssetDataSource =
+    createSiteWiseAssetDataSource(createMockSiteWiseSDK());
   const siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
   const siteWiseAssetModuleSession = siteWiseAssetModule.startSession();
-  const dataModule = new TimeSeriesDataModule(createDataSource(createMockSiteWiseSDK()));
-  const siteWiseAlarmModule = new SiteWiseAlarmModule(createMockIoTEventsSDK(), siteWiseAssetModule);
+  const dataModule = new TimeSeriesDataModule(
+    createDataSource(createMockSiteWiseSDK())
+  );
+  const siteWiseAlarmModule = new SiteWiseAlarmModule(
+    createMockIoTEventsSDK(),
+    siteWiseAssetModule
+  );
 
   const unsubscribeSpy = jest.fn();
   jest.spyOn(dataModule, 'subscribeToDataStreams').mockImplementation(() => ({
@@ -74,8 +98,15 @@ it('unsubscribes', () => {
     update: async () => {},
   }));
 
-  const subscribe = subscribeToTimeSeriesData(dataModule, siteWiseAssetModuleSession, siteWiseAlarmModule);
-  const { unsubscribe } = subscribe({ queries: [], request: { viewport: { duration: '5m' } } }, () => {});
+  const subscribe = subscribeToTimeSeriesData(
+    dataModule,
+    siteWiseAssetModuleSession,
+    siteWiseAlarmModule
+  );
+  const { unsubscribe } = subscribe(
+    { queries: [], request: { viewport: { duration: '5m' } } },
+    () => {}
+  );
   unsubscribe();
 
   expect(unsubscribeSpy).toBeCalled();
@@ -87,12 +118,17 @@ it('provides time series data from iotsitewise', async () => {
   const ASSET_MODEL_ID = 'some-asset-model-id';
   const PROPERTY_NAME = 'some-property-name';
 
-  const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
-  const describeAsset = jest
+  const batchGetAssetPropertyValueHistory = jest
     .fn()
-    .mockImplementation(({ assetId }) =>
-      Promise.resolve(createAssetResponse({ assetId: assetId as string, assetModelId: ASSET_MODEL_ID }))
-    );
+    .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
+  const describeAsset = jest.fn().mockImplementation(({ assetId }) =>
+    Promise.resolve(
+      createAssetResponse({
+        assetId: assetId as string,
+        assetModelId: ASSET_MODEL_ID,
+      })
+    )
+  );
   const describeAssetModel = jest.fn().mockImplementation(({ assetModelId }) =>
     Promise.resolve(
       createAssetModelResponse({
@@ -142,7 +178,10 @@ it('provides time series data from iotsitewise', async () => {
           ],
         },
       ],
-      request: { viewport: { duration: '5m' }, settings: { fetchFromStartToEnd: true } },
+      request: {
+        viewport: { duration: '5m' },
+        settings: { fetchFromStartToEnd: true },
+      },
     },
     cb
   );
@@ -196,12 +235,17 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
   const ASSET_MODEL_ID = 'some-asset-model-id';
   const PROPERTY_NAME = 'some-property-name';
 
-  const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
-  const describeAsset = jest
+  const batchGetAssetPropertyValueHistory = jest
     .fn()
-    .mockImplementation(({ assetId }) =>
-      Promise.resolve(createAssetResponse({ assetId: assetId as string, assetModelId: ASSET_MODEL_ID }))
-    );
+    .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
+  const describeAsset = jest.fn().mockImplementation(({ assetId }) =>
+    Promise.resolve(
+      createAssetResponse({
+        assetId: assetId as string,
+        assetModelId: ASSET_MODEL_ID,
+      })
+    )
+  );
   const describeAssetModel = jest.fn().mockImplementation(({ assetModelId }) =>
     Promise.resolve(
       createAssetModelResponse({
@@ -243,7 +287,10 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
   const { update, unsubscribe } = subscribe(
     {
       queries: [],
-      request: { viewport: { duration: '5m' }, settings: { fetchFromStartToEnd: true } },
+      request: {
+        viewport: { duration: '5m' },
+        settings: { fetchFromStartToEnd: true },
+      },
     },
     cb
   );
@@ -313,7 +360,9 @@ it('provides alarm data from iot-events', async () => {
     id: ALARM_ASSET_ID,
     assetModelId: ASSET_MODEL_WITH_ALARM.assetModelId,
   });
-  const describeAssetModel = jest.fn().mockResolvedValue(ASSET_MODEL_WITH_ALARM);
+  const describeAssetModel = jest
+    .fn()
+    .mockResolvedValue(ASSET_MODEL_WITH_ALARM);
   const getAssetPropertyValue = jest
     .fn()
     .mockResolvedValueOnce({
@@ -325,12 +374,18 @@ it('provides alarm data from iot-events', async () => {
     .mockResolvedValueOnce({
       propertyValue: THRESHOLD_PROPERTY_VALUE,
     });
-  const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(ALARM_PROPERTY_VALUE_HISTORY);
+  const batchGetAssetPropertyValueHistory = jest
+    .fn()
+    .mockResolvedValue(ALARM_PROPERTY_VALUE_HISTORY);
 
-  const listAssetProperties = jest.fn().mockImplementation(() => Promise.resolve(ALARM_LIST_ASSET_PROP_RESPONSE));
+  const listAssetProperties = jest
+    .fn()
+    .mockImplementation(() => Promise.resolve(ALARM_LIST_ASSET_PROP_RESPONSE));
   const listAssetModelProperties = jest
     .fn()
-    .mockImplementation(() => Promise.resolve(ALARM_LIST_ASSET_MODEL_PROP_RESPONSE));
+    .mockImplementation(() =>
+      Promise.resolve(ALARM_LIST_ASSET_MODEL_PROP_RESPONSE)
+    );
 
   const subscribe = initializeSubscribeToTimeSeriesData({
     ioTEventsClient: createMockIoTEventsSDK({
@@ -359,7 +414,10 @@ it('provides alarm data from iot-events', async () => {
           ],
         },
       ],
-      request: { viewport: { duration: '5m' }, settings: { fetchFromStartToEnd: true } },
+      request: {
+        viewport: { duration: '5m' },
+        settings: { fetchFromStartToEnd: true },
+      },
     },
     cb
   );
@@ -368,11 +426,15 @@ it('provides alarm data from iot-events', async () => {
 
   // fetches the asset summary
   expect(describeAsset).toBeCalledTimes(2);
-  expect(describeAsset).toBeCalledWith(expect.objectContaining({ assetId: ALARM_ASSET_ID }));
+  expect(describeAsset).toBeCalledWith(
+    expect.objectContaining({ assetId: ALARM_ASSET_ID })
+  );
 
   // fetches the asset model
   expect(describeAssetModel).toBeCalledTimes(1);
-  expect(describeAssetModel).toBeCalledWith(expect.objectContaining({ assetModelId: ALARM_ASSET_MODEL_ID }));
+  expect(describeAssetModel).toBeCalledWith(
+    expect.objectContaining({ assetModelId: ALARM_ASSET_MODEL_ID })
+  );
 
   // fetches alarm source, state and threshold property value
   expect(getAssetPropertyValue).toBeCalledTimes(3);
@@ -420,7 +482,9 @@ it('provides alarm data from iot-events when subscription is updated', async () 
     id: ALARM_ASSET_ID,
     assetModelId: ASSET_MODEL_WITH_ALARM.assetModelId,
   });
-  const describeAssetModel = jest.fn().mockResolvedValue(ASSET_MODEL_WITH_ALARM);
+  const describeAssetModel = jest
+    .fn()
+    .mockResolvedValue(ASSET_MODEL_WITH_ALARM);
   const getAssetPropertyValue = jest
     .fn()
     .mockResolvedValueOnce({
@@ -432,11 +496,17 @@ it('provides alarm data from iot-events when subscription is updated', async () 
     .mockResolvedValueOnce({
       propertyValue: THRESHOLD_PROPERTY_VALUE,
     });
-  const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(ALARM_PROPERTY_VALUE_HISTORY);
-  const listAssetProperties = jest.fn().mockImplementation(() => Promise.resolve(ALARM_LIST_ASSET_PROP_RESPONSE));
+  const batchGetAssetPropertyValueHistory = jest
+    .fn()
+    .mockResolvedValue(ALARM_PROPERTY_VALUE_HISTORY);
+  const listAssetProperties = jest
+    .fn()
+    .mockImplementation(() => Promise.resolve(ALARM_LIST_ASSET_PROP_RESPONSE));
   const listAssetModelProperties = jest
     .fn()
-    .mockImplementation(() => Promise.resolve(ALARM_LIST_ASSET_MODEL_PROP_RESPONSE));
+    .mockImplementation(() =>
+      Promise.resolve(ALARM_LIST_ASSET_MODEL_PROP_RESPONSE)
+    );
 
   const subscribe = initializeSubscribeToTimeSeriesData({
     ioTEventsClient: createMockIoTEventsSDK({
@@ -456,7 +526,10 @@ it('provides alarm data from iot-events when subscription is updated', async () 
   const { update, unsubscribe } = subscribe(
     {
       queries: [],
-      request: { viewport: { duration: '5m' }, settings: { fetchFromStartToEnd: true } },
+      request: {
+        viewport: { duration: '5m' },
+        settings: { fetchFromStartToEnd: true },
+      },
     },
     cb
   );
@@ -480,11 +553,15 @@ it('provides alarm data from iot-events when subscription is updated', async () 
 
   // fetches the asset summary
   expect(describeAsset).toBeCalledTimes(2);
-  expect(describeAsset).toBeCalledWith(expect.objectContaining({ assetId: ALARM_ASSET_ID }));
+  expect(describeAsset).toBeCalledWith(
+    expect.objectContaining({ assetId: ALARM_ASSET_ID })
+  );
 
   // fetches the asset model
   expect(describeAssetModel).toBeCalledTimes(1);
-  expect(describeAssetModel).toBeCalledWith(expect.objectContaining({ assetModelId: ALARM_ASSET_MODEL_ID }));
+  expect(describeAssetModel).toBeCalledWith(
+    expect.objectContaining({ assetModelId: ALARM_ASSET_MODEL_ID })
+  );
 
   // fetches alarm source, state and threshold property value
   expect(getAssetPropertyValue).toBeCalledTimes(3);

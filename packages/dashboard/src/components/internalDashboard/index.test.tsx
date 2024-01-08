@@ -161,7 +161,9 @@ it.skip('empty state within the dashboard when no widget is selected', function 
   };
 
   render(
-    <AppKitConfig customFeatureConfig={DEFAULT_APP_KIT_CONFIG.featureFlagConfig}>
+    <AppKitConfig
+      customFeatureConfig={DEFAULT_APP_KIT_CONFIG.featureFlagConfig}
+    >
       <Provider store={configureDashboardStore(args)}>
         <DndProvider
           backend={HTML5Backend}

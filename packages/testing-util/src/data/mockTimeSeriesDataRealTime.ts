@@ -1,4 +1,10 @@
-import { DataPoint, DataStream, DataType, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
+import {
+  DataPoint,
+  DataStream,
+  DataType,
+  TimeSeriesDataQuery,
+  Viewport,
+} from '@iot-app-kit/core';
 import { v4 as uuid } from 'uuid';
 import parse from 'parse-duration';
 
@@ -21,23 +27,28 @@ export const mockTimeSeriesDataQueryLiveStream = ({
   requests: MockRequest[];
   dataType: DataType;
   frequency?: string; // see https://www.npmjs.com/package/parse-duration for valid values, ex '1m', '1hr'
-  overrides?: { updateViewport?: (viewport: Viewport) => void; unsubscribe?: () => void };
+  overrides?: {
+    updateViewport?: (viewport: Viewport) => void;
+    unsubscribe?: () => void;
+  };
 }): TimeSeriesDataQuery => {
   const { updateViewport = noop, unsubscribe = noop } = overrides || {};
 
   const id = uuid();
-  let dataStreams: DataStream[] = requests.map(({ createDataPoint: _, name, ...rest }, i) => {
-    return {
-      id: name,
-      name,
-      color: 'black',
-      isLoading: true,
-      dataType,
-      data: [requests[i].createDataPoint(new Date())],
-      resolution: 0,
-      ...rest,
-    };
-  });
+  let dataStreams: DataStream[] = requests.map(
+    ({ createDataPoint: _, name, ...rest }, i) => {
+      return {
+        id: name,
+        name,
+        color: 'black',
+        isLoading: true,
+        dataType,
+        data: [requests[i].createDataPoint(new Date())],
+        resolution: 0,
+        ...rest,
+      };
+    }
+  );
   return {
     toQueryString: () =>
       JSON.stringify({
@@ -59,7 +70,10 @@ export const mockTimeSeriesDataQueryLiveStream = ({
             dataStreams = dataStreams.map((dataStream, i) => ({
               ...dataStream,
               isLoading: false,
-              data: [...dataStream.data, requests[i].createDataPoint(new Date())],
+              data: [
+                ...dataStream.data,
+                requests[i].createDataPoint(new Date()),
+              ],
             }));
 
             next([
@@ -99,23 +113,28 @@ export const mockTimeSeriesDataQueryLiveStreamAggregated = ({
   resolution: number;
   dataType: DataType;
   frequency?: string; // see https://www.npmjs.com/package/parse-duration for valid values, ex '1m', '1hr'
-  overrides?: { updateViewport?: (viewport: Viewport) => void; unsubscribe?: () => void };
+  overrides?: {
+    updateViewport?: (viewport: Viewport) => void;
+    unsubscribe?: () => void;
+  };
 }): TimeSeriesDataQuery => {
   const { updateViewport = noop, unsubscribe = noop } = overrides || {};
 
   const id = uuid();
-  let dataStreams: DataStream[] = requests.map(({ createDataPoint: _, name, ...rest }, i) => {
-    return {
-      id: name,
-      name,
-      color: 'black',
-      isLoading: true,
-      dataType,
-      data: [requests[i].createDataPoint(new Date())],
-      resolution,
-      ...rest,
-    };
-  });
+  let dataStreams: DataStream[] = requests.map(
+    ({ createDataPoint: _, name, ...rest }, i) => {
+      return {
+        id: name,
+        name,
+        color: 'black',
+        isLoading: true,
+        dataType,
+        data: [requests[i].createDataPoint(new Date())],
+        resolution,
+        ...rest,
+      };
+    }
+  );
   return {
     toQueryString: () =>
       JSON.stringify({
@@ -137,7 +156,10 @@ export const mockTimeSeriesDataQueryLiveStreamAggregated = ({
             dataStreams = dataStreams.map((dataStream, i) => ({
               ...dataStream,
               isLoading: false,
-              data: [...dataStream.data, requests[i].createDataPoint(new Date())],
+              data: [
+                ...dataStream.data,
+                requests[i].createDataPoint(new Date()),
+              ],
             }));
 
             next([

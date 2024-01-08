@@ -1,4 +1,7 @@
-import type { DescribeAssetResponse, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import type {
+  DescribeAssetResponse,
+  DescribeAssetModelResponse,
+} from '@aws-sdk/client-iotsitewise';
 
 export interface Asset extends DescribeAssetResponse {
   assetId: NonNullable<DescribeAssetResponse['assetId']>;

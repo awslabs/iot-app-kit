@@ -37,16 +37,25 @@ const loader = new S3SceneLoader({
 
 describe('getSceneUri', () => {
   beforeEach(() => {
-    jest.spyOn(S3Utils, 'parseS3BucketFromArn').mockImplementation((input) => input);
-    jest.spyOn(S3Utils, 'parseS3RelativeScenePathFromURI').mockImplementation((input) => input);
+    jest
+      .spyOn(S3Utils, 'parseS3BucketFromArn')
+      .mockImplementation((input) => input);
+    jest
+      .spyOn(S3Utils, 'parseS3RelativeScenePathFromURI')
+      .mockImplementation((input) => input);
 
     jest.clearAllMocks();
   });
 
   it('should get correct scene url', async () => {
-    const sendSpy = jest.spyOn(IoTTwinMakerClient.prototype, 'send').mockImplementation(() => {
-      return Promise.resolve({ contentLocation: 'mock-contentLocation', s3Location: 'mock-s3Location' });
-    });
+    const sendSpy = jest
+      .spyOn(IoTTwinMakerClient.prototype, 'send')
+      .mockImplementation(() => {
+        return Promise.resolve({
+          contentLocation: 'mock-contentLocation',
+          s3Location: 'mock-s3Location',
+        });
+      });
 
     const expected = 's3://mock-s3Location/mock-contentLocation';
     const result = await loader.getSceneUri();
@@ -56,9 +65,11 @@ describe('getSceneUri', () => {
   });
 
   it('should get null when missing data', async () => {
-    const sendSpy = jest.spyOn(IoTTwinMakerClient.prototype, 'send').mockImplementation(() => {
-      return Promise.resolve({ contentLocation: 'mock-contentLocation' });
-    });
+    const sendSpy = jest
+      .spyOn(IoTTwinMakerClient.prototype, 'send')
+      .mockImplementation(() => {
+        return Promise.resolve({ contentLocation: 'mock-contentLocation' });
+      });
 
     const result = await loader.getSceneUri();
 
@@ -67,9 +78,11 @@ describe('getSceneUri', () => {
   });
 
   it('should get error when API failed', async () => {
-    const sendSpy = jest.spyOn(IoTTwinMakerClient.prototype, 'send').mockImplementation(() => {
-      throw 'API failed';
-    });
+    const sendSpy = jest
+      .spyOn(IoTTwinMakerClient.prototype, 'send')
+      .mockImplementation(() => {
+        throw 'API failed';
+      });
 
     let error;
     try {

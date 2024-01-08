@@ -6,21 +6,33 @@ import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { LineScatterChartWidget } from '~/customization/widgets/types';
 import { applyAggregationToQuery } from '~/customization/widgets/utils/assetQuery/applyAggregationToQuery';
 import { applyResolutionToQuery } from '~/customization/widgets/utils/assetQuery/applyResolutionToQuery';
-import { type FilterPredicate, PropertyLens } from '~/customization/propertiesSection';
+import {
+  type FilterPredicate,
+  PropertyLens,
+} from '~/customization/propertiesSection';
 import { type DashboardWidget } from '~/types';
 
 import { isJust, maybeWithDefault } from '~/util/maybe';
 import { BAR_AGGREGATION_OPTIONS, BAR_RESOLUTION_OPTIONS } from '../constants';
 
-const isOnlyRawData: readonly string[] = ['status-timeline', 'table', 'kpi', 'status'];
+const isOnlyRawData: readonly string[] = [
+  'status-timeline',
+  'table',
+  'kpi',
+  'status',
+];
 const isOnlyAggregated: readonly string[] = ['bar-chart'];
 
 // TODO: Fix lying type
-export const isOnlyRawDataWidget = (widget: DashboardWidget): widget is LineScatterChartWidget =>
+export const isOnlyRawDataWidget = (
+  widget: DashboardWidget
+): widget is LineScatterChartWidget =>
   isOnlyRawData.some((t) => t === widget.type);
 
 // TODO: Fix lying type
-export const isOnlyAggregatedDataWidget = (widget: DashboardWidget): widget is LineScatterChartWidget =>
+export const isOnlyAggregatedDataWidget = (
+  widget: DashboardWidget
+): widget is LineScatterChartWidget =>
   isOnlyAggregated.some((t) => t === widget.type);
 
 const RenderAggregationsPropertiesSection = ({
@@ -38,7 +50,10 @@ const RenderAggregationsPropertiesSection = ({
         queryConfig: {
           ...properties.queryConfig,
           query: properties.queryConfig.query
-            ? applyAggregationToQuery(properties.queryConfig.query, updatedAggregationType)
+            ? applyAggregationToQuery(
+                properties.queryConfig.query,
+                updatedAggregationType
+              )
             : undefined,
         },
         aggregationType: updatedAggregationType,
@@ -49,7 +64,9 @@ const RenderAggregationsPropertiesSection = ({
     ({ resolution }) => resolution,
     (properties, updatedResolution) => {
       // We get the current aggregation and don't change it if it's already set.
-      let updatedAggregationType: AggregateType | undefined = isJust(aggregationMaybe)
+      let updatedAggregationType: AggregateType | undefined = isJust(
+        aggregationMaybe
+      )
         ? aggregationMaybe.value
         : 'AVERAGE';
 
@@ -60,7 +77,10 @@ const RenderAggregationsPropertiesSection = ({
 
       const updatedQuery = properties.queryConfig.query
         ? applyResolutionToQuery(
-            applyResolutionToQuery(properties.queryConfig.query, updatedAggregationType),
+            applyResolutionToQuery(
+              properties.queryConfig.query,
+              updatedAggregationType
+            ),
             updatedResolution
           )
         : undefined;
@@ -84,7 +104,9 @@ const RenderAggregationsPropertiesSection = ({
     <AggregationAndResolutionSection
       aggregation={aggregationType}
       resolution={resolution}
-      updateAggregation={(updatedAggregationType) => updateAggregation(updatedAggregationType as AggregateType)}
+      updateAggregation={(updatedAggregationType) =>
+        updateAggregation(updatedAggregationType as AggregateType)
+      }
       updateResolution={updateResolution}
       resolutionOptions={BAR_RESOLUTION_OPTIONS}
       aggregationOptions={BAR_AGGREGATION_OPTIONS}
@@ -107,14 +129,22 @@ const AggregationsPropertiesSection = ({
   return (
     <PropertiesSection
       isVisible={isVisible}
-      render={({ useProperty }) => <RenderAggregationsPropertiesSection useProperty={useProperty} />}
+      render={({ useProperty }) => (
+        <RenderAggregationsPropertiesSection useProperty={useProperty} />
+      )}
     />
   );
 };
 
 export const AggregationsSettingsConfiguration: React.FC = () => (
   <>
-    <AggregationsPropertiesSection isVisible={isOnlyRawDataWidget} supportedData='raw' />
-    <AggregationsPropertiesSection isVisible={isOnlyAggregatedDataWidget} supportedData='aggregated' />
+    <AggregationsPropertiesSection
+      isVisible={isOnlyRawDataWidget}
+      supportedData='raw'
+    />
+    <AggregationsPropertiesSection
+      isVisible={isOnlyAggregatedDataWidget}
+      supportedData='aggregated'
+    />
   </>
 );

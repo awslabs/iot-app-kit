@@ -1,13 +1,18 @@
-import { IDataBindingConfig, IDataFieldOption } from '../data-binding-provider/types';
+import {
+  IDataBindingConfig,
+  IDataFieldOption,
+} from '../data-binding-provider/types';
 
 /**
  * Data binding templates will be stored as ${my-value} in IValueDataBinding
  */
 const dataBindingTemplateRegExp = /^\$\{([\s\S]+)\}$/;
 
-export const isDataBindingTemplate = (item?: string): boolean => (item ? dataBindingTemplateRegExp.test(item) : false);
+export const isDataBindingTemplate = (item?: string): boolean =>
+  item ? dataBindingTemplateRegExp.test(item) : false;
 
-export const decorateDataBindingTemplate = (item: string): string => '${' + item + '}';
+export const decorateDataBindingTemplate = (item: string): string =>
+  '${' + item + '}';
 
 export const undecorateDataBindingTemplate = (item: string): string =>
   item.match(dataBindingTemplateRegExp)?.[1] ?? item;

@@ -11,13 +11,18 @@ export interface StateManagerProps {
   children: ReactNode;
 }
 
-export const context = createContext<KnowledgeGraphContext>({} as KnowledgeGraphContext);
+export const context = createContext<KnowledgeGraphContext>(
+  {} as KnowledgeGraphContext
+);
 export function useKnowledgeGraphState() {
   return useContext(context);
 }
 const StateManager: React.FC<StateManagerProps> = ({ children }) => {
-  const [selectedGraphNodeEntityId, setSelectedGraphNodeEntityId] = useState<string | null>();
-  const [queryResult, setQueryResult] = useState<ExecuteQueryCommandOutput | null>();
+  const [selectedGraphNodeEntityId, setSelectedGraphNodeEntityId] = useState<
+    string | null
+  >();
+  const [queryResult, setQueryResult] =
+    useState<ExecuteQueryCommandOutput | null>();
   const clearGraphResults = (clear: boolean) => {
     if (clear) {
       setQueryResult(null);

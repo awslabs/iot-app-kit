@@ -1,8 +1,15 @@
 import { Component, h, Prop, State, Watch } from '@stencil/core';
 import { ErrorDetails, TreeProvider, TreeQuery } from '@iot-app-kit/core';
-import { BranchReference, SiteWiseAssetTreeNode } from '@iot-app-kit/source-iotsitewise';
+import {
+  BranchReference,
+  SiteWiseAssetTreeNode,
+} from '@iot-app-kit/source-iotsitewise';
 import { SiteWiseAssetResource, FilterTexts, ColumnDefinition } from './types';
-import { EmptyStateProps, ITreeNode, UseTreeCollection } from '@iot-app-kit/related-table';
+import {
+  EmptyStateProps,
+  ITreeNode,
+  UseTreeCollection,
+} from '@iot-app-kit/related-table';
 import { parseSitewiseAssetTree } from './utils';
 import { TableProps } from '@awsui/components-react/table';
 import { NonCancelableCustomEvent } from '@awsui/components-react';
@@ -25,13 +32,15 @@ const DEFAULT_COLUMNS: ColumnDefinition<SiteWiseAssetResource>[] = [
     sortingField: 'creationDate',
     id: 'creationDate',
     header: 'Created',
-    cell: ({ creationDate }: SiteWiseAssetResource) => creationDate?.toUTCString(),
+    cell: ({ creationDate }: SiteWiseAssetResource) =>
+      creationDate?.toUTCString(),
   },
   {
     sortingField: 'lastUpdateDate',
     id: 'lastUpdateDate',
     header: 'Updated',
-    cell: ({ lastUpdateDate }: SiteWiseAssetResource) => lastUpdateDate?.toUTCString(),
+    cell: ({ lastUpdateDate }: SiteWiseAssetResource) =>
+      lastUpdateDate?.toUTCString(),
   },
 ];
 @Component({
@@ -50,7 +59,9 @@ export class IotResourceExplorer {
   @Prop() paginationEnabled = true;
   @Prop() wrapLines = false;
   @Prop() widgetId: string = uuidv4();
-  @Prop() onSelectionChange: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
+  @Prop() onSelectionChange: (
+    event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>
+  ) => void;
   @Prop() expanded?: boolean = false;
 
   @State() provider: TreeProvider<SiteWiseAssetTreeNode[], BranchReference>;
@@ -95,7 +106,9 @@ export class IotResourceExplorer {
 
   expandNode = (node: ITreeNode<SiteWiseAssetResource>) => {
     node.hierarchies?.forEach((hierarchy: any) => {
-      this.provider.expand(new BranchReference(node.id, hierarchy.id as string));
+      this.provider.expand(
+        new BranchReference(node.id, hierarchy.id as string)
+      );
     });
   };
 
@@ -107,7 +120,9 @@ export class IotResourceExplorer {
       newItems.forEach(({ id, hierarchies, hasChildren }) => {
         if (!this.expandedItems[id] && hasChildren) {
           hierarchies?.forEach((hierarchy: any) => {
-            this.provider.expand(new BranchReference(id, hierarchy.id as string));
+            this.provider.expand(
+              new BranchReference(id, hierarchy.id as string)
+            );
           });
 
           newExpandedItems[id] = true;
@@ -119,7 +134,9 @@ export class IotResourceExplorer {
   }
 
   render() {
-    const filtering = this.filterEnabled ? this.filterTexts || this.defaults.filterText : undefined;
+    const filtering = this.filterEnabled
+      ? this.filterTexts || this.defaults.filterText
+      : undefined;
     const collectionOptions: UseTreeCollection<unknown> = {
       columnDefinitions: this.columnDefinitions,
       keyPropertyName: 'id',
@@ -149,7 +166,10 @@ export class IotResourceExplorer {
 
     if (this.errors.length > 0) {
       // TODO: Make use of all the errors
-      empty = { header: 'Error', description: this.errors[this.errors.length - 1]?.msg };
+      empty = {
+        header: 'Error',
+        description: this.errors[this.errors.length - 1]?.msg,
+      };
     }
 
     return (

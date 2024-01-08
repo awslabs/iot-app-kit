@@ -1,14 +1,22 @@
 import type { TwinMakerDataStreamIdComponent } from '../types';
 
-export const toDataStreamId = (values: TwinMakerDataStreamIdComponent): string => {
+export const toDataStreamId = (
+  values: TwinMakerDataStreamIdComponent
+): string => {
   const sortedValues: Record<string, string> = {};
   Object.keys(values)
     .sort()
-    .forEach((key) => (sortedValues[key] = values[key as keyof TwinMakerDataStreamIdComponent]));
+    .forEach(
+      (key) =>
+        (sortedValues[key] =
+          values[key as keyof TwinMakerDataStreamIdComponent])
+    );
   return JSON.stringify(sortedValues);
 };
 
-export const fromDataStreamId = (dataStreamId: string): TwinMakerDataStreamIdComponent => {
+export const fromDataStreamId = (
+  dataStreamId: string
+): TwinMakerDataStreamIdComponent => {
   try {
     const parsed = JSON.parse(dataStreamId);
 

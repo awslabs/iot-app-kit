@@ -1,4 +1,7 @@
-import { changeDashboardWidth, onChangeDashboardWidthAction } from './changeWidth';
+import {
+  changeDashboardWidth,
+  onChangeDashboardWidthAction,
+} from './changeWidth';
 import { initialState } from '../../state';
 
 it('can change the width of the dashboard', () => {

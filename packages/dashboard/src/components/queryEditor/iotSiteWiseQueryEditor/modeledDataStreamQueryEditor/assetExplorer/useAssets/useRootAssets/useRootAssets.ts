@@ -1,5 +1,11 @@
-import { type AssetSummary, type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { useInfiniteQuery, type QueryFunctionContext } from '@tanstack/react-query';
+import {
+  type AssetSummary,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
+import {
+  useInfiniteQuery,
+  type QueryFunctionContext,
+} from '@tanstack/react-query';
 
 import { ListRootAssetsRequest } from './listRootAssetsRequest';
 import { RootAssetCacheKeyFactory } from './rootAssetCacheKeyFactory';
@@ -28,9 +34,21 @@ export function useRootAssets({ client }: UseRootAssetsOptions) {
     getNextPageParam: ({ nextToken }) => nextToken,
   });
 
-  const rootAssets: AssetSummary[] = rootAssetPages.flatMap(({ assetSummaries = [] }) => assetSummaries);
+  const rootAssets: AssetSummary[] = rootAssetPages.flatMap(
+    ({ assetSummaries = [] }) => assetSummaries
+  );
 
-  return { rootAssets, hasNextPage, fetchNextPage, isFetching, isSuccess, status, isError, isLoading, error };
+  return {
+    rootAssets,
+    hasNextPage,
+    fetchNextPage,
+    isFetching,
+    isSuccess,
+    status,
+    isError,
+    isLoading,
+    error,
+  };
 }
 
 function createUseListRootAssetsQueryFn(client: IoTSiteWiseClient) {

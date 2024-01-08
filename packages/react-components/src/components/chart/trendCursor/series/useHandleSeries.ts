@@ -17,7 +17,9 @@ export const useHandleSeries = ({
   const visualizationRef = useRef(visualization);
   const graphicRef = useRef(graphic);
   const significantDigitsRef = useRef(significantDigits);
-  const hiddenSeriesCount = series.filter((s) => (s as LineSeriesOption).lineStyle?.opacity === 0).length;
+  const hiddenSeriesCount = series.filter(
+    (s) => (s as LineSeriesOption).lineStyle?.opacity === 0
+  ).length;
 
   useEffect(() => {
     graphicRef.current = graphic;
@@ -29,7 +31,10 @@ export const useHandleSeries = ({
   useEffect(() => {
     const update = () => {
       const newG = graphicRef.current.map((g) => {
-        const { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue } = calculateSeriesMakers(
+        const {
+          trendCursorsSeriesMakersInPixels,
+          trendCursorsSeriesMakersValue,
+        } = calculateSeriesMakers(
           seriesRef.current,
           g.timestampInMs,
           chartRef,
@@ -38,7 +43,11 @@ export const useHandleSeries = ({
         );
 
         g.yAxisMarkerValue = trendCursorsSeriesMakersValue;
-        g.children = upsertTrendCursorLineMarkers(g.children, trendCursorsSeriesMakersInPixels, seriesRef.current);
+        g.children = upsertTrendCursorLineMarkers(
+          g.children,
+          trendCursorsSeriesMakersInPixels,
+          seriesRef.current
+        );
         return g;
       });
 

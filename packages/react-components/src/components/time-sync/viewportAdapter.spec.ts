@@ -7,23 +7,41 @@ import {
 
 describe('dateRangeToViewport', () => {
   it('can convert a relative date range option to the correct viewport', () => {
-    expect(dateRangeToViewport(relativeOptions[0])).toEqual({ duration: '1 minute' });
+    expect(dateRangeToViewport(relativeOptions[0])).toEqual({
+      duration: '1 minute',
+    });
 
-    expect(dateRangeToViewport(relativeOptions[1])).toEqual({ duration: '5 minute' });
+    expect(dateRangeToViewport(relativeOptions[1])).toEqual({
+      duration: '5 minute',
+    });
 
-    expect(dateRangeToViewport(relativeOptions[2])).toEqual({ duration: '10 minute' });
+    expect(dateRangeToViewport(relativeOptions[2])).toEqual({
+      duration: '10 minute',
+    });
 
-    expect(dateRangeToViewport(relativeOptions[3])).toEqual({ duration: '30 minute' });
+    expect(dateRangeToViewport(relativeOptions[3])).toEqual({
+      duration: '30 minute',
+    });
 
-    expect(dateRangeToViewport(relativeOptions[4])).toEqual({ duration: '1 hour' });
+    expect(dateRangeToViewport(relativeOptions[4])).toEqual({
+      duration: '1 hour',
+    });
 
-    expect(dateRangeToViewport(relativeOptions[5])).toEqual({ duration: '1 day' });
+    expect(dateRangeToViewport(relativeOptions[5])).toEqual({
+      duration: '1 day',
+    });
 
-    expect(dateRangeToViewport(relativeOptions[6])).toEqual({ duration: '7 day' });
+    expect(dateRangeToViewport(relativeOptions[6])).toEqual({
+      duration: '7 day',
+    });
 
-    expect(dateRangeToViewport(relativeOptions[7])).toEqual({ duration: '30 day' });
+    expect(dateRangeToViewport(relativeOptions[7])).toEqual({
+      duration: '30 day',
+    });
 
-    expect(dateRangeToViewport(relativeOptions[8])).toEqual({ duration: '90 day' });
+    expect(dateRangeToViewport(relativeOptions[8])).toEqual({
+      duration: '90 day',
+    });
   });
 
   it('can convert a relative custom date range option to the correct viewport', () => {
@@ -71,17 +89,25 @@ describe('dateRangeToViewport', () => {
 
 describe('viewportToDateRange', () => {
   it('can convert a relative duration to a date range', () => {
-    expect(viewportToDateRange({ duration: '1 minute' })).toEqual(relativeOptions[0]);
+    expect(viewportToDateRange({ duration: '1 minute' })).toEqual(
+      relativeOptions[0]
+    );
 
     expect(viewportToDateRange({ duration: '1m' })).toEqual(relativeOptions[0]);
 
-    expect(viewportToDateRange({ duration: '5 minute' })).toEqual(relativeOptions[1]);
+    expect(viewportToDateRange({ duration: '5 minute' })).toEqual(
+      relativeOptions[1]
+    );
 
     expect(viewportToDateRange({ duration: '5m' })).toEqual(relativeOptions[1]);
 
-    expect(viewportToDateRange({ duration: '10 minute' })).toEqual(relativeOptions[2]);
+    expect(viewportToDateRange({ duration: '10 minute' })).toEqual(
+      relativeOptions[2]
+    );
 
-    expect(viewportToDateRange({ duration: '10m' })).toEqual(relativeOptions[2]);
+    expect(viewportToDateRange({ duration: '10m' })).toEqual(
+      relativeOptions[2]
+    );
 
     expect(viewportToDateRange({ duration: '1m 60s' })).toEqual({
       amount: 120,

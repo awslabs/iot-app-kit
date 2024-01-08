@@ -13,7 +13,11 @@ type SelectionHooksProps = {
   cellSize: DashboardState['grid']['cellSize'];
 };
 
-export const useSelectionGestures = ({ setActiveGesture, dashboardWidgets, cellSize }: SelectionHooksProps) => {
+export const useSelectionGestures = ({
+  setActiveGesture,
+  dashboardWidgets,
+  cellSize,
+}: SelectionHooksProps) => {
   const dispatch = useDispatch();
   const selectWidgets = useCallback(
     (widgets: DashboardWidget[], union: boolean) => {
@@ -27,7 +31,9 @@ export const useSelectionGestures = ({ setActiveGesture, dashboardWidgets, cellS
     [dispatch]
   );
 
-  const [userSelection, setUserSelection] = useState<Selection | undefined>(undefined);
+  const [userSelection, setUserSelection] = useState<Selection | undefined>(
+    undefined
+  );
 
   const onPointSelect = useCallback(
     ({ position, union }: { position: Position; union: boolean }) => {

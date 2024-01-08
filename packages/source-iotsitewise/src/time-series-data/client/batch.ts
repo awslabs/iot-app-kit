@@ -16,7 +16,9 @@ export const NO_LIMIT_BATCH = -1;
  * @param entries
  * @returns buckets: [BatchHistoricalEntry[], number | undefined][]
  */
-export function createRawLatestEntryBatches<T extends { maxResults?: number }>(entries: T[]): [T[], number][] {
+export function createRawLatestEntryBatches<T extends { maxResults?: number }>(
+  entries: T[]
+): [T[], number][] {
   const buckets: Record<number, T[]> = {};
 
   entries.forEach((entry) => {
@@ -37,13 +39,17 @@ export function createRawLatestEntryBatches<T extends { maxResults?: number }>(e
 
       return chunkRawLatestBatch(bucket).map((chunk): [T[], number] => [
         chunk,
-        maxEntryResults === NO_LIMIT_BATCH ? NO_LIMIT_BATCH : chunk.length * maxEntryResults,
+        maxEntryResults === NO_LIMIT_BATCH
+          ? NO_LIMIT_BATCH
+          : chunk.length * maxEntryResults,
       ]);
     })
     .flat();
 }
 
-export function createRawHistoricalEntryBatches<T extends { maxResults?: number }>(entries: T[]): [T[], number][] {
+export function createRawHistoricalEntryBatches<
+  T extends { maxResults?: number }
+>(entries: T[]): [T[], number][] {
   const buckets: Record<number, T[]> = {};
 
   entries.forEach((entry) => {
@@ -64,13 +70,17 @@ export function createRawHistoricalEntryBatches<T extends { maxResults?: number 
 
       return chunkRawHistoricalBatch(bucket).map((chunk): [T[], number] => [
         chunk,
-        maxEntryResults === NO_LIMIT_BATCH ? NO_LIMIT_BATCH : chunk.length * maxEntryResults,
+        maxEntryResults === NO_LIMIT_BATCH
+          ? NO_LIMIT_BATCH
+          : chunk.length * maxEntryResults,
       ]);
     })
     .flat();
 }
 
-export function createAggregateEntryBatches<T extends { maxResults?: number }>(entries: T[]): [T[], number][] {
+export function createAggregateEntryBatches<T extends { maxResults?: number }>(
+  entries: T[]
+): [T[], number][] {
   const buckets: Record<number, T[]> = {};
 
   entries.forEach((entry) => {
@@ -91,7 +101,9 @@ export function createAggregateEntryBatches<T extends { maxResults?: number }>(e
 
       return chunkAggregatedBatch(bucket).map((chunk): [T[], number] => [
         chunk,
-        maxEntryResults === NO_LIMIT_BATCH ? NO_LIMIT_BATCH : chunk.length * maxEntryResults,
+        maxEntryResults === NO_LIMIT_BATCH
+          ? NO_LIMIT_BATCH
+          : chunk.length * maxEntryResults,
       ]);
     })
     .flat();
@@ -135,7 +147,9 @@ export const shouldFetchNextBatch = ({
 }) =>
   !!nextToken &&
   (maxResults === NO_LIMIT_BATCH ||
-    (dataPointsFetched !== null && dataPointsFetched !== undefined && dataPointsFetched < maxResults));
+    (dataPointsFetched !== null &&
+      dataPointsFetched !== undefined &&
+      dataPointsFetched < maxResults));
 
 function chunkRawLatestBatch<T>(batch: T[]): T[][] {
   const chunks = [];

@@ -9,8 +9,13 @@ const TWIN_MAKER_CACHE_KEY = [{ service: 'iottwinmaker' }] as const;
 const CACHE_KEYS = {
   all: [{ ...TWIN_MAKER_CACHE_KEY[0], scope: 'search' }] as const,
   searches: () => [{ ...CACHE_KEYS.all[0], resource: 'searches' }] as const,
-  search: ({ workspaceId, searchQuery }: { workspaceId: string; searchQuery: string }) =>
-    [{ ...CACHE_KEYS.searches()[0], workspaceId, searchQuery }] as const,
+  search: ({
+    workspaceId,
+    searchQuery,
+  }: {
+    workspaceId: string;
+    searchQuery: string;
+  }) => [{ ...CACHE_KEYS.searches()[0], workspaceId, searchQuery }] as const,
 };
 
 interface UseSearchProps {
@@ -20,17 +25,29 @@ interface UseSearchProps {
 }
 
 /** Use to send a search request. */
-export function useSearch({ workspaceId, searchQuery, client }: UseSearchProps) {
-  const { data, hasNextPage, isFetching, fetchNextPage, isError } = useInfiniteQuery({
-    enabled: searchQuery !== '',
-    queryKey: CACHE_KEYS.search({ workspaceId, searchQuery }),
-    queryFn: createQueryFn(client),
-    getNextPageParam: ({ nextToken }) => nextToken,
-  });
+export function useSearch({
+  workspaceId,
+  searchQuery,
+  client,
+}: UseSearchProps) {
+  const { data, hasNextPage, isFetching, fetchNextPage, isError } =
+    useInfiniteQuery({
+      enabled: searchQuery !== '',
+      queryKey: CACHE_KEYS.search({ workspaceId, searchQuery }),
+      queryFn: createQueryFn(client),
+      getNextPageParam: ({ nextToken }) => nextToken,
+    });
 
-  const modeledDataStreams = data?.pages.flatMap(({ modeledDataStreams }) => modeledDataStreams) ?? [];
+  const modeledDataStreams =
+    data?.pages.flatMap(({ modeledDataStreams }) => modeledDataStreams) ?? [];
 
-  return { modeledDataStreams, hasNextPage, isFetching, fetchNextPage, isError };
+  return {
+    modeledDataStreams,
+    hasNextPage,
+    isFetching,
+    fetchNextPage,
+    isError,
+  };
 }
 
 function createQueryFn(client: IoTTwinMakerClient) {
@@ -39,7 +56,13 @@ function createQueryFn(client: IoTTwinMakerClient) {
     pageParam: nextToken,
     signal,
   }: QueryFunctionContext<ReturnType<typeof CACHE_KEYS.search>>) {
-    const response = await search({ workspaceId, searchQuery, nextToken, client, signal });
+    const response = await search({
+      workspaceId,
+      searchQuery,
+      nextToken,
+      client,
+      signal,
+    });
 
     const modeledDataStreams = QueryResponseProcessor.process(response);
 

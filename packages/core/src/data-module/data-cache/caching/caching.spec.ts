@@ -351,7 +351,11 @@ describe('getDateRangesToRequest', () => {
                 requestHistory: [],
                 isLoading: false,
                 isRefreshing: false,
-                error: { msg: 'errored!', type: 'ResourceNotFoundException', status: '404' },
+                error: {
+                  msg: 'errored!',
+                  type: 'ResourceNotFoundException',
+                  status: '404',
+                },
                 dataCache: EMPTY_CACHE,
                 requestCache: createDataPointCache({
                   start: new Date(1991, 0, 0),
@@ -451,7 +455,10 @@ describe('getRequestInformations', () => {
       getRequestInformations({
         request: {
           viewport: { start: START_DATE, end: END_DATE },
-          settings: { fetchMostRecentBeforeEnd: true, fetchFromStartToEnd: true },
+          settings: {
+            fetchMostRecentBeforeEnd: true,
+            fetchFromStartToEnd: true,
+          },
         },
         store: {
           [STREAM_ID]: {
@@ -494,7 +501,10 @@ describe('getRequestInformations', () => {
       getRequestInformations({
         request: {
           viewport: { start: START_DATE, end: END_DATE },
-          settings: { fetchMostRecentBeforeEnd: false, fetchFromStartToEnd: true },
+          settings: {
+            fetchMostRecentBeforeEnd: false,
+            fetchFromStartToEnd: true,
+          },
         },
         store: {
           [STREAM_ID]: {
@@ -529,7 +539,10 @@ describe('getRequestInformations', () => {
       getRequestInformations({
         request: {
           viewport: { start: START_DATE, end: END_DATE },
-          settings: { fetchMostRecentBeforeEnd: true, fetchFromStartToEnd: true },
+          settings: {
+            fetchMostRecentBeforeEnd: true,
+            fetchFromStartToEnd: true,
+          },
         },
         store: {
           [STREAM_ID]: {
@@ -576,7 +589,10 @@ describe('getRequestInformations', () => {
       getRequestInformations({
         request: {
           viewport: { start: START_DATE, end: END_DATE },
-          settings: { fetchFromStartToEnd: true, fetchMostRecentBeforeEnd: true },
+          settings: {
+            fetchFromStartToEnd: true,
+            fetchMostRecentBeforeEnd: true,
+          },
         },
         store: {
           [STREAM_ID]: {
@@ -686,7 +702,10 @@ describe('getRequestInformations', () => {
       getRequestInformations({
         request: {
           viewport: { start: START_DATE, end: END_DATE },
-          settings: { fetchFromStartToEnd: true, fetchMostRecentBeforeEnd: true },
+          settings: {
+            fetchFromStartToEnd: true,
+            fetchMostRecentBeforeEnd: true,
+          },
         },
         store: {
           [STREAM_ID]: {
@@ -740,7 +759,10 @@ describe('getRequestInformations', () => {
       getRequestInformations({
         request: {
           viewport: { start: START_DATE, end: END_DATE },
-          settings: { fetchMostRecentBeforeStart: true, fetchFromStartToEnd: true },
+          settings: {
+            fetchMostRecentBeforeStart: true,
+            fetchFromStartToEnd: true,
+          },
         },
         store: {
           [STREAM_ID]: {
@@ -834,7 +856,10 @@ describe('getRequestInformations', () => {
       getRequestInformations({
         request: {
           viewport: { start: START_DATE, end: END_DATE },
-          settings: { fetchMostRecentBeforeStart: true, fetchFromStartToEnd: true },
+          settings: {
+            fetchMostRecentBeforeStart: true,
+            fetchFromStartToEnd: true,
+          },
         },
         store: {
           [STREAM_ID]: {
@@ -845,7 +870,9 @@ describe('getRequestInformations', () => {
               isLoading: false,
               isRefreshing: false,
               dataCache: {
-                intervals: [[START_DATE.getTime() - 2000, START_DATE.getTime()]],
+                intervals: [
+                  [START_DATE.getTime() - 2000, START_DATE.getTime()],
+                ],
                 items: [
                   [
                     {
@@ -910,7 +937,9 @@ describe('retrieve unexpired cached time intervals', () => {
         dataCache: EMPTY_CACHE,
         requestCache,
       };
-      expect(unexpiredCacheIntervals(streamStore, {})).toEqual(requestCache.intervals);
+      expect(unexpiredCacheIntervals(streamStore, {})).toEqual(
+        requestCache.intervals
+      );
     });
 
     it('no cached intervals are expired when request range has a duration of 0', () => {
@@ -944,7 +973,9 @@ describe('retrieve unexpired cached time intervals', () => {
         dataCache: EMPTY_CACHE,
         requestCache,
       };
-      expect(unexpiredCacheIntervals(streamStore, TTL_CACHE_MAP)).toEqual(requestCache.intervals);
+      expect(unexpiredCacheIntervals(streamStore, TTL_CACHE_MAP)).toEqual(
+        requestCache.intervals
+      );
     });
 
     it('returns empty set of intervals as all caches are expired by a single TTL', () => {
@@ -1054,7 +1085,9 @@ describe('retrieve unexpired cached time intervals', () => {
         requestCache,
       };
 
-      expect(unexpiredCacheIntervals(streamStore, TTL_CACHE_MAP)).toEqual([[START.getTime(), END.getTime()]]);
+      expect(unexpiredCacheIntervals(streamStore, TTL_CACHE_MAP)).toEqual([
+        [START.getTime(), END.getTime()],
+      ]);
     });
   });
 
@@ -1127,7 +1160,9 @@ describe('retrieve unexpired cached time intervals', () => {
           requestCache,
         };
 
-        expect(unexpiredCacheIntervals(streamStore, TTL_CACHE_MAP)).toEqual([[START.getTime(), END.getTime()]]);
+        expect(unexpiredCacheIntervals(streamStore, TTL_CACHE_MAP)).toEqual([
+          [START.getTime(), END.getTime()],
+        ]);
       });
 
       it('case #2', () => {

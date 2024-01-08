@@ -1,4 +1,10 @@
-import { DataRequest, Provider, ProviderObserver, DataBase, DataStreamBase } from '@iot-app-kit/core';
+import {
+  DataRequest,
+  Provider,
+  ProviderObserver,
+  DataBase,
+  DataStreamBase,
+} from '@iot-app-kit/core';
 import { QueryClient, QueryObserver } from '@tanstack/query-core';
 
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
@@ -8,11 +14,19 @@ import { TwinMakerStaticDataQuery } from './types';
 /**
  * Provider for TwinMaker time series data
  */
-export class TwinMakerPropertyValueDataProvider implements Provider<DataBase[]> {
+export class TwinMakerPropertyValueDataProvider
+  implements Provider<DataBase[]>
+{
   public tmClient: IoTTwinMakerClient;
   public queryClient: QueryClient;
 
-  public observer: QueryObserver<DataBase[], unknown, DataBase[], DataBase[], TwinMakerStaticDataQuery[]>;
+  public observer: QueryObserver<
+    DataBase[],
+    unknown,
+    DataBase[],
+    DataBase[],
+    TwinMakerStaticDataQuery[]
+  >;
 
   private _unsubscribes: (() => void)[] = [];
 
@@ -35,7 +49,9 @@ export class TwinMakerPropertyValueDataProvider implements Provider<DataBase[]> 
         try {
           const promises: Promise<DataStreamBase[]>[] = [];
           queries.forEach((query) => {
-            promises.push(getPropertyValueByEntity({ client: tmClient, query: query }));
+            promises.push(
+              getPropertyValueByEntity({ client: tmClient, query: query })
+            );
           });
           return [{ dataStreams: (await Promise.all(promises)).flat() }];
         } catch (_err) {

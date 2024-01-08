@@ -8,7 +8,9 @@ import type { DataStream } from '@iot-app-kit/core';
 /**
  * infer if stream is an AWS IoT Events alarm stream ingested into AWS SiteWise Asset Alarm State Property
  */
-const isIoTEventsAlarmStateProperty = (propertyValue?: string | number | boolean): boolean => {
+const isIoTEventsAlarmStateProperty = (
+  propertyValue?: string | number | boolean
+): boolean => {
   if (typeof propertyValue === 'string') {
     try {
       const { stateName } = JSON.parse(propertyValue);
@@ -31,7 +33,11 @@ export const completeAlarmStream = ({
   dataStream: DataStream;
 }): DataStream | undefined => {
   if (!assetModel) {
-    if (isIoTEventsAlarmStateProperty(dataStream.data[dataStream.data?.length - 1]?.y)) {
+    if (
+      isIoTEventsAlarmStateProperty(
+        dataStream.data[dataStream.data?.length - 1]?.y
+      )
+    ) {
       return {
         ...dataStream,
         streamType: 'ALARM',

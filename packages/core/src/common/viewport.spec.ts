@@ -8,13 +8,17 @@ const mockCurrentTime = (mockedDate: Date) => {
 describe('viewportStart', () => {
   it('returns start date if one is present', () => {
     const START = new Date(2000, 0, 0);
-    expect(viewportStartDate({ start: START, end: new Date() })).toStrictEqual(START);
+    expect(viewportStartDate({ start: START, end: new Date() })).toStrictEqual(
+      START
+    );
   });
 
   it('returns start date when only the duration is present', () => {
     const TIME = new Date(2000, 0, 1);
     mockCurrentTime(TIME);
-    expect(viewportStartDate({ duration: DAY_IN_MS })).toEqual(new Date(Date.now() - DAY_IN_MS));
+    expect(viewportStartDate({ duration: DAY_IN_MS })).toEqual(
+      new Date(Date.now() - DAY_IN_MS)
+    );
   });
 });
 

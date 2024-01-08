@@ -259,7 +259,9 @@ export const SelectedRowWithContent: Story = () => {
       header: 'Name',
       cell: (item: any) => {
         if (selectedItems?.includes(item)) {
-          return <div style={{ padding: '1rem' }}>{RichCellContent(item.name)}</div>;
+          return (
+            <div style={{ padding: '1rem' }}>{RichCellContent(item.name)}</div>
+          );
         }
         return <div>{item.name}</div>;
       },
@@ -288,7 +290,11 @@ export const SelectedRowWithContent: Story = () => {
       items={items}
       header={
         <Header
-          counter={selectedItems?.length ? `(${selectedItems.length}/${allItems.length})` : `(${allItems.length})`}
+          counter={
+            selectedItems?.length
+              ? `(${selectedItems.length}/${allItems.length})`
+              : `(${allItems.length})`
+          }
         >
           Assets
         </Header>

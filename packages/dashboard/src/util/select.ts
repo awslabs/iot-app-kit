@@ -40,7 +40,10 @@ export const getSelectedWidgetIds = ({
   selectedRect: Rect | undefined;
   cellSize: number;
   dashboardWidgets: DashboardWidget[];
-}) => getSelectedWidgets({ selectedRect, cellSize, dashboardWidgets }).map((widget) => widget.id);
+}) =>
+  getSelectedWidgets({ selectedRect, cellSize, dashboardWidgets }).map(
+    (widget) => widget.id
+  );
 
 /**
  *
@@ -66,12 +69,20 @@ export const pointSelect = ({
     cellSize: cellSize,
   });
 
-  const sortableWidgets = intersectedWidgets.map((widget, index) => ({ id: widget.id, z: widget.z, index }));
-  const topMostWidgetId = last(sortBy(sortableWidgets, ['z', 'index']).map((widget) => widget.id));
+  const sortableWidgets = intersectedWidgets.map((widget, index) => ({
+    id: widget.id,
+    z: widget.z,
+    index,
+  }));
+  const topMostWidgetId = last(
+    sortBy(sortableWidgets, ['z', 'index']).map((widget) => widget.id)
+  );
   return dashboardWidgets.find((widget) => widget.id === topMostWidgetId);
 };
 
-export const selectedRect = (selection: Selection | undefined): Rect | undefined => {
+export const selectedRect = (
+  selection: Selection | undefined
+): Rect | undefined => {
   if (!selection) {
     return undefined;
   }

@@ -1,6 +1,9 @@
 import { ModeledDataStream } from '../../types';
 
-export const isInValidProperty = (dataType: ModeledDataStream['dataType'], widgetType?: string) => {
+export const isInValidProperty = (
+  dataType: ModeledDataStream['dataType'],
+  widgetType?: string
+) => {
   if (!widgetType || !dataType) return false;
 
   const isNumericDataType = dataType === 'DOUBLE' || dataType === 'INTEGER';

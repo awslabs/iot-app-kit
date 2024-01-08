@@ -1,4 +1,6 @@
-import Pagination, { type PaginationProps } from '@cloudscape-design/components/pagination';
+import Pagination, {
+  type PaginationProps,
+} from '@cloudscape-design/components/pagination';
 import React from 'react';
 
 export type AssetTablePaginationProps = PaginationProps;

@@ -8,7 +8,10 @@ import type { ECharts } from 'echarts';
  * @param loading - whether or not to set the loading animation on an echart
  * @returns void
  */
-export const useLoadableEChart = (chartRef: React.MutableRefObject<ECharts | null>, loading?: boolean) => {
+export const useLoadableEChart = (
+  chartRef: React.MutableRefObject<ECharts | null>,
+  loading?: boolean
+) => {
   useEffect(() => {
     const chart = chartRef.current;
     loading === true ? chart?.showLoading() : chart?.hideLoading();

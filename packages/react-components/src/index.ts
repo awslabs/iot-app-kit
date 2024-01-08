@@ -15,7 +15,11 @@ export { StatusTimeline } from './components/status-timeline';
 export { Status } from './components/status/status';
 export { Tooltip } from './components/tooltip';
 export { KnowledgeGraph } from './components/knowledge-graph';
-export type { NodeData, EdgeData, IQueryData } from './components/knowledge-graph';
+export type {
+  NodeData,
+  EdgeData,
+  IQueryData,
+} from './components/knowledge-graph';
 
 export { WebglContext } from '@iot-app-kit/charts';
 export { TimeSync } from './components/time-sync';
@@ -31,4 +35,8 @@ export { Chart } from './components/chart';
 
 export { TrendCursorSync } from './components/trend-cursor-sync';
 
-export type { TableColumnDefinition, TableItem, TableItemRef } from './components/table';
+export type {
+  TableColumnDefinition,
+  TableItem,
+  TableItemRef,
+} from './components/table';

@@ -19,7 +19,9 @@ import { ResourceExplorerFooter } from '../../../footer/footer';
 
 export interface AssetTableProps {
   onClickNextPage: () => void;
-  onSelectAssetModelProperties: (assetModelProperty: AssetModelPropertySummary[]) => void;
+  onSelectAssetModelProperties: (
+    assetModelProperty: AssetModelPropertySummary[]
+  ) => void;
   assetModelProperties: AssetModelPropertySummary[];
   selectedAssetModelProperties: SelectedAssetModelProperties;
   isLoading: boolean;
@@ -48,21 +50,24 @@ export function AssetModelPropertiesTable({
     resourceName: 'asset model properties',
   });
 
-  const { items, collectionProps, paginationProps, propertyFilterProps, actions } = useCollection(
-    assetModelProperties,
-    {
-      propertyFiltering: {
-        filteringProperties: ASSET_MODEL_PROPERTIES_TABLE_FILTERING_PROPERTIES,
-      },
-      pagination: { pageSize: preferences.pageSize },
-      selection: {
-        defaultSelectedItems: selectedAssetModelProperties,
-        trackBy: ({ id = '' }) => id,
-        keepSelection: true,
-      },
-      sorting: {},
-    }
-  );
+  const {
+    items,
+    collectionProps,
+    paginationProps,
+    propertyFilterProps,
+    actions,
+  } = useCollection(assetModelProperties, {
+    propertyFiltering: {
+      filteringProperties: ASSET_MODEL_PROPERTIES_TABLE_FILTERING_PROPERTIES,
+    },
+    pagination: { pageSize: preferences.pageSize },
+    selection: {
+      defaultSelectedItems: selectedAssetModelProperties,
+      trackBy: ({ id = '' }) => id,
+      keepSelection: true,
+    },
+    sorting: {},
+  });
 
   function handleClickNextPage() {
     onClickNextPage();
@@ -76,7 +81,8 @@ export function AssetModelPropertiesTable({
     isEqual
   );
 
-  const columnDefinitionFactory = new AssetModelPropertiesTableColumnDefinitionsFactory();
+  const columnDefinitionFactory =
+    new AssetModelPropertiesTableColumnDefinitionsFactory();
 
   return (
     <Table
@@ -106,11 +112,17 @@ export function AssetModelPropertiesTable({
       stripedRows={preferences.stripedRows}
       visibleColumns={preferences.visibleContent}
       wrapLines={preferences.wrapLines}
-      empty={<AssetModelPropertiesTableEmptyState isError={isError} retry={retry} />}
-      filter={<AssetModelPropertiesTablePropertyFilter {...propertyFilterProps} />}
+      empty={
+        <AssetModelPropertiesTableEmptyState isError={isError} retry={retry} />
+      }
+      filter={
+        <AssetModelPropertiesTablePropertyFilter {...propertyFilterProps} />
+      }
       footer={
         <ResourceExplorerFooter
-          addDisabled={saveDisabled || collectionProps.selectedItems?.length === 0}
+          addDisabled={
+            saveDisabled || collectionProps.selectedItems?.length === 0
+          }
           onAdd={onSave}
           onReset={() => actions.setSelectedItems([])}
           resetDisabled={collectionProps.selectedItems?.length === 0}
@@ -130,7 +142,10 @@ export function AssetModelPropertiesTable({
         />
       }
       preferences={
-        <AssetModelPropertiesTablePreferences preferences={preferences} updatePreferences={updatePreferences} />
+        <AssetModelPropertiesTablePreferences
+          preferences={preferences}
+          updatePreferences={updatePreferences}
+        />
       }
       ariaLabels={{
         resizerRoleDescription: 'Resize button',

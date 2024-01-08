@@ -32,9 +32,15 @@ const Palette = () => {
       <Divider />
       <ul className='component-palette-widgets'>
         {ComponentLibraryComponentOrdering.map((widgetType) => {
-          const [name, iconComponent] = ComponentLibraryComponentMap[widgetType];
+          const [name, iconComponent] =
+            ComponentLibraryComponentMap[widgetType];
           return (
-            <PaletteComponent key={widgetType} componentTag={widgetType} name={name} IconComponent={iconComponent} />
+            <PaletteComponent
+              key={widgetType}
+              componentTag={widgetType}
+              name={name}
+              IconComponent={iconComponent}
+            />
           );
         })}
       </ul>

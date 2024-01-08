@@ -55,7 +55,9 @@ beforeEach(() => {
 });
 
 it('throws error when given tmdt project that does not exist', async () => {
-  twinmakerMock.on(GetWorkspaceCommand).rejects(new ResourceNotFoundException({ $metadata: {}, message: '' }));
+  twinmakerMock
+    .on(GetWorkspaceCommand)
+    .rejects(new ResourceNotFoundException({ $metadata: {}, message: '' }));
 
   const argv2 = {
     _: ['init'],
@@ -69,7 +71,9 @@ it('throws error when given tmdt project that does not exist', async () => {
 
 it('creates an empty tmdt project when given no twinmaker resources', async () => {
   twinmakerMock.on(GetWorkspaceCommand).resolves({});
-  twinmakerMock.on(ListComponentTypesCommand).resolves(emptyListComponentTypesResp);
+  twinmakerMock
+    .on(ListComponentTypesCommand)
+    .resolves(emptyListComponentTypesResp);
   twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
   twinmakerMock.on(ListScenesCommand).resolves(emptyListScenesResp);
 
@@ -88,13 +92,21 @@ it('creates an empty tmdt project when given no twinmaker resources', async () =
     models: [],
     entities: 'entities.json',
   };
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdt.json`, JSON.stringify(expectedTmdt, null, 4));
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/entities.json`, JSON.stringify([], null, 4));
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/tmdt.json`,
+    JSON.stringify(expectedTmdt, null, 4)
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/entities.json`,
+    JSON.stringify([], null, 4)
+  );
 });
 
 it('creates a tmdt project with one component type when given one component type', async () => {
   twinmakerMock.on(GetWorkspaceCommand).resolves({});
-  twinmakerMock.on(ListComponentTypesCommand).resolves(oneCtListComponentTypesResp);
+  twinmakerMock
+    .on(ListComponentTypesCommand)
+    .resolves(oneCtListComponentTypesResp);
   twinmakerMock.on(GetComponentTypeCommand).resolves(getComponentType1Resp);
   twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
   twinmakerMock.on(ListScenesCommand).resolves(emptyListScenesResp);
@@ -115,8 +127,14 @@ it('creates a tmdt project with one component type when given one component type
     entities: 'entities.json',
   };
 
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdt.json`, JSON.stringify(expectedTmdt, null, 4));
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/entities.json`, JSON.stringify([], null, 4));
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/tmdt.json`,
+    JSON.stringify(expectedTmdt, null, 4)
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/entities.json`,
+    JSON.stringify([], null, 4)
+  );
   expect(fs.writeFileSync).toHaveBeenCalledWith(
     `${outDir}/${getComponentType1Resp['componentTypeId']}.json`,
     JSON.stringify(componentType1Definition, null, 4)
@@ -125,25 +143,31 @@ it('creates a tmdt project with one component type when given one component type
 
 it('creates a tmdt project with one model and one scene when given one scene and model', async () => {
   twinmakerMock.on(GetWorkspaceCommand).resolves({});
-  twinmakerMock.on(ListComponentTypesCommand).resolves(emptyListComponentTypesResp);
+  twinmakerMock
+    .on(ListComponentTypesCommand)
+    .resolves(emptyListComponentTypesResp);
   twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
   twinmakerMock.on(ListScenesCommand).resolves(oneSceneListScenesResp);
-  s3Mock.on(GetObjectCommand, { Bucket: 'workspace-bucket', Key: 'scene1.json' }).resolves({
-    $metadata: {},
-    Body: {
-      transformToString: () => {
-        return Promise.resolve(JSON.stringify(scene1, null, 4));
-      },
-    } as SdkStream<Blob>,
-  });
-  s3Mock.on(GetObjectCommand, { Bucket: 'workspace-bucket', Key: 'model1.glb' }).resolves({
-    $metadata: {},
-    Body: {
-      transformToString: () => {
-        return Promise.resolve(fakeModelData);
-      },
-    } as SdkStream<Blob>,
-  });
+  s3Mock
+    .on(GetObjectCommand, { Bucket: 'workspace-bucket', Key: 'scene1.json' })
+    .resolves({
+      $metadata: {},
+      Body: {
+        transformToString: () => {
+          return Promise.resolve(JSON.stringify(scene1, null, 4));
+        },
+      } as SdkStream<Blob>,
+    });
+  s3Mock
+    .on(GetObjectCommand, { Bucket: 'workspace-bucket', Key: 'model1.glb' })
+    .resolves({
+      $metadata: {},
+      Body: {
+        transformToString: () => {
+          return Promise.resolve(fakeModelData);
+        },
+      } as SdkStream<Blob>,
+    });
   expect(
     streamToBuffer({
       transformToString: () => {
@@ -168,14 +192,25 @@ it('creates a tmdt project with one model and one scene when given one scene and
     entities: 'entities.json',
   };
 
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdt.json`, JSON.stringify(expectedTmdt, null, 4));
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/entities.json`, JSON.stringify([], null, 4));
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/scene1.json`, JSON.stringify(scene1, null, 4));
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/tmdt.json`,
+    JSON.stringify(expectedTmdt, null, 4)
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/entities.json`,
+    JSON.stringify([], null, 4)
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/scene1.json`,
+    JSON.stringify(scene1, null, 4)
+  );
 });
 
 it('creates a tmdt project with one entity when given one entity', async () => {
   twinmakerMock.on(GetWorkspaceCommand).resolves({});
-  twinmakerMock.on(ListComponentTypesCommand).resolves(emptyListComponentTypesResp);
+  twinmakerMock
+    .on(ListComponentTypesCommand)
+    .resolves(emptyListComponentTypesResp);
   twinmakerMock.on(ListEntitiesCommand).resolves(oneEntityListEntitiesResp);
   twinmakerMock.on(GetEntityCommand).resolves(getEntity1Resp);
   twinmakerMock.on(ListScenesCommand).resolves(emptyListScenesResp);
@@ -195,7 +230,10 @@ it('creates a tmdt project with one entity when given one entity', async () => {
     models: [],
     entities: 'entities.json',
   };
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdt.json`, JSON.stringify(expectedTmdt, null, 4));
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/tmdt.json`,
+    JSON.stringify(expectedTmdt, null, 4)
+  );
   expect(fs.writeFileSync).toHaveBeenCalledWith(
     `${outDir}/entities.json`,
     JSON.stringify([entity1Definition], null, 4)
@@ -204,27 +242,33 @@ it('creates a tmdt project with one entity when given one entity', async () => {
 
 it('creates a fully populated tmdt project when given a full workspace', async () => {
   twinmakerMock.on(GetWorkspaceCommand).resolves({});
-  twinmakerMock.on(ListComponentTypesCommand).resolves(oneCtListComponentTypesResp);
+  twinmakerMock
+    .on(ListComponentTypesCommand)
+    .resolves(oneCtListComponentTypesResp);
   twinmakerMock.on(GetComponentTypeCommand).resolves(getComponentType1Resp);
   twinmakerMock.on(ListEntitiesCommand).resolves(oneEntityListEntitiesResp);
   twinmakerMock.on(GetEntityCommand).resolves(getEntity1Resp);
   twinmakerMock.on(ListScenesCommand).resolves(oneSceneListScenesResp);
-  s3Mock.on(GetObjectCommand, { Bucket: 'workspace-bucket', Key: 'scene1.json' }).resolves({
-    $metadata: {},
-    Body: {
-      transformToString: () => {
-        return Promise.resolve(JSON.stringify(scene1, null, 4));
-      },
-    } as SdkStream<Blob>,
-  });
-  s3Mock.on(GetObjectCommand, { Bucket: 'workspace-bucket', Key: 'model1.glb' }).resolves({
-    $metadata: {},
-    Body: {
-      transformToString: () => {
-        return Promise.resolve(fakeModelData);
-      },
-    } as SdkStream<Blob>,
-  });
+  s3Mock
+    .on(GetObjectCommand, { Bucket: 'workspace-bucket', Key: 'scene1.json' })
+    .resolves({
+      $metadata: {},
+      Body: {
+        transformToString: () => {
+          return Promise.resolve(JSON.stringify(scene1, null, 4));
+        },
+      } as SdkStream<Blob>,
+    });
+  s3Mock
+    .on(GetObjectCommand, { Bucket: 'workspace-bucket', Key: 'model1.glb' })
+    .resolves({
+      $metadata: {},
+      Body: {
+        transformToString: () => {
+          return Promise.resolve(fakeModelData);
+        },
+      } as SdkStream<Blob>,
+    });
   expect(
     streamToBuffer({
       transformToString: () => {
@@ -249,7 +293,10 @@ it('creates a fully populated tmdt project when given a full workspace', async (
     entities: 'entities.json',
   };
 
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdt.json`, JSON.stringify(expectedTmdt, null, 4));
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/tmdt.json`,
+    JSON.stringify(expectedTmdt, null, 4)
+  );
   expect(fs.writeFileSync).toHaveBeenCalledWith(
     `${outDir}/entities.json`,
     JSON.stringify([entity1Definition], null, 4)
@@ -258,5 +305,8 @@ it('creates a fully populated tmdt project when given a full workspace', async (
     `${outDir}/${getComponentType1Resp['componentTypeId']}.json`,
     JSON.stringify(componentType1Definition, null, 4)
   );
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/scene1.json`, JSON.stringify(scene1, null, 4));
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/scene1.json`,
+    JSON.stringify(scene1, null, 4)
+  );
 });

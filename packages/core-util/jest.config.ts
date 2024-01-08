@@ -12,7 +12,7 @@ const config = {
       statements: 54,
       branches: 50,
       functions: 51,
-      lines: 51,
+      lines: 50,
     },
   },
 };

@@ -1,4 +1,7 @@
-import { AssetModelQuery, SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import {
+  AssetModelQuery,
+  SiteWiseAssetQuery,
+} from '@iot-app-kit/source-iotsitewise';
 
 import unionBy from 'lodash/unionBy';
 import uniq from 'lodash/uniq';
@@ -6,15 +9,22 @@ import uniq from 'lodash/uniq';
 import { SiteWiseQueryConfig } from '../types';
 
 type AssetModelQueryWithAssetId = Required<AssetModelQuery>;
-const assetModelWithAssetId = (assetModelQuery: AssetModelQuery): assetModelQuery is AssetModelQueryWithAssetId =>
+const assetModelWithAssetId = (
+  assetModelQuery: AssetModelQuery
+): assetModelQuery is AssetModelQueryWithAssetId =>
   assetModelQuery.assetIds != null && assetModelQuery.assetIds.length > 0;
-const assetModelQueryToAssetQuery = (assetModelQuery: AssetModelQueryWithAssetId) =>
+const assetModelQueryToAssetQuery = (
+  assetModelQuery: AssetModelQueryWithAssetId
+) =>
   assetModelQuery.assetIds.map((assetId) => ({
     assetId,
     properties: assetModelQuery.properties,
   }));
 
-const combineAssets = (assetsA: SiteWiseAssetQuery['assets'], assetsB: SiteWiseAssetQuery['assets']) => {
+const combineAssets = (
+  assetsA: SiteWiseAssetQuery['assets'],
+  assetsB: SiteWiseAssetQuery['assets']
+) => {
   const assetIds = uniq([...assetsA, ...assetsB].map(({ assetId }) => assetId));
   return assetIds.map((assetId) => {
     const foundA = assetsA.find((asset) => asset.assetId === assetId);
@@ -32,11 +42,17 @@ const combineAssets = (assetsA: SiteWiseAssetQuery['assets'], assetsB: SiteWiseA
   });
 };
 
-export const assetModelQueryToSiteWiseAssetQuery = (query: SiteWiseQueryConfig['query']) => {
+export const assetModelQueryToSiteWiseAssetQuery = (
+  query: SiteWiseQueryConfig['query']
+) => {
   const assetModels = query?.assetModels ?? [];
-  const assetModelQueriesWithAssetId = assetModels.filter(assetModelWithAssetId);
+  const assetModelQueriesWithAssetId = assetModels.filter(
+    assetModelWithAssetId
+  );
 
-  const mappedAssetModelQuery = assetModelQueriesWithAssetId.flatMap(assetModelQueryToAssetQuery);
+  const mappedAssetModelQuery = assetModelQueriesWithAssetId.flatMap(
+    assetModelQueryToAssetQuery
+  );
 
   const assetQuery = query?.assets ?? [];
 

@@ -94,10 +94,17 @@ describe('initiateRequest', () => {
     const end = new Date(2001, 0, 0);
 
     it('gets latest value for multiple properties', async () => {
-      const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
-      const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
+      const batchGetAssetPropertyValueHistory = jest
+        .fn()
+        .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
+      const batchGetAssetPropertyValue = jest
+        .fn()
+        .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
 
-      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory, batchGetAssetPropertyValue });
+      const mockSDK = createMockSiteWiseSDK({
+        batchGetAssetPropertyValueHistory,
+        batchGetAssetPropertyValue,
+      });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -106,7 +113,15 @@ describe('initiateRequest', () => {
       const PROPERTY_2 = 'prop-2';
 
       const query: SiteWiseDataStreamQuery = {
-        assets: [{ assetId: ASSET_ID, properties: [{ propertyId: PROPERTY_1 }, { propertyId: PROPERTY_2 }] }],
+        assets: [
+          {
+            assetId: ASSET_ID,
+            properties: [
+              { propertyId: PROPERTY_1 },
+              { propertyId: PROPERTY_2 },
+            ],
+          },
+        ],
       };
 
       dataSource.initiateRequest(
@@ -155,10 +170,17 @@ describe('initiateRequest', () => {
     });
 
     it('gets latest value for multiple assets', async () => {
-      const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
-      const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
+      const batchGetAssetPropertyValueHistory = jest
+        .fn()
+        .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
+      const batchGetAssetPropertyValue = jest
+        .fn()
+        .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
 
-      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory, batchGetAssetPropertyValue });
+      const mockSDK = createMockSiteWiseSDK({
+        batchGetAssetPropertyValueHistory,
+        batchGetAssetPropertyValue,
+      });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -222,9 +244,13 @@ describe('initiateRequest', () => {
 
   describe('fetch latest before start', () => {
     it('gets latest value before start for multiple properties', async () => {
-      const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
+      const batchGetAssetPropertyValueHistory = jest
+        .fn()
+        .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
 
-      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory });
+      const mockSDK = createMockSiteWiseSDK({
+        batchGetAssetPropertyValueHistory,
+      });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -233,7 +259,15 @@ describe('initiateRequest', () => {
       const PROPERTY_2 = 'prop-2';
 
       const query: SiteWiseDataStreamQuery = {
-        assets: [{ assetId: ASSET_ID, properties: [{ propertyId: PROPERTY_1 }, { propertyId: PROPERTY_2 }] }],
+        assets: [
+          {
+            assetId: ASSET_ID,
+            properties: [
+              { propertyId: PROPERTY_1 },
+              { propertyId: PROPERTY_2 },
+            ],
+          },
+        ],
       };
 
       dataSource.initiateRequest(
@@ -286,9 +320,13 @@ describe('initiateRequest', () => {
     });
 
     it('gets latest value before start for multiple assets', async () => {
-      const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
+      const batchGetAssetPropertyValueHistory = jest
+        .fn()
+        .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
 
-      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory });
+      const mockSDK = createMockSiteWiseSDK({
+        batchGetAssetPropertyValueHistory,
+      });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -354,9 +392,13 @@ describe('initiateRequest', () => {
     });
 
     it('gets latest value before start for aggregates', async () => {
-      const batchGetAssetPropertyAggregates = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_AGGREGATES);
+      const batchGetAssetPropertyAggregates = jest
+        .fn()
+        .mockResolvedValue(BATCH_ASSET_PROPERTY_AGGREGATES);
 
-      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyAggregates });
+      const mockSDK = createMockSiteWiseSDK({
+        batchGetAssetPropertyAggregates,
+      });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -365,7 +407,15 @@ describe('initiateRequest', () => {
       const PROPERTY_2 = 'prop-2';
 
       const query: SiteWiseDataStreamQuery = {
-        assets: [{ assetId: ASSET_ID, properties: [{ propertyId: PROPERTY_1 }, { propertyId: PROPERTY_2 }] }],
+        assets: [
+          {
+            assetId: ASSET_ID,
+            properties: [
+              { propertyId: PROPERTY_1 },
+              { propertyId: PROPERTY_2 },
+            ],
+          },
+        ],
       };
 
       dataSource.initiateRequest(
@@ -422,7 +472,9 @@ describe('initiateRequest', () => {
 it('requests raw data if specified per asset property', async () => {
   const batchGetAssetPropertyValue = jest.fn();
   const batchGetAssetPropertyAggregates = jest.fn();
-  const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
+  const batchGetAssetPropertyValueHistory = jest
+    .fn()
+    .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
   const getInterpolatedAssetPropertyValues = jest.fn();
 
   const mockSDK = createMockSiteWiseSDK({
@@ -524,8 +576,12 @@ it('requests raw data if specified per asset property', async () => {
 describe('e2e through data-module', () => {
   describe('fetching range of historical data', () => {
     it('reports error occurred on request initiation', async () => {
-      const batchGetAssetPropertyAggregates = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
-      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyAggregates });
+      const batchGetAssetPropertyAggregates = jest
+        .fn()
+        .mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
+      const mockSDK = createMockSiteWiseSDK({
+        batchGetAssetPropertyAggregates,
+      });
       const dataSource = createDataSource(mockSDK);
       const dataModule = new TimeSeriesDataModule(dataSource);
 
@@ -537,7 +593,14 @@ describe('e2e through data-module', () => {
         {
           queries: [
             {
-              assets: [{ assetId, properties: [{ propertyId, aggregationType: AggregateType.AVERAGE }] }],
+              assets: [
+                {
+                  assetId,
+                  properties: [
+                    { propertyId, aggregationType: AggregateType.AVERAGE },
+                  ],
+                },
+              ],
             } as SiteWiseDataStreamQuery,
           ],
           request: HISTORICAL_REQUEST,
@@ -552,7 +615,10 @@ describe('e2e through data-module', () => {
         expect.objectContaining({
           dataStreams: [
             expect.objectContaining({
-              error: { msg: 'assetId 1 not found', status: 'ResourceNotFoundException' },
+              error: {
+                msg: 'assetId 1 not found',
+                status: 'ResourceNotFoundException',
+              },
             }),
           ],
         })
@@ -564,7 +630,9 @@ describe('e2e through data-module', () => {
 
   describe('fetching latest value', () => {
     it('reports error occurred on request initiation', async () => {
-      const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
+      const batchGetAssetPropertyValue = jest
+        .fn()
+        .mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
 
       const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValue });
       const dataSource = createDataSource(mockSDK);
@@ -596,7 +664,10 @@ describe('e2e through data-module', () => {
         expect.objectContaining({
           dataStreams: [
             expect.objectContaining({
-              error: { msg: 'assetId 1 not found', status: 'ResourceNotFoundException' },
+              error: {
+                msg: 'assetId 1 not found',
+                status: 'ResourceNotFoundException',
+              },
             }),
           ],
         })
@@ -610,7 +681,9 @@ describe('e2e through data-module', () => {
 describe.skip('aggregated data', () => {
   it('requests aggregated data with correct resolution based on resolutionMap and uses default aggregate type', async () => {
     const getAssetPropertyValue = jest.fn();
-    const getAssetPropertyAggregates = jest.fn().mockResolvedValue(AGGREGATE_VALUES);
+    const getAssetPropertyAggregates = jest
+      .fn()
+      .mockResolvedValue(AGGREGATE_VALUES);
     const getAssetPropertyValueHistory = jest.fn();
     const getInterpolatedAssetPropertyValues = jest.fn();
 
@@ -624,7 +697,12 @@ describe.skip('aggregated data', () => {
     const dataSource = createDataSource(mockSDK);
 
     const query: SiteWiseDataStreamQuery = {
-      assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
+      assets: [
+        {
+          assetId: 'some-asset-id',
+          properties: [{ propertyId: 'some-property-id' }],
+        },
+      ],
     };
 
     const onError = jest.fn();
@@ -653,7 +731,10 @@ describe.skip('aggregated data', () => {
       },
       [
         {
-          id: toId({ propertyId: 'some-property-id', assetId: 'some-asset-id' }),
+          id: toId({
+            propertyId: 'some-property-id',
+            assetId: 'some-asset-id',
+          }),
           start,
           end,
           resolution: '1d',
@@ -683,7 +764,10 @@ describe.skip('aggregated data', () => {
     expect(onSuccess).toBeCalledWith(
       [
         expect.objectContaining({
-          id: toId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
+          id: toId({
+            assetId: 'some-asset-id',
+            propertyId: 'some-property-id',
+          }),
           data: [
             {
               x: 946602000000,
@@ -710,7 +794,9 @@ describe.skip('aggregated data', () => {
 
   it('requests specific resolution', async () => {
     const getAssetPropertyValue = jest.fn();
-    const getAssetPropertyAggregates = jest.fn().mockResolvedValue(AGGREGATE_VALUES);
+    const getAssetPropertyAggregates = jest
+      .fn()
+      .mockResolvedValue(AGGREGATE_VALUES);
     const getAssetPropertyValueHistory = jest.fn();
     const getInterpolatedAssetPropertyValues = jest.fn();
 
@@ -724,7 +810,12 @@ describe.skip('aggregated data', () => {
     const dataSource = createDataSource(mockSDK);
 
     const query: SiteWiseDataStreamQuery = {
-      assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
+      assets: [
+        {
+          assetId: 'some-asset-id',
+          properties: [{ propertyId: 'some-property-id' }],
+        },
+      ],
     };
 
     const onError = jest.fn();
@@ -749,7 +840,10 @@ describe.skip('aggregated data', () => {
       },
       [
         {
-          id: toId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
+          id: toId({
+            assetId: 'some-asset-id',
+            propertyId: 'some-property-id',
+          }),
           start: new Date(),
           end: new Date(),
           resolution: '0',
@@ -800,8 +894,12 @@ describe.skip('aggregated data', () => {
   });
 
   it('requests specific resolution per asset property', async () => {
-    const getAssetPropertyAggregates = jest.fn().mockResolvedValue(AGGREGATE_VALUES);
-    const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
+    const getAssetPropertyAggregates = jest
+      .fn()
+      .mockResolvedValue(AGGREGATE_VALUES);
+    const getAssetPropertyValueHistory = jest
+      .fn()
+      .mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
 
     const mockSDK = createMockSiteWiseSDK({
       getAssetPropertyValueHistory,
@@ -816,11 +914,17 @@ describe.skip('aggregated data', () => {
       assets: [
         {
           assetId: 'some-asset-id',
-          properties: [{ propertyId: 'some-property-id', resolution }, { propertyId: 'some-property-id2' }],
+          properties: [
+            { propertyId: 'some-property-id', resolution },
+            { propertyId: 'some-property-id2' },
+          ],
         },
         {
           assetId: 'some-asset-id2',
-          properties: [{ propertyId: 'some-property-id', resolution }, { propertyId: 'some-property-id2' }],
+          properties: [
+            { propertyId: 'some-property-id', resolution },
+            { propertyId: 'some-property-id2' },
+          ],
         },
       ],
     };
@@ -843,28 +947,40 @@ describe.skip('aggregated data', () => {
       },
       [
         {
-          id: toId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
+          id: toId({
+            assetId: 'some-asset-id',
+            propertyId: 'some-property-id',
+          }),
           start: new Date(),
           end: new Date(),
           resolution: '0',
           fetchFromStartToEnd: true,
         },
         {
-          id: toId({ assetId: 'some-asset-id', propertyId: 'some-property-id2' }),
+          id: toId({
+            assetId: 'some-asset-id',
+            propertyId: 'some-property-id2',
+          }),
           start: new Date(),
           end: new Date(),
           resolution: '0',
           fetchFromStartToEnd: true,
         },
         {
-          id: toId({ assetId: 'some-asset-id2', propertyId: 'some-property-id' }),
+          id: toId({
+            assetId: 'some-asset-id2',
+            propertyId: 'some-property-id',
+          }),
           start: new Date(),
           end: new Date(),
           resolution: '0',
           fetchFromStartToEnd: true,
         },
         {
-          id: toId({ assetId: 'some-asset-id2', propertyId: 'some-property-id2' }),
+          id: toId({
+            assetId: 'some-asset-id2',
+            propertyId: 'some-property-id2',
+          }),
           start: new Date(),
           end: new Date(),
           resolution: '0',
@@ -997,14 +1113,19 @@ describe('gets requests from query', () => {
       },
     };
 
-    const requestInfos = await dataSource.getRequestsFromQuery({ query, request });
+    const requestInfos = await dataSource.getRequestsFromQuery({
+      query,
+      request,
+    });
 
     expect(requestInfos).toEqual([expect.objectContaining({ refId: REF_ID })]);
   });
 });
 
 it.skip('only fetches uncached data for multiple properties', async () => {
-  const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
+  const getAssetPropertyValueHistory = jest
+    .fn()
+    .mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
 
   const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
 
@@ -1029,7 +1150,10 @@ it.skip('only fetches uncached data for multiple properties', async () => {
   const { update, unsubscribe } = dataModule.subscribeToDataStreams(
     {
       queries: [query],
-      request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
+      request: {
+        viewport: { start: START_1, end: END_1 },
+        settings: { fetchFromStartToEnd: true },
+      },
     },
     dataStreamCallback
   );
@@ -1053,12 +1177,18 @@ it.skip('only fetches uncached data for multiple properties', async () => {
     assets: [
       {
         assetId: 'some-asset-id',
-        properties: [{ propertyId: 'some-property-id' }, { propertyId: 'some-property-id2' }],
+        properties: [
+          { propertyId: 'some-property-id' },
+          { propertyId: 'some-property-id2' },
+        ],
       },
     ],
   };
 
-  await update({ queries: [updatedQuery], request: { viewport: { start: START_2, end: END_2 } } });
+  await update({
+    queries: [updatedQuery],
+    request: { viewport: { start: START_2, end: END_2 } },
+  });
 
   await flushPromises();
 
@@ -1098,7 +1228,9 @@ it.skip('only fetches uncached data for multiple properties', async () => {
 });
 
 it.skip('requests buffered data', async () => {
-  const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
+  const getAssetPropertyValueHistory = jest
+    .fn()
+    .mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
 
   const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
 
@@ -1123,7 +1255,10 @@ it.skip('requests buffered data', async () => {
   const { unsubscribe } = dataModule.subscribeToDataStreams(
     {
       queries: [query],
-      request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true, requestBuffer: 1 } },
+      request: {
+        viewport: { start: START, end: END },
+        settings: { fetchFromStartToEnd: true, requestBuffer: 1 },
+      },
     },
     dataStreamCallback
   );

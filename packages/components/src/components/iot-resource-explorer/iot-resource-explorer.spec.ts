@@ -7,7 +7,10 @@ import { update } from '../../testing/update';
 import flushPromises from 'flush-promises';
 import { mocklistAssetsResponse } from '../../testing/mocks/data/listAssetsResponse';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+import {
+  createMockIoTEventsSDK,
+  createMockSiteWiseSDK,
+} from '@iot-app-kit/testing-util';
 
 jest.useFakeTimers();
 

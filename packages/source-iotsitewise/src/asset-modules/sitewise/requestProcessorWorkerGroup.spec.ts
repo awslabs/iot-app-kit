@@ -30,7 +30,9 @@ class WorkerRecorder<Q, R> {
   createWorker(query: Q): Observable<R> {
     const observable: Observable<R> = new Observable<R>((subscriber) => {
       this.counter++;
-      this.lastSubscriberStack.push(new SubscriberRecord<Q, R>(query, subscriber));
+      this.lastSubscriberStack.push(
+        new SubscriberRecord<Q, R>(query, subscriber)
+      );
     });
     return observable;
   }
@@ -69,10 +71,11 @@ const identity = <T>(i: T): T => i;
 
 it('test single consumer, single response', () => {
   const workerRecorder: WorkerRecorder<string, number> = new WorkerRecorder();
-  const workerGroup: RequestProcessorWorkerGroup<string, number> = new RequestProcessorWorkerGroup<string, number>(
-    workerRecorder.workerFactory(),
-    identity
-  );
+  const workerGroup: RequestProcessorWorkerGroup<string, number> =
+    new RequestProcessorWorkerGroup<string, number>(
+      workerRecorder.workerFactory(),
+      identity
+    );
   const recorder: SubscriberRecorder<number> = new SubscriberRecorder<number>();
 
   workerGroup.subscribe('test', recorder);
@@ -87,12 +90,15 @@ it('test single consumer, single response', () => {
 
 it('test multiple consumer, single query', () => {
   const workerRecorder: WorkerRecorder<string, number> = new WorkerRecorder();
-  const workerGroup: RequestProcessorWorkerGroup<string, number> = new RequestProcessorWorkerGroup<string, number>(
-    workerRecorder.workerFactory(),
-    identity
-  );
-  const firstConsumer: SubscriberRecorder<number> = new SubscriberRecorder<number>();
-  const secondConsumer: SubscriberRecorder<number> = new SubscriberRecorder<number>();
+  const workerGroup: RequestProcessorWorkerGroup<string, number> =
+    new RequestProcessorWorkerGroup<string, number>(
+      workerRecorder.workerFactory(),
+      identity
+    );
+  const firstConsumer: SubscriberRecorder<number> =
+    new SubscriberRecorder<number>();
+  const secondConsumer: SubscriberRecorder<number> =
+    new SubscriberRecorder<number>();
 
   workerGroup.subscribe('test', firstConsumer);
   expect(workerRecorder.getWorkerCount()).toEqual(1);
@@ -116,12 +122,15 @@ it('test multiple consumer, single query', () => {
 
 it('late joining consumers immediately get the latest value', () => {
   const workerRecorder: WorkerRecorder<string, number> = new WorkerRecorder();
-  const workerGroup: RequestProcessorWorkerGroup<string, number> = new RequestProcessorWorkerGroup<string, number>(
-    workerRecorder.workerFactory(),
-    identity
-  );
-  const firstConsumer: SubscriberRecorder<number> = new SubscriberRecorder<number>();
-  const secondConsumer: SubscriberRecorder<number> = new SubscriberRecorder<number>();
+  const workerGroup: RequestProcessorWorkerGroup<string, number> =
+    new RequestProcessorWorkerGroup<string, number>(
+      workerRecorder.workerFactory(),
+      identity
+    );
+  const firstConsumer: SubscriberRecorder<number> =
+    new SubscriberRecorder<number>();
+  const secondConsumer: SubscriberRecorder<number> =
+    new SubscriberRecorder<number>();
 
   workerGroup.subscribe('test', firstConsumer);
   const worker = workerRecorder.popLastSubscription();
@@ -141,12 +150,15 @@ it('late joining consumers immediately get the latest value', () => {
 
 it('test multiple consumers with different queries', () => {
   const workerRecorder: WorkerRecorder<string, number> = new WorkerRecorder();
-  const workerGroup: RequestProcessorWorkerGroup<string, number> = new RequestProcessorWorkerGroup<string, number>(
-    workerRecorder.workerFactory(),
-    identity
-  );
-  const firstConsumer: SubscriberRecorder<number> = new SubscriberRecorder<number>();
-  const secondConsumer: SubscriberRecorder<number> = new SubscriberRecorder<number>();
+  const workerGroup: RequestProcessorWorkerGroup<string, number> =
+    new RequestProcessorWorkerGroup<string, number>(
+      workerRecorder.workerFactory(),
+      identity
+    );
+  const firstConsumer: SubscriberRecorder<number> =
+    new SubscriberRecorder<number>();
+  const secondConsumer: SubscriberRecorder<number> =
+    new SubscriberRecorder<number>();
 
   workerGroup.subscribe('First Query', firstConsumer);
   expect(workerRecorder.getWorkerCount()).toEqual(1);
@@ -171,10 +183,11 @@ it('test multiple consumers with different queries', () => {
 
 it('test finalizer deletes completed queries', () => {
   const workerRecorder: WorkerRecorder<string, number> = new WorkerRecorder();
-  const workerGroup: RequestProcessorWorkerGroup<string, number> = new RequestProcessorWorkerGroup<string, number>(
-    workerRecorder.workerFactory(),
-    identity
-  );
+  const workerGroup: RequestProcessorWorkerGroup<string, number> =
+    new RequestProcessorWorkerGroup<string, number>(
+      workerRecorder.workerFactory(),
+      identity
+    );
   const recorder: SubscriberRecorder<number> = new SubscriberRecorder<number>();
 
   workerGroup.subscribe('test', recorder);
@@ -193,10 +206,11 @@ it('test finalizer deletes completed queries', () => {
 
 it('test finalizer deletes queries with no subscribers', () => {
   const workerRecorder: WorkerRecorder<string, number> = new WorkerRecorder();
-  const workerGroup: RequestProcessorWorkerGroup<string, number> = new RequestProcessorWorkerGroup<string, number>(
-    workerRecorder.workerFactory(),
-    identity
-  );
+  const workerGroup: RequestProcessorWorkerGroup<string, number> =
+    new RequestProcessorWorkerGroup<string, number>(
+      workerRecorder.workerFactory(),
+      identity
+    );
   const recorder: SubscriberRecorder<number> = new SubscriberRecorder<number>();
 
   workerGroup.subscribe('test', recorder);

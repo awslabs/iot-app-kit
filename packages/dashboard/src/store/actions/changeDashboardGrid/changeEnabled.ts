@@ -21,4 +21,8 @@ export const changeDashboardGridDragEnabled = (
   state: DashboardState,
   action: ChangeDashboardGridEnabledAction
 ): DashboardState =>
-  changeGridProperty(state, 'enabled', action.payload ? action.payload.enabled : !state.grid.enabled);
+  changeGridProperty(
+    state,
+    'enabled',
+    action.payload ? action.payload.enabled : !state.grid.enabled
+  );

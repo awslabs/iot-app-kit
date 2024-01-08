@@ -1,9 +1,17 @@
-import { DATA_TYPE, TimeSeriesData, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
+import {
+  DATA_TYPE,
+  TimeSeriesData,
+  TimeSeriesDataQuery,
+  Viewport,
+} from '@iot-app-kit/core';
 
 const noop = () => {};
 export const mockTimeSeriesDataQuery = (
   initialResponse: TimeSeriesData[],
-  overrides?: { updateViewport?: (viewport: Viewport) => void; unsubscribe?: () => void }
+  overrides?: {
+    updateViewport?: (viewport: Viewport) => void;
+    unsubscribe?: () => void;
+  }
 ): TimeSeriesDataQuery => {
   const { updateViewport = noop, unsubscribe = noop } = overrides || {};
   return {
@@ -27,7 +35,10 @@ export const mockTimeSeriesDataQuery = (
 };
 export const mockTimeSeriesDataQueryWithError = (
   errorMsg: string,
-  overrides?: { updateViewport?: (viewport: Viewport) => void; unsubscribe?: () => void }
+  overrides?: {
+    updateViewport?: (viewport: Viewport) => void;
+    unsubscribe?: () => void;
+  }
 ): TimeSeriesDataQuery => {
   const { updateViewport = noop, unsubscribe = noop } = overrides || {};
   return {

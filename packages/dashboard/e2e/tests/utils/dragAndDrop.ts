@@ -13,7 +13,13 @@ export type Point = [number, number];
  * @returns a point tuple offset from the bounding box top left
  *
  */
-const toPointTuple = ({ x, y }: { x: number; y: number }): [x: number, y: number] => [x, y];
+const toPointTuple = ({
+  x,
+  y,
+}: {
+  x: number;
+  y: number;
+}): [x: number, y: number] => [x, y];
 
 /**
  *
@@ -84,7 +90,13 @@ const interpolate = (points: Point[], splits: number) => {
   return interpolated;
 };
 
-export type DragPosition = ({ source, target }: { source: BoundingBox; target: BoundingBox }) => {
+export type DragPosition = ({
+  source,
+  target,
+}: {
+  source: BoundingBox;
+  target: BoundingBox;
+}) => {
   x: number;
   y: number;
 };
@@ -127,7 +139,9 @@ export const dragAndDrop =
       const fromPoint = sourcePosition
         ? toPointTuple(sourcePosition({ source: fromBb, target: toBb }))
         : center(fromBb);
-      const toPoint = targetPosition ? toPointTuple(targetPosition({ source: fromBb, target: toBb })) : center(toBb);
+      const toPoint = targetPosition
+        ? toPointTuple(targetPosition({ source: fromBb, target: toBb }))
+        : center(toBb);
 
       const points = interpolate([fromPoint, toPoint], 2);
       const [firstPoint, ...interpolatedPoints] = points;

@@ -70,12 +70,25 @@ const useDragAndUpdate = (
   const diffDep = JSON.stringify(diff);
   useEffect(() => {
     if (isDragging && diff) {
-      const newPoint = computeNewPosition(initialPointRef.current, diff, dimensions.height, dimensions.width, cellSize);
+      const newPoint = computeNewPosition(
+        initialPointRef.current,
+        diff,
+        dimensions.height,
+        dimensions.width,
+        cellSize
+      );
       updateWidget(newPoint);
     }
     // disabling because diff is stringified
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [diffDep, cellSize, dimensions.height, dimensions.width, isDragging, updateWidget]);
+  }, [
+    diffDep,
+    cellSize,
+    dimensions.height,
+    dimensions.width,
+    isDragging,
+    updateWidget,
+  ]);
   return ref;
 };
 
@@ -86,5 +99,12 @@ export const LineAnchor: React.FC<{
   updateWidget: (point: XYCoord) => void;
 }> = ({ style, point, dimensions, updateWidget }) => {
   const dragRef = useDragAndUpdate(point, dimensions, updateWidget);
-  return <div data-testid='line-anchor' ref={dragRef} style={style} className='line-anchor' />;
+  return (
+    <div
+      data-testid='line-anchor'
+      ref={dragRef}
+      style={style}
+      className='line-anchor'
+    />
+  );
 };

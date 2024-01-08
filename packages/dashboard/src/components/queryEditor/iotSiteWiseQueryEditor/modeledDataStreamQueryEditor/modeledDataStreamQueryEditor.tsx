@@ -6,7 +6,11 @@ import { ModeledDataStreamExplorer } from './modeledDataStreamExplorer';
 import { AssetSummary, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { ModeledDataStream } from './modeledDataStreamExplorer/types';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { BROWSE_SEGMENT_ID, BrowseSearchToggle, useBrowseSearchToggle } from './browseSearchToggle';
+import {
+  BROWSE_SEGMENT_ID,
+  BrowseSearchToggle,
+  useBrowseSearchToggle,
+} from './browseSearchToggle';
 import { useSearch } from '../dataStreamSearch/useSearch';
 import { SearchFields } from '../dataStreamSearch/types';
 import { DataStreamSearch } from '../dataStreamSearch';
@@ -22,7 +26,9 @@ export function ModeledDataStreamQueryEditor({
   iotSiteWiseClient,
   iotTwinMakerClient,
 }: ModeledDataStreamQueryEditorProps) {
-  const [selectedAsset, setSelectedAsset] = useState<AssetSummary | undefined>(undefined);
+  const [selectedAsset, setSelectedAsset] = useState<AssetSummary | undefined>(
+    undefined
+  );
   function handleOnSelectAsset(asset?: AssetSummary) {
     setSelectedAsset(asset);
   }
@@ -35,11 +41,18 @@ export function ModeledDataStreamQueryEditor({
   });
 
   const workspaceId =
-    searchFieldValues.workspace != null && 'value' in searchFieldValues.workspace
+    searchFieldValues.workspace != null &&
+    'value' in searchFieldValues.workspace
       ? searchFieldValues.workspace.value
       : undefined;
 
-  const { modeledDataStreams, hasNextPage, isFetching, fetchNextPage, isError } = useSearch({
+  const {
+    modeledDataStreams,
+    hasNextPage,
+    isFetching,
+    fetchNextPage,
+    isError,
+  } = useSearch({
     workspaceId: workspaceId ?? '',
     client: iotTwinMakerClient,
     searchQuery: searchFieldValues.searchQuery,
@@ -47,11 +60,17 @@ export function ModeledDataStreamQueryEditor({
 
   return (
     <Box padding={{ horizontal: 's' }}>
-      <BrowseSearchToggle selectedSegment={selectedSegment} onChange={onChangeSegment} />
+      <BrowseSearchToggle
+        selectedSegment={selectedSegment}
+        onChange={onChangeSegment}
+      />
 
       {selectedSegment === BROWSE_SEGMENT_ID ? (
         <>
-          <AssetExplorer client={iotSiteWiseClient} onSelect={handleOnSelectAsset} />
+          <AssetExplorer
+            client={iotSiteWiseClient}
+            onSelect={handleOnSelectAsset}
+          />
           <br />
           {selectedAsset != null && (
             <ModeledDataStreamExplorer
@@ -59,7 +78,10 @@ export function ModeledDataStreamQueryEditor({
               onClickAddModeledDataStreams={onClickAdd}
               selectedAsset={
                 selectedAsset?.id && selectedAsset?.assetModelId
-                  ? { assetId: selectedAsset.id, assetModelId: selectedAsset.assetModelId }
+                  ? {
+                      assetId: selectedAsset.id,
+                      assetModelId: selectedAsset.assetModelId,
+                    }
                   : undefined
               }
             />
@@ -67,7 +89,10 @@ export function ModeledDataStreamQueryEditor({
         </>
       ) : (
         <>
-          <DataStreamSearch onSubmit={setSearchFieldValues} client={iotTwinMakerClient} />
+          <DataStreamSearch
+            onSubmit={setSearchFieldValues}
+            client={iotTwinMakerClient}
+          />
           {searchFieldValues.searchQuery.length > 0 && (
             <ModeledDataStreamExplorer
               hasNextPage={hasNextPage}

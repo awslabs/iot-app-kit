@@ -17,7 +17,9 @@ const layers: Layers = {
 };
 
 export const useLayers = (): Layers => {
-  const widgets = useSelector((state: DashboardState) => state.dashboardConfiguration.widgets);
+  const widgets = useSelector(
+    (state: DashboardState) => state.dashboardConfiguration.widgets
+  );
 
   const top = max(widgets.map(({ z }) => z)) ?? 0;
   const bottom = min(widgets.map(({ z }) => z)) ?? 0;

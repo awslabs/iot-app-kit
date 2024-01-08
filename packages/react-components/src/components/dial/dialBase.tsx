@@ -24,9 +24,12 @@ export const DialBase: React.FC<DialProperties> = ({
   // Primary point to display. Dial Emphasizes the property point over the alarm point.
   const point = propertyPoint || alarmPoint;
   const value = point?.y;
-  const label = (propertyPoint != null && alarmPoint != null && alarmPoint.y) || undefined;
+  const label =
+    (propertyPoint != null && alarmPoint != null && alarmPoint.y) || undefined;
   const percent =
-    yMin != null && yMax != null && typeof value === 'number' ? (value - yMin) / (yMax / yMin) : undefined;
+    yMin != null && yMax != null && typeof value === 'number'
+      ? (value - yMin) / (yMax / yMin)
+      : undefined;
   return (
     <div>
       {showName && name}

@@ -15,7 +15,9 @@ import WidgetTile from '~/components/widgets/tile/tile';
 
 const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const { viewport } = useViewport();
-  const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
+  const dashboardSignificantDigits = useSelector(
+    (state: DashboardState) => state.significantDigits
+  );
 
   const {
     styleSettings,
@@ -56,7 +58,8 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
     isDefined
   );
 
-  const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
+  const significantDigits =
+    widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
     <Status
@@ -80,11 +83,19 @@ const StatusWidgetEmptyStateComponent: React.FC = () => {
       </Box>
 
       <div className='status-widget-empty-state-message-container'>
-        <Box variant='strong' color='text-status-inactive' margin={{ horizontal: 's' }}>
+        <Box
+          variant='strong'
+          color='text-status-inactive'
+          margin={{ horizontal: 's' }}
+        >
           No properties or alarms
         </Box>
 
-        <Box variant='p' color='text-status-inactive' margin={{ bottom: 's', horizontal: 's' }}>
+        <Box
+          variant='p'
+          color='text-status-inactive'
+          margin={{ bottom: 's', horizontal: 's' }}
+        >
           Add a property or alarm to populate status
         </Box>
       </div>

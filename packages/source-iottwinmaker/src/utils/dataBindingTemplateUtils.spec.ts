@@ -54,24 +54,40 @@ describe('dataBindingTemplateUtils', () => {
     });
 
     it('should return new options for data binding templates', () => {
-      const options = createDataBindingTemplateOptions('entityId', mockDataBindingConfig, '${fake-option}');
+      const options = createDataBindingTemplateOptions(
+        'entityId',
+        mockDataBindingConfig,
+        '${fake-option}'
+      );
       expect(options.length).toBe(2);
       expect(options[1].label).toBe('${sel_entity2}');
     });
 
     it('should return new options for data binding templates if last selected option is emtpy', () => {
-      const options = createDataBindingTemplateOptions('entityId', mockDataBindingConfig, undefined);
+      const options = createDataBindingTemplateOptions(
+        'entityId',
+        mockDataBindingConfig,
+        undefined
+      );
       expect(options.length).toBe(2);
       expect(options[1].label).toBe('${sel_entity2}');
     });
 
     it('should return empty array if data binding templates are empty', () => {
-      const options = createDataBindingTemplateOptions('entityId', undefined, '${fake-option}');
+      const options = createDataBindingTemplateOptions(
+        'entityId',
+        undefined,
+        '${fake-option}'
+      );
       expect(options.length).toBe(0);
     });
 
     it('should return empty array if last selected option is not data binding template', () => {
-      const options = createDataBindingTemplateOptions('entityId', mockDataBindingConfig, 'fake-option');
+      const options = createDataBindingTemplateOptions(
+        'entityId',
+        mockDataBindingConfig,
+        'fake-option'
+      );
       expect(options.length).toBe(0);
     });
 
@@ -79,7 +95,11 @@ describe('dataBindingTemplateUtils', () => {
       const newMockDataBindingConfig = {
         fieldMapping: mockDataBindingConfig.fieldMapping,
       };
-      const options = createDataBindingTemplateOptions('entityId', newMockDataBindingConfig, '${fake-option}');
+      const options = createDataBindingTemplateOptions(
+        'entityId',
+        newMockDataBindingConfig,
+        '${fake-option}'
+      );
       expect(options.length).toBe(0);
     });
   });

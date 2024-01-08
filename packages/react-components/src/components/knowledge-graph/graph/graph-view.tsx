@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import cytoscape, { Core } from 'cytoscape';
-import React, { CSSProperties, forwardRef, MutableRefObject, useRef } from 'react';
+import React, {
+  CSSProperties,
+  forwardRef,
+  MutableRefObject,
+  useRef,
+} from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { ErrorBoundary } from 'react-error-boundary';
 
@@ -11,7 +16,11 @@ interface CytoscapeComponentProps {
   style?: CSSProperties | undefined;
   elements: cytoscape.ElementDefinition[];
   layout?: cytoscape.LayoutOptions | undefined;
-  stylesheet?: cytoscape.Stylesheet | cytoscape.Stylesheet[] | string | undefined;
+  stylesheet?:
+    | cytoscape.Stylesheet
+    | cytoscape.Stylesheet[]
+    | string
+    | undefined;
   className?: string | undefined;
   zoom?: number | undefined;
   pan?: cytoscape.Position | undefined;
@@ -27,8 +36,15 @@ interface CytoscapeComponentProps {
   autolock?: boolean | undefined;
   get?: ((obj: Record<string, any>, key: string) => any) | undefined;
   toJson?: ((obj: Record<string, any>) => any) | undefined;
-  diff?: ((objA: Record<string, any>, objB: Record<string, any>) => boolean) | undefined;
-  forEach?: (<T>(list: T[], iterator: (value: T, index: number, array: T[]) => void) => void) | undefined;
+  diff?:
+    | ((objA: Record<string, any>, objB: Record<string, any>) => boolean)
+    | undefined;
+  forEach?:
+    | (<T>(
+        list: T[],
+        iterator: (value: T, index: number, array: T[]) => void
+      ) => void)
+    | undefined;
   headless?: boolean | undefined;
   styleEnabled?: boolean | undefined;
   hideEdgesOnViewport?: boolean | undefined;
@@ -39,20 +55,22 @@ interface CytoscapeComponentProps {
   pixelRatio?: number | string | undefined;
 }
 
-const GraphView = forwardRef<Core, CytoscapeComponentProps>(({ ...props }, ref) => {
-  const cy = useRef<Core>();
-  // This fixes the type issue with the Cytoscape react library that doesn't actually except "refs". So we handle that here,
-  // and make it follow react conventions instead of doing it's own thing.
-  // istanbul ignore next (this is tested through other tests, but not the negative case)
-  const setRef = (core: Core) => {
-    (ref as MutableRefObject<Core | null>).current = core;
-    cy.current = core;
-  };
-  return (
-    <ErrorBoundary fallback={<div>Error</div>} onError={() => {}}>
-      <CytoscapeComponent cy={setRef} {...props} />;
-    </ErrorBoundary>
-  );
-});
+const GraphView = forwardRef<Core, CytoscapeComponentProps>(
+  ({ ...props }, ref) => {
+    const cy = useRef<Core>();
+    // This fixes the type issue with the Cytoscape react library that doesn't actually except "refs". So we handle that here,
+    // and make it follow react conventions instead of doing it's own thing.
+    // istanbul ignore next (this is tested through other tests, but not the negative case)
+    const setRef = (core: Core) => {
+      (ref as MutableRefObject<Core | null>).current = core;
+      cy.current = core;
+    };
+    return (
+      <ErrorBoundary fallback={<div>Error</div>} onError={() => {}}>
+        <CytoscapeComponent cy={setRef} {...props} />;
+      </ErrorBoundary>
+    );
+  }
+);
 
 export default GraphView;

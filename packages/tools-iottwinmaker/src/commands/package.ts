@@ -7,7 +7,8 @@ export type Options = {
 };
 
 export const command = 'package';
-export const desc = 'Packages a tmdt application into a deployable artifact (e.g. CFN)';
+export const desc =
+  'Packages a tmdt application into a deployable artifact (e.g. CFN)';
 
 export const builder: CommandBuilder<Options> = (yargs) =>
   yargs.options({

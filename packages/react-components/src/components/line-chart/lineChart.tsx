@@ -1,10 +1,23 @@
 import React from 'react';
-import { StyleSettingsMap, Threshold, TimeSeriesDataQuery, Viewport, ThresholdSettings } from '@iot-app-kit/core';
+import {
+  StyleSettingsMap,
+  Threshold,
+  TimeSeriesDataQuery,
+  Viewport,
+  ThresholdSettings,
+} from '@iot-app-kit/core';
 import { LineChart as LineChartBase } from '@iot-app-kit/charts';
-import type { DataStream as DataStreamViz, YAnnotation } from '@iot-app-kit/charts-core';
+import type {
+  DataStream as DataStreamViz,
+  YAnnotation,
+} from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
-import { DEFAULT_LEGEND, DEFAULT_VIEWPORT, ECHARTS_GESTURE } from '../../common/constants';
+import {
+  DEFAULT_LEGEND,
+  DEFAULT_VIEWPORT,
+  ECHARTS_GESTURE,
+} from '../../common/constants';
 import { AxisSettings, ChartSize } from '../../common/chartTypes';
 
 export interface LineChartProps {
@@ -51,7 +64,9 @@ export const LineChart = (props: LineChartProps) => {
   // if using echarts then echarts gesture overrides passed in viewport
   // else explicitly passed in viewport overrides viewport group
   const utilizedViewport =
-    (lastUpdatedBy === ECHARTS_GESTURE ? viewport : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
+    (lastUpdatedBy === ECHARTS_GESTURE
+      ? viewport
+      : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
 
   return (
     <LineChartBase
@@ -66,7 +81,9 @@ export const LineChart = (props: LineChartProps) => {
       setViewport={setViewport}
       annotations={{
         y: allThresholds as YAnnotation[],
-        thresholdOptions: { showColor: thresholdSettings?.colorBreachedData ?? true },
+        thresholdOptions: {
+          showColor: thresholdSettings?.colorBreachedData ?? true,
+        },
       }}
       aggregationType={aggregationType}
       legend={DEFAULT_LEGEND}

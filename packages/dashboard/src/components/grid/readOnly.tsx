@@ -6,7 +6,12 @@ export type ReadOnlyGridProps = PropsWithChildren<{
   height: number;
   cellSize: number;
 }>;
-export const ReadOnlyGrid: React.FC<ReadOnlyGridProps> = ({ width, height, cellSize, children }) => (
+export const ReadOnlyGrid: React.FC<ReadOnlyGridProps> = ({
+  width,
+  height,
+  cellSize,
+  children,
+}) => (
   <SizedGrid
     highlighted={false}
     showGuides={false}

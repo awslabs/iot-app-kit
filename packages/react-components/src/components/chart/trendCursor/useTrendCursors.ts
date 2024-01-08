@@ -14,7 +14,13 @@ import { useHandleSeries } from './series/useHandleSeries';
 import { useHandleChartOptions } from './chartOptions/handleOptions';
 import { KeyMap } from 'react-hotkeys';
 
-const TRENDCURSOR_COLOR_PALETTE = ['#7492e7', '#da7596', '#2ea597', '#a783e1', '#e07941'];
+const TRENDCURSOR_COLOR_PALETTE = [
+  '#7492e7',
+  '#da7596',
+  '#2ea597',
+  '#a783e1',
+  '#e07941',
+];
 
 const useTrendCursors = ({
   chartRef,
@@ -38,12 +44,16 @@ const useTrendCursors = ({
     console.log(`useTrendCursors for chart id : ${chartId}`);
   }
 
-  const isInSyncMode = useDataStore((state) => (groupId ? !!state.trendCursorGroups[groupId] : false));
+  const isInSyncMode = useDataStore((state) =>
+    groupId ? !!state.trendCursorGroups[groupId] : false
+  );
   const [graphic, setGraphic] = useState(initialGraphic ?? []);
   const [isInCursorAddMode, setIsInCursorAddMode] = useState(false);
 
   const colorer = Colorizer(TRENDCURSOR_COLOR_PALETTE);
-  const existingColors = graphic.map((g) => g.color).filter((color): color is string => color != null);
+  const existingColors = graphic
+    .map((g) => g.color)
+    .filter((color): color is string => color != null);
   colorer.remove(existingColors);
 
   // hook for handling all user events
@@ -63,7 +73,15 @@ const useTrendCursors = ({
   });
 
   // for handling the resize of chart
-  useHandleResize({ series, size, graphic, setGraphic, chartRef, visualization, significantDigits });
+  useHandleResize({
+    series,
+    size,
+    graphic,
+    setGraphic,
+    chartRef,
+    visualization,
+    significantDigits,
+  });
 
   // handling the trend cursor sync mode
   useHandleSync({
@@ -79,13 +97,44 @@ const useTrendCursors = ({
     getColor: colorer.next,
   });
 
-  useHandleViewport({ graphic, setGraphic, chartRef, series, visualization, significantDigits, viewportInMs, size });
+  useHandleViewport({
+    graphic,
+    setGraphic,
+    chartRef,
+    series,
+    visualization,
+    significantDigits,
+    viewportInMs,
+    size,
+  });
 
-  useHandleYMinMax({ graphic, setGraphic, chartRef, series, visualization, significantDigits, yAxisOptions });
+  useHandleYMinMax({
+    graphic,
+    setGraphic,
+    chartRef,
+    series,
+    visualization,
+    significantDigits,
+    yAxisOptions,
+  });
 
-  useHandleSeries({ graphic, setGraphic, chartRef, series, visualization, significantDigits });
+  useHandleSeries({
+    graphic,
+    setGraphic,
+    chartRef,
+    series,
+    visualization,
+    significantDigits,
+  });
 
-  useHandleChartOptions({ graphic, setGraphic, chartRef, series, visualization, significantDigits });
+  useHandleChartOptions({
+    graphic,
+    setGraphic,
+    chartRef,
+    series,
+    visualization,
+    significantDigits,
+  });
 
   const trendCursorKeyMap: KeyMap = {
     commandDown: { sequence: 't', action: 'keydown' },
@@ -97,9 +146,16 @@ const useTrendCursors = ({
     commandUp: () => setIsInCursorAddMode(false),
   };
 
-  const orderedTrendCursors = graphic.sort((a, b) => a.timestampInMs - b.timestampInMs);
+  const orderedTrendCursors = graphic.sort(
+    (a, b) => a.timestampInMs - b.timestampInMs
+  );
 
-  return { onContextMenuClickHandler, trendCursorKeyMap, trendCursorHandlers, trendCursors: orderedTrendCursors };
+  return {
+    onContextMenuClickHandler,
+    trendCursorKeyMap,
+    trendCursorHandlers,
+    trendCursors: orderedTrendCursors,
+  };
 };
 
 export default useTrendCursors;

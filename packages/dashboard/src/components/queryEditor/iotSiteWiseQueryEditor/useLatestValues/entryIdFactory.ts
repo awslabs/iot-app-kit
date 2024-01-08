@@ -17,9 +17,9 @@ export class EntryIdFactory {
     // post-condition check
     invariant(
       entryId.length <= this.#MAXIMUM_ENTRY_ID_LENGTH,
-      `Entry ID must be less than or equal to ${this.#MAXIMUM_ENTRY_ID_LENGTH} characters. Got ${
-        entryId.length
-      } characters.`
+      `Entry ID must be less than or equal to ${
+        this.#MAXIMUM_ENTRY_ID_LENGTH
+      } characters. Got ${entryId.length} characters.`
     );
 
     return entryId;
@@ -27,16 +27,28 @@ export class EntryIdFactory {
 
   #createEntryId(): string {
     // Remove dashes from any UUIDs
-    const { assetId, propertyId, propertyAlias } = this.#extractIdentifiersFromDataStream();
-    const entryId = this.#formatIdentifiers({ assetId, propertyId, propertyAlias });
+    const { assetId, propertyId, propertyAlias } =
+      this.#extractIdentifiersFromDataStream();
+    const entryId = this.#formatIdentifiers({
+      assetId,
+      propertyId,
+      propertyAlias,
+    });
 
     return entryId;
   }
 
   #extractIdentifiersFromDataStream() {
-    const assetId = 'assetId' in this.#dataStream ? this.#dataStream.assetId : undefined;
-    const propertyId = 'propertyId' in this.#dataStream ? this.#dataStream.propertyId : undefined;
-    const propertyAlias = 'propertyAlias' in this.#dataStream ? this.#dataStream.propertyAlias : undefined;
+    const assetId =
+      'assetId' in this.#dataStream ? this.#dataStream.assetId : undefined;
+    const propertyId =
+      'propertyId' in this.#dataStream
+        ? this.#dataStream.propertyId
+        : undefined;
+    const propertyAlias =
+      'propertyAlias' in this.#dataStream
+        ? this.#dataStream.propertyAlias
+        : undefined;
 
     return { assetId, propertyId, propertyAlias };
   }
@@ -51,8 +63,13 @@ export class EntryIdFactory {
     propertyAlias?: string;
   }) {
     const trimmedAlias = this.#trimPropertyAlias(propertyAlias);
-    const aliasWithoutSlashes = this.#removeSlashesFromPropertyAlias(trimmedAlias);
-    const joinedIdentifiers = Object.values({ assetId, propertyId, propertyAlias: aliasWithoutSlashes }).join('');
+    const aliasWithoutSlashes =
+      this.#removeSlashesFromPropertyAlias(trimmedAlias);
+    const joinedIdentifiers = Object.values({
+      assetId,
+      propertyId,
+      propertyAlias: aliasWithoutSlashes,
+    }).join('');
     const identifiersWithoutDashes = this.#removeDashes(joinedIdentifiers);
 
     return identifiersWithoutDashes;
@@ -60,7 +77,10 @@ export class EntryIdFactory {
 
   // property aliases can be longer than the maximum entry ID length, so we trim them
   #trimPropertyAlias(propertyAlias?: string): string | undefined {
-    const trimmedPropertyAlias = propertyAlias?.substring(0, this.#MAXIMUM_ENTRY_ID_LENGTH);
+    const trimmedPropertyAlias = propertyAlias?.substring(
+      0,
+      this.#MAXIMUM_ENTRY_ID_LENGTH
+    );
 
     return trimmedPropertyAlias;
   }

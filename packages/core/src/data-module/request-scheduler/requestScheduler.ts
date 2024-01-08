@@ -38,7 +38,8 @@ export default class RequestScheduler {
       return;
     }
 
-    const isExpired = () => refreshExpiration && Date.now() >= refreshExpiration;
+    const isExpired = () =>
+      refreshExpiration && Date.now() >= refreshExpiration;
 
     if (isExpired()) {
       return;

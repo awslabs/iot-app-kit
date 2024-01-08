@@ -12,7 +12,9 @@ import type { DashboardState } from '~/store/state';
 const TestProvider: React.FC<{
   storeArgs?: RecursivePartial<DashboardState>;
   children: ReactNode;
-}> = ({ storeArgs, children }) => <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>;
+}> = ({ storeArgs, children }) => (
+  <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>
+);
 
 it('returns user selection when performing a selection gesture', () => {
   const setActiveGesture = jest.fn();

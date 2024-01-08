@@ -15,10 +15,16 @@ import {
   ALARM,
 } from '../../../__mocks__';
 import type { SiteWiseAssetDataSource } from '../../../asset-modules';
-import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+import {
+  createMockIoTEventsSDK,
+  createMockSiteWiseSDK,
+} from '@iot-app-kit/testing-util';
 
 const getMockedAlarmModule = (
-  { siteWiseApiOverride, eventsApiOverride } = { siteWiseApiOverride: {}, eventsApiOverride: {} }
+  { siteWiseApiOverride, eventsApiOverride } = {
+    siteWiseApiOverride: {},
+    eventsApiOverride: {},
+  }
 ) => {
   /**
    * Default Mocks
@@ -28,7 +34,9 @@ const getMockedAlarmModule = (
     id: ALARM_ASSET_ID,
     assetModelId: ASSET_MODEL_WITH_ALARM.assetModelId,
   });
-  const describeAssetModel = jest.fn().mockResolvedValue(ASSET_MODEL_WITH_ALARM);
+  const describeAssetModel = jest
+    .fn()
+    .mockResolvedValue(ASSET_MODEL_WITH_ALARM);
   const getAssetPropertyValue = jest
     .fn()
     .mockResolvedValueOnce({
@@ -41,12 +49,17 @@ const getMockedAlarmModule = (
       propertyValue: THRESHOLD_PROPERTY_VALUE,
     });
 
-  const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(ALARM_PROPERTY_VALUE_HISTORY);
+  const batchGetAssetPropertyValueHistory = jest
+    .fn()
+    .mockResolvedValue(ALARM_PROPERTY_VALUE_HISTORY);
 
   /**
    * Mocked clients
    */
-  const iotEventsClient = createMockIoTEventsSDK({ getAlarmModel, ...eventsApiOverride });
+  const iotEventsClient = createMockIoTEventsSDK({
+    getAlarmModel,
+    ...eventsApiOverride,
+  });
   const siteWiseClient = createMockSiteWiseSDK({
     describeAsset,
     describeAssetModel,
@@ -55,7 +68,8 @@ const getMockedAlarmModule = (
     ...siteWiseApiOverride,
   });
 
-  const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(siteWiseClient);
+  const assetDataSource: SiteWiseAssetDataSource =
+    createSiteWiseAssetDataSource(siteWiseClient);
   const siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
 
   return new SiteWiseAlarmModule(iotEventsClient, siteWiseAssetModule);

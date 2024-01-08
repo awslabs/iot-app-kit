@@ -13,7 +13,10 @@ type KeyPressOptions = {
  * @param  {(pressed: boolean, e: KeyboardEvent) => void} [callback] Triggered if the key is pressed.
  * @return {boolean} whether or not the key is pressed
  */
-export const useKeyPress = (key: string, options?: KeyPressOptions | KeyPressCallback) => {
+export const useKeyPress = (
+  key: string,
+  options?: KeyPressOptions | KeyPressCallback
+) => {
   let callback: KeyPressOptions['callback'] = undefined;
   let filter: KeyPressOptions['filter'] = () => true;
 

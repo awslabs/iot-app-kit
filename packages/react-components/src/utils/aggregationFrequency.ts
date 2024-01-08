@@ -4,7 +4,10 @@ const aggregateToString = (aggregate: string): string => {
   return aggregate.replace(/_/g, ' ').toLowerCase();
 };
 
-export const getAggregationFrequency = (dataResolution?: number, aggregationType?: string) => {
+export const getAggregationFrequency = (
+  dataResolution?: number,
+  aggregationType?: string
+) => {
   if (!dataResolution || !aggregationType || dataResolution === 0) {
     return 'raw data';
   }

@@ -13,7 +13,11 @@ type MoveHooksProps = {
   cellSize: DashboardState['grid']['cellSize'];
 };
 
-export const useMoveGestures = ({ setActiveGesture, selectedWidgets, cellSize }: MoveHooksProps) => {
+export const useMoveGestures = ({
+  setActiveGesture,
+  selectedWidgets,
+  cellSize,
+}: MoveHooksProps) => {
   const dispatch = useDispatch();
 
   const moveWidgets = useCallback(

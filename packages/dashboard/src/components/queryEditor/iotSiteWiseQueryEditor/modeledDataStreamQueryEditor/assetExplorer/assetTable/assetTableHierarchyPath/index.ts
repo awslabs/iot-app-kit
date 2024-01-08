@@ -1,1 +1,4 @@
-export { AssetTableHierarchyPath, type AssetTableHierarchyPathProps } from './assetTableHierarchyPath';
+export {
+  AssetTableHierarchyPath,
+  type AssetTableHierarchyPathProps,
+} from './assetTableHierarchyPath';

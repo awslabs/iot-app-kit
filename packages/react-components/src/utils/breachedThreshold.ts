@@ -2,9 +2,17 @@ import { getBreachedThreshold } from './thresholdUtils';
 import { isDefined } from './predicates';
 import { closestPoint } from './closestPoint';
 import { DATA_ALIGNMENT, StreamType } from '../common/constants';
-import type { Threshold, DataStream, DataStreamId, Primitive } from '@iot-app-kit/core';
+import type {
+  Threshold,
+  DataStream,
+  DataStreamId,
+  Primitive,
+} from '@iot-app-kit/core';
 
-const isHigherPriority = (t1: undefined | Threshold, t2: Threshold): Threshold => {
+const isHigherPriority = (
+  t1: undefined | Threshold,
+  t2: Threshold
+): Threshold => {
   if (t1 == null) {
     return t2;
   }
@@ -28,7 +36,9 @@ const isHigherPriority = (t1: undefined | Threshold, t2: Threshold): Threshold =
  *
  * If no thresholds are present with `severity`, the first threshold is returned.
  */
-export const highestPriorityThreshold = (thresholds: Threshold[]): Threshold | undefined => {
+export const highestPriorityThreshold = (
+  thresholds: Threshold[]
+): Threshold | undefined => {
   return thresholds.reduce(isHigherPriority, undefined);
 };
 
@@ -37,7 +47,10 @@ export const highestPriorityThreshold = (thresholds: Threshold[]): Threshold | u
  *
  * EXPOSED FOR TESTING
  */
-export const thresholdAppliesToDataStream = (threshold: Threshold, dataStreamId: DataStreamId): boolean => {
+export const thresholdAppliesToDataStream = (
+  threshold: Threshold,
+  dataStreamId: DataStreamId
+): boolean => {
   const { dataStreamIds } = threshold;
   if (dataStreamIds == null) {
     return true;
@@ -65,18 +78,29 @@ export const breachedAlarmThresholds = ({
 }): Threshold[] => {
   const alarmStreamIds: string[] =
     dataStream.associatedStreams != null
-      ? dataStream.associatedStreams.filter(({ type }) => type === StreamType.ALARM).map(({ id }) => id)
+      ? dataStream.associatedStreams
+          .filter(({ type }) => type === StreamType.ALARM)
+          .map(({ id }) => id)
       : [];
 
-  const isAssociatedAlarm = (stream: DataStream) => alarmStreamIds.includes(stream.id);
+  const isAssociatedAlarm = (stream: DataStream) =>
+    alarmStreamIds.includes(stream.id);
   const alarmStreams = dataStreams.filter(isAssociatedAlarm);
 
   // thresholds considered breech, across all alarms for the requested data stream
   const allBreachedAlarmThresholds = alarmStreams
     .map((stream) => {
-      const alarmThresholds = thresholds.filter((threshold) => thresholdAppliesToDataStream(threshold, stream.id));
-      const latestAlarmValue = closestPoint(stream.data, date, DATA_ALIGNMENT.LEFT);
-      return latestAlarmValue != null ? getBreachedThreshold(latestAlarmValue.y, alarmThresholds) : undefined;
+      const alarmThresholds = thresholds.filter((threshold) =>
+        thresholdAppliesToDataStream(threshold, stream.id)
+      );
+      const latestAlarmValue = closestPoint(
+        stream.data,
+        date,
+        DATA_ALIGNMENT.LEFT
+      );
+      return latestAlarmValue != null
+        ? getBreachedThreshold(latestAlarmValue.y, alarmThresholds)
+        : undefined;
     })
     .filter(isDefined);
 
@@ -105,8 +129,13 @@ export const breachedThreshold = ({
   // stream associated with the point who's value is being evaluated. Used to find associated alarms
   dataStream: DataStream;
 }): Threshold | undefined => {
-  const applicableThresholds = thresholds.filter((threshold) => thresholdAppliesToDataStream(threshold, dataStream.id));
-  const dataThreshold = value != null ? getBreachedThreshold(value, applicableThresholds) : undefined;
+  const applicableThresholds = thresholds.filter((threshold) =>
+    thresholdAppliesToDataStream(threshold, dataStream.id)
+  );
+  const dataThreshold =
+    value != null
+      ? getBreachedThreshold(value, applicableThresholds)
+      : undefined;
 
   const alarmThresholds = breachedAlarmThresholds({
     date,
@@ -115,5 +144,7 @@ export const breachedThreshold = ({
     thresholds,
   });
 
-  return highestPriorityThreshold([dataThreshold, ...alarmThresholds].filter(isDefined));
+  return highestPriorityThreshold(
+    [dataThreshold, ...alarmThresholds].filter(isDefined)
+  );
 };

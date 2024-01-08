@@ -1,4 +1,8 @@
-import { MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS } from '../../common/timeConstants';
+import {
+  MINUTE_IN_MS,
+  HOUR_IN_MS,
+  DAY_IN_MS,
+} from '../../common/timeConstants';
 
 export enum SupportedResolutions {
   ONE_MINUTE = '1m',

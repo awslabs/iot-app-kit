@@ -30,19 +30,23 @@ it('should subscribes, updates, and unsubscribes to property value data', async 
   };
   getPropertyValue.mockResolvedValue(mockAPIResponse);
 
-  const provider = new TwinMakerPropertyValueDataProvider(queryClient, tmClient, {
-    queries: [
-      {
-        workspaceId: 'ws-1',
-        entityId: mockEntityRef1.entityId,
-        componentName: mockEntityRef1.componentName,
-        properties: [{ propertyName: mockEntityRef1.propertyName }],
+  const provider = new TwinMakerPropertyValueDataProvider(
+    queryClient,
+    tmClient,
+    {
+      queries: [
+        {
+          workspaceId: 'ws-1',
+          entityId: mockEntityRef1.entityId,
+          componentName: mockEntityRef1.componentName,
+          properties: [{ propertyName: mockEntityRef1.propertyName }],
+        },
+      ],
+      request: {
+        settings: { refreshRate },
       },
-    ],
-    request: {
-      settings: { refreshRate },
-    },
-  });
+    }
+  );
 
   const subscribeCallback = jest.fn();
 

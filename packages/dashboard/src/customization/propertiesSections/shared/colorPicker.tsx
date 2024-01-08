@@ -2,12 +2,11 @@ import React from 'react';
 import './styles.css';
 import type { FC } from 'react';
 
-const ColorPicker: FC<{ id?: string; color: string; updateColor: (newColor: string) => void }> = ({
-  id,
-  color,
-  updateColor,
-  ...other
-}) => {
+const ColorPicker: FC<{
+  id?: string;
+  color: string;
+  updateColor: (newColor: string) => void;
+}> = ({ id, color, updateColor, ...other }) => {
   return (
     <input
       id={id}

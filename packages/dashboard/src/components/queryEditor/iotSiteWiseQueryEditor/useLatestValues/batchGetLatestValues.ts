@@ -25,7 +25,9 @@ export class BatchGetLatestValuesRequest {
 
   public async send() {
     try {
-      const response = await this.#client.send(this.#command, { abortSignal: this.#signal });
+      const response = await this.#client.send(this.#command, {
+        abortSignal: this.#signal,
+      });
 
       return response;
     } catch (error) {

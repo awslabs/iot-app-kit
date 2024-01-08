@@ -40,16 +40,23 @@ export class SearchAssetPropertyListsRequest {
     }
 
     // asset property does not exist
-    if (this.#cache[assetId]?.assetProperties && !this.#cache[assetId].nextToken) {
+    if (
+      this.#cache[assetId]?.assetProperties &&
+      !this.#cache[assetId].nextToken
+    ) {
       return undefined;
     }
 
     try {
       do {
-        const command = this.#createCommand({ assetId, nextToken: this.#cache[assetId]?.nextToken });
-        const { assetPropertySummaries: newAssetProperties = [], nextToken: newNextToken } = await this.#client.send(
-          command
-        );
+        const command = this.#createCommand({
+          assetId,
+          nextToken: this.#cache[assetId]?.nextToken,
+        });
+        const {
+          assetPropertySummaries: newAssetProperties = [],
+          nextToken: newNextToken,
+        } = await this.#client.send(command);
 
         if (this.#cache[assetId]) {
           this.#cache[assetId].assetProperties.push(...newAssetProperties);
@@ -82,15 +89,23 @@ export class SearchAssetPropertyListsRequest {
     assetPropertyId: AssetPropertyId;
     assetProperties: AssetProperty[];
   }): AssetProperty | undefined {
-    const assetProperty = assetProperties.find(({ id }) => id === assetPropertyId);
+    const assetProperty = assetProperties.find(
+      ({ id }) => id === assetPropertyId
+    );
 
     return assetProperty;
   }
 
-  #createCommand(input: Pick<ListAssetPropertiesCommandInput, 'assetId' | 'nextToken'>) {
+  #createCommand(
+    input: Pick<ListAssetPropertiesCommandInput, 'assetId' | 'nextToken'>
+  ) {
     const FILTER = 'ALL';
     const MAX_RESULTS = 250;
-    const command = new ListAssetPropertiesCommand({ ...input, filter: FILTER, maxResults: MAX_RESULTS });
+    const command = new ListAssetPropertiesCommand({
+      ...input,
+      filter: FILTER,
+      maxResults: MAX_RESULTS,
+    });
 
     return command;
   }

@@ -1,11 +1,20 @@
-import { paginateListWorkspaces, type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import {
+  paginateListWorkspaces,
+  type IoTTwinMakerClient,
+} from '@aws-sdk/client-iottwinmaker';
 
 export class ListWorkspacesRequest {
   readonly #MAX_WORKSPACES_PAGE_SIZE = 200;
   readonly #paginator: ReturnType<typeof paginateListWorkspaces>;
   readonly #signal: AbortSignal | undefined;
 
-  constructor({ client, signal }: { client: IoTTwinMakerClient; signal?: AbortSignal }) {
+  constructor({
+    client,
+    signal,
+  }: {
+    client: IoTTwinMakerClient;
+    signal?: AbortSignal;
+  }) {
     this.#paginator = this.#createPaginator(client);
     this.#signal = signal;
   }
@@ -28,7 +37,10 @@ export class ListWorkspacesRequest {
   }
 
   #createPaginator(client: IoTTwinMakerClient) {
-    const paginator = paginateListWorkspaces({ pageSize: this.#MAX_WORKSPACES_PAGE_SIZE, client }, {});
+    const paginator = paginateListWorkspaces(
+      { pageSize: this.#MAX_WORKSPACES_PAGE_SIZE, client },
+      {}
+    );
 
     return paginator;
   }

@@ -10,10 +10,17 @@ import {
   FormField,
   Input,
 } from '@cloudscape-design/components';
-import { spaceScaledXl, spaceStaticXxs } from '@cloudscape-design/design-tokens';
+import {
+  spaceScaledXl,
+  spaceStaticXxs,
+} from '@cloudscape-design/design-tokens';
 
 import ColorPicker from '../shared/colorPicker';
-import { LineStyles, StyledAssetPropertyQuery, YAxisOptions } from '~/customization/widgets/types';
+import {
+  LineStyles,
+  StyledAssetPropertyQuery,
+  YAxisOptions,
+} from '~/customization/widgets/types';
 import { getPropertyDisplay } from './getPropertyDisplay';
 import type { AssetSummary } from '~/hooks/useAssetDescriptionQueries';
 import { Tooltip } from '@iot-app-kit/react-components';
@@ -37,14 +44,21 @@ const LineStylePropertyConfig = ({
   onUpdate: (newStyles: object) => void;
 }) => {
   const [expanded, setExpanded] = useState(false);
-  const [useGlobalStyle, setUseGlobalStyle] = useState<boolean>(!property.line?.style); //make useGlobalStyle true if no line style
-  const [connectionStyle, setConnectionStyle] = useState<LineStyles['connectionStyle']>(
-    property.line?.connectionStyle ?? 'linear'
+  const [useGlobalStyle, setUseGlobalStyle] = useState<boolean>(
+    !property.line?.style
+  ); //make useGlobalStyle true if no line style
+  const [connectionStyle, setConnectionStyle] = useState<
+    LineStyles['connectionStyle']
+  >(property.line?.connectionStyle ?? 'linear');
+  const [lineStyle, setLineStyle] = useState<LineStyles['style']>(
+    property.line?.style ?? 'solid'
   );
-  const [lineStyle, setLineStyle] = useState<LineStyles['style']>(property.line?.style ?? 'solid');
-  const [lineThickness, setLinethickness] = useState<string | undefined>(property.line?.thickness?.toString() ?? '2');
+  const [lineThickness, setLinethickness] = useState<string | undefined>(
+    property.line?.thickness?.toString() ?? '2'
+  );
 
-  const getLineThicknessNumber = (thickness?: string) => (thickness ? parseInt(thickness) : undefined);
+  const getLineThicknessNumber = (thickness?: string) =>
+    thickness ? parseInt(thickness) : undefined;
 
   const onToggleUseGlobalStyles = (isChecked: boolean) => {
     setUseGlobalStyle(isChecked);
@@ -52,28 +66,56 @@ const LineStylePropertyConfig = ({
     setLineStyle('solid');
     setLinethickness('2');
     if (isChecked) {
-      resetStyles({ line: { connectionStyle: undefined, style: undefined, thickness: undefined } });
+      resetStyles({
+        line: {
+          connectionStyle: undefined,
+          style: undefined,
+          thickness: undefined,
+        },
+      });
     } else {
       onUpdate({
-        line: { connectionStyle: connectionStyle, style: lineStyle, thickness: getLineThicknessNumber(lineThickness) },
+        line: {
+          connectionStyle: connectionStyle,
+          style: lineStyle,
+          thickness: getLineThicknessNumber(lineThickness),
+        },
       });
     }
   };
 
-  const updateConnectionStyle = (connectionStyle: LineStyles['connectionStyle']) => {
+  const updateConnectionStyle = (
+    connectionStyle: LineStyles['connectionStyle']
+  ) => {
     setConnectionStyle(connectionStyle);
-    onUpdate({ line: { connectionStyle, style: lineStyle, thickness: getLineThicknessNumber(lineThickness) } });
+    onUpdate({
+      line: {
+        connectionStyle,
+        style: lineStyle,
+        thickness: getLineThicknessNumber(lineThickness),
+      },
+    });
   };
 
   const updateLineStyle = (style: LineStyles['style']) => {
     setLineStyle(style);
-    onUpdate({ line: { connectionStyle: connectionStyle, style, thickness: getLineThicknessNumber(lineThickness) } });
+    onUpdate({
+      line: {
+        connectionStyle: connectionStyle,
+        style,
+        thickness: getLineThicknessNumber(lineThickness),
+      },
+    });
   };
 
   const handleUpdateLineThickness = (thickness: string) => {
     setLinethickness(thickness);
     onUpdate({
-      line: { connectionStyle: connectionStyle, style: lineStyle, thickness: getLineThicknessNumber(thickness) },
+      line: {
+        connectionStyle: connectionStyle,
+        style: lineStyle,
+        thickness: getLineThicknessNumber(thickness),
+      },
     });
   };
 
@@ -86,23 +128,32 @@ const LineStylePropertyConfig = ({
     >
       <div style={propertiesPadding}>
         <SpaceBetween size='m'>
-          <Checkbox onChange={({ detail }) => onToggleUseGlobalStyles(detail.checked)} checked={useGlobalStyle}>
+          <Checkbox
+            onChange={({ detail }) => onToggleUseGlobalStyles(detail.checked)}
+            checked={useGlobalStyle}
+          >
             Use default style
           </Checkbox>
           <LineTypeSection
             disabled={useGlobalStyle}
             type={connectionStyle}
-            updateType={(type) => updateConnectionStyle(type as LineStyles['connectionStyle'])}
+            updateType={(type) =>
+              updateConnectionStyle(type as LineStyles['connectionStyle'])
+            }
           />
           <LineStyleDropdown
             disabled={useGlobalStyle}
             lineStyle={lineStyle}
-            updatelineStyle={(style) => updateLineStyle(style as LineStyles['style'])}
+            updatelineStyle={(style) =>
+              updateLineStyle(style as LineStyles['style'])
+            }
           />
           <LineThicknessDropdown
             disabled={useGlobalStyle}
             lineThickness={lineThickness}
-            updateLineThickness={(thickness) => handleUpdateLineThickness(thickness)}
+            updateLineThickness={(thickness) =>
+              handleUpdateLineThickness(thickness)
+            }
           />
         </SpaceBetween>
       </div>
@@ -125,7 +176,9 @@ const YAxisPropertyConfig = ({
   onUpdate: (newStyles: object) => void;
 }) => {
   const [expanded, setExpanded] = useState(false);
-  const [useGlobalStyle, setUseGlobalStyle] = useState(Object.keys(property.yAxis ?? {}).length == 0);
+  const [useGlobalStyle, setUseGlobalStyle] = useState(
+    Object.keys(property.yAxis ?? {}).length == 0
+  );
 
   const onToggleUseGlobalStyles = (isChecked: boolean) => {
     setUseGlobalStyle(isChecked);
@@ -151,13 +204,22 @@ const YAxisPropertyConfig = ({
     >
       <div style={propertiesPadding}>
         <SpaceBetween size='m'>
-          <Checkbox onChange={({ detail }) => onToggleUseGlobalStyles(detail.checked)} checked={useGlobalStyle}>
+          <Checkbox
+            onChange={({ detail }) => onToggleUseGlobalStyles(detail.checked)}
+            checked={useGlobalStyle}
+          >
             Use default style
           </Checkbox>
-          <Toggle checked={!!property.yAxis?.visible} onChange={({ detail }) => onToggleControls(detail.checked)}>
+          <Toggle
+            checked={!!property.yAxis?.visible}
+            onChange={({ detail }) => onToggleControls(detail.checked)}
+          >
             Show Y-axis controls
           </Toggle>
-          <FormField description='Leave empty to auto-calculate based on all the values' label='Range'>
+          <FormField
+            description='Leave empty to auto-calculate based on all the values'
+            label='Range'
+          >
             <SpaceBetween size='m' direction='horizontal'>
               <SpaceBetween size='s' direction='horizontal'>
                 <label htmlFor='y-axis-min'>Min</label>
@@ -167,7 +229,12 @@ const YAxisPropertyConfig = ({
                   controlId='y-axis-min'
                   value={`${property.yAxis?.yMin ?? ''}`}
                   type='number'
-                  onChange={({ detail }) => onUpdateYAxis({ ...property.yAxis, yMin: numberOrUndefined(detail.value) })}
+                  onChange={({ detail }) =>
+                    onUpdateYAxis({
+                      ...property.yAxis,
+                      yMin: numberOrUndefined(detail.value),
+                    })
+                  }
                 />
               </SpaceBetween>
               <SpaceBetween size='s' direction='horizontal'>
@@ -178,7 +245,12 @@ const YAxisPropertyConfig = ({
                   controlId='y-axis-max'
                   value={`${property.yAxis?.yMax ?? ''}`}
                   type='number'
-                  onChange={({ detail }) => onUpdateYAxis({ ...property.yAxis, yMax: numberOrUndefined(detail.value) })}
+                  onChange={({ detail }) =>
+                    onUpdateYAxis({
+                      ...property.yAxis,
+                      yMax: numberOrUndefined(detail.value),
+                    })
+                  }
                 />
               </SpaceBetween>
             </SpaceBetween>
@@ -206,7 +278,10 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
   onDeleteAssetQuery,
   colorable,
 }) => {
-  const { display, label } = getPropertyDisplay(property.propertyId, assetSummary);
+  const { display, label } = getPropertyDisplay(
+    property.propertyId,
+    assetSummary
+  );
   const labelRef = useRef<HTMLDivElement | null>(null);
   const [isNameTruncated, setIsNameTruncated] = useState(false);
   const resetStyles = (styleToReset: object) => {
@@ -215,7 +290,9 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
 
   useEffect(() => {
     if (labelRef.current) {
-      setIsNameTruncated(labelRef.current.scrollWidth > labelRef.current.clientWidth);
+      setIsNameTruncated(
+        labelRef.current.scrollWidth > labelRef.current.clientWidth
+      );
     }
   }, [label]);
 
@@ -223,15 +300,30 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
     <div style={{ display: 'flex', width: '100%' }}>
       <SpaceBetween size='s' direction='horizontal'>
         {colorable && display === 'property' && (
-          <ColorPicker color={property.color || ''} updateColor={(newColor) => updateStyle({ color: newColor })} />
+          <ColorPicker
+            color={property.color || ''}
+            updateColor={(newColor) => updateStyle({ color: newColor })}
+          />
         )}
-        <Tooltip content={isNameTruncated ? label : ''} position={index == 0 ? 'bottom' : 'top'}>
-          <div className='property-display-label' style={{ marginBlock: spaceStaticXxs }} ref={labelRef}>
+        <Tooltip
+          content={isNameTruncated ? label : ''}
+          position={index == 0 ? 'bottom' : 'top'}
+        >
+          <div
+            className='property-display-label'
+            style={{ marginBlock: spaceStaticXxs }}
+            ref={labelRef}
+          >
             {label}
           </div>
         </Tooltip>
         <div style={{ float: 'right' }}>
-          <Button ariaLabel='delete property' onClick={onDeleteAssetQuery} variant='icon' iconName='remove' />
+          <Button
+            ariaLabel='delete property'
+            onClick={onDeleteAssetQuery}
+            variant='icon'
+            iconName='remove'
+          />
         </div>
       </SpaceBetween>
     </div>
@@ -241,10 +333,21 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
     <div className='property-display'>
       <div className='property-display-summary'>
         <Box color='text-body-secondary'>
-          <ExpandableSection headerText={YAxisHeader} disableContentPaddings={true}>
+          <ExpandableSection
+            headerText={YAxisHeader}
+            disableContentPaddings={true}
+          >
             <div style={{ padding: '0 24px', backgroundColor: '#fbfbfb' }}>
-              <LineStylePropertyConfig resetStyles={resetStyles} onUpdate={updateStyle} property={property} />
-              <YAxisPropertyConfig resetStyles={resetStyles} onUpdate={updateStyle} property={property} />
+              <LineStylePropertyConfig
+                resetStyles={resetStyles}
+                onUpdate={updateStyle}
+                property={property}
+              />
+              <YAxisPropertyConfig
+                resetStyles={resetStyles}
+                onUpdate={updateStyle}
+                property={property}
+              />
             </div>
           </ExpandableSection>
         </Box>

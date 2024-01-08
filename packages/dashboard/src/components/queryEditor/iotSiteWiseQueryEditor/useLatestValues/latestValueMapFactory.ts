@@ -3,15 +3,24 @@ import { type BatchGetAssetPropertyValueCommandOutput } from '@aws-sdk/client-io
 import type { LatestValueMap } from './types';
 
 export class LatestValueMapFactory {
-  readonly #successEntries: NonNullable<BatchGetAssetPropertyValueCommandOutput['successEntries']>;
-  readonly #skippedEntries: NonNullable<BatchGetAssetPropertyValueCommandOutput['skippedEntries']>;
-  readonly #errorEntries: NonNullable<BatchGetAssetPropertyValueCommandOutput['errorEntries']>;
+  readonly #successEntries: NonNullable<
+    BatchGetAssetPropertyValueCommandOutput['successEntries']
+  >;
+  readonly #skippedEntries: NonNullable<
+    BatchGetAssetPropertyValueCommandOutput['skippedEntries']
+  >;
+  readonly #errorEntries: NonNullable<
+    BatchGetAssetPropertyValueCommandOutput['errorEntries']
+  >;
 
   constructor({
     successEntries = [],
     skippedEntries = [],
     errorEntries = [],
-  }: Pick<BatchGetAssetPropertyValueCommandOutput, 'successEntries' | 'skippedEntries' | 'errorEntries'>) {
+  }: Pick<
+    BatchGetAssetPropertyValueCommandOutput,
+    'successEntries' | 'skippedEntries' | 'errorEntries'
+  >) {
     this.#successEntries = successEntries;
     this.#skippedEntries = skippedEntries;
     this.#errorEntries = errorEntries;

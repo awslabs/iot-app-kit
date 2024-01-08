@@ -9,7 +9,11 @@ import { getDefaultAwsClients as aws } from './aws-clients';
  * @param destination model file
  * @returns s3url promise
  */
-async function importResource(workspaceId: string, filePath: string, destination: string) {
+async function importResource(
+  workspaceId: string,
+  filePath: string,
+  destination: string
+) {
   const ws = await aws().tm.getWorkspace({ workspaceId });
   const s3Arn = ws.s3Location;
 

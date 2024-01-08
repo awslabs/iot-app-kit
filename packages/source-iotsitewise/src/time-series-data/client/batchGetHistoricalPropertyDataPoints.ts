@@ -1,16 +1,28 @@
-import { BatchGetAssetPropertyValueHistoryCommand, IoTSiteWiseClient, TimeOrdering } from '@aws-sdk/client-iotsitewise';
+import {
+  BatchGetAssetPropertyValueHistoryCommand,
+  IoTSiteWiseClient,
+  TimeOrdering,
+} from '@aws-sdk/client-iotsitewise';
 import { toDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
 import { fromId } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
-import { createRawHistoricalEntryBatches, calculateNextRawHistoricalBatchSize, shouldFetchNextBatch } from './batch';
+import {
+  createRawHistoricalEntryBatches,
+  calculateNextRawHistoricalBatchSize,
+  shouldFetchNextBatch,
+} from './batch';
 import { deduplicateBatch } from '../util/deduplication';
 import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
 import type {
   BatchGetAssetPropertyValueHistoryErrorEntry,
   BatchGetAssetPropertyValueHistorySuccessEntry,
 } from '@aws-sdk/client-iotsitewise';
-import { type OnSuccessCallback, type ErrorCallback, type RequestInformationAndRange } from '@iot-app-kit/core';
+import {
+  type OnSuccessCallback,
+  type ErrorCallback,
+  type RequestInformationAndRange,
+} from '@iot-app-kit/core';
 import type { HistoricalPropertyParams } from './client';
 import { withinLatestPropertyDataThreshold } from './withinLatestPropertyDataThreshold';
 
@@ -49,13 +61,22 @@ const sendRequest = ({
   // the cache exposes methods that only require batch response entry as an argument.
   const callbackCache: BatchEntryCallbackCache = {};
 
-  const batchSize = calculateNextRawHistoricalBatchSize({ maxResults, dataPointsFetched });
+  const batchSize = calculateNextRawHistoricalBatchSize({
+    maxResults,
+    dataPointsFetched,
+  });
 
   client
     .send(
       new BatchGetAssetPropertyValueHistoryCommand({
         entries: deduplicateBatch(batch).map((entry, entryIndex) => {
-          const { requestInformation, onError, onSuccess, requestStart, requestEnd } = entry;
+          const {
+            requestInformation,
+            onError,
+            onSuccess,
+            requestStart,
+            requestEnd,
+          } = entry;
           const { id, resolution, aggregationType } = requestInformation;
 
           // use 2D array indices as entryIDs to guarantee uniqueness
@@ -64,7 +85,10 @@ const sendRequest = ({
 
           // save request entry data in functional closure.
           callbackCache[entryId] = {
-            onError: ({ errorMessage: msg = 'batch historical error', errorCode: status }) => {
+            onError: ({
+              errorMessage: msg = 'batch historical error',
+              errorCode: status,
+            }) => {
               onError({
                 id,
                 resolution: 0,
@@ -81,7 +105,9 @@ const sendRequest = ({
                       aggregationType,
                       resolution: RESOLUTION_TO_MS_MAPPING[resolution],
                       dataPoints: assetPropertyValueHistory
-                        .map((assetPropertyValue) => toDataPoint(assetPropertyValue))
+                        .map((assetPropertyValue) =>
+                          toDataPoint(assetPropertyValue)
+                        )
                         .filter(isDefined),
                     }),
                   ],
@@ -112,8 +138,13 @@ const sendRequest = ({
       // execute the correct callback for each entry
       // empty entries and entries that don't exist in the cache are ignored.
       // TODO: implement retries for retry-able batch errors
-      errorEntries?.forEach((entry) => entry.entryId && callbackCache[entry.entryId]?.onError(entry));
-      successEntries?.forEach((entry) => entry.entryId && callbackCache[entry.entryId]?.onSuccess(entry));
+      errorEntries?.forEach(
+        (entry) => entry.entryId && callbackCache[entry.entryId]?.onError(entry)
+      );
+      successEntries?.forEach(
+        (entry) =>
+          entry.entryId && callbackCache[entry.entryId]?.onSuccess(entry)
+      );
 
       // increment number of data points fetched
       dataPointsFetched += batchSize;
@@ -140,7 +171,9 @@ const batchGetHistoricalPropertyDataPointsForProperty = ({
 }) =>
   createRawHistoricalEntryBatches<BatchHistoricalEntry>(entries)
     .filter((batch) => batch.length > 0) // filter out empty batches
-    .map(([batch, maxResults], requestIndex) => sendRequest({ client, batch, maxResults, requestIndex }));
+    .map(([batch, maxResults], requestIndex) =>
+      sendRequest({ client, batch, maxResults, requestIndex })
+    );
 
 const shouldAcceptRequest = ({
   end,
@@ -168,24 +201,36 @@ export const batchGetHistoricalPropertyDataPoints = ({
 
   // fan out params into individual entries, handling fetchMostRecentBeforeStart
   params.forEach(({ requestInformations, maxResults, onSuccess, onError }) => {
-    requestInformations.filter(shouldAcceptRequest).forEach((requestInformation) => {
-      const { fetchMostRecentBeforeStart, fetchMostRecentBeforeEnd, start, end } = requestInformation;
+    requestInformations
+      .filter(shouldAcceptRequest)
+      .forEach((requestInformation) => {
+        const {
+          fetchMostRecentBeforeStart,
+          fetchMostRecentBeforeEnd,
+          start,
+          end,
+        } = requestInformation;
 
-      const isMostRecent = fetchMostRecentBeforeStart || fetchMostRecentBeforeEnd;
+        const isMostRecent =
+          fetchMostRecentBeforeStart || fetchMostRecentBeforeEnd;
 
-      entries.push({
-        requestInformation,
-        maxResults: isMostRecent ? 1 : maxResults,
-        onSuccess,
-        onError,
-        requestStart: isMostRecent ? new Date(0, 0, 0) : start,
-        requestEnd: fetchMostRecentBeforeStart ? start : end,
+        entries.push({
+          requestInformation,
+          maxResults: isMostRecent ? 1 : maxResults,
+          onSuccess,
+          onError,
+          requestStart: isMostRecent ? new Date(0, 0, 0) : start,
+          requestEnd: fetchMostRecentBeforeStart ? start : end,
+        });
       });
-    });
   });
 
   // sort entries to ensure earliest data is fetched first because batch API has a property limit
-  entries.sort((a, b) => b.requestInformation.start.getTime() - a.requestInformation.start.getTime());
+  entries.sort(
+    (a, b) =>
+      b.requestInformation.start.getTime() -
+      a.requestInformation.start.getTime()
+  );
 
   if (entries.length > 0) {
     batchGetHistoricalPropertyDataPointsForProperty({

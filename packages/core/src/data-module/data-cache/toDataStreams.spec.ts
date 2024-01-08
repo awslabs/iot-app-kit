@@ -81,11 +81,18 @@ const STORE_WITH_NUMBERS_ONLY: DataStreamsStore = {
 };
 
 it('returns no data streams when provided no infos or stores', () => {
-  expect(toDataStreams({ requestInformations: [], dataStreamsStores: {} })).toBeEmpty();
+  expect(
+    toDataStreams({ requestInformations: [], dataStreamsStores: {} })
+  ).toBeEmpty();
 });
 
 it('returns no data streams when provided no infos with a non-empty store', () => {
-  expect(toDataStreams({ requestInformations: [], dataStreamsStores: STORE_WITH_NUMBERS_ONLY })).toBeEmpty();
+  expect(
+    toDataStreams({
+      requestInformations: [],
+      dataStreamsStores: STORE_WITH_NUMBERS_ONLY,
+    })
+  ).toBeEmpty();
 });
 
 it('returns an array of data streams containing the requested resolutions', () => {

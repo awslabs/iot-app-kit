@@ -21,7 +21,10 @@ type MultiYAxisLegendOptions = {
  *  yMin: list of YAxisLegendOption for the min values of a datastream with a custom yAxis
  *  yMax: list of YAxisLegendOption for the max values of a datastream with a custom yAxis
  */
-export const MultiYAxisLegend = ({ height, datastreams }: MultiYAxisLegendOptions) => {
+export const MultiYAxisLegend = ({
+  height,
+  datastreams,
+}: MultiYAxisLegendOptions) => {
   const { yMax, yMin } = useCustomYAxis(datastreams);
 
   const marginHeight = DEFAULT_MARGIN * 2;
@@ -39,7 +42,12 @@ export const MultiYAxisLegend = ({ height, datastreams }: MultiYAxisLegendOption
       }}
     >
       <YAxisLegend maxHeight={maxHeight} label='Y-Max' axes={yMax} />
-      <YAxisLegend maxHeight={maxHeight} label='Y-Min' axes={yMin} menuPosition='top' />
+      <YAxisLegend
+        maxHeight={maxHeight}
+        label='Y-Min'
+        axes={yMin}
+        menuPosition='top'
+      />
     </div>
   );
 };

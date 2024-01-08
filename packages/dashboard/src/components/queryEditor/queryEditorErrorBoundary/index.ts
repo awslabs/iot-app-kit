@@ -1,1 +1,4 @@
-export { QueryEditorErrorBoundary, type QueryEditorErrorBoundaryProps } from './queryEditorErrorBoundary';
+export {
+  QueryEditorErrorBoundary,
+  type QueryEditorErrorBoundaryProps,
+} from './queryEditorErrorBoundary';

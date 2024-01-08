@@ -67,22 +67,30 @@ describe('thresholdsComponent', () => {
 
   it('renders operator select', () => {
     const elem = render(<TestThresholdComponent />).baseElement;
-    expect(elem.querySelector('[data-test-id="threshold-component-operator-select"]')).toBeTruthy();
+    expect(
+      elem.querySelector('[data-test-id="threshold-component-operator-select"]')
+    ).toBeTruthy();
   });
 
   it('renders threshold value input', () => {
     const elem = render(<TestThresholdComponent />).baseElement;
-    expect(elem.querySelector('[data-test-id="threshold-component-value-input"]')).toBeTruthy();
+    expect(
+      elem.querySelector('[data-test-id="threshold-component-value-input"]')
+    ).toBeTruthy();
   });
 
   it('renders color picker', () => {
     const elem = render(<TestThresholdComponent />).baseElement;
-    expect(elem.querySelector('[data-test-id="threshold-component-color-picker"]')).toBeTruthy();
+    expect(
+      elem.querySelector('[data-test-id="threshold-component-color-picker"]')
+    ).toBeTruthy();
   });
 
   it('renders delete button', () => {
     const elem = render(<TestThresholdComponent />).baseElement;
-    expect(elem.querySelector('[data-test-id="threshold-component-delete-button"]')).toBeTruthy();
+    expect(
+      elem.querySelector('[data-test-id="threshold-component-delete-button"]')
+    ).toBeTruthy();
   });
 });
 
@@ -94,7 +102,9 @@ describe('thresholdsSection', () => {
 
   it('renders correct numbers of thresholds', () => {
     const elem = render(<TestThresholdSection />).baseElement;
-    const components = Array.from(elem.querySelectorAll('[data-test-id="threshold-component"]'));
+    const components = Array.from(
+      elem.querySelectorAll('[data-test-id="threshold-component"]')
+    );
     expect(components.length).toEqual(widget.properties.thresholds?.length);
   });
 });

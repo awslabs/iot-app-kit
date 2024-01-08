@@ -19,7 +19,12 @@ export type ContextMenuOptionProps = {
   action: () => void;
 };
 
-const ContextMenuOption: React.FC<ContextMenuOptionProps> = ({ disabled, text, hotkey, action }) => {
+const ContextMenuOption: React.FC<ContextMenuOptionProps> = ({
+  disabled,
+  text,
+  hotkey,
+  action,
+}) => {
   const [hover, setHover] = useState(false);
 
   let hoverStyle;
@@ -34,7 +39,10 @@ const ContextMenuOption: React.FC<ContextMenuOptionProps> = ({ disabled, text, h
     };
   }
 
-  const disabledStyle = { color: colorBackgroundControlDisabled, cursor: 'not-allowed' };
+  const disabledStyle = {
+    color: colorBackgroundControlDisabled,
+    cursor: 'not-allowed',
+  };
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <li

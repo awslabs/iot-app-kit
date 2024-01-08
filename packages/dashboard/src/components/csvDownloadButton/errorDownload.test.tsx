@@ -25,7 +25,9 @@ const MOCK_QUERY: StyledAssetQuery = {
   properties: [{ propertyAlias: alias1 }],
 };
 
-const mockFetchViewportData = jest.fn(() => Promise.resolve({ isError: true, data: [] }));
+const mockFetchViewportData = jest.fn(() =>
+  Promise.resolve({ isError: true, data: [] })
+);
 jest.mock('./useViewportData', () => ({
   useViewportData: jest.fn(() => ({
     fetchViewportData: mockFetchViewportData,

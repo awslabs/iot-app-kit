@@ -1,4 +1,7 @@
-import { type AssetSummary, type ListAssetsResponse } from '@aws-sdk/client-iotsitewise';
+import {
+  type AssetSummary,
+  type ListAssetsResponse,
+} from '@aws-sdk/client-iotsitewise';
 import { rest } from 'msw';
 
 import { LIST_ASSETS_URL } from './constants';

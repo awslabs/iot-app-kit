@@ -14,8 +14,16 @@ void watch({
         ],
         [
           'anyof',
-          ['allof', ['dirname', 'react-components'], ['match', '*.tsx', 'basename']],
-          ['allof', ['dirname', 'react-components'], ['match', '*.ts', 'basename']],
+          [
+            'allof',
+            ['dirname', 'react-components'],
+            ['match', '*.tsx', 'basename'],
+          ],
+          [
+            'allof',
+            ['dirname', 'react-components'],
+            ['match', '*.ts', 'basename'],
+          ],
         ],
         ['allof', ['dirname', 'core'], ['match', '*.ts', 'basename']],
         ['allof', ['dirname', 'core-util'], ['match', '*.ts', 'basename']],

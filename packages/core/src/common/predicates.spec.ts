@@ -7,7 +7,10 @@ import {
   isHistoricalViewport,
 } from './predicates';
 import type { DataStream } from '../data-module/types';
-import type { HistoricalViewport, DurationViewport } from '../data-module/data-cache/requestTypes';
+import type {
+  HistoricalViewport,
+  DurationViewport,
+} from '../data-module/data-cache/requestTypes';
 
 describe('isDefined', () => {
   it('returns false when passed null', () => {
@@ -83,9 +86,15 @@ describe('isNumberDataStream', () => {
     ],
   };
 
-  const EMPTY_STRING_STREAM: DataStream<string> = { ...STRING_DATA_STREAM, data: [] };
+  const EMPTY_STRING_STREAM: DataStream<string> = {
+    ...STRING_DATA_STREAM,
+    data: [],
+  };
 
-  const EMPTY_NUMBER_STREAM: DataStream<number> = { ...NUMBER_DATA_STREAM, data: [] };
+  const EMPTY_NUMBER_STREAM: DataStream<number> = {
+    ...NUMBER_DATA_STREAM,
+    data: [],
+  };
 
   it('returns true when given empty number stream', () => {
     expect(isNumberDataStream(EMPTY_NUMBER_STREAM)).toBeTrue();
@@ -142,10 +151,14 @@ describe('isHistoricalViewport', () => {
   });
 
   it('returns false when the end date is missing', () => {
-    expect(isHistoricalViewport({ start: new Date() } as unknown as DurationViewport)).toBeFalse();
+    expect(
+      isHistoricalViewport({ start: new Date() } as unknown as DurationViewport)
+    ).toBeFalse();
   });
 
   it('returns false when the start date is missing', () => {
-    expect(isHistoricalViewport({ end: new Date() } as unknown as DurationViewport)).toBeFalse();
+    expect(
+      isHistoricalViewport({ end: new Date() } as unknown as DurationViewport)
+    ).toBeFalse();
   });
 });

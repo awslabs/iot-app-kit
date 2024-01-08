@@ -40,7 +40,12 @@ export default [
       typescript({
         tsconfig: './tsconfig.json',
         tsconfigOverride: {
-          exclude: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx'],
+          exclude: [
+            '**/*.test.ts',
+            '**/*.test.tsx',
+            '**/*.spec.ts',
+            '**/*.spec.tsx',
+          ],
         },
       }),
       postcss({

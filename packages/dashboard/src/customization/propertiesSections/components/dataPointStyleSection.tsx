@@ -11,12 +11,23 @@ type LineStyleSectionOptions = {
 
 const dataPointData = dropdownConsts.dataPointStyle;
 
-export const DataPointStyleSection: FC<LineStyleSectionOptions> = ({ dataPointStyle, updateDataPointStyle }) => {
+export const DataPointStyleSection: FC<LineStyleSectionOptions> = ({
+  dataPointStyle,
+  updateDataPointStyle,
+}) => {
   return (
     <FormField label='Data point shape'>
       <Select
-        selectedOption={dataPointData.dataPointStyleOptions.find(({ value }) => value === dataPointStyle) ?? null}
-        onChange={({ detail }) => updateDataPointStyle(detail.selectedOption.value ?? dataPointData.defaultValue.value)}
+        selectedOption={
+          dataPointData.dataPointStyleOptions.find(
+            ({ value }) => value === dataPointStyle
+          ) ?? null
+        }
+        onChange={({ detail }) =>
+          updateDataPointStyle(
+            detail.selectedOption.value ?? dataPointData.defaultValue.value
+          )
+        }
         options={dataPointData.dataPointStyleOptions}
       />
     </FormField>

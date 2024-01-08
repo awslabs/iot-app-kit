@@ -7,9 +7,16 @@ import { SiteWiseAssetModule } from '../asset-modules';
 import { SiteWiseAlarmModule } from '../alarms/iotevents';
 import { MINUTE_IN_MS } from './util/timeConstants';
 import { DESCRIBE_ASSET_RESPONSE } from '../__mocks__/asset';
-import type { DataSource, DataStream, OnSuccessCallback } from '@iot-app-kit/core';
+import type {
+  DataSource,
+  DataStream,
+  OnSuccessCallback,
+} from '@iot-app-kit/core';
 import type { SiteWiseDataStreamQuery } from './types';
-import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+import {
+  createMockIoTEventsSDK,
+  createMockSiteWiseSDK,
+} from '@iot-app-kit/testing-util';
 
 const DATA_STREAM: DataStream<number> = {
   id: 'some-asset-id---some-property-id',
@@ -23,16 +30,25 @@ const DATA_STREAM: DataStream<number> = {
 
 const AGGREGATE_TYPE = AggregateType.AVERAGE;
 
-const createMockSource = (dataStreams: DataStream[]): DataSource<SiteWiseDataStreamQuery> => ({
+const createMockSource = (
+  dataStreams: DataStream[]
+): DataSource<SiteWiseDataStreamQuery> => ({
   initiateRequest: jest.fn(({ onSuccess }: { onSuccess: OnSuccessCallback }) =>
     onSuccess(
       dataStreams,
-      { start: new Date(), resolution: '1m', end: new Date(), id: '123', aggregationType: AGGREGATE_TYPE },
+      {
+        start: new Date(),
+        resolution: '1m',
+        end: new Date(),
+        id: '123',
+        aggregationType: AGGREGATE_TYPE,
+      },
       new Date(),
       new Date()
     )
   ),
-  getRequestsFromQuery: async () => dataStreams.map((dataStream) => ({ id: dataStream.id, resolution: '0' })),
+  getRequestsFromQuery: async () =>
+    dataStreams.map((dataStream) => ({ id: dataStream.id, resolution: '0' })),
 });
 
 const dataSource = createMockSource([DATA_STREAM]);
@@ -46,7 +62,10 @@ const assetModule = new SiteWiseAssetModule(
   )
 );
 
-const siteWiseAlarmModule = new SiteWiseAlarmModule(createMockIoTEventsSDK(), assetModule);
+const siteWiseAlarmModule = new SiteWiseAlarmModule(
+  createMockIoTEventsSDK(),
+  assetModule
+);
 
 const componentSession = new SiteWiseComponentSession({
   componentId: 'componentId',

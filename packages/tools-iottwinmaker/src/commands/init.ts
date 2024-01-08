@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Arguments, CommandBuilder } from 'yargs';
 
-import { getDefaultAwsClients as aws, initDefaultAwsClients } from '../lib/aws-clients';
+import {
+  getDefaultAwsClients as aws,
+  initDefaultAwsClients,
+} from '../lib/aws-clients';
 import * as fs from 'fs';
 import * as path from 'path';
 import {
@@ -30,7 +33,12 @@ export type tmdt_config_file = {
 
 export type modifiedComponentTypeDefinition = Pick<
   GetComponentTypeCommandOutput,
-  'componentTypeId' | 'description' | 'extendsFrom' | 'functions' | 'isSingleton' | 'propertyDefinitions'
+  | 'componentTypeId'
+  | 'description'
+  | 'extendsFrom'
+  | 'functions'
+  | 'isSingleton'
+  | 'propertyDefinitions'
 >;
 
 export const command = 'init';
@@ -41,12 +49,14 @@ export const builder: CommandBuilder<Options> = (yargs) =>
     region: {
       type: 'string',
       require: true,
-      description: 'Specify the AWS region of the Workspace to bootstrap the project from.',
+      description:
+        'Specify the AWS region of the Workspace to bootstrap the project from.',
     },
     'workspace-id': {
       type: 'string',
       require: true,
-      description: 'Specify the ID of the Workspace to bootstrap the project from.',
+      description:
+        'Specify the ID of the Workspace to bootstrap the project from.',
     },
     out: {
       type: 'string',
@@ -55,19 +65,26 @@ export const builder: CommandBuilder<Options> = (yargs) =>
     },
   });
 
-async function import_component_types(workspaceIdStr: string, tmdt_config: tmdt_config_file, outDir: string) {
+async function import_component_types(
+  workspaceIdStr: string,
+  tmdt_config: tmdt_config_file,
+  outDir: string
+) {
   let nextToken: string | undefined = '';
   while (nextToken != undefined) {
-    const listComponentsResp: ListComponentTypesCommandOutput = await aws().tm.listComponentTypes({
-      workspaceId: workspaceIdStr,
-      nextToken: nextToken,
-    });
+    const listComponentsResp: ListComponentTypesCommandOutput =
+      await aws().tm.listComponentTypes({
+        workspaceId: workspaceIdStr,
+        nextToken: nextToken,
+      });
     nextToken = listComponentsResp['nextToken'];
     const componentTypeSummaries = listComponentsResp['componentTypeSummaries'];
     if (componentTypeSummaries != undefined) {
       for (const componentTypeSummary of componentTypeSummaries) {
         if (!componentTypeSummary.arn?.includes('AmazonOwnedTypesWorkspace')) {
-          console.log(`saving component type: ${componentTypeSummary.componentTypeId} ...`);
+          console.log(
+            `saving component type: ${componentTypeSummary.componentTypeId} ...`
+          );
 
           const getComponentResp = await aws().tm.getComponentType({
             workspaceId: workspaceIdStr,
@@ -89,17 +106,26 @@ async function import_component_types(workspaceIdStr: string, tmdt_config: tmdt_
             JSON.stringify(componentDefinition, null, 4)
           );
 
-          tmdt_config['component_types'].push(`${getComponentResp['componentTypeId']}.json`);
+          tmdt_config['component_types'].push(
+            `${getComponentResp['componentTypeId']}.json`
+          );
         }
       }
     }
   }
   // save each non-pre-defined types into files
-  fs.writeFileSync(path.join(outDir, 'tmdt.json'), JSON.stringify(tmdt_config, null, 4));
+  fs.writeFileSync(
+    path.join(outDir, 'tmdt.json'),
+    JSON.stringify(tmdt_config, null, 4)
+  );
   return tmdt_config;
 }
 
-async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmdt_config_file, outDir: string) {
+async function import_scenes_and_models(
+  workspaceIdStr: string,
+  tmdt_config: tmdt_config_file,
+  outDir: string
+) {
   let nextToken: string | undefined = '';
   while (nextToken != undefined) {
     const listScenesResp: ListScenesCommandOutput = await aws().tm.listScenes({
@@ -116,7 +142,11 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
         const s3ContentLocation = sceneSummary.contentLocation;
         if (s3ContentLocation != undefined) {
           contentBucket = s3ContentLocation.substring(5).split('/')[0];
-          const contentKey = s3ContentLocation.substring(5).split('/').slice(1).join('/');
+          const contentKey = s3ContentLocation
+            .substring(5)
+            .split('/')
+            .slice(1)
+            .join('/');
           console.log(`saving scene file: ${contentKey}`);
 
           const data = await aws().s3.getObject({
@@ -124,9 +154,13 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
             Key: contentKey,
           });
           if (!data.Body) {
-            throw new Error(`Error reading from s3 for bucket ${contentBucket} and key ${contentKey}`);
+            throw new Error(
+              `Error reading from s3 for bucket ${contentBucket} and key ${contentKey}`
+            );
           }
-          const sceneJson = JSON.parse(await data.Body.transformToString('utf-8'));
+          const sceneJson = JSON.parse(
+            await data.Body.transformToString('utf-8')
+          );
           for (const n of sceneJson['nodes']) {
             for (const c of n['components']) {
               if (c['type'] == 'ModelRef') {
@@ -156,7 +190,11 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
                   if (objlist['Contents'] != undefined) {
                     const contents = objlist['Contents'];
                     for (const [, value] of Object.entries(contents)) {
-                      if ('Key' in value && value['Size'] && value['Size'] > 0) {
+                      if (
+                        'Key' in value &&
+                        value['Size'] &&
+                        value['Size'] > 0
+                      ) {
                         modelFiles.add(`s3://${s3bucket}/${value['Key']}`);
                       }
                     }
@@ -167,7 +205,10 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
           }
 
           // detect model files that absolute s3 path, update them to relative to support self-contained snapshot
-          fs.writeFileSync(path.join(outDir, contentKey), JSON.stringify(sceneJson, null, 4)); // TODO handle non-root scene files?
+          fs.writeFileSync(
+            path.join(outDir, contentKey),
+            JSON.stringify(sceneJson, null, 4)
+          ); // TODO handle non-root scene files?
           tmdt_config['scenes'].push(contentKey);
         }
       } // for each scene summary
@@ -219,17 +260,27 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
           if (gltfData['buffers']) {
             for (const buffer of gltfData['buffers']) {
               if (!(buffer['uri'] as string).startsWith('data:')) {
-                const binRelativePath = `${(value as string).split('/').slice(0, -1).join('/')}/${buffer['uri']}`;
+                const binRelativePath = `${(value as string)
+                  .split('/')
+                  .slice(0, -1)
+                  .join('/')}/${buffer['uri']}`;
 
-                console.log(`  saving referenced bin file: ${binRelativePath} ...`);
+                console.log(
+                  `  saving referenced bin file: ${binRelativePath} ...`
+                );
                 const binS3bucket = binRelativePath.split('/')[2];
                 const binS3key = binRelativePath.split('/').slice(3).join('/');
                 const binData = await aws().s3.getObject({
                   Bucket: binS3bucket,
                   Key: binS3key,
                 });
-                const binBodyContents = (await streamToBuffer(binData.Body)) as Buffer;
-                fs.writeFileSync(path.join(outDir, '3d_models', binS3key), binBodyContents);
+                const binBodyContents = (await streamToBuffer(
+                  binData.Body
+                )) as Buffer;
+                fs.writeFileSync(
+                  path.join(outDir, '3d_models', binS3key),
+                  binBodyContents
+                );
                 tmdt_config['models'].push(binS3key);
               }
             }
@@ -238,17 +289,27 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
           if (gltfData['images']) {
             for (const image of gltfData['images']) {
               if (!(image['uri'] as string).startsWith('data:')) {
-                const binRelativePath = `${(value as string).split('/').slice(0, -1).join('/')}/${image['uri']}`;
+                const binRelativePath = `${(value as string)
+                  .split('/')
+                  .slice(0, -1)
+                  .join('/')}/${image['uri']}`;
 
-                console.log(`saving referenced gltf bin file: ${binRelativePath} ...`);
+                console.log(
+                  `saving referenced gltf bin file: ${binRelativePath} ...`
+                );
                 const binS3bucket = binRelativePath.split('/')[2];
                 const binS3key = binRelativePath.split('/').slice(3).join('/');
                 const binData = await aws().s3.getObject({
                   Bucket: binS3bucket,
                   Key: binS3key,
                 });
-                const binBodyContents = (await streamToBuffer(binData.Body)) as Buffer;
-                fs.writeFileSync(path.join(outDir, '3d_models', binS3key), binBodyContents);
+                const binBodyContents = (await streamToBuffer(
+                  binData.Body
+                )) as Buffer;
+                fs.writeFileSync(
+                  path.join(outDir, '3d_models', binS3key),
+                  binBodyContents
+                );
                 tmdt_config['models'].push(binS3key);
               }
             }
@@ -256,13 +317,20 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
         }
       }
       // save each non-pre-defined types into files
-      fs.writeFileSync(path.join(outDir, 'tmdt.json'), JSON.stringify(tmdt_config, null, 4));
+      fs.writeFileSync(
+        path.join(outDir, 'tmdt.json'),
+        JSON.stringify(tmdt_config, null, 4)
+      );
     }
   }
   return tmdt_config;
 }
 
-async function import_entities(workspaceId: string, tmdt_config: tmdt_config_file, outDir: string) {
+async function import_entities(
+  workspaceId: string,
+  tmdt_config: tmdt_config_file,
+  outDir: string
+) {
   const entities = [];
   let nextToken: string | undefined = '';
   let listEntitiesResp: ListEntitiesCommandOutput;
@@ -277,7 +345,9 @@ async function import_entities(workspaceId: string, tmdt_config: tmdt_config_fil
     if (entitySummaries != undefined) {
       for (const entitySummary of entitySummaries) {
         entityCount += 1;
-        console.log(`Saving entity (${entityCount} saved so far): ${entitySummary.entityId} ... `);
+        console.log(
+          `Saving entity (${entityCount} saved so far): ${entitySummary.entityId} ... `
+        );
         const entityDetails: GetEntityCommandOutput = await aws().tm.getEntity({
           workspaceId: workspaceId,
           entityId: entitySummary.entityId,
@@ -290,21 +360,20 @@ async function import_entities(workspaceId: string, tmdt_config: tmdt_config_fil
             (acc, [componentName, componentDetail]) => {
               const propertiesDetails = componentDetail['properties'] as object;
               // FIXME test case where property is added in component for entity but not in component type
-              const filteredProperties = Object.entries(propertiesDetails).reduce(
-                (prop_acc, [propName, propDetail]) => {
-                  if (propDetail['value'] != undefined) {
-                    prop_acc[propName] = {
-                      definition: {
-                        dataType: propDetail['definition']['dataType'],
-                      },
-                      value: propDetail['value'],
-                    };
-                  }
+              const filteredProperties = Object.entries(
+                propertiesDetails
+              ).reduce((prop_acc, [propName, propDetail]) => {
+                if (propDetail['value'] != undefined) {
+                  prop_acc[propName] = {
+                    definition: {
+                      dataType: propDetail['definition']['dataType'],
+                    },
+                    value: propDetail['value'],
+                  };
+                }
 
-                  return prop_acc;
-                },
-                {} as { [key: string]: object }
-              );
+                return prop_acc;
+              }, {} as { [key: string]: object });
 
               // process
               const filteredComponentDetail = {
@@ -331,10 +400,16 @@ async function import_entities(workspaceId: string, tmdt_config: tmdt_config_fil
       }
     }
   }
-  fs.writeFileSync(path.join(outDir, 'entities.json'), JSON.stringify(entities, null, 4)); // TODO handle entity file name collisions
+  fs.writeFileSync(
+    path.join(outDir, 'entities.json'),
+    JSON.stringify(entities, null, 4)
+  ); // TODO handle entity file name collisions
   tmdt_config['entities'] = 'entities.json';
 
-  fs.writeFileSync(path.join(outDir, 'tmdt.json'), JSON.stringify(tmdt_config, null, 4));
+  fs.writeFileSync(
+    path.join(outDir, 'tmdt.json'),
+    JSON.stringify(tmdt_config, null, 4)
+  );
   return tmdt_config;
 }
 
@@ -342,7 +417,9 @@ export const handler = async (argv: Arguments<Options>) => {
   const workspaceId: string = argv['workspace-id'];
   const region: string = argv.region;
   const outDir: string = argv.out;
-  console.log(`Bootstrapping project from workspace ${workspaceId} in ${region} at project directory ${outDir}`);
+  console.log(
+    `Bootstrapping project from workspace ${workspaceId} in ${region} at project directory ${outDir}`
+  );
 
   initDefaultAwsClients({ region: region });
 
@@ -363,7 +440,10 @@ export const handler = async (argv: Arguments<Options>) => {
     entities: '',
   };
 
-  fs.writeFileSync(path.join(outDir, 'tmdt.json'), JSON.stringify(tmdt_config, null, 4));
+  fs.writeFileSync(
+    path.join(outDir, 'tmdt.json'),
+    JSON.stringify(tmdt_config, null, 4)
+  );
 
   // TODO revisit: import workspace bucket/role (probably need role for specialized permissions)
 
@@ -373,7 +453,11 @@ export const handler = async (argv: Arguments<Options>) => {
 
   // import scenes
   console.log('====== Scenes / Models ======');
-  tmdt_config = await import_scenes_and_models(workspaceId, tmdt_config, outDir);
+  tmdt_config = await import_scenes_and_models(
+    workspaceId,
+    tmdt_config,
+    outDir
+  );
 
   // import entities
   console.log('========== Entities =========');

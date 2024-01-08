@@ -34,7 +34,10 @@ export const useHandleYMinMax = ({
   useEffect(() => {
     const update = () => {
       const newG = graphicRef.current.map((g) => {
-        const { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue } = calculateSeriesMakers(
+        const {
+          trendCursorsSeriesMakersInPixels,
+          trendCursorsSeriesMakersValue,
+        } = calculateSeriesMakers(
           seriesRef.current,
           g.timestampInMs,
           chartRef,
@@ -42,7 +45,10 @@ export const useHandleYMinMax = ({
           significantDigitsRef.current
         );
         g.yAxisMarkerValue = trendCursorsSeriesMakersValue;
-        g.children = updateTrendCursorLineMarkers(g.children, trendCursorsSeriesMakersInPixels);
+        g.children = updateTrendCursorLineMarkers(
+          g.children,
+          trendCursorsSeriesMakersInPixels
+        );
         return g;
       });
 

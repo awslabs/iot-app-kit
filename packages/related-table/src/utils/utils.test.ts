@@ -1,5 +1,11 @@
 import { ITreeNode, TreeMap } from '../Model/TreeNode';
-import { buildTreeNodes, buildTreePrefix, filteringFunction, flatTree, sortTree } from './index';
+import {
+  buildTreeNodes,
+  buildTreePrefix,
+  filteringFunction,
+  flatTree,
+  sortTree,
+} from './index';
 
 const items = [
   {
@@ -57,7 +63,12 @@ describe('TreeUtility', () => {
   let nodes: ITreeNode<any>[] = [];
 
   beforeEach(() => {
-    const newNodes = buildTreeNodes(items, new Map() as TreeMap<any>, 'id', 'parentId');
+    const newNodes = buildTreeNodes(
+      items,
+      new Map() as TreeMap<any>,
+      'id',
+      'parentId'
+    );
     sortTree(newNodes, {} as any, []);
     nodes = flatTree(buildTreePrefix(newNodes));
   });
@@ -78,7 +89,9 @@ describe('TreeUtility', () => {
     };
     newItems.splice(parentIndex, 1, newParentItem);
 
-    const newNodes = flatTree(buildTreeNodes(newItems, treeMap, 'id', 'parentId'));
+    const newNodes = flatTree(
+      buildTreeNodes(newItems, treeMap, 'id', 'parentId')
+    );
     const parentNode = newNodes.find((item) => item.name === 'Parent');
     expect(parentNode).toBeDefined();
     expect(parentNode?.priority).toBe(newParentItem.priority);
@@ -92,31 +105,48 @@ describe('TreeUtility', () => {
     const parentIndex = newItems.findIndex((item) => item.name === 'Parent');
     newItems.splice(parentIndex, 1);
 
-    const newNodes = flatTree(buildTreeNodes(newItems, treeMap, 'id', 'parentId'));
+    const newNodes = flatTree(
+      buildTreeNodes(newItems, treeMap, 'id', 'parentId')
+    );
     expect(newNodes.length).toEqual(2);
     expect(treeMap.size).toEqual(2);
   });
 
   it('filtering function by name', () => {
-    const nodesFiltered = nodes.filter((node) => filteringFunction(node, 'Great Grand Child', ['name']));
+    const nodesFiltered = nodes.filter((node) =>
+      filteringFunction(node, 'Great Grand Child', ['name'])
+    );
     expect(nodesFiltered.length).toEqual(6);
   });
 
   it('filtering function by all columns', () => {
-    const nodesFiltered = nodes.filter((node) => filteringFunction(node, 'Great Grand Child'));
+    const nodesFiltered = nodes.filter((node) =>
+      filteringFunction(node, 'Great Grand Child')
+    );
     expect(nodesFiltered.length).toEqual(6);
   });
 
   it('custom filtering function by name', () => {
-    const customFilteringFunction = (item: any, filteringText: string) => item.name === filteringText;
+    const customFilteringFunction = (item: any, filteringText: string) =>
+      item.name === filteringText;
     const nodesFiltered = nodes.filter((node) =>
-      filteringFunction(node, 'Great Grand Child', undefined, customFilteringFunction)
+      filteringFunction(
+        node,
+        'Great Grand Child',
+        undefined,
+        customFilteringFunction
+      )
     );
     expect(nodesFiltered.length).toEqual(6);
   });
 
   it('sort by name and priority', () => {
-    const tree = buildTreeNodes(items, new Map() as TreeMap<any>, 'id', 'parentId');
+    const tree = buildTreeNodes(
+      items,
+      new Map() as TreeMap<any>,
+      'id',
+      'parentId'
+    );
     const sortedNodes = flatTree(tree);
     sortTree(
       sortedNodes,
@@ -145,7 +175,12 @@ describe('TreeUtility', () => {
   });
 
   it('sort reverse by priority', () => {
-    const tree = buildTreeNodes(items, new Map() as TreeMap<any>, 'id', 'parentId');
+    const tree = buildTreeNodes(
+      items,
+      new Map() as TreeMap<any>,
+      'id',
+      'parentId'
+    );
     const sortedNodes = flatTree(tree);
     sortTree(
       sortedNodes,

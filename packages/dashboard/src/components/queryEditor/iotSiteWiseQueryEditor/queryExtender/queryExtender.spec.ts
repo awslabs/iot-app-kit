@@ -22,7 +22,8 @@ describe(QueryExtender.name, () => {
         },
       ] as ModeledDataStream[];
 
-      const extendedQuery = queryExtender.extendAssetQueries(modeledDataStreams);
+      const extendedQuery =
+        queryExtender.extendAssetQueries(modeledDataStreams);
 
       expect(extendedQuery).toEqual({
         assets: [
@@ -60,13 +61,17 @@ describe(QueryExtender.name, () => {
         },
       ] as ModeledDataStream[];
 
-      const extendedQuery = queryExtender.extendAssetQueries(modeledDataStreams);
+      const extendedQuery =
+        queryExtender.extendAssetQueries(modeledDataStreams);
 
       expect(extendedQuery).toEqual({
         assets: [
           {
             assetId: 'asset-1',
-            properties: [{ propertyId: 'property-1' }, { propertyId: 'property-2' }],
+            properties: [
+              { propertyId: 'property-1' },
+              { propertyId: 'property-2' },
+            ],
           },
         ],
       });
@@ -108,9 +113,12 @@ describe(QueryExtender.name, () => {
         properties: [{ propertyAlias: 'property-1' }],
       };
       const queryExtender = new QueryExtender(currentQuery);
-      const unmodeledDataStreams = [{ propertyAlias: 'property-2' }] as UnmodeledDataStream[];
+      const unmodeledDataStreams = [
+        { propertyAlias: 'property-2' },
+      ] as UnmodeledDataStream[];
 
-      const extendedQuery = queryExtender.extendPropertyAliasQueries(unmodeledDataStreams);
+      const extendedQuery =
+        queryExtender.extendPropertyAliasQueries(unmodeledDataStreams);
 
       expect(extendedQuery).toEqual({
         assets: [
@@ -119,7 +127,10 @@ describe(QueryExtender.name, () => {
             properties: [{ propertyId: 'property-1' }],
           },
         ],
-        properties: [{ propertyAlias: 'property-1' }, { propertyAlias: 'property-2' }],
+        properties: [
+          { propertyAlias: 'property-1' },
+          { propertyAlias: 'property-2' },
+        ],
       });
     });
 
@@ -133,9 +144,13 @@ describe(QueryExtender.name, () => {
         { propertyAlias: 'property-2' },
       ] as UnmodeledDataStream[];
 
-      const extendedQuery = queryExtender.extendPropertyAliasQueries(unmodeledDataStreams);
+      const extendedQuery =
+        queryExtender.extendPropertyAliasQueries(unmodeledDataStreams);
 
-      expect(extendedQuery.properties).toEqual([{ propertyAlias: 'property-1' }, { propertyAlias: 'property-2' }]);
+      expect(extendedQuery.properties).toEqual([
+        { propertyAlias: 'property-1' },
+        { propertyAlias: 'property-2' },
+      ]);
     });
   });
 

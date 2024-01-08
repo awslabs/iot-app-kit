@@ -55,7 +55,9 @@ function initDefaultAwsClients(options: { region: string }) {
  */
 function getDefaultAwsClients() {
   if (!defaultAwsClients) {
-    throw new Error('initDefaultAwsClients must be called before calling getDefaultAwsClients');
+    throw new Error(
+      'initDefaultAwsClients must be called before calling getDefaultAwsClients'
+    );
   }
   return defaultAwsClients;
 }

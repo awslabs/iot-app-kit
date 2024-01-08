@@ -4,10 +4,14 @@ import Pagination from '@awsui/components-react/pagination';
 import { NonCancelableCustomEvent, TableProps } from '@awsui/components-react';
 import { EmptyState, EmptyStateProps } from '../RelatedTable/EmptyState';
 import { RelatedTableProps } from '../RelatedTable/RelatedTable';
-import { useTreeCollection, UseTreeCollection } from '../Hooks/useTreeCollection';
+import {
+  useTreeCollection,
+  UseTreeCollection,
+} from '../Hooks/useTreeCollection';
 import { ITreeNode } from '../Model/TreeNode';
 
-export interface RelatedTableExtendedProps<T> extends Omit<RelatedTableProps<T>, 'empty'> {
+export interface RelatedTableExtendedProps<T>
+  extends Omit<RelatedTableProps<T>, 'empty'> {
   items: T[];
   empty: EmptyStateProps;
   collectionOptions: UseTreeCollection<T>;
@@ -64,7 +68,9 @@ export const withUseTreeCollection = (RelatedTableComp: FC<any>) => {
         expandNode(node);
         expandChildren(node);
       },
-      onSortingChange: (event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>) => {
+      onSortingChange: (
+        event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>
+      ) => {
         if (onSortingChange) {
           onSortingChange(event);
         }
@@ -72,7 +78,11 @@ export const withUseTreeCollection = (RelatedTableComp: FC<any>) => {
           collectionProps.onSortingChange(event);
         }
       },
-      onSelectionChange: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => {
+      onSelectionChange: (
+        event: NonCancelableCustomEvent<
+          TableProps.SelectionChangeDetail<unknown>
+        >
+      ) => {
         if (onSelectionChange) {
           onSelectionChange(event);
         }

@@ -1,4 +1,7 @@
-import { type IoTSiteWiseClient, type AssetPropertySummary } from '@aws-sdk/client-iotsitewise';
+import {
+  type IoTSiteWiseClient,
+  type AssetPropertySummary,
+} from '@aws-sdk/client-iotsitewise';
 
 import { SearchAssetPropertyListsRequest } from './searchAssetPropertyListsRequest';
 import { SearchAssetModelPropertyListsRequest } from './searchAssetModelPropertyListsRequest';
@@ -9,8 +12,11 @@ export class SearchAssetPropertyRequest {
   #searchAssetModelPropertyListsRequest: SearchAssetModelPropertyListsRequest;
 
   constructor(client: IoTSiteWiseClient) {
-    this.#searchAssetPropertyListsRequest = new SearchAssetPropertyListsRequest(client);
-    this.#searchAssetModelPropertyListsRequest = new SearchAssetModelPropertyListsRequest(client);
+    this.#searchAssetPropertyListsRequest = new SearchAssetPropertyListsRequest(
+      client
+    );
+    this.#searchAssetModelPropertyListsRequest =
+      new SearchAssetModelPropertyListsRequest(client);
   }
 
   public async send({
@@ -24,11 +30,15 @@ export class SearchAssetPropertyRequest {
   }): Promise<AssetPropertySummary | undefined | never> {
     try {
       // We need both the asset property and the asset model property to get the complete asset property.
-      const assetProperty = await this.#searchAssetPropertyListsRequest.send({ assetPropertyId, assetId });
-      const assetModelProperty = await this.#searchAssetModelPropertyListsRequest.send({
-        assetModelPropertyId: assetPropertyId,
-        assetModelId,
+      const assetProperty = await this.#searchAssetPropertyListsRequest.send({
+        assetPropertyId,
+        assetId,
       });
+      const assetModelProperty =
+        await this.#searchAssetModelPropertyListsRequest.send({
+          assetModelPropertyId: assetPropertyId,
+          assetModelId,
+        });
 
       if (assetProperty && assetModelProperty) {
         // Asset properties may override asset model properties, so we merge it second.

@@ -11,7 +11,10 @@ import {
   spaceScaledXs,
   spaceScaledM,
 } from '@cloudscape-design/design-tokens';
-import { CancelableEventHandler, ClickDetail } from '@cloudscape-design/components/internal/events';
+import {
+  CancelableEventHandler,
+  ClickDetail,
+} from '@cloudscape-design/components/internal/events';
 import { getPlugin } from '@iot-app-kit/core';
 
 import { DashboardWidget } from '~/types';
@@ -34,7 +37,12 @@ const DeletableTileAction = ({ handleDelete }: DeletableTileActionProps) => {
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div onMouseDown={handleMouseDown}>
-      <Button onClick={handleDelete} ariaLabel='delete widget' variant='icon' iconName='close' />
+      <Button
+        onClick={handleDelete}
+        ariaLabel='delete widget'
+        variant='icon'
+        iconName='close'
+      />
     </div>
   );
 };
@@ -50,7 +58,12 @@ export type WidgetTileProps = PropsWithChildren<{
  * Component to add functionality to the widget container
  * Allows a user to title a widget, add click remove
  */
-const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, removeable }) => {
+const WidgetTile: React.FC<WidgetTileProps> = ({
+  children,
+  widget,
+  title,
+  removeable,
+}) => {
   const isReadOnly = useSelector((state: DashboardState) => state.readOnly);
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
@@ -112,7 +125,9 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
             </Box>
           </div>
           <div className='tile-button-contianer'>
-            {isRemoveable && <DeletableTileAction handleDelete={handleDelete} />}
+            {isRemoveable && (
+              <DeletableTileAction handleDelete={handleDelete} />
+            )}
             <ConfirmDeleteModal
               visible={visible}
               headerTitle='Delete selected widget?'
@@ -121,8 +136,8 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
               description={
                 <Box>
                   <Box variant='p'>
-                    Are you sure you want to delete the selected widget? You'll lose all the progress you made to the
-                    widget
+                    Are you sure you want to delete the selected widget? You'll
+                    lose all the progress you made to the widget
                   </Box>
                   <Box variant='p' padding={{ top: 'm' }}>
                     You cannot undo this action.

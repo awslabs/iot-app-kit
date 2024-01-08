@@ -35,7 +35,9 @@ export const sendWidgetsToBack = (state: DashboardState): DashboardState => {
     z: selectedWidgetsIds.includes(widget.id) ? widget.z + zOffset : widget.z,
   }));
 
-  const translatedSelectedWidgets = translatedWidgets.filter((widget) => selectedWidgetsIds.includes(widget.id));
+  const translatedSelectedWidgets = translatedWidgets.filter((widget) =>
+    selectedWidgetsIds.includes(widget.id)
+  );
 
   return {
     ...state,

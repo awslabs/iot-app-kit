@@ -1,9 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { HTMLAttributes, useEffect, useCallback, useMemo, useState, useRef } from 'react';
+import React, {
+  HTMLAttributes,
+  useEffect,
+  useCallback,
+  useMemo,
+  useState,
+  useRef,
+} from 'react';
 import { IntlProvider, FormattedMessage } from 'react-intl';
 import type { Core, EventObjectNode, EventObjectEdge } from 'cytoscape';
-import { Button, Input, Grid, SpaceBetween } from '@cloudscape-design/components';
+import {
+  Button,
+  Input,
+  Grid,
+  SpaceBetween,
+} from '@cloudscape-design/components';
 import { TwinMakerKGQueryDataModule } from '@iot-app-kit/source-iottwinmaker';
 import GraphView from './graph/graph-view';
 import Toolbar from './graph/graph-toolbar';
@@ -18,7 +30,8 @@ import { NodeData, EdgeData } from './graph/types';
 import { IQueryData } from './interfaces';
 import { getElementsDefinition } from './utils';
 
-export interface KnowledgeGraphInterface extends HTMLAttributes<HTMLDivElement> {
+export interface KnowledgeGraphInterface
+  extends HTMLAttributes<HTMLDivElement> {
   kgDataSource: TwinMakerKGQueryDataModule;
   onEntitySelected?: (e: NodeData) => void;
   onRelationshipSelected?: (e: EdgeData) => void;
@@ -82,8 +95,13 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
   const cy = useRef<Core>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const stylesheet = useStylesheet(containerRef);
-  const { selectedGraphNodeEntityId, setSelectedGraphNodeEntityId, setQueryResult, queryResult, clearGraphResults } =
-    useKnowledgeGraphState();
+  const {
+    selectedGraphNodeEntityId,
+    setSelectedGraphNodeEntityId,
+    setQueryResult,
+    queryResult,
+    clearGraphResults,
+  } = useKnowledgeGraphState();
   const [searchTerm, setSearchTerm] = useState('');
   const { nodeData, edgeData } = ResponseParser.parse(
     queryResult ? queryResult['rows'] : null,
@@ -101,14 +119,20 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
   const zoomIn = useCallback(() => {
     cy.current?.zoom({
       level: cy.current.zoom() + ZOOM_INTERVAL,
-      renderedPosition: { x: cy.current.width() / 2, y: cy.current.height() / 2 },
+      renderedPosition: {
+        x: cy.current.width() / 2,
+        y: cy.current.height() / 2,
+      },
     });
   }, []);
 
   const zoomOut = useCallback(() => {
     cy.current?.zoom({
       level: cy.current.zoom() - ZOOM_INTERVAL,
-      renderedPosition: { x: cy.current.width() / 2, y: cy.current.height() / 2 },
+      renderedPosition: {
+        x: cy.current.width() / 2,
+        y: cy.current.height() / 2,
+      },
     });
   }, []);
 
@@ -124,7 +148,10 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
         onEntitySelected(data);
       }
       setSelectedGraphNodeEntityId(data.id);
-      console.log('selectedGraphNodeEntityId Inside = ', selectedGraphNodeEntityId);
+      console.log(
+        'selectedGraphNodeEntityId Inside = ',
+        selectedGraphNodeEntityId
+      );
     },
     [onEntitySelected, setSelectedGraphNodeEntityId]
   );
@@ -171,7 +198,13 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
       cy.current?.off('unselect', 'node');
       cy.current?.off('unselect', 'edge');
     };
-  }, [cy.current, clickEntityHandler, clickRelationshipHandler, unClickEntityHandler, unClickRelationshipHandler]);
+  }, [
+    cy.current,
+    clickEntityHandler,
+    clickRelationshipHandler,
+    unClickEntityHandler,
+    unClickRelationshipHandler,
+  ]);
 
   useEffect(() => {
     if (onGraphResultChange && nodeData) {
@@ -201,7 +234,9 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
 
   const onClearClicked = useCallback(() => {
     if (onClearGraph && nodeData) {
-      edgeData ? onClearGraph([...nodeData.values()], [...edgeData.values()]) : onClearGraph([...nodeData.values()]);
+      edgeData
+        ? onClearGraph([...nodeData.values()], [...edgeData.values()])
+        : onClearGraph([...nodeData.values()]);
     }
     clearGraphResults(true);
   }, [clearGraphResults, onClearGraph, nodeData, edgeData]);
@@ -234,13 +269,26 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
           </Button>
         </Grid>
       </div>
-      <div ref={containerRef} className={`${STYLE_PREFIX} ${className || ''}`.trim()} {...props}>
+      <div
+        ref={containerRef}
+        className={`${STYLE_PREFIX} ${className || ''}`.trim()}
+        {...props}
+      >
         <GraphView
           className={`${STYLE_PREFIX}-canvas`}
           ref={cy}
           stylesheet={stylesheet}
-          elements={getElementsDefinition([...nodeData.values()], [...edgeData.values()])}
-          layout={edgeData.size > 0 ? breadthFirstlayout : nodeData.size > 1 ? gridlayout : presetlayout}
+          elements={getElementsDefinition(
+            [...nodeData.values()],
+            [...edgeData.values()]
+          )}
+          layout={
+            edgeData.size > 0
+              ? breadthFirstlayout
+              : nodeData.size > 1
+              ? gridlayout
+              : presetlayout
+          }
         />
         <Toolbar>
           <Button
@@ -286,7 +334,11 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
               description='Explore button text'
             />
           </Button>
-          <Button disabled={queryResult ? false : true} onClick={onClearClicked} data-testid='clear-button'>
+          <Button
+            disabled={queryResult ? false : true}
+            onClick={onClearClicked}
+            data-testid='clear-button'
+          >
             <FormattedMessage
               id='KnowledgeGraphPanel.button.clear'
               defaultMessage='Clear'

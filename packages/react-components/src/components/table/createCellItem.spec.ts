@@ -3,17 +3,29 @@ import { DEFAULT_TABLE_MESSAGES } from './messages';
 import type { CellItem } from './types';
 import type { TableMessages } from './messages';
 
-const messageOverride = { tableCell: { loading: 'Override loading text' } } as TableMessages;
+const messageOverride = {
+  tableCell: { loading: 'Override loading text' },
+} as TableMessages;
 
 it('creates CellItem', () => {
-  const props = { value: 10, error: undefined, isLoading: false, threshold: undefined };
+  const props = {
+    value: 10,
+    error: undefined,
+    isLoading: false,
+    threshold: undefined,
+  };
   const item: CellItem = createCellItem(props, DEFAULT_TABLE_MESSAGES);
   expect(item).toMatchObject({ value: 10 });
   expect(item.valueOf()).toEqual(10);
 });
 
 it('creates CellItem that returns error message on error', () => {
-  const props = { value: 10, error: { msg: 'Some error' }, isLoading: false, threshold: undefined };
+  const props = {
+    value: 10,
+    error: { msg: 'Some error' },
+    isLoading: false,
+    threshold: undefined,
+  };
   const item: CellItem = createCellItem(props, DEFAULT_TABLE_MESSAGES);
 
   expect(`${item}`).toBe('Some error');

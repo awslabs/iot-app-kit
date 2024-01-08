@@ -1,4 +1,7 @@
-import { ListAssetModelPropertiesCommand, type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  ListAssetModelPropertiesCommand,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 
 export class GetAssetModelPropertiesRequest {
   readonly #command: ListAssetModelPropertiesCommand;
@@ -23,7 +26,9 @@ export class GetAssetModelPropertiesRequest {
 
   public async send() {
     try {
-      const response = await this.#client.send(this.#command, { abortSignal: this.#signal });
+      const response = await this.#client.send(this.#command, {
+        abortSignal: this.#signal,
+      });
 
       return response;
     } catch (error) {
@@ -31,7 +36,13 @@ export class GetAssetModelPropertiesRequest {
     }
   }
 
-  #createCommand({ assetModelId, nextToken }: { assetModelId: string; nextToken?: string }) {
+  #createCommand({
+    assetModelId,
+    nextToken,
+  }: {
+    assetModelId: string;
+    nextToken?: string;
+  }) {
     const command = new ListAssetModelPropertiesCommand({
       assetModelId,
       nextToken,

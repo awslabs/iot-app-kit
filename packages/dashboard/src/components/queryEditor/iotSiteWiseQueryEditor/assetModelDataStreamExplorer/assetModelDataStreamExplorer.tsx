@@ -6,9 +6,15 @@ import Box from '@cloudscape-design/components/box';
 
 import { AssetModelExplorer } from './assetModelExplorer/assetModelExplorer';
 import { AssetModelPropertiesExplorer } from './assetModelPropertiesExplorer/assetModelPropertiesExplorer';
-import { createInitialAssetModelSummary, useSelectedAssetModel } from './useSelectedAssetModel';
+import {
+  createInitialAssetModelSummary,
+  useSelectedAssetModel,
+} from './useSelectedAssetModel';
 import { HorizontalDivider } from '~/components/divider/horizontalDivider';
-import { createInitialAssetModelProperties, useSelectedAssetModelProperties } from './useSelectedAssetModelProperties';
+import {
+  createInitialAssetModelProperties,
+  useSelectedAssetModelProperties,
+} from './useSelectedAssetModelProperties';
 import { createInitialAsset, useSelectedAsset } from './useSelectedAsset';
 import { createAssetModelQuery } from './createAssetModelQuery';
 import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
@@ -21,18 +27,31 @@ export interface AssetModelDataStreamExplorerProps {
   client: IoTSiteWiseClient;
 }
 
-export const AssetModelDataStreamExplorer = ({ client }: AssetModelDataStreamExplorerProps) => {
+export const AssetModelDataStreamExplorer = ({
+  client,
+}: AssetModelDataStreamExplorerProps) => {
   const metricsRecorder = getPlugin('metricsRecorder');
-  const { assetModelId, assetIds, clearModelBasedWidgets, updateSelectedAsset } = useModelBasedQuery();
-  const { assetModels, updateAssetModels, modelBasedWidgetsSelected } = useModelBasedQuerySelection();
+  const {
+    assetModelId,
+    assetIds,
+    clearModelBasedWidgets,
+    updateSelectedAsset,
+  } = useModelBasedQuery();
+  const { assetModels, updateAssetModels, modelBasedWidgetsSelected } =
+    useModelBasedQuerySelection();
 
   const { propertyIds } = getAssetModelQueryInformation(assetModels);
 
-  const [selectedAssetModel, selectAssetModel] = useSelectedAssetModel(createInitialAssetModelSummary(assetModelId));
-  const [selectedAsset, selectAsset] = useSelectedAsset(createInitialAsset(assetIds?.at(0)));
-  const [selectedAssetModelProperties, selectAssetModelProperties] = useSelectedAssetModelProperties(
-    createInitialAssetModelProperties(propertyIds)
+  const [selectedAssetModel, selectAssetModel] = useSelectedAssetModel(
+    createInitialAssetModelSummary(assetModelId)
   );
+  const [selectedAsset, selectAsset] = useSelectedAsset(
+    createInitialAsset(assetIds?.at(0))
+  );
+  const [selectedAssetModelProperties, selectAssetModelProperties] =
+    useSelectedAssetModelProperties(
+      createInitialAssetModelProperties(propertyIds)
+    );
 
   /**
    * update every model based query widget
@@ -55,7 +74,9 @@ export const AssetModelDataStreamExplorer = ({ client }: AssetModelDataStreamExp
         createAssetModelQuery({
           assetModelId: selectedAssetModel.id,
           assetId: selectedAsset?.id,
-          assetModelPropertyIds: createNonNullableList(selectedAssetModelProperties.map(({ id }) => id)),
+          assetModelPropertyIds: createNonNullableList(
+            selectedAssetModelProperties.map(({ id }) => id)
+          ),
         })
       );
       metricsRecorder?.record({
@@ -86,7 +107,9 @@ export const AssetModelDataStreamExplorer = ({ client }: AssetModelDataStreamExp
             client={client}
             onSave={onSave}
             saveDisabled={!modelBasedWidgetsSelected}
-            onSelect={(assetModelProperties) => selectAssetModelProperties(assetModelProperties)}
+            onSelect={(assetModelProperties) =>
+              selectAssetModelProperties(assetModelProperties)
+            }
           />
         </>
       )}

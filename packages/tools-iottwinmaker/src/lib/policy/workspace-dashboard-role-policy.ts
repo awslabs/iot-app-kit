@@ -8,7 +8,11 @@ export const workspaceDashboardRolePolicyTemplate = {
     },
     {
       Effect: 'Allow',
-      Action: ['iottwinmaker:Get*', 'iottwinmaker:List*', 'iottwinmaker:ExecuteQuery'],
+      Action: [
+        'iottwinmaker:Get*',
+        'iottwinmaker:List*',
+        'iottwinmaker:ExecuteQuery',
+      ],
       Resource: ['{workspaceArn}', '{workspaceArn}/*'],
     },
     {

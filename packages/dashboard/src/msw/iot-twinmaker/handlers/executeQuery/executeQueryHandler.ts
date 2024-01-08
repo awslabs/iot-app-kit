@@ -1,4 +1,7 @@
-import { type ExecuteQueryRequest, type ExecuteQueryResponse } from '@aws-sdk/client-iottwinmaker';
+import {
+  type ExecuteQueryRequest,
+  type ExecuteQueryResponse,
+} from '@aws-sdk/client-iottwinmaker';
 import { rest } from 'msw';
 
 import { WORKSPACE_SUMMARIES } from '../../resources/workspaces';
@@ -11,13 +14,18 @@ import { WORKSPACE_SUMMARIES } from '../../resources/workspaces';
  */
 export function executeQueryHandler() {
   return rest.post('', async (req, res, ctx) => {
-    const { workspaceId, queryStatement } = await req.json<ExecuteQueryRequest>();
+    const { workspaceId, queryStatement } =
+      await req.json<ExecuteQueryRequest>();
 
     if (!workspaceId || !queryStatement) {
       return res(ctx.status(400));
     }
 
-    if (!WORKSPACE_SUMMARIES.find((workspace) => workspace.workspaceId === workspaceId)) {
+    if (
+      !WORKSPACE_SUMMARIES.find(
+        (workspace) => workspace.workspaceId === workspaceId
+      )
+    ) {
       return res(ctx.status(404));
     }
 

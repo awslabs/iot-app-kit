@@ -1,7 +1,9 @@
 import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
 
 export const getComparisonOperators = (
-  { supportsContains }: { supportsContains: boolean } = { supportsContains: false }
+  { supportsContains }: { supportsContains: boolean } = {
+    supportsContains: false,
+  }
 ) => [
   { label: '>', value: COMPARISON_OPERATOR.GT },
   { label: '<', value: COMPARISON_OPERATOR.LT },

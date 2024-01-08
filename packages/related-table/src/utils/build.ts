@@ -1,4 +1,9 @@
-import { ExpandableTableNodeStatus, ITreeNode, TreeMap, TreeNode } from '../Model/TreeNode';
+import {
+  ExpandableTableNodeStatus,
+  ITreeNode,
+  TreeMap,
+  TreeNode,
+} from '../Model/TreeNode';
 import { cleanupTree } from './cleanup';
 
 const createOrSetParentNode = <T>(
@@ -7,10 +12,17 @@ const createOrSetParentNode = <T>(
   keyPropertyName: string,
   parentKeyPropertyName: string
 ) => {
-  const parentKey = (node as Record<string, unknown>)[parentKeyPropertyName] as string;
+  const parentKey = (node as Record<string, unknown>)[
+    parentKeyPropertyName
+  ] as string;
   if (parentKey) {
-    const parentNode = treeMap.get(parentKey) || new TreeNode({ [keyPropertyName]: parentKey } as T);
-    if (parentNode.getChildren().length === 0 || node.getParent() !== parentNode) {
+    const parentNode =
+      treeMap.get(parentKey) ||
+      new TreeNode({ [keyPropertyName]: parentKey } as T);
+    if (
+      parentNode.getChildren().length === 0 ||
+      node.getParent() !== parentNode
+    ) {
       node.setParentNode(parentNode);
       parentNode.addChild(node);
     }
@@ -21,7 +33,9 @@ const createOrSetParentNode = <T>(
 const updateNode = <T>(node: ITreeNode<T>, newData: T) => {
   Object.keys(newData as Record<string, unknown>).forEach((prop) => {
     // eslint-disable-next-line no-param-reassign
-    (node as Record<string, unknown>)[prop] = (newData as Record<string, unknown>)[prop];
+    (node as Record<string, unknown>)[prop] = (
+      newData as Record<string, unknown>
+    )[prop];
   });
 };
 
@@ -45,7 +59,11 @@ const createNode = <T>(
   return node;
 };
 
-const prepareNode = <T>(node: ITreeNode<T>, treeMap: TreeMap<T>, keyPropertyName: string): ITreeNode<T> => {
+const prepareNode = <T>(
+  node: ITreeNode<T>,
+  treeMap: TreeMap<T>,
+  keyPropertyName: string
+): ITreeNode<T> => {
   const key = (node as any)[keyPropertyName];
   const parent = node.getParent();
   const isVisible = parent ? parent.isExpanded() && parent.isVisible() : true;
@@ -79,14 +97,22 @@ export const buildTreeNodes = <T>(
   return treeNodes;
 };
 
-export const recursiveBuildTreePrefix = <T>(node: ITreeNode<T>, index: number, parentLastChildPath: boolean[]) => {
+export const recursiveBuildTreePrefix = <T>(
+  node: ITreeNode<T>,
+  index: number,
+  parentLastChildPath: boolean[]
+) => {
   const parent = node.getParent();
   const isLastChild = parent ? parent.getChildren().length - 1 === index : true;
   node.buildPrefix(isLastChild, parentLastChildPath);
   node
     .getChildren()
     .forEach((child: ITreeNode<T>, childIndex) =>
-      recursiveBuildTreePrefix(child, childIndex, parentLastChildPath.concat([isLastChild]))
+      recursiveBuildTreePrefix(
+        child,
+        childIndex,
+        parentLastChildPath.concat([isLastChild])
+      )
     );
   return node;
 };

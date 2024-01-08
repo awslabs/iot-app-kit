@@ -1,7 +1,9 @@
 import { PropertyDataType } from '@aws-sdk/client-iotsitewise';
 import type { DataType } from '@iot-app-kit/core';
 
-export const toDataType = (propertyDataType: PropertyDataType | string | undefined): DataType => {
+export const toDataType = (
+  propertyDataType: PropertyDataType | string | undefined
+): DataType => {
   if (propertyDataType === 'STRING') {
     return 'STRING';
   }

@@ -2,20 +2,33 @@ import flushPromises from 'flush-promises';
 import { DATA_STREAM } from '../mockWidgetProperties';
 import { createMockSiteWiseDataSource } from '../__mocks__';
 import * as caching from './data-cache/caching/caching';
-import { HOUR_IN_MS, MINUTE_IN_MS, MONTH_IN_MS, SECOND_IN_MS } from '../common/time';
+import {
+  HOUR_IN_MS,
+  MINUTE_IN_MS,
+  MONTH_IN_MS,
+  SECOND_IN_MS,
+} from '../common/time';
 import { TimeSeriesDataModule } from './TimeSeriesDataModule';
 
-import { toSiteWiseAssetProperty, toDataStreamId } from '../common/dataStreamId';
+import {
+  toSiteWiseAssetProperty,
+  toDataStreamId,
+} from '../common/dataStreamId';
 import type { MockSiteWiseQuery } from '../__mocks__';
 import type { DataSource, DataPoint } from './types';
-import type { TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from './data-cache/requestTypes';
+import type {
+  TimeSeriesDataRequest,
+  TimeSeriesDataRequestSettings,
+} from './data-cache/requestTypes';
 import type { DataStreamsStore, DataStreamStore } from './data-cache/types';
 
 import Mock = jest.Mock;
 
 const { EMPTY_CACHE } = caching;
 
-const { propertyId: PROPERTY_ID, assetId: ASSET_ID } = toSiteWiseAssetProperty(DATA_STREAM.id);
+const { propertyId: PROPERTY_ID, assetId: ASSET_ID } = toSiteWiseAssetProperty(
+  DATA_STREAM.id
+);
 
 const DATA_STREAM_QUERY: MockSiteWiseQuery = {
   assets: [
@@ -58,7 +71,9 @@ it('subscribes to an empty set of queries', async () => {
 
 describe('update subscription', () => {
   it('provides new data streams when subscription is updated', async () => {
-    const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+    const dataSource = createMockSiteWiseDataSource({
+      dataStreams: [DATA_STREAM],
+    });
     const dataModule = new TimeSeriesDataModule(dataSource);
 
     const timeSeriesCallback = jest.fn();
@@ -147,7 +162,10 @@ describe('initial request', () => {
     dataModule.subscribeToDataStreams(
       {
         queries: [query],
-        request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true } },
+        request: {
+          viewport: { start: START, end: END },
+          settings: { fetchFromStartToEnd: true },
+        },
       },
       timeSeriesCallback
     );
@@ -189,7 +207,14 @@ describe('initial request', () => {
     const someDataType = 'STRING';
 
     const dataSource: DataSource = createMockSiteWiseDataSource({
-      dataStreams: [{ ...DATA_STREAM, meta: someMetaStuff, name: someName, dataType: someDataType }],
+      dataStreams: [
+        {
+          ...DATA_STREAM,
+          meta: someMetaStuff,
+          name: someName,
+          dataType: someDataType,
+        },
+      ],
     });
     const dataModule = new TimeSeriesDataModule(dataSource);
 
@@ -198,7 +223,10 @@ describe('initial request', () => {
     dataModule.subscribeToDataStreams(
       {
         queries: [query],
-        request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true } },
+        request: {
+          viewport: { start: START, end: END },
+          settings: { fetchFromStartToEnd: true },
+        },
       },
       timeSeriesCallback
     );
@@ -242,7 +270,10 @@ describe('initial request', () => {
     dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
-        request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true } },
+        request: {
+          viewport: { start: START, end: END },
+          settings: { fetchFromStartToEnd: true },
+        },
       },
       timeSeriesCallback
     );
@@ -267,7 +298,10 @@ describe('initial request', () => {
     expect(dataSource.initiateRequest).toBeCalledWith(
       expect.objectContaining({
         query: DATA_STREAM_QUERY,
-        request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true } },
+        request: {
+          viewport: { start: START, end: END },
+          settings: { fetchFromStartToEnd: true },
+        },
       }),
       [
         expect.objectContaining({
@@ -282,7 +316,9 @@ describe('initial request', () => {
 });
 
 it('subscribes to a single data stream', async () => {
-  const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+  const dataSource = createMockSiteWiseDataSource({
+    dataStreams: [DATA_STREAM],
+  });
   const dataModule = new TimeSeriesDataModule(dataSource);
 
   const { propertyId, assetId } = toSiteWiseAssetProperty(DATA_STREAM.id);
@@ -330,7 +366,9 @@ it('subscribes to a single data stream', async () => {
 });
 
 it('requests data from a custom data source', async () => {
-  const customSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+  const customSource = createMockSiteWiseDataSource({
+    dataStreams: [DATA_STREAM],
+  });
   const { propertyId, assetId } = toSiteWiseAssetProperty(DATA_STREAM.id);
 
   const dataModule = new TimeSeriesDataModule(customSource);
@@ -502,7 +540,9 @@ it('only requests latest value', async () => {
   const onRequestData = jest.fn();
   const source = createMockSiteWiseDataSource({ onRequestData });
 
-  const LATEST_VALUE_REQUEST_SETTINGS: TimeSeriesDataRequestSettings = { fetchMostRecentBeforeEnd: true };
+  const LATEST_VALUE_REQUEST_SETTINGS: TimeSeriesDataRequestSettings = {
+    fetchMostRecentBeforeEnd: true,
+  };
 
   const dataModule = new TimeSeriesDataModule(source);
   const onSuccess = jest.fn();
@@ -539,7 +579,11 @@ it('only requests latest value', async () => {
 });
 
 describe('error handling', () => {
-  const ERR = { msg: 'An error has occurred!', type: 'ResourceNotFoundException', status: '404' };
+  const ERR = {
+    msg: 'An error has occurred!',
+    type: 'ResourceNotFoundException',
+    status: '404',
+  };
 
   const CACHE_WITH_ERROR: DataStreamsStore = {
     [DATA_STREAM.id]: {
@@ -572,9 +616,13 @@ describe('error handling', () => {
   };
 
   it('provides a data stream which has an error associated with it on initial subscription', async () => {
-    const customSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+    const customSource = createMockSiteWiseDataSource({
+      dataStreams: [DATA_STREAM],
+    });
 
-    const dataModule = new TimeSeriesDataModule(customSource, { initialDataCache: CACHE_WITH_ERROR });
+    const dataModule = new TimeSeriesDataModule(customSource, {
+      initialDataCache: CACHE_WITH_ERROR,
+    });
     const timeSeriesCallback = jest.fn();
 
     const START = new Date(2000, 0, 0);
@@ -606,9 +654,13 @@ describe('error handling', () => {
   });
 
   it('does not re-request a data stream with an error associated with it', async () => {
-    const customSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+    const customSource = createMockSiteWiseDataSource({
+      dataStreams: [DATA_STREAM],
+    });
 
-    const dataModule = new TimeSeriesDataModule(customSource, { initialDataCache: CACHE_WITH_ERROR });
+    const dataModule = new TimeSeriesDataModule(customSource, {
+      initialDataCache: CACHE_WITH_ERROR,
+    });
     const timeSeriesCallback = jest.fn();
 
     dataModule.subscribeToDataStreams(
@@ -633,9 +685,13 @@ describe('error handling', () => {
   });
 
   it('does request a data stream which has no error associated with it', async () => {
-    const customSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+    const customSource = createMockSiteWiseDataSource({
+      dataStreams: [DATA_STREAM],
+    });
 
-    const dataModule = new TimeSeriesDataModule(customSource, { initialDataCache: CACHE_WITHOUT_ERROR });
+    const dataModule = new TimeSeriesDataModule(customSource, {
+      initialDataCache: CACHE_WITHOUT_ERROR,
+    });
 
     const timeSeriesCallback = jest.fn();
 
@@ -670,7 +726,9 @@ describe('error handling', () => {
 
 describe('caching', () => {
   it('does not request already cached data', async () => {
-    const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+    const dataSource = createMockSiteWiseDataSource({
+      dataStreams: [DATA_STREAM],
+    });
     const dataModule = new TimeSeriesDataModule(dataSource);
 
     const START_1 = new Date(2000, 1, 0);
@@ -683,23 +741,38 @@ describe('caching', () => {
     const { update } = dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
-        request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
+        request: {
+          viewport: { start: START_1, end: END_1 },
+          settings: { fetchFromStartToEnd: true },
+        },
       },
       timeSeriesCallback
     );
 
     await flushPromises();
 
-    await update({ request: { viewport: { start: START_2, end: END_2 }, settings: { fetchFromStartToEnd: true } } });
+    await update({
+      request: {
+        viewport: { start: START_2, end: END_2 },
+        settings: { fetchFromStartToEnd: true },
+      },
+    });
 
     (dataSource.initiateRequest as Mock).mockClear();
 
-    await update({ request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } } });
+    await update({
+      request: {
+        viewport: { start: START_1, end: END_1 },
+        settings: { fetchFromStartToEnd: true },
+      },
+    });
     expect(dataSource.initiateRequest).not.toBeCalled();
   });
 
   it('requests only uncached data', async () => {
-    const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+    const dataSource = createMockSiteWiseDataSource({
+      dataStreams: [DATA_STREAM],
+    });
     const dataModule = new TimeSeriesDataModule(dataSource);
 
     // Order of points through time:
@@ -716,7 +789,10 @@ describe('caching', () => {
     const { update } = dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
-        request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
+        request: {
+          viewport: { start: START_1, end: END_1 },
+          settings: { fetchFromStartToEnd: true },
+        },
       },
       timeSeriesCallback
     );
@@ -728,7 +804,10 @@ describe('caching', () => {
     expect(dataSource.initiateRequest).toHaveBeenCalledWith(
       expect.objectContaining({
         query: DATA_STREAM_QUERY,
-        request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
+        request: {
+          viewport: { start: START_1, end: END_1 },
+          settings: { fetchFromStartToEnd: true },
+        },
       }),
       [
         expect.objectContaining({
@@ -742,7 +821,12 @@ describe('caching', () => {
 
     (dataSource.initiateRequest as Mock).mockClear();
 
-    await update({ request: { viewport: { start: START_2, end: END_2 }, settings: { fetchFromStartToEnd: true } } });
+    await update({
+      request: {
+        viewport: { start: START_2, end: END_2 },
+        settings: { fetchFromStartToEnd: true },
+      },
+    });
 
     await flushPromises();
 
@@ -751,7 +835,10 @@ describe('caching', () => {
     expect(dataSource.initiateRequest).toHaveBeenCalledWith(
       expect.objectContaining({
         query: DATA_STREAM_QUERY,
-        request: { viewport: { start: START_2, end: END_2 }, settings: { fetchFromStartToEnd: true } },
+        request: {
+          viewport: { start: START_2, end: END_2 },
+          settings: { fetchFromStartToEnd: true },
+        },
       }),
       [
         expect.objectContaining({
@@ -771,7 +858,9 @@ describe('caching', () => {
   });
 
   it('immediately request when subscribed to an entirely new time interval not previously requested', async () => {
-    const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+    const dataSource = createMockSiteWiseDataSource({
+      dataStreams: [DATA_STREAM],
+    });
     const dataModule = new TimeSeriesDataModule(dataSource);
 
     const START_1 = new Date(2000, 1, 0);
@@ -796,13 +885,19 @@ describe('caching', () => {
     (dataSource.initiateRequest as Mock).mockClear();
 
     await update({
-      request: { viewport: { start: START_2, end: END_2 }, settings: { fetchFromStartToEnd: true } },
+      request: {
+        viewport: { start: START_2, end: END_2 },
+        settings: { fetchFromStartToEnd: true },
+      },
     });
 
     expect(dataSource.initiateRequest).toBeCalledWith(
       expect.objectContaining({
         query: DATA_STREAM_QUERY,
-        request: { viewport: { start: START_2, end: END_2 }, settings: { fetchFromStartToEnd: true } },
+        request: {
+          viewport: { start: START_2, end: END_2 },
+          settings: { fetchFromStartToEnd: true },
+        },
       }),
       [
         expect.objectContaining({
@@ -816,7 +911,9 @@ describe('caching', () => {
   });
 
   it('requests already cached data if the default TTL has expired', async () => {
-    const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+    const dataSource = createMockSiteWiseDataSource({
+      dataStreams: [DATA_STREAM],
+    });
     const dataModule = new TimeSeriesDataModule(dataSource);
 
     const END = new Date();
@@ -828,7 +925,11 @@ describe('caching', () => {
         queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { start: START, end: END },
-          settings: { fetchFromStartToEnd: true, refreshRate: MINUTE_IN_MS, requestBuffer: 0 },
+          settings: {
+            fetchFromStartToEnd: true,
+            refreshRate: MINUTE_IN_MS,
+            requestBuffer: 0,
+          },
         },
       },
       timeSeriesCallback
@@ -846,7 +947,11 @@ describe('caching', () => {
         request: {
           // 1 minute time advancement invalidates 3 minutes of cache by default, which is 2 minutes from END_1
           viewport: { start: START, end: END },
-          settings: { fetchFromStartToEnd: true, refreshRate: MINUTE_IN_MS, requestBuffer: 0 },
+          settings: {
+            fetchFromStartToEnd: true,
+            refreshRate: MINUTE_IN_MS,
+            requestBuffer: 0,
+          },
         },
       }),
       [
@@ -869,8 +974,12 @@ describe('caching', () => {
       },
     };
 
-    const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
-    const dataModule = new TimeSeriesDataModule(dataSource, { cacheSettings: customCacheSettings });
+    const dataSource = createMockSiteWiseDataSource({
+      dataStreams: [DATA_STREAM],
+    });
+    const dataModule = new TimeSeriesDataModule(dataSource, {
+      cacheSettings: customCacheSettings,
+    });
 
     const END = new Date();
     const START = new Date(END.getTime() - HOUR_IN_MS);
@@ -879,7 +988,10 @@ describe('caching', () => {
     dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
-        request: { viewport: { start: START, end: END }, settings: { refreshRate: MINUTE_IN_MS, requestBuffer: 0 } },
+        request: {
+          viewport: { start: START, end: END },
+          settings: { refreshRate: MINUTE_IN_MS, requestBuffer: 0 },
+        },
       },
       timeSeriesCallback
     );
@@ -918,8 +1030,12 @@ it.skip('overrides module-level cache TTL if query-level cache TTL is provided',
     },
   };
 
-  const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
-  const dataModule = new TimeSeriesDataModule(dataSource, { cacheSettings: customCacheSettings });
+  const dataSource = createMockSiteWiseDataSource({
+    dataStreams: [DATA_STREAM],
+  });
+  const dataModule = new TimeSeriesDataModule(dataSource, {
+    cacheSettings: customCacheSettings,
+  });
 
   const END = new Date();
   const START = new Date(END.getTime() - HOUR_IN_MS);
@@ -938,7 +1054,10 @@ it.skip('overrides module-level cache TTL if query-level cache TTL is provided',
           },
         },
       ],
-      request: { viewport: { start: START, end: END }, settings: { refreshRate: MINUTE_IN_MS, requestBuffer: 0 } },
+      request: {
+        viewport: { start: START, end: END },
+        settings: { refreshRate: MINUTE_IN_MS, requestBuffer: 0 },
+      },
     },
     timeSeriesCallback
   );
@@ -978,7 +1097,9 @@ it.skip('overrides module-level cache TTL if query-level cache TTL is provided',
 
 describe('request scheduler', () => {
   it('periodically requests duration based queries', async () => {
-    const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+    const dataSource = createMockSiteWiseDataSource({
+      dataStreams: [DATA_STREAM],
+    });
     const dataModule = new TimeSeriesDataModule(dataSource);
 
     const timeSeriesCallback = jest.fn();
@@ -987,7 +1108,10 @@ describe('request scheduler', () => {
         queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { duration: 900000 },
-          settings: { fetchFromStartToEnd: true, refreshRate: SECOND_IN_MS * 1.5 },
+          settings: {
+            fetchFromStartToEnd: true,
+            refreshRate: SECOND_IN_MS * 1.5,
+          },
         },
       },
       timeSeriesCallback
@@ -1016,8 +1140,12 @@ describe('request scheduler', () => {
       },
     };
 
-    const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
-    const dataModule = new TimeSeriesDataModule(dataSource, { cacheSettings: customCacheSettings });
+    const dataSource = createMockSiteWiseDataSource({
+      dataStreams: [DATA_STREAM],
+    });
+    const dataModule = new TimeSeriesDataModule(dataSource, {
+      cacheSettings: customCacheSettings,
+    });
 
     const END = new Date();
     const START = new Date(END.getTime() - HOUR_IN_MS);
@@ -1028,7 +1156,10 @@ describe('request scheduler', () => {
         queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { start: START, end: END },
-          settings: { fetchFromStartToEnd: true, refreshRate: SECOND_IN_MS * 0.1 },
+          settings: {
+            fetchFromStartToEnd: true,
+            refreshRate: SECOND_IN_MS * 0.1,
+          },
         },
       },
       timeSeriesCallback
@@ -1061,7 +1192,9 @@ describe('request scheduler', () => {
   });
 
   it('stops requesting for data after unsubscribing', async () => {
-    const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+    const dataSource = createMockSiteWiseDataSource({
+      dataStreams: [DATA_STREAM],
+    });
     const dataModule = new TimeSeriesDataModule(dataSource);
 
     const timeSeriesCallback = jest.fn();
@@ -1094,7 +1227,9 @@ describe('request scheduler', () => {
   it('periodically requests data after switching from static to duration based viewport', async () => {
     const DATA_POINT: DataPoint<number> = { x: Date.now(), y: 1921 };
 
-    const dataSource = createMockSiteWiseDataSource({ dataStreams: [{ ...DATA_STREAM, data: [DATA_POINT] }] });
+    const dataSource = createMockSiteWiseDataSource({
+      dataStreams: [{ ...DATA_STREAM, data: [DATA_POINT] }],
+    });
     const dataModule = new TimeSeriesDataModule(dataSource);
 
     const timeSeriesCallback = jest.fn();
@@ -1141,7 +1276,9 @@ describe('request scheduler', () => {
   });
 
   it('stops the request scheduler when we first update request info to have duration and then call unsubscribe', async () => {
-    const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+    const dataSource = createMockSiteWiseDataSource({
+      dataStreams: [DATA_STREAM],
+    });
     const dataModule = new TimeSeriesDataModule(dataSource);
 
     const timeSeriesCallback = jest.fn();
@@ -1182,14 +1319,19 @@ describe('request scheduler', () => {
   });
 
   it('stops the request scheduler when request info gets updated with static viewport that does not intersect with any TTL intervals', async () => {
-    const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+    const dataSource = createMockSiteWiseDataSource({
+      dataStreams: [DATA_STREAM],
+    });
     const dataModule = new TimeSeriesDataModule(dataSource);
 
     const timeSeriesCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
-        request: { viewport: { duration: SECOND_IN_MS }, settings: { fetchFromStartToEnd: true } },
+        request: {
+          viewport: { duration: SECOND_IN_MS },
+          settings: { fetchFromStartToEnd: true },
+        },
       },
       timeSeriesCallback
     );
@@ -1213,14 +1355,19 @@ describe('request scheduler', () => {
   });
 
   it('continues the scheduled requests when request info gets updated with static viewport that intersects with TTL intervals', async () => {
-    const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+    const dataSource = createMockSiteWiseDataSource({
+      dataStreams: [DATA_STREAM],
+    });
     const dataModule = new TimeSeriesDataModule(dataSource);
 
     const timeSeriesCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
-        request: { viewport: { duration: SECOND_IN_MS }, settings: { fetchFromStartToEnd: true } },
+        request: {
+          viewport: { duration: SECOND_IN_MS },
+          settings: { fetchFromStartToEnd: true },
+        },
       },
       timeSeriesCallback
     );
@@ -1233,7 +1380,10 @@ describe('request scheduler', () => {
     await update({
       request: {
         viewport: { start: START, end: END },
-        settings: { refreshRate: SECOND_IN_MS * 1.5, fetchFromStartToEnd: true },
+        settings: {
+          refreshRate: SECOND_IN_MS * 1.5,
+          fetchFromStartToEnd: true,
+        },
       },
     });
     timeSeriesCallback.mockClear();
@@ -1246,7 +1396,9 @@ describe('request scheduler', () => {
 });
 
 it('when data is requested from the viewport start to end with a buffer, include a buffer', async () => {
-  const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM] });
+  const dataSource = createMockSiteWiseDataSource({
+    dataStreams: [DATA_STREAM],
+  });
   const dataModule = new TimeSeriesDataModule(dataSource);
 
   const timeSeriesCallback = jest.fn();
@@ -1259,7 +1411,10 @@ it('when data is requested from the viewport start to end with a buffer, include
   const { unsubscribe } = dataModule.subscribeToDataStreams(
     {
       queries: [DATA_STREAM_QUERY],
-      request: { viewport: { start, end }, settings: { requestBuffer, fetchFromStartToEnd: true } },
+      request: {
+        viewport: { start, end },
+        settings: { requestBuffer, fetchFromStartToEnd: true },
+      },
     },
     timeSeriesCallback
   );
@@ -1292,7 +1447,10 @@ it('when data is requested from the viewport start to end with a buffer, include
 
 it('passes meta field returned from data source into the initiate request', async () => {
   const someMetaData = { someMetaData: 42 };
-  const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM], meta: someMetaData });
+  const dataSource = createMockSiteWiseDataSource({
+    dataStreams: [DATA_STREAM],
+    meta: someMetaData,
+  });
   const dataModule = new TimeSeriesDataModule(dataSource);
 
   const END = new Date();
@@ -1304,7 +1462,11 @@ it('passes meta field returned from data source into the initiate request', asyn
       queries: [DATA_STREAM_QUERY],
       request: {
         viewport: { start: START, end: END },
-        settings: { fetchFromStartToEnd: true, refreshRate: MINUTE_IN_MS, requestBuffer: 0 },
+        settings: {
+          fetchFromStartToEnd: true,
+          refreshRate: MINUTE_IN_MS,
+          requestBuffer: 0,
+        },
       },
     },
     timeSeriesCallback

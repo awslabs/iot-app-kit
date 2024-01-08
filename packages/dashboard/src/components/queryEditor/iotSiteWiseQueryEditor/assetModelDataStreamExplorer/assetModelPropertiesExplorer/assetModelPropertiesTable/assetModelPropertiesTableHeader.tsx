@@ -14,7 +14,11 @@ export function AssetModelPropertiesTableHeader({
     <Header
       variant='h3'
       description='Select an asset model property to add a selected widget.'
-      counter={selectedItemCount ? `(${selectedItemCount}/${totalItemCount})` : `(${totalItemCount})`}
+      counter={
+        selectedItemCount
+          ? `(${selectedItemCount}/${totalItemCount})`
+          : `(${totalItemCount})`
+      }
     >
       Asset model properties
     </Header>

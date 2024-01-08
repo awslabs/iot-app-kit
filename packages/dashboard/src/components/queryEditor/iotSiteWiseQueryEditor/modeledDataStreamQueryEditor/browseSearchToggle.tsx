@@ -11,11 +11,16 @@ export interface BrowseSearchToggleProps {
   onChange: (selectedSegment: SegmentId) => void;
 }
 
-export function BrowseSearchToggle({ selectedSegment, onChange }: BrowseSearchToggleProps) {
+export function BrowseSearchToggle({
+  selectedSegment,
+  onChange,
+}: BrowseSearchToggleProps) {
   return (
     <SegmentedControl
       selectedId={selectedSegment}
-      onChange={({ detail: { selectedId: selectedSegment } }) => onChange(selectedSegment as SegmentId)}
+      onChange={({ detail: { selectedId: selectedSegment } }) =>
+        onChange(selectedSegment as SegmentId)
+      }
       options={[
         { text: 'Browse', id: BROWSE_SEGMENT_ID },
         { text: 'Search', id: SEARCH_SEGMENT_ID },
@@ -26,7 +31,8 @@ export function BrowseSearchToggle({ selectedSegment, onChange }: BrowseSearchTo
 
 export function useBrowseSearchToggle() {
   const DEFAULT_SEGMENT_ID = BROWSE_SEGMENT_ID;
-  const [selectedSegment, setSelectedSegment] = useState<SegmentId>(DEFAULT_SEGMENT_ID);
+  const [selectedSegment, setSelectedSegment] =
+    useState<SegmentId>(DEFAULT_SEGMENT_ID);
 
   return { selectedSegment, onChangeSegment: setSelectedSegment };
 }

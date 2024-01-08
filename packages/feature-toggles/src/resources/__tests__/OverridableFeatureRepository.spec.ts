@@ -7,7 +7,9 @@ jest.mock('js-cookie', () => ({
 }));
 
 const mockFeatureRepository: IFeatureRepository = {
-  evaluate: jest.fn(() => Promise.resolve({ variation: 'test', value: 'test' })),
+  evaluate: jest.fn(() =>
+    Promise.resolve({ variation: 'test', value: 'test' })
+  ),
 };
 
 describe('OverridableFeatureRepository', () => {

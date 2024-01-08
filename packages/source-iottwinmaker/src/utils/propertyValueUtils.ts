@@ -1,7 +1,10 @@
 import { Type } from '@aws-sdk/client-iottwinmaker';
 import { isEmpty, isNil, isNumber, isString } from 'lodash';
 import { DATA_TYPE } from '@iot-app-kit/core';
-import type { DataValue, DataType as TMDataType } from '@aws-sdk/client-iottwinmaker';
+import type {
+  DataValue,
+  DataType as TMDataType,
+} from '@aws-sdk/client-iottwinmaker';
 import type { Primitive, DataType } from '@iot-app-kit/core';
 
 /**
@@ -10,7 +13,8 @@ import type { Primitive, DataType } from '@iot-app-kit/core';
  * @param value The value to check.
  * @returns Returns false if the value is nullish, otherwise true.
  */
-export const isDefined = <T>(value: T | null | undefined): value is T => !isNil(value);
+export const isDefined = <T>(value: T | null | undefined): value is T =>
+  !isNil(value);
 
 /**
  * Extracts the value out of a TwinMaker property's DataValue
@@ -21,12 +25,16 @@ export const toValue = (dataValue: DataValue): Primitive | undefined => {
   const values = Object.values(dataValue).filter(isDefined);
 
   if (isEmpty(values)) {
-    console.warn('Expected value to have at least one property value, but instead it has none!');
+    console.warn(
+      'Expected value to have at least one property value, but instead it has none!'
+    );
     return undefined;
   }
 
   if (values.length > 1) {
-    console.warn('More than one value found in DataValue, use a random value only');
+    console.warn(
+      'More than one value found in DataValue, use a random value only'
+    );
   }
 
   const value = values[0];

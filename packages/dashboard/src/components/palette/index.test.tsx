@@ -35,7 +35,9 @@ const renderDashboard = (state?: RecursivePartial<DashboardState>) => {
   const store = configureDashboardStore(state);
 
   const renderResults = render(
-    <AppKitConfig customFeatureConfig={DEFAULT_APP_KIT_CONFIG.featureFlagConfig}>
+    <AppKitConfig
+      customFeatureConfig={DEFAULT_APP_KIT_CONFIG.featureFlagConfig}
+    >
       <QueryClientProvider client={testQueryClient}>
         <Provider store={store}>
           <DndProvider

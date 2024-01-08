@@ -8,7 +8,9 @@ import { CommonChartProperties } from '~/customization/widgets/types';
 import { nonNegative } from '~/util/number';
 import { PropertyLens } from '~/customization/propertiesSection';
 
-const isSettingsWidget = (w: DashboardWidget): w is DashboardWidget<CommonChartProperties> =>
+const isSettingsWidget = (
+  w: DashboardWidget
+): w is DashboardWidget<CommonChartProperties> =>
   'queryConfig' in w.properties && w.type !== 'xy-plot';
 
 const RenderSettingsConfiguration = ({
@@ -20,7 +22,8 @@ const RenderSettingsConfiguration = ({
     (properties) => properties.significantDigits,
     (properties, updatedSignificantDigits) => ({
       ...properties,
-      significantDigits: updatedSignificantDigits && nonNegative(updatedSignificantDigits),
+      significantDigits:
+        updatedSignificantDigits && nonNegative(updatedSignificantDigits),
     })
   );
 
@@ -34,6 +37,8 @@ const RenderSettingsConfiguration = ({
 export const SettingsConfiguration: React.FC = () => (
   <PropertiesSection
     isVisible={isSettingsWidget}
-    render={({ useProperty }) => <RenderSettingsConfiguration useProperty={useProperty} />}
+    render={({ useProperty }) => (
+      <RenderSettingsConfiguration useProperty={useProperty} />
+    )}
   />
 );

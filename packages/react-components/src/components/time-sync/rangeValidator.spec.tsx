@@ -14,15 +14,26 @@ describe('rangeValidator', () => {
 
   describe('relative ranges', () => {
     it('is valid for relative ranges', () => {
-      expect(rangeValidatorWithMessaging({ type: 'relative', amount: 10, unit: 'minute' }).valid).toBe(true);
+      expect(
+        rangeValidatorWithMessaging({
+          type: 'relative',
+          amount: 10,
+          unit: 'minute',
+        }).valid
+      ).toBe(true);
     });
   });
 
   describe('absolute ranges', () => {
     it('is not valid if the start and or end date are not present', () => {
-      const missingStartAndEnd = rangeValidatorWithMessaging({ type: 'absolute', startDate: '', endDate: '' });
+      const missingStartAndEnd = rangeValidatorWithMessaging({
+        type: 'absolute',
+        startDate: '',
+        endDate: '',
+      });
 
-      const missingStartAndEndErrorMessage = !missingStartAndEnd.valid && missingStartAndEnd.errorMessage;
+      const missingStartAndEndErrorMessage =
+        !missingStartAndEnd.valid && missingStartAndEnd.errorMessage;
 
       expect(missingStartAndEnd.valid).toBe(false);
       expect(missingStartAndEndErrorMessage).toBeString();
@@ -34,7 +45,8 @@ describe('rangeValidator', () => {
         endDate: '1899-12-31T06:01:34.689Z',
       });
 
-      const missingStartErrorMessage = !missingStart.valid && missingStart.errorMessage;
+      const missingStartErrorMessage =
+        !missingStart.valid && missingStart.errorMessage;
 
       expect(missingStart.valid).toBe(false);
       expect(missingStartErrorMessage).toBeString();
@@ -46,7 +58,8 @@ describe('rangeValidator', () => {
         endDate: '',
       });
 
-      const missingEndErrorMessage = !missingEnd.valid && missingEnd.errorMessage;
+      const missingEndErrorMessage =
+        !missingEnd.valid && missingEnd.errorMessage;
 
       expect(missingEnd.valid).toBe(false);
       expect(missingEndErrorMessage).toBeString();

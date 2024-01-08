@@ -2,7 +2,12 @@ import React from 'react';
 import { TableBase } from './tableBase';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
-import type { StyleSettingsMap, Threshold, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
+import type {
+  StyleSettingsMap,
+  Threshold,
+  TimeSeriesDataQuery,
+  Viewport,
+} from '@iot-app-kit/core';
 import { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import { TableColumnDefinition, TableItem, TableItemHydrated } from './types';
 import { createTableItems } from './createTableItems';
@@ -36,7 +41,14 @@ export const Table = ({
   significantDigits?: number;
   paginationEnabled?: boolean;
   pageSize?: number;
-} & Pick<TableBaseProps, 'resizableColumns' | 'sortingDisabled' | 'stickyHeader' | 'empty' | 'preferences'>) => {
+} & Pick<
+  TableBaseProps,
+  | 'resizableColumns'
+  | 'sortingDisabled'
+  | 'stickyHeader'
+  | 'empty'
+  | 'preferences'
+>) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries,

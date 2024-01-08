@@ -1,7 +1,11 @@
 import { IoTSiteWiseDataStreamQuery } from '~/types';
 
 export const applyResolutionToQuery = (
-  { assets = [], properties = [], assetModels = [] }: IoTSiteWiseDataStreamQuery,
+  {
+    assets = [],
+    properties = [],
+    assetModels = [],
+  }: IoTSiteWiseDataStreamQuery,
   resolution: string | undefined
 ) => ({
   assets: assets.map(({ properties, ...others }) => ({

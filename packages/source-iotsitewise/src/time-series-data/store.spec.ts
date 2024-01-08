@@ -36,7 +36,9 @@ describe('TimeSeriesDataStore', () => {
 
     store.appendTimeSeriesData(TIME_SERIES_DATA_WITH_ALARMS);
 
-    expect(store.getState()).toEqual(expect.objectContaining(TIME_SERIES_DATA_WITH_ALARMS));
+    expect(store.getState()).toEqual(
+      expect.objectContaining(TIME_SERIES_DATA_WITH_ALARMS)
+    );
   });
 
   it('will correctly append dataStreams', () => {
@@ -103,7 +105,9 @@ describe('TimeSeriesDataStore', () => {
 
     store.appendTimeSeriesData(TIME_SERIES_DATA_WITH_ALARMS);
 
-    expect(store.getState().thresholds).toEqual(TIME_SERIES_DATA_WITH_ALARMS.thresholds);
+    expect(store.getState().thresholds).toEqual(
+      TIME_SERIES_DATA_WITH_ALARMS.thresholds
+    );
 
     const NEW_THRESHOLDS: Threshold[] = [
       {
@@ -117,6 +121,9 @@ describe('TimeSeriesDataStore', () => {
 
     store.appendTimeSeriesData({ thresholds: NEW_THRESHOLDS });
 
-    expect(store.getState().thresholds).toEqual([...TIME_SERIES_DATA_WITH_ALARMS.thresholds, ...NEW_THRESHOLDS]);
+    expect(store.getState().thresholds).toEqual([
+      ...TIME_SERIES_DATA_WITH_ALARMS.thresholds,
+      ...NEW_THRESHOLDS,
+    ]);
   });
 });

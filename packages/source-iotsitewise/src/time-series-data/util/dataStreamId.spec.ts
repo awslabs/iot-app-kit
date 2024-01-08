@@ -2,7 +2,9 @@ import { toId, fromId } from './dataStreamId';
 
 describe('toDataStreamId', () => {
   it('converts property and asset id to a data stream id', () => {
-    expect(toId({ assetId: 'asset-id', propertyId: 'property-id' })).toBe('asset-id---property-id');
+    expect(toId({ assetId: 'asset-id', propertyId: 'property-id' })).toBe(
+      'asset-id---property-id'
+    );
   });
 
   it('converts propertyAlias to a data stream id', () => {

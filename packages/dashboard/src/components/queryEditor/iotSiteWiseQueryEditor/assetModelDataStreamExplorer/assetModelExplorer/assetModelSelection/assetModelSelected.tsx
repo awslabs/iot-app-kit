@@ -7,7 +7,11 @@ import { spaceScaledXxs } from '@cloudscape-design/design-tokens';
 
 import { VerticalDivider } from '~/components/divider/verticalDivider';
 import { SelectedAssetModel } from '../../useSelectedAssetModel';
-import { AssetSummary, DescribeAssetCommandOutput, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  AssetSummary,
+  DescribeAssetCommandOutput,
+  IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 // import { AssetForAssetModelSelect } from '../../assetsForAssetModelSelect/assetForAssetModelSelect';
 import { AssetForAssetModelSelectForm } from '../../assetsForAssetModelSelect/assetForAssetModelSelectForm';
 import { SelectedAsset, UpdateSelectedAsset } from '../../useSelectedAsset';
@@ -54,7 +58,10 @@ export const AssetModelSelected = ({
 }: AssetModelSelectedOptions) => {
   const { visible, onHide, onShow } = useModalVisibility();
 
-  const { assetModel } = useAssetModel({ assetModelId: selectedAssetModel?.id, client });
+  const { assetModel } = useAssetModel({
+    assetModelId: selectedAssetModel?.id,
+    client,
+  });
 
   const { asset } = useAsset({ assetId: selectedAsset?.id, client });
 
@@ -67,7 +74,9 @@ export const AssetModelSelected = ({
         }}
       >
         <img src={assetModelSvg} alt='Selected asset model icon' />
-        <VerticalDivider classNames={['reset-selected-asset-model-vertical-divider']} />
+        <VerticalDivider
+          classNames={['reset-selected-asset-model-vertical-divider']}
+        />
         <Box fontWeight='bold' variant='span'>
           Asset model:
         </Box>
@@ -84,7 +93,11 @@ export const AssetModelSelected = ({
           client={client}
         />
       </Box>
-      <ResetAssetModelModal visible={visible} onHide={onHide} onReset={onResetSelectedAssetModel} />
+      <ResetAssetModelModal
+        visible={visible}
+        onHide={onHide}
+        onReset={onResetSelectedAssetModel}
+      />
     </div>
   );
 };

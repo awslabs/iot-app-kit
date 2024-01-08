@@ -39,13 +39,15 @@ it('completes an asset model property stream', () => {
     unit: 'test',
   };
 
-  const modelProps = ASSET_MODEL_WITH_ALARM.assetModelProperties?.map((property) => {
-    if (property.id === INPUT_PROPERTY_ID) {
-      return { ...property, ...expectedMetaData };
-    }
+  const modelProps = ASSET_MODEL_WITH_ALARM.assetModelProperties?.map(
+    (property) => {
+      if (property.id === INPUT_PROPERTY_ID) {
+        return { ...property, ...expectedMetaData };
+      }
 
-    return property;
-  });
+      return property;
+    }
+  );
 
   expect(
     completePropertyStream({
@@ -80,7 +82,9 @@ it('appends associated stream if alarm on property created', () => {
   expect(
     completePropertyStream({
       assetModel: ASSET_MODEL_WITH_ALARM,
-      modeledDataStreams: (ASSET_MODEL_WITH_ALARM.assetModelProperties ?? []).map(({ unit, name, dataType }) => ({
+      modeledDataStreams: (
+        ASSET_MODEL_WITH_ALARM.assetModelProperties ?? []
+      ).map(({ unit, name, dataType }) => ({
         propertyId: INPUT_PROPERTY_ID,
         assetId: ALARM_ASSET_ID,
         assetName: 'NAME',

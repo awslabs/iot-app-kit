@@ -1,4 +1,7 @@
-import { DescribeAssetModelCommand, type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  DescribeAssetModelCommand,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 
 export class DescribeAssetModelRequest {
   readonly #signal: AbortSignal | undefined;
@@ -21,7 +24,9 @@ export class DescribeAssetModelRequest {
 
   public async send() {
     try {
-      const response = await this.#client.send(this.#command, { abortSignal: this.#signal });
+      const response = await this.#client.send(this.#command, {
+        abortSignal: this.#signal,
+      });
 
       return response;
     } catch (error) {

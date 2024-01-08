@@ -9,7 +9,11 @@ import { act } from '@testing-library/react';
 import InternalDashboard from './index';
 import { configureDashboardStore } from '../../store';
 
-import { onBringWidgetsToFrontAction, onSelectWidgetsAction, onSendWidgetsToBackAction } from '../../store/actions';
+import {
+  onBringWidgetsToFrontAction,
+  onSelectWidgetsAction,
+  onSendWidgetsToBackAction,
+} from '../../store/actions';
 
 jest.mock('../../store/actions', () => {
   const originalModule = jest.requireActual('../../store/actions');
@@ -30,7 +34,13 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-const renderDashboardAndPressKey = ({ key, meta }: { key: string; meta: boolean }) => {
+const renderDashboardAndPressKey = ({
+  key,
+  meta,
+}: {
+  key: string;
+  meta: boolean;
+}) => {
   const container = document.createElement('div');
   document.body.appendChild(container);
 
@@ -62,15 +72,30 @@ const renderDashboardAndPressKey = ({ key, meta }: { key: string; meta: boolean 
   act(() => {
     if (meta)
       document.body.dispatchEvent(
-        new KeyboardEvent('keydown', { key: 'Control', metaKey: meta, ctrlKey: meta, bubbles: true })
+        new KeyboardEvent('keydown', {
+          key: 'Control',
+          metaKey: meta,
+          ctrlKey: meta,
+          bubbles: true,
+        })
       );
-    document.body.dispatchEvent(new KeyboardEvent('keydown', { key, metaKey: meta, ctrlKey: meta, bubbles: true }));
+    document.body.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key,
+        metaKey: meta,
+        ctrlKey: meta,
+        bubbles: true,
+      })
+    );
   });
 };
 
 // TODO: fix these tests (likely need to mock TwinMaker client)
 it.skip('can clear the selection', () => {
-  (onSelectWidgetsAction as jest.Mock).mockImplementation(() => ({ type: '', payload: {} }));
+  (onSelectWidgetsAction as jest.Mock).mockImplementation(() => ({
+    type: '',
+    payload: {},
+  }));
 
   renderDashboardAndPressKey({ key: 'Escape', meta: false });
 
@@ -81,7 +106,10 @@ it.skip('can clear the selection', () => {
 });
 
 it.skip('can send the selection to the back', () => {
-  (onSendWidgetsToBackAction as jest.Mock).mockImplementation(() => ({ type: '', payload: {} }));
+  (onSendWidgetsToBackAction as jest.Mock).mockImplementation(() => ({
+    type: '',
+    payload: {},
+  }));
 
   renderDashboardAndPressKey({ key: '[', meta: false });
 
@@ -90,7 +118,10 @@ it.skip('can send the selection to the back', () => {
 
 // TODO: fix these tests (likely need to mock TwinMaker client)
 it.skip('can bring the selection to the front', () => {
-  (onBringWidgetsToFrontAction as jest.Mock).mockImplementation(() => ({ type: '', payload: {} }));
+  (onBringWidgetsToFrontAction as jest.Mock).mockImplementation(() => ({
+    type: '',
+    payload: {},
+  }));
 
   renderDashboardAndPressKey({ key: ']', meta: false });
 

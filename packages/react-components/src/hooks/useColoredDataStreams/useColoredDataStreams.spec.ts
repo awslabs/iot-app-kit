@@ -3,12 +3,37 @@ import { useColoredDataStreams } from './useColoredDataStreams';
 import { DataStream } from '@iot-app-kit/core';
 import { Colorizer } from '@iot-app-kit/core-util';
 
-const PALETTE = ['red', 'white', 'blue', 'cyan', 'mauve', 'orange', 'lime', 'pink', 'gold'];
+const PALETTE = [
+  'red',
+  'white',
+  'blue',
+  'cyan',
+  'mauve',
+  'orange',
+  'lime',
+  'pink',
+  'gold',
+];
 
 it('Applies a default color to each stream', () => {
-  const DATA_STREAM_1: DataStream = { id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
-  const DATA_STREAM_2: DataStream = { id: 'abc-2', data: [], resolution: 0, name: 'my-name' };
-  const DATA_STREAM_3: DataStream = { id: 'abc-3', data: [], resolution: 0, name: 'my-name' };
+  const DATA_STREAM_1: DataStream = {
+    id: 'abc-1',
+    data: [],
+    resolution: 0,
+    name: 'my-name',
+  };
+  const DATA_STREAM_2: DataStream = {
+    id: 'abc-2',
+    data: [],
+    resolution: 0,
+    name: 'my-name',
+  };
+  const DATA_STREAM_3: DataStream = {
+    id: 'abc-3',
+    data: [],
+    resolution: 0,
+    name: 'my-name',
+  };
   const colorer = Colorizer(PALETTE);
   const {
     result: { current: dataStreams },
@@ -29,10 +54,30 @@ it('Applies a default color to each stream', () => {
 });
 
 it('preserves the same default colors between renders', () => {
-  const DATA_STREAM_1: DataStream = { id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
-  const DATA_STREAM_2: DataStream = { id: 'abc-2', data: [], resolution: 0, name: 'my-name' };
-  const DATA_STREAM_3: DataStream = { id: 'abc-3', data: [], resolution: 0, name: 'my-name' };
-  const DATA_STREAM_4: DataStream = { id: 'abc-4', data: [], resolution: 0, name: 'my-name' };
+  const DATA_STREAM_1: DataStream = {
+    id: 'abc-1',
+    data: [],
+    resolution: 0,
+    name: 'my-name',
+  };
+  const DATA_STREAM_2: DataStream = {
+    id: 'abc-2',
+    data: [],
+    resolution: 0,
+    name: 'my-name',
+  };
+  const DATA_STREAM_3: DataStream = {
+    id: 'abc-3',
+    data: [],
+    resolution: 0,
+    name: 'my-name',
+  };
+  const DATA_STREAM_4: DataStream = {
+    id: 'abc-4',
+    data: [],
+    resolution: 0,
+    name: 'my-name',
+  };
   const colorer = Colorizer(PALETTE);
   const { result, rerender } = renderHook(
     (dataStreams) =>

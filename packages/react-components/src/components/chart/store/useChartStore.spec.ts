@@ -25,8 +25,12 @@ const DATA_STREAM_2: DataStream = {
 };
 
 const setupStore = () => {
-  const { result: setDataStreamHidden } = renderHook(() => useChartStore((state) => state.hideDataStream));
-  const { result: setDataStreamHighlighted } = renderHook(() => useChartStore((state) => state.highlightDataStream));
+  const { result: setDataStreamHidden } = renderHook(() =>
+    useChartStore((state) => state.hideDataStream)
+  );
+  const { result: setDataStreamHighlighted } = renderHook(() =>
+    useChartStore((state) => state.highlightDataStream)
+  );
   act(() => {
     setDataStreamHidden.current(DATA_STREAM);
     setDataStreamHighlighted.current(DATA_STREAM);
@@ -34,7 +38,9 @@ const setupStore = () => {
 };
 
 const teardownStore = () => {
-  const { result: setDataStreamUnHidden } = renderHook(() => useChartStore((state) => state.unHideDataStream));
+  const { result: setDataStreamUnHidden } = renderHook(() =>
+    useChartStore((state) => state.unHideDataStream)
+  );
   const { result: setDataStreamUnHighlighted } = renderHook(() =>
     useChartStore((state) => state.unHighlightDataStream)
   );
@@ -49,15 +55,21 @@ describe('Data Stream Store Hide/Show and Highlighting', () => {
   afterEach(teardownStore);
 
   it('adds hidden datastreams to data stream store', () => {
-    const { result: hiddenDataStreams } = renderHook(() => useChartStore((state) => state.hiddenDataStreams));
+    const { result: hiddenDataStreams } = renderHook(() =>
+      useChartStore((state) => state.hiddenDataStreams)
+    );
     const isDataStreamHidden = isDataStreamInList(hiddenDataStreams.current);
     expect(isDataStreamHidden(DATA_STREAM)).toBe(true);
     expect(isDataStreamHidden(DATA_STREAM_2)).toBe(false);
   });
 
   it('adds highlighted datastreams to data stream store', () => {
-    const { result: highlightedDataStreams } = renderHook(() => useChartStore((state) => state.highlightedDataStreams));
-    const isDataStreamHidden = isDataStreamInList(highlightedDataStreams.current);
+    const { result: highlightedDataStreams } = renderHook(() =>
+      useChartStore((state) => state.highlightedDataStreams)
+    );
+    const isDataStreamHidden = isDataStreamInList(
+      highlightedDataStreams.current
+    );
     expect(isDataStreamHidden(DATA_STREAM)).toBe(true);
     expect(isDataStreamHidden(DATA_STREAM_2)).toBe(false);
   });

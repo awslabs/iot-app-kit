@@ -3,7 +3,9 @@ import { EntryIdFactory } from './entryIdFactory';
 import type { ModeledDataStream } from '../modeledDataStreamQueryEditor/modeledDataStreamExplorer/types';
 import type { UnmodeledDataStream } from '../unmodeledDataStreamExplorer/types';
 
-type BatchEntry = (ModeledDataStream | UnmodeledDataStream) & { entryId: string };
+type BatchEntry = (ModeledDataStream | UnmodeledDataStream) & {
+  entryId: string;
+};
 
 export class BatchFactory {
   readonly #dataStreams: ModeledDataStream[] | UnmodeledDataStream[];

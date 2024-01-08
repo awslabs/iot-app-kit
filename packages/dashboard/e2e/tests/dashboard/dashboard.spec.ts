@@ -46,7 +46,9 @@ test.skip('dashboard resize, move, and select gestures', async ({ page }) => {
   const widget = await grid.addWidget('kpi', () => location1);
 
   // Placeholder text for kpi widget
-  await expect(page.getByText('Add a property or alarm to populate KPI')).toBeVisible();
+  await expect(
+    page.getByText('Add a property or alarm to populate KPI')
+  ).toBeVisible();
 
   const initialWidgetBoundingBox = await getBoundingBox(widget);
 
@@ -59,8 +61,12 @@ test.skip('dashboard resize, move, and select gestures', async ({ page }) => {
   const resizedWidgetBoundingBox = await getBoundingBox(widget);
 
   // Widget should be bigger now
-  await expect(resizedWidgetBoundingBox.width).toBeGreaterThan(initialWidgetBoundingBox.width);
-  await expect(resizedWidgetBoundingBox.height).toBeGreaterThan(initialWidgetBoundingBox.height);
+  await expect(resizedWidgetBoundingBox.width).toBeGreaterThan(
+    initialWidgetBoundingBox.width
+  );
+  await expect(resizedWidgetBoundingBox.height).toBeGreaterThan(
+    initialWidgetBoundingBox.height
+  );
 
   // translate the widget down and right
   await grid.moveSelection(({ source, target }) => ({
@@ -71,8 +77,12 @@ test.skip('dashboard resize, move, and select gestures', async ({ page }) => {
   const translatedWidgetBoundingBox = await getBoundingBox(widget);
 
   // Widget should be shifted now
-  await expect(translatedWidgetBoundingBox.x).toBeGreaterThan(initialWidgetBoundingBox.x);
-  await expect(translatedWidgetBoundingBox.y).toBeGreaterThan(initialWidgetBoundingBox.y);
+  await expect(translatedWidgetBoundingBox.x).toBeGreaterThan(
+    initialWidgetBoundingBox.x
+  );
+  await expect(translatedWidgetBoundingBox.y).toBeGreaterThan(
+    initialWidgetBoundingBox.y
+  );
 
   await grid.clearSelection();
 
@@ -107,7 +117,10 @@ test('dashboard add and remove multiple widgets', async ({ page }) => {
 
   await page.keyboard.down('Delete');
 
-  const deleteBtn = await page.getByRole('button', { name: 'Delete', exact: true });
+  const deleteBtn = await page.getByRole('button', {
+    name: 'Delete',
+    exact: true,
+  });
 
   await deleteBtn.click();
 

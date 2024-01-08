@@ -19,7 +19,9 @@ export const collectionPreferencesProps = {
   confirmLabel: 'Confirm',
   title: 'Preferences',
 };
-export const PROPERTY_FILTERING: { filteringProperties: PropertyFilterProperty<string>[] } = {
+export const PROPERTY_FILTERING: {
+  filteringProperties: PropertyFilterProperty<string>[];
+} = {
   filteringProperties: [
     {
       key: 'property',

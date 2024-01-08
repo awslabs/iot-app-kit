@@ -8,9 +8,16 @@ import { TitleSection } from './titleSection';
 import { maybeWithDefault } from '~/util/maybe';
 import { PropertyLens } from '~/customization/propertiesSection';
 
-const isWidgetTitle = (w: DashboardWidget): w is DashboardWidget<CommonChartProperties> =>
+const isWidgetTitle = (
+  w: DashboardWidget
+): w is DashboardWidget<CommonChartProperties> =>
   'queryConfig' in w.properties &&
-  !(w.type === 'kpi' || w.type === 'status' || w.type === 'table' || w.type === 'text');
+  !(
+    w.type === 'kpi' ||
+    w.type === 'status' ||
+    w.type === 'table' ||
+    w.type === 'text'
+  );
 
 const RenderWidgetTitleSection = ({
   useProperty,
@@ -37,6 +44,8 @@ const RenderWidgetTitleSection = ({
 export const WidgetTitle: React.FC = () => (
   <PropertiesSection
     isVisible={isWidgetTitle}
-    render={({ useProperty }) => <RenderWidgetTitleSection useProperty={useProperty} />}
+    render={({ useProperty }) => (
+      <RenderWidgetTitleSection useProperty={useProperty} />
+    )}
   />
 );

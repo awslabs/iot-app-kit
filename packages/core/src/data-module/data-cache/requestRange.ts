@@ -41,7 +41,10 @@ export const requestRange = (
     const duration = end.getTime() - start.getTime();
     const bufferedDuration = roundUp(duration * (1 + buffer * 2));
     const durationStep = bufferedDuration / 4;
-    adjustedStart = new Date(Math.floor(start.getTime() / durationStep) * durationStep - durationStep / 2);
+    adjustedStart = new Date(
+      Math.floor(start.getTime() / durationStep) * durationStep -
+        durationStep / 2
+    );
     adjustedEnd = new Date(adjustedStart.getTime() + bufferedDuration);
   }
 

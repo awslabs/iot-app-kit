@@ -1,4 +1,11 @@
-import { DataStream, Primitive, Threshold, ThresholdSettings, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
+import {
+  DataStream,
+  Primitive,
+  Threshold,
+  ThresholdSettings,
+  TimeSeriesDataQuery,
+  Viewport,
+} from '@iot-app-kit/core';
 import { OptionId } from 'echarts/types/src/util/types';
 import { InternalGraphicComponentGroupOption } from './trendCursor/types';
 
@@ -29,7 +36,13 @@ export type SimpleFontSettings = {
 
 export type SizeConfig = { width: number; height: number };
 
-export type Visualization = 'line' | 'bar' | 'scatter' | 'step-start' | 'step-middle' | 'step-end';
+export type Visualization =
+  | 'line'
+  | 'bar'
+  | 'scatter'
+  | 'step-start'
+  | 'step-middle'
+  | 'step-end';
 
 export type ChartStyleSettingsOptions = {
   /**

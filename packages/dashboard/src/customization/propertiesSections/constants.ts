@@ -11,13 +11,37 @@ export const dropdownConsts = {
     ],
   },
   lineType: {
-    defaultValue: { label: 'Linear', value: 'linear', description: 'Points are joined as straight lines.' },
+    defaultValue: {
+      label: 'Linear',
+      value: 'linear',
+      description: 'Points are joined as straight lines.',
+    },
     lineTypeOptions: [
-      { label: 'None', value: 'none', description: 'Scatter plot with no line between the points.' },
-      { label: 'Linear', value: 'linear', description: 'Points are joined as straight lines.' },
-      { label: 'Step before', value: 'step-start', description: 'Step points rendered at the end of the step.' },
-      { label: 'Step middle', value: 'step-middle', description: 'Step points rendered in the middle of the step.' },
-      { label: 'Step after', value: 'step-end', description: 'Step points rendered at the beginning of the step.' },
+      {
+        label: 'None',
+        value: 'none',
+        description: 'Scatter plot with no line between the points.',
+      },
+      {
+        label: 'Linear',
+        value: 'linear',
+        description: 'Points are joined as straight lines.',
+      },
+      {
+        label: 'Step before',
+        value: 'step-start',
+        description: 'Step points rendered at the end of the step.',
+      },
+      {
+        label: 'Step middle',
+        value: 'step-middle',
+        description: 'Step points rendered in the middle of the step.',
+      },
+      {
+        label: 'Step after',
+        value: 'step-end',
+        description: 'Step points rendered at the beginning of the step.',
+      },
     ],
   },
   lineStyle: {

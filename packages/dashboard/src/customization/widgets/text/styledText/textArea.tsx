@@ -14,18 +14,25 @@ type StyledTextAreaProps = TextWidget & {
   isUrl?: boolean;
 };
 
-const StyledTextArea: React.FC<StyledTextAreaProps> = ({ handleSetEdit, isUrl, ...widget }) => {
+const StyledTextArea: React.FC<StyledTextAreaProps> = ({
+  handleSetEdit,
+  isUrl,
+  ...widget
+}) => {
   const { update } = useWidgetActions();
 
   const { value } = widget.properties;
 
-  const { fontSize, fontColor, isBold, isItalic, isUnderlined } = widget.properties.fontSettings || defaultFontSettings;
+  const { fontSize, fontColor, isBold, isItalic, isUnderlined } =
+    widget.properties.fontSettings || defaultFontSettings;
 
   const addPlaceholder = value.length === 0;
 
-  const className = `text-widget text-widget-editing ${isItalic ? 'text-widget-italic' : ''} ${
-    isBold ? 'text-widget-bold' : ''
-  } ${isUnderlined ? 'text-widget-underline' : ''} ${addPlaceholder ? 'text-widget-placeholder' : ''}`;
+  const className = `text-widget text-widget-editing ${
+    isItalic ? 'text-widget-italic' : ''
+  } ${isBold ? 'text-widget-bold' : ''} ${
+    isUnderlined ? 'text-widget-underline' : ''
+  } ${addPlaceholder ? 'text-widget-placeholder' : ''}`;
 
   const style: CSSProperties = {
     fontSize,
@@ -53,7 +60,8 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({ handleSetEdit, isUrl, .
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value.length]);
 
-  const filter = (e: KeyboardEvent | ClipboardEvent) => e.target === ref.current;
+  const filter = (e: KeyboardEvent | ClipboardEvent) =>
+    e.target === ref.current;
   useKeyPress('mod+shift+l', {
     callback: () => {
       const updatedWidget: TextWidget = {

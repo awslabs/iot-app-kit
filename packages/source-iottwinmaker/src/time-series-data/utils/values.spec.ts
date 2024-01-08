@@ -7,13 +7,22 @@ describe('toDataPoint', () => {
 
   it('should return undefined when value or time is not defined', () => {
     expect(toDataPoint({ value: undefined, time: 'time' })).toBeUndefined();
-    expect(toDataPoint({ value: { integerValue: 1 }, time: undefined })).toBeUndefined();
-    expect(toDataPoint({ value: { integerValue: undefined }, time: 'time' })).toBeUndefined();
+    expect(
+      toDataPoint({ value: { integerValue: 1 }, time: undefined })
+    ).toBeUndefined();
+    expect(
+      toDataPoint({ value: { integerValue: undefined }, time: 'time' })
+    ).toBeUndefined();
   });
 
   it('should return expected dataPoint', () => {
     const timeString = '2022/01/01 12:20:30';
-    expect(toDataPoint({ value: { integerValue: 1 }, time: new Date(timeString).toISOString() })).toEqual({
+    expect(
+      toDataPoint({
+        value: { integerValue: 1 },
+        time: new Date(timeString).toISOString(),
+      })
+    ).toEqual({
       x: new Date(timeString).getTime(),
       y: 1,
     });
@@ -22,7 +31,11 @@ describe('toDataPoint', () => {
 
 describe('toDataStream', () => {
   it('should return expected data stream as isRefreshing', () => {
-    const meta = { entityId: 'entity', componentName: 'comp', propertyName: 'prop' };
+    const meta = {
+      entityId: 'entity',
+      componentName: 'comp',
+      propertyName: 'prop',
+    };
     const input = {
       streamId: 'test-stream',
       dataPoints: [{ x: 123456, y: 'value' }],
@@ -40,7 +53,11 @@ describe('toDataStream', () => {
   });
 
   it('should return expected data stream as not isRefreshing when nextToken is undefined', () => {
-    const meta = { entityId: 'entity', componentName: 'comp', propertyName: 'prop' };
+    const meta = {
+      entityId: 'entity',
+      componentName: 'comp',
+      propertyName: 'prop',
+    };
     const input = {
       streamId: 'test-stream',
       dataPoints: [{ x: 123456, y: 'value' }],
@@ -58,7 +75,11 @@ describe('toDataStream', () => {
   });
 
   it('should return expected data stream as not isRefreshing when fetchMostRecent is true', () => {
-    const meta = { entityId: 'entity', componentName: 'comp', propertyName: 'prop' };
+    const meta = {
+      entityId: 'entity',
+      componentName: 'comp',
+      propertyName: 'prop',
+    };
     const input = {
       streamId: 'test-stream',
       dataPoints: [{ x: 123456, y: 'value' }],

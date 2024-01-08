@@ -44,7 +44,8 @@ export const Just = <T>(value: T): Just<T> => ({
 /**
  * Checks if a maybe has a value and casts to Just type
  */
-export const isJust = <T>(m: Maybe<T>): m is Just<T> => m.type === MaybeType.Just;
+export const isJust = <T>(m: Maybe<T>): m is Just<T> =>
+  m.type === MaybeType.Just;
 
 /**
  * Gets the value of a maybe type or a default value

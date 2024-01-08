@@ -1,15 +1,26 @@
-import { BatchGetAssetPropertyValueCommand, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  BatchGetAssetPropertyValueCommand,
+  IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import { toDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
 import { fromId } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
-import { createRawLatestEntryBatches, shouldFetchNextBatch, NO_LIMIT_BATCH } from './batch';
+import {
+  createRawLatestEntryBatches,
+  shouldFetchNextBatch,
+  NO_LIMIT_BATCH,
+} from './batch';
 import { deduplicateBatch } from '../util/deduplication';
 import type {
   BatchGetAssetPropertyValueErrorEntry,
   BatchGetAssetPropertyValueSuccessEntry,
 } from '@aws-sdk/client-iotsitewise';
-import { type OnSuccessCallback, type ErrorCallback, type RequestInformationAndRange } from '@iot-app-kit/core';
+import {
+  type OnSuccessCallback,
+  type ErrorCallback,
+  type RequestInformationAndRange,
+} from '@iot-app-kit/core';
 import type { LatestPropertyParams } from './client';
 import { withinLatestPropertyDataThreshold } from './withinLatestPropertyDataThreshold';
 
@@ -53,7 +64,13 @@ const sendRequest = ({
     .send(
       new BatchGetAssetPropertyValueCommand({
         entries: deduplicateBatch(batch).map((entry, entryIndex) => {
-          const { requestInformation, onError, onSuccess, requestStart, requestEnd } = entry;
+          const {
+            requestInformation,
+            onError,
+            onSuccess,
+            requestStart,
+            requestEnd,
+          } = entry;
           const { id } = requestInformation;
 
           // use 2D array indices as entryIDs to guarantee uniqueness
@@ -62,7 +79,10 @@ const sendRequest = ({
 
           // save request entry data in functional closure.
           callbackCache[entryId] = {
-            onError: ({ errorMessage: msg = 'batch latest value error', errorCode: status }) => {
+            onError: ({
+              errorMessage: msg = 'batch latest value error',
+              errorCode: status,
+            }) => {
               onError({
                 id,
                 resolution: 0, // currently supports raw data only
@@ -74,10 +94,17 @@ const sendRequest = ({
               if (assetPropertyValue) {
                 const dataStream = dataStreamFromSiteWise({
                   ...fromId(id),
-                  dataPoints: [toDataPoint(assetPropertyValue)].filter(isDefined),
+                  dataPoints: [toDataPoint(assetPropertyValue)].filter(
+                    isDefined
+                  ),
                 });
 
-                onSuccess([dataStream], requestInformation, requestStart, requestEnd);
+                onSuccess(
+                  [dataStream],
+                  requestInformation,
+                  requestStart,
+                  requestEnd
+                );
               }
             },
           };
@@ -97,8 +124,13 @@ const sendRequest = ({
       // execute the correct callback for each entry
       // empty entries and entries that don't exist in the cache are ignored.
       // TODO: implement retries for retry-able batch errors
-      errorEntries?.forEach((entry) => entry.entryId && callbackCache[entry.entryId]?.onError(entry));
-      successEntries?.forEach((entry) => entry.entryId && callbackCache[entry.entryId]?.onSuccess(entry));
+      errorEntries?.forEach(
+        (entry) => entry.entryId && callbackCache[entry.entryId]?.onError(entry)
+      );
+      successEntries?.forEach(
+        (entry) =>
+          entry.entryId && callbackCache[entry.entryId]?.onSuccess(entry)
+      );
 
       if (shouldFetchNextBatch({ nextToken, maxResults: NO_LIMIT_BATCH })) {
         sendRequest({
@@ -120,7 +152,9 @@ const batchGetLatestPropertyDataPointsForProperty = ({
 }) =>
   createRawLatestEntryBatches<BatchLatestEntry>(entries)
     .filter((batch) => batch.length > 0) // filter out empty batches
-    .map(([batch], requestIndex) => sendRequest({ client, batch, requestIndex }));
+    .map(([batch], requestIndex) =>
+      sendRequest({ client, batch, requestIndex })
+    );
 
 export const batchGetLatestPropertyDataPoints = ({
   params,
@@ -136,7 +170,9 @@ export const batchGetLatestPropertyDataPoints = ({
     requestInformations
       .filter(
         ({ end, fetchMostRecentBeforeEnd, resolution }) =>
-          resolution === '0' && withinLatestPropertyDataThreshold(end) && fetchMostRecentBeforeEnd
+          resolution === '0' &&
+          withinLatestPropertyDataThreshold(end) &&
+          fetchMostRecentBeforeEnd
       )
       .forEach((requestInformation) => {
         const { end } = requestInformation;
@@ -152,7 +188,11 @@ export const batchGetLatestPropertyDataPoints = ({
   });
 
   // sort entries to ensure earliest data is fetched first because batch API has a property limit
-  entries.sort((a, b) => b.requestInformation.start.getTime() - a.requestInformation.start.getTime());
+  entries.sort(
+    (a, b) =>
+      b.requestInformation.start.getTime() -
+      a.requestInformation.start.getTime()
+  );
 
   if (entries.length > 0) {
     batchGetLatestPropertyDataPointsForProperty({

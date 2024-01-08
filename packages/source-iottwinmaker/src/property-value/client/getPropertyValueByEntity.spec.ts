@@ -80,7 +80,10 @@ describe('getPropertyValueByEntity', () => {
       workspaceId: mockQuery2.workspaceId,
       entityId: mockQuery2.entityId,
       componentName: mockQuery2.componentName,
-      selectedProperties: [mockEntityRef2.propertyName, mockEntityRef3.propertyName],
+      selectedProperties: [
+        mockEntityRef2.propertyName,
+        mockEntityRef3.propertyName,
+      ],
     });
     expect(result).toEqual([
       {
@@ -121,7 +124,9 @@ describe('getPropertyValueByEntity', () => {
         },
       },
     };
-    getPropertyValue.mockResolvedValueOnce(mockAPIResponse1).mockResolvedValueOnce(mockAPIResponse2);
+    getPropertyValue
+      .mockResolvedValueOnce(mockAPIResponse1)
+      .mockResolvedValueOnce(mockAPIResponse2);
 
     const result = await getPropertyValueByEntity({
       query: mockQuery1,

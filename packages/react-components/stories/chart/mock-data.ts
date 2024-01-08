@@ -3,7 +3,10 @@ import { DATA_TYPE, DAY_IN_MS } from '@iot-app-kit/core';
 import type { DataStream } from '@iot-app-kit/core';
 
 const NUM_STREAMS = 2;
-export const VIEWPORT = { start: new Date(2000, 0, 0), end: new Date(2010, 0, 0) };
+export const VIEWPORT = {
+  start: new Date(2000, 0, 0),
+  end: new Date(2010, 0, 0),
+};
 
 const DATA_STREAM: DataStream = {
   id: 'some-asset-id---some-property-id',

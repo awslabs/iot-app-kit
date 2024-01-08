@@ -16,7 +16,9 @@ import WidgetTile from '~/components/widgets/tile';
 
 const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const { viewport } = useViewport();
-  const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
+  const dashboardSignificantDigits = useSelector(
+    (state: DashboardState) => state.significantDigits
+  );
 
   const {
     styleSettings,
@@ -60,7 +62,8 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     isDefined
   );
 
-  const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
+  const significantDigits =
+    widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
     <WidgetTile widget={widget} removeable key={key}>
@@ -85,11 +88,19 @@ const KPIWidgetEmptyStateComponent: React.FC = () => {
       </Box>
 
       <div className='kpi-widget-empty-state-message-container'>
-        <Box variant='strong' color='text-status-inactive' margin={{ horizontal: 's' }}>
+        <Box
+          variant='strong'
+          color='text-status-inactive'
+          margin={{ horizontal: 's' }}
+        >
           No properties or alarms
         </Box>
 
-        <Box variant='p' color='text-status-inactive' margin={{ bottom: 's', horizontal: 's' }}>
+        <Box
+          variant='p'
+          color='text-status-inactive'
+          margin={{ bottom: 's', horizontal: 's' }}
+        >
           Add a property or alarm to populate KPI
         </Box>
       </div>

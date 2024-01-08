@@ -1,12 +1,18 @@
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
-import type { DescribeAlarmModelCommandInput, DescribeAlarmModelResponse } from '@aws-sdk/client-iot-events';
+import type {
+  DescribeAlarmModelCommandInput,
+  DescribeAlarmModelResponse,
+} from '@aws-sdk/client-iot-events';
 
-const nonOverriddenMock = () => Promise.reject(new Error('Mock method not overriden.'));
+const nonOverriddenMock = () =>
+  Promise.reject(new Error('Mock method not overriden.'));
 
 export const createMockIoTEventsSDK = ({
   getAlarmModel = nonOverriddenMock,
 }: {
-  getAlarmModel?: (input: DescribeAlarmModelCommandInput) => Promise<DescribeAlarmModelResponse>;
+  getAlarmModel?: (
+    input: DescribeAlarmModelCommandInput
+  ) => Promise<DescribeAlarmModelResponse>;
 } = {}) =>
   ({
     send: (command: { input: never }) => {

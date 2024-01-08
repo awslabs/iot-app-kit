@@ -28,7 +28,10 @@ export function AssetTablePreferences<P extends AllPreferences>({
       }}
       pageSizePreference={{
         title: 'Select page size',
-        options: SUPPORTED_PAGE_SIZES.map((size) => ({ value: size, label: size.toString() })),
+        options: SUPPORTED_PAGE_SIZES.map((size) => ({
+          value: size,
+          label: size.toString(),
+        })),
       }}
       wrapLinesPreference={{
         label: 'Wrap lines',
@@ -57,7 +60,8 @@ export function AssetTablePreferences<P extends AllPreferences>({
       stickyColumnsPreference={{
         firstColumns: {
           title: 'Stick first column(s)',
-          description: 'Keep the first column(s) visible while horizontally scrolling the table content.',
+          description:
+            'Keep the first column(s) visible while horizontally scrolling the table content.',
           options: [
             { label: 'None', value: 0 },
             { label: 'First column', value: 1 },

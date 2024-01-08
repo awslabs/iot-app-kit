@@ -10,8 +10,15 @@ type ExpandableSectionHeaderProps = {
   onClickButton?: MouseEventHandler;
   iconName?: IconProps.Name;
 };
-const ExpandableSectionHeader: FC<PropsWithChildren<ExpandableSectionHeaderProps>> = (props) => {
-  const { children, onClickButton, buttonEnabled = true, iconName = 'add-plus' } = props;
+const ExpandableSectionHeader: FC<
+  PropsWithChildren<ExpandableSectionHeaderProps>
+> = (props) => {
+  const {
+    children,
+    onClickButton,
+    buttonEnabled = true,
+    iconName = 'add-plus',
+  } = props;
 
   const handleClickButton: MouseEventHandler = (e) => {
     if (!buttonEnabled || !onClickButton) return;
@@ -24,7 +31,10 @@ const ExpandableSectionHeader: FC<PropsWithChildren<ExpandableSectionHeaderProps
         <span className='expandable-section-header-icon'>
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div onClick={handleClickButton}>
-            <Icon variant={buttonEnabled ? 'normal' : 'disabled'} name={iconName} />
+            <Icon
+              variant={buttonEnabled ? 'normal' : 'disabled'}
+              name={iconName}
+            />
           </div>
         </span>
       )}

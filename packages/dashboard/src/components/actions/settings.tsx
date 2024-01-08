@@ -11,7 +11,10 @@ export type DashboardSettingsProps = {
   isVisible: boolean;
 };
 
-const DashboardSettings: React.FC<DashboardSettingsProps> = ({ onClose, isVisible }) => {
+const DashboardSettings: React.FC<DashboardSettingsProps> = ({
+  onClose,
+  isVisible,
+}) => {
   const {
     rows,
     columns,
@@ -24,14 +27,21 @@ const DashboardSettings: React.FC<DashboardSettingsProps> = ({ onClose, isVisibl
   } = useGridSettings();
 
   return (
-    <Modal onDismiss={onClose} visible={isVisible} closeAriaLabel='Close modal' header='Dashboard Settings'>
+    <Modal
+      onDismiss={onClose}
+      visible={isVisible}
+      closeAriaLabel='Close modal'
+      header='Dashboard Settings'
+    >
       <Box>
         <SpaceBetween direction='vertical' size='l'>
           <LabeledInput
             label='Decimal Places'
             type='number'
             value={significantDigits.toFixed()}
-            onChange={(event) => onChangeSignificantDigits(numberFromDetail(event))}
+            onChange={(event) =>
+              onChangeSignificantDigits(numberFromDetail(event))
+            }
           />
           <LabeledInput
             label='Cell Size'
@@ -49,7 +59,9 @@ const DashboardSettings: React.FC<DashboardSettingsProps> = ({ onClose, isVisibl
             label='Number of Columns'
             type='number'
             value={columns.toFixed()}
-            onChange={(event) => onChangeNumberOfColumns(numberFromDetail(event))}
+            onChange={(event) =>
+              onChangeNumberOfColumns(numberFromDetail(event))
+            }
           />
         </SpaceBetween>
       </Box>

@@ -13,7 +13,12 @@ export const handleSetYAxis = (model: LineSeriesModel) => {
   const id = `${option.id}`; // echart option id can also be a number
 
   // Cannot determine yAxis unless the coordinateSystem is cartesion2d
-  if (coordinateSystem.type !== 'cartesian2d' || id == null || appKitChartId == null) return;
+  if (
+    coordinateSystem.type !== 'cartesian2d' ||
+    id == null ||
+    appKitChartId == null
+  )
+    return;
 
   const storeState = useDataStore.getState();
   const stores = storeState.chartStores;
@@ -51,7 +56,10 @@ export const handleSetYAxis = (model: LineSeriesModel) => {
       state.setYMin(id, newMin);
     }
   } else {
-    if (!isEqual(undefined, state.yMaxes[id]) || !isEqual(undefined, state.yMins[id])) {
+    if (
+      !isEqual(undefined, state.yMaxes[id]) ||
+      !isEqual(undefined, state.yMins[id])
+    ) {
       store.getState().clearYAxis(id);
     }
   }

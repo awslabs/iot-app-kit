@@ -35,10 +35,21 @@ type YAxisLegendOptions = {
   axes: YAxisLegendOption[];
   menuPosition?: 'bottom' | 'top';
 };
-export const YAxisLegend = ({ maxHeight, label, axes, menuPosition }: YAxisLegendOptions) => {
-  const highlightDataStream = useChartStore((state) => state.highlightDataStream);
-  const unHighlightDataStream = useChartStore((state) => state.unHighlightDataStream);
-  const highlightedDataStreams = useChartStore((state) => state.highlightedDataStreams);
+export const YAxisLegend = ({
+  maxHeight,
+  label,
+  axes,
+  menuPosition,
+}: YAxisLegendOptions) => {
+  const highlightDataStream = useChartStore(
+    (state) => state.highlightDataStream
+  );
+  const unHighlightDataStream = useChartStore(
+    (state) => state.unHighlightDataStream
+  );
+  const highlightedDataStreams = useChartStore(
+    (state) => state.highlightedDataStreams
+  );
   const isDataStreamHighlighted = isDataStreamInList(highlightedDataStreams);
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuSizeRef, { height }] = useMeasure<HTMLDivElement>();
@@ -51,14 +62,21 @@ export const YAxisLegend = ({ maxHeight, label, axes, menuPosition }: YAxisLegen
       preventViewportOverflow={false}
       classNames='axis-menu'
       styles={{ width: MULTI_Y_AXIS_LEGEND_WIDTH, maxHeight: menuMaxHeight }}
-      placement={menuPosition && menuPosition === 'top' ? 'top-start' : 'bottom-start'}
+      placement={
+        menuPosition && menuPosition === 'top' ? 'top-start' : 'bottom-start'
+      }
       shadow
       open={menuOpen}
       offset={[0, MENU_OFFSET]}
       referenceElement={(ref) => (
         <div ref={ref}>
           <div ref={menuSizeRef}>
-            <Menu styles={{ fontSize: MENU_FONT_SIZE, backgroundColor: colorBackgroundDropdownItemHover }}>
+            <Menu
+              styles={{
+                fontSize: MENU_FONT_SIZE,
+                backgroundColor: colorBackgroundDropdownItemHover,
+              }}
+            >
               <MenuOption
                 styles={{
                   boxShadow: `0 0 0 ${spaceScaledXxxs} ${colorBorderControlDefault}`,
@@ -98,11 +116,17 @@ export const YAxisLegend = ({ maxHeight, label, axes, menuPosition }: YAxisLegen
           onPointerLeave={() => {
             unHighlightDataStream(datastream);
           }}
-          iconEnd={() => <span className='axis-menu-option-value'>{datastream?.unit}</span>}
+          iconEnd={() => (
+            <span className='axis-menu-option-value'>{datastream?.unit}</span>
+          )}
           highlighted={isDataStreamHighlighted(datastream)}
         >
           <div
-            title={value ? getValue(value, significantDigits) : 'No visible data points'}
+            title={
+              value
+                ? getValue(value, significantDigits)
+                : 'No visible data points'
+            }
             className='axis-menu-option-value'
           >
             {value != null ? (

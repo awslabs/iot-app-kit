@@ -6,8 +6,11 @@ type TimeSeriesDescription = DescribeTimeSeriesResponse;
 export class TimeSeriesDescriptionFactory {
   readonly #timeSeriesSummaryFactory = new TimeSeriesSummaryFactory();
 
-  public create(partialDescription: Parameters<TimeSeriesSummaryFactory['create']>[0]): TimeSeriesDescription {
-    const timeSeriesDescription = this.#timeSeriesSummaryFactory.create(partialDescription);
+  public create(
+    partialDescription: Parameters<TimeSeriesSummaryFactory['create']>[0]
+  ): TimeSeriesDescription {
+    const timeSeriesDescription =
+      this.#timeSeriesSummaryFactory.create(partialDescription);
 
     return timeSeriesDescription;
   }

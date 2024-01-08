@@ -1,6 +1,9 @@
 import { DATA_TYPE } from '../common/constants';
 import type { DataStream, DataType } from '../data-module/types';
-import type { HistoricalViewport, Viewport } from '../data-module/data-cache/requestTypes';
+import type {
+  HistoricalViewport,
+  Viewport,
+} from '../data-module/data-cache/requestTypes';
 
 /**
  * Predicate Utilities
@@ -30,7 +33,8 @@ import type { HistoricalViewport, Viewport } from '../data-module/data-cache/req
  *
  */
 
-export const isDefined = <T>(value: T | null | undefined): value is T => value != null;
+export const isDefined = <T>(value: T | null | undefined): value is T =>
+  value != null;
 
 export const isValid =
   <T>(predicate: (t: Partial<T>) => boolean) =>
@@ -41,12 +45,16 @@ export const isValid =
 export const isSupportedDataType =
   (supportsString: boolean) =>
   ({ dataType }: { dataType: DataType }) =>
-    (supportsString && dataType === DATA_TYPE.STRING) || dataType !== DATA_TYPE.STRING;
+    (supportsString && dataType === DATA_TYPE.STRING) ||
+    dataType !== DATA_TYPE.STRING;
 
-export const isNumberDataStream = (stream: DataStream): stream is DataStream<number> =>
-  stream.dataType === DATA_TYPE.NUMBER;
+export const isNumberDataStream = (
+  stream: DataStream
+): stream is DataStream<number> => stream.dataType === DATA_TYPE.NUMBER;
 
-export const isNumber = <T>(val: T | number): val is number => typeof val === 'number';
+export const isNumber = <T>(val: T | number): val is number =>
+  typeof val === 'number';
 
-export const isHistoricalViewport = (viewport: Viewport): viewport is HistoricalViewport =>
-  'start' in viewport && 'end' in viewport;
+export const isHistoricalViewport = (
+  viewport: Viewport
+): viewport is HistoricalViewport => 'start' in viewport && 'end' in viewport;

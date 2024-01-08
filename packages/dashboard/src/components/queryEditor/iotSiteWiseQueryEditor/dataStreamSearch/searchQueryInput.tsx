@@ -9,7 +9,10 @@ export interface SearchQueryInputProps {
   disabled?: boolean;
 }
 
-export const SearchQueryInput = ({ control, disabled }: SearchQueryInputProps) => {
+export const SearchQueryInput = ({
+  control,
+  disabled,
+}: SearchQueryInputProps) => {
   const MIN_SEARCH_QUERY_LENGTH = 1;
   const MAX_SEARCH_QUERY_LENGTH = 48;
 
@@ -19,8 +22,14 @@ export const SearchQueryInput = ({ control, disabled }: SearchQueryInputProps) =
       name='searchQuery'
       rules={{
         required: 'Search query must be between 1 and 48 characters.',
-        minLength: { value: MIN_SEARCH_QUERY_LENGTH, message: 'Search query is too short.' },
-        maxLength: { value: MAX_SEARCH_QUERY_LENGTH, message: 'Search query is too long.' },
+        minLength: {
+          value: MIN_SEARCH_QUERY_LENGTH,
+          message: 'Search query is too short.',
+        },
+        maxLength: {
+          value: MAX_SEARCH_QUERY_LENGTH,
+          message: 'Search query is too long.',
+        },
       }}
       render={({ field, fieldState }) => (
         <FormField

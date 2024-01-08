@@ -2,8 +2,12 @@ import { MutableRefObject, useCallback, useEffect, useState } from 'react';
 import { EChartsOption, EChartsType, ElementEvent } from 'echarts';
 import { KeyMap } from 'react-hotkeys';
 
-export const useHandleChartEvents = (chartRef: MutableRefObject<EChartsType | null>) => {
-  const [chartEventsOptions, setChartEventsOptions] = useState<EChartsOption>({});
+export const useHandleChartEvents = (
+  chartRef: MutableRefObject<EChartsType | null>
+) => {
+  const [chartEventsOptions, setChartEventsOptions] = useState<EChartsOption>(
+    {}
+  );
 
   const [shiftDown, setShiftDown] = useState(false);
   const [prevIsPanning, setPrevIsPanning] = useState(false);

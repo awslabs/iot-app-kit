@@ -3,7 +3,9 @@ import { isDefined } from '~/util/isDefined';
 import type { IoTSiteWiseDataStreamQuery } from '~/types';
 
 // hook grabs all the data types of the assets in a SiteWiseAssetQuery
-export const useWidgetDataTypeSet = (siteWiseQuery: IoTSiteWiseDataStreamQuery | undefined): Set<string> => {
+export const useWidgetDataTypeSet = (
+  siteWiseQuery: IoTSiteWiseDataStreamQuery | undefined
+): Set<string> => {
   const describedAssetsMapQuery = useListAssetPropertiesMapQuery(siteWiseQuery);
   const describedAssetsMap = describedAssetsMapQuery.data ?? {};
 
@@ -17,7 +19,9 @@ export const useWidgetDataTypeSet = (siteWiseQuery: IoTSiteWiseDataStreamQuery |
 
   const dataTypes =
     siteWiseQuery?.assets
-      ?.map(({ assetId, properties }) => properties.map(({ propertyId }) => getPropertyType(assetId, propertyId)))
+      ?.map(({ assetId, properties }) =>
+        properties.map(({ propertyId }) => getPropertyType(assetId, propertyId))
+      )
       .flat(2) // need to flatten array of assets where each asset has array of properties
       .filter(isDefined) ?? [];
 

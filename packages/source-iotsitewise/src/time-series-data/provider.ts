@@ -1,6 +1,10 @@
 import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
 import { SiteWiseComponentSession } from '../component-session';
-import { timeSeriesDataSession, assetSession, alarmsSession } from '../sessions';
+import {
+  timeSeriesDataSession,
+  assetSession,
+  alarmsSession,
+} from '../sessions';
 import type {
   Provider,
   ProviderObserver,
@@ -14,12 +18,19 @@ import type { SiteWiseDataStreamQuery } from './types';
 /**
  * Provider for SiteWise time series data
  */
-export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData[]> {
-  private update: (subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>) => void = () => {};
+export class SiteWiseTimeSeriesDataProvider
+  implements Provider<TimeSeriesData[]>
+{
+  private update: (
+    subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>
+  ) => void = () => {};
   public session: SiteWiseComponentSession;
   public input: DataModuleSubscription<SiteWiseDataStreamQuery>;
 
-  constructor(session: SiteWiseComponentSession, input: DataModuleSubscription<SiteWiseDataStreamQuery>) {
+  constructor(
+    session: SiteWiseComponentSession,
+    input: DataModuleSubscription<SiteWiseDataStreamQuery>
+  ) {
     this.session = session;
     this.input = input;
   }
@@ -31,7 +42,9 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData[]
       timeSeriesDataSession(session),
       assetSession(session),
       alarmsSession(session)
-    )(this.input, (timeSeriesData: TimeSeriesData) => observer.next([timeSeriesData]));
+    )(this.input, (timeSeriesData: TimeSeriesData) =>
+      observer.next([timeSeriesData])
+    );
 
     this.update = update;
 
@@ -41,7 +54,9 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData[]
     });
   }
 
-  updateSubscription(subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>) {
+  updateSubscription(
+    subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>
+  ) {
     this.update(subscriptionUpdate);
   }
 

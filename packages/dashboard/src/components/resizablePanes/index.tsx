@@ -24,7 +24,8 @@ const getSessionStorageNumber = (key: string, fallback: number) => {
   return fallback;
 };
 
-const getStoredLeftWidthPercent = () => getSessionStorageNumber(LEFT_WIDTH_PERCENT_STORAGE_KEY, LEFT_WIDTH_PERCENT);
+const getStoredLeftWidthPercent = () =>
+  getSessionStorageNumber(LEFT_WIDTH_PERCENT_STORAGE_KEY, LEFT_WIDTH_PERCENT);
 
 type ResizablePanesProps = {
   leftPane: ReactNode;
@@ -32,14 +33,20 @@ type ResizablePanesProps = {
   rightPane: ReactNode;
 };
 
-export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, rightPane }) => {
+export const ResizablePanes: FC<ResizablePanesProps> = ({
+  leftPane,
+  centerPane,
+  rightPane,
+}) => {
   const panes = useRef(null);
 
   // Used to prevent any scroll events leaking to the grid component on resize
   const [pointerEvents, setPointerEvents] = useState<'auto' | 'none'>('auto');
 
   /** Currently active drag hangle during a drag, or null if not dragging */
-  const [currentDragHandle, setCurrentDragHandle] = useState<'left' | null>(null);
+  const [currentDragHandle, setCurrentDragHandle] = useState<'left' | null>(
+    null
+  );
 
   /** Last seen mouse x position during a drag, in px from screen left side */
   const [lastSeenAtX, setLastSeenAtX] = useState<number | null>(null);
@@ -66,11 +73,17 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
 
     if (storedLeftWidthPercent) {
       const storedLeftWidth = elementWidth * storedLeftWidthPercent;
-      setLeftPaneWidth(storedLeftWidth > DEFAULT_SIDE_PANE_WIDTH ? storedLeftWidth : DEFAULT_SIDE_PANE_WIDTH);
+      setLeftPaneWidth(
+        storedLeftWidth > DEFAULT_SIDE_PANE_WIDTH
+          ? storedLeftWidth
+          : DEFAULT_SIDE_PANE_WIDTH
+      );
     } else {
       const computedLeftPaneWidth = elementWidth * LEFT_WIDTH_PERCENT;
       const computedLeftPaneWidthWithMinimums =
-        computedLeftPaneWidth > DEFAULT_SIDE_PANE_WIDTH ? computedLeftPaneWidth : DEFAULT_SIDE_PANE_WIDTH;
+        computedLeftPaneWidth > DEFAULT_SIDE_PANE_WIDTH
+          ? computedLeftPaneWidth
+          : DEFAULT_SIDE_PANE_WIDTH;
 
       setLeftPaneWidth(computedLeftPaneWidthWithMinimums);
     }
@@ -89,7 +102,10 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
   const onHandleDragStart = (event: MouseEvent) => {
     const target = event.target;
     if (target instanceof Element) {
-      if (target.classList && target.classList.contains('iot-resizable-panes-handle')) {
+      if (
+        target.classList &&
+        target.classList.contains('iot-resizable-panes-handle')
+      ) {
         setLastSeenAtX(event.clientX);
         setMovedX(0);
         setPointerEvents('none');
@@ -114,7 +130,10 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
       const nextLeftPaneWidth = leftPaneWidth + movedX;
 
       // Stop drag when dragged pane runs into other pane
-      if (nextLeftPaneWidth + rightPaneWidth >= elementWidth - MINIMUM_CENTER_PANE_WIDTH) {
+      if (
+        nextLeftPaneWidth + rightPaneWidth >=
+        elementWidth - MINIMUM_CENTER_PANE_WIDTH
+      ) {
         cancelDrag();
         return;
       }
@@ -128,7 +147,10 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
       // Persist percentage with sessionStorage
       setLeftPaneWidth(minMaxLeftPaneWidth);
       const nextLeftPaneWidthPercent = nextLeftPaneWidth / elementWidth;
-      sessionStorage.setItem(LEFT_WIDTH_PERCENT_STORAGE_KEY, nextLeftPaneWidthPercent.toString());
+      sessionStorage.setItem(
+        LEFT_WIDTH_PERCENT_STORAGE_KEY,
+        nextLeftPaneWidthPercent.toString()
+      );
     }
   };
 
@@ -156,7 +178,10 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
     let nextRightProportion = rightProportion;
 
     if (nextLeftProportion + nextRightProportion > MAXIMUM_PANES_PROPORTION) {
-      while (nextLeftProportion + nextRightProportion > MAXIMUM_PANES_PROPORTION) {
+      while (
+        nextLeftProportion + nextRightProportion >
+        MAXIMUM_PANES_PROPORTION
+      ) {
         nextLeftProportion = nextLeftProportion * 0.99;
         nextRightProportion = nextRightProportion * 0.99;
       }
@@ -168,11 +193,16 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
     // If proportions are too high, or next pane width is larger than minimum
     // size, use minimum size as next pane width instead.
     const nextLeftPaneWidth =
-      maybeNextLeftPaneWidth > DEFAULT_SIDE_PANE_WIDTH ? maybeNextLeftPaneWidth : DEFAULT_SIDE_PANE_WIDTH;
+      maybeNextLeftPaneWidth > DEFAULT_SIDE_PANE_WIDTH
+        ? maybeNextLeftPaneWidth
+        : DEFAULT_SIDE_PANE_WIDTH;
 
     // Persist percentages with sessionStorage
     const nextLeftPaneWidthPercent = nextLeftPaneWidth / elementWidth;
-    sessionStorage.setItem(LEFT_WIDTH_PERCENT_STORAGE_KEY, nextLeftPaneWidthPercent.toString());
+    sessionStorage.setItem(
+      LEFT_WIDTH_PERCENT_STORAGE_KEY,
+      nextLeftPaneWidthPercent.toString()
+    );
 
     // Set pane widths
     setLeftPaneWidth(nextLeftPaneWidth);
@@ -215,7 +245,9 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
       onMouseMove={(e) => onHandleDragMove(e)}
       onMouseUp={() => onHandleDragEnd()}
       style={{
-        gridTemplateColumns: `max-content ${isLeftPaneCollapsed ? '0px' : `${spaceStaticXs}`} auto 0px max-content`,
+        gridTemplateColumns: `max-content ${
+          isLeftPaneCollapsed ? '0px' : `${spaceStaticXs}`
+        } auto 0px max-content`,
       }}
     >
       <CollapsiblePanel
@@ -229,17 +261,28 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
       />
 
       <div
-        className={!isLeftPaneCollapsed ? 'iot-resizable-panes-handle iot-resizable-panes-handle-left' : ''}
+        className={
+          !isLeftPaneCollapsed
+            ? 'iot-resizable-panes-handle iot-resizable-panes-handle-left'
+            : ''
+        }
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       />
 
-      <div style={{ pointerEvents }} className='iot-resizable-panes-pane iot-resizable-panes-pane-center'>
+      <div
+        style={{ pointerEvents }}
+        className='iot-resizable-panes-pane iot-resizable-panes-pane-center'
+      >
         {centerPane}
       </div>
 
       <div
-        className={!isRightPaneCollapsed ? 'iot-resizable-panes-handle iot-resizable-panes-handle-right' : ''}
+        className={
+          !isRightPaneCollapsed
+            ? 'iot-resizable-panes-handle iot-resizable-panes-handle-right'
+            : ''
+        }
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       />

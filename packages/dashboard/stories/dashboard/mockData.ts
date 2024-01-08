@@ -101,7 +101,9 @@ export const mockListAssets = (args: { filter: string }) => {
   if (args.filter === 'TOP_LEVEL') {
     return Promise.resolve(assetsTopLevel);
   }
-  throw new Error(`mockListAssets can't be called with a filter other than TOP_LEVEL.`);
+  throw new Error(
+    `mockListAssets can't be called with a filter other than TOP_LEVEL.`
+  );
 };
 
 export const mockListAssociatedAssets = (args: { assetId: string }) => {
@@ -111,5 +113,7 @@ export const mockListAssociatedAssets = (args: { assetId: string }) => {
   if (args.assetId === 'e9a995de-149e-4f6d-afa6-f073b863a050') {
     return Promise.resolve(assetsTurbineSensors);
   }
-  throw new Error(`mockListAssociatedAssets must be called with Wind Farm asset's ID or Turbine 1 asset's ID`);
+  throw new Error(
+    `mockListAssociatedAssets must be called with Wind Farm asset's ID or Turbine 1 asset's ID`
+  );
 };

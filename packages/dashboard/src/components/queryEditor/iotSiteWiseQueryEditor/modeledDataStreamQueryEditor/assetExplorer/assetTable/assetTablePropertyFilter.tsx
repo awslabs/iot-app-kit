@@ -1,22 +1,28 @@
-import PropertyFilter, { type PropertyFilterProps } from '@cloudscape-design/components/property-filter';
+import PropertyFilter, {
+  type PropertyFilterProps,
+} from '@cloudscape-design/components/property-filter';
 import React from 'react';
 
-export const ASSET_TABLE_FILTERING_PROPERTIES: PropertyFilterProps['filteringProperties'] = [
-  {
-    key: 'name',
-    propertyLabel: 'Name',
-    groupValuesLabel: 'Property names',
-    operators: ['=', '!=', ':', '!:'],
-  },
-  {
-    key: 'description',
-    propertyLabel: 'Description',
-    groupValuesLabel: 'Property descriptions',
-    operators: ['=', '!=', ':', '!:'],
-  },
-];
+export const ASSET_TABLE_FILTERING_PROPERTIES: PropertyFilterProps['filteringProperties'] =
+  [
+    {
+      key: 'name',
+      propertyLabel: 'Name',
+      groupValuesLabel: 'Property names',
+      operators: ['=', '!=', ':', '!:'],
+    },
+    {
+      key: 'description',
+      propertyLabel: 'Description',
+      groupValuesLabel: 'Property descriptions',
+      operators: ['=', '!=', ':', '!:'],
+    },
+  ];
 
-export type AssetTablePropertyFilterProps = Omit<PropertyFilterProps, 'i18nStrings'>;
+export type AssetTablePropertyFilterProps = Omit<
+  PropertyFilterProps,
+  'i18nStrings'
+>;
 
 export function AssetTablePropertyFilter(props: AssetTablePropertyFilterProps) {
   return (
@@ -54,7 +60,8 @@ export function AssetTablePropertyFilter(props: AssetTablePropertyFilterProps) {
         tokenLimitShowMore: 'Show more',
         tokenLimitShowFewer: 'Show fewer',
         clearFiltersText: 'Clear filters',
-        removeTokenButtonAriaLabel: (token) => `Remove token ${token.propertyKey} ${token.operator} ${token.value}`,
+        removeTokenButtonAriaLabel: (token) =>
+          `Remove token ${token.propertyKey} ${token.operator} ${token.value}`,
         enteredTextLabel: (text) => `Use: "${text}"`,
       }}
     />

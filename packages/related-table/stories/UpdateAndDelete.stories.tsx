@@ -1,4 +1,9 @@
-import { Button, Header, Pagination, TextFilter } from '@awsui/components-react';
+import {
+  Button,
+  Header,
+  Pagination,
+  TextFilter,
+} from '@awsui/components-react';
 import React, { useState } from 'react';
 import { Meta, Story } from '@storybook/react';
 import { RelatedTable, useTreeCollection } from '../src';
@@ -206,17 +211,28 @@ export const UpdateAndDelete: Story = () => {
       sortingField: 'creationDate',
       id: 'creationDate',
       header: 'Created',
-      cell: (item: any) => <div>{new Date(item.creationDate * 1000).toUTCString()}</div>,
+      cell: (item: any) => (
+        <div>{new Date(item.creationDate * 1000).toUTCString()}</div>
+      ),
     },
     {
       sortingField: 'lastUpdateDate',
       id: 'lastUpdateDate',
       header: 'Updated',
-      cell: (item: any) => <div>{new Date(item.lastUpdateDate * 1000).toUTCString()}</div>,
+      cell: (item: any) => (
+        <div>{new Date(item.lastUpdateDate * 1000).toUTCString()}</div>
+      ),
     },
   ];
 
-  const { expandNode, items, collectionProps, filterProps, paginationProps, reset } = useTreeCollection(allItems, {
+  const {
+    expandNode,
+    items,
+    collectionProps,
+    filterProps,
+    paginationProps,
+    reset,
+  } = useTreeCollection(allItems, {
     columnDefinitions,
     sorting: {
       defaultState: {
@@ -262,7 +278,11 @@ export const UpdateAndDelete: Story = () => {
                 onClick={() => {
                   const updatedItems: any[] = [];
                   allItems.forEach((item) => {
-                    if (!selectedItems?.some((selected) => selected.id === item.id)) {
+                    if (
+                      !selectedItems?.some(
+                        (selected) => selected.id === item.id
+                      )
+                    ) {
                       updatedItems.push(item);
                     }
                   });

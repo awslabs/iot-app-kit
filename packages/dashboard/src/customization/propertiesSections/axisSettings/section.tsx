@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { ExpandableSection, Input, SpaceBetween, Toggle } from '@cloudscape-design/components';
+import {
+  ExpandableSection,
+  Input,
+  SpaceBetween,
+  Toggle,
+} from '@cloudscape-design/components';
 import ExpandableSectionHeader from '../shared/expandableSectionHeader';
 import type { FC } from 'react';
 import type { InputProps, ToggleProps } from '@cloudscape-design/components';
@@ -29,16 +34,26 @@ type AxisSectionProps = {
   updateAxis: (newValue: AxisSettings | undefined) => void;
 };
 
-const AxisSection: FC<AxisSectionProps> = ({ usesYAxis, axis = defaultAxisSetting, updateAxis }) => {
-  const toggleShowX: NonCancelableEventHandler<ToggleProps.ChangeDetail> = ({ detail: { checked } }) => {
+const AxisSection: FC<AxisSectionProps> = ({
+  usesYAxis,
+  axis = defaultAxisSetting,
+  updateAxis,
+}) => {
+  const toggleShowX: NonCancelableEventHandler<ToggleProps.ChangeDetail> = ({
+    detail: { checked },
+  }) => {
     updateAxis({ ...axis, showX: checked });
   };
 
-  const toggleShowY: NonCancelableEventHandler<ToggleProps.ChangeDetail> = ({ detail: { checked } }) => {
+  const toggleShowY: NonCancelableEventHandler<ToggleProps.ChangeDetail> = ({
+    detail: { checked },
+  }) => {
     updateAxis({ ...axis, showY: checked });
   };
 
-  const updateLabel: NonCancelableEventHandler<InputProps.ChangeDetail> = ({ detail: { value } }) => {
+  const updateLabel: NonCancelableEventHandler<InputProps.ChangeDetail> = ({
+    detail: { value },
+  }) => {
     updateAxis({
       ...axis,
       yAxisLabel: value,
@@ -47,25 +62,43 @@ const AxisSection: FC<AxisSectionProps> = ({ usesYAxis, axis = defaultAxisSettin
 
   return (
     <ExpandableSection
-      headerText={<ExpandableSectionHeader>{defaultMessages.header}</ExpandableSectionHeader>}
+      headerText={
+        <ExpandableSectionHeader>
+          {defaultMessages.header}
+        </ExpandableSectionHeader>
+      }
       defaultExpanded
     >
       <SpaceBetween size='m' direction='vertical'>
         <SpaceBetween size='s' direction='horizontal'>
-          <Toggle checked={!!axis.showX} onChange={toggleShowX} data-test-id='axis-setting-x-toggle'>
+          <Toggle
+            checked={!!axis.showX}
+            onChange={toggleShowX}
+            data-test-id='axis-setting-x-toggle'
+          >
             {defaultMessages.toggleXLabel}
           </Toggle>
 
           {usesYAxis && (
-            <Toggle checked={!!axis.showY} onChange={toggleShowY} data-test-id='axis-setting-y-toggle'>
+            <Toggle
+              checked={!!axis.showY}
+              onChange={toggleShowY}
+              data-test-id='axis-setting-y-toggle'
+            >
               {defaultMessages.toggleYLabel}
             </Toggle>
           )}
         </SpaceBetween>
 
         {usesYAxis && (
-          <div className='axis-property-label' style={{ gap: awsui.spaceScaledS }}>
-            <label htmlFor='axis-label-y' data-test-id='axis-setting-y-label-content'>
+          <div
+            className='axis-property-label'
+            style={{ gap: awsui.spaceScaledS }}
+          >
+            <label
+              htmlFor='axis-label-y'
+              data-test-id='axis-setting-y-label-content'
+            >
               {defaultMessages.yLabelContent}
             </label>
             <div className='axis-property-label-y'>

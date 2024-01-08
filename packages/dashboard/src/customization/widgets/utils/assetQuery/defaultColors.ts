@@ -6,8 +6,11 @@ import { Colorizer } from '@iot-app-kit/core-util';
 import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
 import { StyledAssetQuery } from '../../types';
 
-const colorsFromProperties = ({ properties }: { properties: { color?: string }[] }) =>
-  createNonNullableList(properties.map(({ color }) => color));
+const colorsFromProperties = ({
+  properties,
+}: {
+  properties: { color?: string }[];
+}) => createNonNullableList(properties.map(({ color }) => color));
 
 const applyDefault =
   (colorizer: ReturnType<typeof Colorizer>) =>
@@ -25,7 +28,11 @@ export const colorerFromStyledQuery = (query: StyledAssetQuery) => {
   const assetModelsColors = assetModels.flatMap(colorsFromProperties);
   const propertiesColors = colorsFromProperties({ properties });
 
-  const existingColors = uniq([...assetsColors, ...assetModelsColors, ...propertiesColors]);
+  const existingColors = uniq([
+    ...assetsColors,
+    ...assetModelsColors,
+    ...propertiesColors,
+  ]);
 
   const colorer = Colorizer();
   colorer.remove(existingColors);
@@ -34,7 +41,9 @@ export const colorerFromStyledQuery = (query: StyledAssetQuery) => {
 };
 
 export const colorerFromStyleSettings = (styleSettings: StyleSettingsMap) => {
-  const existingColors = createNonNullableList(Object.values(styleSettings).map(({ color }) => color));
+  const existingColors = createNonNullableList(
+    Object.values(styleSettings).map(({ color }) => color)
+  );
 
   const colorer = Colorizer();
   colorer.remove(existingColors);

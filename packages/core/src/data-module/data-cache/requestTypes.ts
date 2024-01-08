@@ -39,8 +39,18 @@ export interface TimeSeriesDataRequestSettings {
 export type OnRequestData = (opts: {
   request: TimeSeriesDataRequest;
   resolution: number; // milliseconds, 0 for raw data
-  onError: (dataStreamId: DataStreamId, resolution: number, error: string, aggregationType?: AggregateType) => void;
-  onSuccess: (dataStreamId: DataStreamId, dataStream: DataStream, first: Date, last: Date) => void;
+  onError: (
+    dataStreamId: DataStreamId,
+    resolution: number,
+    error: string,
+    aggregationType?: AggregateType
+  ) => void;
+  onSuccess: (
+    dataStreamId: DataStreamId,
+    dataStream: DataStream,
+    first: Date,
+    last: Date
+  ) => void;
   dataStreamId: string;
 }) => void;
 

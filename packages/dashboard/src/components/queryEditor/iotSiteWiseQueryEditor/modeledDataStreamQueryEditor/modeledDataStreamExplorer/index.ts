@@ -1,1 +1,4 @@
-export { ModeledDataStreamExplorer, type ModeledDataStreamExplorerProps } from './modeledDataStreamExplorer';
+export {
+  ModeledDataStreamExplorer,
+  type ModeledDataStreamExplorerProps,
+} from './modeledDataStreamExplorer';

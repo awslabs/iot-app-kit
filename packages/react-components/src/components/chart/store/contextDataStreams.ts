@@ -13,18 +13,26 @@ export interface DataStreamsState extends DataStreamsData {
   unHideDataStream: (datastream?: DataStream) => void;
 }
 
-export const createDataStreamsSlice: StateCreator<DataStreamsState> = (set) => ({
+export const createDataStreamsSlice: StateCreator<DataStreamsState> = (
+  set
+) => ({
   highlightedDataStreams: [],
   hiddenDataStreams: [],
   highlightDataStream: (datastream?: DataStream) =>
     set((state) => {
       if (!datastream) return state;
-      return { highlightedDataStreams: [...state.highlightedDataStreams, datastream] };
+      return {
+        highlightedDataStreams: [...state.highlightedDataStreams, datastream],
+      };
     }),
   unHighlightDataStream: (datastream) =>
     set((state) => {
       if (!datastream) return state;
-      return { highlightedDataStreams: state.highlightedDataStreams.filter(({ id }) => id !== datastream.id) };
+      return {
+        highlightedDataStreams: state.highlightedDataStreams.filter(
+          ({ id }) => id !== datastream.id
+        ),
+      };
     }),
   hideDataStream: (datastream?: DataStream) =>
     set((state) => {
@@ -34,6 +42,10 @@ export const createDataStreamsSlice: StateCreator<DataStreamsState> = (set) => (
   unHideDataStream: (datastream) =>
     set((state) => {
       if (!datastream) return state;
-      return { hiddenDataStreams: state.hiddenDataStreams.filter(({ id }) => id !== datastream.id) };
+      return {
+        hiddenDataStreams: state.hiddenDataStreams.filter(
+          ({ id }) => id !== datastream.id
+        ),
+      };
     }),
 });

@@ -10,9 +10,17 @@ import {
   ITwinMakerDataBindingContext,
   ITwinMakerEntityDataBindingContext,
 } from './types';
-import { DataField, DATA_FIELD_NAMES, DATA_BINDING_CONTEXT_KEYS, EMPTY_STORE_STATE } from './constants';
+import {
+  DataField,
+  DATA_FIELD_NAMES,
+  DATA_BINDING_CONTEXT_KEYS,
+  EMPTY_STORE_STATE,
+} from './constants';
 import { TwinMakerErrorCode } from '../common/error';
-import { createDataBindingTemplateOptions, decorateDataBindingTemplate } from '../utils/dataBindingTemplateUtils';
+import {
+  createDataBindingTemplateOptions,
+  decorateDataBindingTemplate,
+} from '../utils/dataBindingTemplateUtils';
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 import { ErrorDetails } from '@iot-app-kit/core';
 import {
@@ -29,10 +37,15 @@ interface ValueDataBindingProviderStore {
 
 const MIN_ENTITY_VALIDATION_COUNT = 3;
 
-export class EntityPropertyBindingProviderStore implements IValueDataBindingStore {
+export class EntityPropertyBindingProviderStore
+  implements IValueDataBindingStore
+{
   private readonly isDataBindingTemplateProvider?: boolean;
   private readonly metadataModule: TwinMakerMetadataModule;
-  private readonly onError?: (errorCode: TwinMakerErrorCode, errorDetails?: ErrorDetails) => void;
+  private readonly onError?: (
+    errorCode: TwinMakerErrorCode,
+    errorDetails?: ErrorDetails
+  ) => void;
   private readonly store: ValueDataBindingProviderStore = {
     state: cloneDeep(EMPTY_STORE_STATE),
     onStateChangedListener: undefined,
@@ -50,7 +63,10 @@ export class EntityPropertyBindingProviderStore implements IValueDataBindingStor
   }: {
     metadataModule: TwinMakerMetadataModule;
     isDataBindingTemplateProvider?: boolean;
-    onError?: (errorCode: TwinMakerErrorCode, errorDetails?: ErrorDetails) => void;
+    onError?: (
+      errorCode: TwinMakerErrorCode,
+      errorDetails?: ErrorDetails
+    ) => void;
   }) {
     this.isDataBindingTemplateProvider = isDataBindingTemplateProvider;
     this.metadataModule = metadataModule;
@@ -74,14 +90,20 @@ export class EntityPropertyBindingProviderStore implements IValueDataBindingStor
 
   private updateEntitiesList = async () => {
     try {
-      const entitySummaries = await this.metadataModule.fetchEntitiesSummaries();
+      const entitySummaries =
+        await this.metadataModule.fetchEntitiesSummaries();
 
       if (entitySummaries) {
         // set entity list enabled
-        const options = convertEntitySummariesToDataFieldOptions(entitySummaries);
-        this.store.state.definitions[DataField.ENTITY_ID].options = !this.isDataBindingTemplateProvider
+        const options =
+          convertEntitySummariesToDataFieldOptions(entitySummaries);
+        this.store.state.definitions[DataField.ENTITY_ID].options = !this
+          .isDataBindingTemplateProvider
           ? [
-              ...createDataBindingTemplateOptions(DATA_BINDING_CONTEXT_KEYS.entityId, this.dataBindingConfig),
+              ...createDataBindingTemplateOptions(
+                DATA_BINDING_CONTEXT_KEYS.entityId,
+                this.dataBindingConfig
+              ),
               ...options,
             ]
           : options;
@@ -132,8 +154,10 @@ export class EntityPropertyBindingProviderStore implements IValueDataBindingStor
             // so the select can be initialized with the proper label.
             // for now, we'll only return the value, and rely on the client to
             // properly handle the rendering when label is fetched.
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            this.store.state.selectedOptions.push(createIdenticalLabelOption((dataBindingContext as any)[field]));
+            this.store.state.selectedOptions.push(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              createIdenticalLabelOption((dataBindingContext as any)[field])
+            );
           }
         });
       }
@@ -155,18 +179,28 @@ export class EntityPropertyBindingProviderStore implements IValueDataBindingStor
         store.state.errors.invalidEntityId = false;
         changeNeeded = true;
       }
-      if (store.state.selectedOptions[DataField.ENTITY_ID]?.value !== selected.value) {
+      if (
+        store.state.selectedOptions[DataField.ENTITY_ID]?.value !==
+        selected.value
+      ) {
         if (
-          (this.dataBindingConfig?.fieldMapping?.[DATA_BINDING_CONTEXT_KEYS?.entityId]?.find(
-            (val) => this.dataBindingConfig?.template?.[val]
-          ) &&
-            this.dataBindingConfig?.fieldMapping?.[DATA_BINDING_CONTEXT_KEYS?.entityId].find(
+          (this.dataBindingConfig?.fieldMapping?.[
+            DATA_BINDING_CONTEXT_KEYS?.entityId
+          ]?.find((val) => this.dataBindingConfig?.template?.[val]) &&
+            this.dataBindingConfig?.fieldMapping?.[
+              DATA_BINDING_CONTEXT_KEYS?.entityId
+            ].find(
               (val) => decorateDataBindingTemplate(val) === selected.value
             )) ||
-          store.state.definitions[DataField.ENTITY_ID].options.find((val) => val.value === selected.value)
+          store.state.definitions[DataField.ENTITY_ID].options.find(
+            (val) => val.value === selected.value
+          )
         ) {
           validEntity = true;
-        } else if (selected.value && selected.value.length > MIN_ENTITY_VALIDATION_COUNT) {
+        } else if (
+          selected.value &&
+          selected.value.length > MIN_ENTITY_VALIDATION_COUNT
+        ) {
           try {
             await this.metadataModule.fetchEntity({ entityId: selected.value }); // this should get replaced by entity query in the future.
             validEntity = true;
@@ -207,9 +241,12 @@ export class EntityPropertyBindingProviderStore implements IValueDataBindingStor
 
   createBinding = (): Promise<IValueDataBinding | undefined> => {
     return new Promise((resolve) => {
-      const entityId = this.store.state.selectedOptions[DataField.ENTITY_ID]?.value;
-      const componentName = this.store.state.selectedOptions[DataField.COMPONENT_NAME]?.value;
-      const propertyName = this.store.state.selectedOptions[DataField.PROPERTY_NAME]?.value;
+      const entityId =
+        this.store.state.selectedOptions[DataField.ENTITY_ID]?.value;
+      const componentName =
+        this.store.state.selectedOptions[DataField.COMPONENT_NAME]?.value;
+      const propertyName =
+        this.store.state.selectedOptions[DataField.PROPERTY_NAME]?.value;
 
       if (!entityId) {
         resolve(undefined);
@@ -218,8 +255,14 @@ export class EntityPropertyBindingProviderStore implements IValueDataBindingStor
 
       const dataBindingContext: ITwinMakerDataBindingContext = { entityId };
 
-      if (componentName) (dataBindingContext as ITwinMakerEntityDataBindingContext).componentName = componentName;
-      if (propertyName) (dataBindingContext as ITwinMakerEntityDataBindingContext).propertyName = propertyName;
+      if (componentName)
+        (
+          dataBindingContext as ITwinMakerEntityDataBindingContext
+        ).componentName = componentName;
+      if (propertyName)
+        (
+          dataBindingContext as ITwinMakerEntityDataBindingContext
+        ).propertyName = propertyName;
 
       const dataBinding: IValueDataBinding = {
         dataBindingContext,
@@ -228,7 +271,9 @@ export class EntityPropertyBindingProviderStore implements IValueDataBindingStor
       if (componentName && propertyName && this.selectedEntity) {
         // Value of undefined will not be considered as isStaticData = true
         dataBinding.isStaticData =
-          this.selectedEntity.components?.[componentName].properties?.[propertyName].definition?.isTimeSeries === false;
+          this.selectedEntity.components?.[componentName].properties?.[
+            propertyName
+          ].definition?.isTimeSeries === false;
       }
 
       this.dataBinding = dataBinding;
@@ -237,7 +282,9 @@ export class EntityPropertyBindingProviderStore implements IValueDataBindingStor
     });
   };
 
-  setOnStateChangedListener = (listener?: (state: IValueDataBindingProviderState) => void) => {
+  setOnStateChangedListener = (
+    listener?: (state: IValueDataBindingProviderState) => void
+  ) => {
     this.store.onStateChangedListener = listener;
     // Broadcast the initial store state when the consumer just set the listener
     this.notifyStateChange();
@@ -249,7 +296,10 @@ export class EntityPropertyBindingProviderStore implements IValueDataBindingStor
       this.dataBindingConfig?.template
     );
 
-    if (!this.store.state.selectedOptions[DataField.ENTITY_ID]?.value || !selectedEntityId) {
+    if (
+      !this.store.state.selectedOptions[DataField.ENTITY_ID]?.value ||
+      !selectedEntityId
+    ) {
       this.selectedEntity = undefined;
       this.store.state.definitions[DataField.COMPONENT_NAME].state = 'disabled';
       this.store.state.definitions[DataField.PROPERTY_NAME].state = 'disabled';
@@ -267,17 +317,23 @@ export class EntityPropertyBindingProviderStore implements IValueDataBindingStor
     this.notifyStateChange();
 
     try {
-      const selectedEntity = await this.metadataModule.fetchEntity({ entityId: selectedEntityId });
+      const selectedEntity = await this.metadataModule.fetchEntity({
+        entityId: selectedEntityId,
+      });
       this.selectedEntity = selectedEntity;
 
       if (selectedEntity) {
-        const componentNamesOptions = Object.keys(selectedEntity.components ?? {}).map((componentName) =>
-          createIdenticalLabelOption(componentName)
-        );
+        const componentNamesOptions = Object.keys(
+          selectedEntity.components ?? {}
+        ).map((componentName) => createIdenticalLabelOption(componentName));
 
-        this.store.state.definitions[DataField.COMPONENT_NAME].options = !this.isDataBindingTemplateProvider
+        this.store.state.definitions[DataField.COMPONENT_NAME].options = !this
+          .isDataBindingTemplateProvider
           ? [
-              ...createDataBindingTemplateOptions(DATA_BINDING_CONTEXT_KEYS.componentName, this.dataBindingConfig),
+              ...createDataBindingTemplateOptions(
+                DATA_BINDING_CONTEXT_KEYS.componentName,
+                this.dataBindingConfig
+              ),
               ...componentNamesOptions,
             ]
           : componentNamesOptions;
@@ -292,16 +348,20 @@ export class EntityPropertyBindingProviderStore implements IValueDataBindingStor
   };
 
   private updateSelectedEntityName = () => {
-    const entityOptions = this.store.state.definitions[DataField.ENTITY_ID].options;
+    const entityOptions =
+      this.store.state.definitions[DataField.ENTITY_ID].options;
 
     // refresh selected entityName
-    this.store.state.selectedOptions = this.store.state.selectedOptions.map((option) =>
-      option
-        ? {
-            value: option.value,
-            label: entityOptions.find((o) => o.value === option.value)?.label ?? option.value,
-          }
-        : null
+    this.store.state.selectedOptions = this.store.state.selectedOptions.map(
+      (option) =>
+        option
+          ? {
+              value: option.value,
+              label:
+                entityOptions.find((o) => o.value === option.value)?.label ??
+                option.value,
+            }
+          : null
     );
   };
 
@@ -317,10 +377,15 @@ export class EntityPropertyBindingProviderStore implements IValueDataBindingStor
       selectedComponentName in this.selectedEntity.components
     ) {
       // update property list if a component is selected
-      const selectedComponent = this.selectedEntity.components[selectedComponentName];
-      this.store.state.definitions[DataField.PROPERTY_NAME].options = Object.entries(
-        selectedComponent.properties ?? {}
-      ).map(([id, property]) => ({ value: id, label: property.definition?.displayName || id }));
+      const selectedComponent =
+        this.selectedEntity.components[selectedComponentName];
+      this.store.state.definitions[DataField.PROPERTY_NAME].options =
+        Object.entries(selectedComponent.properties ?? {}).map(
+          ([id, property]) => ({
+            value: id,
+            label: property.definition?.displayName || id,
+          })
+        );
       this.store.state.definitions[DataField.PROPERTY_NAME].state = 'ready';
     } else {
       // disable the property list if no component is selected or the selected component doesn't exist (bug)

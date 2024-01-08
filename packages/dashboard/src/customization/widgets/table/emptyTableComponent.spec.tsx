@@ -12,6 +12,8 @@ describe('empty state should display', () => {
   it('should display "No data to display" in document', async () => {
     render(<EmptyTableComponent />);
 
-    expect(screen.getByTestId('default-msg')).toHaveTextContent('No data to display');
+    expect(screen.getByTestId('default-msg')).toHaveTextContent(
+      'No data to display'
+    );
   });
 });

@@ -1,4 +1,7 @@
-import { IoTSiteWiseClient, type AssetSummary } from '@aws-sdk/client-iotsitewise';
+import {
+  IoTSiteWiseClient,
+  type AssetSummary,
+} from '@aws-sdk/client-iotsitewise';
 import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 
@@ -13,7 +16,10 @@ export interface UseChildAssetsOptions {
 
 /** Use the list of child assets for an asset with a given asset ID. */
 export function useChildAssets({ assetId, client }: UseChildAssetsOptions) {
-  const { asset: { assetHierarchies = [] } = {} } = useAsset({ assetId, client });
+  const { asset: { assetHierarchies = [] } = {} } = useAsset({
+    assetId,
+    client,
+  });
   const hierarchyIds = selectHierarchyIds(assetHierarchies);
   const cacheKeyFactory = new ChildAssetCacheKeyFactory(assetId);
 
@@ -36,7 +42,10 @@ export function useChildAssets({ assetId, client }: UseChildAssetsOptions) {
   return { childAssets, isError, isFetching, isLoading, isSuccess };
 }
 
-function isEnabled(assetId: string | undefined, hierarchyId: string | undefined) {
+function isEnabled(
+  assetId: string | undefined,
+  hierarchyId: string | undefined
+) {
   return isAssetId(assetId) && isHierarchyId(hierarchyId);
 }
 
@@ -50,7 +59,9 @@ function isHierarchyId(hierarchyId: string | undefined): hierarchyId is string {
 
 /** List all of the IDs across hierarchies. */
 function selectHierarchyIds(hierarchies: { id?: string }[]): string[] {
-  const hierarchiesWithIds: { id: string }[] = hierarchies.filter((h): h is { id: string } => Boolean(h?.id));
+  const hierarchiesWithIds: { id: string }[] = hierarchies.filter(
+    (h): h is { id: string } => Boolean(h?.id)
+  );
   const hierarchyIds: string[] = hierarchiesWithIds.map(({ id }) => id);
 
   return hierarchyIds;
@@ -61,10 +72,21 @@ function createQueryFn(client: IoTSiteWiseClient) {
     queryKey: [{ assetId, hierarchyId }],
     signal,
   }: QueryFunctionContext<ReturnType<ChildAssetCacheKeyFactory['create']>>) {
-    invariant(isAssetId(assetId), 'Expected asset ID to be defined as required by the enabled flag.');
-    invariant(isHierarchyId(hierarchyId), 'Expected hierarchy ID to be defined as required by the enabled flag.');
+    invariant(
+      isAssetId(assetId),
+      'Expected asset ID to be defined as required by the enabled flag.'
+    );
+    invariant(
+      isHierarchyId(hierarchyId),
+      'Expected hierarchy ID to be defined as required by the enabled flag.'
+    );
 
-    const request = new ListChildAssetsRequest({ assetId, hierarchyId, client, signal });
+    const request = new ListChildAssetsRequest({
+      assetId,
+      hierarchyId,
+      client,
+      signal,
+    });
     const response = await request.send();
 
     return response;

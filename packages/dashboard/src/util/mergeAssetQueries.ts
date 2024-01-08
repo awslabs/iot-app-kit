@@ -5,7 +5,9 @@ export const mergeAssetQueries = (
   currentQueries: SiteWiseAssetQuery['assets'],
   newQuery: SiteWiseAssetQuery['assets'][number]
 ) => {
-  const existingAssetIndex = currentQueries.findIndex((a) => a.assetId === newQuery.assetId);
+  const existingAssetIndex = currentQueries.findIndex(
+    (a) => a.assetId === newQuery.assetId
+  );
   if (existingAssetIndex >= 0) {
     return [
       ...currentQueries.slice(0, existingAssetIndex),
