@@ -50,11 +50,16 @@ const LineStylePropertyConfig = ({
   const [connectionStyle, setConnectionStyle] = useState<
     LineStyles['connectionStyle']
   >(property.line?.connectionStyle ?? 'linear');
+
   const [lineStyle, setLineStyle] = useState<LineStyles['style']>(
-    property.line?.style ?? 'solid'
+    connectionStyle !== 'none' ? property.line?.style ?? 'solid' : undefined
   );
   const [lineThickness, setLinethickness] = useState<string | undefined>(
     property.line?.thickness?.toString() ?? '2'
+  );
+
+  const [isPrevLineStyleNone, setIsPrevLineStyleNone] = useState(
+    connectionStyle === 'none'
   );
 
   const getLineThicknessNumber = (thickness?: string) =>
@@ -87,6 +92,14 @@ const LineStylePropertyConfig = ({
   const updateConnectionStyle = (
     connectionStyle: LineStyles['connectionStyle']
   ) => {
+    if (connectionStyle === 'none') {
+      setLineStyle(undefined);
+      setIsPrevLineStyleNone(true);
+    }
+    if (isPrevLineStyleNone && connectionStyle !== 'none') {
+      setLineStyle('solid');
+      setIsPrevLineStyleNone(false);
+    }
     setConnectionStyle(connectionStyle);
     onUpdate({
       line: {
@@ -142,7 +155,7 @@ const LineStylePropertyConfig = ({
             }
           />
           <LineStyleDropdown
-            disabled={useGlobalStyle}
+            disabled={useGlobalStyle || connectionStyle === 'none'}
             lineStyle={lineStyle}
             updatelineStyle={(style) =>
               updateLineStyle(style as LineStyles['style'])

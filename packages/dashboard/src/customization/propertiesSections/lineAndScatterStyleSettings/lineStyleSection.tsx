@@ -41,7 +41,8 @@ export const LineStyleSection: FC<LineStyleSectionOptions> = ({
         <SpaceBetween size='m'>
           <LineTypeSection type={lineType} updateType={updateType} />
           <LineStyleDropdown
-            lineStyle={lineStyle}
+            disabled={lineType === 'none'}
+            lineStyle={lineType !== 'none' ? lineStyle ?? 'solid' : undefined}
             updatelineStyle={updatelineStyle}
           />
           <LineThicknessDropdown
