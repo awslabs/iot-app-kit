@@ -7,7 +7,10 @@ import { defaultFontSettings } from './defaultFontSettings';
 
 import './textArea.css';
 import type { TextWidget } from '../../types';
-import { colorTextLinkDefault } from '@cloudscape-design/design-tokens';
+import {
+  colorTextLinkDefault,
+  spaceScaledXs,
+} from '@cloudscape-design/design-tokens';
 
 type StyledTextAreaProps = TextWidget & {
   handleSetEdit: (isEditing: boolean) => void;
@@ -37,6 +40,8 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({
   const style: CSSProperties = {
     fontSize,
     color: isUrl ? colorTextLinkDefault : fontColor,
+    padding: spaceScaledXs,
+    background: 'none',
   };
 
   const handleSetText = (text: string) => {
