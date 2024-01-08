@@ -294,6 +294,7 @@ const BaseChart = ({
             />
           ) : (
             <Legend
+              position={options.legend?.position}
               series={series}
               graphic={trendCursors}
               datastreams={dataStreams}
