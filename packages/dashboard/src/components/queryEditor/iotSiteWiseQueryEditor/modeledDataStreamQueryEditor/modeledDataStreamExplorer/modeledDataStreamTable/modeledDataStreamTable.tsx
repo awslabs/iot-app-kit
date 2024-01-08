@@ -23,6 +23,7 @@ import { SelectedAsset } from '../../types';
 import { ResourceExplorerErrorState } from '../../components/resourceExplorerErrorState';
 import { getPlugin } from '@iot-app-kit/core';
 import { isInValidProperty } from './util/resourceExplorerTableLabels';
+import { disableAdd } from '~/components/queryEditor/iotSiteWiseQueryEditor/footer/disableAdd';
 
 export interface ModeledDataStreamTableProps {
   onClickAddModeledDataStreams: (
@@ -195,10 +196,10 @@ export function ModeledDataStreamTable({
         <ResourceExplorerFooter
           resetDisabled={collectionProps.selectedItems?.length === 0}
           onReset={() => actions.setSelectedItems([])}
-          addDisabled={
-            collectionProps.selectedItems?.length === 0 ||
-            selectedWidgets.length !== 1
-          }
+          addDisabled={disableAdd(
+            selectedWidgets,
+            collectionProps?.selectedItems?.length
+          )}
           onAdd={() => {
             onClickAddModeledDataStreams(
               collectionProps.selectedItems as unknown as ModeledDataStream[]
