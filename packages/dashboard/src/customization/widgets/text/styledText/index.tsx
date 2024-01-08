@@ -4,6 +4,7 @@ import { defaultFontSettings } from './defaultFontSettings';
 
 import './index.css';
 import type { TextWidget } from '../../types';
+import { spaceScaledXs } from '@cloudscape-design/design-tokens';
 
 type StyledTextProps = TextWidget & {
   onPointerDown?: PointerEventHandler;
@@ -31,6 +32,7 @@ const StyledText: React.FC<StyledTextProps> = ({
   const style: CSSProperties = {
     fontSize,
     color: fontColor,
+    padding: spaceScaledXs,
   };
 
   const textContent = addPlaceholder ? 'Add text' : value;
