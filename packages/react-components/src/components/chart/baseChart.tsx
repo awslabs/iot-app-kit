@@ -247,7 +247,13 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
           {showTanstackTable ? (
             <TanstackLegend series={series} graphic={trendCursors} datastreams={dataStreams} width={rightLegendWidth} />
           ) : (
-            <Legend series={series} graphic={trendCursors} datastreams={dataStreams} width={rightLegendWidth} />
+            <Legend
+              position={options.legend?.position}
+              series={series}
+              graphic={trendCursors}
+              datastreams={dataStreams}
+              width={rightLegendWidth}
+            />
           )}
         </div>
       )}
