@@ -5,32 +5,34 @@
 .react-resizable-handle {
   position: absolute;
   width: 20px;
-  height: 90%;
+  height: 100%;
   background-repeat: no-repeat;
   background-origin: content-box;
   box-sizing: border-box;
 }
 
 .react-resizable-handle-se {
-  bottom: 5%;
+  bottom: 0%;
   right: 0;
   cursor: ew-resize;
   background-image: url("./assets/horizontalSliderIcon.svg");
   background-position: center;
   border-left: 2px solid #e9ebed;
+  border-right: 1px solid #e9ebed;
 }
 
 .bottom-position .react-resizable-handle-se {
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
+  left: 0;
+  transform: translateX(0);
+  width: 100%;
   z-index: 99;
   height: 20px;
   cursor: ns-resize;
   background-image: url("./assets/verticalSliderIcon.svg");
   border: unset;
   border-top: 2px solid #e9ebed;
+  border-bottom: 1px solid #e9ebed;
 }
 
 .base-chart-element {
@@ -61,6 +63,7 @@
   left: -15px;
   border: unset;
   border-right: 2px solid #e9ebed;
+  border-left: 1px solid #e9ebed;
 }
 
 .base-chart-left-legend {
