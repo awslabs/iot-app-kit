@@ -10,27 +10,33 @@ import flushPromises from 'flush-promises';
 
 const tmClient = new IoTTwinMakerClient({});
 const metadataModule = new TwinMakerMetadataModule('ws-1', tmClient);
-const timeSeriesModule = new TimeSeriesDataModule<TwinMakerDataStreamQuery>(createDataSource(metadataModule, tmClient));
+const timeSeriesModule = new TimeSeriesDataModule<TwinMakerDataStreamQuery>(
+  createDataSource(metadataModule, tmClient)
+);
 
 it('should subscribes, updates, and unsubscribes to time series data', async () => {
   const START_1 = new Date(2020, 0, 0);
   const END_1 = new Date();
   const refreshRate = MINUTE_IN_MS;
 
-  const provider = new TwinMakerTimeSeriesDataProvider(metadataModule, timeSeriesModule, {
-    queries: [
-      {
-        workspaceId: 'ws-1',
-        entityId: 'entity-1',
-        componentName: 'comp-1',
-        properties: [{ propertyName: 'prop-1' }],
+  const provider = new TwinMakerTimeSeriesDataProvider(
+    metadataModule,
+    timeSeriesModule,
+    {
+      queries: [
+        {
+          workspaceId: 'ws-1',
+          entityId: 'entity-1',
+          componentName: 'comp-1',
+          properties: [{ propertyName: 'prop-1' }],
+        },
+      ],
+      request: {
+        viewport: { start: START_1, end: END_1 },
+        settings: { fetchFromStartToEnd: true, refreshRate },
       },
-    ],
-    request: {
-      viewport: { start: START_1, end: END_1 },
-      settings: { fetchFromStartToEnd: true, refreshRate },
-    },
-  });
+    }
+  );
 
   const timeSeriesCallback = jest.fn();
 

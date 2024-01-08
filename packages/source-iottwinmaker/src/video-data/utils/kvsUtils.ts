@@ -1,4 +1,7 @@
-import { GetDataEndpointCommand, KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
+import {
+  GetDataEndpointCommand,
+  KinesisVideoClient,
+} from '@aws-sdk/client-kinesis-video';
 import {
   GetHLSStreamingSessionURLCommand,
   KinesisVideoArchivedMediaClient,
@@ -10,9 +13,15 @@ import {
   PLAYBACKMODE_ON_DEMAND,
   PRODUCER_TIMESTAMP,
 } from '../constants';
-import type { GetHLSStreamingSessionURLInput, HLSFragmentSelector } from '@aws-sdk/client-kinesis-video-archived-media';
+import type {
+  GetHLSStreamingSessionURLInput,
+  HLSFragmentSelector,
+} from '@aws-sdk/client-kinesis-video-archived-media';
 import type { Endpoint } from '@aws-sdk/types';
-import type { GetLiveHLSStreamingSessionURLRequest, GetOnDemandHLSStreamingSessionURLRequest } from '../types';
+import type {
+  GetLiveHLSStreamingSessionURLRequest,
+  GetOnDemandHLSStreamingSessionURLRequest,
+} from '../types';
 
 const expireSessionInSeconds = 1800; // 30 minutes
 
@@ -49,7 +58,9 @@ export const getOnDemandHLSStreamingSessionURL = async (
 
   kinesisVideoArchivedMediaClient.config.endpoint = () =>
     Promise.resolve(getOnDemandHLSStreamingSessionURLRequest.kvsDataEndpoint);
-  const result = await kinesisVideoArchivedMediaClient.send(new GetHLSStreamingSessionURLCommand(request));
+  const result = await kinesisVideoArchivedMediaClient.send(
+    new GetHLSStreamingSessionURLCommand(request)
+  );
   return result.HLSStreamingSessionURL as string;
 };
 
@@ -65,6 +76,8 @@ export const getLiveHLSStreamingSessionURL = async (
 
   kinesisVideoArchivedMediaClient.config.endpoint = () =>
     Promise.resolve(getLiveHLSStreamingSessionURLRequest.kvsDataEndpoint);
-  const result = await kinesisVideoArchivedMediaClient.send(new GetHLSStreamingSessionURLCommand(request));
+  const result = await kinesisVideoArchivedMediaClient.send(
+    new GetHLSStreamingSessionURLCommand(request)
+  );
   return result.HLSStreamingSessionURL as string;
 };

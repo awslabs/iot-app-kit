@@ -6,7 +6,16 @@ import type { Rect, DashboardWidget } from '~/types';
 import type { Anchor } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
 
-const anchors: Anchor[] = ['top', 'top-left', 'top-right', 'bottom', 'bottom-left', 'bottom-right', 'left', 'right'];
+const anchors: Anchor[] = [
+  'top',
+  'top-left',
+  'top-right',
+  'bottom',
+  'bottom-left',
+  'bottom-right',
+  'left',
+  'right',
+];
 const grid = {
   width: 100,
   height: 100,
@@ -25,10 +34,16 @@ describe('resize single widget', () => {
   };
 
   const selectionBox: Rect = baseWidget;
-  const transformerToBeTested = (newSelectionBox: Rect) => transformWidget(baseWidget, selectionBox, newSelectionBox);
+  const transformerToBeTested = (newSelectionBox: Rect) =>
+    transformWidget(baseWidget, selectionBox, newSelectionBox);
 
   anchors.forEach((anchor) => {
-    const newSelectionBox = resizeSelectionBox({ selectionBox: selectionBox, anchor, vector: { x: 10, y: 10 }, grid });
+    const newSelectionBox = resizeSelectionBox({
+      selectionBox: selectionBox,
+      anchor,
+      vector: { x: 10, y: 10 },
+      grid,
+    });
     const expected: Rect = { ...baseWidget, ...newSelectionBox };
     const result = transformerToBeTested(newSelectionBox);
     const keys = ['x', 'y', 'width', 'height'] as (keyof Rect)[];
@@ -59,8 +74,9 @@ describe('resize multiple widgets', () => {
   ] as DashboardWidget[];
 
   const selectionBox = getSelectionBox(widgets)!;
-  const transformerToBeTested = (newSelectionBox: Rect) => (widget: DashboardWidget) =>
-    transformWidget(widget, selectionBox, newSelectionBox);
+  const transformerToBeTested =
+    (newSelectionBox: Rect) => (widget: DashboardWidget) =>
+      transformWidget(widget, selectionBox, newSelectionBox);
 
   anchors.forEach((anchor) => {
     const mapper = transformerToBeTested(

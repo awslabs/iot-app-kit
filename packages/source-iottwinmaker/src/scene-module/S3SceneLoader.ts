@@ -1,7 +1,18 @@
-import { GetSceneCommand, GetWorkspaceCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import {
+  GetSceneCommand,
+  GetWorkspaceCommand,
+  IoTTwinMakerClient,
+} from '@aws-sdk/client-iottwinmaker';
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { getS3BucketAndKey, parseS3BucketFromArn, parseS3RelativeScenePathFromURI } from '../utils/s3Utils';
-import type { GetSceneCommandOutput, GetWorkspaceCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import {
+  getS3BucketAndKey,
+  parseS3BucketFromArn,
+  parseS3RelativeScenePathFromURI,
+} from '../utils/s3Utils';
+import type {
+  GetSceneCommandOutput,
+  GetWorkspaceCommandOutput,
+} from '@aws-sdk/client-iottwinmaker';
 import type { SceneLoader } from '../types';
 
 export class S3SceneLoader implements SceneLoader {
@@ -23,17 +34,33 @@ export class S3SceneLoader implements SceneLoader {
   }
 
   getSceneUri = async (): Promise<string | null> => {
-    const promises: [Promise<GetWorkspaceCommandOutput>, Promise<GetSceneCommandOutput>] = [
-      this.twinMakerClient.send(new GetWorkspaceCommand({ workspaceId: this.workspaceId })),
-      this.twinMakerClient.send(new GetSceneCommand({ workspaceId: this.workspaceId, sceneId: this.sceneId })),
+    const promises: [
+      Promise<GetWorkspaceCommandOutput>,
+      Promise<GetSceneCommandOutput>
+    ] = [
+      this.twinMakerClient.send(
+        new GetWorkspaceCommand({ workspaceId: this.workspaceId })
+      ),
+      this.twinMakerClient.send(
+        new GetSceneCommand({
+          workspaceId: this.workspaceId,
+          sceneId: this.sceneId,
+        })
+      ),
     ];
 
     const [workspace, scene] = await Promise.all(promises);
 
-    const scenePath = scene.contentLocation ? parseS3RelativeScenePathFromURI(scene.contentLocation) : undefined;
-    const sceneFileBucket = workspace.s3Location ? parseS3BucketFromArn(workspace.s3Location) : undefined;
+    const scenePath = scene.contentLocation
+      ? parseS3RelativeScenePathFromURI(scene.contentLocation)
+      : undefined;
+    const sceneFileBucket = workspace.s3Location
+      ? parseS3BucketFromArn(workspace.s3Location)
+      : undefined;
 
-    return scenePath && sceneFileBucket ? `s3://${sceneFileBucket}/${scenePath}` : null;
+    return scenePath && sceneFileBucket
+      ? `s3://${sceneFileBucket}/${scenePath}`
+      : null;
   };
 
   getSceneObject = (uri: string): Promise<ArrayBuffer> | null => {

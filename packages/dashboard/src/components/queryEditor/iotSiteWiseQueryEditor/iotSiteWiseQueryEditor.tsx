@@ -22,19 +22,27 @@ export function IoTSiteWiseQueryEditor({
   iotSiteWiseClient,
   iotTwinMakerClient,
 }: IoTSiteWiseQueryEditorProps) {
-  function handleClickAddModeledDataStreams(newModeledDataStreams: ModeledDataStream[]) {
+  function handleClickAddModeledDataStreams(
+    newModeledDataStreams: ModeledDataStream[]
+  ) {
     onUpdateQuery((currentQuery) => {
       const queryExtender = new QueryExtender(currentQuery);
-      const updatedQuery = queryExtender.extendAssetQueries(newModeledDataStreams);
+      const updatedQuery = queryExtender.extendAssetQueries(
+        newModeledDataStreams
+      );
 
       return updatedQuery;
     });
   }
 
-  function handleClickAddUnmodeledDataStreams(newUnmodeledDataStreams: UnmodeledDataStream[]) {
+  function handleClickAddUnmodeledDataStreams(
+    newUnmodeledDataStreams: UnmodeledDataStream[]
+  ) {
     onUpdateQuery((currentQuery) => {
       const queryExtender = new QueryExtender(currentQuery);
-      const updatedQuery = queryExtender.extendPropertyAliasQueries(newUnmodeledDataStreams);
+      const updatedQuery = queryExtender.extendPropertyAliasQueries(
+        newUnmodeledDataStreams
+      );
 
       return updatedQuery;
     });
@@ -55,7 +63,10 @@ export function IoTSiteWiseQueryEditor({
     label: 'Unmodeled',
     id: 'explore-unmodeled-tab',
     content: (
-      <UnmodeledDataStreamQueryEditor onClickAdd={handleClickAddUnmodeledDataStreams} client={iotSiteWiseClient} />
+      <UnmodeledDataStreamQueryEditor
+        onClickAdd={handleClickAddUnmodeledDataStreams}
+        client={iotSiteWiseClient}
+      />
     ),
   };
 

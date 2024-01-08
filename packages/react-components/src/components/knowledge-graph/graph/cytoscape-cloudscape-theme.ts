@@ -32,7 +32,9 @@ const useCloudScapeTheme = (container: RefObject<HTMLDivElement>) => {
   const colorLookup = useCallback(
     (color: keyof typeof colors, fallback?: string) => {
       if (container.current) {
-        const c = getComputedStyle(container.current).getPropertyValue(colors[color]);
+        const c = getComputedStyle(container.current).getPropertyValue(
+          colors[color]
+        );
         if (c.trim() !== '') {
           return c;
         }
@@ -52,7 +54,10 @@ const useCloudScapeTheme = (container: RefObject<HTMLDivElement>) => {
   return colorLookup;
 };
 
-const useStylesheet = (container: RefObject<HTMLDivElement>, labelProp = 'label') => {
+const useStylesheet = (
+  container: RefObject<HTMLDivElement>,
+  labelProp = 'label'
+) => {
   const color = useCloudScapeTheme(container);
   const [stylesheet, setStylesheet] = useState<cytoscape.Stylesheet[]>([]);
 

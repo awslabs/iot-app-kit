@@ -11,7 +11,10 @@ const thresholdStyle: ThresholdStyleType = {
 const mockUpdateAllThresholdStyles = jest.fn();
 
 const component = (
-  <ThresholdStyleSettings thresholdStyle={thresholdStyle} updateAllThresholdStyles={mockUpdateAllThresholdStyles} />
+  <ThresholdStyleSettings
+    thresholdStyle={thresholdStyle}
+    updateAllThresholdStyles={mockUpdateAllThresholdStyles}
+  />
 );
 
 describe('thresholdStyleSettings', () => {

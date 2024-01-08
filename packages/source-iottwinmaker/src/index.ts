@@ -10,8 +10,14 @@ export type {
   TwinMakerComponentHistoryQuery,
   TwinMakerQuery,
 } from './common/queryTypes';
-export type { TwinMakerDataStreamQuery, TwinMakerDataStreamIdComponent } from './time-series-data/types';
-export { toDataStreamId, fromDataStreamId } from './time-series-data/utils/dataStreamId';
+export type {
+  TwinMakerDataStreamQuery,
+  TwinMakerDataStreamIdComponent,
+} from './time-series-data/types';
+export {
+  toDataStreamId,
+  fromDataStreamId,
+} from './time-series-data/utils/dataStreamId';
 export {
   decorateDataBindingTemplate,
   isDataBindingTemplate,

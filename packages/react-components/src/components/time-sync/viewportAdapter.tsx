@@ -2,10 +2,15 @@ import parse from 'parse-duration';
 import type { DateRangePickerProps } from '@cloudscape-design/components';
 import type { Viewport } from '@iot-app-kit/core';
 
-const relativeOptionKey = (amount: number, unit: DateRangePickerProps.TimeUnit): string =>
-  `previous-${amount}-${unit}s`;
+const relativeOptionKey = (
+  amount: number,
+  unit: DateRangePickerProps.TimeUnit
+): string => `previous-${amount}-${unit}s`;
 
-const relativeOption = (amount: number, unit: DateRangePickerProps.TimeUnit): DateRangePickerProps.RelativeOption => ({
+const relativeOption = (
+  amount: number,
+  unit: DateRangePickerProps.TimeUnit
+): DateRangePickerProps.RelativeOption => ({
   key: relativeOptionKey(amount, unit),
   amount,
   unit,
@@ -24,22 +29,35 @@ export const relativeOptions: DateRangePickerProps.RelativeOption[] = [
   relativeOption(90, 'day'),
 ];
 
-const durationUnits = ['second', 'minute', 'hour', 'day', 'week', 'month', 'year'] as const;
+const durationUnits = [
+  'second',
+  'minute',
+  'hour',
+  'day',
+  'week',
+  'month',
+  'year',
+] as const;
 type DurationUnits = (typeof durationUnits)[number];
 const parseDuration = (duration: string, unit: DurationUnits) => ({
   amount: parse(duration, unit),
   unit,
 });
 
-export const dateRangeToViewport = (value: DateRangePickerProps.Value): Viewport => {
-  if (value.type === 'relative') return { duration: `${value.amount} ${value.unit}` };
+export const dateRangeToViewport = (
+  value: DateRangePickerProps.Value
+): Viewport => {
+  if (value.type === 'relative')
+    return { duration: `${value.amount} ${value.unit}` };
   return {
     start: new Date(value.startDate),
     end: new Date(value.endDate),
   };
 };
 
-export const viewportToDateRange = (viewport?: Viewport): DateRangePickerProps.Value | null => {
+export const viewportToDateRange = (
+  viewport?: Viewport
+): DateRangePickerProps.Value | null => {
   if (!viewport) return null;
 
   if ('duration' in viewport) {
@@ -56,7 +74,9 @@ export const viewportToDateRange = (viewport?: Viewport): DateRangePickerProps.V
        * some unit the dashboard can represent. For this scenario we are using seconds because it is the smallest
        * configurable unit on the dashboard.
        */
-      const matches = duration.match(/(-?(?:\d+\.?\d*|\d*\.?\d+)(?:e[-+]?\d+)?)\s*([\p{L}]*)/giu);
+      const matches = duration.match(
+        /(-?(?:\d+\.?\d*|\d*\.?\d+)(?:e[-+]?\d+)?)\s*([\p{L}]*)/giu
+      );
       if (!matches) return null;
 
       if (matches.length > 1) {
@@ -129,25 +149,39 @@ export const getViewportDateRelativeToAbsolute = (
   const durationRange = relativeBackwardClick ? -2 : -1;
   switch (value.unit) {
     case 'second':
-      newEnd.setSeconds(newEnd.getSeconds() + value.amount * (forward ? 1 : durationRange));
+      newEnd.setSeconds(
+        newEnd.getSeconds() + value.amount * (forward ? 1 : durationRange)
+      );
       break;
     case 'minute':
-      newEnd.setMinutes(newEnd.getMinutes() + value.amount * (forward ? 1 : durationRange));
+      newEnd.setMinutes(
+        newEnd.getMinutes() + value.amount * (forward ? 1 : durationRange)
+      );
       break;
     case 'hour':
-      newEnd.setHours(newEnd.getHours() + value.amount * (forward ? 1 : durationRange));
+      newEnd.setHours(
+        newEnd.getHours() + value.amount * (forward ? 1 : durationRange)
+      );
       break;
     case 'day':
-      newEnd.setDate(newEnd.getDate() + value.amount * (forward ? 1 : durationRange));
+      newEnd.setDate(
+        newEnd.getDate() + value.amount * (forward ? 1 : durationRange)
+      );
       break;
     case 'week':
-      newEnd.setDate(newEnd.getDate() + 7 * (value.amount * (forward ? 1 : durationRange)));
+      newEnd.setDate(
+        newEnd.getDate() + 7 * (value.amount * (forward ? 1 : durationRange))
+      );
       break;
     case 'month':
-      newEnd.setMonth(newEnd.getMonth() + value.amount * (forward ? 1 : durationRange));
+      newEnd.setMonth(
+        newEnd.getMonth() + value.amount * (forward ? 1 : durationRange)
+      );
       break;
     case 'year':
-      newEnd.setFullYear(newEnd.getFullYear() + value.amount * (forward ? 1 : durationRange));
+      newEnd.setFullYear(
+        newEnd.getFullYear() + value.amount * (forward ? 1 : durationRange)
+      );
       break;
   }
   return newEnd;

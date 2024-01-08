@@ -9,7 +9,9 @@ test('status', async ({ page }) => {
   const frame = page.frameLocator(TEST_IFRAME); // Need to go into frame otherwise the `locator` won't locate the selection.
 
   await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Windmill');
-  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot('default.png');
+  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot(
+    'default.png'
+  );
 
   // unit will display
   const unit = 'mph';
@@ -25,7 +27,9 @@ test('status', async ({ page }) => {
 
   // displays as loading
   await page.goto(`${TEST_PAGE}&args=isLoading:true`);
-  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot('loading.png');
+  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot(
+    'loading.png'
+  );
 
   // error will display
   const errorMsg = 'my-custom-error-msg';
@@ -35,7 +39,9 @@ test('status', async ({ page }) => {
 
   // font-sizes can be customized
   await page.goto(`${TEST_PAGE}&args=fontSize:70;secondaryFontSize:30`);
-  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot('custom-font-sizes.png');
+  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot(
+    'custom-font-sizes.png'
+  );
 
   // displays icon
   await page.goto(`${TEST_PAGE}&args=icon:acknowledged`);
@@ -43,5 +49,7 @@ test('status', async ({ page }) => {
 
   // displays empty state
   await page.goto(`${TEST_PAGE}&args=propertyPoint:!null`);
-  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot('empty-state.png');
+  await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot(
+    'empty-state.png'
+  );
 });

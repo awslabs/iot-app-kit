@@ -25,7 +25,9 @@ import { getPlugin } from '@iot-app-kit/core';
 import { isInValidProperty } from './util/resourceExplorerTableLabels';
 
 export interface ModeledDataStreamTableProps {
-  onClickAddModeledDataStreams: (modeledDataStreams: ModeledDataStream[]) => void;
+  onClickAddModeledDataStreams: (
+    modeledDataStreams: ModeledDataStream[]
+  ) => void;
   onClickNextPage?: () => void;
   selectedAsset?: SelectedAsset;
   modeledDataStreams: ModeledDataStream[];
@@ -48,8 +50,12 @@ export function ModeledDataStreamTable({
   modeledDataStreamsTitle,
 }: ModeledDataStreamTableProps) {
   const metricsRecorder = getPlugin('metricsRecorder');
-  const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
-  const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
+  const significantDigits = useSelector(
+    (state: DashboardState) => state.significantDigits
+  );
+  const selectedWidgets = useSelector(
+    (state: DashboardState) => state.selectedWidgets
+  );
 
   const [preferences, setPreferences] = useExplorerPreferences({
     defaultVisibleContent: ['name', 'latestValue'],
@@ -58,7 +64,8 @@ export function ModeledDataStreamTable({
 
   const { getLatestValue } = useLatestValues({
     isEnabled:
-      preferences.visibleContent.includes('latestValue') || preferences.visibleContent.includes('latestValueTime'),
+      preferences.visibleContent.includes('latestValue') ||
+      preferences.visibleContent.includes('latestValueTime'),
     dataStreams: modeledDataStreams,
     client,
   });
@@ -66,22 +73,30 @@ export function ModeledDataStreamTable({
   const modeledDataStreamsWithLatestValues =
     modeledDataStreams?.map((item) => ({
       ...item,
-      latestValue: getLatestValue({ assetId: item.assetId, propertyId: item.propertyId } as ModeledDataStream)?.value,
-      latestValueTime: getLatestValue({ assetId: item.assetId, propertyId: item.propertyId } as ModeledDataStream)
-        ?.timestamp,
+      latestValue: getLatestValue({
+        assetId: item.assetId,
+        propertyId: item.propertyId,
+      } as ModeledDataStream)?.value,
+      latestValueTime: getLatestValue({
+        assetId: item.assetId,
+        propertyId: item.propertyId,
+      } as ModeledDataStream)?.timestamp,
     })) ?? [];
 
-  const { items, collectionProps, paginationProps, propertyFilterProps, actions } = useCollection(
-    modeledDataStreamsWithLatestValues,
-    {
-      propertyFiltering: {
-        filteringProperties: MODELED_DATA_STREAM_TABLE_FILTERING_PROPERTIES,
-      },
-      pagination: { pageSize: preferences.pageSize },
-      selection: { keepSelection: true, trackBy: 'name' },
-      sorting: {},
-    }
-  );
+  const {
+    items,
+    collectionProps,
+    paginationProps,
+    propertyFilterProps,
+    actions,
+  } = useCollection(modeledDataStreamsWithLatestValues, {
+    propertyFiltering: {
+      filteringProperties: MODELED_DATA_STREAM_TABLE_FILTERING_PROPERTIES,
+    },
+    pagination: { pageSize: preferences.pageSize },
+    selection: { keepSelection: true, trackBy: 'name' },
+    sorting: {},
+  });
 
   /**
    * Reset selected items if the user changes the asset
@@ -114,10 +129,20 @@ export function ModeledDataStreamTable({
     },
   };
 
-  const propertySelectionLabel = (selectedItems: ModeledDataStream[], modeledDataStream: ModeledDataStream) => {
-    const isPropertySelected = selectedItems?.find((item) => item.propertyId === modeledDataStream.propertyId);
+  const propertySelectionLabel = (
+    selectedItems: ModeledDataStream[],
+    modeledDataStream: ModeledDataStream
+  ) => {
+    const isPropertySelected = selectedItems?.find(
+      (item) => item.propertyId === modeledDataStream.propertyId
+    );
 
-    if (isInValidProperty(modeledDataStream.dataType, selectedWidgets?.at(0)?.type)) {
+    if (
+      isInValidProperty(
+        modeledDataStream.dataType,
+        selectedWidgets?.at(0)?.type
+      )
+    ) {
       return `${modeledDataStream.dataType} data not supported for the selected widget`;
     } else if (!isPropertySelected) {
       return `Select modeled data stream ${modeledDataStream.name}`;
@@ -134,7 +159,9 @@ export function ModeledDataStreamTable({
     <Table
       {...collectionProps}
       items={items}
-      columnDefinitions={createModeledDataStreamColumnDefinitions(significantDigits)}
+      columnDefinitions={createModeledDataStreamColumnDefinitions(
+        significantDigits
+      )}
       trackBy={(item) => `${item.assetId}---${item.propertyId}`}
       variant='embedded'
       loading={isLoading}
@@ -145,9 +172,19 @@ export function ModeledDataStreamTable({
       stripedRows={preferences.stripedRows}
       wrapLines={preferences.wrapLines}
       stickyColumns={preferences.stickyColumns}
-      isItemDisabled={(item) => isInValidProperty(item.dataType, selectedWidgets?.at(0)?.type)}
-      empty={<ModeledDataStreamTableEmptyState isAssetSelected={selectedAsset != null} />}
-      filter={modeledDataStreams.length > 0 && <ModeledDataStreamTablePropertyFilter {...propertyFilterProps} />}
+      isItemDisabled={(item) =>
+        isInValidProperty(item.dataType, selectedWidgets?.at(0)?.type)
+      }
+      empty={
+        <ModeledDataStreamTableEmptyState
+          isAssetSelected={selectedAsset != null}
+        />
+      }
+      filter={
+        modeledDataStreams.length > 0 && (
+          <ModeledDataStreamTablePropertyFilter {...propertyFilterProps} />
+        )
+      }
       header={
         <ModeledDataStreamTableHeader
           selectedItemCount={collectionProps.selectedItems?.length}
@@ -158,9 +195,14 @@ export function ModeledDataStreamTable({
         <ResourceExplorerFooter
           resetDisabled={collectionProps.selectedItems?.length === 0}
           onReset={() => actions.setSelectedItems([])}
-          addDisabled={collectionProps.selectedItems?.length === 0 || selectedWidgets.length !== 1}
+          addDisabled={
+            collectionProps.selectedItems?.length === 0 ||
+            selectedWidgets.length !== 1
+          }
           onAdd={() => {
-            onClickAddModeledDataStreams(collectionProps.selectedItems as unknown as ModeledDataStream[]);
+            onClickAddModeledDataStreams(
+              collectionProps.selectedItems as unknown as ModeledDataStream[]
+            );
             metricsRecorder?.record({
               metricName: 'ModeledDataStreamAdd',
               metricValue: 1,
@@ -169,15 +211,25 @@ export function ModeledDataStreamTable({
         />
       }
       pagination={
-        <ModeledDataStreamTablePagination {...paginationPropsWithAriaLabels} onNextPageClick={handleClickNextPage} />
+        <ModeledDataStreamTablePagination
+          {...paginationPropsWithAriaLabels}
+          onNextPageClick={handleClickNextPage}
+        />
       }
-      preferences={<ModeledDataStreamTablePreferences preferences={preferences} updatePreferences={setPreferences} />}
+      preferences={
+        <ModeledDataStreamTablePreferences
+          preferences={preferences}
+          updatePreferences={setPreferences}
+        />
+      }
       ariaLabels={{
         itemSelectionLabel: ({ selectedItems }, modeledDataStream) =>
           propertySelectionLabel([...selectedItems], modeledDataStream),
         resizerRoleDescription: 'Resize button',
         allItemsSelectionLabel: ({ selectedItems }) =>
-          selectedItems.length !== items.length ? 'Select modeled data stream' : 'Deselect modeled data stream',
+          selectedItems.length !== items.length
+            ? 'Select modeled data stream'
+            : 'Deselect modeled data stream',
       }}
     />
   );

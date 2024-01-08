@@ -1,5 +1,9 @@
 import React from 'react';
-import { Pagination, PropertyFilter, Table } from '@cloudscape-design/components';
+import {
+  Pagination,
+  PropertyFilter,
+  Table,
+} from '@cloudscape-design/components';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import { getDefaultColumnDefinitions } from './tableHelpers';
 import type { FunctionComponent } from 'react';
@@ -18,13 +22,21 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
     pageSize,
     empty,
   } = props;
-  const { items, collectionProps, propertyFilterProps, paginationProps } = useCollection(userItems, {
-    sorting,
-    propertyFiltering,
-    pagination: { pageSize: pageSize ?? DEFAULT_PAGE_SIZE },
-  });
-  const columnDefinitions = getDefaultColumnDefinitions(userColumnDefinitions, precision);
-  const pagination = { ...(paginationEnabled && { pagination: <Pagination {...paginationProps} /> }) };
+  const { items, collectionProps, propertyFilterProps, paginationProps } =
+    useCollection(userItems, {
+      sorting,
+      propertyFiltering,
+      pagination: { pageSize: pageSize ?? DEFAULT_PAGE_SIZE },
+    });
+  const columnDefinitions = getDefaultColumnDefinitions(
+    userColumnDefinitions,
+    precision
+  );
+  const pagination = {
+    ...(paginationEnabled && {
+      pagination: <Pagination {...paginationProps} />,
+    }),
+  };
 
   return (
     <Table
@@ -35,7 +47,13 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
       columnDefinitions={columnDefinitions}
       empty={empty}
       filter={
-        propertyFiltering && <PropertyFilter {...propertyFilterProps} expandToViewport i18nStrings={propertyFilter} />
+        propertyFiltering && (
+          <PropertyFilter
+            {...propertyFilterProps}
+            expandToViewport
+            i18nStrings={propertyFilter}
+          />
+        )
       }
     />
   );

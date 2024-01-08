@@ -28,8 +28,12 @@ it('renders', () => {
 
 it('renders with create link toggle', () => {
   const elem = render(<TestComponent />).baseElement;
-  const toggle = elem.querySelector('[data-test-id="text-widget-create-link-toggle"]');
-  expect(toggle?.textContent).toMatch(DefaultDashboardMessages.sidePanel.linkSettings.toggle);
+  const toggle = elem.querySelector(
+    '[data-test-id="text-widget-create-link-toggle"]'
+  );
+  expect(toggle?.textContent).toMatch(
+    DefaultDashboardMessages.sidePanel.linkSettings.toggle
+  );
 });
 
 it('renders with url input', () => {

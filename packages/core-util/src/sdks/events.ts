@@ -21,7 +21,9 @@ export const eventsSdk = ({
     credentials,
   });
 
-export const getIotEventsClient = (input: SiteWiseDataSourceInitalization): IoTEventsClient => {
+export const getIotEventsClient = (
+  input: SiteWiseDataSourceInitalization
+): IoTEventsClient => {
   const { iotEventsClient, awsCredentials, awsRegion } = input;
 
   if (iotEventsClient) {

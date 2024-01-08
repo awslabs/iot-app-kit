@@ -12,13 +12,22 @@ export interface CopyWidgetsAction extends Action {
   payload: CopyWidgetsActionPayload;
 }
 
-export const onCopyWidgetsAction = (payload: CopyWidgetsActionPayload): CopyWidgetsAction => ({
+export const onCopyWidgetsAction = (
+  payload: CopyWidgetsActionPayload
+): CopyWidgetsAction => ({
   type: 'COPY_WIDGETS',
   payload,
 });
 
-export const copyWidgets = (state: DashboardState, action: CopyWidgetsAction): DashboardState => {
-  const copiedWidgets = intersectionBy(state.dashboardConfiguration.widgets, action.payload.widgets, 'id');
+export const copyWidgets = (
+  state: DashboardState,
+  action: CopyWidgetsAction
+): DashboardState => {
+  const copiedWidgets = intersectionBy(
+    state.dashboardConfiguration.widgets,
+    action.payload.widgets,
+    'id'
+  );
 
   return {
     ...state,

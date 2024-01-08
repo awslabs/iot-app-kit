@@ -8,7 +8,10 @@ import {
   BATCH_ASSET_PROPERTY_AGGREGATES,
 } from '../../__mocks__/assetPropertyValue';
 import { toId } from '../util/dataStreamId';
-import { MAX_AGGREGATED_DATA_POINTS, MAX_RAW_HISTORICAL_DATA_POINTS } from './constants';
+import {
+  MAX_AGGREGATED_DATA_POINTS,
+  MAX_RAW_HISTORICAL_DATA_POINTS,
+} from './constants';
 import flushPromises from 'flush-promises';
 import { HOUR_IN_MS } from '../util/timeConstants';
 import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
@@ -16,19 +19,25 @@ import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 const AGGREGATE_TYPE = AggregateType.AVERAGE;
 
 it('initializes', () => {
-  expect(() => new SiteWiseClient(createMockSiteWiseSDK({}))).not.toThrowError();
+  expect(
+    () => new SiteWiseClient(createMockSiteWiseSDK({}))
+  ).not.toThrowError();
 });
 
 describe('getHistoricalPropertyDataPoints', () => {
   it('calls onError on failure', async () => {
-    const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
+    const batchGetAssetPropertyValueHistory = jest
+      .fn()
+      .mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory }));
+    const client = new SiteWiseClient(
+      createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory })
+    );
 
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date(2001, 0, 0);
@@ -43,7 +52,11 @@ describe('getHistoricalPropertyDataPoints', () => {
       },
     ];
 
-    await client.getHistoricalPropertyDataPoints({ requestInformations, onSuccess, onError });
+    await client.getHistoricalPropertyDataPoints({
+      requestInformations,
+      onSuccess,
+      onError,
+    });
 
     expect(onError).toBeCalledWith(
       expect.objectContaining({
@@ -56,9 +69,10 @@ describe('getHistoricalPropertyDataPoints', () => {
   });
 
   it('batches and paginates', async () => {
-    const batchGetAssetPropertyValueHistory = jest
-      .fn()
-      .mockResolvedValue({ ...BATCH_ASSET_PROPERTY_VALUE_HISTORY, nextToken: 'nextToken' });
+    const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue({
+      ...BATCH_ASSET_PROPERTY_VALUE_HISTORY,
+      nextToken: 'nextToken',
+    });
     const assetId1 = 'some-asset-id-1';
     const propertyId1 = 'some-property-id-1';
 
@@ -68,7 +82,9 @@ describe('getHistoricalPropertyDataPoints', () => {
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory }));
+    const client = new SiteWiseClient(
+      createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory })
+    );
 
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date(2001, 0, 0);
@@ -127,7 +143,10 @@ describe('getHistoricalPropertyDataPoints', () => {
       }),
     ];
 
-    expect(batchGetAssetPropertyValueHistory.mock.calls).toEqual([batchHistoryParams, batchHistoryParams]);
+    expect(batchGetAssetPropertyValueHistory.mock.calls).toEqual([
+      batchHistoryParams,
+      batchHistoryParams,
+    ]);
 
     expect(onError).not.toBeCalled();
 
@@ -183,17 +202,26 @@ describe('getHistoricalPropertyDataPoints', () => {
 
     // call onSuccess for each entry in each batch
     expect(onSuccess).toBeCalledTimes(4);
-    expect(onSuccess.mock.calls).toEqual([onSuccessParams1, onSuccessParams2, onSuccessParams1, onSuccessParams2]);
+    expect(onSuccess.mock.calls).toEqual([
+      onSuccessParams1,
+      onSuccessParams2,
+      onSuccessParams1,
+      onSuccessParams2,
+    ]);
   });
 
   it('requests data by property alias', async () => {
-    const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
+    const batchGetAssetPropertyValueHistory = jest
+      .fn()
+      .mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
     const propertyAlias = 'some/property/alias';
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory }));
+    const client = new SiteWiseClient(
+      createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory })
+    );
 
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date(2001, 0, 0);
@@ -231,7 +259,9 @@ describe('getHistoricalPropertyDataPoints', () => {
       }),
     ];
 
-    expect(batchGetAssetPropertyValueHistory.mock.calls).toEqual([batchHistoryParams]);
+    expect(batchGetAssetPropertyValueHistory.mock.calls).toEqual([
+      batchHistoryParams,
+    ]);
 
     expect(onError).not.toBeCalled();
 
@@ -270,11 +300,15 @@ describe('getHistoricalPropertyDataPoints', () => {
 
 describe('getLatestPropertyDataPoint', () => {
   it('calls onError when error occurs', async () => {
-    const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
+    const batchGetAssetPropertyValue = jest
+      .fn()
+      .mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
+    const client = new SiteWiseClient(
+      createMockSiteWiseSDK({ batchGetAssetPropertyValue })
+    );
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
@@ -289,7 +323,11 @@ describe('getLatestPropertyDataPoint', () => {
       },
     ];
 
-    await client.getLatestPropertyDataPoint({ onSuccess, onError, requestInformations });
+    await client.getLatestPropertyDataPoint({
+      onSuccess,
+      onError,
+      requestInformations,
+    });
 
     expect(onError).toBeCalledWith(
       expect.objectContaining({
@@ -302,7 +340,9 @@ describe('getLatestPropertyDataPoint', () => {
   });
 
   it('batches', async () => {
-    const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
+    const batchGetAssetPropertyValue = jest
+      .fn()
+      .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
     const assetId1 = 'some-asset-id-1';
     const propertyId1 = 'some-property-id-1';
 
@@ -312,7 +352,9 @@ describe('getLatestPropertyDataPoint', () => {
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
+    const client = new SiteWiseClient(
+      createMockSiteWiseSDK({ batchGetAssetPropertyValue })
+    );
 
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date();
@@ -424,13 +466,17 @@ describe('getLatestPropertyDataPoint', () => {
   });
 
   it('requests data by property alias', async () => {
-    const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
+    const batchGetAssetPropertyValue = jest
+      .fn()
+      .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
     const propertyAlias = 'some/property/alias';
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
+    const client = new SiteWiseClient(
+      createMockSiteWiseSDK({ batchGetAssetPropertyValue })
+    );
 
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date();
@@ -502,14 +548,18 @@ describe('getLatestPropertyDataPoint', () => {
 
 describe('getAggregatedPropertyDataPoints', () => {
   it('calls onError on failure', async () => {
-    const batchGetAssetPropertyAggregates = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
+    const batchGetAssetPropertyAggregates = jest
+      .fn()
+      .mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyAggregates }));
+    const client = new SiteWiseClient(
+      createMockSiteWiseSDK({ batchGetAssetPropertyAggregates })
+    );
 
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date(2001, 0, 0);
@@ -526,7 +576,11 @@ describe('getAggregatedPropertyDataPoints', () => {
       },
     ];
 
-    await client.getAggregatedPropertyDataPoints({ requestInformations, onSuccess, onError });
+    await client.getAggregatedPropertyDataPoints({
+      requestInformations,
+      onSuccess,
+      onError,
+    });
 
     expect(onError).toBeCalledWith(
       expect.objectContaining({
@@ -539,9 +593,10 @@ describe('getAggregatedPropertyDataPoints', () => {
   });
 
   it('batches and paginates', async () => {
-    const batchGetAssetPropertyAggregates = jest
-      .fn()
-      .mockResolvedValue({ ...BATCH_ASSET_PROPERTY_AGGREGATES, nextToken: 'nextToken' });
+    const batchGetAssetPropertyAggregates = jest.fn().mockResolvedValue({
+      ...BATCH_ASSET_PROPERTY_AGGREGATES,
+      nextToken: 'nextToken',
+    });
     const assetId1 = 'some-asset-id-1';
     const propertyId1 = 'some-property-id-1';
 
@@ -551,7 +606,9 @@ describe('getAggregatedPropertyDataPoints', () => {
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyAggregates }));
+    const client = new SiteWiseClient(
+      createMockSiteWiseSDK({ batchGetAssetPropertyAggregates })
+    );
 
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date(2001, 0, 0);
@@ -613,7 +670,10 @@ describe('getAggregatedPropertyDataPoints', () => {
       }),
     ];
 
-    expect(batchGetAssetPropertyAggregates.mock.calls).toEqual([batchHistoryParams, batchHistoryParams]);
+    expect(batchGetAssetPropertyAggregates.mock.calls).toEqual([
+      batchHistoryParams,
+      batchHistoryParams,
+    ]);
 
     expect(onError).not.toBeCalled();
 
@@ -685,18 +745,27 @@ describe('getAggregatedPropertyDataPoints', () => {
 
     // call onSuccess for each entry in each batch
     expect(onSuccess).toBeCalledTimes(4);
-    expect(onSuccess.mock.calls).toEqual([onSuccessParams1, onSuccessParams2, onSuccessParams1, onSuccessParams2]);
+    expect(onSuccess.mock.calls).toEqual([
+      onSuccessParams1,
+      onSuccessParams2,
+      onSuccessParams1,
+      onSuccessParams2,
+    ]);
   });
 
   it('requests data by property alias', async () => {
-    const batchGetAssetPropertyAggregates = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_AGGREGATES);
+    const batchGetAssetPropertyAggregates = jest
+      .fn()
+      .mockResolvedValue(BATCH_ASSET_PROPERTY_AGGREGATES);
 
     const propertyAlias = 'some/property/alias';
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyAggregates }));
+    const client = new SiteWiseClient(
+      createMockSiteWiseSDK({ batchGetAssetPropertyAggregates })
+    );
 
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date(2001, 0, 0);
@@ -734,7 +803,9 @@ describe('getAggregatedPropertyDataPoints', () => {
       }),
     ];
 
-    expect(batchGetAssetPropertyAggregates.mock.calls).toEqual([batchHistoryParams]);
+    expect(batchGetAssetPropertyAggregates.mock.calls).toEqual([
+      batchHistoryParams,
+    ]);
 
     expect(onError).not.toBeCalled();
 
@@ -785,14 +856,18 @@ describe('batch duration', () => {
   });
 
   it('batches requests over a single frame', async () => {
-    const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
+    const batchGetAssetPropertyValue = jest
+      .fn()
+      .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
+    const client = new SiteWiseClient(
+      createMockSiteWiseSDK({ batchGetAssetPropertyValue })
+    );
 
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date();
@@ -849,14 +924,19 @@ describe('batch duration', () => {
   });
 
   it('batches requests over a specified duration', async () => {
-    const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
+    const batchGetAssetPropertyValue = jest
+      .fn()
+      .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }), { batchDuration: 100 });
+    const client = new SiteWiseClient(
+      createMockSiteWiseSDK({ batchGetAssetPropertyValue }),
+      { batchDuration: 100 }
+    );
 
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date();
@@ -928,14 +1008,18 @@ describe('batch deduplication', () => {
   });
 
   it('deduplicates duplicate requests', async () => {
-    const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
+    const batchGetAssetPropertyValue = jest
+      .fn()
+      .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
+    const client = new SiteWiseClient(
+      createMockSiteWiseSDK({ batchGetAssetPropertyValue })
+    );
 
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date();
@@ -972,18 +1056,28 @@ describe('batch deduplication', () => {
 
     // assert batch only had one entry
     expect(batchGetAssetPropertyValue).toBeCalledWith({
-      entries: [{ assetId: 'some-asset-id', entryId: '0-0', propertyId: 'some-property-id' }],
+      entries: [
+        {
+          assetId: 'some-asset-id',
+          entryId: '0-0',
+          propertyId: 'some-property-id',
+        },
+      ],
       nextToken: undefined,
     });
   });
 
   it('does not deduplicate non-duplicate requests', async () => {
-    const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
+    const batchGetAssetPropertyValue = jest
+      .fn()
+      .mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
+    const client = new SiteWiseClient(
+      createMockSiteWiseSDK({ batchGetAssetPropertyValue })
+    );
 
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date();

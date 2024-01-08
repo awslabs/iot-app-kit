@@ -51,7 +51,10 @@ it('should merge queries', () => {
   expect(mergeAssetQueries(MOCK_QUERY.assets, MOCK_ASSET)).toMatchObject([
     {
       assetId: 'assetId',
-      properties: [...MOCK_QUERY.assets[0].properties, ...MOCK_ASSET.properties],
+      properties: [
+        ...MOCK_QUERY.assets[0].properties,
+        ...MOCK_ASSET.properties,
+      ],
     },
   ]);
 });
@@ -65,7 +68,7 @@ it('should not contain duplicate properties', () => {
     a: SiteWiseAssetQuery['assets'][number]['properties'][number],
     b: SiteWiseAssetQuery['assets'][number]['properties'][number]
   ) => a.propertyId.localeCompare(b.propertyId);
-  expect(mergeAssetQueries(MOCK_QUERY.assets, MOCK_ASSET3)[0].properties.sort(sortFn)).toMatchObject(
-    [...MOCK_QUERY.assets[0].properties].sort(sortFn)
-  );
+  expect(
+    mergeAssetQueries(MOCK_QUERY.assets, MOCK_ASSET3)[0].properties.sort(sortFn)
+  ).toMatchObject([...MOCK_QUERY.assets[0].properties].sort(sortFn));
 });

@@ -1,4 +1,8 @@
-import type { StyleSettingsMap, Threshold, ThresholdSettings } from '@iot-app-kit/core';
+import type {
+  StyleSettingsMap,
+  Threshold,
+  ThresholdSettings,
+} from '@iot-app-kit/core';
 import type {
   AssetPropertyQuery,
   SiteWiseAssetQuery,
@@ -6,8 +10,16 @@ import type {
   SiteWiseAssetModelQuery,
 } from '@iot-app-kit/source-iotsitewise';
 import type { DashboardWidget } from '~/types';
-import type { AxisSettings, ComplexFontSettings, SimpleFontSettings, ThresholdWithId } from '../settings';
-import type { TableColumnDefinition, TableItem } from '@iot-app-kit/react-components';
+import type {
+  AxisSettings,
+  ComplexFontSettings,
+  SimpleFontSettings,
+  ThresholdWithId,
+} from '../settings';
+import type {
+  TableColumnDefinition,
+  TableItem,
+} from '@iot-app-kit/react-components';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 
 export type QueryConfig<S, T> = {
@@ -17,7 +29,10 @@ export type QueryConfig<S, T> = {
 
 export type SiteWiseQueryConfig = QueryConfig<
   'iotsitewise',
-  (Partial<SiteWiseAssetQuery> & Partial<SiteWisePropertyAliasQuery> & Partial<SiteWiseAssetModelQuery>) | undefined
+  | (Partial<SiteWiseAssetQuery> &
+      Partial<SiteWisePropertyAliasQuery> &
+      Partial<SiteWiseAssetModelQuery>)
+  | undefined
 >;
 
 export type QueryProperties = {
@@ -75,7 +90,13 @@ export type LineAndScatterStyles = {
 };
 
 export type LineStyles = {
-  connectionStyle?: 'none' | 'linear' | 'curve' | 'step-start' | 'step-middle' | 'step-end';
+  connectionStyle?:
+    | 'none'
+    | 'linear'
+    | 'curve'
+    | 'step-start'
+    | 'step-middle'
+    | 'step-end';
   style?: 'solid' | 'dotted' | 'dashed';
   thickness?: number;
   color?: string;
@@ -97,7 +118,9 @@ export type SymbolStyles = {
   size?: number;
 };
 
-export type AssetPropertyStyles = LineAndScatterStyles & { yAxis?: YAxisOptions };
+export type AssetPropertyStyles = LineAndScatterStyles & {
+  yAxis?: YAxisOptions;
+};
 export type StyledAssetPropertyQuery = AssetPropertyQuery & AssetPropertyStyles;
 
 export type StyledAssetQuery = {
@@ -105,7 +128,8 @@ export type StyledAssetQuery = {
     assetId: SiteWiseAssetQuery['assets'][number]['assetId'];
     properties: StyledAssetPropertyQuery[];
   }[];
-  properties?: (SiteWisePropertyAliasQuery['properties'][number] & AssetPropertyStyles)[];
+  properties?: (SiteWisePropertyAliasQuery['properties'][number] &
+    AssetPropertyStyles)[];
   assetModels?: {
     assetModelId: SiteWiseAssetModelQuery['assetModels'][number]['assetModelId'];
     assetIds?: SiteWiseAssetModelQuery['assetModels'][number]['assetIds'];
@@ -144,7 +168,10 @@ export type ChartLegend = {
   visibleContent?: { [key in ChartLegendContent]?: boolean };
 };
 
-export type StyledSiteWiseQueryConfig = QueryConfig<'iotsitewise', StyledAssetQuery | undefined>;
+export type StyledSiteWiseQueryConfig = QueryConfig<
+  'iotsitewise',
+  StyledAssetQuery | undefined
+>;
 
 export type LineScatterChartProperties = LineAndScatterStyles & {
   title?: string;
@@ -218,13 +245,17 @@ type ChartPropertiesKeysIntersection = KPIPropertiesKeys &
   BarChartPropertiesKeys &
   TablePropertiesKeys &
   StatusTimelinePropertiesKeys;
-export type CommonChartProperties = Pick<ChartPropertiesUnion, ChartPropertiesKeysIntersection>;
+export type CommonChartProperties = Pick<
+  ChartPropertiesUnion,
+  ChartPropertiesKeysIntersection
+>;
 
 export type QueryWidget = DashboardWidget<QueryProperties>;
 
 export type KPIWidget = DashboardWidget<KPIProperties>;
 export type StatusWidget = DashboardWidget<StatusProperties>;
-export type LineScatterChartWidget = DashboardWidget<LineScatterChartProperties>;
+export type LineScatterChartWidget =
+  DashboardWidget<LineScatterChartProperties>;
 export type BarChartWidget = DashboardWidget<BarChartProperties>;
 export type TableWidget = DashboardWidget<TableProperties>;
 export type TextWidget = DashboardWidget<TextProperties>;

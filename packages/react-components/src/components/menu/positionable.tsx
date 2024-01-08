@@ -29,7 +29,10 @@ export type PositionableMenuProps = {
 } & MenuProps &
   (AbsoluteMenu | RelativeMenu);
 
-const createReferenceElement = (setRef: RefCallback<Element | null>, position: Position) => {
+const createReferenceElement = (
+  setRef: RefCallback<Element | null>,
+  position: Position
+) => {
   return (
     <div
       className='menu-placement'
@@ -48,7 +51,9 @@ const createReferenceElement = (setRef: RefCallback<Element | null>, position: P
  * and also position the menu relatively against another html element
  * or absolutely by a position.
  */
-export const PositionableMenu: React.FC<PropsWithChildren<PositionableMenuProps>> = ({
+export const PositionableMenu: React.FC<
+  PropsWithChildren<PositionableMenuProps>
+> = ({
   position,
   referenceElement,
   open,
@@ -89,7 +94,9 @@ export const PositionableMenu: React.FC<PropsWithChildren<PositionableMenuProps>
 
   return (
     <>
-      {position ? createReferenceElement(setPlacementRef, position) : referenceElement(setPlacementRef)}
+      {position
+        ? createReferenceElement(setPlacementRef, position)
+        : referenceElement(setPlacementRef)}
 
       <div
         ref={setPopperRef}

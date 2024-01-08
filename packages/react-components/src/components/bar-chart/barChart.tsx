@@ -1,10 +1,23 @@
 import React from 'react';
-import { StyleSettingsMap, Threshold, TimeSeriesDataQuery, Viewport, ThresholdSettings } from '@iot-app-kit/core';
+import {
+  StyleSettingsMap,
+  Threshold,
+  TimeSeriesDataQuery,
+  Viewport,
+  ThresholdSettings,
+} from '@iot-app-kit/core';
 import { BarChart as BarChartBase } from '@iot-app-kit/charts';
-import type { DataStream as DataStreamViz, YAnnotation } from '@iot-app-kit/charts-core';
+import type {
+  DataStream as DataStreamViz,
+  YAnnotation,
+} from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
-import { DEFAULT_LEGEND, DEFAULT_VIEWPORT, ECHARTS_GESTURE } from '../../common/constants';
+import {
+  DEFAULT_LEGEND,
+  DEFAULT_VIEWPORT,
+  ECHARTS_GESTURE,
+} from '../../common/constants';
 import { AxisSettings, ChartSize } from '../../common/chartTypes';
 
 const HOUR_IN_MS = 1000 * 60 * 60;
@@ -61,7 +74,9 @@ export const BarChart = (props: BarChartProps) => {
   // if using echarts then echarts gesture overrides passed in viewport
   // else explicitly passed in viewport overrides viewport group
   const utilizedViewport =
-    (lastUpdatedBy === ECHARTS_GESTURE ? viewport : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
+    (lastUpdatedBy === ECHARTS_GESTURE
+      ? viewport
+      : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
 
   return (
     <BarChartBase
@@ -76,7 +91,9 @@ export const BarChart = (props: BarChartProps) => {
       setViewport={setViewport}
       annotations={{
         y: allThresholds as YAnnotation[],
-        thresholdOptions: { showColor: thresholdSettings?.colorBreachedData ?? true },
+        thresholdOptions: {
+          showColor: thresholdSettings?.colorBreachedData ?? true,
+        },
       }}
       aggregationType={aggregationType}
       legend={DEFAULT_LEGEND}

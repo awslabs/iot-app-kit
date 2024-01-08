@@ -9,8 +9,18 @@ import ThresholdsSection from './thresholdsSection';
 import { getComparisonOperators } from './comparisonOperators';
 import { Maybe, maybeWithDefault } from '~/util/maybe';
 
-const thresholdsWithContainsOperator: readonly string[] = ['kpi', 'status', 'status-timeline', 'table'];
-const thresholdsWithAnnotations: readonly string[] = ['line-chart', 'scatter-chart', 'bar-chart', 'status-timeline'];
+const thresholdsWithContainsOperator: readonly string[] = [
+  'kpi',
+  'status',
+  'status-timeline',
+  'table',
+];
+const thresholdsWithAnnotations: readonly string[] = [
+  'line-chart',
+  'scatter-chart',
+  'bar-chart',
+  'status-timeline',
+];
 const thresholdsWithStyle: readonly string[] = ['xy-plot'];
 
 // Type encompassing all possible properties for a widget's thresholds
@@ -46,22 +56,40 @@ const RenderThresholdsSettings = ({
 
   // Support setting thresholds for multiple widgets at once if they fall in the same type category
   if (widgetType === '' && types.length > 1) {
-    doesSupportAnnotations = types.every((v) => thresholdsWithAnnotations.includes(v));
-    doesSupportContainsOp = types.every((v) => thresholdsWithContainsOperator.includes(v));
-    doesSupportStyledThreshold = types.every((v) => thresholdsWithStyle.includes(v));
+    doesSupportAnnotations = types.every((v) =>
+      thresholdsWithAnnotations.includes(v)
+    );
+    doesSupportContainsOp = types.every((v) =>
+      thresholdsWithContainsOperator.includes(v)
+    );
+    doesSupportStyledThreshold = types.every((v) =>
+      thresholdsWithStyle.includes(v)
+    );
   } else {
-    doesSupportAnnotations = thresholdsWithAnnotations.some((t) => t === widgetType);
-    doesSupportContainsOp = thresholdsWithContainsOperator.some((t) => t === widgetType);
-    doesSupportStyledThreshold = thresholdsWithStyle.some((t) => t === widgetType);
+    doesSupportAnnotations = thresholdsWithAnnotations.some(
+      (t) => t === widgetType
+    );
+    doesSupportContainsOp = thresholdsWithContainsOperator.some(
+      (t) => t === widgetType
+    );
+    doesSupportStyledThreshold = thresholdsWithStyle.some(
+      (t) => t === widgetType
+    );
   }
 
   const [thresholds, updateThresholds] = useProperty(
     (properties) => properties.thresholds,
-    (properties, updatedThresholds) => ({ ...properties, thresholds: updatedThresholds })
+    (properties, updatedThresholds) => ({
+      ...properties,
+      thresholds: updatedThresholds,
+    })
   );
   const [thresholdSettings, updateThresholdSettings] = useProperty(
     (properties) => properties.thresholdSettings,
-    (properties, updatedThresholdSettings) => ({ ...properties, thresholdSettings: updatedThresholdSettings })
+    (properties, updatedThresholdSettings) => ({
+      ...properties,
+      thresholdSettings: updatedThresholdSettings,
+    })
   );
 
   let props = {};
@@ -87,7 +115,9 @@ const RenderThresholdsSettings = ({
 
   return (
     <ThresholdsSection
-      comparisonOperators={getComparisonOperators({ supportsContains: doesSupportContainsOp })}
+      comparisonOperators={getComparisonOperators({
+        supportsContains: doesSupportContainsOp,
+      })}
       {...props}
     />
   );
@@ -97,7 +127,11 @@ export const ThresholdSettingsConfiguration: React.FC = () => (
   <PropertiesSection
     isVisible={isSupportedWidget}
     render={({ type, types, useProperty }) => (
-      <RenderThresholdsSettings type={type} types={types} useProperty={useProperty} />
+      <RenderThresholdsSettings
+        type={type}
+        types={types}
+        useProperty={useProperty}
+      />
     )}
   />
 );

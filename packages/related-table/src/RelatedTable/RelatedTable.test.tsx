@@ -29,7 +29,11 @@ interface RenderComponentProps {
   onExpandChildren?: (node: any) => void;
 }
 
-const RenderComponent = ({ items, filteringText, onExpandChildren }: RenderComponentProps) => {
+const RenderComponent = ({
+  items,
+  filteringText,
+  onExpandChildren,
+}: RenderComponentProps) => {
   return render(
     <RelatedTable
       columnDefinitions={columnDefinitions}
@@ -46,7 +50,9 @@ const RenderComponent = ({ items, filteringText, onExpandChildren }: RenderCompo
 };
 
 it('list all items in the table correctly', () => {
-  const { queryByText, container } = RenderComponent({ items: [parentNode, node, childNode] });
+  const { queryByText, container } = RenderComponent({
+    items: [parentNode, node, childNode],
+  });
   expect(queryByText(parentNode.name)).not.toBe(null);
   expect(queryByText(node.name)).not.toBe(null);
   expect(queryByText(childNode.name)).not.toBe(null);
@@ -56,7 +62,10 @@ it('list all items in the table correctly', () => {
 
 it('expand button correctly', () => {
   const onExpandChildren = jest.fn();
-  const { container } = RenderComponent({ items: [parentNode], onExpandChildren });
+  const { container } = RenderComponent({
+    items: [parentNode],
+    onExpandChildren,
+  });
 
   const buttons = container.querySelectorAll('button');
   expect(buttons.length).toEqual(1);
@@ -69,7 +78,10 @@ it('expand button correctly', () => {
 });
 
 it('renders filter correctly', () => {
-  const { queryByText } = RenderComponent({ items: [parentNode, node, childNode], filteringText: 'Child' });
+  const { queryByText } = RenderComponent({
+    items: [parentNode, node, childNode],
+    filteringText: 'Child',
+  });
   expect(queryByText(parentNode.name)).not.toBe(null);
   expect(queryByText(node.name)).not.toBe(null);
   expect(queryByText(childNode.name)).not.toBe(null);

@@ -1,6 +1,9 @@
 import { PointerEventHandler, useState } from 'react';
 import { PointClickEvent } from './types';
-import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from '../getDashboardPosition';
+import {
+  DASHBOARD_CONTAINER_ID,
+  getDashboardPosition,
+} from '../getDashboardPosition';
 import { endTracker, startTracker } from './positionTracker';
 import { MouseClick } from '~/types';
 
@@ -21,7 +24,12 @@ export type PointerTrackerProps = {
  * Handles the point click gesture
  *
  */
-export const usePointerTracker = ({ readOnly, enabled, union, click }: PointerTrackerProps) => {
+export const usePointerTracker = ({
+  readOnly,
+  enabled,
+  union,
+  click,
+}: PointerTrackerProps) => {
   const [dashboardGrid, setDashboardGrid] = useState<DOMRect | null>(null);
   const [target, setTarget] = useState<EventTarget | undefined>();
   const [cancelClick, setCancelClick] = useState(false);
@@ -30,7 +38,9 @@ export const usePointerTracker = ({ readOnly, enabled, union, click }: PointerTr
     if (readOnly) return;
     setTarget(e.target);
     setCancelClick(false);
-    const dashboardGrid = document.getElementById(DASHBOARD_CONTAINER_ID)?.getBoundingClientRect();
+    const dashboardGrid = document
+      .getElementById(DASHBOARD_CONTAINER_ID)
+      ?.getBoundingClientRect();
     if (dashboardGrid) {
       setDashboardGrid(dashboardGrid);
     }

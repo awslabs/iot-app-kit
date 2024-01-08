@@ -1,1 +1,4 @@
-export { WorkspaceSelector, type WorkspaceSelectorProps } from './workspaceSelector';
+export {
+  WorkspaceSelector,
+  type WorkspaceSelectorProps,
+} from './workspaceSelector';

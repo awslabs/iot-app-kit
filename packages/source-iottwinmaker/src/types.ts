@@ -21,7 +21,10 @@ export interface SceneLoader {
   getSceneObject: (uri: string) => Promise<ArrayBuffer> | null;
 }
 
-export type SceneInfo = { capabilities?: string[]; sceneMetadata?: Record<string, string> };
+export type SceneInfo = {
+  capabilities?: string[];
+  sceneMetadata?: Record<string, string>;
+};
 
 export interface TwinMakerSceneMetadataModule {
   kgModule: TwinMakerKGQueryDataModule;
@@ -29,22 +32,45 @@ export interface TwinMakerSceneMetadataModule {
   getSceneId: () => string;
   getSceneInfo: () => Promise<GetSceneCommandOutput>;
   updateSceneInfo: (sceneInfo: SceneInfo) => Promise<void>;
-  get3pConnectionList: (connectionTag: string) => Promise<SecretListEntry[] | undefined> | null;
+  get3pConnectionList: (
+    connectionTag: string
+  ) => Promise<SecretListEntry[] | undefined> | null;
 
-  getSceneEntity: (input: Omit<GetEntityCommandInput, 'workspaceId'>) => Promise<GetEntityCommandOutput>;
-  createSceneEntity: (input: Omit<CreateEntityCommandInput, 'workspaceId'>) => Promise<CreateEntityCommandOutput>;
-  updateSceneEntity: (input: Omit<UpdateEntityCommandInput, 'workspaceId'>) => Promise<UpdateEntityCommandOutput>;
-  deleteSceneEntity: (input: Omit<DeleteEntityCommandInput, 'workspaceId'>) => Promise<DeleteEntityCommandOutput>;
+  getSceneEntity: (
+    input: Omit<GetEntityCommandInput, 'workspaceId'>
+  ) => Promise<GetEntityCommandOutput>;
+  createSceneEntity: (
+    input: Omit<CreateEntityCommandInput, 'workspaceId'>
+  ) => Promise<CreateEntityCommandOutput>;
+  updateSceneEntity: (
+    input: Omit<UpdateEntityCommandInput, 'workspaceId'>
+  ) => Promise<UpdateEntityCommandOutput>;
+  deleteSceneEntity: (
+    input: Omit<DeleteEntityCommandInput, 'workspaceId'>
+  ) => Promise<DeleteEntityCommandOutput>;
 }
 
 export interface VideoData {
-  getKvsStreamSrc: (playbackMode: VideoPlaybackMode, startTime?: Date, endTime?: Date) => Promise<string | undefined>;
+  getKvsStreamSrc: (
+    playbackMode: VideoPlaybackMode,
+    startTime?: Date,
+    endTime?: Date
+  ) => Promise<string | undefined>;
   getAvailableTimeRanges: (
     startTime: Date,
     endTime: Date
-  ) => Promise<[{ start: number; end: number; src: string }[], { start: number; end: number }[]] | undefined>;
+  ) => Promise<
+    | [
+        { start: number; end: number; src: string }[],
+        { start: number; end: number }[]
+      ]
+    | undefined
+  >;
   triggerLiveVideoUpload: () => Promise<void>;
-  triggerOnDemandVideoUploadRequest: (startTimestamp: string, endTimestamp: string) => Promise<void>;
+  triggerOnDemandVideoUploadRequest: (
+    startTimestamp: string,
+    endTimestamp: string
+  ) => Promise<void>;
 }
 
 export type VideoDataProps =
@@ -63,5 +89,7 @@ export type VideoDataProps =
       videoUploadRequestPropertyId?: string;
     };
 export interface TwinMakerKGQueryDataModule {
-  executeQuery: (params: executeQueryParams) => Promise<ExecuteQueryCommandOutput>;
+  executeQuery: (
+    params: executeQueryParams
+  ) => Promise<ExecuteQueryCommandOutput>;
 }

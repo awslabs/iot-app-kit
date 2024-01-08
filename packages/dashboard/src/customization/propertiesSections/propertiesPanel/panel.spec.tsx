@@ -1,7 +1,13 @@
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import React from 'react';
-import { RenderResult, act, cleanup, render, screen } from '@testing-library/react';
+import {
+  RenderResult,
+  act,
+  cleanup,
+  render,
+  screen,
+} from '@testing-library/react';
 import createWrapper from '@cloudscape-design/components/test-utils/dom';
 import { Provider } from 'react-redux';
 
@@ -14,7 +20,10 @@ import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import { QueryWidget } from '~/customization/widgets/types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { DashboardIotSiteWiseClients } from '~/types';
-import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+import {
+  createMockIoTEventsSDK,
+  createMockSiteWiseSDK,
+} from '@iot-app-kit/testing-util';
 import { ClientContext } from '~/components/dashboard/clientContext';
 
 const MockAssetQuery: SiteWiseAssetQuery['assets'][number] = {
@@ -68,7 +77,9 @@ const setupStore = ({ widgets, selectedWidgets }: SetupStoreOptions) =>
     selectedWidgets,
   });
 
-const renderTestComponentAsync = async (options?: SetupStoreOptions): Promise<RenderResult> => {
+const renderTestComponentAsync = async (
+  options?: SetupStoreOptions
+): Promise<RenderResult> => {
   let element: RenderResult | undefined = undefined;
 
   const optionsWithDefault = {
@@ -80,10 +91,14 @@ const renderTestComponentAsync = async (options?: SetupStoreOptions): Promise<Re
   const widgets = optionsWithDefault.widgets;
   const selectedWidgets = optionsWithDefault.selectedWidgets;
 
-  const describeAsset = jest.fn().mockImplementation(() => Promise.resolve(mockAssetDescription));
+  const describeAsset = jest
+    .fn()
+    .mockImplementation(() => Promise.resolve(mockAssetDescription));
 
   const clientContext: DashboardIotSiteWiseClients = {
-    iotSiteWiseClient: createMockSiteWiseSDK({ describeAsset }) as unknown as IoTSiteWiseClient,
+    iotSiteWiseClient: createMockSiteWiseSDK({
+      describeAsset,
+    }) as unknown as IoTSiteWiseClient,
     iotEventsClient: createMockIoTEventsSDK(),
     iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
   };

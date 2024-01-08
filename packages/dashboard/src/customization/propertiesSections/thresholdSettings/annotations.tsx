@@ -9,7 +9,10 @@ export const AnnotationsSettings: React.FC<AnnotationsSettingsProps> = ({
   colorBreachedData,
   toggleColorBreachedData,
 }) => (
-  <Toggle checked={colorBreachedData} onChange={(e) => toggleColorBreachedData(e.detail.checked)}>
+  <Toggle
+    checked={colorBreachedData}
+    onChange={(e) => toggleColorBreachedData(e.detail.checked)}
+  >
     Apply threshold color across all data
   </Toggle>
 );

@@ -7,13 +7,25 @@ export class ListParentAssetsRequest {
   readonly #client: IoTSiteWiseClient;
   readonly #signal: AbortSignal | undefined;
 
-  constructor({ assetId, client, signal }: { assetId: string; client: IoTSiteWiseClient; signal?: AbortSignal }) {
+  constructor({
+    assetId,
+    client,
+    signal,
+  }: {
+    assetId: string;
+    client: IoTSiteWiseClient;
+    signal?: AbortSignal;
+  }) {
     this.#assetId = assetId;
     this.#client = client;
     this.#signal = signal;
   }
 
-  public async send(): Promise<NonNullable<Awaited<ReturnType<GetParentAssetRequest['send']>>['assetSummaries']>> {
+  public async send(): Promise<
+    NonNullable<
+      Awaited<ReturnType<GetParentAssetRequest['send']>>['assetSummaries']
+    >
+  > {
     const parentAssets = await this.#recursivelyGetParentAssets(this.#assetId);
 
     return parentAssets ?? [];
@@ -21,8 +33,12 @@ export class ListParentAssetsRequest {
 
   async #recursivelyGetParentAssets(
     assetId: string,
-    parentAssets: Awaited<ReturnType<GetParentAssetRequest['send']>>['assetSummaries'] = []
-  ): Promise<Awaited<ReturnType<GetParentAssetRequest['send']>>['assetSummaries']> {
+    parentAssets: Awaited<
+      ReturnType<GetParentAssetRequest['send']>
+    >['assetSummaries'] = []
+  ): Promise<
+    Awaited<ReturnType<GetParentAssetRequest['send']>>['assetSummaries']
+  > {
     const parentAsset = await this.#getParentAsset(assetId);
 
     // termination condition
@@ -31,11 +47,18 @@ export class ListParentAssetsRequest {
     }
 
     // build up the list of parent assets recursively
-    return this.#recursivelyGetParentAssets(parentAsset.id, [parentAsset, ...parentAssets]);
+    return this.#recursivelyGetParentAssets(parentAsset.id, [
+      parentAsset,
+      ...parentAssets,
+    ]);
   }
 
   async #getParentAsset(assetId: string) {
-    const request = new GetParentAssetRequest({ assetId, client: this.#client, signal: this.#signal });
+    const request = new GetParentAssetRequest({
+      assetId,
+      client: this.#client,
+      signal: this.#signal,
+    });
     const { assetSummaries: [parentAsset] = [] } = await request.send();
 
     return parentAsset;

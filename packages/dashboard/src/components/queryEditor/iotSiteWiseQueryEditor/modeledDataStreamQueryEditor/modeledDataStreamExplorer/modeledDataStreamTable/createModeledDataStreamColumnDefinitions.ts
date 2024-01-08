@@ -6,7 +6,10 @@ import { getFormattedDateTimeFromEpoch } from '~/components/util/dateTimeUtil';
 export function createModeledDataStreamColumnDefinitions(
   significantDigits: number
 ): TableProps<
-  ModeledDataStream & { latestValue?: number | string | boolean; latestValueTime?: number }
+  ModeledDataStream & {
+    latestValue?: number | string | boolean;
+    latestValueTime?: number;
+  }
 >['columnDefinitions'] {
   return [
     {
@@ -31,7 +34,9 @@ export function createModeledDataStreamColumnDefinitions(
       header: 'Latest value time',
       cell: ({ latestValueTime }) => {
         if (latestValueTime && isNumeric(latestValueTime)) {
-          return getFormattedDateTimeFromEpoch(round(latestValueTime, significantDigits));
+          return getFormattedDateTimeFromEpoch(
+            round(latestValueTime, significantDigits)
+          );
         }
         return getFormattedDateTimeFromEpoch(latestValueTime);
       },
@@ -65,5 +70,8 @@ export function createModeledDataStreamColumnDefinitions(
 }
 
 export const modeledDataStreamExplorerColumnDefinitions: TableProps<
-  ModeledDataStream & { latestValue?: number | string | boolean; latestValueTime: number }
+  ModeledDataStream & {
+    latestValue?: number | string | boolean;
+    latestValueTime: number;
+  }
 >['columnDefinitions'] = [];

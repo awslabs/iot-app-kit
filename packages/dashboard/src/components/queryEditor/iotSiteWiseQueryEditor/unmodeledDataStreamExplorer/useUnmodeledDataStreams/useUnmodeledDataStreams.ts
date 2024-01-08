@@ -9,7 +9,10 @@ export interface UseUnmodeledDataStreamsOptions {
   client: IoTSiteWiseClient;
 }
 
-export function useUnmodeledDataStreams({ aliasPrefix, client }: UseUnmodeledDataStreamsOptions) {
+export function useUnmodeledDataStreams({
+  aliasPrefix,
+  client,
+}: UseUnmodeledDataStreamsOptions) {
   const cacheKeyFactory = new UnmodeledDataStreamCacheKeyFactory(aliasPrefix);
 
   const {
@@ -27,7 +30,14 @@ export function useUnmodeledDataStreams({ aliasPrefix, client }: UseUnmodeledDat
 
   const unmodeledDataStreams = combinePages(unmodeledDataStreamPages);
 
-  return { unmodeledDataStreams, hasNextPage, isFetching, fetchNextPage, status, error };
+  return {
+    unmodeledDataStreams,
+    hasNextPage,
+    isFetching,
+    fetchNextPage,
+    status,
+    error,
+  };
 }
 
 function createQueryFn(client: IoTSiteWiseClient) {
@@ -35,16 +45,27 @@ function createQueryFn(client: IoTSiteWiseClient) {
     queryKey: [{ aliasPrefix }],
     pageParam: nextToken,
     signal,
-  }: QueryFunctionContext<ReturnType<UnmodeledDataStreamCacheKeyFactory['create']>>) {
-    const request = new ListUnmodeledDataStreamsRequest({ aliasPrefix, nextToken, client, signal });
+  }: QueryFunctionContext<
+    ReturnType<UnmodeledDataStreamCacheKeyFactory['create']>
+  >) {
+    const request = new ListUnmodeledDataStreamsRequest({
+      aliasPrefix,
+      nextToken,
+      client,
+      signal,
+    });
     const response = await request.send();
 
     return response;
   };
 }
 
-function combinePages(pages: Awaited<ReturnType<ListUnmodeledDataStreamsRequest['send']>>[]) {
-  const combinedPages = pages.flatMap(({ unmodeledDataStreams }) => unmodeledDataStreams ?? []);
+function combinePages(
+  pages: Awaited<ReturnType<ListUnmodeledDataStreamsRequest['send']>>[]
+) {
+  const combinedPages = pages.flatMap(
+    ({ unmodeledDataStreams }) => unmodeledDataStreams ?? []
+  );
 
   return combinedPages;
 }

@@ -12,17 +12,26 @@ export async function* fetchAssetModelsFromQuery({
   queries: SiteWiseDataStreamQuery[];
   assetModuleSession: SiteWiseAssetSession;
 }): AsyncGenerator<
-  | { assetModels: Record<string, DescribeAssetModelResponse>; modeledDataStreams: ModeledDataStream[] }
+  | {
+      assetModels: Record<string, DescribeAssetModelResponse>;
+      modeledDataStreams: ModeledDataStream[];
+    }
   | { errors: Record<string, ErrorDetails> }
 > {
-  const assetQueries = queries.map((query) => ('assets' in query ? query.assets : undefined)).filter(isDefined);
+  const assetQueries = queries
+    .map((query) => ('assets' in query ? query.assets : undefined))
+    .filter(isDefined);
 
   for (const assets of assetQueries) {
     for (const asset of assets) {
       try {
-        const { assetModelId } = await assetModuleSession.fetchAssetSummary({ assetId: asset.assetId });
+        const { assetModelId } = await assetModuleSession.fetchAssetSummary({
+          assetId: asset.assetId,
+        });
 
-        const assetModelResponse = assetModelId && (await assetModuleSession.fetchAssetModel({ assetModelId }));
+        const assetModelResponse =
+          assetModelId &&
+          (await assetModuleSession.fetchAssetModel({ assetModelId }));
 
         const maybeModeledDataStreams = await Promise.all(
           asset.properties.map((property) =>
@@ -34,9 +43,10 @@ export async function* fetchAssetModelsFromQuery({
           )
         );
 
-        const modeledDataStreams = maybeModeledDataStreams.filter<ModeledDataStream>(
-          (ds): ds is ModeledDataStream => ds != null
-        );
+        const modeledDataStreams =
+          maybeModeledDataStreams.filter<ModeledDataStream>(
+            (ds): ds is ModeledDataStream => ds != null
+          );
 
         if (assetModelResponse) {
           yield {

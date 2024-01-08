@@ -9,7 +9,11 @@ import InternalDashboard from '../internalDashboard';
 import { configureDashboardStore, toDashboardState } from '~/store';
 
 import { useDashboardPlugins } from '~/customization/api';
-import type { DashboardClientConfiguration, DashboardConfiguration, DashboardSave } from '~/types';
+import type {
+  DashboardClientConfiguration,
+  DashboardConfiguration,
+  DashboardSave,
+} from '~/types';
 import { ClientContext } from './clientContext';
 import { QueryContext } from './queryContext';
 import { getClients } from './getClients';
@@ -48,7 +52,12 @@ const Dashboard: React.FC<DashboardProperties> = ({
       <ClientContext.Provider value={getClients(clientConfiguration)}>
         <QueryContext.Provider value={getQueries(clientConfiguration)}>
           <QueryClientProvider client={queryClient}>
-            <Provider store={configureDashboardStore({ ...toDashboardState(dashboardConfiguration), readOnly })}>
+            <Provider
+              store={configureDashboardStore({
+                ...toDashboardState(dashboardConfiguration),
+                readOnly,
+              })}
+            >
               <DndProvider
                 backend={TouchBackend}
                 options={{
@@ -56,7 +65,12 @@ const Dashboard: React.FC<DashboardProperties> = ({
                   enableKeyboardEvents: true,
                 }}
               >
-                <InternalDashboard onSave={onSave} editable={true} name={name} propertiesPanel={<PropertiesPanel />} />
+                <InternalDashboard
+                  onSave={onSave}
+                  editable={true}
+                  name={name}
+                  propertiesPanel={<PropertiesPanel />}
+                />
               </DndProvider>
             </Provider>
             <ReactQueryDevtools initialIsOpen={false} />

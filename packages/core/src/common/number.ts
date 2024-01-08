@@ -21,7 +21,9 @@ export const round = (num: number): number => {
 
   const integer = Math.trunc(num);
   // in case of negative number, we need to remove the first 3 characters from decimal string eg. -0.123 => 123
-  const decimal = (num - integer).toFixed(MAX_PRECISION).substring(num !== absoluteValue ? 3 : 2);
+  const decimal = (num - integer)
+    .toFixed(MAX_PRECISION)
+    .substring(num !== absoluteValue ? 3 : 2);
 
   return Number(`${integer}.${decimal}`);
 };

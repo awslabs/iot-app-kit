@@ -14,9 +14,15 @@ const getArcs = (percent: number) => {
   const endAngle2 = endAngle1 + startAngle2;
 
   // Arc representing the value (i.e. if percent is 25%, this would be the arc going a 25% of the circle
-  const valueArc = arc().cornerRadius(CORNER_RADIUS).startAngle(0).endAngle(endAngle1);
+  const valueArc = arc()
+    .cornerRadius(CORNER_RADIUS)
+    .startAngle(0)
+    .endAngle(endAngle1);
   // The remainder of the arc not representing the value
-  const remainingArc = arc().cornerRadius(CORNER_RADIUS).startAngle(endAngle2).endAngle(endAngle1);
+  const remainingArc = arc()
+    .cornerRadius(CORNER_RADIUS)
+    .startAngle(endAngle2)
+    .endAngle(endAngle1);
 
   return {
     valueArc,

@@ -1,4 +1,7 @@
-import { INodeResults, IRelationResults } from './interfaces/kgDataSourceInterfaces';
+import {
+  INodeResults,
+  IRelationResults,
+} from './interfaces/kgDataSourceInterfaces';
 import { ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
 import { NodeData, EdgeData } from './graph/types';
 
@@ -28,13 +31,20 @@ function parseEdge(item: IRelationResults, edgeData: Map<string, EdgeData>) {
 export class ResponseParser {
   static parse(
     queryRows: ExecuteQueryCommandOutput['rows'] | null | undefined,
-    queryColumnDescriptions: ExecuteQueryCommandOutput['columnDescriptions'] | null | undefined
+    queryColumnDescriptions:
+      | ExecuteQueryCommandOutput['columnDescriptions']
+      | null
+      | undefined
   ) {
     const nodeData = new Map<string, NodeData>();
     const edgeData = new Map<string, EdgeData>();
     if (queryRows && queryColumnDescriptions) {
       for (const row of queryRows) {
-        for (let columnNumber = 0; columnNumber < queryColumnDescriptions.length; columnNumber++) {
+        for (
+          let columnNumber = 0;
+          columnNumber < queryColumnDescriptions.length;
+          columnNumber++
+        ) {
           const itemType = queryColumnDescriptions[columnNumber].type;
           const rowData = row.rowData;
           const item = rowData![columnNumber];

@@ -59,7 +59,12 @@ describe('useChartsLegend sets correct items', () => {
 
   it('populates Legend Cell correctly', () => {
     const { result: chart } = renderHook(() =>
-      useChartsLegend({ datastreams: [DATA_STREAM], series: mockSeries, width: 100, graphic: [] })
+      useChartsLegend({
+        datastreams: [DATA_STREAM],
+        series: mockSeries,
+        width: 100,
+        graphic: [],
+      })
     );
     expect(chart.current.items).toStrictEqual([
       {
@@ -82,7 +87,12 @@ describe('useChartsLegend sets correct items', () => {
 
   it('populates column definitions correctly', () => {
     const { result: chartData } = renderHook(() =>
-      useChartsLegend({ datastreams: [DATA_STREAM], series: mockSeries, width: 100, graphic: [] })
+      useChartsLegend({
+        datastreams: [DATA_STREAM],
+        series: mockSeries,
+        width: 100,
+        graphic: [],
+      })
     );
     const e = {
       name: 'Average Wind Speed',

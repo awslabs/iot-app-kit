@@ -18,7 +18,9 @@ const useHandleSync = ({
   significantDigits,
   getColor,
 }: UseSyncProps) => {
-  const syncedTrendCursors = useDataStore((state) => state.trendCursorGroups[groupId ?? '']);
+  const syncedTrendCursors = useDataStore(
+    (state) => state.trendCursorGroups[groupId ?? '']
+  );
 
   if (chartRef && isInSyncMode && syncedTrendCursors) {
     const { toBeAdded, toBeDeleted, toBeUpdated } = calculateSyncDelta({
@@ -27,7 +29,10 @@ const useHandleSync = ({
     });
 
     // if no changes, we skip setting the state
-    if ((toBeAdded.length || toBeDeleted.length || toBeUpdated.length) && series.length > 0) {
+    if (
+      (toBeAdded.length || toBeDeleted.length || toBeUpdated.length) &&
+      series.length > 0
+    ) {
       // add a new trend cursor
       if (toBeAdded.length) {
         toBeAdded.forEach((tcId) => {

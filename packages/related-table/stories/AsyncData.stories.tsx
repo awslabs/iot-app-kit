@@ -1,4 +1,8 @@
-import { Header, StatusIndicator, StatusIndicatorProps } from '@awsui/components-react';
+import {
+  Header,
+  StatusIndicator,
+  StatusIndicatorProps,
+} from '@awsui/components-react';
 import React, { useEffect, useState } from 'react';
 import { Meta, Story } from '@storybook/react';
 import { RelatedTable, useTreeCollection } from '../src';
@@ -48,7 +52,11 @@ function genData() {
       parentId: 'Equipment',
       status: { state: 'ACTIVE' },
     },
-    { entityId: 'Mixer', parentId: 'Cookie Production Line 1', status: { state: 'ACTIVE' } },
+    {
+      entityId: 'Mixer',
+      parentId: 'Cookie Production Line 1',
+      status: { state: 'ACTIVE' },
+    },
     { entityId: 'Pump', parentId: 'Mixer', status: { state: 'ACTIVE' } },
     { entityId: 'Motor_01', parentId: 'Mixer', status: { state: 'ACTIVE' } },
     { entityId: 'Motor_02', parentId: 'Mixer', status: { state: 'ACTIVE' } },
@@ -90,7 +98,11 @@ export const AsyncData: Story = () => {
           ACTIVE: 'success',
           ERROR: 'error',
         };
-        return <StatusIndicator type={statusMap[currentState]}>{currentState}</StatusIndicator>;
+        return (
+          <StatusIndicator type={statusMap[currentState]}>
+            {currentState}
+          </StatusIndicator>
+        );
       },
     },
   ];
@@ -116,7 +128,11 @@ export const AsyncData: Story = () => {
       items={items}
       header={
         <Header
-          counter={selectedItems?.length ? `(${selectedItems.length}/${allItems.length})` : `(${allItems.length})`}
+          counter={
+            selectedItems?.length
+              ? `(${selectedItems.length}/${allItems.length})`
+              : `(${allItems.length})`
+          }
         >
           Entities
         </Header>

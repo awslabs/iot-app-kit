@@ -39,9 +39,21 @@ describe('thresholdsList', () => {
   it('renders', () => {
     const elem = render(component).baseElement;
     expect(elem);
-    expect(elem.querySelectorAll('[data-test-id="threshold-component-operator-select"]')).toHaveLength(2);
-    expect(elem.querySelectorAll('[data-test-id="threshold-component-value-input"]')).toHaveLength(2);
-    expect(elem.querySelectorAll('[data-test-id="threshold-component-color-picker"]')).toHaveLength(2);
-    expect(elem.querySelectorAll('[data-test-id="threshold-component-delete-button"]')).toHaveLength(2);
+    expect(
+      elem.querySelectorAll(
+        '[data-test-id="threshold-component-operator-select"]'
+      )
+    ).toHaveLength(2);
+    expect(
+      elem.querySelectorAll('[data-test-id="threshold-component-value-input"]')
+    ).toHaveLength(2);
+    expect(
+      elem.querySelectorAll('[data-test-id="threshold-component-color-picker"]')
+    ).toHaveLength(2);
+    expect(
+      elem.querySelectorAll(
+        '[data-test-id="threshold-component-delete-button"]'
+      )
+    ).toHaveLength(2);
   });
 });

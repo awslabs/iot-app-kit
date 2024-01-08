@@ -20,7 +20,10 @@ it('with a single existing non-overlapping historical request, simply append the
     end: new Date(2000, 1, 0),
     requestedAt: new Date(2000, 1, 0),
   };
-  expect(mergeHistoricalRequests([existingRequest], request)).toEqual([request, existingRequest]);
+  expect(mergeHistoricalRequests([existingRequest], request)).toEqual([
+    request,
+    existingRequest,
+  ]);
 });
 
 it('with multiple existing non-overlapping historical request, simply append the new request to the front and maintain prior order', () => {
@@ -40,7 +43,10 @@ it('with multiple existing non-overlapping historical request, simply append the
     requestedAt: new Date(2000, 1, 0),
   };
   const existingHistory = [existingRequest2, existingRequest1];
-  expect(mergeHistoricalRequests(existingHistory, request)).toEqual([request, ...existingHistory]);
+  expect(mergeHistoricalRequests(existingHistory, request)).toEqual([
+    request,
+    ...existingHistory,
+  ]);
 });
 
 it('when a new historical request is append and partially overlaps an existing request, truncate the existing historical request', () => {
@@ -77,7 +83,9 @@ it('when a new historical request is append and fully overlaps an existing reque
     requestedAt: new Date(2000, 1, 0),
   };
 
-  expect(mergeHistoricalRequests([existingRequest], request)).toEqual([request]);
+  expect(mergeHistoricalRequests([existingRequest], request)).toEqual([
+    request,
+  ]);
 });
 
 it('when a new historical request is appended and fully overlaps an multiple existing requests, fully remove previous historical requests', () => {
@@ -97,7 +105,9 @@ it('when a new historical request is appended and fully overlaps an multiple exi
     requestedAt: new Date(2005, 0, 0),
   };
 
-  expect(mergeHistoricalRequests([existingRequest2, existingRequest1], request)).toEqual([request]);
+  expect(
+    mergeHistoricalRequests([existingRequest2, existingRequest1], request)
+  ).toEqual([request]);
 });
 
 it('when a new request partially overlaps one existing request, and fully overlaps another, it will return only two requests, one of which is truncated', () => {
@@ -117,7 +127,9 @@ it('when a new request partially overlaps one existing request, and fully overla
     requestedAt: new Date(2005, 0, 0),
   };
 
-  expect(mergeHistoricalRequests([existingRequest2, existingRequest1], request)).toEqual([
+  expect(
+    mergeHistoricalRequests([existingRequest2, existingRequest1], request)
+  ).toEqual([
     request,
     {
       start: existingRequest1.start,

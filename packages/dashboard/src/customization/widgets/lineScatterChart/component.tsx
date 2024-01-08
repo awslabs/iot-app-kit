@@ -5,7 +5,10 @@ import { Chart, useViewport } from '@iot-app-kit/react-components';
 // FIXME: Export ChartOptions from @iot-app-kit/react-components
 // FIXME: Export ChartStyleSettingsOptions from @iot-app-kit/react-components
 // eslint-disable-next-line no-restricted-imports
-import { ChartOptions, ChartStyleSettingsOptions } from '@iot-app-kit/react-components/src/components/chart/types';
+import {
+  ChartOptions,
+  ChartStyleSettingsOptions,
+} from '@iot-app-kit/react-components/src/components/chart/types';
 
 import type { DashboardState } from '~/store/state';
 import type {
@@ -45,7 +48,9 @@ const mapConnectionStyleToVisualizationType = (
   }
 };
 
-const mapSymboleStyleToSymbol = (symbolStyle: SymbolStyles['style']): ChartStyleSettingsOptions['symbol'] => {
+const mapSymboleStyleToSymbol = (
+  symbolStyle: SymbolStyles['style']
+): ChartStyleSettingsOptions['symbol'] => {
   switch (symbolStyle) {
     case 'circle':
       return 'emptyCircle';
@@ -67,7 +72,10 @@ const mapSymboleStyleToSymbol = (symbolStyle: SymbolStyles['style']): ChartStyle
   }
 };
 
-const useAdaptedStyleSettings = (rootStyles: LineAndScatterStyles, styledAssetQuery?: IoTSiteWiseDataStreamQuery) => {
+const useAdaptedStyleSettings = (
+  rootStyles: LineAndScatterStyles,
+  styledAssetQuery?: IoTSiteWiseDataStreamQuery
+) => {
   const depQuery = JSON.stringify(styledAssetQuery);
   const depStyles = JSON.stringify(rootStyles);
   return useMemo(() => {
@@ -78,13 +86,15 @@ const useAdaptedStyleSettings = (rootStyles: LineAndScatterStyles, styledAssetQu
     styledAssetQuery.assets?.forEach((asset) => {
       asset.properties.forEach((property) => {
         if (!property.refId) return;
-        styleSettings[property.refId] = mapStyledAssetPropertyToChartStyleSettings(rootStyles, property);
+        styleSettings[property.refId] =
+          mapStyledAssetPropertyToChartStyleSettings(rootStyles, property);
       });
     });
 
     styledAssetQuery.properties?.forEach((property) => {
       if (!property.refId) return;
-      styleSettings[property.refId] = mapStyledAssetPropertyToChartStyleSettings(rootStyles, property);
+      styleSettings[property.refId] =
+        mapStyledAssetPropertyToChartStyleSettings(rootStyles, property);
     });
 
     return styleSettings;
@@ -98,7 +108,9 @@ const mapStyledAssetPropertyToChartStyleSettings = (
   styles: AssetPropertyStyles
 ): ChartStyleSettingsOptions => {
   return {
-    visualizationType: mapConnectionStyleToVisualizationType(styles.line?.connectionStyle ?? line?.connectionStyle),
+    visualizationType: mapConnectionStyleToVisualizationType(
+      styles.line?.connectionStyle ?? line?.connectionStyle
+    ),
     color: styles.color,
     symbol: mapSymboleStyleToSymbol(styles.symbol?.style ?? symbol?.style),
     symbolColor: styles.symbol?.color,
@@ -118,11 +130,15 @@ const convertAxis = (axis: ChartAxisOptions | undefined) => ({
   yLabel: axis?.yLabel,
 });
 
-const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widget) => {
+const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
+  widget
+) => {
   const { viewport } = useViewport();
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const chartSize = useChartSize(widget);
-  const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
+  const dashboardSignificantDigits = useSelector(
+    (state: DashboardState) => state.significantDigits
+  );
 
   const {
     title,
@@ -143,7 +159,8 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
 
   const aggregation = getAggregation(widget);
 
-  const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
+  const significantDigits =
+    widgetSignificantDigits ?? dashboardSignificantDigits;
 
   // there may be better ways to fix this, i.e. not have -44 and let the chart container  take its parent height,
   // the problem is that the Resizable component needs a "height" to be provided,
@@ -176,7 +193,9 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
         significantDigits={significantDigits}
         size={size}
         legend={legend}
-        defaultVisualizationType={mapConnectionStyleToVisualizationType(line?.connectionStyle)}
+        defaultVisualizationType={mapConnectionStyleToVisualizationType(
+          line?.connectionStyle
+        )}
       />
     </WidgetTile>
   );

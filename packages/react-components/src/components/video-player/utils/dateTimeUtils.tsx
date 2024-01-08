@@ -11,7 +11,12 @@ export const getFormattedDateTime = (rawDate: Date) => {
 };
 
 // Get the new seek time
-export const getNewSeekTime = (newXPosition: number, rect: DOMRect, startTime: number, endTime: number) => {
+export const getNewSeekTime = (
+  newXPosition: number,
+  rect: DOMRect,
+  startTime: number,
+  endTime: number
+) => {
   let seekTime = 0;
   if (rect) {
     const { x, width } = rect;
@@ -22,7 +27,10 @@ export const getNewSeekTime = (newXPosition: number, rect: DOMRect, startTime: n
 };
 
 // Get start and end time using the viewport for video player
-export const getStartAndEndTimeForVideo = (viewport: Viewport, playbackMode: string) => {
+export const getStartAndEndTimeForVideo = (
+  viewport: Viewport,
+  playbackMode: string
+) => {
   let start = undefined;
   let end = undefined;
   if (playbackMode === PLAYBACKMODE_ON_DEMAND) {

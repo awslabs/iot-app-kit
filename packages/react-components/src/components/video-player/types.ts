@@ -16,11 +16,17 @@ export type IVideoUploadRequestProps = {
 };
 
 export type IVideoUploadRequestState = {
-  videoUploadDateRange?: DateRangePickerProps.AbsoluteValue | DateRangePickerProps.RelativeValue;
+  videoUploadDateRange?:
+    | DateRangePickerProps.AbsoluteValue
+    | DateRangePickerProps.RelativeValue;
 };
 
 export type VideoTimeRanges = Array<{ start: number; end: number }>;
-export type VideoTimeRangesWithSource = Array<{ start: number; end: number; src: string }>;
+export type VideoTimeRangesWithSource = Array<{
+  start: number;
+  end: number;
+  src: string;
+}>;
 
 export type CustomVideoProgressBarProps = {
   currentTimeIndicatorId: string;

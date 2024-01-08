@@ -65,7 +65,10 @@ export class DescribeAssetRequest {
     this.#assetCache[assetId] = asset;
   }
 
-  #cachePendingRequest(assetId: AssetId, request: Promise<DescribeAssetCommandOutput>) {
+  #cachePendingRequest(
+    assetId: AssetId,
+    request: Promise<DescribeAssetCommandOutput>
+  ) {
     this.#pendingRequestCache[assetId] = request;
   }
 

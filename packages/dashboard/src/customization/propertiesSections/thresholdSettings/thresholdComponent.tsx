@@ -1,11 +1,24 @@
 import type { FC } from 'react';
 import React, { useCallback, useEffect, useState } from 'react';
 
-import type { ComparisonOperator, Threshold, ThresholdValue } from '@iot-app-kit/core';
+import type {
+  ComparisonOperator,
+  Threshold,
+  ThresholdValue,
+} from '@iot-app-kit/core';
 import type { InputProps, SelectProps } from '@cloudscape-design/components';
-import { Box, Button, Input, Select, SpaceBetween } from '@cloudscape-design/components';
+import {
+  Box,
+  Button,
+  Input,
+  Select,
+  SpaceBetween,
+} from '@cloudscape-design/components';
 
-import { DEFAULT_THRESHOLD_COLOR, OPS_ALLOWED_WITH_STRING } from './defaultValues';
+import {
+  DEFAULT_THRESHOLD_COLOR,
+  OPS_ALLOWED_WITH_STRING,
+} from './defaultValues';
 import ColorPicker from '../shared/colorPicker';
 import type { ThresholdWithId } from '~/customization/settings';
 
@@ -28,18 +41,29 @@ export const ThresholdComponent: FC<{
   onUpdateValue: (value: Threshold['value']) => void;
   onUpdateComparisonOperator: (value: Threshold['comparisonOperator']) => void;
   onUpdateColor: (value: Threshold['color']) => void;
-}> = ({ threshold, comparisonOptions, onDelete, onUpdateValue, onUpdateComparisonOperator, onUpdateColor }) => {
+}> = ({
+  threshold,
+  comparisonOptions,
+  onDelete,
+  onUpdateValue,
+  onUpdateComparisonOperator,
+  onUpdateColor,
+}) => {
   const [validValue, updateValidValue] = useState<boolean>(true);
 
   // To support decimal values, the displayed value and threshold value must be different. This supports
   // input states where the decimal isn't fully typed out yet, like '33.'.
-  const [displayValue, updateDisplayValue] = useState<ThresholdValue>(threshold.value);
+  const [displayValue, updateDisplayValue] = useState<ThresholdValue>(
+    threshold.value
+  );
 
   const { color, comparisonOperator, value } = threshold;
 
   const validateValue: (value: ThresholdValue) => boolean = useCallback(
     (value: ThresholdValue) => {
-      const notAllowString = !OPS_ALLOWED_WITH_STRING.find((op) => comparisonOperator === op);
+      const notAllowString = !OPS_ALLOWED_WITH_STRING.find(
+        (op) => comparisonOperator === op
+      );
       const parsedValue = parseFloat(value as string);
 
       return !(Number.isNaN(parsedValue) && notAllowString);
@@ -53,10 +77,13 @@ export const ThresholdComponent: FC<{
   }, [value, validValue, validateValue, comparisonOperator]);
 
   const selectedOption =
-    comparisonOptions.find(({ value = '' }) => value === comparisonOperator) || comparisonOptions[0];
+    comparisonOptions.find(({ value = '' }) => value === comparisonOperator) ||
+    comparisonOptions[0];
 
   const onUpdateComparator: SelectProps['onChange'] = ({ detail }) => {
-    onUpdateComparisonOperator(detail.selectedOption.value as ComparisonOperator);
+    onUpdateComparisonOperator(
+      detail.selectedOption.value as ComparisonOperator
+    );
   };
 
   const onUpdateThresholdValue: InputProps['onChange'] = ({ detail }) => {
@@ -72,7 +99,10 @@ export const ThresholdComponent: FC<{
       <div className='threshold-display-summary'>
         <SpaceBetween size='xxxs'>
           <Box padding={{ top: 'xxs' }}>
-            <div className='threshold-configuration' style={{ gap: awsui.spaceScaledS }}>
+            <div
+              className='threshold-configuration'
+              style={{ gap: awsui.spaceScaledS }}
+            >
               <Box variant='span'>{defaultMessages.if}</Box>
               <Select
                 expandToViewport={true}

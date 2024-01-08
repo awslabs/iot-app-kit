@@ -10,7 +10,9 @@ const HIGH_LIGHTNESS_COLOR = 'black';
  */
 export const highContrastColor = (backgroundColor: string): string => {
   try {
-    return parseColor(backgroundColor).isLight() ? HIGH_LIGHTNESS_COLOR : LOW_LIGHTNESS_COLOR;
+    return parseColor(backgroundColor).isLight()
+      ? HIGH_LIGHTNESS_COLOR
+      : LOW_LIGHTNESS_COLOR;
   } catch (err) {
     // Invalid color string was likely passed into `color`.
     /* eslint-disable-next-line no-console */

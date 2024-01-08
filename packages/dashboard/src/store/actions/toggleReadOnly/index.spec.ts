@@ -1,11 +1,17 @@
 import { toggleReadOnly } from '.';
 import { initialState } from '../../state';
 
-import { MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET } from '../../../../testing/mocks';
+import {
+  MOCK_KPI_WIDGET,
+  MOCK_LINE_CHART_WIDGET,
+} from '../../../../testing/mocks';
 import type { DashboardState } from '../../state';
 import type { DashboardWidget } from '~/types';
 
-const setupDashboardState = (widgets: DashboardWidget[] = [], pasteCounter = 0): DashboardState => ({
+const setupDashboardState = (
+  widgets: DashboardWidget[] = [],
+  pasteCounter = 0
+): DashboardState => ({
   ...initialState,
   dashboardConfiguration: {
     ...initialState.dashboardConfiguration,
@@ -20,11 +26,19 @@ it('can toggle the state if no widgets are present', () => {
 });
 
 it('can toggle the state if widgets are present', () => {
-  expect(toggleReadOnly(setupDashboardState([MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET])).readOnly).toEqual(true);
+  expect(
+    toggleReadOnly(
+      setupDashboardState([MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET])
+    ).readOnly
+  ).toEqual(true);
 });
 
 it('can toggle the state back and forth', () => {
   expect(
-    toggleReadOnly(toggleReadOnly(setupDashboardState([MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET]))).readOnly
+    toggleReadOnly(
+      toggleReadOnly(
+        setupDashboardState([MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET])
+      )
+    ).readOnly
   ).toEqual(false);
 });

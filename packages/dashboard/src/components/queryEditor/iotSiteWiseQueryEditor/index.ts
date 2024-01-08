@@ -1,1 +1,4 @@
-export { IoTSiteWiseQueryEditor, type IoTSiteWiseQueryEditorProps } from './iotSiteWiseQueryEditor';
+export {
+  IoTSiteWiseQueryEditor,
+  type IoTSiteWiseQueryEditorProps,
+} from './iotSiteWiseQueryEditor';

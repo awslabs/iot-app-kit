@@ -7,7 +7,9 @@ import type { ModeledDataStream } from './types';
 import { SelectedAsset } from '../types';
 
 export interface ModeledDataStreamExplorerProps {
-  onClickAddModeledDataStreams: (modeledDataStreams: ModeledDataStream[]) => void;
+  onClickAddModeledDataStreams: (
+    modeledDataStreams: ModeledDataStream[]
+  ) => void;
   onClickNextPage?: () => void;
   selectedAsset?: SelectedAsset;
   dataStreams?: ModeledDataStream[];
@@ -37,7 +39,9 @@ export function ModeledDataStreamExplorer({
     assetProps: selectedAsset ? [selectedAsset] : [],
     client,
   });
-  const modeledDataStreamsTitle = isSearchError ? `Search result for "${searchQuery}" (0)` : 'Modeled data streams (0)';
+  const modeledDataStreamsTitle = isSearchError
+    ? `Search result for "${searchQuery}" (0)`
+    : 'Modeled data streams (0)';
 
   return (
     <ModeledDataStreamTable

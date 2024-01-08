@@ -1,7 +1,8 @@
 import { AssetModelPropertySummary } from '@aws-sdk/client-iotsitewise';
 import { type TableProps } from '@cloudscape-design/components/table';
 
-type AssetModelPropertiesTableColumnDefinitions = TableProps<AssetModelPropertySummary>['columnDefinitions'];
+type AssetModelPropertiesTableColumnDefinitions =
+  TableProps<AssetModelPropertySummary>['columnDefinitions'];
 
 export class AssetModelPropertiesTableColumnDefinitionsFactory {
   public create(): AssetModelPropertiesTableColumnDefinitions {

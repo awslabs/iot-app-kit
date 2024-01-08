@@ -2,11 +2,17 @@ import React from 'react';
 
 import FormField from '@cloudscape-design/components/form-field';
 import Select, { SelectProps } from '@cloudscape-design/components/select';
-import { AssetModelSummary, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  AssetModelSummary,
+  IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import { useAssetModels } from '../useAssetModels/useAssetModels';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import { OptionsLoadItemsDetail } from '@cloudscape-design/components/internal/components/dropdown/interfaces';
-import { SelectedAssetModel, UpdateSelectedAssetModel } from '../../useSelectedAssetModel';
+import {
+  SelectedAssetModel,
+  UpdateSelectedAssetModel,
+} from '../../useSelectedAssetModel';
 
 type AssetModelSelectOptions = {
   selectedAssetModel?: SelectedAssetModel;
@@ -37,7 +43,11 @@ const mapAssetModelToOption = (assetModel: AssetModelSummary) => ({
   value: assetModel?.id,
 });
 
-export const AssetModelSelect = ({ client, selectedAssetModel, onSelectAssetModel }: AssetModelSelectOptions) => {
+export const AssetModelSelect = ({
+  client,
+  selectedAssetModel,
+  onSelectAssetModel,
+}: AssetModelSelectOptions) => {
   const {
     assetModelSummaries,
     // status,
@@ -50,7 +60,9 @@ export const AssetModelSelect = ({ client, selectedAssetModel, onSelectAssetMode
     refetch,
   } = useAssetModels({ client });
 
-  const selectedAssetModelOption = selectedAssetModel ? mapAssetModelToOption(selectedAssetModel) : null;
+  const selectedAssetModelOption = selectedAssetModel
+    ? mapAssetModelToOption(selectedAssetModel)
+    : null;
 
   const assetModelOptions = assetModelSummaries.map(mapAssetModelToOption);
 
@@ -64,7 +76,9 @@ export const AssetModelSelect = ({ client, selectedAssetModel, onSelectAssetMode
   };
 
   const onChange: NonCancelableEventHandler<SelectProps.ChangeDetail> = (e) => {
-    const selected = assetModelSummaries.find((ams) => ams?.id === e.detail.selectedOption.value);
+    const selected = assetModelSummaries.find(
+      (ams) => ams?.id === e.detail.selectedOption.value
+    );
     if (!selected) return;
     onSelectAssetModel(selected);
   };

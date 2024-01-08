@@ -5,9 +5,11 @@ import { renderWithProviders } from './utils/test-utils';
 import { kgDataSource } from './__mocks__/dataSource';
 import { KnowledgeGraph, ZOOM_INTERVAL } from '../KnowledgeGraphPanel';
 
-jest.mock('@awsui/components-react/container', () => (props: HTMLAttributes<HTMLDivElement>) => (
-  <div data-mocked='Container' {...props}></div>
-));
+jest.mock(
+  '@awsui/components-react/container',
+  () => (props: HTMLAttributes<HTMLDivElement>) =>
+    <div data-mocked='Container' {...props}></div>
+);
 jest.mock(
   'react-cytoscapejs',
   () =>
@@ -15,7 +17,10 @@ jest.mock(
       elements,
       cy: _cy, // We don't want to propagate this ref arg
       ...props
-    }: HTMLAttributes<HTMLDivElement> & { elements: ElementDefinition[]; cy: (() => void) | undefined }) =>
+    }: HTMLAttributes<HTMLDivElement> & {
+      elements: ElementDefinition[];
+      cy: (() => void) | undefined;
+    }) =>
       (
         <div data-mocked='CytoscapeComponent' {...props}>
           {JSON.stringify(elements)}
@@ -29,7 +34,9 @@ jest.mock('react', () => ({
 
 describe('KnowledgeGraph', () => {
   it('should render correctly', () => {
-    const { container } = renderWithProviders(<KnowledgeGraph kgDataSource={kgDataSource} />);
+    const { container } = renderWithProviders(
+      <KnowledgeGraph kgDataSource={kgDataSource} />
+    );
     expect(container).toMatchSnapshot();
   });
   it('should fit to screen on fit button clicked', async () => {
@@ -48,7 +55,9 @@ describe('KnowledgeGraph', () => {
 
     useRefMock.mockReturnValueOnce(fakeCy);
 
-    const { findByTestId } = renderWithProviders(<KnowledgeGraph kgDataSource={kgDataSource} />);
+    const { findByTestId } = renderWithProviders(
+      <KnowledgeGraph kgDataSource={kgDataSource} />
+    );
     const sut = await findByTestId('fit-button');
 
     fireEvent.click(sut);
@@ -72,7 +81,9 @@ describe('KnowledgeGraph', () => {
 
     useRefMock.mockReturnValueOnce(fakeCy);
 
-    const { findByTestId } = renderWithProviders(<KnowledgeGraph kgDataSource={kgDataSource} />);
+    const { findByTestId } = renderWithProviders(
+      <KnowledgeGraph kgDataSource={kgDataSource} />
+    );
     const sut = await findByTestId('center-button');
 
     fireEvent.click(sut);
@@ -98,12 +109,17 @@ describe('KnowledgeGraph', () => {
 
     useRefMock.mockReturnValueOnce(fakeCy);
 
-    const { findByTestId } = renderWithProviders(<KnowledgeGraph kgDataSource={kgDataSource} />);
+    const { findByTestId } = renderWithProviders(
+      <KnowledgeGraph kgDataSource={kgDataSource} />
+    );
     const sut = await findByTestId('zoom-in-button');
 
     fireEvent.click(sut);
 
-    expect(fakeCy.current.zoom).toBeCalledWith({ level: 0.1 + ZOOM_INTERVAL, renderedPosition: { x: 250, y: 250 } });
+    expect(fakeCy.current.zoom).toBeCalledWith({
+      level: 0.1 + ZOOM_INTERVAL,
+      renderedPosition: { x: 250, y: 250 },
+    });
   });
 
   it('should zoom out when zoom out button clicked', async () => {
@@ -124,16 +140,24 @@ describe('KnowledgeGraph', () => {
 
     useRefMock.mockReturnValueOnce(fakeCy);
 
-    const { findByTestId } = renderWithProviders(<KnowledgeGraph kgDataSource={kgDataSource} />);
+    const { findByTestId } = renderWithProviders(
+      <KnowledgeGraph kgDataSource={kgDataSource} />
+    );
     const sut = await findByTestId('zoom-out-button');
 
     fireEvent.click(sut);
 
-    expect(fakeCy.current.zoom).toBeCalledWith({ level: 0.1 - ZOOM_INTERVAL, renderedPosition: { x: 250, y: 250 } });
+    expect(fakeCy.current.zoom).toBeCalledWith({
+      level: 0.1 - ZOOM_INTERVAL,
+      renderedPosition: { x: 250, y: 250 },
+    });
   });
 
   it('should find Search, Explore and Clear button', async () => {
-    const { queryByText } = renderWithProviders(<KnowledgeGraph kgDataSource={kgDataSource} />, {});
+    const { queryByText } = renderWithProviders(
+      <KnowledgeGraph kgDataSource={kgDataSource} />,
+      {}
+    );
     const searchButton = queryByText('Search');
     expect(searchButton).toBeVisible;
     const exploreButton = queryByText('explore-button');

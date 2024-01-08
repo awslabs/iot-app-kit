@@ -36,7 +36,10 @@ export function createQueryFn(client: IoTSiteWiseClient) {
     queryKey: [{ assetId }],
     signal,
   }: QueryFunctionContext<ReturnType<AssetCacheKeyFactory['create']>>) {
-    invariant(isEnabled(assetId), 'Expected assetId to be defined as required by the enabled flag.');
+    invariant(
+      isEnabled(assetId),
+      'Expected assetId to be defined as required by the enabled flag.'
+    );
 
     const request = new GetAssetRequest({ assetId, client, signal });
     const response = await request.send();

@@ -14,12 +14,16 @@ describe(QueryEditorErrorBoundary, () => {
       </QueryEditorErrorBoundary>
     );
 
-    expect(screen.getByText('error fallback is not being rendered')).toBeVisible();
+    expect(
+      screen.getByText('error fallback is not being rendered')
+    ).toBeVisible();
     expect(screen.queryByText('An error occured.')).not.toBeInTheDocument();
 
     await user.click(screen.getByText('EXPLODE'));
 
     expect(screen.getByText('An error occured.')).toBeVisible();
-    expect(screen.queryByText('error fallback is not being rendered')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('error fallback is not being rendered')
+    ).not.toBeInTheDocument();
   });
 });

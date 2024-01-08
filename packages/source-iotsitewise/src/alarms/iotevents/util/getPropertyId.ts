@@ -4,8 +4,9 @@ export const removeBackticks = (value: string) => {
 
 export const SITE_WISE_BACKED_PROPERTY_PREFIX = '$sitewise';
 
-export const isBackedBySiteWiseAssetProperty = (maybeAssetProperty: string): boolean =>
-  maybeAssetProperty.startsWith(SITE_WISE_BACKED_PROPERTY_PREFIX);
+export const isBackedBySiteWiseAssetProperty = (
+  maybeAssetProperty: string
+): boolean => maybeAssetProperty.startsWith(SITE_WISE_BACKED_PROPERTY_PREFIX);
 
 /**
  * Extracts the propertyId from an iot events expressions
@@ -16,7 +17,9 @@ export const isBackedBySiteWiseAssetProperty = (maybeAssetProperty: string): boo
  *
  * More on that here https://docs.aws.amazon.com/iot-sitewise/latest/userguide/define-iot-events-alarm-cli.html
  */
-export const getPropertyId = (modelPropertyId: string | undefined): string | undefined => {
+export const getPropertyId = (
+  modelPropertyId: string | undefined
+): string | undefined => {
   if (modelPropertyId == null) {
     return undefined;
   }

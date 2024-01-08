@@ -1,4 +1,7 @@
-import { GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import {
+  GetPropertyValueHistoryCommand,
+  IoTTwinMakerClient,
+} from '@aws-sdk/client-iottwinmaker';
 import { isUndefined } from 'lodash';
 import type {
   EntityPropertyReference,
@@ -12,7 +15,9 @@ export const getSinglePropertyValueHistory = async (
   getPropertyValueHistoryRequest: GetPropertyValueHistoryRequest,
   twinMakerClient: IoTTwinMakerClient
 ) => {
-  const propertyValueHistoryOutput: { [id: string]: { x: number; y: Primitive }[] } = {};
+  const propertyValueHistoryOutput: {
+    [id: string]: { x: number; y: Primitive }[];
+  } = {};
 
   if (
     getPropertyValueHistoryRequest.entityId &&
@@ -26,7 +31,10 @@ export const getSinglePropertyValueHistory = async (
     );
     propertyValueHistoryOutput[propertyIndentifier] = [];
 
-    const valuesResult = await getPropertyValueHistory(getPropertyValueHistoryRequest, twinMakerClient);
+    const valuesResult = await getPropertyValueHistory(
+      getPropertyValueHistoryRequest,
+      twinMakerClient
+    );
 
     valuesResult.forEach((propertyValueHistory) => {
       propertyValueHistory.values?.forEach((propertyValue) => {
@@ -64,7 +72,9 @@ const getPropertyValueHistory = async (
   let valuesResult: Map<string, PropertyValueHistory> = new Map();
 
   do {
-    const response = await twinMakerClient.send(new GetPropertyValueHistoryCommand(getPropertyValueHistoryRequest));
+    const response = await twinMakerClient.send(
+      new GetPropertyValueHistoryCommand(getPropertyValueHistoryRequest)
+    );
     valuesResult = mergePropertyValueHistoryResponse(valuesResult, response);
 
     getPropertyValueHistoryRequest.nextToken = response.nextToken;
@@ -80,7 +90,9 @@ const mergePropertyValueHistoryResponse = (
   if (newResponse && newResponse.propertyValues) {
     newResponse.propertyValues.forEach((propertyValue) => {
       if (propertyValue.values && propertyValue.entityPropertyReference) {
-        const entityRefKey = generateEntityRefKey(propertyValue.entityPropertyReference);
+        const entityRefKey = generateEntityRefKey(
+          propertyValue.entityPropertyReference
+        );
         const existingValues = currentHistories.get(entityRefKey);
         if (!existingValues) {
           currentHistories.set(entityRefKey, propertyValue);
@@ -93,11 +105,19 @@ const mergePropertyValueHistoryResponse = (
   return currentHistories;
 };
 
-export const generateEntityRefKey = (entityRef: EntityPropertyReference): string => {
+export const generateEntityRefKey = (
+  entityRef: EntityPropertyReference
+): string => {
   let result = '';
-  const externalIdProperties = Object.keys(entityRef.externalIdProperty || {}).sort();
+  const externalIdProperties = Object.keys(
+    entityRef.externalIdProperty || {}
+  ).sort();
   externalIdProperties.forEach((idPropertyName) => {
-    result += idPropertyName + '=' + entityRef.externalIdProperty?.[idPropertyName] + '/';
+    result +=
+      idPropertyName +
+      '=' +
+      entityRef.externalIdProperty?.[idPropertyName] +
+      '/';
   });
 
   if (entityRef.entityId) {
@@ -111,6 +131,10 @@ export const generateEntityRefKey = (entityRef: EntityPropertyReference): string
   return result;
 };
 
-export const createPropertyIndentifierKey = (entityId: string, componentName: string, propertyName: string): string => {
+export const createPropertyIndentifierKey = (
+  entityId: string,
+  componentName: string,
+  propertyName: string
+): string => {
   return `${entityId}_${componentName}_${propertyName}`;
 };

@@ -18,5 +18,8 @@ export const onChangeDashboardWidthAction = (
   payload,
 });
 
-export const changeDashboardWidth = (state: DashboardState, action: ChangeDashboardWidthAction): DashboardState =>
+export const changeDashboardWidth = (
+  state: DashboardState,
+  action: ChangeDashboardWidthAction
+): DashboardState =>
   changeGridProperty(state, 'width', nonNegative(action.payload.width));

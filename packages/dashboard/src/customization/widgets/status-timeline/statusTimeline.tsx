@@ -11,10 +11,14 @@ import WidgetTile from '~/components/widgets/tile';
 import NoChartData from '../components/no-chart-data';
 import { default as timelineSvgDark } from './timeline-dark.svg';
 
-const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) => {
+const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (
+  widget
+) => {
   const { viewport } = useViewport();
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
-  const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
+  const dashboardSignificantDigits = useSelector(
+    (state: DashboardState) => state.significantDigits
+  );
 
   const {
     title,
@@ -29,7 +33,8 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) =
   const key = createWidgetRenderKey(widget.id);
   const aggregation = getAggregation(widget);
 
-  const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
+  const significantDigits =
+    widgetSignificantDigits ?? dashboardSignificantDigits;
 
   const isEmptyWidget = queries.length === 0;
   if (isEmptyWidget) {

@@ -16,8 +16,12 @@ const MODEL_MAP = {
 };
 
 export class QueryResponseProcessor {
-  public static process(response: ExecuteQueryCommandOutput): ModeledDataStream[] {
-    const modeledDataStreams = this.#convertResponseToModeledDataStreams(response.rows ?? []);
+  public static process(
+    response: ExecuteQueryCommandOutput
+  ): ModeledDataStream[] {
+    const modeledDataStreams = this.#convertResponseToModeledDataStreams(
+      response.rows ?? []
+    );
 
     return modeledDataStreams;
   }
@@ -29,7 +33,10 @@ export class QueryResponseProcessor {
       rows
         // Filter out any invalid rows. Situation has occured where `null` was being returned for propertyId and propertyName which causes downstream bugs.
         .filter(
-          (row) => row.rowData && row.rowData.length === 4 && row.rowData.every((cell) => typeof cell === 'string')
+          (row) =>
+            row.rowData &&
+            row.rowData.length === 4 &&
+            row.rowData.every((cell) => typeof cell === 'string')
         )
         .map((row) => this.#convertRowToModeledDataStream(row.rowData as Model))
     );

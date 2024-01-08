@@ -33,34 +33,36 @@ export const mapResponseData = (res: ExecuteQueryResponse) => {
   return res.rows
     ?.map((r) => r.rowData)
     .reduce((acc, rowData) => {
-      const newElements: ElementDefinition[] = res.columnDescriptions?.map((col, i) => {
-        const entity = !!rowData && rowData[i];
+      const newElements: ElementDefinition[] = res.columnDescriptions?.map(
+        (col, i) => {
+          const entity = !!rowData && rowData[i];
 
-        if (entity) {
-          if (col.type === 'EDGE') {
-            const relationship = entity as Edge;
+          if (entity) {
+            if (col.type === 'EDGE') {
+              const relationship = entity as Edge;
+              return {
+                data: {
+                  source: relationship.sourceEntityId,
+                  target: relationship.targetEntityId,
+                  label: relationship.relationshipName,
+                  lineStyle: edgeStyles[relationship.relationshipName],
+                  ...relationship,
+                },
+              } as ElementDefinition;
+            }
+
+            const node = entity as Node;
             return {
               data: {
-                source: relationship.sourceEntityId,
-                target: relationship.targetEntityId,
-                label: relationship.relationshipName,
-                lineStyle: edgeStyles[relationship.relationshipName],
-                ...relationship,
+                id: node.entityId,
+                label: node.entityName,
+                shape: nodeShapes[node.components[0].componentTypeId],
+                ...node,
               },
             } as ElementDefinition;
           }
-
-          const node = entity as Node;
-          return {
-            data: {
-              id: node.entityId,
-              label: node.entityName,
-              shape: nodeShapes[node.components[0].componentTypeId],
-              ...node,
-            },
-          } as ElementDefinition;
         }
-      }) as ElementDefinition[];
+      ) as ElementDefinition[];
 
       return [...acc, ...newElements];
     }, [] as ElementDefinition[]) as ElementDefinition[];

@@ -8,7 +8,10 @@ import { connect, disconnect, type ECharts } from 'echarts';
  * @param groupId - set a group on an echarts instance
  * @returns void
  */
-export const useGroupableEChart = (chartRef: React.MutableRefObject<ECharts | null>, groupId?: string) => {
+export const useGroupableEChart = (
+  chartRef: React.MutableRefObject<ECharts | null>,
+  groupId?: string
+) => {
   useEffect(() => {
     if (groupId && chartRef.current) {
       chartRef.current.group = groupId;

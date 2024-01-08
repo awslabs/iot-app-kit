@@ -27,7 +27,11 @@ const EMPTY_DATA = [
 
 const isQueryEmpty = (queryConfig: StyledSiteWiseQueryConfig) => {
   const query = queryConfig.query;
-  return !query?.assets?.length && !query?.properties?.length && !query?.assetModels?.length;
+  return (
+    !query?.assets?.length &&
+    !query?.properties?.length &&
+    !query?.assetModels?.length
+  );
 };
 
 export const CSVDownloadButton = ({
@@ -35,7 +39,11 @@ export const CSVDownloadButton = ({
   fileName,
   client,
   ...rest
-}: { queryConfig: StyledSiteWiseQueryConfig; client: IoTSiteWiseClient; fileName: string } & ButtonProps) => {
+}: {
+  queryConfig: StyledSiteWiseQueryConfig;
+  client: IoTSiteWiseClient;
+  fileName: string;
+} & ButtonProps) => {
   const { fetchViewportData } = useViewportData({ queryConfig, client });
   const [isDownloading, setIsDownloading] = useState(false);
 
@@ -52,7 +60,8 @@ export const CSVDownloadButton = ({
       return;
     }
 
-    const stringCSVData = data.length === 0 ? unparse(EMPTY_DATA) : unparse(data);
+    const stringCSVData =
+      data.length === 0 ? unparse(EMPTY_DATA) : unparse(data);
     const file = new Blob([stringCSVData], { type: 'text/csv' });
 
     // create Anchor element with download attribute, click on it, and then delete it

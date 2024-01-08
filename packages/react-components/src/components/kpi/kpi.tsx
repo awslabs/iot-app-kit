@@ -4,7 +4,12 @@ import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
-import type { Threshold, StyleSettingsMap, Viewport, TimeSeriesDataQuery } from '@iot-app-kit/core';
+import type {
+  Threshold,
+  StyleSettingsMap,
+  Viewport,
+  TimeSeriesDataQuery,
+} from '@iot-app-kit/core';
 import type { KPISettings } from './types';
 
 export const KPI = ({
@@ -52,8 +57,10 @@ export const KPI = ({
 
   const name = propertyStream?.name || alarmStream?.name;
   const unit = propertyStream?.unit || alarmStream?.unit;
-  const color = alarmThreshold?.color || propertyThreshold?.color || settings?.color;
-  const isLoading = alarmStream?.isLoading || propertyStream?.isLoading || false;
+  const color =
+    alarmThreshold?.color || propertyThreshold?.color || settings?.color;
+  const isLoading =
+    alarmStream?.isLoading || propertyStream?.isLoading || false;
   const error = alarmStream?.error || propertyStream?.error;
 
   return (

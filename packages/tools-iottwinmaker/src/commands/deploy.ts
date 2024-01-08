@@ -7,9 +7,15 @@ import {
   ResourceNotFoundException,
   ValidationException,
 } from '@aws-sdk/client-iottwinmaker';
-import { getDefaultAwsClients as aws, initDefaultAwsClients } from '../lib/aws-clients';
+import {
+  getDefaultAwsClients as aws,
+  initDefaultAwsClients,
+} from '../lib/aws-clients';
 import * as fs from 'fs';
-import { createComponentTypeIfNotExists, waitForComponentTypeActive } from '../lib/component-type';
+import {
+  createComponentTypeIfNotExists,
+  waitForComponentTypeActive,
+} from '../lib/component-type';
 import { importScene } from '../lib/scene';
 import { importResource } from '../lib/resource';
 import { syncEntitiesFunction } from '../lib/sync';
@@ -51,14 +57,19 @@ export const handler = async (argv: Arguments<Options>) => {
   const workspaceId: string = argv['workspace-id']; // TODO allow it to be optional (i.e. option to autogenerate workspace for them)
   const region: string = argv.region;
   const dir: string = argv.dir;
-  console.log(`Deploying project from directory ${dir} into workspace ${workspaceId} in ${region}`);
+  console.log(
+    `Deploying project from directory ${dir} into workspace ${workspaceId} in ${region}`
+  );
 
   initDefaultAwsClients({ region: region });
   if (!fs.existsSync(path.join(dir, 'tmdt.json'))) {
     throw new Error('TDMK.json does not exist. Please run tmdt init first.');
   }
   // read tmdt json file
-  const tmdt_config_buffer = fs.readFileSync(path.join(dir, 'tmdt.json'), 'utf-8'); // TODO encodings
+  const tmdt_config_buffer = fs.readFileSync(
+    path.join(dir, 'tmdt.json'),
+    'utf-8'
+  ); // TODO encodings
   const tmdt_config: tmdt_config_file = JSON.parse(tmdt_config_buffer);
   console.log('========= tmdt.json =========');
   console.log(tmdt_config);
@@ -87,9 +98,12 @@ export const handler = async (argv: Arguments<Options>) => {
   // get workspace bucket
   let workspaceContentBucket = '';
   try {
-    const workspaceDesc: GetWorkspaceCommandOutput = await aws().tm.getWorkspace({ workspaceId: workspaceId });
+    const workspaceDesc: GetWorkspaceCommandOutput =
+      await aws().tm.getWorkspace({ workspaceId: workspaceId });
     if (workspaceDesc['s3Location']) {
-      workspaceContentBucket = workspaceDesc['s3Location'].split(':').slice(-1)[0];
+      workspaceContentBucket = workspaceDesc['s3Location']
+        .split(':')
+        .slice(-1)[0];
     }
   } catch (e) {
     console.error('Error while getting the workspace bucket.\n', e);
@@ -103,13 +117,18 @@ export const handler = async (argv: Arguments<Options>) => {
   while (stillComponentRemaining) {
     stillComponentRemaining = false;
     for (const componentTypeFile of tmdt_config['component_types']) {
-      const componentTypeDefinitionStr = fs.readFileSync(path.join(dir, componentTypeFile), 'utf-8');
+      const componentTypeDefinitionStr = fs.readFileSync(
+        path.join(dir, componentTypeFile),
+        'utf-8'
+      );
       const componentTypeDefinition = JSON.parse(componentTypeDefinitionStr);
       // remove inherited properties
       const propertyDefinitions: Record<string, PropertyDefinitionResponse> =
         componentTypeDefinition['propertyDefinitions'];
       if (propertyDefinitions != undefined) {
-        const filtered_property_definitions = Object.entries(propertyDefinitions).reduce((acc, [key, value]) => {
+        const filtered_property_definitions = Object.entries(
+          propertyDefinitions
+        ).reduce((acc, [key, value]) => {
           if (!value['isInherited']) {
             acc[key] = value;
           } else if ('defaultValue' in value) {
@@ -117,12 +136,16 @@ export const handler = async (argv: Arguments<Options>) => {
           }
           return acc;
         }, {} as { [key: string]: object });
-        componentTypeDefinition['propertyDefinitions'] = filtered_property_definitions;
+        componentTypeDefinition['propertyDefinitions'] =
+          filtered_property_definitions;
       }
       // remove inherited functions
-      const componentTypeFunctions: Record<string, FunctionResponse> = componentTypeDefinition['functions'];
+      const componentTypeFunctions: Record<string, FunctionResponse> =
+        componentTypeDefinition['functions'];
       if (componentTypeFunctions != undefined) {
-        const filtered_functions = Object.entries(componentTypeFunctions).reduce((acc, [key, value]) => {
+        const filtered_functions = Object.entries(
+          componentTypeFunctions
+        ).reduce((acc, [key, value]) => {
           if (!value['isInherited']) {
             acc[key] = value;
           }
@@ -132,10 +155,18 @@ export const handler = async (argv: Arguments<Options>) => {
       }
       // create component type if not exists
       try {
-        const alreadyExists: boolean = await createComponentTypeIfNotExists(workspaceId, componentTypeDefinition);
-        await waitForComponentTypeActive(workspaceId, componentTypeDefinition['componentTypeId']);
+        const alreadyExists: boolean = await createComponentTypeIfNotExists(
+          workspaceId,
+          componentTypeDefinition
+        );
+        await waitForComponentTypeActive(
+          workspaceId,
+          componentTypeDefinition['componentTypeId']
+        );
         if (!alreadyExists) {
-          console.log(`Created component-type: ${componentTypeDefinition['componentTypeId']}`);
+          console.log(
+            `Created component-type: ${componentTypeDefinition['componentTypeId']}`
+          );
         }
       } catch (e) {
         if (
@@ -157,10 +188,16 @@ export const handler = async (argv: Arguments<Options>) => {
   for (const sceneFile of tmdt_config['scenes']) {
     console.log(`Importing scene: ${sceneFile} ...`);
     try {
-      await importScene(workspaceId, path.join(dir, sceneFile), workspaceContentBucket);
+      await importScene(
+        workspaceId,
+        path.join(dir, sceneFile),
+        workspaceContentBucket
+      );
     } catch (error) {
       if (error instanceof ConflictException) {
-        console.log(`  ...skipping scene creation for ${sceneFile} due to pre-existing scene with same id`); // TODO should scan and warn instead
+        console.log(
+          `  ...skipping scene creation for ${sceneFile} due to pre-existing scene with same id`
+        ); // TODO should scan and warn instead
       } else {
         throw error;
       }
@@ -171,13 +208,19 @@ export const handler = async (argv: Arguments<Options>) => {
   console.log('======== Model Files ========');
   for (const modelFile of tmdt_config['models']) {
     console.log(`Importing model: ${modelFile} ...`);
-    await importResource(workspaceId, path.join(dir, '3d_models', modelFile), modelFile);
+    await importResource(
+      workspaceId,
+      path.join(dir, '3d_models', modelFile),
+      modelFile
+    );
   }
 
   // import entities
   console.log('========== Entities =========');
   const entityFileName = tmdt_config['entities'];
-  const entityFileJson = JSON.parse(fs.readFileSync(path.join(dir, entityFileName), 'utf-8'));
+  const entityFileJson = JSON.parse(
+    fs.readFileSync(path.join(dir, entityFileName), 'utf-8')
+  );
   await syncEntitiesFunction(workspaceId, entityFileJson);
 
   console.log('=== Deployment Completed! ===');

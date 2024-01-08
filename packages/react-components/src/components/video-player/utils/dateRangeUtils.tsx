@@ -1,7 +1,10 @@
 import type { DateRangePickerProps } from '@cloudscape-design/components';
 
 export const getStartAndEndTimeFromRange = (
-  newDateRange: DateRangePickerProps.AbsoluteValue | DateRangePickerProps.RelativeValue | undefined,
+  newDateRange:
+    | DateRangePickerProps.AbsoluteValue
+    | DateRangePickerProps.RelativeValue
+    | undefined,
   currentDateTimeForRelativeValue?: Date
 ) => {
   if (!newDateRange) {
@@ -36,7 +39,9 @@ export const getStartAndEndTimeFromRange = (
     const startTimeSeconds = currentDateTimeForRelativeValue.getTime() / 1000;
     // Upload start time (in miliseconds) = current - offset (before x seconds from now)
     const startTime =
-      (startTimeSeconds != null && new Date((startTimeSeconds - offset) * 1000).getTime().toString()) || undefined;
+      (startTimeSeconds != null &&
+        new Date((startTimeSeconds - offset) * 1000).getTime().toString()) ||
+      undefined;
     // Upload end time (in miliseconds) = current time
     const endTime = currentDateTimeForRelativeValue.getTime().toString();
     startAndEndTime = { startTime, endTime };

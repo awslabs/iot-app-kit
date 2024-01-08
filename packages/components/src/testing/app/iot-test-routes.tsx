@@ -12,7 +12,12 @@ export class IotTestRoutes {
       <stencil-router>
         <stencil-route-switch scrollTopOffset={0}>
           {routes.map((r) => (
-            <stencil-route key={r.url} url={r.url} component={r.component} exact />
+            <stencil-route
+              key={r.url}
+              url={r.url}
+              component={r.component}
+              exact
+            />
           ))}
         </stencil-route-switch>
       </stencil-router>

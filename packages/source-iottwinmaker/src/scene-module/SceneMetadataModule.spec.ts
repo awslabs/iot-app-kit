@@ -111,7 +111,9 @@ describe('get3pConnectionList', () => {
   });
 
   it('should get correct list of secrets', async () => {
-    listSecrets.mockResolvedValue({ SecretList: [{ Name: 'dummySecret', ARN: 'dummySecretARN' }] });
+    listSecrets.mockResolvedValue({
+      SecretList: [{ Name: 'dummySecret', ARN: 'dummySecretARN' }],
+    });
 
     const expected = [{ Name: 'dummySecret', ARN: 'dummySecretARN' }];
     const result = await sceneMetadataModule.get3pConnectionList('dummayTag');
@@ -152,7 +154,9 @@ describe('getSceneEntity', () => {
   it('should get correct entity', async () => {
     getEntity.mockResolvedValue({ entityId: 'eid' });
 
-    const result = await sceneMetadataModule.getSceneEntity({ entityId: 'eid' });
+    const result = await sceneMetadataModule.getSceneEntity({
+      entityId: 'eid',
+    });
 
     expect(result).toEqual({ entityId: 'eid' });
     expect(getEntity).toBeCalledTimes(1);
@@ -176,17 +180,27 @@ describe('createSceneEntity', () => {
   });
 
   it('should call API to create entity successfully', async () => {
-    await sceneMetadataModule.createSceneEntity({ entityId: 'eid', entityName: 'ename' });
+    await sceneMetadataModule.createSceneEntity({
+      entityId: 'eid',
+      entityName: 'ename',
+    });
 
     expect(createEntity).toBeCalledTimes(1);
-    expect(createEntity).toBeCalledWith({ entityId: 'eid', entityName: 'ename', workspaceId: 'ws-id' });
+    expect(createEntity).toBeCalledWith({
+      entityId: 'eid',
+      entityName: 'ename',
+      workspaceId: 'ws-id',
+    });
   });
 
   it('should get error when API failed', async () => {
     getEntity.mockRejectedValue('TwinMaker API failed');
 
     try {
-      await sceneMetadataModule.createSceneEntity({ entityId: 'eid', entityName: 'ename' });
+      await sceneMetadataModule.createSceneEntity({
+        entityId: 'eid',
+        entityName: 'ename',
+      });
     } catch (err) {
       expect(err).toEqual('TwinMaker API failed');
       expect(createEntity).toBeCalledTimes(1);
@@ -200,10 +214,17 @@ describe('updateSceneEntity', () => {
   });
 
   it('should call API to update entity successfully', async () => {
-    await sceneMetadataModule.updateSceneEntity({ entityId: 'eid', componentUpdates: { test: {} } });
+    await sceneMetadataModule.updateSceneEntity({
+      entityId: 'eid',
+      componentUpdates: { test: {} },
+    });
 
     expect(updateEntity).toBeCalledTimes(1);
-    expect(updateEntity).toBeCalledWith({ entityId: 'eid', componentUpdates: { test: {} }, workspaceId: 'ws-id' });
+    expect(updateEntity).toBeCalledWith({
+      entityId: 'eid',
+      componentUpdates: { test: {} },
+      workspaceId: 'ws-id',
+    });
   });
 
   it('should get error when API failed', async () => {
@@ -227,7 +248,10 @@ describe('deleteSceneEntity', () => {
     await sceneMetadataModule.deleteSceneEntity({ entityId: 'eid' });
 
     expect(deleteEntity).toBeCalledTimes(1);
-    expect(deleteEntity).toBeCalledWith({ entityId: 'eid', workspaceId: 'ws-id' });
+    expect(deleteEntity).toBeCalledWith({
+      entityId: 'eid',
+      workspaceId: 'ws-id',
+    });
   });
 
   it('should get error when API failed', async () => {

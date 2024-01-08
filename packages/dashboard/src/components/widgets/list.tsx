@@ -43,7 +43,13 @@ const Widgets: React.FC<WidgetsProps> = ({
         margin: `${cellSize / 2}px`,
       }}
     >
-      {!readOnly && <SelectionBox selectedWidgets={selectedWidgets} cellSize={cellSize} dragEnabled={dragEnabled} />}
+      {!readOnly && (
+        <SelectionBox
+          selectedWidgets={selectedWidgets}
+          cellSize={cellSize}
+          dragEnabled={dragEnabled}
+        />
+      )}
       {widgets.map((widget) => (
         <WidgetComponent
           readOnly={readOnly}

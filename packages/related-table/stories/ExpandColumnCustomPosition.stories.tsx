@@ -1,4 +1,9 @@
-import { Button, Header, Pagination, TextFilter } from '@awsui/components-react';
+import {
+  Button,
+  Header,
+  Pagination,
+  TextFilter,
+} from '@awsui/components-react';
 import React, { useState } from 'react';
 import { Meta, Story } from '@storybook/react';
 import { RelatedTable, useTreeCollection } from '../src';
@@ -211,17 +216,28 @@ export const ExpandColumnCustomPosition: Story = () => {
       sortingField: 'creationDate',
       id: 'creationDate',
       header: 'Created',
-      cell: (item: any) => <div>{new Date(item.creationDate * 1000).toUTCString()}</div>,
+      cell: (item: any) => (
+        <div>{new Date(item.creationDate * 1000).toUTCString()}</div>
+      ),
     },
     {
       sortingField: 'lastUpdateDate',
       id: 'lastUpdateDate',
       header: 'Updated',
-      cell: (item: any) => <div>{new Date(item.lastUpdateDate * 1000).toUTCString()}</div>,
+      cell: (item: any) => (
+        <div>{new Date(item.lastUpdateDate * 1000).toUTCString()}</div>
+      ),
     },
   ];
 
-  const { expandNode, items, collectionProps, filterProps, paginationProps, reset } = useTreeCollection(allItems, {
+  const {
+    expandNode,
+    items,
+    collectionProps,
+    filterProps,
+    paginationProps,
+    reset,
+  } = useTreeCollection(allItems, {
     columnDefinitions,
     sorting: {
       defaultState: {
@@ -258,7 +274,11 @@ export const ExpandColumnCustomPosition: Story = () => {
       items={items}
       header={
         <Header
-          counter={selectedItems?.length ? `(${selectedItems.length}/${allItems.length})` : `(${allItems.length})`}
+          counter={
+            selectedItems?.length
+              ? `(${selectedItems.length}/${allItems.length})`
+              : `(${allItems.length})`
+          }
           actions={
             <Button
               iconName='refresh'

@@ -23,7 +23,9 @@ export const styledOptions = [
   { label: ThresholdStyleOptions.asLinesAndFilledRegion, value: '3' },
 ];
 
-export const convertOptionToThresholdStyle = (selectedOption: OptionDefinition): ThresholdStyleType => {
+export const convertOptionToThresholdStyle = (
+  selectedOption: OptionDefinition
+): ThresholdStyleType => {
   switch (selectedOption.label) {
     case ThresholdStyleOptions.asLines: {
       return {
@@ -48,7 +50,9 @@ export const convertOptionToThresholdStyle = (selectedOption: OptionDefinition):
   }
 };
 
-const convertThresholdStyleToOption = (thresholdStyle: ThresholdStyleType): OptionDefinition => {
+const convertThresholdStyleToOption = (
+  thresholdStyle: ThresholdStyleType
+): OptionDefinition => {
   if (!!thresholdStyle.visible && !thresholdStyle.fill) {
     return styledOptions[0];
   } else if (!thresholdStyle.visible && !!thresholdStyle.fill) {
@@ -78,7 +82,9 @@ export const ThresholdStyleSettings: React.FC<ThresholdStyleSettingsProps> = ({
         <Select
           onChange={({ detail }) => {
             setSelectedOption(detail.selectedOption);
-            const thresholdStyle = convertOptionToThresholdStyle(detail.selectedOption);
+            const thresholdStyle = convertOptionToThresholdStyle(
+              detail.selectedOption
+            );
             // Update styles of all thresholds
             updateAllThresholdStyles(thresholdStyle);
           }}

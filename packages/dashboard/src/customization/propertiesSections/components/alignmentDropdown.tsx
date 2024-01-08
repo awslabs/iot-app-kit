@@ -16,13 +16,22 @@ const defaultOption = {
 
 const { legendAlignmentOptions, defaultValue } = dropdownConsts.legendAlignment;
 
-export const AlignmentDropdown = ({ disabled = false, position, onTypeChange }: AlignmentDropdownProps) => {
+export const AlignmentDropdown = ({
+  disabled = false,
+  position,
+  onTypeChange,
+}: AlignmentDropdownProps) => {
   return (
     <FormField label='Alignment'>
       <Select
         disabled={disabled}
-        selectedOption={legendAlignmentOptions.find(({ value }) => value === position) ?? defaultOption}
-        onChange={({ detail }) => onTypeChange(detail.selectedOption.value ?? defaultValue.value)}
+        selectedOption={
+          legendAlignmentOptions.find(({ value }) => value === position) ??
+          defaultOption
+        }
+        onChange={({ detail }) =>
+          onTypeChange(detail.selectedOption.value ?? defaultValue.value)
+        }
         options={legendAlignmentOptions}
       />
     </FormField>

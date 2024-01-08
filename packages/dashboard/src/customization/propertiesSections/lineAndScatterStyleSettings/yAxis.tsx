@@ -28,13 +28,20 @@ export const YAxisSection: FC<YAxisSectionOptions> = ({
   updateMax,
   updateYLabel,
 }) => {
-  const onSetRange = (updater: (value: number | null) => void, value: string) => {
+  const onSetRange = (
+    updater: (value: number | null) => void,
+    value: string
+  ) => {
     const parsed = parseInt(value);
     updater(isNaN(parsed) ? null : parsed);
   };
 
   return (
-    <StyleExpandableSection header='Y-axis' visible={visible} setVisible={setVisible}>
+    <StyleExpandableSection
+      header='Y-axis'
+      visible={visible}
+      setVisible={setVisible}
+    >
       <Box padding='s'>
         <Box padding={{ bottom: 'xs' }}>
           <FormField label='Label'>
@@ -47,7 +54,10 @@ export const YAxisSection: FC<YAxisSectionOptions> = ({
           </FormField>
         </Box>
         <Box>
-          <FormField description='Leave empty to auto-calculate based on all the values' label='Range'>
+          <FormField
+            description='Leave empty to auto-calculate based on all the values'
+            label='Range'
+          >
             <label htmlFor='y-axis-min'>Min</label>
             <Input
               placeholder='Auto'

@@ -15,7 +15,9 @@ type AggregationAndResolutionSectionOptions = {
   aggregationOptions: SelectProps.Option[];
 };
 
-export const AggregationAndResolutionSection: FC<AggregationAndResolutionSectionOptions> = ({
+export const AggregationAndResolutionSection: FC<
+  AggregationAndResolutionSectionOptions
+> = ({
   aggregation,
   resolution,
   updateAggregation,
@@ -23,8 +25,10 @@ export const AggregationAndResolutionSection: FC<AggregationAndResolutionSection
   resolutionOptions,
   aggregationOptions,
 }) => {
-  const selectedResolution = resolutionOptions.find(({ value }) => value === resolution) ?? null;
-  const selectedAggregation = aggregationOptions.find(({ value }) => value === aggregation) ?? null;
+  const selectedResolution =
+    resolutionOptions.find(({ value }) => value === resolution) ?? null;
+  const selectedAggregation =
+    aggregationOptions.find(({ value }) => value === aggregation) ?? null;
 
   return (
     <ExpandableSection

@@ -4,7 +4,9 @@ import { default as tableSvgDark } from './table-dark.svg';
 import WidgetIcon from '../components/widgetIcon';
 
 const TableIcon = () => {
-  return <WidgetIcon widget='Bar' defaultIcon={tableSvg} darkIcon={tableSvgDark} />;
+  return (
+    <WidgetIcon widget='Bar' defaultIcon={tableSvg} darkIcon={tableSvgDark} />
+  );
 };
 
 export default TableIcon;

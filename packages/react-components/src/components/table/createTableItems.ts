@@ -1,4 +1,9 @@
-import type { DataStream, Primitive, Threshold, Viewport } from '@iot-app-kit/core';
+import type {
+  DataStream,
+  Primitive,
+  Threshold,
+  Viewport,
+} from '@iot-app-kit/core';
 import { getDataBeforeDate } from '@iot-app-kit/core';
 import { breachedThreshold } from '../../utils/breachedThreshold';
 import { createCellItem } from './createCellItem';
@@ -14,7 +19,10 @@ export const createTableItems: (
     thresholds?: Threshold[];
   },
   messageOverrides: TableMessages
-) => TableItemHydrated[] = ({ dataStreams, viewport, items, thresholds = [] }, messageOverrides) => {
+) => TableItemHydrated[] = (
+  { dataStreams, viewport, items, thresholds = [] },
+  messageOverrides
+) => {
   return items.map((item) => {
     const keys = Object.keys(item);
     const keyDataPairs = keys.map<{ key: string; data: CellItem }>((key) => {
@@ -27,7 +35,10 @@ export const createTableItems: (
           const { error, isLoading, data: dataPoints } = dataStream;
 
           if (dataStream.resolution !== $cellRef.resolution) {
-            return { key, data: createCellItem({ error, isLoading }, messageOverrides) };
+            return {
+              key,
+              data: createCellItem({ error, isLoading }, messageOverrides),
+            };
           }
 
           if ('end' in viewport && dataPoints) {
@@ -40,7 +51,13 @@ export const createTableItems: (
               thresholds,
               date: viewport.end,
             });
-            return { key, data: createCellItem({ value, error, isLoading, threshold }, messageOverrides) };
+            return {
+              key,
+              data: createCellItem(
+                { value, error, isLoading, threshold },
+                messageOverrides
+              ),
+            };
           }
 
           const value = dataPoints.slice(-1)[0]?.y;
@@ -52,11 +69,23 @@ export const createTableItems: (
             date: new Date(Date.now()),
           });
 
-          return { key, data: createCellItem({ value, error, isLoading, threshold }, messageOverrides) };
+          return {
+            key,
+            data: createCellItem(
+              { value, error, isLoading, threshold },
+              messageOverrides
+            ),
+          };
         }
         return { key, data: createCellItem({}, messageOverrides) };
       }
-      return { key, data: createCellItem({ value: item[key] as Primitive }, messageOverrides) };
+      return {
+        key,
+        data: createCellItem(
+          { value: item[key] as Primitive },
+          messageOverrides
+        ),
+      };
     });
 
     return keyDataPairs.reduce(

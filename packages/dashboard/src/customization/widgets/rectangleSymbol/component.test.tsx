@@ -10,15 +10,60 @@ describe('Rectangle Widget', () => {
 
   type RectangleBorderStyle = 'solid' | 'dashed' | 'dotted';
   [
-    { borderStyle: 'solid' as RectangleBorderStyle, fill: 'none', borderColor: 'black', borderThickness: 5 },
-    { borderStyle: 'dashed' as RectangleBorderStyle, fill: 'none', borderColor: 'black', borderThickness: 5 },
-    { borderStyle: 'dotted' as RectangleBorderStyle, fill: 'none', borderColor: 'black', borderThickness: 5 },
-    { borderStyle: 'solid' as RectangleBorderStyle, fill: 'red', borderColor: 'black', borderThickness: 5 },
-    { borderStyle: 'dashed' as RectangleBorderStyle, fill: 'red', borderColor: 'black', borderThickness: 10 },
-    { borderStyle: 'dotted' as RectangleBorderStyle, fill: 'blue', borderColor: 'black', borderThickness: 15 },
-    { borderStyle: 'solid' as RectangleBorderStyle, fill: 'green', borderColor: 'white', borderThickness: 20 },
-    { borderStyle: 'dashed' as RectangleBorderStyle, fill: 'yellow', borderColor: 'red', borderThickness: 25 },
-    { borderStyle: 'dotted' as RectangleBorderStyle, fill: 'purple', borderColor: 'blue', borderThickness: 30 },
+    {
+      borderStyle: 'solid' as RectangleBorderStyle,
+      fill: 'none',
+      borderColor: 'black',
+      borderThickness: 5,
+    },
+    {
+      borderStyle: 'dashed' as RectangleBorderStyle,
+      fill: 'none',
+      borderColor: 'black',
+      borderThickness: 5,
+    },
+    {
+      borderStyle: 'dotted' as RectangleBorderStyle,
+      fill: 'none',
+      borderColor: 'black',
+      borderThickness: 5,
+    },
+    {
+      borderStyle: 'solid' as RectangleBorderStyle,
+      fill: 'red',
+      borderColor: 'black',
+      borderThickness: 5,
+    },
+    {
+      borderStyle: 'dashed' as RectangleBorderStyle,
+      fill: 'red',
+      borderColor: 'black',
+      borderThickness: 10,
+    },
+    {
+      borderStyle: 'dotted' as RectangleBorderStyle,
+      fill: 'blue',
+      borderColor: 'black',
+      borderThickness: 15,
+    },
+    {
+      borderStyle: 'solid' as RectangleBorderStyle,
+      fill: 'green',
+      borderColor: 'white',
+      borderThickness: 20,
+    },
+    {
+      borderStyle: 'dashed' as RectangleBorderStyle,
+      fill: 'yellow',
+      borderColor: 'red',
+      borderThickness: 25,
+    },
+    {
+      borderStyle: 'dotted' as RectangleBorderStyle,
+      fill: 'purple',
+      borderColor: 'blue',
+      borderThickness: 30,
+    },
   ].forEach((properties) => {
     it(`should render with ${JSON.stringify(properties)} correctly`, () => {
       const { borderStyle, fill, borderColor, borderThickness } = properties;

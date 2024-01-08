@@ -34,7 +34,8 @@ export const viewportManager = {
     viewport: Viewport | null;
   } => {
     const id = v4();
-    const listeners = listenerMap.get(viewportGroup) || new Map<string, ViewportListener>();
+    const listeners =
+      listenerMap.get(viewportGroup) || new Map<string, ViewportListener>();
     listeners.set(id, viewportListener);
     listenerMap.set(viewportGroup, listeners);
 

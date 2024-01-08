@@ -2,7 +2,11 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 
-import { onMoveWidgetsAction, onResizeWidgetsAction, onUpdateWidgetsAction } from '~/store/actions';
+import {
+  onMoveWidgetsAction,
+  onResizeWidgetsAction,
+  onUpdateWidgetsAction,
+} from '~/store/actions';
 import { DashboardWidget, Rect } from '~/types';
 import { getSelectionBox } from '~/util/getSelectionBox';
 import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
@@ -14,7 +18,9 @@ import { Just, Maybe, Nothing } from '~/util/maybe';
  * will make it possible to narrow a list of dashboard widgets
  * to a common dashboard widget type
  */
-export type FilterPredicate<W extends DashboardWidget> = (w: DashboardWidget) => w is W;
+export type FilterPredicate<W extends DashboardWidget> = (
+  w: DashboardWidget
+) => w is W;
 /**
  * Render function type to be used by the PropertiesSection component
  * The generic will be used in conjunction with a predicate funtion
@@ -41,7 +47,10 @@ type Setter<T, V> = (target: T, value: V) => T;
  * and a function which can be called with a new value
  * which will set that value in the target.
  */
-type Lens<W> = <T>(selector: Getter<W, T>, updater: Setter<W, T>) => [Maybe<T>, (newValue: T) => void];
+type Lens<W> = <T>(
+  selector: Getter<W, T>,
+  updater: Setter<W, T>
+) => [Maybe<T>, (newValue: T) => void];
 
 // Lense specifically for widget properties
 export type PropertyLens<W extends DashboardWidget> = Lens<W['properties']>;
@@ -74,7 +83,9 @@ const compositeValue = <T>(values: T[]): Maybe<T> =>
  * the most generic predicate function for a dashboard widget list
  * Is always true. To be used as the default predicate function in useSelection
  */
-export const isDashboardWidget = (widget: DashboardWidget): widget is DashboardWidget => !!widget;
+export const isDashboardWidget = (
+  widget: DashboardWidget
+): widget is DashboardWidget => !!widget;
 
 /**
  *
@@ -99,16 +110,25 @@ export const useSelection = <W extends DashboardWidget>(
    * selection filter does not apply to entire selection
    * this means we cannot correctly narrow the selection type
    */
-  if (selectedWidgets.length === 0 || !isEqual(selectedWidgets, filteredSelection)) return undefined;
+  if (
+    selectedWidgets.length === 0 ||
+    !isEqual(selectedWidgets, filteredSelection)
+  )
+    return undefined;
 
   const selection = filteredSelection;
 
   /**
    * TECH DEBT: getSelectionBox should never be null given the above check
    */
-  const { x, y, height, width } = trimRectPosition(getSelectionBox(selection) ?? { ...NO_SIZE, ...NO_POSITION });
+  const { x, y, height, width } = trimRectPosition(
+    getSelectionBox(selection) ?? { ...NO_SIZE, ...NO_POSITION }
+  );
 
-  const useSize = (): [Pick<Rect, 'height' | 'width'>, (vector: Pick<Rect, 'x' | 'y'>) => void] => [
+  const useSize = (): [
+    Pick<Rect, 'height' | 'width'>,
+    (vector: Pick<Rect, 'x' | 'y'>) => void
+  ] => [
     { height, width },
     (vector) =>
       dispatch(
@@ -119,7 +139,10 @@ export const useSelection = <W extends DashboardWidget>(
         })
       ),
   ];
-  const usePosition = (): [Pick<Rect, 'x' | 'y'>, (vector: Pick<Rect, 'x' | 'y'>) => void] => [
+  const usePosition = (): [
+    Pick<Rect, 'x' | 'y'>,
+    (vector: Pick<Rect, 'x' | 'y'>) => void
+  ] => [
     { x, y },
     (vector) =>
       dispatch(
@@ -141,7 +164,9 @@ export const useSelection = <W extends DashboardWidget>(
      * otherwise we can not pick a single value to represent
      * the selection
      */
-    const propertyValues = selection.map((widget) => selector(widget.properties));
+    const propertyValues = selection.map((widget) =>
+      selector(widget.properties)
+    );
     const propertyValue = compositeValue(propertyValues);
 
     return [

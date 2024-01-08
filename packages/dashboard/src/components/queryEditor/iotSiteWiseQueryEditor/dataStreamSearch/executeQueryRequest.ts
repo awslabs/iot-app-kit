@@ -22,14 +22,20 @@ export class ExecuteQueryRequest {
     client: IoTTwinMakerClient;
     signal?: AbortSignal;
   }) {
-    this.#command = this.#createCommand({ queryStatement, workspaceId, nextToken });
+    this.#command = this.#createCommand({
+      queryStatement,
+      workspaceId,
+      nextToken,
+    });
     this.#client = client;
     this.#signal = signal;
   }
 
   public async send() {
     try {
-      const response = await this.#client.send(this.#command, { abortSignal: this.#signal });
+      const response = await this.#client.send(this.#command, {
+        abortSignal: this.#signal,
+      });
 
       return response;
     } catch (error) {

@@ -1,8 +1,15 @@
-import { AnnotationValue, COMPARISON_OPERATOR, ComparisonOperator } from '@iot-app-kit/core';
+import {
+  AnnotationValue,
+  COMPARISON_OPERATOR,
+  ComparisonOperator,
+} from '@iot-app-kit/core';
 import { COMPARATOR_MAP } from '../../../common/constants';
 import { StyledThreshold } from '../types';
 
-const comparisonOperatorToLowerYAxis = (comparisonOperator: ComparisonOperator, value: AnnotationValue) => {
+const comparisonOperatorToLowerYAxis = (
+  comparisonOperator: ComparisonOperator,
+  value: AnnotationValue
+) => {
   switch (comparisonOperator) {
     case COMPARISON_OPERATOR.GT:
     case COMPARISON_OPERATOR.GTE:
@@ -13,7 +20,10 @@ const comparisonOperatorToLowerYAxis = (comparisonOperator: ComparisonOperator, 
   }
 };
 
-const comparisonOperatorToUpperYAxis = (comparisonOperator: ComparisonOperator, value: AnnotationValue) => {
+const comparisonOperatorToUpperYAxis = (
+  comparisonOperator: ComparisonOperator,
+  value: AnnotationValue
+) => {
   switch (comparisonOperator) {
     case COMPARISON_OPERATOR.LT:
     case COMPARISON_OPERATOR.LTE:

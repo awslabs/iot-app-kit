@@ -13,12 +13,23 @@ it('correctly parses query and yields asset models', async () => {
     id: ALARM_ASSET_ID,
     assetModelId: ASSET_MODEL_WITH_ALARM.assetModelId,
   });
-  const describeAssetModel = jest.fn().mockResolvedValue(ASSET_MODEL_WITH_ALARM);
-  const listAssetProperties = jest.fn().mockResolvedValue(ALARM_LIST_ASSET_PROP_RESPONSE);
-  const listAssetModelProperties = jest.fn().mockResolvedValue(ALARM_LIST_ASSET_MODEL_PROP_RESPONSE);
+  const describeAssetModel = jest
+    .fn()
+    .mockResolvedValue(ASSET_MODEL_WITH_ALARM);
+  const listAssetProperties = jest
+    .fn()
+    .mockResolvedValue(ALARM_LIST_ASSET_PROP_RESPONSE);
+  const listAssetModelProperties = jest
+    .fn()
+    .mockResolvedValue(ALARM_LIST_ASSET_MODEL_PROP_RESPONSE);
 
   const { assetModule } = getAssetModule({
-    siteWiseApiOverride: { describeAsset, describeAssetModel, listAssetProperties, listAssetModelProperties },
+    siteWiseApiOverride: {
+      describeAsset,
+      describeAssetModel,
+      listAssetProperties,
+      listAssetModelProperties,
+    },
   });
   const assetModuleSession = assetModule.startSession();
 

@@ -1,5 +1,10 @@
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { Button, Form, Header, SpaceBetween } from '@cloudscape-design/components';
+import {
+  Button,
+  Form,
+  Header,
+  SpaceBetween,
+} from '@cloudscape-design/components';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -14,7 +19,10 @@ export interface DataStreamSearchProps {
   onSubmit: ({ workspace, searchQuery }: SearchFields) => void;
 }
 
-export const DataStreamSearch = ({ onSubmit, client }: DataStreamSearchProps) => {
+export const DataStreamSearch = ({
+  onSubmit,
+  client,
+}: DataStreamSearchProps) => {
   const metricsRecorder = getPlugin('metricsRecorder');
   const { control, handleSubmit } = useForm<SearchFields>({
     defaultValues: { workspace: null, searchQuery: '' },
@@ -24,7 +32,10 @@ export const DataStreamSearch = ({ onSubmit, client }: DataStreamSearchProps) =>
 
   return (
     <SpaceBetween size='xxs'>
-      <Header variant='h3' description='Search for modeled data streams by name or by the associated asset.'>
+      <Header
+        variant='h3'
+        description='Search for modeled data streams by name or by the associated asset.'
+      >
         Search modeled data streams
       </Header>
 
@@ -53,7 +64,11 @@ export const DataStreamSearch = ({ onSubmit, client }: DataStreamSearchProps) =>
         >
           <SpaceBetween size='s'>
             <SearchQueryInput control={control} disabled={isError} />
-            <WorkspaceSelector control={control} client={client} OnGettingError={setIsError} />
+            <WorkspaceSelector
+              control={control}
+              client={client}
+              OnGettingError={setIsError}
+            />
           </SpaceBetween>
         </Form>
       </form>

@@ -1,7 +1,9 @@
 import { TwinMakerKGQueryDataModule } from '@iot-app-kit/source-iottwinmaker';
 import { ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
 export interface KnowledgeGraphQueryInterface {
-  findPropertiesByEntityOrPropertyNameOrDisplayName(searchTerm: string): Promise<void>;
+  findPropertiesByEntityOrPropertyNameOrDisplayName(
+    searchTerm: string
+  ): Promise<void>;
   findEntitiesByName(name: string): Promise<void>;
   findRelatedEntities(entityId: string): Promise<void>;
   executeExternalEntityQuery(entityId: string): Promise<void>;
@@ -11,7 +13,9 @@ export const createKnowledgeGraphQueryClient = function (
   updateQueryResults: (result: ExecuteQueryCommandOutput) => void
 ) {
   const knowledgeGraphQuery: KnowledgeGraphQueryInterface = {
-    findPropertiesByEntityOrPropertyNameOrDisplayName: async (searchTerm: string): Promise<void> => {
+    findPropertiesByEntityOrPropertyNameOrDisplayName: async (
+      searchTerm: string
+    ): Promise<void> => {
       const queryStatement = `SELECT e.entityName as assetName, p.definition.configuration.sitewisePropertyId as propertyId, p.propertyName as propertyName, p.definition.displayName as displayName FROM EntityGraph MATCH (e), e.components AS c, c.properties AS p WHERE p.definition.displayName LIKE '%${searchTerm}%' OR p.propertyName LIKE '%${searchTerm}%' OR e.entityName LIKE '%${searchTerm}%'`;
       const result = await dataSource.executeQuery({ queryStatement });
       updateQueryResults(result);

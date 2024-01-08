@@ -25,7 +25,11 @@ export const completeDataStreams = ({
     if ('propertyAlias' in propertyInfo) {
       const latestValue = dataStream.data.at(-1)?.y;
       const dataType =
-        typeof latestValue === 'boolean' ? 'BOOLEAN' : typeof latestValue === 'string' ? 'STRING' : 'NUMBER';
+        typeof latestValue === 'boolean'
+          ? 'BOOLEAN'
+          : typeof latestValue === 'string'
+          ? 'STRING'
+          : 'NUMBER';
       return { ...dataStream, name: propertyInfo.propertyAlias, dataType };
     }
     const { assetId, propertyId } = propertyInfo;
@@ -40,7 +44,11 @@ export const completeDataStreams = ({
       propertyId,
       alarms,
     });
-    const alarmPropertyStream = completeAlarmStream({ assetModel, propertyId, dataStream });
+    const alarmPropertyStream = completeAlarmStream({
+      assetModel,
+      propertyId,
+      dataStream,
+    });
 
     if (propertyStream) {
       return propertyStream;

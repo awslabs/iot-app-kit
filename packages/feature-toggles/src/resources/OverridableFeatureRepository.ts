@@ -18,7 +18,9 @@ import { Memoize } from 'typescript-memoize';
  *
  * If it doesn't find an override for a given feature in localStorage, it instead will resolve using the Fallback Repository provided
  */
-export default class OverridableFeatureRepository implements IFeatureRepository {
+export default class OverridableFeatureRepository
+  implements IFeatureRepository
+{
   private fallback?: IFeatureRepository;
 
   constructor(fallbackRepository?: IFeatureRepository) {

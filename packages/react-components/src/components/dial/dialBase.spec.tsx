@@ -24,14 +24,26 @@ describe('unit', () => {
 
   it('renders unit when showUnit is true and provided a property point', () => {
     const someUnit = 'some-Unit';
-    render(<DialBase unit={someUnit} propertyPoint={point} settings={{ showUnit: true }} />);
+    render(
+      <DialBase
+        unit={someUnit}
+        propertyPoint={point}
+        settings={{ showUnit: true }}
+      />
+    );
 
     expect(screen.queryByText(someUnit)).not.toBeNull();
   });
 
   it('renders unit when showUnit is true and provided a alarm point', () => {
     const someUnit = 'some-Unit';
-    render(<DialBase unit={someUnit} alarmPoint={point} settings={{ showUnit: true }} />);
+    render(
+      <DialBase
+        unit={someUnit}
+        alarmPoint={point}
+        settings={{ showUnit: true }}
+      />
+    );
 
     expect(screen.queryByText(someUnit)).not.toBeNull();
   });
@@ -45,7 +57,13 @@ describe('unit', () => {
 
   it('does not render unit when showUnit is false', () => {
     const someUnit = 'some-Unit';
-    render(<DialBase unit={someUnit} settings={{ showUnit: false }} propertyPoint={point} />);
+    render(
+      <DialBase
+        unit={someUnit}
+        settings={{ showUnit: false }}
+        propertyPoint={point}
+      />
+    );
 
     expect(screen.queryByText(someUnit)).toBeNull();
   });
@@ -54,13 +72,23 @@ describe('unit', () => {
 describe('property value', () => {
   it('renders property points y value', () => {
     const Y_VALUE = 123445;
-    render(<DialBase propertyPoint={{ x: new Date().getTime(), y: Y_VALUE }} settings={{ showName: false }} />);
+    render(
+      <DialBase
+        propertyPoint={{ x: new Date().getTime(), y: Y_VALUE }}
+        settings={{ showName: false }}
+      />
+    );
     expect(screen.queryByText(Y_VALUE)).not.toBeNull();
   });
 
   it('renders alarm points y value', () => {
     const Y_VALUE = 123445;
-    render(<DialBase alarmPoint={{ x: new Date().getTime(), y: Y_VALUE }} settings={{ showName: false }} />);
+    render(
+      <DialBase
+        alarmPoint={{ x: new Date().getTime(), y: Y_VALUE }}
+        settings={{ showName: false }}
+      />
+    );
     expect(screen.queryByText(Y_VALUE)).not.toBeNull();
   });
 
@@ -119,7 +147,14 @@ describe('loading', () => {
   it('does not render alarm or property data point while isLoading is true', () => {
     const point = { x: 12341, y: 123213 };
     const alarmPoint = { x: 12341, y: 'warning' };
-    render(<DialBase propertyPoint={point} alarmPoint={alarmPoint} isLoading settings={{}} />);
+    render(
+      <DialBase
+        propertyPoint={point}
+        alarmPoint={alarmPoint}
+        isLoading
+        settings={{}}
+      />
+    );
 
     expect(screen.queryByText(point.y)).toBeNull();
     expect(screen.queryByText(alarmPoint.y)).toBeNull();

@@ -9,10 +9,20 @@ import { createMockSecretsManagerSDK } from './__mocks__/secretsManagerSDK';
 import { TwinMakerPropertyValueDataProvider } from './property-value/provider';
 
 describe('initialize', () => {
-  const query = { entityId: 'entity-1', componentName: 'comp-1', properties: [{ propertyName: 'prop-1' }] };
+  const query = {
+    entityId: 'entity-1',
+    componentName: 'comp-1',
+    properties: [{ propertyName: 'prop-1' }],
+  };
   it('should return timeSeries query data provider', async () => {
-    const init = initialize('ws-id', { awsCredentials: {} as AwsCredentialIdentity, awsRegion: 'us-east-1' });
-    const params = { settings: { fetchFromStartToEnd: true }, viewport: { start: new Date(), end: new Date() } };
+    const init = initialize('ws-id', {
+      awsCredentials: {} as AwsCredentialIdentity,
+      awsRegion: 'us-east-1',
+    });
+    const params = {
+      settings: { fetchFromStartToEnd: true },
+      viewport: { start: new Date(), end: new Date() },
+    };
     const provider = init.query.timeSeriesData(query).build('random', params);
 
     expect(provider instanceof TwinMakerTimeSeriesDataProvider).toBeTrue();
@@ -31,7 +41,10 @@ describe('initialize', () => {
   });
 
   it('should return propertyValue query data provider', async () => {
-    const init = initialize('ws-id', { awsCredentials: {} as AwsCredentialIdentity, awsRegion: 'us-east-1' });
+    const init = initialize('ws-id', {
+      awsCredentials: {} as AwsCredentialIdentity,
+      awsRegion: 'us-east-1',
+    });
     const params = { settings: { refreshRate: 5000 } };
     const provider = init.query.propertyValue(query).build('random', params);
 
@@ -41,7 +54,10 @@ describe('initialize', () => {
   });
 
   it('should return S3SceneLoader', async () => {
-    const init = initialize('ws-id', { awsCredentials: {} as AwsCredentialIdentity, awsRegion: 'us-east-1' });
+    const init = initialize('ws-id', {
+      awsCredentials: {} as AwsCredentialIdentity,
+      awsRegion: 'us-east-1',
+    });
     const result = init.s3SceneLoader('scene-id');
 
     expect(result).toBeDefined();
@@ -50,7 +66,10 @@ describe('initialize', () => {
   });
 
   it('should return valueDataBindingProviders', async () => {
-    const init = initialize('ws-id', { awsCredentials: {} as AwsCredentialIdentity, awsRegion: 'us-east-1' });
+    const init = initialize('ws-id', {
+      awsCredentials: {} as AwsCredentialIdentity,
+      awsRegion: 'us-east-1',
+    });
     const result = init.valueDataBindingProviders();
 
     expect(result).toBeDefined();
@@ -64,7 +83,9 @@ describe('initialize', () => {
       iotTwinMakerClient: createMockTwinMakerSDK({}),
       iotSiteWiseClient: createMockSiteWiseSDK({}),
       kinesisVideoClient: createMockKinesisVideoSDK({}),
-      kinesisVideoArchivedMediaClient: createMockKinesisVideoArchivedMediaSDK({}),
+      kinesisVideoArchivedMediaClient: createMockKinesisVideoArchivedMediaSDK(
+        {}
+      ),
       secretsManagerClient: createMockSecretsManagerSDK({}),
     });
     const result = init.sceneMetadataModule('scene-id');
@@ -75,7 +96,10 @@ describe('initialize', () => {
   });
 
   it('should return VideoData', async () => {
-    const init = initialize('ws-id', { awsCredentials: {} as AwsCredentialIdentity, awsRegion: 'us-east-1' });
+    const init = initialize('ws-id', {
+      awsCredentials: {} as AwsCredentialIdentity,
+      awsRegion: 'us-east-1',
+    });
     const result = init.videoData({ kvsStreamName: 'kvs-stream-name' });
 
     expect(result).toBeDefined();
@@ -84,7 +108,10 @@ describe('initialize', () => {
   });
 
   it('converts a time series data query to string with contents that uniquely represent the query', () => {
-    const init = initialize('ws-id', { awsCredentials: {} as AwsCredentialIdentity, awsRegion: 'us-east-1' });
+    const init = initialize('ws-id', {
+      awsCredentials: {} as AwsCredentialIdentity,
+      awsRegion: 'us-east-1',
+    });
     const timeSeriesDataQuery = init.query.timeSeriesData(query);
 
     expect(timeSeriesDataQuery.toQueryString()).toMatchInlineSnapshot(
@@ -93,7 +120,10 @@ describe('initialize', () => {
   });
 
   it('converts a property value data query to string with contents that uniquely represent the query', () => {
-    const init = initialize('ws-id', { awsCredentials: {} as AwsCredentialIdentity, awsRegion: 'us-east-1' });
+    const init = initialize('ws-id', {
+      awsCredentials: {} as AwsCredentialIdentity,
+      awsRegion: 'us-east-1',
+    });
     const propertyValueQuery = init.query.propertyValue(query);
 
     expect(propertyValueQuery.toQueryString()).toMatchInlineSnapshot(

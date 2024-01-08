@@ -10,7 +10,10 @@ type EditableStyledTextProps = TextWidget & {
   handleSetEdit: (isEditing: boolean) => void;
 };
 
-const EditableStyledText: React.FC<EditableStyledTextProps> = ({ handleSetEdit, ...widget }) => {
+const EditableStyledText: React.FC<EditableStyledTextProps> = ({
+  handleSetEdit,
+  ...widget
+}) => {
   const isSelected = useIsSelected(widget);
 
   const { x, y } = widget;
@@ -31,7 +34,13 @@ const EditableStyledText: React.FC<EditableStyledTextProps> = ({ handleSetEdit, 
     }
   };
 
-  return <StyledText onPointerDown={handleStageEdit} onPointerUp={handleToggleEdit} {...widget} />;
+  return (
+    <StyledText
+      onPointerDown={handleStageEdit}
+      onPointerUp={handleToggleEdit}
+      {...widget}
+    />
+  );
 };
 
 export default EditableStyledText;

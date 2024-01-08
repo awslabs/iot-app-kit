@@ -7,7 +7,10 @@ import {
   isThresholdBreached,
   sortThreshold,
 } from './thresholdUtils';
-import { highestPriorityThreshold, thresholdAppliesToDataStream } from './breachedThreshold';
+import {
+  highestPriorityThreshold,
+  thresholdAppliesToDataStream,
+} from './breachedThreshold';
 import { COMPARISON_OPERATOR } from '../common/constants';
 import type { Threshold } from '@iot-app-kit/core';
 
@@ -57,18 +60,21 @@ describe('annotation logic', () => {
     ${'STOP'}    | ${'STOP'}      | ${COMPARISON_OPERATOR.CONTAINS}           | ${true}
     ${'STOPPED'} | ${'STOP'}      | ${COMPARISON_OPERATOR.CONTAINS}           | ${true}
     ${'3 STOP'}  | ${'STOP'}      | ${COMPARISON_OPERATOR.CONTAINS}           | ${true}
-  `('Check if data point is within the threshold', ({ key, thresholdValue, operator, expected }) => {
-    test(`Given the data value of
+  `(
+    'Check if data point is within the threshold',
+    ({ key, thresholdValue, operator, expected }) => {
+      test(`Given the data value of
     ${key} and threshold value of ${thresholdValue} and
     the operator ${operator}, we expect: ${expected}`, () => {
-      const threshold: Threshold = {
-        color: 'red',
-        value: thresholdValue,
-        comparisonOperator: operator,
-      };
-      expect(isThresholdBreached(key, threshold)).toEqual(expected);
-    });
-  });
+        const threshold: Threshold = {
+          color: 'red',
+          value: thresholdValue,
+          comparisonOperator: operator,
+        };
+        expect(isThresholdBreached(key, threshold)).toEqual(expected);
+      });
+    }
+  );
 
   describe('threshold utils', () => {
     it('returns undefined when empty annotations are passed in', () => {
@@ -89,7 +95,9 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(dataValue, thresholds)).toEqual(expect.objectContaining({ value: expectedValue }));
+      expect(getBreachedThreshold(dataValue, thresholds)).toEqual(
+        expect.objectContaining({ value: expectedValue })
+      );
     });
 
     it('returns undefined when the value is equal to an annotation that only checks less then logic', () => {
@@ -119,7 +127,9 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(dataValue, thresholds)).toEqual(expect.objectContaining({ value: expectedValue }));
+      expect(getBreachedThreshold(dataValue, thresholds)).toEqual(
+        expect.objectContaining({ value: expectedValue })
+      );
     });
 
     it('returns undefined when the value is greater than the annotation that checks for less than or equal', () => {
@@ -149,7 +159,9 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(dataValue, thresholds)).toEqual(expect.objectContaining({ value: expectedValue }));
+      expect(getBreachedThreshold(dataValue, thresholds)).toEqual(
+        expect.objectContaining({ value: expectedValue })
+      );
     });
 
     it('returns undefined when the value is equal to an annotation that only checks greater then logic', () => {
@@ -179,7 +191,9 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(dataValue, thresholds)).toEqual(expect.objectContaining({ value: expectedValue }));
+      expect(getBreachedThreshold(dataValue, thresholds)).toEqual(
+        expect.objectContaining({ value: expectedValue })
+      );
     });
 
     it('returns undefined when the value is less than then annotation that checks for greater than or equal', () => {
@@ -217,7 +231,9 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(3, thresholds)).toEqual(expect.objectContaining({ value: expectedValue }));
+      expect(getBreachedThreshold(3, thresholds)).toEqual(
+        expect.objectContaining({ value: expectedValue })
+      );
     });
 
     it('returns the annotation with the highest value that covers the point', () => {
@@ -241,7 +257,9 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(3, thresholds)).toEqual(expect.objectContaining({ value: expectValue }));
+      expect(getBreachedThreshold(3, thresholds)).toEqual(
+        expect.objectContaining({ value: expectValue })
+      );
     });
 
     it('returns the upper annotation when a positive point data point breaches two annotations', () => {
@@ -270,7 +288,9 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(6, thresholds)).toEqual(expect.objectContaining({ value: expectValue }));
+      expect(getBreachedThreshold(6, thresholds)).toEqual(
+        expect.objectContaining({ value: expectValue })
+      );
     });
 
     it('returns the lower annotation when a negative point data point breaches two annotations', () => {
@@ -299,7 +319,9 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(-15, thresholds)).toEqual(expect.objectContaining({ value: expectValue }));
+      expect(getBreachedThreshold(-15, thresholds)).toEqual(
+        expect.objectContaining({ value: expectValue })
+      );
     });
 
     it('returns the correct annotation when unsorted annotations passed in', () => {
@@ -328,7 +350,9 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(2, thresholds)).toEqual(expect.objectContaining({ value: expectValue }));
+      expect(getBreachedThreshold(2, thresholds)).toEqual(
+        expect.objectContaining({ value: expectValue })
+      );
     });
 
     it('returns true when the object is a threshold type', () => {
@@ -368,7 +392,9 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(2, thresholds)).toEqual(expect.objectContaining({ color: expectColor }));
+      expect(getBreachedThreshold(2, thresholds)).toEqual(
+        expect.objectContaining({ color: expectColor })
+      );
     });
 
     it('returns the correct breached threshold when there are two of the same threshold value for negative value', () => {
@@ -387,7 +413,9 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(-2, thresholds)).toEqual(expect.objectContaining({ color: expectColor }));
+      expect(getBreachedThreshold(-2, thresholds)).toEqual(
+        expect.objectContaining({ color: expectColor })
+      );
     });
 
     it('returns the most recently added threshold when there are two of the same threshold with the same value and comparison operator for the exact value', () => {
@@ -406,7 +434,9 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(0, thresholds)).toEqual(expect.objectContaining({ color: expectColor }));
+      expect(getBreachedThreshold(0, thresholds)).toEqual(
+        expect.objectContaining({ color: expectColor })
+      );
     });
 
     it('returns undefined when two of the same threshold value that does not equal to the exact value', () => {
@@ -446,7 +476,9 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(26, thresholds)).toEqual(expect.objectContaining({ color: expectedColor }));
+      expect(getBreachedThreshold(26, thresholds)).toEqual(
+        expect.objectContaining({ color: expectedColor })
+      );
     });
 
     it('returns the correct threshold when the point is higher than a "less than" threshold but still technically breached by a lower "greater than" threshold', () => {
@@ -464,7 +496,9 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(40, thresholds)).toEqual(expect.objectContaining({ color: expectedColor }));
+      expect(getBreachedThreshold(40, thresholds)).toEqual(
+        expect.objectContaining({ color: expectedColor })
+      );
     });
 
     it('returns the correct threshold when the point is lower than a "greater than" threshold but still technically breached by a higher "less than" threshold', () => {
@@ -482,7 +516,9 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(3, thresholds)).toEqual(expect.objectContaining({ color: expectedColor }));
+      expect(getBreachedThreshold(3, thresholds)).toEqual(
+        expect.objectContaining({ color: expectedColor })
+      );
     });
   });
 });
@@ -642,13 +678,21 @@ describe('thresholdAppliesToDataStream', () => {
   });
 
   it('returns that threshold does not apply, if threshold does specify data stream ids, and does not include the request id', () => {
-    expect(thresholdAppliesToDataStream({ ...threshold, dataStreamIds: ['id-1', 'id-2'] }, 'any-random-id')).toBe(
-      false
-    );
+    expect(
+      thresholdAppliesToDataStream(
+        { ...threshold, dataStreamIds: ['id-1', 'id-2'] },
+        'any-random-id'
+      )
+    ).toBe(false);
   });
 
   it('returns that threshold does apply, if threshold does specify data stream ids, and does include the request id', () => {
-    expect(thresholdAppliesToDataStream({ ...threshold, dataStreamIds: ['id-1', 'id-2'] }, 'id-2')).toBe(true);
+    expect(
+      thresholdAppliesToDataStream(
+        { ...threshold, dataStreamIds: ['id-1', 'id-2'] },
+        'id-2'
+      )
+    ).toBe(true);
   });
 });
 
@@ -695,74 +739,96 @@ describe('highestPriorityThreshold', () => {
   });
 
   it('always return the threshold with the lowest severity', () => {
-    expect(highestPriorityThreshold([ALARM_THRESHOLD_1_SEVERITY, ALARM_THRESHOLD_2_SEVERITY])).toBe(
-      ALARM_THRESHOLD_1_SEVERITY
-    ); // Has lower seveirty
+    expect(
+      highestPriorityThreshold([
+        ALARM_THRESHOLD_1_SEVERITY,
+        ALARM_THRESHOLD_2_SEVERITY,
+      ])
+    ).toBe(ALARM_THRESHOLD_1_SEVERITY); // Has lower seveirty
   });
 
   it('always returns a threshold with a severity, over one without', () => {
     const LOW_SEVERITY = { ...ALARM_THRESHOLD_1_SEVERITY, severity: 999999 };
-    expect(highestPriorityThreshold([LOW_SEVERITY, DATA_THRESHOLD])).toBe(LOW_SEVERITY);
+    expect(highestPriorityThreshold([LOW_SEVERITY, DATA_THRESHOLD])).toBe(
+      LOW_SEVERITY
+    );
   });
 });
 
 describe('isHigherPriorityThresholds', () => {
   it('returns an array with threshold when passed no thresholds', () => {
-    expect(isHigherPriorityThresholds([], DATA_THRESHOLD)).toStrictEqual([DATA_THRESHOLD]);
+    expect(isHigherPriorityThresholds([], DATA_THRESHOLD)).toStrictEqual([
+      DATA_THRESHOLD,
+    ]);
   });
 
   it('returns an array with all thresholds when neither have severity', () => {
-    expect(isHigherPriorityThresholds([DATA_THRESHOLD], DATA_THRESHOLD_2)).toStrictEqual([
-      DATA_THRESHOLD,
-      DATA_THRESHOLD_2,
-    ]);
+    expect(
+      isHigherPriorityThresholds([DATA_THRESHOLD], DATA_THRESHOLD_2)
+    ).toStrictEqual([DATA_THRESHOLD, DATA_THRESHOLD_2]);
   });
 
   it('returns an array with all thresholds when they have the same severity', () => {
-    expect(isHigherPriorityThresholds([ALARM_THRESHOLD_1_SEVERITY], ALARM_THRESHOLD_1_SEVERITY_2)).toStrictEqual([
-      ALARM_THRESHOLD_1_SEVERITY,
-      ALARM_THRESHOLD_1_SEVERITY_2,
-    ]);
+    expect(
+      isHigherPriorityThresholds(
+        [ALARM_THRESHOLD_1_SEVERITY],
+        ALARM_THRESHOLD_1_SEVERITY_2
+      )
+    ).toStrictEqual([ALARM_THRESHOLD_1_SEVERITY, ALARM_THRESHOLD_1_SEVERITY_2]);
   });
 
   it('returns a new array with the threshold with severity when the initial thresholds array has no severity', () => {
-    expect(isHigherPriorityThresholds([DATA_THRESHOLD], ALARM_THRESHOLD_1_SEVERITY)).toStrictEqual([
-      ALARM_THRESHOLD_1_SEVERITY,
-    ]);
+    expect(
+      isHigherPriorityThresholds([DATA_THRESHOLD], ALARM_THRESHOLD_1_SEVERITY)
+    ).toStrictEqual([ALARM_THRESHOLD_1_SEVERITY]);
   });
 
   it('returns the initial thresholds array with severity when the new threshold has no severity', () => {
-    expect(isHigherPriorityThresholds([ALARM_THRESHOLD_1_SEVERITY], DATA_THRESHOLD)).toStrictEqual([
-      ALARM_THRESHOLD_1_SEVERITY,
-    ]);
+    expect(
+      isHigherPriorityThresholds([ALARM_THRESHOLD_1_SEVERITY], DATA_THRESHOLD)
+    ).toStrictEqual([ALARM_THRESHOLD_1_SEVERITY]);
   });
 
   it('returns an array with the higher priority threshold', () => {
-    expect(isHigherPriorityThresholds([ALARM_THRESHOLD_1_SEVERITY], ALARM_THRESHOLD_2_SEVERITY)).toStrictEqual([
-      ALARM_THRESHOLD_1_SEVERITY,
-    ]);
-    expect(isHigherPriorityThresholds([ALARM_THRESHOLD_2_SEVERITY], ALARM_THRESHOLD_1_SEVERITY)).toStrictEqual([
-      ALARM_THRESHOLD_1_SEVERITY,
-    ]);
+    expect(
+      isHigherPriorityThresholds(
+        [ALARM_THRESHOLD_1_SEVERITY],
+        ALARM_THRESHOLD_2_SEVERITY
+      )
+    ).toStrictEqual([ALARM_THRESHOLD_1_SEVERITY]);
+    expect(
+      isHigherPriorityThresholds(
+        [ALARM_THRESHOLD_2_SEVERITY],
+        ALARM_THRESHOLD_1_SEVERITY
+      )
+    ).toStrictEqual([ALARM_THRESHOLD_1_SEVERITY]);
   });
 });
 
 describe('highestPriorityThresholds', () => {
   it('returns an array of a threshold with severity', () => {
-    expect(highestPriorityThresholds([DATA_THRESHOLD, ALARM_THRESHOLD_1_SEVERITY])).toStrictEqual([
-      ALARM_THRESHOLD_1_SEVERITY,
-    ]);
+    expect(
+      highestPriorityThresholds([DATA_THRESHOLD, ALARM_THRESHOLD_1_SEVERITY])
+    ).toStrictEqual([ALARM_THRESHOLD_1_SEVERITY]);
   });
 
   it('returns an array of thresholds with the same severity', () => {
     expect(
-      highestPriorityThresholds([DATA_THRESHOLD, ALARM_THRESHOLD_1_SEVERITY, ALARM_THRESHOLD_1_SEVERITY_2])
+      highestPriorityThresholds([
+        DATA_THRESHOLD,
+        ALARM_THRESHOLD_1_SEVERITY,
+        ALARM_THRESHOLD_1_SEVERITY_2,
+      ])
     ).toStrictEqual([ALARM_THRESHOLD_1_SEVERITY, ALARM_THRESHOLD_1_SEVERITY_2]);
   });
 
   it('returns an array of thresholds with higher priority', () => {
     expect(
-      highestPriorityThresholds([ALARM_THRESHOLD_2_SEVERITY, ALARM_THRESHOLD_1_SEVERITY, ALARM_THRESHOLD_1_SEVERITY_2])
+      highestPriorityThresholds([
+        ALARM_THRESHOLD_2_SEVERITY,
+        ALARM_THRESHOLD_1_SEVERITY,
+        ALARM_THRESHOLD_1_SEVERITY_2,
+      ])
     ).toStrictEqual([ALARM_THRESHOLD_1_SEVERITY, ALARM_THRESHOLD_1_SEVERITY_2]);
   });
 });

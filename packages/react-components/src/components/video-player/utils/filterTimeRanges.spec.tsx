@@ -21,5 +21,10 @@ it('should format the date to DateTime value', () => {
     { start: 26, end: 28 },
     { start: 32, end: 35 },
   ];
-  expect(filterTimerangesForVideoOnEdge(timerangesForVideoOnEdgeRaw, timerangesWithSource)).toEqual(expectedResult);
+  expect(
+    filterTimerangesForVideoOnEdge(
+      timerangesForVideoOnEdgeRaw,
+      timerangesWithSource
+    )
+  ).toEqual(expectedResult);
 });

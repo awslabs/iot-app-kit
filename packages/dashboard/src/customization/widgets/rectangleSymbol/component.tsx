@@ -1,6 +1,10 @@
 import React from 'react';
 import { RectangleWidget } from '../types';
-import { SVG_STROKE_DASHED, SVG_STROKE_DOTTED, SVG_STROKE_SOLID } from '../constants';
+import {
+  SVG_STROKE_DASHED,
+  SVG_STROKE_DOTTED,
+  SVG_STROKE_SOLID,
+} from '../constants';
 
 const RectangleWidgetComponent: React.FC<RectangleWidget> = (widget) => {
   const fitFull = {
@@ -8,7 +12,12 @@ const RectangleWidgetComponent: React.FC<RectangleWidget> = (widget) => {
     height: '100%',
   };
 
-  const { borderStyle = 'solid', fill = 'none', borderColor = 'black', borderThickness = 5 } = widget.properties;
+  const {
+    borderStyle = 'solid',
+    fill = 'none',
+    borderColor = 'black',
+    borderThickness = 5,
+  } = widget.properties;
 
   let strokeString = SVG_STROKE_SOLID;
 

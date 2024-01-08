@@ -64,7 +64,8 @@ export type SiteWiseAssetModelQuery = DataStreamQuery & {
   assetModels: AssetModelQuery[];
 };
 
-export type SiteWiseDataStreamQuery = Partial<SiteWiseAssetQuery> & Partial<SiteWisePropertyAliasQuery>;
+export type SiteWiseDataStreamQuery = Partial<SiteWiseAssetQuery> &
+  Partial<SiteWisePropertyAliasQuery>;
 
 export type SiteWiseDataSourceSettings = {
   batchDuration?: number;

@@ -13,12 +13,17 @@ export interface SelectWidgetsAction extends Action {
   payload: SelectWidgetsActionPayload;
 }
 
-export const onSelectWidgetsAction = (payload: SelectWidgetsActionPayload): SelectWidgetsAction => ({
+export const onSelectWidgetsAction = (
+  payload: SelectWidgetsActionPayload
+): SelectWidgetsAction => ({
   type: 'SELECT_WIDGETS',
   payload,
 });
 
-export const selectWidgets = (state: DashboardState, action: SelectWidgetsAction): DashboardState => ({
+export const selectWidgets = (
+  state: DashboardState,
+  action: SelectWidgetsAction
+): DashboardState => ({
   ...state,
   selectedWidgets: action.payload.union
     ? uniqBy([...state.selectedWidgets, ...action.payload.widgets], 'id')

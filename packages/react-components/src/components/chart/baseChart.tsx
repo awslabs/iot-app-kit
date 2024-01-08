@@ -23,7 +23,11 @@ import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
 import './chart.css';
 import { useContextMenu } from './contextMenu/useContextMenu';
 // import { useViewportToMS } from './hooks/useViewportToMS';
-import { DEFAULT_CHART_VISUALIZATION, DEFAULT_TOOLBOX_CONFIG, PERFORMANCE_MODE_THRESHOLD } from './eChartsConstants';
+import {
+  DEFAULT_CHART_VISUALIZATION,
+  DEFAULT_TOOLBOX_CONFIG,
+  PERFORMANCE_MODE_THRESHOLD,
+} from './eChartsConstants';
 import { useDataZoom } from './hooks/useDataZoom';
 import { useViewport } from '../../hooks/useViewport';
 import { getXAxis } from './chartOptions/axes/xAxis';
@@ -49,7 +53,12 @@ import TanstackLegend from './legend/tanstackLegend';
 /**
  * Base chart to display Line, Scatter, and Bar charts.
  */
-const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...options }: ChartOptions) => {
+const BaseChart = ({
+  viewport,
+  queries,
+  size = { width: 500, height: 500 },
+  ...options
+}: ChartOptions) => {
   // Setup instance of echarts
   const { ref, chartRef } = useECharts(options?.theme);
 
@@ -79,7 +88,12 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     minConstraints,
     maxConstraints,
     leftLegendRef,
-  } = useResizeableEChart(chartRef, size, options.legend?.visible, isBottomAligned);
+  } = useResizeableEChart(
+    chartRef,
+    size,
+    options.legend?.visible,
+    isBottomAligned
+  );
 
   // apply group to echarts
   useGroupableEChart(chartRef, group);
@@ -99,7 +113,12 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     performanceMode,
   });
 
-  const { handleContextMenu, showContextMenu, contextMenuPos, setShowContextMenu } = useContextMenu();
+  const {
+    handleContextMenu,
+    showContextMenu,
+    contextMenuPos,
+    setShowContextMenu,
+  } = useContextMenu();
 
   //handle dataZoom updates, which are dependent on user events and viewportInMS changes
   const viewportInMs = useDataZoom(chartRef, utilizedViewport);
@@ -107,7 +126,12 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   const xAxis = getXAxis(options.axis);
 
   // this will handle all the Trend Cursors operations
-  const { onContextMenuClickHandler, trendCursors, trendCursorKeyMap, trendCursorHandlers } = useTrendCursors({
+  const {
+    onContextMenuClickHandler,
+    trendCursors,
+    trendCursorKeyMap,
+    trendCursorHandlers,
+  } = useTrendCursors({
     chartRef,
     initialGraphic: options.graphic,
     size: { width: chartWidth, height: chartHeight },
@@ -116,14 +140,20 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     viewportInMs,
     groupId: group,
     onContextMenu: handleContextMenu,
-    visualization: options.defaultVisualizationType ?? DEFAULT_CHART_VISUALIZATION,
+    visualization:
+      options.defaultVisualizationType ?? DEFAULT_CHART_VISUALIZATION,
     significantDigits: options.significantDigits,
     yAxisOptions: {
       yAxis,
     },
   });
 
-  const menuOptionClickHandler = ({ action }: { action: Action; e: React.MouseEvent }) => {
+  const menuOptionClickHandler = ({
+    action,
+  }: {
+    action: Action;
+    e: React.MouseEvent;
+  }) => {
     onContextMenuClickHandler({ action, posX: contextMenuPos.x });
     setShowContextMenu(false);
   };
@@ -138,7 +168,8 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   const settings = useChartSetOptionSettings(dataStreams);
 
   // handle chart event updates
-  const { chartEventsOptions, chartEventsKeyMap, chartEventsHandlers } = useHandleChartEvents(chartRef);
+  const { chartEventsOptions, chartEventsKeyMap, chartEventsHandlers } =
+    useHandleChartEvents(chartRef);
 
   const toolTipOptions = {
     ...convertedOptions.tooltip,
@@ -193,7 +224,9 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   };
 
   return (
-    <div className={`base-chart-container ${options.legend?.position}-position`}>
+    <div
+      className={`base-chart-container ${options.legend?.position}-position`}
+    >
       <Resizable
         height={chartHeight}
         width={chartWidth}
@@ -203,7 +236,11 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
         maxConstraints={maxConstraints}
         handle={
           <span
-            className={options.legend?.visible ? 'react-resizable-handle react-resizable-handle-se' : ''}
+            className={
+              options.legend?.visible
+                ? 'react-resizable-handle react-resizable-handle-se'
+                : ''
+            }
             data-gesture='resize'
           />
         }
@@ -211,7 +248,11 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
         onResizeStop={(e) => e.stopPropagation()}
         resizeHandles={[...setHandles(options.legend?.position || 'right')]}
       >
-        <HotKeys keyMap={hotKeyMap} handlers={hotKeyHandlers} className='chart-rightlegend-container'>
+        <HotKeys
+          keyMap={hotKeyMap}
+          handlers={hotKeyHandlers}
+          className='chart-rightlegend-container'
+        >
           <div className='base-chart-left-legend' ref={leftLegendRef}>
             <MultiYAxisLegend datastreams={dataStreams} height={chartHeight} />
           </div>
@@ -245,9 +286,19 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
         >
           {/* TODO: Need to remove cloudscape table after new tanstack table approved and make tanstack table as default */}
           {showTanstackTable ? (
-            <TanstackLegend series={series} graphic={trendCursors} datastreams={dataStreams} width={rightLegendWidth} />
+            <TanstackLegend
+              series={series}
+              graphic={trendCursors}
+              datastreams={dataStreams}
+              width={rightLegendWidth}
+            />
           ) : (
-            <Legend series={series} graphic={trendCursors} datastreams={dataStreams} width={rightLegendWidth} />
+            <Legend
+              series={series}
+              graphic={trendCursors}
+              datastreams={dataStreams}
+              width={rightLegendWidth}
+            />
           )}
         </div>
       )}

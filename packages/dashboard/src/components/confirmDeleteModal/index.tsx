@@ -1,6 +1,11 @@
 import React, { ReactElement } from 'react';
 
-import { Box, Button, Modal, SpaceBetween } from '@cloudscape-design/components';
+import {
+  Box,
+  Button,
+  Modal,
+  SpaceBetween,
+} from '@cloudscape-design/components';
 
 import CustomOrangeButton from '../customOrangeButton';
 
@@ -39,7 +44,10 @@ const ConfirmDeleteModal = ({
                 {cancelTitle}
               </Button>
             )}
-            <CustomOrangeButton title={submitTitle} handleClick={handleSubmit} />
+            <CustomOrangeButton
+              title={submitTitle}
+              handleClick={handleSubmit}
+            />
           </SpaceBetween>
         </Box>
       }

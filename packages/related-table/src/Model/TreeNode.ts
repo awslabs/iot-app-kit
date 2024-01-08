@@ -111,7 +111,9 @@ class InternalTreeNode<T> {
 
     for (let i = parentLastChildPath.length - 1; i >= 1; i -= 1) {
       const isParentLastChild = parentLastChildPath[i];
-      const treeLineMode = isParentLastChild ? LinePrefixTypes.ChildOfLastChild : LinePrefixTypes.ChildOfMiddleChild;
+      const treeLineMode = isParentLastChild
+        ? LinePrefixTypes.ChildOfLastChild
+        : LinePrefixTypes.ChildOfMiddleChild;
       prefix.splice(1, 0, treeLineMode);
     }
 
@@ -120,4 +122,7 @@ class InternalTreeNode<T> {
 }
 
 export type ITreeNode<T> = InternalTreeNode<T> & T;
-export const TreeNode = InternalTreeNode as new <T>(props: T, metadata?: Metadata<T>) => ITreeNode<T>;
+export const TreeNode = InternalTreeNode as new <T>(
+  props: T,
+  metadata?: Metadata<T>
+) => ITreeNode<T>;

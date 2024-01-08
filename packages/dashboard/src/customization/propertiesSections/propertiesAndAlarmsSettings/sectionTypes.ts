@@ -1,4 +1,8 @@
-import type { StyledAssetQuery, StyledSiteWiseQueryConfig, SiteWiseQueryConfig } from '~/customization/widgets/types';
+import type {
+  StyledAssetQuery,
+  StyledSiteWiseQueryConfig,
+  SiteWiseQueryConfig,
+} from '~/customization/widgets/types';
 import { Maybe } from '~/util/maybe';
 import type { StyleSettingsMap } from '@iot-app-kit/core';
 import type { IoTSiteWiseDataStreamQuery } from '~/types';

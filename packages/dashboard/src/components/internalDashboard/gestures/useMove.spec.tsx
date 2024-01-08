@@ -23,7 +23,9 @@ jest.mock('../../../store/actions', () => {
 const TestProvider: React.FC<{
   storeArgs?: RecursivePartial<DashboardState>;
   children: ReactNode;
-}> = ({ storeArgs, children }) => <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>;
+}> = ({ storeArgs, children }) => (
+  <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>
+);
 
 it('sets the gesture to move when performing a move gesture', () => {
   const setActiveGesture = jest.fn();
@@ -47,7 +49,10 @@ it('sets the gesture to move when performing a move gesture', () => {
 });
 
 it('dispatches the move action on gesture move update and end', () => {
-  (onMoveWidgetsAction as jest.Mock).mockImplementation(() => ({ type: '', payload: {} }));
+  (onMoveWidgetsAction as jest.Mock).mockImplementation(() => ({
+    type: '',
+    payload: {},
+  }));
 
   const setActiveGesture = jest.fn();
 

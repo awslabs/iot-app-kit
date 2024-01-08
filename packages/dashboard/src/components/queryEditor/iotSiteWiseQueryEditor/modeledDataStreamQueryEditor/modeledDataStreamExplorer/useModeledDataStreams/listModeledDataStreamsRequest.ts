@@ -1,4 +1,8 @@
-import { DescribeAssetCommand, IoTSiteWiseClient, type DescribeAssetCommandOutput } from '@aws-sdk/client-iotsitewise';
+import {
+  DescribeAssetCommand,
+  IoTSiteWiseClient,
+  type DescribeAssetCommandOutput,
+} from '@aws-sdk/client-iotsitewise';
 import type { ModeledDataStream } from '../types';
 import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
 import { DEFAULT_STRING } from '~/components/queryEditor/contants';
@@ -8,7 +12,15 @@ export class ListModeledDataStreamsRequest {
   readonly #client: IoTSiteWiseClient;
   readonly #signal: AbortSignal | undefined;
 
-  constructor({ assetId, client, signal }: { assetId: string; client: IoTSiteWiseClient; signal?: AbortSignal }) {
+  constructor({
+    assetId,
+    client,
+    signal,
+  }: {
+    assetId: string;
+    client: IoTSiteWiseClient;
+    signal?: AbortSignal;
+  }) {
     this.#command = this.#createCommand(assetId);
     this.#client = client;
     this.#signal = signal;
@@ -53,31 +65,36 @@ export class ListModeledDataStreamsRequest {
     assetId: NonNullable<DescribeAssetCommandOutput['assetId']>;
     assetName: NonNullable<DescribeAssetCommandOutput['assetName']>;
     assetProperties: NonNullable<DescribeAssetCommandOutput['assetProperties']>;
-    assetCompositeModels: NonNullable<DescribeAssetCommandOutput['assetCompositeModels']>;
+    assetCompositeModels: NonNullable<
+      DescribeAssetCommandOutput['assetCompositeModels']
+    >;
   }): ModeledDataStream[] {
     // there may be multiple composite models with their own properties lists
-    const compositeProperties = assetCompositeModels.flatMap(({ properties }) => properties);
+    const compositeProperties = assetCompositeModels.flatMap(
+      ({ properties }) => properties
+    );
     const allProperties = [...assetProperties, ...compositeProperties];
     const nonNullableProperties = createNonNullableList(allProperties);
 
     // we add the assetId and assetName to provide consumers of the data with additional context
-    const allPropertiesWithAssetDetail = nonNullableProperties.map<ModeledDataStream>(
-      ({
-        id: propertyId = DEFAULT_STRING,
-        name = DEFAULT_STRING,
-        unit = DEFAULT_STRING,
-        dataType = undefined as NonNullable<undefined>,
-        dataTypeSpec = DEFAULT_STRING,
-      }) => ({
-        assetId,
-        assetName,
-        propertyId,
-        name,
-        unit,
-        dataType,
-        dataTypeSpec,
-      })
-    );
+    const allPropertiesWithAssetDetail =
+      nonNullableProperties.map<ModeledDataStream>(
+        ({
+          id: propertyId = DEFAULT_STRING,
+          name = DEFAULT_STRING,
+          unit = DEFAULT_STRING,
+          dataType = undefined as NonNullable<undefined>,
+          dataTypeSpec = DEFAULT_STRING,
+        }) => ({
+          assetId,
+          assetName,
+          propertyId,
+          name,
+          unit,
+          dataType,
+          dataTypeSpec,
+        })
+      );
 
     return allPropertiesWithAssetDetail;
   }

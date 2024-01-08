@@ -11,7 +11,9 @@ export const handleRemoveAssetModelProperty = (
       const { properties } = assetModel;
       return {
         ...assetModel,
-        properties: properties.filter((property) => property.propertyId !== propertyId),
+        properties: properties.filter(
+          (property) => property.propertyId !== propertyId
+        ),
       };
     })
     .filter((assetModel) => assetModel.properties.length > 0);

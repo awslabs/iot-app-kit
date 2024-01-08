@@ -5,7 +5,10 @@ import Select, { SelectProps } from '@cloudscape-design/components/select';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import { OptionsLoadItemsDetail } from '@cloudscape-design/components/internal/components/dropdown/interfaces';
 import { SelectedAsset } from '../useSelectedAsset';
-import { isEnabled, useAssetsForAssetModel } from './useAssetsForAssetModel/useAssetsForAssetModel';
+import {
+  isEnabled,
+  useAssetsForAssetModel,
+} from './useAssetsForAssetModel/useAssetsForAssetModel';
 
 export type AssetForAssetModelSelectOptions = {
   assetModelId?: string;
@@ -57,7 +60,9 @@ export const AssetForAssetModelSelect = ({
     refetch,
   } = useAssetsForAssetModel({ assetModelId, client });
 
-  const selectedAssetOption = selectedAsset ? mapAssetToOption(selectedAsset) : null;
+  const selectedAssetOption = selectedAsset
+    ? mapAssetToOption(selectedAsset)
+    : null;
 
   const assetOptions = assetSummaries.map(mapAssetToOption);
 
@@ -71,7 +76,9 @@ export const AssetForAssetModelSelect = ({
   };
 
   const onChange: NonCancelableEventHandler<SelectProps.ChangeDetail> = (e) => {
-    const selected = assetSummaries.find((ams) => ams?.id === e.detail.selectedOption.value);
+    const selected = assetSummaries.find(
+      (ams) => ams?.id === e.detail.selectedOption.value
+    );
     if (!selected) return;
     onSelectAsset(selected);
   };

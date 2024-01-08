@@ -1,7 +1,11 @@
 import React, { CSSProperties } from 'react';
 import './component.css';
 import { LineWidget } from '~/customization/widgets/types';
-import { SVG_STROKE_DASHED, SVG_STROKE_DOTTED, SVG_STROKE_SOLID } from '../constants';
+import {
+  SVG_STROKE_DASHED,
+  SVG_STROKE_DOTTED,
+  SVG_STROKE_SOLID,
+} from '../constants';
 import { LineAnchor } from './lineAnchor/component';
 import { useIsSelected } from '~/customization/hooks/useIsSelected';
 import { useWidgetActions } from '~/customization/hooks/useWidgetActions';

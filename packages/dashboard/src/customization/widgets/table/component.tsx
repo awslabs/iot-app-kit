@@ -1,8 +1,15 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CollectionPreferences, CollectionPreferencesProps } from '@cloudscape-design/components';
+import {
+  CollectionPreferences,
+  CollectionPreferencesProps,
+} from '@cloudscape-design/components';
 
-import { Table, TableColumnDefinition, useViewport } from '@iot-app-kit/react-components';
+import {
+  Table,
+  TableColumnDefinition,
+  useViewport,
+} from '@iot-app-kit/react-components';
 
 import EmptyTableComponent from './emptyTableComponent';
 
@@ -12,7 +19,11 @@ import type { TableWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { useChartSize } from '~/hooks/useChartSize';
 
-import { DEFAULT_PREFERENCES, collectionPreferencesProps, PROPERTY_FILTERING } from './table-config';
+import {
+  DEFAULT_PREFERENCES,
+  collectionPreferencesProps,
+  PROPERTY_FILTERING,
+} from './table-config';
 import { TABLE_OVERFLOW_HEIGHT, TABLE_WIDGET_MAX_HEIGHT } from '../constants';
 import { onUpdateWidgetsAction } from '~/store/actions';
 import { useTableItems } from './useTableItems';
@@ -39,9 +50,15 @@ export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
 
 const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   const { viewport } = useViewport();
-  const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
+  const dashboardSignificantDigits = useSelector(
+    (state: DashboardState) => state.significantDigits
+  );
 
-  const { queryConfig, thresholds, significantDigits: widgetSignificantDigits } = widget.properties;
+  const {
+    queryConfig,
+    thresholds,
+    significantDigits: widgetSignificantDigits,
+  } = widget.properties;
 
   const queries = useQueries(queryConfig.query);
   const key = createWidgetRenderKey(widget.id);
@@ -49,7 +66,8 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   const mappedQuery = assetModelQueryToSiteWiseAssetQuery(queryConfig.query);
   const items = useTableItems(mappedQuery);
 
-  const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
+  const significantDigits =
+    widgetSignificantDigits ?? dashboardSignificantDigits;
   const chartSize = useChartSize(widget);
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const dispatch = useDispatch();
@@ -67,7 +85,12 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   const setPreferences = (detail: CollectionPreferencesProps.Preferences) => {
     dispatch(
       onUpdateWidgetsAction({
-        widgets: [{ ...widget, properties: { ...widget.properties, pageSize: detail.pageSize } }],
+        widgets: [
+          {
+            ...widget,
+            properties: { ...widget.properties, pageSize: detail.pageSize },
+          },
+        ],
       })
     );
   };
@@ -79,8 +102,12 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
         data-testid='table-widget-component'
         onMouseDown={handleMouseDown}
         style={{
-          maxHeight: chartSize.height > TABLE_WIDGET_MAX_HEIGHT ? `${TABLE_WIDGET_MAX_HEIGHT}px` : chartSize.height,
-          overflow: chartSize.height > TABLE_OVERFLOW_HEIGHT ? 'auto' : 'scroll',
+          maxHeight:
+            chartSize.height > TABLE_WIDGET_MAX_HEIGHT
+              ? `${TABLE_WIDGET_MAX_HEIGHT}px`
+              : chartSize.height,
+          overflow:
+            chartSize.height > TABLE_OVERFLOW_HEIGHT ? 'auto' : 'scroll',
         }}
       >
         <Table
@@ -101,7 +128,10 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
             !readOnly && (
               <CollectionPreferences
                 {...collectionPreferencesProps}
-                preferences={{ pageSize: widget.properties.pageSize ?? DEFAULT_PREFERENCES.pageSize }}
+                preferences={{
+                  pageSize:
+                    widget.properties.pageSize ?? DEFAULT_PREFERENCES.pageSize,
+                }}
                 onConfirm={({ detail }) => setPreferences(detail)}
               />
             )

@@ -11,11 +11,15 @@ export function getEnvCredentials(): Credentials | never {
   const sessionToken = process.env.AWS_SESSION_TOKEN;
 
   if (!accessKeyId) {
-    throw new Error('Missing credentials: AWS_ACCESS_KEY_ID. Update AWS_ACCESS_KEY_ID in root `.env` file.');
+    throw new Error(
+      'Missing credentials: AWS_ACCESS_KEY_ID. Update AWS_ACCESS_KEY_ID in root `.env` file.'
+    );
   }
 
   if (!secretAccessKey) {
-    throw new Error('Missing credentials: AWS_SECRET_ACCESS_KEY. Update AWS_SECRET_ACCESS_KEY in root `.env` file.');
+    throw new Error(
+      'Missing credentials: AWS_SECRET_ACCESS_KEY. Update AWS_SECRET_ACCESS_KEY in root `.env` file.'
+    );
   }
 
   return {

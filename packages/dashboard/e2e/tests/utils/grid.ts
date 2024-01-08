@@ -44,7 +44,8 @@ export const gridUtil = (page: Page) => {
      *
      * @returns all of the widget Locators in the grid
      */
-    widgets: async (): Promise<Locator[]> => await page.locator(WidgetSelector).all(),
+    widgets: async (): Promise<Locator[]> =>
+      await page.locator(WidgetSelector).all(),
     /**
      * @param widgetType - which widget to drag and drop from the component pallette
      * @param offset - position offset from the top left corner of grid
@@ -56,9 +57,13 @@ export const gridUtil = (page: Page) => {
     ): Promise<Locator> => {
       const defaultGridTargetOffset = ({ x, y }: BoundingBox) => ({ x, y }); // Default is 0, 0 on the grid
       const gridTargetOffset = offset || defaultGridTargetOffset;
-      const widget = page.getByRole('button', { name: WidgetSelectorMap[widgetType] });
+      const widget = page.getByRole('button', {
+        name: WidgetSelectorMap[widgetType],
+      });
       const draggableWidget = dragGenerator(widget);
-      await draggableWidget.dragTo(gridArea, { targetPosition: ({ target }) => gridTargetOffset(target) });
+      await draggableWidget.dragTo(gridArea, {
+        targetPosition: ({ target }) => gridTargetOffset(target),
+      });
       const widgets = await page.locator(WidgetSelector).all();
       // Assumption that the widget added is last in the DOM
       const addedWidget = widgets.at(-1);
@@ -90,14 +95,20 @@ export const gridUtil = (page: Page) => {
     selectAll: async () => {
       await dragGenerator(gridArea).dragTo(gridArea, {
         sourcePosition: ({ source }) => ({ x: source.x, y: source.y }),
-        targetPosition: ({ target }) => ({ x: target.x + target.width, y: target.y + target.height }),
+        targetPosition: ({ target }) => ({
+          x: target.x + target.width,
+          y: target.y + target.height,
+        }),
       });
     },
     /**
      * @param anchor - anchor of the selection box to click drag
      * @param targetPosition - the position offset to move the anchor to
      */
-    resizeSelection: async (anchor: keyof typeof SelectionAnchorMap, targetPosition: DragPosition) => {
+    resizeSelection: async (
+      anchor: keyof typeof SelectionAnchorMap,
+      targetPosition: DragPosition
+    ) => {
       const anchorLocator = page.locator(SelectionAnchorMap[anchor]);
       await dragGenerator(anchorLocator).dragTo(gridArea, {
         targetPosition,

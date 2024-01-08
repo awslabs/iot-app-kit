@@ -1,15 +1,24 @@
-import { AssetSummary, PropertySummary } from '~/hooks/useAssetDescriptionQueries';
+import {
+  AssetSummary,
+  PropertySummary,
+} from '~/hooks/useAssetDescriptionQueries';
 
 type DisplayType = 'property' | 'alarm' | 'none';
 export const getPropertyDisplay = (
   propertyId: string,
   { properties, alarms, assetName }: AssetSummary
-): { property: PropertySummary | undefined; label: string; display: DisplayType } => {
+): {
+  property: PropertySummary | undefined;
+  label: string;
+  display: DisplayType;
+} => {
   const property = properties?.find((prop) => prop.propertyId === propertyId);
   if (property) {
     return {
       display: 'property',
-      label: (property?.name && assetName && `${property?.name} (${assetName})`) || propertyId,
+      label:
+        (property?.name && assetName && `${property?.name} (${assetName})`) ||
+        propertyId,
       property,
     };
   }
@@ -25,7 +34,9 @@ export const getPropertyDisplay = (
   if (alarm) {
     return {
       display: 'alarm',
-      label: (alarm?.name && assetName && `${alarm?.name} (${assetName})`) || propertyId,
+      label:
+        (alarm?.name && assetName && `${alarm?.name} (${assetName})`) ||
+        propertyId,
       property: alarm.property,
     };
   }

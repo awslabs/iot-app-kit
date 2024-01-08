@@ -1,4 +1,9 @@
-import { FilteringOptions, useCollection, UseCollectionOptions, UseCollectionResult } from '@awsui/collection-hooks';
+import {
+  FilteringOptions,
+  useCollection,
+  UseCollectionOptions,
+  UseCollectionResult,
+} from '@awsui/collection-hooks';
 import { useEffect, useState } from 'react';
 import { TableProps } from '@awsui/components-react/table';
 import { ITreeNode, TreeMap } from '../Model/TreeNode';
@@ -11,13 +16,15 @@ import {
   sortTree,
 } from '../utils';
 
-export interface UseTreeCollection<T> extends UseCollectionOptions<ITreeNode<T>> {
+export interface UseTreeCollection<T>
+  extends UseCollectionOptions<ITreeNode<T>> {
   keyPropertyName: string;
   parentKeyPropertyName: string;
   columnDefinitions: ReadonlyArray<TableProps.ColumnDefinition<T>>;
 }
 
-export interface UseTreeCollectionResult<T> extends UseCollectionResult<ITreeNode<T>> {
+export interface UseTreeCollectionResult<T>
+  extends UseCollectionResult<ITreeNode<T>> {
   expandNode: (node: ITreeNode<T>) => void;
   reset: () => void;
 }
@@ -27,27 +34,48 @@ export const useTreeCollection = <T>(
   props: UseTreeCollection<T>,
   expanded = false
 ): UseTreeCollectionResult<T> => {
-  const { keyPropertyName, parentKeyPropertyName, columnDefinitions, ...collectionProps } = props;
+  const {
+    keyPropertyName,
+    parentKeyPropertyName,
+    columnDefinitions,
+    ...collectionProps
+  } = props;
   const [treeMap, setTreeMap] = useState<TreeMap<T>>(new Map());
   const [nodes, setNodes] = useState<ITreeNode<T>[]>([]);
   const [sortState, setSortState] = useState<TableProps.SortingState<T>>({
     ...(collectionProps.sorting?.defaultState || {}),
   } as TableProps.SortingState<T>);
   const [columnsDefinitions] = useState(columnDefinitions);
-  const [nodesExpanded, addNodesExpanded] = useState<{ [key: string]: boolean }>({});
+  const [nodesExpanded, addNodesExpanded] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   useEffect(() => {
-    const treeNodes = buildTreeNodes(items, treeMap, keyPropertyName, parentKeyPropertyName);
+    const treeNodes = buildTreeNodes(
+      items,
+      treeMap,
+      keyPropertyName,
+      parentKeyPropertyName
+    );
     sortTree(treeNodes, sortState, columnsDefinitions);
     // only builds prefix after building and sorting the tree
     const tree = buildTreePrefix(treeNodes);
     setNodes(flatTree(tree));
-  }, [items, keyPropertyName, parentKeyPropertyName, sortState, columnsDefinitions, treeMap]);
+  }, [
+    items,
+    keyPropertyName,
+    parentKeyPropertyName,
+    sortState,
+    columnsDefinitions,
+    treeMap,
+  ]);
 
   const expandNode = (node: ITreeNode<T>) => {
     if (node) {
       const key = (node as any)[keyPropertyName];
-      const internalNode = nodes.find((n) => (n as any)[keyPropertyName] === key);
+      const internalNode = nodes.find(
+        (n) => (n as any)[keyPropertyName] === key
+      );
       if (internalNode) {
         internalNode.toggleExpandCollapse();
         expandOrCollapseChildren(internalNode, treeMap, keyPropertyName);
@@ -69,7 +97,11 @@ export const useTreeCollection = <T>(
     sorting: undefined, // disable useCollection sort in favor of sortTree
     filtering: {
       ...(collectionProps.filtering || {}),
-      filteringFunction: (item: ITreeNode<T>, filteringText: string, filteringFields?: string[]) =>
+      filteringFunction: (
+        item: ITreeNode<T>,
+        filteringText: string,
+        filteringFields?: string[]
+      ) =>
         filteringFunction(
           item as ITreeNode<Record<string, unknown>>,
           filteringText,
@@ -110,7 +142,8 @@ export const useTreeCollection = <T>(
       sortingDescending: sortState.isDescending,
       onSortingChange: (event: CustomEvent<TableProps.SortingState<T>>) => {
         setSortState(event.detail);
-        const customOnSortingChange = collectionResult.collectionProps.onSortingChange;
+        const customOnSortingChange =
+          collectionResult.collectionProps.onSortingChange;
         if (customOnSortingChange) {
           customOnSortingChange(event);
         }

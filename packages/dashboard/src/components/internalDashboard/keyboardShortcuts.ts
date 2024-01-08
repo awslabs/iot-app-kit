@@ -17,7 +17,9 @@ type useKeyboardShortcutsProps = {
   deleteWidgets?: () => void;
 };
 
-export const useKeyboardShortcuts = ({ deleteWidgets: handleDeleteWidgetModal }: useKeyboardShortcutsProps) => {
+export const useKeyboardShortcuts = ({
+  deleteWidgets: handleDeleteWidgetModal,
+}: useKeyboardShortcutsProps) => {
   const dispatch = useDispatch();
   const selectedWidgets = useSelectedWidgets();
 
@@ -75,7 +77,10 @@ export const useKeyboardShortcuts = ({ deleteWidgets: handleDeleteWidgetModal }:
     (e.target.id === DASHBOARD_CONTAINER_ID || e.target === document.body);
 
   useKeyPress('esc', { filter: keyPressFilter, callback: onClearSelection });
-  useKeyPress('backspace, del', { filter: keyPressFilter, callback: deleteWidgets });
+  useKeyPress('backspace, del', {
+    filter: keyPressFilter,
+    callback: deleteWidgets,
+  });
   useKeyPress('mod+c', { filter: keyPressFilter, callback: copyWidgets });
   useKeyPress('mod+v', { filter: keyPressFilter, callback: pasteWidgets });
   useKeyPress('[', { filter: keyPressFilter, callback: sendWidgetsToBack });

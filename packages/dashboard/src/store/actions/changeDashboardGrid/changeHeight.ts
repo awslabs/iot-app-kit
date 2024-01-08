@@ -18,5 +18,8 @@ export const onChangeDashboardHeightAction = (
   payload,
 });
 
-export const changeDashboardHeight = (state: DashboardState, action: ChangeDashboardHeightAction): DashboardState =>
+export const changeDashboardHeight = (
+  state: DashboardState,
+  action: ChangeDashboardHeightAction
+): DashboardState =>
   changeGridProperty(state, 'height', nonNegative(action.payload.height));

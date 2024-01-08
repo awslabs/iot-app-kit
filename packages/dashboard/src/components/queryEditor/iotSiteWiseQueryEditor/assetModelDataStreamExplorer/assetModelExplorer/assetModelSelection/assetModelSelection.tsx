@@ -8,8 +8,16 @@ import { AssetModelSelect } from './assetModelSelect';
 import { HorizontalDivider } from '~/components/divider/horizontalDivider';
 import { AssetModelSave } from './assetModelSave';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { SelectedAssetModel, UpdateSelectedAssetModel, useSelectedAssetModel } from '../../useSelectedAssetModel';
-import { SelectedAsset, UpdateSelectedAsset, useSelectedAsset } from '../../useSelectedAsset';
+import {
+  SelectedAssetModel,
+  UpdateSelectedAssetModel,
+  useSelectedAssetModel,
+} from '../../useSelectedAssetModel';
+import {
+  SelectedAsset,
+  UpdateSelectedAsset,
+  useSelectedAsset,
+} from '../../useSelectedAsset';
 import { AssetForAssetModelSelectForm } from '../../assetsForAssetModelSelect/assetForAssetModelSelectForm';
 
 type AssetModelSelectionOptions = {
@@ -27,8 +35,10 @@ export const AssetModelSelection = ({
   setSelectedAsset,
   client,
 }: AssetModelSelectionOptions) => {
-  const [currentSelectedAssetModel, selectCurrentAssetModel] = useSelectedAssetModel(selectedAssetModel);
-  const [currentSelectedAsset, selectCurrentAsset] = useSelectedAsset(selectedAsset);
+  const [currentSelectedAssetModel, selectCurrentAssetModel] =
+    useSelectedAssetModel(selectedAssetModel);
+  const [currentSelectedAsset, selectCurrentAsset] =
+    useSelectedAsset(selectedAsset);
 
   const onSave = () => {
     onSelectAssetModel(currentSelectedAssetModel);
@@ -38,9 +48,12 @@ export const AssetModelSelection = ({
   return (
     <SpaceBetween size='s' direction='vertical'>
       <Box variant='p'>
-        Dynamic asset visualizations allow you to build one visualization to represent any asset of a specified asset
-        model.{' '}
-        <Link external href='https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-asset-models.html'>
+        Dynamic asset visualizations allow you to build one visualization to
+        represent any asset of a specified asset model.{' '}
+        <Link
+          external
+          href='https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-asset-models.html'
+        >
           Learn more
         </Link>
       </Box>

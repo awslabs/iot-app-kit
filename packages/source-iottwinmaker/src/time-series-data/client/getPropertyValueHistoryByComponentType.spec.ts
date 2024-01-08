@@ -84,7 +84,10 @@ describe('getPropertyValueHistoryByComponentType', () => {
     getEntity,
     getPropertyValueHistory,
   });
-  const twinMakerMetadataModule = new TwinMakerMetadataModule('workspace-id', tmClient);
+  const twinMakerMetadataModule = new TwinMakerMetadataModule(
+    'workspace-id',
+    tmClient
+  );
   const mockEntities: GetEntityResponse[] = [
     {
       entityId: 'entity-1',
@@ -159,7 +162,9 @@ describe('getPropertyValueHistoryByComponentType', () => {
       },
     },
   ] as any as GetEntityResponse[];
-  jest.spyOn(twinMakerMetadataModule, 'fetchEntitiesByComponentTypeId').mockResolvedValue(mockEntities);
+  jest
+    .spyOn(twinMakerMetadataModule, 'fetchEntitiesByComponentTypeId')
+    .mockResolvedValue(mockEntities);
 
   const onSuccess = jest.fn();
   const onError = jest.fn();
@@ -307,7 +312,9 @@ describe('getPropertyValueHistoryByComponentType', () => {
   });
 
   it('should trigger onSuccess with correct dataStream response for fetchFromStartToEnd case', async () => {
-    getPropertyValueHistory.mockResolvedValueOnce(mockResponse1).mockResolvedValueOnce(mockResponse2);
+    getPropertyValueHistory
+      .mockResolvedValueOnce(mockResponse1)
+      .mockResolvedValueOnce(mockResponse2);
 
     await getPropertyValueHistoryByComponentType({
       metadataModule: twinMakerMetadataModule,
@@ -419,7 +426,9 @@ describe('getPropertyValueHistoryByComponentType', () => {
   });
 
   it('should trigger onSuccess with correct dataStream response for fetchMostRecentBeforeEnd case', async () => {
-    getPropertyValueHistory.mockResolvedValueOnce(mockResponse1).mockResolvedValueOnce(mockResponse2);
+    getPropertyValueHistory
+      .mockResolvedValueOnce(mockResponse1)
+      .mockResolvedValueOnce(mockResponse2);
     const expectedStart = new Date(start);
     expectedStart.setDate(expectedStart.getDate() - 1);
 
@@ -512,6 +521,8 @@ describe('getPropertyValueHistoryByComponentType', () => {
     await flushPromises();
 
     expect(onError).toBeCalledTimes(2);
-    expect(onError).toBeCalledWith(expect.objectContaining({ error: mockErrorDetails }));
+    expect(onError).toBeCalledWith(
+      expect.objectContaining({ error: mockErrorDetails })
+    );
   });
 });

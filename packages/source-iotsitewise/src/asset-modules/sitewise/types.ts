@@ -18,11 +18,21 @@ import type { ErrorDetails } from '@iot-app-kit/core';
 import type { ModeledDataStream } from '../describeModeledDataStreamRequest';
 
 export type SiteWiseAssetDataSource = {
-  describeAsset: (input: DescribeAssetCommandInput) => Promise<DescribeAssetCommandOutput>;
-  getPropertyValue: (input: GetAssetPropertyValueCommandInput) => Promise<GetAssetPropertyValueCommandOutput>;
-  describeAssetModel: (input: DescribeAssetModelCommandInput) => Promise<DescribeAssetModelCommandOutput>;
-  listAssets: (input: ListAssetsCommandInput) => Promise<ListAssetsCommandOutput>;
-  listAssociatedAssets: (input: ListAssociatedAssetsCommandInput) => Promise<ListAssociatedAssetsCommandOutput>;
+  describeAsset: (
+    input: DescribeAssetCommandInput
+  ) => Promise<DescribeAssetCommandOutput>;
+  getPropertyValue: (
+    input: GetAssetPropertyValueCommandInput
+  ) => Promise<GetAssetPropertyValueCommandOutput>;
+  describeAssetModel: (
+    input: DescribeAssetModelCommandInput
+  ) => Promise<DescribeAssetModelCommandOutput>;
+  listAssets: (
+    input: ListAssetsCommandInput
+  ) => Promise<ListAssetsCommandOutput>;
+  listAssociatedAssets: (
+    input: ListAssociatedAssetsCommandInput
+  ) => Promise<ListAssociatedAssetsCommandOutput>;
   describeModeledDataStream: (input: {
     assetPropertyId: string;
     assetId: string;
@@ -96,7 +106,9 @@ export interface SiteWiseAssetSessionInterface {
     }
   ): Subscription;
 
-  fetchAssetPropertyValue(query: AssetPropertyValueQuery): Promise<AssetPropertyValue>;
+  fetchAssetPropertyValue(
+    query: AssetPropertyValueQuery
+  ): Promise<AssetPropertyValue>;
   requestAssetPropertyValue(
     query: AssetPropertyValueQuery,
     observer: {
@@ -105,7 +117,9 @@ export interface SiteWiseAssetSessionInterface {
     }
   ): Subscription;
 
-  fetchAssetHierarchy(query: AssetHierarchyQuery): Promise<HierarchyAssetSummaryList>;
+  fetchAssetHierarchy(
+    query: AssetHierarchyQuery
+  ): Promise<HierarchyAssetSummaryList>;
   requestAssetHierarchy(
     query: AssetHierarchyQuery,
     observer: {

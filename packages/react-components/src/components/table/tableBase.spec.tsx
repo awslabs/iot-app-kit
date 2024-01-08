@@ -48,10 +48,16 @@ it('renders correct data when viewport defined by duration', async () => {
   );
 
   const { container } = render(
-    <TableBase columnDefinitions={columnDefinitions} messageOverrides={DEFAULT_TABLE_MESSAGES} items={tableItems} />
+    <TableBase
+      columnDefinitions={columnDefinitions}
+      messageOverrides={DEFAULT_TABLE_MESSAGES}
+      items={tableItems}
+    />
   );
 
-  const cell = container.getElementsByClassName('iot-table-cell').item(0) as HTMLDivElement;
+  const cell = container
+    .getElementsByClassName('iot-table-cell')
+    .item(0) as HTMLDivElement;
   expect(cell.innerHTML).toMatch('200');
 });
 
@@ -60,12 +66,21 @@ it('renders correct data when the viewport defined by start and end time', async
     start: new Date(2021, 0, 0, 0, 0, 0),
     end: new Date(2021, 12, 30, 0, 0, 0),
   };
-  const tableItems = createTableItems({ dataStreams: [dataStream], items, viewport }, DEFAULT_TABLE_MESSAGES);
+  const tableItems = createTableItems(
+    { dataStreams: [dataStream], items, viewport },
+    DEFAULT_TABLE_MESSAGES
+  );
   const { container } = render(
-    <TableBase columnDefinitions={columnDefinitions} messageOverrides={DEFAULT_TABLE_MESSAGES} items={tableItems} />
+    <TableBase
+      columnDefinitions={columnDefinitions}
+      messageOverrides={DEFAULT_TABLE_MESSAGES}
+      items={tableItems}
+    />
   );
 
-  const cell = container.getElementsByClassName('iot-table-cell').item(0) as HTMLDivElement;
+  const cell = container
+    .getElementsByClassName('iot-table-cell')
+    .item(0) as HTMLDivElement;
   expect(cell.innerHTML).toMatch('100');
 });
 
@@ -82,7 +97,11 @@ it('renders loading circle when datastream is in loading state', async () => {
   );
 
   const { container } = render(
-    <TableBase columnDefinitions={columnDefinitions} messageOverrides={DEFAULT_TABLE_MESSAGES} items={tableItems} />
+    <TableBase
+      columnDefinitions={columnDefinitions}
+      messageOverrides={DEFAULT_TABLE_MESSAGES}
+      items={tableItems}
+    />
   );
 
   const svg = container.getElementsByTagName('svg').item(0) as SVGElement;
@@ -109,10 +128,16 @@ it('renders icon and applies style when a datastream breaches threshold', async 
   );
 
   const { container } = render(
-    <TableBase columnDefinitions={columnDefinitions} messageOverrides={DEFAULT_TABLE_MESSAGES} items={tableItems} />
+    <TableBase
+      columnDefinitions={columnDefinitions}
+      messageOverrides={DEFAULT_TABLE_MESSAGES}
+      items={tableItems}
+    />
   );
 
-  const cell = container.getElementsByClassName('iot-table-cell').item(0) as HTMLDivElement;
+  const cell = container
+    .getElementsByClassName('iot-table-cell')
+    .item(0) as HTMLDivElement;
   expect(cell.style.color).toEqual('red');
   const iconContainer = cell.childNodes.item(0);
   expect(iconContainer).toBeTruthy();
@@ -140,10 +165,16 @@ it('renders icon and displays error message when datastream is in error state', 
   );
 
   const { container } = render(
-    <TableBase columnDefinitions={columnDefinitions} messageOverrides={DEFAULT_TABLE_MESSAGES} items={tableItems} />
+    <TableBase
+      columnDefinitions={columnDefinitions}
+      messageOverrides={DEFAULT_TABLE_MESSAGES}
+      items={tableItems}
+    />
   );
 
-  const cell = container.getElementsByClassName('iot-table-cell').item(0) as HTMLDivElement;
+  const cell = container
+    .getElementsByClassName('iot-table-cell')
+    .item(0) as HTMLDivElement;
   const iconContainer = cell.childNodes.item(0);
   expect(iconContainer).toBeTruthy();
 

@@ -4,7 +4,11 @@ import { MenuOption } from './option';
 
 it('renders', () => {
   render(
-    <MenuOption iconStart={() => <div>icon-start</div>} label='test option' iconEnd={() => <div>icon-end</div>} />
+    <MenuOption
+      iconStart={() => <div>icon-start</div>}
+      label='test option'
+      iconEnd={() => <div>icon-end</div>}
+    />
   );
 
   expect(screen.queryByText('icon-start')).not.toBeNull();

@@ -5,7 +5,10 @@ import NoChartData from './no-chart-data';
 import { default as lineSvgDark } from '../lineScatterChart/line-dark.svg';
 import WidgetTile from '~/components/widgets/tile/tile';
 import { configureDashboardStore } from '~/store';
-import { MOCK_LINE_CHART_WIDGET, MOCK_TEXT_WIDGET } from '../../../../testing/mocks';
+import {
+  MOCK_LINE_CHART_WIDGET,
+  MOCK_TEXT_WIDGET,
+} from '../../../../testing/mocks';
 import StyledTextArea from '../text/styledText/textArea';
 
 describe('NoChartData', () => {
@@ -28,7 +31,9 @@ describe('NoChartData', () => {
     );
 
     const icon = getByAltText('empty widget icon');
-    const emptyStateText = getByText('Browse and select to add your asset properties in your line widget.');
+    const emptyStateText = getByText(
+      'Browse and select to add your asset properties in your line widget.'
+    );
     const deleteButton = getByTitle('delete widget');
 
     expect(icon).toBeInTheDocument();

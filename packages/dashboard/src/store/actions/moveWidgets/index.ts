@@ -17,12 +17,17 @@ export interface MoveWidgetsAction extends Action {
   payload: MoveWidgetsActionPayload;
 }
 
-export const onMoveWidgetsAction = (payload: MoveWidgetsActionPayload): MoveWidgetsAction => ({
+export const onMoveWidgetsAction = (
+  payload: MoveWidgetsActionPayload
+): MoveWidgetsAction => ({
   type: 'MOVE_WIDGETS',
   payload,
 });
 
-export const moveWidgets = (state: DashboardState, action: MoveWidgetsAction): DashboardState => {
+export const moveWidgets = (
+  state: DashboardState,
+  action: MoveWidgetsAction
+): DashboardState => {
   const { vector, complete, widgets } = action.payload;
   const selectedWidgetIds = action.payload.widgets.map((w) => w.id);
   const selectionBox = getSelectionBox(widgets);
@@ -35,7 +40,11 @@ export const moveWidgets = (state: DashboardState, action: MoveWidgetsAction): D
   });
 
   const mover = (widget: DashboardWidget) =>
-    transformWidget(widget, selectionBox, complete ? trimRectPosition(newSelectionBox) : newSelectionBox);
+    transformWidget(
+      widget,
+      selectionBox,
+      complete ? trimRectPosition(newSelectionBox) : newSelectionBox
+    );
 
   const updateWidgets = (widgets: DashboardWidget[]) =>
     widgets.map((widget) => {

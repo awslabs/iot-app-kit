@@ -100,8 +100,12 @@ it('should return alarm stream annotations', () => {
   const { thresholds, dataStreams } = TIME_SERIES_DATA_WITH_ALARMS;
 
   const ALARM_STREAM_ANNOTATIONS = thresholds.filter((yAnnotation) => {
-    return (yAnnotation as unknown as Threshold)!.dataStreamIds!.includes('alarm-asset-id---alarm-state-property-id');
+    return (yAnnotation as unknown as Threshold)!.dataStreamIds!.includes(
+      'alarm-asset-id---alarm-state-property-id'
+    );
   });
 
-  expect(getAlarmStreamThresholds({ thresholds, dataStreams })).toEqual(ALARM_STREAM_ANNOTATIONS);
+  expect(getAlarmStreamThresholds({ thresholds, dataStreams })).toEqual(
+    ALARM_STREAM_ANNOTATIONS
+  );
 });

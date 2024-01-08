@@ -1,5 +1,10 @@
 import React from 'react';
-import { ExpandableSection, Input, Toggle, SpaceBetween } from '@cloudscape-design/components';
+import {
+  ExpandableSection,
+  Input,
+  Toggle,
+  SpaceBetween,
+} from '@cloudscape-design/components';
 import type { FC } from 'react';
 import type { InputProps } from '@cloudscape-design/components';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
@@ -20,7 +25,12 @@ const defaultMessages = {
   url: 'URL',
 };
 
-const LinkSettings: FC<LinkSettingsProps> = ({ href = '', updateHref, isUrl = false, toggleIsUrl }) => {
+const LinkSettings: FC<LinkSettingsProps> = ({
+  href = '',
+  updateHref,
+  isUrl = false,
+  toggleIsUrl,
+}) => {
   const header = (
     <div className='expandable-section-header'>
       <SpaceBetween size='m' direction='horizontal'>
@@ -41,12 +51,18 @@ const LinkSettings: FC<LinkSettingsProps> = ({ href = '', updateHref, isUrl = fa
     </div>
   );
 
-  const onLinkTextChange: NonCancelableEventHandler<InputProps.ChangeDetail> = ({ detail: { value } }) => {
+  const onLinkTextChange: NonCancelableEventHandler<
+    InputProps.ChangeDetail
+  > = ({ detail: { value } }) => {
     updateHref(value);
   };
 
   return (
-    <ExpandableSection headerText={header} defaultExpanded={isUrl} data-test-id='text-widget-link-section'>
+    <ExpandableSection
+      headerText={header}
+      defaultExpanded={isUrl}
+      data-test-id='text-widget-link-section'
+    >
       <div className='link-configuration' style={{ gap: awsui.spaceScaledS }}>
         <label className='section-item-label'>{defaultMessages.url}</label>
         <div className='link-input'>

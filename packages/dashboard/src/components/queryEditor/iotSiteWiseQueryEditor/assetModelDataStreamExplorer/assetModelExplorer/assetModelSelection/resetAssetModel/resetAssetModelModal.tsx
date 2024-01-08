@@ -38,7 +38,8 @@ export const ResetAssetModelModal = ({
         type='warning'
         header='Removing this asset model will remove associated parameters from widgets on this dashboard.'
       >
-        This action cannot be undone. Once reset, you may associate this dashboard with a different asset model.
+        This action cannot be undone. Once reset, you may associate this
+        dashboard with a different asset model.
       </Alert>
     </Modal>
   );

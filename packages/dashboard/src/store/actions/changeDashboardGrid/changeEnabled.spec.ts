@@ -1,5 +1,8 @@
 import { initialState } from '../../state';
-import { changeDashboardGridDragEnabled, onChangeDashboardGridEnabledAction } from './changeEnabled';
+import {
+  changeDashboardGridDragEnabled,
+  onChangeDashboardGridEnabledAction,
+} from './changeEnabled';
 
 it('can change grid enabled', () => {
   expect(

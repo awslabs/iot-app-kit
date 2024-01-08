@@ -6,7 +6,13 @@ import { DataStream } from '@iot-app-kit/core';
 
 const VIEWPORT = { duration: '5m' };
 
-const DATA_STREAM: DataStream = { id: 'abc-1', data: [], resolution: 0, name: 'my-name', color: 'black' };
+const DATA_STREAM: DataStream = {
+  id: 'abc-1',
+  data: [],
+  resolution: 0,
+  name: 'my-name',
+  color: 'black',
+};
 
 it('renders', async () => {
   const query = mockTimeSeriesDataQuery([
@@ -17,7 +23,9 @@ it('renders', async () => {
     },
   ]);
 
-  const { container } = render(<LineChart queries={[query]} viewport={VIEWPORT} />);
+  const { container } = render(
+    <LineChart queries={[query]} viewport={VIEWPORT} />
+  );
   const widget = container.querySelector('iot-app-kit-vis-line-chart');
 
   expect(widget).not.toBeNull();

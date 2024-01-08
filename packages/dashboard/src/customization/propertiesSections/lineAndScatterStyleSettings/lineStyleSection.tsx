@@ -31,18 +31,29 @@ export const LineStyleSection: FC<LineStyleSectionOptions> = ({
   updateDataPointStyle,
 }) => {
   return (
-    <ExpandableSection className='accordian-header' headerText='Widget style' defaultExpanded variant='footer'>
+    <ExpandableSection
+      className='accordian-header'
+      headerText='Widget style'
+      defaultExpanded
+      variant='footer'
+    >
       <Box padding='s'>
         <SpaceBetween size='m'>
           <LineTypeSection type={lineType} updateType={updateType} />
-          <LineStyleDropdown lineStyle={lineStyle} updatelineStyle={updatelineStyle} />
+          <LineStyleDropdown
+            lineStyle={lineStyle}
+            updatelineStyle={updatelineStyle}
+          />
           <LineThicknessDropdown
             lineThickness={lineThickness?.toString() ?? defaultThickness}
             updateLineThickness={(thickness: string) => {
               updateLineThickness(parseInt(thickness));
             }}
           />
-          <DataPointStyleSection dataPointStyle={dataPointStyle} updateDataPointStyle={updateDataPointStyle} />
+          <DataPointStyleSection
+            dataPointStyle={dataPointStyle}
+            updateDataPointStyle={updateDataPointStyle}
+          />
         </SpaceBetween>
       </Box>
     </ExpandableSection>

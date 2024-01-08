@@ -64,8 +64,12 @@ const getLines = (directions: Dir[]): JSX.Element[] =>
   });
 
 const getTopMargin = (isLittleBottom: boolean, theme: Theme) => {
-  const topMarginInternal = isLittleBottom ? 1.5 + WRAPPER_VERTICAL_MARGIN_DIFF : `-${WRAPPER_VERTICAL_MARGIN_DIFF}`;
-  const topMarginOpenSource = isLittleBottom ? 1.3 + AWSUI_TOP_MARGIN_DIFF : `-${AWSUI_TOP_MARGIN_DIFF}`;
+  const topMarginInternal = isLittleBottom
+    ? 1.5 + WRAPPER_VERTICAL_MARGIN_DIFF
+    : `-${WRAPPER_VERTICAL_MARGIN_DIFF}`;
+  const topMarginOpenSource = isLittleBottom
+    ? 1.3 + AWSUI_TOP_MARGIN_DIFF
+    : `-${AWSUI_TOP_MARGIN_DIFF}`;
   return theme === Theme.INTERNAL ? topMarginInternal : topMarginOpenSource;
 };
 
@@ -80,7 +84,8 @@ const getHeight = (width: number, hasRightLine: boolean, theme: Theme) => {
 };
 
 const createLinesSvg = (directions: Dir[], theme: Theme, index: number) => {
-  const width = theme === Theme.INTERNAL ? SVG_WIDTH_IN_REM : AWSUI_SVG_WIDTH_IN_REM;
+  const width =
+    theme === Theme.INTERNAL ? SVG_WIDTH_IN_REM : AWSUI_SVG_WIDTH_IN_REM;
   const leftPos = (index - 1) * 2;
   const rightPos = leftPos + width;
   const rightLine = directions.find((dir) => dir === Dir.Right);
@@ -91,15 +96,27 @@ const createLinesSvg = (directions: Dir[], theme: Theme, index: number) => {
   }
 
   return lines.map((lineDirections) => {
-    const isLittleBottom = lineDirections.length === 1 && lineDirections[0] === Dir.LittleBottom;
-    const isRightLineOnly = lineDirections.length === 1 && lineDirections[0] === Dir.Right;
-    const isTopWithRightLine = lineDirections.length === 1 && lineDirections[0] === Dir.Top && !!rightLine;
+    const isLittleBottom =
+      lineDirections.length === 1 && lineDirections[0] === Dir.LittleBottom;
+    const isRightLineOnly =
+      lineDirections.length === 1 && lineDirections[0] === Dir.Right;
+    const isTopWithRightLine =
+      lineDirections.length === 1 &&
+      lineDirections[0] === Dir.Top &&
+      !!rightLine;
 
-    const paddingLeft = theme === Theme.INTERNAL ? `${BUTTON_PADDING_DIFF}rem` : '';
+    const paddingLeft =
+      theme === Theme.INTERNAL ? `${BUTTON_PADDING_DIFF}rem` : '';
     const topMargin = getTopMargin(isLittleBottom, theme);
-    const height = getHeight(width, isRightLineOnly || isTopWithRightLine, theme);
+    const height = getHeight(
+      width,
+      isRightLineOnly || isTopWithRightLine,
+      theme
+    );
     const viewBox =
-      isRightLineOnly || isTopWithRightLine ? `0 0 ${width} ${width * 2}` : `0 0 ${width} ${TABLE_ROW_HEIGHT_PERCENT}`;
+      isRightLineOnly || isTopWithRightLine
+        ? `0 0 ${width} ${width * 2}`
+        : `0 0 ${width} ${TABLE_ROW_HEIGHT_PERCENT}`;
     return (
       <svg
         key={`${leftPos}${lineDirections.join('_')}${index}`}
@@ -123,7 +140,11 @@ const createLinesSvg = (directions: Dir[], theme: Theme, index: number) => {
   });
 };
 
-export function createPrefixLines<T>(node: ITreeNode<T>, theme: Theme, alwaysExpanded = false) {
+export function createPrefixLines<T>(
+  node: ITreeNode<T>,
+  theme: Theme,
+  alwaysExpanded = false
+) {
   const prefixSequence: JSX.Element[] = [];
   node.getPrefix().forEach((prefix, index) => {
     switch (prefix) {
@@ -131,13 +152,25 @@ export function createPrefixLines<T>(node: ITreeNode<T>, theme: Theme, alwaysExp
       case LinePrefixTypes.ChildOfLastChild:
         break;
       case LinePrefixTypes.LastChild:
-        prefixSequence.splice(index, 0, ...createLinesSvg([Dir.Top, Dir.Right], theme, index));
+        prefixSequence.splice(
+          index,
+          0,
+          ...createLinesSvg([Dir.Top, Dir.Right], theme, index)
+        );
         break;
       case LinePrefixTypes.ChildOfMiddleChild:
-        prefixSequence.splice(index, 0, ...createLinesSvg([Dir.Top, Dir.Bottom], theme, index));
+        prefixSequence.splice(
+          index,
+          0,
+          ...createLinesSvg([Dir.Top, Dir.Bottom], theme, index)
+        );
         break;
       case LinePrefixTypes.MiddleChild:
-        prefixSequence.splice(index, 0, ...createLinesSvg([Dir.Top, Dir.Bottom, Dir.Right], theme, index));
+        prefixSequence.splice(
+          index,
+          0,
+          ...createLinesSvg([Dir.Top, Dir.Bottom, Dir.Right], theme, index)
+        );
         break;
       default:
         prefixSequence.push(<span key='empty' />);

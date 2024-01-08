@@ -25,14 +25,26 @@ describe('unit', () => {
 
   it('renders unit when showUnit is true and provided a property point', () => {
     const someUnit = 'some-Unit';
-    render(<KpiBase unit={someUnit} propertyPoint={point} settings={{ showUnit: true }} />);
+    render(
+      <KpiBase
+        unit={someUnit}
+        propertyPoint={point}
+        settings={{ showUnit: true }}
+      />
+    );
 
     expect(screen.queryByText(someUnit)).not.toBeNull();
   });
 
   it('renders unit when showUnit is true and provided a alarm point', () => {
     const someUnit = 'some-Unit';
-    render(<KpiBase unit={someUnit} alarmPoint={point} settings={{ showUnit: true }} />);
+    render(
+      <KpiBase
+        unit={someUnit}
+        alarmPoint={point}
+        settings={{ showUnit: true }}
+      />
+    );
 
     expect(screen.queryByText(someUnit)).not.toBeNull();
   });
@@ -46,7 +58,13 @@ describe('unit', () => {
 
   it('does not render unit when showUnit is false', () => {
     const someUnit = 'some-Unit';
-    render(<KpiBase unit={someUnit} settings={{ showUnit: false }} propertyPoint={point} />);
+    render(
+      <KpiBase
+        unit={someUnit}
+        settings={{ showUnit: false }}
+        propertyPoint={point}
+      />
+    );
 
     expect(screen.queryByText(someUnit)).toBeNull();
   });
@@ -55,13 +73,23 @@ describe('unit', () => {
 describe('property value', () => {
   it('renders property points y value', () => {
     const Y_VALUE = 123445;
-    render(<KpiBase propertyPoint={{ x: new Date().getTime(), y: Y_VALUE }} settings={{ showName: false }} />);
+    render(
+      <KpiBase
+        propertyPoint={{ x: new Date().getTime(), y: Y_VALUE }}
+        settings={{ showName: false }}
+      />
+    );
     expect(screen.queryByText(Y_VALUE)).not.toBeNull();
   });
 
   it('renders alarm points y value', () => {
     const Y_VALUE = 123445;
-    render(<KpiBase alarmPoint={{ x: new Date().getTime(), y: Y_VALUE }} settings={{ showName: false }} />);
+    render(
+      <KpiBase
+        alarmPoint={{ x: new Date().getTime(), y: Y_VALUE }}
+        settings={{ showName: false }}
+      />
+    );
     expect(screen.queryByText(Y_VALUE)).not.toBeNull();
   });
 
@@ -87,28 +115,48 @@ describe('timestamp', () => {
 
   it('renders property timestamp when showTimestamp is true', () => {
     render(
-      <KpiBase propertyPoint={{ x: PROPERTY_POINT_DATE.getTime(), y: 123123 }} settings={{ showTimestamp: true }} />
+      <KpiBase
+        propertyPoint={{ x: PROPERTY_POINT_DATE.getTime(), y: 123123 }}
+        settings={{ showTimestamp: true }}
+      />
     );
 
-    expect(screen.queryByText(PROPERTY_POINT_DATE.toLocaleString())).not.toBeNull();
+    expect(
+      screen.queryByText(PROPERTY_POINT_DATE.toLocaleString())
+    ).not.toBeNull();
   });
 
   it('does not render property timestamp when showTimestamp is false', () => {
     render(
-      <KpiBase propertyPoint={{ x: PROPERTY_POINT_DATE.getTime(), y: 123123 }} settings={{ showTimestamp: false }} />
+      <KpiBase
+        propertyPoint={{ x: PROPERTY_POINT_DATE.getTime(), y: 123123 }}
+        settings={{ showTimestamp: false }}
+      />
     );
 
     expect(screen.queryByText(PROPERTY_POINT_DATE.toLocaleString())).toBeNull();
   });
 
   it('renders alarm timestamp when showTimestamp is true', () => {
-    render(<KpiBase alarmPoint={{ x: ALARM_POINT_DATE.getTime(), y: 123123 }} settings={{ showTimestamp: true }} />);
+    render(
+      <KpiBase
+        alarmPoint={{ x: ALARM_POINT_DATE.getTime(), y: 123123 }}
+        settings={{ showTimestamp: true }}
+      />
+    );
 
-    expect(screen.queryByText(ALARM_POINT_DATE.toLocaleString())).not.toBeNull();
+    expect(
+      screen.queryByText(ALARM_POINT_DATE.toLocaleString())
+    ).not.toBeNull();
   });
 
   it('does not render alarm timestamp when showTimestamp is false', () => {
-    render(<KpiBase alarmPoint={{ x: ALARM_POINT_DATE.getTime(), y: 123123 }} settings={{ showTimestamp: false }} />);
+    render(
+      <KpiBase
+        alarmPoint={{ x: ALARM_POINT_DATE.getTime(), y: 123123 }}
+        settings={{ showTimestamp: false }}
+      />
+    );
 
     expect(screen.queryByText(ALARM_POINT_DATE.toLocaleString())).toBeNull();
   });
@@ -123,7 +171,9 @@ describe('timestamp', () => {
     );
 
     expect(screen.queryByText(ALARM_POINT_DATE.toLocaleString())).toBeNull();
-    expect(screen.queryByText(PROPERTY_POINT_DATE.toLocaleString())).not.toBeNull();
+    expect(
+      screen.queryByText(PROPERTY_POINT_DATE.toLocaleString())
+    ).not.toBeNull();
   });
 });
 
@@ -157,7 +207,13 @@ describe('loading', () => {
   });
 
   it('does not render icon while loading when showIcon is true', () => {
-    render(<KpiBase isLoading icon={StatusIconType.ACTIVE} settings={{ showIcon: true }} />);
+    render(
+      <KpiBase
+        isLoading
+        icon={StatusIconType.ACTIVE}
+        settings={{ showIcon: true }}
+      />
+    );
     expect(screen.queryByTestId('status-icon-active')).toBeNull();
   });
 
@@ -170,7 +226,13 @@ describe('loading', () => {
 
   it('does not render timestamp while loading and showTimestamp is true', () => {
     const DATE = new Date(2001, 0, 0);
-    render(<KpiBase propertyPoint={{ x: DATE.getTime(), y: 123123 }} isLoading settings={{ showTimestamp: true }} />);
+    render(
+      <KpiBase
+        propertyPoint={{ x: DATE.getTime(), y: 123123 }}
+        isLoading
+        settings={{ showTimestamp: true }}
+      />
+    );
 
     expect(screen.queryByText(DATE.toLocaleString())).toBeNull();
   });
@@ -178,12 +240,16 @@ describe('loading', () => {
 
 describe('icon', () => {
   it('renders icon when showIcon is true', () => {
-    render(<KpiBase icon={StatusIconType.ACTIVE} settings={{ showIcon: true }} />);
+    render(
+      <KpiBase icon={StatusIconType.ACTIVE} settings={{ showIcon: true }} />
+    );
     expect(screen.queryByTestId('status-icon-active')).not.toBeNull();
   });
 
   it('does not render icon when showIcon is false', () => {
-    render(<KpiBase icon={StatusIconType.ACTIVE} settings={{ showIcon: false }} />);
+    render(
+      <KpiBase icon={StatusIconType.ACTIVE} settings={{ showIcon: false }} />
+    );
     expect(screen.queryByTestId('status-icon-active')).toBeNull();
   });
 });

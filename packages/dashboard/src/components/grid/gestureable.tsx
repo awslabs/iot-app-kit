@@ -34,18 +34,24 @@ export const GestureableGrid: React.FC<GesturableGridProps> = ({
 }) => {
   const { width, height, cellSize, enabled } = grid;
 
-  const { dragRef, dropRef, isOver, onPointerDown, onPointerUp } = useGridDragAndDrop({
-    readOnly,
-    enabled,
-    click,
-    drag,
-    dragStart,
-    dragEnd,
-    drop,
-  });
+  const { dragRef, dropRef, isOver, onPointerDown, onPointerUp } =
+    useGridDragAndDrop({
+      readOnly,
+      enabled,
+      click,
+      drag,
+      dragStart,
+      dragEnd,
+      drop,
+    });
 
   return (
-    <div {...gestureable('grid')} ref={dragRef} onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
+    <div
+      {...gestureable('grid')}
+      ref={dragRef}
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+    >
       <div ref={dropRef}>
         <SizedGrid
           width={width}

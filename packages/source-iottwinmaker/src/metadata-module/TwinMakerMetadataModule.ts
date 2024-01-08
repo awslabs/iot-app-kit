@@ -1,6 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { GetEntityCommand, IoTTwinMakerClient, ListEntitiesCommand } from '@aws-sdk/client-iottwinmaker';
-import type { EntitySummary, GetEntityResponse, ListEntitiesResponse } from '@aws-sdk/client-iottwinmaker';
+import {
+  GetEntityCommand,
+  IoTTwinMakerClient,
+  ListEntitiesCommand,
+} from '@aws-sdk/client-iottwinmaker';
+import type {
+  EntitySummary,
+  GetEntityResponse,
+  ListEntitiesResponse,
+} from '@aws-sdk/client-iottwinmaker';
 import type { ErrorDetails } from '@iot-app-kit/core';
 import { QueryClient } from '@tanstack/query-core';
 import { isDefined } from '../utils/propertyValueUtils';
@@ -26,8 +34,15 @@ export class TwinMakerMetadataModule {
     this.cachedQueryClient = cachedQueryClient;
   }
 
-  fetchEntity = async ({ entityId }: { entityId: string }): Promise<GetEntityResponse> => {
-    const request = new GetEntityCommand({ workspaceId: this.workspaceId, entityId });
+  fetchEntity = async ({
+    entityId,
+  }: {
+    entityId: string;
+  }): Promise<GetEntityResponse> => {
+    const request = new GetEntityCommand({
+      workspaceId: this.workspaceId,
+      entityId,
+    });
 
     try {
       const response = await this.cachedQueryClient.fetchQuery({
@@ -37,7 +52,11 @@ export class TwinMakerMetadataModule {
 
       return response;
     } catch (err: any) {
-      const errorDetail: ErrorDetails = { msg: err.message, type: err.name, status: err.$metadata?.httpStatusCode };
+      const errorDetail: ErrorDetails = {
+        msg: err.message,
+        type: err.name,
+        status: err.$metadata?.httpStatusCode,
+      };
 
       throw errorDetail;
     }
@@ -49,14 +68,20 @@ export class TwinMakerMetadataModule {
     componentTypeId: string | undefined;
   }): Promise<GetEntityResponse[]> => {
     return this.cachedQueryClient.fetchQuery({
-      queryKey: ['list-entities-by-component-type-id', this.workspaceId, componentTypeId],
+      queryKey: [
+        'list-entities-by-component-type-id',
+        this.workspaceId,
+        componentTypeId,
+      ],
       queryFn: async () => {
         const summaries = await this._requestEntitiesByComponentTypeId({
           componentTypeId,
         });
 
         const requests = summaries.map((summary) =>
-          summary.entityId ? this.fetchEntity({ entityId: summary.entityId }) : undefined
+          summary.entityId
+            ? this.fetchEntity({ entityId: summary.entityId })
+            : undefined
         );
 
         return (await Promise.all(requests)).filter(isDefined);
@@ -97,7 +122,11 @@ export class TwinMakerMetadataModule {
 
       return summaries;
     } catch (err: any) {
-      const errorDetail: ErrorDetails = { msg: err.message, type: err.name, status: err.$metadata?.httpStatusCode };
+      const errorDetail: ErrorDetails = {
+        msg: err.message,
+        type: err.name,
+        status: err.$metadata?.httpStatusCode,
+      };
 
       throw errorDetail;
     }

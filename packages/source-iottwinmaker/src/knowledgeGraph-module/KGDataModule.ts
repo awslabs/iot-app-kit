@@ -33,9 +33,8 @@ export class KGDataModule implements TwinMakerKGQueryDataModule {
       maxResults: resultsPerPage,
     };
     do {
-      const response: ExecuteQueryCommandOutput = await this.twinMakerClient.send(
-        new ExecuteQueryCommand(commandInput)
-      );
+      const response: ExecuteQueryCommandOutput =
+        await this.twinMakerClient.send(new ExecuteQueryCommand(commandInput));
       pageCounter = pageCounter + 1;
       if (response.rows) {
         rows.push(...response.rows);
@@ -43,9 +42,14 @@ export class KGDataModule implements TwinMakerKGQueryDataModule {
       if (response.columnDescriptions && columnDescriptions.length === 0) {
         columnDescriptions = response.columnDescriptions;
       }
-      if (response.$metadata && Object.keys($metadata).length === 0) $metadata = response.$metadata;
+      if (response.$metadata && Object.keys($metadata).length === 0)
+        $metadata = response.$metadata;
       commandInput.nextToken = response.nextToken;
-    } while (maxPagesCount ? commandInput.nextToken && pageCounter < maxPagesCount : commandInput.nextToken);
+    } while (
+      maxPagesCount
+        ? commandInput.nextToken && pageCounter < maxPagesCount
+        : commandInput.nextToken
+    );
     return { rows, columnDescriptions, $metadata };
   };
 }

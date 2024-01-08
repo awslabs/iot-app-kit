@@ -3,7 +3,11 @@ import { v4 as uuid } from 'uuid';
 import type { IoTSiteWiseDataStreamQuery } from '~/types';
 
 export const assignDefaultRefId = (
-  { assets = [], properties = [], assetModels = [] }: IoTSiteWiseDataStreamQuery,
+  {
+    assets = [],
+    properties = [],
+    assetModels = [],
+  }: IoTSiteWiseDataStreamQuery,
   getId: () => string = uuid
 ) => ({
   assets: assets.map(({ properties, ...others }) => ({

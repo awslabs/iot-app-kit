@@ -3,7 +3,9 @@ import type { AssetId, AssetPropertyId, PropertyAlias } from '../types';
 // Something that is not likely to occur in any UUID implementation or propertyAlias
 const ID_SEPARATOR = '---';
 
-type PropertyInfo = { assetId: AssetId; propertyId: AssetPropertyId } | { propertyAlias: PropertyAlias };
+type PropertyInfo =
+  | { assetId: AssetId; propertyId: AssetPropertyId }
+  | { propertyAlias: PropertyAlias };
 
 export const toId = (propertyInfo: PropertyInfo): string => {
   if ('assetId' in propertyInfo) {

@@ -1,4 +1,7 @@
-import { type AssetSummary, type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  type AssetSummary,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import React from 'react';
 
 import { AssetTable } from './assetTable';
@@ -12,7 +15,11 @@ export interface AssetExplorerProps {
 }
 
 /** User interface element enabling the exploration and selection of assets. */
-export function AssetExplorer({ onSelect, isWithoutHeader, client }: AssetExplorerProps) {
+export function AssetExplorer({
+  onSelect,
+  isWithoutHeader,
+  client,
+}: AssetExplorerProps) {
   const [parentAssetId, setParentAssetId] = useParentAssetId();
   const {
     assets,

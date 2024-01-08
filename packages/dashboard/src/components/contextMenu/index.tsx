@@ -1,7 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Menu from './menu';
 import ContextMenuOption from './option';
-import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from '../grid/getDashboardPosition';
+import {
+  DASHBOARD_CONTAINER_ID,
+  getDashboardPosition,
+} from '../grid/getDashboardPosition';
 import { useKeyPress } from '~/hooks/useKeyPress';
 import { createContextMenuOptions } from './contextMenuOptions';
 import { useLayers } from '../internalDashboard/useLayers';
@@ -32,7 +35,8 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
   sendWidgetsToBack,
 }) => {
   const [contextMenuOpen, setContextMenuOpen] = useState<boolean>(false);
-  const [contextMenuPosition, setContextMenuPosition] = useState<Position | null>(null);
+  const [contextMenuPosition, setContextMenuPosition] =
+    useState<Position | null>(null);
 
   const { contextMenuLayer } = useLayers();
 
@@ -74,7 +78,9 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
   };
 
   const copyAction = withClose(() => copyWidgets());
-  const pasteAction = withClose(() => pasteWidgets(contextMenuPosition || { x: 0, y: 0 }));
+  const pasteAction = withClose(() =>
+    pasteWidgets(contextMenuPosition || { x: 0, y: 0 })
+  );
   const deleteAction = withClose(() => deleteWidgets());
   const bringToFrontAction = withClose(() => bringWidgetsToFront());
   const sendToBackAction = withClose(() => sendWidgetsToBack());
@@ -96,7 +102,10 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 
   return contextMenuOpen && contextMenuPosition ? (
     <div>
-      <Menu clickOutside={onClickOutside} position={{ ...contextMenuPosition, z: contextMenuLayer }}>
+      <Menu
+        clickOutside={onClickOutside}
+        position={{ ...contextMenuPosition, z: contextMenuLayer }}
+      >
         {configuration.map(({ id: sectionId, options }) => (
           <ul
             className='iot-context-list-container'
@@ -104,7 +113,13 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
             style={{ margin: `calc(${spaceScaledXxxs} * -1)` }}
           >
             {options.map(({ id: optionId, text, action, hotkey, disabled }) => (
-              <ContextMenuOption key={optionId} text={text} action={action} hotkey={hotkey} disabled={disabled} />
+              <ContextMenuOption
+                key={optionId}
+                text={text}
+                action={action}
+                hotkey={hotkey}
+                disabled={disabled}
+              />
             ))}
           </ul>
         ))}

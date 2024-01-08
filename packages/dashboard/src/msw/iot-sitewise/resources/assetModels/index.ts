@@ -144,7 +144,10 @@ export const STORAGE_TANK_ASSET_MODEL_HIERARCHY = {
 export const PRODUCTION_LINE_ASSET_MODEL = assetModelFactory.create({
   assetModelName: 'Production Line',
   assetModelDescription: 'Production Line Asset Model',
-  assetModelHierarchies: [REACTOR_ASSET_MODEL_HIERARCHY, STORAGE_TANK_ASSET_MODEL_HIERARCHY],
+  assetModelHierarchies: [
+    REACTOR_ASSET_MODEL_HIERARCHY,
+    STORAGE_TANK_ASSET_MODEL_HIERARCHY,
+  ],
 });
 
 const productionLineAssetModelHierarchyId = uuid();
@@ -195,7 +198,12 @@ export const SITE_ASSET_MODEL = assetModelFactory.create({
 });
 
 export const ASSET_MODELS = {
-  models: [SITE_ASSET_MODEL, PRODUCTION_LINE_ASSET_MODEL, REACTOR_ASSET_MODEL, STORAGE_TANK_ASSET_MODEL],
+  models: [
+    SITE_ASSET_MODEL,
+    PRODUCTION_LINE_ASSET_MODEL,
+    REACTOR_ASSET_MODEL,
+    STORAGE_TANK_ASSET_MODEL,
+  ],
   getAll: function () {
     return this.models;
   },

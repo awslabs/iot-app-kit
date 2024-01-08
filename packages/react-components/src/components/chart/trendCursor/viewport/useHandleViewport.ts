@@ -41,7 +41,10 @@ export const useHandleViewport = ({
         } else {
           g.ignore = false;
 
-          const { trendCursorsSeriesMakersValue, trendCursorsSeriesMakersInPixels } = calculateSeriesMakers(
+          const {
+            trendCursorsSeriesMakersValue,
+            trendCursorsSeriesMakersInPixels,
+          } = calculateSeriesMakers(
             series,
             g.timestampInMs,
             chartRef,
@@ -49,7 +52,10 @@ export const useHandleViewport = ({
             significantDigits
           );
           g.yAxisMarkerValue = trendCursorsSeriesMakersValue;
-          g.children = updateTrendCursorLineMarkers(g.children, trendCursorsSeriesMakersInPixels);
+          g.children = updateTrendCursorLineMarkers(
+            g.children,
+            trendCursorsSeriesMakersInPixels
+          );
 
           // update the X in any case
           g.x = x;

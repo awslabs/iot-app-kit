@@ -10,7 +10,10 @@ export default {
   title: 'Widgets/Status/Status base',
   component: StatusBase,
   argTypes: {
-    propertyPoint: { control: { type: 'object' }, defaultValue: { x: 123123213, y: 100 } },
+    propertyPoint: {
+      control: { type: 'object' },
+      defaultValue: { x: 123123213, y: 100 },
+    },
     alarmPoint: { control: { type: 'object' } },
     name: { control: { type: 'text' }, defaultValue: 'Windmill' },
     error: { control: { type: 'text' } },
@@ -33,7 +36,10 @@ export default {
   },
 } as ComponentMeta<typeof StatusBase>;
 
-type StoryInputs = StatusSettings & { alarmPoint?: DataPoint; propertyPoint?: DataPoint };
+type StoryInputs = StatusSettings & {
+  alarmPoint?: DataPoint;
+  propertyPoint?: DataPoint;
+};
 
 export const Main: ComponentStory<FC<StoryInputs>> = ({
   showName,
@@ -44,6 +50,9 @@ export const Main: ComponentStory<FC<StoryInputs>> = ({
   ...args
 }) => (
   <div style={{ width: '200px', height: '200px' }}>
-    <StatusBase {...args} settings={{ showName, showValue, showUnit, fontSize, secondaryFontSize }} />
+    <StatusBase
+      {...args}
+      settings={{ showName, showValue, showUnit, fontSize, secondaryFontSize }}
+    />
   </div>
 );

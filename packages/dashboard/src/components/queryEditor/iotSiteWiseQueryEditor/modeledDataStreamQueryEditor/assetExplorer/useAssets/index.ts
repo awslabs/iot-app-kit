@@ -1,1 +1,4 @@
-export { useAssets, type UseAssetsOptions as UseAssetsProps } from './useAssets';
+export {
+  useAssets,
+  type UseAssetsOptions as UseAssetsProps,
+} from './useAssets';

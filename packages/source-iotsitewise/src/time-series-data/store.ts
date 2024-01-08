@@ -1,6 +1,12 @@
 import merge from 'lodash.merge';
 import { completeDataStreams } from '../completeDataStreams';
-import type { Threshold, DataStream, ErrorDetails, TimeSeriesData, Viewport } from '@iot-app-kit/core';
+import type {
+  Threshold,
+  DataStream,
+  ErrorDetails,
+  TimeSeriesData,
+  Viewport,
+} from '@iot-app-kit/core';
 import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import type { Alarms } from '../alarms/iotevents';
 import type { ModeledDataStream } from '../asset-modules/describeModeledDataStreamRequest/types';
@@ -31,7 +37,14 @@ export class CreateTimeSeriesDataStore {
   }
 
   update() {
-    const { thresholds, viewport, alarms, assetModels, dataStreams, modeledDataStreams } = this.state; //add assetProeprties
+    const {
+      thresholds,
+      viewport,
+      alarms,
+      assetModels,
+      dataStreams,
+      modeledDataStreams,
+    } = this.state; //add assetProeprties
 
     this.callback({
       dataStreams: completeDataStreams({
@@ -46,15 +59,19 @@ export class CreateTimeSeriesDataStore {
   }
 
   appendTimeSeriesData(updatedState: Partial<TimeSeriesDataStore>): void {
-    const { thresholds, dataStreams, modeledDataStreams, ...rest } = updatedState;
+    const { thresholds, dataStreams, modeledDataStreams, ...rest } =
+      updatedState;
 
     const newDataStreams = (dataStreams as DataStream[])?.filter(
-      (dataStream) => !this.state.dataStreams.map(({ id }) => id).includes(dataStream.id)
+      (dataStream) =>
+        !this.state.dataStreams.map(({ id }) => id).includes(dataStream.id)
     );
 
     this.state.dataStreams = [
       ...this.state.dataStreams.map((dataStream) => {
-        const updatedDataStream = (dataStreams as DataStream[])?.find(({ id }) => dataStream.id === id);
+        const updatedDataStream = (dataStreams as DataStream[])?.find(
+          ({ id }) => dataStream.id === id
+        );
 
         if (updatedDataStream) {
           return { ...dataStream, ...updatedDataStream };
@@ -65,7 +82,10 @@ export class CreateTimeSeriesDataStore {
       ...(newDataStreams || []),
     ];
 
-    this.state.modeledDataStreams = [...this.state.modeledDataStreams, ...(modeledDataStreams || [])];
+    this.state.modeledDataStreams = [
+      ...this.state.modeledDataStreams,
+      ...(modeledDataStreams || []),
+    ];
 
     this.state.thresholds = [...this.state.thresholds, ...(thresholds || [])];
 

@@ -3,7 +3,11 @@ import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { batchGetHistoricalPropertyDataPoints } from './batchGetHistoricalPropertyDataPoints';
 import { batchGetAggregatedPropertyDataPoints } from './batchGetAggregatedPropertyDataPoints';
 import { batchGetLatestPropertyDataPoints } from './batchGetLatestPropertyDataPoints';
-import type { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
+import type {
+  OnSuccessCallback,
+  ErrorCallback,
+  RequestInformationAndRange,
+} from '@iot-app-kit/core';
 import type { SiteWiseDataSourceSettings } from '../types';
 
 export type LatestPropertyParams = {
@@ -31,10 +35,19 @@ export class SiteWiseClient {
   private settings: SiteWiseDataSourceSettings;
 
   private latestPropertyDataLoader: DataLoader<LatestPropertyParams, void>;
-  private historicalPropertyDataLoader: DataLoader<HistoricalPropertyParams, void>;
-  private aggregatedPropertyDataLoader: DataLoader<AggregatedPropertyParams, void>;
+  private historicalPropertyDataLoader: DataLoader<
+    HistoricalPropertyParams,
+    void
+  >;
+  private aggregatedPropertyDataLoader: DataLoader<
+    AggregatedPropertyParams,
+    void
+  >;
 
-  constructor(siteWiseSdk: IoTSiteWiseClient, settings: SiteWiseDataSourceSettings = {}) {
+  constructor(
+    siteWiseSdk: IoTSiteWiseClient,
+    settings: SiteWiseDataSourceSettings = {}
+  ) {
     this.siteWiseSdk = siteWiseSdk;
     this.settings = settings;
 
@@ -45,7 +58,10 @@ export class SiteWiseClient {
      */
     this.latestPropertyDataLoader = new DataLoader<LatestPropertyParams, void>(
       async (keys) => {
-        batchGetLatestPropertyDataPoints({ params: keys.flat(), client: this.siteWiseSdk });
+        batchGetLatestPropertyDataPoints({
+          params: keys.flat(),
+          client: this.siteWiseSdk,
+        });
         return keys.map(() => undefined); // values are updated in data cache and don't need to be rebroadcast
       },
       {
@@ -55,9 +71,15 @@ export class SiteWiseClient {
       }
     );
 
-    this.historicalPropertyDataLoader = new DataLoader<HistoricalPropertyParams, void>(
+    this.historicalPropertyDataLoader = new DataLoader<
+      HistoricalPropertyParams,
+      void
+    >(
       async (keys) => {
-        batchGetHistoricalPropertyDataPoints({ params: keys.flat(), client: this.siteWiseSdk });
+        batchGetHistoricalPropertyDataPoints({
+          params: keys.flat(),
+          client: this.siteWiseSdk,
+        });
         return keys.map(() => undefined);
       },
       {
@@ -67,9 +89,15 @@ export class SiteWiseClient {
       }
     );
 
-    this.aggregatedPropertyDataLoader = new DataLoader<AggregatedPropertyParams, void>(
+    this.aggregatedPropertyDataLoader = new DataLoader<
+      AggregatedPropertyParams,
+      void
+    >(
       async (keys) => {
-        batchGetAggregatedPropertyDataPoints({ params: keys.flat(), client: this.siteWiseSdk });
+        batchGetAggregatedPropertyDataPoints({
+          params: keys.flat(),
+          client: this.siteWiseSdk,
+        });
         return keys.map(() => undefined);
       },
       {
@@ -84,11 +112,15 @@ export class SiteWiseClient {
     return this.latestPropertyDataLoader.load(params);
   }
 
-  getHistoricalPropertyDataPoints(params: HistoricalPropertyParams): Promise<void> {
+  getHistoricalPropertyDataPoints(
+    params: HistoricalPropertyParams
+  ): Promise<void> {
     return this.historicalPropertyDataLoader.load(params);
   }
 
-  getAggregatedPropertyDataPoints(params: AggregatedPropertyParams): Promise<void> {
+  getAggregatedPropertyDataPoints(
+    params: AggregatedPropertyParams
+  ): Promise<void> {
     return this.aggregatedPropertyDataLoader.load(params);
   }
 }

@@ -14,10 +14,22 @@ type GestureHooksProps = {
   cellSize: DashboardState['grid']['cellSize'];
 };
 
-export const useGestures = ({ dashboardWidgets, selectedWidgets, cellSize }: GestureHooksProps) => {
-  const [activeGesture, setActiveGesture] = useState<Gesture | undefined>(undefined);
+export const useGestures = ({
+  dashboardWidgets,
+  selectedWidgets,
+  cellSize,
+}: GestureHooksProps) => {
+  const [activeGesture, setActiveGesture] = useState<Gesture | undefined>(
+    undefined
+  );
 
-  const { userSelection, onPointSelect, onSelectionStart, onSelectionUpdate, onSelectionEnd } = useSelectionGestures({
+  const {
+    userSelection,
+    onPointSelect,
+    onSelectionStart,
+    onSelectionUpdate,
+    onSelectionEnd,
+  } = useSelectionGestures({
     setActiveGesture,
     dashboardWidgets,
     cellSize: cellSize,
@@ -41,10 +53,18 @@ export const useGestures = ({ dashboardWidgets, selectedWidgets, cellSize }: Ges
      * Note: isOnSelection refers to the cursor being in a location which is over the selection rect but not
      * over a selected widget. To understand if we are on a widget in the selection we must use the widget id
      */
-    const { isOnResizeHandle, isOnSelection, isOnWidget, widgetId, isUnion, anchor } =
-      determineTargetGestures(dragEvent);
+    const {
+      isOnResizeHandle,
+      isOnSelection,
+      isOnWidget,
+      widgetId,
+      isUnion,
+      anchor,
+    } = determineTargetGestures(dragEvent);
 
-    const isOnWidgetInSelection = selectedWidgets.some((widget) => widget.id === widgetId);
+    const isOnWidgetInSelection = selectedWidgets.some(
+      (widget) => widget.id === widgetId
+    );
 
     const isMoveGesture = !isUnion && (isOnWidget || isOnSelection);
 

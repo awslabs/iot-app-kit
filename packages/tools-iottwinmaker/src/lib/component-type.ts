@@ -11,7 +11,9 @@ interface ComponentTypeProvider {
   (): Promise<ComponentTypeDefinition>;
 }
 
-function fromComponentTypeDefinition(componentTypeDefinition: ComponentTypeDefinition): ComponentTypeProvider {
+function fromComponentTypeDefinition(
+  componentTypeDefinition: ComponentTypeDefinition
+): ComponentTypeProvider {
   return () => {
     return new Promise((resolve) => resolve(componentTypeDefinition));
   };
@@ -23,7 +25,10 @@ function fromComponentTypeDefinition(componentTypeDefinition: ComponentTypeDefin
  * @param componentTypeDefinition componentTypeDefinition
  * @returns promise boolean
  */
-async function createComponentTypeIfNotExists(workspaceId: string, componentTypeDefinition: ComponentTypeDefinition) {
+async function createComponentTypeIfNotExists(
+  workspaceId: string,
+  componentTypeDefinition: ComponentTypeDefinition
+) {
   try {
     await aws().tm.getComponentType({
       workspaceId,
@@ -54,10 +59,11 @@ async function deleteComponentTypes(workspaceId: string, nonDryRun: boolean) {
     let nextToken: string | undefined = '';
     retryNeeded = false;
     while (nextToken != undefined) {
-      const result: ListComponentTypesCommandOutput = await aws().tm.listComponentTypes({
-        workspaceId,
-        nextToken: nextToken,
-      });
+      const result: ListComponentTypesCommandOutput =
+        await aws().tm.listComponentTypes({
+          workspaceId,
+          nextToken: nextToken,
+        });
       nextToken = result['nextToken'];
       const componentTypeList = result['componentTypeSummaries'];
       if (componentTypeList != undefined) {
@@ -74,7 +80,11 @@ async function deleteComponentTypes(workspaceId: string, nonDryRun: boolean) {
               console.log(`deleted component-type: ${componentTypeId}`);
             } catch (e) {
               const error = String(e);
-              if (error.indexOf('Not allowed to modify component type in reserved namespace') > -1) {
+              if (
+                error.indexOf(
+                  'Not allowed to modify component type in reserved namespace'
+                ) > -1
+              ) {
                 // ignore
               } else {
                 retryNeeded = true;
@@ -93,7 +103,10 @@ async function deleteComponentTypes(workspaceId: string, nonDryRun: boolean) {
  * @param componentTypeId component type ID
  * @returns void promise
  */
-async function waitForComponentTypeActive(workspaceId: string, componentTypeId: string) {
+async function waitForComponentTypeActive(
+  workspaceId: string,
+  componentTypeId: string
+) {
   let timeout = 20;
   while (timeout != 0) {
     timeout--;

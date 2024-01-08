@@ -1,5 +1,8 @@
 import React from 'react';
-import { gestureable, idable } from '../internalDashboard/gestures/determineTargetGestures';
+import {
+  gestureable,
+  idable,
+} from '../internalDashboard/gestures/determineTargetGestures';
 import DynamicWidgetComponent from './dynamicWidget';
 
 import './widget.css';
@@ -22,7 +25,12 @@ export type WidgetProps = {
  * mark it with the handles required to capture gestures
  *
  */
-const WidgetComponent: React.FC<WidgetProps> = ({ cellSize, widget, messageOverrides, readOnly }) => {
+const WidgetComponent: React.FC<WidgetProps> = ({
+  cellSize,
+  widget,
+  messageOverrides,
+  readOnly,
+}) => {
   const { x, y, z, width, height } = widget;
 
   return (
@@ -38,7 +46,10 @@ const WidgetComponent: React.FC<WidgetProps> = ({ cellSize, widget, messageOverr
         height: `${cellSize * height}px`,
       }}
     >
-      <DynamicWidgetComponent widget={widget} widgetsMessages={messageOverrides.widgets} />
+      <DynamicWidgetComponent
+        widget={widget}
+        widgetsMessages={messageOverrides.widgets}
+      />
     </div>
   );
 };

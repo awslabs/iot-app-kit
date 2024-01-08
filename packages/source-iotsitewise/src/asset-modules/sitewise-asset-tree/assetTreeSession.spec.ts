@@ -2,7 +2,10 @@ import { SiteWiseAssetTreeSession } from './assetTreeSession';
 import { BranchReference } from './types';
 import { HIERARCHY_ROOT_ID, LoadingStateEnum } from '../sitewise/types';
 import { PropertyDataType } from '@aws-sdk/client-iotsitewise';
-import { MockSiteWiseAssetSession, MockSiteWiseAssetsReplayData } from '../mocks';
+import {
+  MockSiteWiseAssetSession,
+  MockSiteWiseAssetsReplayData,
+} from '../mocks';
 import { sampleAssetModel } from '../../__mocks__/assetModel';
 import { sampleAssetSummary } from '../../__mocks__/asset';
 import type { HierarchyAssetSummaryList } from '../sitewise/types';
@@ -20,9 +23,15 @@ it('initializes', () => {
     assets: [sampleAssetSummary],
     loadingState: LoadingStateEnum.LOADED,
   };
-  replayData.addHierarchyAssetSummaryList({ assetHierarchyId: HIERARCHY_ROOT_ID }, testData);
+  replayData.addHierarchyAssetSummaryList(
+    { assetHierarchyId: HIERARCHY_ROOT_ID },
+    testData
+  );
   replayData.addAssetSummaries([sampleAssetSummary]);
-  expect(() => new SiteWiseAssetTreeSession(new MockSiteWiseAssetSession(replayData), {})).not.toThrowError();
+  expect(
+    () =>
+      new SiteWiseAssetTreeSession(new MockSiteWiseAssetSession(replayData), {})
+  ).not.toThrowError();
 });
 
 describe('root loading functionality', () => {
@@ -35,7 +44,10 @@ describe('root loading functionality', () => {
     assets: [rootAsset],
     loadingState: LoadingStateEnum.NOT_LOADED,
   };
-  replayData.addHierarchyAssetSummaryList({ assetHierarchyId: HIERARCHY_ROOT_ID }, rootHierarchy);
+  replayData.addHierarchyAssetSummaryList(
+    { assetHierarchyId: HIERARCHY_ROOT_ID },
+    rootHierarchy
+  );
   replayData.addAssetSummaries([rootAsset]);
 
   it('When you subscribe the root is returned', (done) => {
@@ -51,7 +63,9 @@ describe('root loading functionality', () => {
         expect(treeRoot.length).toEqual(1);
         expect(treeRoot[0]?.asset).toEqual(rootAsset);
         expect(treeRoot[0]?.hierarchies.size).toEqual(1);
-        expect(treeRoot[0]?.hierarchies.get('bananas1234')?.isExpanded).toBeFalse();
+        expect(
+          treeRoot[0]?.hierarchies.get('bananas1234')?.isExpanded
+        ).toBeFalse();
         expect(treeRoot[0]?.hierarchies.get('bananas1234')).toEqual({
           children: [],
           id: 'bananas1234',
@@ -74,9 +88,12 @@ describe('branch loading functionality', () => {
   // This time the asset has no hierarchis and the loading will stop at just the asset
 
   it('When you subscribe the asset is returned', (done) => {
-    const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(new MockSiteWiseAssetSession(replayData), {
-      asset: { assetId: rootAsset.id as string },
-    });
+    const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
+      new MockSiteWiseAssetSession(replayData),
+      {
+        asset: { assetId: rootAsset.id as string },
+      }
+    );
     session.subscribe({
       next: (treeRoot) => {
         if (!treeRoot || treeRoot.length == 0) {
@@ -101,15 +118,21 @@ describe('model loading', () => {
     assets: [rootAsset],
     loadingState: LoadingStateEnum.NOT_LOADED,
   };
-  replayData.addHierarchyAssetSummaryList({ assetHierarchyId: HIERARCHY_ROOT_ID }, rootHierarchy);
+  replayData.addHierarchyAssetSummaryList(
+    { assetHierarchyId: HIERARCHY_ROOT_ID },
+    rootHierarchy
+  );
   replayData.addAssetSummaries([rootAsset]);
   replayData.addAssetModels([sampleAssetModel]);
 
   it('When you request the model you get the model', (done) => {
-    const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(new MockSiteWiseAssetSession(replayData), {
-      asset: { assetId: rootAsset.id as string },
-      withModels: true,
-    });
+    const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
+      new MockSiteWiseAssetSession(replayData),
+      {
+        asset: { assetId: rootAsset.id as string },
+        withModels: true,
+      }
+    );
     session.subscribe({
       next: (treeRoot) => {
         if (!treeRoot || treeRoot.length == 0) {
@@ -134,9 +157,14 @@ describe('asset property loading', () => {
     assets: [rootAsset],
     loadingState: LoadingStateEnum.NOT_LOADED,
   };
-  replayData.addHierarchyAssetSummaryList({ assetHierarchyId: HIERARCHY_ROOT_ID }, rootHierarchy);
+  replayData.addHierarchyAssetSummaryList(
+    { assetHierarchyId: HIERARCHY_ROOT_ID },
+    rootHierarchy
+  );
   replayData.addAssetSummaries([rootAsset]);
-  const modelWithProperties: DescribeAssetModelResponse = { ...sampleAssetModel };
+  const modelWithProperties: DescribeAssetModelResponse = {
+    ...sampleAssetModel,
+  };
   const sampleProperty: AssetModelProperty = {
     dataType: PropertyDataType.STRING,
     id: 'modelNumber.id.1234',
@@ -179,10 +207,16 @@ describe('asset property loading', () => {
   });
 
   it('When you request a property and it exists it is attached to the asset node', (done) => {
-    const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(new MockSiteWiseAssetSession(replayData), {
-      withModels: true,
-      withPropertyValues: ['propertyNotInModel.id.1234', 'modelNumber.id.1234'],
-    });
+    const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
+      new MockSiteWiseAssetSession(replayData),
+      {
+        withModels: true,
+        withPropertyValues: [
+          'propertyNotInModel.id.1234',
+          'modelNumber.id.1234',
+        ],
+      }
+    );
     session.subscribe({
       next: (treeRoot) => {
         if (!treeRoot || treeRoot.length == 0) {
@@ -192,7 +226,9 @@ describe('asset property loading', () => {
         expect(treeRoot[0]?.asset).toEqual(rootAsset);
         expect(treeRoot[0]?.model).toEqual(modelWithProperties);
         expect(treeRoot[0]?.properties.size).toEqual(1);
-        expect(treeRoot[0]?.properties.get('modelNumber.id.1234')).toEqual(expectedPropertyValue);
+        expect(treeRoot[0]?.properties.get('modelNumber.id.1234')).toEqual(
+          expectedPropertyValue
+        );
         done();
       },
     });
@@ -213,14 +249,20 @@ describe('expand functionality', () => {
     assets: [rootAsset],
     loadingState: LoadingStateEnum.NOT_LOADED,
   };
-  replayData.addHierarchyAssetSummaryList({ assetHierarchyId: HIERARCHY_ROOT_ID }, rootHierarchy);
+  replayData.addHierarchyAssetSummaryList(
+    { assetHierarchyId: HIERARCHY_ROOT_ID },
+    rootHierarchy
+  );
 
   const bananaHierarchy: HierarchyAssetSummaryList = {
     assetHierarchyId: 'bananas1234',
     assets: [bananaOne, bananaTwo],
     loadingState: LoadingStateEnum.NOT_LOADED,
   };
-  replayData.addHierarchyAssetSummaryList({ assetId: rootAsset.id, assetHierarchyId: 'bananas1234' }, bananaHierarchy);
+  replayData.addHierarchyAssetSummaryList(
+    { assetId: rootAsset.id, assetHierarchyId: 'bananas1234' },
+    bananaHierarchy
+  );
 
   replayData.addAssetSummaries([rootAsset, bananaOne, bananaTwo]);
 
@@ -241,10 +283,18 @@ describe('expand functionality', () => {
         expect(treeRoot[0]?.asset).toEqual(rootAsset);
         expect(treeRoot[0]?.hierarchies.size).toEqual(1);
         expect(treeRoot[0]?.hierarchies.get('bananas1234')).not.toBeUndefined();
-        expect(treeRoot[0]?.hierarchies.get('bananas1234')?.isExpanded).toBeTrue();
-        expect(treeRoot[0]?.hierarchies.get('bananas1234')?.children.length).toEqual(2);
-        expect(treeRoot[0]?.hierarchies.get('bananas1234')?.children[0].asset).toEqual(bananaOne);
-        expect(treeRoot[0]?.hierarchies.get('bananas1234')?.children[1].asset).toEqual(bananaTwo);
+        expect(
+          treeRoot[0]?.hierarchies.get('bananas1234')?.isExpanded
+        ).toBeTrue();
+        expect(
+          treeRoot[0]?.hierarchies.get('bananas1234')?.children.length
+        ).toEqual(2);
+        expect(
+          treeRoot[0]?.hierarchies.get('bananas1234')?.children[0].asset
+        ).toEqual(bananaOne);
+        expect(
+          treeRoot[0]?.hierarchies.get('bananas1234')?.children[1].asset
+        ).toEqual(bananaTwo);
         done();
       },
     });
@@ -266,7 +316,9 @@ describe('expand functionality', () => {
         expect(treeRoot[0]?.asset).toEqual(rootAsset);
         expect(treeRoot[0]?.asset).toEqual(rootAsset);
         expect(treeRoot[0]?.hierarchies.size).toEqual(1);
-        expect(treeRoot[0]?.hierarchies.get('bananas1234')?.children.length).toEqual(0);
+        expect(
+          treeRoot[0]?.hierarchies.get('bananas1234')?.children.length
+        ).toEqual(0);
         done();
       },
     });
@@ -276,14 +328,21 @@ describe('expand functionality', () => {
 describe('error handling', () => {
   const replayData = new MockSiteWiseAssetsReplayData();
 
-  const error = { msg: 'id not found', type: 'ResourceNotFoundException', status: 'ResourceNotFoundException' };
+  const error = {
+    msg: 'id not found',
+    type: 'ResourceNotFoundException',
+    status: 'ResourceNotFoundException',
+  };
 
   replayData.addErrors([error]);
 
   it('it returns the error when requesting root asset fails', (done) => {
-    const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(new MockSiteWiseAssetSession(replayData), {
-      asset: { assetId: '' },
-    });
+    const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
+      new MockSiteWiseAssetSession(replayData),
+      {
+        asset: { assetId: '' },
+      }
+    );
     session.expand(new BranchReference(undefined, HIERARCHY_ROOT_ID));
     session.subscribe({
       next: () => {
@@ -300,9 +359,12 @@ describe('error handling', () => {
   });
 
   it('it returns the error when requesting asset hierarchy fails', (done) => {
-    const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(new MockSiteWiseAssetSession(replayData), {
-      asset: { assetId: '' },
-    });
+    const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
+      new MockSiteWiseAssetSession(replayData),
+      {
+        asset: { assetId: '' },
+      }
+    );
     session.expand(new BranchReference('asset-id', 'hierarchy-id'));
     session.subscribe({
       next: () => {
@@ -319,9 +381,12 @@ describe('error handling', () => {
   });
 
   it('it returns the error when requesting asset summary fails', (done) => {
-    const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(new MockSiteWiseAssetSession(replayData), {
-      asset: { assetId: 'root-asset-id' },
-    });
+    const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
+      new MockSiteWiseAssetSession(replayData),
+      {
+        asset: { assetId: 'root-asset-id' },
+      }
+    );
     session.subscribe({
       next: () => {
         // noop
@@ -337,9 +402,12 @@ describe('error handling', () => {
   });
 
   it('it returns the error when requesting asset model fails', (done) => {
-    const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(new MockSiteWiseAssetSession(replayData), {
-      asset: { assetId: 'root-asset-id' },
-    });
+    const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(
+      new MockSiteWiseAssetSession(replayData),
+      {
+        asset: { assetId: 'root-asset-id' },
+      }
+    );
     session.subscribe({
       next: () => {
         // noop

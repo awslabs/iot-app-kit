@@ -14,7 +14,9 @@ import type { DashboardState } from '~/store/state';
 const TestProvider: React.FC<{
   storeArgs?: RecursivePartial<DashboardState>;
   children: ReactNode;
-}> = ({ storeArgs, children }) => <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>;
+}> = ({ storeArgs, children }) => (
+  <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>
+);
 
 const widgetGestureAttribute = gestureable('widget');
 const resizeGestureAttribute = gestureable('resize');
@@ -22,12 +24,24 @@ const anchorAttribute = anchorable('bottom');
 const idAttribute = idable('widget-1');
 
 const mockWidget = document.createElement('div');
-mockWidget.setAttribute(Object.keys(widgetGestureAttribute)[0], Object.values(widgetGestureAttribute)[0]);
-mockWidget.setAttribute(Object.keys(idAttribute)[0], Object.values(idAttribute)[0]);
+mockWidget.setAttribute(
+  Object.keys(widgetGestureAttribute)[0],
+  Object.values(widgetGestureAttribute)[0]
+);
+mockWidget.setAttribute(
+  Object.keys(idAttribute)[0],
+  Object.values(idAttribute)[0]
+);
 
 const mockAnchor = document.createElement('div');
-mockAnchor.setAttribute(Object.keys(resizeGestureAttribute)[0], Object.values(resizeGestureAttribute)[0]);
-mockAnchor.setAttribute(Object.keys(anchorAttribute)[0], Object.values(anchorAttribute)[0]);
+mockAnchor.setAttribute(
+  Object.keys(resizeGestureAttribute)[0],
+  Object.values(resizeGestureAttribute)[0]
+);
+mockAnchor.setAttribute(
+  Object.keys(anchorAttribute)[0],
+  Object.values(anchorAttribute)[0]
+);
 
 const mockGrid = document.createElement('div');
 
@@ -62,7 +76,18 @@ it('sets the active gesture to move when moving a selected widget', () => {
     () =>
       useGestures({
         dashboardWidgets: MockDashboardFactory.get().widgets,
-        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'kpi', properties: {} }],
+        selectedWidgets: [
+          {
+            id: 'widget-1',
+            x: 0,
+            y: 0,
+            z: 0,
+            height: 1,
+            width: 1,
+            type: 'kpi',
+            properties: {},
+          },
+        ],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -88,7 +113,18 @@ it('sets the active gesture to resize when moving an anchor', () => {
     () =>
       useGestures({
         dashboardWidgets: MockDashboardFactory.get().widgets,
-        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'kpi', properties: {} }],
+        selectedWidgets: [
+          {
+            id: 'widget-1',
+            x: 0,
+            y: 0,
+            z: 0,
+            height: 1,
+            width: 1,
+            type: 'kpi',
+            properties: {},
+          },
+        ],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -114,7 +150,18 @@ it('sets the active gesture to select when moving on the grid', () => {
     () =>
       useGestures({
         dashboardWidgets: MockDashboardFactory.get().widgets,
-        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'kpi', properties: {} }],
+        selectedWidgets: [
+          {
+            id: 'widget-1',
+            x: 0,
+            y: 0,
+            z: 0,
+            height: 1,
+            width: 1,
+            type: 'kpi',
+            properties: {},
+          },
+        ],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -140,7 +187,18 @@ it('resets the active gesture after the gesture ends', () => {
     () =>
       useGestures({
         dashboardWidgets: MockDashboardFactory.get().widgets,
-        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'kpi', properties: {} }],
+        selectedWidgets: [
+          {
+            id: 'widget-1',
+            x: 0,
+            y: 0,
+            z: 0,
+            height: 1,
+            width: 1,
+            type: 'kpi',
+            properties: {},
+          },
+        ],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }

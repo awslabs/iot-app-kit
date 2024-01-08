@@ -34,7 +34,10 @@ const useHandleResize = ({
     const update = () => {
       const newG = graphicRef.current.map((g) => {
         // updating the series line marker's y value
-        const { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue } = calculateSeriesMakers(
+        const {
+          trendCursorsSeriesMakersInPixels,
+          trendCursorsSeriesMakersValue,
+        } = calculateSeriesMakers(
           seriesRef.current,
           g.timestampInMs,
           chartRef,
@@ -43,7 +46,11 @@ const useHandleResize = ({
         );
         g.yAxisMarkerValue = trendCursorsSeriesMakersValue;
         // update line height and markers
-        g.children = onResizeUpdateTrendCursorYValues(g.children, trendCursorsSeriesMakersInPixels, sizeRef.current);
+        g.children = onResizeUpdateTrendCursorYValues(
+          g.children,
+          trendCursorsSeriesMakersInPixels,
+          sizeRef.current
+        );
         // updating x of the graphic
         g.x = calculateXFromTimestamp(g.timestampInMs, chartRef);
         return g;

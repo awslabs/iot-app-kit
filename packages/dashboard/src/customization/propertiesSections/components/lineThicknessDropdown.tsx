@@ -22,12 +22,15 @@ export const LineThicknessDropdown: FC<LineThicknessDropdownProps> = ({
       <Select
         disabled={disabled}
         selectedOption={
-          lineThicknessData.lineThicknessOptions.find(({ value }) => value === lineThickness) ??
-          lineThicknessData.defaultValue
+          lineThicknessData.lineThicknessOptions.find(
+            ({ value }) => value === lineThickness
+          ) ?? lineThicknessData.defaultValue
         }
         options={lineThicknessData.lineThicknessOptions}
         onChange={({ detail }) => {
-          updateLineThickness(detail.selectedOption.value ?? lineThicknessData.defaultValue.value);
+          updateLineThickness(
+            detail.selectedOption.value ?? lineThicknessData.defaultValue.value
+          );
         }}
       />
     </FormField>

@@ -23,8 +23,12 @@ export const useTableItems = (query: SiteWiseQueryConfig['query']) => {
 
   const assetItems = assets.flatMap(({ assetId, properties }) =>
     properties.map(({ propertyId }) => {
-      const assetDescription = queries.find(({ data }) => data?.assetId === assetId)?.data;
-      const { unit, name } = assetDescription?.assetProperties?.find(({ id }) => id === propertyId) ?? { unit: '' };
+      const assetDescription = queries.find(
+        ({ data }) => data?.assetId === assetId
+      )?.data;
+      const { unit, name } = assetDescription?.assetProperties?.find(
+        ({ id }) => id === propertyId
+      ) ?? { unit: '' };
       return {
         property: `${name} (${assetDescription?.assetName ?? ''})`,
         unit,

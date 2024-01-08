@@ -1,4 +1,7 @@
-import { DescribeTimeSeriesCommand, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  DescribeTimeSeriesCommand,
+  IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import invariant from 'tiny-invariant';
 
 const isEnabled = (input?: string): input is string => Boolean(input);

@@ -11,7 +11,10 @@ export const getAlarmStreamThresholds = ({
     return (
       'dataStreamIds' in yAnnotation &&
       yAnnotation.dataStreamIds?.some((dataStreamId) =>
-        dataStreams.some((dataStream) => dataStream.streamType === 'ALARM' && dataStreamId === dataStream.id)
+        dataStreams.some(
+          (dataStream) =>
+            dataStream.streamType === 'ALARM' && dataStreamId === dataStream.id
+        )
       )
     );
   });

@@ -16,7 +16,10 @@ it('returns no points when provided no data streams', () => {
 
 describe('parsing alarm information', () => {
   it('returns alarm point when provided data stream of alarm type with a data point', () => {
-    const dataPoint: DataPoint<string> = { x: new Date(2000, 0, 0).getTime(), y: 'ALARM' };
+    const dataPoint: DataPoint<string> = {
+      x: new Date(2000, 0, 0).getTime(),
+      y: 'ALARM',
+    };
     const DATA_STREAM: DataStream<string> = {
       name: 'alarm-stream',
       id: 'alarms',
@@ -36,7 +39,10 @@ describe('parsing alarm information', () => {
   });
 
   it('returns no alarm point when all data points fall after the viewport', () => {
-    const dataPoint: DataPoint<string> = { x: new Date(2000, 0, 0).getTime(), y: 'ALARM' };
+    const dataPoint: DataPoint<string> = {
+      x: new Date(2000, 0, 0).getTime(),
+      y: 'ALARM',
+    };
     const DATA_STREAM: DataStream<string> = {
       name: 'alarm-stream',
       id: 'alarms',
@@ -56,7 +62,10 @@ describe('parsing alarm information', () => {
   });
 
   it('returns alarm point when datapoint is before viewport', () => {
-    const dataPoint: DataPoint<string> = { x: new Date(2000, 0, 0).getTime(), y: 'ALARM' };
+    const dataPoint: DataPoint<string> = {
+      x: new Date(2000, 0, 0).getTime(),
+      y: 'ALARM',
+    };
     const DATA_STREAM: DataStream<string> = {
       name: 'alarm-stream',
       id: 'alarms',
@@ -78,7 +87,10 @@ describe('parsing alarm information', () => {
 
 describe('parsing property information', () => {
   it('returns property point when provided data stream with no specified stream type', () => {
-    const dataPoint: DataPoint<string> = { x: new Date(2000, 0, 0).getTime(), y: 'ALARM' };
+    const dataPoint: DataPoint<string> = {
+      x: new Date(2000, 0, 0).getTime(),
+      y: 'ALARM',
+    };
     const DATA_STREAM: DataStream<string> = {
       name: 'property-stream',
       id: 'alarms',
@@ -97,7 +109,10 @@ describe('parsing property information', () => {
   });
 
   it('returns no property point when all data points fall after the viewport', () => {
-    const dataPoint: DataPoint<string> = { x: new Date(2000, 0, 0).getTime(), y: 'ALARM' };
+    const dataPoint: DataPoint<string> = {
+      x: new Date(2000, 0, 0).getTime(),
+      y: 'ALARM',
+    };
     const DATA_STREAM: DataStream<string> = {
       name: 'property-stream',
       id: 'alarms',
@@ -116,7 +131,10 @@ describe('parsing property information', () => {
   });
 
   it('returns property point when datapoint is before the viewport', () => {
-    const dataPoint: DataPoint<string> = { x: new Date(2000, 0, 0).getTime(), y: 'ALARM' };
+    const dataPoint: DataPoint<string> = {
+      x: new Date(2000, 0, 0).getTime(),
+      y: 'ALARM',
+    };
     const DATA_STREAM: DataStream<string> = {
       name: 'property-stream',
       id: 'alarms',

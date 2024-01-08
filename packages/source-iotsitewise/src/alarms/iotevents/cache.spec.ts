@@ -1,5 +1,9 @@
 import { Cache } from './cache';
-import { ALARM_MODEL, ALARM_MODEL_NAME, CACHED_ALARM_MODEL } from '../../__mocks__/alarm';
+import {
+  ALARM_MODEL,
+  ALARM_MODEL_NAME,
+  CACHED_ALARM_MODEL,
+} from '../../__mocks__/alarm';
 import { EventsClient } from './client';
 import { createMockIoTEventsSDK } from '@iot-app-kit/testing-util';
 
@@ -14,8 +18,12 @@ it('should request alarm model from cache', async () => {
 
   const cache = initCache({ eventsApiOverride: { getAlarmModel } });
 
-  expect(await cache.getAlarmModel(ALARM_MODEL_NAME)).toEqual(CACHED_ALARM_MODEL);
-  expect(await cache.getAlarmModel(ALARM_MODEL_NAME)).toEqual(CACHED_ALARM_MODEL);
+  expect(await cache.getAlarmModel(ALARM_MODEL_NAME)).toEqual(
+    CACHED_ALARM_MODEL
+  );
+  expect(await cache.getAlarmModel(ALARM_MODEL_NAME)).toEqual(
+    CACHED_ALARM_MODEL
+  );
 
   expect(getAlarmModel).toHaveBeenCalledTimes(1);
 });

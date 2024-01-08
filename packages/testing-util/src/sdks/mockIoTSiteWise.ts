@@ -28,7 +28,8 @@ import type {
   ListAssetModelPropertiesResponse,
 } from '@aws-sdk/client-iotsitewise';
 
-const nonOverriddenMock = () => Promise.reject(new Error('Mock method not override.'));
+const nonOverriddenMock = () =>
+  Promise.reject(new Error('Mock method not override.'));
 
 export const createMockSiteWiseSDK = ({
   listAssets = nonOverriddenMock,
@@ -46,12 +47,24 @@ export const createMockSiteWiseSDK = ({
   batchGetAssetPropertyValue = nonOverriddenMock,
 }: {
   listAssets?: (input: ListAssetsCommandInput) => Promise<ListAssetsResponse>;
-  listAssetProperties?: (input: ListAssetPropertiesCommandInput) => Promise<ListAssetPropertiesResponse>;
-  listAssetModelProperties?: (input: ListAssetModelPropertiesCommandInput) => Promise<ListAssetModelPropertiesResponse>;
-  listAssociatedAssets?: (input: ListAssociatedAssetsCommandInput) => Promise<ListAssociatedAssetsResponse>;
-  describeAsset?: (input: DescribeAssetCommandInput) => Promise<DescribeAssetResponse>;
-  describeAssetModel?: (input: DescribeAssetModelCommandInput) => Promise<DescribeAssetModelResponse>;
-  getAssetPropertyValue?: (input: GetAssetPropertyValueCommandInput) => Promise<GetAssetPropertyValueResponse>;
+  listAssetProperties?: (
+    input: ListAssetPropertiesCommandInput
+  ) => Promise<ListAssetPropertiesResponse>;
+  listAssetModelProperties?: (
+    input: ListAssetModelPropertiesCommandInput
+  ) => Promise<ListAssetModelPropertiesResponse>;
+  listAssociatedAssets?: (
+    input: ListAssociatedAssetsCommandInput
+  ) => Promise<ListAssociatedAssetsResponse>;
+  describeAsset?: (
+    input: DescribeAssetCommandInput
+  ) => Promise<DescribeAssetResponse>;
+  describeAssetModel?: (
+    input: DescribeAssetModelCommandInput
+  ) => Promise<DescribeAssetModelResponse>;
+  getAssetPropertyValue?: (
+    input: GetAssetPropertyValueCommandInput
+  ) => Promise<GetAssetPropertyValueResponse>;
   getAssetPropertyAggregates?: (
     input: GetAssetPropertyAggregatesCommandInput
   ) => Promise<GetAssetPropertyAggregatesResponse>;

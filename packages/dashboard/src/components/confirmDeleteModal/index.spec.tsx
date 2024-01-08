@@ -13,7 +13,9 @@ describe('Confirm Delete Modal', () => {
       handleCancel: jest.fn(),
       handleSubmit: jest.fn(),
     };
-    const { getByText, getByTestId } = render(<ConfirmDeleteModal {...props} />);
+    const { getByText, getByTestId } = render(
+      <ConfirmDeleteModal {...props} />
+    );
 
     // Assert that the header, description, cancel button, and submit button are rendered correctly
     expect(getByText('Confirmation')).toBeInTheDocument();

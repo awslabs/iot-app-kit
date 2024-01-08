@@ -1,7 +1,12 @@
-import { getCurrentTimeIndicator, getTimelineForProgressBar } from './utils/getDisplayForCustomProgressBar';
+import {
+  getCurrentTimeIndicator,
+  getTimelineForProgressBar,
+} from './utils/getDisplayForCustomProgressBar';
 import type { CustomVideoProgressBarProps } from './types';
 
-export const customVideoProgressBar = (customProgressBarProps: CustomVideoProgressBarProps) => {
+export const customVideoProgressBar = (
+  customProgressBarProps: CustomVideoProgressBarProps
+) => {
   const {
     currentTimeIndicatorId,
     timelineId,
@@ -11,7 +16,10 @@ export const customVideoProgressBar = (customProgressBarProps: CustomVideoProgre
     startTimestamp,
     endTimestamp,
   } = customProgressBarProps;
-  return `${getCurrentTimeIndicator(currentTimeIndicatorId, startTimestamp)}${getTimelineForProgressBar(
+  return `${getCurrentTimeIndicator(
+    currentTimeIndicatorId,
+    startTimestamp
+  )}${getTimelineForProgressBar(
     timelineId,
     playProgressId,
     timerangesWithSource,

@@ -20,10 +20,15 @@ export type UseAssetModelOptions = {
 } & (SingleAssetRequest | MultiAssetRequest);
 
 /** Use the list of child assets for an asset with a given asset ID. */
-export function useAssetModel({ assetModelId, assetModelIds, client }: UseAssetModelOptions) {
+export function useAssetModel({
+  assetModelId,
+  assetModelIds,
+  client,
+}: UseAssetModelOptions) {
   const cacheKeyFactory = new AssetModelCacheKeyFactory();
 
-  const requestIds = assetModelId !== undefined ? [assetModelId] : assetModelIds ?? [];
+  const requestIds =
+    assetModelId !== undefined ? [assetModelId] : assetModelIds ?? [];
 
   const queries =
     useQueries({
@@ -35,9 +40,13 @@ export function useAssetModel({ assetModelId, assetModelIds, client }: UseAssetM
       })),
     }) ?? [];
 
-  const assetModelResponses = createNonNullableList(queries.map(({ data }) => data));
-  const assetModel = assetModelId !== undefined ? assetModelResponses.at(0) : undefined;
-  const assetModels = assetModelIds !== undefined ? assetModelResponses : undefined;
+  const assetModelResponses = createNonNullableList(
+    queries.map(({ data }) => data)
+  );
+  const assetModel =
+    assetModelId !== undefined ? assetModelResponses.at(0) : undefined;
+  const assetModels =
+    assetModelIds !== undefined ? assetModelResponses : undefined;
 
   const isError = queries.some(({ isError }) => isError);
   const isFetching = queries.some(({ isFetching }) => isFetching);
@@ -70,9 +79,16 @@ function createModelPropertyQueryFn(client: IoTSiteWiseClient) {
     queryKey: [{ assetModelId }],
     signal,
   }: QueryFunctionContext<ReturnType<AssetModelCacheKeyFactory['create']>>) {
-    invariant(isEnabled(assetModelId), 'Expected asset model ID to be defined as required by the enabled flag.');
+    invariant(
+      isEnabled(assetModelId),
+      'Expected asset model ID to be defined as required by the enabled flag.'
+    );
 
-    const request = new listAssetModelPropertiesRequest({ assetModelId, client, signal });
+    const request = new listAssetModelPropertiesRequest({
+      assetModelId,
+      client,
+      signal,
+    });
     const response = await request.send();
 
     return response;

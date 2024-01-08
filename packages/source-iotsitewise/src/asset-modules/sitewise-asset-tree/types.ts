@@ -1,5 +1,9 @@
 import { LoadingStateEnum } from '../sitewise/types';
-import type { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import type {
+  AssetPropertyValue,
+  AssetSummary,
+  DescribeAssetModelResponse,
+} from '@aws-sdk/client-iotsitewise';
 import type { AssetSummaryQuery } from '../sitewise/types';
 import type { ErrorDetails, ProviderObserver } from '@iot-app-kit/core';
 
@@ -23,15 +27,17 @@ export type SiteWiseAssetTreeQueryArguments = {
   withPropertyValues?: string[];
 };
 
-export type RootedSiteWiseAssetTreeQueryArguments = SiteWiseAssetTreeQueryArguments & {
-  asset: AssetSummaryQuery;
-};
+export type RootedSiteWiseAssetTreeQueryArguments =
+  SiteWiseAssetTreeQueryArguments & {
+    asset: AssetSummaryQuery;
+  };
 
 export type AssetTreeQuery = SiteWiseAssetTreeQueryArguments & {
   asset?: AssetSummaryQuery;
 };
 
-export interface SiteWiseAssetTreeObserver extends ProviderObserver<SiteWiseAssetTreeNode[]> {
+export interface SiteWiseAssetTreeObserver
+  extends ProviderObserver<SiteWiseAssetTreeNode[]> {
   next: (tree: SiteWiseAssetTreeNode[]) => void;
   error?: (err: ErrorDetails[]) => void;
 }

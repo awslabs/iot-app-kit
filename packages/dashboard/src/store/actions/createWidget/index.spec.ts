@@ -1,7 +1,11 @@
 import { createWidgets, onCreateWidgetsAction } from '.';
 import { initialState } from '../../state';
 
-import { MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET, MOCK_SCATTER_CHART_WIDGET } from '../../../../testing/mocks';
+import {
+  MOCK_KPI_WIDGET,
+  MOCK_LINE_CHART_WIDGET,
+  MOCK_SCATTER_CHART_WIDGET,
+} from '../../../../testing/mocks';
 
 it('does nothing if no widgets are provided', () => {
   expect(
@@ -58,7 +62,12 @@ it('adds multiple widgets to a dashboard with existing widgets', () => {
         widgets: [MOCK_LINE_CHART_WIDGET, MOCK_SCATTER_CHART_WIDGET],
       })
     ).dashboardConfiguration.widgets
-  ).toEqual([MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET, MOCK_LINE_CHART_WIDGET, MOCK_SCATTER_CHART_WIDGET]);
+  ).toEqual([
+    MOCK_KPI_WIDGET,
+    MOCK_LINE_CHART_WIDGET,
+    MOCK_LINE_CHART_WIDGET,
+    MOCK_SCATTER_CHART_WIDGET,
+  ]);
 });
 
 it('selects the widgets that are created', () => {

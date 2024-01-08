@@ -17,8 +17,15 @@ export interface AssetTableHierarchyPathProps {
  * displays the asset's parents up to the root of the asset hierarchy and
  * features clickable navigation to the parent assets.
  */
-export function AssetTableHierarchyPath({ parentAssetId, onClickAssetName, client }: AssetTableHierarchyPathProps) {
-  const { hierarchyPathCrumbs } = useHierarchyCrumbs({ assetId: parentAssetId, client });
+export function AssetTableHierarchyPath({
+  parentAssetId,
+  onClickAssetName,
+  client,
+}: AssetTableHierarchyPathProps) {
+  const { hierarchyPathCrumbs } = useHierarchyCrumbs({
+    assetId: parentAssetId,
+    client,
+  });
 
   return (
     <BreadcrumbGroup

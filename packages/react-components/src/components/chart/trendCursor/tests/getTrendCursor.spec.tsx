@@ -90,7 +90,8 @@ describe('Testing getNewTrendCursor file', () => {
     it('should update timestamp on drag', () => {
       const { result } = renderHook(() => useECharts('dark'));
       const newTrendCursor = mockGraphic;
-      const timestamp = Date.parse('2023-07-13T16:00:00.000Z') + 1000 * 60 * 60 * 2; // 1689271200000
+      const timestamp =
+        Date.parse('2023-07-13T16:00:00.000Z') + 1000 * 60 * 60 * 2; // 1689271200000
 
       onDragUpdateTrendCursor({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -130,7 +131,10 @@ describe('Testing getNewTrendCursor file', () => {
   describe('testing markers calculations, calculateTrendCursorsSeriesMakers', () => {
     it('calculateTrendCursorsSeriesMakers should populate the required values', () => {
       const { result } = renderHook(() => useECharts('dark'));
-      const { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue } = calculateSeriesMakers(
+      const {
+        trendCursorsSeriesMakersInPixels,
+        trendCursorsSeriesMakersValue,
+      } = calculateSeriesMakers(
         mockSeries,
         1689264600000,
         result.current.chartRef,

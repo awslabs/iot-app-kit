@@ -1,5 +1,8 @@
 import React, { FC } from 'react';
-import { AssetSummary, useListAssetPropertiesMapQuery } from '~/hooks/useAssetDescriptionQueries';
+import {
+  AssetSummary,
+  useListAssetPropertiesMapQuery,
+} from '~/hooks/useAssetDescriptionQueries';
 import { isJust } from '~/util/maybe';
 import { SelectOneWidget } from '../shared/selectOneWidget';
 import SpaceBetween from '@cloudscape-design/components/space-between';
@@ -13,7 +16,9 @@ import { handleDeleteAssetModelProperty } from './handleDeleteAssetModelProperty
 
 const NoComponents = () => <Box variant='p'>No properties or alarms found</Box>;
 
-export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProps> = ({
+export const StyledPropertiesAlarmsSection: FC<
+  StyledPropertiesAlarmsSectionProps
+> = ({
   queryConfig,
   updateQueryConfig,
   client,
@@ -36,12 +41,16 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
    */
   const mustEditAsSingle = !editablePropertiesAndAlarms;
 
-  const styledAssetQuery = (editablePropertiesAndAlarms && queryConfig.value.query) || undefined;
+  const styledAssetQuery =
+    (editablePropertiesAndAlarms && queryConfig.value.query) || undefined;
 
-  const describedAssetsMapQuery = useListAssetPropertiesMapQuery(styledAssetQuery);
+  const describedAssetsMapQuery =
+    useListAssetPropertiesMapQuery(styledAssetQuery);
   const describedAssetsMap = describedAssetsMapQuery.data ?? {};
 
-  const assetModelIds = (styledAssetQuery?.assetModels ?? []).map(({ assetModelId }) => assetModelId);
+  const assetModelIds = (styledAssetQuery?.assetModels ?? []).map(
+    ({ assetModelId }) => assetModelId
+  );
   const { assetModels } = useAssetModel({ assetModelIds, client });
 
   const getComponents = () => {
@@ -59,7 +68,11 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
         updatedAssetId,
         updatedPropertyId,
         updatedAssetModelId,
-      }: { updatedAssetId?: string; updatedPropertyId?: string; updatedAssetModelId?: string },
+      }: {
+        updatedAssetId?: string;
+        updatedPropertyId?: string;
+        updatedAssetModelId?: string;
+      },
       newStyles: object
     ) => {
       const newQuery = {
@@ -121,7 +134,13 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
               assetSummary={describedAssetsMap[assetId]}
               property={property}
               updateStyle={(newStyles: object) =>
-                onUpdatePropertyStyles({ updatedAssetId: assetId, updatedPropertyId: property.propertyId }, newStyles)
+                onUpdatePropertyStyles(
+                  {
+                    updatedAssetId: assetId,
+                    updatedPropertyId: property.propertyId,
+                  },
+                  newStyles
+                )
               }
               onDeleteAssetQuery={onDeleteAssetQuery({
                 assetId,
@@ -141,10 +160,18 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
           <StyledPropertyComponent
             index={index}
             key={property.propertyAlias}
-            assetSummary={{ assetId: '', assetName: '', properties: [], alarms: [] }}
+            assetSummary={{
+              assetId: '',
+              assetName: '',
+              properties: [],
+              alarms: [],
+            }}
             property={{ ...property, propertyId: property.propertyAlias }}
             updateStyle={(newStyles: object) =>
-              onUpdatePropertyStyles({ updatedPropertyId: property.propertyAlias }, newStyles)
+              onUpdatePropertyStyles(
+                { updatedPropertyId: property.propertyAlias },
+                newStyles
+              )
             }
             onDeleteAssetQuery={onDeleteAssetQuery({
               assetId: '',
@@ -185,7 +212,10 @@ export const StyledPropertiesAlarmsSection: FC<StyledPropertiesAlarmsSectionProp
               property={property}
               updateStyle={(newStyles: object) =>
                 onUpdatePropertyStyles(
-                  { updatedAssetModelId: assetModelId, updatedPropertyId: property.propertyId },
+                  {
+                    updatedAssetModelId: assetModelId,
+                    updatedPropertyId: property.propertyId,
+                  },
                   newStyles
                 )
               }

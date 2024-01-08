@@ -9,7 +9,11 @@ import type {
   HierarchyAssetSummaryList,
   SiteWiseAssetSessionInterface,
 } from './types';
-import type { AssetSummary, DescribeAssetModelResponse, AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
+import type {
+  AssetSummary,
+  DescribeAssetModelResponse,
+  AssetPropertyValue,
+} from '@aws-sdk/client-iotsitewise';
 import type { ErrorDetails } from '@iot-app-kit/core';
 
 export class SiteWiseAssetSession implements SiteWiseAssetSessionInterface {
@@ -19,19 +23,25 @@ export class SiteWiseAssetSession implements SiteWiseAssetSessionInterface {
     this.processor = processor;
   }
 
-  private _requestAssetSummary(query: AssetSummaryQuery): Observable<AssetSummary> {
+  private _requestAssetSummary(
+    query: AssetSummaryQuery
+  ): Observable<AssetSummary> {
     return new Observable<AssetSummary>((observer) => {
       this.processor.getAssetSummary(query, observer);
     });
   }
 
-  private _requestAssetModel(query: AssetModelQuery): Observable<DescribeAssetModelResponse> {
+  private _requestAssetModel(
+    query: AssetModelQuery
+  ): Observable<DescribeAssetModelResponse> {
     return new Observable<DescribeAssetModelResponse>((observer) => {
       this.processor.getAssetModel(query, observer);
     });
   }
 
-  private _requestAssetPropertyValue(query: AssetPropertyValueQuery): Observable<AssetPropertyValue> {
+  private _requestAssetPropertyValue(
+    query: AssetPropertyValueQuery
+  ): Observable<AssetPropertyValue> {
     return new Observable<AssetPropertyValue>((observer) => {
       this.processor.getAssetPropertyValue(query, observer);
     });
@@ -39,18 +49,24 @@ export class SiteWiseAssetSession implements SiteWiseAssetSessionInterface {
 
   private _requestRootAssets(): Observable<HierarchyAssetSummaryList> {
     return new Observable<HierarchyAssetSummaryList>((observer) => {
-      const query: AssetHierarchyQuery = { assetHierarchyId: HIERARCHY_ROOT_ID };
+      const query: AssetHierarchyQuery = {
+        assetHierarchyId: HIERARCHY_ROOT_ID,
+      };
       this.processor.getAssetHierarchy(query, observer);
     });
   }
 
-  private _requestAssetHierarchy(query: AssetHierarchyQuery): Observable<HierarchyAssetSummaryList> {
+  private _requestAssetHierarchy(
+    query: AssetHierarchyQuery
+  ): Observable<HierarchyAssetSummaryList> {
     return new Observable<HierarchyAssetSummaryList>((observer) => {
       this.processor.getAssetHierarchy(query, observer);
     });
   }
 
-  fetchAssetHierarchy(query: AssetHierarchyQuery): Promise<HierarchyAssetSummaryList> {
+  fetchAssetHierarchy(
+    query: AssetHierarchyQuery
+  ): Promise<HierarchyAssetSummaryList> {
     return lastValueFrom(this._requestAssetHierarchy(query));
   }
 
@@ -58,7 +74,9 @@ export class SiteWiseAssetSession implements SiteWiseAssetSessionInterface {
     return lastValueFrom(this._requestAssetModel(query));
   }
 
-  fetchAssetPropertyValue(query: AssetPropertyValueQuery): Promise<AssetPropertyValue> {
+  fetchAssetPropertyValue(
+    query: AssetPropertyValueQuery
+  ): Promise<AssetPropertyValue> {
     return lastValueFrom(this._requestAssetPropertyValue(query));
   }
 
@@ -70,7 +88,11 @@ export class SiteWiseAssetSession implements SiteWiseAssetSessionInterface {
     return lastValueFrom(this._requestRootAssets());
   }
 
-  async describeModeledDataStream(input: { assetPropertyId: string; assetId: string; assetModelId: string }) {
+  async describeModeledDataStream(input: {
+    assetPropertyId: string;
+    assetId: string;
+    assetModelId: string;
+  }) {
     return this.processor.describeModeledDataStream(input);
   }
 

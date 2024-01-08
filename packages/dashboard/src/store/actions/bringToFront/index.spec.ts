@@ -18,14 +18,17 @@ const setupDashboardState = (
 });
 
 it('does nothing if there are no widgets selected', () => {
-  expect(bringWidgetsToFront(setupDashboardState([MOCK_KPI_WIDGET])).dashboardConfiguration.widgets).toEqual([
-    MOCK_KPI_WIDGET,
-  ]);
+  expect(
+    bringWidgetsToFront(setupDashboardState([MOCK_KPI_WIDGET]))
+      .dashboardConfiguration.widgets
+  ).toEqual([MOCK_KPI_WIDGET]);
 });
 
 it('does nothing if there all widgets are selected', () => {
   expect(
-    bringWidgetsToFront(setupDashboardState([MOCK_KPI_WIDGET], [MOCK_KPI_WIDGET])).dashboardConfiguration.widgets
+    bringWidgetsToFront(
+      setupDashboardState([MOCK_KPI_WIDGET], [MOCK_KPI_WIDGET])
+    ).dashboardConfiguration.widgets
   ).toEqual([MOCK_KPI_WIDGET]);
 });
 
@@ -39,8 +42,9 @@ it('moves selected widget to front', () => {
   });
 
   expect(
-    bringWidgetsToFront(setupDashboardState([MOCK_WIDGET, MOCK_WIDGET_2], [MOCK_WIDGET_2])).dashboardConfiguration
-      .widgets
+    bringWidgetsToFront(
+      setupDashboardState([MOCK_WIDGET, MOCK_WIDGET_2], [MOCK_WIDGET_2])
+    ).dashboardConfiguration.widgets
   ).toEqual(
     expect.arrayContaining([
       MOCK_WIDGET,
@@ -66,7 +70,10 @@ it('moves group of widgets and retains their relative order', () => {
 
   expect(
     bringWidgetsToFront(
-      setupDashboardState([MOCK_WIDGET, MOCK_WIDGET_2, MOCK_WIDGET_3], [MOCK_WIDGET_2, MOCK_WIDGET_3])
+      setupDashboardState(
+        [MOCK_WIDGET, MOCK_WIDGET_2, MOCK_WIDGET_3],
+        [MOCK_WIDGET_2, MOCK_WIDGET_3]
+      )
     ).dashboardConfiguration.widgets
   ).toEqual(
     expect.arrayContaining([

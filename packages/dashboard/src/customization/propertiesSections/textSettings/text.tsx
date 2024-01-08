@@ -1,7 +1,14 @@
 import type { FC, MouseEventHandler, ReactNode } from 'react';
 import React from 'react';
-import type { NonCancelableCustomEvent, SelectProps } from '@cloudscape-design/components';
-import { ExpandableSection, Select, SpaceBetween } from '@cloudscape-design/components';
+import type {
+  NonCancelableCustomEvent,
+  SelectProps,
+} from '@cloudscape-design/components';
+import {
+  ExpandableSection,
+  Select,
+  SpaceBetween,
+} from '@cloudscape-design/components';
 import * as awsui from '@cloudscape-design/design-tokens';
 import ColorPicker from '../shared/colorPicker';
 
@@ -86,11 +93,19 @@ const TextSettings: FC<TextSettingsProps> = ({
     <ExpandableSection headerText={defaultMessages.title} defaultExpanded>
       <div className='text-configuration' style={{ gap: awsui.spaceScaledS }}>
         <label htmlFor='text-color-picker'>{defaultMessages.color}</label>
-        <ColorPicker id='text-color-picker' color={fontColor} updateColor={updateFontColor} />
+        <ColorPicker
+          id='text-color-picker'
+          color={fontColor}
+          updateColor={updateFontColor}
+        />
 
         <label>{defaultMessages.style}</label>
         <SpaceBetween size='xxs' direction='horizontal'>
-          <ButtonWithState aria-label='toggle bold text' checked={isBold} onToggle={() => toggleBold(!isBold)}>
+          <ButtonWithState
+            aria-label='toggle bold text'
+            checked={isBold}
+            onToggle={() => toggleBold(!isBold)}
+          >
             <b>B</b>
           </ButtonWithState>
           <ButtonWithState

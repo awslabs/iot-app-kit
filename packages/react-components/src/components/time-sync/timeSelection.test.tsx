@@ -35,7 +35,9 @@ describe('TimeSelection', () => {
       dateRangePicker?.openDropdown();
     });
 
-    const dateRangePickerDropdown = dateRangePicker?.findDropdown({ expandToViewport: true });
+    const dateRangePickerDropdown = dateRangePicker?.findDropdown({
+      expandToViewport: true,
+    });
 
     act(() => {
       const group = dateRangePickerDropdown?.findRelativeRangeRadioGroup();
@@ -59,7 +61,9 @@ describe('TimeSelection', () => {
       dateRangePicker?.openDropdown();
     });
 
-    const dateRangePickerDropdown = dateRangePicker?.findDropdown({ expandToViewport: true });
+    const dateRangePickerDropdown = dateRangePicker?.findDropdown({
+      expandToViewport: true,
+    });
 
     act(() => {
       const group = dateRangePickerDropdown?.findRelativeRangeRadioGroup();
@@ -68,7 +72,8 @@ describe('TimeSelection', () => {
     });
 
     act(() => {
-      const rangeInput = dateRangePickerDropdown?.findCustomRelativeRangeDuration();
+      const rangeInput =
+        dateRangePickerDropdown?.findCustomRelativeRangeDuration();
       rangeInput?.setInputValue('15');
     });
 

@@ -1,28 +1,39 @@
 import { DataPoint, DataStream, Threshold } from '@iot-app-kit/core';
 import { BarSeriesOption, SeriesOption, YAXisComponentOption } from 'echarts';
 
-import { ChartAxisOptions, ChartStyleSettingsOptions, Visualization } from '../../types';
+import {
+  ChartAxisOptions,
+  ChartStyleSettingsOptions,
+  Visualization,
+} from '../../types';
 import { convertDataPoint } from '../convertDataPoint';
-import { StyleSettingsMap, getChartStyleSettingsFromMap } from '../style/convertStyles';
+import {
+  StyleSettingsMap,
+  getChartStyleSettingsFromMap,
+} from '../style/convertStyles';
 import { convertYAxis as convertChartYAxis } from '../axes/yAxis';
 import { convertThresholds } from '../convertThresholds';
 import { ChartStyleSettingsWithDefaults } from '../../utils/getStyles';
-import { DEEMPHASIZE_OPACITY, EMPHASIZE_SCALE_CONSTANT } from '../../eChartsConstants';
+import {
+  DEEMPHASIZE_OPACITY,
+  EMPHASIZE_SCALE_CONSTANT,
+} from '../../eChartsConstants';
 import { GenericSeries } from '../../../../echarts/types';
 
 export const dataValue = (point: DataPoint) => point.y;
 
-const stepTypes: NonNullable<ChartStyleSettingsOptions['visualizationType']>[] = [
-  'step-end',
-  'step-middle',
-  'step-start',
-];
+const stepTypes: NonNullable<ChartStyleSettingsOptions['visualizationType']>[] =
+  ['step-end', 'step-middle', 'step-start'];
 const convertVisualizationType = (
-  visualizationType: Required<Pick<ChartStyleSettingsOptions, 'visualizationType'>>['visualizationType']
+  visualizationType: Required<
+    Pick<ChartStyleSettingsOptions, 'visualizationType'>
+  >['visualizationType']
 ) => (stepTypes.includes(visualizationType) ? 'line' : visualizationType);
 
 const convertStep = (
-  visualizationType: Required<Pick<ChartStyleSettingsOptions, 'visualizationType'>>['visualizationType']
+  visualizationType: Required<
+    Pick<ChartStyleSettingsOptions, 'visualizationType'>
+  >['visualizationType']
 ) => {
   if (!stepTypes.includes(visualizationType)) return false;
   switch (visualizationType) {
@@ -37,10 +48,18 @@ const convertStep = (
   }
 };
 
-const addVisualizationSpecificOptions = (visualizationType: Visualization, series: SeriesOption) => {
+const addVisualizationSpecificOptions = (
+  visualizationType: Visualization,
+  series: SeriesOption
+) => {
   switch (visualizationType) {
     case 'bar':
-      return { ...series, barGap: '0%', barWidth: '10%', barCategoryGap: '0%' } as BarSeriesOption;
+      return {
+        ...series,
+        barGap: '0%',
+        barWidth: '10%',
+        barCategoryGap: '0%',
+      } as BarSeriesOption;
     default:
       return series;
   }
@@ -66,9 +85,16 @@ const convertSeries = (
   if (hidden) {
     opacity = 0;
   }
-  const scaledSymbolSize = emphasis === 'emphasize' ? symbolSize + EMPHASIZE_SCALE_CONSTANT : symbolSize;
-  const scaledLineThickness = emphasis === 'emphasize' ? lineThickness + EMPHASIZE_SCALE_CONSTANT : lineThickness;
-  const symbolStyle = visualizationType !== 'scatter' && performanceMode ? 'none' : symbol;
+  const scaledSymbolSize =
+    emphasis === 'emphasize'
+      ? symbolSize + EMPHASIZE_SCALE_CONSTANT
+      : symbolSize;
+  const scaledLineThickness =
+    emphasis === 'emphasize'
+      ? lineThickness + EMPHASIZE_SCALE_CONSTANT
+      : lineThickness;
+  const symbolStyle =
+    visualizationType !== 'scatter' && performanceMode ? 'none' : symbol;
 
   const genericSeries = {
     id,
@@ -96,7 +122,10 @@ const convertSeries = (
   return addVisualizationSpecificOptions(visualizationType, genericSeries);
 };
 
-const convertYAxis = ({ color, yAxis }: ChartStyleSettingsOptions): YAXisComponentOption | undefined =>
+const convertYAxis = ({
+  color,
+  yAxis,
+}: ChartStyleSettingsOptions): YAXisComponentOption | undefined =>
   yAxis && {
     /**
      * showing the axis only to ensure that the horizontal
@@ -123,7 +152,9 @@ const convertYAxis = ({ color, yAxis }: ChartStyleSettingsOptions): YAXisCompone
 export const convertSeriesAndYAxis =
   (
     styles: ChartStyleSettingsWithDefaults,
-    { performanceMode }: { performanceMode?: boolean } = { performanceMode: false }
+    { performanceMode }: { performanceMode?: boolean } = {
+      performanceMode: false,
+    }
   ) =>
   (datastream: DataStream) => {
     const series = convertSeries(datastream, styles, { performanceMode });
@@ -135,7 +166,10 @@ export const convertSeriesAndYAxis =
     };
   };
 
-const addYAxisIndex = <T extends SeriesOption>(series: T, yAxisIndex = 0): T => ({
+const addYAxisIndex = <T extends SeriesOption>(
+  series: T,
+  yAxisIndex = 0
+): T => ({
   ...series,
   yAxisIndex,
 });
@@ -188,14 +222,23 @@ export const useSeriesAndYAxis = (
     axis,
     thresholds,
     performanceMode,
-  }: { styleSettings: StyleSettingsMap; thresholds: Threshold[]; axis?: ChartAxisOptions; performanceMode?: boolean }
+  }: {
+    styleSettings: StyleSettingsMap;
+    thresholds: Threshold[];
+    axis?: ChartAxisOptions;
+    performanceMode?: boolean;
+  }
 ) => {
   const defaultYAxis: YAXisComponentOption[] = [convertChartYAxis(axis)];
   const convertedThresholds = convertThresholds(thresholds);
   const getStyles = getChartStyleSettingsFromMap(styleSettings);
 
   const { series, yAxis } = datastreams
-    .map((datastream) => convertSeriesAndYAxis(getStyles(datastream), { performanceMode })(datastream))
+    .map((datastream) =>
+      convertSeriesAndYAxis(getStyles(datastream), { performanceMode })(
+        datastream
+      )
+    )
     .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis });
 
   if (series.length > 0) {

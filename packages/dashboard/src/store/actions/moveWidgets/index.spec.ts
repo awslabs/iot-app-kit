@@ -5,7 +5,9 @@ import { initialState } from '../../state';
 import { MOCK_KPI_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
 import type { DashboardWidget } from '~/types';
 
-const setupDashboardState = (widgets: DashboardWidget[] = []): DashboardState => ({
+const setupDashboardState = (
+  widgets: DashboardWidget[] = []
+): DashboardState => ({
   ...initialState,
   grid: {
     ...initialState.grid,
@@ -32,7 +34,12 @@ describe('move', () => {
   });
 
   it('shifts a single selected widget by a fractional amount when position changes slightly', () => {
-    const widget = MockWidgetFactory.getKpiWidget({ x: 1, y: 1, width: 5, height: 5 });
+    const widget = MockWidgetFactory.getKpiWidget({
+      x: 1,
+      y: 1,
+      width: 5,
+      height: 5,
+    });
 
     expect(
       moveWidgets(
@@ -53,7 +60,12 @@ describe('move', () => {
   });
 
   it('does not shift off of the grid', () => {
-    const widget = MockWidgetFactory.getKpiWidget({ x: 0, y: 0, width: 5, height: 5 });
+    const widget = MockWidgetFactory.getKpiWidget({
+      x: 0,
+      y: 0,
+      width: 5,
+      height: 5,
+    });
     const dashboardState = setupDashboardState([widget]);
 
     expect(
@@ -75,8 +87,18 @@ describe('move', () => {
   });
 
   it('does not shift widget that is not selected', () => {
-    const widget1 = MockWidgetFactory.getKpiWidget({ x: 0, y: 0, width: 5, height: 5 });
-    const widget2 = MockWidgetFactory.getKpiWidget({ x: 6, y: 6, width: 5, height: 5 });
+    const widget1 = MockWidgetFactory.getKpiWidget({
+      x: 0,
+      y: 0,
+      width: 5,
+      height: 5,
+    });
+    const widget2 = MockWidgetFactory.getKpiWidget({
+      x: 6,
+      y: 6,
+      width: 5,
+      height: 5,
+    });
 
     expect(
       moveWidgets(
@@ -101,7 +123,12 @@ describe('move', () => {
   });
 
   it('does not shift widget when the vector is 0, 0', () => {
-    const widget = MockWidgetFactory.getKpiWidget({ x: 0, y: 0, width: 5, height: 5 });
+    const widget = MockWidgetFactory.getKpiWidget({
+      x: 0,
+      y: 0,
+      width: 5,
+      height: 5,
+    });
 
     expect(
       moveWidgets(
@@ -122,9 +149,24 @@ describe('move', () => {
   });
 
   it('shifts only selected widgets when multiple widgets are on the dashboard', () => {
-    const widget1 = MockWidgetFactory.getKpiWidget({ x: 0, y: 0, width: 5, height: 5 });
-    const widget2 = MockWidgetFactory.getKpiWidget({ x: 6, y: 6, width: 5, height: 5 });
-    const widget3 = MockWidgetFactory.getKpiWidget({ x: 14, y: 14, width: 5, height: 5 });
+    const widget1 = MockWidgetFactory.getKpiWidget({
+      x: 0,
+      y: 0,
+      width: 5,
+      height: 5,
+    });
+    const widget2 = MockWidgetFactory.getKpiWidget({
+      x: 6,
+      y: 6,
+      width: 5,
+      height: 5,
+    });
+    const widget3 = MockWidgetFactory.getKpiWidget({
+      x: 14,
+      y: 14,
+      width: 5,
+      height: 5,
+    });
 
     expect(
       moveWidgets(
@@ -153,7 +195,12 @@ describe('move', () => {
   });
 
   it('snaps widgets to the grid when the move action is complete', () => {
-    const widget1 = MockWidgetFactory.getKpiWidget({ x: 0, y: 0, width: 5, height: 5 });
+    const widget1 = MockWidgetFactory.getKpiWidget({
+      x: 0,
+      y: 0,
+      width: 5,
+      height: 5,
+    });
 
     expect(
       moveWidgets(
@@ -175,8 +222,18 @@ describe('move', () => {
   });
 
   it('does not move widget group out of the grid', () => {
-    const widget1 = MockWidgetFactory.getKpiWidget({ x: 0, y: 0, width: 5, height: 5 });
-    const widget2 = MockWidgetFactory.getKpiWidget({ x: 5, y: 5, width: 5, height: 5 });
+    const widget1 = MockWidgetFactory.getKpiWidget({
+      x: 0,
+      y: 0,
+      width: 5,
+      height: 5,
+    });
+    const widget2 = MockWidgetFactory.getKpiWidget({
+      x: 5,
+      y: 5,
+      width: 5,
+      height: 5,
+    });
 
     const dashboardState = setupDashboardState([widget1, widget2]);
     expect(
@@ -184,7 +241,10 @@ describe('move', () => {
         dashboardState,
         onMoveWidgetsAction({
           widgets: [widget1, widget2],
-          vector: { x: dashboardState.grid.width, y: dashboardState.grid.height },
+          vector: {
+            x: dashboardState.grid.width,
+            y: dashboardState.grid.height,
+          },
         })
       ).dashboardConfiguration.widgets
     ).toEqual(

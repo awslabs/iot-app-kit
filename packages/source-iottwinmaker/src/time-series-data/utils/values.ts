@@ -6,7 +6,9 @@ import { toValue } from '../../utils/propertyValueUtils';
 /**
  * Converts a response for data into a data point understood by IoT App Kit.
  */
-export const toDataPoint = (propertyValue: PropertyValue | undefined): DataPoint | undefined => {
+export const toDataPoint = (
+  propertyValue: PropertyValue | undefined
+): DataPoint | undefined => {
   if (isNil(propertyValue)) {
     return undefined;
   }

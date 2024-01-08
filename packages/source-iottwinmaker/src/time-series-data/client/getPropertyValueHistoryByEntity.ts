@@ -1,8 +1,15 @@
-import { GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import {
+  GetPropertyValueHistoryCommand,
+  IoTTwinMakerClient,
+} from '@aws-sdk/client-iottwinmaker';
 import { isEqual } from 'lodash';
 import { fromDataStreamId, toDataStreamId } from '../utils/dataStreamId';
 import { toDataPoint, toDataStream } from '../utils/values';
-import type { OnSuccessCallback, RequestInformationAndRange, ErrorCallback } from '@iot-app-kit/core';
+import type {
+  OnSuccessCallback,
+  RequestInformationAndRange,
+  ErrorCallback,
+} from '@iot-app-kit/core';
 import { isDefined } from '../../utils/propertyValueUtils';
 
 export const getPropertyValueHistoryByEntityRequest = ({
@@ -37,7 +44,8 @@ export const getPropertyValueHistoryByEntityRequest = ({
   }
 
   const fetchMostRecent =
-    requestInformationSample.fetchMostRecentBeforeStart || requestInformationSample.fetchMostRecentBeforeEnd;
+    requestInformationSample.fetchMostRecentBeforeStart ||
+    requestInformationSample.fetchMostRecentBeforeEnd;
 
   return client
     .send(
@@ -65,7 +73,9 @@ export const getPropertyValueHistoryByEntityRequest = ({
             values
           ) {
             /** Report the page of data to the data-module */
-            const dataPoints = values.map((propertyValue) => toDataPoint(propertyValue)).filter(isDefined);
+            const dataPoints = values
+              .map((propertyValue) => toDataPoint(propertyValue))
+              .filter(isDefined);
 
             const streamId = toDataStreamId({
               workspaceId,
@@ -112,7 +122,11 @@ export const getPropertyValueHistoryByEntityRequest = ({
         onError({
           id,
           resolution: 0,
-          error: { msg: err.message, type: err.name, status: err.$metadata?.httpStatusCode },
+          error: {
+            msg: err.message,
+            type: err.name,
+            status: err.$metadata?.httpStatusCode,
+          },
         });
       });
     });
@@ -136,7 +150,8 @@ export const getPropertyValueHistoryByEntity = async ({
   }[] = [];
 
   requestInformations.forEach(async (info) => {
-    const { workspaceId, entityId, componentName, propertyName } = fromDataStreamId(info.id);
+    const { workspaceId, entityId, componentName, propertyName } =
+      fromDataStreamId(info.id);
     // Don't combine different propertyNames into the same API call when fetching most recent is true
     // because setting maxResults = 1 doesn't work as wanted in this case to return 1 result per property.
     if (info.fetchMostRecentBeforeEnd || info.fetchMostRecentBeforeStart) {
@@ -155,7 +170,11 @@ export const getPropertyValueHistoryByEntity = async ({
     // Find the group of the requests for the same API call
     const inputIndex = requestInputs.findIndex((input) => {
       const ids = fromDataStreamId(info.id);
-      if (ids.workspaceId !== workspaceId || ids.entityId !== entityId || ids.componentName !== componentName)
+      if (
+        ids.workspaceId !== workspaceId ||
+        ids.entityId !== entityId ||
+        ids.componentName !== componentName
+      )
         return false;
 
       const requestInfo = Object.values(input.requestInfos)[0];
@@ -166,7 +185,12 @@ export const getPropertyValueHistoryByEntity = async ({
         start: requestInfo.start.getTime(),
         end: requestInfo.end.getTime(),
       };
-      const compareInfo = { ...info, id: undefined, start: info.start.getTime(), end: info.end.getTime() };
+      const compareInfo = {
+        ...info,
+        id: undefined,
+        start: info.start.getTime(),
+        end: info.end.getTime(),
+      };
 
       return isEqual(inputInfo, compareInfo);
     });

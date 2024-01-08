@@ -14,9 +14,12 @@ import {
 
 import './option.css';
 
-const isPointerEvent = (e: React.MouseEvent | React.KeyboardEvent): e is React.MouseEvent => e.type === 'click';
-const isEnterEvent = (e: React.MouseEvent | React.KeyboardEvent): e is React.KeyboardEvent =>
-  !isPointerEvent(e) && isHotkey('enter', e);
+const isPointerEvent = (
+  e: React.MouseEvent | React.KeyboardEvent
+): e is React.MouseEvent => e.type === 'click';
+const isEnterEvent = (
+  e: React.MouseEvent | React.KeyboardEvent
+): e is React.KeyboardEvent => !isPointerEvent(e) && isHotkey('enter', e);
 
 export type MenuOptionProps = {
   id?: string;
@@ -83,7 +86,10 @@ export const MenuOption: React.FC<PropsWithChildren<MenuOptionProps>> = ({
 
   const borderRadius = hover ? borderRadiusDropdown : 0;
 
-  const disabledStyle = { color: colorBackgroundControlDisabled, cursor: 'not-allowed' };
+  const disabledStyle = {
+    color: colorBackgroundControlDisabled,
+    cursor: 'not-allowed',
+  };
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <li
@@ -104,12 +110,18 @@ export const MenuOption: React.FC<PropsWithChildren<MenuOptionProps>> = ({
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
     >
-      {iconStart && <div className='menu-option-icon menu-option-icon-start'>{iconStart()}</div>}
+      {iconStart && (
+        <div className='menu-option-icon menu-option-icon-start'>
+          {iconStart()}
+        </div>
+      )}
       <div className='menu-option-label'>
         {children}
         {label}
       </div>
-      {iconEnd && <div className='menu-option-icon menu-option-icon-end'>{iconEnd()}</div>}
+      {iconEnd && (
+        <div className='menu-option-icon menu-option-icon-end'>{iconEnd()}</div>
+      )}
     </li>
   );
 };

@@ -1,4 +1,10 @@
-import { useEffect, useState, SyntheticEvent, useMemo, MutableRefObject } from 'react';
+import {
+  useEffect,
+  useState,
+  SyntheticEvent,
+  useMemo,
+  MutableRefObject,
+} from 'react';
 import type { ECharts } from 'echarts';
 import {
   CHART_RESIZE_INITIAL_FACTOR,
@@ -8,7 +14,11 @@ import {
 import { ResizeCallbackData } from 'react-resizable';
 import { useMeasure } from 'react-use';
 
-const getChartWidth = (width: number, staticWidth: number, rightLegend?: boolean) => {
+const getChartWidth = (
+  width: number,
+  staticWidth: number,
+  rightLegend?: boolean
+) => {
   if (!rightLegend) {
     return width - staticWidth;
   }
@@ -44,19 +54,28 @@ export const useResizeableEChart = (
   isBottomAligned?: boolean
 ) => {
   const { width, height } = size;
-  const [leftLegendRef, { width: leftLegendWidth }] = useMeasure<HTMLDivElement>();
-  const [chartWidth, setChartWidth] = useState(getChartWidth(width, leftLegendWidth));
+  const [leftLegendRef, { width: leftLegendWidth }] =
+    useMeasure<HTMLDivElement>();
+  const [chartWidth, setChartWidth] = useState(
+    getChartWidth(width, leftLegendWidth)
+  );
   const [chartHeight, setChartHeight] = useState(getChartHeight(height));
-  const rightLegendWidth = rightLegend ? width - leftLegendWidth - chartWidth : 0;
+  const rightLegendWidth = rightLegend
+    ? width - leftLegendWidth - chartWidth
+    : 0;
   const rightLegendHeight = rightLegend ? height - chartHeight : 0;
 
   const onResize = (_event: SyntheticEvent, data: ResizeCallbackData) => {
     _event.stopPropagation();
 
     if (!rightLegend) {
-      isBottomAligned ? setChartHeight(height) : setChartWidth(width - leftLegendWidth);
+      isBottomAligned
+        ? setChartHeight(height)
+        : setChartWidth(width - leftLegendWidth);
     } else {
-      isBottomAligned ? setChartHeight(data.size.height) : setChartWidth(data.size.width);
+      isBottomAligned
+        ? setChartHeight(data.size.height)
+        : setChartWidth(data.size.width);
     }
   };
 
@@ -70,7 +89,10 @@ export const useResizeableEChart = (
 
   useEffect(() => {
     const chart = chartRef.current;
-    chart?.resize({ width: isBottomAligned ? width : chartWidth, height: isBottomAligned ? chartHeight : height });
+    chart?.resize({
+      width: isBottomAligned ? width : chartWidth,
+      height: isBottomAligned ? chartHeight : height,
+    });
   }, [chartRef, chartHeight, chartWidth, isBottomAligned, height, width]);
 
   const minConstraints: [number, number] = useMemo(() => {

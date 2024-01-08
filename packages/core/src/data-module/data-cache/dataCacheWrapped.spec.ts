@@ -23,7 +23,11 @@ it('initializes', () => {
 });
 
 describe('shouldRequestDataStream', () => {
-  const ERR = { msg: 'An error has occurred!', type: 'ResourceNotFoundException', status: '404' };
+  const ERR = {
+    msg: 'An error has occurred!',
+    type: 'ResourceNotFoundException',
+    status: '404',
+  };
 
   const CACHE_WITH_ERROR: DataStreamsStore = {
     [DATA_STREAM.id]: {
@@ -117,9 +121,18 @@ describe('actions', () => {
 
     const ID = 'some-id';
     const RESOLUTION = SECOND_IN_MS;
-    const ERROR = { msg: 'some error', type: 'ResourceNotFoundException', status: '404' };
+    const ERROR = {
+      msg: 'some error',
+      type: 'ResourceNotFoundException',
+      status: '404',
+    };
 
-    dataCache.onError({ id: ID, resolution: RESOLUTION, aggregationType: AGGREGATE_TYPE, error: ERROR });
+    dataCache.onError({
+      id: ID,
+      resolution: RESOLUTION,
+      aggregationType: AGGREGATE_TYPE,
+      error: ERROR,
+    });
     const state = dataCache.getState();
 
     expect(state?.[ID]?.resolutions?.[RESOLUTION]?.[AGGREGATE_TYPE]).toEqual(
@@ -190,7 +203,9 @@ describe('actions', () => {
       end
     );
     const state = dataCache.getState() as DataStreamsStore;
-    expect(state[DATA_STREAM.id]?.resolutions?.[100]?.[AGGREGATE_TYPE]).toBeDefined();
+    expect(
+      state[DATA_STREAM.id]?.resolutions?.[100]?.[AGGREGATE_TYPE]
+    ).toBeDefined();
     expect(state[DATA_STREAM.id]?.rawData).toBeUndefined();
   });
 });

@@ -12,12 +12,17 @@ export interface PasteWidgetsAction extends Action {
   payload: PasteWidgetsActionPayload;
 }
 
-export const onPasteWidgetsAction = (payload: PasteWidgetsActionPayload): PasteWidgetsAction => ({
+export const onPasteWidgetsAction = (
+  payload: PasteWidgetsActionPayload
+): PasteWidgetsAction => ({
   type: 'PASTE_WIDGETS',
   payload,
 });
 
-export const pasteWidgets = (state: DashboardState, action: PasteWidgetsAction): DashboardState => {
+export const pasteWidgets = (
+  state: DashboardState,
+  action: PasteWidgetsAction
+): DashboardState => {
   const { position } = action.payload;
 
   const cellSize = state.grid.cellSize;
@@ -43,11 +48,13 @@ export const pasteWidgets = (state: DashboardState, action: PasteWidgetsAction):
     };
 
     // getting widgets group's left most cell value
-    const leftmostWidget: DashboardWidget = minBy(copyGroup, 'x') || copyGroup[0];
+    const leftmostWidget: DashboardWidget =
+      minBy(copyGroup, 'x') || copyGroup[0];
     const groupLeftX = leftmostWidget.x;
 
     // getting widgets group's top most cell value
-    const topmostWidget: DashboardWidget = minBy(copyGroup, 'y') || copyGroup[0];
+    const topmostWidget: DashboardWidget =
+      minBy(copyGroup, 'y') || copyGroup[0];
     const groupTopY = topmostWidget.y;
 
     // getting widgets group's right most cell value

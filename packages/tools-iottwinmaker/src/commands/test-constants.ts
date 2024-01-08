@@ -77,28 +77,30 @@ export const componentType1Definition: ComponentTypeDefinition = {
   description: getComponentType1Resp.description,
 };
 
-export const componentTypeWithInheritedProperty: modifiedComponentTypeDefinition = {
-  componentTypeId: getComponentType1Resp.componentTypeId,
-  description: getComponentType1Resp.description,
-  propertyDefinitions: {
-    testProperty: {
-      isInherited: true,
-      dataType: undefined,
-      isTimeSeries: undefined,
-      isRequiredInEntity: undefined,
-      isExternalId: undefined,
-      isStoredExternally: undefined,
-      isImported: undefined,
-      isFinal: undefined,
+export const componentTypeWithInheritedProperty: modifiedComponentTypeDefinition =
+  {
+    componentTypeId: getComponentType1Resp.componentTypeId,
+    description: getComponentType1Resp.description,
+    propertyDefinitions: {
+      testProperty: {
+        isInherited: true,
+        dataType: undefined,
+        isTimeSeries: undefined,
+        isRequiredInEntity: undefined,
+        isExternalId: undefined,
+        isStoredExternally: undefined,
+        isImported: undefined,
+        isFinal: undefined,
+      },
     },
-  },
-};
+  };
 
-export const modifiedComponentTypeWithInheritedProperty: ComponentTypeDefinition = {
-  componentTypeId: getComponentType1Resp.componentTypeId,
-  description: getComponentType1Resp.description,
-  propertyDefinitions: {},
-};
+export const modifiedComponentTypeWithInheritedProperty: ComponentTypeDefinition =
+  {
+    componentTypeId: getComponentType1Resp.componentTypeId,
+    description: getComponentType1Resp.description,
+    propertyDefinitions: {},
+  };
 
 export const componentTypeWithDefaultValue: modifiedComponentTypeDefinition = {
   componentTypeId: getComponentType1Resp.componentTypeId,

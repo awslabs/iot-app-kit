@@ -1,4 +1,8 @@
-import { GetPropertyValueCommand, GetPropertyValueResponse, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import {
+  GetPropertyValueCommand,
+  GetPropertyValueResponse,
+  IoTTwinMakerClient,
+} from '@aws-sdk/client-iottwinmaker';
 import { DataType, DataStreamBase } from '@iot-app-kit/core';
 import { TwinMakerStaticDataQuery } from '../types';
 import { toValue } from '../../utils/propertyValueUtils';
@@ -24,7 +28,9 @@ export const getPropertyValueByEntity = async ({
         workspaceId: query.workspaceId,
         entityId: query.entityId,
         componentName: query.componentName,
-        selectedProperties: query.properties.map((property) => property.propertyName),
+        selectedProperties: query.properties.map(
+          (property) => property.propertyName
+        ),
         nextToken,
       })
     );

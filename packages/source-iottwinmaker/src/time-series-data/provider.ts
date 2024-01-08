@@ -13,8 +13,12 @@ import type { TwinMakerDataStreamQuery } from './types';
 /**
  * Provider for TwinMaker time series data
  */
-export class TwinMakerTimeSeriesDataProvider implements ProviderWithViewport<TimeSeriesData[]> {
-  private update: (subscriptionUpdate: SubscriptionUpdate<TwinMakerDataStreamQuery>) => void = () => {};
+export class TwinMakerTimeSeriesDataProvider
+  implements ProviderWithViewport<TimeSeriesData[]>
+{
+  private update: (
+    subscriptionUpdate: SubscriptionUpdate<TwinMakerDataStreamQuery>
+  ) => void = () => {};
 
   public dataModule: TimeSeriesDataModule<TwinMakerDataStreamQuery>;
   public metadataModule: TwinMakerMetadataModule;
@@ -34,16 +38,20 @@ export class TwinMakerTimeSeriesDataProvider implements ProviderWithViewport<Tim
   }
 
   subscribe = (observer: ProviderObserver<TimeSeriesData[]>) => {
-    const { update, unsubscribe } = subscribeToTimeSeriesData(this.metadataModule, this.dataModule)(
-      this.input,
-      (timeSeriesData: TimeSeriesData) => observer.next([timeSeriesData])
+    const { update, unsubscribe } = subscribeToTimeSeriesData(
+      this.metadataModule,
+      this.dataModule
+    )(this.input, (timeSeriesData: TimeSeriesData) =>
+      observer.next([timeSeriesData])
     );
 
     this.update = update;
     this._unsubscribes.push(unsubscribe);
   };
 
-  updateSubscription = (subscriptionUpdate: SubscriptionUpdate<TwinMakerDataStreamQuery>) => {
+  updateSubscription = (
+    subscriptionUpdate: SubscriptionUpdate<TwinMakerDataStreamQuery>
+  ) => {
     this.update(subscriptionUpdate);
   };
 

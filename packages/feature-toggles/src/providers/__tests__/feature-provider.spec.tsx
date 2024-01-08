@@ -39,6 +39,8 @@ describe('<FeatureProvider />', () => {
       </FeatureProvider>
     );
 
-    await waitFor(() => expect(container.textContent).toEqual(JSON.stringify(expectedContent)));
+    await waitFor(() =>
+      expect(container.textContent).toEqual(JSON.stringify(expectedContent))
+    );
   });
 });

@@ -29,7 +29,9 @@ export const handleDataValueInterpolation = ({
       const timeMax = data[rightIndex][0];
       const LeftDelta = Math.abs(timeMin - timestampInMs);
       const rightDelta = Math.abs(timeMax - timestampInMs);
-      const ratio = Number((LeftDelta / rightDelta).toPrecision(DEFAULT_PRECISION));
+      const ratio = Number(
+        (LeftDelta / rightDelta).toPrecision(DEFAULT_PRECISION)
+      );
       if (ratio < 1) {
         return data[leftIndex][1];
       } else {

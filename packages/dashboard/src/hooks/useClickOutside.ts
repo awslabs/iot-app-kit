@@ -15,7 +15,12 @@ export const useClickOutside = <T extends HTMLElement>(cb: ClickCallback) => {
     };
 
     const handlePointerDown = (event: PointerEvent) => {
-      if (ref.current && event.target && event.target instanceof Node && !ref.current.contains(event.target)) {
+      if (
+        ref.current &&
+        event.target &&
+        event.target instanceof Node &&
+        !ref.current.contains(event.target)
+      ) {
         setPointerDown(true);
       }
     };

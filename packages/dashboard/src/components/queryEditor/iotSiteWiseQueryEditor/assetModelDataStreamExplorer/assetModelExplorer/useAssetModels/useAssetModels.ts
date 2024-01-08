@@ -32,7 +32,9 @@ export function useAssetModels({ client, fetchAll }: UseAssetModelsOptions) {
 
   if (fetchAll && hasNextPage) fetchNextPage();
 
-  const assetModelSummaries = createNonNullableList(assetModelResponses.flatMap((res) => res.assetModelSummaries));
+  const assetModelSummaries = createNonNullableList(
+    assetModelResponses.flatMap((res) => res.assetModelSummaries)
+  );
 
   return {
     assetModelSummaries,
@@ -52,7 +54,9 @@ export const createQueryFn = (client: IoTSiteWiseClient) => {
   return async ({
     pageParam: nextToken,
     signal,
-  }: QueryFunctionContext<ReturnType<AssetModelsCacheKeyFactory['create']>>) => {
+  }: QueryFunctionContext<
+    ReturnType<AssetModelsCacheKeyFactory['create']>
+  >) => {
     const request = new GetAssetModelsRequest({ nextToken, client, signal });
 
     const response = await request.send();

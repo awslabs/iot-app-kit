@@ -3,7 +3,12 @@ import React, { memo } from 'react';
 import { Box, Header, SpaceBetween } from '@cloudscape-design/components';
 import { TimeSelection } from '@iot-app-kit/react-components';
 
-import { colorChartsLineGrid, spaceScaledXs, spaceScaledXxxl, spaceScaledXxxs } from '@cloudscape-design/design-tokens';
+import {
+  colorChartsLineGrid,
+  spaceScaledXs,
+  spaceScaledXxxl,
+  spaceScaledXxxs,
+} from '@cloudscape-design/design-tokens';
 
 import Actions from '../actions';
 import type { DashboardSave, DashboardWidget } from '~/types';

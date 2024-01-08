@@ -18,9 +18,17 @@ const emptyState = {
 
 const DashboardEmptyState: React.FC = () => {
   return (
-    <div data-testid='empty-state' className='dashboard-empty-state' style={emptyState}>
+    <div
+      data-testid='empty-state'
+      className='dashboard-empty-state'
+      style={emptyState}
+    >
       <div style={{ margin: spaceStaticXxl }}>
-        <img style={{ margin: spaceStaticS }} src={lineSvg} alt='Line widget light icon' />
+        <img
+          style={{ margin: spaceStaticS }}
+          src={lineSvg}
+          alt='Line widget light icon'
+        />
         <div>Drag and drop your widget to the canvas.</div>
       </div>
     </div>

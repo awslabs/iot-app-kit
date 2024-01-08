@@ -7,11 +7,17 @@ const mergeHistoricalRequest = (
   newRequest: HistoricalRequest,
   existingRequest: HistoricalRequest
 ): HistoricalRequest[] => {
-  if (newRequest.start <= existingRequest.start && newRequest.end >= existingRequest.end) {
+  if (
+    newRequest.start <= existingRequest.start &&
+    newRequest.end >= existingRequest.end
+  ) {
     // new request fully contains existing request.
     return [];
   }
-  if (newRequest.start >= existingRequest.start && newRequest.end <= existingRequest.end) {
+  if (
+    newRequest.start >= existingRequest.start &&
+    newRequest.end <= existingRequest.end
+  ) {
     // new request fully contained within existing request
     return [
       {
@@ -27,7 +33,10 @@ const mergeHistoricalRequest = (
     ];
   }
 
-  if (newRequest.start < existingRequest.start && newRequest.end > existingRequest.start) {
+  if (
+    newRequest.start < existingRequest.start &&
+    newRequest.end > existingRequest.start
+  ) {
     // new request overlaps on the left side
     return [
       {
@@ -38,7 +47,10 @@ const mergeHistoricalRequest = (
     ];
   }
 
-  if (existingRequest.start < newRequest.start && existingRequest.end > newRequest.start) {
+  if (
+    existingRequest.start < newRequest.start &&
+    existingRequest.end > newRequest.start
+  ) {
     // new request overlaps on the right side
     return [
       {
@@ -53,8 +65,10 @@ const mergeHistoricalRequest = (
   return [existingRequest];
 };
 
-const chronologicalSort = (r1: HistoricalRequest, r2: HistoricalRequest): number =>
-  r2.start.getTime() - r1.start.getTime();
+const chronologicalSort = (
+  r1: HistoricalRequest,
+  r2: HistoricalRequest
+): number => r2.start.getTime() - r1.start.getTime();
 
 /**
  * Merge Historical Requests
@@ -67,4 +81,7 @@ export const mergeHistoricalRequests = (
   existingHistory: HistoricalRequest[],
   newRequest: HistoricalRequest
 ): HistoricalRequest[] =>
-  [newRequest, ...existingHistory.map((r) => mergeHistoricalRequest(newRequest, r)).flat()].sort(chronologicalSort);
+  [
+    newRequest,
+    ...existingHistory.map((r) => mergeHistoricalRequest(newRequest, r)).flat(),
+  ].sort(chronologicalSort);

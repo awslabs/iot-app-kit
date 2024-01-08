@@ -17,7 +17,10 @@ import type {
   TimeSeriesData,
 } from './types';
 import type { DataStreamsStore, CacheSettings } from './data-cache/types';
-import type { TimeSeriesDataRequest, Viewport } from './data-cache/requestTypes';
+import type {
+  TimeSeriesDataRequest,
+  Viewport,
+} from './data-cache/requestTypes';
 
 export const DEFAULT_CACHE_SETTINGS = {
   ttlDurationMapping: {
@@ -45,7 +48,10 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
    * Create a new data module, optionally with a pre-hydrated data cache.
    *
    */
-  constructor(dataSource: DataSource<Query>, configuration: IotAppKitDataModuleConfiguration = {}) {
+  constructor(
+    dataSource: DataSource<Query>,
+    configuration: IotAppKitDataModuleConfiguration = {}
+  ) {
     const { initialDataCache, cacheSettings } = configuration;
 
     this.dataSourceStore = new DataSourceStore(dataSource);
@@ -77,9 +83,16 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
     request: TimeSeriesDataRequest;
     queries: Query[];
   }) => {
-    const requestedStreams = await this.dataSourceStore.getRequestsFromQueries({ queries, request });
+    const requestedStreams = await this.dataSourceStore.getRequestsFromQueries({
+      queries,
+      request,
+    });
 
-    const isRequestedDataStream = ({ id, resolution, aggregationType }: RequestInformation) =>
+    const isRequestedDataStream = ({
+      id,
+      resolution,
+      aggregationType,
+    }: RequestInformation) =>
       this.dataCache.shouldRequestDataStream({
         dataStreamId: id,
         resolution: parseDuration(resolution),
@@ -111,7 +124,9 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
     }
   };
 
-  private getAdjustedViewport = (request: TimeSeriesDataRequest): { start: Date; end: Date } => {
+  private getAdjustedViewport = (
+    request: TimeSeriesDataRequest
+  ): { start: Date; end: Date } => {
     // Get the date range to request data for.
     // Pass in 'now' for max since we don't want to request for data in the future yet - it doesn't exist yet.
     const { start, end } = requestRange(
@@ -156,12 +171,16 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
       this.unsubscribe(subscriptionId);
     };
 
-    const update = (subscriptionUpdate: SubscriptionUpdate<Query>) => this.update(subscriptionId, subscriptionUpdate);
+    const update = (subscriptionUpdate: SubscriptionUpdate<Query>) =>
+      this.update(subscriptionId, subscriptionUpdate);
 
     return { unsubscribe, update };
   };
 
-  private update = async (subscriptionId: string, subscriptionUpdate: SubscriptionUpdate<Query>): Promise<void> => {
+  private update = async (
+    subscriptionId: string,
+    subscriptionUpdate: SubscriptionUpdate<Query>
+  ): Promise<void> => {
     const subscription = this.subscriptions.getSubscription(subscriptionId);
 
     const updatedSubscription = { ...subscription, ...subscriptionUpdate };

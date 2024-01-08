@@ -7,6 +7,7 @@ export interface ConfigState {
 export const createConfigSlice: StateCreator<ConfigState> = () => ({
   config: {
     useModelBasedQuery: !!localStorage?.getItem('USE_MODEL_BASED_QUERY'),
-    showTanstackTable: localStorage?.getItem('SHOW_LEGEND_TANSTACK_TABLE') === 'true',
+    showTanstackTable:
+      localStorage?.getItem('SHOW_LEGEND_TANSTACK_TABLE') === 'true',
   },
 });

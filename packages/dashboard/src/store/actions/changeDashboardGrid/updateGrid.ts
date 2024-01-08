@@ -14,7 +14,10 @@ export const changeGridProperty = (
     [property]: value,
   };
   const widgets = state.dashboardConfiguration.widgets.map((w) => {
-    return constrainWidgetPositionToGrid({ x: 0, y: 0, width: grid.width, height: grid.height }, w);
+    return constrainWidgetPositionToGrid(
+      { x: 0, y: 0, width: grid.width, height: grid.height },
+      w
+    );
   });
 
   return {

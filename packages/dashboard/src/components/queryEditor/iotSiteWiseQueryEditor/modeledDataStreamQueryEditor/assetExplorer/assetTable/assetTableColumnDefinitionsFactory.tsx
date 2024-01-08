@@ -5,7 +5,8 @@ import React from 'react';
 import type { AssetTableNameLinkProps } from './assetTableNameLink';
 import { getFormattedDateTime } from '~/components/util/dateTimeUtil';
 
-type AssetTableColumnDefinitions = TableProps<AssetSummary>['columnDefinitions'];
+type AssetTableColumnDefinitions =
+  TableProps<AssetSummary>['columnDefinitions'];
 
 export class AssetTableColumnDefinitionsFactory {
   readonly #NameLink: React.ElementType<AssetTableNameLinkProps>;
@@ -60,7 +61,11 @@ export class AssetTableColumnDefinitionsFactory {
       header: 'Name',
       cell: ({ name, id, hierarchies = [] }) => {
         return hierarchies.length > 0 ? (
-          <NameLink assetId={id ?? '-'} assetName={name ?? '-'} updateParentAssetId={this.#onClickNameLink} />
+          <NameLink
+            assetId={id ?? '-'}
+            assetName={name ?? '-'}
+            updateParentAssetId={this.#onClickNameLink}
+          />
         ) : (
           name
         );
@@ -81,7 +86,8 @@ export class AssetTableColumnDefinitionsFactory {
     return {
       id: 'creationDate',
       header: 'Creation Date',
-      cell: ({ creationDate }) => (creationDate ? getFormattedDateTime(creationDate) : '-'),
+      cell: ({ creationDate }) =>
+        creationDate ? getFormattedDateTime(creationDate) : '-',
       sortingField: 'creationDate',
     };
   }
@@ -90,7 +96,8 @@ export class AssetTableColumnDefinitionsFactory {
     return {
       id: 'lastUpdateDate',
       header: 'Last Update Date',
-      cell: ({ lastUpdateDate }) => (lastUpdateDate ? getFormattedDateTime(lastUpdateDate) : '-'),
+      cell: ({ lastUpdateDate }) =>
+        lastUpdateDate ? getFormattedDateTime(lastUpdateDate) : '-',
       sortingField: 'lastUpdateDate',
     };
   }

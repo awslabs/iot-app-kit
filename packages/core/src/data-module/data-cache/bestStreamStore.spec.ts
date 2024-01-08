@@ -132,7 +132,11 @@ describe(' get best stream store based', () => {
                 [AGGREGATE_TYPE]: {
                   id: ID,
                   resolution: 50,
-                  error: { msg: 'woah an error!', type: 'ResourceNotFoundException', status: '404' },
+                  error: {
+                    msg: 'woah an error!',
+                    type: 'ResourceNotFoundException',
+                    status: '404',
+                  },
                   requestHistory: [],
                   isLoading: false,
                   isRefreshing: false,
@@ -165,7 +169,11 @@ describe(' get best stream store based', () => {
     const ERROR_STORE: DataStreamStore = {
       id: ID,
       requestHistory: [],
-      error: { msg: 'woah an error!', type: 'ResourceNotFoundException', status: '404' },
+      error: {
+        msg: 'woah an error!',
+        type: 'ResourceNotFoundException',
+        status: '404',
+      },
       resolution: 0,
       isLoading: false,
       isRefreshing: false,

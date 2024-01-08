@@ -6,12 +6,19 @@ interface ModeledDataStreamTableHeaderProps {
   selectedItemCount?: number;
 }
 
-export function ModeledDataStreamTableHeader({ totalItemCount, selectedItemCount }: ModeledDataStreamTableHeaderProps) {
+export function ModeledDataStreamTableHeader({
+  totalItemCount,
+  selectedItemCount,
+}: ModeledDataStreamTableHeaderProps) {
   return (
     <Header
       variant='h3'
       description='Select a modeled data stream to add a selected widget.'
-      counter={selectedItemCount ? `(${selectedItemCount}/${totalItemCount})` : `(${totalItemCount})`}
+      counter={
+        selectedItemCount
+          ? `(${selectedItemCount}/${totalItemCount})`
+          : `(${totalItemCount})`
+      }
     >
       Modeled data streams
     </Header>

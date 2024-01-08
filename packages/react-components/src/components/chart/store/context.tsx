@@ -1,11 +1,21 @@
-import React, { createContext, useRef, PropsWithChildren, useEffect } from 'react';
+import React, {
+  createContext,
+  useRef,
+  PropsWithChildren,
+  useEffect,
+} from 'react';
 import { createChartStore } from './store';
 import useDataStore from '../../../store';
 
 // Recommended usage from zustand https://docs.pmnd.rs/zustand/previous-versions/zustand-v3-create-context
-export const ChartStoreContext = createContext<ReturnType<typeof createChartStore>>(createChartStore());
+export const ChartStoreContext = createContext<
+  ReturnType<typeof createChartStore>
+>(createChartStore());
 
-export const ChartStoreProvider = ({ id, children }: PropsWithChildren<{ id: string }>) => {
+export const ChartStoreProvider = ({
+  id,
+  children,
+}: PropsWithChildren<{ id: string }>) => {
   const storeRef = useRef<ReturnType<typeof createChartStore>>();
   useEffect(
     () => () => {
@@ -21,5 +31,9 @@ export const ChartStoreProvider = ({ id, children }: PropsWithChildren<{ id: str
     if (!store) store = storeState.addChart(id);
     storeRef.current = store;
   }
-  return <ChartStoreContext.Provider value={storeRef.current}>{children}</ChartStoreContext.Provider>;
+  return (
+    <ChartStoreContext.Provider value={storeRef.current}>
+      {children}
+    </ChartStoreContext.Provider>
+  );
 };

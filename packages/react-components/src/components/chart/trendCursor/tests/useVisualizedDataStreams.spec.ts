@@ -14,7 +14,12 @@ it('converts empty query to empty data stream', async () => {
 
 it('convert query to visualized data stream', async () => {
   const VIEWPORT = { duration: '5m' };
-  const DATA_STREAM: DataStream = { id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
+  const DATA_STREAM: DataStream = {
+    id: 'abc-1',
+    data: [],
+    resolution: 0,
+    name: 'my-name',
+  };
   const queries = mockTimeSeriesDataQuery([
     {
       dataStreams: [DATA_STREAM],

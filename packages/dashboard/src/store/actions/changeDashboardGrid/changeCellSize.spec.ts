@@ -1,5 +1,8 @@
 import { initialState } from '../../state';
-import { changeDashboardCellSize, onChangeDashboardCellSizeAction } from './changeCellSize';
+import {
+  changeDashboardCellSize,
+  onChangeDashboardCellSizeAction,
+} from './changeCellSize';
 
 it('can change grid cellSize', () => {
   expect(

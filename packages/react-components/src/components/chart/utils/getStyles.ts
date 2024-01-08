@@ -5,9 +5,13 @@ export type Emphasis = 'none' | 'emphasize' | 'de-emphasize';
 export const getStyles = (
   refId?: string,
   styleSettings?: ChartOptions['styleSettings']
-): ChartStyleSettingsOptions | undefined => (refId && styleSettings ? styleSettings[refId] : undefined);
+): ChartStyleSettingsOptions | undefined =>
+  refId && styleSettings ? styleSettings[refId] : undefined;
 
-type OptionalChartStyleSettingsOptions = Pick<ChartStyleSettingsOptions, 'symbolColor' | 'yAxis' | 'color'>;
+type OptionalChartStyleSettingsOptions = Pick<
+  ChartStyleSettingsOptions,
+  'symbolColor' | 'yAxis' | 'color'
+>;
 export type ChartStyleSettingsWithDefaults = Omit<
   Required<ChartStyleSettingsOptions>,
   keyof OptionalChartStyleSettingsOptions

@@ -1,7 +1,9 @@
 export const S3Protocol = 's3:';
 export const S3Prefix = `${S3Protocol}//`;
 
-export const getS3BucketAndKey = (uri: string): { Bucket: string; Key: string } | undefined => {
+export const getS3BucketAndKey = (
+  uri: string
+): { Bucket: string; Key: string } | undefined => {
   if (!uri.startsWith(S3Prefix)) {
     return undefined;
   }
@@ -24,7 +26,9 @@ export const parseS3BucketFromArn = (s3Arn: string): string => {
   return arnSplit[1];
 };
 
-export const parseS3RelativeScenePathFromURI = (sceneLocation: string): string => {
+export const parseS3RelativeScenePathFromURI = (
+  sceneLocation: string
+): string => {
   const uriSplit = sceneLocation.split(`${S3Prefix}`)[1];
   return uriSplit.substring(uriSplit.indexOf('/') + 1);
 };

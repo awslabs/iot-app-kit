@@ -28,7 +28,11 @@ export const AGGREGATED_DATA_QUERY = {
     {
       assetId: AGGREGATED_DATA_ASSET,
       properties: [
-        { propertyId: AGGREGATED_DATA_PROPERTY, resolution: '0', refId: 'testing' },
+        {
+          propertyId: AGGREGATED_DATA_PROPERTY,
+          resolution: '0',
+          refId: 'testing',
+        },
         { propertyId: AGGREGATED_DATA_PROPERTY_2 },
       ],
     },
@@ -37,7 +41,10 @@ export const AGGREGATED_DATA_QUERY = {
 
 export const query = (() => {
   try {
-    return initialize({ awsCredentials: getEnvCredentials(), awsRegion: REGION }).query;
+    return initialize({
+      awsCredentials: getEnvCredentials(),
+      awsRegion: REGION,
+    }).query;
   } catch (e) {
     return initialize({
       awsCredentials: {
@@ -51,7 +58,10 @@ export const query = (() => {
 
 export const mockQuery = (
   timeSeriesData: TimeSeriesData[] = [generateMockTimeSeriesData()],
-  overrides?: { updateViewport?: (viewport: Viewport) => void; unsubscribe?: () => void }
+  overrides?: {
+    updateViewport?: (viewport: Viewport) => void;
+    unsubscribe?: () => void;
+  }
 ): SiteWiseQuery => {
   const { updateViewport = noop, unsubscribe = noop } = overrides || {};
   return {

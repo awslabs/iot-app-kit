@@ -5,7 +5,12 @@ import type { FC, PropsWithChildren } from 'react';
 import type { FormFieldProps, GridProps } from '@cloudscape-design/components';
 
 type SettingTileProps = GridProps & FormFieldProps;
-const SettingTile: FC<PropsWithChildren<SettingTileProps>> = ({ gridDefinition, label, description, children }) => {
+const SettingTile: FC<PropsWithChildren<SettingTileProps>> = ({
+  gridDefinition,
+  label,
+  description,
+  children,
+}) => {
   return (
     <FormField label={label} description={description}>
       <Grid gridDefinition={gridDefinition}>{children}</Grid>

@@ -10,5 +10,10 @@ export const useContextMenu = () => {
     e.stop();
   };
 
-  return { handleContextMenu, showContextMenu, contextMenuPos, setShowContextMenu };
+  return {
+    handleContextMenu,
+    showContextMenu,
+    contextMenuPos,
+    setShowContextMenu,
+  };
 };

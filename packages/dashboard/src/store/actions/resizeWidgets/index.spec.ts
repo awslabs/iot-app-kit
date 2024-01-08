@@ -5,7 +5,9 @@ import type { DashboardState } from '../../state';
 import { initialState } from '../../state';
 import type { DashboardWidget } from '~/types';
 
-const setupDashboardState = (widgets: DashboardWidget[] = []): DashboardState => ({
+const setupDashboardState = (
+  widgets: DashboardWidget[] = []
+): DashboardState => ({
   ...initialState,
   grid: {
     ...initialState.grid,

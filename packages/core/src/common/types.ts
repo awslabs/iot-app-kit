@@ -1,5 +1,13 @@
-import type { TimeSeriesDataRequest, Viewport } from '../data-module/data-cache/requestTypes';
-import type { ComparisonOperator, DataStreamId, StatusIconType, TimeSeriesData } from '../data-module/types';
+import type {
+  TimeSeriesDataRequest,
+  Viewport,
+} from '../data-module/data-cache/requestTypes';
+import type {
+  ComparisonOperator,
+  DataStreamId,
+  StatusIconType,
+  TimeSeriesData,
+} from '../data-module/types';
 
 export type ErrorDetails = { msg: string; type?: string; status?: string };
 
@@ -32,7 +40,8 @@ export interface Query<Result, Params = void> {
   toQueryString(): string;
 }
 
-export interface TimeQuery<Result, Params = void> extends Query<Result, Params> {
+export interface TimeQuery<Result, Params = void>
+  extends Query<Result, Params> {
   build(sessionId: string, params?: Params): ProviderWithViewport<Result>;
 }
 
@@ -42,11 +51,15 @@ export interface TreeProvider<Result, Branch> extends Provider<Result> {
   collapse(branch: Branch): void;
 }
 
-export interface TreeQuery<Result, Branch, Params = void> extends Query<Result, Params> {
+export interface TreeQuery<Result, Branch, Params = void>
+  extends Query<Result, Params> {
   build(sessionId: string, params?: Params): TreeProvider<Result, Branch>;
 }
 
-export type TimeSeriesDataQuery = TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
+export type TimeSeriesDataQuery = TimeQuery<
+  TimeSeriesData[],
+  TimeSeriesDataRequest
+>;
 
 export type DataModuleSession = {
   close: () => void;
@@ -82,7 +95,8 @@ export interface Annotation<T extends AnnotationValue> {
   id?: string;
 }
 
-export interface Threshold<T extends ThresholdValue = ThresholdValue> extends Annotation<T> {
+export interface Threshold<T extends ThresholdValue = ThresholdValue>
+  extends Annotation<T> {
   comparisonOperator: ComparisonOperator;
   severity?: number;
   dataStreamIds?: DataStreamId[];

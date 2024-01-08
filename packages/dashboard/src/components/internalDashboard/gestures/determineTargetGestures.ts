@@ -41,8 +41,13 @@ export const determineTargetGestures = (
   let widgetId: string | null = null;
 
   let targetElement = target as HTMLElement;
-  while ((targetElement.getAttribute(GESTURE_ATTRIBUTE) as GestureAttribute) !== 'grid') {
-    const attribute = targetElement.getAttribute(GESTURE_ATTRIBUTE) as GestureAttribute;
+  while (
+    (targetElement.getAttribute(GESTURE_ATTRIBUTE) as GestureAttribute) !==
+    'grid'
+  ) {
+    const attribute = targetElement.getAttribute(
+      GESTURE_ATTRIBUTE
+    ) as GestureAttribute;
 
     if (attribute === 'resize') {
       isOnResizeHandle = true;

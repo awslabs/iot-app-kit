@@ -1,4 +1,7 @@
-import { SiteWiseAssetTreeNode, HierarchyGroup } from '@iot-app-kit/source-iotsitewise';
+import {
+  SiteWiseAssetTreeNode,
+  HierarchyGroup,
+} from '@iot-app-kit/source-iotsitewise';
 import { SiteWiseAssetResource } from './types';
 
 const recursiveParseSitewiseAssetTree = (
@@ -13,7 +16,11 @@ const recursiveParseSitewiseAssetTree = (
       parentId,
     });
     node.hierarchies.forEach((hierarchy: HierarchyGroup) => {
-      recursiveParseSitewiseAssetTree(flattenTree, hierarchy.children, node.asset.id);
+      recursiveParseSitewiseAssetTree(
+        flattenTree,
+        hierarchy.children,
+        node.asset.id
+      );
     });
   });
 };

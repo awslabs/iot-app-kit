@@ -30,12 +30,13 @@ export const useGridDragAndDrop = ({
 }: GridDragAndDropProps) => {
   const union = useKeyPress('shift');
 
-  const { target, dashboardGrid, setCancelClick, onPointerDown, onPointerUp } = usePointerTracker({
-    readOnly,
-    enabled,
-    union,
-    click,
-  });
+  const { target, dashboardGrid, setCancelClick, onPointerDown, onPointerUp } =
+    usePointerTracker({
+      readOnly,
+      enabled,
+      union,
+      click,
+    });
   const { dragRef } = useDragMonitor({
     readOnly,
     enabled: enabled && !union,

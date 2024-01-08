@@ -10,12 +10,16 @@ export const timeSeriesDataSession = (
   return session.siteWiseTimeSeriesModule;
 };
 
-export const assetSession = (session: SiteWiseComponentSession): SiteWiseAssetSession => {
+export const assetSession = (
+  session: SiteWiseComponentSession
+): SiteWiseAssetSession => {
   const assetSession = session.siteWiseAssetModule.startSession();
   session.attachDataModuleSession(assetSession);
   return assetSession;
 };
 
-export const alarmsSession = (session: SiteWiseComponentSession): SiteWiseAlarmModule => {
+export const alarmsSession = (
+  session: SiteWiseComponentSession
+): SiteWiseAlarmModule => {
   return session.siteWiseAlarmModule;
 };

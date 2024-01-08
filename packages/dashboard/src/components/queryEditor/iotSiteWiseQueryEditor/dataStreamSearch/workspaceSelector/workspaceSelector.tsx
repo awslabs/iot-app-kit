@@ -18,7 +18,11 @@ export interface WorkspaceSelectorProps {
   OnGettingError: (isError: boolean) => void;
 }
 
-export const WorkspaceSelector = ({ control, client, OnGettingError }: WorkspaceSelectorProps) => {
+export const WorkspaceSelector = ({
+  control,
+  client,
+  OnGettingError,
+}: WorkspaceSelectorProps) => {
   const { workspaces, status } = useWorkspaces({ client });
   const workspaceOptions = createWorkspaceOptions(workspaces);
 
@@ -53,7 +57,9 @@ export const WorkspaceSelector = ({ control, client, OnGettingError }: Workspace
   );
 };
 
-function createWorkspaceOptions(workspaces: NonNullable<ReturnType<typeof useWorkspaces>['workspaces']>) {
+function createWorkspaceOptions(
+  workspaces: NonNullable<ReturnType<typeof useWorkspaces>['workspaces']>
+) {
   const workspaceOptionFactory = new WorkspaceOptionFactory();
   const workspaceOptions = workspaces.map(workspaceOptionFactory.create);
 

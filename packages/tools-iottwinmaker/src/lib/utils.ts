@@ -21,7 +21,9 @@ async function verifyWorkspaceExists(workspaceId: string) {
     await aws().tm.getWorkspace({ workspaceId: workspaceId });
   } catch (e) {
     if (e instanceof ResourceNotFoundException) {
-      console.error(`Error: workspace '${workspaceId}' not found. Please create it first.`);
+      console.error(
+        `Error: workspace '${workspaceId}' not found. Please create it first.`
+      );
       throw e;
     } else {
       console.error(`Failed to get workspace.`, e);
@@ -37,7 +39,10 @@ async function verifyWorkspaceExists(workspaceId: string) {
  * @param dict dictionary of the missing values to fill in the template
  * @returns the complete JSON stringified template filled in
  */
-function replaceTemplateVars(template: string, dict: Record<string, string>): string {
+function replaceTemplateVars(
+  template: string,
+  dict: Record<string, string>
+): string {
   let result = template;
   for (const key in dict) {
     if (Object.prototype.hasOwnProperty.call(dict, key)) {
@@ -75,4 +80,9 @@ function regionToAirportCode(region: string): string {
   return airportRegionMap.get(region) || region;
 }
 
-export { delay, verifyWorkspaceExists, replaceTemplateVars, regionToAirportCode };
+export {
+  delay,
+  verifyWorkspaceExists,
+  replaceTemplateVars,
+  regionToAirportCode,
+};

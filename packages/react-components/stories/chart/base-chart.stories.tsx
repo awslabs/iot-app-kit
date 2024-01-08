@@ -5,7 +5,13 @@ import { TimeSelection, TimeSync, useViewport, Chart } from '../../src';
 import { getTimeSeriesDataQuery, queryConfigured } from '../utils/query';
 import { ChartOptions, Visualization } from '../../src/components/chart/types';
 
-const chartTypes: Visualization[] = ['line', 'scatter', 'step-start', 'step-middle', 'step-end']; // removing bar for now
+const chartTypes: Visualization[] = [
+  'line',
+  'scatter',
+  'step-start',
+  'step-middle',
+  'step-end',
+]; // removing bar for now
 export default {
   title: 'Widgets/Base Chart',
   component: Chart,
@@ -17,7 +23,10 @@ export default {
       defaultValue: undefined,
     },
     significantDigits: { control: { type: 'number', defaultValue: undefined } },
-    size: { control: { type: 'object' }, defaultValue: { width: 800, height: 500 } },
+    size: {
+      control: { type: 'object' },
+      defaultValue: { width: 800, height: 500 },
+    },
     styleSettings: { control: { type: 'object' }, defaultValue: undefined },
   },
   parameters: {
@@ -27,7 +36,12 @@ export default {
 
 type StoryInputs = ChartOptions;
 
-export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({ id, significantDigits, size, styleSettings }) => {
+export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
+  id,
+  significantDigits,
+  size,
+  styleSettings,
+}) => {
   const { viewport } = useViewport();
 
   return (
@@ -54,12 +68,9 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({ id, signific
   );
 };
 
-export const SiteWiseConnectedBaseChartExample: ComponentStory<FC<StoryInputs>> = ({
-  id,
-  significantDigits,
-  size,
-  styleSettings,
-}) => {
+export const SiteWiseConnectedBaseChartExample: ComponentStory<
+  FC<StoryInputs>
+> = ({ id, significantDigits, size, styleSettings }) => {
   const { viewport } = useViewport();
 
   if (!queryConfigured()) {

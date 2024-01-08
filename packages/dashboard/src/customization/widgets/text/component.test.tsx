@@ -21,14 +21,18 @@ jest.mock('~/customization/hooks/useIsSelected', () => ({
   useIsSelected: jest.fn(),
 }));
 
-jest.mock('./link', () => (props: unknown) => <div data-mocked='TextLink'>{JSON.stringify(props)}</div>);
+jest.mock('./link', () => (props: unknown) => (
+  <div data-mocked='TextLink'>{JSON.stringify(props)}</div>
+));
 jest.mock('./styledText/textArea', () => (props: unknown) => (
   <div data-mocked='StyledTextArea'>{JSON.stringify(props)}</div>
 ));
 jest.mock('./styledText/editableText', () => (props: unknown) => (
   <div data-mocked='EditableStyledText'>{JSON.stringify(props)}</div>
 ));
-jest.mock('./styledText', () => (props: unknown) => <div data-mocked='StyledText'>{JSON.stringify(props)}</div>);
+jest.mock('./styledText', () => (props: unknown) => (
+  <div data-mocked='StyledText'>{JSON.stringify(props)}</div>
+));
 
 describe('Text Widget', () => {
   beforeEach(() => {
@@ -89,6 +93,8 @@ describe('Text Widget', () => {
     );
     unmount();
 
-    expect(onChangeDashboardGridEnabledAction).toBeCalledWith({ enabled: true });
+    expect(onChangeDashboardGridEnabledAction).toBeCalledWith({
+      enabled: true,
+    });
   });
 });

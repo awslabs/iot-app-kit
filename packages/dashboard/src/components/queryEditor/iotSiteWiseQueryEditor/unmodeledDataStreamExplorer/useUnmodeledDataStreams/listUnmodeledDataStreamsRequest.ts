@@ -30,9 +30,12 @@ export class ListUnmodeledDataStreamsRequest {
 
   public async send() {
     try {
-      const { TimeSeriesSummaries = [], nextToken } = await this.#client.send(this.#command, {
-        abortSignal: this.#signal,
-      });
+      const { TimeSeriesSummaries = [], nextToken } = await this.#client.send(
+        this.#command,
+        {
+          abortSignal: this.#signal,
+        }
+      );
       const unmodeledDataStreams = this.#formatDataStreams(TimeSeriesSummaries);
 
       return { unmodeledDataStreams, nextToken };
@@ -41,8 +44,15 @@ export class ListUnmodeledDataStreamsRequest {
     }
   }
 
-  #createCommand({ aliasPrefix, nextToken }: Pick<ListTimeSeriesCommandInput, 'aliasPrefix' | 'nextToken'>) {
-    return new ListTimeSeriesCommand({ timeSeriesType: 'DISASSOCIATED', aliasPrefix, nextToken });
+  #createCommand({
+    aliasPrefix,
+    nextToken,
+  }: Pick<ListTimeSeriesCommandInput, 'aliasPrefix' | 'nextToken'>) {
+    return new ListTimeSeriesCommand({
+      timeSeriesType: 'DISASSOCIATED',
+      aliasPrefix,
+      nextToken,
+    });
   }
 
   #formatDataStreams(rawDataStreams: TimeSeriesSummary[]) {

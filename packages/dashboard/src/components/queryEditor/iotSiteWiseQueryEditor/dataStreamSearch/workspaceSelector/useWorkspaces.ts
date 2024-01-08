@@ -7,7 +7,8 @@ const TWIN_MAKER_CACHE_KEY = [{ service: 'iottwinmaker' }] as const;
 
 const CACHE_KEYS = {
   all: [{ ...TWIN_MAKER_CACHE_KEY[0], key: 'workspaces' }] as const,
-  workspaces: () => [{ ...CACHE_KEYS.all[0], resource: 'workspace summary' }] as const,
+  workspaces: () =>
+    [{ ...CACHE_KEYS.all[0], resource: 'workspace summary' }] as const,
 };
 
 export interface UseWorkspacesOptions {
@@ -24,7 +25,9 @@ export function useWorkspaces({ client }: UseWorkspacesOptions) {
 }
 
 function createQueryFn(client: IoTTwinMakerClient) {
-  return async function ({ signal }: QueryFunctionContext<ReturnType<typeof CACHE_KEYS.workspaces>>) {
+  return async function ({
+    signal,
+  }: QueryFunctionContext<ReturnType<typeof CACHE_KEYS.workspaces>>) {
     const request = new ListWorkspacesRequest({ client, signal });
     const response = await request.send();
 

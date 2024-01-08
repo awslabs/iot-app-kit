@@ -24,7 +24,10 @@ export const getNumberThresholds = (thresholds: Threshold[]): Threshold[] =>
  * @param {Threshold} t2
  * @returns {Array.<Threshold>}
  */
-export const isHigherPriorityThresholds = (t1Array: Threshold[], t2: Threshold): Threshold[] => {
+export const isHigherPriorityThresholds = (
+  t1Array: Threshold[],
+  t2: Threshold
+): Threshold[] => {
   const t1Severity = t1Array[0]?.severity;
   const t2Severity = t2.severity;
   const t2Array = [t2];
@@ -66,16 +69,26 @@ export const isHigherPriorityThresholds = (t1Array: Threshold[], t2: Threshold):
  * @param {Array.<Threshold>} thresholds
  * @returns {Array.<Threshold>}
  */
-export const highestPriorityThresholds = (thresholds: Threshold[]): Threshold[] => {
+export const highestPriorityThresholds = (
+  thresholds: Threshold[]
+): Threshold[] => {
   return thresholds.reduce(isHigherPriorityThresholds, []);
 };
 
-export const isThresholdBreached = (value: Primitive, threshold: Threshold): boolean => {
+export const isThresholdBreached = (
+  value: Primitive,
+  threshold: Threshold
+): boolean => {
   const dataStreamValue = isNumeric(value) ? Number(value) : value;
-  const thresholdValue = isNumeric(threshold.value) ? Number(threshold.value) : threshold.value;
+  const thresholdValue = isNumeric(threshold.value)
+    ? Number(threshold.value)
+    : threshold.value;
   const thresholdComparison = threshold.comparisonOperator;
 
-  if (typeof dataStreamValue === 'number' && typeof thresholdValue === 'number') {
+  if (
+    typeof dataStreamValue === 'number' &&
+    typeof thresholdValue === 'number'
+  ) {
     switch (thresholdComparison) {
       case COMPARISON_OPERATOR.GT:
         return dataStreamValue > thresholdValue;
@@ -96,11 +109,16 @@ export const isThresholdBreached = (value: Primitive, threshold: Threshold): boo
         return false;
 
       default:
-        throw new Error(`Unsupported number threshold comparison operator: ${thresholdComparison}`);
+        throw new Error(
+          `Unsupported number threshold comparison operator: ${thresholdComparison}`
+        );
     }
   }
 
-  if (typeof dataStreamValue === 'string' && typeof thresholdValue === 'string') {
+  if (
+    typeof dataStreamValue === 'string' &&
+    typeof thresholdValue === 'string'
+  ) {
     switch (thresholdComparison) {
       case COMPARISON_OPERATOR.GT:
       case COMPARISON_OPERATOR.GTE:
@@ -115,11 +133,16 @@ export const isThresholdBreached = (value: Primitive, threshold: Threshold): boo
         return dataStreamValue.includes(thresholdValue);
 
       default:
-        throw new Error(`Unsupported string threshold comparison operator: ${thresholdComparison}`);
+        throw new Error(
+          `Unsupported string threshold comparison operator: ${thresholdComparison}`
+        );
     }
   }
 
-  if (typeof dataStreamValue === 'boolean' && typeof thresholdValue === 'boolean') {
+  if (
+    typeof dataStreamValue === 'boolean' &&
+    typeof thresholdValue === 'boolean'
+  ) {
     switch (thresholdComparison) {
       case COMPARISON_OPERATOR.GT:
       case COMPARISON_OPERATOR.GTE:
@@ -132,14 +155,18 @@ export const isThresholdBreached = (value: Primitive, threshold: Threshold): boo
         return dataStreamValue === thresholdValue;
 
       default:
-        throw new Error(`Unsupported boolean threshold comparison operator: ${thresholdComparison}`);
+        throw new Error(
+          `Unsupported boolean threshold comparison operator: ${thresholdComparison}`
+        );
     }
   }
 
   return false;
 };
 
-const thresholdBisector = bisector((threshold: Threshold) => threshold.value).left;
+const thresholdBisector = bisector(
+  (threshold: Threshold) => threshold.value
+).left;
 
 /**
  * This a map of comparison operator to order. The higher the order means higher the precedence.
@@ -167,7 +194,10 @@ const operatorOrder = {
 export const sortThreshold = (thresholds: Threshold[]): Threshold[] =>
   [...thresholds].sort((a, b) => {
     if (a.value === b.value) {
-      return operatorOrder[a.comparisonOperator] - operatorOrder[b.comparisonOperator];
+      return (
+        operatorOrder[a.comparisonOperator] -
+        operatorOrder[b.comparisonOperator]
+      );
     }
     // TODO: Fix this to work for all cases. value is not always a number or comparing to the same type
     return (a.value as number) - (b.value as number);
@@ -184,13 +214,19 @@ export const sortThreshold = (thresholds: Threshold[]): Threshold[] =>
  *
  * 2) When the value is negative, then we will take the lower threshold, which is the lesser one.
  */
-export const getBreachedThreshold = (value: Primitive, thresholds: Threshold[]): Threshold | undefined => {
+export const getBreachedThreshold = (
+  value: Primitive,
+  thresholds: Threshold[]
+): Threshold | undefined => {
   if (thresholds.length === 0) {
     return undefined;
   }
 
   if (typeof value === 'string' || typeof value === 'boolean') {
-    return thresholds.find((threshold) => isThresholdBreached(value, threshold)) || undefined;
+    return (
+      thresholds.find((threshold) => isThresholdBreached(value, threshold)) ||
+      undefined
+    );
   }
 
   /**
@@ -201,10 +237,13 @@ export const getBreachedThreshold = (value: Primitive, thresholds: Threshold[]):
    * TO-DO: Add the 'in between operator' feature as one of the operator selections to consider
    * breached data points in between 2 thresholds.
    */
-  const breachedThresholds = thresholds.filter((threshold) => isThresholdBreached(value, threshold));
+  const breachedThresholds = thresholds.filter((threshold) =>
+    isThresholdBreached(value, threshold)
+  );
 
   // Only consider the highest severity breached thresholds.
-  const highestSeverityThresholds = highestPriorityThresholds(breachedThresholds);
+  const highestSeverityThresholds =
+    highestPriorityThresholds(breachedThresholds);
 
   const numberThresholds = getNumberThresholds(highestSeverityThresholds);
 
@@ -225,7 +264,11 @@ export const getBreachedThreshold = (value: Primitive, thresholds: Threshold[]):
   }
 
   // Special case when the idx is at 0 and that the first two values are of the same value.
-  if (idx === 0 && numberThresholds.length > 1 && sortedThresholds[idx].value === sortedThresholds[idx + 1].value) {
+  if (
+    idx === 0 &&
+    numberThresholds.length > 1 &&
+    sortedThresholds[idx].value === sortedThresholds[idx + 1].value
+  ) {
     annotationLeft = sortedThresholds[idx];
     annotationRight = sortedThresholds[idx + 1];
   }
@@ -235,24 +278,40 @@ export const getBreachedThreshold = (value: Primitive, thresholds: Threshold[]):
   }
 
   if (annotationLeft != null && annotationRight == null) {
-    return isThresholdBreached(value, annotationLeft) ? annotationLeft : undefined;
+    return isThresholdBreached(value, annotationLeft)
+      ? annotationLeft
+      : undefined;
   }
 
   if (annotationLeft == null && annotationRight != null) {
-    return isThresholdBreached(value, annotationRight) ? annotationRight : undefined;
+    return isThresholdBreached(value, annotationRight)
+      ? annotationRight
+      : undefined;
   }
 
-  if (isThresholdBreached(value, annotationLeft) && isThresholdBreached(value, annotationRight)) {
+  if (
+    isThresholdBreached(value, annotationLeft) &&
+    isThresholdBreached(value, annotationRight)
+  ) {
     return value >= 0 ? annotationRight : annotationLeft;
   }
-  if (isThresholdBreached(value, annotationLeft) && !isThresholdBreached(value, annotationRight)) {
+  if (
+    isThresholdBreached(value, annotationLeft) &&
+    !isThresholdBreached(value, annotationRight)
+  ) {
     return annotationLeft;
   }
-  if (!isThresholdBreached(value, annotationLeft) && isThresholdBreached(value, annotationRight)) {
+  if (
+    !isThresholdBreached(value, annotationLeft) &&
+    isThresholdBreached(value, annotationRight)
+  ) {
     return annotationRight;
   }
 
   return undefined;
 };
 
-export const isThreshold = isValid((maybeThreshold: Partial<Threshold>) => maybeThreshold.comparisonOperator != null);
+export const isThreshold = isValid(
+  (maybeThreshold: Partial<Threshold>) =>
+    maybeThreshold.comparisonOperator != null
+);

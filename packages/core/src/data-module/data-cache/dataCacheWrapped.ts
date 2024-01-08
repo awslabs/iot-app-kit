@@ -6,11 +6,19 @@ import { Observable, map, startWith, pairwise, from } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { toDataStreams } from './toDataStreams';
 import type { Store } from 'redux';
-import type { Resolution, RequestInformation, DataStream, RequestInformationAndRange } from '../types';
+import type {
+  Resolution,
+  RequestInformation,
+  DataStream,
+  RequestInformationAndRange,
+} from '../types';
 import type { DataStreamsStore } from './types';
 import type { ErrorDetails } from '../../common/types';
 
-type StoreChange = { prevDataCache: DataStreamsStore; currDataCache: DataStreamsStore };
+type StoreChange = {
+  prevDataCache: DataStreamsStore;
+  currDataCache: DataStreamsStore;
+};
 
 /**
  * Referential comparison of information related to the requested information.
@@ -53,11 +61,17 @@ export class DataCache {
     this.observableStore = from(this.dataCache).pipe(
       startWith(undefined),
       pairwise(),
-      map(([prevDataCache, currDataCache]) => ({ prevDataCache, currDataCache }))
+      map(([prevDataCache, currDataCache]) => ({
+        prevDataCache,
+        currDataCache,
+      }))
     );
   }
 
-  public subscribe = (requestInformations: RequestInformation[], emit: (dataStreams: DataStream[]) => void) => {
+  public subscribe = (
+    requestInformations: RequestInformation[],
+    emit: (dataStreams: DataStream[]) => void
+  ) => {
     const subscription = this.observableStore
       .pipe(
         // Filter out any changes that don't effect the requested informations
@@ -96,7 +110,12 @@ export class DataCache {
     resolution: number;
     aggregationType?: AggregateType;
   }) => {
-    const associatedStore = getDataStreamStore(dataStreamId, resolution, this.getState(), aggregationType);
+    const associatedStore = getDataStreamStore(
+      dataStreamId,
+      resolution,
+      this.getState(),
+      aggregationType
+    );
     const hasError = associatedStore ? associatedStore.error != null : false;
     return !hasError;
   };
@@ -121,7 +140,9 @@ export class DataCache {
     //  For example, if we have queried data for the last day, but it took 1 minute for the query to resolve, we would have the start and the end date
     //  incorrectly offset by one minute with the correct logic.
     dataStreams.forEach((stream) => {
-      this.dataCache.dispatch(onSuccessAction(stream.id, stream, start, end, requestInformation));
+      this.dataCache.dispatch(
+        onSuccessAction(stream.id, stream, start, end, requestInformation)
+      );
     });
   };
 
@@ -136,7 +157,9 @@ export class DataCache {
     error: ErrorDetails;
     aggregationType?: AggregateType;
   }): void => {
-    this.dataCache.dispatch(onErrorAction(id, resolution, error, aggregationType));
+    this.dataCache.dispatch(
+      onErrorAction(id, resolution, error, aggregationType)
+    );
   };
 
   public onRequest = (requestInformation: RequestInformationAndRange): void => {

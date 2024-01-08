@@ -18,17 +18,29 @@ import { S3SceneLoader } from './scene-module/S3SceneLoader';
 import { SceneMetadataModule } from './scene-module/SceneMetadataModule';
 import { KGDataModule } from './knowledgeGraph-module/KGDataModule';
 import { VideoDataImpl } from './video-data/VideoData';
-import { DataBase, ErrorDetails, Query, TimeSeriesDataModule, DataRequest } from '@iot-app-kit/core';
+import {
+  DataBase,
+  ErrorDetails,
+  Query,
+  TimeSeriesDataModule,
+  DataRequest,
+} from '@iot-app-kit/core';
 import { TwinMakerTimeSeriesDataProvider } from './time-series-data/provider';
 import { createDataSource } from './time-series-data/data-source';
 import { TwinMakerMetadataModule } from './metadata-module/TwinMakerMetadataModule';
 import type { Credentials, CredentialProvider } from '@aws-sdk/types';
 import type { VideoDataProps } from './types';
 import type { TwinMakerDataStreamQuery } from './time-series-data/types';
-import type { TimeSeriesDataQuery, TimeSeriesDataRequest } from '@iot-app-kit/core';
+import type {
+  TimeSeriesDataQuery,
+  TimeSeriesDataRequest,
+} from '@iot-app-kit/core';
 import { TwinMakerErrorCode } from './common/error';
 import { createEntityPropertyBindingProvider } from './data-binding-provider/createEntityPropertyBindingProvider';
-import { TwinMakerHistoryQuery, TwinMakerPropertyValueQuery } from './common/queryTypes';
+import {
+  TwinMakerHistoryQuery,
+  TwinMakerPropertyValueQuery,
+} from './common/queryTypes';
 import { TwinMakerPropertyValueDataProvider } from './property-value/provider';
 
 const SOURCE = 'iottwinmaker';
@@ -119,17 +131,29 @@ export const initialize = (
 
   const twinMakerClient: IoTTwinMakerClient =
     authInput.iotTwinMakerClient ??
-    twinMakerSdk(inputWithCred.awsCredentials, inputWithCred.awsRegion, inputWithCred.tmEndpoint);
+    twinMakerSdk(
+      inputWithCred.awsCredentials,
+      inputWithCred.awsRegion,
+      inputWithCred.tmEndpoint
+    );
   const siteWiseClient: IoTSiteWiseClient =
-    authInput.iotSiteWiseClient ?? sitewiseSdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
+    authInput.iotSiteWiseClient ??
+    sitewiseSdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
   const kinesisVideoClient: KinesisVideoClient =
-    authInput.kinesisVideoClient ?? kinesisVideoSdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
+    authInput.kinesisVideoClient ??
+    kinesisVideoSdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
   const kinesisVideoArchivedMediaClient: KinesisVideoArchivedMediaClient =
     authInput.kinesisVideoArchivedMediaClient ??
-    kinesisVideoArchivedMediaSdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
-  const s3Client: S3Client = authInput.s3Client ?? s3Sdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
+    kinesisVideoArchivedMediaSdk(
+      inputWithCred.awsCredentials,
+      inputWithCred.awsRegion
+    );
+  const s3Client: S3Client =
+    authInput.s3Client ??
+    s3Sdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
   const secretsManagerClient: SecretsManagerClient =
-    authInput.secretsManagerClient ?? secretsManagersdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
+    authInput.secretsManagerClient ??
+    secretsManagersdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
 
   // For caching TwinMaker metadata API calls
   const cachedQueryClient = new QueryClient({
@@ -149,14 +173,19 @@ export const initialize = (
     },
   });
 
-  const twinMakerMetadataModule = new TwinMakerMetadataModule(workspaceId, twinMakerClient, cachedQueryClient);
-  const twinMakerTimeSeriesModule = new TimeSeriesDataModule<TwinMakerDataStreamQuery>(
-    createDataSource(twinMakerMetadataModule, twinMakerClient)
+  const twinMakerMetadataModule = new TwinMakerMetadataModule(
+    workspaceId,
+    twinMakerClient,
+    cachedQueryClient
   );
+  const twinMakerTimeSeriesModule =
+    new TimeSeriesDataModule<TwinMakerDataStreamQuery>(
+      createDataSource(twinMakerMetadataModule, twinMakerClient)
+    );
 
-  const timeSeriesDataQuery: (query: TwinMakerHistoryQuery) => TimeSeriesDataQuery = (
+  const timeSeriesDataQuery: (
     query: TwinMakerHistoryQuery
-  ) => ({
+  ) => TimeSeriesDataQuery = (query: TwinMakerHistoryQuery) => ({
     toQueryString: () =>
       JSON.stringify({
         source: SOURCE,
@@ -164,18 +193,24 @@ export const initialize = (
         query,
       }),
     build: (_sessionId: string, params: TimeSeriesDataRequest) =>
-      new TwinMakerTimeSeriesDataProvider(twinMakerMetadataModule, twinMakerTimeSeriesModule, {
-        queries: [
-          {
-            workspaceId,
-            ...query,
-          },
-        ],
-        request: params,
-      }),
+      new TwinMakerTimeSeriesDataProvider(
+        twinMakerMetadataModule,
+        twinMakerTimeSeriesModule,
+        {
+          queries: [
+            {
+              workspaceId,
+              ...query,
+            },
+          ],
+          request: params,
+        }
+      ),
   });
 
-  const propertyValueQuery = (query: TwinMakerPropertyValueQuery): Query<DataBase[], DataRequest> => ({
+  const propertyValueQuery = (
+    query: TwinMakerPropertyValueQuery
+  ): Query<DataBase[], DataRequest> => ({
     toQueryString: () =>
       JSON.stringify({
         source: SOURCE,
@@ -183,15 +218,19 @@ export const initialize = (
         query,
       }),
     build: (_sessionId: string, params: DataRequest) =>
-      new TwinMakerPropertyValueDataProvider(refreshingQueryClient, twinMakerClient, {
-        queries: [
-          {
-            workspaceId,
-            ...query,
-          },
-        ],
-        request: params,
-      }),
+      new TwinMakerPropertyValueDataProvider(
+        refreshingQueryClient,
+        twinMakerClient,
+        {
+          queries: [
+            {
+              workspaceId,
+              ...query,
+            },
+          ],
+          request: params,
+        }
+      ),
   });
   const kgModule = new KGDataModule({ workspaceId, twinMakerClient });
 
@@ -200,8 +239,14 @@ export const initialize = (
       timeSeriesData: timeSeriesDataQuery,
       propertyValue: propertyValueQuery,
     },
-    s3SceneLoader: (sceneId: string) => new S3SceneLoader({ workspaceId, sceneId, twinMakerClient, s3Client }),
-    valueDataBindingProviders: (onError?: (errorCode: TwinMakerErrorCode, errorDetails?: ErrorDetails) => void) => ({
+    s3SceneLoader: (sceneId: string) =>
+      new S3SceneLoader({ workspaceId, sceneId, twinMakerClient, s3Client }),
+    valueDataBindingProviders: (
+      onError?: (
+        errorCode: TwinMakerErrorCode,
+        errorDetails?: ErrorDetails
+      ) => void
+    ) => ({
       TwinMakerEntityProperty: createEntityPropertyBindingProvider({
         metadataModule: twinMakerMetadataModule,
         timeSeriesDataQuery,
@@ -210,7 +255,13 @@ export const initialize = (
       }),
     }),
     sceneMetadataModule: (sceneId: string) =>
-      new SceneMetadataModule({ workspaceId, sceneId, twinMakerClient, secretsManagerClient, kgModule }),
+      new SceneMetadataModule({
+        workspaceId,
+        sceneId,
+        twinMakerClient,
+        secretsManagerClient,
+        kgModule,
+      }),
     kGDatamodule: () => kgModule,
     videoData: (videoDataProps: VideoDataProps) =>
       new VideoDataImpl({
@@ -219,7 +270,8 @@ export const initialize = (
         componentName: videoDataProps.componentName,
         kvsStreamName: videoDataProps.kvsStreamName,
         sitewiseAssetId: videoDataProps.sitewiseAssetId,
-        videoUploadRequestPropertyId: videoDataProps.videoUploadRequestPropertyId,
+        videoUploadRequestPropertyId:
+          videoDataProps.videoUploadRequestPropertyId,
         kinesisVideoClient: kinesisVideoClient,
         kinesisVideoArchivedMediaClient: kinesisVideoArchivedMediaClient,
         siteWiseClient: siteWiseClient,

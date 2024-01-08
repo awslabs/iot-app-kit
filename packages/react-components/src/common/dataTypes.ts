@@ -40,13 +40,15 @@ export const DEFAULT_MESSAGE_OVERRIDES: Required<MessageOverrides> = {
   liveTimeFrameValueLabel: 'Value',
   historicalTimeFrameValueLabel: 'Value',
   noDataStreamsPresentHeader: 'No properties or alarms',
-  noDataStreamsPresentSubHeader: "This widget doesn't have any properties or alarms.",
+  noDataStreamsPresentSubHeader:
+    "This widget doesn't have any properties or alarms.",
   noDataPresentHeader: 'No data',
   noDataPresentSubHeader: "There's no data to display for this time range.",
   liveModeOnly:
     'This visualization displays only live data. Choose a live time frame to display data in this visualization.',
   unsupportedDataTypeHeader: 'Unable to render your data',
-  unsupportedDataTypeSubHeader: 'This chart only supports the following DataType(s):',
+  unsupportedDataTypeSubHeader:
+    'This chart only supports the following DataType(s):',
   supportedTypes: 'Number, String, Boolean',
 };
 

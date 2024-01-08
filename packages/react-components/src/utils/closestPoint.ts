@@ -38,7 +38,9 @@ export const closestPoint = <T extends Primitive>(
     if (maxDistance == null) {
       return rightPoint;
     }
-    return rightPoint.x - date.getTime() <= maxDistance ? rightPoint : undefined;
+    return rightPoint.x - date.getTime() <= maxDistance
+      ? rightPoint
+      : undefined;
   }
 
   /** Left Alignment */

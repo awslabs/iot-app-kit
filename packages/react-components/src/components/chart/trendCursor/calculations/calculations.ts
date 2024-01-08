@@ -13,13 +13,22 @@ export const setXWithBounds = (size: SizeConfig, x: number) => {
 };
 
 // this calculated the new X in pixels when the chart is resized.
-export const calculateXFromTimestamp = (timestampInMs: number, chartRef: MutableRefObject<ECharts | null>) =>
-  chartRef.current?.convertToPixel({ xAxisId: DEFAULT_X_AXIS_ID }, timestampInMs) ?? 0;
+export const calculateXFromTimestamp = (
+  timestampInMs: number,
+  chartRef: MutableRefObject<ECharts | null>
+) =>
+  chartRef.current?.convertToPixel(
+    { xAxisId: DEFAULT_X_AXIS_ID },
+    timestampInMs
+  ) ?? 0;
 
 // for a given user's right click co-ordinate's timestamp, find the nearest trend cursor
 // all trend cursors is associated with a timestamp,
 // we use that to see which TC is the closest to user's right click
-export const calculateNearestTcIndex = (graphic: InternalGraphicComponentGroupOption[], clickTimestamp: number) => {
+export const calculateNearestTcIndex = (
+  graphic: InternalGraphicComponentGroupOption[],
+  clickTimestamp: number
+) => {
   const tcTimestamps = graphic.map((g) => g.timestampInMs);
   let closest = -1;
   let min = Number.MAX_VALUE;
@@ -39,13 +48,20 @@ export const calculateNearestTcIndex = (graphic: InternalGraphicComponentGroupOp
 // TC timestamp
 // Cop timestamp
 // Series name : value
-export const formatCopyData = (graphic: InternalGraphicComponentGroupOption, series: SeriesOption[]) => {
-  let output = `Trend cursor timestamp \t ${new Date(graphic.timestampInMs).toLocaleDateString()}${new Date(
+export const formatCopyData = (
+  graphic: InternalGraphicComponentGroupOption,
+  series: SeriesOption[]
+) => {
+  let output = `Trend cursor timestamp \t ${new Date(
+    graphic.timestampInMs
+  ).toLocaleDateString()}${new Date(
     graphic.timestampInMs
   ).toLocaleTimeString()} \n`;
 
   const currDate = new Date();
-  output = output + `Copy timestamp \t ${currDate.toLocaleDateString()} ${currDate.toLocaleTimeString()} \n`;
+  output =
+    output +
+    `Copy timestamp \t ${currDate.toLocaleDateString()} ${currDate.toLocaleTimeString()} \n`;
   series.forEach((s, index) => {
     output = output + `${s.name} \t ${graphic.yAxisMarkerValue[index]} \n`;
   });

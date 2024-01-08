@@ -1,11 +1,22 @@
-import { DescribeAssetCommand, type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  DescribeAssetCommand,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 
 export class GetAssetRequest {
   readonly #command: DescribeAssetCommand;
   readonly #client: IoTSiteWiseClient;
   readonly #signal: AbortSignal | undefined;
 
-  constructor({ assetId, client, signal }: { assetId: string; client: IoTSiteWiseClient; signal?: AbortSignal }) {
+  constructor({
+    assetId,
+    client,
+    signal,
+  }: {
+    assetId: string;
+    client: IoTSiteWiseClient;
+    signal?: AbortSignal;
+  }) {
     this.#command = this.#createCommand(assetId);
     this.#client = client;
     this.#signal = signal;
@@ -13,7 +24,9 @@ export class GetAssetRequest {
 
   public async send() {
     try {
-      const response = await this.#client.send(this.#command, { abortSignal: this.#signal });
+      const response = await this.#client.send(this.#command, {
+        abortSignal: this.#signal,
+      });
 
       return response;
     } catch (error) {

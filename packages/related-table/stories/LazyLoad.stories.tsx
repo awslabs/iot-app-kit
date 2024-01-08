@@ -49,7 +49,9 @@ const genLazyLoadData = (parent?: any, qty = 2) => {
 
 export const LazyLoad: Story = () => {
   const [allItems, setAllItems] = useState<any[]>(genLazyLoadData());
-  const [lazyLoadedMap, setLazyLoadedMap] = useState<Map<string, boolean>>(new Map());
+  const [lazyLoadedMap, setLazyLoadedMap] = useState<Map<string, boolean>>(
+    new Map()
+  );
 
   const columnDefinitions = [
     {
@@ -92,7 +94,11 @@ export const LazyLoad: Story = () => {
       items={items}
       header={
         <Header
-          counter={selectedItems?.length ? `(${selectedItems.length}/${allItems.length})` : `(${allItems.length})`}
+          counter={
+            selectedItems?.length
+              ? `(${selectedItems.length}/${allItems.length})`
+              : `(${allItems.length})`
+          }
         >
           Assets
         </Header>

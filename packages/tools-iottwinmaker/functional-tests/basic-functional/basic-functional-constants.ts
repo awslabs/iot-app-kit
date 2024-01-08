@@ -22,11 +22,17 @@ type entityDefinition = {
   parentEntityId: string;
 };
 
-export const localResourcesDir: string = path.join(__dirname, 'basic-functional-resources');
+export const localResourcesDir: string = path.join(
+  __dirname,
+  'basic-functional-resources'
+);
 export const timestamp: number = Date.now() % 10000;
 export const workspaceId = `tmdt-functional-test-workspace-${timestamp}`;
 export const region = 'us-east-1';
-export const tmdtDirectory: string = path.join(os.tmpdir(), 'functional-tmdt-test');
+export const tmdtDirectory: string = path.join(
+  os.tmpdir(),
+  'functional-tmdt-test'
+);
 export const tmdtFile = 'tmdt.json';
 export const entitiesFile = 'entities.json';
 

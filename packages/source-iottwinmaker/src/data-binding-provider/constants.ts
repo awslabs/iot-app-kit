@@ -17,7 +17,8 @@ export enum DATA_BINDING_CONTEXT_KEYS {
 export const EMPTY_STORE_STATE: IValueDataBindingProviderState = {
   definitions: DATA_FIELD_NAMES.map((fieldName) => ({
     fieldName,
-    state: fieldName === DATA_BINDING_CONTEXT_KEYS.entityId ? 'loading' : 'disabled',
+    state:
+      fieldName === DATA_BINDING_CONTEXT_KEYS.entityId ? 'loading' : 'disabled',
     options: [],
   })),
   selectedOptions: [],

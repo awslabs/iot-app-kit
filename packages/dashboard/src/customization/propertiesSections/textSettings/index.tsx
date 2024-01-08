@@ -10,7 +10,11 @@ import { PropertyLens } from '~/customization/propertiesSection';
 
 const isTextWidget = (w: DashboardWidget): w is TextWidget => w.type === 'text';
 
-const RenderTextSettingsConfiguration = ({ useProperty }: { useProperty: PropertyLens<TextWidget> }) => {
+const RenderTextSettingsConfiguration = ({
+  useProperty,
+}: {
+  useProperty: PropertyLens<TextWidget>;
+}) => {
   const [fontColor, updateFontColor] = useProperty(
     (properties) => properties.fontSettings?.fontColor,
     (properties, updatedFontColor) => ({
@@ -36,7 +40,10 @@ const RenderTextSettingsConfiguration = ({ useProperty }: { useProperty: Propert
     (properties) => properties.fontSettings?.isUnderlined,
     (properties, updatedIsUnderlined) => ({
       ...properties,
-      fontSettings: { ...properties.fontSettings, isUnderlined: updatedIsUnderlined },
+      fontSettings: {
+        ...properties.fontSettings,
+        isUnderlined: updatedIsUnderlined,
+      },
     })
   );
   const [fontSize, updateFontSize] = useProperty(
@@ -87,6 +94,8 @@ const RenderTextSettingsConfiguration = ({ useProperty }: { useProperty: Propert
 export const TextSettingsConfiguration: React.FC = () => (
   <PropertiesSection
     isVisible={isTextWidget}
-    render={({ useProperty }) => <RenderTextSettingsConfiguration useProperty={useProperty} />}
+    render={({ useProperty }) => (
+      <RenderTextSettingsConfiguration useProperty={useProperty} />
+    )}
   />
 );

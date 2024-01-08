@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { AssetModelPropertySummary, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  AssetModelPropertySummary,
+  IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import { useAssetModelProperties } from './useAssetModelProperties/useAssetModelProperties';
 import { SelectedAssetModel } from '../useSelectedAssetModel';
 import { AssetModelPropertiesTable } from './assetModelPropertiesTable/assetModelPropertiesTable';

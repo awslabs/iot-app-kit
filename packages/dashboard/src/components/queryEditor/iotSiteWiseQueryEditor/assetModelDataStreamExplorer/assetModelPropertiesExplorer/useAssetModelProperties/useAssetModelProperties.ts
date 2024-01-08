@@ -11,7 +11,10 @@ export interface UseAssetModelProperties {
 }
 
 /** Use an AWS IoT SiteWise asset description. */
-export function useAssetModelProperties({ assetModelId, client }: UseAssetModelProperties) {
+export function useAssetModelProperties({
+  assetModelId,
+  client,
+}: UseAssetModelProperties) {
   const cacheKeyFactory = new AssetModelPropertiesCacheKeyFactory(assetModelId);
 
   const {
@@ -34,7 +37,9 @@ export function useAssetModelProperties({ assetModelId, client }: UseAssetModelP
   });
 
   const assetModelPropertySummaries = createNonNullableList(
-    assetModelPropertyResponses.flatMap((res) => res.assetModelPropertySummaries)
+    assetModelPropertyResponses.flatMap(
+      (res) => res.assetModelPropertySummaries
+    )
   );
 
   return {
@@ -51,17 +56,28 @@ export function useAssetModelProperties({ assetModelId, client }: UseAssetModelP
   };
 }
 
-const isEnabled = (assetModelId?: string): assetModelId is string => Boolean(assetModelId);
+const isEnabled = (assetModelId?: string): assetModelId is string =>
+  Boolean(assetModelId);
 
 export const createQueryFn = (client: IoTSiteWiseClient) => {
   return async ({
     queryKey: [{ assetModelId }],
     pageParam: nextToken,
     signal,
-  }: QueryFunctionContext<ReturnType<AssetModelPropertiesCacheKeyFactory['create']>>) => {
-    invariant(isEnabled(assetModelId), 'Expected assetModelId to be defined as required by the enabled flag.');
+  }: QueryFunctionContext<
+    ReturnType<AssetModelPropertiesCacheKeyFactory['create']>
+  >) => {
+    invariant(
+      isEnabled(assetModelId),
+      'Expected assetModelId to be defined as required by the enabled flag.'
+    );
 
-    const request = new GetAssetModelPropertiesRequest({ assetModelId, nextToken, client, signal });
+    const request = new GetAssetModelPropertiesRequest({
+      assetModelId,
+      nextToken,
+      client,
+      signal,
+    });
 
     const response = await request.send();
 

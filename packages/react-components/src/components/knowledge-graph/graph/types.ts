@@ -14,7 +14,15 @@ import type {
 import { INodeResults } from '../interfaces/kgDataSourceInterfaces';
 import type { ValueOf } from 'type-fest';
 
-export type layoutTypes = 'preset' | 'random' | 'grid' | 'circle' | 'concentric' | 'breadthfirst' | 'cose' | 'cise';
+export type layoutTypes =
+  | 'preset'
+  | 'random'
+  | 'grid'
+  | 'circle'
+  | 'concentric'
+  | 'breadthfirst'
+  | 'cose'
+  | 'cise';
 
 export type EdgeStyleProps = {
   color: string;
@@ -95,4 +103,8 @@ export type EventDetail = {
   eventName: EventName;
   data?: NodeData | EdgeData;
 };
-export type EventName = CollectionEventName | GraphEventName | UserInputDeviceEventName | UserInputDeviceEventNameExt;
+export type EventName =
+  | CollectionEventName
+  | GraphEventName
+  | UserInputDeviceEventName
+  | UserInputDeviceEventNameExt;

@@ -42,12 +42,21 @@ describe('toValue', () => {
 
   it('should return string when other values are defined', () => {
     expect(toValue({ stringValue: 'test' })).toEqual('test');
-    expect(toValue({ listValue: [{ booleanValue: true }] })).toEqual('[{"booleanValue":true}]');
-    expect(toValue({ mapValue: { test: { booleanValue: true } } })).toEqual('{"test":{"booleanValue":true}}');
-    expect(toValue({ expression: 'a == 40' })).toEqual('a == 40');
-    expect(toValue({ relationshipValue: { targetEntityId: 'entity-1', targetComponentName: 'comp-1' } })).toEqual(
-      '{"targetEntityId":"entity-1","targetComponentName":"comp-1"}'
+    expect(toValue({ listValue: [{ booleanValue: true }] })).toEqual(
+      '[{"booleanValue":true}]'
     );
+    expect(toValue({ mapValue: { test: { booleanValue: true } } })).toEqual(
+      '{"test":{"booleanValue":true}}'
+    );
+    expect(toValue({ expression: 'a == 40' })).toEqual('a == 40');
+    expect(
+      toValue({
+        relationshipValue: {
+          targetEntityId: 'entity-1',
+          targetComponentName: 'comp-1',
+        },
+      })
+    ).toEqual('{"targetEntityId":"entity-1","targetComponentName":"comp-1"}');
   });
 });
 

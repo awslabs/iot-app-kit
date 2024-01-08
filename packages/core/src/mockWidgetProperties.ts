@@ -1,4 +1,9 @@
-import { COMPARISON_OPERATOR, DATA_TYPE, STATUS_ICON_TYPE, STREAM_TYPE } from './common/constants';
+import {
+  COMPARISON_OPERATOR,
+  DATA_TYPE,
+  STATUS_ICON_TYPE,
+  STREAM_TYPE,
+} from './common/constants';
 import { DAY_IN_MS } from './common/time';
 import type { Threshold } from './common/types';
 import type { DataStream } from './data-module/types';
@@ -47,7 +52,9 @@ export const ALARM = 'alarm';
 export const OK = 'ok';
 
 export const WITHIN_VIEWPORT_DATE = new Date(2000, 0, 1);
-export const BEFORE_VIEWPORT_DATE = new Date(VIEW_PORT.start.getTime() - DAY_IN_MS);
+export const BEFORE_VIEWPORT_DATE = new Date(
+  VIEW_PORT.start.getTime() - DAY_IN_MS
+);
 
 export const ALARM_STREAM: DataStream<string> = {
   id: 'alarm-stream',

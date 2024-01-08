@@ -37,11 +37,17 @@ export default class DataSourceStore<Query extends DataStreamQuery> {
     return this.dataSource
       .getRequestsFromQuery({ query, request })
       .then((requestInformations) =>
-        requestInformations.map((requestInfo) => ({ ...requestInfo, cacheSettings: query.cacheSettings }))
+        requestInformations.map((requestInfo) => ({
+          ...requestInfo,
+          cacheSettings: query.cacheSettings,
+        }))
       );
   };
 
-  public initiateRequest = (request: DataSourceRequest<Query>, requestInformations: RequestInformationAndRange[]) => {
+  public initiateRequest = (
+    request: DataSourceRequest<Query>,
+    requestInformations: RequestInformationAndRange[]
+  ) => {
     this.dataSource.initiateRequest(request, requestInformations);
   };
 }

@@ -11,7 +11,11 @@ type Query = NonNullable<QueryWidget['properties']['queryConfig']['query']>;
 
 // Assigns default RefID to each property and defauly aggregations+resolutions to each property
 const assignDefaults = (
-  { assets = [], properties = [], assetModels = [] }: IoTSiteWiseDataStreamQuery,
+  {
+    assets = [],
+    properties = [],
+    assetModels = [],
+  }: IoTSiteWiseDataStreamQuery,
   resAndAggr: { aggregation?: AggregateType; resolution?: string },
   getId: () => string = uuid
 ) => ({
@@ -41,12 +45,20 @@ const assignDefaults = (
   })),
 });
 
-const assignDefaultColors = (styleSettings: StyleSettingsMap, siteWiseQuery: Query): StyleSettingsMap => {
+const assignDefaultColors = (
+  styleSettings: StyleSettingsMap,
+  siteWiseQuery: Query
+): StyleSettingsMap => {
   const assetRefIds =
-    siteWiseQuery.assets?.flatMap((asset) => asset.properties.map(({ refId }) => refId)).filter(isDefined) ?? [];
-  const propertyRefIds = siteWiseQuery.properties?.map(({ refId }) => refId).filter(isDefined) ?? [];
+    siteWiseQuery.assets
+      ?.flatMap((asset) => asset.properties.map(({ refId }) => refId))
+      .filter(isDefined) ?? [];
+  const propertyRefIds =
+    siteWiseQuery.properties?.map(({ refId }) => refId).filter(isDefined) ?? [];
   const assetModelRefIds =
-    siteWiseQuery.assetModels?.flatMap((asset) => asset.properties.map(({ refId }) => refId)).filter(isDefined) ?? [];
+    siteWiseQuery.assetModels
+      ?.flatMap((asset) => asset.properties.map(({ refId }) => refId))
+      .filter(isDefined) ?? [];
 
   const refIds = [...assetRefIds, ...propertyRefIds, ...assetModelRefIds];
   const applicableStyleSettings = Object.keys(styleSettings)
@@ -72,8 +84,12 @@ export const assignDefaultStyles = (widget: QueryWidget): QueryWidget => {
 
   let styleSettings = widget.properties.styleSettings || {};
 
-  const defaultResolutionAndAggregation = getCurrentAggregationResolution(widget);
-  const assetQueriesWithRefIds = assignDefaults(siteWiseAssetQuery, defaultResolutionAndAggregation);
+  const defaultResolutionAndAggregation =
+    getCurrentAggregationResolution(widget);
+  const assetQueriesWithRefIds = assignDefaults(
+    siteWiseAssetQuery,
+    defaultResolutionAndAggregation
+  );
   styleSettings = assignDefaultColors(styleSettings, assetQueriesWithRefIds);
 
   const updated = {

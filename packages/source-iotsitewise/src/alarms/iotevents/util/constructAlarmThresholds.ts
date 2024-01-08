@@ -6,10 +6,17 @@ import type { Threshold } from '@synchro-charts/core';
 import type { PascalCaseStateName, Alarm } from '../types';
 
 export const constructAlarmThresholds = (alarm: Alarm): Threshold[] => {
-  const propertyStreamId = toId({ assetId: alarm.assetId, propertyId: alarm.inputPropertyId });
-  const alarmStreamId = toId({ assetId: alarm.assetId, propertyId: alarm.alarmStatePropertyId });
+  const propertyStreamId = toId({
+    assetId: alarm.assetId,
+    propertyId: alarm.inputPropertyId,
+  });
+  const alarmStreamId = toId({
+    assetId: alarm.assetId,
+    propertyId: alarm.alarmStatePropertyId,
+  });
 
-  const upperCaseStateName = alarm.state.toUpperCase() as keyof typeof ALARM_STATUS;
+  const upperCaseStateName =
+    alarm.state.toUpperCase() as keyof typeof ALARM_STATUS;
   const state = ALARM_STATUS[upperCaseStateName];
   const alarmStatus = ALARM_STATUS_MAP[state];
 
@@ -28,19 +35,21 @@ export const constructAlarmThresholds = (alarm: Alarm): Threshold[] => {
     description: alarm.rule,
   };
 
-  const alarmStatePropertyThresholds = Object.keys(ALARM_STATUS_MAP).map((alarmStatus) => {
-    const status = ALARM_STATUS_MAP[alarmStatus as PascalCaseStateName];
+  const alarmStatePropertyThresholds = Object.keys(ALARM_STATUS_MAP).map(
+    (alarmStatus) => {
+      const status = ALARM_STATUS_MAP[alarmStatus as PascalCaseStateName];
 
-    return {
-      value: alarmStatus,
-      color: status.color,
-      severity: status.severity,
-      icon: status.icon,
-      comparisonOperator: COMPARISON_OPERATOR.EQUAL,
-      dataStreamIds: [alarmStreamId],
-      description: alarm.rule,
-    };
-  });
+      return {
+        value: alarmStatus,
+        color: status.color,
+        severity: status.severity,
+        icon: status.icon,
+        comparisonOperator: COMPARISON_OPERATOR.EQUAL,
+        dataStreamIds: [alarmStreamId],
+        description: alarm.rule,
+      };
+    }
+  );
 
   return [inputPropertyThreshold, ...alarmStatePropertyThresholds];
 };

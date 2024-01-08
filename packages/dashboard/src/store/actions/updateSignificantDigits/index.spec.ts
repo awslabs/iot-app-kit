@@ -1,5 +1,8 @@
 import { initialState } from '~/store/state';
-import { updateSignificantDigits, onUpdateSignificantDigitsAction } from './index';
+import {
+  updateSignificantDigits,
+  onUpdateSignificantDigitsAction,
+} from './index';
 
 it('can change significant digits', () => {
   expect(

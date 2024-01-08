@@ -1,1 +1,4 @@
-export { ModeledDataStreamQueryEditor, type ModeledDataStreamQueryEditorProps } from './modeledDataStreamQueryEditor';
+export {
+  ModeledDataStreamQueryEditor,
+  type ModeledDataStreamQueryEditorProps,
+} from './modeledDataStreamQueryEditor';

@@ -1,9 +1,13 @@
-import Pagination, { type PaginationProps } from '@cloudscape-design/components/pagination';
+import Pagination, {
+  type PaginationProps,
+} from '@cloudscape-design/components/pagination';
 import React from 'react';
 
 export type AssetModelPropertiesTablePaginationProps = PaginationProps;
 
-export function AssetModelPropertiesTablePagination({ ...props }: AssetModelPropertiesTablePaginationProps) {
+export function AssetModelPropertiesTablePagination({
+  ...props
+}: AssetModelPropertiesTablePaginationProps) {
   return (
     <Pagination
       {...props}

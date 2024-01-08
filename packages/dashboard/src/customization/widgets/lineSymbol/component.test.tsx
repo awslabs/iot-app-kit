@@ -101,12 +101,17 @@ describe('LineWidgetComponent', () => {
         isSelected: true,
       },
     ].forEach((configuration) => {
-      const widget = { ...mockWidgetPartial, properties: { ...configuration.properties } };
+      const widget = {
+        ...mockWidgetPartial,
+        properties: { ...configuration.properties },
+      };
       const isSelected = configuration.isSelected;
       it(`should render correctly with ${JSON.stringify(configuration)} while ${
         isSelected ? 'selected' : 'not selected'
       }`, () => {
-        const { container } = render(<TestComponent widget={widget} isSelected={isSelected} />);
+        const { container } = render(
+          <TestComponent widget={widget} isSelected={isSelected} />
+        );
         expect(container).toMatchSnapshot();
       });
     });
@@ -125,11 +130,15 @@ describe('LineWidgetComponent', () => {
     } as LineWidget;
 
     it('should display anchors when the widget is selected', async () => {
-      const { getAllByTestId } = render(<TestComponent widget={widget} isSelected={true} />);
+      const { getAllByTestId } = render(
+        <TestComponent widget={widget} isSelected={true} />
+      );
       expect(getAllByTestId('line-anchor')).toHaveLength(2);
     });
     it('should not display anchors when the widget is not selected', () => {
-      const { queryAllByTestId } = render(<TestComponent widget={widget} isSelected={false} />);
+      const { queryAllByTestId } = render(
+        <TestComponent widget={widget} isSelected={false} />
+      );
       expect(queryAllByTestId('line-anchor')).toHaveLength(0);
     });
   });

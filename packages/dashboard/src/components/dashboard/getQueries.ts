@@ -1,9 +1,16 @@
-import { DashboardClientConfiguration, DashboardIotSiteWiseQueries } from '~/types';
+import {
+  DashboardClientConfiguration,
+  DashboardIotSiteWiseQueries,
+} from '~/types';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { getClients } from './getClients';
 
-export const getQueries = (dashboardClientConfiguration: DashboardClientConfiguration): DashboardIotSiteWiseQueries => {
-  const { iotEventsClient, iotSiteWiseClient } = getClients(dashboardClientConfiguration);
+export const getQueries = (
+  dashboardClientConfiguration: DashboardClientConfiguration
+): DashboardIotSiteWiseQueries => {
+  const { iotEventsClient, iotSiteWiseClient } = getClients(
+    dashboardClientConfiguration
+  );
 
   if (!iotEventsClient || !iotSiteWiseClient) {
     throw new Error('Could not initialize iot sitewise query.');

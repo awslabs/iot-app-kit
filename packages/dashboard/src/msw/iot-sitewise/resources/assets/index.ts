@@ -8,7 +8,9 @@ import {
 import type { Asset, AssetModel } from '../types';
 
 const siteAssetFactory = new AssetFactory(SITE_ASSET_MODEL);
-const productionLineAssetFactory = new AssetFactory(PRODUCTION_LINE_ASSET_MODEL);
+const productionLineAssetFactory = new AssetFactory(
+  PRODUCTION_LINE_ASSET_MODEL
+);
 const reactorAssetFactory = new AssetFactory(REACTOR_ASSET_MODEL);
 const storageTankAssetFactory = new AssetFactory(STORAGE_TANK_ASSET_MODEL);
 
@@ -28,7 +30,10 @@ class AssetHierarchyClient {
   }
 
   public getAssetsByAssetModelId(assetModelId: string): Asset[] {
-    const assetList = this.#searchByAssetModelId(assetModelId, this.#assetHierarchy);
+    const assetList = this.#searchByAssetModelId(
+      assetModelId,
+      this.#assetHierarchy
+    );
     return assetList;
   }
 
@@ -41,12 +46,18 @@ class AssetHierarchyClient {
 
   public findChildren(assetId: string, hierarchyId: string): Asset[] {
     const node = this.#searchById(assetId, this.#assetHierarchy);
-    const hierarchy = node?.asset.assetHierarchies?.find(({ id }) => id === hierarchyId);
+    const hierarchy = node?.asset.assetHierarchies?.find(
+      ({ id }) => id === hierarchyId
+    );
     // childAssetModelId is not on Assets - We keep it in the translation from AssetModel to Asset to enable this search.
-    const hierarchyAsAssetModelHierarchy = hierarchy as NonNullable<AssetModel['assetModelHierarchies']>[number];
+    const hierarchyAsAssetModelHierarchy = hierarchy as NonNullable<
+      AssetModel['assetModelHierarchies']
+    >[number];
     const childAssetModelId = hierarchyAsAssetModelHierarchy.childAssetModelId;
     const children = node?.children?.map(({ asset }) => asset) ?? [];
-    const childrenOfHierachy = children.filter(({ assetModelId }) => assetModelId === childAssetModelId);
+    const childrenOfHierachy = children.filter(
+      ({ assetModelId }) => assetModelId === childAssetModelId
+    );
 
     return childrenOfHierachy;
   }
@@ -58,7 +69,10 @@ class AssetHierarchyClient {
     return parentAsset;
   }
 
-  #searchById(assetId: string, assetHierarchy: AssetHierarchy): AssetHierarchy[number] | undefined {
+  #searchById(
+    assetId: string,
+    assetHierarchy: AssetHierarchy
+  ): AssetHierarchy[number] | undefined {
     for (const node of assetHierarchy) {
       if (node.asset.assetId === assetId) {
         return node;
@@ -74,7 +88,11 @@ class AssetHierarchyClient {
     }
   }
 
-  #searchByAssetModelId(assetModelId: string, assetHierarchy: AssetHierarchy, assetList?: Asset[]) {
+  #searchByAssetModelId(
+    assetModelId: string,
+    assetHierarchy: AssetHierarchy,
+    assetList?: Asset[]
+  ) {
     const assetsMatchingModelIdList = assetList ? assetList : [];
     for (const node of assetHierarchy) {
       if (node.asset.assetModelId === assetModelId) {
@@ -82,7 +100,11 @@ class AssetHierarchyClient {
       }
 
       if (node.children) {
-        this.#searchByAssetModelId(assetModelId, node.children, assetsMatchingModelIdList);
+        this.#searchByAssetModelId(
+          assetModelId,
+          node.children,
+          assetsMatchingModelIdList
+        );
       }
     }
     return assetsMatchingModelIdList;
@@ -121,19 +143,27 @@ export const ASSET_HIERARCHY = new AssetHierarchyClient(
   ].map(({ assetName }) => ({
     asset: siteAssetFactory.create({ assetName }),
     children: new Array(100).fill(null).map((_, i) => ({
-      asset: productionLineAssetFactory.create({ assetName: `Production Line ${i + 1}` }),
+      asset: productionLineAssetFactory.create({
+        assetName: `Production Line ${i + 1}`,
+      }),
       children: [
-        ...new Array(10)
-          .fill(null)
-          .map((_, j) => ({ asset: reactorAssetFactory.create({ assetName: `Reactor ${j + 1}` }) })),
-        ...new Array(15)
-          .fill(null)
-          .map((_, j) => ({ asset: storageTankAssetFactory.create({ assetName: `Storage Tank ${j + 1}` }) })),
+        ...new Array(10).fill(null).map((_, j) => ({
+          asset: reactorAssetFactory.create({
+            assetName: `Reactor ${j + 1}`,
+          }),
+        })),
+        ...new Array(15).fill(null).map((_, j) => ({
+          asset: storageTankAssetFactory.create({
+            assetName: `Storage Tank ${j + 1}`,
+          }),
+        })),
       ],
     })),
   }))
 );
 
 export const giantFlatAssetHierarchy = new AssetHierarchyClient(
-  new Array(10000).fill(null).map((_, i) => ({ asset: siteAssetFactory.create({ assetName: `Site ${i + 1}` }) }))
+  new Array(10000).fill(null).map((_, i) => ({
+    asset: siteAssetFactory.create({ assetName: `Site ${i + 1}` }),
+  }))
 );

@@ -10,7 +10,9 @@ import type { RecursivePartial, DashboardConfiguration } from '~/types';
 
 export type DashboardStore = Store<DashboardState, DashboardAction>;
 
-export const configureDashboardStore = (preloadedState?: RecursivePartial<DashboardState>) => {
+export const configureDashboardStore = (
+  preloadedState?: RecursivePartial<DashboardState>
+) => {
   /**
    * Merge modifies the source object so it must be cloned or initialState
    * will be shared between different instances of the dashboard store.
@@ -31,7 +33,9 @@ export const configureDashboardStore = (preloadedState?: RecursivePartial<Dashbo
   return store;
 };
 
-export const toDashboardState = (dashboardConfiguration: DashboardConfiguration): RecursivePartial<DashboardState> => {
+export const toDashboardState = (
+  dashboardConfiguration: DashboardConfiguration
+): RecursivePartial<DashboardState> => {
   const { widgets, displaySettings } = dashboardConfiguration;
   const { numRows, numColumns, cellSize } = displaySettings;
 

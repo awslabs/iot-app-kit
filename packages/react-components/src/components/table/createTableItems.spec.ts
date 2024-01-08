@@ -83,7 +83,10 @@ const itemWithRef = [
 ] as TableItem[];
 
 it('creates table items', () => {
-  const items = createTableItems({ dataStreams, viewport, items: itemWithRef }, DEFAULT_TABLE_MESSAGES);
+  const items = createTableItems(
+    { dataStreams, viewport, items: itemWithRef },
+    DEFAULT_TABLE_MESSAGES
+  );
   expect(items).toMatchObject([
     {
       value1: { value: 4 },
@@ -105,7 +108,10 @@ it('creates table items', () => {
 });
 
 it('returns value as it is a primitive value', () => {
-  const items = createTableItems({ dataStreams, viewport, items: itemWithRef }, DEFAULT_TABLE_MESSAGES);
+  const items = createTableItems(
+    { dataStreams, viewport, items: itemWithRef },
+    DEFAULT_TABLE_MESSAGES
+  );
   const data = items[0].value1;
   expect((data as number) + 1).toBe(5);
 });
@@ -131,8 +137,14 @@ it('gets different data points on different viewports on the same data stream', 
       },
     },
   ];
-  const items1 = createTableItems({ dataStreams, viewport: viewport1, items: itemDef }, DEFAULT_TABLE_MESSAGES);
-  const items2 = createTableItems({ dataStreams, viewport: viewport2, items: itemDef }, DEFAULT_TABLE_MESSAGES);
+  const items1 = createTableItems(
+    { dataStreams, viewport: viewport1, items: itemDef },
+    DEFAULT_TABLE_MESSAGES
+  );
+  const items2 = createTableItems(
+    { dataStreams, viewport: viewport2, items: itemDef },
+    DEFAULT_TABLE_MESSAGES
+  );
 
   expect(items1).not.toEqual(items2);
 });
@@ -153,7 +165,10 @@ it('returns undefined value when no data points in data stream', () => {
       },
     },
   ];
-  const items1 = createTableItems({ dataStreams, viewport: viewport1, items: itemDef }, DEFAULT_TABLE_MESSAGES);
+  const items1 = createTableItems(
+    { dataStreams, viewport: viewport1, items: itemDef },
+    DEFAULT_TABLE_MESSAGES
+  );
   expect(items1).toMatchObject([{ noDataPoints: { value: undefined } }]);
 });
 

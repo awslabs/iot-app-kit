@@ -7,7 +7,11 @@ import {
 } from '../../../constants';
 import { getTrendCursorHeaderTimestampText } from '../../../calculations/timestamp';
 
-export const addTCHeader = (uId: string, timestampInMs: number, color?: string) => ({
+export const addTCHeader = (
+  uId: string,
+  timestampInMs: number,
+  color?: string
+) => ({
   type: 'group',
   id: `header-${uId}`,
   draggable: 'horizontal' as const,

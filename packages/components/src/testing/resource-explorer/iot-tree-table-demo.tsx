@@ -247,7 +247,9 @@ export class IotTreeTableDemo {
         filterPlaceholder={this.filterPlaceholder}
         onExpandChildren={(node) => {
           if (!loaded.has(node.id)) {
-            const newItems = allItems.filter((item) => item.parentId === node.id);
+            const newItems = allItems.filter(
+              (item) => item.parentId === node.id
+            );
             this.items = [...this.items, ...newItems];
           }
           loaded.set(node.id, true);

@@ -6,7 +6,10 @@ import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataMod
 import { isEmpty } from 'lodash';
 import type { DataSource, RequestInformationAndRange } from '@iot-app-kit/core';
 import type { TwinMakerDataStreamQuery } from './types';
-import { TwinMakerComponentHistoryQuery, TwinMakerEntityHistoryQuery } from '../common/queryTypes';
+import {
+  TwinMakerComponentHistoryQuery,
+  TwinMakerEntityHistoryQuery,
+} from '../common/queryTypes';
 import { isDefined } from '../utils/propertyValueUtils';
 
 export const createDataSource = (
@@ -25,7 +28,12 @@ export const createDataSource = (
         }
       });
 
-      getPropertyValueHistoryByEntity({ onSuccess, onError, client: twinMaker, requestInformations: entityRequests });
+      getPropertyValueHistoryByEntity({
+        onSuccess,
+        onError,
+        client: twinMaker,
+        requestInformations: entityRequests,
+      });
       getPropertyValueHistoryByComponentType({
         metadataModule,
         onSuccess,
@@ -62,17 +70,19 @@ export const createDataSource = (
           const entityId = entity.entityId;
           const componentName = requestComp?.componentName;
           if (componentName && entityId !== undefined) {
-            return componentQuery.properties.flatMap(({ propertyName, refId }) => ({
-              id: toDataStreamId({
-                workspaceId: query.workspaceId,
-                entityId: entityId,
-                componentName: componentName,
-                propertyName,
-              }),
-              refId,
-              resolution: '0', // No resolution support
-              meta: { componentTypeId: componentQuery.componentTypeId },
-            }));
+            return componentQuery.properties.flatMap(
+              ({ propertyName, refId }) => ({
+                id: toDataStreamId({
+                  workspaceId: query.workspaceId,
+                  entityId: entityId,
+                  componentName: componentName,
+                  propertyName,
+                }),
+                refId,
+                resolution: '0', // No resolution support
+                meta: { componentTypeId: componentQuery.componentTypeId },
+              })
+            );
           }
         });
         return requests.filter(isDefined);

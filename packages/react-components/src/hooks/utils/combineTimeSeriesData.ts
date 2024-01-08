@@ -1,6 +1,9 @@
 import type { TimeSeriesData, Viewport } from '@iot-app-kit/core';
 
-export const combineTimeSeriesData = (timeSeresDataResults: TimeSeriesData[], viewport: Viewport): TimeSeriesData =>
+export const combineTimeSeriesData = (
+  timeSeresDataResults: TimeSeriesData[],
+  viewport: Viewport
+): TimeSeriesData =>
   timeSeresDataResults.reduce(
     (timeSeriesData, newTimeSeriesData) => {
       const { dataStreams, viewport, thresholds } = newTimeSeriesData;

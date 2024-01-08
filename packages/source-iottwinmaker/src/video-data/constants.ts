@@ -1,5 +1,6 @@
 export const CachedVideoAgeOutOnEdge = 'CachedVideoAgeOutOnEdge';
-export const edgeVideoComponentTypeId = 'com.amazon.iotsitewise.connector.edgevideo';
+export const edgeVideoComponentTypeId =
+  'com.amazon.iotsitewise.connector.edgevideo';
 export const kvsVideoComponentTypeId = 'com.amazon.kvs.video';
 export const KinesisVideoStreamName = 'KinesisVideoStreamName';
 export const sitewiseAssetId = 'sitewiseAssetId';

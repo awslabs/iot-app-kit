@@ -3,7 +3,11 @@ import DataSourceStore from '../data-source-store/dataSourceStore';
 import RequestScheduler from '../request-scheduler/requestScheduler';
 import { viewportEndDate } from '../../common/viewport';
 import { maxCacheDuration } from '../data-cache/caching/caching';
-import type { DataStreamQuery, Subscription, SubscriptionUpdate } from '../types';
+import type {
+  DataStreamQuery,
+  Subscription,
+  SubscriptionUpdate,
+} from '../types';
 import type { CacheSettings } from '../data-cache/types';
 
 /**
@@ -33,7 +37,10 @@ export default class SubscriptionStore<Query extends DataStreamQuery> {
     this.cacheSettings = cacheSettings;
   }
 
-  async addSubscription(subscriptionId: string, subscription: Subscription<Query>): Promise<void> {
+  async addSubscription(
+    subscriptionId: string,
+    subscription: Subscription<Query>
+  ): Promise<void> {
     if (this.subscriptions[subscriptionId] == null) {
       /**
        * If the subscription is query based
@@ -58,7 +65,10 @@ export default class SubscriptionStore<Query extends DataStreamQuery> {
               viewportEndDate(subscription.request.viewport).getTime() +
               Math.max(
                 ...subscription.queries.map((query) =>
-                  maxCacheDuration({ ...this.cacheSettings, ...query.cacheSettings })
+                  maxCacheDuration({
+                    ...this.cacheSettings,
+                    ...query.cacheSettings,
+                  })
                 )
               ),
           });
@@ -66,11 +76,20 @@ export default class SubscriptionStore<Query extends DataStreamQuery> {
 
         const { queries, request } = subscription;
 
-        const requestInfos = await this.dataSourceStore.getRequestsFromQueries({ queries, request });
+        const requestInfos = await this.dataSourceStore.getRequestsFromQueries({
+          queries,
+          request,
+        });
 
         // Subscribe to changes from the data cache
-        const unsubscribe = this.dataCache.subscribe(requestInfos, (dataStreams) =>
-          subscription.emit({ dataStreams, viewport: subscription.request.viewport, thresholds: [] })
+        const unsubscribe = this.dataCache.subscribe(
+          requestInfos,
+          (dataStreams) =>
+            subscription.emit({
+              dataStreams,
+              viewport: subscription.request.viewport,
+              thresholds: [],
+            })
         );
 
         this.unsubscribeMap[subscriptionId] = () => {
@@ -92,7 +111,10 @@ export default class SubscriptionStore<Query extends DataStreamQuery> {
     }
   }
 
-  async updateSubscription(subscriptionId: string, subscriptionUpdate: SubscriptionUpdate<Query>): Promise<void> {
+  async updateSubscription(
+    subscriptionId: string,
+    subscriptionUpdate: SubscriptionUpdate<Query>
+  ): Promise<void> {
     if (this.subscriptions[subscriptionId] == null) {
       throw new Error(
         `Attempted to update a subscription with an id of "${subscriptionId}", but the requested subscription does not exist.`
@@ -126,5 +148,6 @@ export default class SubscriptionStore<Query extends DataStreamQuery> {
 
   getSubscriptions = (): Subscription[] => Object.values(this.subscriptions);
 
-  getSubscription = (subscriptionId: string): Subscription => this.subscriptions[subscriptionId];
+  getSubscription = (subscriptionId: string): Subscription =>
+    this.subscriptions[subscriptionId];
 }

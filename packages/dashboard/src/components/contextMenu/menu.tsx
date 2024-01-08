@@ -20,23 +20,31 @@ export type MenuProps = {
 };
 
 const Menu: React.FC<MenuProps> = ({ position, clickOutside, children }) => {
-  const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null);
+  const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(
+    null
+  );
 
-  const popperElement = useClickOutside<HTMLDivElement>((e) => clickOutside && clickOutside(e));
+  const popperElement = useClickOutside<HTMLDivElement>(
+    (e) => clickOutside && clickOutside(e)
+  );
 
-  const { styles, attributes } = usePopper(referenceElement, popperElement.current, {
-    placement: 'right-start',
-    modifiers: [
-      flip,
-      preventOverflow,
-      {
-        name: 'offset',
-        options: {
-          offset: [0, 10],
+  const { styles, attributes } = usePopper(
+    referenceElement,
+    popperElement.current,
+    {
+      placement: 'right-start',
+      modifiers: [
+        flip,
+        preventOverflow,
+        {
+          name: 'offset',
+          options: {
+            offset: [0, 10],
+          },
         },
-      },
-    ],
-  });
+      ],
+    }
+  );
 
   return (
     <>

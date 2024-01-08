@@ -1,4 +1,10 @@
-import { addInterval, intersect, isContained, mergeItems, subtractIntervals } from './intervalStructure';
+import {
+  addInterval,
+  intersect,
+  isContained,
+  mergeItems,
+  subtractIntervals,
+} from './intervalStructure';
 import type { IntervalStructure } from './intervalStructure';
 import { dataPointCompare } from '../data-module/data-cache/caching/caching';
 
@@ -147,7 +153,10 @@ describe('subtract intervals', () => {
 
 describe('is contained', () => {
   it('returns true', () => {
-    const cache: IntervalStructure<number> = { intervals: [[883526400000, 915062400000]], items: [[]] };
+    const cache: IntervalStructure<number> = {
+      intervals: [[883526400000, 915062400000]],
+      items: [[]],
+    };
     expect(isContained(cache, [946598400000, 978220800000])).toBeFalse();
   });
 
@@ -249,38 +258,54 @@ describe('merge items', () => {
   });
 
   it('combines two collections which share a boundary', () => {
-    expect(mergeItems([1, 2], [2, 3, 4], numericalCompare)).toEqual([1, 2, 3, 4]);
+    expect(mergeItems([1, 2], [2, 3, 4], numericalCompare)).toEqual([
+      1, 2, 3, 4,
+    ]);
   });
 
   it('merged first items into second when second contains all of first', () => {
-    expect(mergeItems([1, 2], [0, 1, 2, 3, 4], numericalCompare)).toEqual([0, 1, 2, 3, 4]);
+    expect(mergeItems([1, 2], [0, 1, 2, 3, 4], numericalCompare)).toEqual([
+      0, 1, 2, 3, 4,
+    ]);
   });
 
   it('merged first items into second when first contains all of second', () => {
-    expect(mergeItems([0, 1, 2, 3, 4], [1, 2], numericalCompare)).toEqual([0, 1, 2, 3, 4]);
+    expect(mergeItems([0, 1, 2, 3, 4], [1, 2], numericalCompare)).toEqual([
+      0, 1, 2, 3, 4,
+    ]);
   });
 
   it('merges interval with data not present in second interval, maintains all new data', () => {
-    expect(mergeItems([0, 1, 2, 3, 4], [0, 4], numericalCompare)).toEqual([0, 1, 2, 3, 4]);
+    expect(mergeItems([0, 1, 2, 3, 4], [0, 4], numericalCompare)).toEqual([
+      0, 1, 2, 3, 4,
+    ]);
   });
 
   it('both intervals contain data the other one does not', () => {
-    expect(mergeItems([0, 1, 2, 3, 4], [0, 4, 5], numericalCompare)).toEqual([0, 1, 2, 3, 4, 5]);
+    expect(mergeItems([0, 1, 2, 3, 4], [0, 4, 5], numericalCompare)).toEqual([
+      0, 1, 2, 3, 4, 5,
+    ]);
   });
 
   it('partially overlapping intervals where the first interval contains data not present within the second intervals range', () => {
-    expect(mergeItems([0, 1, 2, 3, 4, 5], [3, 5, 7], numericalCompare)).toEqual([0, 1, 2, 3, 4, 5, 7]);
+    expect(mergeItems([0, 1, 2, 3, 4, 5], [3, 5, 7], numericalCompare)).toEqual(
+      [0, 1, 2, 3, 4, 5, 7]
+    );
   });
 
   it('partially overlapping intervals where the second interval contains data not present within the first intervals range', () => {
-    expect(mergeItems([3, 5, 7], [0, 1, 2, 3, 4, 5], numericalCompare)).toEqual([0, 1, 2, 3, 5, 7]);
+    expect(mergeItems([3, 5, 7], [0, 1, 2, 3, 4, 5], numericalCompare)).toEqual(
+      [0, 1, 2, 3, 5, 7]
+    );
   });
 });
 
 describe('adds item to interval structure', () => {
   describe('add interval when no merging needs to occur', () => {
     it('adds item to empty interval structure', () => {
-      expect(addInterval(INITIAL_STATE, [10, 100], [10], numericalCompare)).toEqual({
+      expect(
+        addInterval(INITIAL_STATE, [10, 100], [10], numericalCompare)
+      ).toEqual({
         intervals: [[10, 100]],
         items: [[10]],
       });
@@ -331,10 +356,12 @@ describe('adds item to interval structure', () => {
           intervals: [[0, 5]],
           items: [[0, 1, 2, 3, 4, 5]],
         };
-        expect(addInterval(structure, [0, 5], [2.5], numericalCompare)).toEqual({
-          intervals: [[0, 5]],
-          items: [[0, 1, 2, 2.5, 3, 4, 5]],
-        });
+        expect(addInterval(structure, [0, 5], [2.5], numericalCompare)).toEqual(
+          {
+            intervals: [[0, 5]],
+            items: [[0, 1, 2, 2.5, 3, 4, 5]],
+          }
+        );
       });
 
       it('merges interval with more data than present in containing interval, takes the additional data', () => {
@@ -342,7 +369,9 @@ describe('adds item to interval structure', () => {
           intervals: [[0, 1000]],
           items: [[1, 55, 121]],
         };
-        expect(addInterval(structure, [10, 100], [55, 56, 57], numericalCompare)).toEqual({
+        expect(
+          addInterval(structure, [10, 100], [55, 56, 57], numericalCompare)
+        ).toEqual({
           intervals: [[0, 1000]],
           items: [[1, 55, 56, 57, 121]],
         });
@@ -359,7 +388,14 @@ describe('adds item to interval structure', () => {
             [11, 15, 20],
           ],
         };
-        expect(addInterval(structure, [5, 15], [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], numericalCompare)).toEqual({
+        expect(
+          addInterval(
+            structure,
+            [5, 15],
+            [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            numericalCompare
+          )
+        ).toEqual({
           intervals: [[0, 20]],
           items: [[0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 20]],
         });
@@ -371,7 +407,9 @@ describe('adds item to interval structure', () => {
         intervals: [[-100, 1000]],
         items: [[1, 55, 121]],
       };
-      expect(addInterval(structure, [10, 100], [55], numericalCompare)).toEqual(structure);
+      expect(addInterval(structure, [10, 100], [55], numericalCompare)).toEqual(
+        structure
+      );
     });
 
     it('merges three intervals into one', () => {
@@ -401,7 +439,14 @@ describe('adds item to interval structure', () => {
           [45, 46],
         ],
       };
-      expect(addInterval(structure, [0, 50], [5, 6, 25, 26, 35, 45, 46], numericalCompare)).toEqual({
+      expect(
+        addInterval(
+          structure,
+          [0, 50],
+          [5, 6, 25, 26, 35, 45, 46],
+          numericalCompare
+        )
+      ).toEqual({
         intervals: [[0, 50]],
         items: [[5, 6, 25, 26, 35, 45, 46]],
       });
@@ -418,7 +463,14 @@ describe('adds item to interval structure', () => {
           [45, 60],
         ],
       };
-      expect(addInterval(structure, [0, 50], [5, 6, 25, 26, 35, 45], numericalCompare)).toEqual({
+      expect(
+        addInterval(
+          structure,
+          [0, 50],
+          [5, 6, 25, 26, 35, 45],
+          numericalCompare
+        )
+      ).toEqual({
         intervals: [[0, 60]],
         items: [[5, 6, 25, 26, 35, 45, 60]],
       });
@@ -435,7 +487,9 @@ describe('adds item to interval structure', () => {
           [40, 60],
         ],
       };
-      expect(addInterval(structure, [25, 45], [30, 35, 40], numericalCompare)).toEqual({
+      expect(
+        addInterval(structure, [25, 45], [30, 35, 40], numericalCompare)
+      ).toEqual({
         intervals: [[20, 60]],
         items: [[20, 30, 35, 40, 60]],
       });

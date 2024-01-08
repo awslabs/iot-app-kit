@@ -6,7 +6,11 @@ import * as cloudscape from '@cloudscape-design/design-tokens';
 
 import { StatusIcon, Value } from '../shared-components';
 import { highContrastColor } from './highContrastColor';
-import { DEFAULT_STATUS_SETTINGS, DEFAULT_STATUS_COLOR, STATUS_ICON_SHRINK_FACTOR } from './constants';
+import {
+  DEFAULT_STATUS_SETTINGS,
+  DEFAULT_STATUS_COLOR,
+  STATUS_ICON_SHRINK_FACTOR,
+} from './constants';
 import { DEFAULT_MESSAGE_OVERRIDES } from '../../common/dataTypes';
 import omitBy from 'lodash.omitby';
 import styled from 'styled-components';
@@ -38,11 +42,18 @@ export const StatusBase: React.FC<StatusProperties> = ({
   settings = {},
   significantDigits,
 }) => {
-  const { showName, showUnit, showValue, showIcon, fontSize, aggregationFontSize, secondaryFontSize }: StatusSettings =
-    {
-      ...DEFAULT_STATUS_SETTINGS,
-      ...omitBy(settings, (x) => x == null),
-    };
+  const {
+    showName,
+    showUnit,
+    showValue,
+    showIcon,
+    fontSize,
+    aggregationFontSize,
+    secondaryFontSize,
+  }: StatusSettings = {
+    ...DEFAULT_STATUS_SETTINGS,
+    ...omitBy(settings, (x) => x == null),
+  };
 
   // Primary point to display
   const point = alarmPoint || propertyPoint;
@@ -66,7 +77,9 @@ export const StatusBase: React.FC<StatusProperties> = ({
         padding: cloudscape.spaceStaticM,
       }}
     >
-      {showName && <span style={{ fontSize: `${secondaryFontSize}px` }}>{name}</span>}
+      {showName && (
+        <span style={{ fontSize: `${secondaryFontSize}px` }}>{name}</span>
+      )}
 
       {error && (
         <Box margin={{ top: 's', bottom: 's' }}>
@@ -99,7 +112,11 @@ export const StatusBase: React.FC<StatusProperties> = ({
               color={highContrastColor(backgroundColor)}
             />
           )}
-          <Value value={point?.y} unit={displayedUnit} precision={significantDigits} />
+          <Value
+            value={point?.y}
+            unit={displayedUnit}
+            precision={significantDigits}
+          />
           {!isLoading && (
             <div style={{ fontSize: `${aggregationFontSize}px` }}>
               {getAggregationFrequency(resolution, aggregationType)}

@@ -49,12 +49,21 @@ export type GridProps = PropsWithChildren<{
   cellSize: number;
   showGuides: boolean;
 }>;
-export const Grid: React.FC<GridProps> = ({ highlighted, showGuides, width, height, cellSize, children }) => (
+export const Grid: React.FC<GridProps> = ({
+  highlighted,
+  showGuides,
+  width,
+  height,
+  cellSize,
+  children,
+}) => (
   <div
     id={DASHBOARD_CONTAINER_ID}
     // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
     tabIndex={0}
-    className={`container ${highlighted ? 'grid-container-border-highlighted' : ''}`}
+    className={`container ${
+      highlighted ? 'grid-container-border-highlighted' : ''
+    }`}
     style={{
       ...getDashboardDimensionStyles({ height, width, cellSize }),
     }}

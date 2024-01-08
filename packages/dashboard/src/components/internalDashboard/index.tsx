@@ -1,7 +1,11 @@
 import React, { CSSProperties, ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPlugin } from '@iot-app-kit/core';
-import { WebglContext, TrendCursorSync, TimeSync } from '@iot-app-kit/react-components';
+import {
+  WebglContext,
+  TrendCursorSync,
+  TimeSync,
+} from '@iot-app-kit/react-components';
 import Box from '@cloudscape-design/components/box';
 import {
   colorBackgroundCellShaded,
@@ -69,30 +73,46 @@ type InternalDashboardProperties = {
 const defaultUserSelect: CSSProperties = { userSelect: 'initial' };
 const disabledUserSelect: CSSProperties = { userSelect: 'none' };
 
-const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, editable, name, propertiesPanel }) => {
+const InternalDashboard: React.FC<InternalDashboardProperties> = ({
+  onSave,
+  editable,
+  name,
+  propertiesPanel,
+}) => {
   const { iotSiteWiseClient, iotTwinMakerClient } = useClients();
 
   /**
    * disable user select styles on drag to prevent highlighting of text under the pointer
    */
-  const [userSelect, setUserSelect] = useState<CSSProperties>(defaultUserSelect);
+  const [userSelect, setUserSelect] =
+    useState<CSSProperties>(defaultUserSelect);
 
   /**
    * Store variables
    */
-  const dashboardConfiguration = useSelector((state: DashboardState) => state.dashboardConfiguration);
-  const dashboardWidgets = useSelector((state: DashboardState) => state.dashboardConfiguration.widgets);
+  const dashboardConfiguration = useSelector(
+    (state: DashboardState) => state.dashboardConfiguration
+  );
+  const dashboardWidgets = useSelector(
+    (state: DashboardState) => state.dashboardConfiguration.widgets
+  );
   const grid = useSelector((state: DashboardState) => state.grid);
   const cellSize = useSelector((state: DashboardState) => state.grid.cellSize);
-  const copiedWidgets = useSelector((state: DashboardState) => state.copiedWidgets);
+  const copiedWidgets = useSelector(
+    (state: DashboardState) => state.copiedWidgets
+  );
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const selectedWidgets = useSelectedWidgets();
-  const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
+  const significantDigits = useSelector(
+    (state: DashboardState) => state.significantDigits
+  );
   const { assetModelId, hasModelBasedQuery } = useModelBasedQuery();
 
   const hasValidAssetModelData = !!(hasModelBasedQuery && assetModelId);
 
-  const [viewFrame, setViewFrameElement] = useState<HTMLDivElement | undefined>(undefined);
+  const [viewFrame, setViewFrameElement] = useState<HTMLDivElement | undefined>(
+    undefined
+  );
   const [visible, setVisible] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -154,7 +174,14 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
   /**
    * setup gesture handling for grid
    */
-  const { activeGesture, userSelection, onPointClick, onGestureStart, onGestureUpdate, onGestureEnd } = useGestures({
+  const {
+    activeGesture,
+    userSelection,
+    onPointClick,
+    onGestureStart,
+    onGestureUpdate,
+    onGestureEnd,
+  } = useGestures({
     dashboardWidgets,
     selectedWidgets,
     cellSize,
@@ -248,14 +275,23 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
       }
     >
       <div className='dashboard' style={userSelect}>
-        <CustomDragLayer onDrag={(isDragging) => setUserSelect(isDragging ? disabledUserSelect : defaultUserSelect)} />
+        <CustomDragLayer
+          onDrag={(isDragging) =>
+            setUserSelect(isDragging ? disabledUserSelect : defaultUserSelect)
+          }
+        />
         <div style={dashboardToolbarBottomBorder} className='dashboard-toolbar'>
           <Box float='left' padding='s'>
             <ComponentPalette />
           </Box>
         </div>
         <ResizablePanes
-          leftPane={<QueryEditor iotSiteWiseClient={iotSiteWiseClient} iotTwinMakerClient={iotTwinMakerClient} />}
+          leftPane={
+            <QueryEditor
+              iotSiteWiseClient={iotSiteWiseClient}
+              iotTwinMakerClient={iotTwinMakerClient}
+            />
+          }
           centerPane={
             <div
               className='display-area'
@@ -266,7 +302,9 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
                 <ContextMenu {...contextMenuProps} />
                 <Widgets {...widgetsProps} />
                 {!widgetLength && <DashboardEmptyState />}
-                {activeGesture === 'select' && <UserSelection {...selectionProps} />}
+                {activeGesture === 'select' && (
+                  <UserSelection {...selectionProps} />
+                )}
               </GestureableGrid>
               <WebglContext viewFrame={viewFrame} />
             </div>
@@ -293,7 +331,10 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
     >
       <div className='dashboard'>
         {hasValidAssetModelData && (
-          <div style={dashboardToolbarBottomBorder} className='dashboard-toolbar-read-only'>
+          <div
+            style={dashboardToolbarBottomBorder}
+            className='dashboard-toolbar-read-only'
+          >
             <Box float='left' padding='s'>
               <AssetModelSelection client={iotSiteWiseClient} />
             </Box>
@@ -319,7 +360,9 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
         {readOnly ? ReadOnlyComponent : EditComponent}
         <ConfirmDeleteModal
           visible={visible}
-          headerTitle={`Delete selected widget${selectedWidgets.length > 1 ? 's' : ''}?`}
+          headerTitle={`Delete selected widget${
+            selectedWidgets.length > 1 ? 's' : ''
+          }?`}
           cancelTitle='Cancel'
           submitTitle='Delete'
           description={

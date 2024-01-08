@@ -1,6 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { getByLabelText, getByPlaceholderText, queryByLabelText, render } from '@testing-library/react';
+import {
+  getByLabelText,
+  getByPlaceholderText,
+  queryByLabelText,
+  render,
+} from '@testing-library/react';
 import { configureDashboardStore } from '~/store';
 import { DashboardWidget } from '~/types';
 import { WidgetTitle } from './index';
@@ -26,7 +31,9 @@ const TestComponent = (widget: DashboardWidget) => (
 );
 
 it('renders', () => {
-  const elem = render(<TestComponent {...MOCK_LINE_CHART_WIDGET} />).baseElement;
+  const elem = render(
+    <TestComponent {...MOCK_LINE_CHART_WIDGET} />
+  ).baseElement;
   expect(elem).toBeTruthy();
 });
 
@@ -40,7 +47,11 @@ it('renders the widget title input', () => {
 });
 
 it('renders the without widget title input', () => {
-  const NO_TITLE_WIDGETS = [MOCK_KPI_WIDGET, MOCK_RECTANGLE_WIDGET, MOCK_TEXT_WIDGET];
+  const NO_TITLE_WIDGETS = [
+    MOCK_KPI_WIDGET,
+    MOCK_RECTANGLE_WIDGET,
+    MOCK_TEXT_WIDGET,
+  ];
   NO_TITLE_WIDGETS.map((widget) => {
     const elem = render(<TestComponent {...widget} />).baseElement;
     expect(queryByLabelText(elem, 'Widget title')).toBeNull();

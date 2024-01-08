@@ -17,8 +17,14 @@ const mergeAssetModelProperties = (
     ...assetModel,
     properties: assetModel.properties.map((property) => {
       const currentProperty = currentAssetModels
-        .find((currentAssetModel) => currentAssetModel.assetModelId === assetModel.assetModelId)
-        ?.properties.find((currentAssetModelProperty) => currentAssetModelProperty.propertyId === property.propertyId);
+        .find(
+          (currentAssetModel) =>
+            currentAssetModel.assetModelId === assetModel.assetModelId
+        )
+        ?.properties.find(
+          (currentAssetModelProperty) =>
+            currentAssetModelProperty.propertyId === property.propertyId
+        );
       return {
         ...currentProperty,
         ...property,
@@ -45,9 +51,13 @@ export const useModelBasedQuerySelection = () => {
     (_properties, updatedProperties) => updatedProperties
   ) ?? [undefined, noop];
 
-  const properties = propertiesMaybe ? maybeWithDefault(defaultQuery, propertiesMaybe) ?? defaultQuery : defaultQuery;
+  const properties = propertiesMaybe
+    ? maybeWithDefault(defaultQuery, propertiesMaybe) ?? defaultQuery
+    : defaultQuery;
 
-  const updateAssetModels = (updatedAssetModels: AssetModelQuery[] | undefined) => {
+  const updateAssetModels = (
+    updatedAssetModels: AssetModelQuery[] | undefined
+  ) => {
     // Only allow updates for a single widget type at a time.
     // This is necessary because xy-plot query config has a different structure
     if (!selectionType || !isJust(selectionType)) return;
@@ -61,9 +71,11 @@ export const useModelBasedQuerySelection = () => {
     if (selectionType.value === 'xy-plot') {
       const styledQuery = styledQueryWidgetOnDrop(
         {
-          ...compositeWidgetForAggregationInformation.properties.queryConfig.query,
+          ...compositeWidgetForAggregationInformation.properties.queryConfig
+            .query,
           assetModels: mergeAssetModelProperties(
-            compositeWidgetForAggregationInformation.properties.queryConfig.query,
+            compositeWidgetForAggregationInformation.properties.queryConfig
+              .query,
             updatedAssetModels
           ),
         },
@@ -75,7 +87,8 @@ export const useModelBasedQuerySelection = () => {
           ...properties.queryConfig,
           query: {
             ...properties.queryConfig.query,
-            assetModels: (styledQuery as unknown as IoTSiteWiseDataStreamQuery).assetModels,
+            assetModels: (styledQuery as unknown as IoTSiteWiseDataStreamQuery)
+              .assetModels,
           },
         },
       };
@@ -87,9 +100,11 @@ export const useModelBasedQuerySelection = () => {
           queryConfig: {
             ...compositeWidgetForAggregationInformation.properties.queryConfig,
             query: {
-              ...compositeWidgetForAggregationInformation.properties.queryConfig.query,
+              ...compositeWidgetForAggregationInformation.properties.queryConfig
+                .query,
               assetModels: mergeAssetModelProperties(
-                compositeWidgetForAggregationInformation.properties.queryConfig.query,
+                compositeWidgetForAggregationInformation.properties.queryConfig
+                  .query,
                 updatedAssetModels
               ),
             },

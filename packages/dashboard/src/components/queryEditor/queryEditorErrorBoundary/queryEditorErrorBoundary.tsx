@@ -5,7 +5,9 @@ import Link from '@cloudscape-design/components/link';
 
 export type QueryEditorErrorBoundaryProps = PropsWithChildren;
 
-export function QueryEditorErrorBoundary({ children }: QueryEditorErrorBoundaryProps) {
+export function QueryEditorErrorBoundary({
+  children,
+}: QueryEditorErrorBoundaryProps) {
   return (
     <ErrorBoundary
       fallbackRender={({ error }) => (

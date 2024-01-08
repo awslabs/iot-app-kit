@@ -12,8 +12,16 @@ import {
   UpdateEntityCommandInput,
   UpdateSceneCommand,
 } from '@aws-sdk/client-iottwinmaker';
-import { ListSecretsCommand, SecretListEntry, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
-import { SceneInfo, TwinMakerKGQueryDataModule, TwinMakerSceneMetadataModule } from '../types';
+import {
+  ListSecretsCommand,
+  SecretListEntry,
+  SecretsManagerClient,
+} from '@aws-sdk/client-secrets-manager';
+import {
+  SceneInfo,
+  TwinMakerKGQueryDataModule,
+  TwinMakerSceneMetadataModule,
+} from '../types';
 
 export class SceneMetadataModule implements TwinMakerSceneMetadataModule {
   private workspaceId: string;
@@ -46,7 +54,10 @@ export class SceneMetadataModule implements TwinMakerSceneMetadataModule {
 
   getSceneInfo = async (): Promise<GetSceneCommandOutput> => {
     const sceneInfo: GetSceneCommandOutput = await this.twinMakerClient.send(
-      new GetSceneCommand({ workspaceId: this.workspaceId, sceneId: this.sceneId })
+      new GetSceneCommand({
+        workspaceId: this.workspaceId,
+        sceneId: this.sceneId,
+      })
     );
 
     return sceneInfo;
@@ -63,12 +74,18 @@ export class SceneMetadataModule implements TwinMakerSceneMetadataModule {
     );
   };
 
-  get3pConnectionList = (connectionTag: string): Promise<SecretListEntry[] | undefined> | null => {
+  get3pConnectionList = (
+    connectionTag: string
+  ): Promise<SecretListEntry[] | undefined> | null => {
     if (!this.secretsManagerClient) return null;
 
     return new Promise((resolve, reject) => {
       this.secretsManagerClient
-        ?.send(new ListSecretsCommand({ Filters: [{ Key: 'tag-key', Values: [connectionTag] }] }))
+        ?.send(
+          new ListSecretsCommand({
+            Filters: [{ Key: 'tag-key', Values: [connectionTag] }],
+          })
+        )
         .then(async (listSecretsResponse) => {
           resolve(listSecretsResponse.SecretList);
         })
@@ -79,18 +96,32 @@ export class SceneMetadataModule implements TwinMakerSceneMetadataModule {
   };
 
   getSceneEntity = (input: Omit<GetEntityCommandInput, 'workspaceId'>) => {
-    return this.twinMakerClient.send(new GetEntityCommand({ ...input, workspaceId: this.workspaceId }));
+    return this.twinMakerClient.send(
+      new GetEntityCommand({ ...input, workspaceId: this.workspaceId })
+    );
   };
 
-  createSceneEntity = (input: Omit<CreateEntityCommandInput, 'workspaceId'>) => {
-    return this.twinMakerClient.send(new CreateEntityCommand({ ...input, workspaceId: this.workspaceId }));
+  createSceneEntity = (
+    input: Omit<CreateEntityCommandInput, 'workspaceId'>
+  ) => {
+    return this.twinMakerClient.send(
+      new CreateEntityCommand({ ...input, workspaceId: this.workspaceId })
+    );
   };
 
-  updateSceneEntity = (input: Omit<UpdateEntityCommandInput, 'workspaceId'>) => {
-    return this.twinMakerClient.send(new UpdateEntityCommand({ ...input, workspaceId: this.workspaceId }));
+  updateSceneEntity = (
+    input: Omit<UpdateEntityCommandInput, 'workspaceId'>
+  ) => {
+    return this.twinMakerClient.send(
+      new UpdateEntityCommand({ ...input, workspaceId: this.workspaceId })
+    );
   };
 
-  deleteSceneEntity = (input: Omit<DeleteEntityCommandInput, 'workspaceId'>) => {
-    return this.twinMakerClient.send(new DeleteEntityCommand({ ...input, workspaceId: this.workspaceId }));
+  deleteSceneEntity = (
+    input: Omit<DeleteEntityCommandInput, 'workspaceId'>
+  ) => {
+    return this.twinMakerClient.send(
+      new DeleteEntityCommand({ ...input, workspaceId: this.workspaceId })
+    );
   };
 }

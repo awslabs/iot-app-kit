@@ -6,7 +6,9 @@ import {
   TREND_CURSOR_Z_INDEX,
 } from '../../../constants';
 
-export const addTCDeleteButton = (uId: string): GraphicComponentImageOption => ({
+export const addTCDeleteButton = (
+  uId: string
+): GraphicComponentImageOption => ({
   id: `delete-button-${uId}`,
   type: 'image',
   z: TREND_CURSOR_Z_INDEX + 1,

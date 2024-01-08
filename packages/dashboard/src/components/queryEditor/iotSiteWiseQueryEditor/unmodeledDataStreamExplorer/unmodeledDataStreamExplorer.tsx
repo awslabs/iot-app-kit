@@ -14,7 +14,10 @@ export interface UnmodeledDataStreamExplorerProps {
   client: IoTSiteWiseClient;
 }
 
-export function UnmodeledDataStreamExplorer({ client, onClickAdd }: UnmodeledDataStreamExplorerProps) {
+export function UnmodeledDataStreamExplorer({
+  client,
+  onClickAdd,
+}: UnmodeledDataStreamExplorerProps) {
   const [aliasPrefix, setAliasPrefix] = useAliasPrefix();
   const {
     unmodeledDataStreams,

@@ -68,7 +68,9 @@ export const MultipleTimeSyncs: ComponentStory<typeof TimeSync> = () => (
   </div>
 );
 
-export const MultipleTimeSyncSameGroup: ComponentStory<typeof TimeSync> = () => (
+export const MultipleTimeSyncSameGroup: ComponentStory<
+  typeof TimeSync
+> = () => (
   <div>
     <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
       <TimeSelection />

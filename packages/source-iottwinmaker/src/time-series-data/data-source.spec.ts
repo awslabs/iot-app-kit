@@ -45,10 +45,15 @@ import type { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 import type { TwinMakerDataStreamQuery } from './types';
 
 const tmClient = new IoTTwinMakerClient({});
-const twinMakerMetadataModule = new TwinMakerMetadataModule('workspace-id', tmClient);
+const twinMakerMetadataModule = new TwinMakerMetadataModule(
+  'workspace-id',
+  tmClient
+);
 
 it('initializes', () => {
-  expect(() => createDataSource(twinMakerMetadataModule, tmClient)).not.toThrowError();
+  expect(() =>
+    createDataSource(twinMakerMetadataModule, tmClient)
+  ).not.toThrowError();
 });
 
 describe('getRequestsFromQuery', () => {
@@ -73,8 +78,12 @@ describe('getRequestsFromQuery', () => {
     };
 
     const result = await dataSource.getRequestsFromQuery({ query, request });
-    expect(result[0]).toEqual(expect.objectContaining({ refId: REF_ID, resolution: '0' }));
-    expect(result[1]).toEqual(expect.objectContaining({ refId: REF_ID + REF_ID, resolution: '0' }));
+    expect(result[0]).toEqual(
+      expect.objectContaining({ refId: REF_ID, resolution: '0' })
+    );
+    expect(result[1]).toEqual(
+      expect.objectContaining({ refId: REF_ID + REF_ID, resolution: '0' })
+    );
   });
 
   it('should return empty request for random query', async () => {

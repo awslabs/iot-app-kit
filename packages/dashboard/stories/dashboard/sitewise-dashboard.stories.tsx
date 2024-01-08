@@ -9,9 +9,13 @@ import { getEnvCredentials } from '../../testing/getEnvCredentials';
 import { DashboardClientConfiguration } from '../../src/types';
 import { DashboardView } from '~/index';
 
-const getDashboardProperties = (defaultProps: DashboardProperties): DashboardProperties => {
+const getDashboardProperties = (
+  defaultProps: DashboardProperties
+): DashboardProperties => {
   const cachedDashboardConfiguration = window.localStorage.getItem('dashboard');
-  const dashboardConfiguration = cachedDashboardConfiguration ? JSON.parse(cachedDashboardConfiguration) : defaultProps;
+  const dashboardConfiguration = cachedDashboardConfiguration
+    ? JSON.parse(cachedDashboardConfiguration)
+    : defaultProps;
 
   return {
     ...defaultProps,
@@ -58,6 +62,10 @@ registerPlugin('metricsRecorder', {
   }),
 });
 
-export const Main: ComponentStory<typeof Dashboard> = () => <Dashboard {...getDashboardProperties(args)} />;
+export const Main: ComponentStory<typeof Dashboard> = () => (
+  <Dashboard {...getDashboardProperties(args)} />
+);
 
-export const View: ComponentStory<typeof DashboardView> = () => <DashboardView {...getDashboardProperties(args)} />;
+export const View: ComponentStory<typeof DashboardView> = () => (
+  <DashboardView {...getDashboardProperties(args)} />
+);

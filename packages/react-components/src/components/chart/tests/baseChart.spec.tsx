@@ -9,7 +9,12 @@ import { TanstackTable } from '../legend/tanstackTable';
 
 const VIEWPORT = { duration: '5m' };
 
-const DATA_STREAM: DataStream = { id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
+const DATA_STREAM: DataStream = {
+  id: 'abc-1',
+  data: [],
+  resolution: 0,
+  name: 'my-name',
+};
 jest.mock('echarts', () => ({
   use: jest.fn(),
   init: jest.fn(),
@@ -40,12 +45,24 @@ describe('Chart Component Testing', () => {
       },
     ]);
 
-    const element = render(<Chart queries={[query]} viewport={VIEWPORT} size={{ width: 500, height: 500 }} />);
+    const element = render(
+      <Chart
+        queries={[query]}
+        viewport={VIEWPORT}
+        size={{ width: 500, height: 500 }}
+      />
+    );
     expect(element).not.toBeNull();
   });
 
   it('Chart renders', () => {
-    const element = render(<Chart queries={[mockQuery]} viewport={VIEWPORT} size={{ width: 500, height: 500 }} />);
+    const element = render(
+      <Chart
+        queries={[mockQuery]}
+        viewport={VIEWPORT}
+        size={{ width: 500, height: 500 }}
+      />
+    );
     expect(element).not.toBeNull();
   });
 });
@@ -73,7 +90,9 @@ describe('Chart slider testing', () => {
     };
 
     const { container } = render(<Chart {...options} />);
-    expect(container.getElementsByClassName('react-resizable-handle-se').length).toBe(1);
+    expect(
+      container.getElementsByClassName('react-resizable-handle-se').length
+    ).toBe(1);
   });
 
   it('should show resize slider when show legend feature is off', () => {
@@ -98,7 +117,9 @@ describe('Chart slider testing', () => {
     };
 
     const { container } = render(<Chart {...options} />);
-    expect(container.getElementsByClassName('react-resizable-handle-se').length).toBe(0);
+    expect(
+      container.getElementsByClassName('react-resizable-handle-se').length
+    ).toBe(0);
   });
 });
 
@@ -120,6 +141,8 @@ describe('Tanstack Table testing', () => {
         stickyHeader
       />
     );
-    expect(container.getElementsByClassName('tanstack-table-container').length).toBe(1);
+    expect(
+      container.getElementsByClassName('tanstack-table-container').length
+    ).toBe(1);
   });
 });

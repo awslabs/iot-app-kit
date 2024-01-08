@@ -6,7 +6,8 @@ import difference from 'lodash.difference';
 
 const hasColor = (stream: DataStream, styles: StyleSettingsMap): boolean => {
   const streamHasColor = stream.color != null;
-  const associatedStyles = stream.refId != null ? styles[stream.refId] ?? {} : {};
+  const associatedStyles =
+    stream.refId != null ? styles[stream.refId] ?? {} : {};
   const hasAssociatedColor = associatedStyles.color != null;
 
   return streamHasColor || hasAssociatedColor;

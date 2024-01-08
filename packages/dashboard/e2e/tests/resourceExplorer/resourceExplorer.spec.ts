@@ -1,6 +1,12 @@
 import { expect, test } from '../test';
 import { gridUtil } from '../utils/grid';
-import { ASSET_MODEL_TAB, MODELED_TAB, TEST_PAGE, UNMODELED_TAB, WIDGET_EMPTY_STATE_TEXT } from '../constants';
+import {
+  ASSET_MODEL_TAB,
+  MODELED_TAB,
+  TEST_PAGE,
+  UNMODELED_TAB,
+  WIDGET_EMPTY_STATE_TEXT,
+} from '../constants';
 import { resourceExplorerUtil } from '../utils/resourceExplorer';
 
 test('can load resource explorer', async ({ page }) => {
@@ -35,8 +41,13 @@ test('can load configure a widget with an asset model', async ({ page }) => {
   await expect(page.locator(ASSET_MODEL_TAB)).toBeVisible();
   await resourceExplorer.tabTo('assetModel');
 
-  const { selectAssetModel, selectAsset, saveAssetModel, selectProperty, addToWidget } =
-    resourceExplorer.assetModelActions;
+  const {
+    selectAssetModel,
+    selectAsset,
+    saveAssetModel,
+    selectProperty,
+    addToWidget,
+  } = resourceExplorer.assetModelActions;
   // configure asset model and default asset and select
   await selectAssetModel('Site');
   await selectAsset('Africa site');

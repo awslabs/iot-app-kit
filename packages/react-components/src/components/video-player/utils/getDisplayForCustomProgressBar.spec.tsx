@@ -15,7 +15,9 @@ it('should return current time indicator html', () => {
   const expectedResult = `<div class='currentTimeIndicator' id='${currentTimeIndicatorId}' style='${currentTimeStyle}'>${getFormattedDateTime(
     new Date(1665583620000)
   )}</div>`;
-  expect(getCurrentTimeIndicator(currentTimeIndicatorId, 1665583620000)).toEqual(expectedResult);
+  expect(
+    getCurrentTimeIndicator(currentTimeIndicatorId, 1665583620000)
+  ).toEqual(expectedResult);
 });
 
 it('should return video timeline progress bar html', () => {
@@ -37,9 +39,13 @@ it('should return video timeline progress bar html', () => {
     timerangesWithSource,
     startTimestamp,
     endTimestamp
-  )}${getDisplayForVideoOnEdge(timerangesForVideoOnEdge, startTimestamp, endTimestamp)}${getVideoProgressHolder(
-    playProgressId
-  )}${getStartTimeIndicator(startTimestamp)}${getEndTimeIndicator(endTimestamp)}</div>`;
+  )}${getDisplayForVideoOnEdge(
+    timerangesForVideoOnEdge,
+    startTimestamp,
+    endTimestamp
+  )}${getVideoProgressHolder(playProgressId)}${getStartTimeIndicator(
+    startTimestamp
+  )}${getEndTimeIndicator(endTimestamp)}</div>`;
   expect(
     getTimelineForProgressBar(
       timelineId,

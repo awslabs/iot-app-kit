@@ -1,5 +1,8 @@
 import { EntitySummary } from '@aws-sdk/client-iottwinmaker';
-import { isDataBindingTemplate, undecorateDataBindingTemplate } from '../../utils/dataBindingTemplateUtils';
+import {
+  isDataBindingTemplate,
+  undecorateDataBindingTemplate,
+} from '../../utils/dataBindingTemplateUtils';
 import { IDataBindingTemplate, IDataFieldOption } from '../types';
 
 export function createIdenticalLabelOption(value: string): IDataFieldOption {
@@ -18,7 +21,9 @@ export function convertDataBindingTemplateId(
   return dataBindingTemplate[undecoratedId] ?? id;
 }
 
-export function convertEntitySummariesToDataFieldOptions(entitySummaries: EntitySummary[]): IDataFieldOption[] {
+export function convertEntitySummariesToDataFieldOptions(
+  entitySummaries: EntitySummary[]
+): IDataFieldOption[] {
   const summaries: Record<string, EntitySummary> = {};
   for (const current of entitySummaries || []) {
     if (current.entityId) {
@@ -29,7 +34,8 @@ export function convertEntitySummariesToDataFieldOptions(entitySummaries: Entity
   return Object.keys(summaries)
     .sort()
     .map((entityId) => {
-      const label = summaries[entityId].entityName ?? summaries[entityId].entityId;
+      const label =
+        summaries[entityId].entityName ?? summaries[entityId].entityId;
       return { value: entityId, label };
     });
 }

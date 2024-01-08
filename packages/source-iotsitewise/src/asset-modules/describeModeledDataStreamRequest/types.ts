@@ -24,4 +24,6 @@ export type AssetModelProperty = NonNullable<
 >[number];
 export type AssetModelPropertyId = string;
 export type AssetId = string;
-export type AssetProperty = NonNullable<ListAssetPropertiesCommandOutput['assetPropertySummaries']>[number];
+export type AssetProperty = NonNullable<
+  ListAssetPropertiesCommandOutput['assetPropertySummaries']
+>[number];

@@ -8,7 +8,10 @@ import InternalDashboard from '../internalDashboard';
 import { configureDashboardStore, toDashboardState } from '~/store';
 
 import { useDashboardPlugins } from '~/customization/api';
-import type { DashboardClientConfiguration, DashboardConfiguration } from '~/types';
+import type {
+  DashboardClientConfiguration,
+  DashboardConfiguration,
+} from '~/types';
 import { ClientContext } from './clientContext';
 import { QueryContext } from './queryContext';
 import { getClients } from './getClients';
@@ -22,14 +25,22 @@ export type DashboardViewProperties = {
   dashboardConfiguration: DashboardConfiguration;
 };
 
-const DashboardView: React.FC<DashboardViewProperties> = ({ clientConfiguration, dashboardConfiguration }) => {
+const DashboardView: React.FC<DashboardViewProperties> = ({
+  clientConfiguration,
+  dashboardConfiguration,
+}) => {
   // Adding Dnd provider because custom widgets may have a drag and drop context
   useDashboardPlugins();
 
   return (
     <ClientContext.Provider value={getClients(clientConfiguration)}>
       <QueryContext.Provider value={getQueries(clientConfiguration)}>
-        <Provider store={configureDashboardStore({ ...toDashboardState(dashboardConfiguration), readOnly: true })}>
+        <Provider
+          store={configureDashboardStore({
+            ...toDashboardState(dashboardConfiguration),
+            readOnly: true,
+          })}
+        >
           <DndProvider
             backend={TouchBackend}
             options={{

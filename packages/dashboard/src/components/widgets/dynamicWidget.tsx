@@ -37,7 +37,10 @@ export const getDragLayerProps = ({
   widgetsMessages,
 });
 
-const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({ widget, widgetsMessages }) => {
+const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
+  widget,
+  widgetsMessages,
+}) => {
   const { invalidTagHeader, invalidTagSubheader } = widgetsMessages;
 
   const componentTag = widget.type;

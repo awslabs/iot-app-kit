@@ -20,10 +20,13 @@ export const useDropMonitor = ({ drop }: DropMonitorProps) => {
       drop: (item: ComponentPaletteDraggable, monitor) => {
         const initialClientOffset = monitor.getInitialClientOffset(); // where the cursor was in the viewport when the drag started;
         const clientOffset = monitor.getClientOffset(); // where cursor is in the viewport when drop occurs;
-        const gridRect = document.getElementById(DASHBOARD_CONTAINER_ID)?.getBoundingClientRect();
+        const gridRect = document
+          .getElementById(DASHBOARD_CONTAINER_ID)
+          ?.getBoundingClientRect();
         const itemRect = item.rect;
 
-        if (!initialClientOffset || !clientOffset || !gridRect || !itemRect) return;
+        if (!initialClientOffset || !clientOffset || !gridRect || !itemRect)
+          return;
 
         // find cursor position in the grid
         const gridOffset = {

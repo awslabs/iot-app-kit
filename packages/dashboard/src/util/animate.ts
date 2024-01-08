@@ -9,7 +9,9 @@ export const MS_PER_FRAME = 1000 / FPS;
 export class Animator {
   #msPrev = window.performance.now();
 
-  public animate(animation: Animation): ReturnType<typeof requestAnimationFrame> {
+  public animate(
+    animation: Animation
+  ): ReturnType<typeof requestAnimationFrame> {
     return requestAnimationFrame(() => {
       const msNow = window.performance.now();
       const msPassed = msNow - this.#msPrev;

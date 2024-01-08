@@ -15,7 +15,10 @@ import type { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 import { TwinMakerEntityHistoryQuery } from '../common/queryTypes';
 
 export const subscribeToTimeSeriesData =
-  (metadataModule: TwinMakerMetadataModule, dataModule: TimeSeriesDataModule<TwinMakerDataStreamQuery>) =>
+  (
+    metadataModule: TwinMakerMetadataModule,
+    dataModule: TimeSeriesDataModule<TwinMakerDataStreamQuery>
+  ) =>
   (
     { queries, request }: DataModuleSubscription<TwinMakerDataStreamQuery>,
     callback: (data: TimeSeriesData) => void
@@ -35,13 +38,20 @@ export const subscribeToTimeSeriesData =
       });
     };
 
-    const { update, unsubscribe } = dataModule.subscribeToDataStreams({ queries, request }, (data: TimeSeriesData) => {
-      dataStreams = data.dataStreams;
-      viewport = data.viewport;
-      emit();
-    });
+    const { update, unsubscribe } = dataModule.subscribeToDataStreams(
+      { queries, request },
+      (data: TimeSeriesData) => {
+        dataStreams = data.dataStreams;
+        viewport = data.viewport;
+        emit();
+      }
+    );
 
-    const fetchResources = ({ queries }: { queries?: TwinMakerDataStreamQuery[] }) => {
+    const fetchResources = ({
+      queries,
+    }: {
+      queries?: TwinMakerDataStreamQuery[];
+    }) => {
       if (queries) {
         queries.forEach((query) => {
           // Only need to fetch resource for entity query since component type query will fetch resources before
@@ -72,7 +82,9 @@ export const subscribeToTimeSeriesData =
       unsubscribe: () => {
         unsubscribe();
       },
-      update: (subscriptionUpdate: SubscriptionUpdate<TwinMakerDataStreamQuery>) => {
+      update: (
+        subscriptionUpdate: SubscriptionUpdate<TwinMakerDataStreamQuery>
+      ) => {
         update(subscriptionUpdate);
         fetchResources(subscriptionUpdate);
       },

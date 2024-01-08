@@ -1,1 +1,4 @@
-export { DataStreamSearch, type DataStreamSearchProps } from './dataStreamSearch';
+export {
+  DataStreamSearch,
+  type DataStreamSearchProps,
+} from './dataStreamSearch';

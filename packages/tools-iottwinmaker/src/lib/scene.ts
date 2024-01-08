@@ -10,7 +10,11 @@ import { ListScenesCommandOutput } from '@aws-sdk/client-iottwinmaker';
  * @param sceneFilePath string file path
  * @param workspaceContentBucket workspace content bucket
  */
-async function importScene(workspaceId: string, sceneFilePath: string, workspaceContentBucket: string) {
+async function importScene(
+  workspaceId: string,
+  sceneFilePath: string,
+  workspaceContentBucket: string
+) {
   const ws = await aws().tm.getWorkspace({ workspaceId });
   const s3Arn = ws.s3Location;
 
@@ -47,7 +51,9 @@ async function importScene(workspaceId: string, sceneFilePath: string, workspace
     ContentType: 'application/json',
   });
 
-  console.log(`Uploaded ${sceneFilePath} to s3://${s3Bucket}/${sceneName}.json`);
+  console.log(
+    `Uploaded ${sceneFilePath} to s3://${s3Bucket}/${sceneName}.json`
+  );
 }
 
 /**

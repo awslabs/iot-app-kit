@@ -39,21 +39,24 @@ export default {
   },
 } as ComponentMeta<typeof KnowledgeGraphContainer>;
 
-export const Basic: ComponentStory<typeof KnowledgeGraphContainer> = Template.bind({});
+export const Basic: ComponentStory<typeof KnowledgeGraphContainer> =
+  Template.bind({});
 Basic.parameters = {
   KG: {
     queryResult: response3,
   },
 };
 
-export const InContainers: ComponentStory<typeof KnowledgeGraphContainer> = TemplateInContainer.bind({});
+export const InContainers: ComponentStory<typeof KnowledgeGraphContainer> =
+  TemplateInContainer.bind({});
 InContainers.parameters = {
   KG: {
     queryResult: response,
   },
 };
 
-export const OverrideStyles: ComponentStory<typeof KnowledgeGraphContainer> = Template.bind({});
+export const OverrideStyles: ComponentStory<typeof KnowledgeGraphContainer> =
+  Template.bind({});
 OverrideStyles.parameters = {
   KG: {
     queryResult: response3,

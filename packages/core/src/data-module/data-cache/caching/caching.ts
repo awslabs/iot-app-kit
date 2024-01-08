@@ -1,24 +1,52 @@
-import { MINUTE_IN_MS, SECOND_IN_MS, parseDuration } from '../../../common/time';
+import {
+  MINUTE_IN_MS,
+  SECOND_IN_MS,
+  parseDuration,
+} from '../../../common/time';
 import { getDataStreamStore } from '../getDataStreamStore';
-import { addInterval, intersect, subtractIntervals } from '../../../common/intervalStructure';
+import {
+  addInterval,
+  intersect,
+  subtractIntervals,
+} from '../../../common/intervalStructure';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { getExpiredCacheIntervals } from './expiredCacheIntervals';
 import { pointBisector } from '../../../common/dataFilters';
-import type { DataPoint, Primitive, RequestInformation, RequestInformationAndRange } from '../../types';
-import type { Interval, IntervalStructure } from '../../../common/intervalStructure';
-import type { CacheSettings, DataStreamsStore, DataStreamStore, TTLDurationMapping } from '../types';
-import type { TimeSeriesDataRequestSettings, TimeSeriesDataRequest } from '../requestTypes';
+import type {
+  DataPoint,
+  Primitive,
+  RequestInformation,
+  RequestInformationAndRange,
+} from '../../types';
+import type {
+  Interval,
+  IntervalStructure,
+} from '../../../common/intervalStructure';
+import type {
+  CacheSettings,
+  DataStreamsStore,
+  DataStreamStore,
+  TTLDurationMapping,
+} from '../types';
+import type {
+  TimeSeriesDataRequestSettings,
+  TimeSeriesDataRequest,
+} from '../requestTypes';
 
 export const unexpiredCacheIntervals = (
   streamStore: DataStreamStore,
   ttlDurationMapping: TTLDurationMapping
 ): Interval[] => {
   const expiredCacheIntervals = streamStore.requestHistory
-    .map((historicalRequest) => getExpiredCacheIntervals(ttlDurationMapping, historicalRequest))
+    .map((historicalRequest) =>
+      getExpiredCacheIntervals(ttlDurationMapping, historicalRequest)
+    )
     .flat();
 
   const allCachedIntervals = streamStore.requestCache.intervals;
-  return allCachedIntervals.map((interval) => subtractIntervals(interval, expiredCacheIntervals)).flat();
+  return allCachedIntervals
+    .map((interval) => subtractIntervals(interval, expiredCacheIntervals))
+    .flat();
 };
 
 // What is considered 'too close', and will cause intervals to merge together.
@@ -39,7 +67,10 @@ const MINIMUM_INTERVAL = SECOND_IN_MS * 3;
  *
  * Assumes combined intervals are sorted, in a strictly ascending order.
  */
-const combineShortIntervals = (combinedIntervals: Interval[], interval: Interval): Interval[] => {
+const combineShortIntervals = (
+  combinedIntervals: Interval[],
+  interval: Interval
+): Interval[] => {
   if (combinedIntervals.length === 0) {
     return [interval];
   }
@@ -79,7 +110,12 @@ export const getDateRangesToRequest = ({
   cacheSettings: CacheSettings;
   aggregationType?: AggregateType;
 }): [Date, Date][] => {
-  const streamStore = getDataStreamStore(dataStreamId, resolution, store, aggregationType);
+  const streamStore = getDataStreamStore(
+    dataStreamId,
+    resolution,
+    store,
+    aggregationType
+  );
 
   if (end.getTime() === start.getTime()) {
     // nothing to request
@@ -92,13 +128,21 @@ export const getDateRangesToRequest = ({
   }
 
   // NOTE: Use the request cache since we don't want to request intervals that already have been requested.
-  const cacheIntervals = unexpiredCacheIntervals(streamStore, cacheSettings.ttlDurationMapping);
-  const millisecondIntervals = subtractIntervals([start.getTime(), end.getTime()], cacheIntervals);
+  const cacheIntervals = unexpiredCacheIntervals(
+    streamStore,
+    cacheSettings.ttlDurationMapping
+  );
+  const millisecondIntervals = subtractIntervals(
+    [start.getTime(), end.getTime()],
+    cacheIntervals
+  );
 
   return millisecondIntervals
     .reduce(combineShortIntervals, [])
     .filter(([startMs, endMs]) => endMs - startMs > MINIMUM_INTERVAL)
-    .map(([startMS, endMS]) => [new Date(startMS), new Date(endMS)] as [Date, Date]);
+    .map(
+      ([startMS, endMS]) => [new Date(startMS), new Date(endMS)] as [Date, Date]
+    );
 };
 
 /**
@@ -208,7 +252,10 @@ export const getRequestInformations = ({
   return requestInformations;
 };
 
-export const dataPointCompare = <T extends Primitive = number>(a: DataPoint<T>, b: DataPoint<T>) => {
+export const dataPointCompare = <T extends Primitive = number>(
+  a: DataPoint<T>,
+  b: DataPoint<T>
+) => {
   const aTime = a.x;
   const bTime = b.x;
   if (aTime !== bTime) {
@@ -268,7 +315,12 @@ export const addToDataPointCache = ({
   if (data.length === 0 && start.getTime() === end.getTime()) {
     return cache;
   }
-  return addInterval(cache, [start.getTime(), end.getTime()], data, dataPointCompare);
+  return addInterval(
+    cache,
+    [start.getTime(), end.getTime()],
+    data,
+    dataPointCompare
+  );
 };
 
 export const checkCacheForRecentPoint = ({
@@ -286,20 +338,32 @@ export const checkCacheForRecentPoint = ({
   cacheSettings: CacheSettings;
   aggregationType?: AggregateType;
 }) => {
-  const streamStore = getDataStreamStore(dataStreamId, resolution, store, aggregationType);
+  const streamStore = getDataStreamStore(
+    dataStreamId,
+    resolution,
+    store,
+    aggregationType
+  );
 
   if (streamStore && streamStore.dataCache.intervals.length > 0) {
     const { dataCache } = streamStore;
-    const cacheIntervals = unexpiredCacheIntervals(streamStore, cacheSettings.ttlDurationMapping);
+    const cacheIntervals = unexpiredCacheIntervals(
+      streamStore,
+      cacheSettings.ttlDurationMapping
+    );
     const intersectedIntervals = intersect(cacheIntervals, dataCache.intervals);
 
-    const interval = intersectedIntervals.find((inter) => inter[0] <= start.getTime() && start.getTime() <= inter[1]);
+    const interval = intersectedIntervals.find(
+      (inter) => inter[0] <= start.getTime() && start.getTime() <= inter[1]
+    );
 
     if (interval) {
       const dataPoints = dataCache.items.flat();
 
       const elementIndex = pointBisector.right(dataPoints, start);
-      return elementIndex !== 0 && dataPoints[elementIndex - 1].x >= interval[0];
+      return (
+        elementIndex !== 0 && dataPoints[elementIndex - 1].x >= interval[0]
+      );
     }
     return false;
   }
@@ -308,7 +372,9 @@ export const checkCacheForRecentPoint = ({
 
 // Validates request config to see if we need to make a fetch Request
 // This will expand in future to accomodate more requestConfig variants
-export const validateRequestConfig = (requestConfig: TimeSeriesDataRequestSettings | undefined) => {
+export const validateRequestConfig = (
+  requestConfig: TimeSeriesDataRequestSettings | undefined
+) => {
   if (requestConfig) {
     return requestConfig.fetchMostRecentBeforeStart;
   }
@@ -318,7 +384,9 @@ export const validateRequestConfig = (requestConfig: TimeSeriesDataRequestSettin
 
 // Returns the maximum duration for possible uncached data for given CacheSettings
 export const maxCacheDuration = (cacheSettings: CacheSettings) => {
-  const ttlDurations = Object.keys(cacheSettings.ttlDurationMapping).map((key) => Number(key));
+  const ttlDurations = Object.keys(cacheSettings.ttlDurationMapping).map(
+    (key) => Number(key)
+  );
 
   if (ttlDurations.length === 0) {
     return 0;

@@ -4,7 +4,13 @@ import type { FC } from 'react';
 import { Icon } from '@cloudscape-design/components';
 
 import { getColor } from '../../src/components/chart/utils/getColor';
-import { Menu, MenuOption, MenuProps, PositionableMenu, PositionableMenuProps } from '../../src/components/menu';
+import {
+  Menu,
+  MenuOption,
+  MenuProps,
+  PositionableMenu,
+  PositionableMenuProps,
+} from '../../src/components/menu';
 
 const defaultPosition = { x: 10, y: 10, z: 0 };
 
@@ -86,7 +92,11 @@ export const Absolute: ComponentStory<FC<StoryInputs>> = ({ position }) => (
 const randomOptions = () =>
   Array(5)
     .fill(10)
-    .map((v) => ({ id: (Math.random() * v).toFixed(0), color: getColor(), label: (Math.random() * v).toFixed(0) }));
+    .map((v) => ({
+      id: (Math.random() * v).toFixed(0),
+      color: getColor(),
+      label: (Math.random() * v).toFixed(0),
+    }));
 
 const ColorIcon = ({ color }: { color: string }) => (
   <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
@@ -130,7 +140,8 @@ export const Relative: ComponentStory<FC<StoryInputs>> = () => {
         <div>
           {Object.entries(selectedMin).map(([color, visible]) => (
             <div style={{ display: 'flex' }}>
-              <ColorIcon color={color} />: <div>{visible ? 'visible' : 'invisible'}</div>
+              <ColorIcon color={color} />:{' '}
+              <div>{visible ? 'visible' : 'invisible'}</div>
             </div>
           ))}
         </div>
@@ -138,7 +149,8 @@ export const Relative: ComponentStory<FC<StoryInputs>> = () => {
         <div>
           {Object.entries(selectedMax).map(([color, visible]) => (
             <div style={{ display: 'flex' }}>
-              <ColorIcon color={color} />: <div>{visible ? 'visible' : 'invisible'}</div>
+              <ColorIcon color={color} />:{' '}
+              <div>{visible ? 'visible' : 'invisible'}</div>
             </div>
           ))}
         </div>
@@ -154,7 +166,13 @@ export const Relative: ComponentStory<FC<StoryInputs>> = () => {
             <div ref={ref}>
               <Menu>
                 <MenuOption
-                  iconStart={() => <Icon name={minOpen ? 'caret-down-filled' : 'caret-right-filled'} />}
+                  iconStart={() => (
+                    <Icon
+                      name={
+                        minOpen ? 'caret-down-filled' : 'caret-right-filled'
+                      }
+                    />
+                  )}
                   label='Y-Min'
                   action={() => setMinOpen(!minOpen)}
                 />
@@ -166,7 +184,12 @@ export const Relative: ComponentStory<FC<StoryInputs>> = () => {
             <MenuOption
               onPointerEnter={() => setHighlightedMin(color)}
               onPointerLeave={() => setHighlightedMin('')}
-              action={() => setSelectedMin({ ...selectedMin, [color]: !(color in selectedMin && selectedMin[color]) })}
+              action={() =>
+                setSelectedMin({
+                  ...selectedMin,
+                  [color]: !(color in selectedMin && selectedMin[color]),
+                })
+              }
               key={color}
               iconStart={() => <ColorIcon color={color} />}
               label={label}
@@ -186,7 +209,11 @@ export const Relative: ComponentStory<FC<StoryInputs>> = () => {
             <div ref={ref}>
               <Menu>
                 <MenuOption
-                  iconStart={() => <Icon name={maxOpen ? 'caret-up-filled' : 'caret-right-filled'} />}
+                  iconStart={() => (
+                    <Icon
+                      name={maxOpen ? 'caret-up-filled' : 'caret-right-filled'}
+                    />
+                  )}
                   label='Y-Max'
                   action={() => setMaxOpen(!maxOpen)}
                 />
@@ -198,7 +225,12 @@ export const Relative: ComponentStory<FC<StoryInputs>> = () => {
             <MenuOption
               onPointerEnter={() => setHighlightedMax(color)}
               onPointerLeave={() => setHighlightedMax('')}
-              action={() => setSelectedMax({ ...selectedMax, [color]: !(color in selectedMax && selectedMax[color]) })}
+              action={() =>
+                setSelectedMax({
+                  ...selectedMax,
+                  [color]: !(color in selectedMax && selectedMax[color]),
+                })
+              }
               key={color}
               iconStart={() => <ColorIcon color={color} />}
               label={label}

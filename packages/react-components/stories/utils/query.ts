@@ -1,8 +1,14 @@
 import { getIotEventsClient, getSiteWiseClient } from '@iot-app-kit/core-util';
-import { SiteWiseDataStreamQuery, initialize } from '@iot-app-kit/source-iotsitewise';
+import {
+  SiteWiseDataStreamQuery,
+  initialize,
+} from '@iot-app-kit/source-iotsitewise';
 
 const getEnvCredentials = () => {
-  if (process.env.AWS_ACCESS_KEY_ID == null || process.env.AWS_SECRET_ACCESS_KEY == null) {
+  if (
+    process.env.AWS_ACCESS_KEY_ID == null ||
+    process.env.AWS_SECRET_ACCESS_KEY == null
+  ) {
     throw new Error(
       'Missing credentials: must provide the following env variables: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_SESSION_TOKEN within .env'
     );
@@ -17,7 +23,9 @@ const getEnvCredentials = () => {
 
 const getRegion = () => {
   if (process.env.AWS_REGION == null) {
-    throw new Error('Missing credentials: Must provide the following env variables: AWS_REGION');
+    throw new Error(
+      'Missing credentials: Must provide the following env variables: AWS_REGION'
+    );
   }
   return process.env.AWS_REGION;
 };
@@ -52,7 +60,9 @@ export const getIotSiteWiseQuery = () => {
   }).query;
 };
 
-export const getTimeSeriesDataQuery = (dataStreamQuery?: SiteWiseDataStreamQuery) => {
+export const getTimeSeriesDataQuery = (
+  dataStreamQuery?: SiteWiseDataStreamQuery
+) => {
   if (dataStreamQuery) {
     return getIotSiteWiseQuery().timeSeriesData(dataStreamQuery);
   }

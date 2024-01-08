@@ -10,7 +10,13 @@ export interface RelatedTableProps<T> extends TableProps<T> {
 }
 
 export function RelatedTable<T>(props: RelatedTableProps<ITreeNode<T>>) {
-  const { columnDefinitions, items = [], expandChildren, expandColumnPosition = 1, filteringText = '' } = props;
+  const {
+    columnDefinitions,
+    items = [],
+    expandChildren,
+    expandColumnPosition = 1,
+    filteringText = '',
+  } = props;
 
   const isFiltering = filteringText !== '';
   const zeroBasedColumnPos = expandColumnPosition - 1;

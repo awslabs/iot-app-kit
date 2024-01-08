@@ -1,5 +1,8 @@
 import { DATA_TYPE } from '@iot-app-kit/core';
-import { breachedAlarmThresholds, breachedThreshold } from './breachedThreshold';
+import {
+  breachedAlarmThresholds,
+  breachedThreshold,
+} from './breachedThreshold';
 import { COMPARISON_OPERATOR, StreamType } from '../common/constants';
 import { SECOND_IN_MS } from './time';
 import type { Threshold, DataStream, DataPoint } from '@iot-app-kit/core';
@@ -157,7 +160,10 @@ describe('breachedThreshold', () => {
         date: new Date(),
         dataStream: PROPERTY_STREAM,
         dataStreams: DATA_STREAMS,
-        thresholds: [ALARM_W_SEVERITY_1_THRESHOLD, ALARM_W_SEVERITY_2_THRESHOLD],
+        thresholds: [
+          ALARM_W_SEVERITY_1_THRESHOLD,
+          ALARM_W_SEVERITY_2_THRESHOLD,
+        ],
       })
     ).toEqual(ALARM_W_SEVERITY_1_THRESHOLD);
   });
@@ -189,7 +195,10 @@ describe('breachedThreshold', () => {
         date: new Date(),
         dataStream: PROPERTY_STREAM,
         dataStreams: DATA_STREAMS,
-        thresholds: [ALARM_W_SEVERITY_1_THRESHOLD, ALARM_W_SEVERITY_2_THRESHOLD],
+        thresholds: [
+          ALARM_W_SEVERITY_1_THRESHOLD,
+          ALARM_W_SEVERITY_2_THRESHOLD,
+        ],
       })
     ).toEqual(ALARM_W_SEVERITY_1_THRESHOLD);
   });

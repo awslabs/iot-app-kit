@@ -64,7 +64,11 @@ export const convertMS = (
   };
 };
 
-export const displayDate = (date: Date, resolution: number, { start, end }: { start: Date; end: Date }): string => {
+export const displayDate = (
+  date: Date,
+  resolution: number,
+  { start, end }: { start: Date; end: Date }
+): string => {
   const viewportDurationMS = end.getTime() - start.getTime();
   if (resolution < HOUR_IN_MS) {
     if (viewportDurationMS < MINUTE_IN_MS) {

@@ -32,21 +32,26 @@ const propertyMap = [
   'wind-speed',
 ];
 
-export const UNMODELED_DATA_STREAMS = new Array(10).fill(null).flatMap((_, i) => {
-  const timeSeriesSummaries = new Array(100).fill(null).map((_, j) => {
-    const alias = `/aws/windfarm/${i}/turbine/${j}/${propertyMap[i]}`;
-    const timeSeriesSummary = timeSeriesSummaryFactory.create({ alias });
+export const UNMODELED_DATA_STREAMS = new Array(10)
+  .fill(null)
+  .flatMap((_, i) => {
+    const timeSeriesSummaries = new Array(100).fill(null).map((_, j) => {
+      const alias = `/aws/windfarm/${i}/turbine/${j}/${propertyMap[i]}`;
+      const timeSeriesSummary = timeSeriesSummaryFactory.create({ alias });
 
-    return timeSeriesSummary;
+      return timeSeriesSummary;
+    });
+
+    return timeSeriesSummaries;
   });
-
-  return timeSeriesSummaries;
-});
 
 export const TIME_SERIES_SUMMARIES = [...UNMODELED_DATA_STREAMS];
 
-export const TIME_SERIES_DESCRIPTIONS = TIME_SERIES_SUMMARIES.map((timeSeriesSummary) => {
-  const timeSeriesDescription = timeSeriesDescriptionFactory.create(timeSeriesSummary);
+export const TIME_SERIES_DESCRIPTIONS = TIME_SERIES_SUMMARIES.map(
+  (timeSeriesSummary) => {
+    const timeSeriesDescription =
+      timeSeriesDescriptionFactory.create(timeSeriesSummary);
 
-  return timeSeriesDescription;
-});
+    return timeSeriesDescription;
+  }
+);

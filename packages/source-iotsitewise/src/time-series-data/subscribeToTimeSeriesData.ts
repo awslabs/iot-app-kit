@@ -4,7 +4,11 @@ import { SiteWiseAlarmModule } from '../alarms/iotevents';
 import { fetchAssetModelsFromQuery } from '../asset-modules/util/fetchAssetModelsFromQuery';
 import { fetchAlarmsFromQuery } from '../alarms/iotevents/util/fetchAlarmsFromQuery';
 import { CreateTimeSeriesDataStore } from './store';
-import type { DataModuleSubscription, TimeSeriesData, SubscriptionUpdate } from '@iot-app-kit/core';
+import type {
+  DataModuleSubscription,
+  TimeSeriesData,
+  SubscriptionUpdate,
+} from '@iot-app-kit/core';
 import type { SiteWiseDataStreamQuery } from './types';
 
 export const subscribeToTimeSeriesData =
@@ -13,7 +17,10 @@ export const subscribeToTimeSeriesData =
     assetModuleSession: SiteWiseAssetSession,
     alarmModule: SiteWiseAlarmModule
   ) =>
-  ({ queries, request }: DataModuleSubscription<SiteWiseDataStreamQuery>, callback: (data: TimeSeriesData) => void) => {
+  (
+    { queries, request }: DataModuleSubscription<SiteWiseDataStreamQuery>,
+    callback: (data: TimeSeriesData) => void
+  ) => {
     const store = new CreateTimeSeriesDataStore({
       initialState: {
         modeledDataStreams: [],
@@ -26,18 +33,25 @@ export const subscribeToTimeSeriesData =
       callback,
     });
 
-    const { update, unsubscribe } = dataModule.subscribeToDataStreams({ queries, request }, (data) => {
-      store.appendTimeSeriesData({
-        dataStreams: data.dataStreams,
-        viewport: data.viewport,
-      });
-    });
+    const { update, unsubscribe } = dataModule.subscribeToDataStreams(
+      { queries, request },
+      (data) => {
+        store.appendTimeSeriesData({
+          dataStreams: data.dataStreams,
+          viewport: data.viewport,
+        });
+      }
+    );
 
     const updateAssetModels = (queries: SiteWiseDataStreamQuery[]) => {
       (async () => {
-        for await (const response of fetchAssetModelsFromQuery({ queries, assetModuleSession })) {
+        for await (const response of fetchAssetModelsFromQuery({
+          queries,
+          assetModuleSession,
+        })) {
           const assetModels = 'assetModels' in response && response.assetModels;
-          const modeledDataStreams = 'modeledDataStreams' in response && response.modeledDataStreams;
+          const modeledDataStreams =
+            'modeledDataStreams' in response && response.modeledDataStreams;
           const errors = 'errors' in response && response.errors;
 
           if (assetModels) {
@@ -58,7 +72,10 @@ export const subscribeToTimeSeriesData =
 
     const updateAlarms = (queries: SiteWiseDataStreamQuery[]) => {
       (async () => {
-        for await (const { alarms, thresholds } of fetchAlarmsFromQuery({ queries, alarmModule })) {
+        for await (const { alarms, thresholds } of fetchAlarmsFromQuery({
+          queries,
+          alarmModule,
+        })) {
           store.appendTimeSeriesData({ alarms, thresholds });
         }
       })();
@@ -69,7 +86,9 @@ export const subscribeToTimeSeriesData =
       unsubscribe: () => {
         unsubscribe();
       },
-      update: (subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>) => {
+      update: (
+        subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>
+      ) => {
         update(subscriptionUpdate);
         const { queries } = subscriptionUpdate;
 

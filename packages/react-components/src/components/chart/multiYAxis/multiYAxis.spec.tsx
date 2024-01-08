@@ -17,15 +17,21 @@ const DATA_STREAM: DataStream = {
 };
 
 const setupStore = () => {
-  const { result: setYMax } = renderHook(() => useChartStore((state) => state.setYMax));
-  const { result: setYMin } = renderHook(() => useChartStore((state) => state.setYMin));
+  const { result: setYMax } = renderHook(() =>
+    useChartStore((state) => state.setYMax)
+  );
+  const { result: setYMin } = renderHook(() =>
+    useChartStore((state) => state.setYMin)
+  );
   act(() => {
     setYMax.current(DATA_STREAM.id, { value: 1 });
     setYMin.current(DATA_STREAM.id, { value: 0 });
   });
 };
 const teardownStore = () => {
-  const { result: clearYAxis } = renderHook(() => useChartStore((state) => state.clearYAxis));
+  const { result: clearYAxis } = renderHook(() =>
+    useChartStore((state) => state.clearYAxis)
+  );
   act(() => {
     clearYAxis.current(DATA_STREAM.id);
   });
@@ -70,17 +76,24 @@ describe('MultiYAxisLegend', () => {
     act(() => {
       fireEvent.pointerEnter(screen.getByText('0'));
     });
-    const { result: highlightedDataStreams, rerender: rerenderHighlightedDataStreams } = renderHook(() =>
+    const {
+      result: highlightedDataStreams,
+      rerender: rerenderHighlightedDataStreams,
+    } = renderHook(() =>
       useChartStore((state) => state.highlightedDataStreams)
     );
     expect(highlightedDataStreams.current).toEqual([DATA_STREAM]);
-    expect(isDataStreamInList(highlightedDataStreams.current)(DATA_STREAM)).toBeTrue();
+    expect(
+      isDataStreamInList(highlightedDataStreams.current)(DATA_STREAM)
+    ).toBeTrue();
 
     act(() => {
       fireEvent.pointerLeave(screen.getByText('0'));
     });
     rerenderHighlightedDataStreams();
     expect(highlightedDataStreams.current).toEqual([]);
-    expect(isDataStreamInList(highlightedDataStreams.current)(DATA_STREAM)).toBeFalse();
+    expect(
+      isDataStreamInList(highlightedDataStreams.current)(DATA_STREAM)
+    ).toBeFalse();
   });
 });

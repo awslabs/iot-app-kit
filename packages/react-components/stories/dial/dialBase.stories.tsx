@@ -9,8 +9,14 @@ export default {
   title: 'Widgets/Dial/Dial base',
   component: DialBase,
   argTypes: {
-    propertyPoint: { control: { type: 'object' }, defaultValue: { x: 123123213, y: 100.13 } },
-    alarmPoint: { control: { type: 'object' }, defaultValue: { x: 123123213, y: 'Warning' } },
+    propertyPoint: {
+      control: { type: 'object' },
+      defaultValue: { x: 123123213, y: 100.13 },
+    },
+    alarmPoint: {
+      control: { type: 'object' },
+      defaultValue: { x: 123123213, y: 'Warning' },
+    },
     yMin: { control: { type: 'number' }, defaultValue: 0 },
     yMax: { control: { type: 'number' }, defaultValue: 100 },
     showName: { control: { type: 'boolean' }, defaultValue: true },
@@ -21,9 +27,18 @@ export default {
   },
 } as ComponentMeta<typeof DialBase>;
 
-type StoryInputs = DialSettings & { alarmPoint?: DataPoint; propertyPoint?: DataPoint };
+type StoryInputs = DialSettings & {
+  alarmPoint?: DataPoint;
+  propertyPoint?: DataPoint;
+};
 
-export const Main: ComponentStory<FC<StoryInputs>> = ({ yMin, yMax, showName, showUnit, ...args }) => (
+export const Main: ComponentStory<FC<StoryInputs>> = ({
+  yMin,
+  yMax,
+  showName,
+  showUnit,
+  ...args
+}) => (
   <div style={{ width: '200px', height: '200px' }}>
     <DialBase {...args} settings={{ yMin, yMax, showName, showUnit }} />
   </div>

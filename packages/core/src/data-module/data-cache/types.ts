@@ -36,7 +36,9 @@ export type AggregationStreamStore = {
 };
 
 export type DataStoreForID = {
-  resolutions?: { [resolution: number]: AggregationStreamStore | undefined } | undefined;
+  resolutions?:
+    | { [resolution: number]: AggregationStreamStore | undefined }
+    | undefined;
   rawData?: DataStreamStore | undefined;
 };
 

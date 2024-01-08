@@ -13,14 +13,24 @@ export interface UpdateWidgetsAction extends Action {
   payload: UpdateWidgetsActionPayload;
 }
 
-export const onUpdateWidgetsAction = (payload: UpdateWidgetsActionPayload): UpdateWidgetsAction => ({
+export const onUpdateWidgetsAction = (
+  payload: UpdateWidgetsActionPayload
+): UpdateWidgetsAction => ({
   type: 'UPDATE_WIDGET',
   payload,
 });
 
-export const updateWidgets = (state: DashboardState, action: UpdateWidgetsAction): DashboardState => {
+export const updateWidgets = (
+  state: DashboardState,
+  action: UpdateWidgetsAction
+): DashboardState => {
   const widgets = action.payload.widgets
-    .map((w) => constrainWidgetPositionToGrid({ x: 0, y: 0, width: state.grid.width, height: state.grid.height }, w))
+    .map((w) =>
+      constrainWidgetPositionToGrid(
+        { x: 0, y: 0, width: state.grid.width, height: state.grid.height },
+        w
+      )
+    )
     .map(trimRectPosition);
 
   const updatedWidgets = state.dashboardConfiguration.widgets.map((w) => {

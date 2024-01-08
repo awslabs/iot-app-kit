@@ -9,8 +9,12 @@ interface UnmodeledDataStreamSearchFormProps {
   onSearch: (aliasPrefix: string | undefined) => void;
 }
 
-export function UnmodeledDataStreamSearchForm({ onSearch }: UnmodeledDataStreamSearchFormProps) {
-  const { control, handleSubmit } = useForm({ defaultValues: { aliasPrefix: '' } });
+export function UnmodeledDataStreamSearchForm({
+  onSearch,
+}: UnmodeledDataStreamSearchFormProps) {
+  const { control, handleSubmit } = useForm({
+    defaultValues: { aliasPrefix: '' },
+  });
 
   return (
     <form

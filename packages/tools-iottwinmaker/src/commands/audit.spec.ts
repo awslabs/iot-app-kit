@@ -1,4 +1,8 @@
-import { GetWorkspaceCommand, IoTTwinMakerClient, ResourceNotFoundException } from '@aws-sdk/client-iottwinmaker';
+import {
+  GetWorkspaceCommand,
+  IoTTwinMakerClient,
+  ResourceNotFoundException,
+} from '@aws-sdk/client-iottwinmaker';
 import { handler, Options } from './audit';
 import { Arguments } from 'yargs';
 import { mockClient } from 'aws-sdk-client-mock';
@@ -8,7 +12,9 @@ const twinmakerMock = mockClient(IoTTwinMakerClient);
 // TODO add tests after implementation
 
 it('throws error when given workspace that does not exist', async () => {
-  twinmakerMock.on(GetWorkspaceCommand).rejects(new ResourceNotFoundException({ $metadata: {}, message: '' }));
+  twinmakerMock
+    .on(GetWorkspaceCommand)
+    .rejects(new ResourceNotFoundException({ $metadata: {}, message: '' }));
 
   const argv2 = {
     _: ['audit'],

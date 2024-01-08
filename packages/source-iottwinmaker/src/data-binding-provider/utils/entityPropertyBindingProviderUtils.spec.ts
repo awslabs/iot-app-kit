@@ -9,7 +9,10 @@ import {
 describe('entityPropertyBindingProviderUtils', () => {
   describe('createIdenticalLabelOption', () => {
     it('should return IDataFieldOption successfully', () => {
-      expect(createIdenticalLabelOption('fake-value')).toEqual({ label: 'fake-value', value: 'fake-value' });
+      expect(createIdenticalLabelOption('fake-value')).toEqual({
+        label: 'fake-value',
+        value: 'fake-value',
+      });
     });
   });
 
@@ -44,21 +47,33 @@ describe('entityPropertyBindingProviderUtils', () => {
     });
 
     it('should convert templatized ID to the reference value.', () => {
-      expect(convertDataBindingTemplateId('${MockTemplate1}', dataBindingTemplate)).toBe('MockReference1');
-      expect(convertDataBindingTemplateId('${MockTemplate2}', dataBindingTemplate)).toBe('MockReference2');
-      expect(convertDataBindingTemplateId('${MockTemplate3}', dataBindingTemplate)).toBe('MockReference3');
+      expect(
+        convertDataBindingTemplateId('${MockTemplate1}', dataBindingTemplate)
+      ).toBe('MockReference1');
+      expect(
+        convertDataBindingTemplateId('${MockTemplate2}', dataBindingTemplate)
+      ).toBe('MockReference2');
+      expect(
+        convertDataBindingTemplateId('${MockTemplate3}', dataBindingTemplate)
+      ).toBe('MockReference3');
     });
 
     it('should skip convertion is ID is not templatized.', () => {
-      expect(convertDataBindingTemplateId('MockTemplate1', dataBindingTemplate)).toBe('MockTemplate1');
+      expect(
+        convertDataBindingTemplateId('MockTemplate1', dataBindingTemplate)
+      ).toBe('MockTemplate1');
     });
 
     it('should skip convertion is ID is undefined.', () => {
-      expect(convertDataBindingTemplateId(undefined, dataBindingTemplate)).toBe(undefined);
+      expect(convertDataBindingTemplateId(undefined, dataBindingTemplate)).toBe(
+        undefined
+      );
     });
 
     it('should skip convertion is data binding templates array is empty.', () => {
-      expect(convertDataBindingTemplateId('${MockTemplate2}', undefined)).toBe('${MockTemplate2}');
+      expect(convertDataBindingTemplateId('${MockTemplate2}', undefined)).toBe(
+        '${MockTemplate2}'
+      );
     });
   });
 });

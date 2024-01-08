@@ -8,7 +8,10 @@ type AssetModelPropertiesTableEmptyStateOptions = {
   retry: () => void;
 };
 
-export function AssetModelPropertiesTableEmptyState({ isError, retry }: AssetModelPropertiesTableEmptyStateOptions) {
+export function AssetModelPropertiesTableEmptyState({
+  isError,
+  retry,
+}: AssetModelPropertiesTableEmptyStateOptions) {
   const emptyState = (
     <>
       <b>No asset model properties.</b>

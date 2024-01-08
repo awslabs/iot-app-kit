@@ -14,12 +14,19 @@ const titlePadding = {
   paddingTop: spaceStaticXxs,
 };
 
-export const TitleSection: FC<TitleSectionOptions> = ({ title, updateTitle }) => {
+export const TitleSection: FC<TitleSectionOptions> = ({
+  title,
+  updateTitle,
+}) => {
   return (
     <Box padding='s'>
       <FormField label='Widget title'>
         <div style={titlePadding}>
-          <Input placeholder='Input title' onChange={({ detail }) => updateTitle(detail.value)} value={title ?? ''} />
+          <Input
+            placeholder='Input title'
+            onChange={({ detail }) => updateTitle(detail.value)}
+            value={title ?? ''}
+          />
         </div>
       </FormField>
     </Box>

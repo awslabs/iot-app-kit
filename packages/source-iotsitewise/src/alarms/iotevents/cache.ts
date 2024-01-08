@@ -22,14 +22,17 @@ export class Cache {
       throw new Error('Could not get alarm rule');
     }
 
-    const { inputProperty, comparisonOperator, threshold } = alarmRule.simpleRule;
+    const { inputProperty, comparisonOperator, threshold } =
+      alarmRule.simpleRule;
 
     if (!inputProperty || !comparisonOperator || !threshold || !severity) {
       throw new Error('Could not parse alarm');
     }
 
     const inputPropertyId = inputProperty;
-    const scComparisonOperator = IoTEventsToSynchroChartsComparisonOperator[comparisonOperator] as COMPARISON_OPERATOR;
+    const scComparisonOperator = IoTEventsToSynchroChartsComparisonOperator[
+      comparisonOperator
+    ] as COMPARISON_OPERATOR;
     const thresholdPropertyId = threshold;
 
     const alarm = {

@@ -15,7 +15,10 @@ export class SiteWiseAlarmModule {
   private readonly assetModuleSession: SiteWiseAssetSession;
   private readonly cache: Cache;
 
-  constructor(client: IoTEventsClient, siteWiseAssetModule: SiteWiseAssetModule) {
+  constructor(
+    client: IoTEventsClient,
+    siteWiseAssetModule: SiteWiseAssetModule
+  ) {
     this.client = new EventsClient(client);
     this.assetModuleSession = siteWiseAssetModule.startSession();
     this.cache = new Cache(this.client);
@@ -33,24 +36,34 @@ export class SiteWiseAlarmModule {
     alarmStatePropertyId: string;
   }): Promise<Alarm | undefined> {
     try {
-      const alarmAsset = await this.assetModuleSession.fetchAssetSummary({ assetId });
+      const alarmAsset = await this.assetModuleSession.fetchAssetSummary({
+        assetId,
+      });
 
       const assetModelId = alarmAsset?.assetModelId;
 
-      const assetModel = await this.assetModuleSession.fetchAssetModel({ assetModelId: assetModelId as string });
+      const assetModel = await this.assetModuleSession.fetchAssetModel({
+        assetModelId: assetModelId as string,
+      });
 
-      const alarmSourceId = getAlarmSourceProperty(assetModel, alarmStatePropertyId)?.id;
+      const alarmSourceId = getAlarmSourceProperty(
+        assetModel,
+        alarmStatePropertyId
+      )?.id;
 
       if (!alarmSourceId) {
         return undefined;
       }
 
-      const alarmSourcePropertyValue = await this.assetModuleSession.fetchAssetPropertyValue({
-        assetId,
-        propertyId: alarmSourceId as string,
-      });
+      const alarmSourcePropertyValue =
+        await this.assetModuleSession.fetchAssetPropertyValue({
+          assetId,
+          propertyId: alarmSourceId as string,
+        });
 
-      const alarmModelName = getAlarmModelName(toValue(alarmSourcePropertyValue.value) as string);
+      const alarmModelName = getAlarmModelName(
+        toValue(alarmSourcePropertyValue.value) as string
+      );
 
       const {
         comparisonOperator,
@@ -59,20 +72,30 @@ export class SiteWiseAlarmModule {
         severity,
       } = await this.getAlarmModel(alarmModelName);
 
-      const alarmStatePropertyValue = await this.assetModuleSession.fetchAssetPropertyValue({
-        assetId: assetId,
-        propertyId: alarmStatePropertyId,
-      });
-      const state = parseAlarmData(toValue(alarmStatePropertyValue.value) as string);
+      const alarmStatePropertyValue =
+        await this.assetModuleSession.fetchAssetPropertyValue({
+          assetId: assetId,
+          propertyId: alarmStatePropertyId,
+        });
+      const state = parseAlarmData(
+        toValue(alarmStatePropertyValue.value) as string
+      );
 
-      const thresholdPropertyId = getPropertyId(thresholdPropertyIdExpression) as string;
-      const thresholdPropertyValue = await this.assetModuleSession.fetchAssetPropertyValue({
-        assetId,
-        propertyId: thresholdPropertyId as string,
-      });
+      const thresholdPropertyId = getPropertyId(
+        thresholdPropertyIdExpression
+      ) as string;
+      const thresholdPropertyValue =
+        await this.assetModuleSession.fetchAssetPropertyValue({
+          assetId,
+          propertyId: thresholdPropertyId as string,
+        });
 
-      const inputPropertyId = getPropertyId(inputPropertyIdExpression) as string;
-      const inputPropertyName = assetModel.assetModelProperties?.find(({ id }) => id === inputPropertyId)?.name;
+      const inputPropertyId = getPropertyId(
+        inputPropertyIdExpression
+      ) as string;
+      const inputPropertyName = assetModel.assetModelProperties?.find(
+        ({ id }) => id === inputPropertyId
+      )?.name;
 
       const threshold = toValue(thresholdPropertyValue.value);
 

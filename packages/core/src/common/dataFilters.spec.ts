@@ -14,12 +14,19 @@ describe('getDataBeforeDate', () => {
   });
 
   it('returns empty list when one point is given, and is after the date', () => {
-    expect(getDataBeforeDate([{ x: new Date(2002, 0, 0).getTime(), y: 100 }], new Date(DATE))).toBeEmpty();
+    expect(
+      getDataBeforeDate(
+        [{ x: new Date(2002, 0, 0).getTime(), y: 100 }],
+        new Date(DATE)
+      )
+    ).toBeEmpty();
   });
 
   it('returns data point when given one data point at the date', () => {
     const DATA_POINT = { x: DATE, y: 100 };
-    expect(getDataBeforeDate([DATA_POINT], new Date(DATE))).toEqual([DATA_POINT]);
+    expect(getDataBeforeDate([DATA_POINT], new Date(DATE))).toEqual([
+      DATA_POINT,
+    ]);
   });
 
   it('returns empty list when all dates are after the given date', () => {

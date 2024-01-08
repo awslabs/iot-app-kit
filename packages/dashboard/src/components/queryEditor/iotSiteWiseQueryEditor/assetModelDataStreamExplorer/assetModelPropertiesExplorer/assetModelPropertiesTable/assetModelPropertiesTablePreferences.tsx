@@ -8,7 +8,9 @@ import { SUPPORTED_PAGE_SIZES } from '../../../constants';
 type AllPreferences = NonNullable<CollectionPreferencesProps['preferences']>;
 type Preferences<P extends AllPreferences> = P;
 
-export interface AssetModelPropertiesTablePreferencesProps<P extends AllPreferences> {
+export interface AssetModelPropertiesTablePreferencesProps<
+  P extends AllPreferences
+> {
   preferences: Preferences<P>;
   updatePreferences: (preferences: Preferences<P>) => void;
 }
@@ -28,7 +30,10 @@ export function AssetModelPropertiesTablePreferences<P extends AllPreferences>({
       }}
       pageSizePreference={{
         title: 'Select page size',
-        options: SUPPORTED_PAGE_SIZES.map((size) => ({ value: size, label: size.toString() })),
+        options: SUPPORTED_PAGE_SIZES.map((size) => ({
+          value: size,
+          label: size.toString(),
+        })),
       }}
       wrapLinesPreference={{
         label: 'Wrap lines',
@@ -56,7 +61,8 @@ export function AssetModelPropertiesTablePreferences<P extends AllPreferences>({
       stickyColumnsPreference={{
         firstColumns: {
           title: 'Stick first column(s)',
-          description: 'Keep the first column(s) visible while horizontally scrolling the table content.',
+          description:
+            'Keep the first column(s) visible while horizontally scrolling the table content.',
           options: [
             { label: 'None', value: 0 },
             { label: 'First column', value: 1 },

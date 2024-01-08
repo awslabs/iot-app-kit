@@ -7,7 +7,10 @@ import {
   AssetPropertySummary,
   AssetModelPropertySummary,
 } from '@aws-sdk/client-iotsitewise';
-import type { SiteWiseAssetQuery, SiteWisePropertyAliasQuery } from '@iot-app-kit/source-iotsitewise';
+import type {
+  SiteWiseAssetQuery,
+  SiteWisePropertyAliasQuery,
+} from '@iot-app-kit/source-iotsitewise';
 import { useQuery } from '@tanstack/react-query';
 import { useClients } from '~/components/dashboard/clientContext';
 import { listAssetPropertiesWithComposite } from './listAssetPropertiesWithAssetDescription';
@@ -39,15 +42,27 @@ const describeAsset = (client: IoTSiteWiseClient, assetId: string) =>
 const describeSiteWiseAssetQuery = async (
   client: IoTSiteWiseClient,
   siteWiseQuery: Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>
-) => Promise.all(siteWiseQuery.assets?.map(({ assetId }: { assetId: string }) => describeAsset(client, assetId)) ?? []);
+) =>
+  Promise.all(
+    siteWiseQuery.assets?.map(({ assetId }: { assetId: string }) =>
+      describeAsset(client, assetId)
+    ) ?? []
+  );
 
 const ASSET_DESCRIPTION_QUERY_KEY = ['assetDescriptions'];
 
 export const isAlarm = (item: AssetCompositeModel) => item.type === 'AWS/ALARM';
 
-export const isAlarmState = (property: AssetProperty) => property.name === 'AWS/ALARM_STATE';
+export const isAlarmState = (property: AssetProperty) =>
+  property.name === 'AWS/ALARM_STATE';
 
-const mapPropertySummary = ({ id, name, unit, dataType, alias }: AssetProperty): PropertySummary => ({
+const mapPropertySummary = ({
+  id,
+  name,
+  unit,
+  dataType,
+  alias,
+}: AssetProperty): PropertySummary => ({
   propertyId: id,
   name,
   unit,
@@ -55,25 +70,35 @@ const mapPropertySummary = ({ id, name, unit, dataType, alias }: AssetProperty):
   alias,
 });
 
-const mapCompositeModelToAlarmSummary = (model: AssetCompositeModel): AlarmSummary => ({
+const mapCompositeModelToAlarmSummary = (
+  model: AssetCompositeModel
+): AlarmSummary => ({
   name: model.name,
   id: model?.id,
   properties:
     model.properties
       ?.filter(isAlarmState)
-      .map(({ id, unit, dataType, alias }) => mapPropertySummary({ id, unit, dataType, alias, name: model.name })) ??
-    [],
+      .map(({ id, unit, dataType, alias }) =>
+        mapPropertySummary({ id, unit, dataType, alias, name: model.name })
+      ) ?? [],
 });
 
-export const mapAssetDescriptionToAssetSummary = (description: DescribeAssetResponse): AssetSummary => ({
+export const mapAssetDescriptionToAssetSummary = (
+  description: DescribeAssetResponse
+): AssetSummary => ({
   assetId: description.assetId,
   assetName: description.assetName,
   properties: description.assetProperties?.map(mapPropertySummary) ?? [],
-  alarms: description.assetCompositeModels?.filter(isAlarm).map(mapCompositeModelToAlarmSummary) ?? [],
+  alarms:
+    description.assetCompositeModels
+      ?.filter(isAlarm)
+      .map(mapCompositeModelToAlarmSummary) ?? [],
 });
 
 export const useAssetDescriptionMapQuery = (
-  siteWiseQuery: Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery> | undefined
+  siteWiseQuery:
+    | Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>
+    | undefined
 ) => {
   const { iotSiteWiseClient } = useClients();
 
@@ -111,7 +136,9 @@ const listPropertiesSiteWiseAssetQuery = async (
   siteWiseQuery: Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>
 ) =>
   Promise.all(
-    siteWiseQuery.assets?.map(({ assetId }: { assetId: string }) => listAssetProperties(client, assetId)) ?? []
+    siteWiseQuery.assets?.map(({ assetId }: { assetId: string }) =>
+      listAssetProperties(client, assetId)
+    ) ?? []
   );
 
 const newMapPropertySummary = ({
@@ -142,7 +169,9 @@ const mapListAssetPropertiesToAssetSummary = (
 };
 
 export const useListAssetPropertiesMapQuery = (
-  siteWiseQuery: Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery> | undefined
+  siteWiseQuery:
+    | Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>
+    | undefined
 ) => {
   const { iotSiteWiseClient } = useClients();
   const fetchSiteWiseAssetQueryDescription = async () => {
@@ -162,7 +191,11 @@ export const useListAssetPropertiesMapQuery = (
         const assetId = n.at(0)?.path?.at(0)?.id;
         if (assetId) {
           const assetName = n.at(0)?.path?.at(0)?.name;
-          acc[assetId] = mapListAssetPropertiesToAssetSummary(n, assetId, assetName);
+          acc[assetId] = mapListAssetPropertiesToAssetSummary(
+            n,
+            assetId,
+            assetName
+          );
         }
         return acc;
       }, {}) ?? {},

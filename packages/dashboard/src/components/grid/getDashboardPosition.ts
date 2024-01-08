@@ -4,9 +4,18 @@ import type { Position } from '~/types';
 export const DASHBOARD_CONTAINER_ID = 'container';
 
 const getOffsets = (
-  event: React.MouseEvent | React.TouchEvent | React.PointerEvent | MouseEvent | TouchEvent | PointerEvent
+  event:
+    | React.MouseEvent
+    | React.TouchEvent
+    | React.PointerEvent
+    | MouseEvent
+    | TouchEvent
+    | PointerEvent
 ) => {
-  if ((window.TouchEvent && event instanceof TouchEvent) || (event as React.TouchEvent).touches) {
+  if (
+    (window.TouchEvent && event instanceof TouchEvent) ||
+    (event as React.TouchEvent).touches
+  ) {
     const ev = (event as TouchEvent).touches[0];
 
     const rect = (ev.target as HTMLElement).getBoundingClientRect();
@@ -31,7 +40,13 @@ const getOffsets = (
 };
 
 export const getDashboardPosition = (
-  event: React.MouseEvent | React.TouchEvent | React.PointerEvent | MouseEvent | TouchEvent | PointerEvent
+  event:
+    | React.MouseEvent
+    | React.TouchEvent
+    | React.PointerEvent
+    | MouseEvent
+    | TouchEvent
+    | PointerEvent
 ): Position => {
   const { offsetX, offsetY } = getOffsets(event);
   let totalOffsetX = offsetX;

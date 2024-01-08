@@ -6,12 +6,19 @@ interface AssetTableHeaderProps {
   selectedItemCount?: number;
 }
 
-export function AssetTableHeader({ totalItemCount, selectedItemCount }: AssetTableHeaderProps) {
+export function AssetTableHeader({
+  totalItemCount,
+  selectedItemCount,
+}: AssetTableHeaderProps) {
   return (
     <Header
       variant='h3'
       description='Browse through your asset hierarchy and select an asset to view its associated data streams.'
-      counter={selectedItemCount ? `(${selectedItemCount}/${totalItemCount})` : `(${totalItemCount})`}
+      counter={
+        selectedItemCount
+          ? `(${selectedItemCount}/${totalItemCount})`
+          : `(${totalItemCount})`
+      }
     >
       Browse assets
     </Header>

@@ -5,12 +5,25 @@ import { infoMessage, errorMessage } from './constants';
 export const WorkspaceErrorState = () => {
   return (
     <SpaceBetween size='s'>
-      <Alert statusIconAriaLabel='Info' type='info' dismissible dismissAriaLabel='cancel'>
+      <Alert
+        statusIconAriaLabel='Info'
+        type='info'
+        dismissible
+        dismissAriaLabel='cancel'
+      >
         {infoMessage}
       </Alert>
-      <Alert statusIconAriaLabel='Error' type='error' dismissible dismissAriaLabel='cancel'>
+      <Alert
+        statusIconAriaLabel='Error'
+        type='error'
+        dismissible
+        dismissAriaLabel='cancel'
+      >
         {errorMessage}&nbsp;
-        <Link external href='https://docs.aws.amazon.com/iot-twinmaker/latest/guide/twinmaker-gs-workspace.html'>
+        <Link
+          external
+          href='https://docs.aws.amazon.com/iot-twinmaker/latest/guide/twinmaker-gs-workspace.html'
+        >
           Learn more about creating a workspace
         </Link>
       </Alert>

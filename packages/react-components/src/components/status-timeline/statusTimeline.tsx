@@ -1,13 +1,29 @@
 import React from 'react';
-import { StyleSettingsMap, Threshold, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
-import { StatusTimeline as StatusTimelineBaseWrongType, LineChart } from '@iot-app-kit/charts';
-import type { DataStream as DataStreamViz, Annotations } from '@iot-app-kit/charts-core';
+import {
+  StyleSettingsMap,
+  Threshold,
+  TimeSeriesDataQuery,
+  Viewport,
+} from '@iot-app-kit/core';
+import {
+  StatusTimeline as StatusTimelineBaseWrongType,
+  LineChart,
+} from '@iot-app-kit/charts';
+import type {
+  DataStream as DataStreamViz,
+  Annotations,
+} from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
-import { DEFAULT_LEGEND, DEFAULT_VIEWPORT, ECHARTS_GESTURE } from '../../common/constants';
+import {
+  DEFAULT_LEGEND,
+  DEFAULT_VIEWPORT,
+  ECHARTS_GESTURE,
+} from '../../common/constants';
 
 // TODO: Remove this type assertion - iot-app-kit/charts has the wrong type for StatusTimeline
-const StatusTimelineBase: typeof LineChart = StatusTimelineBaseWrongType as unknown as typeof LineChart;
+const StatusTimelineBase: typeof LineChart =
+  StatusTimelineBaseWrongType as unknown as typeof LineChart;
 
 type StatusTimelineAxisSettings = { showX?: boolean };
 
@@ -44,7 +60,9 @@ export const StatusTimeline = ({
   // if using echarts then echarts gesture overrides passed in viewport
   // else explicitly passed in viewport overrides viewport group
   const utilizedViewport =
-    (lastUpdatedBy === ECHARTS_GESTURE ? viewport : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
+    (lastUpdatedBy === ECHARTS_GESTURE
+      ? viewport
+      : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
 
   return (
     <StatusTimelineBase

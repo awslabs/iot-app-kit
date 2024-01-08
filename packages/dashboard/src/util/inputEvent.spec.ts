@@ -2,7 +2,9 @@ import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces
 import { numberFromDetail } from './inputEvent';
 import { NonCancelableCustomEvent } from '@cloudscape-design/components';
 
-const mockEventDetail = (value: BaseChangeDetail['value']): NonCancelableCustomEvent<BaseChangeDetail> => ({
+const mockEventDetail = (
+  value: BaseChangeDetail['value']
+): NonCancelableCustomEvent<BaseChangeDetail> => ({
   detail: { value },
   initCustomEvent: function (): void {
     throw new Error('Function not implemented.');

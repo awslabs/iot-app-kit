@@ -45,14 +45,21 @@ it('updates subscription', async () => {
 
   const queries = [
     {
-      assets: [{ assetId: '123', properties: [{ propertyId: 'prop1' }, { propertyId: 'prop2' }] }],
+      assets: [
+        {
+          assetId: '123',
+          properties: [{ propertyId: 'prop1' }, { propertyId: 'prop2' }],
+        },
+      ],
     },
   ];
 
   await subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION);
   await subscriptionStore.updateSubscription(SUBSCRIPTION_ID, { queries });
 
-  expect(subscriptionStore.getSubscriptions()).toEqual([{ ...MOCK_SUBSCRIPTION, queries }]);
+  expect(subscriptionStore.getSubscriptions()).toEqual([
+    { ...MOCK_SUBSCRIPTION, queries },
+  ]);
 
   subscriptionStore.removeSubscription(SUBSCRIPTION_ID);
 });
@@ -70,19 +77,25 @@ it('gets subscription by subscriptionId', async () => {
   const subscriptionStore = createSubscriptionStore();
   await subscriptionStore.addSubscription('some-id', MOCK_SUBSCRIPTION);
 
-  expect(subscriptionStore.getSubscription('some-id')).toEqual(MOCK_SUBSCRIPTION);
+  expect(subscriptionStore.getSubscription('some-id')).toEqual(
+    MOCK_SUBSCRIPTION
+  );
   subscriptionStore.removeSubscription('some-id');
 });
 
 describe('throws errors when', () => {
   it('throws error when trying to update non-existent subscription', async () => {
     const subscriptionStore = createSubscriptionStore();
-    await expect(subscriptionStore.updateSubscription('some-id', {})).rejects.toThrowError(/some-id/);
+    await expect(
+      subscriptionStore.updateSubscription('some-id', {})
+    ).rejects.toThrowError(/some-id/);
   });
 
   it('throws error when trying to remove non-existent subscription', () => {
     const subscriptionStore = createSubscriptionStore();
-    expect(() => subscriptionStore.removeSubscription('some-id')).toThrowError(/some-id/);
+    expect(() => subscriptionStore.removeSubscription('some-id')).toThrowError(
+      /some-id/
+    );
   });
 
   it('throws error when trying to add the same subscription id twice', async () => {
@@ -90,7 +103,9 @@ describe('throws errors when', () => {
     const subscriptionStore = createSubscriptionStore();
 
     await subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION);
-    await expect(subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION)).rejects.toThrowError(/some-id/);
+    await expect(
+      subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION)
+    ).rejects.toThrowError(/some-id/);
 
     subscriptionStore.removeSubscription('some-id');
   });

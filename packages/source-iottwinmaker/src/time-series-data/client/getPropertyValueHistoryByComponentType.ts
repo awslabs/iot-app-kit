@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import {
+  GetPropertyValueHistoryCommand,
+  IoTTwinMakerClient,
+} from '@aws-sdk/client-iottwinmaker';
 import { isEmpty, isEqual } from 'lodash';
 import { TwinMakerMetadataModule } from '../../metadata-module/TwinMakerMetadataModule';
 import { fromDataStreamId, toDataStreamId } from '../utils/dataStreamId';
@@ -53,7 +56,8 @@ export const getPropertyValueHistoryByComponentTypeRequest = async ({
 
     // May let single data point query be handled by entity query
     const fetchMostRecent =
-      requestInformationSample.fetchMostRecentBeforeStart || requestInformationSample.fetchMostRecentBeforeEnd;
+      requestInformationSample.fetchMostRecentBeforeStart ||
+      requestInformationSample.fetchMostRecentBeforeEnd;
 
     const completedStreamId: string[] = [];
 
@@ -81,23 +85,27 @@ export const getPropertyValueHistoryByComponentTypeRequest = async ({
             if (
               comp.componentTypeId === componentTypeId &&
               values.entityPropertyReference?.propertyName &&
-              propertyNames.includes(values.entityPropertyReference?.propertyName) &&
+              propertyNames.includes(
+                values.entityPropertyReference?.propertyName
+              ) &&
               values.entityPropertyReference.externalIdProperty &&
               comp.componentName
             ) {
               // Find externalId key and value to be matched with entityPropertyReference.externalIdProperty
-              const externalIdPropertyKey = Object.keys(comp.properties || {}).find(
-                (key) => comp.properties?.[key].definition?.isExternalId
-              );
+              const externalIdPropertyKey = Object.keys(
+                comp.properties || {}
+              ).find((key) => comp.properties?.[key].definition?.isExternalId);
               if (!externalIdPropertyKey) return;
 
-              const externalIdPropertyValue = Object.values(comp.properties?.[externalIdPropertyKey].value || {}).find(
-                isDefined
-              );
+              const externalIdPropertyValue = Object.values(
+                comp.properties?.[externalIdPropertyKey].value || {}
+              ).find(isDefined);
               if (!externalIdPropertyValue) return;
 
               if (
-                values.entityPropertyReference.externalIdProperty[externalIdPropertyKey] === externalIdPropertyValue
+                values.entityPropertyReference.externalIdProperty[
+                  externalIdPropertyKey
+                ] === externalIdPropertyValue
               ) {
                 isMatch = true;
                 matchingComponentName = comp.componentName;
@@ -110,7 +118,8 @@ export const getPropertyValueHistoryByComponentTypeRequest = async ({
         const entityId = matchingEntity?.entityId;
         const propertyName = values.entityPropertyReference.propertyName;
 
-        if (!entityId || isEmpty(matchingComponentName) || !propertyName) return;
+        if (!entityId || isEmpty(matchingComponentName) || !propertyName)
+          return;
 
         const streamId = toDataStreamId({
           workspaceId,
@@ -125,11 +134,16 @@ export const getPropertyValueHistoryByComponentTypeRequest = async ({
 
         /** Report the page of data to the data-module */
         const dataPoints: DataPoint[] = values.values
-          ? values.values.map((propertyValue) => toDataPoint(propertyValue)).filter(isDefined)
+          ? values.values
+              .map((propertyValue) => toDataPoint(propertyValue))
+              .filter(isDefined)
           : [];
-        const mostRecentDataPoints: DataPoint[] = dataPoints.length > 0 ? [dataPoints[0]] : [];
+        const mostRecentDataPoints: DataPoint[] =
+          dataPoints.length > 0 ? [dataPoints[0]] : [];
         const dataType =
-          matchingEntity?.components?.[matchingComponentName].properties?.[propertyName].definition?.dataType;
+          matchingEntity?.components?.[matchingComponentName].properties?.[
+            propertyName
+          ].definition?.dataType;
 
         const stream: DataStream = {
           ...toDataStream({
@@ -176,7 +190,8 @@ export const getPropertyValueHistoryByComponentTypeRequest = async ({
         // Update all received data streams that are not marked as completed in this last request
         receivedStreamIds.forEach((id) => {
           if (!completedStreamId.includes(id)) {
-            const { entityId, componentName, propertyName } = fromDataStreamId(id);
+            const { entityId, componentName, propertyName } =
+              fromDataStreamId(id);
             const matchingRequestInfo = requestInformations[id];
 
             const stream: DataStream = {
@@ -204,7 +219,11 @@ export const getPropertyValueHistoryByComponentTypeRequest = async ({
         onError({
           id,
           resolution: 0,
-          error: { msg: err.message, type: err.name, status: err.$metadata?.httpStatusCode },
+          error: {
+            msg: err.message,
+            type: err.name,
+            status: err.$metadata?.httpStatusCode,
+          },
         });
       }
     });
@@ -235,7 +254,9 @@ export const getPropertyValueHistoryByComponentType = async ({
   requestInformations.forEach(async (info) => {
     const { workspaceId, propertyName } = fromDataStreamId(info.id);
     const componentTypeId =
-      info.meta?.['componentTypeId'] !== undefined ? String(info.meta?.['componentTypeId']) : undefined;
+      info.meta?.['componentTypeId'] !== undefined
+        ? String(info.meta?.['componentTypeId'])
+        : undefined;
     if (!componentTypeId || isEmpty(componentTypeId)) {
       return;
     }
@@ -250,7 +271,12 @@ export const getPropertyValueHistoryByComponentType = async ({
         start: requestInfo.start.getTime(),
         end: requestInfo.end.getTime(),
       };
-      const compareInfo = { ...info, id: undefined, start: info.start.getTime(), end: info.end.getTime() };
+      const compareInfo = {
+        ...info,
+        id: undefined,
+        start: info.start.getTime(),
+        end: info.end.getTime(),
+      };
 
       return isEqual(inputInfo, compareInfo);
     });

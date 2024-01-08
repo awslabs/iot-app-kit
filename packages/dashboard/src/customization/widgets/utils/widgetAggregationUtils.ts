@@ -1,7 +1,10 @@
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { LineScatterChartWidget, QueryWidget } from '../types';
 
-export const WidgetDefaultAggregation: Record<string, AggregateType | undefined> = {
+export const WidgetDefaultAggregation: Record<
+  string,
+  AggregateType | undefined
+> = {
   'bar-chart': AggregateType.AVERAGE,
   'line-chart': AggregateType.AVERAGE,
   'xy-plot': AggregateType.AVERAGE,
@@ -23,8 +26,13 @@ export const WidgetDefaultResolution: Record<string, string | undefined> = {
   table: '0',
 };
 
-export const getCurrentAggregationResolution = (widget: QueryWidget | LineScatterChartWidget) => {
-  if ('aggregationType' in widget.properties && 'resolution' in widget.properties) {
+export const getCurrentAggregationResolution = (
+  widget: QueryWidget | LineScatterChartWidget
+) => {
+  if (
+    'aggregationType' in widget.properties &&
+    'resolution' in widget.properties
+  ) {
     return {
       aggregation: widget.properties.aggregationType,
       resolution: widget.properties.resolution,
@@ -33,8 +41,10 @@ export const getCurrentAggregationResolution = (widget: QueryWidget | LineScatte
 
   const widgetType = widget.type;
   const firstAssetProperty = getFirstProperty(widget.properties.queryConfig);
-  const currentAggregation = firstAssetProperty?.aggregationType ?? WidgetDefaultAggregation[widgetType];
-  const currentResolution = firstAssetProperty?.resolution ?? WidgetDefaultResolution[widgetType];
+  const currentAggregation =
+    firstAssetProperty?.aggregationType ?? WidgetDefaultAggregation[widgetType];
+  const currentResolution =
+    firstAssetProperty?.resolution ?? WidgetDefaultResolution[widgetType];
 
   return {
     aggregation: currentAggregation,
@@ -42,8 +52,13 @@ export const getCurrentAggregationResolution = (widget: QueryWidget | LineScatte
   };
 };
 
-export const getAggregation = (widget: QueryWidget | LineScatterChartWidget) => {
-  if ('aggregationType' in widget.properties && 'resolution' in widget.properties) {
+export const getAggregation = (
+  widget: QueryWidget | LineScatterChartWidget
+) => {
+  if (
+    'aggregationType' in widget.properties &&
+    'resolution' in widget.properties
+  ) {
     return widget.properties.aggregationType;
   }
 
@@ -52,7 +67,9 @@ export const getAggregation = (widget: QueryWidget | LineScatterChartWidget) => 
   return firstProperty?.aggregationType;
 };
 
-function getFirstProperty(queryConfig: QueryWidget['properties']['queryConfig']) {
+function getFirstProperty(
+  queryConfig: QueryWidget['properties']['queryConfig']
+) {
   if ('query' in queryConfig && queryConfig.query != null) {
     if (
       'properties' in queryConfig.query &&
@@ -62,7 +79,11 @@ function getFirstProperty(queryConfig: QueryWidget['properties']['queryConfig'])
       return queryConfig.query.properties[0];
     }
 
-    if ('assets' in queryConfig.query && queryConfig.query.assets != null && queryConfig.query.assets.length > 0) {
+    if (
+      'assets' in queryConfig.query &&
+      queryConfig.query.assets != null &&
+      queryConfig.query.assets.length > 0
+    ) {
       return queryConfig.query.assets[0].properties[0];
     }
 

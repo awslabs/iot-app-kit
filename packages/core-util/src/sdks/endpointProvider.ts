@@ -7,7 +7,9 @@ export const DEFAULT_PARTITION = 'com';
 const constructEndpoint =
   (subDomain: string) =>
   ([awsRegion, awsPartition]: [string, string]): EndpointV2 => ({
-    url: new URL(`https://${subDomain}.${awsRegion}.amazonaws.${awsPartition}/`),
+    url: new URL(
+      `https://${subDomain}.${awsRegion}.amazonaws.${awsPartition}/`
+    ),
   });
 
 export const getEndpointPovider = ({
@@ -23,12 +25,17 @@ export const getEndpointPovider = ({
   let partition = Promise.resolve(DEFAULT_PARTITION);
 
   if (awsRegion) {
-    region = typeof awsRegion === 'string' ? Promise.resolve(awsRegion) : awsRegion();
+    region =
+      typeof awsRegion === 'string' ? Promise.resolve(awsRegion) : awsRegion();
   }
 
   if (awsPartition) {
-    partition = typeof awsPartition === 'string' ? Promise.resolve(awsPartition) : awsPartition();
+    partition =
+      typeof awsPartition === 'string'
+        ? Promise.resolve(awsPartition)
+        : awsPartition();
   }
 
-  return () => Promise.all([region, partition]).then(constructEndpoint(subDomain));
+  return () =>
+    Promise.all([region, partition]).then(constructEndpoint(subDomain));
 };

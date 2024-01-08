@@ -5,4 +5,11 @@ export type EntityData = {
   entityName?: string;
 };
 
-export type Health = 'ok' | 'critical' | 'high' | 'medium' | 'low' | 'offline' | 'unknown';
+export type Health =
+  | 'ok'
+  | 'critical'
+  | 'high'
+  | 'medium'
+  | 'low'
+  | 'offline'
+  | 'unknown';

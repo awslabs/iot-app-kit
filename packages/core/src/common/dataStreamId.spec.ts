@@ -2,7 +2,9 @@ import { toDataStreamId, toSiteWiseAssetProperty } from './dataStreamId';
 
 describe('toDataStreamId', () => {
   it('converts property and asset id to a data stream id', () => {
-    expect(toDataStreamId({ assetId: 'asset-id', propertyId: 'property-id' })).toBe('asset-id---property-id');
+    expect(
+      toDataStreamId({ assetId: 'asset-id', propertyId: 'property-id' })
+    ).toBe('asset-id---property-id');
   });
 });
 

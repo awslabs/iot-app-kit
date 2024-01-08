@@ -1,6 +1,9 @@
 import { ITreeNode } from '../Model/TreeNode';
 
-const recursiveFlatTree = <T>(tree: ITreeNode<T>[], flattenTree: ITreeNode<T>[]) => {
+const recursiveFlatTree = <T>(
+  tree: ITreeNode<T>[],
+  flattenTree: ITreeNode<T>[]
+) => {
   tree.forEach((node) => {
     flattenTree.push(node);
     if (node.getChildren().length) {

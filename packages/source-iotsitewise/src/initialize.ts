@@ -1,16 +1,32 @@
-import type { AwsCredentialIdentity, Provider as AWSCredentialsProvider, Provider } from '@aws-sdk/types';
-import { TreeQuery, TimeSeriesDataRequest, TimeSeriesDataQuery, TimeSeriesDataModule } from '@iot-app-kit/core';
+import type {
+  AwsCredentialIdentity,
+  Provider as AWSCredentialsProvider,
+  Provider,
+} from '@aws-sdk/types';
+import {
+  TreeQuery,
+  TimeSeriesDataRequest,
+  TimeSeriesDataQuery,
+  TimeSeriesDataModule,
+} from '@iot-app-kit/core';
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { getIotEventsClient, getSiteWiseClient } from '@iot-app-kit/core-util';
 import { SiteWiseTimeSeriesDataProvider } from './time-series-data/provider';
-import { BranchReference, SiteWiseAssetModule, SiteWiseAssetTreeSession } from './asset-modules';
+import {
+  BranchReference,
+  SiteWiseAssetModule,
+  SiteWiseAssetTreeSession,
+} from './asset-modules';
 import { SiteWiseComponentSession } from './component-session';
 import { createSiteWiseAssetDataSource } from './asset-modules/asset-data-source';
 import { createDataSource } from './time-series-data';
 import { assetSession } from './sessions';
 import { SiteWiseAlarmModule } from './alarms/iotevents';
-import type { SiteWiseDataSourceSettings, SiteWiseDataStreamQuery } from './time-series-data/types';
+import type {
+  SiteWiseDataSourceSettings,
+  SiteWiseDataStreamQuery,
+} from './time-series-data/types';
 import type {
   RootedSiteWiseAssetTreeQueryArguments,
   SiteWiseAssetDataSource,
@@ -23,7 +39,9 @@ const SOURCE = 'iotsitewise';
 export type SiteWiseDataSourceInitInputs = {
   iotSiteWiseClient?: IoTSiteWiseClient;
   iotEventsClient?: IoTEventsClient;
-  awsCredentials?: AwsCredentialIdentity | AWSCredentialsProvider<AwsCredentialIdentity>;
+  awsCredentials?:
+    | AwsCredentialIdentity
+    | AWSCredentialsProvider<AwsCredentialIdentity>;
   awsRegion?: string | Provider<string>;
   settings?: SiteWiseDataSourceSettings;
 };
@@ -31,8 +49,12 @@ export type SiteWiseDataSourceInitInputs = {
 export type SiteWiseQuery = {
   timeSeriesData: (query: SiteWiseDataStreamQuery) => TimeSeriesDataQuery;
   assetTree: {
-    fromRoot: (query?: SiteWiseAssetTreeQueryArguments) => TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
-    fromAsset: (query: RootedSiteWiseAssetTreeQueryArguments) => TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
+    fromRoot: (
+      query?: SiteWiseAssetTreeQueryArguments
+    ) => TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
+    fromAsset: (
+      query: RootedSiteWiseAssetTreeQueryArguments
+    ) => TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
   };
 };
 
@@ -46,14 +68,22 @@ export const initialize = (input: SiteWiseDataSourceInitInputs) => {
   const siteWiseClient = getSiteWiseClient(input);
   const iotEventsClient = getIotEventsClient(input);
 
-  const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(siteWiseClient);
+  const assetDataSource: SiteWiseAssetDataSource =
+    createSiteWiseAssetDataSource(siteWiseClient);
   const siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
-  const siteWiseTimeSeriesModule = new TimeSeriesDataModule(createDataSource(siteWiseClient, input.settings));
-  const siteWiseAlarmModule = new SiteWiseAlarmModule(iotEventsClient, siteWiseAssetModule);
+  const siteWiseTimeSeriesModule = new TimeSeriesDataModule(
+    createDataSource(siteWiseClient, input.settings)
+  );
+  const siteWiseAlarmModule = new SiteWiseAlarmModule(
+    iotEventsClient,
+    siteWiseAssetModule
+  );
 
   return {
     query: {
-      timeSeriesData: (query: SiteWiseDataStreamQuery): TimeSeriesDataQuery => ({
+      timeSeriesData: (
+        query: SiteWiseDataStreamQuery
+      ): TimeSeriesDataQuery => ({
         toQueryString: () =>
           JSON.stringify({
             source: SOURCE,
@@ -79,7 +109,12 @@ export const initialize = (input: SiteWiseDataSourceInitInputs) => {
         fromRoot: (
           args: SiteWiseAssetTreeQueryArguments = {}
         ): TreeQuery<SiteWiseAssetTreeNode[], BranchReference> => ({
-          toQueryString: () => JSON.stringify({ source: SOURCE, queryType: 'assets-from-root', query: args }),
+          toQueryString: () =>
+            JSON.stringify({
+              source: SOURCE,
+              queryType: 'assets-from-root',
+              query: args,
+            }),
           build: (sessionId: string) => {
             const session = new SiteWiseComponentSession({
               componentId: sessionId,
@@ -94,7 +129,12 @@ export const initialize = (input: SiteWiseDataSourceInitInputs) => {
           args: RootedSiteWiseAssetTreeQueryArguments
         ): TreeQuery<SiteWiseAssetTreeNode[], BranchReference> => {
           return {
-            toQueryString: () => JSON.stringify({ source: SOURCE, queryType: 'assets-from-asset', query: args }),
+            toQueryString: () =>
+              JSON.stringify({
+                source: SOURCE,
+                queryType: 'assets-from-asset',
+                query: args,
+              }),
             build: (sessionId: string) => {
               const session = new SiteWiseComponentSession({
                 componentId: sessionId,

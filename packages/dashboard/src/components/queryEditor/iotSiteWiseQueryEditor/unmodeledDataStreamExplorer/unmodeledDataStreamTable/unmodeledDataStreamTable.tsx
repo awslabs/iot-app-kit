@@ -36,8 +36,12 @@ export function UnmodeledDataStreamTable({
   hasNextPage,
 }: UnmodeledDataStreamTableProps) {
   const metricsRecorder = getPlugin('metricsRecorder');
-  const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
-  const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
+  const significantDigits = useSelector(
+    (state: DashboardState) => state.significantDigits
+  );
+  const selectedWidgets = useSelector(
+    (state: DashboardState) => state.selectedWidgets
+  );
   const [preferences, setPreferences] = useExplorerPreferences({
     defaultVisibleContent: ['propertyAlias', 'latestValue'],
     resourceName: 'unmodeled data stream',
@@ -45,7 +49,8 @@ export function UnmodeledDataStreamTable({
 
   const { getLatestValue } = useLatestValues({
     isEnabled:
-      preferences.visibleContent.includes('latestValue') || preferences.visibleContent.includes('latestValueTime'),
+      preferences.visibleContent.includes('latestValue') ||
+      preferences.visibleContent.includes('latestValueTime'),
     dataStreams: unmodeledDataStreams,
     client,
   });
@@ -57,42 +62,45 @@ export function UnmodeledDataStreamTable({
       latestValueTime: getLatestValue(item)?.timestamp,
     })) ?? [];
 
-  const { items, collectionProps, paginationProps, propertyFilterProps, actions } = useCollection(
-    unmodeledDataStreamsWithLatestValues,
-    {
-      propertyFiltering: {
-        filteringProperties: [
-          {
-            key: 'propertyAlias',
-            propertyLabel: 'Alias',
-            groupValuesLabel: 'Property aliases',
-            operators: ['=', '!=', ':', '!:'],
-          },
-          {
-            key: 'dataType',
-            propertyLabel: 'Data type',
-            groupValuesLabel: 'Data types',
-            operators: ['=', '!=', ':', '!:'],
-          },
-          {
-            key: 'dataTypeSpec',
-            propertyLabel: 'Data type spec',
-            groupValuesLabel: 'Data type specs',
-            operators: ['=', '!=', ':', '!:'],
-          },
-          {
-            key: 'latestValue',
-            propertyLabel: 'Latest value',
-            groupValuesLabel: 'Latest values',
-            operators: ['=', '!=', '>', '>=', '<', '<='],
-          },
-        ],
-      },
-      pagination: { pageSize: preferences.pageSize },
-      selection: { keepSelection: true, trackBy: 'propertyAlias' },
-      sorting: {},
-    }
-  );
+  const {
+    items,
+    collectionProps,
+    paginationProps,
+    propertyFilterProps,
+    actions,
+  } = useCollection(unmodeledDataStreamsWithLatestValues, {
+    propertyFiltering: {
+      filteringProperties: [
+        {
+          key: 'propertyAlias',
+          propertyLabel: 'Alias',
+          groupValuesLabel: 'Property aliases',
+          operators: ['=', '!=', ':', '!:'],
+        },
+        {
+          key: 'dataType',
+          propertyLabel: 'Data type',
+          groupValuesLabel: 'Data types',
+          operators: ['=', '!=', ':', '!:'],
+        },
+        {
+          key: 'dataTypeSpec',
+          propertyLabel: 'Data type spec',
+          groupValuesLabel: 'Data type specs',
+          operators: ['=', '!=', ':', '!:'],
+        },
+        {
+          key: 'latestValue',
+          propertyLabel: 'Latest value',
+          groupValuesLabel: 'Latest values',
+          operators: ['=', '!=', '>', '>=', '<', '<='],
+        },
+      ],
+    },
+    pagination: { pageSize: preferences.pageSize },
+    selection: { keepSelection: true, trackBy: 'propertyAlias' },
+    sorting: {},
+  });
 
   return (
     <Table
@@ -114,9 +122,14 @@ export function UnmodeledDataStreamTable({
         <ResourceExplorerFooter
           resetDisabled={collectionProps.selectedItems?.length === 0}
           onReset={() => actions.setSelectedItems([])}
-          addDisabled={collectionProps.selectedItems?.length === 0 || selectedWidgets.length !== 1}
+          addDisabled={
+            collectionProps.selectedItems?.length === 0 ||
+            selectedWidgets.length !== 1
+          }
           onAdd={() => {
-            onClickAdd(collectionProps.selectedItems as unknown as UnmodeledDataStream[]);
+            onClickAdd(
+              collectionProps.selectedItems as unknown as UnmodeledDataStream[]
+            );
             metricsRecorder?.record({
               metricName: 'UnmodeledDataStreamAdd',
               metricValue: 1,
@@ -148,7 +161,9 @@ export function UnmodeledDataStreamTable({
           header: 'Latest value time',
           cell: ({ latestValueTime }) => {
             if (latestValueTime && isNumeric(latestValueTime)) {
-              return getFormattedDateTimeFromEpoch(round(latestValueTime, significantDigits));
+              return getFormattedDateTimeFromEpoch(
+                round(latestValueTime, significantDigits)
+              );
             }
             return getFormattedDateTimeFromEpoch(latestValueTime);
           },
@@ -198,9 +213,11 @@ export function UnmodeledDataStreamTable({
           filteringFinishedText='End of results'
           filteringEmpty='No suggestions found'
           i18nStrings={{
-            filteringAriaLabel: 'Filter unmodeled data streams by text, property, or value',
+            filteringAriaLabel:
+              'Filter unmodeled data streams by text, property, or value',
             dismissAriaLabel: 'Dismiss',
-            filteringPlaceholder: 'Filter unmodeled data streams by text, property, or value',
+            filteringPlaceholder:
+              'Filter unmodeled data streams by text, property, or value',
             groupValuesText: 'Values',
             groupPropertiesText: 'Properties',
             operatorsText: 'Operators',
@@ -224,7 +241,8 @@ export function UnmodeledDataStreamTable({
             tokenLimitShowMore: 'Show more',
             tokenLimitShowFewer: 'Show fewer',
             clearFiltersText: 'Clear filters',
-            removeTokenButtonAriaLabel: (token) => `Remove token ${token.propertyKey} ${token.operator} ${token.value}`,
+            removeTokenButtonAriaLabel: (token) =>
+              `Remove token ${token.propertyKey} ${token.operator} ${token.value}`,
             enteredTextLabel: (text) => `Use: "${text}"`,
           }}
         />
@@ -243,7 +261,10 @@ export function UnmodeledDataStreamTable({
           }}
           pageSizePreference={{
             title: 'Select page size',
-            options: SUPPORTED_PAGE_SIZES.map((size) => ({ value: size, label: size.toString() })),
+            options: SUPPORTED_PAGE_SIZES.map((size) => ({
+              value: size,
+              label: size.toString(),
+            })),
           }}
           wrapLinesPreference={{
             label: 'Wrap lines',
@@ -273,7 +294,9 @@ export function UnmodeledDataStreamTable({
       ariaLabels={{
         resizerRoleDescription: 'Resize button',
         allItemsSelectionLabel: ({ selectedItems }) =>
-          selectedItems.length !== items.length ? 'Select unmodeled data stream' : 'Deselect unmodeled data stream',
+          selectedItems.length !== items.length
+            ? 'Select unmodeled data stream'
+            : 'Deselect unmodeled data stream',
       }}
     />
   );

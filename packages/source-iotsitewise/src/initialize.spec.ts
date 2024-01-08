@@ -1,4 +1,7 @@
-import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+import {
+  createMockIoTEventsSDK,
+  createMockSiteWiseSDK,
+} from '@iot-app-kit/testing-util';
 import { initialize } from './initialize';
 
 it('converts a query to string with contents that uniquely represent the query', () => {
