@@ -17,6 +17,7 @@ import {
   createMockIoTEventsSDK,
   createMockSiteWiseSDK,
 } from '@iot-app-kit/testing-util';
+import { CreateTimeSeriesDataStore } from './store';
 
 const DATA_STREAM: DataStream<number> = {
   id: 'some-asset-id---some-property-id',
@@ -29,6 +30,23 @@ const DATA_STREAM: DataStream<number> = {
 };
 
 const AGGREGATE_TYPE = AggregateType.AVERAGE;
+
+const createMockTimeSeriesStore = () => {
+  const cb = jest.fn();
+  const store = new CreateTimeSeriesDataStore({
+    initialState: {
+      modeledDataStreams: [],
+      dataStreams: [],
+      thresholds: [],
+      assetModels: {},
+      alarms: {},
+      errors: {},
+    },
+    callback: cb,
+  });
+
+  return { store, cb };
+};
 
 const createMockSource = (
   dataStreams: DataStream[]
@@ -88,13 +106,19 @@ it.skip('subscribes, updates, and unsubscribes to time series data by delegating
 
   const refreshRate = MINUTE_IN_MS;
 
-  const provider = new SiteWiseTimeSeriesDataProvider(componentSession, {
-    queries: [{ assets: [] }],
-    request: {
-      viewport: { start: START_1, end: END_1 },
-      settings: { fetchFromStartToEnd: true, refreshRate },
+  const { store } = createMockTimeSeriesStore();
+
+  const provider = new SiteWiseTimeSeriesDataProvider(
+    componentSession,
+    {
+      queries: [{ assets: [] }],
+      request: {
+        viewport: { start: START_1, end: END_1 },
+        settings: { fetchFromStartToEnd: true, refreshRate },
+      },
     },
-  });
+    store
+  );
 
   const timeSeriesCallback = jest.fn();
 
