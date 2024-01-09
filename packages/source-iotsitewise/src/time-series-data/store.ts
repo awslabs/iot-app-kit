@@ -23,20 +23,22 @@ export type TimeSeriesDataStore = {
 
 export class CreateTimeSeriesDataStore {
   private readonly state: TimeSeriesDataStore;
-  private readonly callback: (data: TimeSeriesData) => void;
+  private callback: ((data: TimeSeriesData) => void) | undefined;
 
   constructor({
     initialState,
     callback,
   }: {
     initialState: Partial<TimeSeriesDataStore>;
-    callback: (data: TimeSeriesData) => void;
+    callback?: (data: TimeSeriesData) => void;
   }) {
     this.callback = callback;
     this.state = { ...initialState } as TimeSeriesDataStore;
   }
 
   update() {
+    if (!this.callback) return;
+
     const {
       thresholds,
       viewport,
@@ -96,5 +98,9 @@ export class CreateTimeSeriesDataStore {
 
   getState() {
     return this.state;
+  }
+
+  setCallback(callback: (data: TimeSeriesData) => void) {
+    this.callback = callback;
   }
 }

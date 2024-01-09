@@ -36,6 +36,24 @@ import {
   createMockIoTEventsSDK,
   createMockSiteWiseSDK,
 } from '@iot-app-kit/testing-util';
+import { CreateTimeSeriesDataStore } from './store';
+
+const createMockTimeSeriesStore = () => {
+  const cb = jest.fn();
+  const store = new CreateTimeSeriesDataStore({
+    initialState: {
+      modeledDataStreams: [],
+      dataStreams: [],
+      thresholds: [],
+      assetModels: {},
+      alarms: {},
+      errors: {},
+    },
+    callback: cb,
+  });
+
+  return { store, cb };
+};
 
 const initializeSubscribeToTimeSeriesData = ({
   ioTSiteWiseClient,
@@ -56,22 +74,26 @@ const initializeSubscribeToTimeSeriesData = ({
     siteWiseAssetModule
   );
 
-  return subscribeToTimeSeriesData(
-    dataModule,
-    siteWiseAssetModuleSession,
-    siteWiseAlarmModule
-  );
+  const { store, cb } = createMockTimeSeriesStore();
+  return {
+    subscribe: subscribeToTimeSeriesData(
+      dataModule,
+      siteWiseAssetModuleSession,
+      siteWiseAlarmModule,
+      store
+    ),
+    cb,
+  };
 };
 
 it('does not emit any data streams when empty query is subscribed to', async () => {
-  const subscribe = initializeSubscribeToTimeSeriesData({
+  const { subscribe, cb } = initializeSubscribeToTimeSeriesData({
     ioTSiteWiseClient: createMockSiteWiseSDK(),
   });
-  const cb = jest.fn();
-  const { unsubscribe } = subscribe(
-    { queries: [], request: { viewport: { duration: '5m' } } },
-    cb
-  );
+  const { unsubscribe } = subscribe({
+    queries: [],
+    request: { viewport: { duration: '5m' } },
+  });
 
   await flushPromises();
 
@@ -91,6 +113,7 @@ it('unsubscribes', () => {
     createMockIoTEventsSDK(),
     siteWiseAssetModule
   );
+  const { store } = createMockTimeSeriesStore();
 
   const unsubscribeSpy = jest.fn();
   jest.spyOn(dataModule, 'subscribeToDataStreams').mockImplementation(() => ({
@@ -101,12 +124,13 @@ it('unsubscribes', () => {
   const subscribe = subscribeToTimeSeriesData(
     dataModule,
     siteWiseAssetModuleSession,
-    siteWiseAlarmModule
+    siteWiseAlarmModule,
+    store
   );
-  const { unsubscribe } = subscribe(
-    { queries: [], request: { viewport: { duration: '5m' } } },
-    () => {}
-  );
+  const { unsubscribe } = subscribe({
+    queries: [],
+    request: { viewport: { duration: '5m' } },
+  });
   unsubscribe();
 
   expect(unsubscribeSpy).toBeCalled();
@@ -155,7 +179,7 @@ it('provides time series data from iotsitewise', async () => {
       })
     )
   );
-  const subscribe = initializeSubscribeToTimeSeriesData({
+  const { subscribe, cb } = initializeSubscribeToTimeSeriesData({
     ioTSiteWiseClient: createMockSiteWiseSDK({
       describeAsset,
       describeAssetModel,
@@ -165,26 +189,22 @@ it('provides time series data from iotsitewise', async () => {
     }),
   });
 
-  const cb = jest.fn();
-  const { unsubscribe } = subscribe(
-    {
-      queries: [
-        {
-          assets: [
-            {
-              assetId: ASSET_ID,
-              properties: [{ propertyId: PROPERTY_ID, resolution: '0' }],
-            },
-          ],
-        },
-      ],
-      request: {
-        viewport: { duration: '5m' },
-        settings: { fetchFromStartToEnd: true },
+  const { unsubscribe } = subscribe({
+    queries: [
+      {
+        assets: [
+          {
+            assetId: ASSET_ID,
+            properties: [{ propertyId: PROPERTY_ID, resolution: '0' }],
+          },
+        ],
       },
+    ],
+    request: {
+      viewport: { duration: '5m' },
+      settings: { fetchFromStartToEnd: true },
     },
-    cb
-  );
+  });
 
   await flushPromises();
 
@@ -273,7 +293,7 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
     )
   );
 
-  const subscribe = initializeSubscribeToTimeSeriesData({
+  const { subscribe, cb } = initializeSubscribeToTimeSeriesData({
     ioTSiteWiseClient: createMockSiteWiseSDK({
       describeAsset,
       describeAssetModel,
@@ -283,17 +303,13 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
     }),
   });
 
-  const cb = jest.fn();
-  const { update, unsubscribe } = subscribe(
-    {
-      queries: [],
-      request: {
-        viewport: { duration: '5m' },
-        settings: { fetchFromStartToEnd: true },
-      },
+  const { update, unsubscribe } = subscribe({
+    queries: [],
+    request: {
+      viewport: { duration: '5m' },
+      settings: { fetchFromStartToEnd: true },
     },
-    cb
-  );
+  });
 
   await flushPromises();
 
@@ -387,7 +403,7 @@ it('provides alarm data from iot-events', async () => {
       Promise.resolve(ALARM_LIST_ASSET_MODEL_PROP_RESPONSE)
     );
 
-  const subscribe = initializeSubscribeToTimeSeriesData({
+  const { subscribe, cb } = initializeSubscribeToTimeSeriesData({
     ioTEventsClient: createMockIoTEventsSDK({
       getAlarmModel,
     }),
@@ -401,26 +417,22 @@ it('provides alarm data from iot-events', async () => {
     }),
   });
 
-  const cb = jest.fn();
-  const { unsubscribe } = subscribe(
-    {
-      queries: [
-        {
-          assets: [
-            {
-              assetId: ALARM_ASSET_ID,
-              properties: [{ propertyId: ALARM_STATE_PROPERTY_ID }],
-            },
-          ],
-        },
-      ],
-      request: {
-        viewport: { duration: '5m' },
-        settings: { fetchFromStartToEnd: true },
+  const { unsubscribe } = subscribe({
+    queries: [
+      {
+        assets: [
+          {
+            assetId: ALARM_ASSET_ID,
+            properties: [{ propertyId: ALARM_STATE_PROPERTY_ID }],
+          },
+        ],
       },
+    ],
+    request: {
+      viewport: { duration: '5m' },
+      settings: { fetchFromStartToEnd: true },
     },
-    cb
-  );
+  });
 
   await flushPromises();
 
@@ -508,7 +520,7 @@ it('provides alarm data from iot-events when subscription is updated', async () 
       Promise.resolve(ALARM_LIST_ASSET_MODEL_PROP_RESPONSE)
     );
 
-  const subscribe = initializeSubscribeToTimeSeriesData({
+  const { subscribe, cb } = initializeSubscribeToTimeSeriesData({
     ioTEventsClient: createMockIoTEventsSDK({
       getAlarmModel,
     }),
@@ -522,17 +534,13 @@ it('provides alarm data from iot-events when subscription is updated', async () 
     }),
   });
 
-  const cb = jest.fn();
-  const { update, unsubscribe } = subscribe(
-    {
-      queries: [],
-      request: {
-        viewport: { duration: '5m' },
-        settings: { fetchFromStartToEnd: true },
-      },
+  const { update, unsubscribe } = subscribe({
+    queries: [],
+    request: {
+      viewport: { duration: '5m' },
+      settings: { fetchFromStartToEnd: true },
     },
-    cb
-  );
+  });
 
   await flushPromises();
 
