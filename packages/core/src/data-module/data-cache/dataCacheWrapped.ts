@@ -3,7 +3,7 @@ import { configureStore } from './createStore';
 import { onErrorAction, onRequestAction, onSuccessAction } from './dataActions';
 import { getDataStreamStore } from './getDataStreamStore';
 import { Observable, map, startWith, pairwise, from } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { delay, filter } from 'rxjs/operators';
 import { toDataStreams } from './toDataStreams';
 import type { Store } from 'redux';
 import type {
@@ -14,6 +14,7 @@ import type {
 } from '../types';
 import type { DataStreamsStore } from './types';
 import type { ErrorDetails } from '../../common/types';
+import { hasIntervalForRange } from './dateUtils';
 
 type StoreChange = {
   prevDataCache: DataStreamsStore;
@@ -121,6 +122,50 @@ export class DataCache {
   };
 
   public getState = (): DataStreamsStore => this.dataCache.getState();
+
+  // emits cached data
+  public getCachedDataForRange = (
+    requestInfos: RequestInformationAndRange[],
+    emit: (dataStreams: DataStream[]) => void
+  ) => {
+    const subscription = this.observableStore
+      .pipe(delay(0))
+      .subscribe(({ currDataCache }) => {
+        const hasLoadedFullIntervalData = requestInfos.every((request) => {
+          const { id, resolution, aggregationType, start, end } = request;
+          const associatedStore = getDataStreamStore(
+            id,
+            resolution,
+            currDataCache,
+            aggregationType
+          );
+
+          // if no stores are found, then data is uncached
+          if (!associatedStore) return false;
+
+          // check if cache has correct interval and is not loading more data
+          const hasLoadedData =
+            !associatedStore.isLoading && !associatedStore.isRefreshing;
+          const hasLoadedFullInterval = hasIntervalForRange(
+            associatedStore.dataCache.intervals,
+            { start, end }
+          );
+
+          return hasLoadedData && hasLoadedFullInterval;
+        });
+
+        // only emit data streams if all request informations have loaded dataStreams for the required time range
+        if (hasLoadedFullIntervalData) {
+          const dataStreams = toDataStreams({
+            requestInformations: requestInfos,
+            dataStreamsStores: currDataCache,
+          });
+
+          subscription.unsubscribe();
+          emit(dataStreams);
+        }
+      });
+  };
 
   /**
    * data-cache bindings
