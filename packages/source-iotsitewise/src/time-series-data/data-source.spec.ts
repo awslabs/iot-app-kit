@@ -151,7 +151,7 @@ describe('initiateRequest', () => {
 
       await flushPromises();
 
-      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
+      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(2);
 
       expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
         expect.objectContaining({
@@ -223,7 +223,7 @@ describe('initiateRequest', () => {
 
       await flushPromises();
 
-      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
+      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(2);
 
       expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
         expect.objectContaining({
@@ -232,6 +232,12 @@ describe('initiateRequest', () => {
               assetId: ASSET_1,
               propertyId: PROPERTY_1,
             }),
+          ]),
+        })
+      );
+      expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
+        expect.objectContaining({
+          entries: expect.arrayContaining([
             expect.objectContaining({
               assetId: ASSET_2,
               propertyId: PROPERTY_2,
@@ -297,7 +303,7 @@ describe('initiateRequest', () => {
 
       await flushPromises();
 
-      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
+      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(2);
 
       expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
         expect.objectContaining({
@@ -308,6 +314,12 @@ describe('initiateRequest', () => {
               startDate: new Date(0, 0, 0),
               endDate: historicalRequestStart,
             }),
+          ]),
+        })
+      );
+      expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
+        expect.objectContaining({
+          entries: expect.arrayContaining([
             expect.objectContaining({
               assetId: ASSET_ID,
               propertyId: PROPERTY_2,
@@ -369,7 +381,7 @@ describe('initiateRequest', () => {
 
       await flushPromises();
 
-      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
+      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(2);
 
       expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
         expect.objectContaining({
@@ -380,6 +392,12 @@ describe('initiateRequest', () => {
               startDate: new Date(0, 0, 0),
               endDate: historicalRequestStart,
             }),
+          ]),
+        })
+      );
+      expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
+        expect.objectContaining({
+          entries: expect.arrayContaining([
             expect.objectContaining({
               assetId: ASSET_2,
               propertyId: PROPERTY_2,
@@ -445,7 +463,7 @@ describe('initiateRequest', () => {
 
       await flushPromises();
 
-      expect(batchGetAssetPropertyAggregates).toBeCalledTimes(1);
+      expect(batchGetAssetPropertyAggregates).toBeCalledTimes(2);
 
       expect(batchGetAssetPropertyAggregates).toBeCalledWith(
         expect.objectContaining({
@@ -456,6 +474,12 @@ describe('initiateRequest', () => {
               startDate: new Date(0, 0, 0),
               endDate: historicalRequestStart,
             }),
+          ]),
+        })
+      );
+      expect(batchGetAssetPropertyAggregates).toBeCalledWith(
+        expect.objectContaining({
+          entries: expect.arrayContaining([
             expect.objectContaining({
               assetId: ASSET_ID,
               propertyId: PROPERTY_2,

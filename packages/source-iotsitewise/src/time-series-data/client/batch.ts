@@ -1,3 +1,4 @@
+import type { RequestInformation } from '@iot-app-kit/core';
 import {
   MAX_AGGREGATED_DATA_POINTS,
   MAX_AGGREGATED_REQUEST_ENTRIES,
@@ -48,11 +49,24 @@ export function createRawLatestEntryBatches<T extends { maxResults?: number }>(
 }
 
 export function createRawHistoricalEntryBatches<
-  T extends { maxResults?: number }
+  T extends { requestInformation?: RequestInformation; maxResults?: number }
 >(entries: T[]): [T[], number][] {
   const buckets: Record<number, T[]> = {};
+  /*
+   * singles contains the entries that should not be combined.
+   * For example, most-recent-request entries are not combined to ensure a
+   * dedicated request with maxResults of 1 is fired for each entry.
+   */
+  const singles: [T[], number][] = [];
 
   entries.forEach((entry) => {
+    // Do NOT combine most recent requests
+    if (isMostRecentRequest(entry)) {
+      singles.push([[entry], 1]);
+
+      return;
+    }
+
     const maxEntryResults = entry.maxResults || NO_LIMIT_BATCH;
 
     if (buckets[maxEntryResults]) {
@@ -75,15 +89,29 @@ export function createRawHistoricalEntryBatches<
           : chunk.length * maxEntryResults,
       ]);
     })
-    .flat();
+    .flat()
+    .concat(singles);
 }
 
-export function createAggregateEntryBatches<T extends { maxResults?: number }>(
-  entries: T[]
-): [T[], number][] {
+export function createAggregateEntryBatches<
+  T extends { requestInformation?: RequestInformation; maxResults?: number }
+>(entries: T[]): [T[], number][] {
   const buckets: Record<number, T[]> = {};
+  /*
+   * singles contains the entries that should not be combined.
+   * For example, most-recent-request entries are not combined to ensure a
+   * dedicated request with maxResults of 1 is fired for each entry.
+   */
+  const singles: [T[], number][] = [];
 
   entries.forEach((entry) => {
+    // Do NOT combine most recent requests
+    if (isMostRecentRequest(entry)) {
+      singles.push([[entry], 1]);
+
+      return;
+    }
+
     const maxEntryResults = entry.maxResults || NO_LIMIT_BATCH;
 
     if (buckets[maxEntryResults]) {
@@ -106,7 +134,8 @@ export function createAggregateEntryBatches<T extends { maxResults?: number }>(
           : chunk.length * maxEntryResults,
       ]);
     })
-    .flat();
+    .flat()
+    .concat(singles);
 }
 
 export function calculateNextRawHistoricalBatchSize({
@@ -179,4 +208,17 @@ function chunkAggregatedBatch<T>(batch: T[]): T[][] {
   }
 
   return chunks;
+}
+
+function isMostRecentRequest<
+  T extends { requestInformation?: RequestInformation }
+>({ requestInformation }: T) {
+  if (requestInformation == null) {
+    return false;
+  }
+
+  const { fetchMostRecentBeforeEnd, fetchMostRecentBeforeStart } =
+    requestInformation;
+
+  return fetchMostRecentBeforeEnd || fetchMostRecentBeforeStart || false;
 }
