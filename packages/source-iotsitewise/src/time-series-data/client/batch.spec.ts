@@ -237,6 +237,83 @@ describe('createRawHistoricalEntryBatches', () => {
     );
   });
 
+  it.each(['fetchMostRecentBeforeEnd', 'fetchMostRecentBeforeStart'])(
+    'separate all %s entries',
+    (mostRecentOption) => {
+      const onError = jest.fn();
+      const onSuccess = jest.fn();
+      const startDate = new Date(2000, 0, 0);
+      const endDate = new Date(2001, 0, 0);
+      const resolution = '0';
+
+      const batches = createRawHistoricalEntryBatches([
+        {
+          requestInformation: {
+            id: '1',
+            resolution,
+            [mostRecentOption]: true,
+          },
+          maxResults: 1,
+          onError,
+          onSuccess,
+          requestStart: startDate,
+          requestEnd: endDate,
+        },
+        {
+          requestInformation: {
+            id: '2',
+            resolution,
+            [mostRecentOption]: true,
+          },
+          maxResults: 1,
+          onError,
+          onSuccess,
+          requestStart: startDate,
+          requestEnd: endDate,
+        },
+      ]);
+
+      expect(batches).toEqual(
+        expect.arrayContaining([
+          [
+            [
+              {
+                requestInformation: {
+                  id: '1',
+                  resolution,
+                  [mostRecentOption]: true,
+                },
+                maxResults: 1,
+                onError,
+                onSuccess,
+                requestStart: startDate,
+                requestEnd: endDate,
+              },
+            ],
+            1,
+          ],
+          [
+            [
+              {
+                requestInformation: {
+                  id: '2',
+                  resolution,
+                  [mostRecentOption]: true,
+                },
+                maxResults: 1,
+                onError,
+                onSuccess,
+                requestStart: startDate,
+                requestEnd: endDate,
+              },
+            ],
+            1,
+          ],
+        ])
+      );
+    }
+  );
+
   it('handles empty input', () => {
     const batches = createRawHistoricalEntryBatches([]);
     expect(batches).toEqual([]);
@@ -349,6 +426,83 @@ describe('createAggregateEntryBatches', () => {
       ])
     );
   });
+
+  it.each(['fetchMostRecentBeforeEnd', 'fetchMostRecentBeforeStart'])(
+    'separate all %s entries',
+    (mostRecentOption) => {
+      const onError = jest.fn();
+      const onSuccess = jest.fn();
+      const startDate = new Date(2000, 0, 0);
+      const endDate = new Date(2001, 0, 0);
+      const resolution = '1h';
+
+      const batches = createAggregateEntryBatches([
+        {
+          requestInformation: {
+            id: '1',
+            resolution,
+            [mostRecentOption]: true,
+          },
+          maxResults: 1,
+          onError,
+          onSuccess,
+          requestStart: startDate,
+          requestEnd: endDate,
+        },
+        {
+          requestInformation: {
+            id: '2',
+            resolution,
+            [mostRecentOption]: true,
+          },
+          maxResults: 1,
+          onError,
+          onSuccess,
+          requestStart: startDate,
+          requestEnd: endDate,
+        },
+      ]);
+
+      expect(batches).toEqual(
+        expect.arrayContaining([
+          [
+            [
+              {
+                requestInformation: {
+                  id: '1',
+                  resolution,
+                  [mostRecentOption]: true,
+                },
+                maxResults: 1,
+                onError,
+                onSuccess,
+                requestStart: startDate,
+                requestEnd: endDate,
+              },
+            ],
+            1,
+          ],
+          [
+            [
+              {
+                requestInformation: {
+                  id: '2',
+                  resolution,
+                  [mostRecentOption]: true,
+                },
+                maxResults: 1,
+                onError,
+                onSuccess,
+                requestStart: startDate,
+                requestEnd: endDate,
+              },
+            ],
+            1,
+          ],
+        ])
+      );
+    }
+  );
 
   it('handles empty input', () => {
     const batches = createAggregateEntryBatches([]);
