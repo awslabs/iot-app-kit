@@ -203,25 +203,79 @@ export const batchGetHistoricalPropertyDataPoints = ({
   params.forEach(({ requestInformations, maxResults, onSuccess, onError }) => {
     requestInformations
       .filter(shouldAcceptRequest)
+      // fanout on fetchMostRecentBeforeStart, fetchMostRecentBeforeEnd, fetchFromStartToEnd into dedicated request info
+      .flatMap(
+        ({
+          fetchMostRecentBeforeStart,
+          fetchMostRecentBeforeEnd,
+          fetchFromStartToEnd,
+          ...rest
+        }) => {
+          const infos: RequestInformationAndRange[] = [];
+
+          if (fetchMostRecentBeforeStart) {
+            infos.push({
+              ...rest,
+              fetchMostRecentBeforeStart,
+            });
+          }
+
+          if (fetchMostRecentBeforeEnd) {
+            infos.push({
+              ...rest,
+              fetchMostRecentBeforeEnd,
+            });
+          }
+
+          if (fetchFromStartToEnd) {
+            infos.push({
+              ...rest,
+              fetchFromStartToEnd,
+            });
+          }
+
+          return infos;
+        }
+      )
       .forEach((requestInformation) => {
+        // only 1 of the following options are enabled at this point:
+        // fetchMostRecentBeforeStart, fetchMostRecentBeforeEnd, fetchFromStartToEnd
         const {
           fetchMostRecentBeforeStart,
           fetchMostRecentBeforeEnd,
+          fetchFromStartToEnd,
           start,
           end,
         } = requestInformation;
 
-        const isMostRecent =
-          fetchMostRecentBeforeStart || fetchMostRecentBeforeEnd;
-
-        entries.push({
-          requestInformation,
-          maxResults: isMostRecent ? 1 : maxResults,
-          onSuccess,
-          onError,
-          requestStart: isMostRecent ? new Date(0, 0, 0) : start,
-          requestEnd: fetchMostRecentBeforeStart ? start : end,
-        });
+        if (fetchMostRecentBeforeStart) {
+          entries.push({
+            requestInformation,
+            maxResults: 1,
+            onSuccess,
+            onError,
+            requestStart: new Date(0, 0, 0),
+            requestEnd: start,
+          });
+        } else if (fetchMostRecentBeforeEnd) {
+          entries.push({
+            requestInformation,
+            maxResults: 1,
+            onSuccess,
+            onError,
+            requestStart: new Date(0, 0, 0),
+            requestEnd: end,
+          });
+        } else if (fetchFromStartToEnd) {
+          entries.push({
+            requestInformation,
+            maxResults,
+            onSuccess,
+            onError,
+            requestStart: start,
+            requestEnd: end,
+          });
+        }
       });
   });
 
