@@ -9,7 +9,6 @@ import { MINUTE_IN_MS, parseDuration, SECOND_IN_MS } from '../common/time';
 import type {
   DataModuleSubscription,
   DataSource,
-  DataStream,
   DataStreamQuery,
   RequestInformation,
   RequestInformationAndRange,
@@ -140,35 +139,6 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
     );
 
     return { start, end };
-  };
-
-  public getCachedDataStreams = async ({
-    viewport,
-    queries,
-    emitDataStreams,
-  }: {
-    viewport: Viewport;
-    queries: Query[];
-    emitDataStreams: (dataStreams: DataStream[]) => void;
-  }) => {
-    const requestedStreams = await this.dataSourceStore.getRequestsFromQueries({
-      queries,
-      request: { viewport },
-    });
-
-    // create request information on every dataStream requested
-    // so they can be used to get cached data
-    const requestInformations = requestedStreams.map((stream) => ({
-      start: viewportStartDate(viewport),
-      end: viewportEndDate(viewport),
-      ...stream,
-    })) as RequestInformationAndRange[];
-
-    const unsubscribe = this.dataCache.getCachedDataForRange(
-      requestInformations,
-      emitDataStreams
-    );
-    return unsubscribe;
   };
 
   public subscribeToDataStreams = (
