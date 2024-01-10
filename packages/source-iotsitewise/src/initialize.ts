@@ -8,8 +8,6 @@ import {
   TimeSeriesDataRequest,
   TimeSeriesDataQuery,
   TimeSeriesDataModule,
-  Viewport,
-  DataStream,
 } from '@iot-app-kit/core';
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
@@ -35,8 +33,6 @@ import type {
   SiteWiseAssetTreeNode,
   SiteWiseAssetTreeQueryArguments,
 } from './asset-modules';
-import { fetchTimeSeriesData } from './time-series-data/fetchTimeSeriesData';
-import { CreateTimeSeriesDataStore } from './time-series-data/store';
 
 const SOURCE = 'iotsitewise';
 
@@ -51,13 +47,6 @@ export type SiteWiseDataSourceInitInputs = {
 };
 
 export type SiteWiseQuery = {
-  fetchTimeSeriesData: ({
-    query,
-    viewport,
-  }: {
-    query: SiteWiseDataStreamQuery;
-    viewport: Viewport;
-  }) => Promise<DataStream[]>;
   timeSeriesData: (query: SiteWiseDataStreamQuery) => TimeSeriesDataQuery;
   assetTree: {
     fromRoot: (
@@ -78,16 +67,6 @@ export type SiteWiseQuery = {
 export const initialize = (input: SiteWiseDataSourceInitInputs) => {
   const siteWiseClient = getSiteWiseClient(input);
   const iotEventsClient = getIotEventsClient(input);
-  const store = new CreateTimeSeriesDataStore({
-    initialState: {
-      modeledDataStreams: [],
-      dataStreams: [],
-      thresholds: [],
-      assetModels: {},
-      alarms: {},
-      errors: {},
-    },
-  });
 
   const assetDataSource: SiteWiseAssetDataSource =
     createSiteWiseAssetDataSource(siteWiseClient);
@@ -102,10 +81,6 @@ export const initialize = (input: SiteWiseDataSourceInitInputs) => {
 
   return {
     query: {
-      fetchTimeSeriesData: fetchTimeSeriesData(
-        siteWiseTimeSeriesModule,
-        store.getState()
-      ),
       timeSeriesData: (
         query: SiteWiseDataStreamQuery
       ): TimeSeriesDataQuery => ({
@@ -126,8 +101,7 @@ export const initialize = (input: SiteWiseDataSourceInitInputs) => {
             {
               queries: [query],
               request: params,
-            },
-            store
+            }
           ),
       }),
 

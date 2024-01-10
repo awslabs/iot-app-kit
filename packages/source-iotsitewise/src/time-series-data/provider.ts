@@ -14,7 +14,6 @@ import type {
   SubscriptionUpdate,
 } from '@iot-app-kit/core';
 import type { SiteWiseDataStreamQuery } from './types';
-import { CreateTimeSeriesDataStore } from './store';
 
 /**
  * Provider for SiteWise time series data
@@ -27,31 +26,25 @@ export class SiteWiseTimeSeriesDataProvider
   ) => void = () => {};
   public session: SiteWiseComponentSession;
   public input: DataModuleSubscription<SiteWiseDataStreamQuery>;
-  private store: CreateTimeSeriesDataStore;
 
   constructor(
     session: SiteWiseComponentSession,
-    input: DataModuleSubscription<SiteWiseDataStreamQuery>,
-    store: CreateTimeSeriesDataStore
+    input: DataModuleSubscription<SiteWiseDataStreamQuery>
   ) {
     this.session = session;
     this.input = input;
-    this.store = store;
   }
 
   subscribe(observer: ProviderObserver<TimeSeriesData[]>) {
-    const { session, store } = this;
-
-    store.setCallback((timeSeriesData: TimeSeriesData) =>
-      observer.next([timeSeriesData])
-    );
+    const { session } = this;
 
     const { update, unsubscribe } = subscribeToTimeSeriesData(
       timeSeriesDataSession(session),
       assetSession(session),
-      alarmsSession(session),
-      store
-    )(this.input);
+      alarmsSession(session)
+    )(this.input, (timeSeriesData: TimeSeriesData) =>
+      observer.next([timeSeriesData])
+    );
 
     this.update = update;
 
