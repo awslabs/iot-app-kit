@@ -159,7 +159,7 @@ export type ChartAxisOptions = YAxisRange & {
   yLabel?: string;
 };
 
-type ChartLegendContent = 'unit' | 'asset';
+type ChartLegendContent = 'latestValue' | 'unit' | 'asset';
 export type ChartLegend = {
   visible?: boolean;
   position?: 'left' | 'bottom' | 'right';

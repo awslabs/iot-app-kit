@@ -10,9 +10,10 @@ import isEqual from 'lodash.isequal';
 const mapDataStreamInformation = (
   datastreams: DataStream[],
   series: SeriesOption[],
-  graphic: InternalGraphicComponentGroupOption[]
+  graphic: InternalGraphicComponentGroupOption[],
+  visibleContent: ChartLegend['visibleContent']
 ): DataStreamInformation[] =>
-  datastreams.map(({ id, name }) => {
+  datastreams.map(({ id, name, unit }) => {
     const foundSeries = series.find((series) => series.id === id);
     const graphicIndex = series.findIndex((series) => series.id === id);
     const trendCursorValues = graphic.reduce<
@@ -22,10 +23,11 @@ const mapDataStreamInformation = (
       valueMap[trendCursorId] = nextGraphic.yAxisMarkerValue[graphicIndex];
       return valueMap;
     }, {});
+    const unitValue = visibleContent?.unit && unit ? ` (${unit})` : '';
 
     return {
       id,
-      name,
+      name: `${name}${unitValue}`,
       color:
         ((foundSeries as LineSeriesOption)?.lineStyle?.color as string) ?? '',
       trendCursorValues,
@@ -53,6 +55,7 @@ export const ChartLegendTableAdapter = ({
   datastreams,
   series,
   graphic,
+  visibleContent,
   ...options
 }: ChartLegendTableAdapterOptions) => {
   const [datastreamInformation, setDatastreamInformation] = useState<
@@ -60,7 +63,7 @@ export const ChartLegendTableAdapter = ({
   >([]);
   const [trendCursors, setTrendCursors] = useState<TrendCursor[]>([]);
   const previousDatastreamInformation = useRef(
-    mapDataStreamInformation(datastreams, series, graphic)
+    mapDataStreamInformation(datastreams, series, graphic, visibleContent)
   );
   const previousTrendCursors = useRef(mapTrendCursors(graphic));
 
@@ -68,7 +71,8 @@ export const ChartLegendTableAdapter = ({
     const mappedDataStreamInformation = mapDataStreamInformation(
       datastreams,
       series,
-      graphic
+      graphic,
+      visibleContent
     );
     if (
       !isEqual(
@@ -84,7 +88,7 @@ export const ChartLegendTableAdapter = ({
       setTrendCursors(mappedTrendCursors);
       previousTrendCursors.current = mappedTrendCursors;
     }
-  }, [datastreams, series, graphic]);
+  }, [datastreams, series, graphic, visibleContent]);
 
   return (
     <ChartLegendTable

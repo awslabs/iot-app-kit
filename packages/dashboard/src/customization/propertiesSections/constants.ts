@@ -72,6 +72,9 @@ export const dropdownConsts = {
       { label: 'Bottom', value: 'bottom' },
     ],
   },
+  legendDisplaySection: {
+    legendDisplaylist: [{ label: 'Unit', value: 'unit' }],
+  },
 };
 
 export const LINE_RESOLUTION_OPTIONS: SelectProps.Option[] = [
