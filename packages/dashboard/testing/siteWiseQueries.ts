@@ -65,6 +65,7 @@ export const mockQuery = (
 ): SiteWiseQuery => {
   const { updateViewport = noop, unsubscribe = noop } = overrides || {};
   return {
+    fetchTimeSeriesData: (_input) => new Promise(() => {}),
     timeSeriesData: () => ({
       toQueryString: () => JSON.stringify(timeSeriesData),
       build: () => ({

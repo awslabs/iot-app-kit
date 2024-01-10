@@ -1,3 +1,4 @@
+import { DataStream, Primitive } from '@iot-app-kit/core';
 import { createContext, useContext } from 'react';
 import { assetModelQueryToSiteWiseAssetQuery } from '~/customization/widgets/utils/assetModelQueryToAssetQuery';
 import {
@@ -32,4 +33,12 @@ export const useQueries = ({
   const queries = [iotSiteWiseQuery.timeSeriesData(mappedQuery)] ?? [];
 
   return queries;
+};
+
+export const useFetchTimeSeriesData = () => {
+  const { iotSiteWiseQuery } = useContext(QueryContext);
+  if (!iotSiteWiseQuery)
+    return () => new Promise(() => []) as Promise<DataStream<Primitive>[]>;
+
+  return iotSiteWiseQuery.fetchTimeSeriesData;
 };
