@@ -6,6 +6,7 @@ import { fetchAlarmsFromQuery } from '../alarms/iotevents/util/fetchAlarmsFromQu
 import { CreateTimeSeriesDataStore } from './store';
 import type {
   DataModuleSubscription,
+  TimeSeriesData,
   SubscriptionUpdate,
 } from '@iot-app-kit/core';
 import type { SiteWiseDataStreamQuery } from './types';
@@ -14,10 +15,24 @@ export const subscribeToTimeSeriesData =
   (
     dataModule: TimeSeriesDataModule<SiteWiseDataStreamQuery>,
     assetModuleSession: SiteWiseAssetSession,
-    alarmModule: SiteWiseAlarmModule,
-    store: CreateTimeSeriesDataStore
+    alarmModule: SiteWiseAlarmModule
   ) =>
-  ({ queries, request }: DataModuleSubscription<SiteWiseDataStreamQuery>) => {
+  (
+    { queries, request }: DataModuleSubscription<SiteWiseDataStreamQuery>,
+    callback: (data: TimeSeriesData) => void
+  ) => {
+    const store = new CreateTimeSeriesDataStore({
+      initialState: {
+        modeledDataStreams: [],
+        dataStreams: [],
+        thresholds: [],
+        assetModels: {},
+        alarms: {},
+        errors: {},
+      },
+      callback,
+    });
+
     const { update, unsubscribe } = dataModule.subscribeToDataStreams(
       { queries, request },
       (data) => {
