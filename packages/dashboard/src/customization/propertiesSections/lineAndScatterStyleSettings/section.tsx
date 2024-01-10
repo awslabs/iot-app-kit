@@ -191,6 +191,17 @@ const RenderLineAndScatterStyleSettingsSection = ({
     })
   );
 
+  const [legendVisibleContentMaybe, updateLegendVisibleContent] = useProperty(
+    (properties) => properties.legend?.visibleContent,
+    (properties, updatedLegendVisibleContent) => ({
+      ...properties,
+      legend: {
+        ...properties.legend,
+        visibleContent: updatedLegendVisibleContent,
+      },
+    })
+  );
+
   const connectionStyle = maybeWithDefault(undefined, connectionStyleMaybe);
   const lineStyle = maybeWithDefault(undefined, lineStyleMaybe);
   const lineThickness = maybeWithDefault(undefined, lineThicknessMaybe);
@@ -198,6 +209,10 @@ const RenderLineAndScatterStyleSettingsSection = ({
   const axis = maybeWithDefault(undefined, axisMaybe);
   const legendVisible = maybeWithDefault(undefined, legendVisibleMaybe);
   const legendPosition = maybeWithDefault(undefined, legendPositionMaybe);
+  const legendVisibleContent = maybeWithDefault(
+    undefined,
+    legendVisibleContentMaybe
+  );
 
   const aggregationType = maybeWithDefault(undefined, aggregationMaybe);
   const resolution = maybeWithDefault(undefined, resolutionMaybe);
@@ -286,6 +301,12 @@ const RenderLineAndScatterStyleSettingsSection = ({
         setAlignment={(position) =>
           updateLegendPosition(position as ChartLegend['position'])
         }
+        setVisibleContent={(visibleContent) => {
+          updateLegendVisibleContent(
+            visibleContent as ChartLegend['visibleContent']
+          );
+        }}
+        visibleContent={legendVisibleContent}
       />
     </>
   );

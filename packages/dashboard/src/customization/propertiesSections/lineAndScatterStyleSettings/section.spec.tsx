@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
+import { ChartLegend } from '~/customization/widgets/types';
 import { LegendSection } from './legendSection';
 import { YAxisSection } from './yAxis';
 
@@ -51,9 +52,12 @@ describe('LegendSection', () => {
       position: 'left',
       setVisible: () => {},
       setAlignment: () => {},
+      visibleContent: 'unit' as ChartLegend['visibleContent'],
+      setVisibleContent: () => {},
     };
     const { getByLabelText } = render(<LegendSection {...options} />);
     expect(getByLabelText('Alignment')).toBeDisabled();
+    expect(getByLabelText('Display')).toBeDisabled();
   });
 
   test('should not disable legend options when visible is true', () => {
@@ -62,8 +66,11 @@ describe('LegendSection', () => {
       position: 'left',
       setVisible: () => {},
       setAlignment: () => {},
+      visibleContent: 'unit' as ChartLegend['visibleContent'],
+      setVisibleContent: () => {},
     };
     const { getByLabelText } = render(<LegendSection {...options} />);
     expect(getByLabelText('Alignment')).not.toBeDisabled();
+    expect(getByLabelText('Display')).not.toBeDisabled();
   });
 });
