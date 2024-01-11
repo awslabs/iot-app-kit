@@ -11,6 +11,7 @@ export {
   getDataBeforeDate,
   pointBisector,
 } from './common/dataFilters';
+export { toSiteWiseAssetProperty } from './common/dataStreamId';
 
 // Viewport utilities
 export { parseDuration } from './common/time';

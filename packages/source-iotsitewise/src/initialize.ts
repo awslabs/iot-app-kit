@@ -10,6 +10,7 @@ import {
   TimeSeriesDataModule,
   Viewport,
   DataStream,
+  TimeSeriesDataRequestSettings,
 } from '@iot-app-kit/core';
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
@@ -53,9 +54,11 @@ export type SiteWiseQuery = {
   fetchTimeSeriesData: ({
     query,
     viewport,
+    settings,
   }: {
     query: SiteWiseDataStreamQuery;
     viewport: Viewport;
+    settings?: TimeSeriesDataRequestSettings;
   }) => Promise<DataStream[]>;
   timeSeriesData: (query: SiteWiseDataStreamQuery) => TimeSeriesDataQuery;
   assetTree: {
