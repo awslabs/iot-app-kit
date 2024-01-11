@@ -20,6 +20,7 @@ import type {
 import type { DataStreamsStore, CacheSettings } from './data-cache/types';
 import type {
   TimeSeriesDataRequest,
+  TimeSeriesDataRequestSettings,
   Viewport,
 } from './data-cache/requestTypes';
 
@@ -146,14 +147,16 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
     viewport,
     queries,
     emitDataStreams,
+    settings,
   }: {
     viewport: Viewport;
     queries: Query[];
     emitDataStreams: (dataStreams: DataStream[]) => void;
+    settings?: TimeSeriesDataRequestSettings;
   }) => {
     const requestedStreams = await this.dataSourceStore.getRequestsFromQueries({
       queries,
-      request: { viewport },
+      request: { viewport, settings },
     });
 
     // create request information on every dataStream requested

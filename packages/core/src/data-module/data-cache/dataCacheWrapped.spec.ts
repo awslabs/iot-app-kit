@@ -209,3 +209,74 @@ describe('actions', () => {
     expect(state[DATA_STREAM.id]?.rawData).toBeUndefined();
   });
 });
+
+describe('getCachedDataForRange', () => {
+  const NUM_DATA_STREAM: DataStream<number> = {
+    id: 'some-asset-id---some-property-id',
+    resolution: 0,
+    detailedName: 'data-stream-name/detailed-name',
+    name: 'data-stream-name',
+    color: 'black',
+    dataType: DATA_TYPE.NUMBER,
+    data: [
+      { x: 1699945200000, y: 123 },
+      { x: 1699946200000, y: 20 },
+    ],
+  };
+  const REQUEST_INFO = {
+    id: NUM_DATA_STREAM.id,
+    resolution: '0',
+    start: new Date(1699945200000),
+    end: new Date(1699946200000),
+  };
+  const CACHE: DataStreamsStore = {
+    [NUM_DATA_STREAM.id]: {
+      rawData: {
+        id: NUM_DATA_STREAM.id,
+        resolution: NUM_DATA_STREAM.resolution,
+        aggregationType: AGGREGATE_TYPE,
+        dataCache: EMPTY_CACHE,
+        requestCache: EMPTY_CACHE,
+        requestHistory: [],
+        isLoading: false,
+        isRefreshing: false,
+        error: undefined,
+      },
+    },
+  };
+  it('returns correct data if interval is already present', async () => {
+    const cache = new DataCache(CACHE);
+    cache.onSuccess(
+      [NUM_DATA_STREAM],
+      REQUEST_INFO,
+      new Date(1699945200000),
+      new Date(1699946200000)
+    );
+    const promise = new Promise((resolve) =>
+      cache.getCachedDataForRange([REQUEST_INFO], (ds) => resolve(ds))
+    );
+    const data = await promise;
+
+    expect(data).toEqual(
+      expect.arrayContaining([expect.objectContaining({ ...NUM_DATA_STREAM })])
+    );
+  });
+
+  it('returns correct data if data is added to cache after request is made', async () => {
+    const cache = new DataCache(CACHE);
+    const promise = new Promise((resolve) =>
+      cache.getCachedDataForRange([REQUEST_INFO], (ds) => resolve(ds))
+    );
+    cache.onSuccess(
+      [NUM_DATA_STREAM],
+      REQUEST_INFO,
+      new Date(1699945200000),
+      new Date(1699946200000)
+    );
+    const data = await promise;
+
+    expect(data).toEqual(
+      expect.arrayContaining([expect.objectContaining({ ...NUM_DATA_STREAM })])
+    );
+  });
+});
