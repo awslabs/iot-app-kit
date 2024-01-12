@@ -5,8 +5,9 @@ import React from 'react';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { CSVDownloadButton } from './index';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useViewportData } from './useViewportData';
+import { useFetchTimeSeriesData } from '../dashboard/queryContext';
 import { StyledAssetQuery } from '~/customization/widgets/types';
+import { DataStream } from '@iot-app-kit/core';
 
 const testQueryClient = new QueryClient({
   defaultOptions: {
@@ -20,18 +21,29 @@ const assetId1 = 'some-asset-id-1';
 const propertyId1 = 'some-property-id-1';
 const alias1 = 'some-asset-alias-1';
 
+const MOCK_DATA_STREAM_1: DataStream = {
+  data: [],
+  unit: 'MPH',
+  aggregationType: 'AVERAGE',
+  resolution: 86000,
+  name: 'Average Wind Speed',
+  id: '1233545352---56842304',
+  error: { msg: 'failure' },
+};
+
 const MOCK_QUERY: StyledAssetQuery = {
   assets: [{ assetId: assetId1, properties: [{ propertyId: propertyId1 }] }],
   properties: [{ propertyAlias: alias1 }],
 };
 
-const mockFetchViewportData = jest.fn(() =>
-  Promise.resolve({ isError: true, data: [] })
+const mockFetchTimeSeriesData = jest.fn(() =>
+  Promise.resolve([MOCK_DATA_STREAM_1])
 );
-jest.mock('./useViewportData', () => ({
-  useViewportData: jest.fn(() => ({
-    fetchViewportData: mockFetchViewportData,
-  })),
+jest.mock('../dashboard/queryContext', () => ({
+  useFetchTimeSeriesData: jest.fn(() => mockFetchTimeSeriesData),
+}));
+jest.mock('~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap', () => ({
+  fetchListAssetPropertiesMap: jest.fn(),
 }));
 
 it('console an errors if data has errors', async function () {
@@ -44,6 +56,7 @@ it('console an errors if data has errors', async function () {
             ...MOCK_QUERY,
           },
         }}
+        widgetType='line'
         fileName='csv-test'
         client={createMockSiteWiseSDK() as unknown as IoTSiteWiseClient}
       />
@@ -54,7 +67,7 @@ it('console an errors if data has errors', async function () {
 
   const downloadButton = screen.queryByTestId(/csv-download-button/);
   downloadButton && fireEvent.click(downloadButton);
-  expect(useViewportData).toHaveBeenCalled();
+  expect(useFetchTimeSeriesData).toHaveBeenCalled();
   await waitFor(() => expect(consoleErrorSpy).toBeCalled());
 });
 
@@ -68,6 +81,7 @@ it('does not create a file for download if data has errors', async function () {
             ...MOCK_QUERY,
           },
         }}
+        widgetType='line'
         fileName='csv-test'
         client={createMockSiteWiseSDK() as unknown as IoTSiteWiseClient}
       />
@@ -78,6 +92,6 @@ it('does not create a file for download if data has errors', async function () {
 
   const createElementSpyOn = jest.spyOn(document, 'createElement');
   downloadButton && fireEvent(downloadButton, new MouseEvent('click'));
-  await waitFor(() => expect(useViewportData).toHaveBeenCalled());
+  await waitFor(() => expect(useFetchTimeSeriesData).toHaveBeenCalled());
   await waitFor(() => expect(createElementSpyOn).not.toBeCalledWith('a'));
 });
