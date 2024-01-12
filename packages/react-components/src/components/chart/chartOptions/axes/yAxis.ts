@@ -10,6 +10,8 @@ export const convertYAxis = (
   show: axis?.showY ?? DEFAULT_Y_AXIS.show,
   min: axis?.yMin ?? undefined,
   max: axis?.yMax ?? undefined,
+  type: 'value',
+  scale: true,
   axisLabel: {
     hideOverlap: true,
     color: '#5f6b7a',
