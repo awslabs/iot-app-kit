@@ -22,7 +22,6 @@ import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
 
 import './chart.css';
 import { useContextMenu } from './contextMenu/useContextMenu';
-// import { useViewportToMS } from './hooks/useViewportToMS';
 import {
   DEFAULT_CHART_VISUALIZATION,
   DEFAULT_TOOLBOX_CONFIG,
@@ -31,9 +30,9 @@ import {
 import { useDataZoom } from './hooks/useDataZoom';
 import { useViewport } from '../../hooks/useViewport';
 import { getXAxis } from './chartOptions/axes/xAxis';
-import { useHandleChartEvents } from './events/useHandleChartEvents';
 import { useGetConfigValue } from '../../store';
 import TanstackLegend from './legend/tanstackLegend';
+import { useHandleChartEvents } from './events/useHandleChartEvents';
 
 /**
  * Developer Notes:
