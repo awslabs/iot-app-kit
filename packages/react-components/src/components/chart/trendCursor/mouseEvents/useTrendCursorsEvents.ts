@@ -50,6 +50,7 @@ const useTrendCursorsEvents = ({
   const seriesRef = useRef(series);
   const sizeRef = useRef(size);
   const isInCursorAddModeRef = useRef(isInCursorAddMode);
+  const prevIsInCursorAddModeRef = useRef(isInCursorAddMode);
   const isInSyncModeRef = useRef(isInSyncMode);
   const graphicRef = useRef(graphic);
   const setGraphicRef = useRef(setGraphic);
@@ -161,9 +162,15 @@ const useTrendCursorsEvents = ({
       graphicRef.current.length < MAX_TREND_CURSORS
     ) {
       chartRef.current?.getZr().setCursorStyle('crosshair');
-    } else {
-      chartRef.current?.getZr().setCursorStyle('default'); // in case we get out of add mode and mouse does not move, switch back to default cursor
+    } else if (
+      prevIsInCursorAddModeRef.current &&
+      !isInCursorAddModeRef.current
+    ) {
+      // set to default only when cursormode goes from true to false |---___|
+      chartRef.current?.getZr().setCursorStyle('default');
     }
+
+    prevIsInCursorAddModeRef.current = isInCursorAddModeRef.current;
 
     const mouseMoveEventHandler = () =>
       mouseoverHandler(
