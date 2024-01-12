@@ -147,5 +147,9 @@ export const useHandleChartEvents = (
     };
   }, [chartRef, isBrushZooming, shiftDown, isPanning, prevIsPanning]);
 
-  return { chartEventsOptions, chartEventsKeyMap, chartEventsHandlers };
+  return {
+    chartEventsOptions,
+    chartEventsKeyMap,
+    chartEventsHandlers,
+  };
 };
