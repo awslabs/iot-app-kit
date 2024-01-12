@@ -4,26 +4,21 @@ import { Button, ButtonProps } from '@cloudscape-design/components';
 
 import { unparse } from 'papaparse';
 import { StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
-import { useViewportData } from '~/components/csvDownloadButton/useViewportData';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { useFetchTimeSeriesData } from '../dashboard/queryContext';
+import { useViewport } from '@iot-app-kit/react-components';
+import { assetModelQueryToSiteWiseAssetQuery } from '~/customization/widgets/utils/assetModelQueryToAssetQuery';
+import { convertToCSVObject } from './convertToCSVObject';
+import { useQueryClient } from '@tanstack/react-query';
+import { fetchListAssetPropertiesMap } from '~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap';
+import {
+  BAR_CHART_RESOLUTIONS,
+  DEFAULT_VIEWPORT,
+  EMPTY_DATA,
+} from './constants';
+import { convertViewportToHistoricalViewport } from '../util/dateTimeUtil';
 
-const EMPTY_DATA = [
-  {
-    timestamp: '',
-    dataQuality: '',
-    value: '',
-    unit: '',
-    aggregationType: '',
-    resolution: '',
-    propertyName: '',
-    assetName: '',
-    propertyAlias: '',
-    assetId: '',
-    dataType: '',
-    dataTypeSpec: '',
-    propertyId: '',
-  },
-];
+const canOnlyDownloadLiveMode: readonly string[] = ['table', 'kpi', 'status'];
 
 const isQueryEmpty = (queryConfig: StyledSiteWiseQueryConfig) => {
   const query = queryConfig.query;
@@ -38,36 +33,88 @@ export const CSVDownloadButton = ({
   queryConfig,
   fileName,
   client,
+  widgetType,
   ...rest
 }: {
   queryConfig: StyledSiteWiseQueryConfig;
   client: IoTSiteWiseClient;
-  fileName: string;
+  widgetType: string;
+  fileName?: string;
 } & ButtonProps) => {
-  const { fetchViewportData } = useViewportData({ queryConfig, client });
   const [isDownloading, setIsDownloading] = useState(false);
+  const queryClient = useQueryClient();
+  const fetchTimeSeriesData = useFetchTimeSeriesData();
+
+  const { viewport: injectedViewport } = useViewport();
+  const viewport = injectedViewport || DEFAULT_VIEWPORT;
 
   const onClickDownload = async () => {
     setIsDownloading(true);
+
     const requestDateMS = Date.now();
-    const requestDateString = new Date(requestDateMS).toISOString();
 
-    const { data, isError } = await fetchViewportData(requestDateMS);
+    // get asset properties for modeled data
+    const listAssetPropertiesMap = await fetchListAssetPropertiesMap(
+      queryConfig.query,
+      queryClient,
+      client
+    );
 
-    if (isError || !data) {
-      isError && console.error('Unable to download CSV data');
+    // calculate viewport to request data for
+    const calculatedViewport = convertViewportToHistoricalViewport(
+      viewport,
+      requestDateMS
+    );
+
+    const isViewportInFuture =
+      calculatedViewport.start.getTime() > requestDateMS &&
+      calculatedViewport.end.getTime() > requestDateMS;
+
+    // since fetchTimeSeriesData is async it'll wait for future viewports to be in cache
+    // to avoid this, if viewport is in the future we dont request time series data
+    const mappedQuery = assetModelQueryToSiteWiseAssetQuery(queryConfig.query);
+    const dataStreams = isViewportInFuture
+      ? []
+      : await fetchTimeSeriesData({
+          query: mappedQuery,
+          viewport: calculatedViewport,
+          // since bar chart doesnt do raw data we need to pass a custom resolution mapping to handle auto select resolution mode
+          settings:
+            widgetType === 'bar-chart'
+              ? { resolution: BAR_CHART_RESOLUTIONS }
+              : undefined,
+        });
+
+    // convert dataStreams into the CSV Objects we want in CSV file
+    const { data, hasError } = await convertToCSVObject({
+      dataStreams,
+      client,
+      queryConfig,
+      viewport: calculatedViewport,
+      listAssetPropertiesMap: listAssetPropertiesMap ?? {},
+    });
+
+    setIsDownloading(false);
+
+    if (hasError) {
+      hasError && console.error('Unable to download CSV data');
       setIsDownloading(false);
       return;
     }
 
+    // create file with unparsed CSV data
     const stringCSVData =
       data.length === 0 ? unparse(EMPTY_DATA) : unparse(data);
     const file = new Blob([stringCSVData], { type: 'text/csv' });
 
-    // create Anchor element with download attribute, click on it, and then delete it
+    // create Anchor element with a download attribute, click on it, and then delete it
     const element = document.createElement('a');
     element.href = URL.createObjectURL(file);
-    element.download = `${fileName} ${requestDateString}.csv`;
+    const requestDateString = new Date(requestDateMS).toISOString();
+    element.download = `${fileName} ${requestDateString}.csv`.replace(
+      / /g,
+      '_'
+    );
     document.body.appendChild(element); // required for this to work in firefox
     element.click();
     element.remove();
@@ -75,8 +122,9 @@ export const CSVDownloadButton = ({
   };
 
   const isEmptyQuery = isQueryEmpty(queryConfig);
+  const cannotDownload = canOnlyDownloadLiveMode.some((t) => t === widgetType);
 
-  if (isEmptyQuery) return <></>;
+  if (isEmptyQuery || cannotDownload) return <></>;
 
   return (
     <Button

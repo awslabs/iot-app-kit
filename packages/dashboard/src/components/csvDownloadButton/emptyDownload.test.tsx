@@ -9,7 +9,6 @@ import {
   StyledAssetQuery,
   StyledSiteWiseQueryConfig,
 } from '~/customization/widgets/types';
-import { useViewportData } from './useViewportData';
 
 const testQueryClient = new QueryClient({
   defaultOptions: {
@@ -32,13 +31,12 @@ const MOCK_EMPTY_QUERY: StyledAssetQuery = {
   assets: [],
 };
 
-const mockFetchViewportData = jest.fn(() =>
-  Promise.resolve({ isError: false, data: [] })
-);
-jest.mock('./useViewportData', () => ({
-  useViewportData: jest.fn(() => ({
-    fetchViewportData: mockFetchViewportData,
-  })),
+const mockFetchTimeSeriesData = jest.fn(() => Promise.resolve([]));
+jest.mock('../dashboard/queryContext', () => ({
+  useFetchTimeSeriesData: jest.fn(() => mockFetchTimeSeriesData),
+}));
+jest.mock('~/data/listAssetPropertiesMap/fetchListAssetPropertiesMap', () => ({
+  fetchListAssetPropertiesMap: jest.fn(),
 }));
 
 it('does not render button if query has no content', function () {
@@ -49,6 +47,7 @@ it('does not render button if query has no content', function () {
           source: 'iotsitewise',
           query: MOCK_EMPTY_QUERY,
         }}
+        widgetType='line'
         fileName='csv-test'
         client={createMockSiteWiseSDK() as unknown as IoTSiteWiseClient}
       />
@@ -72,6 +71,7 @@ it('creates a file for download if data is empty', async function () {
       <CSVDownloadButton
         queryConfig={mockQueryConfig}
         fileName='csv-test'
+        widgetType='line'
         client={mockClient}
       />
     </QueryClientProvider>
@@ -80,10 +80,6 @@ it('creates a file for download if data is empty', async function () {
   const downloadButton = screen.queryByTestId(/csv-download-button/);
   downloadButton && fireEvent.click(downloadButton);
   const createElementSpyOn = jest.spyOn(document, 'createElement');
-  expect(useViewportData).toHaveBeenCalledWith({
-    queryConfig: mockQueryConfig,
-    client: mockClient,
-  });
-  await waitFor(() => expect(mockFetchViewportData).toHaveBeenCalled());
+  await waitFor(() => expect(mockFetchTimeSeriesData).toHaveBeenCalled());
   await waitFor(() => expect(createElementSpyOn).toBeCalledWith('a'));
 });
