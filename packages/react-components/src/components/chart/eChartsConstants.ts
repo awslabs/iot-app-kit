@@ -12,7 +12,7 @@ export const DEFAULT_TOOLBOX_CONFIG: ToolboxComponentOption = {
   show: true,
   right: 30,
   feature: {
-    dataZoom: { yAxisIndex: false, title: { back: 'Undo\nzoom' } },
+    dataZoom: { title: { back: 'Undo\nzoom' } },
   },
   iconStyle: {
     borderColor: '#414d5c',
@@ -52,7 +52,7 @@ export const DEFAULT_TOOLTIP: TooltipComponentOption = {
 
 export const DEFAULT_DATA_ZOOM: DataZoomComponentOption = {
   type: 'inside',
-  filterMode: 'none',
+  filterMode: 'filter',
   zoomOnMouseWheel: true,
   moveOnMouseMove: 'shift',
   moveOnMouseWheel: false,
