@@ -18,9 +18,9 @@ import { Menu, MenuOption, PositionableMenu } from '../../menu';
 import { ColorIcon } from '../legend/colorIcon';
 import { Value } from '../../shared-components';
 import { MULTI_Y_AXIS_LEGEND_WIDTH } from '../eChartsConstants';
-import { useChartStore } from '../store';
-import { isDataStreamInList } from '../../../utils/isDataStreamInList';
 import { YAxisLegendOption } from '../types';
+import { useHighlightedDataStreams } from '../hooks/useHighlightedDataStreams';
+
 import './yAxisMenu.css';
 
 const getValue = (value: Primitive, significantDigits = 4) =>
@@ -41,16 +41,12 @@ export const YAxisLegend = ({
   axes,
   menuPosition,
 }: YAxisLegendOptions) => {
-  const highlightDataStream = useChartStore(
-    (state) => state.highlightDataStream
-  );
-  const unHighlightDataStream = useChartStore(
-    (state) => state.unHighlightDataStream
-  );
-  const highlightedDataStreams = useChartStore(
-    (state) => state.highlightedDataStreams
-  );
-  const isDataStreamHighlighted = isDataStreamInList(highlightedDataStreams);
+  const {
+    highlightDataStream,
+    unHighlightDataStream,
+    isDataStreamHighlighted,
+  } = useHighlightedDataStreams();
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuSizeRef, { height }] = useMeasure<HTMLDivElement>();
 
@@ -119,7 +115,7 @@ export const YAxisLegend = ({
           iconEnd={() => (
             <span className='axis-menu-option-value'>{datastream?.unit}</span>
           )}
-          highlighted={isDataStreamHighlighted(datastream)}
+          highlighted={datastream ? isDataStreamHighlighted(datastream) : false}
         >
           <div
             title={

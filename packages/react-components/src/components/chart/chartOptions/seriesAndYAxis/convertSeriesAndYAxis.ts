@@ -1,6 +1,5 @@
 import { DataPoint, DataStream, Threshold } from '@iot-app-kit/core';
 import { BarSeriesOption, SeriesOption, YAXisComponentOption } from 'echarts';
-import isEqual from 'lodash.isequal';
 
 import {
   ChartAxisOptions,
@@ -20,9 +19,9 @@ import {
   EMPHASIZE_SCALE_CONSTANT,
 } from '../../eChartsConstants';
 import { GenericSeries } from '../../../../echarts/types';
-import { useCallback, useMemo } from 'react';
-import { useChartStore } from '../../store';
-import { isDataStreamInList } from '../../../../utils/isDataStreamInList';
+import { useMemo } from 'react';
+import { useVisibleDataStreams } from '../../hooks/useVisibleDataStreams';
+import { useHighlightedDataStreams } from '../../hooks/useHighlightedDataStreams';
 
 export const dataValue = (point: DataPoint) => point.y;
 
@@ -243,25 +242,9 @@ export const useSeriesAndYAxis = (
     performanceMode?: boolean;
   }
 ) => {
-  const { highlightedDataStreams } = useChartStore(
-    (state) => ({ highlightedDataStreams: state.highlightedDataStreams }),
-    isEqual
-  );
-  const isDataStreamHighlighted = useCallback(
-    (datastream: DataStreamInfo) =>
-      isDataStreamInList(highlightedDataStreams)(datastream),
-    [highlightedDataStreams]
-  );
-
-  const { hiddenDataStreams } = useChartStore(
-    (state) => ({ hiddenDataStreams: state.hiddenDataStreams }),
-    isEqual
-  );
-  const isDataStreamHidden = useCallback(
-    (datastream: DataStreamInfo) =>
-      isDataStreamInList(hiddenDataStreams)(datastream),
-    [hiddenDataStreams]
-  );
+  const { isDataStreamHidden } = useVisibleDataStreams();
+  const { highlightedDataStreams, isDataStreamHighlighted } =
+    useHighlightedDataStreams();
 
   return useMemo(() => {
     const defaultYAxis: YAXisComponentOption[] = [convertChartYAxis(axis)];
