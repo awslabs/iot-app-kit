@@ -1,16 +1,18 @@
 import { DataStream } from '@iot-app-kit/core';
 import { StateCreator } from 'zustand';
 
+export type DataStreamIdentity = Pick<DataStream, 'id'>;
+
 export interface DataStreamsData {
-  highlightedDataStreams: DataStream[];
-  hiddenDataStreams: DataStream[];
+  highlightedDataStreams: DataStreamIdentity[];
+  hiddenDataStreams: DataStreamIdentity[];
 }
 
 export interface DataStreamsState extends DataStreamsData {
-  highlightDataStream: (datastream?: DataStream) => void;
-  unHighlightDataStream: (datastream?: DataStream) => void;
-  hideDataStream: (datastream?: DataStream) => void;
-  unHideDataStream: (datastream?: DataStream) => void;
+  highlightDataStream: (datastream?: DataStreamIdentity) => void;
+  unHighlightDataStream: (datastream?: DataStreamIdentity) => void;
+  hideDataStream: (datastream?: DataStreamIdentity) => void;
+  unHideDataStream: (datastream?: DataStreamIdentity) => void;
 }
 
 export const createDataStreamsSlice: StateCreator<DataStreamsState> = (
@@ -18,7 +20,7 @@ export const createDataStreamsSlice: StateCreator<DataStreamsState> = (
 ) => ({
   highlightedDataStreams: [],
   hiddenDataStreams: [],
-  highlightDataStream: (datastream?: DataStream) =>
+  highlightDataStream: (datastream?: DataStreamIdentity) =>
     set((state) => {
       if (!datastream) return state;
       return {
@@ -34,10 +36,15 @@ export const createDataStreamsSlice: StateCreator<DataStreamsState> = (
         ),
       };
     }),
-  hideDataStream: (datastream?: DataStream) =>
+  hideDataStream: (datastream?: DataStreamIdentity) =>
     set((state) => {
       if (!datastream) return state;
-      return { hiddenDataStreams: [...state.hiddenDataStreams, datastream] };
+      return {
+        hiddenDataStreams: [...state.hiddenDataStreams, datastream],
+        highlightedDataStreams: state.highlightedDataStreams.filter(
+          ({ id }) => id !== datastream.id
+        ),
+      };
     }),
   unHideDataStream: (datastream) =>
     set((state) => {

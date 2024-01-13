@@ -35,6 +35,7 @@ export default {
     styleSettings: { control: { type: 'object' }, defaultValue: undefined },
     axis: { control: { type: 'object' }, defaultValue: undefined },
     thresholds: { control: { type: 'object' }, defaultValue: [] },
+    legend: { control: { type: 'object' }, defaultValue: { visible: true } },
   },
   parameters: {
     layout: 'fullscreen',
@@ -87,6 +88,7 @@ export const SiteWiseConnectedBaseChartExample: ComponentStory<
   styleSettings,
   axis,
   thresholds,
+  legend,
 }) => {
   const { viewport } = useViewport();
 
@@ -118,9 +120,9 @@ export const SiteWiseConnectedBaseChartExample: ComponentStory<
     styleSettings,
     viewport,
     theme: 'light',
-    legend: { visible: true },
     axis,
     thresholds,
+    legend,
   };
 
   return (
