@@ -7,7 +7,7 @@ import { useVisualizedDataStreams } from './hooks/useVisualizedDataStreams';
 import { HotKeys } from 'react-hotkeys';
 import { useTrendCursors } from './trendCursor';
 import { Resizable, ResizeHandle } from 'react-resizable';
-import Legend from './legend/legend';
+import Legend from './legend/table';
 import ChartContextMenu, { Action } from './contextMenu/ChartContextMenu';
 import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
 import { useContextMenu } from './contextMenu/useContextMenu';
@@ -240,11 +240,11 @@ const BaseChart = ({
           }}
         >
           <Legend
-            position={options.legend?.position}
+            {...options.legend}
             series={series}
             graphic={trendCursors}
             datastreams={dataStreams}
-            width={rightLegendWidth}
+            width={rightLegendWidth.toString()}
           />
         </div>
       )}
