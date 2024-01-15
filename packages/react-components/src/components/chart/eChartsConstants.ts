@@ -100,6 +100,12 @@ export const MULTI_Y_AXIS_LEGEND_WIDTH = 170;
 export const EMPHASIZE_SCALE_CONSTANT = 2;
 export const DEEMPHASIZE_OPACITY = 0.25;
 
+/**
+ * Echarts tooltip has z-index of 9999999.
+ * Must set context menu above this so its always displayed on top.
+ */
+export const CONTEXT_MENU_Z_INDEX = 10000000;
+
 // Zoom constants
 
 export const ECHARTS_ZOOM_DEBOUNCE_MS = 300;
