@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu, MenuOption } from '../../menu';
 
+import { CONTEXT_MENU_Z_INDEX } from '../eChartsConstants';
 import { MAX_TREND_CURSORS } from '../trendCursor/constants';
 import { InternalGraphicComponentGroupOption } from '../trendCursor/types';
 
@@ -29,6 +30,7 @@ const ChartContextMenu = ({
         position: 'absolute',
         top: `${position.y}px`,
         left: `${position.x}px`,
+        zIndex: CONTEXT_MENU_Z_INDEX,
       }}
       onClickOutside={onOutSideClickHandler}
     >
