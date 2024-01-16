@@ -147,7 +147,7 @@ describe('AddObjectMenu', () => {
     expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-view-camera');
   });
 
-  it('should call appendSceneNode when adding a tag', () => {
+  it('should call setAddingWidget when adding a tag', () => {
     const anchorComponent: IAnchorComponent = {
       icon: 'Info',
       type: 'Tag',
@@ -156,10 +156,13 @@ describe('AddObjectMenu', () => {
     render(<AddObjectMenu canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-object-tag');
     fireEvent.pointerUp(sut);
-    expect(appendSceneNode).toBeCalledWith({
-      name: 'Tag',
-      components: [anchorComponent],
-      parentRef: selectedSceneNodeRef,
+    expect(setAddingWidget).toBeCalledWith({
+      type: KnownComponentType.Tag,
+      node: {
+        name: 'Tag',
+        components: [anchorComponent],
+        parentRef: selectedSceneNodeRef,
+      },
     });
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
     expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-tag');
@@ -177,7 +180,7 @@ describe('AddObjectMenu', () => {
     expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-empty');
   });
 
-  it('should call appendSceneNode when adding a model', () => {
+  it('should call setAddingWidget when adding a model', () => {
     const gltfComponent: IModelRefComponent = {
       type: 'ModelRef',
       uri: 'modelUri',
@@ -188,16 +191,19 @@ describe('AddObjectMenu', () => {
     render(<AddObjectMenu canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-object-model');
     fireEvent.pointerUp(sut);
-    expect(appendSceneNode).toBeCalledWith({
-      name: 'filename',
-      components: [gltfComponent],
-      parentRef: selectedSceneNodeRef,
+    expect(setAddingWidget).toBeCalledWith({
+      type: KnownComponentType.ModelRef,
+      node: {
+        name: 'filename',
+        components: [gltfComponent],
+        parentRef: selectedSceneNodeRef,
+      },
     });
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
     expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-model');
   });
 
-  it('should call appendSceneNode when adding an environment model', () => {
+  it('should call setAddingWidget when adding an environment model', () => {
     const gltfComponent: IModelRefComponent = {
       type: 'ModelRef',
       uri: 'modelUri',
@@ -208,10 +214,13 @@ describe('AddObjectMenu', () => {
     render(<AddObjectMenu canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-environment-model');
     fireEvent.pointerUp(sut);
-    expect(appendSceneNode).toBeCalledWith({
-      name: 'filename',
-      components: [gltfComponent],
-      parentRef: undefined,
+    expect(setAddingWidget).toBeCalledWith({
+      type: KnownComponentType.ModelRef,
+      node: {
+        name: 'filename',
+        components: [gltfComponent],
+        parentRef: undefined,
+      },
     });
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
     expect(mockMetricRecorder.recordClick).toBeCalledWith('add-environment-model');
@@ -231,7 +240,7 @@ describe('AddObjectMenu', () => {
     expect(mockMetricRecorder.recordClick).toBeCalledWith('add-effect-model-shader');
   });
 
-  it('should call appendSceneNode when adding a motion indicator', () => {
+  it('should call setAddingWidget when adding a motion indicator', () => {
     const motionIndicatorComponent: IMotionIndicatorComponent = {
       type: KnownComponentType.MotionIndicator,
       valueDataBindings: {},
@@ -245,10 +254,13 @@ describe('AddObjectMenu', () => {
     render(<AddObjectMenu canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-object-motion-indicator');
     fireEvent.pointerUp(sut);
-    expect(appendSceneNode).toBeCalledWith({
-      name: 'MotionIndicator',
-      components: [motionIndicatorComponent],
-      parentRef: selectedSceneNodeRef,
+    expect(setAddingWidget).toBeCalledWith({
+      type: KnownComponentType.MotionIndicator,
+      node: {
+        name: 'MotionIndicator',
+        components: [motionIndicatorComponent],
+        parentRef: selectedSceneNodeRef,
+      },
     });
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
     expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-motion-indicator');
@@ -263,7 +275,7 @@ describe('AddObjectMenu', () => {
   });
 
   it('should call setAddingWidget when adding a annotation', () => {
-    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true, [COMPOSER_FEATURES.ENHANCED_EDITING]: true });
+    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true });
     const component: IDataOverlayComponent = {
       type: KnownComponentType.DataOverlay,
       valueDataBindings: [],

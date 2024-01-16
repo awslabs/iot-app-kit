@@ -92,7 +92,6 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
   const nodeMap = useStore(sceneComposerId)((state) => state.document.nodeMap);
   const { setAddingWidget, getObject3DBySceneNodeRef } = useEditorState(sceneComposerId);
   const { enableMatterportViewer } = useMatterportViewer();
-  const enhancedEditingEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.ENHANCED_EDITING];
   const { formatMessage } = useIntl();
   const { activeCameraSettings, mainCameraObject } = useActiveCamera();
   const dynamicSceneEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicScene];
@@ -185,17 +184,15 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
       icon: getSceneResourceDefaultValue(type),
       type: 'Tag',
     };
+
     const node = {
       name: 'Tag',
       components: [anchorComponent],
       parentRef: getRefForParenting(),
     } as ISceneNodeInternal;
-    if (enhancedEditingEnabled) {
-      setAddingWidget({ type: KnownComponentType.Tag, node });
-    } else {
-      appendSceneNode(node);
-    }
-  }, [enhancedEditingEnabled, getRefForParenting, appendSceneNode, setAddingWidget]);
+
+    setAddingWidget({ type: KnownComponentType.Tag, node });
+  }, [getRefForParenting, appendSceneNode, setAddingWidget]);
 
   const handleAddColorOverlay = () => {
     // Requires a selected scene node
@@ -292,16 +289,14 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
           uri: modelUri,
           modelType: modelType ?? ext.toUpperCase(),
         };
+
         const node = {
           name: filename,
           components: [gltfComponent],
           parentRef: mustBeRoot ? undefined : getRefForParenting(),
         } as unknown as ISceneNodeInternal;
-        if (enhancedEditingEnabled && !modelType) {
-          setAddingWidget({ type: KnownComponentType.ModelRef, node });
-        } else {
-          appendSceneNode(node);
-        }
+
+        setAddingWidget({ type: KnownComponentType.ModelRef, node });
       });
     }
   };
@@ -323,11 +318,7 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
       parentRef: getRefForParenting(),
     } as unknown as ISceneNodeInternal;
 
-    if (enhancedEditingEnabled) {
-      setAddingWidget({ type: KnownComponentType.MotionIndicator, node });
-    } else {
-      appendSceneNode(node);
-    }
+    setAddingWidget({ type: KnownComponentType.MotionIndicator, node });
   };
 
   const handleAddOverlay = useCallback(
@@ -350,13 +341,9 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
         parentRef: getRefForParenting(),
       } as unknown as ISceneNodeInternal;
 
-      if (enhancedEditingEnabled) {
-        setAddingWidget({ type: KnownComponentType.DataOverlay, node });
-      } else {
-        appendSceneNode(node);
-      }
+      setAddingWidget({ type: KnownComponentType.DataOverlay, node });
     },
-    [getRefForParenting, enhancedEditingEnabled, setAddingWidget, appendSceneNode],
+    [getRefForParenting, setAddingWidget, appendSceneNode],
   );
 
   return (
