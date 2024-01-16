@@ -21,21 +21,17 @@ const strings = defineMessages({
 const SceneHierarchyPanel = () => {
   const { formatMessage } = useIntl();
 
-  const [{ variation: canSearchHierarchy }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.SceneHierarchySearch]);
-  const [{ variation: canReorderHierarchy }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.SceneHierarchyReorder]);
   const [{ variation: canSelectMultiple }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.SceneHierarchyMultiSelect]);
 
   return (
     <LogProvider namespace='SceneHierarchyPanel'>
       <SceneHierarchyDataProvider selectionMode={canSelectMultiple === 'T1' ? 'multi' : 'single'}>
         <Layout>
-          {canSearchHierarchy === 'T1' && (
-            <Toolbar>
-              <Typeahead placeholder={formatMessage(strings.searchPlaceholder)} />
-            </Toolbar>
-          )}
+          <Toolbar>
+            <Typeahead placeholder={formatMessage(strings.searchPlaceholder)} />
+          </Toolbar>
           <Main>
-            <SceneHierarchyTree enableDragAndDrop={canReorderHierarchy === 'T1'} />
+            <SceneHierarchyTree enableDragAndDrop={true} />
           </Main>
         </Layout>
       </SceneHierarchyDataProvider>

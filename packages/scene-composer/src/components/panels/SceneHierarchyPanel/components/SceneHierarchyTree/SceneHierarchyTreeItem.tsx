@@ -5,10 +5,9 @@ import ISceneHierarchyNode from '../../model/ISceneHierarchyNode';
 import { useChildNodes, useSceneHierarchyData } from '../../SceneHierarchyDataProvider';
 import { DropHandler } from '../../../../../hooks/useDropMonitor';
 import SubModelTree from '../SubModelTree';
-import { COMPOSER_FEATURES, KnownComponentType } from '../../../../../interfaces';
+import { KnownComponentType } from '../../../../../interfaces';
 import { IModelRefComponentInternal, useSceneDocument } from '../../../../../store';
 import { ModelType } from '../../../../../models/SceneModels';
-import useFeature from '../../../../../hooks/useFeature';
 import { findComponentByType } from '../../../../../utils/nodeUtils';
 import { sceneComposerIdContext } from '../../../../../common/sceneComposerIdContext';
 import { isDynamicNode } from '../../../../../utils/entityModelUtils/sceneUtils';
@@ -50,8 +49,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   const isValidModelRef = useMemo(() => {
     return component && component?.modelType !== ModelType.Environment;
   }, [component]);
-  const [{ variation: subModelSelectionEnabled }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.SubModelSelection]);
-  const showSubModel = subModelSelectionEnabled === 'T1' && isValidModelRef && !!model && !isViewing();
+  const showSubModel = isValidModelRef && !!model && !isViewing();
   const isSubModel = !!findComponentByType(node, KnownComponentType.SubModelRef);
   const isDynamic = isDynamicNode(node);
 

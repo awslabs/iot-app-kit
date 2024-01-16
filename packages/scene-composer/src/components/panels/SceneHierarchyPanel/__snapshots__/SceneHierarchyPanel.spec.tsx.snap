@@ -6,6 +6,15 @@ exports[`SceneHierarchyPanel should render search hierarchy correctly when enabl
     class="tm-hierarchy-panel"
   >
     <div
+      class="tm-toolbar"
+    >
+      <div
+        data-mocked="Autosuggest"
+        placeholder="Find resources"
+        value=""
+      />
+    </div>
+    <div
       class="tm-main"
       id="tm-main"
       role="radioGroup"
