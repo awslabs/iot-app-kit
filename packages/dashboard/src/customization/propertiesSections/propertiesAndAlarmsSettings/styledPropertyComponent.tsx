@@ -298,7 +298,7 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
 
   const YAxisHeader = (
     <div style={{ display: 'flex', width: '100%' }}>
-      <SpaceBetween size='s' direction='horizontal'>
+      <SpaceBetween size='xs' direction='horizontal'>
         {colorable && display === 'property' && (
           <ColorPicker
             color={property.color || ''}
