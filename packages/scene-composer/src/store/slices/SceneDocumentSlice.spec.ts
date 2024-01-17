@@ -909,18 +909,18 @@ describe('createSceneDocumentSlice', () => {
 
   it('should be able to getSceneProperty', () => {
     const document = {
-      properties: { baseUrl: 'baseUrlValue' },
+      properties: { matterportModelId: 'abc' },
     };
     const get = jest.fn().mockReturnValue({ document }); // fake out get call
     const set = jest.fn();
 
     // Act
     const { getSceneProperty } = createSceneDocumentSlice(set, get);
-    const result = getSceneProperty(KnownSceneProperty.BaseUrl);
+    const result = getSceneProperty(KnownSceneProperty.MatterportModelId);
     const result2 = getSceneProperty(KnownSceneProperty.EnvironmentPreset, 'default');
 
     expect(get).toBeCalledTimes(2);
-    expect(result).toEqual(document.properties.baseUrl);
+    expect(result).toEqual(document.properties.matterportModelId);
     expect(result2).toEqual('default');
   });
 
@@ -931,13 +931,13 @@ describe('createSceneDocumentSlice', () => {
 
     // Act
     const { getSceneProperty } = createSceneDocumentSlice(set, get);
-    const result = getSceneProperty(KnownSceneProperty.BaseUrl, 'default');
+    const result = getSceneProperty(KnownSceneProperty.EnvironmentPreset, 'default');
 
     expect(get).toBeCalled();
     expect(result).toEqual('default');
   });
 
-  [{}, { properties: { baseUrl: 'original' } }].forEach((document) => {
+  [{}, { properties: { environmentPreset: 'neutral' } }].forEach((document) => {
     it(`should be able to setSceneProperty ${document.properties ? 'with' : 'without'} set properties`, () => {
       const draft = { lastOperation: undefined, document };
       const get = jest.fn(); // fake out get call
@@ -945,10 +945,10 @@ describe('createSceneDocumentSlice', () => {
 
       // Act
       const { setSceneProperty } = createSceneDocumentSlice(set, get);
-      setSceneProperty(KnownSceneProperty.BaseUrl, 'setValue');
+      setSceneProperty(KnownSceneProperty.EnvironmentPreset, 'setValue');
 
       expect(draft.lastOperation!).toEqual('setSceneProperty');
-      expect(draft.document.properties!.baseUrl).toEqual('setValue');
+      expect(draft.document.properties!.environmentPreset).toEqual('setValue');
     });
   });
 

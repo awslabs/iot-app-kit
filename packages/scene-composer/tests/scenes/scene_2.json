@@ -223,7 +223,6 @@
       ]
     }
   },
-  "defaultCameraIndex": 0,
   "properties": {
     "environmentPreset": "neutral",
     "componentSettings": {
