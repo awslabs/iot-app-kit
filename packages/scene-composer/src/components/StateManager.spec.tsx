@@ -27,7 +27,7 @@ import DefaultErrorFallback from './DefaultErrorFallback';
 import { numberStream, stringStream, viewport } from '../../tests/data/mockDataStreams';
 import { DataStream } from '@iot-app-kit/core';
 import useActiveCamera from '../hooks/useActiveCamera';
-import { COMPOSER_FEATURES, KnownComponentType, SceneComposerInternalConfig, setMatterportSdk } from '..';
+import { KnownComponentType, SceneComposerInternalConfig, setMatterportSdk } from '..';
 import * as THREE from 'three';
 import { SCENE_CAPABILITY_MATTERPORT } from '../common/constants';
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
@@ -680,7 +680,7 @@ describe('StateManager', () => {
         <StateManager
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
-          config={{ mode: 'Viewing', featureConfig: { [COMPOSER_FEATURES.AutoQuery]: true } }}
+          config={{ mode: 'Viewing' }}
           onSceneUpdated={jest.fn()}
         />,
       );
@@ -691,25 +691,6 @@ describe('StateManager', () => {
     expect(setAutoQueryEnabledMock).not.toBeCalledWith(false);
   });
 
-  it('should call setAutoQueryEnabled with false when feature is off', async () => {
-    useStore('default').setState(createState('random'));
-
-    await act(async () => {
-      create(
-        <StateManager
-          sceneLoader={mockSceneLoader}
-          sceneMetadataModule={mockSceneMetadataModule}
-          config={{ mode: 'Viewing', featureConfig: { [COMPOSER_FEATURES.AutoQuery]: false } }}
-          onSceneUpdated={jest.fn()}
-        />,
-      );
-      await flushPromises();
-    });
-    expect(setAutoQueryEnabledMock).toBeCalledTimes(1);
-    expect(setAutoQueryEnabledMock).toBeCalledWith(false);
-    expect(setAutoQueryEnabledMock).not.toBeCalledWith(true);
-  });
-
   it('should call setAutoQueryEnabled with false when mode is Editing', async () => {
     useStore('default').setState(createState('random'));
 
@@ -718,7 +699,7 @@ describe('StateManager', () => {
         <StateManager
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
-          config={{ mode: 'Editing', featureConfig: { [COMPOSER_FEATURES.AutoQuery]: true } }}
+          config={{ mode: 'Editing' }}
           onSceneUpdated={jest.fn()}
         />,
       );
@@ -737,7 +718,7 @@ describe('StateManager', () => {
         <StateManager
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
-          config={{ mode: 'Viewing', featureConfig: { [COMPOSER_FEATURES.AutoQuery]: true } }}
+          config={{ mode: 'Viewing' }}
           onSceneUpdated={jest.fn()}
           queries={[]}
         />,
@@ -757,7 +738,7 @@ describe('StateManager', () => {
         <StateManager
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
-          config={{ mode: 'Viewing', featureConfig: { [COMPOSER_FEATURES.AutoQuery]: true } }}
+          config={{ mode: 'Viewing' }}
           onSceneUpdated={jest.fn()}
           dataStreams={[]}
         />,

@@ -4,7 +4,6 @@ import { isEmpty } from 'lodash';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import {
-  COMPOSER_FEATURES,
   DefaultAnchorStatus,
   IAnchorComponent,
   ISceneNode,
@@ -16,7 +15,6 @@ import { MattertagItem, TagItem } from '../utils/matterportTagUtils';
 import { RecursivePartial } from '../utils/typeUtils';
 import { Component } from '../models/SceneModels';
 import { generateUUID } from '../utils/mathUtils';
-import { getGlobalSettings } from '../common/GlobalSettings';
 import { convertToIotTwinMakerNamespace } from '../utils/sceneResourceUtils';
 import { FONT_AWESOME_PREFIX, MATTERPORT_FONTID_PROPERTY } from '../common/constants';
 
@@ -46,19 +44,13 @@ const addTag = (
   addSceneNode: (node: ISceneNode, disableAutoSelect?: boolean) => Readonly<ISceneNode>,
   { id, item }: AddTagInputs,
 ) => {
-  const tagStyleEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
-
   const anchorComponent: IAnchorComponent = {
     type: KnownComponentType.Tag,
     offset: [item.stemVector.x, item.stemVector.y, item.stemVector.z],
-    icon: tagStyleEnabled
-      ? convertToIotTwinMakerNamespace(SceneResourceType.Icon, DefaultAnchorStatus.Custom)
-      : undefined,
-    chosenColor: tagStyleEnabled
-      ? '#' + new Color(item.color.r, item.color.g, item.color.b).getHexString('srgb')
-      : undefined,
+    icon: convertToIotTwinMakerNamespace(SceneResourceType.Icon, DefaultAnchorStatus.Custom),
+    chosenColor: '#' + new Color(item.color.r, item.color.g, item.color.b).getHexString('srgb'),
     customIcon:
-      tagStyleEnabled && MATTERPORT_FONTID_PROPERTY in item && !isEmpty(item.fontId)
+      MATTERPORT_FONTID_PROPERTY in item && !isEmpty(item.fontId)
         ? { prefix: FONT_AWESOME_PREFIX, iconName: item.fontId }
         : undefined,
   };
@@ -85,7 +77,7 @@ const updateTag = (
   updateSceneNode: (ref: string, partial: RecursivePartial<ISceneNodeInternal>, isTransient?: boolean) => void,
   { ref, node, item }: UpdateTagInputs,
 ) => {
-  const shouldSyncTagStyle = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle] && item.color;
+  const shouldSyncTagStyle = item.color;
 
   // assume only one tag per node which is same assumption as findComponentByType
   const components = [...node.components];

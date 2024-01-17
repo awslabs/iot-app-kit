@@ -2,11 +2,10 @@ import { renderHook } from '@testing-library/react-hooks';
 import { MpSdk } from '@matterport/r3f/dist';
 
 import { generateUUID } from '../utils/mathUtils';
-import { COMPOSER_FEATURES, IAnchorComponent, ISceneNode, KnownComponentType } from '../interfaces';
+import { IAnchorComponent, ISceneNode, KnownComponentType } from '../interfaces';
 import { IDataOverlayComponentInternal, ISceneNodeInternal, useStore } from '../store';
 import { MattertagItem, TagItem } from '../utils/matterportTagUtils';
 import { Component } from '../models/SceneModels';
-import { setFeatureConfig } from '../common/GlobalSettings';
 
 import useMatterportTags from './useMatterportTags';
 
@@ -112,7 +111,6 @@ ${mattertagItem.description}`,
       removeSceneNode,
     });
     jest.clearAllMocks();
-    setFeatureConfig({ [COMPOSER_FEATURES.TagStyle]: true });
   });
 
   it('should add matterport mattertag', () => {

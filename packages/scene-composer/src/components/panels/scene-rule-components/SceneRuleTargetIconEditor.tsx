@@ -3,9 +3,8 @@ import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-cor
 import React, { useMemo, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
-import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { SCENE_ICONS } from '../../../common/constants';
-import { COMPOSER_FEATURES, DefaultAnchorStatus } from '../../../interfaces';
+import { DefaultAnchorStatus } from '../../../interfaces';
 import { IIconLookup } from '../../../models/SceneModels';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
 import { colors } from '../../../utils/styleUtils';
@@ -26,22 +25,19 @@ export const SceneRuleTargetIconEditor: React.FC<ISceneRuleTargetIconEditorProps
 }: ISceneRuleTargetIconEditorProps) => {
   const propsSelectedIcon = DefaultAnchorStatus[targetValue] ?? DefaultAnchorStatus.Info;
   const [selectedIcon, setSelectedIcon] = useState<DefaultAnchorStatus>(propsSelectedIcon);
-  const tagStyle = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
 
   const intl = useIntl();
 
-  const options = Object.keys(SCENE_ICONS)
-    .filter((icon) => (!tagStyle && icon !== 'Custom') || tagStyle)
-    .map((sceneIcon) => ({
-      label: intl.formatMessage(i18nSceneIconsKeysStrings[sceneIcon]) || sceneIcon,
-      value: sceneIcon,
-    }));
+  const options = Object.keys(SCENE_ICONS).map((sceneIcon) => ({
+    label: intl.formatMessage(i18nSceneIconsKeysStrings[sceneIcon]) || sceneIcon,
+    value: sceneIcon,
+  }));
 
   const iconString = useMemo(() => {
     return btoa(SCENE_ICONS[selectedIcon]);
   }, [selectedIcon]);
 
-  const isCustomStyle = tagStyle && targetValue === 'Custom';
+  const isCustomStyle = targetValue === 'Custom';
 
   const i18nIconStrings = defineMessages({
     [DefaultAnchorStatus.Info]: { defaultMessage: 'Info icon', description: 'Icon name label' },
