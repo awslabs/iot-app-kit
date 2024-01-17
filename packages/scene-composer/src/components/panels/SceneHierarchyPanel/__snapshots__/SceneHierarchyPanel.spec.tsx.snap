@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SceneHierarchyPanel should render search hierarchy correctly when enabled is "C" 1`] = `
+exports[`SceneHierarchyPanel should render hierarchy correctly when enabled is "C" 1`] = `
 <div>
   <div
     class="tm-hierarchy-panel"
@@ -28,7 +28,7 @@ exports[`SceneHierarchyPanel should render search hierarchy correctly when enabl
 </div>
 `;
 
-exports[`SceneHierarchyPanel should render search hierarchy correctly when enabled is "T1" 1`] = `
+exports[`SceneHierarchyPanel should render hierarchy correctly when enabled is "T1" 1`] = `
 <div>
   <div
     class="tm-hierarchy-panel"

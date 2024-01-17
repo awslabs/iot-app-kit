@@ -67,7 +67,6 @@ describe('AddObjectMenu', () => {
     jest.clearAllMocks();
 
     setFeatureConfig({
-      [COMPOSER_FEATURES.CameraView]: true,
       [COMPOSER_FEATURES.EnvironmentModel]: true,
       [COMPOSER_FEATURES.DynamicScene]: true,
     });
@@ -266,16 +265,7 @@ describe('AddObjectMenu', () => {
     expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-motion-indicator');
   });
 
-  it('should not see add overlay item when feature is not enabled', () => {
-    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: false });
-
-    render(<AddObjectMenu canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);
-
-    expect(screen.queryByTestId('add-overlay-menu')).toBeNull();
-  });
-
   it('should call setAddingWidget when adding a annotation', () => {
-    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true });
     const component: IDataOverlayComponent = {
       type: KnownComponentType.DataOverlay,
       valueDataBindings: [],

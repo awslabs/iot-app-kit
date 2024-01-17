@@ -81,7 +81,6 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
           {
             uuid: ObjectTypes.Overlay,
             isDisabled: isOverlayComponent,
-            feature: { name: COMPOSER_FEATURES.Overlay },
           },
         ]
       : [];

@@ -1,8 +1,8 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 
-import { setFeatureConfig, setMetricRecorder } from '../../common/GlobalSettings';
-import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
+import { setMetricRecorder } from '../../common/GlobalSettings';
+import { KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
 import { useStore } from '../../store';
 
@@ -27,7 +27,6 @@ describe('AddComponentMenu', () => {
       updateComponentInternal,
       getSceneNodeByRef,
     });
-    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true });
   });
 
   it('should show add overlay for Tag node without overlay and call addComponentInternal when clicked', () => {

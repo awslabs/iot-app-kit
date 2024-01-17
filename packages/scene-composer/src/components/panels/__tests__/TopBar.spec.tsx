@@ -4,13 +4,7 @@ import * as THREE from 'three';
 
 import { TopBar } from '../TopBar';
 import { useStore } from '../../../store';
-import {
-  COMPOSER_FEATURES,
-  DEFAULT_CAMERA_OPTIONS,
-  DEFAULT_CAMERA_POSITION,
-  KnownComponentType,
-  setFeatureConfig,
-} from '../../..';
+import { DEFAULT_CAMERA_OPTIONS, DEFAULT_CAMERA_POSITION, KnownComponentType } from '../../..';
 import useActiveCamera from '../../../hooks/useActiveCamera';
 
 jest.mock('../../../hooks/useActiveCamera', () => jest.fn().mockReturnValue({ setActiveCameraSettings: jest.fn() }));
@@ -91,7 +85,6 @@ describe('<TopBar />', () => {
     };
 
     useStore('default').setState({ ...baseState, document });
-    setFeatureConfig({ [COMPOSER_FEATURES.CameraView]: true });
     const { setActiveCameraSettings } = useActiveCamera();
 
     const { getByTestId } = render(<TopBar />);

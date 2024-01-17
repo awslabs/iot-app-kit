@@ -1,56 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SceneRuleTargetEditor should render a drop down with appropriate options: { opacityRuleFeature: C, type: Color } 1`] = `
-<div>
-  <div
-    data-mocked="Grid"
-    griddefinition="[{\\"colspan\\":4},{\\"colspan\\":8}]"
-  >
-    <div
-      data-mocked="Select"
-      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"}]"
-      selectedarialabel="test message"
-      selectedoption="{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"}"
-    />
-    SceneRuleTargetColorEditor
-  </div>
-</div>
-`;
-
-exports[`SceneRuleTargetEditor should render a drop down with appropriate options: { opacityRuleFeature: C, type: Icon } 1`] = `
-<div>
-  <div
-    data-mocked="Grid"
-    griddefinition="[{\\"colspan\\":4},{\\"colspan\\":8}]"
-  >
-    <div
-      data-mocked="Select"
-      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"}]"
-      selectedarialabel="test message"
-      selectedoption="{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"}"
-    />
-    SceneRuleTargetIconEditor
-  </div>
-</div>
-`;
-
-exports[`SceneRuleTargetEditor should render a drop down with appropriate options: { opacityRuleFeature: C, type: Opacity } 1`] = `
-<div>
-  <div
-    data-mocked="Grid"
-    griddefinition="[{\\"colspan\\":4},{\\"colspan\\":8}]"
-  >
-    <div
-      data-mocked="Select"
-      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"}]"
-      selectedarialabel="test message"
-      selectedoption="{\\"label\\":\\"test message\\",\\"value\\":\\"Opacity\\"}"
-    />
-  </div>
-</div>
-`;
-
-exports[`SceneRuleTargetEditor should render a drop down with appropriate options: { opacityRuleFeature: T1, type: Color } 1`] = `
+exports[`SceneRuleTargetEditor should render a drop down with appropriate resource type: Color 1`] = `
 <div>
   <div
     data-mocked="Grid"
@@ -67,7 +17,7 @@ exports[`SceneRuleTargetEditor should render a drop down with appropriate option
 </div>
 `;
 
-exports[`SceneRuleTargetEditor should render a drop down with appropriate options: { opacityRuleFeature: T1, type: Icon } 1`] = `
+exports[`SceneRuleTargetEditor should render a drop down with appropriate resource type: Icon 1`] = `
 <div>
   <div
     data-mocked="Grid"
@@ -84,7 +34,7 @@ exports[`SceneRuleTargetEditor should render a drop down with appropriate option
 </div>
 `;
 
-exports[`SceneRuleTargetEditor should render a drop down with appropriate options: { opacityRuleFeature: T1, type: Opacity } 1`] = `
+exports[`SceneRuleTargetEditor should render a drop down with appropriate resource type: Opacity 1`] = `
 <div>
   <div
     data-mocked="Grid"

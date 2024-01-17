@@ -4,7 +4,6 @@ import { defineMessages, useIntl } from 'react-intl';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import useFeature from '../../../hooks/useFeature';
 import { COMPOSER_FEATURES, KnownSceneProperty, SceneResourceType, TargetMetadata } from '../../../interfaces';
 import { IIconLookup } from '../../../models/SceneModels';
 import { useSceneDocument, useStore } from '../../../store';
@@ -54,21 +53,16 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
   const targetInfo = getSceneResourceInfo(target);
   const { formatMessage } = useIntl();
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const [{ variation: opacityRuleEnabled }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.OpacityRule]);
   const tagStyle = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
   const [chosenColor, setChosenColor] = useState<string>(targetMetadata?.color ?? colors.customBlue);
   const [icon, setIcon] = useState<IIconLookup>({
     prefix: targetMetadata?.iconPrefix as string,
     iconName: targetMetadata?.iconName as string,
   });
-  const options = Object.values(SceneResourceType)
-    .filter((type) => {
-      return opacityRuleEnabled === 'C' ? type !== SceneResourceType.Opacity : true;
-    })
-    .map((type) => ({
-      label: formatMessage(i18nSceneResourceTypeStrings[SceneResourceType[type]]) || SceneResourceType[type],
-      value: SceneResourceType[type],
-    }));
+  const options = Object.values(SceneResourceType).map((type) => ({
+    label: formatMessage(i18nSceneResourceTypeStrings[SceneResourceType[type]]) || SceneResourceType[type],
+    value: SceneResourceType[type],
+  }));
   const { getSceneProperty } = useSceneDocument(sceneComposerId);
 
   const tagStyleColors = getSceneProperty<string[]>(KnownSceneProperty.TagCustomColors, []);
@@ -156,7 +150,7 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
           onChange={(targetValue) => onChange(convertToIotTwinMakerNamespace(targetInfo.type, targetValue))}
         />
       )}
-      {opacityRuleEnabled === 'T1' && targetInfo.type === SceneResourceType.Opacity && (
+      {targetInfo.type === SceneResourceType.Opacity && (
         <SceneRuleTargetOpacityEditor
           targetValue={targetInfo.value}
           onChange={(targetValue) => onChange(convertToIotTwinMakerNamespace(targetInfo.type, targetValue))}

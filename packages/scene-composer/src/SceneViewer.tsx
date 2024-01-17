@@ -71,10 +71,6 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
             // Allow beta users to override feature config
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             ...((config as any)?.featureConfig || {}),
-            [COMPOSER_FEATURES.CameraView]: true,
-            [COMPOSER_FEATURES.OpacityRule]: true,
-            [COMPOSER_FEATURES.Overlay]: true,
-            [COMPOSER_FEATURES.TagResize]: true,
             [COMPOSER_FEATURES.Matterport]: true,
             [COMPOSER_FEATURES.TagStyle]: true,
             [COMPOSER_FEATURES.AutoQuery]: true,
