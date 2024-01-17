@@ -2,9 +2,8 @@ import { Grid, Select } from '@awsui/components-react';
 import React, { useContext, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
-import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { COMPOSER_FEATURES, KnownSceneProperty, SceneResourceType, TargetMetadata } from '../../../interfaces';
+import { KnownSceneProperty, SceneResourceType, TargetMetadata } from '../../../interfaces';
 import { IIconLookup } from '../../../models/SceneModels';
 import { useSceneDocument, useStore } from '../../../store';
 import {
@@ -53,7 +52,6 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
   const targetInfo = getSceneResourceInfo(target);
   const { formatMessage } = useIntl();
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const tagStyle = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
   const [chosenColor, setChosenColor] = useState<string>(targetMetadata?.color ?? colors.customBlue);
   const [icon, setIcon] = useState<IIconLookup>({
     prefix: targetMetadata?.iconPrefix as string,
@@ -68,7 +66,7 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
   const tagStyleColors = getSceneProperty<string[]>(KnownSceneProperty.TagCustomColors, []);
   const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
 
-  const isCustomStyle = tagStyle && targetInfo.value === 'Custom';
+  const isCustomStyle = targetInfo.value === 'Custom';
   return (
     <Grid gridDefinition={[{ colspan: 4 }, { colspan: 8 }]}>
       <Select

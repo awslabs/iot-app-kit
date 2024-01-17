@@ -72,8 +72,6 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             ...((config as any)?.featureConfig || {}),
             [COMPOSER_FEATURES.Matterport]: true,
-            [COMPOSER_FEATURES.TagStyle]: true,
-            [COMPOSER_FEATURES.AutoQuery]: true,
             [COMPOSER_FEATURES.SceneAppearance]: true,
           },
         }}

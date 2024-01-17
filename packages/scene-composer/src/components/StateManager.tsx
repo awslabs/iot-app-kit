@@ -105,7 +105,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     setAutoQueryEnabled,
   } = useViewOptionState(sceneComposerId);
   const { enableMatterportViewer } = useMatterportViewer();
-  const autoQueryEnabled = !!config?.featureConfig?.[COMPOSER_FEATURES.AutoQuery];
   const dataProviderRef = useRef<ProviderWithViewport<TimeSeriesData[]> | undefined>(undefined);
   const prevSelection = useRef<string | undefined>(undefined);
   const [matterportReady, setMatterportReady] = useState<boolean>(false);
@@ -216,8 +215,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   }, [config.featureConfig]);
 
   useEffect(() => {
-    setAutoQueryEnabled(isViewing && autoQueryEnabled && !queries && !dataStreams);
-  }, [isViewing, autoQueryEnabled, queries, dataStreams]);
+    setAutoQueryEnabled(isViewing && !queries && !dataStreams);
+  }, [isViewing, queries, dataStreams]);
 
   useEffect(() => {
     if (config.metricRecorder) {

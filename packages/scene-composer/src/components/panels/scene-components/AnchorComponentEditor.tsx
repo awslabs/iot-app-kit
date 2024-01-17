@@ -4,16 +4,9 @@ import { debounce } from 'lodash';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
-import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { SCENE_ICONS } from '../../../common/constants';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import {
-  COMPOSER_FEATURES,
-  DefaultAnchorStatus,
-  IValueDataBinding,
-  KnownSceneProperty,
-  SceneResourceType,
-} from '../../../interfaces';
+import { DefaultAnchorStatus, IValueDataBinding, KnownSceneProperty, SceneResourceType } from '../../../interfaces';
 import { IAnchorComponentInternal, ISceneComponentInternal, useSceneDocument, useStore } from '../../../store';
 import { isDynamicNode } from '../../../utils/entityModelUtils/sceneUtils';
 import { shallowEqualsArray } from '../../../utils/objectUtils';
@@ -50,7 +43,6 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
   component,
 }: IAnchorComponentEditorProps) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const tagStyle = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
   const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
   const valueDataBindingProvider = useStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
@@ -166,16 +158,12 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
     [items],
   );
 
-  const iconOptions = useMemo(() => {
-    return Object.keys(SCENE_ICONS)
-      .filter((icon) => (!tagStyle && icon !== 'Custom') || tagStyle)
-      .map((sceneIcon) => {
-        return {
-          label: intl.formatMessage(i18nSceneIconsKeysStrings[sceneIcon]) || sceneIcon,
-          value: sceneIcon,
-        };
-      });
-  }, [tagStyle]);
+  const iconOptions = Object.keys(SCENE_ICONS).map((sceneIcon) => {
+    return {
+      label: intl.formatMessage(i18nSceneIconsKeysStrings[sceneIcon]) || sceneIcon,
+      value: sceneIcon,
+    };
+  });
 
   const iconSelectedOptionIndex = useMemo(() => {
     if (!anchorComponent.icon) {
@@ -210,7 +198,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
 
   const hasIcon = iconSelectedOptionIndex >= 0;
   const iconGridDefinition = hasIcon ? [{ colspan: 10 }, { colspan: 2 }] : [{ colspan: 12 }];
-  const isCustomStyle = tagStyle && iconOptions[iconSelectedOptionIndex]?.value === 'Custom';
+  const isCustomStyle = iconOptions[iconSelectedOptionIndex]?.value === 'Custom';
   const customIcon = (anchorComponent.customIcon ?? { prefix: '', iconName: '' }) as IconLookup;
   return (
     <SpaceBetween size='s'>
