@@ -50,6 +50,7 @@ export const YAxisSection: FC<YAxisSectionOptions> = ({
               value={`${yLabel ?? ''}`}
               type='text'
               onChange={({ detail }) => updateYLabel(detail.value)}
+              disabled={!visible}
             />
           </FormField>
         </Box>
@@ -65,6 +66,7 @@ export const YAxisSection: FC<YAxisSectionOptions> = ({
               value={`${min ?? ''}`}
               type='number'
               onChange={({ detail }) => onSetRange(updateMin, detail.value)}
+              disabled={!visible}
             />
 
             <label htmlFor='y-axis-max'>Max</label>
@@ -74,6 +76,7 @@ export const YAxisSection: FC<YAxisSectionOptions> = ({
               value={`${max ?? ''}`}
               type='number'
               onChange={({ detail }) => onSetRange(updateMax, detail.value)}
+              disabled={!visible}
             />
           </FormField>
         </Box>
