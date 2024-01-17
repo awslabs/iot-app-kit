@@ -1,4 +1,4 @@
-import { AssetModelPropertySummary } from '@aws-sdk/client-iotsitewise';
+import type { AssetModelPropertySummary } from '@aws-sdk/client-iotsitewise';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import Table from '@cloudscape-design/components/table';
 import React from 'react';
@@ -16,6 +16,10 @@ import { SelectedAssetModelProperties } from '../../useSelectedAssetModelPropert
 import { useCustomCompareEffect } from 'react-use';
 import { isEqual } from 'lodash';
 import { ResourceExplorerFooter } from '../../../footer/footer';
+
+import { useSelector } from 'react-redux';
+import { DashboardState } from '~/store/state';
+import { isModeledPropertyInvalid } from '~/components/queryEditor/helpers/isModeledPropertyInvalid';
 
 export interface AssetTableProps {
   onClickNextPage: () => void;
@@ -49,6 +53,10 @@ export function AssetModelPropertiesTable({
     defaultVisibleContent: ['name'],
     resourceName: 'asset model properties',
   });
+
+  const selectedWidgets = useSelector(
+    (state: DashboardState) => state.selectedWidgets
+  );
 
   const {
     items,
@@ -99,6 +107,9 @@ export function AssetModelPropertiesTable({
       loading={isLoading}
       loadingText='Loading asset model properties...'
       selectionType='multi'
+      isItemDisabled={(item) =>
+        isModeledPropertyInvalid(item.dataType, selectedWidgets?.at(0)?.type)
+      }
       onSelectionChange={(event) => {
         const selectedAssets = event.detail.selectedItems;
         onSelectAssetModelProperties(selectedAssets);
