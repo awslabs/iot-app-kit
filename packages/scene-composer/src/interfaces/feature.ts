@@ -9,9 +9,6 @@ export enum COMPOSER_FEATURES {
   FirstPerson = 'FirstPerson',
   SceneAppearance = 'SceneAppearance',
   Textures = 'Textures',
-
-  // Deprecated features (to be removed)
-  EnvironmentModel = 'EnvironmentModel',
 }
 
 export type FeatureConfig = Partial<Record<COMPOSER_FEATURES, boolean>>;

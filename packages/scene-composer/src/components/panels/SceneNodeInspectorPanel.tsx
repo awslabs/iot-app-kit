@@ -13,7 +13,7 @@ import LogProvider from '../../logger/react-logger/log-provider';
 import { Component } from '../../models/SceneModels';
 import { ISceneNodeInternal, useEditorState, useSceneDocument } from '../../store';
 import { useSnapObjectToFloor } from '../../three/transformUtils';
-import { findComponentByType, isEnvironmentNode } from '../../utils/nodeUtils';
+import { findComponentByType } from '../../utils/nodeUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
 import { toNumber } from '../../utils/stringUtils';
 import { RecursivePartial } from '../../utils/typeUtils';
@@ -189,7 +189,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
             <TextInput value={selectedSceneNode.name} setValue={(e) => handleInputChanges({ name: e?.toString() })} />
           </FormField>
         </ExpandableInfoSection>
-        {!isEnvironmentNode(selectedSceneNode) && transformVisible && (
+        {transformVisible && (
           <ExpandableInfoSection
             title={intl.formatMessage({ defaultMessage: 'Transform', description: 'Expandable section title' })}
             defaultExpanded

@@ -8,7 +8,7 @@ import { useStore } from '../../store';
 import { TransformControls as TransformControlsImpl } from '../../three/TransformControls';
 import { snapObjectToFloor } from '../../three/transformUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
-import { findComponentByType, isEnvironmentNode } from '../../utils/nodeUtils';
+import { findComponentByType } from '../../utils/nodeUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
 
@@ -76,7 +76,7 @@ export function EditorTransformControls() {
 
   // Update transform controls' attached object
   useEffect(() => {
-    if (selectedSceneNodeRef && !isEnvironmentNode(selectedSceneNode) && transformVisible) {
+    if (selectedSceneNodeRef && transformVisible) {
       const object3d = getObject3DBySceneNodeRef(selectedSceneNodeRef);
       if (object3d) {
         log?.verbose('attach transform controls to', object3d);

@@ -6,7 +6,6 @@ import { IModelRefComponentInternal, ISceneNodeInternal, useEditorState, useNode
 import LogProvider from '../../../logger/react-logger/log-provider';
 
 import { TilesModelComponent } from './TilesModelComponent';
-import { EnvironmentModelComponent } from './EnvironmentModelComponent';
 import { ErrorModelComponent, GLTFModelComponent } from './GLTFModelComponent';
 
 const ModelRefComponent = ({
@@ -36,12 +35,6 @@ const ModelRefComponent = ({
           component={component}
           hiddenWhileImmersive={node.properties.hiddenWhileImmersive === true && cameraControlsType === 'immersive'}
         />
-      </LogProvider>
-    );
-  } else if (component.modelType === ModelType.Environment) {
-    return (
-      <LogProvider namespace='ModelRefComponent' ErrorView={ErrorModelComponent} onError={onError}>
-        <EnvironmentModelComponent node={node} component={component} />
       </LogProvider>
     );
   } else if (component.modelType === ModelType.Tiles3D) {

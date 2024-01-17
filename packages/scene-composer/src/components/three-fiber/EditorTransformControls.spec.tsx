@@ -40,11 +40,9 @@ jest.doMock('../../../src/three/TransformControls', () => {
 });
 
 const mockFindComponentByType = jest.fn();
-const mockisEnvironmentNode = jest.fn();
 jest.doMock('../../../src/utils/nodeUtils', () => {
   return {
     findComponentByType: mockFindComponentByType,
-    isEnvironmentNode: mockisEnvironmentNode,
   };
 });
 
@@ -382,17 +380,6 @@ describe('EditorTransformControls', () => {
 
     // detach
     expect(MockTransformControls.detach).toBeCalledTimes(1);
-  });
-
-  it('should not attach and detach to an node with an EnvironmentModelComponent', async () => {
-    useStore('default').setState(baseState);
-    mockisEnvironmentNode.mockReturnValue(true);
-
-    render(<EditorTransformControls />);
-
-    // attach
-    expect(MockTransformControls.attach).not.toHaveBeenCalled();
-    expect(MockTransformControls.detach).toHaveBeenCalled();
   });
 
   it('should flipY when selected node has overlay component', async () => {
