@@ -5,9 +5,8 @@ import { create } from 'react-test-renderer';
 
 import { SceneLayout } from '.';
 import { useStore } from '../../store';
-import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
+import { KnownComponentType } from '../../interfaces';
 import useSelectedNode from '../../hooks/useSelectedNode';
-import { setFeatureConfig } from '../../common/GlobalSettings';
 
 jest.mock('.', () => {
   const originalModule = jest.requireActual('.');
@@ -58,8 +57,6 @@ describe('SceneLayout', () => {
         ],
       },
     });
-
-    setFeatureConfig({ [COMPOSER_FEATURES.CameraView]: true });
   });
 
   [

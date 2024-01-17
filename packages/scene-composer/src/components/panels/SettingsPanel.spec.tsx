@@ -3,7 +3,6 @@ import { render } from '@testing-library/react';
 
 import { useStore } from '../../store';
 import { setFeatureConfig } from '../../common/GlobalSettings';
-import { COMPOSER_FEATURES } from '../../interfaces';
 import { mockProvider } from '../../../tests/components/panels/scene-components/MockComponents';
 import useDynamicScene from '../../hooks/useDynamicScene';
 
@@ -47,7 +46,6 @@ describe('SettingsPanel contains expected elements.', () => {
   });
 
   it('should contains default elements in editing mode.', async () => {
-    setFeatureConfig({ [COMPOSER_FEATURES.TagResize]: false });
     useStore('default').setState({
       isEditing: jest.fn().mockReturnValue(true),
     });
@@ -56,7 +54,7 @@ describe('SettingsPanel contains expected elements.', () => {
 
     expect(queryByTitle('Current View Settings')).toBeTruthy();
     expect(queryByTitle('Scene Settings')).toBeTruthy();
-    expect(queryByTitle('Tag Settings')).toBeFalsy();
+    expect(queryByTitle('Tag Settings')).toBeTruthy();
     expect(queryByTitle('Data Binding Template')).toBeTruthy();
     expect(container).toMatchSnapshot();
   });
@@ -70,22 +68,12 @@ describe('SettingsPanel contains expected elements.', () => {
 
     expect(queryByTitle('Current View Settings')).toBeTruthy();
     expect(queryByTitle('Scene Settings')).toBeFalsy();
-    expect(queryByTitle('Tag Settings')).toBeFalsy();
+    expect(queryByTitle('Tag Settings')).toBeTruthy();
     expect(queryByTitle('Data Binding Template')).toBeFalsy();
     expect(container).toMatchSnapshot();
   });
 
-  it('should contains tag settings element.', async () => {
-    setFeatureConfig({ [COMPOSER_FEATURES.TagResize]: true });
-
-    const { container, queryByTitle } = render(<SettingsPanel />);
-
-    expect(queryByTitle('Tag Settings')).toBeTruthy();
-    expect(container).toMatchSnapshot();
-  });
-
   it('should contains settings element for overlay in editing.', async () => {
-    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true });
     useStore('default').setState({
       isEditing: jest.fn().mockReturnValue(true),
     });
@@ -100,7 +88,6 @@ describe('SettingsPanel contains expected elements.', () => {
   });
 
   it('should contains settings element for overlay in viewing.', async () => {
-    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true });
     useStore('default').setState({
       isEditing: jest.fn().mockReturnValue(false),
     });

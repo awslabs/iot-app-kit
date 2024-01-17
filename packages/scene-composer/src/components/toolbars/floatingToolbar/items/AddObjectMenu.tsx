@@ -147,7 +147,6 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
         },
         {
           uuid: ObjectTypes.ViewCamera,
-          feature: { name: COMPOSER_FEATURES.CameraView },
           isDisabled: enableMatterportViewer,
         },
         {
@@ -155,7 +154,6 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
         },
         {
           uuid: ObjectTypes.Annotation,
-          feature: { name: COMPOSER_FEATURES.Overlay },
         },
         {
           uuid: ObjectTypes.ModelShader,

@@ -34,9 +34,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
   const isEditing = useStore(sceneComposerId)((state) => state.isEditing());
   const intl = useIntl();
 
-  const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
   const matterportEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Matterport];
-  const overlayEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Overlay];
   const sceneAppearanceEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SceneAppearance];
   const animationComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Animations];
   const dynamicSceneEnabled = useDynamicScene();
@@ -137,24 +135,16 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
             componentType={KnownComponentType.Tag}
             label={intl.formatMessage(visibilityToggleLabels[KnownComponentType.Tag])}
           />
-          {overlayEnabled && (
-            <>
-              <Divider />
-              <ComponentVisibilityToggle
-                componentType={Component.DataOverlaySubType.OverlayPanel}
-                label={intl.formatMessage(visibilityToggleLabels[Component.DataOverlaySubType.OverlayPanel])}
-              />
-            </>
-          )}
-          {overlayEnabled && (
-            <>
-              <Divider />
-              <ComponentVisibilityToggle
-                componentType={Component.DataOverlaySubType.TextAnnotation}
-                label={intl.formatMessage(visibilityToggleLabels[Component.DataOverlaySubType.TextAnnotation])}
-              />
-            </>
-          )}
+          <Divider />
+          <ComponentVisibilityToggle
+            componentType={Component.DataOverlaySubType.OverlayPanel}
+            label={intl.formatMessage(visibilityToggleLabels[Component.DataOverlaySubType.OverlayPanel])}
+          />
+          <Divider />
+          <ComponentVisibilityToggle
+            componentType={Component.DataOverlaySubType.TextAnnotation}
+            label={intl.formatMessage(visibilityToggleLabels[Component.DataOverlaySubType.TextAnnotation])}
+          />
         </FormField>
       </ExpandableInfoSection>
 
@@ -197,15 +187,13 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
         </ExpandableInfoSection>
       )}
 
-      {(tagResizeEnabled || overlayEnabled) && (
-        <ExpandableInfoSection
-          title={intl.formatMessage({ description: 'ExpandableInfoSection Title', defaultMessage: 'Tag Settings' })}
-          defaultExpanded={false}
-        >
-          {tagResizeEnabled && <SceneTagSettingsEditor />}
-          {overlayEnabled && isEditing && <OverlayPanelVisibilityToggle />}
-        </ExpandableInfoSection>
-      )}
+      <ExpandableInfoSection
+        title={intl.formatMessage({ description: 'ExpandableInfoSection Title', defaultMessage: 'Tag Settings' })}
+        defaultExpanded={false}
+      >
+        <SceneTagSettingsEditor />
+        {isEditing && <OverlayPanelVisibilityToggle />}
+      </ExpandableInfoSection>
 
       {valueDataBindingProvider && isEditing && (
         <ExpandableInfoSection

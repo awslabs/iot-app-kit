@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import { SceneNodeInspectorPanel } from '../SceneNodeInspectorPanel';
-import { COMPOSER_FEATURES, KnownComponentType } from '../../../interfaces';
+import { KnownComponentType } from '../../../interfaces';
 import { Component, ModelType } from '../../../models/SceneModels';
 import { ISceneNodeInternal, useStore } from '../../../store';
 import { setFeatureConfig } from '../../../common/GlobalSettings';
@@ -119,7 +119,6 @@ describe('SceneNodeInspectorPanel returns expected elements.', () => {
   });
 
   it('disable rotation, hide scale and render correct overlay section when selected scene node is Tag.', async () => {
-    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true });
     getSceneNodeByRef.mockReturnValue({
       ...baseNode,
       components: [
@@ -144,7 +143,6 @@ describe('SceneNodeInspectorPanel returns expected elements.', () => {
   });
 
   it('disable scale and rotation when selected scene node is Annotation.', async () => {
-    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true });
     getSceneNodeByRef.mockReturnValue({
       ...baseNode,
       components: [
@@ -173,7 +171,6 @@ describe('SceneNodeInspectorPanel returns expected elements.', () => {
   });
 
   it('disable rotation, hide scale and render correct overlay section when selected scene node is Tag with Overlay panel.', async () => {
-    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true });
     getSceneNodeByRef.mockReturnValue({
       ...baseNode,
       components: [
