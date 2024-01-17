@@ -22,8 +22,8 @@ import { ResourceExplorerFooter } from '../../../footer/footer';
 import { SelectedAsset } from '../../types';
 import { ResourceExplorerErrorState } from '../../components/resourceExplorerErrorState';
 import { getPlugin } from '@iot-app-kit/core';
-import { isInValidProperty } from './util/resourceExplorerTableLabels';
 import { disableAdd } from '~/components/queryEditor/iotSiteWiseQueryEditor/footer/disableAdd';
+import { isModeledPropertyInvalid } from '~/components/queryEditor/helpers/isModeledPropertyInvalid';
 
 export interface ModeledDataStreamTableProps {
   onClickAddModeledDataStreams: (
@@ -139,7 +139,7 @@ export function ModeledDataStreamTable({
     );
 
     if (
-      isInValidProperty(
+      isModeledPropertyInvalid(
         modeledDataStream.dataType,
         selectedWidgets?.at(0)?.type
       )
@@ -174,7 +174,7 @@ export function ModeledDataStreamTable({
       wrapLines={preferences.wrapLines}
       stickyColumns={preferences.stickyColumns}
       isItemDisabled={(item) =>
-        isInValidProperty(item.dataType, selectedWidgets?.at(0)?.type)
+        isModeledPropertyInvalid(item.dataType, selectedWidgets?.at(0)?.type)
       }
       empty={
         <ModeledDataStreamTableEmptyState
