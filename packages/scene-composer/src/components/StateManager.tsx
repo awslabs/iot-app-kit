@@ -92,7 +92,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const [updatedExternalLibraryConfig, setUpdatedExternalLibraryConfig] = useState<ExternalLibraryConfig | undefined>(
     externalLibraryConfig,
   );
-  const baseUrl = useStore(sceneComposerId)((state) => state.getSceneProperty<string>(KnownSceneProperty.BaseUrl));
   const messages = useStore(sceneComposerId)((state) => state.getMessages());
   const matterportModelId = useStore(sceneComposerId)((state) =>
     state.getSceneProperty<string>(KnownSceneProperty.MatterportModelId),
@@ -114,8 +113,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const { setActiveCameraSettings, setActiveCameraName } = useActiveCamera();
 
   const standardUriModifier = useMemo(
-    () => createStandardUriModifier(sceneContentUri || '', baseUrl),
-    [sceneContentUri, baseUrl],
+    () => createStandardUriModifier(sceneContentUri || '', undefined),
+    [sceneContentUri],
   );
 
   const isViewing = config.mode === 'Viewing';

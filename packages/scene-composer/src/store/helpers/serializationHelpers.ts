@@ -762,9 +762,6 @@ function serializeDocument(document: ISceneDocumentInternal, specVersion: string
       : [],
 
     rules,
-
-    // TODO: allow picking a default camera, currently it's hard coded as the first camera
-    defaultCameraIndex: indexedObjectCollector[KnownComponentType.Camera] ? 0 : undefined,
   };
 
   return JSON.stringify(exportedScene, ...stringifyArgs);

@@ -62,7 +62,6 @@ export interface Scene {
   properties?: KeyValuePair;
   rules?: Record<string, RuleBasedMap>;
   cameras?: Array<Camera>;
-  defaultCameraIndex?: number;
 }
 
 export enum CameraType {
