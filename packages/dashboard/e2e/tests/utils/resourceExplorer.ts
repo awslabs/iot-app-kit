@@ -50,6 +50,15 @@ export const resourceExplorerUtil = (page: Page) => {
       await frame.getByText('Set asset model').click();
     },
     /**
+     * finds an asset property
+     *
+     * @returns Locator
+     *
+     */
+    findProperty: (label: string) => {
+      return frame.getByLabel(`Select asset model property ${label}`);
+    },
+    /**
      * select an asset model property from the table
      *
      * @returns void

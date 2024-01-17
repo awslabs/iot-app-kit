@@ -54,11 +54,51 @@ test('can load configure a widget with an asset model', async ({ page }) => {
   await saveAssetModel();
 
   // select property on asset model and add to widget
-  await selectProperty('Coordinates');
+  await selectProperty('Production Rate');
   await addToWidget();
 
   // check that widget is not in empty state
   await expect(page.getByText(WIDGET_EMPTY_STATE_TEXT)).not.toBeVisible();
   // check that property is visible in legend
-  await expect(grid.gridArea().getByText('Coordinates')).toBeVisible();
+  await expect(grid.gridArea().getByText('Production Rate')).toBeVisible();
+});
+
+test('properties are disabled and enabled according to their data type', async ({
+  page,
+}) => {
+  await page.goto(TEST_PAGE);
+
+  const grid = gridUtil(page);
+  const resourceExplorer = resourceExplorerUtil(page);
+
+  // add line widget
+  const location1 = await grid.cellLocation(0, 0);
+  const lineWidget = await grid.addWidget('line', () => location1);
+
+  // select line widget
+  await grid.clickWidget(lineWidget);
+
+  // check that widget is in empty state
+  await expect(page.getByText(WIDGET_EMPTY_STATE_TEXT)).toBeVisible();
+
+  // open resource explorer and tab to asset model tab
+  await resourceExplorer.open();
+  await expect(page.locator(ASSET_MODEL_TAB)).toBeVisible();
+  await resourceExplorer.tabTo('assetModel');
+
+  const { selectAssetModel, selectAsset, saveAssetModel, findProperty } =
+    resourceExplorer.assetModelActions;
+
+  // configure asset model and default asset and select
+  await selectAssetModel('Site');
+  await selectAsset('Africa site');
+  await saveAssetModel();
+
+  // check that number property is not disabled
+  const validProperty = findProperty('Production Rate');
+  await expect(validProperty).not.toBeDisabled();
+
+  // check that string property is disabled
+  const invalidProperty = findProperty('Coordinates');
+  await expect(invalidProperty).toBeDisabled();
 });
