@@ -107,7 +107,6 @@
     "@iot-app-kit/core": "9.13.0",
     "@iot-app-kit/core-util": "9.13.0",
     "@iot-app-kit/source-iottwinmaker": "9.13.0",
-    "@tanstack/react-table": "^8.10.7",
     "color": "^4.2.3",
     "copy-to-clipboard": "^3.3.3",
     "d3-array": "^3.2.3",
