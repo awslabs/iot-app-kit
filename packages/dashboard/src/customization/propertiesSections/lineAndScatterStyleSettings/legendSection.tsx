@@ -32,7 +32,11 @@ export const LegendSection: FC<LegendSectionOptions> = ({
     >
       <Box padding='s'>
         <SpaceBetween size='m'>
-          <AlignmentDropdown position={position} onTypeChange={handleType} />
+          <AlignmentDropdown
+            position={position}
+            onTypeChange={handleType}
+            disabled={!visible}
+          />
         </SpaceBetween>
       </Box>
     </StyleExpandableSection>
