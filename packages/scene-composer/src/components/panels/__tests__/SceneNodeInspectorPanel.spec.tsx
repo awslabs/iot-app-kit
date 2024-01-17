@@ -99,25 +99,6 @@ describe('SceneNodeInspectorPanel returns expected elements.', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('SceneNode panel contains expected elements when selected Environment model.', async () => {
-    getSceneNodeByRef.mockReturnValue({
-      ...baseNode,
-      components: [
-        {
-          type: KnownComponentType.ModelRef,
-          modelType: ModelType.Environment,
-        },
-      ],
-      transformConstraint: {
-        snapToFloor: true,
-      },
-    });
-
-    const { container } = render(<SceneNodeInspectorPanel />);
-
-    expect(container).toMatchSnapshot();
-  });
-
   it('disable rotation, hide scale and render correct overlay section when selected scene node is Tag.', async () => {
     getSceneNodeByRef.mockReturnValue({
       ...baseNode,

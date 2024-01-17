@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 
-import { IModelRefComponentInternal, ISceneComponentInternal, ISceneNodeInternal } from '../store';
+import { ISceneComponentInternal, ISceneNodeInternal } from '../store';
 import { AddingWidgetInfo, KnownComponentType } from '../interfaces';
-import { ModelType, Vector3 } from '../models/SceneModels';
+import { Vector3 } from '../models/SceneModels';
 import { ITransformInternal } from '../store/internalInterfaces';
 
 /**
@@ -179,11 +179,4 @@ export const createNodeWithTransform = (
       scale: scale.toArray(),
     },
   } as ISceneNodeInternal;
-};
-
-export const isEnvironmentNode = (node?: ISceneNodeInternal): boolean => {
-  return (
-    (findComponentByType(node, KnownComponentType.ModelRef) as IModelRefComponentInternal)?.modelType ===
-    ModelType.Environment
-  );
 };

@@ -7,7 +7,6 @@ import { DropHandler } from '../../../../../hooks/useDropMonitor';
 import SubModelTree from '../SubModelTree';
 import { KnownComponentType } from '../../../../../interfaces';
 import { IModelRefComponentInternal, useSceneDocument } from '../../../../../store';
-import { ModelType } from '../../../../../models/SceneModels';
 import { findComponentByType } from '../../../../../utils/nodeUtils';
 import { sceneComposerIdContext } from '../../../../../common/sceneComposerIdContext';
 import { isDynamicNode } from '../../../../../utils/entityModelUtils/sceneUtils';
@@ -46,10 +45,9 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   const node = getSceneNodeByRef(key);
   const component = findComponentByType(node, KnownComponentType.ModelRef) as IModelRefComponentInternal;
   const componentRef = component?.ref;
-  const isValidModelRef = useMemo(() => {
-    return component && component?.modelType !== ModelType.Environment;
+  const showSubModel = useMemo(() => {
+    return component && !!model && !isViewing();
   }, [component]);
-  const showSubModel = isValidModelRef && !!model && !isViewing();
   const isSubModel = !!findComponentByType(node, KnownComponentType.SubModelRef);
   const isDynamic = isDynamicNode(node);
 

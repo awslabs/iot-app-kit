@@ -3,10 +3,8 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import * as THREE from 'three';
 
-const mockIsEnvironmentNode = jest.fn();
 jest.doMock('../../../../../src/utils/nodeUtils', () => ({
   createNodeWithTransform: jest.fn(),
-  isEnvironmentNode: mockIsEnvironmentNode,
 }));
 
 import { AddObjectMenu } from './AddObjectMenu';
@@ -67,7 +65,6 @@ describe('AddObjectMenu', () => {
     jest.clearAllMocks();
 
     setFeatureConfig({
-      [COMPOSER_FEATURES.EnvironmentModel]: true,
       [COMPOSER_FEATURES.DynamicScene]: true,
     });
   });
@@ -200,29 +197,6 @@ describe('AddObjectMenu', () => {
     });
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
     expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-model');
-  });
-
-  it('should call setAddingWidget when adding an environment model', () => {
-    const gltfComponent: IModelRefComponent = {
-      type: 'ModelRef',
-      uri: 'modelUri',
-      modelType: 'Environment',
-    };
-    showAssetBrowserCallback.mockImplementationOnce((callback) => callback(null, 'modelUri'));
-
-    render(<AddObjectMenu canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);
-    const sut = screen.getByTestId('add-environment-model');
-    fireEvent.pointerUp(sut);
-    expect(setAddingWidget).toBeCalledWith({
-      type: KnownComponentType.ModelRef,
-      node: {
-        name: 'filename',
-        components: [gltfComponent],
-        parentRef: undefined,
-      },
-    });
-    expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
-    expect(mockMetricRecorder.recordClick).toBeCalledWith('add-environment-model');
   });
 
   it('should call addComponentInternal when adding a model shader', () => {

@@ -4,7 +4,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { isEmpty } from 'lodash';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { findComponentByType, getFinalNodeTransform, isEnvironmentNode } from '../../../utils/nodeUtils';
+import { findComponentByType, getFinalNodeTransform } from '../../../utils/nodeUtils';
 import { ISceneNodeInternal, useNodeErrorState, useSceneDocument, useStore } from '../../../store';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { ITransform, KnownComponentType } from '../../../interfaces';
@@ -121,7 +121,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
   const { nodeErrorMap: validationErrors } = useNodeErrorState(sceneComposerId);
 
   const rootNodeRefs = Object.values(nodeMap)
-    .filter((item) => !item.parentRef && (!isEnvironmentNode(item) || isEditing()))
+    .filter((item) => !item.parentRef && isEditing())
     .map((item) => item.ref);
 
   const [searchTerms, setSearchTerms] = useState('');

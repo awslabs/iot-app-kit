@@ -10,16 +10,6 @@ exports[`ModelRefComponent should render correctly 1`] = `
 </div>
 `;
 
-exports[`ModelRefComponent should render correctly with Environment Model Type 1`] = `
-<div>
-  <div
-    component="[object Object]"
-    id="EnvironmentModelComponent"
-    node="[object Object]"
-  />
-</div>
-`;
-
 exports[`ModelRefComponent should render correctly with Tiles Model Type 1`] = `
 <div>
   <div

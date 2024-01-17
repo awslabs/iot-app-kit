@@ -26,10 +26,6 @@ jest.mock('../TilesModelComponent', () => ({
   TilesModelComponent: (props) => <div id='TilesModelComponent' {...props} />,
 }));
 
-jest.mock('../EnvironmentModelComponent', () => ({
-  EnvironmentModelComponent: (props) => <div id='EnvironmentModelComponent' {...props} />,
-}));
-
 describe('ModelRefComponent', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -41,29 +37,6 @@ describe('ModelRefComponent', () => {
       modelType: ModelType.GLB,
       ref: 'test-ref',
       type: KnownComponentType.ModelRef,
-    };
-
-    const node: ISceneNodeInternal = {
-      ref: 'test-ref',
-      name: 'test-name',
-      transform: { position: [0, 0, 0], rotation: [0, 0, 0], scale: [0, 0, 0] },
-      transformConstraint: {},
-      components: [component],
-      childRefs: [],
-      properties: {},
-    };
-
-    const { container } = render(<ModelRefComponent node={node} component={component} />);
-
-    expect(container).toMatchSnapshot();
-  });
-
-  it('should render correctly with Environment Model Type', () => {
-    const component: IModelRefComponentInternal = {
-      uri: 'uri',
-      modelType: ModelType.Environment,
-      ref: 'test-ref',
-      type: 'ModelRef',
     };
 
     const node: ISceneNodeInternal = {

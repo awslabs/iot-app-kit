@@ -14,7 +14,7 @@ import {
   useNodeErrorState,
   useSceneDocument,
 } from '../../../store';
-import { findComponentByType, isEnvironmentNode } from '../../../utils/nodeUtils';
+import { findComponentByType } from '../../../utils/nodeUtils';
 import { getChildrenGroupName, getEntityGroupName } from '../../../utils/objectThreeUtils';
 
 import ComponentGroup from './ComponentGroup';
@@ -155,7 +155,7 @@ const EntityGroup = ({ node }: IEntityGroupProps): JSX.Element => {
         onClick={onClick}
         onPointerEnter={onPointerEnter}
         onPointerLeave={onPointerLeave}
-        userData={{ nodeRef: !isEnvironmentNode(node) ? nodeRef : undefined, componentTypes }} // Do not add ref for environment nodes
+        userData={{ nodeRef, componentTypes }}
       >
         <ComponentGroup node={node} components={node.components} />
         <ChildGroup node={node} />
