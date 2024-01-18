@@ -4,7 +4,12 @@ import { Button, FormField, Input, SpaceBetween } from '@awsui/components-react'
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { COMPOSER_FEATURES, ISceneBackgroundSetting, KnownSceneProperty } from '../../../interfaces';
+import {
+  COMPOSER_FEATURES,
+  ISceneBackgroundSetting,
+  KnownSceneProperty,
+  TextureFileTypeList,
+} from '../../../interfaces';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { useStore } from '../../../store';
 import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
@@ -69,7 +74,7 @@ export const SceneBackgroundSettingsEditor: React.FC = () => {
         setSceneProperty(KnownSceneProperty.SceneBackgroundSettings, {
           textureUri: localTextureUri,
         });
-      });
+      }, TextureFileTypeList);
     } else {
       console.info('No asset browser available');
     }

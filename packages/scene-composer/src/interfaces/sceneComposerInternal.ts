@@ -6,6 +6,7 @@ import { FeatureConfig } from './feature';
 import { ISceneDocumentSnapshot } from './interfaces';
 import { IMetricRecorder } from './metricRecorder';
 import { SceneViewerConfig, SceneViewerPropsShared } from './sceneViewer';
+import { AssetType } from './assets';
 
 /// TODO: Add documentation
 
@@ -26,7 +27,7 @@ export type OnSceneUpdateCallback = (snapshot: ISceneDocumentSnapshot) => void;
 
 // Temporary implementation to show asset browser that depends on external framework.
 export type AssetBrowserResultCallback = (s3bucketArn: string | null, selectedAssetContentLocation: string) => void;
-export type ShowAssetBrowserCallback = (callback: AssetBrowserResultCallback) => void;
+export type ShowAssetBrowserCallback = (callback: AssetBrowserResultCallback, typelist?: AssetType[]) => void;
 
 export interface SceneComposerInternalProps extends SceneViewerPropsShared {
   onSceneUpdated?: OnSceneUpdateCallback;

@@ -4,7 +4,7 @@ import { Button, FormField, Input, SpaceBetween } from '@awsui/components-react'
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { IGroundPlaneSettings, KnownSceneProperty, COMPOSER_FEATURES } from '../../../interfaces';
+import { IGroundPlaneSettings, KnownSceneProperty, COMPOSER_FEATURES, TextureFileTypeList } from '../../../interfaces';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { useStore } from '../../../store';
 import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
@@ -91,7 +91,7 @@ export const GroundPlaneSettingsEditor: React.FC = () => {
           textureUri: localTextureUri,
           opacity: internalOpacity,
         });
-      });
+      }, TextureFileTypeList);
     } else {
       console.info('No asset browser available');
     }
