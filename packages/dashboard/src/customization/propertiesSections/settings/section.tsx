@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {
+  Box,
   ExpandableSection,
   Input,
   InputProps,
@@ -13,7 +14,6 @@ import { numberFromDetail } from '~/util/inputEvent';
 
 import './section.css';
 import { isNumeric } from '@iot-app-kit/core/dist/es/common/number';
-import { spaceScaledXs } from '@cloudscape-design/design-tokens';
 
 export const SettingsSection = ({
   significantDigits,
@@ -30,12 +30,14 @@ export const SettingsSection = ({
     );
   };
 
-  const sectionStyle = {
-    padding: spaceScaledXs,
-  };
   return (
-    <div style={sectionStyle}>
-      <ExpandableSection headerText='Settings' defaultExpanded>
+    <ExpandableSection
+      className='accordian-header'
+      headerText='Settings'
+      defaultExpanded
+      variant='footer'
+    >
+      <Box padding='s'>
         <SpaceBetween size='m' direction='vertical'>
           <div
             className='settings-property-label'
@@ -53,7 +55,7 @@ export const SettingsSection = ({
             </div>
           </div>
         </SpaceBetween>
-      </ExpandableSection>
-    </div>
+      </Box>
+    </ExpandableSection>
   );
 };
