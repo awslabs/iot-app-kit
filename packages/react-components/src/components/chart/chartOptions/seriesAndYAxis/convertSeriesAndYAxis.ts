@@ -247,7 +247,9 @@ export const useSeriesAndYAxis = (
     useHighlightedDataStreams();
 
   return useMemo(() => {
-    const defaultYAxis: YAXisComponentOption[] = [convertChartYAxis(axis)];
+    const defaultYAxis: YAXisComponentOption[] = [
+      convertChartYAxis(axis, significantDigits),
+    ];
     const convertedThresholds = convertThresholds(thresholds);
 
     const shouldUseEmphasis = highlightedDataStreams.length > 0;
