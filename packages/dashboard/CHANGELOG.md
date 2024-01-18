@@ -1,5 +1,40 @@
 # Changelog
 
+## [9.14.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.13.0...dashboard-v9.14.0) (2024-01-18)
+
+
+### Features
+
+* add CSV download button ([d89b1f8](https://github.com/awslabs/iot-app-kit/commit/d89b1f880491615c023ea84d53b0c843d52315b4))
+* async fetchTimeSeriesData ([2b776cc](https://github.com/awslabs/iot-app-kit/commit/2b776ccf73a538abfbcf4a0ba175dca7c2c4aa0c))
+* async listAssetPropertiesDescription ([6632db5](https://github.com/awslabs/iot-app-kit/commit/6632db5837e75d8786cb2c2150986d57f4e6ad39))
+* fetchTimeSeriesData ([1c65191](https://github.com/awslabs/iot-app-kit/commit/1c65191654c726b66cf1e0bcc2df83d620f6d4a5))
+
+
+### Bug Fixes
+
+* **dashboard:** decrease width of property label in config panel to stop overflow of delete button ([ee027e5](https://github.com/awslabs/iot-app-kit/commit/ee027e5d95946b89bebcd5e3bdc3a82aecd60d0b))
+* **dashboard:** for kpi/status disable add of RE when an property is already added ([712c1a7](https://github.com/awslabs/iot-app-kit/commit/712c1a777bc51c69956bfbb855bd0a01a6721e18))
+* disable options in legend or yaxis section if visible is false [#2467](https://github.com/awslabs/iot-app-kit/issues/2467) ([b4daa17](https://github.com/awslabs/iot-app-kit/commit/b4daa17735a6ebed582c98d292e7b1c261a65dea))
+* **react-components:** refactor chart to use dataset ([b403789](https://github.com/awslabs/iot-app-kit/commit/b4037897cd4e7169958373bbf61d29c7454706ef))
+* text widget enhancement - 2429 ([0d5a367](https://github.com/awslabs/iot-app-kit/commit/0d5a367c074b12d98aa91a5b5c1ea37e3033c047))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/core bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/core-util bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/react-components bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.13.0 to 9.14.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/testing-util bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/ts-config bumped from 9.13.0 to 9.14.0
+    * eslint-config-iot-app-kit bumped from 9.13.0 to 9.14.0
+
 ## [9.13.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.12.0...dashboard-v9.13.0) (2024-01-05)
 
 

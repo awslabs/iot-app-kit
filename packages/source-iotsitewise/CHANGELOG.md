@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.14.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v9.13.0...source-iotsitewise-v9.14.0) (2024-01-18)
+
+
+### Features
+
+* async fetchTimeSeriesData ([2b776cc](https://github.com/awslabs/iot-app-kit/commit/2b776ccf73a538abfbcf4a0ba175dca7c2c4aa0c))
+* fetchTimeSeriesData ([1c65191](https://github.com/awslabs/iot-app-kit/commit/1c65191654c726b66cf1e0bcc2df83d620f6d4a5))
+
+
+### Bug Fixes
+
+* add request settings to fetchTimeSeriesData ([d7cbd9d](https://github.com/awslabs/iot-app-kit/commit/d7cbd9d8bb5a5f56804a7ebce2c87e944bcb6f2b))
+* source-iotsitewise batch API options ([6e4d430](https://github.com/awslabs/iot-app-kit/commit/6e4d430a033bbd54eb403a96f04ecb23a7909e36))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/core-util bumped from 9.13.0 to 9.14.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/testing-util bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/ts-config bumped from 9.13.0 to 9.14.0
+    * eslint-config-iot-app-kit bumped from 9.13.0 to 9.14.0
+
 ## [9.13.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v9.12.0...source-iotsitewise-v9.13.0) (2024-01-05)
 
 
