@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [9.14.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.13.0...react-components-v9.14.0) (2024-01-18)
+
+
+### Features
+
+* changed ui experience of chart legend based on legend position [#2277](https://github.com/awslabs/iot-app-kit/issues/2277) ([de1f147](https://github.com/awslabs/iot-app-kit/commit/de1f14772b614f67156a34ac64300111a6c55126))
+
+
+### Bug Fixes
+
+* improved zoom and default values for y axis ([112e5c5](https://github.com/awslabs/iot-app-kit/commit/112e5c58d7e3478dec03dfbb2eb52ec315b4690d))
+* make context menu appear on top of chart tooltip ([e1622c8](https://github.com/awslabs/iot-app-kit/commit/e1622c86bf4ead6856e7e1c9be1d5b8a1d6d4d61))
+* **react-components:** fix the mouse events ([7c07a37](https://github.com/awslabs/iot-app-kit/commit/7c07a37eb5e8649a6d967c96b297659caad270a8))
+* **react-components:** refactor chart to use dataset ([b403789](https://github.com/awslabs/iot-app-kit/commit/b4037897cd4e7169958373bbf61d29c7454706ef))
+* removed tanstack table related code ([c8be85d](https://github.com/awslabs/iot-app-kit/commit/c8be85d919faac44441f4b00aa81ac7dbf215599))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/core bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/core-util bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.13.0 to 9.14.0
+  * devDependencies
+    * @iot-app-kit/core bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/jest-config bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/testing-util bumped from 9.13.0 to 9.14.0
+    * @iot-app-kit/ts-config bumped from 9.13.0 to 9.14.0
+    * eslint-config-iot-app-kit bumped from 9.13.0 to 9.14.0
+
 ## [9.13.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.12.0...react-components-v9.13.0) (2024-01-05)
 
 

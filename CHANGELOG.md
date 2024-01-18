@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.14.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.13.0...root-v9.14.0) (2024-01-18)
+
+
+### Features
+
+* add CSV download button ([d89b1f8](https://github.com/awslabs/iot-app-kit/commit/d89b1f880491615c023ea84d53b0c843d52315b4))
+* async fetchTimeSeriesData ([2b776cc](https://github.com/awslabs/iot-app-kit/commit/2b776ccf73a538abfbcf4a0ba175dca7c2c4aa0c))
+* async listAssetPropertiesDescription ([6632db5](https://github.com/awslabs/iot-app-kit/commit/6632db5837e75d8786cb2c2150986d57f4e6ad39))
+* changed ui experience of chart legend based on legend position [#2277](https://github.com/awslabs/iot-app-kit/issues/2277) ([de1f147](https://github.com/awslabs/iot-app-kit/commit/de1f14772b614f67156a34ac64300111a6c55126))
+* fetchTimeSeriesData ([1c65191](https://github.com/awslabs/iot-app-kit/commit/1c65191654c726b66cf1e0bcc2df83d620f6d4a5))
+
+
+### Bug Fixes
+
+* add request settings to fetchTimeSeriesData ([d7cbd9d](https://github.com/awslabs/iot-app-kit/commit/d7cbd9d8bb5a5f56804a7ebce2c87e944bcb6f2b))
+* **dashboard:** decrease width of property label in config panel to stop overflow of delete button ([ee027e5](https://github.com/awslabs/iot-app-kit/commit/ee027e5d95946b89bebcd5e3bdc3a82aecd60d0b))
+* **dashboard:** for kpi/status disable add of RE when an property is already added ([712c1a7](https://github.com/awslabs/iot-app-kit/commit/712c1a777bc51c69956bfbb855bd0a01a6721e18))
+* disable options in legend or yaxis section if visible is false [#2467](https://github.com/awslabs/iot-app-kit/issues/2467) ([b4daa17](https://github.com/awslabs/iot-app-kit/commit/b4daa17735a6ebed582c98d292e7b1c261a65dea))
+* **doc-site:** canvas not recognised automatically ([1e42f58](https://github.com/awslabs/iot-app-kit/commit/1e42f5872f863349b51264526d4b74271e811412))
+* improved zoom and default values for y axis ([112e5c5](https://github.com/awslabs/iot-app-kit/commit/112e5c58d7e3478dec03dfbb2eb52ec315b4690d))
+* make context menu appear on top of chart tooltip ([e1622c8](https://github.com/awslabs/iot-app-kit/commit/e1622c86bf4ead6856e7e1c9be1d5b8a1d6d4d61))
+* **react-components:** fix the mouse events ([7c07a37](https://github.com/awslabs/iot-app-kit/commit/7c07a37eb5e8649a6d967c96b297659caad270a8))
+* **react-components:** refactor chart to use dataset ([b403789](https://github.com/awslabs/iot-app-kit/commit/b4037897cd4e7169958373bbf61d29c7454706ef))
+* removed tanstack table related code ([c8be85d](https://github.com/awslabs/iot-app-kit/commit/c8be85d919faac44441f4b00aa81ac7dbf215599))
+* source-iotsitewise batch API options ([6e4d430](https://github.com/awslabs/iot-app-kit/commit/6e4d430a033bbd54eb403a96f04ecb23a7909e36))
+* text widget enhancement - 2429 ([0d5a367](https://github.com/awslabs/iot-app-kit/commit/0d5a367c074b12d98aa91a5b5c1ea37e3033c047))
+* **V1011333107:** vulnerbility in fast-xml-parser dependabot couldn't resolve ([73d0e79](https://github.com/awslabs/iot-app-kit/commit/73d0e79b8d567d27e32ce947682b47c9885f9deb))
+
 ## [9.13.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.12.0...root-v9.13.0) (2024-01-05)
 
 
