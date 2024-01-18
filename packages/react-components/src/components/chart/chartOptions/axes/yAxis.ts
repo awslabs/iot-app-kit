@@ -1,9 +1,11 @@
 import { YAXisComponentOption } from 'echarts';
 import { ChartAxisOptions } from '../../types';
 import { DEFAULT_Y_AXIS } from '../../eChartsConstants';
+import { round } from '@iot-app-kit/core-util';
 
 export const convertYAxis = (
-  axis: ChartAxisOptions | undefined
+  axis?: ChartAxisOptions,
+  significantDigits?: number
 ): YAXisComponentOption => ({
   ...DEFAULT_Y_AXIS,
   name: axis?.yLabel,
@@ -15,6 +17,7 @@ export const convertYAxis = (
   axisLabel: {
     hideOverlap: true,
     color: '#5f6b7a',
+    formatter: (value: number) => `${round(value, significantDigits)}`,
   },
   nameLocation: 'middle',
   nameGap: 30,
