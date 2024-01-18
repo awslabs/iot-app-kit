@@ -5,6 +5,7 @@ import type {
   SelectProps,
 } from '@cloudscape-design/components';
 import {
+  Box,
   ExpandableSection,
   Select,
   SpaceBetween,
@@ -90,49 +91,56 @@ const TextSettings: FC<TextSettingsProps> = ({
   };
 
   return (
-    <ExpandableSection headerText={defaultMessages.title} defaultExpanded>
-      <div className='text-configuration' style={{ gap: awsui.spaceScaledS }}>
-        <label htmlFor='text-color-picker'>{defaultMessages.color}</label>
-        <ColorPicker
-          id='text-color-picker'
-          color={fontColor}
-          updateColor={updateFontColor}
-        />
+    <ExpandableSection
+      className='accordian-header'
+      headerText={defaultMessages.title}
+      defaultExpanded
+      variant='footer'
+    >
+      <Box padding='s'>
+        <div className='text-configuration' style={{ gap: awsui.spaceScaledS }}>
+          <label htmlFor='text-color-picker'>{defaultMessages.color}</label>
+          <ColorPicker
+            id='text-color-picker'
+            color={fontColor}
+            updateColor={updateFontColor}
+          />
 
-        <label>{defaultMessages.style}</label>
-        <SpaceBetween size='xxs' direction='horizontal'>
-          <ButtonWithState
-            aria-label='toggle bold text'
-            checked={isBold}
-            onToggle={() => toggleBold(!isBold)}
-          >
-            <b>B</b>
-          </ButtonWithState>
-          <ButtonWithState
-            aria-label='toggle italicize text'
-            checked={isItalic}
-            onToggle={() => toggleItalic(!isItalic)}
-          >
-            <i>I</i>
-          </ButtonWithState>
-          <ButtonWithState
-            aria-label='toggle underline text'
-            checked={isUnderlined}
-            onToggle={() => toggleUnderlined(!isUnderlined)}
-          >
-            <u>U</u>
-          </ButtonWithState>
-        </SpaceBetween>
+          <label>{defaultMessages.style}</label>
+          <SpaceBetween size='xxs' direction='horizontal'>
+            <ButtonWithState
+              aria-label='toggle bold text'
+              checked={isBold}
+              onToggle={() => toggleBold(!isBold)}
+            >
+              <b>B</b>
+            </ButtonWithState>
+            <ButtonWithState
+              aria-label='toggle italicize text'
+              checked={isItalic}
+              onToggle={() => toggleItalic(!isItalic)}
+            >
+              <i>I</i>
+            </ButtonWithState>
+            <ButtonWithState
+              aria-label='toggle underline text'
+              checked={isUnderlined}
+              onToggle={() => toggleUnderlined(!isUnderlined)}
+            >
+              <u>U</u>
+            </ButtonWithState>
+          </SpaceBetween>
 
-        <label>{defaultMessages.size}</label>
-        <Select
-          selectedOption={{ label: `${fontSize} px`, value: `${fontSize}` }}
-          options={fontSizeOptions}
-          onChange={onFontSizeChange}
-          ariaLabel='dropdown font size'
-          data-test-id='text-widget-setting-font-size'
-        />
-      </div>
+          <label>{defaultMessages.size}</label>
+          <Select
+            selectedOption={{ label: `${fontSize} px`, value: `${fontSize}` }}
+            options={fontSizeOptions}
+            onChange={onFontSizeChange}
+            ariaLabel='dropdown font size'
+            data-test-id='text-widget-setting-font-size'
+          />
+        </div>
+      </Box>
     </ExpandableSection>
   );
 };
