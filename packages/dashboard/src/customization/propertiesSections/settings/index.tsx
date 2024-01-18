@@ -10,8 +10,7 @@ import { PropertyLens } from '~/customization/propertiesSection';
 
 const isSettingsWidget = (
   w: DashboardWidget
-): w is DashboardWidget<CommonChartProperties> =>
-  'queryConfig' in w.properties && w.type !== 'xy-plot';
+): w is DashboardWidget<CommonChartProperties> => 'queryConfig' in w.properties;
 
 const RenderSettingsConfiguration = ({
   useProperty,
