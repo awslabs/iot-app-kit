@@ -6,6 +6,7 @@ import { Viewport } from '@iot-app-kit/core';
 import { TimeSync, TimeSelection } from '@iot-app-kit/react-components';
 
 import {
+  AssetType,
   AssetBrowserResultCallback,
   COMPOSER_FEATURES,
   ExternalLibraryConfig,
@@ -130,10 +131,20 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   }, []);
 
   const mockAssetBrowserCallback: ShowAssetBrowserCallback = useCallback(
-    (cb: AssetBrowserResultCallback) => {
+    (cb: AssetBrowserResultCallback, typeList?: AssetType[]) => {
       actionRecorderShowAssetBrowserCallback(cb);
       if (source === 'local') {
-        cb(null, 'PALLET_JACK.glb');
+        if (typeList) {
+          if (typeList.includes(AssetType.GLB)) {
+            cb(null, 'PALLET_JACK.glb');
+          } else if (typeList.includes(AssetType.PNG)) {
+            cb(null, 'PB_AWS_logo_RGB_stacked.png');
+          } else {
+            cb(null, 'PALLET_JACK.glb');
+          }
+        } else {
+          cb(null, 'PALLET_JACK.glb');
+        }
       } else {
         cb(null, 'CookieFactoryMixer.glb'); // Update the string to a model available in your S3 bucket
       }

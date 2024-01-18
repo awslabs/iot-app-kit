@@ -16,6 +16,7 @@ import {
   ISceneNode,
   KnownComponentType,
   SceneResourceType,
+  ModelFileTypeList,
 } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component, LightType } from '../../../../models/SceneModels';
@@ -265,7 +266,7 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
           } as unknown as ISceneNodeInternal;
 
           setAddingWidget({ type: KnownComponentType.ModelRef, node });
-        });
+        }, ModelFileTypeList);
       }
     },
     [selectedSceneNodeRef],

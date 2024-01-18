@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';
 import { getGlobalSettings } from '../../../common/GlobalSettings';
-import { COMPOSER_FEATURES, KnownSceneProperty } from '../../../interfaces';
+import { COMPOSER_FEATURES, KnownSceneProperty, TextureFileTypeList } from '../../../interfaces';
 import { IPlaneGeometryComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
@@ -94,7 +94,7 @@ export const PlaneGeometryComponentEditor: React.FC<IPlaneGeometryComponentEdito
         const { color: _color, ...otherComponentProps } = planeGeometryComponent;
         const updatedComponent = { ...otherComponentProps, textureUri: localTextureUri };
         onUpdateCallback(updatedComponent, true);
-      });
+      }, TextureFileTypeList);
     } else {
       console.info('No asset browser available');
     }

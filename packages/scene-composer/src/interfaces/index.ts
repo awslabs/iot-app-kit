@@ -1,3 +1,4 @@
+export * from './assets';
 export * from './interfaces';
 export * from './components';
 export * from './dataTypes';
