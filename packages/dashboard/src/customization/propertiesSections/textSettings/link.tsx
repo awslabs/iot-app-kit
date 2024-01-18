@@ -4,6 +4,7 @@ import {
   Input,
   Toggle,
   SpaceBetween,
+  Box,
 } from '@cloudscape-design/components';
 import type { FC } from 'react';
 import type { InputProps } from '@cloudscape-design/components';
@@ -59,21 +60,25 @@ const LinkSettings: FC<LinkSettingsProps> = ({
 
   return (
     <ExpandableSection
+      className='accordian-header'
       headerText={header}
-      defaultExpanded={isUrl}
       data-test-id='text-widget-link-section'
+      defaultExpanded={isUrl}
+      variant='footer'
     >
-      <div className='link-configuration' style={{ gap: awsui.spaceScaledS }}>
-        <label className='section-item-label'>{defaultMessages.url}</label>
-        <div className='link-input'>
-          <Input
-            ariaLabel='text widget link input'
-            value={href}
-            onChange={onLinkTextChange}
-            data-test-id='text-widget-link-input'
-          />
+      <Box>
+        <div className='link-configuration' style={{ gap: awsui.spaceScaledS }}>
+          <label className='section-item-label'>{defaultMessages.url}</label>
+          <div className='link-input'>
+            <Input
+              ariaLabel='text widget link input'
+              value={href}
+              onChange={onLinkTextChange}
+              data-test-id='text-widget-link-input'
+            />
+          </div>
         </div>
-      </div>
+      </Box>
     </ExpandableSection>
   );
 };

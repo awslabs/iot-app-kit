@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {
+  Box,
   ExpandableSection,
   Input,
   SpaceBetween,
   Toggle,
 } from '@cloudscape-design/components';
-import ExpandableSectionHeader from '../shared/expandableSectionHeader';
 import type { FC } from 'react';
 import type { InputProps, ToggleProps } from '@cloudscape-design/components';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
@@ -62,56 +62,56 @@ const AxisSection: FC<AxisSectionProps> = ({
 
   return (
     <ExpandableSection
-      headerText={
-        <ExpandableSectionHeader>
-          {defaultMessages.header}
-        </ExpandableSectionHeader>
-      }
+      className='accordian-header'
+      headerText={defaultMessages.header}
       defaultExpanded
+      variant='footer'
     >
-      <SpaceBetween size='m' direction='vertical'>
-        <SpaceBetween size='s' direction='horizontal'>
-          <Toggle
-            checked={!!axis.showX}
-            onChange={toggleShowX}
-            data-test-id='axis-setting-x-toggle'
-          >
-            {defaultMessages.toggleXLabel}
-          </Toggle>
+      <Box padding='s'>
+        <SpaceBetween size='m' direction='vertical'>
+          <SpaceBetween size='s' direction='horizontal'>
+            <Toggle
+              checked={!!axis.showX}
+              onChange={toggleShowX}
+              data-test-id='axis-setting-x-toggle'
+            >
+              {defaultMessages.toggleXLabel}
+            </Toggle>
+
+            {usesYAxis && (
+              <Toggle
+                checked={!!axis.showY}
+                onChange={toggleShowY}
+                data-test-id='axis-setting-y-toggle'
+              >
+                {defaultMessages.toggleYLabel}
+              </Toggle>
+            )}
+          </SpaceBetween>
 
           {usesYAxis && (
-            <Toggle
-              checked={!!axis.showY}
-              onChange={toggleShowY}
-              data-test-id='axis-setting-y-toggle'
+            <div
+              className='axis-property-label'
+              style={{ gap: awsui.spaceScaledS }}
             >
-              {defaultMessages.toggleYLabel}
-            </Toggle>
+              <label
+                htmlFor='axis-label-y'
+                data-test-id='axis-setting-y-label-content'
+              >
+                {defaultMessages.yLabelContent}
+              </label>
+              <div className='axis-property-label-y'>
+                <Input
+                  controlId='axis-label-y'
+                  value={axis.yAxisLabel || ''}
+                  onChange={updateLabel}
+                  data-test-id='axis-setting-y-label-input'
+                />
+              </div>
+            </div>
           )}
         </SpaceBetween>
-
-        {usesYAxis && (
-          <div
-            className='axis-property-label'
-            style={{ gap: awsui.spaceScaledS }}
-          >
-            <label
-              htmlFor='axis-label-y'
-              data-test-id='axis-setting-y-label-content'
-            >
-              {defaultMessages.yLabelContent}
-            </label>
-            <div className='axis-property-label-y'>
-              <Input
-                controlId='axis-label-y'
-                value={axis.yAxisLabel || ''}
-                onChange={updateLabel}
-                data-test-id='axis-setting-y-label-input'
-              />
-            </div>
-          </div>
-        )}
-      </SpaceBetween>
+      </Box>
     </ExpandableSection>
   );
 };
