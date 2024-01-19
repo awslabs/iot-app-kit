@@ -270,7 +270,11 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
         />
       }
     >
-      <div className='dashboard' style={userSelect}>
+      <div
+        className='dashboard'
+        data-test-id='edit-mode-dashboard'
+        style={userSelect}
+      >
         <CustomDragLayer
           onDrag={(isDragging) =>
             setUserSelect(isDragging ? disabledUserSelect : defaultUserSelect)
@@ -325,7 +329,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
         />
       }
     >
-      <div className='dashboard'>
+      <div className='dashboard' data-test-id='read-only-mode-dashboard'>
         {hasValidAssetModelData && (
           <div
             style={dashboardToolbarBottomBorder}
