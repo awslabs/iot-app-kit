@@ -33,8 +33,10 @@ export type DashboardClientConfiguration =
   | DashboardIotSiteWiseClients
   | DashboardClientCredentials;
 
+// OnSave has an optional viewMode value which can be used to persist the dashboard's viewMode after the save action
 export type DashboardSave = (
-  dashboardConfiguration: DashboardConfiguration
+  dashboardConfiguration: DashboardConfiguration,
+  viewModeOnSave?: 'preview' | 'edit'
 ) => Promise<void>;
 
 export type DashboardWidget<

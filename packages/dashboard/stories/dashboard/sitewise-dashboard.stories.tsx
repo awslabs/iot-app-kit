@@ -48,11 +48,18 @@ export const Main: ComponentStory<typeof Dashboard> = () => {
   const [dashboardConfig, setDashboardConfig] = useState(
     getInitialDashboardConfig()
   );
+  const [initialViewMode, setInitialViewMode] = useState<'preview' | 'edit'>(
+    'edit'
+  );
 
   // on save not only updates local storage but forces the dashboard to reload given the updated config
   // this is done to more realistically match the dashboard implementation in iot-application
-  const onSave = async (dashboard: DashboardConfiguration) => {
+  const onSave = async (
+    dashboard: DashboardConfiguration,
+    viewModeOnSave?: 'preview' | 'edit'
+  ) => {
     console.log(dashboard);
+    viewModeOnSave && setInitialViewMode(viewModeOnSave);
     window.localStorage.setItem('dashboard', JSON.stringify(dashboard));
     return new Promise(() => setDashboardConfig(dashboard)) as Promise<void>;
   };
@@ -61,6 +68,7 @@ export const Main: ComponentStory<typeof Dashboard> = () => {
     <Dashboard
       clientConfiguration={CLIENT_CONFIGURATION}
       onSave={onSave}
+      initialViewMode={initialViewMode}
       dashboardConfiguration={dashboardConfig}
     />
   );

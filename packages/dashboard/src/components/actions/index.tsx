@@ -41,16 +41,19 @@ const Actions: React.FC<ActionsProps> = ({
 
   const handleOnSave = () => {
     if (!onSave) return;
-    onSave({
-      displaySettings: {
-        numColumns: grid.width,
-        numRows: grid.height,
-        cellSize: grid.cellSize,
-        significantDigits,
+    onSave(
+      {
+        displaySettings: {
+          numColumns: grid.width,
+          numRows: grid.height,
+          cellSize: grid.cellSize,
+          significantDigits,
+        },
+        ...dashboardConfiguration,
+        viewport: viewport ?? DEFAULT_VIEWPORT,
       },
-      ...dashboardConfiguration,
-      viewport: viewport ?? DEFAULT_VIEWPORT,
-    });
+      readOnly ? 'preview' : 'edit'
+    );
 
     metricsRecorder?.record({
       metricName: 'DashboardSave',
