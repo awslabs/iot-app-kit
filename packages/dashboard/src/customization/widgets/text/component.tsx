@@ -12,6 +12,7 @@ import { useIsSelected } from '~/customization/hooks/useIsSelected';
 import './component.css';
 import type { TextWidget } from '../types';
 import type { DashboardState } from '~/store/state';
+import WidgetTile from '~/components/widgets/tile/tile';
 
 const TextWidgetComponent: React.FC<TextWidget> = (widget) => {
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
@@ -46,13 +47,13 @@ const TextWidgetComponent: React.FC<TextWidget> = (widget) => {
 
   const props = { readOnly, isSelected, handleSetEdit, ...widget };
 
-  if (readOnly) {
-    if (isUrl) {
-      return <TextLink {...widget} />;
-    } else {
-      return <StyledText {...widget} />;
-    }
-  } else {
+  const renderTextArea = ({
+    isUrl,
+    isEditing,
+  }: {
+    isUrl?: boolean;
+    isEditing: boolean;
+  }) => {
     if (isUrl) {
       return <StyledTextArea isUrl {...props} />;
     } else if (isEditing) {
@@ -60,6 +61,20 @@ const TextWidgetComponent: React.FC<TextWidget> = (widget) => {
     } else {
       return <EditableStyledText {...props} />;
     }
+  };
+
+  if (readOnly) {
+    if (isUrl) {
+      return <TextLink {...widget} />;
+    } else {
+      return <StyledText {...widget} />;
+    }
+  } else {
+    return (
+      <WidgetTile widget={widget}>
+        {renderTextArea({ isUrl, isEditing })}
+      </WidgetTile>
+    );
   }
 };
 

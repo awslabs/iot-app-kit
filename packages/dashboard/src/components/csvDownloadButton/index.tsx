@@ -34,6 +34,7 @@ export const CSVDownloadButton = ({
   fileName,
   client,
   widgetType,
+  variant,
   ...rest
 }: {
   queryConfig: StyledSiteWiseQueryConfig;
@@ -131,7 +132,7 @@ export const CSVDownloadButton = ({
       ariaLabel='download CSV'
       iconName='download'
       loading={isDownloading}
-      variant='icon'
+      variant={variant ?? 'icon'}
       onClick={onClickDownload}
       data-testid='csv-download-button'
       {...rest}

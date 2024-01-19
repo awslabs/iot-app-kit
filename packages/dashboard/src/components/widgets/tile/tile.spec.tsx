@@ -58,7 +58,7 @@ describe('WidgetTile', () => {
     });
     const { container } = render(
       <Provider store={store}>
-        <WidgetTile removeable widget={MOCK_LINE_CHART_WIDGET}>
+        <WidgetTile widget={MOCK_LINE_CHART_WIDGET}>
           <div>test-content</div>
         </WidgetTile>
         ;
@@ -89,7 +89,7 @@ describe('WidgetTile', () => {
           readOnly: true,
         })}
       >
-        <WidgetTile removeable widget={MOCK_LINE_CHART_WIDGET}>
+        <WidgetTile widget={MOCK_LINE_CHART_WIDGET}>
           <div>test-content</div>
         </WidgetTile>
         ;

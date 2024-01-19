@@ -9,6 +9,7 @@
 .widget-tile-body {
   display: grid;
   flex: 1;
+  overflow: hidden;
 }
 
 .horizontal-divider {
@@ -26,6 +27,14 @@
   white-space: nowrap;
 }
 
-.tile-button-contianer {
+.tile-button-container {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: -20px;
+  z-index: 1;
+}
+
+.preview-button-container {
   display: flex;
 }

@@ -47,7 +47,7 @@ const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
   // the 44 is from the widget tile header's height
   const size = { width: chartSize.width, height: chartSize.height - 44 };
   return (
-    <WidgetTile widget={widget} removeable title={title}>
+    <WidgetTile widget={widget} title={title}>
       <BarChart
         chartSize={size}
         key={key}

@@ -201,7 +201,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   const isEmptyWidget = queries.length === 0;
   if (isEmptyWidget) {
     return (
-      <WidgetTile widget={widget} removeable title={title}>
+      <WidgetTile widget={widget} title={title}>
         <NoChartData
           icon={lineSvgDark}
           emptyStateText='Browse and select to add your asset properties in your line widget.'
@@ -211,7 +211,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   }
 
   return (
-    <WidgetTile widget={widget} removeable title={title}>
+    <WidgetTile widget={widget} title={title}>
       <Chart
         queries={queries}
         viewport={viewport}

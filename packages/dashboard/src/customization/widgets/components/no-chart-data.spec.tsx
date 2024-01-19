@@ -20,7 +20,7 @@ describe('NoChartData', () => {
     });
     const { getByText, getByAltText, getByTitle } = render(
       <Provider store={store}>
-        <WidgetTile widget={MOCK_LINE_CHART_WIDGET} removeable>
+        <WidgetTile widget={MOCK_LINE_CHART_WIDGET}>
           <NoChartData
             icon={lineSvgDark}
             emptyStateText='Browse and select to add your asset properties in your line widget.'
@@ -60,7 +60,7 @@ describe('NoChartData', () => {
     });
     const { getByText, getByTitle } = render(
       <Provider store={store}>
-        <WidgetTile widget={MOCK_TEXT_WIDGET} removeable>
+        <WidgetTile widget={MOCK_TEXT_WIDGET}>
           <StyledTextArea {...MOCK_TEXT_WIDGET} handleSetEdit={() => {}} />
         </WidgetTile>
         ;
