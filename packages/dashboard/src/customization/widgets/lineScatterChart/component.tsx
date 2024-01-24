@@ -213,6 +213,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   return (
     <WidgetTile widget={widget} removeable title={title}>
       <Chart
+        id={widget.id}
         queries={queries}
         viewport={viewport}
         gestures={readOnly}

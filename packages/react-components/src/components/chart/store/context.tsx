@@ -10,7 +10,7 @@ import useDataStore from '../../../store';
 // Recommended usage from zustand https://docs.pmnd.rs/zustand/previous-versions/zustand-v3-create-context
 export const ChartStoreContext = createContext<
   ReturnType<typeof createChartStore>
->(createChartStore());
+>(createChartStore({ chartId: 'contextStore' }));
 
 export const ChartStoreProvider = ({
   id,
