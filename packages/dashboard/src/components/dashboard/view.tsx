@@ -13,12 +13,14 @@ import type {
   DashboardConfiguration,
 } from '~/types';
 import { ClientContext } from './clientContext';
+import { queryClient } from '~/data/query-client';
 import { QueryContext } from './queryContext';
 import { getClients } from './getClients';
 import { getQueries } from './getQueries';
 
 import '@cloudscape-design/global-styles/index.css';
 import '../../styles/variables.css';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 export type DashboardViewProperties = {
   clientConfiguration: DashboardClientConfiguration;
@@ -35,22 +37,24 @@ const DashboardView: React.FC<DashboardViewProperties> = ({
   return (
     <ClientContext.Provider value={getClients(clientConfiguration)}>
       <QueryContext.Provider value={getQueries(clientConfiguration)}>
-        <Provider
-          store={configureDashboardStore({
-            ...toDashboardState(dashboardConfiguration),
-            readOnly: true,
-          })}
-        >
-          <DndProvider
-            backend={TouchBackend}
-            options={{
-              enableMouseEvents: true,
-              enableKeyboardEvents: true,
-            }}
+        <QueryClientProvider client={queryClient}>
+          <Provider
+            store={configureDashboardStore({
+              ...toDashboardState(dashboardConfiguration),
+              readOnly: true,
+            })}
           >
-            <InternalDashboard />
-          </DndProvider>
-        </Provider>
+            <DndProvider
+              backend={TouchBackend}
+              options={{
+                enableMouseEvents: true,
+                enableKeyboardEvents: true,
+              }}
+            >
+              <InternalDashboard />
+            </DndProvider>
+          </Provider>
+        </QueryClientProvider>
       </QueryContext.Provider>
     </ClientContext.Provider>
   );
