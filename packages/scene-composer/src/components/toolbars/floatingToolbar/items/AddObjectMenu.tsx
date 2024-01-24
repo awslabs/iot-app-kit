@@ -239,38 +239,35 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
     }
   }, [selectedSceneNodeRef]);
 
-  const handleAddModel = useCallback(
-    (modelType?: string, mustBeRoot = false) => {
-      if (showAssetBrowserCallback) {
-        showAssetBrowserCallback((s3BucketArn, contentLocation) => {
-          const [filename, ext] = extractFileNameExtFromUrl(contentLocation);
+  const handleAddModel = (modelType?: string, mustBeRoot = false) => {
+    if (showAssetBrowserCallback) {
+      showAssetBrowserCallback((s3BucketArn, contentLocation) => {
+        const [filename, ext] = extractFileNameExtFromUrl(contentLocation);
 
-          let modelUri: string;
-          if (s3BucketArn === null) {
-            // This should be used for local testing only
-            modelUri = contentLocation;
-          } else {
-            modelUri = `s3://${parseS3BucketFromArn(s3BucketArn)}/${contentLocation}`;
-          }
+        let modelUri: string;
+        if (s3BucketArn === null) {
+          // This should be used for local testing only
+          modelUri = contentLocation;
+        } else {
+          modelUri = `s3://${parseS3BucketFromArn(s3BucketArn)}/${contentLocation}`;
+        }
 
-          const gltfComponent: IModelRefComponent = {
-            type: 'ModelRef',
-            uri: modelUri,
-            modelType: modelType ?? ext.toUpperCase(),
-          };
+        const gltfComponent: IModelRefComponent = {
+          type: 'ModelRef',
+          uri: modelUri,
+          modelType: modelType ?? ext.toUpperCase(),
+        };
 
-          const node = {
-            name: filename,
-            components: [gltfComponent],
-            parentRef: mustBeRoot ? undefined : selectedSceneNodeRef,
-          } as unknown as ISceneNodeInternal;
+        const node = {
+          name: filename,
+          components: [gltfComponent],
+          parentRef: mustBeRoot ? undefined : selectedSceneNodeRef,
+        } as unknown as ISceneNodeInternal;
 
-          setAddingWidget({ type: KnownComponentType.ModelRef, node });
-        }, ModelFileTypeList);
-      }
-    },
-    [selectedSceneNodeRef],
-  );
+        setAddingWidget({ type: KnownComponentType.ModelRef, node });
+      }, ModelFileTypeList);
+    }
+  };
 
   const handleAddMotionIndicator = useCallback(() => {
     const motionIndicatorComponent: IMotionIndicatorComponent = {
