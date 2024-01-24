@@ -13,7 +13,7 @@ export interface ChartStoreState extends ChartStoreData {
 export const createChartStoresSlice: StateCreator<ChartStoreState> = (set) => ({
   chartStores: {},
   addChart: (id) => {
-    const store = createChartStore();
+    const store = createChartStore({ chartId: id }); //repopulate chart store from local storage
     set((state) => ({
       chartStores: {
         ...state.chartStores,
