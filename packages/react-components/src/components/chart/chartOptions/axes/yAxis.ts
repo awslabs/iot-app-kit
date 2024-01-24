@@ -20,5 +20,6 @@ export const convertYAxis = (
     formatter: (value: number) => `${round(value, significantDigits)}`,
   },
   nameLocation: 'middle',
-  nameGap: 30,
+  //TODO: Increased nameGap to solve label collides with y-axis issue, but the issue is in echarts and waiting for this(https://github.com/apache/echarts/issues/9265) CR to be merged from echart team.
+  nameGap: 38,
 });
