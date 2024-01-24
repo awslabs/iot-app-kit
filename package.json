@@ -42,7 +42,7 @@
     "@cloudscape-design/components": "3.0.421",
     "@cloudscape-design/design-tokens": "3.0.15",
     "@cloudscape-design/global-styles": "1.0.12",
-    "vite": "^4.5.1"
+    "vite": "^4.5.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.7",
