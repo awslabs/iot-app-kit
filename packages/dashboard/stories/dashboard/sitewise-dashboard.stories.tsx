@@ -1,59 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { registerPlugin } from '@iot-app-kit/core';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import Dashboard, { DashboardProperties } from '../../src/components/dashboard';
+import Dashboard from '../../src/components/dashboard';
 import { REGION } from '../../testing/siteWiseQueries';
 
 import { getEnvCredentials } from '../../testing/getEnvCredentials';
-import { DashboardClientConfiguration } from '../../src/types';
+import {
+  DashboardClientConfiguration,
+  DashboardConfiguration,
+} from '../../src/types';
 import { DashboardView } from '~/index';
 
-const getDashboardProperties = (
-  defaultProps: DashboardProperties
-): DashboardProperties => {
-  const cachedDashboardConfiguration = window.localStorage.getItem('dashboard');
-  const dashboardConfiguration = cachedDashboardConfiguration
-    ? JSON.parse(cachedDashboardConfiguration)
-    : defaultProps;
-
-  return {
-    ...defaultProps,
-    dashboardConfiguration: {
-      ...defaultProps.dashboardConfiguration,
-      ...dashboardConfiguration,
-    },
-  };
+const DEFAULT_DASHBOARD_CONFIG = {
+  displaySettings: {
+    numColumns: 100,
+    numRows: 100,
+  },
+  widgets: [],
+  viewport: { duration: '10m' },
 };
 
-export default {
-  title: 'Dashboard/SiteWise Connected',
-  component: Dashboard,
-  parameters: {
-    layout: 'fullscreen',
-  },
-} as ComponentMeta<typeof Dashboard>;
-
-const clientConfiguration: DashboardClientConfiguration = {
+const CLIENT_CONFIGURATION: DashboardClientConfiguration = {
   awsCredentials: getEnvCredentials(),
   awsRegion: REGION,
-};
-
-const args: DashboardProperties = {
-  clientConfiguration,
-  dashboardConfiguration: {
-    displaySettings: {
-      numColumns: 100,
-      numRows: 100,
-    },
-    widgets: [],
-    viewport: { duration: '10m' },
-  },
-  onSave: async (dashboard) => {
-    console.log(dashboard);
-    window.localStorage.setItem('dashboard', JSON.stringify(dashboard));
-    return Promise.resolve();
-  },
 };
 
 registerPlugin('metricsRecorder', {
@@ -62,10 +32,51 @@ registerPlugin('metricsRecorder', {
   }),
 });
 
-export const Main: ComponentStory<typeof Dashboard> = () => (
-  <Dashboard {...getDashboardProperties(args)} />
-);
+const getInitialDashboardConfig = (): DashboardConfiguration => {
+  const cachedDashboardConfiguration = window.localStorage.getItem('dashboard');
+  const dashboardConfiguration = cachedDashboardConfiguration
+    ? JSON.parse(cachedDashboardConfiguration)
+    : {};
+
+  return {
+    ...DEFAULT_DASHBOARD_CONFIG,
+    ...dashboardConfiguration,
+  };
+};
+
+export const Main: ComponentStory<typeof Dashboard> = () => {
+  const [dashboardConfig, setDashboardConfig] = useState(
+    getInitialDashboardConfig()
+  );
+
+  // on save not only updates local storage but forces the dashboard to reload given the updated config
+  // this is done to more realistically match the dashboard implementation in iot-application
+  const onSave = async (dashboard: DashboardConfiguration) => {
+    console.log(dashboard);
+    window.localStorage.setItem('dashboard', JSON.stringify(dashboard));
+    return new Promise(() => setDashboardConfig(dashboard)) as Promise<void>;
+  };
+
+  return (
+    <Dashboard
+      clientConfiguration={CLIENT_CONFIGURATION}
+      onSave={onSave}
+      dashboardConfiguration={dashboardConfig}
+    />
+  );
+};
 
 export const View: ComponentStory<typeof DashboardView> = () => (
-  <DashboardView {...getDashboardProperties(args)} />
+  <DashboardView
+    clientConfiguration={CLIENT_CONFIGURATION}
+    dashboardConfiguration={getInitialDashboardConfig()}
+  />
 );
+
+export default {
+  title: 'Dashboard/SiteWise Connected',
+  component: Dashboard,
+  parameters: {
+    layout: 'fullscreen',
+  },
+} as ComponentMeta<typeof Dashboard>;
