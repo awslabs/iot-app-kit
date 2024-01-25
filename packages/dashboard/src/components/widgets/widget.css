@@ -5,7 +5,9 @@
   height: 100%;
   overflow: hidden;
   user-select: none;
-  box-sizing: content-box;
+  box-sizing: border-box;
+  border: var(--selection-border-width) solid transparent;
+  border-radius: var(--selection-radius);
 }
 
 .widget-editable {
