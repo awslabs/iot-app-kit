@@ -1,0 +1,18 @@
+.property-panel-header-container {
+  height: 62px;
+  padding: 0 24px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid #b6bed1;
+  border-top: 1px solid #b6bec9;
+}
+
+.property-panel-header-pull-right {
+  margin-left: auto;
+}
+
+.property-panel-header-container-hover:hover {
+  background-color: #f4f4f4;
+  cursor: pointer;
+}
