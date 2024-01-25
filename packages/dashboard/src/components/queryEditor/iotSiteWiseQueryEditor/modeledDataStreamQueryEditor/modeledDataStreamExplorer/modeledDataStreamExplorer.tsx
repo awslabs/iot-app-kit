@@ -43,6 +43,7 @@ export function ModeledDataStreamExplorer({
     ? `Search result for "${searchQuery}" (0)`
     : 'Modeled data streams (0)';
 
+  console.log('ModeledDataStreamTable', dataStreams, assetProperties);
   return (
     <ModeledDataStreamTable
       onClickAddModeledDataStreams={onClickAddModeledDataStreams}

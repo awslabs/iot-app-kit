@@ -29,7 +29,7 @@ export const ResourceExplorerFooter = ({
   const stickyFooter = {
     backgroundColor: colorBackgroundButtonNormalDefault,
     bottom: spaceStaticXxxs,
-    width: width + STICKY_BUTTON_WIDTH_FACTOR,
+    width: width + STICKY_BUTTON_WIDTH_FACTOR - 8,
     borderTop: `${spaceStaticXxxs} solid ${colorBorderDividerDefault}`,
   };
 

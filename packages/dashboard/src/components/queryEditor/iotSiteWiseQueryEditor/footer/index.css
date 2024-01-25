@@ -1,5 +1,5 @@
 .queryeditor-button-sticky {
   position: fixed;
   z-index: 999;
-  left: 0;
+  left: 8px;
 }
