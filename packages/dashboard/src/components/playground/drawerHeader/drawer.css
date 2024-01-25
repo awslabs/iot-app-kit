@@ -1,0 +1,21 @@
+.drawer-container {
+  height: 62px;
+  padding: 0 24px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid #b6bed1;
+  border-top: 1px solid #b6bec9;
+}
+
+.drawer-pull-right {
+  margin-left: auto;
+}
+
+.drawer-collapse-button-divider {
+  border-left: 1px solid #b6bed1;
+}
+
+.drawer-container-hover:hover {
+  background-color: #f4f4f4;
+}

@@ -182,7 +182,7 @@ const BaseChart = ({
 
   return (
     <div
-      className={`base-chart-container ${options.legend?.position}-position`}
+      className={`react-resize-chart-override base-chart-container ${options.legend?.position}-position`}
     >
       <Resizable
         height={chartHeight}

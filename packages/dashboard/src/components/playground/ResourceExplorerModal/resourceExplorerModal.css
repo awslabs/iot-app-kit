@@ -1,0 +1,7 @@
+.playground-re-container {
+  height: 90vh;
+  position: relative;
+  border-top: 1px solid #e9ebed;
+  overflow: scroll;
+  border-radius: 16px;
+}

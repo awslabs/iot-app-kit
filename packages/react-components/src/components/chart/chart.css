@@ -1,8 +1,8 @@
-.react-resizable {
+.react-resize-chart-override .react-resizable {
   position: relative;
 }
 
-.react-resizable-handle {
+.react-resize-chart-override .react-resizable-handle {
   position: absolute;
   width: 20px;
   height: 100%;
@@ -11,7 +11,7 @@
   box-sizing: border-box;
 }
 
-.react-resizable-handle-se {
+.react-resize-chart-override .react-resizable-handle-se {
   bottom: 0%;
   right: 0;
   cursor: ew-resize;
@@ -21,7 +21,7 @@
   border-right: 1px solid #e9ebed;
 }
 
-.bottom-position .react-resizable-handle-se {
+.bottom-position .react-resize-chart-override .react-resizable-handle-se {
   bottom: 0;
   left: 0;
   transform: translateX(0);
@@ -46,7 +46,7 @@
   outline: none;
 }
 
-.base-chart-container.left-position {
+.base-chart-container .left-position {
   flex-direction: row-reverse;
 }
 
@@ -54,11 +54,11 @@
   padding-left: 20px;
 }
 
-.base-chart-container.bottom-position {
+.base-chart-container .bottom-position {
   flex-direction: column;
 }
 
-.left-position .react-resizable-handle-se {
+.left-position .react-resize-chart-override .react-resizable-handle-se {
   right: unset;
   left: 0;
   border: unset;

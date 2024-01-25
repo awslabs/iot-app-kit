@@ -62,6 +62,8 @@ import DashboardHeader from './dashboardHeader';
 
 import '@iot-app-kit/components/styles.css';
 import './index.css';
+import { Playground } from '~/components/playground/playground';
+import { showPlayground } from '~/components/playground/showPlayground';
 
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
@@ -285,32 +287,63 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             <ComponentPalette />
           </Box>
         </div>
-        <ResizablePanes
-          leftPane={
-            <QueryEditor
-              iotSiteWiseClient={iotSiteWiseClient}
-              iotTwinMakerClient={iotTwinMakerClient}
-            />
-          }
-          centerPane={
-            <div
-              className='display-area'
-              ref={(el) => setViewFrameElement(el || undefined)}
-              style={{ backgroundColor: colorBackgroundCellShaded }}
-            >
-              <GestureableGrid {...gridProps}>
-                <ContextMenu {...contextMenuProps} />
-                <Widgets {...widgetsProps} />
-                {!widgetLength && <DashboardEmptyState />}
-                {activeGesture === 'select' && (
-                  <UserSelection {...selectionProps} />
-                )}
-              </GestureableGrid>
-              <WebglContext viewFrame={viewFrame} />
-            </div>
-          }
-          rightPane={propertiesPanel}
-        />
+        {showPlayground() ? (
+          <Playground
+            resourceExplorer={
+              <QueryEditor
+                iotSiteWiseClient={iotSiteWiseClient}
+                iotTwinMakerClient={iotTwinMakerClient}
+              />
+            }
+            creator={
+              <div
+                ref={(el) => setViewFrameElement(el || undefined)}
+                className='creator-container'
+                style={{
+                  backgroundColor: colorBackgroundCellShaded,
+                }}
+              >
+                <GestureableGrid {...gridProps}>
+                  <ContextMenu {...contextMenuProps} />
+                  <Widgets {...widgetsProps} />
+                  {!widgetLength && <DashboardEmptyState />}
+                  {activeGesture === 'select' && (
+                    <UserSelection {...selectionProps} />
+                  )}
+                </GestureableGrid>
+                <WebglContext viewFrame={viewFrame} />
+              </div>
+            }
+            rightPane={propertiesPanel}
+          />
+        ) : (
+          <ResizablePanes
+            leftPane={
+              <QueryEditor
+                iotSiteWiseClient={iotSiteWiseClient}
+                iotTwinMakerClient={iotTwinMakerClient}
+              />
+            }
+            centerPane={
+              <div
+                className='display-area'
+                ref={(el) => setViewFrameElement(el || undefined)}
+                style={{ backgroundColor: colorBackgroundCellShaded }}
+              >
+                <GestureableGrid {...gridProps}>
+                  <ContextMenu {...contextMenuProps} />
+                  <Widgets {...widgetsProps} />
+                  {!widgetLength && <DashboardEmptyState />}
+                  {activeGesture === 'select' && (
+                    <UserSelection {...selectionProps} />
+                  )}
+                </GestureableGrid>
+                <WebglContext viewFrame={viewFrame} />
+              </div>
+            }
+            rightPane={propertiesPanel}
+          />
+        )}
       </div>
     </ContentLayout>
   );

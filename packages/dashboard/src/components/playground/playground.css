@@ -1,0 +1,17 @@
+.playground-container {
+  height: calc(100vh - 160px);
+  display: flex;
+  width: 100%;
+}
+
+.playground-creator-container {
+  overflow: scroll;
+  width: 100%;
+  position: relative;
+}
+
+.playground-config-container {
+  z-index: 2;
+  margin-left: auto;
+  height: 100%;
+}

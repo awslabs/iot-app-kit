@@ -1,0 +1,10 @@
+.properties-table-parent-container {
+  height: 86%;
+  overflow: scroll;
+}
+
+.properties-table-property-td-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
