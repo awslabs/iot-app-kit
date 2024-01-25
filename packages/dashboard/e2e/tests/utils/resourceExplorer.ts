@@ -17,6 +17,21 @@ export const resourceExplorerUtil = (page: Page) => {
   const frame = page.locator(RESOURCE_EXPLORER_FRAME);
 
   /**
+   * general RE specific actions
+   */
+  const generalActions = {
+    /**
+     * click the add button
+     * will add the asset model configuration to the selection.
+     *
+     * @returns void
+     */
+    addToWidget: async () => {
+      await frame.getByRole('button', { name: 'Add', exact: true }).click();
+    },
+  };
+
+  /**
    * asset model tab specific actions
    */
   const assetModelActions = {
@@ -66,14 +81,57 @@ export const resourceExplorerUtil = (page: Page) => {
     selectProperty: async (label: string) => {
       await frame.getByLabel(`Select asset model property ${label}`).click();
     },
+  };
+
+  /**
+   * modeled tab specific actions
+   */
+  const modeledActions = {
     /**
-     * click the add button
-     * will add the asset model configuration to the selection.
+     * finds an asset
+     *
+     * @returns Locator
+     *
+     */
+    findAsset: (label: string) => {
+      return frame.getByLabel(`Select asset ${label}`);
+    },
+
+    /**
+     * select asset from table
      *
      * @returns void
      */
-    addToWidget: async () => {
-      await frame.getByRole('button', { name: 'Add', exact: true }).click();
+    selectAsset: (label: string) => {
+      return frame.getByLabel(`Select asset ${label}`).click();
+    },
+
+    /**
+     * finds an asset property
+     *
+     * @returns Locator
+     *
+     */
+    findProperty: (label: string) => {
+      return frame.getByLabel(`Select modeled data stream ${label}`);
+    },
+    /**
+     * select asset property from table
+     *
+     * @returns void
+     */
+    selectProperty: async (label: string) => {
+      await frame.getByLabel(`Select modeled data stream ${label}`).click();
+    },
+    /**
+     * select a disabled asset property from table
+     *
+     * @returns void
+     */
+    findDisabledProperty: (label: string) => {
+      return frame.getByLabel(
+        `${label} data not supported for the selected widget`
+      );
     },
   };
 
@@ -94,6 +152,8 @@ export const resourceExplorerUtil = (page: Page) => {
     tabTo: async (tab: Tabs) => {
       await frame.locator(tabMap[tab]).click();
     },
+    generalActions,
     assetModelActions,
+    modeledActions,
   };
 };
