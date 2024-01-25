@@ -12,9 +12,18 @@ export const disableAdd = (
   switch (currWidgetType) {
     case 'status':
     case 'kpi': {
-      const assets =
+      const modeledProperties =
         get(selectedWidget, 'properties.queryConfig.query.assets') ?? [];
-      if (assets.length) {
+      const unmodeledProperties =
+        get(selectedWidget, 'properties.queryConfig.query.properties') ?? [];
+      const assetModelProperties =
+        get(selectedWidget, 'properties.queryConfig.query.assetModels') ?? [];
+      if (
+        modeledProperties.length ||
+        unmodeledProperties.length ||
+        assetModelProperties.length ||
+        collectionPropsLength !== 1
+      ) {
         widgetBasedDisable = true;
       }
       break;
@@ -22,6 +31,7 @@ export const disableAdd = (
     default:
   }
   return (
+    collectionPropsLength === undefined ||
     collectionPropsLength === 0 ||
     selectedWidgets.length !== 1 ||
     widgetBasedDisable
