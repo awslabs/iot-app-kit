@@ -20,6 +20,7 @@ import { ResourceExplorerFooter } from '../../../footer/footer';
 import { useSelector } from 'react-redux';
 import { DashboardState } from '~/store/state';
 import { isModeledPropertyInvalid } from '~/components/queryEditor/helpers/isModeledPropertyInvalid';
+import { disableAdd } from '~/components/queryEditor/iotSiteWiseQueryEditor/footer/disableAdd';
 
 export interface AssetTableProps {
   onClickNextPage: () => void;
@@ -132,7 +133,8 @@ export function AssetModelPropertiesTable({
       footer={
         <ResourceExplorerFooter
           addDisabled={
-            saveDisabled || collectionProps.selectedItems?.length === 0
+            saveDisabled ||
+            disableAdd(selectedWidgets, collectionProps.selectedItems?.length)
           }
           onAdd={onSave}
           onReset={() => actions.setSelectedItems([])}
