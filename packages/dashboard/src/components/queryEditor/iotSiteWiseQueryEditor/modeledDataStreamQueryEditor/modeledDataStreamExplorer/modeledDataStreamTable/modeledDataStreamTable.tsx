@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { isFunction } from 'lodash';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
@@ -99,19 +99,40 @@ export function ModeledDataStreamTable({
     sorting: {},
   });
 
+  const actionsRef = useRef(actions);
+  const collectionPropsRef = useRef(collectionProps);
+
   /**
    * Reset selected items if the user changes the asset
    * to avoid confusing add UX
    */
   useEffect(() => {
-    actions.setSelectedItems([]);
-    /**
-     * adding actions as a dependency causes
-     * the hook to run on every change becuase useCollection
-     * returns a new action reference
-     */
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedAsset]);
+    actionsRef.current.setSelectedItems([]);
+  }, [selectedAsset?.assetId]);
+
+  /**
+   * update the collectionPropsRef for the most
+   * current selectedItems
+   */
+  useEffect(() => {
+    collectionPropsRef.current = collectionProps;
+  }, [collectionProps]);
+
+  /**
+   * Remove selected items if the properties are
+   * not able to be displayed on widget
+   */
+
+  const widgetType = selectedWidgets?.at(0)?.type;
+
+  useEffect(() => {
+    if (collectionPropsRef.current.selectedItems) {
+      const x = collectionPropsRef.current.selectedItems?.filter(
+        (item) => !isModeledPropertyInvalid(item.dataType, widgetType)
+      );
+      actionsRef.current.setSelectedItems(x);
+    }
+  }, [widgetType]);
 
   const handleClickNextPage = () => {
     if (isFunction(onClickNextPage)) {
@@ -204,6 +225,7 @@ export function ModeledDataStreamTable({
             onClickAddModeledDataStreams(
               collectionProps.selectedItems as unknown as ModeledDataStream[]
             );
+            actions.setSelectedItems([]); //clear table after adding it to widget
             metricsRecorder?.record({
               metricName: 'ModeledDataStreamAdd',
               metricValue: 1,
