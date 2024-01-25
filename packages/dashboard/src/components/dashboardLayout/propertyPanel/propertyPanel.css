@@ -1,0 +1,23 @@
+.property-panel-container {
+  min-height: 62px;
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  z-index: 2;
+  box-shadow: rgb(0 7 22 / 10%) 0 -36px 36px -36px; /* took it from another portal */
+  max-height: calc(100vh - 225px);
+}
+
+.react-resize-drawer-override .react-resizable-handle-n {
+  position: absolute;
+  z-index: 10000;
+  top: 0;
+  margin-top: 3px;
+  height: 18px;
+  width: 100%;
+  cursor: ns-resize !important;
+  background-image: url("propertyPanel-drawer.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+}
