@@ -19,7 +19,10 @@ For an example of a real world use case using the IoT App Kit, [visit this tutor
 <img width="1170" alt="IoT App Kit Demo" src="https://user-images.githubusercontent.com/6397726/159107236-ea95e7ba-a89c-43e6-a34c-c5ea1dd37e8b.png">
 
 ## Contributors guide to IoT App Kit
-Learn how to contribute at [the development guide](https://github.com/awslabs/iot-app-kit/tree/main/docs/development.md).
+Learn how to contribute by reviewing the following documents:
+- [Development guide](https://github.com/awslabs/iot-app-kit/tree/main/docs/development.md)
+- [Coding guidelines](https://github.com/awslabs/iot-app-kit/blob/main/docs/CodingGuidelines.md)
+- [PR best practices](https://github.com/awslabs/iot-app-kit/blob/main/docs/PRBestPractices.md)
 
 ## Packages
 
