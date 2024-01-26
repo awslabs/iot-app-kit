@@ -1,7 +1,7 @@
-name: Unit tests
+name: Unit tests - full suite
 on: [pull_request]
 jobs:
-  unit-tests-full-suite:
+  all-packages:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -13,11 +13,9 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - name: Install
-        run: npm ci --prefer-offline --no-audit --no-fund
-
-      - name: Run unit tests
-        run: npx turbo run test
+      - name: Install dependencies
+        shell: bash
+        run: npm run bootstrap
 
       - name: Run lints
         run: npx turbo run lint
@@ -27,3 +25,103 @@ jobs:
 
       - name: Ensure no un-commited changes
         run: npm run test:git
+  dashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: test dashboard
+        uses: ./.github/workflows/composite
+        with:
+          repo-path: packages/dashboard
+  react-components:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: ./.github/workflows/composite
+        with:
+          repo-path: packages/react-components
+  core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: ./.github/workflows/composite
+        with:
+          repo-path: packages/core
+  components:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: ./.github/workflows/composite
+        with:
+          repo-path: packages/components
+  core-util:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: ./.github/workflows/composite
+        with:
+          repo-path: packages/core-util
+  feature-toggles:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: ./.github/workflows/composite
+        with:
+          repo-path: packages/feature-toggles
+  related-table:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: ./.github/workflows/composite
+        with:
+          repo-path: packages/related-table
+  scene-composer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: ./.github/workflows/composite
+        with:
+          repo-path: packages/scene-composer
+  source-iotsitewise:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: ./.github/workflows/composite
+        with:
+          repo-path: packages/source-iotsitewise
+  source-iottwinmaker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: ./.github/workflows/composite
+        with:
+          repo-path: packages/source-iottwinmaker
+  tools-iottwinmaker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: ./.github/workflows/composite
+        with:
+          repo-path: packages/tools-iottwinmaker
