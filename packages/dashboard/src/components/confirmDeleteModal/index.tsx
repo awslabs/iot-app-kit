@@ -1,12 +1,9 @@
 import React, { ReactElement } from 'react';
 
-import {
-  Box,
-  Button,
-  Modal,
-  SpaceBetween,
-} from '@cloudscape-design/components';
-
+import Box from '@cloudscape-design/components/box';
+import Button from '@cloudscape-design/components/button';
+import Modal from '@cloudscape-design/components/modal';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import CustomOrangeButton from '../customOrangeButton';
 
 interface ConfirmDeleteModalProps {

@@ -1,9 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  CollectionPreferences,
+import CollectionPreferences, {
   CollectionPreferencesProps,
-} from '@cloudscape-design/components';
+} from '@cloudscape-design/components/collection-preferences';
 
 import {
   Table,

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { FormField, Input, InputProps } from '@cloudscape-design/components';
+import FormField from '@cloudscape-design/components/form-field';
+import Input, { InputProps } from '@cloudscape-design/components/input';
 
 export type LabeledInputProps = InputProps & { label: string };
 

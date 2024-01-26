@@ -1,4 +1,4 @@
-import type { SelectProps } from '@cloudscape-design/components';
+import type { SelectProps } from '@cloudscape-design/components/select';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import {
   LINE_AGGREGATION_OPTIONS,

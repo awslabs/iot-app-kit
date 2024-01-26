@@ -1,15 +1,11 @@
 import type { FC, MouseEventHandler, ReactNode } from 'react';
 import React from 'react';
-import type {
-  NonCancelableCustomEvent,
-  SelectProps,
-} from '@cloudscape-design/components';
-import {
-  Box,
-  ExpandableSection,
-  Select,
-  SpaceBetween,
-} from '@cloudscape-design/components';
+import type { NonCancelableCustomEvent } from '@cloudscape-design/components/internal/events';
+import type { SelectProps } from '@cloudscape-design/components/select';
+import Box from '@cloudscape-design/components/box';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+import ExpandableSection from '@cloudscape-design/components/expandable-section';
+import Select from '@cloudscape-design/components/select';
 import * as awsui from '@cloudscape-design/design-tokens';
 import ColorPicker from '../shared/colorPicker';
 

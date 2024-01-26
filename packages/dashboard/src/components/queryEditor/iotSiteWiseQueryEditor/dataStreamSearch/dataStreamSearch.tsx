@@ -1,10 +1,8 @@
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import {
-  Button,
-  Form,
-  Header,
-  SpaceBetween,
-} from '@cloudscape-design/components';
+import Button from '@cloudscape-design/components/button';
+import Form from '@cloudscape-design/components/form';
+import Header from '@cloudscape-design/components/header';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 

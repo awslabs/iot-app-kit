@@ -1,12 +1,9 @@
 import React from 'react';
+import Box from '@cloudscape-design/components/box';
+import ExpandableSection from '@cloudscape-design/components/expandable-section';
+import Input, { InputProps } from '@cloudscape-design/components/input';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 
-import {
-  Box,
-  ExpandableSection,
-  Input,
-  InputProps,
-  SpaceBetween,
-} from '@cloudscape-design/components';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 
 import * as awsui from '@cloudscape-design/design-tokens';

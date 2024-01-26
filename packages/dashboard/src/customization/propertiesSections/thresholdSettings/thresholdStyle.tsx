@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { FormField, Select, SelectProps } from '@cloudscape-design/components';
+import type { SelectProps } from '@cloudscape-design/components/select';
+import Select from '@cloudscape-design/components/select';
+import FormField from '@cloudscape-design/components/form-field';
+
 import { OptionDefinition } from '@cloudscape-design/components/internal/components/option/interfaces';
 // FIXME: Export ThresholdStyleType from @iot-app-kit/react-components
 // eslint-disable-next-line no-restricted-imports

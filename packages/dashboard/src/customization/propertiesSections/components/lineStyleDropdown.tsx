@@ -1,6 +1,7 @@
 import React from 'react';
 import type { FC } from 'react';
-import { FormField, Select } from '@cloudscape-design/components';
+import FormField from '@cloudscape-design/components/form-field';
+import Select from '@cloudscape-design/components/select';
 import { dropdownConsts } from '../constants';
 
 type LineStyleDropdownProps = {

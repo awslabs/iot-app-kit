@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Box, SpaceBetween } from '@cloudscape-design/components';
+import Box from '@cloudscape-design/components/box';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+
 import { colorTextLayoutToggle } from '@cloudscape-design/design-tokens';
 
 import './no-chart-data.css';

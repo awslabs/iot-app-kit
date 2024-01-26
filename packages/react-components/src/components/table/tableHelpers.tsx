@@ -2,7 +2,7 @@ import React from 'react';
 import { round } from '@iot-app-kit/core-util';
 import { STATUS_ICON_TYPE } from '@iot-app-kit/core';
 
-import { TableProps as CloudscapeTableProps } from '@cloudscape-design/components';
+import { TableProps as CloudscapeTableProps } from '@cloudscape-design/components/table';
 
 import { LoadingSpinner } from './spinner';
 import { getIcons } from '../../common/iconUtils';

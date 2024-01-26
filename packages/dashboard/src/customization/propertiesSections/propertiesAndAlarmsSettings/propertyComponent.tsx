@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button, SpaceBetween, Box } from '@cloudscape-design/components';
+import Button from '@cloudscape-design/components/button';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+import Box from '@cloudscape-design/components/box';
 import ColorPicker from '../shared/colorPicker';
 import type { FC } from 'react';
 import type { StyleSettingsMap } from '@iot-app-kit/core';

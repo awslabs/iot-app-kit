@@ -12,7 +12,7 @@ import { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import { TableColumnDefinition, TableItem, TableItemHydrated } from './types';
 import { createTableItems } from './createTableItems';
 import { DEFAULT_TABLE_MESSAGES } from './messages';
-import { TableProps as TableBaseProps } from '@cloudscape-design/components';
+import { TableProps as TableBaseProps } from '@cloudscape-design/components/table';
 
 const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
 

@@ -1,13 +1,13 @@
 import React from 'react';
-import {
-  ExpandableSection,
-  Input,
-  Toggle,
-  SpaceBetween,
-  Box,
-} from '@cloudscape-design/components';
+import ExpandableSection from '@cloudscape-design/components/expandable-section';
+
+import Input from '@cloudscape-design/components/input';
+import Toggle from '@cloudscape-design/components/toggle';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+import Box from '@cloudscape-design/components/box';
+
 import type { FC } from 'react';
-import type { InputProps } from '@cloudscape-design/components';
+import type { InputProps } from '@cloudscape-design/components/input';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import type { TextWidget } from '~/customization/widgets/types';
 

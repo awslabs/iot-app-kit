@@ -7,7 +7,7 @@ import { isJust } from '~/util/maybe';
 import { SelectOneWidget } from '../shared/selectOneWidget';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { StyledPropertyComponent } from './styledPropertyComponent';
-import { Box } from '@cloudscape-design/components';
+import Box from '@cloudscape-design/components/box';
 import { StyledPropertiesAlarmsSectionProps } from './sectionTypes';
 import { defaultOnDeleteQuery } from './onDeleteProperty';
 import { StyledAssetQuery } from '~/customization/widgets/types';

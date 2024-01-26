@@ -1,5 +1,5 @@
 import { isMacLike } from './util/browser';
-import type { DateRangePickerProps } from '@cloudscape-design/components';
+import type { DateRangePickerProps } from '@cloudscape-design/components/date-range-picker';
 
 export type ResourceExplorerMessages = {
   explorerEmptyLabel: string;

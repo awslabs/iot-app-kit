@@ -1,5 +1,7 @@
 import React from 'react';
-import { Alert, Link, SpaceBetween } from '@cloudscape-design/components';
+import Alert from '@cloudscape-design/components/alert';
+import Link from '@cloudscape-design/components/link';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import { infoMessage, errorMessage } from './constants';
 
 export const WorkspaceErrorState = () => {

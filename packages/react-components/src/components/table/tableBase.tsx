@@ -1,9 +1,7 @@
 import React from 'react';
-import {
-  Pagination,
-  PropertyFilter,
-  Table,
-} from '@cloudscape-design/components';
+import Table from '@cloudscape-design/components/table';
+import Pagination from '@cloudscape-design/components/pagination';
+import PropertyFilter from '@cloudscape-design/components/property-filter';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import { getDefaultColumnDefinitions } from './tableHelpers';
 import type { FunctionComponent } from 'react';

@@ -1,8 +1,9 @@
 import React from 'react';
-import { Icon, SpaceBetween } from '@cloudscape-design/components';
+import Icon from '@cloudscape-design/components/icon';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import './styles.css';
 import type { FC, MouseEventHandler, PropsWithChildren } from 'react';
-import type { IconProps } from '@cloudscape-design/components';
+import type { IconProps } from '@cloudscape-design/components/icon';
 
 type ExpandableSectionHeaderProps = {
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5';

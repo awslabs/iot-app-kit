@@ -1,7 +1,7 @@
 import Box from '@cloudscape-design/components/box';
 import React from 'react';
 import EmptyPanelSvg from './assets/emptyPanel.svg';
-import { SpaceBetween } from '@cloudscape-design/components';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import './emptyPanel.css';
 
 /** Empty state for the properties panel. */

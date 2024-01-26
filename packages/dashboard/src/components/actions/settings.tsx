@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Box, Modal, SpaceBetween } from '@cloudscape-design/components';
+import Box from '@cloudscape-design/components/box';
+import Modal from '@cloudscape-design/components/modal';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 
 import LabeledInput from '../util/labeledInput';
 import { useGridSettings } from './useGridSettings';

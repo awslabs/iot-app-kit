@@ -12,7 +12,7 @@ import {
   colorBorderDividerDefault,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
-import { ContentLayout } from '@cloudscape-design/components';
+import ContentLayout from '@cloudscape-design/components/content-layout';
 
 import { selectedRect } from '~/util/select';
 

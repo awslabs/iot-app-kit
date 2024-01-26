@@ -10,12 +10,11 @@ import React, {
 } from 'react';
 import { IntlProvider, FormattedMessage } from 'react-intl';
 import type { Core, EventObjectNode, EventObjectEdge } from 'cytoscape';
-import {
-  Button,
-  Input,
-  Grid,
-  SpaceBetween,
-} from '@cloudscape-design/components';
+import Button from '@cloudscape-design/components/button';
+import Input from '@cloudscape-design/components/input';
+import Grid from '@cloudscape-design/components/grid';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+
 import { TwinMakerKGQueryDataModule } from '@iot-app-kit/source-iottwinmaker';
 import GraphView from './graph/graph-view';
 import Toolbar from './graph/graph-toolbar';

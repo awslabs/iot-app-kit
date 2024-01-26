@@ -1,6 +1,8 @@
 import React, { memo } from 'react';
 
-import { Box, Header, SpaceBetween } from '@cloudscape-design/components';
+import Box from '@cloudscape-design/components/box';
+import Header from '@cloudscape-design/components/header';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import { TimeSelection } from '@iot-app-kit/react-components';
 
 import {

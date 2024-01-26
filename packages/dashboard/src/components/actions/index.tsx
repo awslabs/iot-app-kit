@@ -4,7 +4,9 @@ import { isEqual, pick } from 'lodash';
 
 import { getPlugin } from '@iot-app-kit/core';
 import { useViewport } from '@iot-app-kit/react-components';
-import { Button, SpaceBetween, Box } from '@cloudscape-design/components';
+import Button from '@cloudscape-design/components/button';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+import Box from '@cloudscape-design/components/box';
 
 import { onSelectWidgetsAction, onToggleReadOnly } from '~/store/actions';
 import type { DashboardState } from '~/store/state';

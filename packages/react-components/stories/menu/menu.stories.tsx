@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import type { FC } from 'react';
-import { Icon } from '@cloudscape-design/components';
+import Icon from '@cloudscape-design/components/icon';
 
 import { getColor } from '../../src/components/chart/utils/getColor';
 import {

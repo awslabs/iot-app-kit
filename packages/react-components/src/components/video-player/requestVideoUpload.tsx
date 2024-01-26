@@ -1,12 +1,11 @@
-import {
-  Button,
-  DateRangePicker,
-  SpaceBetween,
-} from '@cloudscape-design/components';
+import Button from '@cloudscape-design/components/button';
+import DateRangePicker from '@cloudscape-design/components/date-range-picker';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+
 import React, { Component } from 'react';
 import { i18nStrings, requestVideoButtonLabel } from './constants';
 import { getStartAndEndTimeFromRange } from './utils/dateRangeUtils';
-import type { DateRangePickerProps } from '@cloudscape-design/components';
+import type { DateRangePickerProps } from '@cloudscape-design/components/date-range-picker';
 import type {
   IVideoUploadRequestProps,
   IVideoUploadRequestState,

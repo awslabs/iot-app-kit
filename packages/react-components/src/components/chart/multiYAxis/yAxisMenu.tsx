@@ -12,7 +12,7 @@ import {
   spaceScaledXs,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
-import { Box } from '@cloudscape-design/components';
+import Box from '@cloudscape-design/components/box';
 
 import { Menu, MenuOption, PositionableMenu } from '../../menu';
 import { ColorIcon } from '../legend/colorIcon';

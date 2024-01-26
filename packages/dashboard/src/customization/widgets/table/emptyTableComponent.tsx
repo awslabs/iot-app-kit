@@ -1,5 +1,7 @@
 import React from 'react';
-import { Box, SpaceBetween } from '@cloudscape-design/components';
+import Box from '@cloudscape-design/components/box';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+
 import type { FunctionComponent } from 'react';
 
 const EmptyTableComponent: FunctionComponent = () => {

@@ -6,14 +6,14 @@ import type {
   Threshold,
   ThresholdValue,
 } from '@iot-app-kit/core';
-import type { InputProps, SelectProps } from '@cloudscape-design/components';
-import {
-  Box,
-  Button,
-  Input,
-  Select,
-  SpaceBetween,
-} from '@cloudscape-design/components';
+import type { InputProps } from '@cloudscape-design/components/input';
+import type { SelectProps } from '@cloudscape-design/components/select';
+
+import Box from '@cloudscape-design/components/box';
+import Button from '@cloudscape-design/components/button';
+import Select from '@cloudscape-design/components/select';
+import Input from '@cloudscape-design/components/input';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 
 import {
   DEFAULT_THRESHOLD_COLOR,
@@ -22,7 +22,7 @@ import {
 import ColorPicker from '../shared/colorPicker';
 import type { ThresholdWithId } from '~/customization/settings';
 
-import * as awsui from '@cloudscape-design/design-tokens';
+import { spaceScaledS } from '@cloudscape-design/design-tokens';
 
 import './thresholdComponent.css';
 
@@ -101,7 +101,7 @@ export const ThresholdComponent: FC<{
           <Box padding={{ top: 'xxs' }}>
             <div
               className='threshold-configuration'
-              style={{ gap: awsui.spaceScaledS }}
+              style={{ gap: spaceScaledS }}
             >
               <Box variant='span'>{defaultMessages.if}</Box>
               <Select

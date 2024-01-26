@@ -1,4 +1,4 @@
-import { Toggle } from '@cloudscape-design/components';
+import Toggle from '@cloudscape-design/components/toggle';
 import React from 'react';
 
 export type AnnotationsSettingsProps = {

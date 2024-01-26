@@ -1,8 +1,10 @@
 import React from 'react';
-import { FormField, Grid } from '@cloudscape-design/components';
-import './styles.css';
+import Grid from '@cloudscape-design/components/grid';
+import FormField from '@cloudscape-design/components/form-field';
 import type { FC, PropsWithChildren } from 'react';
-import type { FormFieldProps, GridProps } from '@cloudscape-design/components';
+import type { FormFieldProps } from '@cloudscape-design/components/form-field';
+import type { GridProps } from '@cloudscape-design/components/grid';
+import './styles.css';
 
 type SettingTileProps = GridProps & FormFieldProps;
 const SettingTile: FC<PropsWithChildren<SettingTileProps>> = ({

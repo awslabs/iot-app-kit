@@ -1,4 +1,4 @@
-import { DateRangePickerProps } from '@cloudscape-design/components';
+import { DateRangePickerProps } from '@cloudscape-design/components/date-range-picker';
 
 /**
  *

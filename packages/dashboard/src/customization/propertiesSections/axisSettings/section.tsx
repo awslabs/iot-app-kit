@@ -1,13 +1,13 @@
 import * as React from 'react';
-import {
-  Box,
-  ExpandableSection,
-  Input,
-  SpaceBetween,
-  Toggle,
-} from '@cloudscape-design/components';
+import Box from '@cloudscape-design/components/box';
+
+import ExpandableSection from '@cloudscape-design/components/expandable-section';
+import Input from '@cloudscape-design/components/input';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+import Toggle from '@cloudscape-design/components/toggle';
 import type { FC } from 'react';
-import type { InputProps, ToggleProps } from '@cloudscape-design/components';
+import type { InputProps } from '@cloudscape-design/components/input';
+import type { ToggleProps } from '@cloudscape-design/components/toggle';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import type { AxisSettings } from '../../settings';
 

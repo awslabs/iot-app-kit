@@ -1,4 +1,4 @@
-import { Button } from '@cloudscape-design/components';
+import Button from '@cloudscape-design/components/button';
 import {
   borderRadiusDropdown,
   colorBackgroundDropdownItemHover,

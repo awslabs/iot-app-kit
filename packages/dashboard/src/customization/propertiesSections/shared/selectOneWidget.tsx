@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@cloudscape-design/components';
+import Box from '@cloudscape-design/components/box';
 
 export const SelectOneWidget = () => (
   <Box variant='p' color='text-status-inactive'>

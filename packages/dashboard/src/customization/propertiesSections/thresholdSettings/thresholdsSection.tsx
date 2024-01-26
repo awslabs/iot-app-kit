@@ -3,12 +3,10 @@ import React, { FC, useState } from 'react';
 import { ComparisonOperator, ThresholdSettings } from '@iot-app-kit/core';
 import { nanoid } from '@reduxjs/toolkit';
 
-import {
-  Button,
-  ExpandableSection,
-  SpaceBetween,
-  Toggle,
-} from '@cloudscape-design/components';
+import Toggle from '@cloudscape-design/components/toggle';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+import ExpandableSection from '@cloudscape-design/components/expandable-section';
+import Button from '@cloudscape-design/components/button';
 
 import { DEFAULT_THRESHOLD_COLOR } from './defaultValues';
 import type {

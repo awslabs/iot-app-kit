@@ -5,7 +5,8 @@ import { Status, useViewport } from '@iot-app-kit/react-components';
 import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import type { DashboardState } from '~/store/state';
 import type { StatusWidget } from '../types';
-import { Box } from '@cloudscape-design/components';
+import Box from '@cloudscape-design/components/box';
+
 import { useQueries } from '~/components/dashboard/queryContext';
 import { isDefined } from '~/util/isDefined';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';

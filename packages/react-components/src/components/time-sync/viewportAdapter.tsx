@@ -1,5 +1,5 @@
 import parse from 'parse-duration';
-import type { DateRangePickerProps } from '@cloudscape-design/components';
+import type { DateRangePickerProps } from '@cloudscape-design/components/date-range-picker';
 import type { Viewport } from '@iot-app-kit/core';
 
 const relativeOptionKey = (

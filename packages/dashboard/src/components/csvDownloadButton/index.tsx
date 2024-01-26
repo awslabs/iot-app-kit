@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Button, ButtonProps } from '@cloudscape-design/components';
+import Button, { ButtonProps } from '@cloudscape-design/components/button';
 
 import { unparse } from 'papaparse';
 import { StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
