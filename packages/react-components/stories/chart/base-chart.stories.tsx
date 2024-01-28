@@ -64,7 +64,7 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
             defaultVisualizationType={chartType}
             significantDigits={significantDigits}
             size={size}
-            onChartOptionsChange={jest.fn()}
+            onChartOptionsChange={() => {}}
             styleSettings={styleSettings}
             viewport={viewport ?? VIEWPORT}
             queries={[MOCK_TIME_SERIES_DATA_QUERY]}
