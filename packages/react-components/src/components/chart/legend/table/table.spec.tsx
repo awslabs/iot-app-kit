@@ -24,12 +24,14 @@ describe('legend table', () => {
         name: 'fake datastream',
         color: 'black',
         trendCursorValues: {},
+        latestValue: 111,
       },
       {
         id: 'datastream-2',
         name: 'fake datastream 2',
         color: 'black',
         trendCursorValues: {},
+        latestValue: 222,
       },
     ];
     const table = render(
@@ -37,6 +39,7 @@ describe('legend table', () => {
         visible={true}
         datastreams={datastreams}
         trendCursors={[]}
+        significantDigits={2}
       />
     );
 
@@ -55,6 +58,7 @@ describe('legend table', () => {
           'trendcursor-1': 111,
           'trendcursor-2': 333,
         },
+        latestValue: 111,
       },
     ];
     const trendCursors: TrendCursor[] = [
@@ -74,6 +78,7 @@ describe('legend table', () => {
         visible={true}
         datastreams={datastreams}
         trendCursors={trendCursors}
+        significantDigits={2}
       />
     );
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import { DataStream } from '@iot-app-kit/core';
-import { ChartLegend } from '../../types';
+import { DataStream, Primitive } from '@iot-app-kit/core';
+import { ChartLegend, ChartOptions } from '../../types';
 import { ChartLegendTable } from './table';
 import { DataStreamInformation, TrendCursor } from './types';
 import { TrendCursorValues } from '../../../../echarts/extensions/trendCursors/store';
@@ -11,12 +11,14 @@ const mapDataStreamInformation = ({
   chartId,
   visibleContent,
 }: {
-  datastreams: Pick<DataStream, 'id' | 'color' | 'name' | 'unit'>[];
+  datastreams: (Pick<DataStream, 'id' | 'color' | 'name' | 'unit'> & {
+    latestValue: Primitive | undefined;
+  })[];
   trendCursorValues: TrendCursorValues[];
   chartId: string;
   visibleContent: ChartLegend['visibleContent'];
 }): DataStreamInformation[] =>
-  datastreams.map(({ id, name, color, unit }) => {
+  datastreams.map(({ id, name, color, unit, latestValue }) => {
     const values = trendCursorValues.reduce<
       DataStreamInformation['trendCursorValues']
     >((valueMap, next) => {
@@ -33,15 +35,19 @@ const mapDataStreamInformation = ({
       id,
       name: dataStreamName,
       color,
+      latestValue,
       trendCursorValues: values,
     };
   });
 
 type ChartLegendTableAdapterOptions = ChartLegend & {
-  datastreams: Pick<DataStream, 'id' | 'color' | 'name'>[];
+  datastreams: (Pick<DataStream, 'id' | 'color' | 'name' | 'unit'> & {
+    latestValue: Primitive | undefined;
+  })[];
   trendCursorValues: TrendCursorValues[];
   trendCursors: TrendCursor[];
   chartId?: string;
+  significantDigits: ChartOptions['significantDigits'];
 };
 
 export const ChartLegendTableAdapter = ({
@@ -50,6 +56,7 @@ export const ChartLegendTableAdapter = ({
   trendCursorValues,
   chartId = '',
   visibleContent,
+  significantDigits,
   ...options
 }: ChartLegendTableAdapterOptions) => {
   const datastreamItems = mapDataStreamInformation({
@@ -64,6 +71,7 @@ export const ChartLegendTableAdapter = ({
       datastreams={datastreamItems}
       trendCursors={trendCursors}
       visibleContent={visibleContent}
+      significantDigits={significantDigits}
       {...options}
     />
   );
