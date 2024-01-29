@@ -36,6 +36,17 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     baseURL: 'http://localhost:6006/',
+    storageState: {
+      cookies: [],
+      origins: [
+        {
+          origin: 'localhost',
+          localStorage: [
+            { name: 'USE_SVG_FOR_ECHARTS_PLAYWRIGHT_TEST_ONLY', value: 'true' },
+          ],
+        },
+      ],
+    },
   },
 
   /* Configure projects for major browsers */
