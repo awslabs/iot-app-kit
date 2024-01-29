@@ -77,6 +77,7 @@ export const dropdownConsts = {
       { label: 'Unit', value: 'unit' },
       { label: 'Maximum Value', value: 'maxValue' },
       { label: 'Minimum Value', value: 'minValue' },
+      { label: 'Latest Value', value: 'latestValue' },
     ],
   },
 };

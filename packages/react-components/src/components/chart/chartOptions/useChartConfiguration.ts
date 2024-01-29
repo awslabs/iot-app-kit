@@ -39,7 +39,7 @@ const useTitle = ({
 
 const toDataStreamIdentifiers = (dataStreams: DataStream[]) =>
   dataStreams.map(
-    ({ id, name, color, refId, dataType, detailedName, unit }) => ({
+    ({ id, name, color, refId, dataType, detailedName, unit, data }) => ({
       id,
       name,
       color,
@@ -47,6 +47,7 @@ const toDataStreamIdentifiers = (dataStreams: DataStream[]) =>
       dataType,
       detailedName,
       unit,
+      latestValue: data.at(-1)?.y,
     })
   );
 
@@ -55,7 +56,7 @@ const toDataStreamMetaData = (
   series: SeriesOption[]
 ) => {
   return datastreams.map(
-    ({ id, name, color, dataType, refId, detailedName, unit }) => {
+    ({ id, name, color, dataType, refId, detailedName, unit, latestValue }) => {
       const foundSeries = series.find(
         ({ id: seriesId }) => seriesId === id
       ) ?? { appKitColor: color };
@@ -68,6 +69,7 @@ const toDataStreamMetaData = (
         dataType,
         detailedName,
         unit,
+        latestValue,
       };
     }
   );
