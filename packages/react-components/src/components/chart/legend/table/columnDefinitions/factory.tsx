@@ -1,11 +1,13 @@
 import React from 'react';
 import { type TableProps } from '@cloudscape-design/components/table';
+import { isNumeric, round } from '@iot-app-kit/core-util';
 import { DataStreamInformation, TrendCursor } from '../types';
 import { DataStreamCell, DataStreamColumnHeader } from './datastream';
 import { TrendCursorCell, TrendCursorColumnHeader } from './trendCursor';
 import { MaximumColumnHeader, MaximumCell } from './maximumValue';
-import { ChartLegend } from '../../../types';
 import { MinimumColumnHeader, MinimumCell } from './minimumValue';
+import { ChartLegend, ChartOptions } from '../../../types';
+import { LatestValueCell, LatestValueColumnHeader } from './latestValue';
 
 type LegendTableColumnDefinitions =
   TableProps<DataStreamInformation>['columnDefinitions'];
@@ -30,6 +32,22 @@ const createMaximumColumnDefinition =
     },
     isRowHeader: true,
   });
+const createLatestValueColumnDefinition = (
+  significantDigits: ChartOptions['significantDigits']
+): LegendTableColumnDefinitions[1] => ({
+  id: 'Latest Value',
+  sortingField: 'latestValue',
+  header: <LatestValueColumnHeader />,
+  cell: (item) => {
+    const latestValue =
+      item.latestValue && isNumeric(item.latestValue)
+        ? round(item.latestValue, significantDigits)
+        : item.latestValue;
+
+    return <LatestValueCell {...item} latestValue={latestValue} />;
+  },
+  isRowHeader: true,
+});
 
 const createMinimumColumnDefinition =
   (): LegendTableColumnDefinitions[number] => ({
@@ -68,10 +86,12 @@ export const createTableLegendColumnDefinitions = ({
   trendCursors,
   width,
   visibleContent,
+  significantDigits,
 }: {
   trendCursors: TrendCursor[];
   width: number;
   visibleContent: ChartLegend['visibleContent'];
+  significantDigits: ChartOptions['significantDigits'];
 }) => {
   const trendCursorColumnDefinitions = trendCursors
     .sort((a, b) => a.date - b.date)
@@ -81,6 +101,9 @@ export const createTableLegendColumnDefinitions = ({
     createDataStreamColumnDefinition(width),
     ...(visibleContent?.maxValue ? [createMaximumColumnDefinition()] : []),
     ...(visibleContent?.minValue ? [createMinimumColumnDefinition()] : []),
+    ...(visibleContent?.latestValue
+      ? [createLatestValueColumnDefinition(significantDigits)]
+      : []),
     ...trendCursorColumnDefinitions,
   ];
 };

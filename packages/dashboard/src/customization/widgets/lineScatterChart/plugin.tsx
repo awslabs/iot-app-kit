@@ -41,6 +41,7 @@ export const lineScatterChartPlugin: DashboardPlugin = {
             asset: true,
             maxValue: true,
             minValue: true,
+            latestValue: true,
           },
         },
       }),
