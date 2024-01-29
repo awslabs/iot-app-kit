@@ -1,11 +1,9 @@
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import FormField from '@cloudscape-design/components/form-field';
 import Select, { type SelectProps } from '@cloudscape-design/components/select';
-import { OptionDefinition } from '@cloudscape-design/components/internal/components/option/interfaces';
 import { type useQuery } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 import { Controller, type Control } from 'react-hook-form';
-import { useLocalStorage } from 'react-use';
 
 import { useWorkspaces } from './useWorkspaces';
 import { WorkspaceOptionFactory } from './workspaceOptionFactory';
@@ -28,33 +26,10 @@ export const WorkspaceSelector = ({
   const { workspaces, status } = useWorkspaces({ client });
   const workspaceOptions = createWorkspaceOptions(workspaces);
 
-  const [storedWorkspace, setStoredWorkspace] =
-    useLocalStorage<OptionDefinition | null>('storedWorkspace', null);
-
   useEffect(() => {
     OnGettingError(status === 'error');
   }, [status, OnGettingError]);
 
-  useEffect(() => {
-    if (workspaceOptions.length) {
-      const isStoredValueInOptions =
-        storedWorkspace &&
-        workspaceOptions.some(
-          (option: OptionDefinition) => option.value === storedWorkspace.value
-        );
-      if (!isStoredValueInOptions) {
-        setStoredWorkspace(workspaceOptions[0]);
-      }
-    }
-  }, [storedWorkspace, setStoredWorkspace, workspaceOptions]);
-
-  const onChangeHandler = (
-    detail: SelectProps.ChangeDetail,
-    onChange: (...event: unknown[]) => void
-  ) => {
-    setStoredWorkspace(detail.selectedOption);
-    onChange(detail.selectedOption);
-  };
   return (
     <Controller
       control={control}
@@ -69,8 +44,8 @@ export const WorkspaceSelector = ({
           <Select
             disabled={status == 'error'}
             options={workspaceOptions}
-            selectedOption={storedWorkspace ?? null}
-            onChange={({ detail }) => onChangeHandler(detail, field.onChange)}
+            selectedOption={field.value}
+            onChange={({ detail }) => field.onChange(detail.selectedOption)}
             placeholder='Select a workspace'
             loadingText='Loading workspaces...'
             errorText='Failed to load workspaces.'
