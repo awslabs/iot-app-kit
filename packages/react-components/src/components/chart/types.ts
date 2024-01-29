@@ -24,7 +24,8 @@ type ChartLegendContent =
   | 'asset'
   | 'visibility'
   | 'maxValue'
-  | 'minValue';
+  | 'minValue'
+  | 'latestValue';
 export type ChartLegend = {
   visible?: boolean;
   position?: 'left' | 'bottom' | 'right';

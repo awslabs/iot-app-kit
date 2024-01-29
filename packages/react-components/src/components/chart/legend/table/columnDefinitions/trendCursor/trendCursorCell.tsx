@@ -5,7 +5,7 @@ import { DataStream } from '@iot-app-kit/core';
 
 type TrendCursorCellOptions = Omit<
   DataStreamInformation,
-  'trendCursorValues'
+  'trendCursorValues' | 'latestValue'
 > & { trendCursorValue?: number };
 
 export const TrendCursorCell = ({
