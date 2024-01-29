@@ -23,7 +23,13 @@ export const useECharts = (theme?: string) => {
 
   useEffect(() => {
     if (ref.current) {
-      chartRef.current = init(ref.current, theme);
+      chartRef.current = init(ref.current, theme, {
+        renderer:
+          localStorage.getItem('USE_SVG_FOR_ECHARTS_PLAYWRIGHT_TEST_ONLY') ===
+          'true'
+            ? 'svg'
+            : 'canvas',
+      });
     }
 
     return () => {
