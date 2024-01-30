@@ -1,6 +1,6 @@
 import { KnownComponentType } from '../interfaces';
 
-export const MAX_PROPERTY_STRING_LENGTH = 256;
+export const MAX_PROPERTY_STRING_LENGTH = 2048;
 
 // Scene Nodes
 const SCENE_COMPONENT_TYPE_ID_PREFIX = 'com.amazon.iottwinmaker.3d';

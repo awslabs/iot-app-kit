@@ -1,4 +1,4 @@
-import { componentTypeToId } from '../../common/entityModelConstants';
+import { MAX_PROPERTY_STRING_LENGTH, componentTypeToId } from '../../common/entityModelConstants';
 import { KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
 
@@ -65,7 +65,7 @@ describe('createOverlayEntityComponent', () => {
   });
 
   it('should return expected overlay component with data rows having long content', () => {
-    const longContent = new Array(60).fill('0123456789').join('');
+    const longContent = new Array(600).fill('0123456789').join('');
     const result = createOverlayEntityComponent({
       type: KnownComponentType.DataOverlay,
       subType: Component.DataOverlaySubType.TextAnnotation,
@@ -91,16 +91,13 @@ describe('createOverlayEntityComponent', () => {
                   stringValue: Component.DataOverlayRowType.Markdown,
                 },
                 content: {
-                  stringValue:
-                    '0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345',
+                  stringValue: expect.stringContaining('0123456789'),
                 },
                 content_1: {
-                  stringValue:
-                    '6789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901',
+                  stringValue: expect.stringContaining('0123456789'),
                 },
                 content_2: {
-                  stringValue:
-                    '2345678901234567890123456789012345678901234567890123456789012345678901234567890123456789',
+                  stringValue: expect.stringContaining('0123456789'),
                 },
               },
             },
@@ -108,10 +105,19 @@ describe('createOverlayEntityComponent', () => {
         },
       },
     });
+    expect(result.properties?.dataRows.value?.listValue?.[0].mapValue?.content.stringValue?.length).toEqual(
+      MAX_PROPERTY_STRING_LENGTH,
+    );
+    expect(result.properties?.dataRows.value?.listValue?.[0].mapValue?.content_1.stringValue?.length).toEqual(
+      MAX_PROPERTY_STRING_LENGTH,
+    );
+    expect(result.properties?.dataRows.value?.listValue?.[0].mapValue?.content_2.stringValue?.length).toEqual(
+      6000 - MAX_PROPERTY_STRING_LENGTH * 2,
+    );
   });
 
   it('should return expected overlay component with data rows having long content and split to no more than 10 parts', () => {
-    const longContent = new Array(1000).fill('0123456789').join('');
+    const longContent = new Array(3000).fill('0123456789').join('');
     const result = createOverlayEntityComponent({
       type: KnownComponentType.DataOverlay,
       subType: Component.DataOverlaySubType.TextAnnotation,
