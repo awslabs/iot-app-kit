@@ -1,0 +1,1 @@
+export const IS_REFRESHING_DELAY = 3000;
