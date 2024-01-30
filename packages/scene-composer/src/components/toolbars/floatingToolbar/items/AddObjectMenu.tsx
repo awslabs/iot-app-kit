@@ -21,7 +21,7 @@ import {
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component, LightType } from '../../../../models/SceneModels';
 import { IColorOverlayComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../../store';
-import { extractFileNameExtFromUrl, parseS3BucketFromArn } from '../../../../utils/pathUtils';
+import { parseS3BucketFromArn } from '../../../../utils/pathUtils';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemOptionRaw, ToolbarItemOptions, ToolbarOrientation } from '../../common/types';
 import { getGlobalSettings } from '../../../../common/GlobalSettings';
@@ -31,6 +31,7 @@ import { createNodeWithTransform, findComponentByType } from '../../../../utils/
 import { FLOATING_TOOLBAR_VERTICAL_ORIENTATION_BUFFER } from '../FloatingToolbar';
 import { TOOLBAR_ITEM_CONTAINER_HEIGHT } from '../../common/styledComponents';
 import { isDynamicScene } from '../../../../utils/entityModelUtils/sceneUtils';
+import { evaluateModelType } from '../../../../utils/sceneAssetUtils';
 
 // Note: ObjectType String is used to record metric. DO NOT change existing ids unless it's necessary.
 enum ObjectTypes {
@@ -88,6 +89,7 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const document = useStore(sceneComposerId)((state) => state.document);
   const nodeMap = useStore(sceneComposerId)((state) => state.document.nodeMap);
+  const addMessages = useStore(sceneComposerId)((state) => state.addMessages);
   const { setAddingWidget, getObject3DBySceneNodeRef } = useEditorState(sceneComposerId);
   const { enableMatterportViewer } = useMatterportViewer();
   const { formatMessage } = useIntl();
@@ -197,7 +199,7 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
     });
   }, [selectedSceneNodeRef]);
 
-  const handleAddViewCamera = useCallback(() => {
+  const handleAddViewCamera = () => {
     if (mainCameraObject) {
       const cameraComponent: ICameraComponent = {
         cameraType: activeCameraSettings.cameraType,
@@ -237,12 +239,18 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
 
       appendSceneNode(newNode);
     }
-  }, [selectedSceneNodeRef]);
+  };
 
-  const handleAddModel = (modelType?: string, mustBeRoot = false) => {
+  const handleAddModel = (mustBeRoot = false) => {
     if (showAssetBrowserCallback) {
       showAssetBrowserCallback((s3BucketArn, contentLocation) => {
-        const [filename, ext] = extractFileNameExtFromUrl(contentLocation);
+        // Check that the file is a valid 3D model type
+        const result = evaluateModelType(contentLocation, addMessages, formatMessage);
+
+        // If the file is not valid to load into the scene then ignore it
+        if (!result) {
+          return;
+        }
 
         let modelUri: string;
         if (s3BucketArn === null) {
@@ -253,13 +261,13 @@ export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMen
         }
 
         const gltfComponent: IModelRefComponent = {
-          type: 'ModelRef',
+          type: KnownComponentType.ModelRef,
           uri: modelUri,
-          modelType: modelType ?? ext.toUpperCase(),
+          modelType: result.modelType,
         };
 
         const node = {
-          name: filename,
+          name: result.modelName,
           components: [gltfComponent],
           parentRef: mustBeRoot ? undefined : selectedSceneNodeRef,
         } as unknown as ISceneNodeInternal;

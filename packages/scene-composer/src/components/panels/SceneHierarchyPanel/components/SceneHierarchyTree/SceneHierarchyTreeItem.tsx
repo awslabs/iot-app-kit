@@ -10,6 +10,7 @@ import { IModelRefComponentInternal, useSceneDocument } from '../../../../../sto
 import { findComponentByType } from '../../../../../utils/nodeUtils';
 import { sceneComposerIdContext } from '../../../../../common/sceneComposerIdContext';
 import { isDynamicNode } from '../../../../../utils/entityModelUtils/sceneUtils';
+import { ModelType } from '../../../../../models/SceneModels';
 
 import SceneNodeLabel from './SceneNodeLabel';
 import { AcceptableDropTypes, EnhancedTree, EnhancedTreeItem } from './constants';
@@ -45,8 +46,9 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   const node = getSceneNodeByRef(key);
   const component = findComponentByType(node, KnownComponentType.ModelRef) as IModelRefComponentInternal;
   const componentRef = component?.ref;
+  // Show sub models for non Tiles3D models in edit mode
   const showSubModel = useMemo(() => {
-    return component && !!model && !isViewing();
+    return component && component.modelType !== ModelType.Tiles3D && !!model && !isViewing();
   }, [component, model]);
   const isSubModel = !!findComponentByType(node, KnownComponentType.SubModelRef);
   const isDynamic = isDynamicNode(node);

@@ -10,6 +10,7 @@ jest.doMock('../../../../../src/utils/nodeUtils', () => ({
 import { AddObjectMenu } from './AddObjectMenu';
 import { IColorOverlayComponentInternal, useStore } from '../../../../store';
 import {
+  AssetType,
   COMPOSER_FEATURES,
   DEFAULT_CAMERA_OPTIONS,
   DEFAULT_LIGHT_SETTINGS_MAP,
@@ -27,11 +28,8 @@ import { CameraType, Component, LightType } from '../../../../models/SceneModels
 import { createNodeWithTransform } from '../../../../utils/nodeUtils';
 import { ToolbarOrientation } from '../../common/types';
 import { isDynamicScene } from '../../../../utils/entityModelUtils/sceneUtils';
+import { TILESET_JSON } from '../../../../utils/sceneAssetUtils';
 /* eslint-enable */
-
-jest.mock('../../../../utils/pathUtils', () => ({
-  extractFileNameExtFromUrl: jest.fn().mockReturnValue(['filename', 'ext']),
-}));
 
 jest.mock('../../../../utils/entityModelUtils/sceneUtils', () => ({
   isDynamicScene: jest.fn(),
@@ -42,6 +40,7 @@ describe('AddObjectMenu', () => {
   const appendSceneNode = jest.fn();
   const showAssetBrowserCallback = jest.fn();
   const setAddingWidget = jest.fn();
+  const addMessages = jest.fn();
   const selectedSceneNodeRef = 'test-ref';
   const mockMetricRecorder = {
     recordClick: jest.fn(),
@@ -61,6 +60,7 @@ describe('AddObjectMenu', () => {
       }),
       setAddingWidget,
       mainCameraObject,
+      addMessages,
     } as any);
     jest.clearAllMocks();
 
@@ -177,12 +177,15 @@ describe('AddObjectMenu', () => {
   });
 
   it('should call setAddingWidget when adding a model', () => {
+    const expectedNodeName = 'modelUri';
+    const filename = `${expectedNodeName}.${AssetType.GLTF}`;
+    const modelUri = `bucket/assets/${filename}`;
     const gltfComponent: IModelRefComponent = {
-      type: 'ModelRef',
-      uri: 'modelUri',
-      modelType: 'EXT',
+      type: KnownComponentType.ModelRef,
+      uri: modelUri,
+      modelType: AssetType.GLTF,
     };
-    showAssetBrowserCallback.mockImplementationOnce((callback) => callback(null, 'modelUri'));
+    showAssetBrowserCallback.mockImplementationOnce((callback) => callback(null, modelUri));
 
     render(<AddObjectMenu canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);
     const sut = screen.getByTestId('add-object-model');
@@ -190,13 +193,48 @@ describe('AddObjectMenu', () => {
     expect(setAddingWidget).toBeCalledWith({
       type: KnownComponentType.ModelRef,
       node: {
-        name: 'filename',
+        name: expectedNodeName,
         components: [gltfComponent],
         parentRef: selectedSceneNodeRef,
       },
     });
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
     expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-model');
+  });
+
+  it('should call setAddingWidget when adding a tiles3d model', () => {
+    const expectedNodeName = 'MixerTileset';
+    const modelUri = `bucket/assets/${expectedNodeName}/${TILESET_JSON}`;
+    const gltfComponent: IModelRefComponent = {
+      type: KnownComponentType.ModelRef,
+      uri: modelUri,
+      modelType: AssetType.TILES_3D,
+    };
+    showAssetBrowserCallback.mockImplementationOnce((callback) => callback(null, modelUri));
+
+    render(<AddObjectMenu canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);
+    const sut = screen.getByTestId('add-object-model');
+    fireEvent.pointerUp(sut);
+    expect(setAddingWidget).toBeCalledWith({
+      type: KnownComponentType.ModelRef,
+      node: {
+        name: expectedNodeName,
+        components: [gltfComponent],
+        parentRef: selectedSceneNodeRef,
+      },
+    });
+    expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
+    expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-model');
+  });
+
+  it('should ignore action and display a message when adding an invalid model type', () => {
+    showAssetBrowserCallback.mockImplementationOnce((callback) => callback(null, 'file.invalid'));
+
+    render(<AddObjectMenu canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);
+    const sut = screen.getByTestId('add-object-model');
+    fireEvent.pointerUp(sut);
+    expect(setAddingWidget).toBeCalledTimes(0);
+    expect(addMessages).toBeCalledTimes(1);
   });
 
   it('should call addComponentInternal when adding a model shader', () => {

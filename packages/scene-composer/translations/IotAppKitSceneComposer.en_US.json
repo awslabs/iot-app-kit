@@ -867,6 +867,10 @@
     "note": "times",
     "text": "x"
   },
+  "gIcLg9": {
+    "note": "Warning for selecting an unsupported file type",
+    "text": "File with extension {modelType} is not a supported model type"
+  },
   "gOijHE": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
     "text": "Selected"

@@ -16,6 +16,8 @@ import {
   SceneComposerInternal,
   SceneViewerPropsShared,
   ShowAssetBrowserCallback,
+  ModelFileTypeList,
+  TextureFileTypeList,
 } from '../../src';
 import { convertDataInputToDataStreams, getTestDataInputContinuous } from '../../tests/testData';
 
@@ -53,6 +55,7 @@ interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManager
   viewportDurationSecs?: number;
   queriesJSON?: string;
   showAssetBrowserCallback: ShowAssetBrowserCallback;
+  assetType?: AssetType;
 }
 
 const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
@@ -72,6 +75,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   viewportDurationSecs,
   queriesJSON,
   showAssetBrowserCallback: actionRecorderShowAssetBrowserCallback,
+  assetType = AssetType.GLB,
   ...props
 }: SceneComposerWrapperProps) => {
   const duration = viewportDurationSecs ? viewportDurationSecs : 300; //default 5 minutes
@@ -130,26 +134,34 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     onSceneUpdated(sceneSnapshot);
   }, []);
 
+  const defaultAssetBrowserCallback = (cb: AssetBrowserResultCallback) => {
+    cb(null, 'PALLET_JACK.glb');
+  };
+
   const mockAssetBrowserCallback: ShowAssetBrowserCallback = useCallback(
     (cb: AssetBrowserResultCallback, typeList?: AssetType[]) => {
       actionRecorderShowAssetBrowserCallback(cb);
       if (source === 'local') {
         if (typeList) {
-          if (typeList.includes(AssetType.GLB)) {
-            cb(null, 'PALLET_JACK.glb');
-          } else if (typeList.includes(AssetType.PNG)) {
+          if (typeList === ModelFileTypeList) {
+            if (assetType === AssetType.TILES_3D) {
+              cb(null, 'MIXER_Tiles3D/tileset.json');
+            } else {
+              defaultAssetBrowserCallback(cb);
+            }
+          } else if (typeList === TextureFileTypeList) {
             cb(null, 'PB_AWS_logo_RGB_stacked.png');
           } else {
-            cb(null, 'PALLET_JACK.glb');
+            defaultAssetBrowserCallback(cb);
           }
         } else {
-          cb(null, 'PALLET_JACK.glb');
+          defaultAssetBrowserCallback(cb);
         }
       } else {
         cb(null, 'CookieFactoryMixer.glb'); // Update the string to a model available in your S3 bucket
       }
     },
-    [source],
+    [source, assetType],
   );
 
   if (loader) {
