@@ -24,7 +24,7 @@ export const DataStreamSearch = ({
   client,
 }: DataStreamSearchProps) => {
   const metricsRecorder = getPlugin('metricsRecorder');
-  const { control, handleSubmit } = useForm<SearchFields>({
+  const { control, handleSubmit, setValue } = useForm<SearchFields>({
     defaultValues: { workspace: null, searchQuery: '' },
   });
 
@@ -68,6 +68,7 @@ export const DataStreamSearch = ({
               control={control}
               client={client}
               OnGettingError={setIsError}
+              setValue={setValue}
             />
           </SpaceBetween>
         </Form>
