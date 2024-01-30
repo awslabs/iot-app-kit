@@ -1,9 +1,11 @@
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import FormField from '@cloudscape-design/components/form-field';
 import Select, { type SelectProps } from '@cloudscape-design/components/select';
+import { OptionDefinition } from '@cloudscape-design/components/internal/components/option/interfaces';
 import { type useQuery } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
-import { Controller, type Control } from 'react-hook-form';
+import { Controller, type Control, UseFormSetValue } from 'react-hook-form';
+import { useLocalStorage } from 'react-use';
 
 import { useWorkspaces } from './useWorkspaces';
 import { WorkspaceOptionFactory } from './workspaceOptionFactory';
@@ -15,20 +17,47 @@ type TanstackStatusType = ReturnType<typeof useQuery>['status'];
 export interface WorkspaceSelectorProps {
   control: Control<SearchFields>;
   client: IoTTwinMakerClient;
+  setValue: UseFormSetValue<SearchFields>;
   OnGettingError: (isError: boolean) => void;
 }
 
 export const WorkspaceSelector = ({
   control,
   client,
+  setValue,
   OnGettingError,
 }: WorkspaceSelectorProps) => {
   const { workspaces, status } = useWorkspaces({ client });
   const workspaceOptions = createWorkspaceOptions(workspaces);
+  const [storedWorkspace, setStoredWorkspace] =
+    useLocalStorage<OptionDefinition | null>('storedWorkspace', null);
 
   useEffect(() => {
     OnGettingError(status === 'error');
   }, [status, OnGettingError]);
+
+  useEffect(() => {
+    setValue('workspace', storedWorkspace || workspaceOptions[0]);
+    if (workspaceOptions.length) {
+      const isStoredValueInOptions =
+        storedWorkspace &&
+        workspaceOptions.some(
+          (option: OptionDefinition) => option.value === storedWorkspace.value
+        );
+      if (!isStoredValueInOptions) {
+        setStoredWorkspace(workspaceOptions[0]);
+        setValue('workspace', workspaceOptions[0]);
+      }
+    }
+  }, [workspaceOptions, storedWorkspace, setValue, setStoredWorkspace]);
+
+  const onChangeHandler = (
+    detail: SelectProps.ChangeDetail,
+    onChange: (...event: unknown[]) => void
+  ) => {
+    setStoredWorkspace(detail.selectedOption);
+    onChange(detail.selectedOption);
+  };
 
   return (
     <Controller
@@ -45,7 +74,7 @@ export const WorkspaceSelector = ({
             disabled={status == 'error'}
             options={workspaceOptions}
             selectedOption={field.value}
-            onChange={({ detail }) => field.onChange(detail.selectedOption)}
+            onChange={({ detail }) => onChangeHandler(detail, field.onChange)}
             placeholder='Select a workspace'
             loadingText='Loading workspaces...'
             errorText='Failed to load workspaces.'
