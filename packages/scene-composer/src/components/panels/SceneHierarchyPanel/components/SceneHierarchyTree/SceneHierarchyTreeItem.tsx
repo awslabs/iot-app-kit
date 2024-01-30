@@ -47,7 +47,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   const componentRef = component?.ref;
   const showSubModel = useMemo(() => {
     return component && !!model && !isViewing();
-  }, [component]);
+  }, [component, model]);
   const isSubModel = !!findComponentByType(node, KnownComponentType.SubModelRef);
   const isDynamic = isDynamicNode(node);
 
