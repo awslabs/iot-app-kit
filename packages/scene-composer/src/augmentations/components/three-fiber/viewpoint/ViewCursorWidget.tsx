@@ -13,7 +13,7 @@ import { ViewCursorEditSvgString, ViewCursorMoveSvgString } from '../../../../as
 export const INIT_SVG_SCALE = 0.003;
 export const INIT_SVG_VECTOR = new THREEVector3(INIT_SVG_SCALE, INIT_SVG_SCALE, INIT_SVG_SCALE);
 
-export const ViewCursorWidget = () => {
+export const ViewCursorWidget = (): React.JSX.Element => {
   const ref = useRef<THREEObject3D>(null);
   const { gl } = useThree();
   const sceneComposerId = useContext(sceneComposerIdContext);
@@ -60,11 +60,15 @@ export const ViewCursorWidget = () => {
       // Intersections are sorted
       const closestIntersection = intersects[0];
       const n = getIntersectionTransform(closestIntersection);
-      shape.lookAt(n.normal as THREEVector3);
-      shape.position.copy(n.position);
-      // Set scale based on intersection distance
-      shape.scale.copy(INIT_SVG_VECTOR);
-      shape.scale.multiplyScalar(closestIntersection.distance);
+      const normalVector = n.normal as THREEVector3;
+      // Intersection surface normal may not be a uniform vector, like for point clouds
+      if (normalVector) {
+        shape.lookAt(n.normal as THREEVector3);
+        shape.position.copy(n.position);
+        // Set scale based on intersection distance
+        shape.scale.copy(INIT_SVG_VECTOR);
+        shape.scale.multiplyScalar(closestIntersection.distance);
+      }
     }
   });
 

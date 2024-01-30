@@ -1,0 +1,106 @@
+{
+    "specVersion": "1.0",
+    "version": "1",
+    "unit": "meters",
+    "properties": {
+        "environmentPreset": "neutral",
+        "componentSettings": {
+            "Tag": {
+                "autoRescale": false,
+                "scale": 1,
+                "enableOcclusion": false
+            }
+        }
+    },
+    "nodes": [
+        {
+            "name": "MIXER_Tiles3D",
+            "transform": {
+                "position": [
+                    0.06654937013597362,
+                    0.9998963209552567,
+                    -0.004778029802959161
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": true
+            },
+            "components": [
+              {
+                "type": "ModelRef",
+                "uri": "MIXER_Tiles3D/tileset.json",
+                "modelType": "Tiles3D"
+              }
+            ],
+            "properties": {}
+        }
+    ],
+    "rootNodeIndexes": [
+        0
+    ],
+    "cameras": [],
+    "rules": {
+        "sampleAlarmIconRule": {
+            "statements": [
+                {
+                    "expression": "alarm_status == 'ACTIVE'",
+                    "target": "iottwinmaker.common.icon:Error"
+                },
+                {
+                    "expression": "alarm_status == 'ACKNOWLEDGED'",
+                    "target": "iottwinmaker.common.icon:Warning"
+                },
+                {
+                    "expression": "alarm_status == 'SNOOZE_DISABLED'",
+                    "target": "iottwinmaker.common.icon:Warning"
+                },
+                {
+                    "expression": "alarm_status == 'NORMAL'",
+                    "target": "iottwinmaker.common.icon:Info"
+                }
+            ]
+        },
+        "sampleTimeSeriesIconRule": {
+            "statements": [
+                {
+                    "expression": "temperature >= 40",
+                    "target": "iottwinmaker.common.icon:Error"
+                },
+                {
+                    "expression": "temperature >= 20",
+                    "target": "iottwinmaker.common.icon:Warning"
+                },
+                {
+                    "expression": "temperature < 20",
+                    "target": "iottwinmaker.common.icon:Info"
+                }
+            ]
+        },
+        "sampleTimeSeriesColorRule": {
+            "statements": [
+                {
+                    "expression": "temperature >= 40",
+                    "target": "iottwinmaker.common.color:#FF0000"
+                },
+                {
+                    "expression": "temperature >= 20",
+                    "target": "iottwinmaker.common.color:#FFFF00"
+                },
+                {
+                    "expression": "temperature < 20",
+                    "target": "iottwinmaker.common.color:#00FF00"
+                }
+            ]
+        }
+    }
+}

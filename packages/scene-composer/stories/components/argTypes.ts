@@ -1,12 +1,18 @@
 import { Density, Mode } from '@awsui/global-styles';
 
-import { COMPOSER_FEATURES } from '../../src';
+import { AssetType, COMPOSER_FEATURES } from '../../src';
 import scenes from '../scenes';
 
 export const viewerArgTypes = {
   // if local scene
   scene: {
     options: Object.keys(scenes),
+    control: 'select',
+    table: { category: 'Scene' },
+    if: { arg: 'source', eq: 'local' },
+  },
+  assetType: {
+    options: Object.values(AssetType),
     control: 'select',
     table: { category: 'Scene' },
     if: { arg: 'source', eq: 'local' },
