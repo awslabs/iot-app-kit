@@ -12,7 +12,7 @@ export const DEFAULT_TOOLBOX_CONFIG: ToolboxComponentOption = {
   show: true,
   right: 30,
   feature: {
-    dataZoom: { title: { back: 'Undo\nzoom' } },
+    dataZoom: { title: { back: 'Undo\nzoom' }, filterMode: 'none' },
   },
   iconStyle: {
     borderColor: '#414d5c',
@@ -23,6 +23,7 @@ export const DEFAULT_Y_AXIS: YAXisComponentOption = {
   show: true,
   type: 'value',
   position: 'left',
+  scale: true,
 };
 
 // if you change this, please update the width calculation
