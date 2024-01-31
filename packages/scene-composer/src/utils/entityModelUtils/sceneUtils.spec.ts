@@ -6,6 +6,7 @@ import { setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
 import {
   LAYER_ROOT_ENTITY_ID,
   LAYER_ROOT_ENTITY_NAME,
+  SCENE_ROOT_ENTITY_COMPONENT_NAME,
   SCENE_ROOT_ENTITY_ID,
   SCENE_ROOT_ENTITY_NAME,
 } from '../../common/entityModelConstants';
@@ -23,8 +24,10 @@ import {
   isDynamicScene,
   prepareWorkspace,
   staticNodeCount,
+  updateSceneRootEntity,
 } from './sceneUtils';
 import { createNodeEntity } from './createNodeEntity';
+import { updateSceneEntityComponent } from './sceneComponent';
 
 jest.mock('../mathUtils', () => ({
   generateUUID: jest.fn(() => 'random-uuid'),
@@ -32,6 +35,10 @@ jest.mock('../mathUtils', () => ({
 
 jest.mock('./createNodeEntity', () => ({
   createNodeEntity: jest.fn(),
+}));
+
+jest.mock('./sceneComponent', () => ({
+  updateSceneEntityComponent: jest.fn(),
 }));
 
 jest.mock('../nodeUtils', () => ({
@@ -63,6 +70,34 @@ describe('createSceneRootEntity', () => {
       parentEntityId: SCENE_ROOT_ENTITY_ID,
       entityName: createSceneEntityId('test'),
     });
+  });
+});
+
+describe('updateSceneRootEntity', () => {
+  const updateSceneEntity = jest.fn();
+  const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
+    updateSceneEntity,
+  };
+
+  it('should call updateSceneEntity with expected input', () => {
+    setTwinMakerSceneMetadataModule(mockMetadataModule as unknown as TwinMakerSceneMetadataModule);
+    const mockSceneDocument = { specVersion: '1.0', version: '1', ruleMap: {} };
+    const mockComponentUpdates = {
+      componentTypeId: 'type.scene',
+      propertyUpdates: {},
+    };
+    (updateSceneEntityComponent as jest.Mock).mockReturnValue(mockComponentUpdates);
+
+    updateSceneRootEntity('scene-root-id', mockSceneDocument);
+
+    expect(updateSceneEntity).toBeCalledWith({
+      workspaceId: undefined,
+      entityId: 'scene-root-id',
+      componentUpdates: {
+        [SCENE_ROOT_ENTITY_COMPONENT_NAME]: mockComponentUpdates,
+      },
+    });
+    expect(updateSceneEntityComponent).toBeCalledWith(mockSceneDocument);
   });
 });
 

@@ -6,6 +6,7 @@ export enum COMPOSER_FEATURES {
   SubModelChildren = 'SubModelChildren',
   Animations = 'Animations',
   DynamicScene = 'DynamicScene',
+  DynamicSceneAlpha = 'DynamicSceneAlpha', // gate changes pending backend prod deployment and integrated testing
   FirstPerson = 'FirstPerson',
   SceneAppearance = 'SceneAppearance',
   Textures = 'Textures',

@@ -15,6 +15,7 @@ import serializationHelpers from '../helpers/serializationHelpers';
 import { DisplayMessageCategory, SceneNodeRuntimeProperty } from '../internalInterfaces';
 import { appendSceneNode } from '../helpers/sceneDocumentHelpers';
 import { createNodeEntity } from '../../utils/entityModelUtils/createNodeEntity';
+import { updateSceneRootEntity } from '../../utils/entityModelUtils/sceneUtils';
 
 import { createSceneDocumentSlice } from './SceneDocumentSlice';
 
@@ -31,6 +32,10 @@ jest.mock('../../../src/utils/entityModelUtils/updateNodeEntity');
 jest.mock('../../../src/utils/entityModelUtils/deleteNodeEntity');
 
 jest.mock('../../../src/utils/entityModelUtils/createNodeEntity');
+
+jest.mock('../../../src/utils/entityModelUtils/sceneUtils', () => {
+  return { ...jest.requireActual('../../../src/utils/entityModelUtils/sceneUtils'), updateSceneRootEntity: jest.fn() };
+});
 
 jest.mock('../helpers/sceneDocumentHelpers', () => {
   return { ...jest.requireActual('../helpers/sceneDocumentHelpers'), appendSceneNode: jest.fn() };
@@ -597,6 +602,7 @@ describe('createSceneDocumentSlice', () => {
 
     // Assert
     expect(mergeDeep).toBeCalledWith(draft.document, 'partial');
+    expect(updateSceneRootEntity).not.toBeCalled();
     expect(draft.lastOperation!).toEqual('updateDocumentInternal');
   });
 
@@ -754,6 +760,7 @@ describe('createSceneDocumentSlice', () => {
     const { updateSceneRuleMapById } = createSceneDocumentSlice(set, get);
     updateSceneRuleMapById('rule1', { statements: { testRule: { expression: 1, target: 'target' } } } as any);
 
+    expect(updateSceneRootEntity).not.toBeCalled();
     expect(draft.lastOperation!).toEqual('updateSceneRuleMapById');
     expect(draft.document.ruleMap.rule1.statements.testRule.expression).toEqual(1);
   });
@@ -769,6 +776,7 @@ describe('createSceneDocumentSlice', () => {
     const { removeSceneRuleMapById } = createSceneDocumentSlice(set, get);
     removeSceneRuleMapById('rule1');
 
+    expect(updateSceneRootEntity).not.toBeCalled();
     expect(draft.lastOperation!).toEqual('removeSceneRuleMapById');
     expect(draft.document.ruleMap.rule1).toBeUndefined();
   });
@@ -947,6 +955,7 @@ describe('createSceneDocumentSlice', () => {
       const { setSceneProperty } = createSceneDocumentSlice(set, get);
       setSceneProperty(KnownSceneProperty.EnvironmentPreset, 'setValue');
 
+      expect(updateSceneRootEntity).not.toBeCalled();
       expect(draft.lastOperation!).toEqual('setSceneProperty');
       expect(draft.document.properties!.environmentPreset).toEqual('setValue');
     });
@@ -1258,6 +1267,83 @@ describe('createSceneDocumentSlice', () => {
       expect(draft.lastOperation!).toEqual('removeComponent');
       expect(updateEntity).toBeCalledTimes(1);
       expect(updateEntity).toBeCalledWith(document.nodeMap.testNode, [{ type: 'abc', ref: 'test-comp-1' }], 'DELETE');
+    });
+  });
+
+  describe('update scene root entity', () => {
+    const sceneRootEntityId = 'root-id';
+    const documentBase = {
+      properties: {
+        [KnownSceneProperty.SceneRootEntityId]: sceneRootEntityId,
+      },
+      ruleMap: {},
+    };
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+
+      setFeatureConfig({ [COMPOSER_FEATURES.DynamicSceneAlpha]: true });
+    });
+
+    it('should call updateSceneRootEntity for updateDocumentInternal action', () => {
+      const document = cloneDeep(documentBase);
+      const draft = { lastOperation: undefined, document };
+      const get = jest.fn().mockReturnValue({}); // fake out get call
+      const set = jest.fn((callback) => callback(draft));
+
+      const { updateDocumentInternal } = createSceneDocumentSlice(set, get);
+      updateDocumentInternal({ unit: 'meters' });
+
+      expect(draft.lastOperation!).toEqual('updateDocumentInternal');
+      expect(updateSceneRootEntity).toBeCalledTimes(1);
+      expect(updateSceneRootEntity).toBeCalledWith(sceneRootEntityId, document);
+    });
+
+    it('should call updateSceneRootEntity for updateSceneRuleMapById action', () => {
+      const document = cloneDeep(documentBase);
+      const draft = { lastOperation: undefined, document };
+      const get = jest.fn().mockReturnValue({}); // fake out get call
+      const set = jest.fn((callback) => callback(draft));
+      const mockRule = { statements: [{ expression: 'test', target: 'error-icon' }] };
+
+      const { updateSceneRuleMapById } = createSceneDocumentSlice(set, get);
+      updateSceneRuleMapById('ruleId', mockRule);
+
+      expect(draft.lastOperation!).toEqual('updateSceneRuleMapById');
+      expect(updateSceneRootEntity).toBeCalledTimes(1);
+      expect(updateSceneRootEntity).toBeCalledWith(sceneRootEntityId, document);
+    });
+
+    it('should call updateSceneRootEntity for removeSceneRuleMapById action', () => {
+      const document = cloneDeep(documentBase);
+      const mockRule = { statements: [{ expression: 'test', target: 'error-icon' }] };
+      document.ruleMap['ruleId'] = mockRule;
+      const draft = { lastOperation: undefined, document };
+      const get = jest.fn().mockReturnValue({}); // fake out get call
+      const set = jest.fn((callback) => callback(draft));
+
+      const { removeSceneRuleMapById } = createSceneDocumentSlice(set, get);
+      removeSceneRuleMapById('ruleId');
+
+      expect(draft.lastOperation!).toEqual('removeSceneRuleMapById');
+      expect(updateSceneRootEntity).toBeCalledTimes(1);
+      expect(updateSceneRootEntity).toBeCalledWith(sceneRootEntityId, document);
+    });
+
+    it('should call updateSceneRootEntity for setSceneProperty action', () => {
+      const document = cloneDeep(documentBase);
+      const mockRule = { statements: [{ expression: 'test', target: 'error-icon' }] };
+      document.ruleMap['ruleId'] = mockRule;
+      const draft = { lastOperation: undefined, document };
+      const get = jest.fn().mockReturnValue({}); // fake out get call
+      const set = jest.fn((callback) => callback(draft));
+
+      const { setSceneProperty } = createSceneDocumentSlice(set, get);
+      setSceneProperty(KnownSceneProperty.MatterportModelId, 'matterport-id');
+
+      expect(draft.lastOperation!).toEqual('setSceneProperty');
+      expect(updateSceneRootEntity).toBeCalledTimes(1);
+      expect(updateSceneRootEntity).toBeCalledWith(sceneRootEntityId, document);
     });
   });
 });

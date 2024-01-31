@@ -1,10 +1,16 @@
-import { CreateEntityCommandInput, CreateEntityCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import {
+  CreateEntityCommandInput,
+  CreateEntityCommandOutput,
+  UpdateEntityCommandInput,
+  UpdateEntityCommandOutput,
+} from '@aws-sdk/client-iottwinmaker';
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { isEmpty } from 'lodash';
 
 import {
   LAYER_ROOT_ENTITY_ID,
   LAYER_ROOT_ENTITY_NAME,
+  SCENE_ROOT_ENTITY_COMPONENT_NAME,
   SCENE_ROOT_ENTITY_ID,
   SCENE_ROOT_ENTITY_NAME,
 } from '../../common/entityModelConstants';
@@ -13,9 +19,10 @@ import { generateUUID } from '../mathUtils';
 import { ISceneDocumentInternal, ISceneNodeInternal } from '../../store';
 import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
 import { findComponentByType, getFinalNodeTransform } from '../nodeUtils';
-import { KnownComponentType, KnownSceneProperty } from '../../interfaces';
+import { ISceneDocument, KnownComponentType, KnownSceneProperty } from '../../interfaces';
 
 import { createNodeEntity } from './createNodeEntity';
+import { updateSceneEntityComponent } from './sceneComponent';
 
 export const createSceneEntityId = (sceneName: string): string => {
   return `SCENE_${sceneName}_${generateUUID()}`;
@@ -36,6 +43,25 @@ export const createSceneRootEntity = (): Promise<CreateEntityCommandOutput> | un
   };
 
   return getGlobalSettings().twinMakerSceneMetadataModule!.createSceneEntity(input);
+};
+
+export const updateSceneRootEntity = (
+  sceneEntityId: string,
+  scene: Omit<ISceneDocument, 'nodeMap' | 'rootNodeRefs'>,
+): Promise<UpdateEntityCommandOutput> | undefined => {
+  if (!getGlobalSettings().twinMakerSceneMetadataModule) {
+    return;
+  }
+
+  const input: UpdateEntityCommandInput = {
+    workspaceId: undefined,
+    entityId: sceneEntityId,
+    componentUpdates: {
+      [SCENE_ROOT_ENTITY_COMPONENT_NAME]: updateSceneEntityComponent(scene),
+    },
+  };
+
+  return getGlobalSettings().twinMakerSceneMetadataModule!.updateSceneEntity(input);
 };
 
 export const checkIfEntityAvailable = async (

@@ -4,6 +4,7 @@ export const MAX_PROPERTY_STRING_LENGTH = 2048;
 
 // Scene Nodes
 const SCENE_COMPONENT_TYPE_ID_PREFIX = 'com.amazon.iottwinmaker.3d';
+export const SCENE_COMPONENT_TYPE_ID = `${SCENE_COMPONENT_TYPE_ID_PREFIX}.scene`;
 export const NODE_COMPONENT_TYPE_ID = `${SCENE_COMPONENT_TYPE_ID_PREFIX}.node`;
 export const LAYER_COMPONENT_TYPE_ID = `${SCENE_COMPONENT_TYPE_ID_PREFIX}.layer`;
 export const componentTypeToId: Record<KnownComponentType, string> = {
@@ -24,6 +25,7 @@ export const DEFAULT_PARENT_RELATIONSHIP_NAME = 'isChildOf';
 export const SUB_MODEL_REF_PARENT_RELATIONSHIP_NAME = 'parentRef';
 export const DEFAULT_NODE_COMPONENT_NAME = 'Node';
 export const SCENE_ROOT_ENTITY_ID = 'SCENES_EntityId';
+export const SCENE_ROOT_ENTITY_COMPONENT_NAME = 'Scene';
 export const SCENE_ROOT_ENTITY_NAME = '$SCENES';
 
 // Matterport
