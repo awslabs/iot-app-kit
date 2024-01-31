@@ -111,7 +111,6 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
   const log = useLifecycleLogging('SceneHierarchyDataProvider');
   const sceneComposerId = useSceneComposerId();
   const { document, removeSceneNode } = useStore(sceneComposerId)((state) => state);
-  const { isEditing } = useStore(sceneComposerId)((state) => state);
   const { updateSceneNodeInternal } = useSceneDocument(sceneComposerId);
   const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
@@ -121,7 +120,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
   const { nodeErrorMap: validationErrors } = useNodeErrorState(sceneComposerId);
 
   const rootNodeRefs = Object.values(nodeMap)
-    .filter((item) => !item.parentRef && isEditing())
+    .filter((item) => !item.parentRef)
     .map((item) => item.ref);
 
   const [searchTerms, setSearchTerms] = useState('');
