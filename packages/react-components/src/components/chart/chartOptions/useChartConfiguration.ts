@@ -89,6 +89,10 @@ type ChartConfigurationOptions = Pick<
   thresholds: Threshold<ThresholdValue>[];
 };
 
+export type DataStreamMetaData = ReturnType<
+  typeof useChartConfiguration
+>['dataStreamMetaData'][number];
+
 /**
  * Hook to set the chart visual configuration options
  * These include styling:

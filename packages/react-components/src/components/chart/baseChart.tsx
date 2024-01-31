@@ -16,6 +16,7 @@ import { useChartConfiguration } from './chartOptions/useChartConfiguration';
 
 import './chart.css';
 import { useTrendCursors } from '../../echarts/extensions/trendCursors';
+import { useChartStoreDataStreamsSync } from './hooks/useChartStoreDataStreamsSync';
 
 /**
  * Developer Notes:
@@ -72,6 +73,8 @@ const BaseChart = ({
   });
 
   useChartDataset(chartRef, dataStreams);
+
+  useChartStoreDataStreamsSync(dataStreamMetaData);
 
   const isBottomAligned = options.legend?.position === 'bottom';
 
