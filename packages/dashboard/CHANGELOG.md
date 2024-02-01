@@ -1,46 +1,5 @@
 # Changelog
 
-## [9.15.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.14.0...dashboard-v9.15.0) (2024-01-31)
-
-
-### Features
-
-* automatically selecting previously selected workspace or first workspace from options [#2384](https://github.com/awslabs/iot-app-kit/issues/2384) ([c1424a2](https://github.com/awslabs/iot-app-kit/commit/c1424a2b2ac7d7034c748cb221e565a8967c3da8))
-* display legend unit conditionally  [#2277](https://github.com/awslabs/iot-app-kit/issues/2277) ([9f6440e](https://github.com/awslabs/iot-app-kit/commit/9f6440e9e06c9040a6be46eab3a9141ad02a0509))
-* legend resize ([792b617](https://github.com/awslabs/iot-app-kit/commit/792b6170cc19402f3c49fbd60e4a07dc0890c434))
-* **react-components:** trendcurors using echarts extension ([a7c6bbe](https://github.com/awslabs/iot-app-kit/commit/a7c6bbe064ae746f024b74d885721a70a06716a2))
-* scatter chart is selected the line style dropdown should be disabled for scatter chart [#2427](https://github.com/awslabs/iot-app-kit/issues/2427) ([d407ba3](https://github.com/awslabs/iot-app-kit/commit/d407ba344c41480b5986a8c8eb0ec8e79ade21a8))
-
-
-### Bug Fixes
-
-* add signigicant digits to xy plot ([70a109e](https://github.com/awslabs/iot-app-kit/commit/70a109e8083b6729313f4f0dc362df0f3cf6ea62))
-* **dashboard:** fix spacing between widgets without selection box ([7cc590d](https://github.com/awslabs/iot-app-kit/commit/7cc590dd988bf244c430e55e43745a8be344e8d7))
-* **dashboard:** fix spacing issues on editable grid ([0529abd](https://github.com/awslabs/iot-app-kit/commit/0529abd18267bf69ea36a2795096d724784ce3bc))
-* **dashboard:** kpi/status bug to stop adding more than 1 property ([f68c5eb](https://github.com/awslabs/iot-app-kit/commit/f68c5eb42d34aa3483d3f85fe01dfb5d4e64fb3a))
-* **dashboard:** selected assets do not deselect on widget selection ([5c717f8](https://github.com/awslabs/iot-app-kit/commit/5c717f8bf57788ae9cac6521807d82622b47ac8a))
-* empty state overflow ([3e073f7](https://github.com/awslabs/iot-app-kit/commit/3e073f72cfd0a47c87bf09d8b20c64ef54907430))
-* hidden and highlighted datastreams persist correctly ([5a85bb7](https://github.com/awslabs/iot-app-kit/commit/5a85bb7d40d07dce439a1bfa15550d8893089cbd))
-* improve properties panel styling ([f3de67e](https://github.com/awslabs/iot-app-kit/commit/f3de67e73c7197c6bf63254c93476475661738b0))
-* realistic dev experience on storybook ([377d64a](https://github.com/awslabs/iot-app-kit/commit/377d64a4ead7b0a68d5df47a5df568da7d188021))
-* template asset table disables invalid dataTypes ([7cacc1c](https://github.com/awslabs/iot-app-kit/commit/7cacc1cee19fa9c9d116435d377e4bf820ba9ff9))
-
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @iot-app-kit/components bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/core bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/core-util bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/react-components bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/source-iotsitewise bumped from 9.14.0 to 9.15.0
-  * devDependencies
-    * @iot-app-kit/jest-config bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/testing-util bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/ts-config bumped from 9.14.0 to 9.15.0
-    * eslint-config-iot-app-kit bumped from 9.14.0 to 9.15.0
-
 ## [9.14.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.13.0...dashboard-v9.14.0) (2024-01-18)
 
 

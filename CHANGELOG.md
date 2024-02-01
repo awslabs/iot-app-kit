@@ -3,41 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [9.15.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.14.0...root-v9.15.0) (2024-01-31)
-
-
-### Features
-
-* automatically selecting previously selected workspace or first workspace from options [#2384](https://github.com/awslabs/iot-app-kit/issues/2384) ([c1424a2](https://github.com/awslabs/iot-app-kit/commit/c1424a2b2ac7d7034c748cb221e565a8967c3da8))
-* display legend unit conditionally  [#2277](https://github.com/awslabs/iot-app-kit/issues/2277) ([9f6440e](https://github.com/awslabs/iot-app-kit/commit/9f6440e9e06c9040a6be46eab3a9141ad02a0509))
-* legend resize ([792b617](https://github.com/awslabs/iot-app-kit/commit/792b6170cc19402f3c49fbd60e4a07dc0890c434))
-* **react-components:** trendcurors using echarts extension ([a7c6bbe](https://github.com/awslabs/iot-app-kit/commit/a7c6bbe064ae746f024b74d885721a70a06716a2))
-* scatter chart is selected the line style dropdown should be disabled for scatter chart [#2427](https://github.com/awslabs/iot-app-kit/issues/2427) ([d407ba3](https://github.com/awslabs/iot-app-kit/commit/d407ba344c41480b5986a8c8eb0ec8e79ade21a8))
-* **scene:** add asset type filter option for browser callback ([f65d4f0](https://github.com/awslabs/iot-app-kit/commit/f65d4f0d5429dfa25b90208d924bfe3c3e3640df))
-
-
-### Bug Fixes
-
-* add signigicant digits to xy plot ([70a109e](https://github.com/awslabs/iot-app-kit/commit/70a109e8083b6729313f4f0dc362df0f3cf6ea62))
-* **composer:** update property string length limit to 2048 ([a3cb800](https://github.com/awslabs/iot-app-kit/commit/a3cb8009d8547351449bac7c121e67d66971a708))
-* **dashboard:** fix spacing between widgets without selection box ([7cc590d](https://github.com/awslabs/iot-app-kit/commit/7cc590dd988bf244c430e55e43745a8be344e8d7))
-* **dashboard:** fix spacing issues on editable grid ([0529abd](https://github.com/awslabs/iot-app-kit/commit/0529abd18267bf69ea36a2795096d724784ce3bc))
-* **dashboard:** kpi/status bug to stop adding more than 1 property ([f68c5eb](https://github.com/awslabs/iot-app-kit/commit/f68c5eb42d34aa3483d3f85fe01dfb5d4e64fb3a))
-* **dashboard:** selected assets do not deselect on widget selection ([5c717f8](https://github.com/awslabs/iot-app-kit/commit/5c717f8bf57788ae9cac6521807d82622b47ac8a))
-* empty state overflow ([3e073f7](https://github.com/awslabs/iot-app-kit/commit/3e073f72cfd0a47c87bf09d8b20c64ef54907430))
-* fix filtered data on zooms ([99e2f90](https://github.com/awslabs/iot-app-kit/commit/99e2f90aecdbaaa354e62e76b22c88a8530c1509))
-* hidden and highlighted datastreams persist correctly ([5a85bb7](https://github.com/awslabs/iot-app-kit/commit/5a85bb7d40d07dce439a1bfa15550d8893089cbd))
-* improve properties panel styling ([f3de67e](https://github.com/awslabs/iot-app-kit/commit/f3de67e73c7197c6bf63254c93476475661738b0))
-* react-component Chart story book is broken ([c273ad5](https://github.com/awslabs/iot-app-kit/commit/c273ad529a7d78f887a2b8c64b50f76bfc018fc2))
-* **react-components:** fix global and chart store persistence ([83f1345](https://github.com/awslabs/iot-app-kit/commit/83f13452cbf350639cc2cc576d47a26138d58832))
-* **react-components:** refactor legend table into modules ([f5eed70](https://github.com/awslabs/iot-app-kit/commit/f5eed7068b70ae9305782f07b08115294b26a3b7))
-* realistic dev experience on storybook ([377d64a](https://github.com/awslabs/iot-app-kit/commit/377d64a4ead7b0a68d5df47a5df568da7d188021))
-* **scene-composer:** 3D model selection broken on first click ([7ee722a](https://github.com/awslabs/iot-app-kit/commit/7ee722ab3cf1aa4a353e7b05c1a9b53f3ac00c88))
-* **scene-composer:** fix scene hierarchy in viewer mode ([c8c70fd](https://github.com/awslabs/iot-app-kit/commit/c8c70fdac04d8aab12f5a6a3f19303cb6754d083))
-* **scene-composer:** fix sub-model selection ([0a11b9a](https://github.com/awslabs/iot-app-kit/commit/0a11b9a391767fea2d255509ac9377889e812a5c))
-* template asset table disables invalid dataTypes ([7cacc1c](https://github.com/awslabs/iot-app-kit/commit/7cacc1cee19fa9c9d116435d377e4bf820ba9ff9))
-* yAxis label collides with yAxis name [#2471](https://github.com/awslabs/iot-app-kit/issues/2471) ([85ac6ac](https://github.com/awslabs/iot-app-kit/commit/85ac6ac4586d560e44cadedbffe5b1a187bd8bb8))
-
 ## [9.14.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.13.0...root-v9.14.0) (2024-01-18)
 
 
