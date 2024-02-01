@@ -88,27 +88,33 @@ const Actions: React.FC<ActionsProps> = ({
 
   return (
     <Box padding={{ top: 'xxs' }} data-testid='dashboard-actions'>
-      <SpaceBetween size='s' direction='horizontal'>
-        {onSave && <Button onClick={handleOnSave}>Save</Button>}
-        {editable && (
-          <CustomOrangeButton
-            title={readOnly ? 'Edit' : 'Preview'}
-            handleClick={handleOnReadOnly}
+      <div
+        aria-label='dashboard actions'
+        //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+        tabIndex={0}
+      >
+        <SpaceBetween size='s' direction='horizontal'>
+          {onSave && <Button onClick={handleOnSave}>Save</Button>}
+          {editable && (
+            <CustomOrangeButton
+              title={readOnly ? 'Edit' : 'Preview'}
+              handleClick={handleOnReadOnly}
+            />
+          )}
+          {editable && !readOnly && (
+            <Button
+              onClick={() => setSettingVisibility(true)}
+              iconName='settings'
+              variant='icon'
+              ariaLabel='Dashboard settings'
+            />
+          )}
+          <DashboardSettings
+            isVisible={dashboardSettingsVisible}
+            onClose={() => setSettingVisibility(false)}
           />
-        )}
-        {editable && !readOnly && (
-          <Button
-            onClick={() => setSettingVisibility(true)}
-            iconName='settings'
-            variant='icon'
-            ariaLabel='Dashboard settings'
-          />
-        )}
-        <DashboardSettings
-          isVisible={dashboardSettingsVisible}
-          onClose={() => setSettingVisibility(false)}
-        />
-      </SpaceBetween>
+        </SpaceBetween>
+      </div>
     </Box>
   );
 };
