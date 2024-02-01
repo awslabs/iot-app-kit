@@ -3,33 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [9.15.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.14.0...scene-composer-v9.15.0) (2024-01-31)
-
-
-### Features
-
-* **scene:** add asset type filter option for browser callback ([f65d4f0](https://github.com/awslabs/iot-app-kit/commit/f65d4f0d5429dfa25b90208d924bfe3c3e3640df))
-
-
-### Bug Fixes
-
-* **composer:** update property string length limit to 2048 ([a3cb800](https://github.com/awslabs/iot-app-kit/commit/a3cb8009d8547351449bac7c121e67d66971a708))
-* **scene-composer:** 3D model selection broken on first click ([7ee722a](https://github.com/awslabs/iot-app-kit/commit/7ee722ab3cf1aa4a353e7b05c1a9b53f3ac00c88))
-* **scene-composer:** fix scene hierarchy in viewer mode ([c8c70fd](https://github.com/awslabs/iot-app-kit/commit/c8c70fdac04d8aab12f5a6a3f19303cb6754d083))
-* **scene-composer:** fix sub-model selection ([0a11b9a](https://github.com/awslabs/iot-app-kit/commit/0a11b9a391767fea2d255509ac9377889e812a5c))
-
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @iot-app-kit/core bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/react-components bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/related-table bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/source-iottwinmaker bumped from 9.14.0 to 9.15.0
-  * devDependencies
-    * eslint-config-iot-app-kit bumped from 9.14.0 to 9.15.0
-
 ## [9.14.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.13.0...scene-composer-v9.14.0) (2024-01-18)
 
 

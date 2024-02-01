@@ -2,43 +2,6 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
-## [9.15.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.14.0...react-components-v9.15.0) (2024-01-31)
-
-
-### Features
-
-* display legend unit conditionally  [#2277](https://github.com/awslabs/iot-app-kit/issues/2277) ([9f6440e](https://github.com/awslabs/iot-app-kit/commit/9f6440e9e06c9040a6be46eab3a9141ad02a0509))
-* legend resize ([792b617](https://github.com/awslabs/iot-app-kit/commit/792b6170cc19402f3c49fbd60e4a07dc0890c434))
-* **react-components:** trendcurors using echarts extension ([a7c6bbe](https://github.com/awslabs/iot-app-kit/commit/a7c6bbe064ae746f024b74d885721a70a06716a2))
-
-
-### Bug Fixes
-
-* add signigicant digits to xy plot ([70a109e](https://github.com/awslabs/iot-app-kit/commit/70a109e8083b6729313f4f0dc362df0f3cf6ea62))
-* fix filtered data on zooms ([99e2f90](https://github.com/awslabs/iot-app-kit/commit/99e2f90aecdbaaa354e62e76b22c88a8530c1509))
-* hidden and highlighted datastreams persist correctly ([5a85bb7](https://github.com/awslabs/iot-app-kit/commit/5a85bb7d40d07dce439a1bfa15550d8893089cbd))
-* react-component Chart story book is broken ([c273ad5](https://github.com/awslabs/iot-app-kit/commit/c273ad529a7d78f887a2b8c64b50f76bfc018fc2))
-* **react-components:** fix global and chart store persistence ([83f1345](https://github.com/awslabs/iot-app-kit/commit/83f13452cbf350639cc2cc576d47a26138d58832))
-* **react-components:** refactor legend table into modules ([f5eed70](https://github.com/awslabs/iot-app-kit/commit/f5eed7068b70ae9305782f07b08115294b26a3b7))
-* yAxis label collides with yAxis name [#2471](https://github.com/awslabs/iot-app-kit/issues/2471) ([85ac6ac](https://github.com/awslabs/iot-app-kit/commit/85ac6ac4586d560e44cadedbffe5b1a187bd8bb8))
-
-
-### Dependencies
-
-* The following workspace dependencies were updated
-  * dependencies
-    * @iot-app-kit/components bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/core bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/core-util bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/source-iottwinmaker bumped from 9.14.0 to 9.15.0
-  * devDependencies
-    * @iot-app-kit/core bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/jest-config bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/source-iotsitewise bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/testing-util bumped from 9.14.0 to 9.15.0
-    * @iot-app-kit/ts-config bumped from 9.14.0 to 9.15.0
-    * eslint-config-iot-app-kit bumped from 9.14.0 to 9.15.0
-
 ## [9.14.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.13.0...react-components-v9.14.0) (2024-01-18)
 
 
