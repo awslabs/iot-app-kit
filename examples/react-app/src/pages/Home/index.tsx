@@ -141,8 +141,15 @@ const ScenePage = () => {
 
   const onSelectionChanged = useCallback(
     (e: any) => {
-      if (e.additionalComponentData && e.additionalComponentData[0]?.dataBindingContext?.entityId) {
-        const entityId = e.additionalComponentData[0].dataBindingContext.entityId;
+      if (e.additionalComponentData && e.componentTypes) {
+        let entityId = selectedEntityId;
+        const entityIndex = e.componentTypes.findIndex((component: string) => component === 'EntityBinding')
+        const tagIndex = e.componentTypes.findIndex((component: string) => component === 'Tag')
+        if (e.additionalComponentData[entityIndex]?.dataBindingContext?.entityId) {
+          entityId = e.additionalComponentData[entityIndex].dataBindingContext.entityId;
+        } else if (e.additionalComponentData[tagIndex]?.dataBindingContext?.entityId) {
+          entityId = e.additionalComponentData[tagIndex].dataBindingContext.entityId;
+        }
         if (selectedEntityId !== entityId) {
           const query: IQueryData = { entityId: entityId };
           setSelectedEntityId(entityId);
