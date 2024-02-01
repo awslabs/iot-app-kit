@@ -35,7 +35,11 @@ const PaletteComponent: React.FC<PaletteComponentProps> = ({
   );
 
   return (
-    <li ref={node}>
+    <li
+      ref={node}
+      //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+      tabIndex={0}
+    >
       <div aria-label={`add ${name} widget`} role='button' ref={dragRef}>
         <PaletteComponentIcon widgetName={name} Icon={IconComponent} />
       </div>

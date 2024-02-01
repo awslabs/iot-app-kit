@@ -150,57 +150,63 @@ export const TimeSelection = ({
   } = messages;
 
   return (
-    <FormField label={!hideTitle ? title : ''} data-testid='time-selection'>
-      <SpaceBetween direction='horizontal' size='xxs'>
-        {isPaginationEnabled && (
-          <Tooltip
-            content={`Move back ${
-              viewport && 'duration' in viewport
-                ? viewport.duration
-                : 'selected range'
-            }`}
-            position='bottom'
-            children={
-              <Button
-                iconName='caret-left-filled'
-                onClick={handlePaginateBackward}
-                ariaLabel='Move backward'
-              />
-            }
-          />
-        )}
+    <div
+      aria-label='viewport picker'
+      //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+      tabIndex={0}
+    >
+      <FormField label={!hideTitle ? title : ''} data-testid='time-selection'>
+        <SpaceBetween direction='horizontal' size='xxs'>
+          {isPaginationEnabled && (
+            <Tooltip
+              content={`Move back ${
+                viewport && 'duration' in viewport
+                  ? viewport.duration
+                  : 'selected range'
+              }`}
+              position='bottom'
+              children={
+                <Button
+                  iconName='caret-left-filled'
+                  onClick={handlePaginateBackward}
+                  ariaLabel='Move backward'
+                />
+              }
+            />
+          )}
 
-        <DateRangePicker
-          expandToViewport={true}
-          onChange={handleChangeDateRange}
-          value={viewportToDateRange(viewport)}
-          showClearButton={false}
-          relativeOptions={relativeOptions}
-          isValidRange={rangeValidator({
-            dateRangeIncompleteError,
-            dateRangeInvalidError,
-          })}
-          i18nStrings={i18nStrings}
-          placeholder={placeholder}
-        />
-        {isPaginationEnabled && (
-          <Tooltip
-            content={`Move forward ${
-              viewport && 'duration' in viewport
-                ? viewport.duration
-                : 'selected range'
-            }`}
-            position='bottom'
-            children={
-              <Button
-                iconName='caret-right-filled'
-                onClick={handlePaginateForward}
-                ariaLabel='Move forward'
-              />
-            }
+          <DateRangePicker
+            expandToViewport={true}
+            onChange={handleChangeDateRange}
+            value={viewportToDateRange(viewport)}
+            showClearButton={false}
+            relativeOptions={relativeOptions}
+            isValidRange={rangeValidator({
+              dateRangeIncompleteError,
+              dateRangeInvalidError,
+            })}
+            i18nStrings={i18nStrings}
+            placeholder={placeholder}
           />
-        )}
-      </SpaceBetween>
-    </FormField>
+          {isPaginationEnabled && (
+            <Tooltip
+              content={`Move forward ${
+                viewport && 'duration' in viewport
+                  ? viewport.duration
+                  : 'selected range'
+              }`}
+              position='bottom'
+              children={
+                <Button
+                  iconName='caret-right-filled'
+                  onClick={handlePaginateForward}
+                  ariaLabel='Move forward'
+                />
+              }
+            />
+          )}
+        </SpaceBetween>
+      </FormField>
+    </div>
   );
 };

@@ -280,7 +280,13 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             setUserSelect(isDragging ? disabledUserSelect : defaultUserSelect)
           }
         />
-        <div style={dashboardToolbarBottomBorder} className='dashboard-toolbar'>
+        <div
+          style={dashboardToolbarBottomBorder}
+          className='dashboard-toolbar'
+          aria-label='edit mode dashboard toolbar'
+          //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+          tabIndex={0}
+        >
           <Box float='left' padding='s'>
             <ComponentPalette />
           </Box>
@@ -334,6 +340,9 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
           <div
             style={dashboardToolbarBottomBorder}
             className='dashboard-toolbar-read-only'
+            aria-label='preview mode dashboard toolbar'
+            //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+            tabIndex={0}
           >
             <Box float='left' padding='s'>
               <AssetModelSelection client={iotSiteWiseClient} />

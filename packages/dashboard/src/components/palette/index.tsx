@@ -27,10 +27,14 @@ const Divider = () => <div style={divider} />;
 
 const Palette = () => {
   return (
-    <div className='widget-panel'>
+    <div
+      className='widget-panel'
+      //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+      tabIndex={0}
+    >
       <h4 style={widgetFont}>Widgets</h4>
       <Divider />
-      <ul className='component-palette-widgets'>
+      <ul className='component-palette-widgets' aria-label='widget panel'>
         {ComponentLibraryComponentOrdering.map((widgetType) => {
           const [name, iconComponent] =
             ComponentLibraryComponentMap[widgetType];

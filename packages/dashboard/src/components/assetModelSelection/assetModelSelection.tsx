@@ -33,7 +33,11 @@ export const AssetModelSelection = ({ client }: AssetModelSelectionOptions) => {
   if (!hasModelBasedQuery || !assetModelId) return null;
 
   return (
-    <div className='asset-model-selection'>
+    <div
+      className='asset-model-selection'
+      //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+      tabIndex={0}
+    >
       <h4 style={{ color: colorTextBodyDefault }}>
         <label htmlFor={assetModelSelectionControlId}>Assets</label>
       </h4>
