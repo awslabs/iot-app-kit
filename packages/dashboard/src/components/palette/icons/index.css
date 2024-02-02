@@ -11,7 +11,6 @@
   top: 105%;
   border-style: solid;
   z-index: 9;
-  visibility: hidden;
   transform: translateX(-50%);
 }
 
@@ -40,8 +39,4 @@
   border-top: 10px solid var(--colors-white);
   margin-top: -2px;
   z-index: 1;
-}
-
-.palette-component-icon:hover .tooltiptext {
-  visibility: visible;
 }
