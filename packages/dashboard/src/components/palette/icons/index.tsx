@@ -1,4 +1,4 @@
-import React, { type DragEventHandler } from 'react';
+import React, { useState, type DragEventHandler, useEffect } from 'react';
 import Box from '@cloudscape-design/components/box';
 import {
   colorBackgroundHomeHeader,
@@ -19,6 +19,8 @@ const PaletteComponentIcon: React.FC<PaletteComponentIconProps> = ({
   Icon,
   widgetName,
 }) => {
+  const [hover, setHover] = useState<boolean>(false);
+
   const tooltipStyle = {
     fontSize: spaceScaledM,
     color: colorBackgroundHomeHeader,
@@ -33,11 +35,39 @@ const PaletteComponentIcon: React.FC<PaletteComponentIconProps> = ({
   // Without this, Firefox widget drag and drop does not work correctly.
   const ignoreDragStart: DragEventHandler = (event) => event.preventDefault();
 
+  const handleEscape = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      event.stopPropagation();
+      setHover(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, []);
+
   return (
-    <span onDragStart={ignoreDragStart}>
+    <span
+      onDragStart={ignoreDragStart}
+      onMouseEnter={() => {
+        setHover(true);
+      }}
+      onMouseLeave={() => {
+        setHover(false);
+      }}
+    >
       <Box padding='xxs' className='palette-component-icon ripple'>
         <Icon />
-        <span className='tooltiptext' style={tooltipStyle}>
+        <span
+          className='tooltiptext'
+          style={{
+            ...tooltipStyle,
+            visibility: `${hover ? 'visible' : 'hidden'}`,
+          }}
+        >
           {widgetName}
         </span>
       </Box>
