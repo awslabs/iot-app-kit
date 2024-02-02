@@ -1,5 +1,5 @@
 import type { FC, MouseEventHandler, ReactNode } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 import type {
   NonCancelableCustomEvent,
   SelectProps,
@@ -10,7 +10,12 @@ import {
   Select,
   SpaceBetween,
 } from '@cloudscape-design/components';
-import * as awsui from '@cloudscape-design/design-tokens';
+import {
+  colorBorderItemFocused,
+  colorTextBodyDefault,
+  spaceScaledS,
+  spaceStaticXxxs,
+} from '@cloudscape-design/design-tokens';
 import ColorPicker from '../shared/colorPicker';
 
 import type { TextWidget } from '~/customization/widgets/types';
@@ -29,13 +34,33 @@ const ButtonWithState: FC<ButtonWithStateProps> = ({
   onToggle,
   ...others // passing other attributes like data-test-id
 }) => {
+  const [tabFocus, setTabFocus] = useState<boolean>(false);
+
+  const handleTabFocus = (event: React.FocusEvent<HTMLButtonElement>) => {
+    if (event.nativeEvent.type === 'focusin') {
+      setTabFocus(true);
+    }
+  };
+
+  const handleBlur = () => {
+    setTabFocus(false);
+  };
+
+  const focusStyle = {
+    outline: `${spaceStaticXxxs} solid ${colorBorderItemFocused}`,
+    outlineStyle: 'auto',
+  };
+
   return (
     <button
       role='checkbox'
       aria-checked={checked}
       {...others}
       className={`text-button-toggle ${checked ? 'checked' : ''}`}
+      style={tabFocus ? focusStyle : {}}
       onClick={onToggle}
+      onFocus={handleTabFocus}
+      onBlur={handleBlur}
     >
       {children}
     </button>
@@ -69,7 +94,7 @@ type TextSettingsProps = FontSettings & {
 };
 
 const TextSettings: FC<TextSettingsProps> = ({
-  fontColor = awsui.colorTextBodyDefault,
+  fontColor = colorTextBodyDefault,
   updateFontColor,
   isBold = false,
   toggleBold,
@@ -98,7 +123,7 @@ const TextSettings: FC<TextSettingsProps> = ({
       variant='footer'
     >
       <Box padding='s'>
-        <div className='text-configuration' style={{ gap: awsui.spaceScaledS }}>
+        <div className='text-configuration' style={{ gap: spaceScaledS }}>
           <label htmlFor='text-color-picker'>{defaultMessages.color}</label>
           <ColorPicker
             id='text-color-picker'
