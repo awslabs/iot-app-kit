@@ -122,7 +122,7 @@ describe('FogSettingsEditor', () => {
           near: 1,
           far: 1000,
         };
-      } else if (property === KnownSceneProperty.TagCustomColors) {
+      } else if (property === KnownSceneProperty.FogCustomColors) {
         const customColors: string[] = [];
         return customColors;
       }

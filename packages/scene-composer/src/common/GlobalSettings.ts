@@ -4,6 +4,7 @@ import { MpSdk } from '@matterport/r3f/dist';
 import { DracoDecoderConfig, GetSceneObjectFunction } from '../interfaces/sceneViewer';
 import { COMPOSER_FEATURES, FeatureConfig } from '../interfaces';
 import { IMetricRecorder } from '../interfaces/metricRecorder';
+import { FlashMessageDefinition } from '../interfaces/sceneComposerInternal';
 
 const globalSettings: {
   debugMode: boolean;
@@ -14,6 +15,7 @@ const globalSettings: {
   getSceneObjectFunction: GetSceneObjectFunction | undefined;
   twinMakerSceneMetadataModule: TwinMakerSceneMetadataModule | undefined;
   matterportSdks: Record<string, MpSdk | undefined>;
+  onFlashMessage?: (message: FlashMessageDefinition) => void;
 } = {
   debugMode: false,
   dracoDecoder: { enable: true },
@@ -68,6 +70,11 @@ export const setTwinMakerSceneMetadataModule = (twinMakerSceneMetadataModule: Tw
 
 export const setMatterportSdk = (sceneId: string, sdk?: MpSdk): void => {
   globalSettings.matterportSdks[sceneId] = sdk;
+  notifySubscribers();
+};
+
+export const setOnFlashMessage = (onFlashMessage?: (message: FlashMessageDefinition) => void): void => {
+  globalSettings.onFlashMessage = onFlashMessage;
   notifySubscribers();
 };
 

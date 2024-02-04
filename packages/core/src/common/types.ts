@@ -9,7 +9,18 @@ import type {
   TimeSeriesData,
 } from '../data-module/types';
 
-export type ErrorDetails = { msg: string; type?: string; status?: string };
+export type ErrorDetails<T = undefined> = T extends undefined
+  ? {
+      msg: string;
+      type?: string;
+      status?: string;
+    }
+  : {
+      msg: string;
+      type?: string;
+      status?: string;
+      meta: T;
+    };
 
 export interface ProviderObserver<DataType> {
   next: (data: DataType) => void;

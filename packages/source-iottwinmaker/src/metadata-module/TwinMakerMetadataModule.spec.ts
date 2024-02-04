@@ -3,6 +3,7 @@ import { ErrorDetails } from '@iot-app-kit/core';
 import { createMockTwinMakerSDK } from '../__mocks__/iottwinmakerSDK';
 import { TwinMakerMetadataModule } from './TwinMakerMetadataModule';
 import { QueryClient } from '@tanstack/query-core';
+import { FetchEntityErrorMeta } from './types';
 
 const createCache = () =>
   new QueryClient({
@@ -79,10 +80,11 @@ describe('TwinMakerMetadataModule', () => {
         message: 'random-error-message',
         $metadata: { httpStatusCode: '401' },
       };
-      const mockErrorDetails: ErrorDetails = {
+      const mockErrorDetails: ErrorDetails<FetchEntityErrorMeta> = {
         msg: mockError.message,
         type: mockError.name,
         status: mockError.$metadata.httpStatusCode,
+        meta: { entityId: 'random' },
       };
       getEntity.mockRejectedValue(mockError as never);
 

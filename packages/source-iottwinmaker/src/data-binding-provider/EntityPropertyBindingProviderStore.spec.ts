@@ -173,6 +173,9 @@ describe('EntityPropertyBindingProviderStore', () => {
       msg: 'mock error message.',
       status: undefined,
       type: 'error name',
+      meta: {
+        entityId: mockDataBindingInput.dataBindingContext.entityId,
+      },
     });
   });
 

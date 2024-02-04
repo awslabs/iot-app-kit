@@ -24,3 +24,4 @@ export {
   undecorateDataBindingTemplate,
 } from './utils/dataBindingTemplateUtils';
 export * from './data-binding-provider/types';
+export type { FetchEntityErrorMeta } from './metadata-module/types';

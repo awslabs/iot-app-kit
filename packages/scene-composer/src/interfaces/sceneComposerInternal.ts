@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { FlashbarProps } from '@cloudscape-design/components';
 
 import ILogger from '../logger/ILogger';
 
@@ -29,6 +30,8 @@ export type OnSceneUpdateCallback = (snapshot: ISceneDocumentSnapshot) => void;
 export type AssetBrowserResultCallback = (s3bucketArn: string | null, selectedAssetContentLocation: string) => void;
 export type ShowAssetBrowserCallback = (callback: AssetBrowserResultCallback, typelist?: AssetType[]) => void;
 
+export interface FlashMessageDefinition extends FlashbarProps.MessageDefinition {}
+
 export interface SceneComposerInternalProps extends SceneViewerPropsShared {
   onSceneUpdated?: OnSceneUpdateCallback;
 
@@ -36,6 +39,8 @@ export interface SceneComposerInternalProps extends SceneViewerPropsShared {
 
   ErrorView?: ReactNode;
   onError?(error: Error, errorInfo?: { componentStack: string }): void;
+
+  onFlashMessage?(message: FlashMessageDefinition): void;
 
   config: SceneComposerInternalConfig;
 }

@@ -17,6 +17,7 @@ import {
   setGetSceneObjectFunction,
   setLocale,
   setMetricRecorder,
+  setOnFlashMessage,
   setTwinMakerSceneMetadataModule,
   subscribe,
   unsubscribe,
@@ -63,6 +64,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   externalLibraryConfig,
   activeCamera,
   selectedDataBinding,
+  onFlashMessage,
 }: SceneComposerInternalProps) => {
   useLifecycleLogging('StateManager');
   const sceneComposerId = useSceneComposerId();
@@ -222,6 +224,10 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       setLocale(config.locale);
     }
   }, [config.locale]);
+
+  useEffect(() => {
+    setOnFlashMessage(onFlashMessage);
+  }, [onFlashMessage]);
 
   useEffect(() => {
     setGetSceneObjectFunction(sceneLoader.getSceneObject);

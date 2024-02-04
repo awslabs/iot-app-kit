@@ -4,7 +4,8 @@ import {
   setDracoDecoder,
   setMetricRecorder,
   setFeatureConfig,
-} from '../src/common/GlobalSettings';
+  setOnFlashMessage,
+} from './GlobalSettings';
 
 describe('GlobalSettings', () => {
   it('should be able to setDebugMode', () => {
@@ -31,5 +32,17 @@ describe('GlobalSettings', () => {
     expect(getGlobalSettings().featureConfig).toEqual({});
     setFeatureConfig(mockConfig as any);
     expect(getGlobalSettings().featureConfig).toEqual(mockConfig);
+  });
+
+  it('should be able to setOnFlashMessage', () => {
+    let testValue = 0;
+    const mockCallback = () => {
+      testValue = 1;
+    };
+    expect(getGlobalSettings().onFlashMessage).toBeUndefined();
+    setOnFlashMessage(mockCallback);
+    expect(getGlobalSettings().onFlashMessage).toEqual(mockCallback);
+    getGlobalSettings().onFlashMessage!({});
+    expect(testValue).toEqual(1);
   });
 });

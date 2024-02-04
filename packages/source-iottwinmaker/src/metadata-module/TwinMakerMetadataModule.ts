@@ -12,6 +12,7 @@ import type {
 import type { ErrorDetails } from '@iot-app-kit/core';
 import { QueryClient } from '@tanstack/query-core';
 import { isDefined } from '../utils/propertyValueUtils';
+import { FetchEntityErrorMeta } from './types';
 
 export class TwinMakerMetadataModule {
   private readonly workspaceId: string;
@@ -52,10 +53,11 @@ export class TwinMakerMetadataModule {
 
       return response;
     } catch (err: any) {
-      const errorDetail: ErrorDetails = {
+      const errorDetail: ErrorDetails<FetchEntityErrorMeta> = {
         msg: err.message,
         type: err.name,
         status: err.$metadata?.httpStatusCode,
+        meta: { entityId },
       };
 
       throw errorDetail;
