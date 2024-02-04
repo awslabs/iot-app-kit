@@ -7,19 +7,21 @@ import { TimeSync, TimeSelection } from '@iot-app-kit/react-components';
 
 import {
   AssetType,
-  AssetBrowserResultCallback,
   COMPOSER_FEATURES,
   ExternalLibraryConfig,
   ISceneDocumentSnapshot,
-  OnSceneUpdateCallback,
-  OperationMode,
-  SceneComposerInternal,
-  SceneViewerPropsShared,
-  ShowAssetBrowserCallback,
   ModelFileTypeList,
+  SceneViewerPropsShared,
   TextureFileTypeList,
 } from '../../src';
 import { convertDataInputToDataStreams, getTestDataInputContinuous } from '../../tests/testData';
+import {
+  AssetBrowserResultCallback,
+  OnSceneUpdateCallback,
+  OperationMode,
+  ShowAssetBrowserCallback,
+} from '../../src/interfaces/sceneComposerInternal';
+import { SceneComposerInternal } from '../../src/components/SceneComposerInternal';
 
 import ThemeManager, { ThemeManagerProps } from './theme-manager';
 import useLoader from './hooks/useLoader';

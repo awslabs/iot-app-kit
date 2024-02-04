@@ -1,7 +1,7 @@
 import { Mode, Density, applyDensity, applyMode } from '@awsui/global-styles';
 import React, { FC, ReactNode, useEffect } from 'react';
 
-import { setDebugMode } from '../../src';
+import { setDebugMode } from '../../src/common/GlobalSettings';
 
 export interface ThemeManagerProps {
   theme?: 'light' | 'dark';
