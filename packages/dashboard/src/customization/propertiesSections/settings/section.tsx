@@ -47,6 +47,7 @@ export const SettingsSection = ({
             <div className='settings-property-label-control'>
               <Input
                 type='number'
+                data-testid='decimal-place-config'
                 controlId='decimal-places'
                 ariaLabel='decimal places'
                 value={significantDigits?.toFixed() ?? ''}

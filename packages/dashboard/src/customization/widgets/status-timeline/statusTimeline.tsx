@@ -42,7 +42,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (
       <WidgetTile widget={widget} removeable title={title}>
         <NoChartData
           icon={timelineSvgDark}
-          emptyStateText='Browse and select to add your asset properties in your line widget.'
+          emptyStateText='Browse and select to add your asset properties in your status timeline widget.'
         />
       </WidgetTile>
     );

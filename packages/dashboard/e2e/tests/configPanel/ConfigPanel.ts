@@ -10,6 +10,7 @@ export class ConfigPanel {
   readonly yAxisLabelInput: Locator;
   readonly showYAxisToggle: Locator;
   readonly showLegendToggle: Locator;
+  readonly decimalPlaceInput: Locator;
 
   constructor({ page }: { page: Page }) {
     this.page = page;
@@ -27,5 +28,8 @@ export class ConfigPanel {
     this.showLegendToggle = this.container
       .locator('input[type=checkbox]')
       .locator('nth=1');
+    this.decimalPlaceInput = this.container
+      .getByTestId('decimal-place-config')
+      .locator('input');
   }
 }
