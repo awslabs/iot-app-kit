@@ -29,8 +29,8 @@
     "fix": "eslint --fix "
   },
   "dependencies": {
-    "@iot-app-kit/core": "^9.11.0",
-    "@iot-app-kit/react-components": "^9.11.0",
-    "@iot-app-kit/testing-util": "^9.11.0"
+    "@iot-app-kit/core": "^9.15.0",
+    "@iot-app-kit/react-components": "^9.15.0",
+    "@iot-app-kit/testing-util": "^9.15.0"
   }
 }
