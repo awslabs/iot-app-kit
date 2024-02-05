@@ -81,7 +81,7 @@ export class AssetPropertyValueFactory {
       ...this.#createDefaults(),
       ...partialAssetPropertyValue,
       value: {
-        doubleValue: faker.number.float({ min: 0, max: 100 }),
+        doubleValue: faker.number.float({ min: 0, max: 100, precision: 0.001 }),
       },
     };
 
@@ -138,7 +138,7 @@ export function batchGetAssetPropertyValueHandler() {
     const response = {
       successEntries: entries.map(({ entryId }) => ({
         entryId,
-        assetPropertyValue: factory.createIntegerAssetPropertyValue(),
+        assetPropertyValue: factory.createDoubleAssetPropertyValue(),
       })),
       skippedEntries: [],
       errorEntries: [],
@@ -186,7 +186,7 @@ export function batchGetAssetPropertyValueHistoryHandler() {
                 })
                 .map((date) => {
                   const assetPropertyValue =
-                    factory.createIntegerAssetPropertyValue({
+                    factory.createDoubleAssetPropertyValue({
                       timestamp: {
                         timeInSeconds: Math.floor(date.getTime() / 1000),
                         offsetInNanos: Math.floor(date.getTime() % 1000),

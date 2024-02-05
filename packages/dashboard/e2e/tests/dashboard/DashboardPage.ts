@@ -9,7 +9,8 @@ export class DashboardPage {
   readonly browser: Browser;
   public readonly heading: Locator;
   public readonly lineChartWidgetButton: Locator;
-  public readonly testWidgetButton: Locator;
+  public readonly textWidgetButton: Locator;
+  public readonly kpiWidgetButton: Locator;
   public readonly gridArea: Locator;
   public readonly confirmModalDeleteButton: Locator;
   public readonly contextMenuDeleteButton: Locator;
@@ -20,8 +21,11 @@ export class DashboardPage {
     this.lineChartWidgetButton = page.getByRole('button', {
       name: 'add Line widget',
     });
-    this.testWidgetButton = page.getByRole('button', {
+    this.textWidgetButton = page.getByRole('button', {
       name: 'add Text widget',
+    });
+    this.kpiWidgetButton = page.getByRole('button', {
+      name: 'add KPI widget',
     });
     this.gridArea = page.locator('#container');
     this.gridArea = page.locator('#container');
@@ -44,9 +48,11 @@ export class DashboardPage {
       case 'line':
         return this.lineChartWidgetButton;
       case 'text':
-        return this.testWidgetButton;
+        return this.textWidgetButton;
+      case 'kpi':
+        return this.kpiWidgetButton;
       default:
-        return this.lineChartWidgetButton;
+        throw new Error('Widget type is not defined in dashboardPage test');
     }
   }
 

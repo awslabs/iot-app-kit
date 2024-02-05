@@ -44,7 +44,11 @@ export const KpiBase: React.FC<KPIProperties> = ({
   const point = propertyPoint || alarmPoint;
   const displayedUnit = showUnit ? unit : undefined;
   return (
-    <div className='kpi' style={{ fontSize: `${secondaryFontSize}px` }}>
+    <div
+      className='kpi'
+      data-testid='kpi-base-component'
+      style={{ fontSize: `${secondaryFontSize}px` }}
+    >
       {showName && name}
       {error && (
         <Box margin={{ vertical: 's' }}>
@@ -63,7 +67,10 @@ export const KpiBase: React.FC<KPIProperties> = ({
           />
         )}
         {!isLoading && (
-          <span style={{ color, fontSize: `${fontSize}px` }}>
+          <span
+            data-testid='kpi-value'
+            style={{ color, fontSize: `${fontSize}px` }}
+          >
             <Value
               value={point?.y}
               unit={displayedUnit}
