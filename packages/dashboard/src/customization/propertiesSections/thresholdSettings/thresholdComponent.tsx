@@ -10,6 +10,7 @@ import type { InputProps, SelectProps } from '@cloudscape-design/components';
 import {
   Box,
   Button,
+  FormField,
   Input,
   Select,
   SpaceBetween,
@@ -103,34 +104,46 @@ export const ThresholdComponent: FC<{
               className='threshold-configuration'
               style={{ gap: awsui.spaceScaledS }}
             >
-              <Box variant='span'>{defaultMessages.if}</Box>
-              <Select
-                expandToViewport={true}
-                options={comparisonOptions}
-                selectedOption={selectedOption}
-                onChange={onUpdateComparator}
-                data-test-id='threshold-component-operator-select'
-              />
-              <Input
-                value={`${displayValue}`}
-                placeholder='Threshold value'
-                onChange={onUpdateThresholdValue}
-                data-test-id='threshold-component-value-input'
-                invalid={!validValue}
-              />
-              {defaultMessages.showAs}
-              <ColorPicker
-                color={color || DEFAULT_THRESHOLD_COLOR}
-                updateColor={onUpdateColor}
-                data-test-id='threshold-component-color-picker'
-              />
-              <Button
-                ariaLabel='delete threshold'
-                iconName='remove'
-                variant='icon'
-                onClick={onDelete}
-                data-test-id='threshold-component-delete-button'
-              />
+              <Box variant='span' margin={{ top: 'l' }}>
+                {defaultMessages.if}
+              </Box>
+              <FormField label='Operator'>
+                <Select
+                  expandToViewport
+                  options={comparisonOptions}
+                  selectedOption={selectedOption}
+                  onChange={onUpdateComparator}
+                  data-test-id='threshold-component-operator-select'
+                />
+              </FormField>
+              <FormField label='Value'>
+                <Input
+                  value={`${displayValue}`}
+                  placeholder='Threshold value'
+                  onChange={onUpdateThresholdValue}
+                  data-test-id='threshold-component-value-input'
+                  invalid={!validValue}
+                />
+              </FormField>
+              <Box variant='span' margin={{ top: 'l' }}>
+                {defaultMessages.showAs}
+              </Box>
+              <Box variant='span' margin={{ top: 'l' }}>
+                <ColorPicker
+                  color={color || DEFAULT_THRESHOLD_COLOR}
+                  updateColor={onUpdateColor}
+                  data-test-id='threshold-component-color-picker'
+                />
+              </Box>
+              <Box variant='span' margin={{ top: 'l' }}>
+                <Button
+                  ariaLabel='delete threshold'
+                  iconName='remove'
+                  variant='icon'
+                  onClick={onDelete}
+                  data-test-id='threshold-component-delete-button'
+                />
+              </Box>
             </div>
           </Box>
         </SpaceBetween>
