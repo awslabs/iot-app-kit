@@ -26,8 +26,6 @@
     "test:typescript": "tsc --noEmit"
   },
   "dependencies": {
-    "@aws-sdk/client-iot-events": "3.354.0",
-    "@aws-sdk/client-iotsitewise": "3.456.0",
     "@iot-app-kit/core": "10.0.0",
     "lodash.difference": "4.5.0"
   },
