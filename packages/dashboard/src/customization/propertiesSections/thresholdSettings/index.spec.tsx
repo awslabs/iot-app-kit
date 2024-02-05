@@ -4,11 +4,12 @@ import { MOCK_KPI_WIDGET } from '../../../../testing/mocks';
 import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
 import { Provider } from 'react-redux';
 import { configureDashboardStore } from '~/store';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { ThresholdComponent } from './thresholdComponent';
 import type { DashboardState } from '~/store/state';
 import type { ThresholdWithId } from '~/customization/settings';
 import { ThresholdSettingsConfiguration, ThresholdsWidget } from './index';
+import userEvent from '@testing-library/user-event';
 
 const MOCK_THRESHOLD_1: ThresholdWithId = {
   id: '1',
@@ -72,11 +73,35 @@ describe('thresholdsComponent', () => {
     ).toBeTruthy();
   });
 
+  it('should focus the operator select on click of label', async () => {
+    const user = userEvent.setup();
+    render(<TestThresholdComponent />);
+
+    const label = screen.getByText('Operator');
+    const input = screen.getByLabelText('Operator');
+
+    expect(input).not.toHaveFocus();
+    await user.click(label);
+    expect(input).toHaveFocus();
+  });
+
   it('renders threshold value input', () => {
     const elem = render(<TestThresholdComponent />).baseElement;
     expect(
       elem.querySelector('[data-test-id="threshold-component-value-input"]')
     ).toBeTruthy();
+  });
+
+  it('should focus the threshold value input on click of label', async () => {
+    const user = userEvent.setup();
+    render(<TestThresholdComponent />);
+
+    const label = screen.getByText('Value');
+    const input = screen.getByLabelText('Value');
+
+    expect(input).not.toHaveFocus();
+    await user.click(label);
+    expect(input).toHaveFocus();
   });
 
   it('renders color picker', () => {
