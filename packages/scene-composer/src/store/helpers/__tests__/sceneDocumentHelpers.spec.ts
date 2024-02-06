@@ -75,11 +75,14 @@ describe('sceneDocumentHelpers', () => {
         ruleMap: {},
       } as ISceneDocumentInternal;
 
-      removeNode(document, 'testNode', logger);
-      expect(document.nodeMap.testNode).toBeUndefined();
+      removeNode(document, 'childNode', logger);
+      expect(document.nodeMap.testNode.childRefs).toEqual([]);
       expect(document.nodeMap.childNode).toBeUndefined();
       expect(document.nodeMap.grandchildNode).toBeUndefined();
-      expect(document.componentNodeMap).toEqual({ abc: { root: ['root-comp'] }, def: {} });
+      expect(document.componentNodeMap).toEqual({
+        abc: { root: ['root-comp'], testNode: ['test-comp-1'] },
+        def: { testNode: ['test-comp-2'] },
+      });
     });
   });
 
