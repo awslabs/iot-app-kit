@@ -49,7 +49,7 @@ export const removeNode = (document: ISceneDocumentInternal, nodeRef: string, lo
     const indexOfNodeInParent = document.nodeMap[nodeToRemove.parentRef]!.childRefs.findIndex(
       (ref) => ref === nodeToRemove.ref,
     );
-    indexOfNodeInParent >= 0 ?? document.nodeMap[nodeToRemove.parentRef]?.childRefs.splice(indexOfNodeInParent, 1);
+    indexOfNodeInParent >= 0 && document.nodeMap[nodeToRemove.parentRef]?.childRefs.splice(indexOfNodeInParent, 1);
   }
 
   return nodeToRemove;
