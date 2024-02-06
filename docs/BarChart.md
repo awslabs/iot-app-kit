@@ -12,6 +12,8 @@ The line chart utilizes WebGL. You need to create an instance of the WebGL conte
 
 ## Examples
 
+Brians editingasdfadsfsadf
+
 #### React component example
 
 ```
