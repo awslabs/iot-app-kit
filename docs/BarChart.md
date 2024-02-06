@@ -11,7 +11,7 @@ You can view and interact with a bar chart example, visit [BarChart](https://syn
 The line chart utilizes WebGL. You need to create an instance of the WebGL context before you can use the BarChart component. To learn more about how to create an instance of the WebGL context for this component, see [WebGL context](https://synchrocharts.com/#/WebGL%20context) in the Synchro Charts documentation.  
 
 ## Examples
-
+ MY EDIT TEST
 #### React component example
 
 ```
