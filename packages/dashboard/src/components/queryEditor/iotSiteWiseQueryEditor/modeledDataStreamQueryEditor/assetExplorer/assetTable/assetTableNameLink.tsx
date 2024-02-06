@@ -1,5 +1,7 @@
-import Link from '@cloudscape-design/components/link';
 import React from 'react';
+
+import { Link, Icon } from '@cloudscape-design/components';
+import { spaceScaledXs } from '@cloudscape-design/design-tokens';
 
 export interface AssetTableNameLinkProps {
   assetId: string;
@@ -20,7 +22,13 @@ export function AssetTableNameLink({
         updateParentAssetId(assetId);
       }}
     >
-      {assetName}
+      <span
+        data-testid='asset-name-link'
+        title={`View children assets of ${assetName}`}
+      >
+        <Icon name='angle-right' size='inherit' />
+        <span style={{ paddingLeft: spaceScaledXs }}>{assetName}</span>
+      </span>
     </Link>
   );
 }
