@@ -3,7 +3,6 @@ on:
   pull_request:
     paths:
     - 'packages/scene-composer/**'
-
 jobs:
   publish-storybook:
     runs-on: ubuntu-latest

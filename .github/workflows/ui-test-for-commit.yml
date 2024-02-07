@@ -1,5 +1,7 @@
 name: UI Tests - Associated to last commit
 on: [pull_request]
+env:
+  PW_TEST_HTML_REPORT_OPEN: 'never'
 jobs:
   e2e-tests-playwright:
     runs-on: ubuntu-latest
@@ -30,7 +32,7 @@ jobs:
 
       - name: test UI
         run:
-          npm run test:ui -w @iot-app-kit/dashboard --filter=[HEAD~1] && npm run test:ui -w @iot-app-kit/react-components --filter=[HEAD~1] && npm run test:ui -w @iot-app-kit/scene-composer --filter=[HEAD~1]
+          npm run test:ui -w @iot-app-kit/dashboard --filter=[HEAD~1] && npm run test:ui -w @iot-app-kit/react-components --filter=[HEAD~1] && npm run test:ui -w @iot-app-kit/scene-composer --filter=[HEAD~1] --production
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
