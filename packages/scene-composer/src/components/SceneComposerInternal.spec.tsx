@@ -5,9 +5,11 @@ import str2ab from 'string-to-arraybuffer';
 import flushPromises from 'flush-promises';
 import { Object3D, Event, Mesh, MeshBasicMaterial, Color } from 'three';
 
-import { SceneComposerInternal, useSceneComposerApi, SceneComposerApi } from '..';
+import { useSceneComposerApi, SceneComposerApi } from '..';
 import { testScenes } from '../../tests/testData';
 import { useStore } from '../store';
+
+import { SceneComposerInternal } from './SceneComposerInternal';
 
 jest.mock('../layouts/StaticLayout', () => ({
   StaticLayout: 'StaticLayout',

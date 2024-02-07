@@ -42,6 +42,7 @@ export interface SceneViewerPropsShared {
 
   onSelectionChanged?: SelectionChangedEventCallback;
   onWidgetClick?: WidgetClickEventCallback;
+  onSceneLoaded?: () => void;
 
   /**
    * The data to be visualized by the composer.

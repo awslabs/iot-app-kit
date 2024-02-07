@@ -27,11 +27,13 @@ import DefaultErrorFallback from './DefaultErrorFallback';
 import { numberStream, stringStream, viewport } from '../../tests/data/mockDataStreams';
 import { DataStream } from '@iot-app-kit/core';
 import useActiveCamera from '../hooks/useActiveCamera';
-import { KnownComponentType, SceneComposerInternalConfig, setMatterportSdk } from '..';
+import { KnownComponentType } from '..';
 import * as THREE from 'three';
 import { SCENE_CAPABILITY_MATTERPORT } from '../common/constants';
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { MpSdk } from '@matterport/webcomponent';
+import { SceneComposerInternalConfig } from '../interfaces/sceneComposerInternal';
+import { setMatterportSdk } from '../common/GlobalSettings';
 
 jest.mock('../hooks/useActiveCamera', () => {
   return jest.fn().mockReturnValue({

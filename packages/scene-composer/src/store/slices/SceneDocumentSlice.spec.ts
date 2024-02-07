@@ -4,7 +4,7 @@ import flushPromises from 'flush-promises';
 import { Object3D, Vector3 } from 'three';
 
 import { IAnchorComponentInternal, IDataOverlayComponentInternal, ISceneNodeInternal } from '..';
-import { COMPOSER_FEATURES, IErrorDetails, KnownComponentType, KnownSceneProperty, setFeatureConfig } from '../..';
+import { COMPOSER_FEATURES, IErrorDetails, KnownComponentType, KnownSceneProperty } from '../..';
 import { Component } from '../../models/SceneModels';
 import { containsMatchingEntityComponent } from '../../utils/dataBindingUtils';
 import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity';
@@ -16,6 +16,7 @@ import { DisplayMessageCategory, SceneNodeRuntimeProperty } from '../internalInt
 import { appendSceneNode } from '../helpers/sceneDocumentHelpers';
 import { createNodeEntity } from '../../utils/entityModelUtils/createNodeEntity';
 import { updateSceneRootEntity } from '../../utils/entityModelUtils/sceneUtils';
+import { setFeatureConfig } from '../../common/GlobalSettings';
 
 import { createSceneDocumentSlice } from './SceneDocumentSlice';
 
