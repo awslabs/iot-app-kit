@@ -31,14 +31,7 @@ import { DisplayMessageCategory } from '../store/internalInterfaces';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import useActiveCamera from '../hooks/useActiveCamera';
 import useMatterportViewer from '../hooks/useMatterportViewer';
-import {
-  AdditionalComponentData,
-  COMPOSER_FEATURES,
-  ExternalLibraryConfig,
-  KnownComponentType,
-  KnownSceneProperty,
-  SceneComposerInternalProps,
-} from '../interfaces';
+import { AdditionalComponentData, ExternalLibraryConfig, KnownComponentType, KnownSceneProperty } from '../interfaces';
 import { SceneLayout } from '../layouts/SceneLayout';
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
 import { ICameraComponentInternal, RootState, useStore, useViewOptionState } from '../store';
@@ -48,6 +41,7 @@ import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/d
 import { findComponentByType } from '../utils/nodeUtils';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
 import { createStandardUriModifier } from '../utils/uriModifiers';
+import { SceneComposerInternalProps } from '../interfaces/sceneComposerInternal';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';

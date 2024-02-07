@@ -21,14 +21,13 @@ import {
   IModelRefComponent,
   IMotionIndicatorComponent,
   KnownComponentType,
-  setFeatureConfig,
-  setMetricRecorder,
 } from '../../../..';
 import { CameraType, Component, LightType } from '../../../../models/SceneModels';
 import { createNodeWithTransform } from '../../../../utils/nodeUtils';
 import { ToolbarOrientation } from '../../common/types';
 import { isDynamicScene } from '../../../../utils/entityModelUtils/sceneUtils';
 import { TILESET_JSON } from '../../../../utils/sceneAssetUtils';
+import { setFeatureConfig, setMetricRecorder } from '../../../../common/GlobalSettings';
 /* eslint-enable */
 
 jest.mock('../../../../utils/entityModelUtils/sceneUtils', () => ({

@@ -9,7 +9,7 @@ import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
 import LogProvider from '../logger/react-logger/log-provider';
 import { GlobalStyles } from '../GlobalStyles';
 import useAwsLightDarkModes from '../hooks/useAwsLightDarkModes';
-import { KnownComponentType, SceneComposerInternalProps, StyleTarget } from '../interfaces';
+import { KnownComponentType, StyleTarget } from '../interfaces';
 import { materialReducer, initialMaterialMaps, addMaterial, removeMaterial, backUpOriginalMaterial } from '../reducers';
 import { useStore } from '../store';
 import { IDataBoundSceneComponentInternal, ISceneComponentInternal } from '../store/internalInterfaces';
@@ -17,6 +17,7 @@ import { darkTheme, lightTheme } from '../theme';
 import { containsMatchingEntityComponent } from '../utils/dataBindingUtils';
 import { generateUUID } from '../utils/mathUtils';
 import { createMaterialFromStyle } from '../utils/objectThreeStyleUtils';
+import { SceneComposerInternalProps } from '../interfaces/sceneComposerInternal';
 
 import StateManager from './StateManager';
 import DefaultErrorFallback from './DefaultErrorFallback';

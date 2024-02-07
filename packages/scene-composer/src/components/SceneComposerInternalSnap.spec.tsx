@@ -3,9 +3,10 @@ import { create, act } from 'react-test-renderer';
 import str2ab from 'string-to-arraybuffer';
 import flushPromises from 'flush-promises';
 
-import { SceneComposerInternal } from '..';
 import * as SceneLayoutComponents from '../layouts/SceneLayout';
 import { invalidTestScenes, testScenes } from '../../tests/testData';
+
+import { SceneComposerInternal } from './SceneComposerInternal';
 
 jest.mock('../layouts/StaticLayout', () => ({
   StaticLayout: 'StaticLayout',

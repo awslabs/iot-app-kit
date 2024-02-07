@@ -17,8 +17,6 @@ import {
   ITransformConstraint,
   IValueDataBinding,
   IValueDataBindingProvider,
-  OperationMode,
-  ShowAssetBrowserCallback,
   URIModifier,
   KnownComponentType,
   WidgetClickEventCallback,
@@ -27,6 +25,7 @@ import {
   IEntityBindingComponent,
   IPlaneGeometryComponent,
 } from '../interfaces';
+import { OperationMode, ShowAssetBrowserCallback } from '../interfaces/sceneComposerInternal';
 import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../three/OrbitControls';
 import { PointerLockControls as PointerLockControlsImpl } from '../three/PointerLockControls';
 

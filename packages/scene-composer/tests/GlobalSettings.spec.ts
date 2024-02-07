@@ -1,4 +1,10 @@
-import { getGlobalSettings, setDebugMode, setDracoDecoder, setMetricRecorder, setFeatureConfig } from '../src';
+import {
+  getGlobalSettings,
+  setDebugMode,
+  setDracoDecoder,
+  setMetricRecorder,
+  setFeatureConfig,
+} from '../src/common/GlobalSettings';
 
 describe('GlobalSettings', () => {
   it('should be able to setDebugMode', () => {
