@@ -8,6 +8,26 @@ import { REGION } from '../../testing/siteWiseQueries';
 import { getEnvCredentials } from '../../testing/getEnvCredentials';
 import { DashboardClientConfiguration } from '../../src/types';
 import { DashboardView } from '~/index';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTEventsClient } from '@aws-sdk/client-iot-events';
+import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+
+const credentials = () =>
+  Promise.resolve({
+    accessKeyId: 'xxx',
+    secretAccessKey: 'xxx',
+    sessionToken: 'xxx',
+  });
+const endpoint = 'https://54.90.223.90';
+const clientConfig = {
+  endpoint,
+  credentials,
+  region: 'edge',
+  disableHostPrefix: true,
+};
+const iotSiteWiseClient = new IoTSiteWiseClient(clientConfig);
+const iotEventsClient = new IoTEventsClient(clientConfig);
+const iotTwinMakerClient = new IoTTwinMakerClient(clientConfig);
 
 const getDashboardProperties = (
   defaultProps: DashboardProperties
@@ -22,6 +42,11 @@ const getDashboardProperties = (
     dashboardConfiguration: {
       ...defaultProps.dashboardConfiguration,
       ...dashboardConfiguration,
+    },
+    clientConfiguration: {
+      iotSiteWiseClient,
+      iotEventsClient,
+      iotTwinMakerClient,
     },
   };
 };
