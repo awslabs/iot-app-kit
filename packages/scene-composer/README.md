@@ -13,6 +13,26 @@ The library will be built and copied to the `dist` folder.
 npm run build
 ```
 
+**UI Tests**
+
+Pre-requisites: You need to have [Docker](https://docs.docker.com/get-docker/) installed locally to run UI Tests, we rely on it to provide the necessary browsers to generate consistent screenshots.
+
+To setup the docker image, there's a post install script, so you may need to trigger it with:
+
+```bash
+npm install
+
+# Or if you don't want to re-install everything
+docker compose up
+```
+
+Commands:
+
+```bash
+# Run all tests once
+
+```
+
 **Analyze command**
 
 You can use the following tool to analyze the releasing bundle content:

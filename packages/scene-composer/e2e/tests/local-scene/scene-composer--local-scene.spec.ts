@@ -6,13 +6,16 @@ const localScene = '/iframe.html?args=&id=developer-scene-composer--local-scene'
 const canvas = '#tm-scene-unselectable-canvas';
 
 test.describe('scene-composer--local-scene', () => {
-  test('visual regression', async ({ page }) => {
+  test('visual regression', async ({ page }, testInfo) => {
     await page.goto(localScene);
     const frame = page.locator('#root');
-    expect(await frame.locator(canvas).screenshot()).toMatchSnapshot({
-      name: 'local-scene-canvas.png',
-      threshold: 1,
-    });
+
+    // Example on how to make sure the screenshot shows up in the test report
+    // TODO: Automate this so every screenshot is attached automatically to it's test.
+    const screenshot = await frame.locator(canvas).screenshot();
+    await testInfo.attach('local-scene-canvas.png', { body: screenshot, contentType: 'image/png' });
+
+    expect(screenshot).toMatchSnapshot('local-scene-canvas.png');
   });
 
   test('get object by name', async ({ page }) => {

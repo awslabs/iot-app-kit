@@ -8,6 +8,8 @@ Ensure you have `node` version 16 and `npm` > 8.0.
 
 - Node: any `v16` or higher
 - Npm: `v8.0.0` or higher
+- git lfs: https://git-lfs.com/ - We use git lfs to keep binary files and screenshots from ballooning our repo size
+- docker: https://www.docker.com/products/docker-desktop/ - Docker is needed by our UI Tests to ensure reliability/consistency across dev local and ci
 
 If you need to setup node, consult https://nodejs.org/en/download/package-manager
 
@@ -51,6 +53,7 @@ Learn more at the [npm workspaces documentation](https://docs.npmjs.com/cli/v7/u
 Every package in IoT App Kit follows a similar structure:
 
 - every package with tests, contains a `test` command that runs jest based tests
+- every package with UI Tests, contains a `test:ui` command that runs playwright tests, and a `test:ui:reliability` command that stress tests these tests to ensure they aren't flaky
 - every package contains a `lint` command that executes eslint
 - every package contains a `fix` command that fixes eslint errors
 - every package contains a `build` command that builds the package
@@ -77,6 +80,8 @@ the correct [semver](https://semver.org/) version for publishing.
 
 Due to the changelog and versioning being determined by the commit messaging, commit messages are considered part of the review process,
 so "squash merging" and other techniques that allow changing the commit message after approval right before merging, are not allowed.
+
+You should add UI Tests for any major functionality, and if you do, label your pull request with the `test:reliability` label on first checkin, which will stress test your UI tests.
 
 **git good tip**: `git rebase -i HEAD~${NUM_COMMITS}` is a useful way to squash together the last `NUM_COMMITS` before making your pull-request. Learn more [here](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History). 
 

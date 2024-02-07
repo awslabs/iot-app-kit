@@ -27,6 +27,7 @@
     "fix:stylelint": "stylelint '**/*.css' --fix",
     "test": "turbo run test",
     "test:ui": "turbo run test:ui",
+    "test:reliability": "turbo run test:ui:reliability",
     "test:stylelint": "stylelint '**/*.css' --max-warnings 0",
     "test:git": "git diff --exit-code",
     "release": "npm run build",
@@ -34,7 +35,8 @@
     "versionup:patch": "turbo run version --no-git-tag-version patch",
     "versionup:minor": "turbo run version --no-git-tag-version minor",
     "versionup:major": "turbo run version --no-git-tag-version major",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test:ci": "if test \"$NODE_ENV\" = \"production\"; then echo \"Yes!\"; fi"
   },
   "dependencies": {
     "@cloudscape-design/collection-hooks": "1.0.22",
