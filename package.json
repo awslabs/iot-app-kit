@@ -37,11 +37,10 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@cloudscape-design/collection-hooks": "1.0.22",
-    "@cloudscape-design/component-toolkit": "1.0.0-beta.26",
-    "@cloudscape-design/components": "3.0.421",
-    "@cloudscape-design/design-tokens": "3.0.15",
-    "@cloudscape-design/global-styles": "1.0.12",
+    "@cloudscape-design/collection-hooks": "1.0.36",
+    "@cloudscape-design/components": "3.0.518",
+    "@cloudscape-design/design-tokens": "3.0.34",
+    "@cloudscape-design/global-styles": "1.0.23",
     "vite": "^4.5.2"
   },
   "devDependencies": {
