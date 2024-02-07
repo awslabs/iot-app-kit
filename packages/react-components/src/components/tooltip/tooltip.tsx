@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import './tooltip.css';
 import {
   colorBackgroundHomeHeader,
-  colorBackgroundLayoutMain,
   spaceScaledM,
   spaceStaticS,
   spaceStaticXs,
@@ -28,7 +27,7 @@ export const Tooltip = ({
   const tooltipStyle = {
     fontSize: spaceScaledM,
     color: colorBackgroundHomeHeader,
-    backgroundColor: colorBackgroundLayoutMain,
+    backgroundColor: '#ffffff',
     padding: spaceStaticS,
     borderRadius: spaceStaticXs,
     border: `${spaceStaticXxxs} solid ${colorBackgroundHomeHeader}`,
