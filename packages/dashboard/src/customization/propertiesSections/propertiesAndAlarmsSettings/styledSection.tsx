@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import {
   AssetSummary,
-  useListAssetPropertiesMapQuery,
+  useAssetDescriptionMapQuery
+  // useListAssetPropertiesMapQuery,
 } from '~/hooks/useAssetDescriptionQueries';
 import { isJust } from '~/util/maybe';
 import { SelectOneWidget } from '../shared/selectOneWidget';
@@ -45,7 +46,8 @@ export const StyledPropertiesAlarmsSection: FC<
     (editablePropertiesAndAlarms && queryConfig.value.query) || undefined;
 
   const describedAssetsMapQuery =
-    useListAssetPropertiesMapQuery(styledAssetQuery);
+    // useListAssetPropertiesMapQuery(styledAssetQuery);
+    useAssetDescriptionMapQuery(styledAssetQuery);
   const describedAssetsMap = describedAssetsMapQuery.data ?? {};
 
   const assetModelIds = (styledAssetQuery?.assetModels ?? []).map(

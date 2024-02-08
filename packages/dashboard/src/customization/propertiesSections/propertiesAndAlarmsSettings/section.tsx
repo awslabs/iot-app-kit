@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import {
   AssetSummary,
-  useListAssetPropertiesMapQuery,
+  useAssetDescriptionMapQuery,
+  // useListAssetPropertiesMapQuery,
 } from '~/hooks/useAssetDescriptionQueries';
 import { PropertyComponent } from './propertyComponent';
 import { isJust } from '~/util/maybe';
@@ -52,7 +53,7 @@ export const GeneralPropertiesAlarmsSection: FC<
   const siteWiseAssetQuery =
     (editablePropertiesAndAlarms && queryConfig.value.query) || undefined;
   const describedAssetsMapQuery =
-    useListAssetPropertiesMapQuery(siteWiseAssetQuery);
+    useAssetDescriptionMapQuery(siteWiseAssetQuery);
   const describedAssetsMap = describedAssetsMapQuery.data ?? {};
 
   const assetModelIds = (siteWiseAssetQuery?.assetModels ?? []).map(

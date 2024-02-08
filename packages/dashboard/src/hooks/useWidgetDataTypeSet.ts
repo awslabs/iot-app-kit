@@ -1,4 +1,5 @@
-import { useListAssetPropertiesMapQuery } from './useAssetDescriptionQueries';
+// import { useListAssetPropertiesMapQuery } from './useAssetDescriptionQueries';
+import { useAssetDescriptionMapQuery } from './useAssetDescriptionQueries';
 import { isDefined } from '~/util/isDefined';
 import type { IoTSiteWiseDataStreamQuery } from '~/types';
 
@@ -6,7 +7,8 @@ import type { IoTSiteWiseDataStreamQuery } from '~/types';
 export const useWidgetDataTypeSet = (
   siteWiseQuery: IoTSiteWiseDataStreamQuery | undefined
 ): Set<string> => {
-  const describedAssetsMapQuery = useListAssetPropertiesMapQuery(siteWiseQuery);
+  // const describedAssetsMapQuery = useListAssetPropertiesMapQuery(siteWiseQuery);
+  const describedAssetsMapQuery = useAssetDescriptionMapQuery(siteWiseQuery);
   const describedAssetsMap = describedAssetsMapQuery.data ?? {};
 
   const getPropertyType = (assetId: string, propertyId: string) => {

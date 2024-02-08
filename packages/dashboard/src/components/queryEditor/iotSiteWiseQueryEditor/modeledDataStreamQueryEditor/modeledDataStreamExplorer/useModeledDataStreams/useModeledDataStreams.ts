@@ -2,10 +2,11 @@ import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 
-import { listModeledDataStreamsRequestWithCompositeModels } from './listModeledDataStreamsRequestWithCompositeModels';
+// import { listModeledDataStreamsRequestWithCompositeModels } from './listModeledDataStreamsRequestWithCompositeModels';
 // import { ListModeledDataStreamsRequest } from './listModeledDataStreamsRequest';
 import { ModeledDataStreamCacheKeyFactory } from './modeledDataStreamCacheKeyFactory';
 import { SelectedAsset } from '../../types';
+import { ListModeledDataStreamsRequest } from './listModeledDataStreamsRequest';
 
 export interface UseModeledDataStreamsProps {
   assetProps: SelectedAsset[];
@@ -44,8 +45,13 @@ function createCompositeQueryFn(client: IoTSiteWiseClient) {
       selectedAsset,
       'Expected assetProp to be defined as required by the enabled flag.'
     );
-    const request = new listModeledDataStreamsRequestWithCompositeModels({
-      selectedAsset,
+    // const request = new listModeledDataStreamsRequestWithCompositeModels({
+    //   selectedAsset,
+    //   client,
+    //   signal,
+    // });
+    const request = new ListModeledDataStreamsRequest({
+      assetId: selectedAsset.assetId,
       client,
       signal,
     });

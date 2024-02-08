@@ -3,14 +3,55 @@ import { registerPlugin } from '@iot-app-kit/core';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import Dashboard from '../../src/components/dashboard';
-import { REGION } from '../../testing/siteWiseQueries';
+// import { REGION } from '../../testing/siteWiseQueries';
 
-import { getEnvCredentials } from '../../testing/getEnvCredentials';
+// import { getEnvCredentials } from '../../testing/getEnvCredentials';
 import {
   DashboardClientConfiguration,
   DashboardConfiguration,
 } from '../../src/types';
 import { DashboardView } from '~/index';
+
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTEventsClient } from '@aws-sdk/client-iot-events';
+import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+
+const credentials = () =>
+  Promise.resolve({
+    "accessKeyId":"<accessKeyId>","secretAccessKey":"<secretAccessKey>","sessionToken":"<sessionToken>"
+  });
+const endpoint = '<endpoint>';
+const clientConfig = {
+  endpoint,
+  credentials,
+  region: 'edge',
+  disableHostPrefix: true,
+};
+const iotSiteWiseClient = new IoTSiteWiseClient(clientConfig);
+const iotEventsClient = new IoTEventsClient(clientConfig);
+const iotTwinMakerClient = new IoTTwinMakerClient(clientConfig);
+
+// const getDashboardProperties = (
+//   defaultProps: DashboardProperties
+// ): DashboardProperties => {
+//   const cachedDashboardConfiguration = window.localStorage.getItem('dashboard');
+//   const dashboardConfiguration = cachedDashboardConfiguration
+//     ? JSON.parse(cachedDashboardConfiguration)
+//     : defaultProps;
+
+//   return {
+//     ...defaultProps,
+//     dashboardConfiguration: {
+//       ...defaultProps.dashboardConfiguration,
+//       ...dashboardConfiguration,
+//     },
+//     clientConfiguration: {
+//       iotSiteWiseClient,
+//       iotEventsClient,
+//       iotTwinMakerClient,
+//     },
+//   };
+// };
 
 const DEFAULT_DASHBOARD_CONFIG = {
   displaySettings: {
@@ -21,9 +62,14 @@ const DEFAULT_DASHBOARD_CONFIG = {
   viewport: { duration: '10m' },
 };
 
+// const CLIENT_CONFIGURATION: DashboardClientConfiguration = {
+//   awsCredentials: getEnvCredentials(),
+//   awsRegion: REGION,
+// };
 const CLIENT_CONFIGURATION: DashboardClientConfiguration = {
-  awsCredentials: getEnvCredentials(),
-  awsRegion: REGION,
+  iotSiteWiseClient,
+  iotEventsClient,
+  iotTwinMakerClient,
 };
 
 registerPlugin('metricsRecorder', {

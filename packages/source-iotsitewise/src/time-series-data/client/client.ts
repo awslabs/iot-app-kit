@@ -1,14 +1,18 @@
-import DataLoader from 'dataloader';
+// import DataLoader from 'dataloader';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { batchGetHistoricalPropertyDataPoints } from './batchGetHistoricalPropertyDataPoints';
-import { batchGetAggregatedPropertyDataPoints } from './batchGetAggregatedPropertyDataPoints';
-import { batchGetLatestPropertyDataPoints } from './batchGetLatestPropertyDataPoints';
+// import { batchGetHistoricalPropertyDataPoints } from './batchGetHistoricalPropertyDataPoints';
+// import { batchGetAggregatedPropertyDataPoints } from './batchGetAggregatedPropertyDataPoints';
+// import { batchGetLatestPropertyDataPoints } from './batchGetLatestPropertyDataPoints';
 import type {
   OnSuccessCallback,
   ErrorCallback,
   RequestInformationAndRange,
 } from '@iot-app-kit/core';
 import type { SiteWiseDataSourceSettings } from '../types';
+import { getAggregatedPropertyDataPoints } from './legacy/getAggregatedPropertyDataPoints';
+import { getHistoricalPropertyDataPoints } from './legacy/getHistoricalPropertyDataPoints';
+import { getLatestPropertyDataPoint } from './legacy/getLatestPropertyDataPoint';
+
 
 export type LatestPropertyParams = {
   requestInformations: RequestInformationAndRange[];
@@ -32,95 +36,98 @@ export type AggregatedPropertyParams = {
 
 export class SiteWiseClient {
   private siteWiseSdk: IoTSiteWiseClient;
-  private settings: SiteWiseDataSourceSettings;
+  // private settings: SiteWiseDataSourceSettings;
 
-  private latestPropertyDataLoader: DataLoader<LatestPropertyParams, void>;
-  private historicalPropertyDataLoader: DataLoader<
-    HistoricalPropertyParams,
-    void
-  >;
-  private aggregatedPropertyDataLoader: DataLoader<
-    AggregatedPropertyParams,
-    void
-  >;
+  // private latestPropertyDataLoader: DataLoader<LatestPropertyParams, void>;
+  // private historicalPropertyDataLoader: DataLoader<
+  //   HistoricalPropertyParams,
+  //   void
+  // >;
+  // private aggregatedPropertyDataLoader: DataLoader<
+  //   AggregatedPropertyParams,
+  //   void
+  // >;
 
   constructor(
     siteWiseSdk: IoTSiteWiseClient,
-    settings: SiteWiseDataSourceSettings = {}
+    _settings: SiteWiseDataSourceSettings = {}
   ) {
     this.siteWiseSdk = siteWiseSdk;
-    this.settings = settings;
+    // this.settings = settings;
 
     /**
      * Instantiate batch data loaders for latest, historical, and aggregated data.
      * by default, data loaders will schedule batches for each frame of execution which ensures
      * no additional latency when capturing many related requests in a single batch.
      */
-    this.latestPropertyDataLoader = new DataLoader<LatestPropertyParams, void>(
-      async (keys) => {
-        batchGetLatestPropertyDataPoints({
-          params: keys.flat(),
-          client: this.siteWiseSdk,
-        });
-        return keys.map(() => undefined); // values are updated in data cache and don't need to be rebroadcast
-      },
-      {
-        batchScheduleFn: this.settings.batchDuration
-          ? (callback) => setTimeout(callback, this.settings.batchDuration)
-          : undefined,
-      }
-    );
+    // this.latestPropertyDataLoader = new DataLoader<LatestPropertyParams, void>(
+    //   async (keys) => {
+    //     batchGetLatestPropertyDataPoints({
+    //       params: keys.flat(),
+    //       client: this.siteWiseSdk,
+    //     });
+    //     return keys.map(() => undefined); // values are updated in data cache and don't need to be rebroadcast
+    //   },
+    //   {
+    //     batchScheduleFn: this.settings.batchDuration
+    //       ? (callback) => setTimeout(callback, this.settings.batchDuration)
+    //       : undefined,
+    //   }
+    // );
 
-    this.historicalPropertyDataLoader = new DataLoader<
-      HistoricalPropertyParams,
-      void
-    >(
-      async (keys) => {
-        batchGetHistoricalPropertyDataPoints({
-          params: keys.flat(),
-          client: this.siteWiseSdk,
-        });
-        return keys.map(() => undefined);
-      },
-      {
-        batchScheduleFn: this.settings.batchDuration
-          ? (callback) => setTimeout(callback, this.settings.batchDuration)
-          : undefined,
-      }
-    );
+    // this.historicalPropertyDataLoader = new DataLoader<
+    //   HistoricalPropertyParams,
+    //   void
+    // >(
+    //   async (keys) => {
+    //     batchGetHistoricalPropertyDataPoints({
+    //       params: keys.flat(),
+    //       client: this.siteWiseSdk,
+    //     });
+    //     return keys.map(() => undefined);
+    //   },
+    //   {
+    //     batchScheduleFn: this.settings.batchDuration
+    //       ? (callback) => setTimeout(callback, this.settings.batchDuration)
+    //       : undefined,
+    //   }
+    // );
 
-    this.aggregatedPropertyDataLoader = new DataLoader<
-      AggregatedPropertyParams,
-      void
-    >(
-      async (keys) => {
-        batchGetAggregatedPropertyDataPoints({
-          params: keys.flat(),
-          client: this.siteWiseSdk,
-        });
-        return keys.map(() => undefined);
-      },
-      {
-        batchScheduleFn: this.settings.batchDuration
-          ? (callback) => setTimeout(callback, this.settings.batchDuration)
-          : undefined,
-      }
-    );
+    // this.aggregatedPropertyDataLoader = new DataLoader<
+    //   AggregatedPropertyParams,
+    //   void
+    // >(
+    //   async (keys) => {
+    //     batchGetAggregatedPropertyDataPoints({
+    //       params: keys.flat(),
+    //       client: this.siteWiseSdk,
+    //     });
+    //     return keys.map(() => undefined);
+    //   },
+    //   {
+    //     batchScheduleFn: this.settings.batchDuration
+    //       ? (callback) => setTimeout(callback, this.settings.batchDuration)
+    //       : undefined,
+    //   }
+    // );
   }
 
   getLatestPropertyDataPoint(params: LatestPropertyParams): Promise<void> {
-    return this.latestPropertyDataLoader.load(params);
+    // return this.latestPropertyDataLoader.load(params);
+    return getLatestPropertyDataPoint({ client: this.siteWiseSdk, ...params });
   }
 
   getHistoricalPropertyDataPoints(
     params: HistoricalPropertyParams
   ): Promise<void> {
-    return this.historicalPropertyDataLoader.load(params);
+    // return this.historicalPropertyDataLoader.load(params);
+    return getHistoricalPropertyDataPoints({ client: this.siteWiseSdk, ...params });
   }
 
   getAggregatedPropertyDataPoints(
     params: AggregatedPropertyParams
   ): Promise<void> {
-    return this.aggregatedPropertyDataLoader.load(params);
+    // return this.aggregatedPropertyDataLoader.load(params);
+    return getAggregatedPropertyDataPoints({ client: this.siteWiseSdk, ...params });
   }
 }

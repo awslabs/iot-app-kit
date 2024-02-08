@@ -1,8 +1,8 @@
-import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { GetAssetPropertyValueCommand, type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
 
 import { BatchFactory } from './batchFactory';
-import { BatchGetLatestValuesRequest } from './batchGetLatestValues';
+// import { BatchGetLatestValuesRequest } from './batchGetLatestValues';
 import { EntryIdFactory } from './entryIdFactory';
 import { LatestValueCacheKeyFactory } from './latestValueCacheKeyFactory';
 import { LatestValueMapFactory } from './latestValueMapFactory';
@@ -66,15 +66,26 @@ export function useLatestValues({
 function createQueryFn(client: IoTSiteWiseClient) {
   return async function ({
     queryKey: [{ entries = [] }],
-    signal,
+    // signal,
   }: QueryFunctionContext<ReturnType<LatestValueCacheKeyFactory['create']>>) {
-    const request = new BatchGetLatestValuesRequest({
-      client,
-      entries,
-      signal,
+    // const request = new BatchGetLatestValuesRequest({
+    //   client,
+    //   entries,
+    //   signal,
+    // });
+    // const response = await request.send();
+
+    const requests = entries.map((entry) => client.send(new GetAssetPropertyValueCommand({
+      ...entry
+    })).then(resp => ({ entryId: entry.entryId, assetPropertyValue: resp.propertyValue })));
+
+    const successEntries = await Promise.all(requests);
+
+    const latestValueMapFactory = new LatestValueMapFactory({
+      successEntries,
+      skippedEntries: [],
+      errorEntries: [],
     });
-    const response = await request.send();
-    const latestValueMapFactory = new LatestValueMapFactory(response);
     const latestValueMap = latestValueMapFactory.create();
 
     return latestValueMap;
