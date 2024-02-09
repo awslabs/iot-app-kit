@@ -64,7 +64,11 @@
     "copy:notice": "cp ../../NOTICE NOTICE",
     "prepack": "npm run copy:license && npm run copy:notice",
     "pack": "npm pack",
-    "svglint": "svglint src/assets/**/*.svg"
+    "svglint": "svglint src/assets/**/*.svg",
+    "test:ui": "npx playwright test --update-snapshots",
+    "test:ui:reliability": "npx playwright test --repeat-each 5 --workers=1",
+    "test:ui:dev": "npx playwright test --ui",
+    "test:ui-update": "npx playwright test --update-snapshots"
   },
   "peerDependencies": {
     "react": "^18",

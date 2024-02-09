@@ -62,11 +62,16 @@ describe('RadioButton', () => {
     ],
   ].forEach((item) => {
     it(`it should render the ${item[0]} as a radio button`, () => {
-      const data = item[1] as any;
+      const data = item[1] as {
+        testId: string;
+        selected: boolean;
+        toggle: () => null;
+        label: string;
+      };
       const { selected, testId, toggle, label } = data;
 
       const { getByTestId } = render(<RadioButton selected={selected} testId={testId} toggle={toggle} label={label} />);
-      const radioBtn: any = getByTestId(testId);
+      const radioBtn = getByTestId(testId);
 
       expect(radioBtn).toMatchSnapshot();
     });

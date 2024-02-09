@@ -38,6 +38,7 @@ exports[`SceneComposerInternal should render a default error view when loading a
             <R3FWrapper
               sceneLoaded={true}
             >
+              <TestBootstrapper />
               <React.Suspense
                 fallback={
                   <Provider>
@@ -142,6 +143,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
               <R3FWrapper
                 sceneLoaded={true}
               >
+                <TestBootstrapper />
                 <React.Suspense
                   fallback={
                     <Provider>
@@ -209,6 +211,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
               <R3FWrapper
                 sceneLoaded={true}
               >
+                <TestBootstrapper />
                 <React.Suspense
                   fallback={
                     <Provider>
@@ -280,6 +283,7 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
             <R3FWrapper
               sceneLoaded={true}
             >
+              <TestBootstrapper />
               <React.Suspense
                 fallback={
                   <Provider>
@@ -469,6 +473,7 @@ exports[`SceneComposerInternal should render error when major version is newer 1
             <R3FWrapper
               sceneLoaded={true}
             >
+              <TestBootstrapper />
               <React.Suspense
                 fallback={
                   <Provider>
@@ -539,6 +544,7 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
             <R3FWrapper
               sceneLoaded={true}
             >
+              <TestBootstrapper />
               <React.Suspense
                 fallback={
                   <Provider>
@@ -609,6 +615,7 @@ exports[`SceneComposerInternal should render warning when minor version is newer
             <R3FWrapper
               sceneLoaded={true}
             >
+              <TestBootstrapper />
               <React.Suspense
                 fallback={
                   <Provider>
@@ -680,6 +687,7 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
               <R3FWrapper
                 sceneLoaded={true}
               >
+                <TestBootstrapper />
                 <React.Suspense
                   fallback={
                     <Provider>
@@ -747,6 +755,7 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
               <R3FWrapper
                 sceneLoaded={true}
               >
+                <TestBootstrapper />
                 <React.Suspense
                   fallback={
                     <Provider>

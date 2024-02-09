@@ -6,7 +6,6 @@ import { useStore } from '../store';
 import { processQueries } from '../utils/entityModelUtils/processQueries';
 import { KnownSceneProperty } from '../interfaces';
 import { LAYER_DEFAULT_REFRESH_INTERVAL } from '../utils/entityModelUtils/sceneLayerUtils';
-import { DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME } from '../common/entityModelConstants';
 
 import { SceneLayers } from './SceneLayers';
 

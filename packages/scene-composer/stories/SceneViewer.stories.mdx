@@ -60,7 +60,7 @@ Motion Indicators should disappear when turned off.
   <Story name='Motion Indicator'
     height='500px'
     parameters={{ controls: { include: ['onSelectionChanged', 'onWidgetClick'], hideNoControlsWarning: true }}}
-    args={{ ...defaultArgs, scene: 'CookieFactoryWaterTank' }}>
+    args={{ ...defaultArgs, scene: 'CookieFactoryWaterTank', sceneComposerId: "motion-indicator-view-options" }}>
     {Template.bind({})}
   </Story>
 </Canvas>
