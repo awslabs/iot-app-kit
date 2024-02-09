@@ -1,4 +1,4 @@
-import type { AssetModelPropertySummary } from '@aws-sdk/client-iotsitewise';
+import type { AssetModelProperty, AssetModelPropertySummary } from '@aws-sdk/client-iotsitewise';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import Table from '@cloudscape-design/components/table';
 import React from 'react';
@@ -27,7 +27,7 @@ export interface AssetTableProps {
   onSelectAssetModelProperties: (
     assetModelProperty: AssetModelPropertySummary[]
   ) => void;
-  assetModelProperties: AssetModelPropertySummary[];
+  assetModelProperties: AssetModelPropertySummary[] | AssetModelProperty[];
   selectedAssetModelProperties: SelectedAssetModelProperties;
   isLoading: boolean;
   hasNextPage: boolean;

@@ -4,10 +4,11 @@ import {
   AssetModelPropertySummary,
   IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
-import { useAssetModelProperties } from './useAssetModelProperties/useAssetModelProperties';
+// import { useAssetModelProperties } from './useAssetModelProperties/useAssetModelProperties';
 import { SelectedAssetModel } from '../useSelectedAssetModel';
 import { AssetModelPropertiesTable } from './assetModelPropertiesTable/assetModelPropertiesTable';
 import { SelectedAssetModelProperties } from '../useSelectedAssetModelProperties';
+import { useAssetModel } from '~/hooks/useAssetModel/useAssetModel';
 
 export interface AssetExplorerProps {
   selectedAssetModel: SelectedAssetModel;
@@ -28,21 +29,38 @@ export const AssetModelPropertiesExplorer = ({
   saveDisabled,
 }: AssetExplorerProps) => {
   const assetModelId = selectedAssetModel?.id ?? '';
+  // const {
+  //   assetModelPropertySummaries,
+  //   hasNextPage = false,
+  //   isFetching,
+  //   isLoading,
+  //   isError,
+  //   fetchNextPage,
+  //   refetch,
+  // } = useAssetModelProperties({ client, assetModelId });
+
   const {
-    assetModelPropertySummaries,
-    hasNextPage = false,
+    assetModel: assetModelPropertySummaries,
+    // hasNextPage = false,
     isFetching,
     isLoading,
     isError,
-    fetchNextPage,
-    refetch,
-  } = useAssetModelProperties({ client, assetModelId });
+    // fetchNextPage,
+    // refetch,
+   } = useAssetModel({
+    assetModelId,
+    client,
+  });
+
+  const fetchNextPage = () => {};
+  const refetch = () => {};
+  const hasNextPage = false;
 
   return (
     <AssetModelPropertiesTable
       onClickNextPage={fetchNextPage}
       onSelectAssetModelProperties={onSelect}
-      assetModelProperties={assetModelPropertySummaries}
+      assetModelProperties={assetModelPropertySummaries || []}
       selectedAssetModelProperties={selectedAssetModelProperties}
       isLoading={isLoading || isFetching}
       isError={isError}
