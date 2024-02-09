@@ -7,10 +7,10 @@ import { CMPTLoader } from '3d-tiles-renderer/src/three/CMPTLoader.js';
 import { GLTFExtensionLoader } from '3d-tiles-renderer/src/three/GLTFExtensionLoader.js';
 import { TilesGroup } from '3d-tiles-renderer/src/three/TilesGroup.js';
 import { Matrix4, Box3, Sphere, Vector3, Vector2, Frustum, LoadingManager } from 'three';
-import { raycastTraverse, raycastTraverseFirstHit } from '3d-tiles-renderer/src/three/raycastTraverse.js';
 import { readMagicBytes } from '3d-tiles-renderer/src/utilities/readMagicBytes.js';
 
 import { TilesRendererBase } from './TilesRendererBase.js';
+import { raycastTraverse, raycastTraverseFirstHit } from './raycastTraverse.js';
 
 const INITIAL_FRUSTUM_CULLED = Symbol('INITIAL_FRUSTUM_CULLED');
 const tempMat = new Matrix4();

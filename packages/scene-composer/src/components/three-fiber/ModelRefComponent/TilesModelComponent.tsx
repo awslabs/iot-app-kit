@@ -1,10 +1,11 @@
 import React from 'react';
 import { ThreeEvent, useFrame } from '@react-three/fiber';
+import { Object3D } from 'three';
 
 import { MAX_CLICK_DISTANCE } from '../../../common/constants';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { IModelRefComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../store';
-import { getComponentGroupName } from '../../../utils/objectThreeUtils';
+import { acceleratedRaycasting, getComponentGroupName } from '../../../utils/objectThreeUtils';
 import {
   findComponentByType,
   createNodeWithPositionAndNormal,
@@ -33,6 +34,14 @@ export const TilesModelComponent: React.FC<TilesModelProps> = ({ node, component
   //       to clone the model like what we did in GLTFModelComponent. However, if we found this assumption is
   //       wrong in the future, let's optimize from here.
   const tilesRenderer = useTiles(component.uri, uriModifier);
+
+  // Enable optimized raycasting
+  tilesRenderer.onLoadModel = (scene: Object3D) => {
+    scene.traverse((obj: Object3D) => {
+      acceleratedRaycasting(obj);
+    });
+  };
+
   useFrame(() => {
     tilesRenderer.update();
   });
