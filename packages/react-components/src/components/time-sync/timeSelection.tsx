@@ -25,7 +25,7 @@ export type ViewportMessages = DateRangePickerProps.I18nStrings & {
   dateRangeInvalidError: string;
 };
 const messages: ViewportMessages = {
-  title: 'Time machine',
+  title: 'Time range',
   placeholder: 'Dashboard time range',
   todayAriaLabel: 'Today',
   nextMonthAriaLabel: 'Next month',
@@ -155,26 +155,25 @@ export const TimeSelection = ({
       //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
     >
-      <FormField label={!hideTitle ? title : ''} data-testid='time-selection'>
-        <SpaceBetween direction='horizontal' size='xxs'>
-          {isPaginationEnabled && (
-            <Tooltip
-              content={`Move back ${
-                viewport && 'duration' in viewport
-                  ? viewport.duration
-                  : 'selected range'
-              }`}
-              position='bottom'
-              children={
-                <Button
-                  iconName='caret-left-filled'
-                  onClick={handlePaginateBackward}
-                  ariaLabel='Move backward'
-                />
-              }
-            />
-          )}
-
+      <SpaceBetween direction='horizontal' size='xxs' alignItems='end'>
+        {isPaginationEnabled && (
+          <Tooltip
+            content={`Move back ${
+              viewport && 'duration' in viewport
+                ? viewport.duration
+                : 'selected range'
+            }`}
+            position='bottom'
+            children={
+              <Button
+                iconName='caret-left-filled'
+                onClick={handlePaginateBackward}
+                ariaLabel='Move backward'
+              />
+            }
+          />
+        )}
+        <FormField label={!hideTitle ? title : ''} data-testid='time-selection'>
           <DateRangePicker
             expandToViewport={true}
             onChange={handleChangeDateRange}
@@ -188,25 +187,26 @@ export const TimeSelection = ({
             i18nStrings={i18nStrings}
             placeholder={placeholder}
           />
-          {isPaginationEnabled && (
-            <Tooltip
-              content={`Move forward ${
-                viewport && 'duration' in viewport
-                  ? viewport.duration
-                  : 'selected range'
-              }`}
-              position='bottom'
-              children={
-                <Button
-                  iconName='caret-right-filled'
-                  onClick={handlePaginateForward}
-                  ariaLabel='Move forward'
-                />
-              }
-            />
-          )}
-        </SpaceBetween>
-      </FormField>
+        </FormField>
+
+        {isPaginationEnabled && (
+          <Tooltip
+            content={`Move forward ${
+              viewport && 'duration' in viewport
+                ? viewport.duration
+                : 'selected range'
+            }`}
+            position='bottom'
+            children={
+              <Button
+                iconName='caret-right-filled'
+                onClick={handlePaginateForward}
+                ariaLabel='Move forward'
+              />
+            }
+          />
+        )}
+      </SpaceBetween>
     </div>
   );
 };

@@ -55,8 +55,8 @@ const DashboardHeader = ({
       <Header variant='h1'>{name}</Header>
     </Box>
     <Box float='right'>
-      <SpaceBetween size='s' direction='horizontal'>
-        <TimeSelection isPaginationEnabled hideTitle />
+      <SpaceBetween size='s' direction='horizontal' alignItems='end'>
+        <TimeSelection isPaginationEnabled />
         {editable && (
           <>
             <Divider key='2' />
