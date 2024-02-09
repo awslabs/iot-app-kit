@@ -1,16 +1,15 @@
 import { Checkbox, FormField, TextContent } from '@awsui/components-react';
 import { debounce } from 'lodash';
 import React, { useCallback, useContext, useRef } from 'react';
-import { defineMessages, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import * as THREE from 'three';
 
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { TABBED_PANEL_CONTAINER_NAME } from '../../common/internalConstants';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { COMPOSER_FEATURES, IDataOverlayComponent, KnownComponentType } from '../../interfaces';
+import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
 import LogProvider from '../../logger/react-logger/log-provider';
-import { Component } from '../../models/SceneModels';
 import { ISceneNodeInternal, useEditorState, useSceneDocument } from '../../store';
 import { useSnapObjectToFloor } from '../../three/transformUtils';
 import { findComponentByType } from '../../utils/nodeUtils';
@@ -18,6 +17,7 @@ import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
 import { toNumber } from '../../utils/stringUtils';
 import { RecursivePartial } from '../../utils/typeUtils';
 import { isDynamicNode } from '../../utils/entityModelUtils/sceneUtils';
+import { getLocalizedComponentType } from '../../common/componentTypeStings';
 
 import { AddComponentMenu } from './AddComponentMenu';
 import { ExpandableInfoSection, Matrix3XInputGrid, TextInput, Triplet } from './CommonPanelComponents';
@@ -35,57 +35,6 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const subModelMovementEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SubModelMovement];
-
-  const i18nKnownComponentTypesStrings = defineMessages({
-    [KnownComponentType.ModelRef]: {
-      defaultMessage: 'Model Reference',
-      description: 'Expandable Section title',
-    },
-    [KnownComponentType.SubModelRef]: {
-      defaultMessage: 'Model Reference',
-      description: 'Expandable Section Title',
-    },
-    [KnownComponentType.Camera]: {
-      defaultMessage: 'Camera',
-      description: 'Expandable Section title',
-    },
-    [KnownComponentType.Light]: {
-      defaultMessage: 'Light',
-      description: 'Expandable Section title',
-    },
-    [KnownComponentType.Tag]: {
-      defaultMessage: 'Tag',
-      description: 'Expandable Section title',
-    },
-    [KnownComponentType.EntityBinding]: {
-      defaultMessage: 'Entity data binding',
-      description: 'Expandable Section title',
-    },
-    [KnownComponentType.ModelShader]: {
-      defaultMessage: 'Model Shader',
-      description: 'Expandable Section title',
-    },
-    [KnownComponentType.MotionIndicator]: {
-      defaultMessage: 'Motion Indicator',
-      description: 'Expandable Section title',
-    },
-    [Component.DataOverlaySubType.TextAnnotation]: {
-      defaultMessage: 'Annotation',
-      description: 'Expandable Section title',
-    },
-    [Component.DataOverlaySubType.OverlayPanel]: {
-      defaultMessage: 'Overlay',
-      description: 'Expandable Section title',
-    },
-    [KnownComponentType.Animation]: {
-      defaultMessage: 'Animation',
-      description: 'Expandable Section title',
-    },
-    [KnownComponentType.PlaneGeometry]: {
-      defaultMessage: 'Plane Geometry',
-      description: 'Expandable Section title',
-    },
-  });
 
   log?.verbose('render inspect panel with selected scene node ', selectedSceneNodeRef, selectedSceneNode);
 
@@ -160,12 +109,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
         <ExpandableInfoSection
           withoutSpaceBetween
           key={component.type + '_' + index}
-          title={
-            (component.type === KnownComponentType.DataOverlay
-              ? intl.formatMessage(i18nKnownComponentTypesStrings[(component as IDataOverlayComponent).subType]) ||
-                (component as IDataOverlayComponent).subType
-              : intl.formatMessage(i18nKnownComponentTypesStrings[component.type])) || component.type
-          }
+          title={getLocalizedComponentType(component, intl)}
           headerButton={
             selectedSceneNodeRef && <ComponentEditMenu nodeRef={selectedSceneNodeRef} currentComponent={component} />
           }

@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 
 import { SceneNodeInspectorPanel } from '../SceneNodeInspectorPanel';
 import { KnownComponentType } from '../../../interfaces';
-import { Component, ModelType } from '../../../models/SceneModels';
+import { Component } from '../../../models/SceneModels';
 import { ISceneNodeInternal, useStore } from '../../../store';
 import { setFeatureConfig } from '../../../common/GlobalSettings';
 

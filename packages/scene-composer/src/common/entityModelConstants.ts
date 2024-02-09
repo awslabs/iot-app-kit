@@ -1,6 +1,8 @@
 import { KnownComponentType } from '../interfaces';
 
+// Backend limits
 export const MAX_PROPERTY_STRING_LENGTH = 2048;
+export const MAX_QUERY_HOP = 30;
 
 // Scene Nodes
 const SCENE_COMPONENT_TYPE_ID_PREFIX = 'com.amazon.iottwinmaker.3d';

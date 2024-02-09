@@ -1,4 +1,4 @@
-import { ComponentRequest, ComponentUpdateRequest, ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
+import { ComponentRequest, ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
 import { DocumentType } from '@aws-sdk/types';
 import { isEmpty } from 'lodash';
 
@@ -92,30 +92,27 @@ export const createNodeEntityComponent = (node: ISceneNode, layerId?: string): C
     };
   }
 
-  return comp;
-};
-
-export const updateNodeEntityComponent = (
-  node: ISceneNode,
-  layerId?: string,
-  updateType?: ComponentUpdateType,
-): ComponentUpdateRequest => {
-  const request = createNodeEntityComponent(node, layerId);
   const entityBinding = node.components?.find((component) => component.type === 'EntityBinding');
   const entityId = (entityBinding as IEntityBindingComponent)?.valueDataBinding?.dataBindingContext?.entityId;
 
   if (entityId) {
-    request.properties![DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME] = {
+    comp.properties![DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME] = {
       value: {
         relationshipValue: {
           targetEntityId: entityId,
         },
       },
     };
-  } else if (updateType === 'DELETE') {
+  } else {
     // TODO: handle clear entity binding
-    console.error('Delete Entity Binding is not currently supported.');
+    console.warn('Delete Entity Binding is not currently supported.');
   }
+
+  return comp;
+};
+
+export const updateNodeEntityComponent = (node: ISceneNode, layerId?: string): ComponentUpdateRequest => {
+  const request = createNodeEntityComponent(node, layerId);
 
   return {
     componentTypeId: request.componentTypeId,

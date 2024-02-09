@@ -1,15 +1,15 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { useStore } from '../store';
-import { DisplayMessageCategory } from '../store/internalInterfaces';
+import { useStore } from '../../store';
+import { DisplayMessageCategory } from '../../store/internalInterfaces';
 
 import MessageModal from './MessageModal';
 
 import Mock = jest.Mock;
 
-jest.mock('../../src/store', () => {
-  const originalModule = jest.requireActual('../../src/store');
+jest.mock('../../store', () => {
+  const originalModule = jest.requireActual('../../store');
   return {
     ...originalModule,
     useStore: jest.fn(),

@@ -33,7 +33,7 @@ export const updateEntity = async (
 ): Promise<void> => {
   const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
 
-  const nodecomp = updateNodeEntityComponent(node, undefined, updateType);
+  const nodecomp = updateNodeEntityComponent(node, undefined);
 
   const updateEntity: UpdateEntityCommandInput = {
     workspaceId: undefined,
