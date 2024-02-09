@@ -16,7 +16,7 @@ import { DisplayMessageCategory, SceneNodeRuntimeProperty } from '../internalInt
 import { appendSceneNode } from '../helpers/sceneDocumentHelpers';
 import { createNodeEntity } from '../../utils/entityModelUtils/createNodeEntity';
 import { updateSceneRootEntity } from '../../utils/entityModelUtils/sceneUtils';
-import { setFeatureConfig } from '../../common/GlobalSettings';
+import { setFeatureConfig, setOnFlashMessage } from '../../common/GlobalSettings';
 
 import { createSceneDocumentSlice } from './SceneDocumentSlice';
 
@@ -1238,36 +1238,50 @@ describe('createSceneDocumentSlice', () => {
       expect(draft.lastOperation!).toEqual('updateComponentInternal');
     });
 
-    it('should call delete entity for removeSceneNode action', () => {
+    it('should call delete entity for removeSceneNode action', async () => {
       const document = cloneDeep(documentBase);
       const draft = { lastOperation: undefined, document };
       const get = jest.fn().mockReturnValue({ document }); // fake out get call
       const set = jest.fn((callback) => callback(draft));
+      const onFlashMessage = jest.fn();
+      setOnFlashMessage(onFlashMessage);
+      (deleteNodeEntity as jest.Mock).mockResolvedValue({});
 
       // Act
       const { removeSceneNode } = createSceneDocumentSlice(set, get);
       removeSceneNode('testNode');
 
+      await flushPromises();
+
       expect(get).toBeCalled();
       expect(deleteNodeEntity).toBeCalledTimes(1);
       expect(deleteNodeEntity).toBeCalledWith('testNode');
       expect(draft.lastOperation!).toEqual('removeSceneNode');
+      expect(onFlashMessage).toBeCalledTimes(1);
+      expect(onFlashMessage).toBeCalledWith(expect.objectContaining({ type: 'success' }));
     });
 
-    it('should call update entity for removeComponent action', () => {
+    it('should call update entity for removeComponent action', async () => {
       const document = cloneDeep(documentBase);
       const draft = { lastOperation: undefined, document };
       const getSceneNodeByRef = jest.fn().mockReturnValue(document.nodeMap.testNode);
       const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
       const set = jest.fn((callback) => callback(draft));
+      const onFlashMessage = jest.fn();
+      setOnFlashMessage(onFlashMessage);
+      (updateEntity as jest.Mock).mockResolvedValue({});
 
       // Act
       const { removeComponent } = createSceneDocumentSlice(set, get);
       removeComponent('testNode', 'test-comp-1');
 
+      await flushPromises();
+
       expect(draft.lastOperation!).toEqual('removeComponent');
       expect(updateEntity).toBeCalledTimes(1);
       expect(updateEntity).toBeCalledWith(document.nodeMap.testNode, [{ type: 'abc', ref: 'test-comp-1' }], 'DELETE');
+      expect(onFlashMessage).toBeCalledTimes(1);
+      expect(onFlashMessage).toBeCalledWith(expect.objectContaining({ type: 'success' }));
     });
   });
 

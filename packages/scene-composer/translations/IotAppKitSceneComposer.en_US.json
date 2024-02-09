@@ -387,6 +387,10 @@
     "note": "rule Id label",
     "text": "Rule Id"
   },
+  "FgS5ks": {
+    "note": "Delete action confirmation message",
+    "text": "Delete {nodeName}? This will delete 1 entity and its {childCount} children. While this action may be undone, it may not return to its original state."
+  },
   "FvIdJC": {
     "note": "chrome picker",
     "text": "chromePicker"
@@ -406,6 +410,10 @@
   "GesjrB": {
     "note": "Rule has no statements",
     "text": "No statements"
+  },
+  "Gp31Xy": {
+    "note": "Delete action confirmation warning message",
+    "text": "If you attempt to undo this action after {componentName} is deleted, it may have issues such as some properties still being deleted or disconnection from data."
   },
   "Gv0vX8": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
@@ -518,6 +526,10 @@
   "MZtQw3": {
     "note": "75mm lens",
     "text": "75mm"
+  },
+  "MrbJ0V": {
+    "note": "Delete action confirmation message",
+    "text": "Delete {nodeName}'s {componentName} component? While this action may be undone, it may not return to its original state."
   },
   "NXP1Hm": {
     "note": "Form field errorText",
@@ -654,6 +666,10 @@
   "U5Wazx": {
     "note": "remove Button text",
     "text": "Remove"
+  },
+  "UHsPN6": {
+    "note": "Delete component confirmation header text",
+    "text": "Delete {nodeName}'s {componentName} component"
   },
   "UoOmLE": {
     "note": "Form Field label",
@@ -911,6 +927,14 @@
     "note": "Expandable Section title",
     "text": "Plane Geometry"
   },
+  "hkc541": {
+    "note": "button label",
+    "text": "Delete"
+  },
+  "hyIDNW": {
+    "note": "Delete action confirmation warning message",
+    "text": "If you attempt to undo this action after {nodeName} is deleted, it may have issues such as the children still being deleted or disconnection from data."
+  },
   "ifspRT": {
     "note": "Expandable Section title",
     "text": "Model Shader"
@@ -975,6 +999,10 @@
     "note": "Warning message",
     "text": "Warning"
   },
+  "lXOqtn": {
+    "note": "Delete node confirmation header text",
+    "text": "Delete {nodeName}"
+  },
   "lbVroy": {
     "note": "checkbox option",
     "text": "Open by default"
@@ -1014,6 +1042,10 @@
   "nGlTEq": {
     "note": "Form Field label",
     "text": "Arrow"
+  },
+  "nJP/oB": {
+    "note": "Delete action confirmation message",
+    "text": "Delete {nodeName}? Unable to load number of children. While this action may be undone, it may not return to its original state."
   },
   "nhcDIE": {
     "note": "select box option text value",
@@ -1078,6 +1110,10 @@
   "qU9dRt": {
     "note": "Form Field label",
     "text": "Scale"
+  },
+  "qYJQjk": {
+    "note": "Delete action confirmation message",
+    "text": "Delete {nodeName}? This will delete 1 entity. While this action may be undone, it may not return to its original state."
   },
   "qZiKXL": {
     "note": "ExpandableInfoSection Title",

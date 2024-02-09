@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DeleteNodeModal should render correctly for loading status 1`] = `
+<div>
+  <div>
+    Delete delete-node-name
+    <div
+      data-mocked="Spinner"
+    />
+    If you attempt to undo this action after delete-node-name is deleted, it may have issues such as the children still being deleted or disconnection from data.
+  </div>
+</div>
+`;
+
+exports[`DeleteNodeModal should render correctly when query returns 0 children 1`] = `
+<div>
+  <div>
+    Delete delete-node-name
+    Delete delete-node-name? This will delete 1 entity. While this action may be undone, it may not return to its original state.
+    If you attempt to undo this action after delete-node-name is deleted, it may have issues such as the children still being deleted or disconnection from data.
+  </div>
+</div>
+`;
+
+exports[`DeleteNodeModal should render correctly when query returns 1 children 1`] = `
+<div>
+  <div>
+    Delete delete-node-name
+    Delete delete-node-name? This will delete 1 entity and its 1 children. While this action may be undone, it may not return to its original state.
+    If you attempt to undo this action after delete-node-name is deleted, it may have issues such as the children still being deleted or disconnection from data.
+  </div>
+</div>
+`;
+
+exports[`DeleteNodeModal should render correctly when query returns error 1`] = `
+<div>
+  <div>
+    Delete delete-node-name
+    Delete delete-node-name? Unable to load number of children. While this action may be undone, it may not return to its original state.
+    If you attempt to undo this action after delete-node-name is deleted, it may have issues such as the children still being deleted or disconnection from data.
+  </div>
+</div>
+`;
+
+exports[`DeleteNodeModal should render correctly when query returns invalid number 1`] = `
+<div>
+  <div>
+    Delete delete-node-name
+    Delete delete-node-name? Unable to load number of children. While this action may be undone, it may not return to its original state.
+    If you attempt to undo this action after delete-node-name is deleted, it may have issues such as the children still being deleted or disconnection from data.
+  </div>
+</div>
+`;

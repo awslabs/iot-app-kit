@@ -14,6 +14,7 @@ export type SceneComposerEditorOperation =
   | 'addMessages'
   | 'clearMessages'
   | 'setConvertSceneModalVisibility'
+  | 'setDeleteConfirmationModalVisible'
   | 'setAddingWidget'
   | 'setCursorPosition'
   | 'setCursorLookAt'
@@ -87,6 +88,7 @@ export const SceneComposerOperationTypeMap: Record<SceneComposerOperation, Opera
   addMessages: 'UPDATE_EDITOR',
   clearMessages: 'UPDATE_EDITOR',
   setConvertSceneModalVisibility: 'UPDATE_EDITOR',
+  setDeleteConfirmationModalVisible: 'UPDATE_EDITOR',
   setAddingWidget: 'UPDATE_EDITOR',
   setCursorPosition: 'UPDATE_EDITOR',
   setCursorLookAt: 'UPDATE_EDITOR',

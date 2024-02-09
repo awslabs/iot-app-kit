@@ -6,13 +6,17 @@ import { setMetricRecorder } from '../../common/GlobalSettings';
 import { KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
 import { useStore } from '../../store';
+import { isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
 
 import { ComponentEditMenu } from './ComponentEditMenu';
+
+jest.mock('../../utils/entityModelUtils/sceneUtils');
 
 describe('ComponentEditMenu', () => {
   const nodeRef = 'test-node-ref';
   const removeComponent = jest.fn();
   const updateComponentInternal = jest.fn();
+  const setDeleteConfirmationModalVisible = jest.fn();
   const mockMetricRecorder = {
     recordClick: jest.fn(),
   };
@@ -24,7 +28,10 @@ describe('ComponentEditMenu', () => {
     useStore('default').setState({
       removeComponent,
       updateComponentInternal,
+      setDeleteConfirmationModalVisible,
     });
+
+    (isDynamicScene as jest.Mock).mockReturnValue(false);
   });
 
   it('should render empty when current component has no menu item', () => {
@@ -40,7 +47,7 @@ describe('ComponentEditMenu', () => {
     expect(wrapper().getElement().innerHTML).not.toContain('Add entity binding');
   });
 
-  it('should correctly remove data binding component', () => {
+  it('should correctly remove entity binding component', () => {
     const component = { type: KnownComponentType.EntityBinding, ref: 'comp-ref', valueDataBindings: [{}] };
     const { getByTestId } = render(<ComponentEditMenu nodeRef={nodeRef} currentComponent={component} />);
     const removeEntityBinding = getByTestId('remove-entity-binding');
@@ -54,6 +61,21 @@ describe('ComponentEditMenu', () => {
     expect(removeComponent).toBeCalledWith(nodeRef, component.ref);
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
     expect(mockMetricRecorder.recordClick).toBeCalledWith('EntityBinding-remove-entity-binding');
+  });
+
+  it('should correctly remove entity binding component in dynamic scene', () => {
+    (isDynamicScene as jest.Mock).mockReturnValue(true);
+    const component = { type: KnownComponentType.EntityBinding, ref: 'comp-ref', valueDataBindings: [{}] };
+    const { getByTestId } = render(<ComponentEditMenu nodeRef={nodeRef} currentComponent={component} />);
+    const removeEntityBinding = getByTestId('remove-entity-binding');
+
+    act(() => {
+      fireEvent.pointerUp(removeEntityBinding);
+    });
+
+    expect(getByTestId('edit-component').childNodes[2].childNodes.length).toEqual(1);
+    expect(setDeleteConfirmationModalVisible).not.toBeCalled();
+    expect(removeComponent).toBeCalledTimes(1);
   });
 
   it('should correctly add additional data binding to overlay component', () => {
@@ -99,6 +121,31 @@ describe('ComponentEditMenu', () => {
     expect(removeComponent).toBeCalledWith(nodeRef, component.ref);
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
     expect(mockMetricRecorder.recordClick).toBeCalledWith('DataOverlay-remove-overlay');
+  });
+
+  it('should correctly remove overlay panel component for dynamic scene', () => {
+    (isDynamicScene as jest.Mock).mockReturnValue(true);
+    const component = {
+      type: KnownComponentType.DataOverlay,
+      ref: 'comp-ref',
+      subType: Component.DataOverlaySubType.OverlayPanel,
+      valueDataBindings: [],
+    };
+    const { getByTestId } = render(<ComponentEditMenu nodeRef={nodeRef} currentComponent={component} />);
+    const removeOverlayButton = getByTestId('remove-overlay');
+
+    act(() => {
+      fireEvent.pointerUp(removeOverlayButton);
+    });
+
+    expect(getByTestId('edit-component').childNodes[2].childNodes[0].childNodes.length).toEqual(2);
+    expect(setDeleteConfirmationModalVisible).toBeCalledTimes(1);
+    expect(setDeleteConfirmationModalVisible).toBeCalledWith(true, {
+      type: 'deleteComponent',
+      nodeRef,
+      componentRef: component.ref,
+    });
+    expect(removeComponent).not.toBeCalled();
   });
 
   it('should not render remove overlay button for annotation', () => {

@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useSceneModal() hook should render with convert scene modal 1`] = `
+Object {
+  "current": <ConvertSceneModal />,
+}
+`;
+
+exports[`useSceneModal() hook should render with delete component modal 1`] = `
+Object {
+  "current": <DeleteComponentModal />,
+}
+`;
+
+exports[`useSceneModal() hook should render with delete node modal 1`] = `
+Object {
+  "current": <DeleteNodeModal />,
+}
+`;
+
+exports[`useSceneModal() hook should render with message modal 1`] = `
+Object {
+  "current": <MessageModal />,
+}
+`;
+
+exports[`useSceneModal() hook should render with no modal 1`] = `
+Object {
+  "current": null,
+}
+`;

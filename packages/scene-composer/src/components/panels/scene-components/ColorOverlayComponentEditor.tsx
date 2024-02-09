@@ -6,6 +6,7 @@ import { IComponentEditorProps } from '../ComponentEditor';
 import { IColorOverlayComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IValueDataBinding } from '../../../interfaces';
+import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
 
 import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
 
@@ -23,6 +24,11 @@ export const ColorOverlayComponentEditor: React.FC<IColorOverlayComponentEditor>
   const listSceneRuleMapIds = useStore(sceneComposerId)((state) => state.listSceneRuleMapIds);
   const removeComponent = useStore(sceneComposerId)((state) => state.removeComponent);
   const intl = useIntl();
+  const document = useStore(sceneComposerId)((state) => state.document);
+  const setDeleteConfirmationModalVisible = useStore(sceneComposerId)(
+    (state) => state.setDeleteConfirmationModalVisible,
+  );
+  const isDynamic = isDynamicScene(document);
 
   const colorOverlayComponent = component as IColorOverlayComponentInternal;
 
@@ -41,7 +47,15 @@ export const ColorOverlayComponentEditor: React.FC<IColorOverlayComponentEditor>
   );
 
   const removeComponentCallback = useCallback(() => {
-    removeComponent(node.ref, component.ref);
+    if (isDynamic) {
+      setDeleteConfirmationModalVisible(true, {
+        type: 'deleteComponent',
+        nodeRef: node.ref,
+        componentRef: component.ref,
+      });
+    } else {
+      removeComponent(node.ref, component.ref);
+    }
   }, [node, component]);
 
   const ruleOptions = ruleMapIds

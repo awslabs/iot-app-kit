@@ -316,7 +316,13 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         nodeToRemove = removeNode(draft.document, nodeRef, LOG);
 
         if (isDynamicNode(nodeToRemove)) {
-          deleteNodeEntity(nodeRef);
+          deleteNodeEntity(nodeRef)?.then(() => {
+            // TODO: localize strings
+            getGlobalSettings().onFlashMessage?.({
+              type: 'success',
+              header: `Successfully deleted ${nodeToRemove.name}.`,
+            });
+          });
         }
 
         draft.lastOperation = 'removeSceneNode';
@@ -435,7 +441,13 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         const removedComponenet = draft.document.nodeMap[nodeRef].components.splice(componentIndex, 1).at(0);
 
         if (removedComponenet && isDynamicNode(draft.document.nodeMap[nodeRef])) {
-          updateEntity(draft.document.nodeMap[nodeRef], [removedComponenet], ComponentUpdateType.DELETE);
+          updateEntity(draft.document.nodeMap[nodeRef], [removedComponenet], ComponentUpdateType.DELETE).then(() => {
+            // TODO: localize strings
+            getGlobalSettings().onFlashMessage?.({
+              type: 'success',
+              header: `Successfully deleted ${removedComponenet.type} component from ${node.name}.`,
+            });
+          });
         }
 
         draft.lastOperation = 'removeComponent';

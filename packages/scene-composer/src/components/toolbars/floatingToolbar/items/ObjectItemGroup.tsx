@@ -4,12 +4,13 @@ import { defineMessages, useIntl } from 'react-intl';
 import { DeleteSvg, RotateIconSvg, ScaleIconSvg, TranslateIconSvg } from '../../../../assets/svgs';
 import { KnownComponentType, TransformControlMode } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
-import { useEditorState, useSceneDocument } from '../../../../store';
+import { useEditorState, useSceneDocument, useStore } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { TOOLBAR_ITEM_CONTAINER_HEIGHT, ToolbarItemGroup } from '../../common/styledComponents';
 import { ToolbarItemOptions, ToolbarOrientation } from '../../common/types';
 import { findComponentByType } from '../../../../utils/nodeUtils';
 import { FLOATING_TOOLBAR_VERTICAL_ORIENTATION_BUFFER } from '../FloatingToolbar';
+import { isDynamicScene } from '../../../../utils/entityModelUtils/sceneUtils';
 
 enum TransformTypes {
   Translate = 'transform-translate',
@@ -38,12 +39,16 @@ export function ObjectItemGroup({ toolbarOrientation, canvasHeight }: ObjectItem
   const sceneComposerId = useContext(sceneComposerIdContext);
   const intl = useIntl();
   const { selectedSceneNodeRef, transformControlMode, setTransformControlMode } = useEditorState(sceneComposerId);
-  const { getSceneNodeByRef, removeSceneNode } = useSceneDocument(sceneComposerId);
+  const setDeleteConfirmationModalVisible = useStore(sceneComposerId)(
+    (state) => state.setDeleteConfirmationModalVisible,
+  );
+  const { getSceneNodeByRef, removeSceneNode, document } = useSceneDocument(sceneComposerId);
   const { formatMessage } = useIntl();
   const selectedSceneNode = getSceneNodeByRef(selectedSceneNodeRef);
 
   const isTagComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.Tag);
   const isOverlayComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.DataOverlay);
+  const isDynamic = isDynamicScene(document);
 
   const transformSelectorItems = [
     {
@@ -98,8 +103,12 @@ export function ObjectItemGroup({ toolbarOrientation, canvasHeight }: ObjectItem
         ]}
         type='button'
         onSelect={() => {
-          if (removeSceneNode && selectedSceneNodeRef) {
-            removeSceneNode(selectedSceneNodeRef);
+          if (selectedSceneNodeRef) {
+            if (isDynamic) {
+              setDeleteConfirmationModalVisible(true, { type: 'deleteNode', nodeRef: selectedSceneNodeRef });
+            } else if (removeSceneNode) {
+              removeSceneNode(selectedSceneNodeRef);
+            }
           }
         }}
         isVertical={toolbarOrientation === ToolbarOrientation.Vertical}
