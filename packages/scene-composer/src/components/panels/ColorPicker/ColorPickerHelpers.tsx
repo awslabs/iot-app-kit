@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormField, Input, InputProps } from '@awsui/components-react';
 import { ColorRepresentation } from 'three';
-import tinycolor from 'tinycolor2';
+import tinycolor, { Color } from 'tinycolor2';
 import './ColorPicker.scss';
 import { HexColorPicker } from 'react-colorful';
 import { NonCancelableEventHandler } from '@awsui/components-react/internal/events';
@@ -9,7 +9,7 @@ import { BaseChangeDetail } from '@awsui/components-react/input/interfaces';
 
 export const DEFAULT_COLOR = new tinycolor().toHexString();
 
-const toTinyColor = (color: ColorRepresentation) => {
+const toTinyColor = (color: ColorRepresentation): string | Color => {
   return typeof color === 'number' ? new tinycolor(color.toString(16)) : new tinycolor(color);
 };
 
@@ -17,7 +17,7 @@ export const hexString = (color: ColorRepresentation): string => {
   return toTinyColor(color).toHexString();
 };
 
-export const updateColorWithRgb = (oldColor: ColorRepresentation, newValue): string => {
+export const updateColorWithRgb = (oldColor: ColorRepresentation, newValue: { ColorRepresentation }) => {
   return new tinycolor({ ...toTinyColor(oldColor).toRgb(), ...newValue }).toHexString();
 };
 

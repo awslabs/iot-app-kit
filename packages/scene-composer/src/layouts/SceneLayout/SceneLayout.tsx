@@ -1,7 +1,7 @@
-import React, { FC, Fragment, ReactNode, Suspense, useContext, useEffect, useMemo, useRef } from 'react';
+import React, { FC, Fragment, ReactNode, Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import styled, { ThemeContext } from 'styled-components';
-import { Canvas, ThreeEvent } from '@react-three/fiber';
+import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
 import { useContextBridge } from '@react-three/drei/core/useContextBridge';
 import { MatterportViewer, MpSdk } from '@matterport/r3f/dist';
 import { isEmpty } from 'lodash';
@@ -21,7 +21,7 @@ import {
   SettingsPanel,
   TopBar,
 } from '../../components/panels';
-import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
+import { sceneComposerIdContext, useSceneComposerId } from '../../common/sceneComposerIdContext';
 import { useSceneDocument, useStore } from '../../store';
 import LogProvider from '../../logger/react-logger/log-provider';
 import DefaultErrorFallback from '../../components/DefaultErrorFallback';
@@ -47,6 +47,33 @@ const UnselectableCanvas = styled(Canvas)`
   }};
   z-index: 0;
 `;
+
+const TestBootstrapper = () => {
+  const sceneComposerId = useSceneComposerId();
+  const { scene, gl } = useThree();
+  useEffect(() => {
+    const customEvent = new CustomEvent('twinmaker:scene-loaded', {
+      detail: {
+        sceneComposerId,
+        scene,
+        gl,
+      },
+    });
+    window.dispatchEvent(customEvent);
+
+    return () => {
+      const customEvent = new CustomEvent('twinmaker:scene-unloaded', {
+        detail: {
+          sceneComposerId,
+        },
+      });
+
+      window.dispatchEvent(customEvent);
+    };
+  }, [scene, gl, sceneComposerId]);
+
+  return <></>;
+};
 
 const R3FWrapper = (props: { matterportConfig?: MatterportConfig; children?: ReactNode; sceneLoaded?: boolean }) => {
   const { children, sceneLoaded, matterportConfig } = props;
@@ -119,9 +146,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
   const intl = useIntl();
   const { sceneLoaded } = useSceneDocument(sceneComposerId);
-
   const renderDisplayRef = useRef<HTMLDivElement>(null!);
-
   const selectedNode = useSelectedNode();
 
   const shouldShowPreview = useMemo(() => {
@@ -180,6 +205,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
                 <CameraPreviewTrack ref={renderDisplayRef} title={selectedNode.selectedSceneNode?.name} />
               )}
               <R3FWrapper sceneLoaded={sceneLoaded} matterportConfig={externalLibraryConfig?.matterport}>
+                {sceneLoaded && <TestBootstrapper />}
                 <Suspense fallback={LoadingView}>
                   {!sceneLoaded ? null : (
                     <Fragment>

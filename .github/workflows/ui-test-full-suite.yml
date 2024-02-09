@@ -29,7 +29,7 @@ jobs:
 
       - name: test UI
         run:
-          npm run test:ui -w @iot-app-kit/dashboard && npm run test:ui -w @iot-app-kit/react-components
+          npm run test:ui -w @iot-app-kit/dashboard && npm run test:ui -w @iot-app-kit/react-components && npm run test:ui:reliability -w @iot-app-kit/scene-composer
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

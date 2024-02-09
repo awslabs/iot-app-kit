@@ -45,6 +45,7 @@ export const WebGLCanvasManager: React.FC = () => {
   const { document, getSceneNodeByRef, getSceneProperty } = useSceneDocument(sceneComposerId);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
   const { gl } = useThree();
+
   const domRef = useRef<HTMLElement>(gl.domElement.parentElement);
   const environmentPreset = getSceneProperty<string>(KnownSceneProperty.EnvironmentPreset);
   const rootNodeRefs = document.rootNodeRefs;

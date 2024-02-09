@@ -17,7 +17,7 @@ describe('DefaultErrorFallback', () => {
     innerError: new Error('Testing an innerError'),
   });
   const error = new Error('Testing an error');
-  const errorString = 'Testing a string' as any;
+  const errorString = 'Testing a string';
   const other = {} as any;
 
   [
@@ -27,7 +27,7 @@ describe('DefaultErrorFallback', () => {
     ['Unknown', other],
   ].forEach((value) => {
     it(`should render correctly with a ${value[0]} type`, () => {
-      const container = create(<DefaultErrorFallback error={value[1] as any} />);
+      const container = create(<DefaultErrorFallback error={value[1]} />);
 
       expect(container).toMatchSnapshot();
     });

@@ -74,14 +74,14 @@ describe('snapObjectToFloor', () => {
         }
       });
 
-      const testNode = { ref: 'ref', parentRef: 'parentRef', transformConstraint: { snapToFloor: true } } as any;
+      const testNode = { ref: 'ref', parentRef: 'parentRef', transformConstraint: { snapToFloor: true } };
       const validate = jest.fn((floorPosition: Vector3, node: ISceneNodeInternal) => {
         expect(floorPosition).toEqual([0, 0.5, 0]);
         expect(node).toEqual(testNode);
       });
 
       const DummyComponent = () => {
-        const activate = useSnapObjectToFloor(validate, testNode);
+        const activate = useSnapObjectToFloor(validate, testNode as ISceneNodeInternal);
         const [isDone, setIsDone] = useState(false);
         useEffect(() => {
           activate();
@@ -101,7 +101,7 @@ describe('snapObjectToFloor', () => {
 
       jest.runOnlyPendingTimers();
 
-      (componentMesh.onAfterRender as any)();
+      componentMesh.onAfterRender();
     });
   });
 });
