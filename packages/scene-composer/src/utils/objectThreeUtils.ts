@@ -49,6 +49,7 @@ export function cloneMaterials(obj: THREE.Object3D) {
   }
 }
 
+// Only run once on model load
 export function acceleratedRaycasting(obj: THREE.Object3D) {
   if (obj instanceof THREE.Mesh) {
     const mesh = obj;
