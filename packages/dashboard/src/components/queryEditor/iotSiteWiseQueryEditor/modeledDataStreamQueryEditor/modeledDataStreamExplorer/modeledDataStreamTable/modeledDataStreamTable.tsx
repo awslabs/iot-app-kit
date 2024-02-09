@@ -63,6 +63,9 @@ export function ModeledDataStreamTable({
     resourceName: 'modeled data stream',
   });
 
+  // TODO: move the edge filtering logic
+  preferences.visibleContent = preferences.visibleContent.filter((content) => content != 'latestValue' && content != 'latestValueTime');
+
   const { getLatestValue } = useLatestValues({
     isEnabled:
       preferences.visibleContent.includes('latestValue') ||

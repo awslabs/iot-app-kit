@@ -37,7 +37,7 @@ const getAggregatedPropertyDataPointsForProperty = ({
   // fetch leading point without mutating requestInformation
   if (requestInformation.fetchMostRecentBeforeStart) {
     end = start;
-    start = new Date(0, 0, 0);
+    start = new Date(2018, 0, 1);
   }
 
   return client

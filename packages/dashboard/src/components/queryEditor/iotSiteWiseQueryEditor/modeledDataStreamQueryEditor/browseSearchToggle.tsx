@@ -23,7 +23,8 @@ export function BrowseSearchToggle({
       }
       options={[
         { text: 'Browse', id: BROWSE_SEGMENT_ID },
-        { text: 'Search', id: SEARCH_SEGMENT_ID },
+        // { text: 'Search', id: SEARCH_SEGMENT_ID },
+        { text: 'Search', id: SEARCH_SEGMENT_ID, disabled: true },
       ]}
     />
   );

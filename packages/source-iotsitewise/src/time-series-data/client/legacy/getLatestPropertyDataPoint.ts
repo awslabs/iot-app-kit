@@ -54,7 +54,7 @@ export const getLatestPropertyDataPoint = async ({
         }))
         .forEach(({ dataStream, requestInformation }) => {
           const lastDataPoint = dataStream.data.slice(-1)[0];
-          const start = lastDataPoint ? new Date(lastDataPoint.x) : new Date(0, 0, 0);
+          const start = lastDataPoint ? new Date(lastDataPoint.x) : new Date(2018, 0, 1);
           onSuccess([dataStream], requestInformation, start, end);
         });
     });
