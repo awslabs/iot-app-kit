@@ -3,22 +3,21 @@ import { Alert, Box, Button, Header, SpaceBetween } from '@awsui/components-reac
 import React, { useCallback, useContext, useState } from 'react';
 import { useIntl } from 'react-intl';
 
-import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
-import { ISceneNodeInternal, useStore } from '../store';
-import { KnownSceneProperty } from '../interfaces';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
+import { ISceneNodeInternal, useStore } from '../../store';
+import { KnownSceneProperty } from '../../interfaces';
 import {
   checkIfEntityAvailable,
   convertAllNodesToEntities,
   createSceneRootEntity,
   prepareWorkspace,
   staticNodeCount,
-} from '../utils/entityModelUtils/sceneUtils';
-import { createLayer } from '../utils/entityModelUtils/sceneLayerUtils';
-import { LayerType } from '../common/entityModelConstants';
-import { getGlobalSettings } from '../common/GlobalSettings';
-
-import CenteredContainer from './CenteredContainer';
-import { ConvertingProgress } from './ConvertingProgress';
+} from '../../utils/entityModelUtils/sceneUtils';
+import { createLayer } from '../../utils/entityModelUtils/sceneLayerUtils';
+import { LayerType } from '../../common/entityModelConstants';
+import { getGlobalSettings } from '../../common/GlobalSettings';
+import CenteredContainer from '../CenteredContainer';
+import { ConvertingProgress } from '../ConvertingProgress';
 
 interface ConvertProgress {
   total: number;

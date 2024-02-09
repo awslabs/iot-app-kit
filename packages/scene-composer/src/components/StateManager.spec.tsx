@@ -29,7 +29,7 @@ import { DataStream } from '@iot-app-kit/core';
 import useActiveCamera from '../hooks/useActiveCamera';
 import { KnownComponentType } from '..';
 import * as THREE from 'three';
-import { SCENE_CAPABILITY_MATTERPORT } from '../common/constants';
+import { MATTERPORT_ERROR, SCENE_CAPABILITY_MATTERPORT } from '../common/constants';
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { MpSdk } from '@matterport/webcomponent';
 import { SceneComposerInternalConfig } from '../interfaces/sceneComposerInternal';
@@ -60,7 +60,7 @@ describe('StateManager', () => {
   const getObject3DBySceneNodeRef = jest.fn().mockReturnValue(object3D);
   const baseState = {
     loadScene: jest.fn(),
-    getMessages: jest.fn().mockReturnValue(['messagge']),
+    addMessages: jest.fn(),
     getObject3DBySceneNodeRef,
     selectedSceneNodeRef: undefined,
     sceneLoaded: false,
@@ -284,7 +284,7 @@ describe('StateManager', () => {
       ...createState('mockConnectionName'),
       getSceneProperty: jest.fn().mockReturnValue('mockMatterportModelId'),
     });
-    getSceneInfo.mockResolvedValue({ error: { message: 'Client id and secret not valid' } });
+    getSceneInfo.mockResolvedValue({ error: { message: 'Client id and secret not valid', code: MATTERPORT_ERROR } });
 
     let container;
     await act(async () => {
@@ -301,7 +301,7 @@ describe('StateManager', () => {
       await flushPromises();
     });
 
-    expect(container).toMatchSnapshot();
+    expect(baseState.addMessages).toBeCalledTimes(1);
   });
 
   it("should subscribe to query's provider succcessfully", async () => {

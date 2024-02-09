@@ -33,7 +33,6 @@ const DefaultErrorFallback: FC<ErrorFallbackProps> = ({ error }) => {
 
   return (
     <StaticLayout
-      showModal={true}
       modalContent={
         <CenteredContainer header={<Header variant='h2'>{errorTitle}</Header>}>
           <TextContent>

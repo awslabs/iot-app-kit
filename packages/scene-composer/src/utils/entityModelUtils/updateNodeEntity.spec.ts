@@ -73,7 +73,7 @@ describe('updateEntity', () => {
     });
 
     expect(updateNodeEntityComponent).toBeCalledTimes(1);
-    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, undefined);
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined);
     expect(updateTagEntityComponent).not.toBeCalled();
     expect(updateOverlayEntityComponent).not.toBeCalled();
   });
@@ -115,7 +115,7 @@ describe('updateEntity', () => {
     });
 
     expect(updateNodeEntityComponent).toBeCalledTimes(1);
-    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, 'UPDATE');
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined);
     expect(updateTagEntityComponent).toBeCalledTimes(1);
     expect(updateTagEntityComponent).toBeCalledWith(tag);
     expect(updateOverlayEntityComponent).toBeCalledTimes(1);
@@ -153,7 +153,7 @@ describe('updateEntity', () => {
     });
 
     expect(updateNodeEntityComponent).toBeCalledTimes(1);
-    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, 'UPDATE');
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined);
     expect(updateTagEntityComponent).toBeCalledTimes(1);
     expect(updateTagEntityComponent).toBeCalledWith(compToUpdate);
     expect(updateOverlayEntityComponent).not.toBeCalled();
@@ -176,7 +176,7 @@ describe('updateEntity', () => {
     });
 
     expect(updateNodeEntityComponent).toBeCalledTimes(1);
-    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, 'UPDATE');
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined);
     expect(updateOverlayEntityComponent).toBeCalledTimes(1);
     expect(updateOverlayEntityComponent).toBeCalledWith(compToUpdate);
     expect(updateTagEntityComponent).not.toBeCalled();
@@ -198,7 +198,7 @@ describe('updateEntity', () => {
     });
 
     expect(updateNodeEntityComponent).toBeCalledTimes(1);
-    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, 'UPDATE');
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined);
     expect(updateOverlayEntityComponent).not.toBeCalled();
     expect(updateTagEntityComponent).not.toBeCalled();
   });
@@ -220,7 +220,7 @@ describe('updateEntity', () => {
     });
 
     expect(updateNodeEntityComponent).toBeCalledTimes(1);
-    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, 'DELETE');
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined);
     expect(updateOverlayEntityComponent).not.toBeCalled();
     expect(updateTagEntityComponent).not.toBeCalled();
   });

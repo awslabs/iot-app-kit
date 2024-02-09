@@ -11,9 +11,7 @@ describe('StaticLayoutSnap', () => {
         footer='footer'
         leftPanel='leftPanel'
         rightPanel='rightPanel'
-        modalContent='modalContent'
         mainContent='mainContent'
-        showModal={false}
       />,
     );
     expect(container).toMatchSnapshot();
@@ -28,7 +26,6 @@ describe('StaticLayoutSnap', () => {
         rightPanel='rightPanel'
         modalContent='modalContent'
         mainContent='mainContent'
-        showModal={true}
       />,
     );
     expect(container).toMatchSnapshot();
@@ -41,7 +38,6 @@ describe('StaticLayoutSnap', () => {
         footer='footer'
         leftPanel='leftPanel'
         rightPanel='rightPanel'
-        modalContent='modalContent'
         mainContent='mainContent'
         topBar='topBar'
       />,

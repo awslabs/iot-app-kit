@@ -9,7 +9,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { setMatterportSdk } from '../../common/GlobalSettings';
 import LoggingContext from '../../logger/react-logger/contexts/logging';
-import MessageModal from '../../components/MessageModal';
 import { MenuBar } from '../../components/MenuBar';
 import { StaticLayout } from '../StaticLayout';
 import { WebGLCanvasManager } from '../../components/WebGLCanvasManager';
@@ -30,9 +29,9 @@ import { CameraPreview } from '../../components/three-fiber/CameraPreview';
 import useMatterportViewer from '../../hooks/useMatterportViewer';
 import useSelectedNode from '../../hooks/useSelectedNode';
 import { findComponentByType } from '../../utils/nodeUtils';
-import ConvertSceneModal from '../../components/ConvertSceneModal';
 import useDynamicScene from '../../hooks/useDynamicScene';
 import { SceneLayers } from '../../components/SceneLayers';
+import useSceneModal from '../../hooks/useSceneModal';
 
 import { Direction } from './components/utils';
 import ScenePanel from './components/ScenePanel';
@@ -102,17 +101,9 @@ interface SceneLayoutProps {
   isViewing: boolean;
   onPointerMissed: (event: ThreeEvent<PointerEvent>) => void;
   LoadingView: ReactNode;
-  showMessageModal: boolean;
-  showConvertSceneModal?: boolean;
   externalLibraryConfig?: ExternalLibraryConfig;
 }
-const SceneLayout: FC<SceneLayoutProps> = ({
-  isViewing,
-  LoadingView = null,
-  showMessageModal,
-  showConvertSceneModal,
-  externalLibraryConfig,
-}) => {
+const SceneLayout: FC<SceneLayoutProps> = ({ isViewing, LoadingView = null, externalLibraryConfig }) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const valueDataBindingProvider = useStore(sceneComposerId)((state) => state.getEditorConfig)()
     .valueDataBindingProvider;
@@ -163,6 +154,8 @@ const SceneLayout: FC<SceneLayoutProps> = ({
   const viewingModeScenePanel = <ScenePanel {...leftPanelViewModeProps} />;
   const rightPanel = <ScenePanel {...rightPanelProps} />;
 
+  const modal = useSceneModal();
+
   return (
     <StaticLayout
       mainContent={
@@ -193,8 +186,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
           </LogProvider>
         </Fragment>
       }
-      showModal={showMessageModal || (showConvertSceneModal && !isViewing)}
-      modalContent={showConvertSceneModal && !isViewing ? <ConvertSceneModal /> : <MessageModal />}
+      modalContent={modal}
       header={!isViewing && <MenuBar />}
       leftPanel={isViewing ? viewingModeScenePanel : leftPanel}
       rightPanel={!isViewing && rightPanel}

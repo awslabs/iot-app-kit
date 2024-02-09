@@ -19,7 +19,6 @@ exports[`DefaultErrorFallback should render correctly with a Error type 1`] = `
       </MockTextContent>
     </Styled(MockContainer)>
   }
-  showModal={true}
 />
 `;
 
@@ -42,7 +41,6 @@ exports[`DefaultErrorFallback should render correctly with a SceneComposerRuntim
       </MockTextContent>
     </Styled(MockContainer)>
   }
-  showModal={true}
 />
 `;
 
@@ -65,7 +63,6 @@ exports[`DefaultErrorFallback should render correctly with a String type 1`] = `
       </MockTextContent>
     </Styled(MockContainer)>
   }
-  showModal={true}
 />
 `;
 
@@ -88,6 +85,5 @@ exports[`DefaultErrorFallback should render correctly with a Unknown type 1`] = 
       </MockTextContent>
     </Styled(MockContainer)>
   }
-  showModal={true}
 />
 `;

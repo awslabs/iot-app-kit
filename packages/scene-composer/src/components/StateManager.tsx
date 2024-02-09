@@ -88,7 +88,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const [updatedExternalLibraryConfig, setUpdatedExternalLibraryConfig] = useState<ExternalLibraryConfig | undefined>(
     externalLibraryConfig,
   );
-  const messages = useStore(sceneComposerId)((state) => state.getMessages());
   const matterportModelId = useStore(sceneComposerId)((state) =>
     state.getSceneProperty<string>(KnownSceneProperty.MatterportModelId),
   );
@@ -103,8 +102,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const dataProviderRef = useRef<ProviderWithViewport<TimeSeriesData[]> | undefined>(undefined);
   const prevSelection = useRef<string | undefined>(undefined);
   const [matterportReady, setMatterportReady] = useState<boolean>(false);
-
-  const convertSceneModalVisible = useStore(sceneComposerId)((state) => !!state.convertSceneModalVisible);
 
   const { setActiveCameraSettings, setActiveCameraName } = useActiveCamera();
 
@@ -416,13 +413,9 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     [setSelectedSceneNodeRef],
   );
 
-  const showMessageModal = messages.length > 0;
-
   return (
     <SceneLayout
       isViewing={isViewing}
-      showMessageModal={showMessageModal}
-      showConvertSceneModal={convertSceneModalVisible}
       externalLibraryConfig={updatedExternalLibraryConfig}
       LoadingView={
         <IntlProvider locale={config.locale}>

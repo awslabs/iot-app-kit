@@ -122,24 +122,9 @@ describe('createNodeEntityComponent', () => {
 
     expect(result.properties!.properties).toBeUndefined();
   });
-});
-
-describe('updateNodeEntityComponent', () => {
-  it('should return expected empty node component', () => {
-    expect(updateNodeEntityComponent({ name: 'Test' })).toEqual({
-      componentTypeId: NODE_COMPONENT_TYPE_ID,
-      propertyUpdates: {
-        name: {
-          value: {
-            stringValue: 'Test',
-          },
-        },
-      },
-    });
-  });
 
   it('should return expected node component with entity binding', () => {
-    const result = updateNodeEntityComponent({
+    const result = createNodeEntityComponent({
       name: 'Test',
       components: [
         {
@@ -153,7 +138,7 @@ describe('updateNodeEntityComponent', () => {
 
     expect(result).toEqual({
       componentTypeId: NODE_COMPONENT_TYPE_ID,
-      propertyUpdates: {
+      properties: {
         name: {
           value: {
             stringValue: 'Test',
@@ -164,6 +149,21 @@ describe('updateNodeEntityComponent', () => {
             relationshipValue: {
               targetEntityId: 'data-entity-id',
             },
+          },
+        },
+      },
+    });
+  });
+});
+
+describe('updateNodeEntityComponent', () => {
+  it('should return expected empty node component', () => {
+    expect(updateNodeEntityComponent({ name: 'Test' })).toEqual({
+      componentTypeId: NODE_COMPONENT_TYPE_ID,
+      propertyUpdates: {
+        name: {
+          value: {
+            stringValue: 'Test',
           },
         },
       },

@@ -104,7 +104,6 @@ interface IStaticLayoutProps {
   footer?: React.ReactNode;
   mainContent?: React.ReactNode;
   modalContent?: React.ReactNode;
-  showModal?: boolean;
   leftPanel?: React.ReactNode;
   rightPanel?: React.ReactNode;
   topBar?: React.ReactNode;
@@ -116,13 +115,12 @@ const StaticLayout: React.FC<IStaticLayoutProps> = ({
   rightPanel,
   mainContent,
   modalContent,
-  showModal,
   footer,
   topBar,
 }: IStaticLayoutProps) => {
   return (
     <LayoutContainerBox>
-      {!!showModal && <ModalWrapper>{modalContent}</ModalWrapper>}
+      {!!modalContent && <ModalWrapper>{modalContent}</ModalWrapper>}
 
       {!!header && <HeaderContainerBox>{header}</HeaderContainerBox>}
 

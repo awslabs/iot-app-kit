@@ -3,27 +3,27 @@ import { act, render, waitFor } from '@testing-library/react';
 import flushPromises from 'flush-promises';
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
-import { useStore } from '../store';
+import { useStore } from '../../store';
 import {
   checkIfEntityAvailable,
   convertAllNodesToEntities,
   createSceneRootEntity,
   prepareWorkspace,
   staticNodeCount,
-} from '../utils/entityModelUtils/sceneUtils';
-import { createLayer } from '../utils/entityModelUtils/sceneLayerUtils';
-import { KnownSceneProperty } from '../interfaces';
-import { setTwinMakerSceneMetadataModule } from '../common/GlobalSettings';
-import { LayerType } from '../common/entityModelConstants';
-import { defaultNode } from '../../__mocks__/sceneNode';
+} from '../../utils/entityModelUtils/sceneUtils';
+import { createLayer } from '../../utils/entityModelUtils/sceneLayerUtils';
+import { KnownSceneProperty } from '../../interfaces';
+import { setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
+import { LayerType } from '../../common/entityModelConstants';
+import { defaultNode } from '../../../__mocks__/sceneNode';
 
 import ConvertSceneModal from './ConvertSceneModal';
 
-jest.mock('../utils/entityModelUtils/sceneLayerUtils', () => ({
+jest.mock('../../utils/entityModelUtils/sceneLayerUtils', () => ({
   createLayer: jest.fn(),
 }));
 
-jest.mock('../utils/entityModelUtils/sceneUtils', () => ({
+jest.mock('../../utils/entityModelUtils/sceneUtils', () => ({
   createSceneRootEntity: jest.fn(),
   prepareWorkspace: jest.fn(),
   checkIfEntityAvailable: jest.fn(),
