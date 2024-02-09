@@ -11,6 +11,7 @@ import { getGlobalSettings } from '../../common/GlobalSettings';
 import { Component } from '../../models/SceneModels';
 import { ISceneComponentInternal } from '../../store/internalInterfaces';
 import { generateUUID } from '../../utils/mathUtils';
+import { isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
 
 interface ComponentEditMenuProps {
   nodeRef: string;
@@ -46,6 +47,11 @@ export const ComponentEditMenu: React.FC<ComponentEditMenuProps> = ({ nodeRef, c
   const sceneComposerId = useContext(sceneComposerIdContext);
   const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
   const removeComponent = useStore(sceneComposerId)((state) => state.removeComponent);
+  const document = useStore(sceneComposerId)((state) => state.document);
+  const setDeleteConfirmationModalVisible = useStore(sceneComposerId)(
+    (state) => state.setDeleteConfirmationModalVisible,
+  );
+  const isDynamic = isDynamicScene(document);
   const { formatMessage } = useIntl();
 
   const mapToMenuItem = useCallback(
@@ -123,8 +129,21 @@ export const ComponentEditMenu: React.FC<ComponentEditMenuProps> = ({ nodeRef, c
     }
   }, [nodeRef, currentComponent]);
 
+  const removeComponentLocal = useCallback(
+    (nodeRef: string, componentRef: string) => {
+      if (isDynamic) {
+        setDeleteConfirmationModalVisible(true, { type: 'deleteComponent', nodeRef, componentRef });
+      } else {
+        removeComponent(nodeRef, componentRef);
+      }
+    },
+    [isDynamic, setDeleteConfirmationModalVisible, removeComponent],
+  );
+
   const handleRemoveEntityBinding = useCallback(() => {
     if (currentComponent.type == KnownComponentType.EntityBinding) {
+      // Entity binding is not a separate component in entity model, therefore no need to show
+      // delete confirmation modal.
       removeComponent(nodeRef, currentComponent.ref);
       return;
     }
@@ -147,7 +166,7 @@ export const ComponentEditMenu: React.FC<ComponentEditMenuProps> = ({ nodeRef, c
               handleRemoveEntityBinding();
               break;
             case ObjectTypes.RemoveOverlay:
-              removeComponent(nodeRef, currentComponent.ref);
+              removeComponentLocal(nodeRef, currentComponent.ref);
               break;
           }
 

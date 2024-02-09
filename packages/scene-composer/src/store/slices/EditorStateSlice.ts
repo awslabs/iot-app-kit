@@ -39,6 +39,12 @@ class MappingWrapper {
 
 type SubModelRef = number | string;
 
+interface DeleteConfirmationModalParams {
+  type: 'deleteNode' | 'deleteComponent';
+  nodeRef: string;
+  componentRef?: string;
+}
+
 export interface IEditorStateSlice {
   /* Editor Config */
   editorConfig: IEditorConfig;
@@ -63,6 +69,10 @@ export interface IEditorStateSlice {
 
   convertSceneModalVisible?: boolean;
   setConvertSceneModalVisibility(visible: boolean): void;
+
+  deleteConfirmationModalVisible?: boolean;
+  deleteConfirmationModalParams?: DeleteConfirmationModalParams;
+  setDeleteConfirmationModalVisible(visible: boolean, params?: DeleteConfirmationModalParams): void;
 
   // Selection and highlights
   selectedSceneNodeRef?: string;
@@ -222,6 +232,14 @@ export const createEditStateSlice = (
       set((draft) => {
         draft.convertSceneModalVisible = visible;
         draft.lastOperation = 'setConvertSceneModalVisibility';
+      });
+    },
+
+    setDeleteConfirmationModalVisible(visible, params) {
+      set((draft) => {
+        draft.deleteConfirmationModalVisible = visible;
+        draft.deleteConfirmationModalParams = params;
+        draft.lastOperation = 'setDeleteConfirmationModalVisible';
       });
     },
 

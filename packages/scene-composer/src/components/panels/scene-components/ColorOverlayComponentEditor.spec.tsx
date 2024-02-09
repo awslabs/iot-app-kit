@@ -3,18 +3,28 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 
-import { ColorOverlayComponentEditor } from '../../../../src/components/panels/scene-components/ColorOverlayComponentEditor';
-import { IColorOverlayComponentInternal, useStore } from '../../../../src/store';
+import { IColorOverlayComponentInternal, useStore } from '../../../store';
+import {
+  mockBinding,
+  mockBuilderState,
+  mockNode,
+  mockComponent,
+  mockProvider,
+} from '../../../../tests/components/panels/scene-components/MockComponents';
+import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
 
-import { mockBinding, mockBuilderState, mockNode, mockComponent, mockProvider } from './MockComponents';
+import { ColorOverlayComponentEditor } from './ColorOverlayComponentEditor';
 
 /* TODO: This component needs to be refactored, and rely on mocks, but it's too deeply coupled to use mocks atm, so this fixes the tests */
 jest.mock('@awsui/components-react', () => ({
   ...jest.requireActual('@awsui/components-react'),
 }));
 
+jest.mock('../../../utils/entityModelUtils/sceneUtils');
+
 const updateComponentInternalFn = jest.fn();
 const removeComponentFn = jest.fn();
+const setDeleteConfirmationModalVisible = jest.fn();
 
 const mockEditorConfig = {
   valueDataBindingProvider: mockProvider,
@@ -29,6 +39,7 @@ const baseState = {
     return ['rule1'];
   }),
   removeComponent: removeComponentFn,
+  setDeleteConfirmationModalVisible,
 };
 
 describe('ColorOverlayComponentEditor', () => {
@@ -41,6 +52,7 @@ describe('ColorOverlayComponentEditor', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    (isDynamicScene as jest.Mock).mockReturnValue(false);
   });
 
   it('should select bindings', () => {
@@ -97,7 +109,27 @@ describe('ColorOverlayComponentEditor', () => {
     const polarisWrapper = wrapper(container);
     const button = polarisWrapper.findButton('[data-testid="color-overlay-remove-component-button"]');
     button!.click();
+
     expect(removeComponentFn).toBeCalledWith(mockNode.ref, mockNode.components[0].ref);
+  });
+
+  it('should remove components for dynamic scene', () => {
+    (isDynamicScene as jest.Mock).mockReturnValue(true);
+    useStore('default').setState(baseState);
+
+    const { container } = render(<ColorOverlayComponentEditor node={mockNode} component={colorComponent} />);
+
+    const polarisWrapper = wrapper(container);
+    const button = polarisWrapper.findButton('[data-testid="color-overlay-remove-component-button"]');
+    button!.click();
+
+    expect(removeComponentFn).not.toBeCalled();
+    expect(setDeleteConfirmationModalVisible).toBeCalledTimes(1);
+    expect(setDeleteConfirmationModalVisible).toBeCalledWith(true, {
+      type: 'deleteComponent',
+      nodeRef: mockNode.ref,
+      componentRef: colorComponent.ref,
+    });
   });
 
   it('should build with no rule selected', () => {

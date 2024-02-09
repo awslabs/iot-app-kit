@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DeleteComponentModal should render correctly 1`] = `
+<div>
+  <div>
+    Delete delete-node-name's Tag component
+    Delete delete-node-name's Tag component? While this action may be undone, it may not return to its original state.
+    If you attempt to undo this action after Tag is deleted, it may have issues such as some properties still being deleted or disconnection from data.
+  </div>
+</div>
+`;

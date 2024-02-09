@@ -153,6 +153,25 @@ describe('createEditStateSlice', () => {
     expect(draft.convertSceneModalVisible).toEqual(true);
   });
 
+  it('should be able to set delete confirmation modal visibility', () => {
+    const draft = {
+      lastOperation: undefined,
+      deleteConfirmationModalVisible: false,
+      deleteConfirmationModalParams: undefined,
+    };
+    const get = jest.fn();
+    const set = jest.fn((callback) => callback(draft));
+
+    // Act
+    const { setDeleteConfirmationModalVisible } = createEditStateSlice(set, get, mockApi); // api is never used in the function, so it's not needed
+    setDeleteConfirmationModalVisible(true, { type: 'deleteNode', nodeRef: 'node-ref' });
+
+    // Assert
+    expect(draft.lastOperation!).toEqual('setDeleteConfirmationModalVisible');
+    expect(draft.deleteConfirmationModalVisible).toEqual(true);
+    expect(draft.deleteConfirmationModalParams).toEqual({ type: 'deleteNode', nodeRef: 'node-ref' });
+  });
+
   [true, false].forEach((modelLoading) => {
     it(`should be able to ${modelLoading ? 'loading' : 'not loading'} with setLoadingModelState`, () => {
       // Arrange
