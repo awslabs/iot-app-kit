@@ -160,7 +160,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
           >
             <div
               data-mocked="Input"
-              data-test-id="node-ref"
+              data-testid="ip-undefined"
               value="node-name"
             />
           </div>
@@ -648,7 +648,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
           >
             <div
               data-mocked="Input"
-              data-test-id="node-ref"
+              data-testid="ip-undefined"
               value="node-name"
             />
           </div>
@@ -1057,7 +1057,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
           >
             <div
               data-mocked="Input"
-              data-test-id="node-ref"
+              data-testid="ip-undefined"
               value="node-name"
             />
           </div>
@@ -1433,7 +1433,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
           >
             <div
               data-mocked="Input"
-              data-test-id="node-ref"
+              data-testid="ip-undefined"
               value="node-name"
             />
           </div>
@@ -1916,7 +1916,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
           >
             <div
               data-mocked="Input"
-              data-test-id="node-ref"
+              data-testid="ip-undefined"
               value="node-name"
             />
           </div>

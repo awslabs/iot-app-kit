@@ -94,7 +94,14 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   return (
     <EnhancedTreeItem
       key={key}
-      labelNode={<SceneNodeLabel objectRef={key} labelText={labelText} componentTypes={componentTypes} />}
+      labelNode={
+        <SceneNodeLabel
+          dataTestid={node?.components[0].ref}
+          objectRef={key}
+          labelText={labelText}
+          componentTypes={componentTypes}
+        />
+      }
       labelText={labelText}
       onExpand={onExpandNode}
       expanded={expanded}
