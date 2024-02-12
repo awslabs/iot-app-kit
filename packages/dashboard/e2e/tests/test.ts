@@ -12,6 +12,7 @@ interface Fixtures {
   dashboardWithLineWidget: DashboardPage;
   dashboardWithTextWidget: DashboardPage;
   dashboardWithKPIWidget: DashboardPage;
+  dashboardWithStatusWidget: DashboardPage;
   resourceExplorer: ResourceExplorer;
   configPanel: ConfigPanel;
 }
@@ -44,6 +45,15 @@ export const test = base.extend<Fixtures>({
   dashboardWithKPIWidget: async ({ page, browser }, use) => {
     const dashboardWithKPIWidget = await createNewDashboardWithWidget(
       'kpi',
+      page,
+      browser
+    );
+
+    return use(dashboardWithKPIWidget);
+  },
+  dashboardWithStatusWidget: async ({ page, browser }, use) => {
+    const dashboardWithKPIWidget = await createNewDashboardWithWidget(
+      'status',
       page,
       browser
     );

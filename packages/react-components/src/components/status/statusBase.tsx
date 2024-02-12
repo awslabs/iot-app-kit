@@ -112,11 +112,13 @@ export const StatusBase: React.FC<StatusProperties> = ({
               color={highContrastColor(backgroundColor)}
             />
           )}
-          <Value
-            value={point?.y}
-            unit={displayedUnit}
-            precision={significantDigits}
-          />
+          <span data-testid='status-value'>
+            <Value
+              value={point?.y}
+              unit={displayedUnit}
+              precision={significantDigits}
+            />
+          </span>
           {!isLoading && (
             <div style={{ fontSize: `${aggregationFontSize}px` }}>
               {getAggregationFrequency(resolution, aggregationType)}
