@@ -11,6 +11,7 @@ export class DashboardPage {
   public readonly lineChartWidgetButton: Locator;
   public readonly textWidgetButton: Locator;
   public readonly kpiWidgetButton: Locator;
+  public readonly statusWidgetButton: Locator;
   public readonly gridArea: Locator;
   public readonly confirmModalDeleteButton: Locator;
   public readonly contextMenuDeleteButton: Locator;
@@ -26,6 +27,9 @@ export class DashboardPage {
     });
     this.kpiWidgetButton = page.getByRole('button', {
       name: 'add KPI widget',
+    });
+    this.statusWidgetButton = page.getByRole('button', {
+      name: 'add Status widget',
     });
     this.gridArea = page.locator('#container');
     this.gridArea = page.locator('#container');
@@ -51,6 +55,8 @@ export class DashboardPage {
         return this.textWidgetButton;
       case 'kpi':
         return this.kpiWidgetButton;
+      case 'status':
+        return this.statusWidgetButton;
       default:
         throw new Error('Widget type is not defined in dashboardPage test');
     }
