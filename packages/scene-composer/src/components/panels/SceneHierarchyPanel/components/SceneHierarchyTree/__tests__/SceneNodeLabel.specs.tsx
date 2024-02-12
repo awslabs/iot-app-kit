@@ -43,6 +43,7 @@ describe('SceneNodeLabel', () => {
   });
 
   const defaultParams: SceneNodeLabelProps = {
+    dataTestid: 'testid',
     objectRef: '123',
     labelText: 'Text',
     componentTypes: [KnownComponentType.ModelRef],

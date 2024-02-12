@@ -155,7 +155,7 @@ const EntityGroup = ({ node }: IEntityGroupProps): JSX.Element => {
         onClick={onClick}
         onPointerEnter={onPointerEnter}
         onPointerLeave={onPointerLeave}
-        userData={{ nodeRef, componentTypes }}
+        userData={{ nodeRef, componentTypes, dataTestId: object3dRef?.current?.uuid }}
       >
         <ComponentGroup node={node} components={node.components} />
         <ChildGroup node={node} />

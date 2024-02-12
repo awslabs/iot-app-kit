@@ -17,7 +17,6 @@ test.describe('scene-composer--local-scene', () => {
 
   test('get object by name', async ({ page }) => {
     const state = new PlaywrightHelper(page, localScene);
-    // find object named 'PalletJack'
     const palletJack = await state.getObjecByName('PalletJack');
 
     // assert expected values on object
@@ -26,18 +25,13 @@ test.describe('scene-composer--local-scene', () => {
     expect(palletJack.visible).toBeTruthy();
   });
 
-  test('select object', async ({ page }) => {
+  test('validate hierarchy interaction', async ({ page }) => {
     const state = new PlaywrightHelper(page, localScene);
-    // find object named 'PalletJack'
     const palletJack = await state.getObjecByName('PalletJack');
-
     // select object in hierarchy
-    const formattedName = palletJack.name.replace(/([A-Z])/g, ' $1').trim();
-    const handle = await page.$(`text=${formattedName}`);
-    await handle?.hover();
-    await handle?.click();
+    await page.getByTestId(palletJack.userData.componentRef).click();
 
-    // assert that the associated selectedSceneNode.ref was selected in the Inspector Panel
-    expect(page.getByTestId('cb85148b-00ca-4006-8b0f-600890eaee46')).toBeDefined();
+    // assert that the correct obj is displayed in the Inspector Panel
+    expect(page.getByTestId(`ip-${palletJack.userData.componentRef}`)).toBeDefined();
   });
 });
