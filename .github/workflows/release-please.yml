@@ -25,6 +25,7 @@ jobs:
         with:
           ref: release-please--branches--main
           fetch-depth: 2
+          lfs: 'true'
 
       - name: Setting up Node.js
         uses: actions/setup-node@v4
