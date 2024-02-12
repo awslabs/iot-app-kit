@@ -35,11 +35,10 @@ import {
   ISceneDocumentInternal,
   ISceneNodeInternal,
   ISerializationErrorDetails,
+  NodeEntityCommand,
   SceneNodeRuntimeProperty,
 } from '../internalInterfaces';
-import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity';
-import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
-import { isDynamicNode, isDynamicScene, updateSceneRootEntity } from '../../utils/entityModelUtils/sceneUtils';
+import { isDynamicNode, isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
 import { createNodeEntity } from '../../utils/entityModelUtils/createNodeEntity';
 import { findComponentByType, getFinalNodeScale } from '../../utils/nodeUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
@@ -276,7 +275,10 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         const sceneRootEntityId = draft.document.properties?.sceneRootEntityId;
         const dynamicSceneAlphaEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicSceneAlpha];
         if (dynamicSceneAlphaEnabled && sceneRootEntityId) {
-          updateSceneRootEntity(sceneRootEntityId, draft.document);
+          draft.addNodeEntityCommand(sceneRootEntityId, {
+            entityNodeCommand: NodeEntityCommand.UpdateSceneRootEntity,
+            commandPayload: { scene: draft.document },
+          });
         }
 
         draft.lastOperation = 'updateDocumentInternal';
@@ -316,7 +318,9 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         nodeToRemove = removeNode(draft.document, nodeRef, LOG);
 
         if (isDynamicNode(nodeToRemove)) {
-          deleteNodeEntity(nodeRef);
+          draft.addNodeEntityCommand(nodeRef, {
+            entityNodeCommand: NodeEntityCommand.DeleteNodeEntity,
+          });
         }
 
         draft.lastOperation = 'removeSceneNode';
@@ -343,7 +347,10 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         const sceneRootEntityId = draft.document.properties?.sceneRootEntityId;
         const dynamicSceneAlphaEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicSceneAlpha];
         if (dynamicSceneAlphaEnabled && sceneRootEntityId) {
-          updateSceneRootEntity(sceneRootEntityId, draft.document);
+          draft.addNodeEntityCommand(sceneRootEntityId, {
+            entityNodeCommand: NodeEntityCommand.UpdateSceneRootEntity,
+            commandPayload: { scene: draft.document },
+          });
         }
 
         draft.lastOperation = 'updateSceneRuleMapById';
@@ -357,7 +364,10 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         const sceneRootEntityId = draft.document.properties?.sceneRootEntityId;
         const dynamicSceneAlphaEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicSceneAlpha];
         if (dynamicSceneAlphaEnabled && sceneRootEntityId) {
-          updateSceneRootEntity(sceneRootEntityId, draft.document);
+          draft.addNodeEntityCommand(sceneRootEntityId, {
+            entityNodeCommand: NodeEntityCommand.UpdateSceneRootEntity,
+            commandPayload: { scene: draft.document },
+          });
         }
 
         draft.lastOperation = 'removeSceneRuleMapById';
@@ -378,7 +388,10 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         addComponentToComponentNodeMap(draft.document.componentNodeMap[component.type]!, nodeRef, component.ref);
 
         if (isDynamicNode(node)) {
-          updateEntity(node, [component]);
+          draft.addNodeEntityCommand(nodeRef, {
+            entityNodeCommand: NodeEntityCommand.UpdateEntity,
+            commandPayload: { compsToBeUpdated: [component] },
+          });
         }
 
         draft.lastOperation = 'addComponentInternal';
@@ -411,7 +424,10 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         const updatedComponenet = updatedNode?.components[componentToUpdateIndex];
 
         if (updatedComponenet && isDynamicNode(updatedNode)) {
-          updateEntity(updatedNode, [updatedComponenet]);
+          draft.addNodeEntityCommand(nodeRef, {
+            entityNodeCommand: NodeEntityCommand.UpdateEntity,
+            commandPayload: { compsToBeUpdated: [updatedComponenet] },
+          });
         }
 
         draft.lastOperation = 'updateComponentInternal';
@@ -435,7 +451,10 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         const removedComponenet = draft.document.nodeMap[nodeRef].components.splice(componentIndex, 1).at(0);
 
         if (removedComponenet && isDynamicNode(draft.document.nodeMap[nodeRef])) {
-          updateEntity(draft.document.nodeMap[nodeRef], [removedComponenet], ComponentUpdateType.DELETE);
+          draft.addNodeEntityCommand(nodeRef, {
+            entityNodeCommand: NodeEntityCommand.UpdateEntity,
+            commandPayload: { compsToBeUpdated: [removedComponenet], updateType: ComponentUpdateType.DELETE },
+          });
         }
 
         draft.lastOperation = 'removeComponent';
@@ -488,7 +507,10 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         const sceneRootEntityId = draft.document.properties?.sceneRootEntityId;
         const dynamicSceneAlphaEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicSceneAlpha];
         if (dynamicSceneAlphaEnabled && sceneRootEntityId) {
-          updateSceneRootEntity(sceneRootEntityId, draft.document);
+          draft.addNodeEntityCommand(sceneRootEntityId, {
+            entityNodeCommand: NodeEntityCommand.UpdateSceneRootEntity,
+            commandPayload: { scene: draft.document },
+          });
         }
 
         draft.lastOperation = 'setSceneProperty';

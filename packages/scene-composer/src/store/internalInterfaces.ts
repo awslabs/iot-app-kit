@@ -1,3 +1,5 @@
+import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
+
 import { IErrorDetails } from '../common/errors';
 import {
   SelectionChangedEventCallback,
@@ -149,3 +151,36 @@ export const isISceneComponentInternal = (
 ): item is ISceneComponentInternal => {
   return !!item;
 };
+
+/******************************************************************************
+ * Node Entity
+ ******************************************************************************/
+
+export enum NodeEntityCommand {
+  CreateNodeEntity = 'createNodeEntity',
+  DeleteNodeEntity = 'deleteNodeEntity',
+  UpdateEntity = 'updateEntity',
+  UpdateSceneRootEntity = 'updateSceneRootEntity',
+}
+
+export interface ICreateNodeEntityCommandPayload {
+  layerId: string;
+  parentRef: string;
+}
+
+export interface IUpdateNodeEntityCommandPayload {
+  compsToBeUpdated?: ISceneComponentInternal[];
+  updateType?: ComponentUpdateType;
+}
+
+export interface IUpdateSceneRootEntityCommandPayload {
+  scene: Omit<ISceneDocument, 'nodeMap' | 'rootNodeRefs'>;
+}
+
+export interface INodeEntityCommand {
+  entityNodeCommand: NodeEntityCommand;
+  commandPayload?:
+    | ICreateNodeEntityCommandPayload
+    | IUpdateNodeEntityCommandPayload
+    | IUpdateSceneRootEntityCommandPayload;
+}

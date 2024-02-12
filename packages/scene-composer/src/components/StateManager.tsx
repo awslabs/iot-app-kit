@@ -27,13 +27,17 @@ import {
   MATTERPORT_ERROR,
   MATTERPORT_SECRET_ARN,
 } from '../common/constants';
-import { DisplayMessageCategory } from '../store/internalInterfaces';
+import {
+  DisplayMessageCategory,
+  IUpdateNodeEntityCommandPayload,
+  IUpdateSceneRootEntityCommandPayload,
+  NodeEntityCommand,
+} from '../store/internalInterfaces';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import useActiveCamera from '../hooks/useActiveCamera';
 import useMatterportViewer from '../hooks/useMatterportViewer';
 import {
   AdditionalComponentData,
-  COMPOSER_FEATURES,
   ExternalLibraryConfig,
   KnownComponentType,
   KnownSceneProperty,
@@ -41,13 +45,16 @@ import {
 } from '../interfaces';
 import { SceneLayout } from '../layouts/SceneLayout';
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
-import { ICameraComponentInternal, RootState, useStore, useViewOptionState } from '../store';
+import { ICameraComponentInternal, RootState, useNodeEntityCommandState, useStore, useViewOptionState } from '../store';
 import { getCameraSettings } from '../utils/cameraUtils';
 import { getAdditionalComponentData } from '../utils/eventDataUtils';
 import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/dataStreamUtils';
 import { findComponentByType } from '../utils/nodeUtils';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
 import { createStandardUriModifier } from '../utils/uriModifiers';
+import { deleteNodeEntity } from '../utils/entityModelUtils/deleteNodeEntity';
+import { updateEntity } from '../utils/entityModelUtils/updateNodeEntity';
+import { updateSceneRootEntity } from '../utils/entityModelUtils/sceneUtils';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
@@ -109,6 +116,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const [matterportReady, setMatterportReady] = useState<boolean>(false);
 
   const convertSceneModalVisible = useStore(sceneComposerId)((state) => !!state.convertSceneModalVisible);
+
+  const { clearNodeEntityCommandMap, getNodeEntityCommandMap } = useNodeEntityCommandState(sceneComposerId);
 
   const { setActiveCameraSettings, setActiveCameraName } = useActiveCamera();
 
@@ -327,6 +336,43 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       }, 1);
     }
   }, [sceneLoaded, onSceneLoaded, enableMatterportViewer, matterportReady]);
+
+  const executeNodeEntityCommand = () => {
+    const nodeEntityCommandMap = getNodeEntityCommandMap();
+    clearNodeEntityCommandMap();
+    for (const nodeEntityCommand in nodeEntityCommandMap) {
+      switch (nodeEntityCommandMap[nodeEntityCommand].entityNodeCommand) {
+        case NodeEntityCommand.DeleteNodeEntity:
+          deleteNodeEntity(nodeEntityCommand);
+          break;
+        case NodeEntityCommand.UpdateEntity: {
+          const commandPayload = nodeEntityCommandMap[nodeEntityCommand]
+            .commandPayload as IUpdateNodeEntityCommandPayload;
+          const node = getSceneNodeByRef(nodeEntityCommand);
+          if (node) {
+            updateEntity(node, commandPayload.compsToBeUpdated, commandPayload.updateType);
+          }
+          break;
+        }
+        case NodeEntityCommand.UpdateSceneRootEntity: {
+          const commandPayload = nodeEntityCommandMap[nodeEntityCommand]
+            .commandPayload as IUpdateSceneRootEntityCommandPayload;
+          updateSceneRootEntity(nodeEntityCommand, commandPayload.scene);
+          break;
+        }
+        default:
+          break;
+      }
+    }
+
+    setTimeout(executeNodeEntityCommand, 30000);
+  };
+
+  useEffect(() => {
+    if (onSceneLoaded && sceneLoaded) {
+      executeNodeEntityCommand();
+    }
+  }, [sceneLoaded, onSceneLoaded]);
 
   // Subscribe to store update
   useEffect(() => {

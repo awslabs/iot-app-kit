@@ -26,6 +26,7 @@ import {
   IEntityBindingComponentInternal,
   IPlaneGeometryComponentInternal,
 } from './internalInterfaces';
+import { INodeEntityCommandStateSlice, createNodeEntityCommandStateSlice } from './slices/NodeEntityCommandStateSlice';
 
 export type {
   // Document
@@ -56,7 +57,8 @@ export type RootState = ISharedState &
   IEditorStateSlice &
   IDataStoreSlice &
   UndoState &
-  INodeErrorStateSlice;
+  INodeErrorStateSlice &
+  INodeEntityCommandStateSlice;
 
 /**
  * Core state management functions
@@ -71,6 +73,7 @@ const stateCreator: StateCreator<RootState> = (set, get, api) => ({
     ...createViewOptionStateSlice(set),
   },
   ...createNodeErrorStateSlice(set, get, api),
+  ...createNodeEntityCommandStateSlice(set, get),
 });
 
 const createStateImpl: () => UseStore<RootState> = () => create<RootState>(undoMiddleware(log(immer(stateCreator))));
@@ -154,6 +157,13 @@ const nodeErrorStateSelector = (state: RootState): INodeErrorStateSlice => ({
   removeNodeError: state.removeNodeError,
 });
 
+const nodeEntityCommandStateSelector = (state: RootState): INodeEntityCommandStateSlice => ({
+  nodeEntityCommandMap: state.nodeEntityCommandMap,
+  getNodeEntityCommandMap: state.getNodeEntityCommandMap,
+  addNodeEntityCommand: state.addNodeEntityCommand,
+  clearNodeEntityCommandMap: state.clearNodeEntityCommandMap,
+});
+
 const viewOptionStateSelector = (state: RootState): IViewOptionStateSlice => ({
   viewport: state.noHistoryStates.viewport,
   setViewport: state.noHistoryStates.setViewport,
@@ -190,6 +200,10 @@ const useNodeErrorState = (id: string): INodeErrorStateSlice => {
   return useStore(id)(nodeErrorStateSelector, shallow);
 };
 
+const useNodeEntityCommandState = (id: string): INodeEntityCommandStateSlice => {
+  return useStore(id)(nodeEntityCommandStateSelector, shallow);
+};
+
 const useViewOptionState = (id: string): IViewOptionStateSlice => {
   return useStore(id)(viewOptionStateSelector, shallow);
 };
@@ -209,6 +223,8 @@ export {
   useDataStore,
   nodeErrorStateSelector,
   useNodeErrorState,
+  nodeEntityCommandStateSelector,
+  useNodeEntityCommandState,
   isDocumentStateChanged,
   isISceneComponentInternal,
   isISceneNodeInternal,

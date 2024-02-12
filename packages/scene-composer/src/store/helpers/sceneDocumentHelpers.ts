@@ -2,11 +2,10 @@ import { isEmpty } from 'lodash';
 
 import ILogger from '../../logger/ILogger';
 import { isDynamicNode } from '../../utils/entityModelUtils/sceneUtils';
-import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
 import { mergeDeep } from '../../utils/objectUtils';
 import { RecursivePartial } from '../../utils/typeUtils';
 import { RootState } from '../Store';
-import { ISceneDocumentInternal, ISceneNodeInternal } from '../internalInterfaces';
+import { ISceneDocumentInternal, ISceneNodeInternal, NodeEntityCommand } from '../internalInterfaces';
 
 import { addNodeToComponentNodeMap, deleteNodeFromComponentNodeMap } from './componentMapHelpers';
 import interfaceHelpers from './interfaceHelpers';
@@ -194,6 +193,9 @@ export const updateSceneNode = (
   const updatedNode = draft.document.nodeMap[ref];
   if (isDynamicNode(updatedNode) && !skipEntityUpdate) {
     const compsToBeUpdated = !isEmpty(partial.components) ? updatedNode.components : undefined;
-    updateEntity(updatedNode, compsToBeUpdated);
+    draft.addNodeEntityCommand(ref, {
+      entityNodeCommand: NodeEntityCommand.UpdateEntity,
+      commandPayload: { compsToBeUpdated: compsToBeUpdated },
+    });
   }
 };
