@@ -24,3 +24,5 @@ export const TREND_CURSOR_TABLE_CELL = '.trend-cursor-value';
 
 export const MAX_VALUE_TABLE_HEADER = 'base-chart-legend-max-header-container';
 export const MAX_TABLE_CELL = 'max-value';
+export const MIN_VALUE_TABLE_HEADER = 'base-chart-legend-min-header-container';
+export const MIN_TABLE_CELL = 'min-value';
