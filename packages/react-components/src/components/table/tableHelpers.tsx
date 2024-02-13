@@ -47,6 +47,7 @@ export const getDefaultColumnDefinitions: (
         return (
           <div
             className='iot-table-cell'
+            data-testid='table-value'
             style={{
               color,
               display: 'flex',
