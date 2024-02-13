@@ -18,6 +18,9 @@
     "packages/dashboard": {
       "component": "dashboard"
     },
+    "packages/doc-site": {
+      "component": "doc-site"
+    },
     "packages/react-components": {
       "component": "react-components"
     },
