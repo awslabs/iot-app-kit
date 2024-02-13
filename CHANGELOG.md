@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.15.0...root-v10.0.0) (2024-02-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* **composer:** remove deprecated and internal interfaces from public
+
+### Features
+
+* adding docker setup for scene-composer ui tests ([3db0c9b](https://github.com/awslabs/iot-app-kit/commit/3db0c9bf11dcba40782241f3886cd79f1912f00f))
+* **composer:** save scene level data to scene root entity ([6cabfb5](https://github.com/awslabs/iot-app-kit/commit/6cabfb55de10004b1f0314cb7be931ef3969b09e))
+* **composer:** support showing flash message ([da7281a](https://github.com/awslabs/iot-app-kit/commit/da7281a84e47325c56071850f6ea49a6eed73233))
+* **scene composer:** adding data-testid to improve e2e test ([1e5ab86](https://github.com/awslabs/iot-app-kit/commit/1e5ab863f89fcdf66aa7b4c0e3b0f5c77367411e))
+* **scene composer:** setting up 3D test harness ([df62eef](https://github.com/awslabs/iot-app-kit/commit/df62eefd048a66f327070bc8c90b4c9b964de26e))
+* **scene-composer:** enable accelerated raycasting for 3D Tiles ([84d2ce4](https://github.com/awslabs/iot-app-kit/commit/84d2ce4783c74a3792c11009f99cfac888cd848d))
+* **Tiles3D:** add Tiles3D AssetType and evaluate model type when adding a 3D model to the scene ([eec0f50](https://github.com/awslabs/iot-app-kit/commit/eec0f508caa4b1f6b2c7a84baa4f45bf4dc7195b))
+
+
+### Bug Fixes
+
+* add doc-site to release-please config ([ccf5086](https://github.com/awslabs/iot-app-kit/commit/ccf5086fc9ef362e7c61c4d02cb3e88aa20b21c5))
+* **composer:** cannot delete scene node of a child and then its parent ([a2e140a](https://github.com/awslabs/iot-app-kit/commit/a2e140ab0ef05975e2ec1d8e36a4d68ad9087911))
+* **composer:** refactor scene modal rendering ([1d797b1](https://github.com/awslabs/iot-app-kit/commit/1d797b1a6aeab60e45f8e11daf8cd97b9b21033b))
+* **composer:** remove deprecated and internal interfaces from public ([07e82b4](https://github.com/awslabs/iot-app-kit/commit/07e82b42963931ddce95362f4a6cca9add6a1423))
+* **example:** make sure selection change uses the entity binding component index ([200d0db](https://github.com/awslabs/iot-app-kit/commit/200d0db2171d21d5545a1c7e9d8403ac7bbeae3e))
+* set npm-publish to node v16 ([057eac9](https://github.com/awslabs/iot-app-kit/commit/057eac9f5629be32bf2415fb3f241f715f8150c1))
+* testing-util as devDependency of doc-site ([3cc2bb0](https://github.com/awslabs/iot-app-kit/commit/3cc2bb08294244c3f6fd15800892d6402894b434))
+
 ## [9.15.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.14.0...root-v9.15.0) (2024-02-01)
 
 
