@@ -2,6 +2,7 @@
   "packages/components": "9.15.0",
   "packages/core": "9.15.0",
   "packages/dashboard": "9.15.0",
+  "packages/doc-site": "9.15.0",
   "packages/core-util": "9.15.0",
   "packages/react-components": "9.15.0",
   "packages/related-table": "9.15.0",

@@ -1,6 +1,6 @@
 {
   "name": "@iot-app-kit/doc-site",
-  "version": "9.11.0",
+  "version": "9.15.0",
   "private": true,
   "devDependencies": {
     "@iot-app-kit/testing-util": "^9.15.0",
@@ -15,7 +15,7 @@
     "@storybook/react-webpack5": "^7.6.6",
     "@storybook/test": "^7.6.6",
     "@storybook/theming": "^7.6.6",
-    "eslint-config-iot-app-kit": "^9.11.0",
+    "eslint-config-iot-app-kit": "^9.15.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
