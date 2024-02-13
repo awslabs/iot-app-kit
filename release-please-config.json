@@ -61,6 +61,7 @@
         "components",
         "core",
         "dashboard",
+        "doc-site",
         "react-components",
         "related-table",
         "scene-composer",
