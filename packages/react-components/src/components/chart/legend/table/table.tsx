@@ -18,6 +18,7 @@ export const ChartLegendTable = ({
   visible,
   position,
   width,
+  visibleContent,
 }: ChartLegendTableOptions) => {
   const { items, collectionProps } = useCollection(datastreams, {
     sorting: {},
@@ -28,8 +29,9 @@ export const ChartLegendTable = ({
       createTableLegendColumnDefinitions({
         trendCursors,
         width: Number(width),
+        visibleContent,
       }),
-    [width, trendCursors]
+    [width, trendCursors, visibleContent]
   );
 
   if (!visible) return null;

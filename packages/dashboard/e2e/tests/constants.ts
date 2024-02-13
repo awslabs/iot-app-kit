@@ -21,3 +21,6 @@ export const REMOVE_TREND_CURSOR = 'Delete trend cursor';
 export const TREND_CURSOR_TABLE_HEADER =
   '.base-chart-legend-tc-header-container';
 export const TREND_CURSOR_TABLE_CELL = '.trend-cursor-value';
+
+export const MAX_VALUE_TABLE_HEADER = 'base-chart-legend-max-header-container';
+export const MAX_TABLE_CELL = 'max-value';

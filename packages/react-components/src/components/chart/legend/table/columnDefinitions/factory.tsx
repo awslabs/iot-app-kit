@@ -3,6 +3,8 @@ import { type TableProps } from '@cloudscape-design/components/table';
 import { DataStreamInformation, TrendCursor } from '../types';
 import { DataStreamCell, DataStreamColumnHeader } from './datastream';
 import { TrendCursorCell, TrendCursorColumnHeader } from './trendCursor';
+import { MaximumColumnHeader, MaximumCell } from './maximumValue';
+import { ChartLegend } from '../../../types';
 
 type LegendTableColumnDefinitions =
   TableProps<DataStreamInformation>['columnDefinitions'];
@@ -16,6 +18,17 @@ const createDataStreamColumnDefinition = (
   cell: (item) => <DataStreamCell {...item} width={width} />,
   isRowHeader: true,
 });
+
+const createMaximumColumnDefinition =
+  (): LegendTableColumnDefinitions[number] => ({
+    id: 'AssetName',
+    sortingField: 'assetName',
+    header: <MaximumColumnHeader />,
+    cell: (item) => {
+      return <MaximumCell {...item} />;
+    },
+    isRowHeader: true,
+  });
 
 const createTrendCursorColumnDefinition = ({
   id: trendCursorId,
@@ -42,9 +55,11 @@ const createTrendCursorColumnDefinition = ({
 export const createTableLegendColumnDefinitions = ({
   trendCursors,
   width,
+  visibleContent,
 }: {
   trendCursors: TrendCursor[];
   width: number;
+  visibleContent: ChartLegend['visibleContent'];
 }) => {
   const trendCursorColumnDefinitions = trendCursors
     .sort((a, b) => a.date - b.date)
@@ -52,6 +67,7 @@ export const createTableLegendColumnDefinitions = ({
 
   return [
     createDataStreamColumnDefinition(width),
+    ...(visibleContent?.maxValue ? [createMaximumColumnDefinition()] : []),
     ...trendCursorColumnDefinitions,
   ];
 };
