@@ -25,6 +25,7 @@ import {
 } from '@iot-app-kit/core';
 import type { HistoricalPropertyParams } from './client';
 import { withinLatestPropertyDataThreshold } from './withinLatestPropertyDataThreshold';
+import { flattenRequestInfoByFetch } from '../util/flattenRequestInfoByFetch';
 
 export type BatchHistoricalEntry = {
   requestInformation: RequestInformationAndRange;
@@ -204,39 +205,7 @@ export const batchGetHistoricalPropertyDataPoints = ({
     requestInformations
       .filter(shouldAcceptRequest)
       // fanout on fetchMostRecentBeforeStart, fetchMostRecentBeforeEnd, fetchFromStartToEnd into dedicated request info
-      .flatMap(
-        ({
-          fetchMostRecentBeforeStart,
-          fetchMostRecentBeforeEnd,
-          fetchFromStartToEnd,
-          ...rest
-        }) => {
-          const infos: RequestInformationAndRange[] = [];
-
-          if (fetchMostRecentBeforeStart) {
-            infos.push({
-              ...rest,
-              fetchMostRecentBeforeStart,
-            });
-          }
-
-          if (fetchMostRecentBeforeEnd) {
-            infos.push({
-              ...rest,
-              fetchMostRecentBeforeEnd,
-            });
-          }
-
-          if (fetchFromStartToEnd) {
-            infos.push({
-              ...rest,
-              fetchFromStartToEnd,
-            });
-          }
-
-          return infos;
-        }
-      )
+      .flatMap(flattenRequestInfoByFetch)
       .forEach((requestInformation) => {
         // only 1 of the following options are enabled at this point:
         // fetchMostRecentBeforeStart, fetchMostRecentBeforeEnd, fetchFromStartToEnd

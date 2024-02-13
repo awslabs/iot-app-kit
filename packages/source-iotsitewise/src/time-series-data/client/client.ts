@@ -30,6 +30,10 @@ export type AggregatedPropertyParams = {
   onSuccess: OnSuccessCallback;
 };
 
+export type SiteWiseClientSettings = {
+  batchDuration?: SiteWiseDataSourceSettings['batchDuration'];
+};
+
 export class SiteWiseClient {
   private siteWiseSdk: IoTSiteWiseClient;
   private settings: SiteWiseDataSourceSettings;
@@ -46,7 +50,7 @@ export class SiteWiseClient {
 
   constructor(
     siteWiseSdk: IoTSiteWiseClient,
-    settings: SiteWiseDataSourceSettings = {}
+    settings: SiteWiseClientSettings = {}
   ) {
     this.siteWiseSdk = siteWiseSdk;
     this.settings = settings;

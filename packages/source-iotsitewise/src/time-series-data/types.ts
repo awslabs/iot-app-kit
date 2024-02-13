@@ -67,6 +67,9 @@ export type SiteWiseAssetModelQuery = DataStreamQuery & {
 export type SiteWiseDataStreamQuery = Partial<SiteWiseAssetQuery> &
   Partial<SiteWisePropertyAliasQuery>;
 
+export type EdgeMode = 'enabled' | 'disabled';
+
 export type SiteWiseDataSourceSettings = {
   batchDuration?: number;
+  edgeMode?: EdgeMode;
 };
