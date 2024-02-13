@@ -30,8 +30,9 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+  reporter: [
+    ['html', { host: '0.0.0.0' }],
+  ] /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */,
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,
@@ -40,7 +41,7 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    baseURL: 'http://localhost:6007/',
+    baseURL: 'http://0.0.0.0:6007/',
   },
 
   /* Configure projects for major browsers */
@@ -58,7 +59,7 @@ export default defineConfig({
   webServer: {
     command: 'npm run start',
     reuseExistingServer: true,
-    url: 'http://localhost:6007',
+    url: 'http://0.0.0.0:6007',
     timeout: 300 * 1000, // 5 minutes
     stdout: 'pipe',
     stderr: 'pipe',

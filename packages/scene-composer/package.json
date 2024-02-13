@@ -36,7 +36,6 @@
     }
   },
   "scripts": {
-    "postinstall": "docker compose up",
     "build": "run-s compile",
     "build:watch": "node ./tools/watch-build.js",
     "dev": "npm-watch build",

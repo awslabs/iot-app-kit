@@ -32,7 +32,7 @@ jobs:
 
       - name: test UI
         run:
-          npm run test:ui -w @iot-app-kit/dashboard --filter=[HEAD~1] && npm run test:ui -w @iot-app-kit/react-components --filter=[HEAD~1] && npm run test:ui -w @iot-app-kit/scene-composer --filter=[HEAD~1] --production
+          npm run test:ui -w @iot-app-kit/dashboard --filter=[HEAD~1] && npm run test:ui -w @iot-app-kit/react-components --filter=[HEAD~1] --production && npm run test:ui -w @iot-app-kit/scene-composer --filter=[HEAD~1] --production
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
