@@ -5,6 +5,7 @@ import { DataStreamCell, DataStreamColumnHeader } from './datastream';
 import { TrendCursorCell, TrendCursorColumnHeader } from './trendCursor';
 import { MaximumColumnHeader, MaximumCell } from './maximumValue';
 import { ChartLegend } from '../../../types';
+import { MinimumColumnHeader, MinimumCell } from './minimumValue';
 
 type LegendTableColumnDefinitions =
   TableProps<DataStreamInformation>['columnDefinitions'];
@@ -26,6 +27,17 @@ const createMaximumColumnDefinition =
     header: <MaximumColumnHeader />,
     cell: (item) => {
       return <MaximumCell {...item} />;
+    },
+    isRowHeader: true,
+  });
+
+const createMinimumColumnDefinition =
+  (): LegendTableColumnDefinitions[number] => ({
+    id: 'AssetName',
+    sortingField: 'assetName',
+    header: <MinimumColumnHeader />,
+    cell: (item) => {
+      return <MinimumCell {...item} />;
     },
     isRowHeader: true,
   });
@@ -68,6 +80,7 @@ export const createTableLegendColumnDefinitions = ({
   return [
     createDataStreamColumnDefinition(width),
     ...(visibleContent?.maxValue ? [createMaximumColumnDefinition()] : []),
+    ...(visibleContent?.minValue ? [createMinimumColumnDefinition()] : []),
     ...trendCursorColumnDefinitions,
   ];
 };
