@@ -160,7 +160,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
           >
             <div
               data-mocked="Input"
-              data-testid="ip-undefined"
+              data-testid="ip-3D-obj-ref-1"
               value="node-name"
             />
           </div>
@@ -535,7 +535,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
           <div
             data-testid="ComponentEditMenu"
           >
-            [{"nodeRef":"testNodeRef","currentComponent":{"type":"ModelRef"}},{}]
+            [{"nodeRef":"testNodeRef","currentComponent":{"ref":"3D-obj-ref-1","type":"ModelRef"}},{}]
           </div>
         </div>
       </div>
@@ -546,7 +546,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
         <div
           data-testid="ComponentEditor"
         >
-          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":true},"components":[{"type":"ModelRef"}]},"component":{"type":"ModelRef"}},{}]
+          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":true},"components":[{"ref":"3D-obj-ref-1","type":"ModelRef"}]},"component":{"ref":"3D-obj-ref-1","type":"ModelRef"}},{}]
         </div>
       </div>
     </div>
@@ -648,7 +648,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
           >
             <div
               data-mocked="Input"
-              data-testid="ip-undefined"
+              data-testid="ip-3D-obj-ref-1"
               value="node-name"
             />
           </div>
@@ -911,7 +911,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
           <div
             data-testid="ComponentEditMenu"
           >
-            [{"nodeRef":"testNodeRef","currentComponent":{"type":"Tag"}},{}]
+            [{"nodeRef":"testNodeRef","currentComponent":{"ref":"3D-obj-ref-1","type":"Tag"}},{}]
           </div>
         </div>
       </div>
@@ -922,7 +922,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
         <div
           data-testid="ComponentEditor"
         >
-          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"type":"Tag"},{"type":"DataOverlay","subType":"OverlayPanel"}]},"component":{"type":"Tag"}},{}]
+          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"ref":"3D-obj-ref-1","type":"Tag"},{"ref":"3D-obj-ref-2","type":"DataOverlay","subType":"OverlayPanel"}]},"component":{"ref":"3D-obj-ref-1","type":"Tag"}},{}]
         </div>
       </div>
     </div>
@@ -944,7 +944,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
           <div
             data-testid="ComponentEditMenu"
           >
-            [{"nodeRef":"testNodeRef","currentComponent":{"type":"DataOverlay","subType":"OverlayPanel"}},{}]
+            [{"nodeRef":"testNodeRef","currentComponent":{"ref":"3D-obj-ref-2","type":"DataOverlay","subType":"OverlayPanel"}},{}]
           </div>
         </div>
       </div>
@@ -955,7 +955,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
         <div
           data-testid="ComponentEditor"
         >
-          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"type":"Tag"},{"type":"DataOverlay","subType":"OverlayPanel"}]},"component":{"type":"DataOverlay","subType":"OverlayPanel"}},{}]
+          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"ref":"3D-obj-ref-1","type":"Tag"},{"ref":"3D-obj-ref-2","type":"DataOverlay","subType":"OverlayPanel"}]},"component":{"ref":"3D-obj-ref-2","type":"DataOverlay","subType":"OverlayPanel"}},{}]
         </div>
       </div>
     </div>
@@ -1057,7 +1057,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
           >
             <div
               data-mocked="Input"
-              data-testid="ip-undefined"
+              data-testid="ip-3D-obj-ref-1"
               value="node-name"
             />
           </div>
@@ -1320,7 +1320,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
           <div
             data-testid="ComponentEditMenu"
           >
-            [{"nodeRef":"testNodeRef","currentComponent":{"type":"Tag"}},{}]
+            [{"nodeRef":"testNodeRef","currentComponent":{"ref":"3D-obj-ref-1","type":"Tag"}},{}]
           </div>
         </div>
       </div>
@@ -1331,7 +1331,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
         <div
           data-testid="ComponentEditor"
         >
-          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"type":"Tag"}]},"component":{"type":"Tag"}},{}]
+          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"ref":"3D-obj-ref-1","type":"Tag"}]},"component":{"ref":"3D-obj-ref-1","type":"Tag"}},{}]
         </div>
       </div>
     </div>
@@ -1433,7 +1433,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
           >
             <div
               data-mocked="Input"
-              data-testid="ip-undefined"
+              data-testid="ip-3D-obj-ref-1"
               value="node-name"
             />
           </div>
@@ -1803,7 +1803,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
           <div
             data-testid="ComponentEditMenu"
           >
-            [{"nodeRef":"testNodeRef","currentComponent":{"type":"DataOverlay","subType":"TextAnnotation"}},{}]
+            [{"nodeRef":"testNodeRef","currentComponent":{"ref":"3D-obj-ref-1","type":"DataOverlay","subType":"TextAnnotation"}},{}]
           </div>
         </div>
       </div>
@@ -1814,7 +1814,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
         <div
           data-testid="ComponentEditor"
         >
-          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"type":"DataOverlay","subType":"TextAnnotation"}]},"component":{"type":"DataOverlay","subType":"TextAnnotation"}},{}]
+          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"ref":"3D-obj-ref-1","type":"DataOverlay","subType":"TextAnnotation"}]},"component":{"ref":"3D-obj-ref-1","type":"DataOverlay","subType":"TextAnnotation"}},{}]
         </div>
       </div>
     </div>
@@ -1916,7 +1916,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
           >
             <div
               data-mocked="Input"
-              data-testid="ip-undefined"
+              data-testid="ip-3D-obj-ref-1"
               value="node-name"
             />
           </div>
@@ -2281,7 +2281,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
           <div
             data-testid="ComponentEditMenu"
           >
-            [{"nodeRef":"testNodeRef","currentComponent":{"type":"MotionIndicator","shape":"LinearPlane"}},{}]
+            [{"nodeRef":"testNodeRef","currentComponent":{"ref":"3D-obj-ref-1","type":"MotionIndicator","shape":"LinearPlane"}},{}]
           </div>
         </div>
       </div>
@@ -2292,7 +2292,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
         <div
           data-testid="ComponentEditor"
         >
-          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"type":"MotionIndicator","shape":"LinearPlane"}]},"component":{"type":"MotionIndicator","shape":"LinearPlane"}},{}]
+          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"ref":"3D-obj-ref-1","type":"MotionIndicator","shape":"LinearPlane"}]},"component":{"ref":"3D-obj-ref-1","type":"MotionIndicator","shape":"LinearPlane"}},{}]
         </div>
       </div>
     </div>

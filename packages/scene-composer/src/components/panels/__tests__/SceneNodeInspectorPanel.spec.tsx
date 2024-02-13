@@ -70,6 +70,7 @@ describe('SceneNodeInspectorPanel returns expected elements.', () => {
       ...baseNode,
       components: [
         {
+          ref: '3D-obj-ref-1',
           type: KnownComponentType.ModelRef,
         },
       ],
@@ -88,6 +89,7 @@ describe('SceneNodeInspectorPanel returns expected elements.', () => {
       ...baseNode,
       components: [
         {
+          ref: '3D-obj-ref-1',
           type: KnownComponentType.MotionIndicator,
           shape: Component.MotionIndicatorShape.LinearPlane,
         },
@@ -104,6 +106,7 @@ describe('SceneNodeInspectorPanel returns expected elements.', () => {
       ...baseNode,
       components: [
         {
+          ref: '3D-obj-ref-1',
           type: KnownComponentType.Tag,
         },
       ],
@@ -128,6 +131,7 @@ describe('SceneNodeInspectorPanel returns expected elements.', () => {
       ...baseNode,
       components: [
         {
+          ref: '3D-obj-ref-1',
           type: KnownComponentType.DataOverlay,
           subType: Component.DataOverlaySubType.TextAnnotation,
         },
@@ -156,9 +160,11 @@ describe('SceneNodeInspectorPanel returns expected elements.', () => {
       ...baseNode,
       components: [
         {
+          ref: '3D-obj-ref-1',
           type: KnownComponentType.Tag,
         },
         {
+          ref: '3D-obj-ref-2',
           type: KnownComponentType.DataOverlay,
           subType: Component.DataOverlaySubType.OverlayPanel,
         },
