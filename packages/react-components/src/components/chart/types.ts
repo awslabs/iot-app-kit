@@ -19,7 +19,7 @@ export type ChartAxisOptions = YAxisOptions & {
   showX?: boolean;
 };
 
-type ChartLegendContent = 'unit' | 'asset' | 'visibility';
+type ChartLegendContent = 'unit' | 'asset' | 'visibility' | 'maxValue';
 export type ChartLegend = {
   visible?: boolean;
   position?: 'left' | 'bottom' | 'right';
