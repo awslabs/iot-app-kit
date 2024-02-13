@@ -26,6 +26,7 @@ import type {
   RequestInformationAndRange,
 } from '@iot-app-kit/core';
 import type { AggregatedPropertyParams } from './client';
+import { flattenRequestInfoByFetch } from '../util/flattenRequestInfoByFetch';
 
 export type BatchAggregatedEntry = {
   requestInformation: RequestInformationAndRange;
@@ -195,39 +196,7 @@ export const batchGetAggregatedPropertyDataPoints = ({
       // Aggregates for raw data only (denoted by '0')
       .filter(({ resolution }) => resolution !== '0')
       // fanout on fetchMostRecentBeforeStart, fetchMostRecentBeforeEnd, fetchFromStartToEnd into dedicated request info
-      .flatMap(
-        ({
-          fetchMostRecentBeforeStart,
-          fetchMostRecentBeforeEnd,
-          fetchFromStartToEnd,
-          ...rest
-        }) => {
-          const infos: RequestInformationAndRange[] = [];
-
-          if (fetchMostRecentBeforeStart) {
-            infos.push({
-              ...rest,
-              fetchMostRecentBeforeStart,
-            });
-          }
-
-          if (fetchMostRecentBeforeEnd) {
-            infos.push({
-              ...rest,
-              fetchMostRecentBeforeEnd,
-            });
-          }
-
-          if (fetchFromStartToEnd) {
-            infos.push({
-              ...rest,
-              fetchFromStartToEnd,
-            });
-          }
-
-          return infos;
-        }
-      )
+      .flatMap(flattenRequestInfoByFetch)
       .forEach((requestInformation) => {
         // only 1 of the following options are enabled at this point:
         // fetchMostRecentBeforeStart, fetchMostRecentBeforeEnd, fetchFromStartToEnd
