@@ -27,7 +27,7 @@
     "fix:stylelint": "stylelint '**/*.css' --fix",
     "test": "turbo run test",
     "test:ui": "turbo run test:ui",
-    "test:reliability": "turbo run test:ui:reliability",
+    "test:reliability": "PW_TEST_HTML_REPORT_OPEN=never turbo run test:ui:reliability",
     "test:stylelint": "stylelint '**/*.css' --max-warnings 0",
     "test:git": "git diff --exit-code",
     "release": "npm run build",

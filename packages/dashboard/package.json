@@ -32,7 +32,15 @@
     "test:watch": "jest --watch",
     "lint": "eslint . --max-warnings=0",
     "fix": "eslint --fix .",
-    "test:ui": "npx playwright test",
+    "playwright": "docker compose run playwright",
+    "test:ui": "if test \"$NODE_ENV\" = \"production\"; then npm run _test:ui:ci ; else npm run _test:ui:local ; fi",
+    "test:ui:reliability": "if test \"$NODE_ENV\" = \"production\"; then npm run _test:ui:reliability:ci ; else npm run _test:ui:reliability:local ; fi",
+    "_test:ui:ci": "npx playwright test",
+    "_test:ui:local": "npm run playwright -- npx playwright test",
+    "_test:ui:reliability:ci": "npx playwright test --repeat-each 5 --workers=1",
+    "_test:ui:reliability:local": "npm run playwright -- npx playwright test --repeat-each 5 --workers=1",
+    "test:ui:update": "npm run playwright -- npx playwright test --update-snapshots",
+    "test:ui:dev": "npx playwright test --ui",
     "watch-dependencies": "npm exec turbowatch ./turbowatch.ts"
   },
   "devDependencies": {

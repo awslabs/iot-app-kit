@@ -1,7 +1,10 @@
 version: '3.0'
 
+name: iot-app-kit-scene-composer
+
 services:
   playwright:
+    container_name: iot-app-kit-scene-composer
     image: mcr.microsoft.com/playwright:v1.39.0-focal
     build: .
     volumes:
