@@ -13,6 +13,7 @@ import type {
   SiteWiseDataStreamQuery,
 } from './types';
 import type { ResolutionConfig, DataSource } from '@iot-app-kit/core';
+import { SiteWiseClientEdge } from './client/edge/client';
 
 const DEFAULT_RESOLUTION_MAPPING = {
   [MINUTE_IN_MS * 15]: SupportedResolutions.ONE_MINUTE,
@@ -67,9 +68,13 @@ export const determineResolution = ({
 
 export const createDataSource = (
   siteWise: IoTSiteWiseClient,
-  settings?: SiteWiseDataSourceSettings
+  settings: SiteWiseDataSourceSettings = {}
 ): DataSource<SiteWiseDataStreamQuery> => {
-  const client = new SiteWiseClient(siteWise, settings);
+  const { edgeMode } = settings;
+  const client =
+    edgeMode === 'enabled'
+      ? new SiteWiseClientEdge(siteWise)
+      : new SiteWiseClient(siteWise, settings);
   return {
     initiateRequest: ({ onSuccess, onError }, requestInformations) => {
       Promise.all([
