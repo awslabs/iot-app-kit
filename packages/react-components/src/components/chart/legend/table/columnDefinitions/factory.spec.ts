@@ -6,6 +6,7 @@ describe('legend table column definitions', () => {
     const columnDefinitions = createTableLegendColumnDefinitions({
       trendCursors: [],
       width: 100,
+      visibleContent: {},
     });
     expect(columnDefinitions).toEqual(
       expect.arrayContaining([expect.toBeObject()])
@@ -27,6 +28,7 @@ describe('legend table column definitions', () => {
     const columnDefinitions = createTableLegendColumnDefinitions({
       trendCursors,
       width: 100,
+      visibleContent: {},
     });
     expect(columnDefinitions).toEqual(
       expect.arrayContaining([
