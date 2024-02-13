@@ -3,6 +3,7 @@
   "version": "9.11.0",
   "private": true,
   "devDependencies": {
+    "@iot-app-kit/testing-util": "^9.15.0",
     "@storybook/addon-essentials": "^7.6.6",
     "@storybook/addon-interactions": "^7.6.6",
     "@storybook/addon-links": "^7.6.6",
@@ -30,7 +31,6 @@
   },
   "dependencies": {
     "@iot-app-kit/core": "^9.15.0",
-    "@iot-app-kit/react-components": "^9.15.0",
-    "@iot-app-kit/testing-util": "^9.15.0"
+    "@iot-app-kit/react-components": "^9.15.0"
   }
 }
