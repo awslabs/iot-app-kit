@@ -3,8 +3,8 @@ import {
   MODELED_TAB,
   TEST_PAGE,
   WIDGET_EMPTY_STATE_TEXT,
-  MAX_VALUE_TABLE_HEADER,
-  MAX_TABLE_CELL,
+  MIN_VALUE_TABLE_HEADER,
+  MIN_TABLE_CELL,
 } from '../constants';
 import { gridUtil } from '../utils/grid';
 import { resourceExplorerUtil } from '../utils/resourceExplorer';
@@ -41,7 +41,7 @@ const setupTest = async (page: Page) => {
   return lineWidget;
 };
 
-test('max value is present', async ({ page }) => {
+test('min value is present', async ({ page }) => {
   const lineWidget = await setupTest(page);
 
   const bounds = await lineWidget.boundingBox();
@@ -51,15 +51,15 @@ test('max value is present', async ({ page }) => {
   }
 
   // cloudscape table makes 2 instances of the header
-  await expect(page.getByTestId(MAX_VALUE_TABLE_HEADER)).toHaveCount(2);
+  await expect(page.getByTestId(MIN_VALUE_TABLE_HEADER)).toHaveCount(2);
 
   // pause for data load + echarts lifecycle to re-render
   await page.waitForTimeout(2000);
 
-  const updatedMaxValueString = await page
-    .getByTestId(MAX_TABLE_CELL)
+  const updatedMinValueString = await page
+    .getByTestId(MIN_TABLE_CELL)
     .first()
     .innerText();
 
-  expect(updatedMaxValueString).not.toEqual('-');
+  expect(updatedMinValueString).not.toEqual('-');
 });
