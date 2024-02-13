@@ -1,0 +1,13 @@
+version: '3.0'
+
+services:
+  playwright:
+    image: mcr.microsoft.com/playwright:v1.39.0-focal
+    build: .
+    volumes:
+      - ../../:/iot-app-kit
+    ports:
+      - 9323:9323/tcp
+      - 6007:6007/tcp
+    working_dir: '/iot-app-kit/packages/react-components'
+    command: sh -c "npx playwright install chromium"
