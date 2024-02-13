@@ -55,9 +55,12 @@ describe('LegendSection', () => {
       visibleContent: 'unit' as ChartLegend['visibleContent'],
       setVisibleContent: () => {},
     };
-    const { getByLabelText } = render(<LegendSection {...options} />);
+    const { getByLabelText, getAllByLabelText } = render(
+      <LegendSection {...options} />
+    );
     expect(getByLabelText('Alignment')).toBeDisabled();
-    expect(getByLabelText('Display')).toBeDisabled();
+    expect(getAllByLabelText('Display')[0]).toBeDisabled();
+    expect(getAllByLabelText('Display')[1]).toBeDisabled();
   });
 
   test('should not disable legend options when visible is true', () => {
@@ -69,8 +72,11 @@ describe('LegendSection', () => {
       visibleContent: 'unit' as ChartLegend['visibleContent'],
       setVisibleContent: () => {},
     };
-    const { getByLabelText } = render(<LegendSection {...options} />);
+    const { getByLabelText, getAllByLabelText } = render(
+      <LegendSection {...options} />
+    );
     expect(getByLabelText('Alignment')).not.toBeDisabled();
-    expect(getByLabelText('Display')).not.toBeDisabled();
+    expect(getAllByLabelText('Display')[0]).not.toBeDisabled();
+    expect(getAllByLabelText('Display')[1]).not.toBeDisabled();
   });
 });

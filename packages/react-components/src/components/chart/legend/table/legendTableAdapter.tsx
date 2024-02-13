@@ -63,6 +63,7 @@ export const ChartLegendTableAdapter = ({
     <ChartLegendTable
       datastreams={datastreamItems}
       trendCursors={trendCursors}
+      visibleContent={visibleContent}
       {...options}
     />
   );
