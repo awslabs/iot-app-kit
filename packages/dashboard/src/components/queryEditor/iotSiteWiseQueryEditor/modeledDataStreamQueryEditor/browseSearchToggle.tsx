@@ -1,5 +1,7 @@
 import SegmentedControl from '@cloudscape-design/components/segmented-control';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import type { DashboardState } from '~/store/state';
 
 export const BROWSE_SEGMENT_ID = 'browse-assets';
 export const SEARCH_SEGMENT_ID = 'search-assets';
@@ -7,14 +9,18 @@ export const SEARCH_SEGMENT_ID = 'search-assets';
 type SegmentId = typeof BROWSE_SEGMENT_ID | typeof SEARCH_SEGMENT_ID;
 
 export interface BrowseSearchToggleProps {
-  selectedSegment: SegmentId;
   onChange: (selectedSegment: SegmentId) => void;
+  selectedSegment: SegmentId;
 }
 
 export function BrowseSearchToggle({
-  selectedSegment,
   onChange,
+  selectedSegment,
 }: BrowseSearchToggleProps) {
+  const isEdgeModeEnabled = useSelector(
+    (state: DashboardState) => state.isEdgeModeEnabled
+  );
+
   return (
     <SegmentedControl
       selectedId={selectedSegment}
@@ -23,7 +29,7 @@ export function BrowseSearchToggle({
       }
       options={[
         { text: 'Browse', id: BROWSE_SEGMENT_ID },
-        { text: 'Search', id: SEARCH_SEGMENT_ID },
+        { text: 'Search', id: SEARCH_SEGMENT_ID, disabled: isEdgeModeEnabled },
       ]}
     />
   );

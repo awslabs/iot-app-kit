@@ -51,6 +51,9 @@ export function ModeledDataStreamTable({
   modeledDataStreamsTitle,
 }: ModeledDataStreamTableProps) {
   const metricsRecorder = getPlugin('metricsRecorder');
+  const isEdgeModeEnabled = useSelector(
+    (state: DashboardState) => state.isEdgeModeEnabled
+  );
   const significantDigits = useSelector(
     (state: DashboardState) => state.significantDigits
   );
@@ -62,6 +65,13 @@ export function ModeledDataStreamTable({
     defaultVisibleContent: ['name', 'latestValue'],
     resourceName: 'modeled data stream',
   });
+
+  if (isEdgeModeEnabled) {
+    // filter out the latestValue fields to mitigate performance impact on edge
+    preferences.visibleContent = preferences.visibleContent.filter(
+      (content) => content !== 'latestValue' && content !== 'latestValueTime'
+    );
+  }
 
   const { getLatestValue } = useLatestValues({
     isEnabled:

@@ -67,6 +67,9 @@ const WidgetTile: React.FC<WidgetTileProps> = ({
   title,
   removeable,
 }) => {
+  const isEdgeModeEnabled = useSelector(
+    (state: DashboardState) => state.isEdgeModeEnabled
+  );
   const isReadOnly = useSelector((state: DashboardState) => state.readOnly);
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
@@ -129,16 +132,18 @@ const WidgetTile: React.FC<WidgetTileProps> = ({
             </Box>
           </div>
           <div className='tile-button-contianer'>
-            {widget.type !== 'text' && iotSiteWiseClient && (
-              <CSVDownloadButton
-                fileName={`${widget.properties.title ?? widget.type}`}
-                client={iotSiteWiseClient}
-                widgetType={widget.type}
-                queryConfig={
-                  widget.properties.queryConfig as StyledSiteWiseQueryConfig
-                }
-              />
-            )}
+            {!isEdgeModeEnabled &&
+              widget.type !== 'text' &&
+              iotSiteWiseClient && (
+                <CSVDownloadButton
+                  fileName={`${widget.properties.title ?? widget.type}`}
+                  client={iotSiteWiseClient}
+                  widgetType={widget.type}
+                  queryConfig={
+                    widget.properties.queryConfig as StyledSiteWiseQueryConfig
+                  }
+                />
+              )}
             {isRemoveable && (
               <DeletableTileAction handleDelete={handleDelete} />
             )}
