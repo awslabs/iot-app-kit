@@ -35,6 +35,7 @@
         "AWS_SESSION_TOKEN",
         "AWS_REGION",
         "ASSET_ID_1",
+        "EDGE_GATEWAY_ENDPOINT",
         "NODE_ENV",
         "PROPERTY_ID_1",
         "PROPERTY_ID_2",

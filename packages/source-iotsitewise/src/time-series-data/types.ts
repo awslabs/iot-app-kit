@@ -1,6 +1,11 @@
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { SOURCE as IoTEventsSource } from '../alarms/iotevents';
-import type { CacheSettings, DataStreamQuery, RefId } from '@iot-app-kit/core';
+import type {
+  CacheSettings,
+  DataStreamQuery,
+  EdgeMode,
+  RefId,
+} from '@iot-app-kit/core';
 
 /**
  * Learn more about AWS IoT SiteWise assets at https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-asset-models.html
@@ -66,8 +71,6 @@ export type SiteWiseAssetModelQuery = DataStreamQuery & {
 
 export type SiteWiseDataStreamQuery = Partial<SiteWiseAssetQuery> &
   Partial<SiteWisePropertyAliasQuery>;
-
-export type EdgeMode = 'enabled' | 'disabled';
 
 export type SiteWiseDataSourceSettings = {
   batchDuration?: number;

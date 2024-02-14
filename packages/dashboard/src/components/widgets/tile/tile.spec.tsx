@@ -100,4 +100,26 @@ describe('WidgetTile', () => {
       container.querySelector('[aria-label="delete widget"]')
     ).not.toBeInTheDocument();
   });
+
+  it('does not show download CSV in readonly mode', function () {
+    const { container } = render(
+      <Provider
+        store={configureDashboardStore({
+          dashboardConfiguration: {
+            widgets: [MOCK_LINE_CHART_WIDGET],
+          },
+          isEdgeModeEnabled: true,
+        })}
+      >
+        <WidgetTile removeable widget={MOCK_LINE_CHART_WIDGET}>
+          <div>test-content</div>
+        </WidgetTile>
+        ;
+      </Provider>
+    );
+
+    expect(
+      container.querySelector('[aria-label="download CSV"]')
+    ).not.toBeInTheDocument();
+  });
 });

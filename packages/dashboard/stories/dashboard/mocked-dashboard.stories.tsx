@@ -33,10 +33,7 @@ const emptyDashboardConfiguration: DashboardProperties = {
     viewport,
     widgets: [],
   },
-  onSave: async (dashboard) => {
-    window.localStorage.setItem('dashboard', JSON.stringify(dashboard));
-    Promise.resolve();
-  },
+  onSave: () => Promise.resolve(),
 };
 
 const widgetDashboardConfiguration = {
