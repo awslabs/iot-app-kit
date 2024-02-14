@@ -111,6 +111,11 @@ export const CONTEXT_MENU_Z_INDEX = 10000000;
 
 export const ECHARTS_ZOOM_DEBOUNCE_MS = 300;
 
+// viewport timestamp constants
+export const TIMESTAMP_WIDTH_FACTOR = 44;
+export const TIMESTAMP_WIDTH_FACTOR_BOTTOM = 24;
+export const TIMESTAMP_HEIGHT_FACTOR_BOTTOM = 19;
+
 // legend constants
 export const LEGEND_NAME_MIN_WIDTH_FACTOR = 3.5;
 
