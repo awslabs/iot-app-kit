@@ -2,11 +2,30 @@ import CollectionPreferences, {
   type CollectionPreferencesProps,
 } from '@cloudscape-design/components/collection-preferences';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
+import type { DashboardState } from '~/store/state';
 import { SUPPORTED_PAGE_SIZES } from '../../../constants';
 
 type AllPreferences = NonNullable<CollectionPreferencesProps['preferences']>;
 type Preferences<P extends AllPreferences> = P;
+
+const visibleContentOptions = [
+  { id: 'id', label: 'ID' },
+  { id: 'alias', label: 'Alias' },
+  { id: 'name', label: 'Name' },
+  { id: 'latestValue', label: 'Latest values' },
+  { id: 'latestValueTime', label: 'Latest value times' },
+  { id: 'assetName', label: 'Asset name' },
+  { id: 'dataType', label: 'Data type' },
+  { id: 'dataTypeSpec', label: 'Data type spec' },
+  { id: 'unit', label: 'Unit' },
+];
+
+// filter out the latestValue fields to mitigate performance impact on edge
+const visibleContentOptionsEdge = visibleContentOptions.filter(
+  ({ id }) => id !== 'latestValue' && id !== 'latestValueTime'
+);
 
 interface ModeledDataStreamTablePreferencesProps<P extends AllPreferences> {
   preferences: Preferences<P>;
@@ -17,6 +36,13 @@ export function ModeledDataStreamTablePreferences<P extends AllPreferences>({
   preferences,
   updatePreferences,
 }: ModeledDataStreamTablePreferencesProps<P>) {
+  const isEdgeModeEnabled = useSelector(
+    (state: DashboardState) => state.isEdgeModeEnabled
+  );
+  const options = isEdgeModeEnabled
+    ? visibleContentOptionsEdge
+    : visibleContentOptions;
+
   return (
     <CollectionPreferences
       title='Asset property preferences'
@@ -46,17 +72,7 @@ export function ModeledDataStreamTablePreferences<P extends AllPreferences>({
         options: [
           {
             label: `Asset property fields`,
-            options: [
-              { id: 'id', label: 'ID' },
-              { id: 'alias', label: 'Alias' },
-              { id: 'name', label: 'Name' },
-              { id: 'latestValue', label: 'Latest values' },
-              { id: 'latestValueTime', label: 'Latest value times' },
-              { id: 'assetName', label: 'Asset name' },
-              { id: 'dataType', label: 'Data type' },
-              { id: 'dataTypeSpec', label: 'Data type spec' },
-              { id: 'unit', label: 'Unit' },
-            ],
+            options,
           },
         ],
       }}

@@ -2,7 +2,9 @@ import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import Tabs from '@cloudscape-design/components/tabs';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
+import type { DashboardState } from '~/store/state';
 import { ModeledDataStreamQueryEditor } from './modeledDataStreamQueryEditor';
 import { UnmodeledDataStreamQueryEditor } from './unmodeledDataStreamExplorer';
 import { QueryExtender } from './queryExtender';
@@ -22,6 +24,10 @@ export function IoTSiteWiseQueryEditor({
   iotSiteWiseClient,
   iotTwinMakerClient,
 }: IoTSiteWiseQueryEditorProps) {
+  const isEdgeModeEnabled = useSelector(
+    (state: DashboardState) => state.isEdgeModeEnabled
+  );
+
   function handleClickAddModeledDataStreams(
     newModeledDataStreams: ModeledDataStream[]
   ) {
@@ -68,12 +74,14 @@ export function IoTSiteWiseQueryEditor({
         client={iotSiteWiseClient}
       />
     ),
+    disabled: isEdgeModeEnabled,
   };
 
   const assetModeledTab = {
     label: 'Dynamic assets',
     id: 'explore-asset-model-tab',
     content: <AssetModelDataStreamExplorer client={iotSiteWiseClient} />,
+    disabled: isEdgeModeEnabled,
   };
 
   const defaultTabs = [modeledTab, unmodeledTab, assetModeledTab];

@@ -4,6 +4,7 @@ import { deepFreeze } from '~/util/deepFreeze';
 export type DashboardState<
   Properties extends Record<string, unknown> = Record<string, unknown>
 > = {
+  isEdgeModeEnabled: boolean;
   grid: {
     enabled: boolean;
     width: number;
@@ -28,6 +29,7 @@ export type DashboardState<
  *
  */
 export const initialState: DashboardState = deepFreeze({
+  isEdgeModeEnabled: false,
   grid: {
     enabled: true,
     width: 100,

@@ -19,6 +19,9 @@ export { viewportManager } from './viewportManager/viewportManager';
 export { isHistoricalViewport } from './common/predicates';
 export { viewportEndDate, viewportStartDate } from './common/viewport';
 
+// Edge utilities
+export * from './edge/types';
+
 // Exposed but for internal usage only. Liable to change.
 export { TimeSeriesDataModule } from './data-module/TimeSeriesDataModule';
 

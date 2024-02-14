@@ -4,9 +4,11 @@ import {
 } from '~/types';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { getClients } from './getClients';
+import { type EdgeMode } from '@iot-app-kit/core';
 
 export const getQueries = (
-  dashboardClientConfiguration: DashboardClientConfiguration
+  dashboardClientConfiguration: DashboardClientConfiguration,
+  edgeMode?: EdgeMode
 ): DashboardIotSiteWiseQueries => {
   const { iotEventsClient, iotSiteWiseClient } = getClients(
     dashboardClientConfiguration
@@ -22,6 +24,7 @@ export const getQueries = (
     // Collect batch requests before sending
     settings: {
       batchDuration: 100,
+      edgeMode,
     },
   }).query;
 

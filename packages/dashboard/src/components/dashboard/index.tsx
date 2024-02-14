@@ -2,6 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
+import { type EdgeMode } from '@iot-app-kit/core';
+import { isEdgeModeEnabled } from '@iot-app-kit/core';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import InternalDashboard from '../internalDashboard';
@@ -30,6 +32,7 @@ export type DashboardProperties = {
   onSave: DashboardSave;
   clientConfiguration: DashboardClientConfiguration;
   dashboardConfiguration: DashboardConfiguration;
+  edgeMode?: EdgeMode;
   initialViewMode?: 'preview' | 'edit';
   name?: string;
 };
@@ -39,6 +42,7 @@ const Dashboard: React.FC<DashboardProperties> = ({
   onSave,
   clientConfiguration,
   dashboardConfiguration,
+  edgeMode = 'disabled',
   initialViewMode,
   name,
 }) => {
@@ -50,12 +54,15 @@ const Dashboard: React.FC<DashboardProperties> = ({
     <>
       {showFPSMonitor && <FpsView height={50} width={80} />}
       <ClientContext.Provider value={getClients(clientConfiguration)}>
-        <QueryContext.Provider value={getQueries(clientConfiguration)}>
+        <QueryContext.Provider
+          value={getQueries(clientConfiguration, edgeMode)}
+        >
           <QueryClientProvider client={queryClient}>
             <Provider
               store={configureDashboardStore({
                 ...toDashboardState(dashboardConfiguration),
                 readOnly,
+                isEdgeModeEnabled: isEdgeModeEnabled(edgeMode),
               })}
             >
               <DndProvider
