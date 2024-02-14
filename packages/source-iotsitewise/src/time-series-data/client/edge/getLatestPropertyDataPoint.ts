@@ -25,7 +25,6 @@ export const getLatestPropertyDataPoint = async ({
   client: IoTSiteWiseClient;
   requestInformations: RequestInformationAndRange[];
 }): Promise<void> => {
-  const end = new Date();
   const requests = requestInformations
     .filter(
       ({ resolution, fetchMostRecentBeforeEnd }) =>
@@ -76,7 +75,12 @@ export const getLatestPropertyDataPoint = async ({
           const start = lastDataPoint
             ? new Date(lastDataPoint.x)
             : SITEWISE_PREVIEW_DATE;
-          onSuccess([dataStream], requestInformation, start, end);
+          onSuccess(
+            [dataStream],
+            requestInformation,
+            start,
+            requestInformation.end
+          );
         });
     });
   } catch {

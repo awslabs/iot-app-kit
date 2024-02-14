@@ -11,11 +11,13 @@ export const createListAssetPropertiesMapCacheKey = (
   siteWiseQuery:
     | Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>
     | undefined
-) => {
+): string[] => {
   return [
     ...ASSET_DESCRIPTION_QUERY_KEY,
     'assetDescriptionsMap',
-    ...(siteWiseQuery?.assets?.map((a) => a.assetId) ?? []),
+    ...(siteWiseQuery?.assets?.map(
+      ({ assetId }: { assetId: string }) => assetId
+    ) ?? []),
   ];
 };
 

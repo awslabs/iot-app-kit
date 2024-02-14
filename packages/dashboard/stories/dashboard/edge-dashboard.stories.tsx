@@ -1,18 +1,33 @@
 import React, { useState } from 'react';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTEventsClient } from '@aws-sdk/client-iot-events';
+import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { registerPlugin } from '@iot-app-kit/core';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import Dashboard from '../../src/components/dashboard';
-import { REGION } from '../../testing/siteWiseQueries';
 
-import { getEnvCredentials } from '../../testing/getEnvCredentials';
 import {
   DashboardClientConfiguration,
   DashboardConfiguration,
 } from '../../src/types';
 import { DashboardView } from '~/index';
 
-const DASHBOARD_STORAGE_NAMESPACE = 'connected-dashboard';
+import { getEnvCredentials } from '../../testing/getEnvCredentials';
+import { getEndpoints } from '../../testing/getEndpoints';
+
+const DASHBOARD_STORAGE_NAMESPACE = 'edge-dashboard';
+
+const endpoint = getEndpoints().edgeGatewayEndpoint;
+const clientConfig = {
+  endpoint,
+  credentials: getEnvCredentials(),
+  region: 'edge',
+  disableHostPrefix: true,
+};
+const iotSiteWiseClient = new IoTSiteWiseClient(clientConfig);
+const iotEventsClient = new IoTEventsClient(clientConfig);
+const iotTwinMakerClient = new IoTTwinMakerClient(clientConfig);
 
 const DEFAULT_DASHBOARD_CONFIG = {
   displaySettings: {
@@ -24,8 +39,9 @@ const DEFAULT_DASHBOARD_CONFIG = {
 };
 
 const CLIENT_CONFIGURATION: DashboardClientConfiguration = {
-  awsCredentials: getEnvCredentials(),
-  awsRegion: REGION,
+  iotSiteWiseClient,
+  iotEventsClient,
+  iotTwinMakerClient,
 };
 
 registerPlugin('metricsRecorder', {
@@ -77,6 +93,7 @@ export const Main: ComponentStory<typeof Dashboard> = () => {
       onSave={onSave}
       initialViewMode={initialViewMode}
       dashboardConfiguration={dashboardConfig}
+      edgeMode='enabled'
     />
   );
 };
@@ -85,11 +102,12 @@ export const View: ComponentStory<typeof DashboardView> = () => (
   <DashboardView
     clientConfiguration={CLIENT_CONFIGURATION}
     dashboardConfiguration={getInitialDashboardConfig()}
+    edgeMode='enabled'
   />
 );
 
 export default {
-  title: 'Dashboard/SiteWise Connected',
+  title: 'Dashboard/Edge Connected',
   component: Dashboard,
   parameters: {
     layout: 'fullscreen',
