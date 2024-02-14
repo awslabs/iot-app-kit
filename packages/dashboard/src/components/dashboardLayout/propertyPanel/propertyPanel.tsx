@@ -11,6 +11,7 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import { useWindowSize } from '~/components/dashboardLayout/hooks/useWindowSize';
 import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import './propertyPanel.css';
+import { PropertiesPanelTable } from '~/components/dashboardLayout/propertyPanel/propertiesPanelTable/propertiesPanelTable';
 
 export const PropertyPanel = ({
   isConfigPanelCollapsed,
@@ -80,6 +81,7 @@ export const PropertyPanel = ({
             }}
           >
             {panelHeader}
+            <PropertiesPanelTable onAddDataStreams={() => {}} />
           </div>
         </Resizable>
       )}

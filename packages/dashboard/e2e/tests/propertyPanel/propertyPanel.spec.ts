@@ -2,7 +2,6 @@ import { test } from '../test';
 import { expect } from '@playwright/test';
 
 test.describe('Property Panel Tests', () => {
-  test.skip();
   test('test if the property panel is visible in the new layout', async ({
     dashboardWithPropertyPanel,
   }) => {
@@ -71,5 +70,48 @@ test.describe('Property Panel Tests', () => {
       (await propPanel.boundingBox()).height >
         propPanelBeforeMoveBoundingBox.height
     ).toBeTruthy();
+  });
+
+  test('the property panel table should be rendered when property panel opens', async ({
+    dashboardWithPropertyPanel,
+  }) => {
+    const propPanel = dashboardWithPropertyPanel.page.locator(
+      'div[class="property-panel-container"]'
+    );
+    await propPanel.click();
+    const propPanelTable = propPanel.locator(
+      'div[class="properties-table-parent-container"]'
+    );
+    await expect(propPanelTable).toBeVisible();
+  });
+
+  test('the property panel table should be rendered when a widget is selected', async ({
+    dashboardWithPropertyPanel,
+  }) => {
+    await dashboardWithPropertyPanel.addAWidgetByType('line');
+
+    const propPanelTable = dashboardWithPropertyPanel.page.locator(
+      'div[class="properties-table-parent-container"]'
+    );
+    const text = propPanelTable.getByText(
+      'No data streams added to the widget'
+    );
+    await expect(text).toBeVisible();
+  });
+
+  test('when a widget is deselected, the table should ask the user to select a widget to display data', async ({
+    dashboardWithPropertyPanel,
+    page,
+  }) => {
+    await dashboardWithPropertyPanel.addAWidgetByType('line');
+    const boundingBox = await dashboardWithPropertyPanel.gridArea.boundingBox();
+
+    await page.mouse.dblclick(boundingBox.x + 10, boundingBox.y + 10);
+
+    const propPanelTable = dashboardWithPropertyPanel.page.locator(
+      'div[class="properties-table-parent-container"]'
+    );
+    const text = propPanelTable.getByText('Please select a widget above');
+    await expect(text).toBeVisible();
   });
 });
