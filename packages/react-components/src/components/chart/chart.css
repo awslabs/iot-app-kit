@@ -69,3 +69,15 @@
 .base-chart-left-legend {
   display: flex;
 }
+
+.base-chart-container-element {
+  position: relative;
+}
+
+.base-chart-timestamp {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  overflow: hidden;
+  white-space: nowrap;
+}
