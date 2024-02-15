@@ -150,14 +150,14 @@ describe(`${PropertiesPanel.name}`, () => {
 
     expect(screen.getByText('Style')).toBeVisible();
     expect(screen.getByText('Axis')).toBeVisible();
-    expect(screen.getByText('Settings')).toBeVisible();
+    expect(screen.getByText('Decimal places')).toBeVisible();
   });
   it('should render the style section when switched between widgets', async () => {
     await renderTestComponentAsync();
 
     expect(screen.getByText('Style')).toBeVisible();
     expect(screen.getByText('Axis')).toBeVisible();
-    expect(screen.getByText('Settings')).toBeVisible();
+    expect(screen.getByText('Decimal places')).toBeVisible();
 
     const thresholdsTab = screen.getByTestId('thresholds');
     expect(thresholdsTab).toBeVisible();
@@ -172,7 +172,7 @@ describe(`${PropertiesPanel.name}`, () => {
     };
 
     await renderTestComponentAsync(options);
-    expect(screen.getByText('Settings')).toBeVisible();
+    expect(screen.getByText('Decimal places')).toBeVisible();
   });
 
   it('should render an empty thresholds section', async () => {
