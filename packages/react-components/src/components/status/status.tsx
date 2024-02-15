@@ -13,6 +13,7 @@ import type {
 } from '@iot-app-kit/core';
 import type { StatusSettings } from './types';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
+import { UpdatedKpiBase } from '../kpi/updatedKpiBase';
 
 export const Status = ({
   query,
@@ -67,6 +68,25 @@ export const Status = ({
   const isLoading =
     alarmStream?.isLoading || propertyStream?.isLoading || false;
   const error = alarmStream?.error || propertyStream?.error;
+
+  const hasNewKPI = !!localStorage?.getItem('USE_UPDATED_KPI');
+
+  if (hasNewKPI)
+    return (
+      <UpdatedKpiBase
+        aggregationType={aggregationType}
+        propertyPoint={propertyPoint}
+        resolution={propertyResolution}
+        alarmPoint={alarmPoint}
+        settings={settings}
+        name={name}
+        unit={unit}
+        color={color}
+        isLoading={isLoading}
+        error={error?.msg}
+        significantDigits={significantDigits}
+      />
+    );
 
   return (
     <StatusBase
