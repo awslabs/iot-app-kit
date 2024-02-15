@@ -1,10 +1,12 @@
 import SeriesModel from 'echarts/types/src/model/Series';
 import { SeriesOption, DefaultStatesMixin } from 'echarts/types/src/util/types';
+import { round } from '@iot-app-kit/core-util';
 
 export const findMinMax = (
   series: SeriesModel<SeriesOption<unknown, DefaultStatesMixin>>,
   start: number,
-  end: number
+  end: number,
+  appKitSignificantDigits: number
 ) => {
   let max: number | undefined = undefined;
   let min: number | undefined = undefined;
@@ -12,10 +14,10 @@ export const findMinMax = (
     const dataPoint = series.getData().getValues(dims) as number[];
     if (contains(start, end, dataPoint[0])) {
       if (max === undefined || dataPoint[1] > max) {
-        max = dataPoint[1];
+        max = round(dataPoint[1], appKitSignificantDigits);
       }
       if (min === undefined || dataPoint[1] < min) {
-        min = dataPoint[1];
+        min = round(dataPoint[1], appKitSignificantDigits);
       }
     }
   });
