@@ -1,5 +1,4 @@
 import React from 'react';
-import { KpiBase } from './kpiBase';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
@@ -11,6 +10,8 @@ import type {
   TimeSeriesDataQuery,
 } from '@iot-app-kit/core';
 import type { KPISettings } from './types';
+import { UpdatedKpiBase } from './updatedKpiBase';
+import { KpiBase } from './kpiBase';
 
 export const KPI = ({
   query,
@@ -62,6 +63,25 @@ export const KPI = ({
   const isLoading =
     alarmStream?.isLoading || propertyStream?.isLoading || false;
   const error = alarmStream?.error || propertyStream?.error;
+
+  const hasNewKPI = !!localStorage?.getItem('USE_UPDATED_KPI');
+
+  if (hasNewKPI)
+    return (
+      <UpdatedKpiBase
+        propertyPoint={propertyPoint}
+        alarmPoint={alarmPoint}
+        settings={settings}
+        aggregationType={aggregationType}
+        resolution={propertyResolution}
+        name={name}
+        unit={unit}
+        color={color}
+        isLoading={isLoading}
+        error={error?.msg}
+        significantDigits={significantDigits}
+      />
+    );
 
   return (
     <KpiBase

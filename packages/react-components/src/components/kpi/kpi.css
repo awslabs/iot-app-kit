@@ -1,0 +1,41 @@
+.updated-kpi {
+  box-sizing: border-box;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  overflow: hidden;
+}
+
+.updated-kpi .property-name {
+  font-weight: bold;
+  color: #000716;
+  padding: 2px 0;
+}
+
+.updated-kpi .asset-name {
+  color: #414d5c;
+  padding: 2px 0;
+}
+
+.updated-kpi .value {
+  font-weight: bold;
+  padding: 4px 0;
+}
+
+.updated-kpi .timestamp-container {
+  color: "#414D5C";
+}
+
+.updated-kpi .timestamp-border {
+  position: relative;
+  width: calc(100% + 16px);
+  height: 2px;
+  left: -8px;
+  background-color: #e9ebed;
+}
+
+.updated-kpi .timestamp {
+  margin-top: 6px;
+}
