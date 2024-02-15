@@ -1,4 +1,5 @@
-import { test, expect, Page } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
+import { test } from '../test';
 import {
   MODELED_TAB,
   TEST_PAGE,
@@ -8,6 +9,7 @@ import {
 } from '../constants';
 import { gridUtil } from '../utils/grid';
 import { resourceExplorerUtil } from '../utils/resourceExplorer';
+import { getDecimalPlaces } from '../utils/getDecimalPlaces';
 
 const setupTest = async (page: Page) => {
   await page.goto(TEST_PAGE);
@@ -41,25 +43,63 @@ const setupTest = async (page: Page) => {
   return lineWidget;
 };
 
-test('min value is present', async ({ page }) => {
-  const lineWidget = await setupTest(page);
+test.describe('Data Stream Maxes', () => {
+  test('min value is present', async ({ page }) => {
+    const lineWidget = await setupTest(page);
 
-  const bounds = await lineWidget.boundingBox();
+    const bounds = await lineWidget.boundingBox();
 
-  if (!bounds) {
-    throw new Error('Line widget has no bounds');
-  }
+    if (!bounds) {
+      throw new Error('Line widget has no bounds');
+    }
 
-  // cloudscape table makes 2 instances of the header
-  await expect(page.getByTestId(MIN_VALUE_TABLE_HEADER)).toHaveCount(2);
+    // cloudscape table makes 2 instances of the header
+    await expect(page.getByTestId(MIN_VALUE_TABLE_HEADER)).toHaveCount(2);
 
-  // pause for data load + echarts lifecycle to re-render
-  await page.waitForTimeout(2000);
+    // pause for data load + echarts lifecycle to re-render
+    await page.waitForTimeout(2000);
 
-  const updatedMinValueString = await page
-    .getByTestId(MIN_TABLE_CELL)
-    .first()
-    .innerText();
+    const updatedMinValueString = await page
+      .getByTestId(MIN_TABLE_CELL)
+      .first()
+      .innerText();
 
-  expect(updatedMinValueString).not.toEqual('-');
+    expect(updatedMinValueString).not.toEqual('-');
+  });
+
+  test('Min value has correct significant digits', async ({
+    page,
+    configPanel,
+  }) => {
+    const lineWidget = await setupTest(page);
+    const bounds = await lineWidget.boundingBox();
+
+    if (!bounds) {
+      throw new Error('Line widget has no bounds');
+    }
+
+    // pause for data load + echarts lifecycle to re-render
+    await page.waitForTimeout(2000);
+
+    const initialMaxValueString = await page
+      .getByTestId(MIN_TABLE_CELL)
+      .first()
+      .innerText();
+
+    expect(getDecimalPlaces(initialMaxValueString)).toBe(3);
+
+    //change sig digits to 1
+    await configPanel.collapsedButton.click();
+    await configPanel.decimalPlaceInput.fill('1');
+
+    // pause for data load + echarts lifecycle to re-render
+    await page.waitForTimeout(2000);
+
+    //confirm that value has one decimal place
+    const updatedMaxValueString = await page
+      .getByTestId(MIN_TABLE_CELL)
+      .first()
+      .innerText();
+    expect(getDecimalPlaces(updatedMaxValueString)).toBe(1);
+  });
 });

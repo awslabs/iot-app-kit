@@ -15,6 +15,8 @@ export const dataStreamMinMaxSyncExtension: any = (registers: EChartsExtensionIn
   ) => {
     const [ecModel, api, params] = args;
     const appKitChartId = ecModel.option.appKitChartId as string; // widget-id
+    const appKitSignificantDigits = ecModel.option
+      .appKitSignificantDigits as number; //significant digits
     const grid = api
       ?.getCoordinateSystems()
       .find((a) => a.model?.type === 'grid') as Grid;
@@ -47,7 +49,8 @@ export const dataStreamMinMaxSyncExtension: any = (registers: EChartsExtensionIn
       const { max, min } = findMinMax(
         series,
         startDateXCoordinateValue,
-        endDateXCoordinateValue
+        endDateXCoordinateValue,
+        appKitSignificantDigits
       );
       minValues[id] = min;
       maxValues[id] = max;

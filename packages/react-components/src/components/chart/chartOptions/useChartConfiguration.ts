@@ -202,6 +202,7 @@ export const useChartConfiguration = (
     chart.setOption(
       {
         appKitChartId: id,
+        appKitSignificantDigits: significantDigits,
         backgroundColor,
         xAxis,
         tooltip,
@@ -217,6 +218,7 @@ export const useChartConfiguration = (
     chartRef,
     id,
     backgroundColor,
+    significantDigits,
     xAxis,
     tooltip,
     title,
