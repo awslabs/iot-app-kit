@@ -42,7 +42,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
 
   if (shouldShowEmptyState) {
     return (
-      <WidgetTile widget={widget} removeable>
+      <WidgetTile widget={widget}>
         <KPIWidgetEmptyStateComponent />
       </WidgetTile>
     );
@@ -66,7 +66,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
-    <WidgetTile widget={widget} removeable key={key}>
+    <WidgetTile widget={widget} key={key}>
       <KPI
         query={queries[0]}
         viewport={viewport}

@@ -39,7 +39,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (
   const isEmptyWidget = queries.length === 0;
   if (isEmptyWidget) {
     return (
-      <WidgetTile widget={widget} removeable title={title}>
+      <WidgetTile widget={widget}>
         <NoChartData
           icon={timelineSvgDark}
           emptyStateText='Browse and select to add your asset properties in your status timeline widget.'
@@ -49,7 +49,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (
   }
 
   return (
-    <WidgetTile widget={widget} removeable title={title} key={key}>
+    <WidgetTile widget={widget} title={title} key={key}>
       <StatusTimeline
         queries={queries}
         viewport={viewport}
