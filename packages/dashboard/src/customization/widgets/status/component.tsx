@@ -39,7 +39,7 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
 
   if (shouldShowEmptyState) {
     return (
-      <WidgetTile widget={widget} removeable>
+      <WidgetTile widget={widget}>
         <StatusWidgetEmptyStateComponent />
       </WidgetTile>
     );

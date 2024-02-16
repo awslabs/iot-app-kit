@@ -18,9 +18,14 @@ import {
 } from './constants';
 import { convertViewportToHistoricalViewport } from '../util/dateTimeUtil';
 
-const canOnlyDownloadLiveMode: readonly string[] = ['table', 'kpi', 'status'];
+export const canOnlyDownloadLiveMode: readonly string[] = [
+  'table',
+  'kpi',
+  'status',
+  'text',
+];
 
-const isQueryEmpty = (queryConfig: StyledSiteWiseQueryConfig) => {
+export const isQueryEmpty = (queryConfig: StyledSiteWiseQueryConfig) => {
   const query = queryConfig.query;
   return (
     !query?.assets?.length &&
