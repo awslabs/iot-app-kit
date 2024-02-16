@@ -1,127 +1,81 @@
 import React from 'react';
 
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
-import InternalDashboard from '../internalDashboard';
-
-import { configureDashboardStore } from '../../store';
 import { useDashboardPlugins } from '../../customization/api';
-import type { DashboardState } from '../../store/state';
-import type { RecursivePartial } from '~/types';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AppKitConfig } from '@iot-app-kit/react-components';
 // FIXME: Export DEFAULT_APP_KIT_CONFIG from @iot-app-kit/react-components
 // eslint-disable-next-line no-restricted-imports
 import { DEFAULT_APP_KIT_CONFIG } from '@iot-app-kit/react-components/src/components/iot-app-kit-config/defaultValues';
+import Palette from './index';
 
-const testQueryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
-
-const InternalDashboardAux = () => {
+const ComponentPaletteTestComponent = ({
+  onAddWidget,
+}: {
+  onAddWidget: typeof jest.fn;
+}) => {
   useDashboardPlugins();
-  return <InternalDashboard editable={true} />;
-};
-
-const renderDashboard = (state?: RecursivePartial<DashboardState>) => {
-  const store = configureDashboardStore(state);
-
-  const renderResults = render(
+  return (
     <AppKitConfig
       customFeatureConfig={DEFAULT_APP_KIT_CONFIG.featureFlagConfig}
     >
-      <QueryClientProvider client={testQueryClient}>
-        <Provider store={store}>
-          <DndProvider
-            backend={HTML5Backend}
-            options={{
-              enableMouseEvents: true,
-              enableKeyboardEvents: true,
-            }}
-          >
-            <InternalDashboardAux />
-          </DndProvider>
-        </Provider>
-      </QueryClientProvider>
+      <DndProvider
+        backend={HTML5Backend}
+        options={{
+          enableMouseEvents: true,
+          enableKeyboardEvents: true,
+        }}
+      >
+        <Palette onAddWidget={onAddWidget} />
+      </DndProvider>
     </AppKitConfig>
   );
-
-  return { ...renderResults, store };
 };
 
-// TODO: fix these tests (likely need to mock TwinMaker client)
-describe.skip('Component Palette', () => {
-  it('can drag widgets onto the grid', function () {
-    const { container, store } = renderDashboard();
+describe('Component Palette', () => {
+  /**
+   * drag and drop functionality covered by dashboard e2e tests
+   * removing them here because they are redundant and difficult
+   * to maintain in the jest context
+   */
 
-    const draggableLine = screen.getByLabelText(/add line widget/i);
-    const draggableText = screen.getByLabelText(/add text widget/i);
+  it('adds a widget when clicked', () => {
+    const onAddWidgetStub = jest.fn();
+    render(<ComponentPaletteTestComponent onAddWidget={onAddWidgetStub} />);
 
-    const grid = container.querySelector(`#${DASHBOARD_CONTAINER_ID}`);
-
-    if (!grid) throw new Error('could not get draggable elements for test');
-
-    expect(store.getState().dashboardConfiguration.widgets).toHaveLength(0);
-
-    act(() => {
-      fireEvent.dragStart(draggableLine);
-      fireEvent.dragEnter(grid);
-      fireEvent.dragOver(grid);
-      fireEvent.drop(grid);
-    });
-
-    expect(store.getState().dashboardConfiguration.widgets).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          type: 'line-chart',
-        }),
-      ])
-    );
+    const lineWidget = screen.getByLabelText(/add line widget/i);
 
     act(() => {
-      fireEvent.dragStart(draggableText);
-      fireEvent.dragEnter(grid);
-      fireEvent.dragOver(grid);
-      fireEvent.drop(grid);
+      fireEvent.pointerUp(lineWidget);
     });
 
-    expect(store.getState().dashboardConfiguration.widgets).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          type: 'line-chart',
-        }),
-        expect.objectContaining({
-          type: 'text',
-        }),
-      ])
-    );
+    expect(onAddWidgetStub).toBeCalledWith('xy-plot');
   });
 
-  it('does not add a widget if dropped outside of grid', function () {
-    const { store } = renderDashboard();
+  it('adds a widget on enter or space', () => {
+    const onAddWidgetStub = jest.fn();
+    render(<ComponentPaletteTestComponent onAddWidget={onAddWidgetStub} />);
 
-    const draggable = screen.getByLabelText(/add line widget/i);
-
-    // Preview button is always visible, and outside of the grid area
-    const previewBtn = screen.getByRole('button', { name: /preview/i });
-
-    expect(store.getState().dashboardConfiguration.widgets).toHaveLength(0);
+    const lineWidget = screen.getByLabelText(/add line widget/i);
 
     act(() => {
-      fireEvent.dragStart(draggable);
-      fireEvent.dragEnter(previewBtn);
-      fireEvent.dragOver(previewBtn);
-      fireEvent.drop(previewBtn);
+      fireEvent.keyDown(lineWidget, { code: 'a' });
     });
 
-    expect(store.getState().dashboardConfiguration.widgets).toHaveLength(0);
+    expect(onAddWidgetStub).not.toBeCalled();
+
+    act(() => {
+      fireEvent.keyDown(lineWidget, { code: 'enter' });
+    });
+
+    expect(onAddWidgetStub).toBeCalledWith('xy-plot');
+
+    act(() => {
+      fireEvent.keyDown(lineWidget, { code: 'space' });
+    });
+
+    expect(onAddWidgetStub).toBeCalledWith('xy-plot');
   });
 });

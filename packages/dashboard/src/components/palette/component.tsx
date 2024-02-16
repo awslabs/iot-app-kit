@@ -6,20 +6,24 @@ import PaletteComponentIcon from './icons';
 
 import type { ComponentPaletteDraggable } from './types';
 
+import './component.css';
+
 type PaletteComponentProps = {
   name: string;
   componentTag: string;
   IconComponent: React.FC;
+  onAddWidget: (componentTag: string) => void;
 };
 
 const PaletteComponent: React.FC<PaletteComponentProps> = ({
   componentTag,
   name,
   IconComponent,
+  onAddWidget,
 }) => {
   const node = useRef(null);
 
-  const [_, dragRef] = useDrag(
+  const [{ isDragging }, dragRef] = useDrag(
     () => ({
       type: ItemTypes.Component,
       item: (): ComponentPaletteDraggable => {
@@ -30,19 +34,41 @@ const PaletteComponent: React.FC<PaletteComponentProps> = ({
             : null, // Used to determine the cursor offset from the upper left corner on drop
         };
       },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
     }),
     []
   );
 
+  // isDragging updates before the click event is captured and the handler executes
+  // the pointer up event fires before the hook value updates.
+  // this because it's what ReactDnD uses to indicate drag start / drag end
+  const handlePointerUp = () => {
+    if (isDragging) return;
+    onAddWidget(componentTag);
+  };
+
+  // Must handle key down specifically for enter or space
+  // because we are using pointer up instead of click
+  // https://accessibleweb.com/question-answer/what-keyboard-functions-need-to-be-compatible-with-a-button/
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!['enter', 'space'].includes(e.code.toLowerCase())) return;
+    onAddWidget(componentTag);
+  };
+
   return (
-    <li
-      ref={node}
-      //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-      tabIndex={0}
-    >
-      <div aria-label={`add ${name} widget`} role='button' ref={dragRef}>
+    <li ref={node}>
+      <button
+        aria-label={`add ${name} widget`}
+        className='palette-button'
+        ref={dragRef}
+        draggable='true'
+        onPointerUp={handlePointerUp}
+        onKeyDown={handleKeyDown}
+      >
         <PaletteComponentIcon widgetName={name} Icon={IconComponent} />
-      </div>
+      </button>
     </li>
   );
 };
