@@ -25,7 +25,11 @@ const divider = {
 
 const Divider = () => <div style={divider} />;
 
-const Palette = () => {
+type PaletteOptions = {
+  onAddWidget: (componentTag: string) => void;
+};
+
+const Palette = ({ onAddWidget }: PaletteOptions) => {
   return (
     <div
       className='widget-panel'
@@ -44,6 +48,7 @@ const Palette = () => {
               componentTag={widgetType}
               name={name}
               IconComponent={iconComponent}
+              onAddWidget={onAddWidget}
             />
           );
         })}
