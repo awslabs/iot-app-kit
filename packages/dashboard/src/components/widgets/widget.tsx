@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   gestureable,
   idable,
 } from '../internalDashboard/gestures/determineTargetGestures';
 import DynamicWidgetComponent from './dynamicWidget';
+import WidgetActions from './widgetActions';
 
 import './widget.css';
 import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
@@ -29,9 +30,19 @@ const WidgetComponent: React.FC<WidgetProps> = ({
   cellSize,
   widget,
   messageOverrides,
+  isSelected,
   readOnly,
 }) => {
   const { x, y, z, width, height } = widget;
+  const [showActionButtons, setShowActionButtons] = useState(false);
+
+  const handleShowActionButtons = (show: boolean) => {
+    if (isSelected) {
+      setShowActionButtons(false);
+      return;
+    }
+    setShowActionButtons(show);
+  };
 
   return (
     <div
@@ -45,7 +56,10 @@ const WidgetComponent: React.FC<WidgetProps> = ({
         width: `${cellSize * width}px`,
         height: `${cellSize * height}px`,
       }}
+      onMouseEnter={() => handleShowActionButtons(true)}
+      onMouseLeave={() => handleShowActionButtons(false)}
     >
+      {showActionButtons && <WidgetActions widget={widget} />}
       <DynamicWidgetComponent
         widget={widget}
         widgetsMessages={messageOverrides.widgets}

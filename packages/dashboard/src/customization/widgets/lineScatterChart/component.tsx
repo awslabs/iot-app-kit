@@ -175,12 +175,9 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
 
   const convertedAxis = useConvertedAxis(axis);
 
-  // there may be better ways to fix this, i.e. not have -44 and let the chart container  take its parent height,
-  // the problem is that the Resizable component needs a "height" to be provided,
-  // so not entirely sure if we can have a mechanism where the container auto adjusts the height
-  // the 52 is from the widget tile header's height and top, bottom boder lines height
+  // the 4 is from the widget tile top, bottom boder lines height
   // the 8 is from the left and right border lines width
-  const size = { width: chartSize.width - 8, height: chartSize.height - 52 };
+  const size = { width: chartSize.width - 8, height: chartSize.height - 4 };
 
   const onChartOptionsChange = (options: Pick<ChartOptions, 'legend'>) => {
     dispatch(
@@ -201,7 +198,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   const isEmptyWidget = queries.length === 0;
   if (isEmptyWidget) {
     return (
-      <WidgetTile widget={widget} removeable title={title}>
+      <WidgetTile widget={widget}>
         <NoChartData
           icon={lineSvgDark}
           emptyStateText='Browse and select to add your asset properties in your line widget.'
@@ -211,7 +208,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   }
 
   return (
-    <WidgetTile widget={widget} removeable title={title}>
+    <WidgetTile widget={widget}>
       <Chart
         id={widget.id}
         queries={queries}
@@ -223,6 +220,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
         thresholds={thresholds}
         significantDigits={significantDigits}
         size={size}
+        titleText={title}
         legend={legend}
         onChartOptionsChange={onChartOptionsChange}
         defaultVisualizationType={mapConnectionStyleToVisualizationType(
