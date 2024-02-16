@@ -34,11 +34,12 @@ export const WorkspaceSelector = ({
 
   useEffect(() => {
     OnGettingError(status === 'error');
-  }, [status, OnGettingError]);
+    if (status === 'error') setStoredWorkspace(null);
+  }, [status, OnGettingError, setStoredWorkspace]);
 
   useEffect(() => {
-    setValue('workspace', storedWorkspace || workspaceOptions[0]);
     if (workspaceOptions.length) {
+      setValue('workspace', storedWorkspace || workspaceOptions[0]);
       const isStoredValueInOptions =
         storedWorkspace &&
         workspaceOptions.some(
