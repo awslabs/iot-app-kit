@@ -41,13 +41,10 @@ const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
   const aggregation = getAggregation(widget);
   const significantDigits =
     widgetSignificantDigits ?? dashboardSignificantDigits;
-  // there may be better ways to fix this, i.e. not have -44 and let the chart container  take its parent height,
-  // the problem is that the Resizable component needs a "height" to be provided,
-  // so not entirely sure if we can have a mechanism where the container auto adjusts the height
-  // the 44 is from the widget tile header's height
-  const size = { width: chartSize.width, height: chartSize.height - 44 };
+
+  const size = { width: chartSize.width, height: chartSize.height };
   return (
-    <WidgetTile widget={widget} removeable title={title}>
+    <WidgetTile widget={widget} title={title}>
       <BarChart
         chartSize={size}
         key={key}
