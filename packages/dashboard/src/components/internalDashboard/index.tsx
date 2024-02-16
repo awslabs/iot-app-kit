@@ -185,10 +185,13 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     cellSize,
   });
 
-  const onDrop = (e: DropEvent) => {
-    const { item, position } = e;
-    const componentTag = item.componentTag;
-
+  const onAddWidget = ({
+    componentTag,
+    position,
+  }: {
+    componentTag: string;
+    position: Position;
+  }) => {
     const widgetPresets = widgetCreator(grid)(componentTag);
 
     const { x, y } = toGridPosition(position, cellSize);
@@ -209,6 +212,19 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
       metricName: 'DashboardWidgetAdd',
       metricValue: 1,
     });
+  };
+
+  const onDrop = (e: DropEvent) => {
+    const { item, position } = e;
+    const componentTag = item.componentTag;
+
+    onAddWidget({ componentTag, position });
+  };
+
+  // Adds the widget to the start of the dashboard
+  // Provides an accessible way to add a widget
+  const onAddWidgetFromPalette = (componentTag: string) => {
+    onAddWidget({ componentTag, position: { x: 0, y: 0 } });
   };
 
   /**
@@ -314,7 +330,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
           tabIndex={0}
         >
           <Box float='left' padding='s'>
-            <ComponentPalette />
+            <ComponentPalette onAddWidget={onAddWidgetFromPalette} />
           </Box>
         </div>
         {showDashboardLayout ? (
