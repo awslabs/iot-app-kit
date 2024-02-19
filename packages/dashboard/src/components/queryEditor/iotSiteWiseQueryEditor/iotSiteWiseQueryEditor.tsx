@@ -81,7 +81,6 @@ export function IoTSiteWiseQueryEditor({
     label: 'Dynamic assets',
     id: 'explore-asset-model-tab',
     content: <AssetModelDataStreamExplorer client={iotSiteWiseClient} />,
-    disabled: isEdgeModeEnabled,
   };
 
   const defaultTabs = [modeledTab, unmodeledTab, assetModeledTab];
