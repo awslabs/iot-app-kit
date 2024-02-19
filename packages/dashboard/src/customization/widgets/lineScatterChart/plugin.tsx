@@ -39,9 +39,9 @@ export const lineScatterChartPlugin: DashboardPlugin = {
           visibleContent: {
             unit: true,
             asset: true,
-            maxValue: true,
-            minValue: true,
             latestValue: true,
+            maxValue: false,
+            minValue: false,
           },
         },
       }),

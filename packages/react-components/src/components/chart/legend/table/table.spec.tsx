@@ -25,6 +25,8 @@ describe('legend table', () => {
         color: 'black',
         trendCursorValues: {},
         latestValue: 111,
+        maxValue: undefined,
+        minValue: undefined,
       },
       {
         id: 'datastream-2',
@@ -32,6 +34,8 @@ describe('legend table', () => {
         color: 'black',
         trendCursorValues: {},
         latestValue: 222,
+        maxValue: undefined,
+        minValue: undefined,
       },
     ];
     const table = render(
@@ -59,6 +63,8 @@ describe('legend table', () => {
           'trendcursor-2': 333,
         },
         latestValue: 111,
+        maxValue: undefined,
+        minValue: undefined,
       },
     ];
     const trendCursors: TrendCursor[] = [
