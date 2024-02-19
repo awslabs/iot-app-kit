@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
-import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  type AssetModelPropertySummary,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 
 import Box from '@cloudscape-design/components/box';
 
 import { AssetModelExplorer } from './assetModelExplorer/assetModelExplorer';
 import { AssetModelPropertiesExplorer } from './assetModelPropertiesExplorer/assetModelPropertiesExplorer';
+import { AssetModelPropertiesExplorerEdge } from './assetModelPropertiesExplorer/assetModelPropertiesExplorerEdge';
 import {
   createInitialAssetModelSummary,
   useSelectedAssetModel,
@@ -22,6 +27,7 @@ import { getAssetModelQueryInformation } from './getAssetModelQueryInformation';
 import { useModelBasedQuery } from './modelBasedQuery/useModelBasedQuery';
 import { useModelBasedQuerySelection } from './modelBasedQuery/useModelBasedQuerySelection';
 import { getPlugin } from '@iot-app-kit/core';
+import type { DashboardState } from '~/store/state';
 
 export interface AssetModelDataStreamExplorerProps {
   client: IoTSiteWiseClient;
@@ -31,6 +37,9 @@ export const AssetModelDataStreamExplorer = ({
   client,
 }: AssetModelDataStreamExplorerProps) => {
   const metricsRecorder = getPlugin('metricsRecorder');
+  const isEdgeModeEnabled = useSelector(
+    (state: DashboardState) => state.isEdgeModeEnabled
+  );
   const {
     assetModelId,
     assetIds,
@@ -86,6 +95,16 @@ export const AssetModelDataStreamExplorer = ({
     }
   };
 
+  const assetModelPropertiesExplorerProps = {
+    selectedAssetModelProperties,
+    selectedAssetModel,
+    client,
+    onSave,
+    saveDisabled: !modelBasedWidgetsSelected,
+    onSelect: (assetModelProperties: AssetModelPropertySummary[]) =>
+      selectAssetModelProperties(assetModelProperties),
+  };
+
   return (
     <Box padding={{ horizontal: 's' }}>
       <AssetModelExplorer
@@ -101,16 +120,15 @@ export const AssetModelDataStreamExplorer = ({
           <Box padding={{ bottom: 's', top: 'm' }}>
             <HorizontalDivider />
           </Box>
-          <AssetModelPropertiesExplorer
-            selectedAssetModelProperties={selectedAssetModelProperties}
-            selectedAssetModel={selectedAssetModel}
-            client={client}
-            onSave={onSave}
-            saveDisabled={!modelBasedWidgetsSelected}
-            onSelect={(assetModelProperties) =>
-              selectAssetModelProperties(assetModelProperties)
-            }
-          />
+          {isEdgeModeEnabled ? (
+            <AssetModelPropertiesExplorerEdge
+              {...assetModelPropertiesExplorerProps}
+            />
+          ) : (
+            <AssetModelPropertiesExplorer
+              {...assetModelPropertiesExplorerProps}
+            />
+          )}
         </>
       )}
     </Box>
