@@ -42,6 +42,7 @@ export const LegendDisplaySection: FC<LegendDisplaySectionProps> = ({
           }
           disabled={disabled}
           key={value}
+          data-testid={label}
         >
           {label}
         </Checkbox>

@@ -4,12 +4,16 @@ import { ChartLegend, ChartOptions } from '../../types';
 import { ChartLegendTable } from './table';
 import { DataStreamInformation, TrendCursor } from './types';
 import { TrendCursorValues } from '../../../../echarts/extensions/trendCursors/store';
+import { useDataStreamMaxMin } from '../../hooks/useDataStreamMaxMin';
+import { MinMaxMap } from '../../store/dataStreamMinMaxStore';
 
 const mapDataStreamInformation = ({
   datastreams,
   trendCursorValues,
   chartId,
   visibleContent,
+  dataStreamMaxes,
+  dataStreamMins,
 }: {
   datastreams: (Pick<DataStream, 'id' | 'color' | 'name' | 'unit'> & {
     latestValue: Primitive | undefined;
@@ -17,6 +21,8 @@ const mapDataStreamInformation = ({
   trendCursorValues: TrendCursorValues[];
   chartId: string;
   visibleContent: ChartLegend['visibleContent'];
+  dataStreamMaxes: MinMaxMap;
+  dataStreamMins: MinMaxMap;
 }): DataStreamInformation[] =>
   datastreams.map(({ id, name, color, unit, latestValue }) => {
     const values = trendCursorValues.reduce<
@@ -30,6 +36,8 @@ const mapDataStreamInformation = ({
     }, {});
 
     const dataStreamName = visibleContent?.unit ? `${name} (${unit})` : name;
+    const maxValue = dataStreamMaxes[id] ?? '-';
+    const minValue = dataStreamMins[id] ?? '-';
 
     return {
       id,
@@ -37,6 +45,8 @@ const mapDataStreamInformation = ({
       color,
       latestValue,
       trendCursorValues: values,
+      maxValue,
+      minValue,
     };
   });
 
@@ -59,11 +69,14 @@ export const ChartLegendTableAdapter = ({
   significantDigits,
   ...options
 }: ChartLegendTableAdapterOptions) => {
+  const { dataStreamMaxes, dataStreamMins } = useDataStreamMaxMin();
   const datastreamItems = mapDataStreamInformation({
     datastreams,
     trendCursorValues,
     chartId,
     visibleContent,
+    dataStreamMaxes,
+    dataStreamMins,
   });
 
   return (

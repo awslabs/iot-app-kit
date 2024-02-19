@@ -11,6 +11,8 @@ export class ConfigPanel {
   readonly showYAxisToggle: Locator;
   readonly showLegendToggle: Locator;
   readonly decimalPlaceInput: Locator;
+  readonly maxValueCheckbox: Locator;
+  readonly minValueCheckbox: Locator;
 
   constructor({ page }: { page: Page }) {
     this.page = page;
@@ -31,5 +33,11 @@ export class ConfigPanel {
     this.decimalPlaceInput = this.container
       .getByTestId('decimal-place-config')
       .locator('input');
+    this.maxValueCheckbox = this.container
+      .getByTestId('Maximum Value')
+      .locator('input[type=checkbox]');
+    this.minValueCheckbox = this.container
+      .getByTestId('Minimum Value')
+      .locator('input[type=checkbox]');
   }
 }
