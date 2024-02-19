@@ -9,7 +9,6 @@ import {
   colorBorderDividerDefault,
   spaceStaticXxxs,
 } from '@cloudscape-design/design-tokens';
-import { STICKY_BUTTON_WIDTH_FACTOR } from '../constants';
 import './index.css';
 
 export type ResourceExplorerFooterOptions = {
@@ -29,7 +28,7 @@ export const ResourceExplorerFooter = ({
   const stickyFooter = {
     backgroundColor: colorBackgroundButtonNormalDefault,
     bottom: spaceStaticXxxs,
-    width: width + STICKY_BUTTON_WIDTH_FACTOR,
+    width: width,
     borderTop: `${spaceStaticXxxs} solid ${colorBorderDividerDefault}`,
   };
 

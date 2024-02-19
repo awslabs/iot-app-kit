@@ -12,13 +12,16 @@ import { useWindowSize } from '~/components/dashboardLayout/hooks/useWindowSize'
 import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import './propertyPanel.css';
 import { PropertiesPanelTable } from '~/components/dashboardLayout/propertyPanel/propertiesPanelTable/propertiesPanelTable';
+import { ResourceExplorerModal } from '~/components/dashboardLayout/propertyPanel/ResourceExplorerModal/ResourceExplorerModal';
 
 export const PropertyPanel = ({
   isConfigPanelCollapsed,
+  resourceExplorer,
 }: {
   resourceExplorer: ReactNode;
   isConfigPanelCollapsed: boolean;
 }) => {
+  const [showRE, setShowRE] = useState(false);
   const [isDrawerCollapsed, setIsDrawerCollapsed] = useState(true);
   const selectedWidgets = useSelectedWidgets();
   const [innerWidth] = useWindowSize();
@@ -81,7 +84,12 @@ export const PropertyPanel = ({
             }}
           >
             {panelHeader}
-            <PropertiesPanelTable onAddDataStreams={() => {}} />
+            <ResourceExplorerModal
+              visible={showRE}
+              resourceExplorer={resourceExplorer}
+              onDismiss={() => setShowRE(false)}
+            />
+            <PropertiesPanelTable onAddDataStreams={() => setShowRE(true)} />
           </div>
         </Resizable>
       )}

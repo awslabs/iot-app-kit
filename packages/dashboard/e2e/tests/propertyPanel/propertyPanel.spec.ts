@@ -114,4 +114,54 @@ test.describe('Property Panel Tests', () => {
     const text = propPanelTable.getByText('Please select a widget above');
     await expect(text).toBeVisible();
   });
+
+  test('Added properties are visible on the table', async ({
+    dashboardWithPropertyPanel,
+    page,
+  }) => {
+    await dashboardWithPropertyPanel.addAWidgetByType('line');
+
+    const propPanelTable = dashboardWithPropertyPanel.page.locator(
+      'div[class="properties-table-parent-container"]'
+    );
+    await propPanelTable
+      .getByText('+ Add data streams', { exact: true })
+      .click();
+
+    const REModal = page.locator('div[class="property-panel-re-container"]');
+
+    const asset = REModal.getByText('Africa site');
+    await asset.click();
+    const assetList = REModal.getByText('Production Line 1', {
+      exact: true,
+    });
+    await assetList.click();
+    const selectAsset = REModal.getByTitle('Select asset Reactor 1', {
+      exact: true,
+    });
+    await selectAsset.click();
+
+    const properties = ['Max Temperature', 'Min Temperature'];
+    // add all the properties
+    for (let i = 0; i < properties.length; i++) {
+      const propertyRow = REModal.getByLabel(
+        `Select modeled data stream ${properties[i]}`
+      );
+      await propertyRow.click();
+    }
+    // click add
+    await REModal.getByRole('button', { name: 'Add', exact: true }).click();
+
+    const boundingBox = await dashboardWithPropertyPanel.gridArea.boundingBox();
+
+    await page.mouse.click(boundingBox.x + 10, boundingBox.y + 10);
+
+    // await page.waitForTimeout(2000);
+    await expect(
+      dashboardWithPropertyPanel.gridArea.getByText('Max Temperature')
+    ).toBeVisible();
+    await expect(
+      dashboardWithPropertyPanel.gridArea.getByText('Min Temperature')
+    ).toBeVisible();
+  });
 });
