@@ -24,13 +24,16 @@ const createDataStreamColumnDefinition = (
 
 const createMaximumColumnDefinition =
   (): LegendTableColumnDefinitions[number] => ({
-    id: 'AssetName',
-    sortingField: 'assetName',
+    id: 'MaxColumn',
     header: <MaximumColumnHeader />,
     cell: (item) => {
       return <MaximumCell {...item} />;
     },
-    isRowHeader: true,
+    sortingComparator: (a, b) => {
+      const aValue = typeof a.maxValue === 'number' ? a.maxValue : 0;
+      const bValue = typeof b.maxValue === 'number' ? b.maxValue : 0;
+      return aValue - bValue;
+    },
   });
 const createLatestValueColumnDefinition = (
   significantDigits: ChartOptions['significantDigits']
@@ -51,13 +54,16 @@ const createLatestValueColumnDefinition = (
 
 const createMinimumColumnDefinition =
   (): LegendTableColumnDefinitions[number] => ({
-    id: 'AssetName',
-    sortingField: 'assetName',
+    id: 'MinColumn',
     header: <MinimumColumnHeader />,
     cell: (item) => {
       return <MinimumCell {...item} />;
     },
-    isRowHeader: true,
+    sortingComparator: (a, b) => {
+      const aValue = typeof a.minValue === 'number' ? a.minValue : 0;
+      const bValue = typeof b.minValue === 'number' ? b.minValue : 0;
+      return aValue - bValue;
+    },
   });
 
 const createTrendCursorColumnDefinition = ({

@@ -43,8 +43,8 @@ const setupTest = async (page: Page) => {
   return lineWidget;
 };
 
-test.describe('Data Stream Maxes', () => {
-  test('min value is present', async ({ page }) => {
+test.describe('Data Stream Mins', () => {
+  test('min value is present', async ({ page, configPanel }) => {
     const lineWidget = await setupTest(page);
 
     const bounds = await lineWidget.boundingBox();
@@ -52,6 +52,10 @@ test.describe('Data Stream Maxes', () => {
     if (!bounds) {
       throw new Error('Line widget has no bounds');
     }
+
+    // check Min Value checkbox
+    await configPanel.collapsedButton.click();
+    await configPanel.minValueCheckbox.check();
 
     // cloudscape table makes 2 instances of the header
     await expect(page.getByTestId(MIN_VALUE_TABLE_HEADER)).toHaveCount(2);
@@ -78,6 +82,10 @@ test.describe('Data Stream Maxes', () => {
       throw new Error('Line widget has no bounds');
     }
 
+    // check Min Value checkbox
+    await configPanel.collapsedButton.click();
+    await configPanel.minValueCheckbox.check();
+
     // pause for data load + echarts lifecycle to re-render
     await page.waitForTimeout(2000);
 
@@ -89,7 +97,6 @@ test.describe('Data Stream Maxes', () => {
     expect(getDecimalPlaces(initialMaxValueString)).toBe(3);
 
     //change sig digits to 1
-    await configPanel.collapsedButton.click();
     await configPanel.decimalPlaceInput.fill('1');
 
     // pause for data load + echarts lifecycle to re-render
