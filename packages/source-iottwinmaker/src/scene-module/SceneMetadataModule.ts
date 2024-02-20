@@ -124,4 +124,21 @@ export class SceneMetadataModule implements TwinMakerSceneMetadataModule {
       new DeleteEntityCommand({ ...input, workspaceId: this.workspaceId })
     );
   };
+
+  createDynamicScene = async (input: Omit<CreateSceneCommandInput, 'workspaceId'>): Promise<CreateSceneCommandOutput> => {
+    const createDynamicSceneResult: CreateSceneCommandOutput = await this.twinMakerClient.send(
+      new CreateSceneCommand({ ...input, workspaceId: this.workspaceId, capabilities: [dynamicScene] })
+    );
+    const sceneInfo: GetSceneCommandOutput = await this.twinMakerClient.send(
+      new GetSceneCommand({ workspaceId: this.workspaceId, sceneId: this.sceneId })
+    );
+    const sceneRootEntityId = sceneInfo?.sceneMetadata?.sceneRootEntityId;
+    const updateSceneRootEntityResult: UpdateEntityCommandOutput = await this.twinMakerClient.send(
+      new UpdateEntityCommand({ workspaceId: this.workspaceId, entityId: sceneRootEntityId})
+    );
+    const createLayerEntityResult: CreateEntityCommandOutput = await this.twinMakerClient.send(
+      new CreateEntityCommand({ workspaceId: this.workspaceId, entityId: LAYER_ROOT_ENTITY_ID, entityName: LAYER_ROOT_ENTITY_NAME })
+    );
+    return createDynamicSceneResult;
+  };
 }
