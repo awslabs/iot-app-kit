@@ -10,18 +10,10 @@ import { DashboardWidget } from '~/types';
 import { LineStyleSection } from './lineStyleSection';
 import { YAxisSection } from './yAxis';
 import { LegendSection } from './legendSection';
-import { AggregationAndResolutionSection } from './aggregationAndResolutionSection';
-import { isJust, maybeWithDefault } from '~/util/maybe';
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import {
-  getAggregationOptions,
-  getResolutionOptions,
-} from '../aggregationSettings/helpers';
-import { useWidgetDataTypeSet } from '~/hooks/useWidgetDataTypeSet';
-import { applyAggregationToQuery } from '~/customization/widgets/utils/assetQuery/applyAggregationToQuery';
-import { applyResolutionToQuery } from '~/customization/widgets/utils/assetQuery/applyResolutionToQuery';
+import { maybeWithDefault } from '~/util/maybe';
 import { PropertyLens } from '~/customization/propertiesSection';
 import { getPlugin } from '@iot-app-kit/core';
+import { AggregationsSettingsConfiguration } from '../aggregationSettings';
 
 const isLineAndScatterWidget = (
   w: DashboardWidget
@@ -93,82 +85,6 @@ const RenderLineAndScatterStyleSettingsSection = ({
     })
   );
 
-  const [query] = useProperty(
-    (properties) => properties.queryConfig.query,
-    (properties, updatedQuery) => ({
-      ...properties,
-      queryConfig: {
-        ...properties.queryConfig,
-        query: updatedQuery,
-      },
-    })
-  );
-
-  const [aggregationMaybe, updateAggregation] = useProperty(
-    // Default resolution is auto. We ensure the aggregation is defaulted to average instead of no aggregation.
-    ({ aggregationType }) => aggregationType,
-    (properties, updatedAggregationType) => ({
-      ...properties,
-      queryConfig: {
-        ...properties.queryConfig,
-        query: properties.queryConfig.query
-          ? applyAggregationToQuery(
-              properties.queryConfig.query,
-              updatedAggregationType
-            )
-          : undefined,
-      },
-      aggregationType: updatedAggregationType,
-    })
-  );
-
-  const [resolutionMaybe, updateResolution] = useProperty(
-    ({ resolution }) => resolution,
-    (properties, updatedResolution) => {
-      // We get the current aggregation and don't change it if it's already set.
-      let updatedAggregationType: AggregateType | undefined = isJust(
-        aggregationMaybe
-      )
-        ? aggregationMaybe.value
-        : undefined;
-
-      // If auto resolution is set, we default to no aggregation.
-      if (updatedResolution == null) {
-        updatedAggregationType = 'AVERAGE';
-      }
-
-      // If a non-auto resolution is set and there is no selected aggregation type, we default to average aggregation.
-      if (updatedResolution != null && updatedAggregationType == null) {
-        updatedAggregationType = 'AVERAGE';
-      }
-
-      // If the resolution is raw, we don't need an aggregation.
-      if (updatedResolution === '0') {
-        updatedAggregationType = undefined;
-      }
-
-      const updatedQuery = properties.queryConfig.query
-        ? applyResolutionToQuery(
-            applyResolutionToQuery(
-              properties.queryConfig.query,
-              updatedAggregationType
-            ),
-            updatedResolution
-          )
-        : undefined;
-
-      return {
-        ...properties,
-        queryConfig: {
-          ...properties.queryConfig,
-          query: updatedQuery,
-        },
-        resolution: updatedResolution,
-        aggregationType: updatedAggregationType,
-      };
-    }
-  );
-
   const [legendVisibleMaybe, updateLegendVisible] = useProperty(
     (properties) => properties.legend?.visible,
     (properties, updatedLegendVisible) => ({
@@ -214,18 +130,6 @@ const RenderLineAndScatterStyleSettingsSection = ({
     legendVisibleContentMaybe
   );
 
-  const aggregationType = maybeWithDefault(undefined, aggregationMaybe);
-  const resolution = maybeWithDefault(undefined, resolutionMaybe);
-  const assetQuery = maybeWithDefault(undefined, query);
-
-  const dataTypeSet = useWidgetDataTypeSet(assetQuery ?? { assets: [] });
-  const filteredResolutionOptions = getResolutionOptions(true);
-  const filteredAggregationOptions = getAggregationOptions(
-    true,
-    dataTypeSet,
-    resolution
-  );
-
   const handleSetVisible = (visible: boolean) => {
     updateAxis({ ...axis, yVisible: visible });
     logCustomYAxis({
@@ -256,16 +160,7 @@ const RenderLineAndScatterStyleSettingsSection = ({
 
   return (
     <>
-      <AggregationAndResolutionSection
-        aggregation={aggregationType}
-        resolution={resolution}
-        updateAggregation={(updatedAggregationType) =>
-          updateAggregation(updatedAggregationType as AggregateType)
-        }
-        updateResolution={updateResolution}
-        resolutionOptions={filteredResolutionOptions}
-        aggregationOptions={filteredAggregationOptions}
-      />
+      <AggregationsSettingsConfiguration />
       <YAxisSection
         visible={axis?.yVisible ?? true}
         min={axis?.yMin ?? null}

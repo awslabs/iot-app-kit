@@ -8,6 +8,7 @@ import { DEFAULT_KPI_SETTINGS } from './constants';
 import { Value } from '../shared-components';
 import type { KPIProperties, KPISettings } from './types';
 import './kpi.css';
+import { highContrastColor } from '../status/highContrastColor';
 
 export const UpdatedKpiBase: React.FC<KPIProperties> = ({
   propertyPoint,
@@ -31,6 +32,8 @@ export const UpdatedKpiBase: React.FC<KPIProperties> = ({
   };
 
   const point = propertyPoint;
+  const fontColor =
+    backgroundColor === '#ffffff' ? '' : highContrastColor(backgroundColor);
 
   if (error) {
     return (
@@ -59,7 +62,7 @@ export const UpdatedKpiBase: React.FC<KPIProperties> = ({
       <div>
         <div
           className='property-name'
-          style={{ fontSize: `${secondaryFontSize}px` }}
+          style={{ fontSize: `${secondaryFontSize}px`, color: fontColor }}
         >
           {isLoading ? '-' : showName && name}{' '}
           {showUnit && !isLoading && unit && `(${unit})`}
@@ -67,7 +70,7 @@ export const UpdatedKpiBase: React.FC<KPIProperties> = ({
         <div
           className='value'
           data-testid='kpi-value'
-          style={{ fontSize: `${fontSize}px` }}
+          style={{ fontSize: `${fontSize}px`, color: fontColor }}
         >
           {isLoading ? (
             <Spinner data-testid='loading' />
@@ -79,9 +82,12 @@ export const UpdatedKpiBase: React.FC<KPIProperties> = ({
       {point && showTimestamp && (
         <div
           className='timestamp-container'
-          style={{ fontSize: `${secondaryFontSize}px` }}
+          style={{ fontSize: `${secondaryFontSize}px`, color: fontColor }}
         >
-          <div className='timestamp-border' />
+          <div
+            className='timestamp-border'
+            style={{ backgroundColor: fontColor }}
+          />
           {isLoading ? (
             '-'
           ) : (

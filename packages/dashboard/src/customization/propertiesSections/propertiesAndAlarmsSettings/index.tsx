@@ -12,6 +12,7 @@ import { StyledPropertiesAlarmsSection } from './styledSection';
 import { PropertyLens } from '~/customization/propertiesSection';
 import { useClients } from '~/components/dashboard/clientContext';
 import { spaceScaledXs } from '@cloudscape-design/design-tokens';
+import { Maybe, maybeWithDefault } from '~/util/maybe';
 
 // exclude table because it is handled specially
 const isQueryWidgetExcludesTable = (w: DashboardWidget): w is QueryWidget =>
@@ -49,8 +50,10 @@ const RenderPropertiesSectionWithStyledQuery = ({
 
 const RenderPropertiesSectionWithoutTable = ({
   useProperty,
+  maybeType,
 }: {
   useProperty: PropertyLens<QueryWidget>;
+  maybeType: Maybe<string>;
 }) => {
   const { iotSiteWiseClient } = useClients();
 
@@ -69,6 +72,13 @@ const RenderPropertiesSectionWithoutTable = ({
     })
   );
 
+  const hasNewKPI = !!localStorage?.getItem('USE_UPDATED_KPI');
+  const type = maybeWithDefault(undefined, maybeType);
+  const canColorProperty = !(
+    hasNewKPI &&
+    (type === 'kpi' || type === 'status')
+  );
+
   if (!iotSiteWiseClient) return null;
 
   return (
@@ -78,6 +88,7 @@ const RenderPropertiesSectionWithoutTable = ({
       styleSettings={styleSettings}
       updateStyleSettings={updateStyleSettings}
       client={iotSiteWiseClient}
+      colorable={canColorProperty}
     />
   );
 };
@@ -132,8 +143,11 @@ export const PropertiesAndAlarmsSettingsConfiguration: React.FC = () => (
     />
     <PropertiesSection
       isVisible={isQueryWidgetExcludesTable}
-      render={({ useProperty }) => (
-        <RenderPropertiesSectionWithoutTable useProperty={useProperty} />
+      render={({ useProperty, type }) => (
+        <RenderPropertiesSectionWithoutTable
+          maybeType={type}
+          useProperty={useProperty}
+        />
       )}
     />
     <PropertiesSection

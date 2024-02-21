@@ -50,6 +50,7 @@ export type KPIProperties = QueryProperties & {
   showName?: boolean;
   showTimestamp?: boolean;
   thresholds?: ThresholdWithId[];
+  backgroundColor?: string;
   significantDigits?: number;
 };
 
@@ -64,6 +65,7 @@ export type StatusProperties = QueryProperties & {
   showIcon?: boolean;
   showName?: boolean;
   thresholds?: ThresholdWithId[];
+  showTimestamp?: boolean;
   backgroundColor?: string;
   significantDigits?: number;
 };

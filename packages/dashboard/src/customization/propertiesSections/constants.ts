@@ -82,7 +82,7 @@ export const dropdownConsts = {
   },
 };
 
-export const LINE_RESOLUTION_OPTIONS: SelectProps.Option[] = [
+export const ALL_RESOLUTION_OPTIONS: SelectProps.Option[] = [
   { label: '1 min', value: '1m' },
   { label: '15 min', value: '15m' },
   { label: '1 hour', value: '1h' },
@@ -91,7 +91,7 @@ export const LINE_RESOLUTION_OPTIONS: SelectProps.Option[] = [
   { label: 'Autoselect', value: undefined },
 ];
 
-export const LINE_AGGREGATION_OPTIONS: SelectProps.Option[] = [
+export const ALL_AGGREGATION_OPTIONS: SelectProps.Option[] = [
   { label: 'Average', value: AggregateType.AVERAGE },
   { label: 'Count', value: AggregateType.COUNT },
   { label: 'Maximum', value: AggregateType.MAXIMUM },
@@ -100,7 +100,7 @@ export const LINE_AGGREGATION_OPTIONS: SelectProps.Option[] = [
   { label: 'Sum', value: AggregateType.SUM },
 ];
 
-export const BAR_RESOLUTION_OPTIONS: SelectProps.Option[] = [
+export const AGGREGATE_ONLY_RESOLUTION_OPTIONS: SelectProps.Option[] = [
   { label: '1 min', value: '1m' },
   { label: '15 min', value: '15m' },
   { label: '1 hour', value: '1h' },
@@ -108,7 +108,7 @@ export const BAR_RESOLUTION_OPTIONS: SelectProps.Option[] = [
   { label: 'Autoselect', value: undefined },
 ];
 
-export const BAR_AGGREGATION_OPTIONS: SelectProps.Option[] = [
+export const AGGREGATE_ONLY_AGGREGATION_OPTIONS: SelectProps.Option[] = [
   { label: 'Average', value: AggregateType.AVERAGE },
   { label: 'Count', value: AggregateType.COUNT },
   { label: 'Maximum', value: AggregateType.MAXIMUM },
