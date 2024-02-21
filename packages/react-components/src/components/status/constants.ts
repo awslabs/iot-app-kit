@@ -13,4 +13,7 @@ export const DEFAULT_STATUS_SETTINGS: Required<StatusSettings> = {
   fontSize: 20,
   secondaryFontSize: 20,
   aggregationFontSize: 12,
+  showTimestamp: true,
+  backgroundColor: 'white',
+  showAssetName: true,
 };

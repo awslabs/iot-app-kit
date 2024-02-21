@@ -7,10 +7,12 @@ export const KPI_ICON_SHRINK_FACTOR = 0.7;
 export const DEFAULT_KPI_SETTINGS: Required<KPISettings> = {
   showTimestamp: true,
   showUnit: true,
-  color: 'black',
+  color: '#000000',
   showIcon: true,
   showName: true,
   fontSize: 30,
   secondaryFontSize: 15,
   aggregationFontSize: 12,
+  backgroundColor: '#ffffff',
+  showAssetName: true,
 };

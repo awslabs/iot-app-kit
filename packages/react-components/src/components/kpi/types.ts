@@ -2,8 +2,6 @@ import type { WidgetSettings } from '../../common/dataTypes';
 
 export type KPIProperties = WidgetSettings & {
   settings?: Partial<KPISettings>;
-  resolution?: number;
-  aggregationType?: string;
 };
 
 export type KPISettings = {
@@ -15,4 +13,6 @@ export type KPISettings = {
   secondaryFontSize: number; // pixels
   aggregationFontSize: number; // pixels
   color: string; // hex string
+  backgroundColor: string; // hex string
+  showAssetName: boolean;
 };
