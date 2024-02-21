@@ -4,31 +4,25 @@ import Spinner from '@cloudscape-design/components/spinner';
 import Box from '@cloudscape-design/components/box';
 import omitBy from 'lodash.omitby';
 
-import {
-  DEFAULT_KPI_SETTINGS,
-  DEFAULT_KPI_COLOR,
-  KPI_ICON_SHRINK_FACTOR,
-} from './constants';
-import { StatusIcon, Value } from '../shared-components';
+import { DEFAULT_KPI_SETTINGS } from './constants';
+import { Value } from '../shared-components';
 import type { KPIProperties, KPISettings } from './types';
 import './kpi.css';
 
 export const UpdatedKpiBase: React.FC<KPIProperties> = ({
-  icon,
   propertyPoint,
   error,
   unit,
   name,
   isLoading,
-  color = DEFAULT_KPI_COLOR,
   settings = {},
   significantDigits,
 }) => {
   const {
     showUnit,
-    showIcon,
     showName,
     showTimestamp,
+    backgroundColor,
     fontSize,
     secondaryFontSize,
   }: KPISettings = {
@@ -57,28 +51,19 @@ export const UpdatedKpiBase: React.FC<KPIProperties> = ({
   }
 
   return (
-    <div className='updated-kpi' data-testid='kpi-base-component'>
+    <div
+      className='updated-kpi'
+      data-testid='kpi-base-component'
+      style={{ backgroundColor }}
+    >
       <div>
-        {showIcon && icon && (
-          <StatusIcon
-            name={icon}
-            size={fontSize * KPI_ICON_SHRINK_FACTOR}
-            color={color}
-          />
-        )}
         <div
           className='property-name'
           style={{ fontSize: `${secondaryFontSize}px` }}
         >
           {isLoading ? '-' : showName && name}{' '}
-          {showUnit && !isLoading && `(${unit})`}
+          {showUnit && !isLoading && unit && `(${unit})`}
         </div>
-        {/* <div
-          className='asset-name'
-          style={{ fontSize: `${secondaryFontSize}px` }}
-        >
-          {isLoading ? '-' : assetName && assetName}
-        </div> */}
         <div
           className='value'
           data-testid='kpi-value'
