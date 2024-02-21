@@ -13,15 +13,17 @@ import {
 import { type DashboardWidget } from '~/types';
 
 import { isJust, maybeWithDefault } from '~/util/maybe';
-import { BAR_AGGREGATION_OPTIONS, BAR_RESOLUTION_OPTIONS } from '../constants';
+import {
+  AGGREGATE_ONLY_AGGREGATION_OPTIONS,
+  AGGREGATE_ONLY_RESOLUTION_OPTIONS,
+  ALL_AGGREGATION_OPTIONS,
+  ALL_RESOLUTION_OPTIONS,
+} from '../constants';
+import { SelectProps } from '@cloudscape-design/components';
 
-const isOnlyRawData: readonly string[] = [
-  'status-timeline',
-  'table',
-  'kpi',
-  'status',
-];
+const isOnlyRawData: readonly string[] = ['status-timeline', 'table'];
 const isOnlyAggregated: readonly string[] = ['bar-chart'];
+const isRawAndAggregated: readonly string[] = ['xy-plot'];
 
 // TODO: Fix lying type
 export const isOnlyRawDataWidget = (
@@ -35,11 +37,22 @@ export const isOnlyAggregatedDataWidget = (
 ): widget is LineScatterChartWidget =>
   isOnlyAggregated.some((t) => t === widget.type);
 
+export const isAggregateAndRawDataWidget = (
+  widget: DashboardWidget
+): widget is LineScatterChartWidget =>
+  (!!localStorage?.getItem('USE_UPDATED_KPI') &&
+    (widget.type === 'kpi' || widget.type === 'status')) ||
+  isRawAndAggregated.some((t) => t === widget.type);
+
 const RenderAggregationsPropertiesSection = ({
   useProperty,
+  aggregationOptions,
+  resolutionOptions,
 }: {
   // TODO: Fix lying type
   useProperty: PropertyLens<LineScatterChartWidget>;
+  aggregationOptions: SelectProps.Option[];
+  resolutionOptions: SelectProps.Option[];
 }) => {
   const [aggregationMaybe, updateAggregation] = useProperty(
     // Default resolution is auto. We ensure the aggregation is defaulted to average instead of raw.
@@ -63,16 +76,25 @@ const RenderAggregationsPropertiesSection = ({
   const [resolutionMaybe, updateResolution] = useProperty(
     ({ resolution }) => resolution,
     (properties, updatedResolution) => {
-      // We get the current aggregation and don't change it if it's already set.
       let updatedAggregationType: AggregateType | undefined = isJust(
         aggregationMaybe
       )
         ? aggregationMaybe.value
-        : 'AVERAGE';
+        : undefined;
 
-      // If auto resolution is set, we default to average aggregation.
+      // If auto resolution is set, we default to no aggregation.
       if (updatedResolution == null) {
         updatedAggregationType = 'AVERAGE';
+      }
+
+      // If a non-auto resolution is set and there is no selected aggregation type, we default to average aggregation.
+      if (updatedResolution != null && updatedAggregationType == null) {
+        updatedAggregationType = 'AVERAGE';
+      }
+
+      // If the resolution is raw, we don't need an aggregation.
+      if (updatedResolution === '0') {
+        updatedAggregationType = undefined;
       }
 
       const updatedQuery = properties.queryConfig.query
@@ -108,8 +130,8 @@ const RenderAggregationsPropertiesSection = ({
         updateAggregation(updatedAggregationType as AggregateType)
       }
       updateResolution={updateResolution}
-      resolutionOptions={BAR_RESOLUTION_OPTIONS}
-      aggregationOptions={BAR_AGGREGATION_OPTIONS}
+      resolutionOptions={resolutionOptions}
+      aggregationOptions={aggregationOptions}
     />
   );
 };
@@ -120,7 +142,7 @@ const AggregationsPropertiesSection = ({
 }: {
   // TODO: Fix lying type
   isVisible: FilterPredicate<LineScatterChartWidget>;
-  supportedData: 'raw' | 'aggregated';
+  supportedData: 'raw' | 'aggregated' | 'all';
 }) => {
   if (supportedData === 'raw') {
     return null;
@@ -130,7 +152,19 @@ const AggregationsPropertiesSection = ({
     <PropertiesSection
       isVisible={isVisible}
       render={({ useProperty }) => (
-        <RenderAggregationsPropertiesSection useProperty={useProperty} />
+        <RenderAggregationsPropertiesSection
+          aggregationOptions={
+            supportedData === 'all'
+              ? ALL_AGGREGATION_OPTIONS
+              : AGGREGATE_ONLY_AGGREGATION_OPTIONS
+          }
+          resolutionOptions={
+            supportedData === 'all'
+              ? ALL_RESOLUTION_OPTIONS
+              : AGGREGATE_ONLY_RESOLUTION_OPTIONS
+          }
+          useProperty={useProperty}
+        />
       )}
     />
   );
@@ -145,6 +179,10 @@ export const AggregationsSettingsConfiguration: React.FC = () => (
     <AggregationsPropertiesSection
       isVisible={isOnlyAggregatedDataWidget}
       supportedData='aggregated'
+    />
+    <AggregationsPropertiesSection
+      isVisible={isAggregateAndRawDataWidget}
+      supportedData='all'
     />
   </>
 );

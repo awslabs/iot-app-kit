@@ -30,6 +30,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     showIcon,
     showName,
     showTimestamp,
+    backgroundColor,
     thresholds,
     significantDigits: widgetSignificantDigits,
   } = widget.properties;
@@ -55,6 +56,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
       showValue,
       showUnit,
       showTimestamp,
+      backgroundColor,
       fontSize: primaryFont.fontSize,
       color: primaryFont.fontColor,
       secondaryFontSize: secondaryFont.fontSize,
