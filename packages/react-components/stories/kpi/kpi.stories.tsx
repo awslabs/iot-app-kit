@@ -33,12 +33,28 @@ export const MockDataKPI: ComponentStory<typeof KPI> = () => {
     <div style={{ background: 'grey' }}>
       <div style={{ height: '200px', width: '250px', padding: '20px' }}>
         <KPI
+          thresholds={[
+            {
+              value: 435,
+              id: 'abc',
+              color: '#be1c1f',
+              comparisonOperator: 'GT',
+            },
+          ]}
           viewport={{ duration: '5m' }}
           query={MOCK_TIME_SERIES_DATA_QUERY}
         />
       </div>
       <div style={{ height: '200px', width: '250px', padding: '20px' }}>
         <KPI
+          thresholds={[
+            {
+              value: 35,
+              id: '123',
+              color: '#dfe7f5',
+              comparisonOperator: 'GT',
+            },
+          ]}
           viewport={{ duration: '5m' }}
           query={MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY}
         />
