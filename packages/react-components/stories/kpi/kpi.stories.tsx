@@ -1,7 +1,14 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { KPI } from '../../src/components/kpi/kpi';
-import { initialize } from '@iot-app-kit/source-iotsitewise';
+import {
+  getSingleValueTimeSeriesDataQuery,
+  queryConfigured,
+} from '../utils/query';
+import {
+  MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY,
+  MOCK_TIME_SERIES_DATA_QUERY,
+} from './mock-data';
 
 const ASSET_ID = '587295b6-e0d0-4862-b7db-b905afd7c514';
 const PROPERTY_ID = '16d45cb7-bb8b-4a1e-8256-55276f261d93';
@@ -21,28 +28,53 @@ export default {
   },
 } as ComponentMeta<typeof KPI>;
 
-const { query } = initialize({
-  awsCredentials: {
-    accessKeyId: 'xxxx',
-    secretAccessKey: 'xxxx',
-    sessionToken: 'xxxx',
-  },
-});
+export const MockDataKPI: ComponentStory<typeof KPI> = () => {
+  return (
+    <div style={{ background: 'grey' }}>
+      <div style={{ height: '200px', width: '250px', padding: '20px' }}>
+        <KPI
+          viewport={{ duration: '5m' }}
+          query={MOCK_TIME_SERIES_DATA_QUERY}
+        />
+      </div>
+      <div style={{ height: '200px', width: '250px', padding: '20px' }}>
+        <KPI
+          viewport={{ duration: '5m' }}
+          query={MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY}
+        />
+      </div>
+    </div>
+  );
+};
 
-export const Main: ComponentStory<typeof KPI> = () => (
-  <KPI
-    viewport={{ duration: '5m' }}
-    query={query.timeSeriesData({
-      assets: [
-        {
-          assetId: ASSET_ID,
-          properties: [
-            {
-              propertyId: PROPERTY_ID,
-            },
-          ],
-        },
-      ],
-    })}
-  />
-);
+export const ConnectedKPIWidget: ComponentStory<typeof KPI> = () => {
+  if (!queryConfigured()) {
+    return (
+      <div>
+        <h1>All required Env variables not set</h1>
+        <p>Required:</p>
+        <ul>
+          <li>AWS_ACCESS_KEY_ID</li>
+          <li>AWS_SECRET_ACCESS_KEY</li>
+          <li>AWS_SESSION_TOKEN</li>
+          <li>AWS_REGION</li>
+          <li>ASSET_ID_1</li>
+          <li>PROPERTY_ID_1</li>
+          <li>PROPERTY_ID_2</li>
+          <li>PROPERTY_ID_3</li>
+        </ul>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ background: 'grey' }}>
+      <div style={{ height: '200px', width: '250px', padding: '20px' }}>
+        <KPI
+          viewport={{ duration: '5m' }}
+          query={getSingleValueTimeSeriesDataQuery()}
+        />
+      </div>
+    </div>
+  );
+};

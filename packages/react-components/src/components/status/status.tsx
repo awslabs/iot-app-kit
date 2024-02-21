@@ -13,7 +13,7 @@ import type {
 } from '@iot-app-kit/core';
 import type { StatusSettings } from './types';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
-import { UpdatedKpiBase } from '../kpi/updatedKpiBase';
+import { KPI } from '../kpi/kpi';
 
 export const Status = ({
   query,
@@ -73,17 +73,13 @@ export const Status = ({
 
   if (hasNewKPI)
     return (
-      <UpdatedKpiBase
+      <KPI
+        query={query}
+        viewport={passedInViewport}
+        styles={styles}
+        thresholds={thresholds}
         aggregationType={aggregationType}
-        propertyPoint={propertyPoint}
-        resolution={propertyResolution}
-        alarmPoint={alarmPoint}
         settings={settings}
-        name={name}
-        unit={unit}
-        color={color}
-        isLoading={isLoading}
-        error={error?.msg}
         significantDigits={significantDigits}
       />
     );

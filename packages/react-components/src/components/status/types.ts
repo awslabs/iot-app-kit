@@ -3,7 +3,6 @@ import type { WidgetSettings } from '../../common/dataTypes';
 export type StatusProperties = WidgetSettings & {
   settings?: Partial<StatusSettings>;
   aggregationType?: string;
-  resolution?: number;
 };
 
 export type StatusSettings = {
@@ -15,4 +14,7 @@ export type StatusSettings = {
   fontSize: number; // pixels
   secondaryFontSize: number; // pixels
   aggregationFontSize: number; // pixels
+  backgroundColor: string; // hex string
+  showTimestamp: boolean;
+  showAssetName: boolean;
 };

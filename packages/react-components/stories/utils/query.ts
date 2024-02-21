@@ -98,6 +98,32 @@ export const getTimeSeriesDataQuery = (
   });
 };
 
+export const getSingleValueTimeSeriesDataQuery = (
+  dataStreamQuery?: SiteWiseDataStreamQuery
+) => {
+  if (dataStreamQuery) {
+    return getIotSiteWiseQuery().timeSeriesData(dataStreamQuery);
+  }
+
+  const { assetId, propertyId1 } = getAssetQuery();
+
+  return getIotSiteWiseQuery().timeSeriesData({
+    assets: [
+      {
+        assetId,
+        properties: [
+          {
+            refId: '1',
+            propertyId: propertyId1,
+            aggregationType: 'AVERAGE',
+            resolution: '1m',
+          },
+        ],
+      },
+    ],
+  });
+};
+
 export const queryConfigured = () => {
   try {
     getEnvCredentials();

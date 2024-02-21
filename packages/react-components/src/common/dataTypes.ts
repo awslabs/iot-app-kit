@@ -63,6 +63,9 @@ export type WidgetSettings = {
   name?: string;
   detailedName?: string;
   aggregationType?: string;
+  resolution?: number;
   isLoading?: boolean;
   significantDigits?: number;
+  assetName?: string;
+  propertyName?: string;
 };
