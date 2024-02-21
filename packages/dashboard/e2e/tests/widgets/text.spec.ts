@@ -263,7 +263,7 @@ test.describe('Test Text Widget', () => {
       await widget.dblclick();
       await widget.getByRole('textbox').fill(TEXT_WIDGET_CONTENT);
       await configPanel.container
-        .getByRole('button', { name: 'Link Create link' })
+        .getByTestId('text-widget-link-header')
         .click();
       await configPanel.container
         .getByText('Create link', { exact: true })

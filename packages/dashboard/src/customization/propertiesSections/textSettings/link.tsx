@@ -33,11 +33,22 @@ const LinkSettings: FC<LinkSettingsProps> = ({
   toggleIsUrl,
 }) => {
   const header = (
-    <div className='expandable-section-header'>
+    <div
+      className='expandable-section-header'
+      data-testid='text-widget-link-header'
+    >
       <SpaceBetween size='m' direction='horizontal'>
         <span>{defaultMessages.title}</span>
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-        <div onClick={(e) => e.stopPropagation()}>
+        <div
+          onClick={(e) => e.stopPropagation()}
+          onKeyDown={(e) => {
+            e.stopPropagation();
+            if (e.key === 'Enter') {
+              toggleIsUrl(!isUrl);
+            }
+          }}
+        >
           <Toggle
             checked={isUrl}
             onChange={({ detail }) => {
@@ -62,6 +73,7 @@ const LinkSettings: FC<LinkSettingsProps> = ({
     <ExpandableSection
       className='accordian-header'
       headerText={header}
+      headerAriaLabel='Text widget link settings'
       data-test-id='text-widget-link-section'
       defaultExpanded={isUrl}
       variant='footer'
