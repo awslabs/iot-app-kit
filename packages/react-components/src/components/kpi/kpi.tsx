@@ -4,7 +4,6 @@ import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
 import type {
-  Threshold,
   StyleSettingsMap,
   Viewport,
   TimeSeriesDataQuery,
@@ -12,6 +11,7 @@ import type {
 import type { KPISettings } from './types';
 import { UpdatedKpiBase } from './updatedKpiBase';
 import { KpiBase } from './kpiBase';
+import { StyledThreshold } from '../chart/types';
 
 export const KPI = ({
   query,
@@ -24,7 +24,7 @@ export const KPI = ({
 }: {
   query: TimeSeriesDataQuery;
   viewport?: Viewport;
-  thresholds?: Threshold[];
+  thresholds?: StyledThreshold[];
   styles?: StyleSettingsMap;
   aggregationType?: string;
   settings?: Partial<KPISettings>;
@@ -60,7 +60,10 @@ export const KPI = ({
   const name = propertyStream?.name || alarmStream?.name;
   const unit = propertyStream?.unit || alarmStream?.unit;
   const color =
-    alarmThreshold?.color || propertyThreshold?.color || settings?.color;
+    alarmThreshold?.color ||
+    propertyThreshold?.color ||
+    settings?.color ||
+    settings?.backgroundColor;
   const isLoading =
     alarmStream?.isLoading || propertyStream?.isLoading || false;
   const error = alarmStream?.error || propertyStream?.error;
@@ -72,12 +75,11 @@ export const KPI = ({
       <UpdatedKpiBase
         propertyPoint={propertyPoint}
         alarmPoint={alarmPoint}
-        settings={settings}
+        settings={{ ...settings, backgroundColor: color }}
         aggregationType={aggregationType}
         resolution={propertyResolution}
         name={name}
         unit={unit}
-        color={color}
         isLoading={isLoading}
         error={error?.msg}
         significantDigits={significantDigits}

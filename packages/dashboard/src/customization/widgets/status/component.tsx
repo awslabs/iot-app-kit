@@ -28,7 +28,9 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
     showUnit,
     showIcon,
     showName,
+    showTimestamp,
     thresholds,
+    backgroundColor,
     significantDigits: widgetSignificantDigits,
   } = widget.properties;
 
@@ -51,8 +53,10 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
       showIcon,
       showValue,
       showUnit,
+      showTimestamp,
       fontSize: primaryFont.fontSize,
       color: primaryFont.fontColor,
+      backgroundColor,
       secondaryFontSize: secondaryFont.fontSize,
     },
     isDefined
