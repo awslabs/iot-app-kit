@@ -19,7 +19,7 @@ it('renders', function () {
           numRows: 100,
         },
         widgets: [],
-        viewport: { duration: '5m' },
+        viewport: { duration: '55m' },
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
@@ -35,6 +35,7 @@ it('renders', function () {
   expect(queryByText(/component library/i)).not.toBeInTheDocument();
   expect(queryByTestId(/dashboard-actions/i)).toBeInTheDocument();
   expect(queryByTestId(/time-selection/i)).toBeInTheDocument();
+  expect(queryByText('Last 55 minutes')).toBeInTheDocument();
 });
 
 it('renders in readonly initially', function () {
@@ -116,7 +117,7 @@ it('passes the correct viewMode to onSave', function () {
       significantDigits: 4,
     },
     widgets: [],
-    viewport: { duration: '5m' },
+    viewport: { duration: '55m' },
   };
 
   render(
