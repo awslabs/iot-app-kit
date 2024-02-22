@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Viewport, getPlugin } from '@iot-app-kit/core';
+import { getPlugin } from '@iot-app-kit/core';
 import { WebglContext, TimeSync } from '@iot-app-kit/react-components';
 import Box from '@cloudscape-design/components/box';
 import {
@@ -66,7 +66,6 @@ type InternalDashboardProperties = {
   editable?: boolean;
   name?: string;
   propertiesPanel?: ReactNode;
-  viewport?: Viewport;
 };
 
 const defaultUserSelect: CSSProperties = { userSelect: 'initial' };
@@ -77,7 +76,6 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   editable,
   name,
   propertiesPanel,
-  viewport,
 }) => {
   const { iotSiteWiseClient, iotTwinMakerClient } = useClients();
 
@@ -395,10 +393,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   );
 
   return (
-    <TimeSync
-      initialViewport={viewport ?? { duration: '5m' }}
-      group='dashboard-timesync'
-    >
+    <TimeSync initialViewport={{ duration: '5m' }} group='dashboard-timesync'>
       {readOnly ? ReadOnlyComponent : EditComponent}
       <ConfirmDeleteModal
         visible={visible}
