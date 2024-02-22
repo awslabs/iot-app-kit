@@ -5,6 +5,7 @@ import {
   RenderResult,
   act,
   cleanup,
+  fireEvent,
   render,
   screen,
 } from '@testing-library/react';
@@ -14,7 +15,10 @@ import { Provider } from 'react-redux';
 import { PropertiesPanel } from './panel';
 import { configureDashboardStore } from '~/store';
 import { DashboardState } from '~/store/state';
-import { MOCK_LINE_CHART_WIDGET } from '../../../../testing/mocks';
+import {
+  MOCK_KPI_WIDGET,
+  MOCK_LINE_CHART_WIDGET,
+} from '../../../../testing/mocks';
 import { mockAssetDescription } from '../../../../testing/mocks/siteWiseSDK';
 import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import { QueryWidget } from '~/customization/widgets/types';
@@ -148,12 +152,26 @@ describe(`${PropertiesPanel.name}`, () => {
     expect(screen.getByText('Axis')).toBeVisible();
     expect(screen.getByText('Settings')).toBeVisible();
   });
-
-  it('should render the style section', async () => {
+  it('should render the style section when switched between widgets', async () => {
     await renderTestComponentAsync();
 
     expect(screen.getByText('Style')).toBeVisible();
     expect(screen.getByText('Axis')).toBeVisible();
+    expect(screen.getByText('Settings')).toBeVisible();
+
+    const thresholdsTab = screen.getByTestId('thresholds');
+    expect(thresholdsTab).toBeVisible();
+
+    fireEvent.click(thresholdsTab);
+    expect(thresholdsTab).toHaveFocus();
+    expect(screen.getByText('Add a threshold')).toBeVisible();
+
+    const options = {
+      widgets: [MOCK_KPI_WIDGET],
+      selectedWidgets: [MOCK_KPI_WIDGET],
+    };
+
+    await renderTestComponentAsync(options);
     expect(screen.getByText('Settings')).toBeVisible();
   });
 
