@@ -2,9 +2,9 @@ import {
   AnnotationValue,
   COMPARISON_OPERATOR,
   ComparisonOperator,
+  StyledThreshold,
 } from '@iot-app-kit/core';
 import { COMPARATOR_MAP } from '../../../common/constants';
-import { StyledThreshold } from '../types';
 
 const comparisonOperatorToLowerYAxis = (
   comparisonOperator: ComparisonOperator,

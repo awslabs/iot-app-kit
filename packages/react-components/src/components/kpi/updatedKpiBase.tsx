@@ -22,6 +22,8 @@ export const UpdatedKpiBase: React.FC<KPIProperties> = ({
   isLoading,
   settings = {},
   significantDigits,
+  isFilledThreshold,
+  isThresholdVisible,
 }) => {
   const {
     showUnit,
@@ -36,9 +38,13 @@ export const UpdatedKpiBase: React.FC<KPIProperties> = ({
     ...omitBy(settings, (x) => x == null),
   };
 
+  const background =
+    !isFilledThreshold && isThresholdVisible ? '#ffffff' : backgroundColor;
+  const highContrastFontColor =
+    background === '#ffffff' ? '' : highContrastColor(background);
+  const fontColor = isFilledThreshold ? highContrastFontColor : '';
+
   const point = propertyPoint;
-  const fontColor =
-    backgroundColor === '#ffffff' ? '' : highContrastColor(backgroundColor);
   const aggregationResolutionString = getAggregationFrequency(
     resolution,
     aggregationType
@@ -64,57 +70,60 @@ export const UpdatedKpiBase: React.FC<KPIProperties> = ({
 
   return (
     <div
-      className='updated-kpi'
+      className='updated-kpi-container'
       data-testid='kpi-base-component'
-      style={{ backgroundColor }}
+      style={{ backgroundColor: background }}
     >
-      <div>
-        <div
-          className='property-name'
-          style={{ fontSize: `${secondaryFontSize}px`, color: fontColor }}
-        >
-          {isLoading ? '-' : showName && name}{' '}
-          {showUnit && !isLoading && unit && `(${unit})`}
+      <div className='updated-kpi'>
+        <div>
+          <div
+            className='property-name'
+            style={{ fontSize: `${secondaryFontSize}px`, color: fontColor }}
+          >
+            {isLoading ? '-' : showName && name}{' '}
+            {showUnit && !isLoading && unit && `(${unit})`}
+          </div>
+          <div
+            className='value'
+            data-testid='kpi-value'
+            style={{ fontSize: `${fontSize}px`, color: fontColor }}
+          >
+            {isLoading ? (
+              <Spinner data-testid='loading' />
+            ) : (
+              <Value value={point?.y} precision={significantDigits} />
+            )}
+          </div>
         </div>
-        <div
-          className='value'
-          data-testid='kpi-value'
-          style={{ fontSize: `${fontSize}px`, color: fontColor }}
-        >
-          {isLoading ? (
-            <Spinner data-testid='loading' />
-          ) : (
-            <Value value={point?.y} precision={significantDigits} />
-          )}
-        </div>
-      </div>
-      {point && (
-        <div
-          className='timestamp-container'
-          style={{ fontSize: `${secondaryFontSize}px`, color: fontColor }}
-        >
-          {showAggregationAndResolution && aggregationResolutionString && (
-            <div>{isLoading ? '-' : aggregationResolutionString}</div>
-          )}
-          {showTimestamp && (
-            <>
-              <div
-                className='timestamp-border'
-                style={{ backgroundColor: fontColor }}
-              />
-              {isLoading ? (
-                '-'
-              ) : (
+        {point && (
+          <div
+            className='timestamp-container'
+            style={{
+              fontSize: fontSizeBodyS,
+              color: fontColor,
+            }}
+          >
+            {showAggregationAndResolution && aggregationResolutionString && (
+              <div className='aggregation'>
+                {isLoading ? '-' : aggregationResolutionString}
+              </div>
+            )}
+            {showTimestamp && (
+              <>
                 <div
-                  className='timestamp'
-                  style={{ fontSize: `${fontSizeBodyS}` }}
-                >
-                  {new Date(point.x).toLocaleString()}
+                  className='timestamp-border'
+                  style={{ backgroundColor: fontColor }}
+                />
+                <div className='timestamp'>
+                  {isLoading ? '-' : new Date(point.x).toLocaleString()}
                 </div>
-              )}
-            </>
-          )}
-        </div>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+      {!isFilledThreshold && isThresholdVisible && (
+        <div style={{ backgroundColor }} className='kpi-line-threshold' />
       )}
     </div>
   );

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   DataStream,
+  StyledThreshold,
   Threshold,
   TimeSeriesDataQuery,
   Viewport,
@@ -10,7 +11,6 @@ import isEqual from 'lodash.isequal';
 import { useTimeSeriesData } from '../../../hooks/useTimeSeriesData';
 import { useViewport } from '../../../hooks/useViewport';
 import { DEFAULT_VIEWPORT, StreamType } from '../../../common/constants';
-import { StyledThreshold } from '../types';
 
 const isNotAlarmStream = ({ streamType }: DataStream) =>
   streamType !== StreamType.ALARM;
