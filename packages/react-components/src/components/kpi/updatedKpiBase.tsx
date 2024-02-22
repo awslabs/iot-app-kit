@@ -9,10 +9,14 @@ import { Value } from '../shared-components';
 import type { KPIProperties, KPISettings } from './types';
 import './kpi.css';
 import { highContrastColor } from '../status/highContrastColor';
+import { getAggregationFrequency } from '../../utils/aggregationFrequency';
+import { fontSizeBodyS } from '@cloudscape-design/design-tokens';
 
 export const UpdatedKpiBase: React.FC<KPIProperties> = ({
   propertyPoint,
   error,
+  resolution,
+  aggregationType,
   unit,
   name,
   isLoading,
@@ -23,6 +27,7 @@ export const UpdatedKpiBase: React.FC<KPIProperties> = ({
     showUnit,
     showName,
     showTimestamp,
+    showAggregationAndResolution,
     backgroundColor,
     fontSize,
     secondaryFontSize,
@@ -34,6 +39,10 @@ export const UpdatedKpiBase: React.FC<KPIProperties> = ({
   const point = propertyPoint;
   const fontColor =
     backgroundColor === '#ffffff' ? '' : highContrastColor(backgroundColor);
+  const aggregationResolutionString = getAggregationFrequency(
+    resolution,
+    aggregationType
+  );
 
   if (error) {
     return (
@@ -79,21 +88,31 @@ export const UpdatedKpiBase: React.FC<KPIProperties> = ({
           )}
         </div>
       </div>
-      {point && showTimestamp && (
+      {point && (
         <div
           className='timestamp-container'
           style={{ fontSize: `${secondaryFontSize}px`, color: fontColor }}
         >
-          <div
-            className='timestamp-border'
-            style={{ backgroundColor: fontColor }}
-          />
-          {isLoading ? (
-            '-'
-          ) : (
-            <div className='timestamp'>
-              {new Date(point.x).toLocaleString()}
-            </div>
+          {showAggregationAndResolution && aggregationResolutionString && (
+            <div>{isLoading ? '-' : aggregationResolutionString}</div>
+          )}
+          {showTimestamp && (
+            <>
+              <div
+                className='timestamp-border'
+                style={{ backgroundColor: fontColor }}
+              />
+              {isLoading ? (
+                '-'
+              ) : (
+                <div
+                  className='timestamp'
+                  style={{ fontSize: `${fontSizeBodyS}` }}
+                >
+                  {new Date(point.x).toLocaleString()}
+                </div>
+              )}
+            </>
           )}
         </div>
       )}

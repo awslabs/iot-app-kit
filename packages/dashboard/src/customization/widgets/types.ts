@@ -44,6 +44,7 @@ export type KPIProperties = QueryProperties & {
   title?: string;
   primaryFont: SimpleFontSettings;
   secondaryFont: SimpleFontSettings;
+  showAggregationAndResolution?: boolean;
   showValue?: boolean;
   showUnit?: boolean;
   showIcon?: boolean;
@@ -60,6 +61,7 @@ export type StatusProperties = QueryProperties & {
   title?: string;
   primaryFont: SimpleFontSettings;
   secondaryFont: SimpleFontSettings;
+  showAggregationAndResolution?: boolean;
   showValue?: boolean;
   showUnit?: boolean;
   showIcon?: boolean;

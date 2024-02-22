@@ -5,6 +5,7 @@ export const DEFAULT_STATUS_COLOR = '#16191f';
 export const STATUS_ICON_SHRINK_FACTOR = 0.9;
 
 export const DEFAULT_STATUS_SETTINGS: Required<StatusSettings> = {
+  showAggregationAndResolution: true,
   showUnit: true,
   showIcon: true,
   showName: true,

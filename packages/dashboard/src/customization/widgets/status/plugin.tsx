@@ -27,6 +27,7 @@ export const statusPlugin: DashboardPlugin = {
         showName: true,
         showTimestamp: true,
         showUnit: true,
+        showAggregationAndResolution: true,
       }),
       initialSize: {
         height: STATUS_WIDGET_INITIAL_HEIGHT,

@@ -9,6 +9,7 @@ export const DEFAULT_KPI_SETTINGS: Required<KPISettings> = {
   showUnit: true,
   color: '#000000',
   showIcon: true,
+  showAggregationAndResolution: true,
   showName: true,
   fontSize: 30,
   secondaryFontSize: 15,
