@@ -2,9 +2,10 @@ import React from 'react';
 
 import { SpaceBetween, Box } from '@cloudscape-design/components';
 
-import { StyledThreshold, ThresholdWithId } from '~/customization/settings';
+import { ThresholdWithId } from '~/customization/settings';
 import { ThresholdComponent } from './thresholdComponent';
 import { ComparisonOperators } from './comparisonOperators';
+import { StyledThreshold } from '@iot-app-kit/core';
 
 const NoThresholds = () => <Box />;
 

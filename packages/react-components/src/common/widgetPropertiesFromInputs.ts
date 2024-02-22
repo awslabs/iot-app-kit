@@ -7,6 +7,7 @@ import type {
   DataPoint,
   Viewport,
   Threshold,
+  StyledThreshold,
 } from '@iot-app-kit/core';
 
 const propertyInfo = ({
@@ -15,7 +16,7 @@ const propertyInfo = ({
   viewport,
 }: {
   dataStreams: DataStream[];
-  thresholds: Threshold[];
+  thresholds: StyledThreshold[];
   viewport: Viewport;
 }) => {
   const dataStream = dataStreams.find(({ streamType }) => streamType == null);

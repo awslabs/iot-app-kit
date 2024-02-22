@@ -1,7 +1,7 @@
 import {
   DataStream,
   Primitive,
-  Threshold,
+  StyledThreshold,
   ThresholdSettings,
   TimeSeriesDataQuery,
   Viewport,
@@ -87,13 +87,6 @@ export type ChartStyleSettings = {
 };
 
 export type ChartEventType = { target: { id?: OptionId }; offsetX?: number };
-
-export type ThresholdStyleType = {
-  visible?: boolean;
-  fill?: string;
-};
-
-export type StyledThreshold = Threshold & ThresholdStyleType;
 
 export type ChartOptions = {
   queries: TimeSeriesDataQuery[];

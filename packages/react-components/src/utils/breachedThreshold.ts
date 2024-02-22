@@ -7,6 +7,7 @@ import type {
   DataStream,
   DataStreamId,
   Primitive,
+  StyledThreshold,
 } from '@iot-app-kit/core';
 
 const isHigherPriority = (
@@ -123,12 +124,12 @@ export const breachedThreshold = ({
   value: Primitive | undefined;
   // The point in time to evaluate the alarm streams at against the thresholds
   date: Date;
-  thresholds: Threshold[];
+  thresholds: StyledThreshold[];
   // All data streams, utilized to find the alarm streams associated with the info
   dataStreams: DataStream[];
   // stream associated with the point who's value is being evaluated. Used to find associated alarms
   dataStream: DataStream;
-}): Threshold | undefined => {
+}): StyledThreshold | undefined => {
   const applicableThresholds = thresholds.filter((threshold) =>
     thresholdAppliesToDataStream(threshold, dataStream.id)
   );

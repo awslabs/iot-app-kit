@@ -1,67 +1,19 @@
 import React, { useState } from 'react';
 import { FormField, Select, SelectProps } from '@cloudscape-design/components';
-import { OptionDefinition } from '@cloudscape-design/components/internal/components/option/interfaces';
-// FIXME: Export ThresholdStyleType from @iot-app-kit/react-components
-// eslint-disable-next-line no-restricted-imports
-import { ThresholdStyleType } from '@iot-app-kit/react-components/src/components/chart/types';
 import { spaceScaledXs } from '@cloudscape-design/design-tokens';
+import { ThresholdStyleType } from '@iot-app-kit/core';
+import { OptionDefinition } from '@cloudscape-design/components/internal/components/option/interfaces';
 
 export type ThresholdStyleSettingsProps = {
   thresholdStyle: ThresholdStyleType;
   updateAllThresholdStyles: (thresholdStyle: ThresholdStyleType) => void;
-};
-
-enum ThresholdStyleOptions {
-  asLines = 'As lines',
-  asFilledRegion = 'As filled region',
-  asLinesAndFilledRegion = 'As lines and filled region',
-}
-
-export const styledOptions = [
-  { label: ThresholdStyleOptions.asLines, value: '1' },
-  { label: ThresholdStyleOptions.asFilledRegion, value: '2' },
-  { label: ThresholdStyleOptions.asLinesAndFilledRegion, value: '3' },
-];
-
-export const convertOptionToThresholdStyle = (
-  selectedOption: OptionDefinition
-): ThresholdStyleType => {
-  switch (selectedOption.label) {
-    case ThresholdStyleOptions.asLines: {
-      return {
-        visible: true,
-      };
-    }
-    case ThresholdStyleOptions.asFilledRegion: {
-      return {
-        visible: false,
-        fill: 'color',
-      };
-    }
-    case ThresholdStyleOptions.asLinesAndFilledRegion: {
-      return {
-        visible: true,
-        fill: 'color',
-      };
-    }
-    default: {
-      return {};
-    }
-  }
-};
-
-const convertThresholdStyleToOption = (
-  thresholdStyle: ThresholdStyleType
-): OptionDefinition => {
-  if (!!thresholdStyle.visible && !thresholdStyle.fill) {
-    return styledOptions[0];
-  } else if (!thresholdStyle.visible && !!thresholdStyle.fill) {
-    return styledOptions[1];
-  } else if (!!thresholdStyle.visible && !!thresholdStyle.fill) {
-    return styledOptions[2];
-  } else {
-    return styledOptions[0];
-  }
+  convertThresholdStyleToOption: (
+    thresholdStyle: ThresholdStyleType
+  ) => OptionDefinition;
+  convertOptionToThresholdStyle: (
+    selectedOption: OptionDefinition
+  ) => ThresholdStyleType;
+  styledOptions: { label: string; value: string }[];
 };
 
 const style = {
@@ -71,6 +23,9 @@ const style = {
 export const ThresholdStyleSettings: React.FC<ThresholdStyleSettingsProps> = ({
   thresholdStyle,
   updateAllThresholdStyles,
+  convertThresholdStyleToOption,
+  convertOptionToThresholdStyle,
+  styledOptions,
 }) => {
   const [selectedOption, setSelectedOption] = useState<SelectProps.Option>(
     convertThresholdStyleToOption(thresholdStyle)

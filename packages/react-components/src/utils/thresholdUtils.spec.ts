@@ -60,6 +60,13 @@ describe('annotation logic', () => {
     ${'STOP'}    | ${'STOP'}      | ${COMPARISON_OPERATOR.CONTAINS}           | ${true}
     ${'STOPPED'} | ${'STOP'}      | ${COMPARISON_OPERATOR.CONTAINS}           | ${true}
     ${'3 STOP'}  | ${'STOP'}      | ${COMPARISON_OPERATOR.CONTAINS}           | ${true}
+    ${true}      | ${false}       | ${COMPARISON_OPERATOR.GREATER_THAN_EQUAL} | ${false}
+    ${true}      | ${false}       | ${COMPARISON_OPERATOR.GREATER_THAN}       | ${false}
+    ${true}      | ${false}       | ${COMPARISON_OPERATOR.LESS_THAN_EQUAL}    | ${false}
+    ${true}      | ${false}       | ${COMPARISON_OPERATOR.LESS_THAN}          | ${false}
+    ${true}      | ${false}       | ${COMPARISON_OPERATOR.CONTAINS}           | ${false}
+    ${true}      | ${false}       | ${COMPARISON_OPERATOR.EQUAL}              | ${false}
+    ${true}      | ${true}        | ${COMPARISON_OPERATOR.EQUAL}              | ${true}
   `(
     'Check if data point is within the threshold',
     ({ key, thresholdValue, operator, expected }) => {
