@@ -6,6 +6,7 @@ export type KPIProperties = WidgetSettings & {
 
 export type KPISettings = {
   showTimestamp: boolean;
+  showAggregationAndResolution: boolean;
   showName: boolean;
   showIcon: boolean;
   showUnit: boolean;

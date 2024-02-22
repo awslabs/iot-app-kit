@@ -7,6 +7,7 @@ export type StatusProperties = WidgetSettings & {
 
 export type StatusSettings = {
   color: string; // hex string
+  showAggregationAndResolution: boolean;
   showName: boolean;
   showIcon: boolean;
   showValue: boolean;
