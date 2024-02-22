@@ -1,6 +1,6 @@
 import type {
   StyleSettingsMap,
-  Threshold,
+  StyledThreshold,
   ThresholdSettings,
 } from '@iot-app-kit/core';
 import type {
@@ -50,7 +50,7 @@ export type KPIProperties = QueryProperties & {
   showIcon?: boolean;
   showName?: boolean;
   showTimestamp?: boolean;
-  thresholds?: ThresholdWithId[];
+  thresholds?: StyledThreshold[];
   backgroundColor?: string;
   significantDigits?: number;
 };
@@ -66,7 +66,7 @@ export type StatusProperties = QueryProperties & {
   showUnit?: boolean;
   showIcon?: boolean;
   showName?: boolean;
-  thresholds?: ThresholdWithId[];
+  thresholds?: StyledThreshold[];
   showTimestamp?: boolean;
   backgroundColor?: string;
   significantDigits?: number;
@@ -140,13 +140,6 @@ export type StyledAssetQuery = {
     properties: StyledAssetPropertyQuery[];
   }[];
 };
-
-export type ThresholdStyleType = {
-  visible?: boolean;
-  fill?: string;
-};
-
-export type StyledThreshold = Threshold & ThresholdStyleType;
 
 type YAxisRange = {
   yMin?: number;

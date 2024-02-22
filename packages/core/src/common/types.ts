@@ -102,6 +102,13 @@ export interface Threshold<T extends ThresholdValue = ThresholdValue>
   dataStreamIds?: DataStreamId[];
 }
 
+export type ThresholdStyleType = {
+  visible?: boolean;
+  fill?: string;
+};
+
+export type StyledThreshold = Threshold & ThresholdStyleType;
+
 export type ThresholdSettings = {
   // Specify whether data that is breached by the thresholds will be colored based on the threshold configuration
   colorBreachedData?: boolean;

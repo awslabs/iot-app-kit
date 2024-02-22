@@ -2,6 +2,8 @@ import type { WidgetSettings } from '../../common/dataTypes';
 
 export type KPIProperties = WidgetSettings & {
   settings?: Partial<KPISettings>;
+  isFilledThreshold?: boolean;
+  isThresholdVisible?: boolean;
 };
 
 export type KPISettings = {
