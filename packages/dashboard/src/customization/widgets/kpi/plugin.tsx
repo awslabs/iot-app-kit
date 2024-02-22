@@ -27,6 +27,7 @@ export const kpiPlugin: DashboardPlugin = {
         showName: true,
         showTimestamp: true,
         showUnit: true,
+        showAggregationAndResolution: true,
       }),
       initialSize: {
         height: KPI_WIDGET_INITIAL_HEIGHT,
