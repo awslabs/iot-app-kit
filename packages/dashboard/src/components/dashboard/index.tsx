@@ -76,6 +76,7 @@ const Dashboard: React.FC<DashboardProperties> = ({
                   onSave={onSave}
                   editable={true}
                   name={name}
+                  viewport={dashboardConfiguration.viewport}
                   propertiesPanel={<PropertiesPanel />}
                 />
               </DndProvider>
