@@ -33,8 +33,5 @@
   height: 2px;
   left: -8px;
   background-color: #e9ebed;
-}
-
-.updated-kpi .timestamp {
-  margin-top: 6px;
+  margin: 8px 0;
 }

@@ -52,9 +52,24 @@ const RenderDisplaySettingsSection = ({
     })
   );
 
+  const [
+    maybeShowAggregationAndResolution,
+    updateShowAggregationAndResolution,
+  ] = useProperty(
+    (properties) => properties.showAggregationAndResolution,
+    (properties, updatedValue) => ({
+      ...properties,
+      showAggregationAndResolution: updatedValue,
+    })
+  );
+
   const showName = maybeWithDefault(undefined, maybeShowName);
   const showTimestamp = maybeWithDefault(undefined, maybeShowTimestamp);
   const showUnit = maybeWithDefault(undefined, maybeShowUnit);
+  const showAggregationAndResolution = maybeWithDefault(
+    undefined,
+    maybeShowAggregationAndResolution
+  );
 
   return (
     <ExpandableSection
@@ -82,6 +97,14 @@ const RenderDisplaySettingsSection = ({
             checked={!!showUnit}
           >
             Show unit
+          </Checkbox>
+          <Checkbox
+            onChange={(event) =>
+              updateShowAggregationAndResolution(event.detail.checked)
+            }
+            checked={!!showAggregationAndResolution}
+          >
+            Show aggregation & resolution
           </Checkbox>
         </FormField>
       </Box>

@@ -28,6 +28,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     showValue,
     showUnit,
     showIcon,
+    showAggregationAndResolution,
     showName,
     showTimestamp,
     backgroundColor,
@@ -53,6 +54,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     {
       showName,
       showIcon,
+      showAggregationAndResolution,
       showValue,
       showUnit,
       showTimestamp,
