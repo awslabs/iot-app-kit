@@ -1,26 +1,33 @@
+.updated-kpi-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100%;
+  overflow: hidden;
+}
+
 .updated-kpi {
-  padding: 8px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: calc(100% - 16px);
-  overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 .updated-kpi .property-name {
   font-weight: bold;
   color: #000716;
-  padding: 2px 0;
+  padding: 8px 8px 2px;
 }
 
 .updated-kpi .asset-name {
   color: #414d5c;
-  padding: 2px 0;
+  padding: 8px 8px 2px;
 }
 
 .updated-kpi .value {
   font-weight: bold;
-  padding: 4px 0;
+  padding: 8px 8px 2px;
 }
 
 .updated-kpi .timestamp-container {
@@ -28,10 +35,20 @@
 }
 
 .updated-kpi .timestamp-border {
-  position: relative;
-  width: calc(100% + 16px);
   height: 2px;
-  left: -8px;
   background-color: #e9ebed;
-  margin: 8px 0;
+}
+
+.updated-kpi .timestamp {
+  padding: 6px;
+  height: 18px;
+}
+
+.kpi-line-threshold {
+  height: 100%;
+  width: 16px;
+}
+
+.aggregation {
+  padding: 6px;
 }

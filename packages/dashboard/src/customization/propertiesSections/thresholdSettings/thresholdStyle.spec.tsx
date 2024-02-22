@@ -2,8 +2,13 @@ import React from 'react';
 
 import { render } from '@testing-library/react';
 import { ThresholdStyleSettings } from './thresholdStyle';
-import { ThresholdStyleType } from '~/customization/widgets/types';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
+import { ThresholdStyleType } from '@iot-app-kit/core';
+import {
+  convertOptionToThresholdStyle,
+  convertThresholdStyleToOption,
+  styledOptions,
+} from './defaultThresholds';
 
 const thresholdStyle: ThresholdStyleType = {
   visible: true,
@@ -14,6 +19,9 @@ const component = (
   <ThresholdStyleSettings
     thresholdStyle={thresholdStyle}
     updateAllThresholdStyles={mockUpdateAllThresholdStyles}
+    convertOptionToThresholdStyle={convertOptionToThresholdStyle}
+    convertThresholdStyleToOption={convertThresholdStyleToOption}
+    styledOptions={styledOptions}
   />
 );
 

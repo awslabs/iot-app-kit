@@ -1,6 +1,11 @@
 import React, { FC, useState } from 'react';
 
-import { ComparisonOperator, ThresholdSettings } from '@iot-app-kit/core';
+import {
+  ComparisonOperator,
+  ThresholdSettings,
+  StyledThreshold,
+  ThresholdStyleType,
+} from '@iot-app-kit/core';
 import { nanoid } from '@reduxjs/toolkit';
 
 import {
@@ -11,10 +16,7 @@ import {
 } from '@cloudscape-design/components';
 
 import { DEFAULT_THRESHOLD_COLOR } from './defaultValues';
-import type {
-  StyledThreshold,
-  ThresholdWithId,
-} from '~/customization/settings';
+import type { ThresholdWithId } from '~/customization/settings';
 import { Maybe, maybeWithDefault } from '~/util/maybe';
 import { SelectOneWidget } from '../shared/selectOneWidget';
 import { useExpandable } from '../shared/useExpandable';
@@ -25,16 +27,19 @@ import {
   CancelableEventHandler,
   ClickDetail,
 } from '@cloudscape-design/components/internal/events';
-import {
-  ThresholdStyleSettings,
-  convertOptionToThresholdStyle,
-  styledOptions,
-} from './thresholdStyle';
-// FIXME: Export ThresholdStyleType from @iot-app-kit/react-components
-// eslint-disable-next-line no-restricted-imports
-import { ThresholdStyleType } from '@iot-app-kit/react-components/src/components/chart/types';
+import { ThresholdStyleSettings } from './thresholdStyle';
 import '../propertiesSectionsStyle.css';
 import { spaceScaledXs } from '@cloudscape-design/design-tokens';
+import {
+  convertThresholdStyleToOptionKPI,
+  convertOptionToThresholdStyleKPI,
+  styledOptionsKPI,
+} from './kpiThresholds';
+import {
+  convertOptionToThresholdStyle,
+  convertThresholdStyleToOption,
+  styledOptions,
+} from './defaultThresholds';
 
 const ThresholdsExpandableSection: React.FC<
   React.PropsWithChildren<{ title: string }>
@@ -51,6 +56,7 @@ const ThresholdsExpandableSection: React.FC<
 );
 
 type ThresholdsSectionProps = {
+  widgetType: string;
   thresholds?: Maybe<ThresholdWithId[] | undefined>;
   updateThresholds?: (newValue: ThresholdWithId[] | undefined) => void;
   comparisonOperators: ComparisonOperators;
@@ -63,6 +69,7 @@ type ThresholdsSectionProps = {
 };
 
 const ThresholdsSection: FC<ThresholdsSectionProps> = ({
+  widgetType,
   thresholds,
   updateThresholds,
   comparisonOperators,
@@ -335,10 +342,23 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
         }
       };
 
+      const isStatusOrKPI = widgetType === 'kpi' || widgetType === 'status';
+
       return (
         <ThresholdStyleSettings
           thresholdStyle={thresholdStyle}
           updateAllThresholdStyles={updateAllThresholdStyles}
+          convertThresholdStyleToOption={
+            isStatusOrKPI
+              ? convertThresholdStyleToOptionKPI
+              : convertThresholdStyleToOption
+          }
+          convertOptionToThresholdStyle={
+            isStatusOrKPI
+              ? convertOptionToThresholdStyleKPI
+              : convertOptionToThresholdStyle
+          }
+          styledOptions={isStatusOrKPI ? styledOptionsKPI : styledOptions}
         />
       );
     }

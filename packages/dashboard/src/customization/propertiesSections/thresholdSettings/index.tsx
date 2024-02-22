@@ -1,9 +1,9 @@
 import React from 'react';
-import { ThresholdSettings } from '@iot-app-kit/core';
+import { StyledThreshold, ThresholdSettings } from '@iot-app-kit/core';
 
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { PropertyLens } from '~/customization/propertiesSection';
-import { StyledThreshold, ThresholdWithId } from '~/customization/settings';
+import { ThresholdWithId } from '~/customization/settings';
 import { DashboardWidget } from '~/types';
 import ThresholdsSection from './thresholdsSection';
 import { getComparisonOperators } from './comparisonOperators';
@@ -49,6 +49,7 @@ const RenderThresholdsSettings = ({
   useProperty: PropertyLens<ThresholdsWidget>;
 }) => {
   const widgetType = maybeWithDefault('', type);
+  const hasNewKPI = !!localStorage?.getItem('USE_UPDATED_KPI');
 
   let doesSupportAnnotations;
   let doesSupportContainsOp;
@@ -62,8 +63,10 @@ const RenderThresholdsSettings = ({
     doesSupportContainsOp = types.every((v) =>
       thresholdsWithContainsOperator.includes(v)
     );
-    doesSupportStyledThreshold = types.every((v) =>
-      thresholdsWithStyle.includes(v)
+    doesSupportStyledThreshold = types.every(
+      (v) =>
+        thresholdsWithStyle.includes(v) ||
+        ((v === 'kpi' || v === 'status') && hasNewKPI)
     );
   } else {
     doesSupportAnnotations = thresholdsWithAnnotations.some(
@@ -72,9 +75,9 @@ const RenderThresholdsSettings = ({
     doesSupportContainsOp = thresholdsWithContainsOperator.some(
       (t) => t === widgetType
     );
-    doesSupportStyledThreshold = thresholdsWithStyle.some(
-      (t) => t === widgetType
-    );
+    doesSupportStyledThreshold =
+      thresholdsWithStyle.some((t) => t === widgetType) ||
+      ((widgetType === 'kpi' || widgetType === 'status') && hasNewKPI);
   }
 
   const [thresholds, updateThresholds] = useProperty(
@@ -115,6 +118,7 @@ const RenderThresholdsSettings = ({
 
   return (
     <ThresholdsSection
+      widgetType={widgetType}
       comparisonOperators={getComparisonOperators({
         supportsContains: doesSupportContainsOp,
       })}

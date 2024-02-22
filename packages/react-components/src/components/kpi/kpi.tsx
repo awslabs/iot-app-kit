@@ -7,11 +7,11 @@ import type {
   StyleSettingsMap,
   Viewport,
   TimeSeriesDataQuery,
+  StyledThreshold,
 } from '@iot-app-kit/core';
 import type { KPISettings } from './types';
 import { UpdatedKpiBase } from './updatedKpiBase';
 import { KpiBase } from './kpiBase';
-import { StyledThreshold } from '../chart/types';
 
 export const KPI = ({
   query,
@@ -46,7 +46,6 @@ export const KPI = ({
   const {
     propertyPoint,
     alarmPoint,
-    alarmThreshold,
     propertyThreshold,
     alarmStream,
     propertyStream,
@@ -59,11 +58,10 @@ export const KPI = ({
 
   const name = propertyStream?.name || alarmStream?.name;
   const unit = propertyStream?.unit || alarmStream?.unit;
-  const color =
-    alarmThreshold?.color ||
-    propertyThreshold?.color ||
-    settings?.color ||
-    settings?.backgroundColor;
+  const backgroundColor =
+    propertyThreshold?.color || settings?.color || settings?.backgroundColor;
+  const isThresholdVisible = !!propertyThreshold?.color;
+  const isFilledThreshold = !!propertyThreshold?.fill;
   const isLoading =
     alarmStream?.isLoading || propertyStream?.isLoading || false;
   const error = alarmStream?.error || propertyStream?.error;
@@ -75,7 +73,9 @@ export const KPI = ({
       <UpdatedKpiBase
         propertyPoint={propertyPoint}
         alarmPoint={alarmPoint}
-        settings={{ ...settings, backgroundColor: color }}
+        settings={{ ...settings, backgroundColor }}
+        isThresholdVisible={isThresholdVisible}
+        isFilledThreshold={isFilledThreshold}
         aggregationType={dataStreams[0]?.aggregationType}
         resolution={propertyResolution}
         name={name}
@@ -95,7 +95,7 @@ export const KPI = ({
       resolution={propertyResolution}
       name={name}
       unit={unit}
-      color={color}
+      color={backgroundColor}
       isLoading={isLoading}
       error={error?.msg}
       significantDigits={significantDigits}
