@@ -11,6 +11,7 @@ import {
   UpdateEntityCommand,
   UpdateEntityCommandInput,
   UpdateSceneCommand,
+  CreateSceneCommand,
 } from '@aws-sdk/client-iottwinmaker';
 import {
   ListSecretsCommand,
@@ -122,6 +123,18 @@ export class SceneMetadataModule implements TwinMakerSceneMetadataModule {
   ) => {
     return this.twinMakerClient.send(
       new DeleteEntityCommand({ ...input, workspaceId: this.workspaceId })
+    );
+  };
+
+  createScene = async (sceneInfo: SceneInfo): Promise<void> => {
+    await this.twinMakerClient.send(
+      new CreateSceneCommand({
+        workspaceId: this.workspaceId,
+        sceneId: this.sceneId,
+        contentLocation: undefined,
+        capabilities: sceneInfo.capabilities,
+        sceneMetadata: sceneInfo.sceneMetadata,
+      })
     );
   };
 }
