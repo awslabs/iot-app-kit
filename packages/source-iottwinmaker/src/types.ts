@@ -48,6 +48,7 @@ export interface TwinMakerSceneMetadataModule {
   deleteSceneEntity: (
     input: Omit<DeleteEntityCommandInput, 'workspaceId'>
   ) => Promise<DeleteEntityCommandOutput>;
+  createScene: (input: SceneInfo) => Promise<void>;
 }
 
 export interface VideoData {

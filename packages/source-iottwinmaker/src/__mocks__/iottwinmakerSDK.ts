@@ -21,6 +21,7 @@ import {
   UpdateSceneCommandInput,
   UpdateSceneCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
+import { SceneInfo } from '../types';
 
 const nonOverriddenMock = () => Promise.reject(new Error('Mock method not override.'));
 
@@ -35,6 +36,7 @@ export const createMockTwinMakerSDK = ({
   listEntities = nonOverriddenMock,
   updateScene = nonOverriddenMock,
   executeQuery = nonOverriddenMock,
+  createScene = nonOverriddenMock,
 }: {
   getEntity?: (input: GetEntityCommandInput) => Promise<GetEntityCommandOutput>;
   createEntity?: (input: CreateEntityCommandInput) => Promise<CreateEntityCommandOutput>;
@@ -50,6 +52,7 @@ export const createMockTwinMakerSDK = ({
   listEntities?: (input: ListEntitiesCommandInput) => Promise<ListEntitiesCommandOutput>;
   updateScene?: (input: UpdateSceneCommandInput) => Promise<UpdateSceneCommandOutput>;
   executeQuery?: (input: ExecuteQueryCommandInput) => Promise<ExecuteQueryCommandOutput>;
+  createScene?: (input: SceneInfo) => Promise<void>;
 } = {}) =>
   ({
     send: (command: { input: any }) => {
@@ -78,6 +81,8 @@ export const createMockTwinMakerSDK = ({
           return updateScene(command.input);
         case 'ExecuteQueryCommand':
           return executeQuery(command.input);
+        case 'CreateSceneCommand':
+          return createScene(command.input);
         default:
           throw new Error(
             `missing mock implementation for command name ${commandName}. Add a new command within the mock IotTwinMaker SDK.`

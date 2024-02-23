@@ -9,6 +9,7 @@ const getEntity = jest.fn();
 const createEntity = jest.fn();
 const updateEntity = jest.fn();
 const deleteEntity = jest.fn();
+const createScene = jest.fn();
 const twinMakerClientMock = createMockTwinMakerSDK({
   getScene,
   updateScene,
@@ -16,6 +17,7 @@ const twinMakerClientMock = createMockTwinMakerSDK({
   createEntity,
   updateEntity,
   deleteEntity,
+  createScene,
 });
 
 const listSecrets = jest.fn();
@@ -262,6 +264,37 @@ describe('deleteSceneEntity', () => {
     } catch (err) {
       expect(err).toEqual('TwinMaker API failed');
       expect(deleteEntity).toBeCalledTimes(1);
+    }
+  });
+});
+
+describe('createScene', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should call API to create scene successfully', async () => {
+    await sceneMetadataModule.createScene({ capabilities: ['DYNAMIC_SCENE'] });
+    expect(createScene).toBeCalledTimes(1);
+    expect(createScene).toBeCalledWith({
+      workspaceId: 'ws-id',
+      sceneId: 'scene-id',
+      capabilities: ['DYNAMIC_SCENE'],
+      contentLocation: undefined,
+      sceneMetadata: undefined,
+    });
+  });
+
+  it('should get error when API failed', async () => {
+    createScene.mockRejectedValue('TwinMaker API failed');
+
+    try {
+      await sceneMetadataModule.createScene({
+        capabilities: ['DYNAMIC_SCENE'],
+      });
+    } catch (err) {
+      expect(err).toEqual('TwinMaker API failed');
+      expect(createScene).toBeCalledTimes(1);
     }
   });
 });
