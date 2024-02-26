@@ -13,7 +13,6 @@ import { LegendSection } from './legendSection';
 import { maybeWithDefault } from '~/util/maybe';
 import { PropertyLens } from '~/customization/propertiesSection';
 import { getPlugin } from '@iot-app-kit/core';
-import { AggregationsSettingsConfiguration } from '../aggregationSettings';
 
 const isLineAndScatterWidget = (
   w: DashboardWidget
@@ -160,7 +159,6 @@ const RenderLineAndScatterStyleSettingsSection = ({
 
   return (
     <>
-      <AggregationsSettingsConfiguration />
       <YAxisSection
         visible={axis?.yVisible ?? true}
         min={axis?.yMin ?? null}
