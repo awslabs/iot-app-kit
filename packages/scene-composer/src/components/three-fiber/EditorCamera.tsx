@@ -235,7 +235,7 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
   return matterportSdk ? (
     <Fragment>
       <MatterportFocusCamera
-        blockNavigation={controlsRemove}
+        blockNavigation={/*true*/controlsRemove}
         from={cameraTarget?.target?.position}
         target={cameraTarget?.object3d ? cameraTarget?.object3d : cameraTarget?.target?.target}
         transition={

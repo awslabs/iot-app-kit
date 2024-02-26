@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { invalidate, ThreeEvent, useFrame, useThree } from '@react-three/fiber';
 import { SkeletonUtils } from 'three-stdlib';
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -26,6 +26,8 @@ import {
 import { GLTFLoadingManager } from '../../../common/loadingManagers';
 
 import { useGLTF } from './GLTFLoader';
+
+import { getFaces } from '../../../utils/faceSelectionUtils';
 
 function processObject(component: IModelRefComponentInternal, obj: THREE.Object3D, options: { maxAnisotropy: number }) {
   cloneMaterials(obj);
@@ -55,6 +57,9 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   const { getSceneNodeByRef } = useStore(sceneComposerId)((state) => state);
   const { isEditing, addingWidget, setAddingWidget, cursorLookAt, cursorVisible, setCursorVisible } =
     useEditorState(sceneComposerId);
+
+  const [selectedVerticesArray, setSelectedVerticiesArray] = useState<Float32Array>();
+  const [sharedWorldMatrix, setSharedWorldMatrix] = useState<THREE.Matrix4>();
 
   useEffect(() => {
     setCursorVisible(hiddenWhileImmersive || !!addingWidget);
@@ -181,9 +186,59 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
     }
   };
 
+  const BRUSH_RADIUS = 3;
+  const onClickMeshBrush = (e: ThreeEvent<MouseEvent>) => {
+    if(e.intersections.length > 0) {
+      const object = e.intersections[0].object;
+      if (object instanceof THREE.Mesh) {
+        //console.log('got mesh', object, e.intersections[0].face);
+        const clickPoint = e.intersections[0].point;
+        const brushSphere = new THREE.Sphere(clickPoint, BRUSH_RADIUS);
+        //console.log('generated brush zone', brushSphere);
+        const mesh = object as THREE.Mesh;
+        const geometry = mesh.geometry;
+        
+        //first try is non-indexed buffer
+
+        //doing index would let us prevent duplicate triangles on multiclick with a hashmap of
+        //face indexes from the original mesh
+        //const newGeometry = new THREE.BufferGeometry();
+
+        //probably needs a world transform adjustment if not identity...
+        const array = getFaces(geometry,brushSphere, mesh.matrixWorld);
+        setSelectedVerticiesArray(array);
+
+        //hide the model so we can see the result in dollhouse/floorplan (doesn't hide in explore)
+        if(array) {
+          const forcedMaterial = new THREE.MeshStandardMaterial({color: 0x00ff00, opacity: 0.1, transparent:true});
+          object.material = forcedMaterial;
+          object.material.needsUpdate = true;
+          setSharedWorldMatrix(mesh.matrixWorld);
+        }
+
+      }
+    }
+  }
+
   return (
     <group name={getComponentGroupName(node.ref, 'GLTF_MODEL')} scale={scale} dispose={null}>
-      <primitive object={clonedModelScene} onClick={onClick} />
+      <primitive object={clonedModelScene} onClick={onClickMeshBrush /*onClick*/} />
+      {selectedVerticesArray && <mesh 
+            /*position={[0, 0, 0]}*/
+            /*matrixWorld={sharedWorldMatrix}*/
+            name='Selected Faces'>
+              <bufferGeometry attach="geometry">
+                <bufferAttribute 
+                  attach="attributes-position"
+                  array={selectedVerticesArray}
+                  count={selectedVerticesArray.length / 3}
+                  itemSize={3}
+                />
+              </bufferGeometry>
+              <meshStandardMaterial color={0xffffff} />
+          </mesh>
+
+          }
     </group>
   );
 };
