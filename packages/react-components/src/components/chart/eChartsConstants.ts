@@ -11,6 +11,7 @@ import type {
 export const DEFAULT_TOOLBOX_CONFIG: ToolboxComponentOption = {
   show: true,
   right: 30,
+  top: 6, // top 6 is to avoid the overalping of echart toolbox with widget toolbox
   feature: {
     dataZoom: { title: { back: 'Undo\nzoom' }, filterMode: 'none' },
   },
