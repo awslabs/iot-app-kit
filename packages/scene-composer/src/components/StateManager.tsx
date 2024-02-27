@@ -182,7 +182,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
         additionalComponentData,
       });
     }
-  }, [selectedSceneNodeRef]);
+  }, [selectedSceneNodeRef, onSelectionChanged]);
 
   useEffect(() => {
     const node = getSceneNodeByRef(selectedSceneNodeRef);
