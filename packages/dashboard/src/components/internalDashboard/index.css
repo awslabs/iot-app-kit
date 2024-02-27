@@ -99,8 +99,3 @@
 .collapsible-panel-right {
   border-left: 2px solid var(--colors-grey-border);
 }
-
-
-.center-pane-container {
-  position: relative;
-}
