@@ -8,16 +8,8 @@ import './index.css';
 const CustomOrangeButton = ({
   title,
   handleClick,
-  disabled,
   ...rest
 }: { title: string; handleClick?: () => void } & ButtonProps) => {
-  if (disabled) {
-    return (
-      <Button variant='primary' disabled={true}>
-        {title}
-      </Button>
-    );
-  }
   return (
     <Button
       className='btn-custom-primary'
