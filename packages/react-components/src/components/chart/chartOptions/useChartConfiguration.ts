@@ -34,7 +34,7 @@ const useTitle = ({
   return useMemo(
     () => ({
       text: hasSeries ? titleText ?? '' : 'No data present',
-      padding: [0, 12],
+      padding: [4, 12],
       textStyle: {
         width: chartWidth - 90, // Decreased 90px width from chart width for title to avoid overlapping with the title and zoom in and out buttons
         overflow: 'truncate',
