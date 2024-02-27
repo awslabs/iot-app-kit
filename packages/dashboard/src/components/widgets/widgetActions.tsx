@@ -7,8 +7,9 @@ import {
   colorBackgroundButtonNormalDefault,
   spaceStaticXl,
   spaceStaticL,
+  spaceStaticXxs,
   spaceStaticXs,
-  spaceStaticXxxs,
+  borderRadiusBadge,
 } from '@cloudscape-design/design-tokens';
 import {
   CancelableEventHandler,
@@ -108,10 +109,10 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
       className='widget-actions-container'
       aria-label='widget-actions-container'
       style={{
-        padding: `${spaceStaticXxxs} ${spaceStaticXs}`,
+        padding: `${spaceStaticXxs} ${spaceStaticXs}`,
         height: `${spaceStaticXl}`,
         right: `${spaceStaticL}`,
-        borderRadius: `${spaceStaticXs}`,
+        borderRadius: `${borderRadiusBadge}`,
         border: `2px solid ${colorBackgroundButtonPrimaryDefault}`,
         backgroundColor: `${colorBackgroundButtonNormalDefault}`,
         pointerEvents: 'auto',
