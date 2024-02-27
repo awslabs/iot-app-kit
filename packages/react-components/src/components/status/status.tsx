@@ -37,7 +37,6 @@ export const Status = ({
     queries: [query],
     settings: {
       fetchMostRecentBeforeEnd: true,
-      fetchMostRecentBeforeStart: true,
     },
     styles,
   });
