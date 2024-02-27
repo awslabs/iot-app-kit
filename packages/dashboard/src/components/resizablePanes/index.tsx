@@ -55,10 +55,14 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
   const [movedX, setMovedX] = useState<number | null>(null);
 
   /** Current widths of the three panes, in px */
-  const [leftPaneWidth, setLeftPaneWidth] = useState(DEFAULT_SIDE_PANE_WIDTH);
-  const [rightPaneWidth, setRightPaneWidth] = useState(DEFAULT_SIDE_PANE_WIDTH);
   const [isRightPaneCollapsed, setRightPaneCollapsed] = useState(true);
   const [isLeftPaneCollapsed, setLeftPaneCollapsed] = useState(false);
+  // left panel open by default
+  const [leftPaneWidth, setLeftPaneWidth] = useState(DEFAULT_SIDE_PANE_WIDTH);
+  // right panel closed by default
+  const [rightPaneWidth, setRightPaneWidth] = useState(
+    DEFAULT_COLLAPSED_SIDE_PANE_WIDTH
+  );
 
   useEffect(() => {
     // On initial load, attempt to get stored widths from sessionStorage.
@@ -214,6 +218,8 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
       setLeftPaneWidth(DEFAULT_SIDE_PANE_WIDTH);
       setLeftPaneCollapsed(false);
       resizeSidePanes();
+
+      handleClosePanelIfScreenSizeIsTooSmall('right');
     } else {
       setLeftPaneWidth(DEFAULT_COLLAPSED_SIDE_PANE_WIDTH);
       setLeftPaneCollapsed(true);
@@ -225,6 +231,8 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
     if (isRightPaneCollapsed) {
       setRightPaneWidth(DEFAULT_SIDE_PANE_WIDTH);
       setRightPaneCollapsed(false);
+
+      handleClosePanelIfScreenSizeIsTooSmall('left');
     } else {
       setRightPaneWidth(DEFAULT_COLLAPSED_SIDE_PANE_WIDTH);
       setRightPaneCollapsed(true);
@@ -232,9 +240,46 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
   };
 
   useEffect(() => {
-    window.addEventListener('resize', resizeSidePanes);
-    return () => window.removeEventListener('resize', resizeSidePanes);
-  }, [leftPaneWidth, resizeSidePanes]);
+    const handleWindowResize = () => {
+      resizeSidePanes();
+      // prefer left pane if both are open
+      if (!isLeftPaneCollapsed) {
+        handleClosePanelIfScreenSizeIsTooSmall('right');
+      }
+    };
+    window.addEventListener('resize', handleWindowResize);
+    return () => window.removeEventListener('resize', handleWindowResize);
+  }, [leftPaneWidth, isLeftPaneCollapsed, resizeSidePanes]);
+
+  /**
+   *
+   * Accessibility patch
+   * In order to avoid horizontal scrolling when the window is small or zoomed in far
+   * we will only have one panel open at a time
+   * after the panes element is smaller than the threshold
+   */
+  const handleClosePanelIfScreenSizeIsTooSmall = (
+    panelToClose: 'left' | 'right'
+  ) => {
+    const el = panes.current as HTMLElement | null;
+    if (!el) return;
+
+    // both panels initial open size + the left panels resize grab handle
+    const handleWidth = 8;
+    const shouldClosePanel =
+      el.offsetWidth <= 2 * DEFAULT_SIDE_PANE_WIDTH + handleWidth;
+
+    if (!shouldClosePanel) return;
+
+    switch (panelToClose) {
+      case 'left':
+        setLeftPaneCollapsed(true);
+        break;
+      case 'right':
+        setRightPaneCollapsed(true);
+        break;
+    }
+  };
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
