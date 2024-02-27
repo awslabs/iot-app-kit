@@ -96,7 +96,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   };
 
   return (
-    <WidgetTile widget={widget}>
+    <WidgetTile widget={widget} removeable>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         data-testid='table-widget-component'

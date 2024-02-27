@@ -23,24 +23,17 @@ import { SeriesOption } from 'echarts';
 import { GenericSeries } from '../../../echarts/types';
 
 const useTitle = ({
-  chartWidth,
   titleText,
   hasSeries,
 }: {
-  chartWidth: number;
   titleText?: string;
   hasSeries: boolean;
 }) => {
   return useMemo(
     () => ({
       text: hasSeries ? titleText ?? '' : 'No data present',
-      padding: [0, 12],
-      textStyle: {
-        width: chartWidth - 90, // Decreased 90px width from chart width for title to avoid overlapping with the title and zoom in and out buttons
-        overflow: 'truncate',
-      },
     }),
-    [hasSeries, titleText, chartWidth]
+    [hasSeries, titleText]
   );
 };
 
@@ -96,7 +89,7 @@ type ChartConfigurationOptions = Pick<
   dataStreams: DataStream[];
 } & { visibleData: DataPoint[] } & {
   thresholds: Threshold<ThresholdValue>[];
-} & { chartWidth: number };
+};
 
 export type DataStreamMetaData = ReturnType<
   typeof useChartConfiguration
@@ -121,7 +114,6 @@ export const useChartConfiguration = (
     axis,
     backgroundColor,
     significantDigits,
-    chartWidth,
     styleSettings,
     thresholds,
     defaultVisualizationType,
@@ -182,11 +174,7 @@ export const useChartConfiguration = (
     performanceMode,
   });
 
-  const title = useTitle({
-    chartWidth,
-    hasSeries: series.length > 0,
-    titleText,
-  });
+  const title = useTitle({ hasSeries: series.length > 0, titleText });
 
   /*
    * Setup all of the changeable chart configuration options

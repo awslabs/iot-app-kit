@@ -1,16 +1,15 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 
-import { render } from '@testing-library/react';
+import wrapper from '@cloudscape-design/components/test-utils/dom';
+
+import { act, render } from '@testing-library/react';
 
 import { screen } from '@testing-library/dom';
 
 import WidgetTile from './tile';
 import { configureDashboardStore } from '~/store';
-import {
-  MOCK_BAR_WIDGET,
-  MOCK_LINE_CHART_WIDGET,
-} from '../../../../testing/mocks';
+import { MOCK_LINE_CHART_WIDGET } from '../../../../testing/mocks';
 
 describe('WidgetTile', () => {
   it('should render widget content', function () {
@@ -32,27 +31,65 @@ describe('WidgetTile', () => {
     expect(screen.getByText('test-content')).toBeInTheDocument();
   });
 
-  it('displays titlewhen widget type is "bar-chart"', () => {
-    const { getByText } = render(
-      <WidgetTile widget={MOCK_BAR_WIDGET} title='Test Title'>
-        Test Children
-      </WidgetTile>
+  it('should render a title', function () {
+    render(
+      <Provider
+        store={configureDashboardStore({
+          dashboardConfiguration: {
+            widgets: [MOCK_LINE_CHART_WIDGET],
+          },
+        })}
+      >
+        <WidgetTile title='test-title' widget={MOCK_LINE_CHART_WIDGET}>
+          <div>test-content</div>
+        </WidgetTile>
+        ;
+      </Provider>
     );
-    const titleElement = getByText('Test Title');
-    expect(titleElement).toBeInTheDocument();
+
+    expect(screen.getByText('test-title')).toBeInTheDocument();
   });
 
-  it('does not show download CSV in readonly mode', function () {
+  it('can remove a widget', function () {
+    const store = configureDashboardStore({
+      dashboardConfiguration: {
+        widgets: [MOCK_LINE_CHART_WIDGET],
+      },
+    });
+    const { container } = render(
+      <Provider store={store}>
+        <WidgetTile removeable widget={MOCK_LINE_CHART_WIDGET}>
+          <div>test-content</div>
+        </WidgetTile>
+        ;
+      </Provider>
+    );
+
+    const removeButton = wrapper(container).findButton();
+
+    act(() => {
+      removeButton?.click();
+    });
+
+    const deleteBtn = screen.getByText('Delete');
+    expect(deleteBtn).toBeInTheDocument();
+    act(() => {
+      deleteBtn?.click();
+    });
+    expect(store.getState().dashboardConfiguration.widgets).toEqual([]);
+  });
+
+  it('does not show delete in readonly mode', function () {
     const { container } = render(
       <Provider
         store={configureDashboardStore({
           dashboardConfiguration: {
             widgets: [MOCK_LINE_CHART_WIDGET],
           },
-          isEdgeModeEnabled: true,
+          readOnly: true,
         })}
       >
-        <WidgetTile widget={MOCK_LINE_CHART_WIDGET}>
+        <WidgetTile removeable widget={MOCK_LINE_CHART_WIDGET}>
           <div>test-content</div>
         </WidgetTile>
         ;
@@ -60,7 +97,7 @@ describe('WidgetTile', () => {
     );
 
     expect(
-      container.querySelector('[aria-label="download CSV"]')
+      container.querySelector('[aria-label="delete widget"]')
     ).not.toBeInTheDocument();
   });
 
@@ -74,7 +111,7 @@ describe('WidgetTile', () => {
           isEdgeModeEnabled: true,
         })}
       >
-        <WidgetTile widget={MOCK_LINE_CHART_WIDGET}>
+        <WidgetTile removeable widget={MOCK_LINE_CHART_WIDGET}>
           <div>test-content</div>
         </WidgetTile>
         ;

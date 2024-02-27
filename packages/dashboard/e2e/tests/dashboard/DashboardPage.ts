@@ -39,7 +39,6 @@ export class DashboardPage {
     this.gridArea = page.locator('#container');
     this.confirmModalDeleteButton = this.page.getByRole('button', {
       name: 'Delete',
-      exact: true,
     });
     this.contextMenuDeleteButton = this.gridArea.getByText('Delete');
   }

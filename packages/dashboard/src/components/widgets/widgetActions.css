@@ -1,7 +1,0 @@
-.widget-actions-container {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  top: -20px;
-  z-index: 999; /* Widget actions toolbox should be above the widget container */
-}

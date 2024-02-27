@@ -86,6 +86,19 @@ const BaseChart = ({
   //handle dataZoom updates, which are dependent on user events and viewportInMS changes
   useDataZoom(chartRef, utilizedViewport);
 
+  const { dataStreamMetaData } = useChartConfiguration(chartRef, {
+    group,
+    isLoading,
+    dataStreams,
+    thresholds,
+    visibleData,
+    ...options,
+  });
+
+  useChartDataset(chartRef, dataStreams);
+
+  useChartStoreDataStreamsSync(dataStreamMetaData);
+
   const isBottomAligned = options.legend?.position === 'bottom';
 
   // Setup resize container and calculate size for echarts
@@ -129,20 +142,6 @@ const BaseChart = ({
     fontSize: `10px`,
     color: `${colorBackgroundLayoutToggleActive}`,
   };
-
-  const { dataStreamMetaData } = useChartConfiguration(chartRef, {
-    group,
-    isLoading,
-    dataStreams,
-    thresholds,
-    visibleData,
-    chartWidth,
-    ...options,
-  });
-
-  useChartDataset(chartRef, dataStreams);
-
-  useChartStoreDataStreamsSync(dataStreamMetaData);
 
   // handle chart event updates
   const { chartEventsKeyMap, chartEventsHandlers } =

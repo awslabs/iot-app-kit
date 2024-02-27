@@ -2,7 +2,6 @@ import type { DataPoint, TimeSeriesData } from '@iot-app-kit/core';
 import { DATA_TYPE } from '@iot-app-kit/core';
 import random from 'lodash/random';
 import {
-  BarChartWidget,
   KPIWidget,
   LineScatterChartWidget,
   LineWidget,
@@ -139,32 +138,6 @@ export const MOCK_STATUS_TIMELINE_WIDGET: StatusWidget = {
     },
     primaryFont: {},
     secondaryFont: {},
-  },
-};
-
-export const MOCK_BAR_WIDGET: BarChartWidget = {
-  id: 'mock-status-timeline-widget',
-  type: 'bar-chart',
-  x: 2,
-  y: 2,
-  z: 1,
-  width: 8,
-  height: 5,
-  properties: {
-    queryConfig: {
-      source: 'iotsitewise',
-      query: {
-        assets: [
-          {
-            assetId: DEMO_TURBINE_ASSET_1,
-            properties: [
-              { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
-              { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
-            ],
-          },
-        ],
-      },
-    },
   },
 };
 
