@@ -58,8 +58,6 @@ import DashboardHeader from './dashboardHeader';
 
 import '@iot-app-kit/components/styles.css';
 import './index.css';
-import { DashboardLayout } from '~/components/dashboardLayout/dashboardLayout';
-import { showDashboardLayout } from '~/components/dashboardLayout/showDashboardLayout';
 
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
@@ -273,30 +271,6 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     return null;
   }
 
-  const centerPane = (
-    <div
-      ref={(el) => setViewFrameElement(el || undefined)}
-      className='center-pane-container'
-      style={{
-        backgroundColor: colorBackgroundCellShaded,
-      }}
-    >
-      <GestureableGrid {...gridProps}>
-        <ContextMenu {...contextMenuProps} />
-        <Widgets {...widgetsProps} />
-        {!widgetLength && <DashboardEmptyState />}
-        {activeGesture === 'select' && <UserSelection {...selectionProps} />}
-      </GestureableGrid>
-      <WebglContext viewFrame={viewFrame} />
-    </div>
-  );
-
-  const resourceExplorer = (
-    <QueryEditor
-      iotSiteWiseClient={iotSiteWiseClient}
-      iotTwinMakerClient={iotTwinMakerClient}
-    />
-  );
   const EditComponent = (
     <ContentLayout
       disableOverlap
@@ -333,19 +307,32 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             <ComponentPalette onAddWidget={onAddWidgetFromPalette} />
           </Box>
         </div>
-        {showDashboardLayout ? (
-          <DashboardLayout
-            leftPane={resourceExplorer}
-            centerPane={centerPane}
-            rightPane={propertiesPanel}
-          />
-        ) : (
-          <ResizablePanes
-            leftPane={resourceExplorer}
-            centerPane={centerPane}
-            rightPane={propertiesPanel}
-          />
-        )}
+        <ResizablePanes
+          leftPane={
+            <QueryEditor
+              iotSiteWiseClient={iotSiteWiseClient}
+              iotTwinMakerClient={iotTwinMakerClient}
+            />
+          }
+          centerPane={
+            <div
+              className='display-area'
+              ref={(el) => setViewFrameElement(el || undefined)}
+              style={{ backgroundColor: colorBackgroundCellShaded }}
+            >
+              <GestureableGrid {...gridProps}>
+                <ContextMenu {...contextMenuProps} />
+                <Widgets {...widgetsProps} />
+                {!widgetLength && <DashboardEmptyState />}
+                {activeGesture === 'select' && (
+                  <UserSelection {...selectionProps} />
+                )}
+              </GestureableGrid>
+              <WebglContext viewFrame={viewFrame} />
+            </div>
+          }
+          rightPane={propertiesPanel}
+        />
       </div>
     </ContentLayout>
   );
