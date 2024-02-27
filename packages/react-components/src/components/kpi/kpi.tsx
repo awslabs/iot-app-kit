@@ -35,7 +35,6 @@ export const KPI = ({
     queries: [query],
     settings: {
       fetchMostRecentBeforeEnd: true,
-      fetchMostRecentBeforeStart: true,
     },
     styles,
   });
