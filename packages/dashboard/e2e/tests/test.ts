@@ -14,7 +14,6 @@ interface Fixtures {
   dashboardWithKPIWidget: DashboardPage;
   dashboardWithStatusWidget: DashboardPage;
   dashboardWithTableWidget: DashboardPage;
-  dashboardWithPropertyPanel: DashboardPage;
   resourceExplorer: ResourceExplorer;
   configPanel: ConfigPanel;
 }
@@ -71,12 +70,6 @@ export const test = base.extend<Fixtures>({
 
     return use(dashboardWithKPIWidget);
   },
-  dashboardWithPropertyPanel: async ({ page, browser }, use) => {
-    const dashboardWithLineWidgetPropertyPanel =
-      await createNewDashboardWithPropertyPanel(page, browser);
-
-    return use(dashboardWithLineWidgetPropertyPanel);
-  },
   configPanel: async ({ page }, use) => {
     const configPanel = new ConfigPanel({ page });
     await use(configPanel);
@@ -98,20 +91,5 @@ const createNewDashboardWithWidget = async (
   if (resourceExplorer) {
     await resourceExplorer.addModeledProperties([MODELED_PROPERTY_NAME]);
   }
-  return dashboard;
-};
-
-const createNewDashboardWithPropertyPanel = async (
-  page: Page,
-  browser: Browser
-) => {
-  const dashboard = new DashboardPage({ page, browser });
-  await dashboard.goto();
-  await page.evaluate(() =>
-    localStorage.setItem('SHOW_DASHBOARD_LAYOUT', 'true')
-  );
-  await page.reload();
-  await dashboard.makeViewportToAbsolute();
-
   return dashboard;
 };
