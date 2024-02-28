@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v9.15.0...source-iotsitewise-v10.0.0) (2024-02-28)
+
+
+### Features
+
+* introduce edgeMode in dashboard components ([c168fb4](https://github.com/awslabs/iot-app-kit/commit/c168fb45b68252e25385c38bc20752ce1ffcd4e8))
+* introduce edgeMode in source-iotsitewise ([3106695](https://github.com/awslabs/iot-app-kit/commit/31066951a245712a0b7aa94fd3307813390ab8e4))
+
+
+### Bug Fixes
+
+* aws clients marked as peer dependencies ([0272167](https://github.com/awslabs/iot-app-kit/commit/027216707ec5fdd77390ef1de132ef744f4f17b8))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/core-util bumped from 9.15.0 to 10.0.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/testing-util bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/ts-config bumped from 9.15.0 to 10.0.0
+    * eslint-config-iot-app-kit bumped from 9.15.0 to 10.0.0
+
 ## [9.15.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v9.14.0...source-iotsitewise-v9.15.0) (2024-02-01)
 
 

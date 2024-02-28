@@ -3,6 +3,82 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.15.0...root-v10.0.0) (2024-02-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **composer:** remove deprecated and internal interfaces from public
+
+### Features
+
+* add arrow to asset name [#2551](https://github.com/awslabs/iot-app-kit/issues/2551) ([bd12bea](https://github.com/awslabs/iot-app-kit/commit/bd12bea402358d9a641740cb17c8bc9a04e215cc))
+* add threshold settings to KPI ([2fa0429](https://github.com/awslabs/iot-app-kit/commit/2fa0429b6262092b4b3c86c21b8808b90e2d49fe))
+* added a label time range for viewport picker in dashboard header [#2559](https://github.com/awslabs/iot-app-kit/issues/2559) ([743cb80](https://github.com/awslabs/iot-app-kit/commit/743cb80ec36d116d6ef25e97ec54f2238ddb2ea1))
+* added accessible labels to different toolbar container [#2510](https://github.com/awslabs/iot-app-kit/issues/2510) ([ce5af6f](https://github.com/awslabs/iot-app-kit/commit/ce5af6fbc6e6b887f3fade9395bcbf54da386a88))
+* added viewport timestamps in xy plot [#2470](https://github.com/awslabs/iot-app-kit/issues/2470) ([46c1d24](https://github.com/awslabs/iot-app-kit/commit/46c1d24b99ff2ca9fb990ceed341ad6820c21f01))
+* added visible labels operator and value for threshold controls for accessibility [#2512](https://github.com/awslabs/iot-app-kit/issues/2512) [#2513](https://github.com/awslabs/iot-app-kit/issues/2513) ([06b5ee5](https://github.com/awslabs/iot-app-kit/commit/06b5ee58a9a823bacb29c60c546b803b89f1cb97))
+* adding docker setup for scene-composer ui tests ([3db0c9b](https://github.com/awslabs/iot-app-kit/commit/3db0c9bf11dcba40782241f3886cd79f1912f00f))
+* changed outline for config panel text style buttons on focus initiated by tab [#2547](https://github.com/awslabs/iot-app-kit/issues/2547) ([e94fee7](https://github.com/awslabs/iot-app-kit/commit/e94fee72e095161258d01cbe9777aeca833f5c90))
+* **composer:** createDynamicScene util ([0b3b80c](https://github.com/awslabs/iot-app-kit/commit/0b3b80c0e62176c76411fe07718df7ef6849ef3a))
+* **composer:** save scene level data to scene root entity ([6cabfb5](https://github.com/awslabs/iot-app-kit/commit/6cabfb55de10004b1f0314cb7be931ef3969b09e))
+* **composer:** show delete confirmation modal for dynamic scene ([fdc9ef1](https://github.com/awslabs/iot-app-kit/commit/fdc9ef16df97d1528b3f28c96470e513bb9722a7))
+* **composer:** support showing flash message ([da7281a](https://github.com/awslabs/iot-app-kit/commit/da7281a84e47325c56071850f6ea49a6eed73233))
+* conditionally display latest value in legend table  [#2277](https://github.com/awslabs/iot-app-kit/issues/2277) ([d3feb29](https://github.com/awslabs/iot-app-kit/commit/d3feb2920f3c63b0b2ce9580fc07a86475fc1ff1))
+* **dashboard:** adding new property panel layout ([39a8271](https://github.com/awslabs/iot-app-kit/commit/39a82711f97cf14494bd0ff6e74338bb41b8ff18))
+* **dashboard:** make component library keyboard accessible ([164b0ce](https://github.com/awslabs/iot-app-kit/commit/164b0ce2a2ec6b5610d9a5c346cecda914d3bdea))
+* enable dynamic assets on edge mode ([5b6a9e8](https://github.com/awslabs/iot-app-kit/commit/5b6a9e8d43b45ec0c3d4e60491557542f969ef58))
+* introduce edgeMode in dashboard components ([c168fb4](https://github.com/awslabs/iot-app-kit/commit/c168fb45b68252e25385c38bc20752ce1ffcd4e8))
+* introduce edgeMode in source-iotsitewise ([3106695](https://github.com/awslabs/iot-app-kit/commit/31066951a245712a0b7aa94fd3307813390ab8e4))
+* kpi and status gated config panel ([1f56b4f](https://github.com/awslabs/iot-app-kit/commit/1f56b4f2e7212ddfcc216fb778e0d4db57309ab2))
+* made widget tooltip dismissable by pressing escape key [#2511](https://github.com/awslabs/iot-app-kit/issues/2511) ([87c81b5](https://github.com/awslabs/iot-app-kit/commit/87c81b5d2302c2656a9dbeacea02bbae9a334ede))
+* new design status (gated) ([69d6c97](https://github.com/awslabs/iot-app-kit/commit/69d6c979d1baefd4fd486cf0d1402b7357e8506b))
+* **react-components:** add max column to legend ([322c20f](https://github.com/awslabs/iot-app-kit/commit/322c20f0d438ecb45ee02fae186f6a198963c5b6))
+* **react-components:** add min column to legend ([69ba923](https://github.com/awslabs/iot-app-kit/commit/69ba92324da42770e267c9a0bce717ebf1ca0dbf))
+* **react-components:** calculate min/max and store value in store for chart to consume ([41b8551](https://github.com/awslabs/iot-app-kit/commit/41b855103e6643dd79e6e0fc9e7350fddefd9101))
+* **scene composer:** adding data-testid to improve e2e test ([1e5ab86](https://github.com/awslabs/iot-app-kit/commit/1e5ab863f89fcdf66aa7b4c0e3b0f5c77367411e))
+* **scene composer:** setting up 3D test harness ([df62eef](https://github.com/awslabs/iot-app-kit/commit/df62eefd048a66f327070bc8c90b4c9b964de26e))
+* **scene-composer:** enable accelerated raycasting for 3D Tiles ([84d2ce4](https://github.com/awslabs/iot-app-kit/commit/84d2ce4783c74a3792c11009f99cfac888cd848d))
+* screen reader and keyboard accessibility for text widget link settings [#2363](https://github.com/awslabs/iot-app-kit/issues/2363) ([f0c0811](https://github.com/awslabs/iot-app-kit/commit/f0c08117f18158f7d2b486ce2ae0f21cfcf0a1f6))
+* show/hide aggregation and resolution in KPI ([aef1f14](https://github.com/awslabs/iot-app-kit/commit/aef1f146c6d4db03d759b76896d78e966b1ce1e6))
+* **Tiles3D:** add Tiles3D AssetType and evaluate model type when adding a 3D model to the scene ([eec0f50](https://github.com/awslabs/iot-app-kit/commit/eec0f508caa4b1f6b2c7a84baa4f45bf4dc7195b))
+* updated KPI style (gated) ([31ea2f3](https://github.com/awslabs/iot-app-kit/commit/31ea2f371676be9b6412073772b9110b01c42786))
+* widget tool box on mouse hover and selection state ([c80d42a](https://github.com/awslabs/iot-app-kit/commit/c80d42a3d10223d0d7edd5b3ee1b23c9ab613399))
+
+
+### Bug Fixes
+
+* add doc-site to release-please config ([08fb141](https://github.com/awslabs/iot-app-kit/commit/08fb141eee84f97d80082317532c3434aa78d55b))
+* add doc-site to release-please config ([ccf5086](https://github.com/awslabs/iot-app-kit/commit/ccf5086fc9ef362e7c61c4d02cb3e88aa20b21c5))
+* aws clients marked as peer dependencies ([0272167](https://github.com/awslabs/iot-app-kit/commit/027216707ec5fdd77390ef1de132ef744f4f17b8))
+* chart gesture icons overlap on mouse hover ([b5e5c0d](https://github.com/awslabs/iot-app-kit/commit/b5e5c0d6115ed8eb9d819a9b4ceef31c7b56db2b))
+* **composer:** cannot delete scene node of a child and then its parent ([a2e140a](https://github.com/awslabs/iot-app-kit/commit/a2e140ab0ef05975e2ec1d8e36a4d68ad9087911))
+* **composer:** refactor scene modal rendering ([1d797b1](https://github.com/awslabs/iot-app-kit/commit/1d797b1a6aeab60e45f8e11daf8cd97b9b21033b))
+* **composer:** remove deprecated and internal interfaces from public ([07e82b4](https://github.com/awslabs/iot-app-kit/commit/07e82b42963931ddce95362f4a6cca9add6a1423))
+* **dashboard:** revert the title change for line chart ([88ed63e](https://github.com/awslabs/iot-app-kit/commit/88ed63ebd6e4f4da8c25820891afdc2ce6ac8903))
+* **dashboard:** style fixes to make the dashboard accessible at small screensizes ([dde49e6](https://github.com/awslabs/iot-app-kit/commit/dde49e6bc06f8b7f2472ab36db91196e93ce84aa))
+* default Style tab upon widget selection ([5456435](https://github.com/awslabs/iot-app-kit/commit/5456435081da8e77a860c2c3f38b841a728eb4f8))
+* **example:** make sure selection change uses the entity binding component index ([200d0db](https://github.com/awslabs/iot-app-kit/commit/200d0db2171d21d5545a1c7e9d8403ac7bbeae3e))
+* fixed the bug in saving workspace in localstorage [#2566](https://github.com/awslabs/iot-app-kit/issues/2566) ([7a7f619](https://github.com/awslabs/iot-app-kit/commit/7a7f61920438b8d30b8a42a1d71971e4822d56be))
+* fixed the workspace required errorin search [#2384](https://github.com/awslabs/iot-app-kit/issues/2384) ([0ff9bc3](https://github.com/awslabs/iot-app-kit/commit/0ff9bc3887cc87441b80df017d964be36727be7f))
+* internal pipeline has issues with lfs, reverting ([968f950](https://github.com/awslabs/iot-app-kit/commit/968f95005c51591d7cb99af323808fd232b8d4e9))
+* min max is sortable and not present on widget add ([7578a2e](https://github.com/awslabs/iot-app-kit/commit/7578a2e113221b2d3c00c01d2ede253e7ce07081))
+* min/max values have correct significant digits ([50e183d](https://github.com/awslabs/iot-app-kit/commit/50e183d240ecf329362e10d21b9864d08cb525ee))
+* preserve viewMode onSave ([731756a](https://github.com/awslabs/iot-app-kit/commit/731756a3d89bb5eca611c0bb4d3b576822f108f3))
+* remove double aggregation picker ([dea30ce](https://github.com/awslabs/iot-app-kit/commit/dea30ce3e50f5bba5931970eaf5e8d233753b1b2))
+* remove fetchMostRecentBeforeStart from status and kpi ([f9b3183](https://github.com/awslabs/iot-app-kit/commit/f9b3183ce5e52462f5120362a130b4aea6588671))
+* **scene:** update dependency for selection change use effect ([623b55b](https://github.com/awslabs/iot-app-kit/commit/623b55b016890a3e537fdae0b1d39ec665603834))
+* set npm-publish to node v16 ([057eac9](https://github.com/awslabs/iot-app-kit/commit/057eac9f5629be32bf2415fb3f241f715f8150c1))
+* testing-util as devDependency of doc-site ([3cc2bb0](https://github.com/awslabs/iot-app-kit/commit/3cc2bb08294244c3f6fd15800892d6402894b434))
+* update react-components public API for status and kpi widgets ([5e7bd49](https://github.com/awslabs/iot-app-kit/commit/5e7bd49fc6ae36fbdbd85e8c02bbb0b4ac082346))
+* updated the ux for widget actions [#2439](https://github.com/awslabs/iot-app-kit/issues/2439) ([c50cd03](https://github.com/awslabs/iot-app-kit/commit/c50cd0381e7e1240b30bbffa1cd4a4c4f5de4987))
+* updated the viewport settings for dynamic input [#2565](https://github.com/awslabs/iot-app-kit/issues/2565) ([7589b1d](https://github.com/awslabs/iot-app-kit/commit/7589b1d1c52aa9a9c5e4ce2336afb8b44d251f55))
+
+
+### Reverts
+
+* "feat(dashboard): adding new property panel layout" ([9f6b707](https://github.com/awslabs/iot-app-kit/commit/9f6b707b0ba78981d6ee65536260acf0e1a3bb38))
+
 ## [9.15.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.14.0...root-v9.15.0) (2024-02-01)
 
 

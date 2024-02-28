@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v9.15.0...source-iottwinmaker-v10.0.0) (2024-02-28)
+
+
+### Features
+
+* **composer:** createDynamicScene util ([0b3b80c](https://github.com/awslabs/iot-app-kit/commit/0b3b80c0e62176c76411fe07718df7ef6849ef3a))
+* **composer:** support showing flash message ([da7281a](https://github.com/awslabs/iot-app-kit/commit/da7281a84e47325c56071850f6ea49a6eed73233))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 9.15.0 to 10.0.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/ts-config bumped from 9.15.0 to 10.0.0
+    * eslint-config-iot-app-kit bumped from 9.15.0 to 10.0.0
+
 ## [9.15.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v9.14.0...source-iottwinmaker-v9.15.0) (2024-02-01)
 
 
