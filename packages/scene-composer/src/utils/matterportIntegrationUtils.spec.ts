@@ -1,7 +1,8 @@
 import { useIntl } from 'react-intl';
+import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import { OPTIONS_PLACEHOLDER_VALUE } from '../common/internalConstants';
-import { SCENE_CAPABILITY_MATTERPORT } from '../common/constants';
+import { SceneCapabilities, SceneMetadataMapKeys } from '../common/sceneModelConstants';
 
 import { getMatterportConnectionList, getUpdatedSceneInfoForConnection } from './matterportIntegrationUtils';
 
@@ -13,7 +14,7 @@ describe('matterportIntegrationUtils', () => {
   const getSceneInfo = jest.fn();
   const updateSceneInfo = jest.fn();
   const get3pConnectionList = jest.fn();
-  const mockSceneMetadataModule = {
+  const mockSceneMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
     getSceneInfo,
     updateSceneInfo,
     get3pConnectionList,
@@ -34,7 +35,10 @@ describe('matterportIntegrationUtils', () => {
 
   it('should return valid list when SceneMetadataModule is defined', async () => {
     get3pConnectionList.mockResolvedValue([{ Name: MOCK_CONNECTION_NAME, ARN: MOCK_ARN }]);
-    const connectionList = await getMatterportConnectionList(intl, mockSceneMetadataModule);
+    const connectionList = await getMatterportConnectionList(
+      intl,
+      mockSceneMetadataModule as TwinMakerSceneMetadataModule,
+    );
     expect(connectionList).toEqual([
       {
         label: 'Select a connection',
@@ -49,19 +53,25 @@ describe('matterportIntegrationUtils', () => {
 
   it('should remove Matterport config when connection is cleared', async () => {
     getSceneInfo.mockResolvedValue({
-      capabilities: [SCENE_CAPABILITY_MATTERPORT],
-      sceneMetadata: { MATTERPORT_SECRET_ARN: MOCK_ARN },
+      capabilities: [SceneCapabilities.MATTERPORT],
+      sceneMetadata: { [SceneMetadataMapKeys.MATTERPORT_SECRET_ARN]: MOCK_ARN },
     });
-    const updatedSceneInfo = await getUpdatedSceneInfoForConnection(OPTIONS_PLACEHOLDER_VALUE, mockSceneMetadataModule);
+    const updatedSceneInfo = await getUpdatedSceneInfoForConnection(
+      OPTIONS_PLACEHOLDER_VALUE,
+      mockSceneMetadataModule as TwinMakerSceneMetadataModule,
+    );
     expect(updatedSceneInfo).toEqual({ capabilities: [], sceneMetadata: {} });
   });
 
   it('should remove Matterport config when connection is cleared leaving other settings', async () => {
     getSceneInfo.mockResolvedValue({
-      capabilities: [SCENE_CAPABILITY_MATTERPORT, MOCK_CAPABILITY],
-      sceneMetadata: { MATTERPORT_SECRET_ARN: MOCK_ARN },
+      capabilities: [SceneCapabilities.MATTERPORT, MOCK_CAPABILITY],
+      sceneMetadata: { [SceneMetadataMapKeys.MATTERPORT_SECRET_ARN]: MOCK_ARN },
     });
-    const updatedSceneInfo = await getUpdatedSceneInfoForConnection(OPTIONS_PLACEHOLDER_VALUE, mockSceneMetadataModule);
+    const updatedSceneInfo = await getUpdatedSceneInfoForConnection(
+      OPTIONS_PLACEHOLDER_VALUE,
+      mockSceneMetadataModule as TwinMakerSceneMetadataModule,
+    );
     expect(updatedSceneInfo).toEqual({ capabilities: [MOCK_CAPABILITY], sceneMetadata: {} });
   });
 
@@ -70,22 +80,28 @@ describe('matterportIntegrationUtils', () => {
       capabilities: [],
       sceneMetadata: {},
     });
-    const updatedSceneInfo = await getUpdatedSceneInfoForConnection(MOCK_ARN, mockSceneMetadataModule);
+    const updatedSceneInfo = await getUpdatedSceneInfoForConnection(
+      MOCK_ARN,
+      mockSceneMetadataModule as TwinMakerSceneMetadataModule,
+    );
     expect(updatedSceneInfo).toEqual({
-      capabilities: [SCENE_CAPABILITY_MATTERPORT],
-      sceneMetadata: { MATTERPORT_SECRET_ARN: MOCK_ARN },
+      capabilities: [SceneCapabilities.MATTERPORT],
+      sceneMetadata: { [SceneMetadataMapKeys.MATTERPORT_SECRET_ARN]: MOCK_ARN },
     });
   });
 
   it('should update connection ARN when connection changed for Matterport scene', async () => {
     getSceneInfo.mockResolvedValue({
-      capabilities: [SCENE_CAPABILITY_MATTERPORT],
-      sceneMetadata: { MATTERPORT_SECRET_ARN: MOCK_ARN },
+      capabilities: [SceneCapabilities.MATTERPORT],
+      sceneMetadata: { [SceneMetadataMapKeys.MATTERPORT_SECRET_ARN]: MOCK_ARN },
     });
-    const updatedSceneInfo = await getUpdatedSceneInfoForConnection('new-ARN', mockSceneMetadataModule);
+    const updatedSceneInfo = await getUpdatedSceneInfoForConnection(
+      'new-ARN',
+      mockSceneMetadataModule as TwinMakerSceneMetadataModule,
+    );
     expect(updatedSceneInfo).toEqual({
-      capabilities: [SCENE_CAPABILITY_MATTERPORT],
-      sceneMetadata: { MATTERPORT_SECRET_ARN: 'new-ARN' },
+      capabilities: [SceneCapabilities.MATTERPORT],
+      sceneMetadata: { [SceneMetadataMapKeys.MATTERPORT_SECRET_ARN]: 'new-ARN' },
     });
   });
 });
