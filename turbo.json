@@ -27,6 +27,11 @@
       "env": ["CI"],
       "outputMode": "new-only"
     },
+    "test:ui:reliability": {
+      "dependsOn": ["build"],
+      "env": ["CI"],
+      "outputMode": "new-only"
+    },
     "start": {
       "dependsOn": ["^build"],
       "env": [

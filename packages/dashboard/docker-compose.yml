@@ -1,6 +1,6 @@
 version: '3.0'
 
-name: iot-app-kit-react-components
+name: iot-app-kit-dashboard
 
 services:
   playwright:
@@ -10,6 +10,6 @@ services:
       - ../../:/iot-app-kit
     ports:
       - 9323:9323/tcp
-      - 6007:6007/tcp
-    working_dir: '/iot-app-kit/packages/react-components'
+      - 6006:6006/tcp
+    working_dir: '/iot-app-kit/packages/dashboard'
     command: sh -c "npx playwright install chromium"
