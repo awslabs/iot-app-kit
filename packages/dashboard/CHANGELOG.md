@@ -1,5 +1,67 @@
 # Changelog
 
+## [10.0.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.15.0...dashboard-v10.0.0) (2024-02-28)
+
+
+### Features
+
+* add arrow to asset name [#2551](https://github.com/awslabs/iot-app-kit/issues/2551) ([bd12bea](https://github.com/awslabs/iot-app-kit/commit/bd12bea402358d9a641740cb17c8bc9a04e215cc))
+* add threshold settings to KPI ([2fa0429](https://github.com/awslabs/iot-app-kit/commit/2fa0429b6262092b4b3c86c21b8808b90e2d49fe))
+* added a label time range for viewport picker in dashboard header [#2559](https://github.com/awslabs/iot-app-kit/issues/2559) ([743cb80](https://github.com/awslabs/iot-app-kit/commit/743cb80ec36d116d6ef25e97ec54f2238ddb2ea1))
+* added accessible labels to different toolbar container [#2510](https://github.com/awslabs/iot-app-kit/issues/2510) ([ce5af6f](https://github.com/awslabs/iot-app-kit/commit/ce5af6fbc6e6b887f3fade9395bcbf54da386a88))
+* added visible labels operator and value for threshold controls for accessibility [#2512](https://github.com/awslabs/iot-app-kit/issues/2512) [#2513](https://github.com/awslabs/iot-app-kit/issues/2513) ([06b5ee5](https://github.com/awslabs/iot-app-kit/commit/06b5ee58a9a823bacb29c60c546b803b89f1cb97))
+* changed outline for config panel text style buttons on focus initiated by tab [#2547](https://github.com/awslabs/iot-app-kit/issues/2547) ([e94fee7](https://github.com/awslabs/iot-app-kit/commit/e94fee72e095161258d01cbe9777aeca833f5c90))
+* conditionally display latest value in legend table  [#2277](https://github.com/awslabs/iot-app-kit/issues/2277) ([d3feb29](https://github.com/awslabs/iot-app-kit/commit/d3feb2920f3c63b0b2ce9580fc07a86475fc1ff1))
+* **dashboard:** adding new property panel layout ([39a8271](https://github.com/awslabs/iot-app-kit/commit/39a82711f97cf14494bd0ff6e74338bb41b8ff18))
+* **dashboard:** make component library keyboard accessible ([164b0ce](https://github.com/awslabs/iot-app-kit/commit/164b0ce2a2ec6b5610d9a5c346cecda914d3bdea))
+* enable dynamic assets on edge mode ([5b6a9e8](https://github.com/awslabs/iot-app-kit/commit/5b6a9e8d43b45ec0c3d4e60491557542f969ef58))
+* introduce edgeMode in dashboard components ([c168fb4](https://github.com/awslabs/iot-app-kit/commit/c168fb45b68252e25385c38bc20752ce1ffcd4e8))
+* kpi and status gated config panel ([1f56b4f](https://github.com/awslabs/iot-app-kit/commit/1f56b4f2e7212ddfcc216fb778e0d4db57309ab2))
+* made widget tooltip dismissable by pressing escape key [#2511](https://github.com/awslabs/iot-app-kit/issues/2511) ([87c81b5](https://github.com/awslabs/iot-app-kit/commit/87c81b5d2302c2656a9dbeacea02bbae9a334ede))
+* **react-components:** add max column to legend ([322c20f](https://github.com/awslabs/iot-app-kit/commit/322c20f0d438ecb45ee02fae186f6a198963c5b6))
+* **react-components:** add min column to legend ([69ba923](https://github.com/awslabs/iot-app-kit/commit/69ba92324da42770e267c9a0bce717ebf1ca0dbf))
+* screen reader and keyboard accessibility for text widget link settings [#2363](https://github.com/awslabs/iot-app-kit/issues/2363) ([f0c0811](https://github.com/awslabs/iot-app-kit/commit/f0c08117f18158f7d2b486ce2ae0f21cfcf0a1f6))
+* show/hide aggregation and resolution in KPI ([aef1f14](https://github.com/awslabs/iot-app-kit/commit/aef1f146c6d4db03d759b76896d78e966b1ce1e6))
+* widget tool box on mouse hover and selection state ([c80d42a](https://github.com/awslabs/iot-app-kit/commit/c80d42a3d10223d0d7edd5b3ee1b23c9ab613399))
+
+
+### Bug Fixes
+
+* aws clients marked as peer dependencies ([0272167](https://github.com/awslabs/iot-app-kit/commit/027216707ec5fdd77390ef1de132ef744f4f17b8))
+* chart gesture icons overlap on mouse hover ([b5e5c0d](https://github.com/awslabs/iot-app-kit/commit/b5e5c0d6115ed8eb9d819a9b4ceef31c7b56db2b))
+* **dashboard:** revert the title change for line chart ([88ed63e](https://github.com/awslabs/iot-app-kit/commit/88ed63ebd6e4f4da8c25820891afdc2ce6ac8903))
+* **dashboard:** style fixes to make the dashboard accessible at small screensizes ([dde49e6](https://github.com/awslabs/iot-app-kit/commit/dde49e6bc06f8b7f2472ab36db91196e93ce84aa))
+* default Style tab upon widget selection ([5456435](https://github.com/awslabs/iot-app-kit/commit/5456435081da8e77a860c2c3f38b841a728eb4f8))
+* fixed the bug in saving workspace in localstorage [#2566](https://github.com/awslabs/iot-app-kit/issues/2566) ([7a7f619](https://github.com/awslabs/iot-app-kit/commit/7a7f61920438b8d30b8a42a1d71971e4822d56be))
+* fixed the workspace required errorin search [#2384](https://github.com/awslabs/iot-app-kit/issues/2384) ([0ff9bc3](https://github.com/awslabs/iot-app-kit/commit/0ff9bc3887cc87441b80df017d964be36727be7f))
+* min max is sortable and not present on widget add ([7578a2e](https://github.com/awslabs/iot-app-kit/commit/7578a2e113221b2d3c00c01d2ede253e7ce07081))
+* min/max values have correct significant digits ([50e183d](https://github.com/awslabs/iot-app-kit/commit/50e183d240ecf329362e10d21b9864d08cb525ee))
+* preserve viewMode onSave ([731756a](https://github.com/awslabs/iot-app-kit/commit/731756a3d89bb5eca611c0bb4d3b576822f108f3))
+* remove double aggregation picker ([dea30ce](https://github.com/awslabs/iot-app-kit/commit/dea30ce3e50f5bba5931970eaf5e8d233753b1b2))
+* updated the ux for widget actions [#2439](https://github.com/awslabs/iot-app-kit/issues/2439) ([c50cd03](https://github.com/awslabs/iot-app-kit/commit/c50cd0381e7e1240b30bbffa1cd4a4c4f5de4987))
+* updated the viewport settings for dynamic input [#2565](https://github.com/awslabs/iot-app-kit/issues/2565) ([7589b1d](https://github.com/awslabs/iot-app-kit/commit/7589b1d1c52aa9a9c5e4ce2336afb8b44d251f55))
+
+
+### Reverts
+
+* "feat(dashboard): adding new property panel layout" ([9f6b707](https://github.com/awslabs/iot-app-kit/commit/9f6b707b0ba78981d6ee65536260acf0e1a3bb38))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/core bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/core-util bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/react-components bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.15.0 to 10.0.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/testing-util bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/ts-config bumped from 9.15.0 to 10.0.0
+    * eslint-config-iot-app-kit bumped from 9.15.0 to 10.0.0
+
 ## [9.15.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.14.0...dashboard-v9.15.0) (2024-02-01)
 
 

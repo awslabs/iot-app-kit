@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [10.0.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.15.0...react-components-v10.0.0) (2024-02-28)
+
+
+### Features
+
+* add threshold settings to KPI ([2fa0429](https://github.com/awslabs/iot-app-kit/commit/2fa0429b6262092b4b3c86c21b8808b90e2d49fe))
+* added a label time range for viewport picker in dashboard header [#2559](https://github.com/awslabs/iot-app-kit/issues/2559) ([743cb80](https://github.com/awslabs/iot-app-kit/commit/743cb80ec36d116d6ef25e97ec54f2238ddb2ea1))
+* added accessible labels to different toolbar container [#2510](https://github.com/awslabs/iot-app-kit/issues/2510) ([ce5af6f](https://github.com/awslabs/iot-app-kit/commit/ce5af6fbc6e6b887f3fade9395bcbf54da386a88))
+* added viewport timestamps in xy plot [#2470](https://github.com/awslabs/iot-app-kit/issues/2470) ([46c1d24](https://github.com/awslabs/iot-app-kit/commit/46c1d24b99ff2ca9fb990ceed341ad6820c21f01))
+* conditionally display latest value in legend table  [#2277](https://github.com/awslabs/iot-app-kit/issues/2277) ([d3feb29](https://github.com/awslabs/iot-app-kit/commit/d3feb2920f3c63b0b2ce9580fc07a86475fc1ff1))
+* kpi and status gated config panel ([1f56b4f](https://github.com/awslabs/iot-app-kit/commit/1f56b4f2e7212ddfcc216fb778e0d4db57309ab2))
+* new design status (gated) ([69d6c97](https://github.com/awslabs/iot-app-kit/commit/69d6c979d1baefd4fd486cf0d1402b7357e8506b))
+* **react-components:** add max column to legend ([322c20f](https://github.com/awslabs/iot-app-kit/commit/322c20f0d438ecb45ee02fae186f6a198963c5b6))
+* **react-components:** add min column to legend ([69ba923](https://github.com/awslabs/iot-app-kit/commit/69ba92324da42770e267c9a0bce717ebf1ca0dbf))
+* **react-components:** calculate min/max and store value in store for chart to consume ([41b8551](https://github.com/awslabs/iot-app-kit/commit/41b855103e6643dd79e6e0fc9e7350fddefd9101))
+* show/hide aggregation and resolution in KPI ([aef1f14](https://github.com/awslabs/iot-app-kit/commit/aef1f146c6d4db03d759b76896d78e966b1ce1e6))
+* updated KPI style (gated) ([31ea2f3](https://github.com/awslabs/iot-app-kit/commit/31ea2f371676be9b6412073772b9110b01c42786))
+* widget tool box on mouse hover and selection state ([c80d42a](https://github.com/awslabs/iot-app-kit/commit/c80d42a3d10223d0d7edd5b3ee1b23c9ab613399))
+
+
+### Bug Fixes
+
+* chart gesture icons overlap on mouse hover ([b5e5c0d](https://github.com/awslabs/iot-app-kit/commit/b5e5c0d6115ed8eb9d819a9b4ceef31c7b56db2b))
+* internal pipeline has issues with lfs, reverting ([968f950](https://github.com/awslabs/iot-app-kit/commit/968f95005c51591d7cb99af323808fd232b8d4e9))
+* min max is sortable and not present on widget add ([7578a2e](https://github.com/awslabs/iot-app-kit/commit/7578a2e113221b2d3c00c01d2ede253e7ce07081))
+* min/max values have correct significant digits ([50e183d](https://github.com/awslabs/iot-app-kit/commit/50e183d240ecf329362e10d21b9864d08cb525ee))
+* remove fetchMostRecentBeforeStart from status and kpi ([f9b3183](https://github.com/awslabs/iot-app-kit/commit/f9b3183ce5e52462f5120362a130b4aea6588671))
+* update react-components public API for status and kpi widgets ([5e7bd49](https://github.com/awslabs/iot-app-kit/commit/5e7bd49fc6ae36fbdbd85e8c02bbb0b4ac082346))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/core bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/core-util bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/source-iottwinmaker bumped from 9.15.0 to 10.0.0
+  * devDependencies
+    * @iot-app-kit/core bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/jest-config bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/source-iotsitewise bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/testing-util bumped from 9.15.0 to 10.0.0
+    * @iot-app-kit/ts-config bumped from 9.15.0 to 10.0.0
+    * eslint-config-iot-app-kit bumped from 9.15.0 to 10.0.0
+
 ## [9.15.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.14.0...react-components-v9.15.0) (2024-02-01)
 
 
