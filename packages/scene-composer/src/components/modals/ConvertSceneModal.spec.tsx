@@ -5,17 +5,19 @@ import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import { useStore } from '../../store';
 import {
-  checkIfEntityAvailable,
+  checkIfEntityExists,
   convertAllNodesToEntities,
   createSceneRootEntity,
   prepareWorkspace,
   staticNodeCount,
+  updateSceneRootEntity,
 } from '../../utils/entityModelUtils/sceneUtils';
 import { createLayer } from '../../utils/entityModelUtils/sceneLayerUtils';
-import { KnownSceneProperty } from '../../interfaces';
-import { setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
+import { COMPOSER_FEATURES, KnownSceneProperty } from '../../interfaces';
+import { setFeatureConfig, setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
 import { LayerType } from '../../common/entityModelConstants';
 import { defaultNode } from '../../../__mocks__/sceneNode';
+import { SceneCapabilities, SceneMetadataMapKeys } from '../../common/sceneModelConstants';
 
 import ConvertSceneModal from './ConvertSceneModal';
 
@@ -25,8 +27,9 @@ jest.mock('../../utils/entityModelUtils/sceneLayerUtils', () => ({
 
 jest.mock('../../utils/entityModelUtils/sceneUtils', () => ({
   createSceneRootEntity: jest.fn(),
+  updateSceneRootEntity: jest.fn(),
   prepareWorkspace: jest.fn(),
-  checkIfEntityAvailable: jest.fn(),
+  checkIfEntityExists: jest.fn(),
   staticNodeCount: jest.fn(),
   convertAllNodesToEntities: jest.fn(),
 }));
@@ -37,6 +40,8 @@ describe('ConvertSceneModal', () => {
   const updateSceneNodeInternalBatch = jest.fn();
   const getObject3DBySceneNodeRef = jest.fn();
   const getSceneProperty = jest.fn();
+  const updateSceneInfo = jest.fn();
+  const getSceneInfo = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -53,6 +58,7 @@ describe('ConvertSceneModal', () => {
     (createSceneRootEntity as jest.Mock).mockImplementation(() => {
       return Promise.resolve({ entityId: 'scene-root-id' });
     });
+    (updateSceneRootEntity as jest.Mock).mockResolvedValue({});
     (prepareWorkspace as jest.Mock).mockResolvedValue(undefined);
 
     getSceneProperty.mockImplementation((p) => {
@@ -65,12 +71,17 @@ describe('ConvertSceneModal', () => {
       }
     });
 
-    (checkIfEntityAvailable as jest.Mock).mockReturnValue(true);
+    (checkIfEntityExists as jest.Mock).mockReturnValue(true);
     (staticNodeCount as jest.Mock).mockReturnValue(2);
 
     setTwinMakerSceneMetadataModule({
       getSceneId: jest.fn().mockReturnValue('test-scene'),
+      getSceneInfo,
+      updateSceneInfo,
     } as Partial<TwinMakerSceneMetadataModule> as TwinMakerSceneMetadataModule);
+    setFeatureConfig({});
+    getSceneInfo.mockResolvedValue({});
+    updateSceneInfo.mockResolvedValue({});
   });
 
   it('should render with correct confirmation view', () => {
@@ -128,7 +139,7 @@ describe('ConvertSceneModal', () => {
   });
 
   it('should create a default layer entity when it does not exist', async () => {
-    (checkIfEntityAvailable as jest.Mock).mockImplementation((entityId) => {
+    (checkIfEntityExists as jest.Mock).mockImplementation((entityId) => {
       if (entityId == 'layer-id') {
         return Promise.resolve(false);
       }
@@ -147,12 +158,36 @@ describe('ConvertSceneModal', () => {
     expect(createLayer as jest.Mock).toBeCalledTimes(1);
     expect(createLayer as jest.Mock).toBeCalledWith('test-scene_Default', LayerType.Relationship);
     expect(createSceneRootEntity as jest.Mock).not.toBeCalled();
+    expect(updateSceneRootEntity as jest.Mock).not.toBeCalled();
     expect(setSceneProperty).toBeCalledTimes(1);
     expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.LayerIds, ['test-scene_Default']);
   });
 
+  it('should call updateSceneRootEntity when root entity exists and DynamicSceneAlpha is enabled', async () => {
+    (checkIfEntityExists as jest.Mock).mockImplementation((entityId) => {
+      if (entityId == 'layer-id') {
+        return Promise.resolve(false);
+      }
+      return Promise.resolve(true);
+    });
+    setFeatureConfig({ [COMPOSER_FEATURES.DynamicSceneAlpha]: true });
+
+    const { queryByTestId } = render(<ConvertSceneModal />);
+
+    const confirmButton = queryByTestId('confirm-button');
+    act(() => {
+      confirmButton!.click();
+    });
+
+    await flushPromises();
+
+    expect(createSceneRootEntity as jest.Mock).not.toBeCalled();
+    expect(updateSceneRootEntity as jest.Mock).toBeCalledTimes(1);
+    expect(updateSceneRootEntity as jest.Mock).toBeCalledWith('scene-root-id', useStore('default').getState().document);
+  });
+
   it('should create a default scene entity when it does not exist', async () => {
-    (checkIfEntityAvailable as jest.Mock).mockImplementation((entityId) => {
+    (checkIfEntityExists as jest.Mock).mockImplementation((entityId) => {
       if (entityId == 'scene-root-id') {
         return Promise.resolve(false);
       }
@@ -272,5 +307,29 @@ describe('ConvertSceneModal', () => {
     expect(errorMessage).toBeTruthy();
 
     expect(container).toMatchSnapshot();
+  });
+
+  it('should call updateSceneInfo when DynamicSceneAlpha is enabled', async () => {
+    const { queryByTestId } = render(<ConvertSceneModal />);
+    setFeatureConfig({ [COMPOSER_FEATURES.DynamicSceneAlpha]: true });
+    getSceneInfo.mockResolvedValue({ capabilities: ['RANDOM'], sceneMetadata: { randomKey: 'random-value' } });
+
+    const confirmButton = queryByTestId('confirm-button');
+    act(() => {
+      confirmButton!.click();
+    });
+
+    await flushPromises();
+    expect(queryByTestId('confirm-button')?.getAttribute('disabled')).not.toBeNull();
+
+    expect(getSceneInfo).toBeCalledTimes(1);
+    expect(updateSceneInfo).toBeCalledTimes(1);
+    expect(updateSceneInfo).toBeCalledWith({
+      capabilities: ['RANDOM', SceneCapabilities.DYNAMIC_SCENE],
+      sceneMetadata: {
+        randomKey: 'random-value',
+        [SceneMetadataMapKeys.SCENE_ROOT_ENTITY_ID]: 'scene-root-id',
+      },
+    });
   });
 });

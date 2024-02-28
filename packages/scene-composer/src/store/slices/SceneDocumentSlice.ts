@@ -1,5 +1,5 @@
 import { isDataBindingTemplate } from '@iot-app-kit/source-iottwinmaker';
-import { isEmpty } from 'lodash';
+import { isEmpty, isString } from 'lodash';
 import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { Euler, Quaternion, Vector3 } from 'three';
 
@@ -82,7 +82,7 @@ export interface ISceneDocumentSlice {
   getComponentRefByType(type: KnownComponentType): Record<string, string[]>;
 
   /* External Data Model APIs */
-  loadScene(sceneContent: string, options?: IDeserializeOptions): void;
+  loadScene(sceneContent: string | ISceneDocumentInternal, options?: IDeserializeOptions): void;
   appendSceneNode(node: ISceneNode, disableAutoSelect?: boolean): Readonly<ISceneNode>;
   removeSceneNode(nodeRef: string): Readonly<ISceneNode> | undefined;
   updateSceneNode(ref: string, partial: Pick<ISceneNode, 'name' | 'parentRef' | 'transform' | 'childRefs'>): void;
@@ -115,12 +115,17 @@ export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> =
       let errors: ISerializationErrorDetails[] | undefined;
 
       set((draft) => {
-        const result = serializationHelpers.document.deserialize(sceneContent, options);
+        let document: ISceneDocumentInternal | undefined;
+        if (isString(sceneContent)) {
+          const result = serializationHelpers.document.deserialize(sceneContent, options);
+          errors = result.errors;
+          document = result.document;
+        } else {
+          document = sceneContent;
+        }
 
-        errors = result.errors;
-
-        if (result.document) {
-          draft.document = result.document;
+        if (document) {
+          draft.document = document;
         } else {
           // fallback to the empty state
           draft.document = createEmptyDocumentState();
@@ -128,7 +133,7 @@ export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> =
 
         // Initialize view option values based on settings from the scene document
         const overlaySettings: IOverlaySettings | undefined =
-          result.document?.properties?.[KnownSceneProperty.ComponentSettings]?.[KnownComponentType.DataOverlay];
+          document?.properties?.[KnownSceneProperty.ComponentSettings]?.[KnownComponentType.DataOverlay];
         if (overlaySettings) {
           draft.noHistoryStates.componentVisibilities[Component.DataOverlaySubType.OverlayPanel] =
             overlaySettings.overlayPanelVisible;
@@ -136,7 +141,7 @@ export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> =
 
         const dynamicSceneEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicScene];
 
-        if (!dynamicSceneEnabled || !isDynamicScene(result.document)) {
+        if (!dynamicSceneEnabled || !isDynamicScene(document)) {
           draft.sceneLoaded = true;
         }
         draft.lastOperation = 'loadScene';
