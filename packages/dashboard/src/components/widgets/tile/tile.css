@@ -21,6 +21,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  min-height: 22px;
 }
 
 .tile-button-contianer {

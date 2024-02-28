@@ -62,6 +62,9 @@ const DeletableTileAction = ({
 
 const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
   const dispatch = useDispatch();
+  const isEdgeModeEnabled = useSelector(
+    (state: DashboardState) => state.isEdgeModeEnabled
+  );
   const { iotSiteWiseClient } = useClients();
   const { onDelete } = useDeleteWidgets();
   const metricsRecorder = getPlugin('metricsRecorder');
@@ -117,7 +120,7 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
         pointerEvents: 'auto',
       }}
     >
-      {widget.type !== 'text' && iotSiteWiseClient && (
+      {!isEdgeModeEnabled && widget.type !== 'text' && iotSiteWiseClient && (
         <CSVDownloadButton
           variant='inline-icon'
           fileName={`${widget.properties.title ?? widget.type}`}

@@ -177,7 +177,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
 
   // the 4 is from the widget tile top, bottom boder lines height
   // the 8 is from the left and right border lines width
-  const size = { width: chartSize.width - 8, height: chartSize.height - 4 };
+  const size = { width: chartSize.width - 8, height: chartSize.height - 34 };
 
   const onChartOptionsChange = (options: Pick<ChartOptions, 'legend'>) => {
     dispatch(
@@ -208,7 +208,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   }
 
   return (
-    <WidgetTile widget={widget}>
+    <WidgetTile widget={widget} title={title}>
       <Chart
         id={widget.id}
         queries={queries}
@@ -220,7 +220,6 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
         thresholds={thresholds}
         significantDigits={significantDigits}
         size={size}
-        titleText={title}
         legend={legend}
         onChartOptionsChange={onChartOptionsChange}
         defaultVisualizationType={mapConnectionStyleToVisualizationType(
