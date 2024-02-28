@@ -50,7 +50,6 @@
     "pack": "npm pack"
   },
   "dependencies": {
-    "@aws-sdk/client-iotsitewise": "3.456.0",
     "d3-array": "^3.2.4",
     "intervals-fn": "^3.0.3",
     "parse-duration": "^1.0.3",
@@ -71,6 +70,9 @@
     "jest-extended": "^3.2.4",
     "npm-watch": "^0.11.0",
     "typescript": "^4.9.5"
+  },
+  "peerDependencies": {
+    "@aws-sdk/client-iotsitewise": "^3.456.0"
   },
   "bugs": {
     "url": "https://github.com/awslabs/iot-app-kit/issues"

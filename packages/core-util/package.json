@@ -40,5 +40,9 @@
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "jest-extended": "^3.2.4"
+  },
+  "peerDependencies": {
+    "@aws-sdk/client-iot-events": "^3.354.0",
+    "@aws-sdk/client-iotsitewise": "^3.456.0"
   }
 }
