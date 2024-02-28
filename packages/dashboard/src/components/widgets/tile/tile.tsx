@@ -20,7 +20,7 @@ export type WidgetTileProps = PropsWithChildren<{
  * Component to add functionality to the widget container
  * Allows a user to title a widget for bar and status-timeline
  */
-const WidgetTile: React.FC<WidgetTileProps> = ({ widget, title, children }) => {
+const WidgetTile: React.FC<WidgetTileProps> = ({ title, children }) => {
   return (
     <div
       aria-description='widget tile'
@@ -31,16 +31,14 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ widget, title, children }) => {
         backgroundColor: colorBackgroundContainerContent,
       }}
     >
-      {(widget.type === 'bar-chart' || widget.type === 'status-timeline') && (
-        <Box
-          padding={{ horizontal: 's', top: 'xs' }}
-          color='text-body-secondary'
-          fontSize='heading-m'
-          fontWeight='bold'
-        >
-          <div className='widget-tile-header'>{title}</div>
-        </Box>
-      )}
+      <Box
+        padding={{ horizontal: 's', top: 'xs' }}
+        color='text-body-secondary'
+        fontSize='heading-m'
+        fontWeight='bold'
+      >
+        <div className='widget-tile-header'>{title}</div>
+      </Box>
       <div className='widget-tile-body'>{children}</div>
     </div>
   );
