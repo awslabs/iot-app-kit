@@ -67,10 +67,9 @@ export class SceneMetadataModule implements TwinMakerSceneMetadataModule {
   updateSceneInfo = async (sceneInfo: SceneInfo): Promise<void> => {
     await this.twinMakerClient.send(
       new UpdateSceneCommand({
+        ...sceneInfo,
         workspaceId: this.workspaceId,
         sceneId: this.sceneId,
-        capabilities: sceneInfo.capabilities,
-        sceneMetadata: sceneInfo.sceneMetadata,
       })
     );
   };

@@ -5,19 +5,21 @@ import { useIntl } from 'react-intl';
 
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { ISceneNodeInternal, useStore } from '../../store';
-import { KnownSceneProperty } from '../../interfaces';
+import { COMPOSER_FEATURES, KnownSceneProperty } from '../../interfaces';
 import {
-  checkIfEntityAvailable,
+  checkIfEntityExists,
   convertAllNodesToEntities,
   createSceneRootEntity,
   prepareWorkspace,
   staticNodeCount,
+  updateSceneRootEntity,
 } from '../../utils/entityModelUtils/sceneUtils';
 import { createLayer } from '../../utils/entityModelUtils/sceneLayerUtils';
 import { LayerType } from '../../common/entityModelConstants';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import CenteredContainer from '../CenteredContainer';
 import { ConvertingProgress } from '../ConvertingProgress';
+import { SceneCapabilities, SceneMetadataMapKeys } from '../../common/sceneModelConstants';
 
 interface ConvertProgress {
   total: number;
@@ -93,6 +95,7 @@ const ConvertSceneModal: React.FC = () => {
       let rootId = sceneRootId;
       const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
       const layerName = `${sceneMetadataModule?.getSceneId()}_Default`;
+      const isDynamicSceneAlphaEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicSceneAlpha];
 
       if (sceneMetadataModule) {
         // Before backend can create the new default roots, the client side code will
@@ -100,15 +103,30 @@ const ConvertSceneModal: React.FC = () => {
         await prepareWorkspace(sceneMetadataModule);
 
         // Create default layer and default scene root node
-        if (!layerId || isEmpty(layerId) || !(await checkIfEntityAvailable(layerId, sceneMetadataModule))) {
+        if (!layerId || isEmpty(layerId) || !(await checkIfEntityExists(layerId, sceneMetadataModule))) {
           const layer = await createLayer(layerName, LayerType.Relationship);
           layerId = layer?.entityId;
           setSceneProperty(KnownSceneProperty.LayerIds, [layerId]);
         }
-        if (!sceneRootId || isEmpty(sceneRootId) || !(await checkIfEntityAvailable(sceneRootId, sceneMetadataModule))) {
-          const root = await createSceneRootEntity();
+        const rootEntityExist = rootId && (await checkIfEntityExists(rootId, sceneMetadataModule));
+        if (!rootId || isEmpty(rootId) || !rootEntityExist) {
+          const root = await createSceneRootEntity(document);
           rootId = root?.entityId;
           setSceneProperty(KnownSceneProperty.SceneRootEntityId, rootId);
+        } else if (rootEntityExist && isDynamicSceneAlphaEnabled) {
+          await updateSceneRootEntity(rootId, document);
+        }
+
+        if (isDynamicSceneAlphaEnabled) {
+          // Update scene with dynamic scene capability
+          const sceneInfo = await sceneMetadataModule.getSceneInfo();
+          await sceneMetadataModule.updateSceneInfo({
+            capabilities: [...(sceneInfo.capabilities || []), SceneCapabilities.DYNAMIC_SCENE],
+            sceneMetadata: {
+              ...sceneInfo.sceneMetadata,
+              [SceneMetadataMapKeys.SCENE_ROOT_ENTITY_ID]: rootId!,
+            },
+          });
         }
       }
 
