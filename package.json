@@ -21,7 +21,6 @@
     "start": "cd packages/components && npm start",
     "build": "turbo run build",
     "clean": "git clean -dxf -e /.idea -e /.vscode -e creds.json",
-    "dev": "turbo run dev",
     "lint": "turbo run lint",
     "fix": "turbo run fix && npm run fix:stylelint",
     "fix:stylelint": "stylelint '**/*.css' --fix",
