@@ -4,6 +4,7 @@ import { cleanup, renderHook } from '@testing-library/react-hooks';
 import str2ab from 'string-to-arraybuffer';
 import flushPromises from 'flush-promises';
 import { Object3D, Event, Mesh, MeshBasicMaterial, Color } from 'three';
+import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import { useSceneComposerApi, SceneComposerApi } from '..';
 import { testScenes } from '../../tests/testData';
@@ -44,8 +45,17 @@ function createSceneLoaderMock(sceneContent: string) {
 }
 
 describe('SceneComposerInternal', () => {
+  const getSceneInfo = jest.fn();
+  const mockSceneMetadataModule = {
+    getSceneInfo,
+  } as unknown as TwinMakerSceneMetadataModule;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    getSceneInfo.mockResolvedValue({
+      capabilities: [],
+      sceneMetadata: {},
+    });
   });
 
   describe('useSceneComposerApi', () => {
@@ -62,6 +72,7 @@ describe('SceneComposerInternal', () => {
               sceneComposerId={sceneComposerId}
               config={{ mode: 'Editing' }}
               sceneLoader={createSceneLoaderMock(testScenes.scene1)}
+              sceneMetadataModule={mockSceneMetadataModule}
             />
           );
         };
@@ -81,6 +92,7 @@ describe('SceneComposerInternal', () => {
             sceneComposerId={sceneComposerId}
             config={{ mode: 'Editing' }}
             sceneLoader={createSceneLoaderMock(testScenes.waterTank)}
+            sceneMetadataModule={mockSceneMetadataModule}
           />
         );
       };

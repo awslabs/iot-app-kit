@@ -9,6 +9,7 @@ import {
   DeleteEntityCommandOutput,
   GetEntityCommandInput,
   GetEntityCommandOutput,
+  UpdateSceneCommandInput,
 } from '@aws-sdk/client-iottwinmaker';
 import { SecretListEntry } from '@aws-sdk/client-secrets-manager';
 
@@ -21,10 +22,9 @@ export interface SceneLoader {
   getSceneObject: (uri: string) => Promise<ArrayBuffer> | null;
 }
 
-export type SceneInfo = {
-  capabilities?: string[];
-  sceneMetadata?: Record<string, string>;
-};
+export type SceneInfo = Partial<
+  Omit<UpdateSceneCommandInput, 'workspaceId' | 'sceneId'>
+>;
 
 export interface TwinMakerSceneMetadataModule {
   kgModule: TwinMakerKGQueryDataModule;

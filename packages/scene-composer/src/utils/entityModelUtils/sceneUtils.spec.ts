@@ -1,8 +1,9 @@
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { Object3D } from 'three';
 import flushPromises from 'flush-promises';
+import { ResourceNotFoundException } from '@aws-sdk/client-iottwinmaker';
 
-import { setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
+import { setFeatureConfig, setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
 import {
   LAYER_ROOT_ENTITY_ID,
   LAYER_ROOT_ENTITY_NAME,
@@ -13,10 +14,10 @@ import {
 import { ISceneDocumentInternal, ISceneNodeInternal, SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
 import { defaultNode } from '../../../__mocks__/sceneNode';
 import { findComponentByType, getFinalNodeTransform } from '../nodeUtils';
-import { KnownSceneProperty } from '../../interfaces';
+import { COMPOSER_FEATURES, KnownSceneProperty } from '../../interfaces';
 
 import {
-  checkIfEntityAvailable,
+  checkIfEntityExists,
   convertAllNodesToEntities,
   createSceneEntityId,
   createSceneRootEntity,
@@ -27,7 +28,7 @@ import {
   updateSceneRootEntity,
 } from './sceneUtils';
 import { createNodeEntity } from './createNodeEntity';
-import { updateSceneEntityComponent } from './sceneComponent';
+import { createSceneEntityComponent, updateSceneEntityComponent } from './sceneComponent';
 
 jest.mock('../mathUtils', () => ({
   generateUUID: jest.fn(() => 'random-uuid'),
@@ -38,6 +39,7 @@ jest.mock('./createNodeEntity', () => ({
 }));
 
 jest.mock('./sceneComponent', () => ({
+  createSceneEntityComponent: jest.fn(),
   updateSceneEntityComponent: jest.fn(),
 }));
 
@@ -59,10 +61,14 @@ describe('createSceneRootEntity', () => {
     getSceneId: jest.fn().mockReturnValue('test'),
   };
 
-  it('should call createSceneEntity with expected input', () => {
+  it('should call createSceneEntity with expected input when DynamicSceneAlpha is off', () => {
     setTwinMakerSceneMetadataModule(mockMetadataModule as unknown as TwinMakerSceneMetadataModule);
+    setFeatureConfig({});
 
-    createSceneRootEntity();
+    createSceneRootEntity({
+      ruleMap: {},
+      version: '1',
+    });
 
     expect(createSceneEntity).toBeCalledWith({
       workspaceId: undefined,
@@ -70,6 +76,27 @@ describe('createSceneRootEntity', () => {
       parentEntityId: SCENE_ROOT_ENTITY_ID,
       entityName: createSceneEntityId('test'),
     });
+    expect(createSceneEntityComponent).not.toBeCalled();
+  });
+
+  it('should call createSceneEntity with expected input when DynamicSceneAlpha is on', () => {
+    setTwinMakerSceneMetadataModule(mockMetadataModule as unknown as TwinMakerSceneMetadataModule);
+    setFeatureConfig({ [COMPOSER_FEATURES.DynamicSceneAlpha]: true });
+    (createSceneEntityComponent as jest.Mock).mockReturnValue('random');
+
+    createSceneRootEntity({
+      ruleMap: {},
+      version: '1',
+    });
+
+    expect(createSceneEntity).toBeCalledWith({
+      workspaceId: undefined,
+      entityId: createSceneEntityId('test'),
+      parentEntityId: SCENE_ROOT_ENTITY_ID,
+      entityName: createSceneEntityId('test'),
+      components: { [SCENE_ROOT_ENTITY_COMPONENT_NAME]: 'random' },
+    });
+    expect(createSceneEntityComponent).toBeCalledTimes(1);
   });
 });
 
@@ -101,7 +128,7 @@ describe('updateSceneRootEntity', () => {
   });
 });
 
-describe('checkIfEntityAvailable', () => {
+describe('checkIfEntityExists', () => {
   const getSceneEntity = jest.fn();
   const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
     getSceneEntity,
@@ -114,17 +141,28 @@ describe('checkIfEntityAvailable', () => {
   it('should return true when entity exist', async () => {
     getSceneEntity.mockResolvedValue(undefined);
 
-    const result = await checkIfEntityAvailable('eid', mockMetadataModule as TwinMakerSceneMetadataModule);
+    const result = await checkIfEntityExists('eid', mockMetadataModule as TwinMakerSceneMetadataModule);
 
     expect(result).toEqual(true);
   });
 
   it('should return false when entity does not exist', async () => {
-    getSceneEntity.mockRejectedValue(() => new Error('entity does not exist'));
+    getSceneEntity.mockRejectedValue(new ResourceNotFoundException({ $metadata: {}, message: 'does not exist' }));
 
-    const result = await checkIfEntityAvailable('eid', mockMetadataModule as TwinMakerSceneMetadataModule);
+    const result = await checkIfEntityExists('eid', mockMetadataModule as TwinMakerSceneMetadataModule);
 
     expect(result).toEqual(false);
+  });
+
+  it('should return exception when api rejects', async () => {
+    const error = new Error('entity does not exist');
+    getSceneEntity.mockRejectedValue(error);
+
+    try {
+      await checkIfEntityExists('eid', mockMetadataModule as TwinMakerSceneMetadataModule);
+    } catch (e) {
+      expect(e).toEqual(error);
+    }
   });
 });
 
@@ -143,7 +181,7 @@ describe('prepareWorkspace', () => {
   it('should call createSceneEntity to create scenes root entity', async () => {
     getSceneEntity.mockImplementation(({ entityId }) => {
       if (entityId === SCENE_ROOT_ENTITY_ID) {
-        throw new Error('entity does not exist');
+        throw new ResourceNotFoundException({ $metadata: {}, message: 'does not exist' });
       }
       return;
     });
@@ -160,7 +198,7 @@ describe('prepareWorkspace', () => {
   it('should call createSceneEntity to create layers root entity', async () => {
     getSceneEntity.mockImplementation(({ entityId }) => {
       if (entityId === LAYER_ROOT_ENTITY_ID) {
-        throw new Error('entity does not exist');
+        throw new ResourceNotFoundException({ $metadata: {}, message: 'does not exist' });
       }
       return;
     });
@@ -175,7 +213,7 @@ describe('prepareWorkspace', () => {
   });
 
   it('should call createSceneEntity to create both layers and scenes root entities', async () => {
-    getSceneEntity.mockRejectedValue(() => new Error('entity does not exist'));
+    getSceneEntity.mockRejectedValue(new ResourceNotFoundException({ $metadata: {}, message: 'does not exist' }));
 
     await prepareWorkspace(mockMetadataModule as TwinMakerSceneMetadataModule);
 
@@ -460,7 +498,7 @@ describe('convertAllNodesToEntities', () => {
     const worldTransform = { position: [4, 4, 4], rotation: [5, 5, 5], scale: [6, 6, 6] };
     (getFinalNodeTransform as jest.Mock).mockImplementation((_, __, ___) => worldTransform);
     (findComponentByType as jest.Mock).mockReturnValue(true);
-    getSceneEntity.mockRejectedValue(new Error('404'));
+    getSceneEntity.mockRejectedValue(new ResourceNotFoundException({ $metadata: {}, message: 'does not exist' }));
     jest.useFakeTimers();
     let error;
     onFailure.mockImplementation((node, err) => (error = err));

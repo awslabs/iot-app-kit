@@ -7,13 +7,14 @@ import { useStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { KnownSceneProperty } from '../../../interfaces';
 import { getGlobalSettings, subscribe, unsubscribe } from '../../../common/GlobalSettings';
-import { MATTERPORT_ERROR, MATTERPORT_SECRET_ARN } from '../../../common/constants';
+import { MATTERPORT_ERROR } from '../../../common/constants';
 import {
   getMatterportConnectionList,
   getUpdatedSceneInfoForConnection,
 } from '../../../utils/matterportIntegrationUtils';
 import { OPTIONS_PLACEHOLDER_VALUE } from '../../../common/internalConstants';
 import { DisplayMessageCategory } from '../../../store/internalInterfaces';
+import { SceneMetadataMapKeys } from '../../../common/sceneModelConstants';
 
 import { MatterportTagSync } from './MatterportTagSync';
 
@@ -44,10 +45,14 @@ export const MatterportIntegration: React.FC = () => {
   const updateSelectedConnectionName = useCallback(async () => {
     if (twinMakerSceneMetadataModule) {
       const getSceneResponse = await twinMakerSceneMetadataModule.getSceneInfo();
-      if (getSceneResponse && getSceneResponse.sceneMetadata && getSceneResponse.sceneMetadata[MATTERPORT_SECRET_ARN]) {
+      if (
+        getSceneResponse &&
+        getSceneResponse.sceneMetadata &&
+        getSceneResponse.sceneMetadata[SceneMetadataMapKeys.MATTERPORT_SECRET_ARN]
+      ) {
         const isValidConnection = !(getSceneResponse.error && getSceneResponse.error.code === MATTERPORT_ERROR);
         setIsValidConnection(isValidConnection);
-        setSelectedConnectionName(getSceneResponse.sceneMetadata[MATTERPORT_SECRET_ARN]);
+        setSelectedConnectionName(getSceneResponse.sceneMetadata[SceneMetadataMapKeys.MATTERPORT_SECRET_ARN]);
       } else {
         setIsValidConnection(false);
         setSelectedConnectionName(OPTIONS_PLACEHOLDER_VALUE);

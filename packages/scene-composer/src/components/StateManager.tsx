@@ -9,6 +9,7 @@ import { ThreeEvent } from '@react-three/fiber';
 import ab2str from 'arraybuffer-to-string';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { GetSceneCommandOutput } from '@aws-sdk/client-iottwinmaker';
 
 import {
   getMatterportSdk,
@@ -22,12 +23,7 @@ import {
   subscribe,
   unsubscribe,
 } from '../common/GlobalSettings';
-import {
-  MATTERPORT_ACCESS_TOKEN,
-  MATTERPORT_APPLICATION_KEY,
-  MATTERPORT_ERROR,
-  MATTERPORT_SECRET_ARN,
-} from '../common/constants';
+import { MATTERPORT_ACCESS_TOKEN, MATTERPORT_APPLICATION_KEY, MATTERPORT_ERROR } from '../common/constants';
 import { DisplayMessageCategory } from '../store/internalInterfaces';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import useActiveCamera from '../hooks/useActiveCamera';
@@ -35,7 +31,7 @@ import useMatterportViewer from '../hooks/useMatterportViewer';
 import { AdditionalComponentData, ExternalLibraryConfig, KnownComponentType, KnownSceneProperty } from '../interfaces';
 import { SceneLayout } from '../layouts/SceneLayout';
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
-import { ICameraComponentInternal, RootState, useStore, useViewOptionState } from '../store';
+import { ICameraComponentInternal, ISceneDocumentInternal, RootState, useStore, useViewOptionState } from '../store';
 import { getCameraSettings } from '../utils/cameraUtils';
 import { getAdditionalComponentData } from '../utils/eventDataUtils';
 import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/dataStreamUtils';
@@ -43,6 +39,8 @@ import { findComponentByType } from '../utils/nodeUtils';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
 import { createStandardUriModifier } from '../utils/uriModifiers';
 import { SceneComposerInternalProps } from '../interfaces/sceneComposerInternal';
+import { parseSceneCompFromEntity } from '../utils/entityModelUtils/sceneComponent';
+import { SceneCapabilities, SceneMetadataMapKeys } from '../common/sceneModelConstants';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
@@ -82,7 +80,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     addMessages,
   } = useStore(sceneComposerId)((state) => state);
   const [sceneContentUri, setSceneContentUri] = useState<string>('');
-  const [sceneContent, setSceneContent] = useState<string>('');
+  const [sceneContent, setSceneContent] = useState<string | ISceneDocumentInternal | undefined>();
   const [loadSceneError, setLoadSceneError] = useState<Error | undefined>();
   const [queriedStreams, setQueriedStreams] = useState<DataStream[] | undefined>();
   const [updatedExternalLibraryConfig, setUpdatedExternalLibraryConfig] = useState<ExternalLibraryConfig | undefined>(
@@ -102,6 +100,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const dataProviderRef = useRef<ProviderWithViewport<TimeSeriesData[]> | undefined>(undefined);
   const prevSelection = useRef<string | undefined>(undefined);
   const [matterportReady, setMatterportReady] = useState<boolean>(false);
+  const [sceneInfo, setSceneInfo] = useState<GetSceneCommandOutput | undefined>(undefined);
 
   const { setActiveCameraSettings, setActiveCameraName } = useActiveCamera();
 
@@ -134,17 +133,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     onWidgetClick,
     onSelectionChanged,
   ]);
-
-  // Initialize ConnectionNameForMatterportViewer on scene loading
-  useEffect(() => {
-    if (sceneMetadataModule) {
-      sceneMetadataModule.getSceneInfo().then((getSceneResponse) => {
-        if (getSceneResponse && getSceneResponse.sceneMetadata) {
-          setConnectionNameForMatterportViewer(getSceneResponse.sceneMetadata[MATTERPORT_SECRET_ARN]);
-        }
-      });
-    }
-  }, [sceneLoaded]);
 
   useEffect(() => {
     const onMatterportSdkUpdated = () => {
@@ -233,11 +221,55 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   useEffect(() => {
     if (sceneMetadataModule) {
       setTwinMakerSceneMetadataModule(sceneMetadataModule);
+      sceneMetadataModule
+        .getSceneInfo()
+        .then((info) => {
+          setSceneInfo(info);
+
+          // Initialize ConnectionNameForMatterportViewer
+          if (info && info.sceneMetadata?.[SceneMetadataMapKeys.MATTERPORT_SECRET_ARN]) {
+            setConnectionNameForMatterportViewer(info.sceneMetadata[SceneMetadataMapKeys.MATTERPORT_SECRET_ARN]);
+          }
+        })
+        .catch((error) => {
+          setLoadSceneError(error || new Error('Failed to get scene info'));
+        });
     }
   }, [sceneMetadataModule]);
 
   // get scene uri
   useEffect(() => {
+    // If sceneMetadataModule is provided, wait for sceneInfo to check if it's a dynamic scene,
+    // otherwise always assume it's a static scene and get its scene uri.
+    if (sceneMetadataModule && !sceneInfo) {
+      return;
+    }
+
+    if (sceneInfo && sceneMetadataModule && sceneInfo.capabilities?.includes(SceneCapabilities.DYNAMIC_SCENE)) {
+      // Fetch scene level metadata for dynamic scene
+      const rootId = sceneInfo.sceneMetadata?.[SceneMetadataMapKeys.SCENE_ROOT_ENTITY_ID];
+      if (!rootId) {
+        setLoadSceneError(new Error('Failed to get scene root entity id'));
+        return;
+      }
+
+      sceneMetadataModule
+        .getSceneEntity({ entityId: rootId })
+        .then((res) => {
+          const document = parseSceneCompFromEntity(res);
+          if (!document) {
+            throw new Error('Failed to parse scene metadata');
+          }
+          setSceneContent(document);
+        })
+        .catch((e) => {
+          setLoadSceneError(e || new Error('Failed to get scene root entity'));
+        });
+
+      return;
+    }
+
+    // Fetch scene uri for static scene
     sceneLoader
       .getSceneUri()
       .then((uri) => {
@@ -250,7 +282,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       .catch((error) => {
         setLoadSceneError(error || new Error('Failed to get scene uri'));
       });
-  }, [sceneLoader]);
+  }, [sceneLoader, sceneMetadataModule, sceneInfo]);
 
   useEffect(() => {
     if (sceneContentUri && sceneContentUri.length > 0) {
@@ -310,7 +342,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
 
   // load scene content
   useLayoutEffect(() => {
-    if (sceneContent?.length > 0) {
+    if (sceneContent) {
       loadScene(sceneContent, { disableMotionIndicator: false });
     }
   }, [sceneContent]);

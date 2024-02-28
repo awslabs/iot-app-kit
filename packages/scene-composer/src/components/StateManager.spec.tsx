@@ -29,11 +29,13 @@ import { DataStream } from '@iot-app-kit/core';
 import useActiveCamera from '../hooks/useActiveCamera';
 import { KnownComponentType } from '..';
 import * as THREE from 'three';
-import { MATTERPORT_ERROR, SCENE_CAPABILITY_MATTERPORT } from '../common/constants';
+import { MATTERPORT_ERROR } from '../common/constants';
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { MpSdk } from '@matterport/webcomponent';
 import { SceneComposerInternalConfig } from '../interfaces/sceneComposerInternal';
 import { setMatterportSdk } from '../common/GlobalSettings';
+import { parseSceneCompFromEntity } from '../utils/entityModelUtils/sceneComponent';
+import { SceneCapabilities, SceneMetadataMapKeys } from '../common/sceneModelConstants';
 
 jest.mock('../hooks/useActiveCamera', () => {
   return jest.fn().mockReturnValue({
@@ -50,6 +52,8 @@ jest.mock('../hooks/useActiveCamera', () => {
     setActiveCameraName: jest.fn(),
   });
 });
+
+jest.mock('../utils/entityModelUtils/sceneComponent');
 /* eslint-enable */
 
 describe('StateManager', () => {
@@ -84,18 +88,19 @@ describe('StateManager', () => {
   const mockSceneContent = 'This is test content';
   const mockGetSceneObjectFunction = jest.fn();
   const mockSceneLoader = {
-    getSceneUri: () => Promise.resolve('https://test.url'),
-    getSceneUrl: () => Promise.resolve('https://test.url'),
+    getSceneUri: jest.fn().mockResolvedValue('https://test.url'),
     getSceneObject: mockGetSceneObjectFunction,
   };
   const MOCK_ARN = 'mockARN';
   const getSceneInfo = jest.fn();
   const updateSceneInfo = jest.fn();
   const get3pConnectionList = jest.fn();
+  const getSceneEntity = jest.fn();
   const mockSceneMetadataModule = {
     getSceneInfo,
     updateSceneInfo,
     get3pConnectionList,
+    getSceneEntity,
   } as unknown as TwinMakerSceneMetadataModule;
   const mockDataStreams: DataStream[] = [numberStream, stringStream];
 
@@ -105,9 +110,10 @@ describe('StateManager', () => {
     const mockArrayBuffer = str2ab(mockSceneContent);
     mockGetSceneObjectFunction.mockImplementation(() => Promise.resolve(mockArrayBuffer));
     getSceneInfo.mockResolvedValue({
-      capabilities: [SCENE_CAPABILITY_MATTERPORT],
-      sceneMetadata: { MATTERPORT_SECRET_ARN: MOCK_ARN },
+      capabilities: [SceneCapabilities.MATTERPORT],
+      sceneMetadata: { [SceneMetadataMapKeys.MATTERPORT_SECRET_ARN]: MOCK_ARN },
     });
+    getSceneEntity.mockResolvedValue({});
   });
 
   it('should render correctly', async () => {
@@ -129,7 +135,7 @@ describe('StateManager', () => {
     });
 
     expect(container).toMatchSnapshot();
-
+    expect(mockSceneLoader.getSceneUri).toBeCalledTimes(1);
     expect(baseState.loadScene).toBeCalledWith(mockSceneContent, { disableMotionIndicator: false });
   });
 
@@ -148,6 +154,7 @@ describe('StateManager', () => {
           <StateManager
             viewport={viewport}
             sceneLoader={loader}
+            sceneMetadataModule={mockSceneMetadataModule}
             config={sceneConfig}
             dataStreams={mockDataStreams}
             onSceneUpdated={jest.fn()}
@@ -177,6 +184,7 @@ describe('StateManager', () => {
           <StateManager
             viewport={viewport}
             sceneLoader={loader}
+            sceneMetadataModule={mockSceneMetadataModule}
             config={sceneConfig}
             dataStreams={mockDataStreams}
             onSceneUpdated={jest.fn()}
@@ -206,6 +214,7 @@ describe('StateManager', () => {
           <StateManager
             viewport={viewport}
             sceneLoader={loader}
+            sceneMetadataModule={mockSceneMetadataModule}
             config={sceneConfig}
             dataStreams={mockDataStreams}
             onSceneUpdated={jest.fn()}
@@ -235,6 +244,7 @@ describe('StateManager', () => {
           <StateManager
             viewport={viewport}
             sceneLoader={loader}
+            sceneMetadataModule={mockSceneMetadataModule}
             config={sceneConfig}
             dataStreams={mockDataStreams}
             onSceneUpdated={jest.fn()}
@@ -247,6 +257,133 @@ describe('StateManager', () => {
     expect(container).toMatchSnapshot();
     expect(console.error).toBeCalledTimes(2);
     errorSpy.mockRestore();
+  });
+
+  it('should load dynamic scene correctly', async () => {
+    useStore('default').setState(baseState);
+    getSceneInfo.mockResolvedValue({
+      capabilities: [SceneCapabilities.DYNAMIC_SCENE],
+      sceneMetadata: { [SceneMetadataMapKeys.SCENE_ROOT_ENTITY_ID]: 'root-id' },
+    });
+    const mockSceneContent = 'mock scene content';
+    (parseSceneCompFromEntity as jest.Mock).mockReturnValue(mockSceneContent);
+
+    let container;
+    await act(async () => {
+      container = create(
+        <ErrorBoundary ErrorView={DefaultErrorFallback}>
+          <StateManager
+            viewport={viewport}
+            sceneLoader={mockSceneLoader}
+            sceneMetadataModule={mockSceneMetadataModule}
+            config={sceneConfig}
+            dataStreams={mockDataStreams}
+            onSceneUpdated={jest.fn()}
+          />
+        </ErrorBoundary>,
+      );
+      await flushPromises();
+    });
+
+    expect(container).toMatchSnapshot();
+    expect(mockSceneLoader.getSceneUri).not.toBeCalled();
+    expect(mockSceneMetadataModule.getSceneEntity).toBeCalledTimes(1);
+    expect(mockSceneMetadataModule.getSceneEntity).toBeCalledWith({ entityId: 'root-id' });
+    expect(baseState.loadScene).toBeCalledTimes(1);
+    expect(baseState.loadScene).toBeCalledWith(mockSceneContent, { disableMotionIndicator: false });
+  });
+
+  it('should load dynamic scene with error for empty document', async () => {
+    useStore('default').setState(baseState);
+    getSceneInfo.mockResolvedValue({
+      capabilities: [SceneCapabilities.DYNAMIC_SCENE],
+      sceneMetadata: { [SceneMetadataMapKeys.SCENE_ROOT_ENTITY_ID]: 'root-id' },
+    });
+    (parseSceneCompFromEntity as jest.Mock).mockReturnValue(undefined);
+
+    let container;
+    await act(async () => {
+      container = create(
+        <ErrorBoundary ErrorView={DefaultErrorFallback}>
+          <StateManager
+            viewport={viewport}
+            sceneLoader={mockSceneLoader}
+            sceneMetadataModule={mockSceneMetadataModule}
+            config={sceneConfig}
+            dataStreams={mockDataStreams}
+            onSceneUpdated={jest.fn()}
+          />
+        </ErrorBoundary>,
+      );
+      await flushPromises();
+    });
+
+    expect(container).toMatchSnapshot();
+    expect(mockSceneLoader.getSceneUri).not.toBeCalled();
+    expect(mockSceneMetadataModule.getSceneEntity).toBeCalledTimes(1);
+    expect(mockSceneMetadataModule.getSceneEntity).toBeCalledWith({ entityId: 'root-id' });
+    expect(baseState.loadScene).not.toBeCalled();
+  });
+
+  it('should load dynamic scene with error for getting scene entity failure', async () => {
+    useStore('default').setState(baseState);
+    getSceneInfo.mockResolvedValue({
+      capabilities: [SceneCapabilities.DYNAMIC_SCENE],
+      sceneMetadata: { [SceneMetadataMapKeys.SCENE_ROOT_ENTITY_ID]: 'root-id' },
+    });
+    const mockSceneContent = 'mock scene content';
+    (parseSceneCompFromEntity as jest.Mock).mockReturnValue(mockSceneContent);
+    getSceneEntity.mockRejectedValue(new Error('get scene entity failure'));
+
+    let container;
+    await act(async () => {
+      container = create(
+        <ErrorBoundary ErrorView={DefaultErrorFallback}>
+          <StateManager
+            viewport={viewport}
+            sceneLoader={mockSceneLoader}
+            sceneMetadataModule={mockSceneMetadataModule}
+            config={sceneConfig}
+            dataStreams={mockDataStreams}
+            onSceneUpdated={jest.fn()}
+          />
+        </ErrorBoundary>,
+      );
+      await flushPromises();
+    });
+
+    expect(container).toMatchSnapshot();
+    expect(mockSceneLoader.getSceneUri).not.toBeCalled();
+    expect(mockSceneMetadataModule.getSceneEntity).toBeCalledTimes(1);
+    expect(mockSceneMetadataModule.getSceneEntity).toBeCalledWith({ entityId: 'root-id' });
+    expect(baseState.loadScene).not.toBeCalled();
+  });
+
+  it('should load dynamic scene with error for getting scene info failure', async () => {
+    useStore('default').setState(baseState);
+    getSceneInfo.mockRejectedValue(undefined);
+
+    let container;
+    await act(async () => {
+      container = create(
+        <ErrorBoundary ErrorView={DefaultErrorFallback}>
+          <StateManager
+            viewport={viewport}
+            sceneLoader={mockSceneLoader}
+            sceneMetadataModule={mockSceneMetadataModule}
+            config={sceneConfig}
+            dataStreams={mockDataStreams}
+            onSceneUpdated={jest.fn()}
+          />
+        </ErrorBoundary>,
+      );
+      await flushPromises();
+    });
+
+    expect(container).toMatchSnapshot();
+    expect(mockSceneLoader.getSceneUri).not.toBeCalled();
+    expect(mockSceneMetadataModule.getSceneEntity).not.toBeCalled();
+    expect(baseState.loadScene).not.toBeCalled();
   });
 
   it('should render correctly with Matterport configuration', async () => {
