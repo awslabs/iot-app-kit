@@ -115,7 +115,10 @@ export const ECHARTS_ZOOM_DEBOUNCE_MS = 300;
 // viewport timestamp constants
 export const TIMESTAMP_WIDTH_FACTOR = 44;
 export const TIMESTAMP_WIDTH_FACTOR_BOTTOM = 24;
-export const TIMESTAMP_HEIGHT_FACTOR_BOTTOM = 19;
+export const TIMESTAMP_HEIGHT_FACTOR_BOTTOM = 24;
+
+// loading indicator
+export const REFRESHING_DELAY_MS = 3000;
 
 // legend constants
 export const LEGEND_NAME_MIN_WIDTH_FACTOR = 3.5;

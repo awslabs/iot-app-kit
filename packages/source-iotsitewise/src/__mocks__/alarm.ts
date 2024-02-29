@@ -275,45 +275,46 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
     }
   ],
   dataStreams: [{
-    id: 'alarm-asset-id---alarm-state-property-id',
-    streamType: 'ALARM',
-    aggregationType: undefined,
-    name: 'test',
-    resolution: 0,
-    refId: undefined,
-    isRefreshing: false,
-    isLoading: false,
-    error: undefined,
-    dataType: 'NUMBER' as PropertyDataType,
-    data: [
-      {
-        x: 1000000,
-        y: 'Active',
-      },
-      {
-        x: 2000000,
-        y: 'Normal',
-      },
-    ],
-  }],
+      id: 'alarm-asset-id---alarm-state-property-id',
+      streamType: 'ALARM',
+      aggregationType: undefined,
+      name: 'test',
+      resolution: 0,
+      refId: undefined,
+      isRefreshing: false,
+      numOutgoingRequests: -1,
+      isLoading: false,
+      error: undefined,
+      dataType: 'NUMBER' as PropertyDataType,
+      data: [
+        {
+          x: 1000000,
+          y: 'Active',
+        },
+        {
+          x: 2000000,
+          y: 'Normal',
+        },
+      ],
+    }],
   viewport: {
     duration: '5m'
   }
 } as TimeSeriesData;
 
 export const ALARM_PROPERTY_VALUE_HISTORY: BatchGetAssetPropertyValueHistoryResponse = {
-  successEntries: [
-    {
-      entryId: '0-0',
-      assetPropertyValueHistory: [
-        ALARM_STATE_PROPERTY_VALUE,
-        ALARM_STATE_PROPERTY_VALUE2,
-      ]
+    successEntries: [
+      {
+        entryId: '0-0',
+        assetPropertyValueHistory: [
+          ALARM_STATE_PROPERTY_VALUE,
+          ALARM_STATE_PROPERTY_VALUE2,
+        ]
     }
-  ],
-  errorEntries: [],
-  skippedEntries: [],
-};
+    ],
+    errorEntries: [],
+    skippedEntries: [],
+  };
 
 export const CACHED_ALARM_MODEL = {
   comparisonOperator: 'GT',
@@ -332,21 +333,21 @@ export const ALARM_LIST_ASSET_PROP_RESPONSE = ({
 
 export const ALARM_LIST_ASSET_MODEL_PROP_RESPONSE = ({
   assetModelPropertySummaries: [{
-    dataType: 'INTEGER' as PropertyDataType,
-    id: INPUT_PROPERTY_ID,
-    name: 'inputProperty',
-    type: {
-      measurement: {}
+      dataType: 'INTEGER' as PropertyDataType,
+      id: INPUT_PROPERTY_ID,
+      name: 'inputProperty',
+      type: {
+        measurement: {}
+      },
+      unit: 'Celsius'
     },
-    unit: 'Celsius'
-  },
-  {
-    dataType: 'INTEGER' as PropertyDataType,
-    id: THRESHOLD_PROPERTY_ID,
-    name: 'thresholdProperty',
-    type: {
-      measurement: {}
+    {
+      dataType: 'INTEGER' as PropertyDataType,
+      id: THRESHOLD_PROPERTY_ID,
+      name: 'thresholdProperty',
+      type: {
+        measurement: {}
     },
-    unit: 'Celsius'
+  unit: 'Celsius'
   }],
 });
