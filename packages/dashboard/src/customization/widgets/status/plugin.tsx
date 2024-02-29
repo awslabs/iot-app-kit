@@ -1,6 +1,5 @@
 import React from 'react';
 import StatusWidgetComponent from './component';
-import StatusIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';
 import type { StatusWidget } from '../types';
 import {
@@ -12,10 +11,6 @@ export const statusPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
     registerWidget<StatusWidget>('status', {
       render: (widget) => <StatusWidgetComponent {...widget} />,
-      componentLibrary: {
-        name: 'Status',
-        icon: StatusIcon,
-      },
       properties: () => ({
         resolution: '0',
         queryConfig: {

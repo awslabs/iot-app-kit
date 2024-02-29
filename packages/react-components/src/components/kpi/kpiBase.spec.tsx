@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { KpiBase } from './kpiBase';
-import { StatusIconType } from '../../common/constants';
 import type { DataPoint } from '@iot-app-kit/core';
 
 describe('name', () => {
@@ -33,20 +32,9 @@ describe('unit', () => {
       />
     );
 
-    expect(screen.queryByText(someUnit)).not.toBeNull();
-  });
-
-  it('renders unit when showUnit is true and provided a alarm point', () => {
-    const someUnit = 'some-Unit';
-    render(
-      <KpiBase
-        unit={someUnit}
-        alarmPoint={point}
-        settings={{ showUnit: true }}
-      />
+    expect(screen.getByTestId('kpi-name-and-unit').textContent).toContain(
+      someUnit
     );
-
-    expect(screen.queryByText(someUnit)).not.toBeNull();
   });
 
   it('does not render unit when showUnit is true and is not provided a data point', () => {
@@ -81,37 +69,10 @@ describe('property value', () => {
     );
     expect(screen.queryByText(Y_VALUE)).not.toBeNull();
   });
-
-  it('renders alarm points y value', () => {
-    const Y_VALUE = 123445;
-    render(
-      <KpiBase
-        alarmPoint={{ x: new Date().getTime(), y: Y_VALUE }}
-        settings={{ showName: false }}
-      />
-    );
-    expect(screen.queryByText(Y_VALUE)).not.toBeNull();
-  });
-
-  it('renders property points y value when provided both an alarm and a property', () => {
-    const Y_VALUE_PROPERTY = 123445;
-    const Y_VALUE_ALARM = 'alarm_value';
-    render(
-      <KpiBase
-        alarmPoint={{ x: new Date().getTime(), y: Y_VALUE_ALARM }}
-        propertyPoint={{ x: 234324, y: Y_VALUE_PROPERTY }}
-        settings={{ showName: false }}
-      />
-    );
-
-    expect(screen.queryByText(Y_VALUE_PROPERTY)).not.toBeNull();
-    expect(screen.queryByText(Y_VALUE_ALARM)).toBeNull();
-  });
 });
 
 describe('timestamp', () => {
   const PROPERTY_POINT_DATE = new Date(2000, 0, 0);
-  const ALARM_POINT_DATE = new Date(2001, 0, 0);
 
   it('renders property timestamp when showTimestamp is true', () => {
     render(
@@ -135,45 +96,6 @@ describe('timestamp', () => {
     );
 
     expect(screen.queryByText(PROPERTY_POINT_DATE.toLocaleString())).toBeNull();
-  });
-
-  it('renders alarm timestamp when showTimestamp is true', () => {
-    render(
-      <KpiBase
-        alarmPoint={{ x: ALARM_POINT_DATE.getTime(), y: 123123 }}
-        settings={{ showTimestamp: true }}
-      />
-    );
-
-    expect(
-      screen.queryByText(ALARM_POINT_DATE.toLocaleString())
-    ).not.toBeNull();
-  });
-
-  it('does not render alarm timestamp when showTimestamp is false', () => {
-    render(
-      <KpiBase
-        alarmPoint={{ x: ALARM_POINT_DATE.getTime(), y: 123123 }}
-        settings={{ showTimestamp: false }}
-      />
-    );
-
-    expect(screen.queryByText(ALARM_POINT_DATE.toLocaleString())).toBeNull();
-  });
-
-  it('renders only property time stamp when provided property and alarm', () => {
-    render(
-      <KpiBase
-        alarmPoint={{ x: ALARM_POINT_DATE.getTime(), y: 123123 }}
-        propertyPoint={{ x: PROPERTY_POINT_DATE.getTime(), y: 123123 }}
-        settings={{ showTimestamp: true }}
-      />
-    );
-
-    expect(screen.queryByText(ALARM_POINT_DATE.toLocaleString())).toBeNull();
-    expect(
-      screen.queryByText(PROPERTY_POINT_DATE.toLocaleString())
-    ).not.toBeNull();
   });
 });
 
@@ -206,17 +128,6 @@ describe('loading', () => {
     expect(screen.queryByText(someError)).not.toBeNull();
   });
 
-  it('does not render icon while loading when showIcon is true', () => {
-    render(
-      <KpiBase
-        isLoading
-        icon={StatusIconType.ACTIVE}
-        settings={{ showIcon: true }}
-      />
-    );
-    expect(screen.queryByTestId('status-icon-active')).toBeNull();
-  });
-
   it('does not render data point while isLoading is true', () => {
     const point = { x: 12341, y: 123213 };
     render(<KpiBase propertyPoint={point} isLoading settings={{}} />);
@@ -235,21 +146,5 @@ describe('loading', () => {
     );
 
     expect(screen.queryByText(DATE.toLocaleString())).toBeNull();
-  });
-});
-
-describe('icon', () => {
-  it('renders icon when showIcon is true', () => {
-    render(
-      <KpiBase icon={StatusIconType.ACTIVE} settings={{ showIcon: true }} />
-    );
-    expect(screen.queryByTestId('status-icon-active')).not.toBeNull();
-  });
-
-  it('does not render icon when showIcon is false', () => {
-    render(
-      <KpiBase icon={StatusIconType.ACTIVE} settings={{ showIcon: false }} />
-    );
-    expect(screen.queryByTestId('status-icon-active')).toBeNull();
   });
 });

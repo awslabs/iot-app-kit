@@ -25,6 +25,16 @@ it('renders', async () => {
 
   render(<KPI query={query} viewport={VIEWPORT} />);
 
-  expect(screen.queryByText(DATA_STREAM.unit)).not.toBeNull();
-  expect(screen.queryByText(LATEST_VALUE)).not.toBeNull();
+  expect(screen.getByTestId('kpi-name-and-unit').textContent).toContain(
+    DATA_STREAM.name
+  );
+  expect(screen.getByTestId('kpi-name-and-unit').textContent).toContain(
+    DATA_STREAM.unit
+  );
+  expect(screen.getByTestId('kpi-value').textContent).toContain(
+    `${DATA_STREAM.data[0].y} `
+  );
+  expect(screen.getByTestId('kpi-timestamp').textContent).toContain(
+    new Date(DATA_STREAM.data[0].x).toLocaleString()
+  );
 });

@@ -20,7 +20,6 @@ const widgetWithCustomDisplaySettings: readonly string[] = ['kpi', 'status'];
 export const isDisplaySettingsWidget = (
   widget: DashboardWidget
 ): widget is KPIWidget =>
-  !!localStorage?.getItem('USE_UPDATED_KPI') &&
   widgetWithCustomDisplaySettings.some((t) => t === widget.type);
 
 const RenderDisplaySettingsSection = ({
@@ -83,18 +82,21 @@ const RenderDisplaySettingsSection = ({
           <Checkbox
             onChange={(event) => updateShowName(event.detail.checked)}
             checked={!!showName}
+            data-testid='show-hide-name'
           >
             Show name
           </Checkbox>
           <Checkbox
             onChange={(event) => updateShowTimestamp(event.detail.checked)}
             checked={!!showTimestamp}
+            data-testid='show-hide-timestamp'
           >
             Show timestamp
           </Checkbox>
           <Checkbox
             onChange={(event) => updateShowUnit(event.detail.checked)}
             checked={!!showUnit}
+            data-testid='show-hide-unit'
           >
             Show unit
           </Checkbox>
@@ -103,6 +105,7 @@ const RenderDisplaySettingsSection = ({
               updateShowAggregationAndResolution(event.detail.checked)
             }
             checked={!!showAggregationAndResolution}
+            data-testid='show-hide-aggregation-resolution'
           >
             Show aggregation & resolution
           </Checkbox>

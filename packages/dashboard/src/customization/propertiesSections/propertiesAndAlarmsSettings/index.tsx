@@ -72,12 +72,8 @@ const RenderPropertiesSectionWithoutTable = ({
     })
   );
 
-  const hasNewKPI = !!localStorage?.getItem('USE_UPDATED_KPI');
   const type = maybeWithDefault(undefined, maybeType);
-  const canColorProperty = !(
-    hasNewKPI &&
-    (type === 'kpi' || type === 'status')
-  );
+  const canColorProperty = !(type === 'kpi' || type === 'status');
 
   if (!iotSiteWiseClient) return null;
 
