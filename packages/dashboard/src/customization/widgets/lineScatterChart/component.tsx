@@ -177,7 +177,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
 
   // the 4 is from the widget tile top, bottom boder lines height
   // the 8 is from the left and right border lines width
-  const size = { width: chartSize.width - 8, height: chartSize.height - 34 };
+  const size = { width: chartSize.width - 8, height: chartSize.height - 44 };
 
   const onChartOptionsChange = (options: Pick<ChartOptions, 'legend'>) => {
     dispatch(
