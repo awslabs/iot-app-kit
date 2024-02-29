@@ -53,6 +53,42 @@ test.describe('Test KPI Widget', () => {
     await expect(addButton).toBeDisabled();
   });
 
+  test('KPI Widget supports show/hide several properties', async ({
+    resourceExplorer,
+    dashboardWithKPIWidget,
+    configPanel,
+  }) => {
+    // add property
+    await resourceExplorer.addModeledProperties(['Max Temperature']);
+
+    const nameAndUnit =
+      dashboardWithKPIWidget.gridArea.getByTestId('kpi-name-and-unit');
+    const timestamp =
+      dashboardWithKPIWidget.gridArea.getByTestId('kpi-timestamp');
+    const aggregationAndResolution =
+      dashboardWithKPIWidget.gridArea.getByTestId('kpi-aggregation');
+    const value = dashboardWithKPIWidget.gridArea.getByTestId('kpi-value');
+
+    // verify that all values are initially visible
+    await expect(nameAndUnit).toBeVisible();
+    await expect(timestamp).toBeVisible();
+    await expect(aggregationAndResolution).toBeVisible();
+    await expect(value).toBeVisible();
+
+    // open config panel
+    await configPanel.collapsedButton.click();
+    await configPanel.showHideName.click();
+    await configPanel.showHideUnit.click();
+    await configPanel.showHideTimestamp.click();
+    await configPanel.showHideAggregationResolution.click();
+
+    // verify that no values are visible other than the data point
+    expect(await nameAndUnit.textContent()).toBe(' ');
+    await expect(timestamp).not.toBeVisible();
+    await expect(aggregationAndResolution).not.toBeVisible();
+    await expect(value).toBeVisible();
+  });
+
   test('KPI Widget supports significant digits', async ({
     resourceExplorer,
     dashboardWithKPIWidget,
@@ -120,6 +156,6 @@ test.describe('Test KPI Widget', () => {
 
     const widgetValue =
       dashboardWithKPIWidget.gridArea.getByTestId('kpi-value');
-    await expect(widgetValue).toHaveCSS('color', 'rgb(246, 56, 4)');
+    await expect(widgetValue).toHaveCSS('color', 'rgb(255, 255, 255)');
   });
 });

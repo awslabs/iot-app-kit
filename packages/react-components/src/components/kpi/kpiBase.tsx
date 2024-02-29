@@ -4,89 +4,131 @@ import Spinner from '@cloudscape-design/components/spinner';
 import Box from '@cloudscape-design/components/box';
 import omitBy from 'lodash.omitby';
 
-import {
-  DEFAULT_KPI_SETTINGS,
-  DEFAULT_KPI_COLOR,
-  KPI_ICON_SHRINK_FACTOR,
-} from './constants';
-import { StatusIcon, Value } from '../shared-components';
-import type { KPIProperties, KPISettings } from './types';
+import { DEFAULT_KPI_SETTINGS } from './constants';
+import { Value } from '../shared-components';
+import type { KPIBaseProperties, KPISettings } from './types';
+import './kpi.css';
+import { highContrastColor } from './highContrastColor';
 import { getAggregationFrequency } from '../../utils/aggregationFrequency';
+import { fontSizeBodyS } from '@cloudscape-design/design-tokens';
 
-export const KpiBase: React.FC<KPIProperties> = ({
-  icon,
+export const KpiBase: React.FC<KPIBaseProperties> = ({
   propertyPoint,
-  alarmPoint,
   error,
+  resolution,
+  aggregationType,
   unit,
   name,
-  aggregationType,
-  resolution,
   isLoading,
-  color = DEFAULT_KPI_COLOR,
   settings = {},
   significantDigits,
+  isFilledThreshold,
+  isThresholdVisible,
 }) => {
   const {
-    showName,
     showUnit,
-    showIcon,
+    showName,
     showTimestamp,
+    showAggregationAndResolution,
+    backgroundColor,
     fontSize,
-    aggregationFontSize,
     secondaryFontSize,
   }: KPISettings = {
     ...DEFAULT_KPI_SETTINGS,
     ...omitBy(settings, (x) => x == null),
   };
 
-  // Primary point to display. KPI Emphasizes the property point over the alarm point.
-  const point = propertyPoint || alarmPoint;
-  const displayedUnit = showUnit ? unit : undefined;
-  return (
-    <div
-      className='kpi'
-      data-testid='kpi-base-component'
-      style={{ fontSize: `${secondaryFontSize}px` }}
-    >
-      {showName && name}
-      {error && (
-        <Box margin={{ vertical: 's' }}>
-          <Alert statusIconAriaLabel='Error' type='error'>
-            {error}
-          </Alert>
-        </Box>
-      )}
-      <div>
-        {isLoading && <Spinner data-testid='loading' />}
-        {!isLoading && showIcon && icon && (
-          <StatusIcon
-            name={icon}
-            size={fontSize * KPI_ICON_SHRINK_FACTOR}
-            color={color}
-          />
-        )}
-        {!isLoading && (
-          <span
-            data-testid='kpi-value'
-            style={{ color, fontSize: `${fontSize}px` }}
-          >
-            <Value
-              value={point?.y}
-              unit={displayedUnit}
-              precision={significantDigits}
-            />
-          </span>
+  const background =
+    !isFilledThreshold && isThresholdVisible ? '#ffffff' : backgroundColor;
+  const highContrastFontColor =
+    background === '#ffffff' ? '' : highContrastColor(background);
+  const fontColor = isFilledThreshold ? highContrastFontColor : '';
+
+  const point = propertyPoint;
+  const aggregationResolutionString = getAggregationFrequency(
+    resolution,
+    aggregationType
+  );
+
+  if (error) {
+    return (
+      <div
+        className='kpi'
+        data-testid='kpi-error-component'
+        style={{ fontSize: `${secondaryFontSize}px` }}
+      >
+        {error && (
+          <Box margin={{ vertical: 's' }}>
+            <Alert statusIconAriaLabel='Error' type='error'>
+              {error}
+            </Alert>
+          </Box>
         )}
       </div>
-      {point &&
-        !isLoading &&
-        showTimestamp &&
-        new Date(point.x).toLocaleString()}
-      {!isLoading && point?.y && (
-        <div style={{ fontSize: `${aggregationFontSize}px` }}>
-          {getAggregationFrequency(resolution, aggregationType)}
+    );
+  }
+
+  return (
+    <div
+      className='kpi-container'
+      data-testid='kpi-base-component'
+      style={{ backgroundColor: background }}
+    >
+      <div className='kpi'>
+        <div>
+          <div
+            className='property-name'
+            data-testid='kpi-name-and-unit'
+            style={{ fontSize: `${secondaryFontSize}px`, color: fontColor }}
+          >
+            {isLoading ? '-' : showName && name}{' '}
+            {showUnit && !isLoading && unit && `(${unit})`}
+          </div>
+          <div
+            className='value'
+            data-testid='kpi-value'
+            style={{ fontSize: `${fontSize}px`, color: fontColor }}
+          >
+            {isLoading ? (
+              <Spinner data-testid='loading' />
+            ) : (
+              <Value value={point?.y} precision={significantDigits} />
+            )}
+          </div>
         </div>
+        {point && (
+          <div
+            className='timestamp-container'
+            style={{
+              fontSize: fontSizeBodyS,
+              color: fontColor,
+            }}
+          >
+            {showAggregationAndResolution && aggregationResolutionString && (
+              <div className='aggregation' data-testid='kpi-aggregation'>
+                {isLoading ? '-' : aggregationResolutionString}
+              </div>
+            )}
+            {showTimestamp && (
+              <>
+                <div
+                  className='timestamp-border'
+                  style={{ backgroundColor: fontColor }}
+                />
+                <div className='timestamp' data-testid='kpi-timestamp'>
+                  {isLoading ? '-' : new Date(point.x).toLocaleString()}
+                </div>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+      {!isFilledThreshold && isThresholdVisible && (
+        <div
+          data-testid='kpi-side-threshold'
+          style={{ backgroundColor }}
+          className='kpi-line-threshold'
+        />
       )}
     </div>
   );

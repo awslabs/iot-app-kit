@@ -70,17 +70,19 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
     widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
-    <Status
-      key={key}
-      query={queries[0]}
-      viewport={viewport}
-      styles={styleSettings}
-      settings={settings}
-      thresholds={thresholds}
-      aggregationType={aggregateToString(aggregation)}
-      significantDigits={significantDigits}
-      refreshRate={refreshRate}
-    />
+    <WidgetTile widget={widget} key={key}>
+      <Status
+        key={key}
+        query={queries[0]}
+        viewport={viewport}
+        styles={styleSettings}
+        settings={settings}
+        thresholds={thresholds}
+        aggregationType={aggregateToString(aggregation)}
+        significantDigits={significantDigits}
+        refreshRate={refreshRate}
+      />
+    </WidgetTile>
   );
 };
 

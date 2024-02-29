@@ -21,7 +21,7 @@ const thresholdsWithAnnotations: readonly string[] = [
   'bar-chart',
   'status-timeline',
 ];
-const thresholdsWithStyle: readonly string[] = ['xy-plot'];
+const thresholdsWithStyle: readonly string[] = ['xy-plot', 'kpi', 'status'];
 
 // Type encompassing all possible properties for a widget's thresholds
 type ThresholdProperties = {
@@ -49,7 +49,6 @@ const RenderThresholdsSettings = ({
   useProperty: PropertyLens<ThresholdsWidget>;
 }) => {
   const widgetType = maybeWithDefault('', type);
-  const hasNewKPI = !!localStorage?.getItem('USE_UPDATED_KPI');
 
   let doesSupportAnnotations;
   let doesSupportContainsOp;
@@ -63,10 +62,8 @@ const RenderThresholdsSettings = ({
     doesSupportContainsOp = types.every((v) =>
       thresholdsWithContainsOperator.includes(v)
     );
-    doesSupportStyledThreshold = types.every(
-      (v) =>
-        thresholdsWithStyle.includes(v) ||
-        ((v === 'kpi' || v === 'status') && hasNewKPI)
+    doesSupportStyledThreshold = types.every((v) =>
+      thresholdsWithStyle.includes(v)
     );
   } else {
     doesSupportAnnotations = thresholdsWithAnnotations.some(
@@ -75,9 +72,9 @@ const RenderThresholdsSettings = ({
     doesSupportContainsOp = thresholdsWithContainsOperator.some(
       (t) => t === widgetType
     );
-    doesSupportStyledThreshold =
-      thresholdsWithStyle.some((t) => t === widgetType) ||
-      ((widgetType === 'kpi' || widgetType === 'status') && hasNewKPI);
+    doesSupportStyledThreshold = thresholdsWithStyle.some(
+      (t) => t === widgetType
+    );
   }
 
   const [thresholds, updateThresholds] = useProperty(

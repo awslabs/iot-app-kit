@@ -1,4 +1,4 @@
-.updated-kpi-container {
+.kpi-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -6,7 +6,7 @@
   overflow: hidden;
 }
 
-.updated-kpi {
+.kpi {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -14,32 +14,32 @@
   width: 100%;
 }
 
-.updated-kpi .property-name {
+.kpi .property-name {
   font-weight: bold;
   color: #000716;
   padding: 8px 8px 2px;
 }
 
-.updated-kpi .asset-name {
+.kpi .asset-name {
   color: #414d5c;
   padding: 8px 8px 2px;
 }
 
-.updated-kpi .value {
+.kpi .value {
   font-weight: bold;
   padding: 8px 8px 2px;
 }
 
-.updated-kpi .timestamp-container {
+.kpi .timestamp-container {
   color: #414d5c;
 }
 
-.updated-kpi .timestamp-border {
+.kpi .timestamp-border {
   height: 2px;
   background-color: #e9ebed;
 }
 
-.updated-kpi .timestamp {
+.kpi .timestamp {
   padding: 6px;
   height: 18px;
 }

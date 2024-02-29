@@ -8,10 +8,10 @@ export class DashboardPage {
   readonly page: Page;
   readonly browser: Browser;
   public readonly heading: Locator;
+  public readonly widgetPalette: Locator;
   public readonly lineChartWidgetButton: Locator;
   public readonly textWidgetButton: Locator;
   public readonly kpiWidgetButton: Locator;
-  public readonly statusWidgetButton: Locator;
   public readonly tableWidgetButton: Locator;
   public readonly gridArea: Locator;
   public readonly confirmModalDeleteButton: Locator;
@@ -20,6 +20,7 @@ export class DashboardPage {
   constructor({ page, browser }: { page: Page; browser: Browser }) {
     this.page = page;
     this.browser = browser;
+    this.widgetPalette = page.getByRole('list', { name: 'widget panel' });
     this.lineChartWidgetButton = page.getByRole('button', {
       name: 'add Line widget',
     });
@@ -28,9 +29,6 @@ export class DashboardPage {
     });
     this.kpiWidgetButton = page.getByRole('button', {
       name: 'add KPI widget',
-    });
-    this.statusWidgetButton = page.getByRole('button', {
-      name: 'add Status widget',
     });
     this.tableWidgetButton = page.getByRole('button', {
       name: 'add Table widget',
@@ -60,8 +58,6 @@ export class DashboardPage {
         return this.textWidgetButton;
       case 'kpi':
         return this.kpiWidgetButton;
-      case 'status':
-        return this.statusWidgetButton;
       case 'table':
         return this.tableWidgetButton;
       default:
