@@ -12,16 +12,33 @@ import {
 } from '../../components/chart/eChartsConstants';
 import { ResizeCallbackData } from 'react-resizable';
 import { useMeasure } from 'react-use';
-import { pxToPercent } from '../utils/pxToPercentage';
+import {
+  emToPx,
+  perToPx,
+  pxToEm,
+  pxToPercent,
+  pxToRem,
+  remToPx,
+} from '../utils/pxConversion';
 import { ChartOptions } from '../../components/chart/types';
+import { parseValueAndUnit } from '../utils/parseValueAndUnit';
 
-export const getDecimalFromPercentage = (n: string): number => {
-  if (!n.includes('%') || n === '') {
-    return 0;
+export const calculateAdjustedWidth = (
+  width: number,
+  staticWidth: number,
+  unit: string,
+  value: number
+): number => {
+  switch (unit) {
+    case '%':
+      return width * (1 - perToPx(value)) - staticWidth;
+    case 'rem':
+      return width - staticWidth - remToPx(value);
+    case 'em':
+      return width - staticWidth - emToPx(value);
+    default:
+      return width - staticWidth - value;
   }
-  const convertStringToNumber = parseInt(n.split('%')[0]);
-
-  return convertStringToNumber / 100;
 };
 
 export const getChartWidth = (
@@ -30,12 +47,30 @@ export const getChartWidth = (
   isLegendVisible?: boolean,
   legendWidth?: string,
   isBottomAligned?: boolean
-) => {
+): number => {
   if (!(isLegendVisible && legendWidth) || isBottomAligned) {
     return width - staticWidth;
   }
 
-  return width * (1 - getDecimalFromPercentage(legendWidth)) - staticWidth;
+  const { value, unit } = parseValueAndUnit(legendWidth);
+  return calculateAdjustedWidth(width, staticWidth, unit, value);
+};
+
+export const calculateAdjustedHight = (
+  height: number,
+  unit: string,
+  value: number
+) => {
+  switch (unit) {
+    case '%':
+      return height * (1 - perToPx(value));
+    case 'rem':
+      return height - remToPx(value);
+    case 'em':
+      return height - emToPx(value);
+    default:
+      return height - value;
+  }
 };
 
 export const getChartHeight = (
@@ -43,12 +78,13 @@ export const getChartHeight = (
   isLegendVisible?: boolean,
   legendHeight?: string,
   isBottomAligned?: boolean
-) => {
+): number => {
   if (!(isLegendVisible && legendHeight && isBottomAligned)) {
     return height;
   }
 
-  return height * (1 - getDecimalFromPercentage(legendHeight));
+  const { value, unit } = parseValueAndUnit(legendHeight);
+  return calculateAdjustedHight(height, unit, value);
 };
 
 export const getRightLegendWidth = (
@@ -76,6 +112,52 @@ export const getRightLegendHeight = (
   return isBottomAligned ? height - chartHeight : height;
 };
 
+export const getLegendHeight = (
+  height: number,
+  chartHeight: number,
+  unitType: string
+) => {
+  const size = height - chartHeight;
+
+  switch (unitType) {
+    case '%':
+      return `${pxToPercent(size, height).toFixed(0)}%`;
+    case 'rem':
+      return `${pxToRem(size).toFixed(0)}rem`;
+    case 'em':
+      return `${pxToEm(size).toFixed(0)}em`;
+    default:
+      return `${size.toFixed(0)}px`;
+  }
+};
+
+export const getLegendWidth = (
+  width: number,
+  chartWidth: number,
+  leftLegendWidth: number,
+  unitType: string
+) => {
+  const adjustedWidth = leftLegendWidth
+    ? width - chartWidth - leftLegendWidth
+    : width - chartWidth;
+
+  switch (unitType) {
+    case '%':
+      return `${pxToPercent(adjustedWidth, width).toFixed(0)}%`;
+    case 'rem':
+      return `${pxToRem(adjustedWidth).toFixed(0)}rem`;
+    case 'em':
+      return `${pxToEm(adjustedWidth).toFixed(0)}em`;
+    default:
+      return `${adjustedWidth.toFixed(0)}px`;
+  }
+};
+
+const getLegendStyleType = (type: string): string => {
+  const styleTypes = ['%', 'rem', 'em', 'px']; // expected style types
+  return styleTypes.find((styleType) => type.includes(styleType)) ?? 'px';
+};
+
 /**
  * hook to set up the size of an echarts instance within the base chart component
  * note: the chart sits along side a legend table which means that the
@@ -101,12 +183,16 @@ export const useResizeableEChart = (
   const { width, height } = size;
   const legendWidth = legend?.width;
   const legendHeight = legend?.height;
+  const legendUnitType = useMemo(
+    () => getLegendStyleType(legendWidth ?? '0px'),
+    [legendWidth]
+  );
   const isLegendVisible = legend?.visible ?? false;
 
   const [leftLegendRef, { width: leftLegendWidth }] =
     useMeasure<HTMLDivElement>();
 
-  const [chartWidth, setChartWidth] = useState(
+  const [chartWidth, setChartWidth] = useState<number>(
     getChartWidth(
       width,
       leftLegendWidth,
@@ -115,7 +201,7 @@ export const useResizeableEChart = (
       isBottomAligned
     )
   );
-  const [chartHeight, setChartHeight] = useState(
+  const [chartHeight, setChartHeight] = useState<number>(
     getChartHeight(height, isLegendVisible, legendHeight, isBottomAligned)
   );
   const rightLegendWidth = getRightLegendWidth(
@@ -136,21 +222,28 @@ export const useResizeableEChart = (
     _event.stopPropagation();
 
     if (isBottomAligned) {
-      setChartHeight(data.size.height);
+      setChartHeight(parseInt(data.size.height.toFixed(0)));
       onChartOptionsChange?.({
         legend: {
           ...legend,
-          height: pxToPercent(height - data.size.height, height),
+          height: getLegendHeight(
+            height,
+            parseInt(data.size.height.toFixed(0)),
+            legendUnitType
+          ),
         },
       });
     } else {
-      setChartWidth(data.size.width);
+      setChartWidth(parseInt(data.size.width.toFixed(0)));
       onChartOptionsChange?.({
         legend: {
           ...legend,
-          width: leftLegendWidth
-            ? pxToPercent(width - data.size.width - leftLegendWidth, width)
-            : pxToPercent(width - data.size.width, width),
+          width: getLegendWidth(
+            width,
+            leftLegendWidth,
+            parseInt(data.size.width.toFixed(0)),
+            legendUnitType
+          ),
         },
       });
     }
