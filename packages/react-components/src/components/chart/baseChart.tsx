@@ -1,12 +1,6 @@
 import React from 'react';
 import type { MouseEvent } from 'react';
-import {
-  colorBackgroundLayoutToggleActive,
-  colorTextHomeHeaderDefault,
-  spaceStaticL,
-  spaceStaticS,
-  spaceStaticXxxs,
-} from '@cloudscape-design/design-tokens';
+import { spaceStaticL, spaceStaticM } from '@cloudscape-design/design-tokens';
 
 import { useECharts, useResizeableEChart } from '../../hooks/useECharts';
 import { ChartOptions } from './types';
@@ -25,8 +19,11 @@ import { useChartConfiguration } from './chartOptions/useChartConfiguration';
 import './chart.css';
 import { useTrendCursors } from '../../echarts/extensions/trendCursors';
 import { useChartStoreDataStreamsSync } from './hooks/useChartStoreDataStreamsSync';
+import useIsRefreshing from './hooks/useIsrefreshing';
 import { convertViewportToMs } from './viewport/convertViewportToMs';
+import { Timestamp } from './timeStamps/timeStamp';
 import {
+  REFRESHING_DELAY_MS,
   TIMESTAMP_HEIGHT_FACTOR_BOTTOM,
   TIMESTAMP_WIDTH_FACTOR,
   TIMESTAMP_WIDTH_FACTOR_BOTTOM,
@@ -81,8 +78,14 @@ const BaseChart = ({
   } = useTrendCursors({ group, chartRef, id: options.id });
 
   // convert TimeSeriesDataQuery to TimeSeriesData
-  const { isLoading, dataStreams, thresholds, utilizedViewport, visibleData } =
-    useVisualizedDataStreams(queries, viewport, refreshRate);
+  const {
+    isLoading,
+    isRefreshing,
+    dataStreams,
+    thresholds,
+    utilizedViewport,
+    visibleData,
+  } = useVisualizedDataStreams(queries, viewport, refreshRate);
 
   //handle dataZoom updates, which are dependent on user events and viewportInMS changes
   useDataZoom(chartRef, utilizedViewport);
@@ -122,13 +125,9 @@ const BaseChart = ({
 
   const timestampStyle = {
     width: getTimeStampWidth(),
-    borderTop: `${spaceStaticXxxs} solid ${colorTextHomeHeaderDefault}`,
     ...(isLegendVisible &&
       isLegendPositionLeft && { marginLeft: spaceStaticL }),
-    padding: `${spaceStaticXxxs} ${spaceStaticS} ${spaceStaticXxxs} ${spaceStaticS}`,
     top: chartHeight - TIMESTAMP_HEIGHT_FACTOR_BOTTOM,
-    fontSize: `10px`,
-    color: `${colorBackgroundLayoutToggleActive}`,
   };
 
   const { dataStreamMetaData } = useChartConfiguration(chartRef, {
@@ -140,6 +139,9 @@ const BaseChart = ({
     chartWidth,
     ...options,
   });
+
+  const delayLoading = useIsRefreshing(isRefreshing, REFRESHING_DELAY_MS);
+  const isPropertiesRefreshing = !isLoading && delayLoading;
 
   useChartDataset(chartRef, dataStreams);
 
@@ -206,7 +208,9 @@ const BaseChart = ({
             keyMap={hotKeyMap}
             handlers={hotKeyHandlers}
             className='chart-rightlegend-container'
-            style={{ paddingBottom: `${spaceStaticL}` }}
+            style={{
+              paddingBottom: isLegendPositionBottom ? `${spaceStaticM}` : 0,
+            }}
           >
             <div className='base-chart-left-legend' ref={leftLegendRef}>
               <MultiYAxisLegend
@@ -247,10 +251,12 @@ const BaseChart = ({
             />
           </HotKeys>
         </Resizable>
-        <div className='base-chart-timestamp' style={timestampStyle}>
-          <span>{timestampStart}</span>
-          <span>{timestampEnd}</span>
-        </div>
+        <Timestamp
+          showLoadingIndicator={isPropertiesRefreshing}
+          start={timestampStart}
+          end={timestampEnd}
+          styleProps={timestampStyle}
+        />
       </div>
       {options.legend?.visible && (
         <div

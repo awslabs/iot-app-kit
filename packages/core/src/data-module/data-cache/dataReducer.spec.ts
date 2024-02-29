@@ -359,6 +359,7 @@ it('sets the data when a success action occurs with aggregated data', () => {
             dataCache: EMPTY_CACHE,
             requestCache: EMPTY_CACHE,
             aggregationType: AGGREGATE_TYPE,
+            numOutgoingRequests: 0,
           },
         },
       },
@@ -392,7 +393,8 @@ it('sets the data when a success action occurs with aggregated data', () => {
       aggregationType: AGGREGATE_TYPE,
       error: undefined,
       isLoading: false,
-      isRefreshing: true,
+      isRefreshing: false,
+      numOutgoingRequests: -1,
       requestHistory: [
         expect.objectContaining({
           end: expect.any(Date),
@@ -775,6 +777,7 @@ it('merges data into existing data cache', () => {
             resolution: SECOND_IN_MS,
             isLoading: true,
             isRefreshing: true,
+            numOutgoingRequests: 0,
             requestHistory: [
               {
                 start: new Date(2000, 0, 0),
@@ -839,6 +842,7 @@ it('merges data into existing data cache', () => {
     dataType: 'NUMBER',
     name: 'some name',
     error: undefined,
+    numOutgoingRequests: -1,
     dataCache: {
       intervals: [[DATE_ONE, DATE_FOUR]],
       items: [
@@ -933,6 +937,7 @@ describe('requests to different resolutions', () => {
               requestCache: EMPTY_CACHE,
               requestHistory: [],
               aggregationType: AGGREGATE_TYPE,
+              numOutgoingRequests: 0,
             },
           },
         },
@@ -957,6 +962,7 @@ describe('requests to different resolutions', () => {
       resolution: '500ms',
       start: NEW_FIRST_DATE,
       end: NEW_LAST_DATE,
+      getDataStreamStore,
       fetchFromStartToEnd: true,
       aggregationType: AGGREGATE_TYPE,
     };
@@ -985,6 +991,7 @@ describe('requests to different resolutions', () => {
               aggregationType: AGGREGATE_TYPE,
               isLoading: false,
               isRefreshing: false,
+              numOutgoingRequests: -1,
               error: undefined,
               dataType: 'NUMBER',
               name: 'some name',
@@ -1033,6 +1040,7 @@ describe('requests to different resolutions', () => {
               requestCache: EMPTY_CACHE,
               requestHistory: [],
               aggregationType: AGGREGATE_TYPE,
+              numOutgoingRequests: 0,
             },
           },
         },
@@ -1077,6 +1085,7 @@ describe('requests to different resolutions', () => {
         error: ERROR,
         isLoading: false,
         isRefreshing: false,
+        numOutgoingRequests: -1,
         requestHistory: [
           {
             start: NEW_FIRST_DATE,
