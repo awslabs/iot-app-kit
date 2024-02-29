@@ -1,14 +1,18 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import {
   useResizeableEChart,
-  getDecimalFromPercentage,
   getChartHeight,
   getChartWidth,
   getRightLegendHeight,
   getRightLegendWidth,
+  calculateAdjustedWidth,
+  calculateAdjustedHight,
+  getLegendHeight,
+  getLegendWidth,
 } from './useResizeableEChart';
 import { ChartOptions } from '../../components/chart/types';
 import { ResizeCallbackData } from 'react-resizable';
+import { perToPx } from '../utils/pxConversion';
 
 describe('useResizeableEChart', () => {
   describe('render chart when legend is not visible', () => {
@@ -144,21 +148,6 @@ describe('useResizeableEChart', () => {
     });
   });
 
-  describe('render getDecimalFromPercentage', () => {
-    it('should return 0 if the input does not contain "%" or is empty', () => {
-      expect(getDecimalFromPercentage('')).toBe(0);
-      expect(getDecimalFromPercentage('123')).toBe(0);
-      expect(getDecimalFromPercentage('123abc')).toBe(0);
-      expect(getDecimalFromPercentage('abc')).toBe(0);
-    });
-
-    it('should return the decimal value of the input', () => {
-      expect(getDecimalFromPercentage('100%')).toBe(1);
-      expect(getDecimalFromPercentage('50%')).toBe(0.5);
-      expect(getDecimalFromPercentage('25%')).toBe(0.25);
-    });
-  });
-
   describe('render getChartWidth', () => {
     it('should return width - staticWidth when isLegendVisible and legendWidth are falsy or isBottomAligned is true', () => {
       expect(getChartWidth(100, 10)).toBe(90);
@@ -183,7 +172,8 @@ describe('useResizeableEChart', () => {
       const isLegendVisible = true;
       const legendHeight = '50%';
       const isBottomAligned = true;
-      const expected = height * (1 - getDecimalFromPercentage(legendHeight));
+      const expected =
+        height * (1 - perToPx(parseInt(legendHeight.split('%')[0])));
       const result = getChartHeight(
         height,
         isLegendVisible,
@@ -259,5 +249,63 @@ describe('useResizeableEChart', () => {
 
       expect(result).toBe(height);
     });
+  });
+});
+
+describe('calculateAdjustedWidth', () => {
+  it('should correctly adjust width when unit is percentage', () => {
+    const result = calculateAdjustedWidth(100, 10, '%', 20);
+    expect(result).toEqual(70);
+  });
+
+  it('should correctly adjust width when unit is neither percentage, rem, nor em', () => {
+    const result = calculateAdjustedWidth(100, 10, 'px', 15);
+    expect(result).toEqual(75);
+  });
+});
+
+describe('calculateAdjustedHight', () => {
+  it('should correctly adjust height when unit is percentage', () => {
+    const result = calculateAdjustedHight(100, '%', 20);
+    expect(result).toEqual(80);
+  });
+
+  it('should correctly adjust height when unit is neither percentage, rem, nor em', () => {
+    const result = calculateAdjustedHight(100, 'px', 15);
+    expect(result).toEqual(85);
+  });
+});
+
+describe('getLegendHeight', () => {
+  it('should return the correct legend height when unit type is percentage', () => {
+    const result = getLegendHeight(100, 30, '%');
+    expect(result).toEqual('70%');
+  });
+
+  it('should return the correct legend height when unit type is rem', () => {
+    const result = getLegendHeight(100, 30, 'rem');
+    expect(result).toEqual('4rem');
+  });
+
+  it('should return the correct legend height when unit type is neither percentage, rem, nor em', () => {
+    const result = getLegendHeight(100, 30, 'px');
+    expect(result).toEqual('70px');
+  });
+});
+
+describe('getLegendWidth', () => {
+  it('should return the correct legend width when unit type is percentage', () => {
+    const result = getLegendWidth(100, 70, 10, '%');
+    expect(result).toEqual('20%');
+  });
+
+  it('should return the correct legend width when unit type is rem', () => {
+    const result = getLegendWidth(100, 70, 10, 'rem');
+    expect(result).toEqual('1rem');
+  });
+
+  it('should return the correct legend width when unit type is neither percentage, rem, nor em', () => {
+    const result = getLegendWidth(100, 70, 10, 'px');
+    expect(result).toEqual('20px');
   });
 });
