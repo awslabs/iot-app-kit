@@ -16,6 +16,7 @@ const isNotAlarmStream = ({ streamType }: DataStream) =>
   streamType !== StreamType.ALARM;
 const dataStreamIsLoading = ({ isLoading }: DataStream) => isLoading;
 const dataStreamHasError = ({ error }: DataStream) => error != null;
+const dataStreamIsRefreshing = ({ isRefreshing }: DataStream) => isRefreshing;
 
 export const useVisualizedDataStreams = (
   queries: TimeSeriesDataQuery[],
@@ -57,6 +58,9 @@ export const useVisualizedDataStreams = (
     const isLoading =
       !hasError && dataStreamsWithoutAlarms.some(dataStreamIsLoading);
 
+    const isRefreshing =
+      !hasError && dataStreamsWithoutAlarms.some(dataStreamIsRefreshing);
+
     const visibleData = dataStreamsWithoutAlarms.flatMap(({ data }) =>
       getVisibleData(data, utilizedViewport, false)
     );
@@ -68,6 +72,7 @@ export const useVisualizedDataStreams = (
       thresholds,
       utilizedViewport,
       visibleData,
+      isRefreshing,
     };
   }, [dataStreams, thresholds, utilizedViewport]);
 };

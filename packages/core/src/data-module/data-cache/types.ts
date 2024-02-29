@@ -29,6 +29,7 @@ export type DataStreamStore = {
   isRefreshing: boolean;
   aggregationType?: AggregateType;
   error?: ErrorDetails;
+  numOutgoingRequests?: number;
 } & Omit<DataStream, 'data'>;
 
 export type AggregationStreamStore = {
