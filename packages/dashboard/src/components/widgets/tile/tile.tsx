@@ -3,6 +3,7 @@ import {
   colorBorderDividerDefault,
   borderRadiusBadge,
   colorBackgroundContainerContent,
+  spaceScaledXs,
 } from '@cloudscape-design/design-tokens';
 import { Box } from '@cloudscape-design/components';
 
@@ -20,15 +21,12 @@ export type WidgetTileProps = PropsWithChildren<{
  * Component to add functionality to the widget container
  * Allows a user to title a widget for bar and status-timeline
  */
-const WidgetTile: React.FC<WidgetTileProps> = ({ title, children }) => {
-  return (
+const WidgetTile: React.FC<WidgetTileProps> = ({ widget, title, children }) => {
+  const titleComponentWithBorder = (
     <div
-      aria-description='widget tile'
-      className='widget-tile'
       style={{
-        border: `2px solid ${colorBorderDividerDefault}`,
-        borderRadius: borderRadiusBadge,
-        backgroundColor: colorBackgroundContainerContent,
+        borderBottom: `2px solid ${colorBorderDividerDefault}`,
+        paddingBottom: spaceScaledXs,
       }}
     >
       <Box
@@ -39,6 +37,25 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ title, children }) => {
       >
         <div className='widget-tile-header'>{title}</div>
       </Box>
+    </div>
+  );
+
+  // temporary solution for fixing title
+  // once gestures are correctly handled, we can move
+  // the title back into the react-components
+  const widgetsWithTitle = ['xy-plot', 'bar-chart', 'status-timeline'];
+
+  return (
+    <div
+      aria-description='widget tile'
+      className='widget-tile'
+      style={{
+        border: `2px solid ${colorBorderDividerDefault}`,
+        borderRadius: borderRadiusBadge,
+        backgroundColor: colorBackgroundContainerContent,
+      }}
+    >
+      {widgetsWithTitle.includes(widget.type) && titleComponentWithBorder}
       <div className='widget-tile-body'>{children}</div>
     </div>
   );
