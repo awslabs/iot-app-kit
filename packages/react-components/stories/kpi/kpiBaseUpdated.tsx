@@ -5,11 +5,10 @@ import { KpiBase } from '../../src/components/kpi/kpiBase';
 import { KPISettings } from '../../src/components/kpi/types';
 import type { DataPoint } from '@iot-app-kit/core';
 import type { FC } from 'react';
-import { UpdatedKpiBase } from '../../src/components/kpi/updatedKpiBase';
 
 export default {
   title: 'Widgets/KPI/Updated KPI Base',
-  component: UpdatedKpiBase,
+  component: KpiBase,
   argTypes: {
     name: { control: { type: 'text' }, defaultValue: 'Windmill' },
     error: { control: { type: 'text' } },
@@ -51,7 +50,6 @@ export const Main: ComponentStory<FC<StoryInputs>> = ({
   ...args
 }) => (
   <div style={{ background: 'grey', padding: '25px' }}>
-    <div style={{ margin: '5px 0' }}>Current KPI:</div>
     <div
       style={{
         background: 'white',
@@ -61,30 +59,6 @@ export const Main: ComponentStory<FC<StoryInputs>> = ({
       }}
     >
       <KpiBase
-        {...args}
-        unit='MPH'
-        name='Wind speed'
-        settings={{
-          showName,
-          showUnit,
-          showTimestamp,
-          fontSize,
-          secondaryFontSize,
-        }}
-      />
-    </div>
-    <div style={{ margin: '5px 0' }}>
-      New (gated under localStorage 'USE_UPDATED_KPI'):
-    </div>
-    <div
-      style={{
-        background: 'white',
-        width: '250px',
-        height: '150px',
-        marginBottom: '24px',
-      }}
-    >
-      <UpdatedKpiBase
         {...args}
         unit='MPH'
         name='Wind speed'

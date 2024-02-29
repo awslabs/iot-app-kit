@@ -23,7 +23,7 @@ import { SelectProps } from '@cloudscape-design/components';
 
 const isOnlyRawData: readonly string[] = ['status-timeline', 'table'];
 const isOnlyAggregated: readonly string[] = ['bar-chart'];
-const isRawAndAggregated: readonly string[] = ['xy-plot'];
+const isRawAndAggregated: readonly string[] = ['xy-plot', 'kpi', 'status'];
 
 // TODO: Fix lying type
 export const isOnlyRawDataWidget = (
@@ -40,8 +40,6 @@ export const isOnlyAggregatedDataWidget = (
 export const isAggregateAndRawDataWidget = (
   widget: DashboardWidget
 ): widget is LineScatterChartWidget =>
-  (!!localStorage?.getItem('USE_UPDATED_KPI') &&
-    (widget.type === 'kpi' || widget.type === 'status')) ||
   isRawAndAggregated.some((t) => t === widget.type);
 
 const RenderAggregationsPropertiesSection = ({

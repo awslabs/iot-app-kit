@@ -10,7 +10,6 @@ import type {
   StyledThreshold,
 } from '@iot-app-kit/core';
 import type { KPISettings } from './types';
-import { UpdatedKpiBase } from './updatedKpiBase';
 import { KpiBase } from './kpiBase';
 
 export const KPI = ({
@@ -19,7 +18,6 @@ export const KPI = ({
   thresholds = [],
   styles,
   settings,
-  aggregationType,
   significantDigits,
   refreshRate,
 }: {
@@ -68,36 +66,17 @@ export const KPI = ({
     alarmStream?.isLoading || propertyStream?.isLoading || false;
   const error = alarmStream?.error || propertyStream?.error;
 
-  const hasNewKPI = !!localStorage?.getItem('USE_UPDATED_KPI');
-
-  if (hasNewKPI)
-    return (
-      <UpdatedKpiBase
-        propertyPoint={propertyPoint}
-        alarmPoint={alarmPoint}
-        settings={{ ...settings, backgroundColor }}
-        isThresholdVisible={isThresholdVisible}
-        isFilledThreshold={isFilledThreshold}
-        aggregationType={dataStreams[0]?.aggregationType}
-        resolution={propertyResolution}
-        name={name}
-        unit={unit}
-        isLoading={isLoading}
-        error={error?.msg}
-        significantDigits={significantDigits}
-      />
-    );
-
   return (
     <KpiBase
       propertyPoint={propertyPoint}
       alarmPoint={alarmPoint}
-      settings={settings}
-      aggregationType={aggregationType}
+      settings={{ ...settings, backgroundColor }}
+      isThresholdVisible={isThresholdVisible}
+      isFilledThreshold={isFilledThreshold}
+      aggregationType={dataStreams[0]?.aggregationType}
       resolution={propertyResolution}
       name={name}
       unit={unit}
-      color={backgroundColor}
       isLoading={isLoading}
       error={error?.msg}
       significantDigits={significantDigits}
