@@ -138,7 +138,7 @@ export const useTimeSeriesData = ({
       unsubscribeProvider(id);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queriesString]);
+  }, [queriesString, settings.refreshRate]);
 
   useEffect(() => {
     if (prevViewportRef.current != null) {

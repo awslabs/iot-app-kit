@@ -23,6 +23,7 @@ export const Status = ({
   aggregationType,
   settings,
   significantDigits,
+  refreshRate,
 }: {
   query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
   viewport?: Viewport;
@@ -31,12 +32,14 @@ export const Status = ({
   styles?: StyleSettingsMap;
   settings?: Partial<StatusSettings>;
   significantDigits?: number;
+  refreshRate?: number;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries: [query],
     settings: {
       fetchMostRecentBeforeEnd: true,
+      refreshRate,
     },
     styles,
   });
@@ -81,6 +84,7 @@ export const Status = ({
         aggregationType={aggregationType}
         settings={settings}
         significantDigits={significantDigits}
+        refreshRate={refreshRate}
       />
     );
 
