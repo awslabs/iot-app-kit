@@ -9,6 +9,7 @@ updates:
     schedule:
       interval: weekly
       day: tuesday
+    target-branch: rc
     # Disable auto version updates for npm dependencies temporarily
     open-pull-requests-limit: 0
     ignore:
@@ -20,7 +21,9 @@ updates:
       - dependency-name: 'three-mesh-bvh'
       - dependency-name: 'three-stdlib'
       - dependency-name: '@awsui'
+
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: daily
+    target-branch: rc
