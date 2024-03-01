@@ -55,7 +55,10 @@ test.describe('Test Table Widget', () => {
       .getByTestId('table-value')
       .textContent();
 
-    expect(getDecimalPlaces(widgetValue)).toBe(3);
+    // because of rounding, sometimes 0 gets cut off
+    // hence we want to check a range of [sig digits - 1, sig digits]
+    expect(getDecimalPlaces(widgetValue)).toBeGreaterThanOrEqual(2);
+    expect(getDecimalPlaces(widgetValue)).toBeLessThanOrEqual(3);
 
     //change sig digits to 1
     await configPanel.collapsedButton.click();
@@ -66,7 +69,10 @@ test.describe('Test Table Widget', () => {
       .getByTestId('table-value')
       .textContent();
 
-    expect(getDecimalPlaces(updatedWidgetValue)).toBe(1);
+    // because of rounding, sometimes 0 gets cut off
+    // hence we want to check a range of [sig digits - 1, sig digits]
+    expect(getDecimalPlaces(updatedWidgetValue)).toBeGreaterThanOrEqual(0);
+    expect(getDecimalPlaces(updatedWidgetValue)).toBeLessThanOrEqual(1);
   });
 
   test('Table Widget supports thresholds', async ({
