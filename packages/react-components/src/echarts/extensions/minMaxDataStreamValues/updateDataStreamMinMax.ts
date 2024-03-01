@@ -5,7 +5,7 @@ import throttle from 'lodash.throttle';
 import Grid from 'echarts/types/src/coord/cartesian/Grid';
 import { LifecycleEvents } from 'echarts/types/src/core/lifecycle';
 
-const THROTTLE_RATE = 2000;
+const THROTTLE_RATE = 1000;
 
 // Echarts core use type does not map correctly to the echarts extension type so exporting as any
 // eslint-disable-next-line
