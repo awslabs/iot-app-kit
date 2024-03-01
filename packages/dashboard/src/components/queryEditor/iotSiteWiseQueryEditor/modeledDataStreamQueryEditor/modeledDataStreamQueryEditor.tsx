@@ -10,10 +10,14 @@ import {
   BROWSE_SEGMENT_ID,
   BrowseSearchToggle,
   useBrowseSearchToggle,
+  ASSET_MODEL_SEGMENT_ID,
 } from './browseSearchToggle';
 import { useSearch } from '../dataStreamSearch/useSearch';
 import { SearchFields } from '../dataStreamSearch/types';
 import { DataStreamSearch } from '../dataStreamSearch';
+import { AssetModelSelect } from '../assetModelDataStreamExplorer/assetModelExplorer/assetModelSelection/assetModelSelect';
+import { useSelectedAssetModel } from '../assetModelDataStreamExplorer/useSelectedAssetModel';
+import { Header, SpaceBetween } from '@cloudscape-design/components';
 
 export interface ModeledDataStreamQueryEditorProps {
   onClickAdd: (modeledDataStreams: ModeledDataStream[]) => void;
@@ -58,6 +62,13 @@ export function ModeledDataStreamQueryEditor({
     searchQuery: searchFieldValues.searchQuery,
   });
 
+  const [selectedAssetModel, setSelectedAssetModel] = useSelectedAssetModel();
+
+  function onSelectAssetModel(assetModel: typeof selectedAssetModel) {
+    setSelectedAssetModel(assetModel);
+    setSelectedAsset(undefined);
+  }
+
   return (
     <Box padding={{ horizontal: 's' }}>
       <BrowseSearchToggle
@@ -87,6 +98,43 @@ export function ModeledDataStreamQueryEditor({
             />
           )}
         </>
+      ) : selectedSegment === ASSET_MODEL_SEGMENT_ID ? (
+        <SpaceBetween size='s'>
+          <Header
+            variant='h3'
+            description='Find modeled data streams by asset model.'
+          >
+            Find modeled data streams
+          </Header>
+          <AssetModelSelect
+            client={iotSiteWiseClient}
+            selectedAssetModel={selectedAssetModel}
+            onSelectAssetModel={
+              onSelectAssetModel as typeof setSelectedAssetModel
+            }
+          />
+          {selectedAssetModel != null && (
+            <AssetExplorer
+              assetModelId={selectedAssetModel.id}
+              client={iotSiteWiseClient}
+              onSelect={handleOnSelectAsset}
+            />
+          )}
+          {selectedAssetModel != null && selectedAsset != null && (
+            <ModeledDataStreamExplorer
+              client={iotSiteWiseClient}
+              onClickAddModeledDataStreams={onClickAdd}
+              selectedAsset={
+                selectedAsset?.id && selectedAsset?.assetModelId
+                  ? {
+                    assetId: selectedAsset.id,
+                    assetModelId: selectedAsset.assetModelId,
+                  }
+                  : undefined
+              }
+            />
+          )}
+        </SpaceBetween>
       ) : (
         <>
           <DataStreamSearch
