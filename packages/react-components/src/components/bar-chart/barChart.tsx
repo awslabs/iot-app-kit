@@ -36,6 +36,7 @@ export interface BarChartProps {
   aggregationType?: string;
   gestures?: boolean;
   significantDigits?: number;
+  refreshRate?: number;
 }
 
 export const BarChart = (props: BarChartProps) => {
@@ -49,6 +50,7 @@ export const BarChart = (props: BarChartProps) => {
     thresholdSettings,
     aggregationType,
     styles,
+    refreshRate,
     ...rest
   } = props;
 
@@ -65,6 +67,7 @@ export const BarChart = (props: BarChartProps) => {
         [HOUR_IN_MS]: '1h',
         [DAY_IN_MS * 5]: '1d',
       },
+      refreshRate,
     },
     styles,
   });

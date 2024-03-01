@@ -9,6 +9,7 @@ import { SettingsConfiguration } from './index';
 const state: Partial<DashboardState> = {
   dashboardConfiguration: {
     widgets: [MOCK_LINE_CHART_WIDGET],
+    querySettings: {},
   },
   selectedWidgets: [MOCK_LINE_CHART_WIDGET],
 };

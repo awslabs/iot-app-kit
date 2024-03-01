@@ -59,10 +59,15 @@ export type DashboardDisplaySettings = {
   significantDigits?: number;
 };
 
+export type DashboardTimeSeriesSettings = {
+  refreshRate?: number;
+};
+
 export type DashboardConfiguration<
   Properties extends Record<string, unknown> = Record<string, unknown>
 > = {
   displaySettings: DashboardDisplaySettings;
+  querySettings?: DashboardTimeSeriesSettings;
   widgets: DashboardWidget<Properties>[];
   viewport: Viewport;
 };

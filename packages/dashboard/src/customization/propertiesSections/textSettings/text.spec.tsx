@@ -22,6 +22,7 @@ const widget: TextWidget = {
 const state: Partial<DashboardState> = {
   dashboardConfiguration: {
     widgets: [widget],
+    querySettings: {},
   },
   selectedWidgets: [widget],
 };

@@ -20,6 +20,7 @@ it('renders', function () {
         },
         widgets: [],
         viewport: { duration: '5m' },
+        querySettings: {},
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
@@ -48,6 +49,7 @@ it('renders in readonly initially', function () {
         },
         widgets: [],
         viewport: { duration: '5m' },
+        querySettings: {},
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
@@ -84,6 +86,7 @@ it('renders in edit initially', function () {
         },
         widgets: [],
         viewport: { duration: '5m' },
+        querySettings: {},
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
@@ -117,6 +120,9 @@ it('passes the correct viewMode to onSave', function () {
     },
     widgets: [],
     viewport: { duration: '5m' },
+    querySettings: {
+      refreshRate: 5000,
+    },
   };
 
   render(
@@ -157,6 +163,7 @@ it('renders dashboard name', function () {
         },
         widgets: [],
         viewport: { duration: '5m' },
+        querySettings: {},
       }}
       name='Test dashboard'
       clientConfiguration={{
@@ -183,6 +190,7 @@ it('renders without dashboard name', function () {
         },
         widgets: [],
         viewport: { duration: '5m' },
+        querySettings: {},
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),

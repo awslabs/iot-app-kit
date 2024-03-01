@@ -33,6 +33,7 @@ export const StatusTimeline = ({
   viewport: passedInViewport,
   aggregationType,
   styles,
+  refreshRate,
   ...rest
 }: {
   queries: TimeSeriesDataQuery[];
@@ -43,6 +44,7 @@ export const StatusTimeline = ({
   aggregationType?: string;
   gestures?: boolean;
   significantDigits?: number;
+  refreshRate?: number;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
@@ -51,6 +53,7 @@ export const StatusTimeline = ({
       fetchFromStartToEnd: true,
       fetchMostRecentBeforeStart: true,
       resolution: '0',
+      refreshRate,
     },
     styles,
   });
