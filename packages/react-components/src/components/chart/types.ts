@@ -107,6 +107,7 @@ export type ChartOptions = {
   id?: string;
   titleText?: string;
   onChartOptionsChange?: (options: Pick<ChartOptions, 'legend'>) => void;
+  refreshRate?: number;
 };
 
 export interface ViewportInMs {

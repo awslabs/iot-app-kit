@@ -36,6 +36,7 @@ const widget: ThresholdsWidget = {
 const state: Partial<DashboardState> = {
   dashboardConfiguration: {
     widgets: [widget],
+    querySettings: {},
   },
   selectedWidgets: [widget],
 };

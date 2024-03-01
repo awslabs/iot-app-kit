@@ -19,6 +19,7 @@ it('renders', function () {
         },
         widgets: [],
         viewport: { duration: '5m' },
+        querySettings: {},
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
