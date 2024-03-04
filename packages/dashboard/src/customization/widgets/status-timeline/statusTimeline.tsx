@@ -5,7 +5,7 @@ import { DashboardState } from '~/store/state';
 import { StatusTimelineWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
-import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import { aggregateToString } from '~/customization/propertiesSections/formatDataSettings/helpers';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import WidgetTile from '~/components/widgets/tile';
 import NoChartData from '../components/no-chart-data';
