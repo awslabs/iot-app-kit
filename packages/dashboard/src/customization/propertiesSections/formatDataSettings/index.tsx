@@ -19,7 +19,14 @@ import {
   ALL_AGGREGATION_OPTIONS,
   ALL_RESOLUTION_OPTIONS,
 } from '../constants';
-import { SelectProps } from '@cloudscape-design/components';
+import {
+  Box,
+  ExpandableSection,
+  SelectProps,
+  SpaceBetween,
+} from '@cloudscape-design/components';
+import { DecimalPlacesConfiguration } from '../decimalPlacesSettings';
+import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 
 const isOnlyRawData: readonly string[] = ['status-timeline', 'table'];
 const isOnlyAggregated: readonly string[] = ['bar-chart'];
@@ -168,19 +175,34 @@ const AggregationsPropertiesSection = ({
   );
 };
 
-export const AggregationsSettingsConfiguration: React.FC = () => (
-  <>
-    <AggregationsPropertiesSection
-      isVisible={isOnlyRawDataWidget}
-      supportedData='raw'
-    />
-    <AggregationsPropertiesSection
-      isVisible={isOnlyAggregatedDataWidget}
-      supportedData='aggregated'
-    />
-    <AggregationsPropertiesSection
-      isVisible={isAggregateAndRawDataWidget}
-      supportedData='all'
-    />
-  </>
-);
+export const FormatDataConfiguration: React.FC = () => {
+  const currentWidgets = useSelectedWidgets();
+  const isTextWidget = currentWidgets.some((widget) => widget.type === 'text');
+  if (isTextWidget) return null;
+  return (
+    <ExpandableSection
+      className='accordian-header'
+      headerText='Format data'
+      defaultExpanded
+      variant='footer'
+    >
+      <Box padding='s'>
+        <SpaceBetween direction='vertical' size='s'>
+          <AggregationsPropertiesSection
+            isVisible={isOnlyRawDataWidget}
+            supportedData='raw'
+          />
+          <AggregationsPropertiesSection
+            isVisible={isOnlyAggregatedDataWidget}
+            supportedData='aggregated'
+          />
+          <AggregationsPropertiesSection
+            isVisible={isAggregateAndRawDataWidget}
+            supportedData='all'
+          />
+          <DecimalPlacesConfiguration />
+        </SpaceBetween>
+      </Box>
+    </ExpandableSection>
+  );
+};
