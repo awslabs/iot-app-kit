@@ -9,6 +9,7 @@ import {
   SiteWiseQuery,
 } from '@iot-app-kit/source-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import type { RefreshRate } from './components/querySettingsSync/types';
 
 export type DashboardClientCredentials = {
   awsCredentials: AwsCredentialIdentity | Provider<AwsCredentialIdentity>;
@@ -60,7 +61,7 @@ export type DashboardDisplaySettings = {
 };
 
 export type DashboardTimeSeriesSettings = {
-  refreshRate?: number;
+  refreshRate?: RefreshRate;
 };
 
 export type DashboardConfiguration<

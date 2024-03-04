@@ -1,8 +1,9 @@
 import type { Action } from 'redux';
 import type { DashboardState } from '../../state';
+import { type RefreshRate } from '~/components/querySettingsSync/types';
 
 type UpdateRefreshRateActionPayload = {
-  refreshRate: number;
+  refreshRate: RefreshRate;
 };
 
 export interface UpdateRefreshRateAction extends Action {
