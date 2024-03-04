@@ -6,7 +6,7 @@ import * as KpiStories from './Kpi.stories';
 
 The Key Performance Indicator (KPI) component provides a compact representation when you need an overview of your asset properties. This overview gives you the most critical insights into the overall performance of your devices, equipment, or processes. With the KPI, you can interact with IoT data from one or more data sources.
 
-<Canvas sourceState="none"  of={KpiStories.Standard} />
+<Canvas sourceState="none" story={{height : '70px' }} of={KpiStories.Standard} />
 
 ## Properties
 
@@ -23,7 +23,7 @@ Type: Object
 
 ### `thresholds`
 
-(Optional) Thresholds define rules which effect how the data is visualized based on whether the data breaches the threshold.
+(Optional) Styled Thresholds define rules which effect how the data is visualized based on whether the data breaches the threshold as well as how the threshold is styled
 
 [Learn more about thresholds](/docs/core-thresholds--docs#thresholds).
 
@@ -49,15 +49,15 @@ The settings object contains the following properties:
 
   Type: Boolean
 
-- `showName`
+- `showAggregationAndResolution`
 
-  (Optional) whether to display the name of the data being displayed. Defaults to true.
+  (Optional) whether to display the aggregation and resolution of the data being displayed. Defaults to true.
 
   Type: Boolean
 
-- `showIcon`
+- `showName`
 
-  (Optional) whether to display the icon if present. Defaults to true
+  (Optional) whether to display the name of the data being displayed. Defaults to true.
 
   Type: Boolean
 
@@ -79,11 +79,26 @@ The settings object contains the following properties:
 
   Type: Number
 
-- `color`
+---
+
+- `color` (deprecated)
 
   (Optional) color to display value. Defaults to black. Is overriden by thresholds and alarms. Must be a css string.
 
   Type: String
+
+
+- `showIcon` (deprecated)
+
+  (Optional) whether to display the icon if present. Defaults to true
+
+  Type: Boolean
+
+- `aggregationFontSize` (deprecated)
+
+  (Optional) font size in pixels for the aggregation and resolution
+
+  Type: Number
 
 ### `styles`
 
