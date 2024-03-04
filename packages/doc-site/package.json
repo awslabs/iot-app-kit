@@ -2,6 +2,14 @@
   "name": "@iot-app-kit/doc-site",
   "version": "10.0.0",
   "private": true,
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "start": "storybook dev -p 6006",
+    "build": "storybook build",
+    "lint": "eslint  --max-warnings=0",
+    "fix": "eslint --fix "
+  },
   "devDependencies": {
     "@iot-app-kit/testing-util": "^10.0.0",
     "@storybook/addon-essentials": "^7.6.6",
@@ -20,14 +28,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "storybook": "^7.6.6"
-  },
-  "scripts": {
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "start": "storybook dev -p 6006",
-    "build": "storybook build",
-    "lint": "eslint  --max-warnings=0",
-    "fix": "eslint --fix "
   },
   "dependencies": {
     "@iot-app-kit/core": "^10.0.0",
