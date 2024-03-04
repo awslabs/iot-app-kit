@@ -19,7 +19,16 @@ type Story = StoryObj<typeof KPI>;
 
 export const Standard: Story = {
   args: {
-    query: mockSinWaveData('1s'),
+    query: mockSinWaveData('5s'),
+    settings: {
+      showUnit: true,
+      showName: true,
+      showTimestamp: true,
+      showAggregationAndResolution: true,
+      fontSize: 30,
+      secondaryFontSize: 12,
+      backgroundColor: '#ffffff',
+    }
   },
 };
 

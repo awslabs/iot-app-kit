@@ -21,7 +21,7 @@ export const mockSinWaveData = (frequency?: string) =>
 
 export const mockSinWaveDataAggregated = () =>
   mockTimeSeriesDataQueryLiveStreamAggregated({
-    frequency: '1s',
+    frequency: '5s',
     resolution: 1000,
     dataType: DATA_TYPE.NUMBER,
     requests: [
