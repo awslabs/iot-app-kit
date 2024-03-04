@@ -131,30 +131,36 @@ const TextSettings: FC<TextSettingsProps> = ({
             updateColor={updateFontColor}
           />
 
-          <label>{defaultMessages.style}</label>
-          <SpaceBetween size='xxs' direction='horizontal'>
-            <ButtonWithState
-              aria-label='toggle bold text'
-              checked={isBold}
-              onToggle={() => toggleBold(!isBold)}
-            >
-              <b>B</b>
-            </ButtonWithState>
-            <ButtonWithState
-              aria-label='toggle italicize text'
-              checked={isItalic}
-              onToggle={() => toggleItalic(!isItalic)}
-            >
-              <i>I</i>
-            </ButtonWithState>
-            <ButtonWithState
-              aria-label='toggle underline text'
-              checked={isUnderlined}
-              onToggle={() => toggleUnderlined(!isUnderlined)}
-            >
-              <u>U</u>
-            </ButtonWithState>
-          </SpaceBetween>
+          <label id='text-style'>{defaultMessages.style}</label>
+          <div
+            aria-labelledby='text-style'
+            //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+            tabIndex={0}
+          >
+            <SpaceBetween size='xxs' direction='horizontal'>
+              <ButtonWithState
+                aria-label='toggle bold text'
+                checked={isBold}
+                onToggle={() => toggleBold(!isBold)}
+              >
+                <b>B</b>
+              </ButtonWithState>
+              <ButtonWithState
+                aria-label='toggle italicize text'
+                checked={isItalic}
+                onToggle={() => toggleItalic(!isItalic)}
+              >
+                <i>I</i>
+              </ButtonWithState>
+              <ButtonWithState
+                aria-label='toggle underline text'
+                checked={isUnderlined}
+                onToggle={() => toggleUnderlined(!isUnderlined)}
+              >
+                <u>U</u>
+              </ButtonWithState>
+            </SpaceBetween>
+          </div>
 
           <label>{defaultMessages.size}</label>
           <Select
