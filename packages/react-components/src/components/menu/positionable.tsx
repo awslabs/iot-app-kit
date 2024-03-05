@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { usePopper } from 'react-popper';
-import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow.js';
-import flip from '@popperjs/core/lib/modifiers/flip.js';
+import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
+import flip from '@popperjs/core/lib/modifiers/flip';
 import type { Options } from '@popperjs/core/lib/types';
 import type { PropsWithChildren, RefCallback } from 'react';
 
