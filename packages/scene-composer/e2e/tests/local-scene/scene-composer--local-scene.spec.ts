@@ -20,7 +20,7 @@ test.describe('scene-composer--local-scene', () => {
 
   test('get object by name', async ({ page }) => {
     const state = new PlaywrightHelper(page, localScene);
-    const palletJack = await state.getObjecByName('PalletJack');
+    const palletJack = await state.getObjectByName('PalletJack');
 
     // assert expected values on object
     expect(palletJack.isObject3D).toBeTruthy();
@@ -30,7 +30,7 @@ test.describe('scene-composer--local-scene', () => {
 
   test('validate hierarchy interaction', async ({ page }) => {
     const state = new PlaywrightHelper(page, localScene);
-    const palletJack = await state.getObjecByName('PalletJack');
+    const palletJack = await state.getObjectByName('PalletJack');
     // select object in hierarchy
     await page.getByTestId(palletJack.userData.componentRef).click();
 

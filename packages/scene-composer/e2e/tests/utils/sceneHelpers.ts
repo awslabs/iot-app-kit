@@ -35,15 +35,15 @@ export class PlaywrightHelper {
     this.localScene = localScene;
   }
 
-  async goto(localScene: string) {
+  async goto(localScene: string): Promise<void> {
     await this.page.goto(localScene);
   }
 
-  async getFrame(localFrame: string) {
+  async getFrame(localFrame: string): Promise<Locator> {
     return this.page.locator(localFrame);
   }
 
-  async getSceneId(frame: Locator) {
+  async getSceneId(frame: Locator): Promise<string> {
     const sceneId: string = await frame.evaluate(async () => {
       return await new Promise((res, rej) => {
         const timer = setTimeout(
@@ -64,14 +64,14 @@ export class PlaywrightHelper {
     return sceneId;
   }
 
-  async tmScene(frame: Locator, sceneId: string) {
+  async tmScene(frame: Locator, sceneId: string): Promise<Scene> {
     const sceneResult = await frame.evaluate((_element: HTMLElement, sceneId: string) => {
       return Promise.resolve<Scene>(window['__twinmaker_tests'][sceneId].scene);
     }, sceneId);
     return sceneResult;
   }
 
-  async getScene() {
+  async getScene(): Promise<{ frame: Locator; sceneId: string; scene: Scene }> {
     await this.page.goto(this.localScene);
     const frame = this.page.locator('#root');
     const sceneId = await this.getSceneId(frame);
@@ -107,7 +107,7 @@ export class PlaywrightHelper {
   }
 
   // map harness functions here
-  async getObjecByName(name: string) {
+  async getObjectByName(name: string) {
     return await this.playwrightState('getObjecByName', name);
   }
 }

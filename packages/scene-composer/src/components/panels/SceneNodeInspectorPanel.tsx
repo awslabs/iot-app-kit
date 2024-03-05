@@ -131,7 +131,9 @@ export const SceneNodeInspectorPanel: React.FC = () => {
         >
           <FormField label={intl.formatMessage({ defaultMessage: 'Name', description: 'Form field label' })}>
             <TextInput
-              data-testid={`ip-${selectedSceneNode.components[0].ref}`}
+              data-testid={
+                selectedSceneNode.components.length > 0 ? `ip-${selectedSceneNode.components[0].ref}` : undefined
+              }
               value={selectedSceneNode.name}
               setValue={(e) => handleInputChanges({ name: e?.toString() })}
             />
