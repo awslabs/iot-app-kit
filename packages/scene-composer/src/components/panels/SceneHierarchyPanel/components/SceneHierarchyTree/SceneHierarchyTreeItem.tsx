@@ -96,7 +96,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
       key={key}
       labelNode={
         <SceneNodeLabel
-          dataTestid={node?.components[0].ref}
+          dataTestid={node?.components && node.components.length > 0 ? node?.components[0].ref : undefined}
           objectRef={key}
           labelText={labelText}
           componentTypes={componentTypes}
