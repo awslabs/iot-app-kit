@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { usePopper } from 'react-popper';
-import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow.js';
-import flip from '@popperjs/core/lib/modifiers/flip.js';
+import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
+import flip from '@popperjs/core/lib/modifiers/flip';
 import './menu.css';
 import { useClickOutside } from '~/hooks/useClickOutside';
 import type { ReactNode } from 'react';
