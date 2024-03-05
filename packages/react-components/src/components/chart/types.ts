@@ -49,6 +49,8 @@ export type Visualization =
   | 'step-middle'
   | 'step-end';
 
+export type LineStyle = 'solid' | 'dotted' | 'dashed';
+
 export type ChartStyleSettingsOptions = {
   /**
    * applies to all chart types
@@ -74,7 +76,7 @@ export type ChartStyleSettingsOptions = {
   /**
    * applies to line chart type
    */
-  lineStyle?: 'solid' | 'dotted' | 'dashed';
+  lineStyle?: LineStyle;
   lineThickness?: number;
 
   yAxis?: YAxisOptions; // allows us to do multiple y axis
