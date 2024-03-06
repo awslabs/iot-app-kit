@@ -61,7 +61,7 @@ export const toDataPoint = (
   if (assetPropertyValue == null) {
     return undefined;
   }
-  const { timestamp, value } = assetPropertyValue;
+  const { timestamp, value, quality } = assetPropertyValue;
   const dataValue = toValue(value);
 
   if (dataValue == null) {
@@ -71,6 +71,7 @@ export const toDataPoint = (
   return {
     x: toTimestamp(timestamp),
     y: dataValue,
+    quality,
   };
 };
 
@@ -131,7 +132,9 @@ const getAggregateTimestamp = (timestamp?: Date) => {
 export const aggregateToDataPoint = ({
   timestamp,
   value,
+  quality,
 }: AggregatedValue): DataPoint<number> => ({
   x: getAggregateTimestamp(timestamp),
   y: aggregateToValue(value as Aggregates),
+  quality,
 });

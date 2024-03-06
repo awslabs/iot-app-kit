@@ -1,4 +1,4 @@
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { AggregateType, Quality } from '@aws-sdk/client-iotsitewise';
 import type {
   TimeSeriesDataRequest,
   Viewport,
@@ -22,6 +22,7 @@ export type DataPointBase<T extends Primitive = Primitive> = {
 export interface DataPoint<T extends Primitive = Primitive>
   extends DataPointBase<T> {
   x: Timestamp;
+  quality?: Quality;
 }
 
 export type Resolution = number;
