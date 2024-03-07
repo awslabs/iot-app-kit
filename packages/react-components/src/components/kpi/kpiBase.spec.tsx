@@ -58,6 +58,72 @@ describe('unit', () => {
   });
 });
 
+describe('data quality', () => {
+  const goodQualityPoint: DataPoint = { x: 1213, y: 123, quality: 'GOOD' };
+  const badQualityPoint: DataPoint = { x: 1213, y: 123, quality: 'BAD' };
+  const uncertainQualityPoint: DataPoint = {
+    x: 1213,
+    y: 123,
+    quality: 'UNCERTAIN',
+  };
+  const undefinedQualityPoint: DataPoint = { x: 1213, y: 123 };
+
+  it('renders quality when showDataQuality is true and provided a property point with bad quality', () => {
+    render(
+      <KpiBase
+        propertyPoint={badQualityPoint}
+        settings={{ showDataQuality: true }}
+      />
+    );
+
+    expect(screen.queryByText('Bad quality')).toBeDefined();
+  });
+
+  it('renders quality when showDataQuality is true and provided a property point with uncertain quality', () => {
+    render(
+      <KpiBase
+        propertyPoint={uncertainQualityPoint}
+        settings={{ showDataQuality: true }}
+      />
+    );
+
+    expect(screen.queryByText('Uncertain quality')).toBeDefined();
+  });
+
+  it('does not render quality when showDataQuality is true and it is a good quality point', () => {
+    render(
+      <KpiBase
+        propertyPoint={goodQualityPoint}
+        settings={{ showDataQuality: true }}
+      />
+    );
+
+    expect(screen.queryByTestId('data-quality-text')).toBeNull();
+  });
+
+  it('does not render quality if the point quality is not defined', () => {
+    render(
+      <KpiBase
+        propertyPoint={undefinedQualityPoint}
+        settings={{ showDataQuality: true }}
+      />
+    );
+
+    expect(screen.queryByTestId('data-quality-text')).toBeNull();
+  });
+
+  it('does not render quality when showDataQuality is false', () => {
+    render(
+      <KpiBase
+        propertyPoint={badQualityPoint}
+        settings={{ showDataQuality: false }}
+      />
+    );
+
+    expect(screen.queryByText('Bad quality')).toBeNull();
+  });
+});
+
 describe('property value', () => {
   it('renders property points y value', () => {
     const Y_VALUE = 123445;

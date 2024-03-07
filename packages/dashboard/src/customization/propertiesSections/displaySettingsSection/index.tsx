@@ -62,6 +62,14 @@ const RenderDisplaySettingsSection = ({
     })
   );
 
+  const [maybeShowDataQuality, updateShowDataQuality] = useProperty(
+    (properties) => properties.showDataQuality,
+    (properties, updatedShowDataQuality) => ({
+      ...properties,
+      showDataQuality: updatedShowDataQuality,
+    })
+  );
+
   const showName = maybeWithDefault(undefined, maybeShowName);
   const showTimestamp = maybeWithDefault(undefined, maybeShowTimestamp);
   const showUnit = maybeWithDefault(undefined, maybeShowUnit);
@@ -69,6 +77,7 @@ const RenderDisplaySettingsSection = ({
     undefined,
     maybeShowAggregationAndResolution
   );
+  const showDataQuality = maybeWithDefault(undefined, maybeShowDataQuality);
 
   return (
     <ExpandableSection
@@ -108,6 +117,13 @@ const RenderDisplaySettingsSection = ({
             data-testid='show-hide-aggregation-resolution'
           >
             Show aggregation & resolution
+          </Checkbox>
+          <Checkbox
+            onChange={(event) => updateShowDataQuality(event.detail.checked)}
+            checked={!!showDataQuality}
+            data-testid='show-hide-data-quality'
+          >
+            Show data quality
           </Checkbox>
         </FormField>
       </Box>

@@ -7,6 +7,7 @@ export const KPI_ICON_SHRINK_FACTOR = 0.7;
 export const DEFAULT_KPI_SETTINGS: Required<KPISettings> = {
   showTimestamp: true,
   showUnit: true,
+  showDataQuality: true,
   color: '#000000',
   showIcon: true,
   showAggregationAndResolution: true,
