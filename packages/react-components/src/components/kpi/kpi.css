@@ -44,6 +44,10 @@
   height: 18px;
 }
 
+.kpi .data-quality {
+  padding: 4px 8px 2px;
+}
+
 .kpi-line-threshold {
   height: 100%;
   width: 16px;
