@@ -12,17 +12,20 @@ import { LoadingSpinner } from './spinner';
 import { getIcons } from '../../common/iconUtils';
 import type { TableColumnDefinition, TableItemHydrated } from './types';
 import {
+  colorTextStatusError,
   colorTextStatusWarning,
   spaceStaticS,
   spaceStaticXxs,
 } from '@cloudscape-design/design-tokens';
 
 const dataQuality = ({ quality }: { quality: DataPoint['quality'] }) => {
+  const color =
+    quality === 'BAD' ? colorTextStatusError : colorTextStatusWarning;
   return (
     <span
       style={{
-        color: `${colorTextStatusWarning}`,
-        borderBottom: `1px dotted ${colorTextStatusWarning}`,
+        color,
+        borderBottom: `1px dotted ${color}`,
         marginLeft: `${spaceStaticS}`,
       }}
     >

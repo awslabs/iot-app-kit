@@ -11,6 +11,7 @@ import './kpi.css';
 import { highContrastColor } from './highContrastColor';
 import { getAggregationFrequency } from '../../utils/aggregationFrequency';
 import { fontSizeBodyS } from '@cloudscape-design/design-tokens';
+import { DataQualityText } from '../data-quality/data-quality-text';
 
 export const KpiBase: React.FC<KPIBaseProperties> = ({
   propertyPoint,
@@ -29,6 +30,7 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     showUnit,
     showName,
     showTimestamp,
+    showDataQuality,
     showAggregationAndResolution,
     backgroundColor,
     fontSize,
@@ -95,6 +97,9 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
               <Value value={point?.y} precision={significantDigits} />
             )}
           </div>
+          {!isLoading && showDataQuality && (
+            <DataQualityText quality={point?.quality} />
+          )}
         </div>
         {point && (
           <div
