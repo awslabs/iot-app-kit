@@ -22,7 +22,13 @@ export const MOCK_TIME_SERIES_DATA_QUERY = mockTimeSeriesDataQuery([
     dataStreams: [
       {
         ...DATA_STREAM,
-        data: [{ x: new Date(2005, 6, 13).getTime(), y: (2 * (10 * 13)) ^ 2 }],
+        data: [
+          {
+            x: new Date(2005, 6, 13).getTime(),
+            y: (2 * (10 * 13)) ^ 2,
+            quality: 'BAD',
+          },
+        ],
         unit: 'Minutes',
         name: `stream-1`,
         refId: `stream-1`,
@@ -44,7 +50,13 @@ export const MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY = mockTimeSeriesDataQuery([
         resolution: DAY_IN_MS * 300,
         aggregationType: 'AVERAGE',
         unit: 'MPH',
-        data: [{ x: new Date(2000, 5, 13).getTime(), y: (10 * 14) ^ 2 }],
+        data: [
+          {
+            x: new Date(2000, 5, 13).getTime(),
+            y: (10 * 14) ^ 2,
+            quality: 'UNCERTAIN',
+          },
+        ],
       },
     ],
     thresholds: [],
