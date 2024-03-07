@@ -2,6 +2,7 @@ export type StatusSettings = {
   showAggregationAndResolution: boolean;
   showName: boolean;
   showUnit: boolean;
+  showDataQuality: boolean;
   fontSize: number; // pixels
   secondaryFontSize: number; // pixels
   backgroundColor: string; // hex string
