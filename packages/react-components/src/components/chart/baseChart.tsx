@@ -52,7 +52,6 @@ const BaseChart = ({
   queries,
   onChartOptionsChange,
   size = { width: 500, height: 500 },
-  refreshRate,
   ...options
 }: ChartOptions) => {
   const isLegendVisible = options.legend?.visible;
@@ -85,7 +84,7 @@ const BaseChart = ({
     thresholds,
     utilizedViewport,
     visibleData,
-  } = useVisualizedDataStreams(queries, viewport, refreshRate);
+  } = useVisualizedDataStreams(queries, viewport);
 
   //handle dataZoom updates, which are dependent on user events and viewportInMS changes
   useDataZoom(chartRef, utilizedViewport);

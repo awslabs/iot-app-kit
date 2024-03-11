@@ -28,7 +28,6 @@ export const Table = ({
   significantDigits,
   paginationEnabled,
   pageSize,
-  refreshRate,
   ...props
 }: {
   columnDefinitions: TableColumnDefinition[];
@@ -42,7 +41,6 @@ export const Table = ({
   significantDigits?: number;
   paginationEnabled?: boolean;
   pageSize?: number;
-  refreshRate?: number;
 } & Pick<
   TableBaseProps,
   | 'resizableColumns'
@@ -56,7 +54,7 @@ export const Table = ({
     queries,
     // Currently set to only fetch raw data.
     // TODO: Support all resolutions and aggregation types
-    settings: { fetchMostRecentBeforeEnd: true, resolution: '0', refreshRate },
+    settings: { fetchMostRecentBeforeEnd: true, resolution: '0' },
     styles,
   });
   const { viewport } = useViewport();

@@ -13,15 +13,11 @@ import { getAggregation } from '../utils/widgetAggregationUtils';
 import './component.css';
 import { aggregateToString } from '~/customization/propertiesSections/formatDataSettings/helpers';
 import WidgetTile from '~/components/widgets/tile';
-import { useRefreshRate } from '~/customization/hooks/useRefreshRate';
-
 const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const { viewport } = useViewport();
   const dashboardSignificantDigits = useSelector(
     (state: DashboardState) => state.significantDigits
   );
-
-  const [refreshRate] = useRefreshRate();
 
   const {
     styleSettings,
@@ -82,7 +78,6 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
         thresholds={thresholds}
         aggregationType={aggregateToString(aggregation)}
         significantDigits={significantDigits}
-        refreshRate={refreshRate}
       />
     </WidgetTile>
   );
