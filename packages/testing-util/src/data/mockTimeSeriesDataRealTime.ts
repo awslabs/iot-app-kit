@@ -2,6 +2,7 @@ import {
   DataPoint,
   DataStream,
   DataType,
+  RequestSettings,
   TimeSeriesDataQuery,
   Viewport,
 } from '@iot-app-kit/core';
@@ -99,6 +100,9 @@ export const mockTimeSeriesDataQueryLiveStream = ({
         },
       };
     },
+    getRequestSettings: () => {
+      return {} as RequestSettings;
+    },
   };
 };
 
@@ -184,6 +188,9 @@ export const mockTimeSeriesDataQueryLiveStreamAggregated = ({
           updateViewport(viewport);
         },
       };
+    },
+    getRequestSettings: () => {
+      return {} as RequestSettings;
     },
   };
 };

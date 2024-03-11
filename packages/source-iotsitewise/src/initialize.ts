@@ -117,6 +117,7 @@ export const initialize = (input: SiteWiseDataSourceInitInputs) => {
               request: params,
             }
           ),
+        getRequestSettings: () => query.requestSettings,
       }),
 
       assetTree: {

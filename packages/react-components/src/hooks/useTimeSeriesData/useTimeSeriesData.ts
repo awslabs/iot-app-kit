@@ -27,6 +27,8 @@ const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
   fetchFromStartToEnd: true,
 };
 
+const DEFAULT_REFRESH_RATE = 5000;
+
 const DEFAULT_VIEWPORT = { duration: '10m' };
 
 const unsubscribeProvider = (id: string) => {
@@ -101,6 +103,7 @@ export const useTimeSeriesData = ({
             resolution,
           })
         ),
+        requestSettings: query.requestSettings,
       },
     }));
 
@@ -115,7 +118,11 @@ export const useTimeSeriesData = ({
         queries.map((query) =>
           query.build(id, {
             viewport,
-            settings,
+            settings: {
+              ...settings,
+              refreshRate:
+                query.getRequestSettings()?.refreshRate ?? DEFAULT_REFRESH_RATE,
+            },
           })
         )
       )
@@ -138,7 +145,7 @@ export const useTimeSeriesData = ({
       unsubscribeProvider(id);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queriesString, settings.refreshRate]);
+  }, [queriesString]);
 
   useEffect(() => {
     if (prevViewportRef.current != null) {

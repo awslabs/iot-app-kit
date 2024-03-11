@@ -6,6 +6,7 @@ import Dashboard, { DashboardProperties } from '../../src/components/dashboard';
 import { DashboardClientConfiguration } from '../../src/types';
 import { DEFAULT_REGION } from '~/msw/constants';
 import { useWorker } from '~/msw/useWorker';
+import { RefreshRate } from '~/components/querySettingsSync/types';
 
 /**
  * Data is mocked by the service worker started above.
@@ -25,7 +26,9 @@ const displaySettings = {
 };
 
 const viewport = { duration: '5m' };
-const querySettings = { refreshRate: 5000 };
+const querySettings: {
+  [x: string]: RefreshRate;
+} = { refreshRate: 5000 };
 
 const emptyDashboardConfiguration: DashboardProperties = {
   clientConfiguration,

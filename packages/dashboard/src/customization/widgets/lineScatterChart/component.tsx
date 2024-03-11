@@ -29,8 +29,6 @@ import { default as lineSvgDark } from './line-dark.svg';
 import { IoTSiteWiseDataStreamQuery } from '~/types';
 import { assetModelQueryToSiteWiseAssetQuery } from '../utils/assetModelQueryToAssetQuery';
 import { onUpdateWidgetsAction } from '~/store/actions';
-import { useRefreshRate } from '~/customization/hooks/useRefreshRate';
-
 const mapConnectionStyleToVisualizationType = (
   connectionStyle: LineStyles['connectionStyle']
 ): ChartStyleSettingsOptions['visualizationType'] => {
@@ -151,7 +149,6 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   const dashboardSignificantDigits = useSelector(
     (state: DashboardState) => state.significantDigits
   );
-  const [refreshRate] = useRefreshRate();
 
   const {
     title,
@@ -227,7 +224,6 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
         defaultVisualizationType={mapConnectionStyleToVisualizationType(
           line?.connectionStyle
         )}
-        refreshRate={refreshRate}
       />
     </WidgetTile>
   );
