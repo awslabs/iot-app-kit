@@ -12,14 +12,11 @@ import { aggregateToString } from '~/customization/propertiesSections/formatData
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import './component.css';
 import WidgetTile from '~/components/widgets/tile/tile';
-import { useRefreshRate } from '~/customization/hooks/useRefreshRate';
-
 const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const { viewport } = useViewport();
   const dashboardSignificantDigits = useSelector(
     (state: DashboardState) => state.significantDigits
   );
-  const [refreshRate] = useRefreshRate();
 
   const {
     styleSettings,
@@ -80,7 +77,6 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
         thresholds={thresholds}
         aggregationType={aggregateToString(aggregation)}
         significantDigits={significantDigits}
-        refreshRate={refreshRate}
       />
     </WidgetTile>
   );

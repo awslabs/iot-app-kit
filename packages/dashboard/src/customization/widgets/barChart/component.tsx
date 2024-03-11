@@ -11,7 +11,6 @@ import { getAggregation } from '../utils/widgetAggregationUtils';
 import { aggregateToString } from '~/customization/propertiesSections/formatDataSettings/helpers';
 import { useChartSize } from '~/hooks/useChartSize';
 import WidgetTile from '~/components/widgets/tile';
-import { useRefreshRate } from '~/customization/hooks/useRefreshRate';
 
 const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
   const { viewport } = useViewport();
@@ -19,7 +18,6 @@ const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
   const dashboardSignificantDigits = useSelector(
     (state: DashboardState) => state.significantDigits
   );
-  const [refreshRate] = useRefreshRate();
   const chartSize = useChartSize(widget);
 
   const {
@@ -59,7 +57,6 @@ const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
         thresholds={thresholds}
         thresholdSettings={thresholdSettings}
         significantDigits={significantDigits}
-        refreshRate={refreshRate}
       />
     </WidgetTile>
   );

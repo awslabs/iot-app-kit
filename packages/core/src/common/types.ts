@@ -5,6 +5,7 @@ import type {
 import type {
   ComparisonOperator,
   DataStreamId,
+  RequestSettings,
   StatusIconType,
   TimeSeriesData,
 } from '../data-module/types';
@@ -54,6 +55,7 @@ export interface Query<Result, Params = void> {
 export interface TimeQuery<Result, Params = void>
   extends Query<Result, Params> {
   build(sessionId: string, params?: Params): ProviderWithViewport<Result>;
+  getRequestSettings(): RequestSettings | undefined;
 }
 
 export interface TreeProvider<Result, Branch> extends Provider<Result> {
