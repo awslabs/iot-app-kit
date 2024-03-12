@@ -432,6 +432,7 @@ test('basic functional test', async () => {
     $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': constants.workspaceId,
+    'non-dry-run': true,
   } as Arguments<destroy.Options>;
   expect(await destroy.handler(argv2)).toBe(0);
 
