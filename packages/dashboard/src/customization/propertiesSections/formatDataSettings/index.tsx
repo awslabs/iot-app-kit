@@ -104,7 +104,7 @@ const RenderAggregationsPropertiesSection = ({
 
       const updatedQuery = properties.queryConfig.query
         ? applyResolutionToQuery(
-            applyResolutionToQuery(
+            applyAggregationToQuery(
               properties.queryConfig.query,
               updatedAggregationType
             ),
