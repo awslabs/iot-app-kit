@@ -29,6 +29,7 @@ export type Options = {
   region: string;
   'workspace-id': string;
   dir: string;
+  'endpoint-url': string;
 };
 
 export const command = 'deploy';
@@ -51,17 +52,24 @@ export const builder: CommandBuilder<Options> = (yargs) =>
       require: true,
       description: 'Specify the project location, directory for tmdt.json file',
     },
+    'endpoint-url': {
+      type: 'string',
+      require: false,
+      description: 'Specify the AWS IoT TwinMaker endpoint.',
+      default: '',
+    },
   });
 
 export const handler = async (argv: Arguments<Options>) => {
   const workspaceId: string = argv['workspace-id']; // TODO allow it to be optional (i.e. option to autogenerate workspace for them)
   const region: string = argv.region;
   const dir: string = argv.dir;
+  const tmEndpoint: string = argv['endpoint-url'];
   console.log(
     `Deploying project from directory ${dir} into workspace ${workspaceId} in ${region}`
   );
 
-  initDefaultAwsClients({ region: region });
+  initDefaultAwsClients({ region, tmEndpoint });
   if (!fs.existsSync(path.join(dir, 'tmdt.json'))) {
     throw new Error('TDMK.json does not exist. Please run tmdt init first.');
   }
@@ -85,7 +93,9 @@ export const handler = async (argv: Arguments<Options>) => {
         workspace role to continue deployment (Y)? Press any other key to abort (n).`,
       });
       if (response.confirmation === 'Y') {
-        await createWorkspaceIfNotExists(workspaceId);
+        // Support gamma endpoint for TwinMaker
+        const isGamma = !!tmEndpoint && tmEndpoint.includes('gamma');
+        await createWorkspaceIfNotExists(workspaceId, isGamma);
       } else {
         console.log('Aborting deployment...');
         return 0;

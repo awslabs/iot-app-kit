@@ -6,7 +6,7 @@ import {
 } from '@aws-sdk/client-iottwinmaker';
 import { delay, replaceTemplateVars, regionToAirportCode } from './utils';
 import { getDefaultAwsClients as aws } from './aws-clients';
-import { WORKSPACE_ROLE_ASSUME_POLICY } from './policy/workspace-role-assume-policy';
+import { getWorkspaceRoleAssumePolicy } from './policy/workspace-role-assume-policy';
 import { WORKSPACE_DASHBOARD_ROLE_ASSUME_POLICY } from './policy/workspace-dashboard-role-assume-policy';
 import { workspaceRolePolicyTemplate } from './policy/workspace-role-policy';
 import { workspaceDashboardRolePolicyTemplate } from './policy/workspace-dashboard-role-policy';
@@ -25,6 +25,36 @@ import {
   ListObjectsV2CommandOutput,
   NoSuchBucket,
 } from '@aws-sdk/client-s3';
+
+/*
+The following rules apply for naming buckets in Amazon S3:
+    Bucket names must be between 3 and 63 characters long.
+    Bucket names can consist only of lowercase letters, numbers, dots (.), and hyphens (-).
+*/
+const S3_NAME_LENGTH_LIMIT = 63;
+const NEW_BUCKET_PREFIX = 'twinmaker-workspace';
+export const generateS3BucketName = (
+  workspaceId: string,
+  accountId: string,
+  region: string,
+  suffix = ''
+) => {
+  const regionAirportCode = regionToAirportCode(region).toLowerCase();
+  const bucketIdentifier = workspaceId
+    .substring(
+      0,
+      S3_NAME_LENGTH_LIMIT -
+        (NEW_BUCKET_PREFIX.length +
+          accountId.length +
+          regionAirportCode.length +
+          3 +
+          suffix.length)
+    )
+    .toLowerCase()
+    .replace(/_/g, '-');
+
+  return `${NEW_BUCKET_PREFIX}-${bucketIdentifier}-${accountId}-${regionAirportCode}${suffix}`;
+};
 
 /**
  * Helper function during workspace creation to create and attach roles and policies
@@ -254,10 +284,7 @@ async function createWorkspaceS3Bucket(
   accountId: string,
   region: string
 ) {
-  const s3BucketName =
-    `twinmaker-workspace-${workspaceId}-${accountId}-${regionToAirportCode(
-      region
-    )}`.toLowerCase();
+  const s3BucketName = generateS3BucketName(workspaceId, accountId, region);
   console.log(
     `Creating S3 Bucket for the TwinMaker Workspace in region: ${region}...`
   );
@@ -278,7 +305,12 @@ async function createWorkspaceS3Bucket(
   });
   console.log('CORS Policy configured');
   console.log('Creating bucket for access logging...');
-  const s3LoggingBucketName = `${s3BucketName}-logs`;
+  const s3LoggingBucketName = generateS3BucketName(
+    workspaceId,
+    accountId,
+    region,
+    '-logs'
+  );
   await createS3Bucket(s3LoggingBucketName, region);
   console.log('Enabling access logging for workspace S3 Bucket...');
   await enableAccessLogging(s3BucketName, s3LoggingBucketName);
@@ -335,9 +367,10 @@ async function retryWorkspaceCreation(
 /**
  * Driver function for workspace creation
  * @param workspaceId workspace-id to be created
+ * @param isGamma whether gamma endpoint url is used
  * @returns promise of workspace arn, s3 arn, role arn, dashboardrole arn
  */
-async function prepareWorkspace(workspaceId: string) {
+async function prepareWorkspace(workspaceId: string, isGamma: boolean) {
   const region: string = aws().region;
   const { accountId, accountArn } = await aws().getCurrentIdentity();
   const { s3BucketArn } = await createWorkspaceS3Bucket(
@@ -359,12 +392,14 @@ async function prepareWorkspace(workspaceId: string) {
     policyParams
   );
 
+  const assumeRolePolicy = getWorkspaceRoleAssumePolicy(isGamma);
+
   const workspaceRoleArn: string = await createRoleAndPolicy(
     workspaceId,
     accountId,
     regionToAirportCode(region),
     'WorkspaceRole',
-    JSON.stringify(WORKSPACE_ROLE_ASSUME_POLICY),
+    JSON.stringify(assumeRolePolicy),
     workspaceRolePolicy
   );
   // retry workspace creation up to 10 times to allow role to propagate
@@ -408,9 +443,13 @@ async function prepareWorkspace(workspaceId: string) {
 /**
  * Create a workspace if it does not already exist
  * @param workspaceId workspace-id to be created
+ * @param isGamma whether gamma endpoint url is used
  * @returns promise of workspace id and arn if created successfully
  */
-async function createWorkspaceIfNotExists(workspaceId: string) {
+async function createWorkspaceIfNotExists(
+  workspaceId: string,
+  isGamma: boolean
+) {
   let workspace: GetWorkspaceCommandOutput;
   console.log(`Creating a new Workspace: ${workspaceId}`);
   try {
@@ -420,7 +459,7 @@ async function createWorkspaceIfNotExists(workspaceId: string) {
     );
   } catch (e) {
     if (e instanceof ResourceNotFoundException) {
-      await prepareWorkspace(workspaceId);
+      await prepareWorkspace(workspaceId, isGamma);
       workspace = await aws().tm.getWorkspace({ workspaceId });
     } else {
       throw new Error(`Failed to get workspace. ${e}`);

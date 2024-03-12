@@ -21,6 +21,7 @@ export type Options = {
   region: string;
   'workspace-id': string;
   out: string;
+  'endpoint-url': string;
 };
 
 export type tmdt_config_file = {
@@ -62,6 +63,12 @@ export const builder: CommandBuilder<Options> = (yargs) =>
       type: 'string',
       require: true,
       description: 'Specify the directory to initialize a project in.',
+    },
+    'endpoint-url': {
+      type: 'string',
+      require: false,
+      description: 'Specify the AWS IoT TwinMaker endpoint.',
+      default: '',
     },
   });
 
@@ -417,11 +424,12 @@ export const handler = async (argv: Arguments<Options>) => {
   const workspaceId: string = argv['workspace-id'];
   const region: string = argv.region;
   const outDir: string = argv.out;
+  const tmEndpoint: string = argv['endpoint-url'];
   console.log(
     `Bootstrapping project from workspace ${workspaceId} in ${region} at project directory ${outDir}`
   );
 
-  initDefaultAwsClients({ region: region });
+  initDefaultAwsClients({ region, tmEndpoint });
 
   await verifyWorkspaceExists(workspaceId);
 

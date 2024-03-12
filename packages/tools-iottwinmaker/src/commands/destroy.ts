@@ -19,6 +19,7 @@ export type Options = {
   'delete-workspace': boolean;
   'delete-s3-bucket': boolean;
   'non-dry-run': boolean;
+  'endpoint-url': string;
 };
 
 export const command = 'destroy';
@@ -56,6 +57,12 @@ export const builder: CommandBuilder<Options> = (yargs) =>
       description: 'Specify non-dry-run for real run execution of destroy.',
       default: false,
     },
+    'endpoint-url': {
+      type: 'string',
+      require: false,
+      description: 'Specify the AWS IoT TwinMaker endpoint.',
+      default: '',
+    },
   });
 
 export const handler = async (argv: Arguments<Options>) => {
@@ -64,8 +71,9 @@ export const handler = async (argv: Arguments<Options>) => {
   let deleteWorkspaceFlag: boolean = argv['delete-workspace'];
   let deleteS3Flag: boolean = argv['delete-s3-bucket'];
   const nonDryRun: boolean = argv['non-dry-run'];
+  const tmEndpoint: string = argv['endpoint-url'];
 
-  initDefaultAwsClients({ region: region });
+  initDefaultAwsClients({ region, tmEndpoint });
 
   await verifyWorkspaceExists(workspaceId);
 
