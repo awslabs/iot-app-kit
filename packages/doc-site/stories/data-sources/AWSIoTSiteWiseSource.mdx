@@ -160,6 +160,14 @@ Each asset contains the following fields:
 
   Type: String
 
+`requestSettings`
+
+(Optional) Specifies how the query requests time series data.
+
+- `refreshRate`
+
+  (Optional) Specifies how often to request data again, in milliseconds. This applies to data whose time to live (TTL) has expired or to live streaming data when a viewport is specified, The default value is 5 seconds.
+
 #### Alarms
 
 AWS IoT SiteWise has a concept of [alarms](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-alarms.html).
