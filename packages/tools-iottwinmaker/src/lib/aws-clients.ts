@@ -15,11 +15,14 @@ class AwsClients {
   cf: CloudFormation;
   kvs: KinesisVideo;
 
-  constructor(region: string) {
+  constructor(region: string, tmEndpoint?: string) {
     this.region = region;
     const options = { customUserAgent: 'tmdt/0.0.2', region: region };
     this.sts = new STS(options);
-    this.tm = new IoTTwinMaker(options);
+    // Only pass an endpoint if there is a string with content
+    const endpoint =
+      tmEndpoint === undefined || tmEndpoint === '' ? undefined : tmEndpoint;
+    this.tm = new IoTTwinMaker({ ...options, endpoint });
     this.iam = new IAM(options);
     this.s3 = new S3(options);
     this.cf = new CloudFormation(options);
@@ -45,8 +48,11 @@ let defaultAwsClients: AwsClients | null = null;
  * Helper function that create new aws client with a given region
  * @param options object containing the aws region
  */
-function initDefaultAwsClients(options: { region: string }) {
-  defaultAwsClients = new AwsClients(options.region);
+function initDefaultAwsClients(options: {
+  region: string;
+  tmEndpoint?: string;
+}) {
+  defaultAwsClients = new AwsClients(options.region, options.tmEndpoint);
 }
 
 /**

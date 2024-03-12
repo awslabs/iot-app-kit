@@ -67,26 +67,7 @@ const iamMock = mockClient(IAMClient);
 const stsMock = mockClient(STSClient);
 const fakeTmdtDir = '/tmp/deploy-unit-tests';
 
-beforeEach(() => {
-  twinmakerMock.reset();
-  s3Mock.reset();
-  jest.resetAllMocks();
-});
-
-it('throws error when given tmdt project that does not exist', async () => {
-  const argv2 = {
-    _: ['deploy'],
-    $0: 'tmdt_local',
-    region: 'us-east-1',
-    'workspace-id': 'irrelevant',
-    dir: 'i-do-not-exist',
-  } as Arguments<Options>;
-  await expect(handler(argv2)).rejects.toThrow(
-    Error('TDMK.json does not exist. Please run tmdt init first.')
-  );
-});
-
-it('deploys nothing when given an empty tmdt project', async () => {
+const emptyProjectSpy = () => {
   jest.spyOn(fs, 'existsSync').mockReturnValue(true);
   jest.spyOn(fs, 'readFileSync').mockImplementation((path) => {
     if (typeof path !== 'string') throw new Error('Not a string');
@@ -97,33 +78,9 @@ it('deploys nothing when given an empty tmdt project', async () => {
       return JSON.stringify([], null, 4);
     }
   });
-  twinmakerMock.on(GetWorkspaceCommand).resolves({});
+};
 
-  const argv2 = {
-    _: ['init'],
-    $0: 'tmdt_local',
-    region: 'us-east-1',
-    'workspace-id': workspaceId,
-    dir: fakeTmdtDir,
-  } as Arguments<Options>;
-  expect(await handler(argv2)).toBe(0);
-  expect(twinmakerMock.commandCalls(CreateComponentTypeCommand).length).toBe(0);
-  expect(twinmakerMock.commandCalls(CreateEntityCommand).length).toBe(0);
-  expect(twinmakerMock.commandCalls(CreateSceneCommand).length).toBe(0);
-});
-
-it('creates new workspace when given workspace that does not exist and user prompts to create new one', async () => {
-  jest.spyOn(fs, 'existsSync').mockReturnValue(true);
-  jest.spyOn(fs, 'readFileSync').mockImplementation((path) => {
-    if (typeof path !== 'string') throw new Error('Not a string');
-    if (path.includes('tmdt')) {
-      return JSON.stringify(emptyTmdt, null, 4);
-    } else {
-      // covers entities.json
-      return JSON.stringify([], null, 4);
-    }
-  });
-  prompts.inject(['Y']);
+const mockCallsForWorkspaceDoesNotExist = () => {
   stsMock
     .on(GetCallerIdentityCommand)
     .resolves({ Account: 'fakeAccountId', Arn: 'fakeAccountArn' });
@@ -140,12 +97,77 @@ it('creates new workspace when given workspace that does not exist and user prom
   s3Mock.on(PutBucketAclCommand).resolves({});
   s3Mock.on(PutBucketCorsCommand).resolves({});
   twinmakerMock.on(CreateWorkspaceCommand).resolves({ arn: '*' });
-  iamMock
-    .on(GetRoleCommand)
-    .rejects(new NoSuchEntityException({ $metadata: {}, message: '' }));
   iamMock.on(CreateRoleCommand).resolves({ Role: fakeRole });
   iamMock.on(CreatePolicyCommand).resolves({ Policy: fakePolicy });
   iamMock.on(AttachRolePolicyCommand).resolves({});
+};
+
+beforeEach(() => {
+  twinmakerMock.reset();
+  s3Mock.reset();
+  iamMock.reset();
+  jest.resetAllMocks();
+});
+
+it('throws error when given tmdt project that does not exist', async () => {
+  const argv2 = {
+    _: ['deploy'],
+    $0: 'tmdt_local',
+    region: 'us-east-1',
+    'workspace-id': 'irrelevant',
+    dir: 'i-do-not-exist',
+  } as Arguments<Options>;
+  await expect(handler(argv2)).rejects.toThrow(
+    Error('TDMK.json does not exist. Please run tmdt init first.')
+  );
+});
+
+it('throws error when user provided execution role does not exist', async () => {
+  emptyProjectSpy();
+
+  prompts.inject(['Y']);
+
+  mockCallsForWorkspaceDoesNotExist();
+  const error = new NoSuchEntityException({ $metadata: {}, message: '' });
+  iamMock.on(GetRoleCommand).rejects(error);
+
+  const argv2 = {
+    _: ['init'],
+    $0: 'tmdt_local',
+    region: 'us-east-1',
+    'workspace-id': 'non-existent',
+    dir: fakeTmdtDir,
+    'execution-role': 'role-name-does-not-exist',
+  } as Arguments<Options>;
+  await expect(handler(argv2)).rejects.toThrow(error);
+});
+
+it('deploys nothing when given an empty tmdt project', async () => {
+  emptyProjectSpy();
+  twinmakerMock.on(GetWorkspaceCommand).resolves({});
+
+  const argv2 = {
+    _: ['init'],
+    $0: 'tmdt_local',
+    region: 'us-east-1',
+    'workspace-id': workspaceId,
+    dir: fakeTmdtDir,
+  } as Arguments<Options>;
+  expect(await handler(argv2)).toBe(0);
+  expect(twinmakerMock.commandCalls(CreateComponentTypeCommand).length).toBe(0);
+  expect(twinmakerMock.commandCalls(CreateEntityCommand).length).toBe(0);
+  expect(twinmakerMock.commandCalls(CreateSceneCommand).length).toBe(0);
+});
+
+it('creates new workspace when given workspace that does not exist and user prompts to create new one', async () => {
+  emptyProjectSpy();
+
+  prompts.inject(['Y']);
+
+  mockCallsForWorkspaceDoesNotExist();
+  iamMock
+    .on(GetRoleCommand)
+    .rejects(new NoSuchEntityException({ $metadata: {}, message: '' }));
 
   const argv2 = {
     _: ['init'],
@@ -168,6 +190,40 @@ it('creates new workspace when given workspace that does not exist and user prom
   expect(iamMock.commandCalls(CreateRoleCommand).length).toBe(2);
   expect(iamMock.commandCalls(CreatePolicyCommand).length).toBe(2);
   expect(iamMock.commandCalls(AttachRolePolicyCommand).length).toBe(2);
+});
+
+it('creates new workspace when given workspace that does not exist and a user provided execution role', async () => {
+  emptyProjectSpy();
+
+  prompts.inject(['Y']);
+
+  mockCallsForWorkspaceDoesNotExist();
+  iamMock
+    .on(GetRoleCommand)
+    .resolvesOnce({
+      Role: {
+        Path: 'fakePath',
+        RoleName: 'fakeRoleName',
+        RoleId: 'fakeRoleId',
+        Arn: 'fakeRoleArn',
+        CreateDate: new Date(),
+      },
+    })
+    .rejects(new NoSuchEntityException({ $metadata: {}, message: '' }));
+
+  const argv2 = {
+    _: ['init'],
+    $0: 'tmdt_local',
+    region: 'us-east-1',
+    'workspace-id': 'non-existent',
+    dir: fakeTmdtDir,
+    'execution-role': 'fakeRoleName',
+  } as Arguments<Options>;
+  expect(await handler(argv2)).toBe(0);
+  expect(iamMock.commandCalls(GetRoleCommand).length).toBe(2);
+  expect(iamMock.commandCalls(CreateRoleCommand).length).toBe(1);
+  expect(iamMock.commandCalls(CreatePolicyCommand).length).toBe(1);
+  expect(iamMock.commandCalls(AttachRolePolicyCommand).length).toBe(1);
 });
 
 it('deploys successfully when given a tmdt project with one component type', async () => {
