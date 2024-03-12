@@ -1,6 +1,6 @@
 import type { Action } from 'redux';
 import type { DashboardState } from '../../state';
-import { type RefreshRate } from '~/components/querySettingsSync/types';
+import type { RefreshRate } from '@iot-app-kit/core';
 
 type UpdateRefreshRateActionPayload = {
   refreshRate: RefreshRate;
