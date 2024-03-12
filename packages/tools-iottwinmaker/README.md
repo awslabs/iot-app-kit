@@ -57,6 +57,9 @@ ___
 - *--workspace-id*: Specify the ID of the Workspace to bootstrap the project from
 - *--out*: Specify the directory to initialize a project in
 
+### Init Parameters (optional flags)
+- *--endpoint-url*: Specify the TM service endpoint url
+
 Use this command to bootstrap a TMDT project from an existing workspace.
 
 The following will initialize a tmdt project at the specified directory with a `tmdt.json` file
@@ -77,6 +80,10 @@ ___
 - *--region*: Specify the AWS region to deploy to
 - *--workspace-id*: Specify the ID of the Workspace to deploy to
 - *--dir*: Specify the project location, directory for tmdt.json file
+
+### Deploy Parameters (optional flags)
+- *--endpoint-url*: Specify the TM service endpoint url
+- *--execution-role*: Specify the name of the execution role to associate with a new workspace
 
 The following will deploy a tmdt project at the specified directory (the directory must contain a `tmdt.json` file) into the specified workspace.
 
@@ -104,6 +111,7 @@ TMDT destroy is a destructive command hence it is a "Dry Run" by default command
 - *--delete-workspace*: Specify if TM workspace should also be deleted
 - *--delete-s3-bucket*: Specify if workspace s3 Bucket, its contents, and any associated logging bucket should be deleted
 - *--nonDryRun*: Use this flag for real deletion of resources
+- *--endpoint-url*: Specify the TM service endpoint url
 
 **Example 1:**
 
