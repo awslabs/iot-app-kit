@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { RefreshRate } from '~/components/querySettingsSync/types';
+import { RefreshRate } from '@iot-app-kit/core';
 import { onUpdateRefreshRateAction } from '~/store/actions';
 import { DashboardState } from '~/store/state';
 

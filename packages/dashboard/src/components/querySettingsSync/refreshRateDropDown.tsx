@@ -8,7 +8,7 @@ import {
 import { useRefreshRate } from '~/customization/hooks/useRefreshRate';
 import { SECOND_IN_MS } from '@iot-app-kit/core';
 import invariant from 'tiny-invariant';
-import { RefreshRate } from './types';
+import { type RefreshRate } from '@iot-app-kit/core';
 
 export const RefreshRateDropDown = () => {
   const [refreshRate, updateRefreshRate] = useRefreshRate();
