@@ -8,7 +8,7 @@ import Dashboard from './index';
 import React from 'react';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import type { RefreshRate } from '@iot-app-kit/core';
+import { RefreshRate } from '../querySettingsSync/types';
 
 it('renders', function () {
   const { queryByText, queryByTestId } = render(

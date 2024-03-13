@@ -1,5 +1,8 @@
-import type { RefreshRateString, RefreshRateOption } from './types';
-import { type RefreshRate } from '@iot-app-kit/core';
+import type {
+  RefreshRate,
+  RefreshRateString,
+  RefreshRateOption,
+} from './types';
 
 export const SECOND_IN_MS = 1000 as const satisfies RefreshRate;
 export const SECOND_IN_MS_STRING = '1000' as const satisfies RefreshRateString;
@@ -27,6 +30,7 @@ export const REFRESH_RATE_OPTIONS = [
   { label: '5m', value: FIVE_MINUTES_IN_MS_STRING },
 ] satisfies RefreshRateOption[];
 
+export const DEFAULT_REFRESH_RATE = FIVE_SECONDS_IN_MS;
 export const DEFAULT_REFRESH_RATE_OPTION = REFRESH_RATE_OPTIONS[1];
 
 type RefreshRateOptionMap = {

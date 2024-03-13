@@ -65,6 +65,7 @@ export const BarChart = (props: BarChartProps) => {
         [HOUR_IN_MS]: '1h',
         [DAY_IN_MS * 5]: '1d',
       },
+      // refreshRate,
     },
     styles,
   });

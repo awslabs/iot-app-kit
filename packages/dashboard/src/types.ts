@@ -1,4 +1,4 @@
-import type { Viewport, RefreshRate } from '@iot-app-kit/core';
+import type { Viewport } from '@iot-app-kit/core';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
@@ -9,6 +9,7 @@ import {
   SiteWiseQuery,
 } from '@iot-app-kit/source-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import { RefreshRate } from './components/querySettingsSync/types';
 
 export type DashboardClientCredentials = {
   awsCredentials: AwsCredentialIdentity | Provider<AwsCredentialIdentity>;
