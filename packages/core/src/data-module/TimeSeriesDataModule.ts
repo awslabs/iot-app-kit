@@ -26,7 +26,7 @@ import type {
 
 export const DEFAULT_CACHE_SETTINGS = {
   ttlDurationMapping: {
-    [1.2 * MINUTE_IN_MS]: SECOND_IN_MS,
+    [1.2 * MINUTE_IN_MS]: SECOND_IN_MS * 1.5,
     [3 * MINUTE_IN_MS]: 30 * SECOND_IN_MS,
     [20 * MINUTE_IN_MS]: 5 * MINUTE_IN_MS,
   },

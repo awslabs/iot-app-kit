@@ -29,7 +29,6 @@ import { onUpdateWidgetsAction } from '~/store/actions';
 import { useTableItems } from './useTableItems';
 import WidgetTile from '~/components/widgets/tile/tile';
 import { assetModelQueryToSiteWiseAssetQuery } from '../utils/assetModelQueryToAssetQuery';
-import { useRefreshRate } from '~/customization/hooks/useRefreshRate';
 
 export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
   {
@@ -54,7 +53,6 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   const dashboardSignificantDigits = useSelector(
     (state: DashboardState) => state.significantDigits
   );
-  const [refreshRate] = useRefreshRate();
 
   const {
     queryConfig,
@@ -139,7 +137,6 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
             )
           }
           propertyFiltering={PROPERTY_FILTERING}
-          refreshRate={refreshRate}
         />
       </div>
     </WidgetTile>

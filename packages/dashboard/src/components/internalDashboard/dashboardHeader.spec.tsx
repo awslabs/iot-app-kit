@@ -1,13 +1,8 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { render } from '@testing-library/react';
 import DashboardHeader from './dashboardHeader';
-import { configureDashboardStore } from '~/store';
-import { Provider } from 'react-redux';
 
 describe('DashboardHeader', () => {
-  const ProviderWrapper = ({ children }: PropsWithChildren) => (
-    <Provider store={configureDashboardStore()}>{children}</Provider>
-  );
   it('should render the dashboard title', () => {
     const props = {
       name: 'My Dashboard',
@@ -16,7 +11,6 @@ describe('DashboardHeader', () => {
       onSave: jest.fn(),
       dashboardConfiguration: {
         widgets: [],
-        querySettings: {},
       },
       grid: {
         enabled: true,
@@ -26,9 +20,7 @@ describe('DashboardHeader', () => {
       },
       significantDigits: 2,
     };
-    const { getByText } = render(<DashboardHeader {...props} />, {
-      wrapper: ProviderWrapper,
-    });
+    const { getByText } = render(<DashboardHeader {...props} />);
     const titleElement = getByText('My Dashboard');
     expect(titleElement).toBeInTheDocument();
   });
@@ -41,7 +33,6 @@ describe('DashboardHeader', () => {
       onSave: jest.fn(),
       dashboardConfiguration: {
         widgets: [],
-        querySettings: {},
       },
       grid: {
         enabled: true,
@@ -51,9 +42,7 @@ describe('DashboardHeader', () => {
       },
       significantDigits: 2,
     };
-    const { getByTestId } = render(<DashboardHeader {...props} />, {
-      wrapper: ProviderWrapper,
-    });
+    const { getByTestId } = render(<DashboardHeader {...props} />);
     const timeSelectionElement = getByTestId('time-selection');
     expect(timeSelectionElement).toBeInTheDocument();
   });

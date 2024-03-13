@@ -19,7 +19,6 @@ export const KPI = ({
   styles,
   settings,
   significantDigits,
-  refreshRate,
 }: {
   query: TimeSeriesDataQuery;
   viewport?: Viewport;
@@ -28,14 +27,12 @@ export const KPI = ({
   aggregationType?: string;
   settings?: Partial<KPISettings>;
   significantDigits?: number;
-  refreshRate?: number;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries: [query],
     settings: {
       fetchMostRecentBeforeEnd: true,
-      refreshRate,
     },
     styles,
   });
