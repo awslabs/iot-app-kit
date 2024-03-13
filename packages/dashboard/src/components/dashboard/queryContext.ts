@@ -1,6 +1,5 @@
 import { DataStream, Primitive } from '@iot-app-kit/core';
 import { createContext, useContext } from 'react';
-import { useRefreshRate } from '~/customization/hooks/useRefreshRate';
 import { assetModelQueryToSiteWiseAssetQuery } from '~/customization/widgets/utils/assetModelQueryToAssetQuery';
 import {
   DashboardIotSiteWiseQueries,
@@ -15,10 +14,8 @@ export const useQueries = ({
   assets = [],
   properties = [],
   assetModels = [],
-  requestSettings = {},
 }: IoTSiteWiseDataStreamQuery = {}) => {
   const { iotSiteWiseQuery } = useContext(QueryContext);
-  const [refreshRate] = useRefreshRate();
 
   if (
     iotSiteWiseQuery == null ||
@@ -31,13 +28,8 @@ export const useQueries = ({
     assetModels,
     assets,
     properties,
-    requestSettings: {
-      ...requestSettings,
-      refreshRate,
-    },
   });
 
-  //fetch time series data has settings object
   const queries = [iotSiteWiseQuery.timeSeriesData(mappedQuery)] ?? [];
 
   return queries;

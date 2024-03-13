@@ -32,7 +32,6 @@ import type { Credentials, CredentialProvider } from '@aws-sdk/types';
 import type { VideoDataProps } from './types';
 import type { TwinMakerDataStreamQuery } from './time-series-data/types';
 import type {
-  RequestSettings,
   TimeSeriesDataQuery,
   TimeSeriesDataRequest,
 } from '@iot-app-kit/core';
@@ -207,9 +206,6 @@ export const initialize = (
           request: params,
         }
       ),
-    getRequestSettings: () => {
-      return {} as RequestSettings;
-    },
   });
 
   const propertyValueQuery = (

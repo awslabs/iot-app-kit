@@ -18,6 +18,7 @@ export const Status = ({
   aggregationType,
   settings,
   significantDigits,
+  refreshRate,
 }: {
   query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
   viewport?: Viewport;
@@ -26,6 +27,7 @@ export const Status = ({
   styles?: StyleSettingsMap;
   settings?: Partial<StatusSettings>;
   significantDigits?: number;
+  refreshRate?: number;
 }) => {
   return (
     <KPI
@@ -36,6 +38,7 @@ export const Status = ({
       aggregationType={aggregationType}
       settings={settings}
       significantDigits={significantDigits}
+      refreshRate={refreshRate}
     />
   );
 };
