@@ -35,7 +35,8 @@ const mapDataStreamInformation = ({
       return valueMap;
     }, {});
 
-    const dataStreamName = visibleContent?.unit ? `${name} (${unit})` : name;
+    const dataStreamName =
+      visibleContent?.unit && unit ? `${name} (${unit})` : name;
     const maxValue = dataStreamMaxes[id] ?? '-';
     const minValue = dataStreamMins[id] ?? '-';
 
