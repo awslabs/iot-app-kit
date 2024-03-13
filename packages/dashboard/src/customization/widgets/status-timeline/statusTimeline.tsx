@@ -10,6 +10,8 @@ import { getAggregation } from '../utils/widgetAggregationUtils';
 import WidgetTile from '~/components/widgets/tile';
 import NoChartData from '../components/no-chart-data';
 import { default as timelineSvgDark } from './timeline-dark.svg';
+import { useRefreshRate } from '~/customization/hooks/useRefreshRate';
+
 const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (
   widget
 ) => {
@@ -18,6 +20,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (
   const dashboardSignificantDigits = useSelector(
     (state: DashboardState) => state.significantDigits
   );
+  const [refreshRate] = useRefreshRate();
 
   const {
     title,
@@ -58,6 +61,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (
         thresholds={thresholds}
         aggregationType={aggregateToString(aggregation)}
         significantDigits={significantDigits}
+        refreshRate={refreshRate}
       />
     </WidgetTile>
   );
