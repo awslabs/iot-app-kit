@@ -49,6 +49,48 @@ describe('default cell function', () => {
     expect(container.textContent).toContain('10');
   });
 
+  it('does not return quality text for good value', () => {
+    const item: TableItemHydrated = {
+      data: {
+        value: 10,
+        error: undefined,
+        isLoading: undefined,
+        valueOf: jest.fn(),
+        quality: 'GOOD',
+      },
+    };
+    const { container } = render(<div>{firstColumnDef.cell(item)}</div>);
+    expect(container.textContent).not.toContain('Quality');
+  });
+
+  it('returns uncertain quality text for uncertain value', () => {
+    const item: TableItemHydrated = {
+      data: {
+        value: 10,
+        error: undefined,
+        isLoading: undefined,
+        valueOf: jest.fn(),
+        quality: 'UNCERTAIN',
+      },
+    };
+    const { container } = render(<div>{firstColumnDef.cell(item)}</div>);
+    expect(container.textContent).toContain('Uncertain Quality');
+  });
+
+  it('returns bad quality text for bad value', () => {
+    const item: TableItemHydrated = {
+      data: {
+        value: 10,
+        error: undefined,
+        isLoading: undefined,
+        valueOf: jest.fn(),
+        quality: 'BAD',
+      },
+    };
+    const { container } = render(<div>{firstColumnDef.cell(item)}</div>);
+    expect(container.textContent).toContain('Bad Quality');
+  });
+
   it('return hyphen when property not found in tableItem', () => {
     const item: TableItemHydrated = {
       data: {

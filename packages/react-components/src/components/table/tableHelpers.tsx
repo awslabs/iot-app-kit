@@ -1,12 +1,48 @@
 import React from 'react';
 import { round } from '@iot-app-kit/core-util';
 import { STATUS_ICON_TYPE } from '@iot-app-kit/core';
+import type { DataPoint } from '@iot-app-kit/core';
 
-import { TableProps as CloudscapeTableProps } from '@cloudscape-design/components';
+import {
+  TableProps as CloudscapeTableProps,
+  Icon,
+} from '@cloudscape-design/components';
 
 import { LoadingSpinner } from './spinner';
 import { getIcons } from '../../common/iconUtils';
 import type { TableColumnDefinition, TableItemHydrated } from './types';
+import {
+  colorTextStatusWarning,
+  spaceStaticS,
+  spaceStaticXxs,
+} from '@cloudscape-design/design-tokens';
+
+const dataQuality = ({ quality }: { quality: DataPoint['quality'] }) => {
+  return (
+    <span
+      style={{
+        color: `${colorTextStatusWarning}`,
+        borderBottom: `1px dotted ${colorTextStatusWarning}`,
+        marginLeft: `${spaceStaticS}`,
+      }}
+    >
+      {quality === 'BAD' && (
+        <>
+          <Icon name='status-negative' variant='error' />
+          <span style={{ marginLeft: `${spaceStaticXxs}` }}>Bad Quality</span>
+        </>
+      )}
+      {quality === 'UNCERTAIN' && (
+        <>
+          <Icon name='status-warning' variant='warning' />
+          <span style={{ marginLeft: `${spaceStaticXxs}` }}>
+            Uncertain Quality
+          </span>
+        </>
+      )}
+    </span>
+  );
+};
 
 export const getDefaultColumnDefinitions: (
   columnDefinitions: TableColumnDefinition[],
@@ -19,7 +55,7 @@ export const getDefaultColumnDefinitions: (
         return '-';
       }
 
-      const { error, isLoading, value, threshold } = item[colDef.key];
+      const { error, isLoading, value, threshold, quality } = item[colDef.key];
       const { color = 'unset', icon } = threshold || {};
       if (error) {
         return (
@@ -57,6 +93,7 @@ export const getDefaultColumnDefinitions: (
           >
             {icon ? <div className='icon'>{getIcons(icon)}</div> : null}{' '}
             {round(value, precision)}
+            {quality && dataQuality({ quality })}
           </div>
         );
       }
@@ -70,6 +107,7 @@ export const getDefaultColumnDefinitions: (
           }}
         >
           {icon ? <div className='icon'>{getIcons(icon)}</div> : null} {value}
+          {quality && dataQuality({ quality })}
         </div>
       );
     },
