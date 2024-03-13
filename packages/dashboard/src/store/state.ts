@@ -1,4 +1,4 @@
-import type { DashboardTimeSeriesSettings, DashboardWidget } from '~/types';
+import type { DashboardWidget } from '~/types';
 import { deepFreeze } from '~/util/deepFreeze';
 
 export type DashboardState<
@@ -15,10 +15,7 @@ export type DashboardState<
   selectedWidgets: DashboardWidget<Properties>[];
   copiedWidgets: DashboardWidget<Properties>[];
   pasteCounter: number;
-  dashboardConfiguration: {
-    widgets: DashboardWidget<Properties>[];
-    querySettings?: DashboardTimeSeriesSettings;
-  };
+  dashboardConfiguration: { widgets: DashboardWidget<Properties>[] };
   significantDigits: number;
 };
 
@@ -45,9 +42,6 @@ export const initialState: DashboardState = deepFreeze({
   pasteCounter: 0,
   dashboardConfiguration: {
     widgets: [],
-    querySettings: {
-      refreshRate: 5000,
-    },
   },
   significantDigits: 4,
 });

@@ -11,7 +11,6 @@ import { TextSettingsConfiguration } from './index';
 const state: Partial<DashboardState> = {
   dashboardConfiguration: {
     widgets: [MOCK_TEXT_LINK_WIDGET],
-    querySettings: {},
   },
   selectedWidgets: [MOCK_TEXT_LINK_WIDGET],
 };

@@ -1,4 +1,4 @@
-import { RequestSettings, TimeSeriesData, Viewport } from '@iot-app-kit/core';
+import { TimeSeriesData, Viewport } from '@iot-app-kit/core';
 import { initialize, SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import noop from 'lodash/noop';
 import { getEnvCredentials } from './getEnvCredentials';
@@ -75,9 +75,6 @@ export const mockQuery = (
         unsubscribe,
         updateViewport,
       }),
-      getRequestSettings: () => {
-        return {} as RequestSettings;
-      },
     }),
     assetTree: {
       fromRoot: () => ({
@@ -88,7 +85,6 @@ export const mockQuery = (
           expand: () => {},
           collapse: () => {},
         }),
-        getRequestSettings: () => {},
       }),
       fromAsset: () => ({
         toQueryString: () => '',
@@ -98,7 +94,6 @@ export const mockQuery = (
           expand: () => {},
           collapse: () => {},
         }),
-        getRequestSettings: () => {},
       }),
     },
   };

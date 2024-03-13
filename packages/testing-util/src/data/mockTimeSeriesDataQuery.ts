@@ -1,6 +1,5 @@
 import {
   DATA_TYPE,
-  RequestSettings,
   TimeSeriesData,
   TimeSeriesDataQuery,
   Viewport,
@@ -32,9 +31,6 @@ export const mockTimeSeriesDataQuery = (
         updateViewport(viewport);
       },
     }),
-    getRequestSettings: () => {
-      return {} as RequestSettings;
-    },
   };
 };
 export const mockTimeSeriesDataQueryWithError = (
@@ -78,9 +74,6 @@ export const mockTimeSeriesDataQueryWithError = (
         updateViewport(viewport);
       },
     }),
-    getRequestSettings: () => {
-      return {} as RequestSettings;
-    },
   };
 };
 
@@ -122,8 +115,5 @@ export const mockTimeSeriesDataQueryLoading = (overrides?: {
         updateViewport(viewport);
       },
     }),
-    getRequestSettings: () => {
-      return {} as RequestSettings;
-    },
   };
 };

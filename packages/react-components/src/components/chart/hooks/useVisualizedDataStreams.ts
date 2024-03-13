@@ -21,7 +21,6 @@ const dataStreamIsRefreshing = ({ isRefreshing }: DataStream) => isRefreshing;
 export const useVisualizedDataStreams = (
   queries: TimeSeriesDataQuery[],
   passedInViewport?: Viewport,
-  refreshRate = 5000,
   thresholdOptions: StyledThreshold[] = []
 ) => {
   const { viewport, lastUpdatedBy } = useViewport();
@@ -37,7 +36,6 @@ export const useVisualizedDataStreams = (
     queries,
     settings: {
       fetchFromStartToEnd: true,
-      refreshRate,
     },
   });
 

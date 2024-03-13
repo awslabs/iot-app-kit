@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 
 import { Box, Header, SpaceBetween } from '@cloudscape-design/components';
 import { TimeSelection } from '@iot-app-kit/react-components';
-import { RefreshRateDropDown } from '../querySettingsSync/refreshRateDropDown';
 
 import {
   colorChartsLineGrid,
@@ -12,11 +11,7 @@ import {
 } from '@cloudscape-design/design-tokens';
 
 import Actions from '../actions';
-import type {
-  DashboardSave,
-  DashboardTimeSeriesSettings,
-  DashboardWidget,
-} from '~/types';
+import type { DashboardSave, DashboardWidget } from '~/types';
 
 type DashboardHeaderProps = {
   name?: string;
@@ -24,7 +19,6 @@ type DashboardHeaderProps = {
   readOnly: boolean;
   dashboardConfiguration: {
     widgets: DashboardWidget<Record<string, unknown>>[];
-    querySettings?: DashboardTimeSeriesSettings;
   };
   grid: {
     enabled: boolean;
@@ -63,7 +57,6 @@ const DashboardHeader = ({
     <Box float='right'>
       <SpaceBetween size='s' direction='horizontal' alignItems='end'>
         <TimeSelection isPaginationEnabled />
-        <RefreshRateDropDown />
         {editable && (
           <>
             <Divider key='2' />
