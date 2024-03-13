@@ -44,6 +44,7 @@ export const createTableItems: (
           if ('end' in viewport && dataPoints) {
             const point = getDataBeforeDate(dataPoints, viewport.end).pop();
             const value = point?.y;
+            const quality = point?.quality;
             const threshold = breachedThreshold({
               dataStream,
               dataStreams,
@@ -54,13 +55,14 @@ export const createTableItems: (
             return {
               key,
               data: createCellItem(
-                { value, error, isLoading, threshold },
+                { value, error, isLoading, threshold, quality },
                 messageOverrides
               ),
             };
           }
 
           const value = dataPoints.slice(-1)[0]?.y;
+          const quality = dataPoints.slice(-1)[0]?.quality;
           const threshold = breachedThreshold({
             dataStream,
             dataStreams,
@@ -72,7 +74,7 @@ export const createTableItems: (
           return {
             key,
             data: createCellItem(
-              { value, error, isLoading, threshold },
+              { value, error, isLoading, threshold, quality },
               messageOverrides
             ),
           };

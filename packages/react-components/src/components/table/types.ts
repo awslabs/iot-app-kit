@@ -1,5 +1,10 @@
 import { TableProps as CloudscapeTableProps } from '@cloudscape-design/components';
-import type { ErrorDetails, Primitive, Threshold } from '@iot-app-kit/core';
+import type {
+  DataPoint,
+  ErrorDetails,
+  Primitive,
+  Threshold,
+} from '@iot-app-kit/core';
 import type { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import type { TableMessages } from './messages';
 
@@ -28,6 +33,7 @@ export type CellItem = {
   threshold?: Threshold;
   valueOf: () => Primitive | undefined;
   toString: () => string;
+  quality?: DataPoint['quality'];
 };
 
 export type TableItemHydrated = { [k: string]: CellItem };
@@ -46,6 +52,7 @@ export type CellProps = {
   error: ErrorDetails;
   isLoading: boolean;
   threshold: Threshold;
+  quality?: DataPoint['quality'];
 };
 
 export interface TableProps
