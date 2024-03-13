@@ -149,7 +149,7 @@ export type DataModuleSubscription<Query extends DataStreamQuery> = {
   queries: Query[];
 };
 
-export type RefreshRate = 1000 | 5000 | 10000 | 60000 | 300000;
+type RefreshRate = 1000 | 5000 | 10000 | 60000 | 300000;
 
 export type RequestSettings = {
   refreshRate?: RefreshRate;
