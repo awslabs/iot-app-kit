@@ -15,7 +15,6 @@ import {
   toggleReadOnly,
   updateSignificantDigits,
   updateWidgets,
-  updateRefreshRate,
 } from './actions';
 
 import { createWidgets } from './actions/createWidget';
@@ -90,10 +89,6 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'UPDATE_SIGNIFICANT_DIGITS': {
       return updateSignificantDigits(state, action);
-    }
-
-    case 'UPDATE_REFRESH_RATE': {
-      return updateRefreshRate(state, action);
     }
 
     default:

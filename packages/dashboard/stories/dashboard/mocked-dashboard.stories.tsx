@@ -25,7 +25,6 @@ const displaySettings = {
 };
 
 const viewport = { duration: '5m' };
-const querySettings = { refreshRate: 5000 };
 
 const emptyDashboardConfiguration: DashboardProperties = {
   clientConfiguration,
@@ -33,7 +32,6 @@ const emptyDashboardConfiguration: DashboardProperties = {
     displaySettings,
     viewport,
     widgets: [],
-    querySettings,
   },
   onSave: () => Promise.resolve(),
 };
@@ -43,7 +41,6 @@ const widgetDashboardConfiguration = {
   dashboardConfiguration: {
     displaySettings,
     viewport,
-    querySettings,
     widgets: [
       {
         type: 'iot-line-chart',

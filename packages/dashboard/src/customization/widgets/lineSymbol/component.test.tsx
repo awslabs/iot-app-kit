@@ -24,9 +24,6 @@ const TestComponent = (object: { widget: LineWidget; isSelected: boolean }) => {
   const initialState: Partial<DashboardState> = {
     dashboardConfiguration: {
       widgets: [widget],
-      querySettings: {
-        refreshRate: 5000,
-      },
     },
     selectedWidgets: isSelected ? [widget] : [],
   };
