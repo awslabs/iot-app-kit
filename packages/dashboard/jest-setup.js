@@ -1,6 +1,10 @@
 import '@testing-library/jest-dom';
 import { server } from './src/msw/server';
 
+import { TextDecoder, TextEncoder } from 'util';
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+
 beforeAll(() => {
   disableLogging();
   server.listen();

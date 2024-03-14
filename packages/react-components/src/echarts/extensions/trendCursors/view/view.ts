@@ -16,6 +16,7 @@ import { POSITION, SIZE, STYLE, Z } from './constants';
 
 import deleteButtonSvg from './deleteButton.svg';
 import { TrendCursor } from '../store';
+import { GenericSeries } from '../../../types';
 
 // Echarts doesn't expose this interface correctly
 // eslint-disable-next-line
@@ -325,10 +326,13 @@ export class TrendCursorView extends echarts.ComponentView {
     );
 
     const modelStyle = model.getData().getVisual('style');
+    // modifying the symbol color can affect the visual style object
+    // so we must get color differently
+    const modelColor = (model.option as GenericSeries).appKitColor;
     const pointGraphic = new Circle({
       z: Z.Point,
       style: {
-        fill: modelStyle.fill,
+        fill: modelColor,
         opacity: modelStyle.opacity,
       },
       shape: { cx: x, cy: y, r: SIZE.Point.radius },
