@@ -131,6 +131,7 @@ export function UnmodeledDataStreamTable({
             onClickAdd(
               collectionProps.selectedItems as unknown as UnmodeledDataStream[]
             );
+            actions.setSelectedItems([]);
             metricsRecorder?.record({
               metricName: 'UnmodeledDataStreamAdd',
               metricValue: 1,
