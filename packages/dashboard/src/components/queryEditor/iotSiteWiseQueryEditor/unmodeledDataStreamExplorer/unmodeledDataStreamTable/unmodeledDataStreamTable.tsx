@@ -2,6 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { isNumeric, round } from '@iot-app-kit/core-util';
+import { getPlugin } from '@iot-app-kit/core';
+import { DateTime } from '@iot-app-kit/react-components';
 
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import Box from '@cloudscape-design/components/box';
@@ -16,10 +18,8 @@ import { useExplorerPreferences } from '../../useExplorerPreferences';
 import { SUPPORTED_PAGE_SIZES } from '../../constants';
 import { useLatestValues } from '../../useLatestValues';
 import { DashboardState } from '~/store/state';
-import { getFormattedDateTimeFromEpoch } from '~/components/util/dateTimeUtil';
-import { ResourceExplorerFooter } from '../../footer/footer';
-import { getPlugin } from '@iot-app-kit/core';
 import { disableAdd } from '~/components/queryEditor/iotSiteWiseQueryEditor/footer/disableAdd';
+import { ResourceExplorerFooter } from '../../footer/footer';
 
 export interface UnmodeledDataStreamTableProps {
   onClickAdd: (unmodeledDataStreams: UnmodeledDataStream[]) => void;
@@ -162,12 +162,17 @@ export function UnmodeledDataStreamTable({
           id: 'latestValueTime',
           header: 'Latest value time',
           cell: ({ latestValueTime }) => {
+            if (!latestValueTime) return '-';
             if (latestValueTime && isNumeric(latestValueTime)) {
-              return getFormattedDateTimeFromEpoch(
-                Number(round(latestValueTime, significantDigits))
+              return (
+                <DateTime
+                  dateTime={
+                    Number(round(latestValueTime, significantDigits)) * 1000
+                  }
+                />
               );
             }
-            return getFormattedDateTimeFromEpoch(latestValueTime);
+            return <DateTime dateTime={latestValueTime * 1000} />;
           },
           sortingField: 'latestValueTime',
         },

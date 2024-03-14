@@ -14,6 +14,7 @@ import { Spinner } from '@cloudscape-design/components';
 import './timestamp.css';
 import { useViewport } from '../../hooks/useViewport';
 import { convertViewportToMs } from '../../utils/convertViewportToMs';
+import { DateTime } from '../timeZone';
 
 type TimestampProps = {
   showLoadingIndicator: boolean;
@@ -33,9 +34,10 @@ export const Timestamp = ({
   styleProps,
 }: TimestampProps) => {
   const { viewport } = useViewport();
+  // const { initial, end } = convertViewportToMs(viewport);
+  // const timestampStart = new Date(initial).toLocaleString();
+  // const timestampEnd = new Date(end).toLocaleString();
   const { initial, end } = convertViewportToMs(viewport);
-  const timestampStart = new Date(initial).toLocaleString();
-  const timestampEnd = new Date(end).toLocaleString();
   const timestampStyle = {
     ...styleProps,
     backgroundColor: showLoadingIndicator ? '' : colorBorderDividerSecondary,
@@ -65,8 +67,12 @@ export const Timestamp = ({
           color: colorTextBodyDefault,
         }}
       >
-        <span>{timestampStart}</span>
-        <span>{timestampEnd}</span>
+        <span>
+          <DateTime dateTime={initial} />
+        </span>
+        <span>
+          <DateTime dateTime={end} />
+        </span>
       </div>
     </div>
   );

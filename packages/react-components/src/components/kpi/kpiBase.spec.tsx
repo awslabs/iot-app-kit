@@ -1,7 +1,9 @@
 import React from 'react';
+import { format } from 'date-fns-tz';
 import { render, screen } from '@testing-library/react';
-import { KpiBase } from './kpiBase';
 import type { DataPoint } from '@iot-app-kit/core';
+import { KpiBase } from './kpiBase';
+import { FULL_DATE_TIME } from '../../utils/time';
 
 describe('name', () => {
   it('renders name when showName is true', () => {
@@ -149,7 +151,7 @@ describe('timestamp', () => {
     );
 
     expect(
-      screen.queryByText(PROPERTY_POINT_DATE.toLocaleString())
+      screen.queryByText(format(PROPERTY_POINT_DATE, FULL_DATE_TIME))
     ).not.toBeNull();
   });
 

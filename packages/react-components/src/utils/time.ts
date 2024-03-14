@@ -11,6 +11,7 @@ export const YEAR_IN_MS = 12 * MONTH_IN_MS;
 // Global time format strings
 export const SHORT_TIME = 'hh:mm a';
 export const FULL_DATE = 'yyy-MM-dd hh:mm:ss a';
+export const FULL_DATE_TIME = 'dd/MM/yyyy, hh:mm:ss';
 
 /**
  * ConvertMS is a helper function that will take in milliseconds and convert it to the highest detonator

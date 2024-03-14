@@ -33,6 +33,7 @@ export { useHasFeatureFlag } from './hooks/useHasFeatureFlag';
 export { useGetConfigValue } from './store/index';
 
 export { Chart } from './components/chart';
+export * from './components/timeZone';
 
 export type {
   TableColumnDefinition,

@@ -10,8 +10,7 @@ import {
 import { AnomalyObjectDataSource } from './datasource';
 import { AnomalyObjectDataSourceValue, Diagnostic, Diagnostics } from './input';
 import { AnomalyData, AnomalyDescription, DiagnosticData } from './output';
-import { isAfter } from 'date-fns/isAfter';
-import { isBefore } from 'date-fns/isBefore';
+import { isAfter, isBefore } from 'date-fns';
 
 /**
  * Transformer for AnomalyResult type responses from

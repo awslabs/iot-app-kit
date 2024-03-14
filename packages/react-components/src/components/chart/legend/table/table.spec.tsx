@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, renderHook, screen } from '@testing-library/react';
+import { format } from 'date-fns-tz';
 import { ChartLegendTable } from './table';
 import { DataStreamInformation, TrendCursor } from './types';
 import { useChartStore } from '../../store';
@@ -90,10 +91,12 @@ describe('legend table', () => {
 
     expect(table).not.toBeNull();
     expect(
-      screen.getByText(new Date(trendCursors[0].date).toLocaleTimeString())
+      screen
+        .getAllByText(format(new Date(trendCursors[0].date), 'dd/MM/yyyy'))
+        .at(0)
     ).not.toBeNull();
     expect(
-      screen.getByText(new Date(trendCursors[1].date).toLocaleTimeString())
+      screen.getByText(format(new Date(trendCursors[1].date), 'hh:mm:ss'))
     ).not.toBeNull();
 
     expect(screen.getByText('111')).not.toBeNull();
