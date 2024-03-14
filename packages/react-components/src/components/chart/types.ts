@@ -88,6 +88,11 @@ export type ChartStyleSettings = {
 
 export type ChartEventType = { target: { id?: OptionId }; offsetX?: number };
 
+export type ChartDataQuality = {
+  showBadDataIcons?: boolean;
+  showUncertainDataIcons?: boolean;
+};
+
 export type ChartOptions = {
   queries: TimeSeriesDataQuery[];
   defaultVisualizationType?: Visualization;
@@ -106,7 +111,10 @@ export type ChartOptions = {
   theme?: string;
   id?: string;
   titleText?: string;
-  onChartOptionsChange?: (options: Pick<ChartOptions, 'legend'>) => void;
+  dataQuality?: ChartDataQuality;
+  onChartOptionsChange?: (
+    options: Pick<ChartOptions, 'legend' | 'dataQuality'>
+  ) => void;
 };
 
 export interface ViewportInMs {

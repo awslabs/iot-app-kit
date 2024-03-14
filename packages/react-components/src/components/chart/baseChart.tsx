@@ -28,6 +28,10 @@ import {
   TIMESTAMP_WIDTH_FACTOR,
   TIMESTAMP_WIDTH_FACTOR_BOTTOM,
 } from './eChartsConstants';
+import { DataQualityPreferencesModal } from './preferences/dataQualityModal';
+import { useModalVisibility } from '../../hooks/useModalVisibility/useModalVisibility';
+import { PreferencesModalToggle } from './preferences/toggle';
+import { useDataQuality } from './hooks/useDataQuality';
 
 /**
  * Developer Notes:
@@ -54,6 +58,18 @@ const BaseChart = ({
   size = { width: 500, height: 500 },
   ...options
 }: ChartOptions) => {
+  const {
+    visible: dataQualityPreferencesVisible,
+    onHide: onHideDataQualityPreferences,
+    onShow: onShowDataQualityPreferences,
+  } = useModalVisibility();
+  const {
+    showBadDataIcons,
+    showUncertainDataIcons,
+    handleChangeBadDataIconsVisibility,
+    handleChangeUncertainDataIconsVisibility,
+  } = useDataQuality({ ...options.dataQuality, onChartOptionsChange });
+
   const isLegendVisible = options.legend?.visible;
   const isLegendPositionLeft = options.legend?.position === 'left';
   const isLegendPositionBottom = options.legend?.position === 'bottom';
@@ -130,6 +146,8 @@ const BaseChart = ({
   };
 
   const { dataStreamMetaData } = useChartConfiguration(chartRef, {
+    showBadDataIcons,
+    showUncertainDataIcons,
     group,
     isLoading,
     dataStreams,
@@ -226,6 +244,17 @@ const BaseChart = ({
                 height: chartHeight,
                 width: chartWidth,
               }}
+            />
+            <PreferencesModalToggle onShow={onShowDataQualityPreferences} />
+            <DataQualityPreferencesModal
+              onHide={onHideDataQualityPreferences}
+              visible={dataQualityPreferencesVisible}
+              showBadDataIcons={showBadDataIcons}
+              showUncertainDataIcons={showUncertainDataIcons}
+              onChangeShowBadDataIcons={handleChangeBadDataIconsVisibility}
+              onChangeShowUncertainDataIcons={
+                handleChangeUncertainDataIconsVisibility
+              }
             />
             {/*TODO: should not show when in dashboard */}
             <ChartContextMenu
