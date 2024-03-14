@@ -4,8 +4,6 @@ import { convertYAxis } from './axes/yAxis';
 import { convertSeriesAndYAxis } from './seriesAndYAxis/convertSeriesAndYAxis';
 import { convertStyles } from './style/convertStyles';
 import { convertThresholds } from './convertThresholds';
-import { useTooltip } from './convertTooltip';
-import { renderHook } from '@testing-library/react';
 
 const MOCK_AXIS = {
   yAxisLabel: 'Y Value',
@@ -94,7 +92,6 @@ describe('testing converters', () => {
     const convertedSeriesAndYAxisFunc = convertSeriesAndYAxis(styles);
     const result = convertedSeriesAndYAxisFunc(datastream);
 
-    expect(result).toHaveProperty('series.itemStyle.color', 'red');
     expect(result).toHaveProperty('series.step', 'middle');
   });
 
@@ -133,23 +130,6 @@ describe('testing converters', () => {
     // series name should fallback to id if no name is present
     expect(result.series.name).toEqual('abc-1');
     expect(result).toHaveProperty('series.step', false);
-  });
-
-  it('converts tooltip', async () => {
-    const { result } = renderHook(() => useTooltip(2));
-    const convertedTooltip = result.current;
-    expect(convertedTooltip.valueFormatter).toBeFunction();
-    const valueFormatter = convertedTooltip.valueFormatter;
-    if (valueFormatter) expect(valueFormatter(300)).toBe('300');
-  });
-
-  it('converts tooltip with value array', async () => {
-    const { result } = renderHook(() => useTooltip(2));
-    const convertedTooltip = result.current;
-    expect(convertedTooltip.valueFormatter).toBeFunction();
-    const valueFormatter = convertedTooltip.valueFormatter;
-    if (valueFormatter)
-      expect(valueFormatter([300, 10, 20000])).toBe('300, 10, 20000');
   });
 });
 

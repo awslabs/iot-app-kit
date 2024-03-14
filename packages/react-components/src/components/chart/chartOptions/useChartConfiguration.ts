@@ -9,9 +9,9 @@ import {
   useGroupableEChart,
   useLoadableEChart,
 } from '../../../hooks/useECharts';
-import { ChartOptions } from '../types';
+import { ChartDataQuality, ChartOptions } from '../types';
 import { useXAxis } from './axes/xAxis';
-import { useTooltip } from './convertTooltip';
+import { useTooltip } from './tooltip/convertTooltip';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import isEqual from 'lodash.isequal';
 import {
@@ -96,7 +96,7 @@ type ChartConfigurationOptions = Pick<
   dataStreams: DataStream[];
 } & { visibleData: DataPoint[] } & {
   thresholds: Threshold<ThresholdValue>[];
-} & { chartWidth: number };
+} & { chartWidth: number } & ChartDataQuality;
 
 export type DataStreamMetaData = ReturnType<
   typeof useChartConfiguration
@@ -125,6 +125,8 @@ export const useChartConfiguration = (
     styleSettings,
     thresholds,
     defaultVisualizationType,
+    showBadDataIcons,
+    showUncertainDataIcons,
   }: ChartConfigurationOptions
 ) => {
   /**
@@ -171,7 +173,6 @@ export const useChartConfiguration = (
   );
 
   const xAxis = useXAxis(axis);
-  const tooltip = useTooltip(significantDigits);
 
   const { series, yAxis } = useSeriesAndYAxis(dataSteamIdentifiers, {
     styleSettings,
@@ -180,6 +181,15 @@ export const useChartConfiguration = (
     axis,
     thresholds,
     performanceMode,
+    showBadDataIcons,
+    showUncertainDataIcons,
+  });
+
+  const tooltip = useTooltip({
+    significantDigits,
+    series,
+    showBadDataIcons,
+    showUncertainDataIcons,
   });
 
   const title = useTitle({
