@@ -3,6 +3,7 @@ import { BarSeriesOption, SeriesOption, YAXisComponentOption } from 'echarts';
 
 import {
   ChartAxisOptions,
+  ChartDataQuality,
   ChartOptions,
   ChartStyleSettingsOptions,
   Visualization,
@@ -22,6 +23,9 @@ import { GenericSeries } from '../../../../echarts/types';
 import { useMemo } from 'react';
 import { useVisibleDataStreams } from '../../hooks/useVisibleDataStreams';
 import { useHighlightedDataStreams } from '../../hooks/useHighlightedDataStreams';
+import { convertSymbol } from './convertSymbol';
+import { convertSymbolSize } from './convertSymbolSize';
+import { convertColor } from './convertColor';
 
 export const dataValue = (point: DataPoint) => point.y;
 
@@ -82,16 +86,17 @@ const convertSeries = (
     significantDigits,
     hidden,
   }: ChartStyleSettingsWithDefaults,
-  { performanceMode, index }: { performanceMode?: boolean; index?: number }
+  {
+    performanceMode,
+    index,
+    showBadDataIcons,
+    showUncertainDataIcons,
+  }: { performanceMode?: boolean; index?: number } & ChartDataQuality
 ) => {
   let opacity = emphasis === 'de-emphasize' ? DEEMPHASIZE_OPACITY : 1;
   if (hidden) {
     opacity = 0;
   }
-  const scaledSymbolSize =
-    emphasis === 'emphasize'
-      ? symbolSize + EMPHASIZE_SCALE_CONSTANT
-      : symbolSize;
   const scaledLineThickness =
     emphasis === 'emphasize'
       ? lineThickness + EMPHASIZE_SCALE_CONSTANT
@@ -105,10 +110,24 @@ const convertSeries = (
     datasetIndex: index,
     type: convertVisualizationType(visualizationType),
     step: convertStep(visualizationType),
-    symbol: symbolStyle,
-    symbolSize: scaledSymbolSize,
+    showSymbol: true,
+    symbol: convertSymbol({
+      symbolStyle,
+      showBadDataIcons,
+      showUncertainDataIcons,
+    }),
+    symbolSize: convertSymbolSize({
+      emphasis,
+      symbolSize,
+      showBadDataIcons,
+      showUncertainDataIcons,
+    }),
     itemStyle: {
-      color: symbolColor ?? color,
+      ...convertColor({
+        color: symbolColor ?? color,
+        showBadDataIcons,
+        showUncertainDataIcons,
+      }),
       opacity,
     },
     lineStyle: {
@@ -155,7 +174,12 @@ const convertYAxis = ({
 export const convertSeriesAndYAxis =
   (
     styles: ChartStyleSettingsWithDefaults,
-    { performanceMode, index }: { performanceMode?: boolean; index: number } = {
+    {
+      performanceMode,
+      index,
+      showBadDataIcons,
+      showUncertainDataIcons,
+    }: { performanceMode?: boolean; index: number } & ChartDataQuality = {
       performanceMode: false,
       index: 0,
     }
@@ -164,6 +188,8 @@ export const convertSeriesAndYAxis =
     const series = convertSeries(datastream, styles, {
       performanceMode,
       index,
+      showBadDataIcons,
+      showUncertainDataIcons,
     });
     const yAxis = convertYAxis(styles);
 
@@ -233,6 +259,8 @@ export const useSeriesAndYAxis = (
     axis,
     thresholds,
     performanceMode,
+    showBadDataIcons,
+    showUncertainDataIcons,
   }: Pick<
     ChartOptions,
     'defaultVisualizationType' | 'styleSettings' | 'significantDigits'
@@ -240,7 +268,7 @@ export const useSeriesAndYAxis = (
     thresholds: Threshold[];
     axis?: ChartAxisOptions;
     performanceMode?: boolean;
-  }
+  } & ChartDataQuality
 ) => {
   const { isDataStreamHidden } = useVisibleDataStreams();
   const { highlightedDataStreams, isDataStreamHighlighted } =
@@ -281,6 +309,8 @@ export const useSeriesAndYAxis = (
         return convertSeriesAndYAxis(chartStylesWithDefaults, {
           performanceMode,
           index,
+          showBadDataIcons,
+          showUncertainDataIcons,
         })(datastream);
       })
       .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis });
@@ -305,5 +335,7 @@ export const useSeriesAndYAxis = (
     highlightedDataStreams,
     isDataStreamHighlighted,
     isDataStreamHidden,
+    showBadDataIcons,
+    showUncertainDataIcons,
   ]);
 };
