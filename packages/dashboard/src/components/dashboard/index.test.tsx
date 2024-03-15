@@ -8,6 +8,7 @@ import Dashboard from './index';
 import React from 'react';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { RefreshRate } from '../refreshRate/types';
 
 it('renders', function () {
   const { queryByText, queryByTestId } = render(
@@ -114,6 +115,9 @@ it('passes the correct viewMode to onSave', function () {
       cellSize: 20,
       numRows: 100,
       significantDigits: 4,
+    },
+    querySettings: {
+      refreshRate: 5000 as RefreshRate,
     },
     widgets: [],
     viewport: { duration: '5m' },
