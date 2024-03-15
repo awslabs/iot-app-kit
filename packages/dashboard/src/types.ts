@@ -8,6 +8,7 @@ import {
   SiteWisePropertyAliasQuery,
   SiteWiseQuery,
 } from '@iot-app-kit/source-iotsitewise';
+import { RefreshRate } from './components/refreshRate/types';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 
 export type DashboardClientCredentials = {
@@ -59,10 +60,15 @@ export type DashboardDisplaySettings = {
   significantDigits?: number;
 };
 
+export type DashboardTimeSeriesSettings = {
+  refreshRate?: RefreshRate;
+};
+
 export type DashboardConfiguration<
   Properties extends Record<string, unknown> = Record<string, unknown>
 > = {
   displaySettings: DashboardDisplaySettings;
+  querySettings?: DashboardTimeSeriesSettings;
   widgets: DashboardWidget<Properties>[];
   viewport: Viewport;
 };

@@ -21,6 +21,10 @@ export type AssetId = string;
 
 export type AssetModelId = string;
 
+export type RequestSettings = {
+  refreshRate?: number;
+};
+
 export type AssetPropertyQuery = {
   propertyId: string;
   refId?: RefId;
@@ -59,14 +63,17 @@ export type AssetModelQuery = {
 
 export type SiteWiseAssetQuery = DataStreamQuery & {
   assets: AssetQuery[];
+  requestSettings?: RequestSettings;
 };
 
 export type SiteWisePropertyAliasQuery = DataStreamQuery & {
   properties: PropertyAliasQuery[];
+  requestSettings?: RequestSettings;
 };
 
 export type SiteWiseAssetModelQuery = DataStreamQuery & {
   assetModels: AssetModelQuery[];
+  requestSettings?: RequestSettings;
 };
 
 export type SiteWiseDataStreamQuery = Partial<SiteWiseAssetQuery> &
