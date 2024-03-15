@@ -9,6 +9,7 @@ import type {
   SubscriptionUpdate,
 } from '../types';
 import type { CacheSettings } from '../data-cache/types';
+import * as RefreshRate from './refreshRate';
 
 /**
  * Subscription store
@@ -37,9 +38,21 @@ export default class SubscriptionStore<Query extends DataStreamQuery> {
     this.cacheSettings = cacheSettings;
   }
 
+  getRefreshRate(subscription: Subscription) {
+    const refreshRate =
+      subscription.queries
+        .filter(RefreshRate.isQueryWithRequestSettings)
+        .find((q) => q.requestSettings.refreshRate != null)?.requestSettings
+        .refreshRate || subscription.request.settings?.refreshRate;
+
+    return RefreshRate.getValidRefreshRate(refreshRate);
+  }
+
   async addSubscription(
     subscriptionId: string,
-    subscription: Subscription<Query>
+    subscription: Subscription<
+      Query | (Query & RefreshRate.QueryRequestSettings)
+    >
   ): Promise<void> {
     if (this.subscriptions[subscriptionId] == null) {
       /**
@@ -48,19 +61,21 @@ export default class SubscriptionStore<Query extends DataStreamQuery> {
       if ('queries' in subscription) {
         subscription.fulfill();
 
+        const refreshRate = this.getRefreshRate(subscription);
+
         if ('duration' in subscription.request.viewport) {
           /** has a duration, so periodically request for data without a deadline */
           this.scheduler.create({
             id: subscriptionId,
             cb: () => subscription.fulfill(),
-            refreshRate: subscription.request.settings?.refreshRate,
+            refreshRate,
           });
         } else {
           /** has a static start and end, request until data is unexpireable */
           this.scheduler.create({
             id: subscriptionId,
             cb: () => subscription.fulfill(),
-            refreshRate: subscription.request.settings?.refreshRate,
+            refreshRate,
             refreshExpiration:
               viewportEndDate(subscription.request.viewport).getTime() +
               Math.max(

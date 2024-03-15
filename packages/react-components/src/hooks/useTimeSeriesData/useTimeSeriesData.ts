@@ -101,6 +101,7 @@ export const useTimeSeriesData = ({
             resolution,
           })
         ),
+        requestSettings: query.requestSettings,
       },
     }));
 
