@@ -3,7 +3,7 @@ import React from 'react';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { DashboardWidget } from '~/types';
 import { maybeWithDefault } from '~/util/maybe';
-import { DecimalPlacesSection } from './section';
+import { SettingsSection } from './section';
 import { CommonChartProperties } from '~/customization/widgets/types';
 import { nonNegative } from '~/util/number';
 import { PropertyLens } from '~/customization/propertiesSection';
@@ -12,7 +12,7 @@ const isSettingsWidget = (
   w: DashboardWidget
 ): w is DashboardWidget<CommonChartProperties> => 'queryConfig' in w.properties;
 
-const RenderDecimalPlacesConfiguration = ({
+const RenderSettingsConfiguration = ({
   useProperty,
 }: {
   useProperty: PropertyLens<DashboardWidget<CommonChartProperties>>;
@@ -27,17 +27,17 @@ const RenderDecimalPlacesConfiguration = ({
   );
 
   return (
-    <DecimalPlacesSection
+    <SettingsSection
       significantDigits={maybeWithDefault(undefined, significantDigits)}
       updateSignificantDigits={updateSignificantDigits}
     />
   );
 };
-export const DecimalPlacesConfiguration: React.FC = () => (
+export const SettingsConfiguration: React.FC = () => (
   <PropertiesSection
     isVisible={isSettingsWidget}
     render={({ useProperty }) => (
-      <RenderDecimalPlacesConfiguration useProperty={useProperty} />
+      <RenderSettingsConfiguration useProperty={useProperty} />
     )}
   />
 );

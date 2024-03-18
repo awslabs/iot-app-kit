@@ -8,7 +8,7 @@ import type { StatusWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { isDefined } from '~/util/isDefined';
-import { aggregateToString } from '~/customization/propertiesSections/formatDataSettings/helpers';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import './component.css';
 import WidgetTile from '~/components/widgets/tile/tile';
