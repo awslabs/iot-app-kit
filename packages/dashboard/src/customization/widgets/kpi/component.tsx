@@ -11,7 +11,7 @@ import { isDefined } from '~/util/isDefined';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 
 import './component.css';
-import { aggregateToString } from '~/customization/propertiesSections/formatDataSettings/helpers';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import WidgetTile from '~/components/widgets/tile';
 
 const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
