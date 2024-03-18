@@ -8,7 +8,7 @@ import type { DashboardState } from '~/store/state';
 import type { BarChartWidget } from '.././types';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { getAggregation } from '../utils/widgetAggregationUtils';
-import { aggregateToString } from '~/customization/propertiesSections/formatDataSettings/helpers';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { useChartSize } from '~/hooks/useChartSize';
 import WidgetTile from '~/components/widgets/tile';
 
