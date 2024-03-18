@@ -160,6 +160,33 @@ Each asset contains the following fields:
 
   Type: String
 
+`requestSettings`
+
+(Optional) Specifies how often to request time-series data during live mode in milliseconds under the refresh.
+
+Type: Object
+
+  - `refreshRate`
+
+  (Optional) The default value of the refreshRate field is 5000 milliseconds. The minimum value is 1000 milliseconds. Passing in a number below 1000 milliseconds into refreshRate will default to 1000 milliseconds.
+
+  Type: number
+
+
+This query will request data every 5 seconds while in live mode. 
+
+```
+query.timeSeriesData({
+  assets: [{
+    assetId: 'id',
+    properties: [{ propertyId: 'alarmStatePropertyId' }]
+    requestSettings: {
+      refreshRate: 5000
+    }
+  }]
+})
+```
+
 #### Alarms
 
 AWS IoT SiteWise has a concept of [alarms](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-alarms.html).
