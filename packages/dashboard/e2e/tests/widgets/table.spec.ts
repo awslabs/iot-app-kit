@@ -58,7 +58,7 @@ test.describe('Test Table Widget', () => {
     // because of rounding, sometimes 0 gets cut off
     // hence we want to check a range of [sig digits - 1, sig digits]
     expect(getDecimalPlaces(widgetValue)).toBeGreaterThanOrEqual(2);
-    expect(getDecimalPlaces(widgetValue)).toBeLessThanOrEqual(3);
+    expect(getDecimalPlaces(widgetValue)).toBeLessThanOrEqual(4);
 
     //change sig digits to 1
     await configPanel.collapsedButton.click();

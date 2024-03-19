@@ -1,31 +1,26 @@
 import type { Primitive } from '@iot-app-kit/core';
 
 /**
- * Rounds a number to a pre-determined precision
+ * Rounds a number to a given precision
  *
- * i.e. round(100000.1234) => 100000.1234
- *      round(100000.12345678) => 100000.1234
- *      round(.02345678) => 0.02346
+ * i.e. round(100000.1234, 4) => 100000.1234
+ *      round(100000.12345678, 4) => 100000.1234
+ *      round(.02345678, 2) => 0.02
+ *      round(100000.12345678) => 100000.12345678
+ *
+ * Must be represented as a string to not lose trailing zeros.
  */
-export const round = (num: number, precision = 4): number => {
+export const round = (num: number, precision?: number): string => {
   if (
     Number.isNaN(num) ||
     num === Infinity ||
     num === -Infinity ||
-    precision <= 0
+    precision === undefined
   ) {
-    return num;
+    return num.toString();
   }
 
-  if (Math.abs(num) < 1) {
-    return Number(num.toPrecision(precision));
-  }
-
-  const integer = Math.trunc(num);
-  const decimal = num - integer;
-  return Number(
-    (integer + Number(decimal.toFixed(precision))).toFixed(precision)
-  );
+  return num.toFixed(precision);
 };
 
 /**
