@@ -11,5 +11,9 @@ export const LatestValueCell = ({ id, latestValue }: DataStreamInformation) => {
     [isDataStreamHidden, id]
   );
 
-  return <div className={!isVisible ? 'hidden-legend' : ''}>{latestValue}</div>;
+  return (
+    <div className={!isVisible ? 'hidden-legend' : ''}>
+      {latestValue ?? '-'}
+    </div>
+  );
 };
