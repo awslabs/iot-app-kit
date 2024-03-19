@@ -35,7 +35,7 @@ export function createModeledDataStreamColumnDefinitions(
       cell: ({ latestValueTime }) => {
         if (latestValueTime && isNumeric(latestValueTime)) {
           return getFormattedDateTimeFromEpoch(
-            round(latestValueTime, significantDigits)
+            Number(round(latestValueTime, significantDigits))
           );
         }
         return getFormattedDateTimeFromEpoch(latestValueTime);
