@@ -61,6 +61,7 @@ export const DecimalPlacesSection = ({
             inputMode='numeric'
             data-testid='decimal-place-config'
             controlId='decimal-places'
+            placeholder='Auto'
             value={field.value}
             onChange={({ detail: { value } }) => {
               field.onChange(value);
