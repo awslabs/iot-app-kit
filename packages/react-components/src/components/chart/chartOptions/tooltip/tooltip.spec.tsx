@@ -36,10 +36,10 @@ describe('echarts tooltip', () => {
 
     expect(tooltip).not.toBeNull();
     expect(screen.getByText('fake datastream')).not.toBeNull();
-    expect(screen.getByText('10')).not.toBeNull();
+    expect(screen.getByText('10.0000')).not.toBeNull();
     expect(screen.getByText('fake datastream 2')).not.toBeNull();
     expect(tooltip.queryByText('(Bad data quality)')).toBeInTheDocument();
-    expect(screen.getByText('20')).not.toBeNull();
+    expect(screen.getByText('20.0000')).not.toBeNull();
   });
 
   it('does not show data quality if the settings are disabled', () => {
@@ -75,9 +75,9 @@ describe('echarts tooltip', () => {
     expect(
       tooltip.queryByText('(Uncertain data quality)')
     ).not.toBeInTheDocument();
-    expect(screen.getByText('10')).not.toBeNull();
+    expect(screen.getByText('10.0000')).not.toBeNull();
     expect(screen.getByText('fake datastream 2')).not.toBeNull();
     expect(tooltip.queryByText('(Bad data quality)')).not.toBeInTheDocument();
-    expect(screen.getByText('20')).not.toBeNull();
+    expect(screen.getByText('20.0000')).not.toBeNull();
   });
 });

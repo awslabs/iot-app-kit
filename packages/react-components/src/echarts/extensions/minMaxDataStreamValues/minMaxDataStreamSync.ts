@@ -8,15 +8,15 @@ export const findMinMax = (
   end: number,
   appKitSignificantDigits: number
 ) => {
-  let max: number | undefined = undefined;
-  let min: number | undefined = undefined;
+  let max: string | undefined = undefined;
+  let min: string | undefined = undefined;
   series.getData().each((dims) => {
     const dataPoint = series.getData().getValues(dims) as number[];
     if (contains(start, end, dataPoint[0])) {
-      if (max === undefined || dataPoint[1] > max) {
+      if (max === undefined || dataPoint[1] > Number(max)) {
         max = round(dataPoint[1], appKitSignificantDigits);
       }
-      if (min === undefined || dataPoint[1] < min) {
+      if (min === undefined || dataPoint[1] < Number(min)) {
         min = round(dataPoint[1], appKitSignificantDigits);
       }
     }

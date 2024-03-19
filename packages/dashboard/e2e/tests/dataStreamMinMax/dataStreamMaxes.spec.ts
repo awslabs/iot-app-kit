@@ -94,7 +94,7 @@ test.describe('Data Stream Maxes', () => {
       .first()
       .innerText();
 
-    expect(getDecimalPlaces(initialMaxValueString)).toBe(3);
+    expect(getDecimalPlaces(initialMaxValueString)).toBe(4);
 
     //change sig digits to 1
     await configPanel.decimalPlaceInput.fill('1');
