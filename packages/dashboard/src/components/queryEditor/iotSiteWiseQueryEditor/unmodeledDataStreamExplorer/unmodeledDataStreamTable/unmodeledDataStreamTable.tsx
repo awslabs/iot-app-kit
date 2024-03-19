@@ -164,7 +164,7 @@ export function UnmodeledDataStreamTable({
           cell: ({ latestValueTime }) => {
             if (latestValueTime && isNumeric(latestValueTime)) {
               return getFormattedDateTimeFromEpoch(
-                round(latestValueTime, significantDigits)
+                Number(round(latestValueTime, significantDigits))
               );
             }
             return getFormattedDateTimeFromEpoch(latestValueTime);

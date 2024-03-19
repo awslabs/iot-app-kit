@@ -101,7 +101,7 @@ test.describe('Test KPI Widget', () => {
     const widgetValue = await dashboardWithKPIWidget.gridArea
       .getByTestId('kpi-value')
       .textContent();
-    expect(getDecimalPlaces(widgetValue)).toBe(3);
+    expect(getDecimalPlaces(widgetValue)).toBe(4);
 
     //change sig digits to 1
     await configPanel.collapsedButton.click();
