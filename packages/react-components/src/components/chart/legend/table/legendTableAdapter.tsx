@@ -15,7 +15,10 @@ const mapDataStreamInformation = ({
   dataStreamMaxes,
   dataStreamMins,
 }: {
-  datastreams: (Pick<DataStream, 'id' | 'color' | 'name' | 'unit'> & {
+  datastreams: (Pick<
+    DataStream,
+    'id' | 'color' | 'name' | 'unit' | 'assetName'
+  > & {
     latestValue: Primitive | undefined;
   })[];
   trendCursorValues: TrendCursorValues[];
@@ -24,7 +27,7 @@ const mapDataStreamInformation = ({
   dataStreamMaxes: MinMaxMap;
   dataStreamMins: MinMaxMap;
 }): DataStreamInformation[] =>
-  datastreams.map(({ id, name, color, unit, latestValue }) => {
+  datastreams.map(({ id, name, color, unit, assetName, latestValue }) => {
     const values = trendCursorValues.reduce<
       DataStreamInformation['trendCursorValues']
     >((valueMap, next) => {
@@ -44,6 +47,7 @@ const mapDataStreamInformation = ({
       id,
       name: dataStreamName,
       color,
+      assetName,
       latestValue,
       trendCursorValues: values,
       maxValue,
@@ -52,7 +56,10 @@ const mapDataStreamInformation = ({
   });
 
 type ChartLegendTableAdapterOptions = ChartLegend & {
-  datastreams: (Pick<DataStream, 'id' | 'color' | 'name' | 'unit'> & {
+  datastreams: (Pick<
+    DataStream,
+    'id' | 'color' | 'name' | 'unit' | 'assetName'
+  > & {
     latestValue: Primitive | undefined;
   })[];
   trendCursorValues: TrendCursorValues[];

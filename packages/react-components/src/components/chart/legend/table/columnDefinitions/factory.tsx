@@ -5,9 +5,14 @@ import { DataStreamInformation, TrendCursor } from '../types';
 import { DataStreamCell, DataStreamColumnHeader } from './datastream';
 import { TrendCursorCell, TrendCursorColumnHeader } from './trendCursor';
 import { MaximumColumnHeader, MaximumCell } from './maximumValue';
+import { AssetNameCell, AssetNameColumnHeader } from './assetName';
 import { MinimumColumnHeader, MinimumCell } from './minimumValue';
 import { ChartLegend, ChartOptions } from '../../../types';
 import { LatestValueCell, LatestValueColumnHeader } from './latestValue';
+import {
+  LEGEND_ASSET_NAME_COL_MAX_WIDTH,
+  LEGEND_ASSET_NAME_COL_MIN_WIDTH,
+} from '../../../eChartsConstants';
 
 type LegendTableColumnDefinitions =
   TableProps<DataStreamInformation>['columnDefinitions'];
@@ -35,6 +40,18 @@ const createMaximumColumnDefinition =
       return aValue - bValue;
     },
   });
+
+const createAssetNameColumnDefinition =
+  (): LegendTableColumnDefinitions[1] => ({
+    id: 'AssetName',
+    sortingField: 'assetName',
+    header: <AssetNameColumnHeader />,
+    minWidth: LEGEND_ASSET_NAME_COL_MIN_WIDTH,
+    maxWidth: LEGEND_ASSET_NAME_COL_MAX_WIDTH,
+    cell: (item) => <AssetNameCell {...item} />,
+    isRowHeader: true,
+  });
+
 const createLatestValueColumnDefinition = (
   significantDigits: ChartOptions['significantDigits']
 ): LegendTableColumnDefinitions[1] => ({
@@ -105,6 +122,7 @@ export const createTableLegendColumnDefinitions = ({
 
   return [
     createDataStreamColumnDefinition(width),
+    ...(visibleContent?.asset ? [createAssetNameColumnDefinition()] : []),
     ...(visibleContent?.maxValue ? [createMaximumColumnDefinition()] : []),
     ...(visibleContent?.minValue ? [createMinimumColumnDefinition()] : []),
     ...(visibleContent?.latestValue
