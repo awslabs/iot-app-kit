@@ -75,6 +75,7 @@ export const dropdownConsts = {
   legendDisplaySection: {
     legendDisplaylist: [
       { label: 'Unit', value: 'unit' },
+      { label: 'Asset Name', value: 'asset' },
       { label: 'Maximum Value', value: 'maxValue' },
       { label: 'Minimum Value', value: 'minValue' },
       { label: 'Latest Value', value: 'latestValue' },
