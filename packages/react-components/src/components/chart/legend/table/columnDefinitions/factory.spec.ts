@@ -46,11 +46,12 @@ describe('legend table column definitions', () => {
     );
   });
 
-  it('latest value column is added when latestvalue visible is true', () => {
+  it('asset name and latest value columns are added when asset name and latestvalue visible is true', () => {
     const columnDefinitions = createTableLegendColumnDefinitions({
       trendCursors: [],
       width: 100,
       visibleContent: {
+        asset: true,
         latestValue: true,
       },
       significantDigits: 0,
@@ -59,24 +60,31 @@ describe('legend table column definitions', () => {
       expect.arrayContaining([
         expect.toBeObject(),
         expect.objectContaining({
+          id: 'AssetName',
+        }),
+        expect.objectContaining({
           id: 'Latest Value',
         }),
       ])
     );
   });
 
-  it('latest value column is not added when latestvalue visible is false', () => {
+  it('asset name and latest value columns are not added when asset name and latestvalue visibility is false', () => {
     const columnDefinitions = createTableLegendColumnDefinitions({
       trendCursors: [],
       width: 100,
       visibleContent: {
         latestValue: false,
+        asset: false,
       },
       significantDigits: 0,
     });
     expect(columnDefinitions).toEqual(
       expect.arrayContaining([
         expect.toBeObject(),
+        expect.not.objectContaining({
+          id: 'AssetName',
+        }),
         expect.not.objectContaining({
           id: 'Latest Value',
         }),

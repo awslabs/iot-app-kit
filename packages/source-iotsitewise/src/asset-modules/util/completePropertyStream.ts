@@ -25,7 +25,8 @@ export const completePropertyStream = ({
   }
 
   const property = modeledDataStreams.find(
-    (property) => property.propertyId === propertyId
+    (property) =>
+      property.propertyId === propertyId && property.assetId === assetId
   );
 
   if (!property) {
@@ -36,6 +37,7 @@ export const completePropertyStream = ({
     ...dataStream,
     name: property.name,
     unit: property.unit,
+    assetName: property.assetName,
     dataType: toDataType(property.dataType),
     associatedStreams: Object.keys(alarms)
       .filter((id) => {

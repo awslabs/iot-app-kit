@@ -106,6 +106,7 @@ export interface DataStream<T extends Primitive = Primitive>
   isLoading?: boolean;
   isRefreshing?: boolean;
   numOutgoingRequests?: number;
+  assetName?: string;
 }
 
 export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
