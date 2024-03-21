@@ -1,4 +1,5 @@
 import React from 'react';
+import { colorBackgroundContainerContent } from '@cloudscape-design/design-tokens';
 import {
   anchorable,
   gestureable,
@@ -29,6 +30,9 @@ const SelectionBoxAnchor: React.FC<SelectionBoxAnchorProps> = ({ anchor }) => {
   const cornerClass = isCorner
     ? `selection-box-corner selection-box-corner-${anchor}`
     : '';
+  const cornerStyle = isCorner
+    ? { backgroundColor: colorBackgroundContainerContent }
+    : {};
   const sideClass = isSide
     ? `selection-box-side selection-box-side-${anchor}`
     : '';
@@ -45,6 +49,7 @@ const SelectionBoxAnchor: React.FC<SelectionBoxAnchorProps> = ({ anchor }) => {
         {...gestureable('resize')}
         {...anchorable(anchor)}
         className={anchorClass}
+        style={cornerStyle}
       />
     </>
   );
