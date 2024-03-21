@@ -5,6 +5,7 @@ import { WebglContext, TimeSync } from '@iot-app-kit/react-components';
 import Box from '@cloudscape-design/components/box';
 import {
   colorBackgroundCellShaded,
+  colorBackgroundLayoutMain,
   colorBorderDividerDefault,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
@@ -267,6 +268,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
 
   const dashboardToolbarBottomBorder = {
     borderBottom: `solid ${spaceScaledXxxs} ${colorBorderDividerDefault}`,
+    backgroundColor: colorBackgroundLayoutMain,
   };
 
   if (iotSiteWiseClient == null || iotTwinMakerClient == null) {

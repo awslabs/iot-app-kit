@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Box, SpaceBetween } from '@cloudscape-design/components';
-import { colorTextLayoutToggle } from '@cloudscape-design/design-tokens';
+import { colorBackgroundContainerContent } from '@cloudscape-design/design-tokens';
 
 import './no-chart-data.css';
 
@@ -16,7 +16,7 @@ const NoChartData = ({ icon, emptyStateText }: NoChartDataProps) => {
       aria-description='empty widget tile'
       className='no-chart-data-empty-state'
       style={{
-        backgroundColor: colorTextLayoutToggle,
+        backgroundColor: colorBackgroundContainerContent,
       }}
     >
       <Box textAlign='center'>

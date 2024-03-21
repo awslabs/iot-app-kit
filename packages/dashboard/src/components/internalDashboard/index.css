@@ -28,11 +28,6 @@
   position: relative;
 }
 
-.dashboard .dashboard-toolbar,
-.dashboard .dashboard-toolbar-read-only {
-  background-color: var(--colors-white);
-}
-
 .dashboard .dashboard-toolbar .dashboard-toolbar-read-only {
   display: grid;
   grid-template-columns: auto max-content;
@@ -93,7 +88,6 @@
   height: 100%;
   max-height: calc(100vh - var(--toolbar-overlay-height));
   z-index: var(--stack-order-grid-inputs);
-  background-color: var(--colors-white);
 }
 
 .collapsible-panel-right {
