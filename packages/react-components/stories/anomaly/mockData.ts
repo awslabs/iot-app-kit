@@ -44,12 +44,14 @@ function getRandomDate(from: Date, to: Date) {
   return new Date(fromTime + Math.random() * (toTime - fromTime)).getTime();
 }
 
+export const MOCK_DATA_VIEWPORT = {
+  start: new Date(),
+  end: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+};
 // creates array of 10 random dates within last 7 days
 const times = new Array(10)
   .fill(null)
-  .map(() =>
-    getRandomDate(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), new Date())
-  );
+  .map(() => getRandomDate(MOCK_DATA_VIEWPORT.end, MOCK_DATA_VIEWPORT.start));
 
 export const mockDatasource: AnomalyObjectDataSource = {
   state: 'success',
