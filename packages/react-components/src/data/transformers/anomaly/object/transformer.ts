@@ -10,6 +10,8 @@ import {
 import { AnomalyObjectDataSource } from './datasource';
 import { AnomalyObjectDataSourceValue, Diagnostic, Diagnostics } from './input';
 import { AnomalyData, AnomalyDescription, DiagnosticData } from './output';
+import { isAfter } from 'date-fns/isAfter';
+import { isBefore } from 'date-fns/isBefore';
 
 /**
  * Transformer for AnomalyResult type responses from
@@ -58,6 +60,27 @@ export class AnomalyObjectDataSourceTransformer extends ObjectDataSourceTransfor
     }
 
     return hasValidData;
+  }
+
+  #getDataExtent(dataSource: AnomalyObjectDataSource) {
+    let start: Date | null = null;
+    let end: Date | null = null;
+    dataSource.value.data.forEach(({ timestamp }) => {
+      const date = new Date(timestamp);
+      if (start === null || isAfter(date, start)) {
+        start = date;
+      }
+      if (end === null || isBefore(date, end)) {
+        end = date;
+      }
+    });
+
+    if (start === null || end === null) return undefined;
+
+    return {
+      start,
+      end,
+    };
   }
 
   #getDiagnosticKey(
@@ -119,6 +142,7 @@ export class AnomalyObjectDataSourceTransformer extends ObjectDataSourceTransfor
     return {
       ...dataSource.value.styles,
       diagnostics: diagnosticMapping,
+      dataExtent: this.#getDataExtent(dataSource),
     };
   }
 }
