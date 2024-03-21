@@ -1,5 +1,6 @@
 import {
   borderRadiusDropdown,
+  colorBackgroundButtonNormalDefault,
   colorBackgroundDropdownItemHover,
 } from '@cloudscape-design/design-tokens';
 import React, { useRef } from 'react';
@@ -37,7 +38,7 @@ export const HighlightToggle = ({
       style={{
         backgroundColor: isHovering
           ? colorBackgroundDropdownItemHover
-          : 'white', //white background color matches surroundings to display that it is diabled
+          : colorBackgroundButtonNormalDefault, //white background color matches surroundings to display that it is diabled
         borderRadius: borderRadiusDropdown,
       }}
       className={`base-chart-legend-row-line-container ${
