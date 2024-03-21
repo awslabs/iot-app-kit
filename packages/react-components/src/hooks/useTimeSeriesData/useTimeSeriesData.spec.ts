@@ -104,8 +104,7 @@ it('returns time series data when the number of time series queries changes', ()
   });
 });
 
-// TODO: Fix this test
-it.skip('returns time series data when the number of queries within one time series query changes', () => {
+it('returns time series data when the number of queries within one time series query changes', () => {
   const THRESHOLD_1: Threshold = {
     comparisonOperator: 'GT',
     value: 10,
