@@ -5,7 +5,7 @@ import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Button from '@cloudscape-design/components/button';
 import {
-  colorBackgroundButtonNormalDefault,
+  colorBackgroundContainerContent,
   colorBorderDividerDefault,
   spaceStaticXxxs,
 } from '@cloudscape-design/design-tokens';
@@ -27,7 +27,7 @@ export const ResourceExplorerFooter = ({
 }: ResourceExplorerFooterOptions) => {
   const [componentRef, { width }] = useMeasure<HTMLDivElement>();
   const stickyFooter = {
-    backgroundColor: colorBackgroundButtonNormalDefault,
+    backgroundColor: colorBackgroundContainerContent,
     bottom: spaceStaticXxxs,
     width: width + STICKY_BUTTON_WIDTH_FACTOR,
     borderTop: `${spaceStaticXxxs} solid ${colorBorderDividerDefault}`,

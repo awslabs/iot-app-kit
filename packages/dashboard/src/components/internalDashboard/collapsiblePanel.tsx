@@ -2,7 +2,8 @@ import React, { ReactNode } from 'react';
 
 import './index.css';
 import {
-  colorBackgroundButtonPrimaryDefault,
+  colorBackgroundLayoutMain,
+  colorBackgroundSegmentActive,
   colorBorderDividerDefault,
   spaceContainerHorizontal,
   spaceStaticL,
@@ -84,7 +85,7 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
       <div
         style={{
-          backgroundColor: colorBackgroundButtonPrimaryDefault,
+          backgroundColor: colorBackgroundSegmentActive,
           margin: spaceContainerHorizontal,
         }}
         className='side_panels_collapsed_style'
@@ -109,6 +110,7 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
         ...(props.isPanelCollapsed && {
           [`border${borderSide}`]: `${spaceStaticXxxs} solid ${colorBorderDividerDefault}`,
         }),
+        backgroundColor: colorBackgroundLayoutMain,
       }}
     >
       {props.isPanelCollapsed ? collapsedPanel : expandedPanel}
