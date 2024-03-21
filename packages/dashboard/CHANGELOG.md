@@ -1,5 +1,51 @@
 # Changelog
 
+## [10.1.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.0.0...dashboard-v10.1.0) (2024-03-21)
+
+
+### Features
+
+* added validation for decimal places input and moved in section format data [#2599](https://github.com/awslabs/iot-app-kit/issues/2599) ([1cd97c1](https://github.com/awslabs/iot-app-kit/commit/1cd97c14f569df5867e8865151e76a457c8af52d))
+* **dashboard:** adding new property panel layout ([617c77c](https://github.com/awslabs/iot-app-kit/commit/617c77c06a5496641cc75df963a12a1a8dda7be6))
+* new KPI and update tests ([328e41a](https://github.com/awslabs/iot-app-kit/commit/328e41ae6f1b25c743a16f03d966a5b97408455a))
+* user selected dashboard refresh-rate ([1c1256d](https://github.com/awslabs/iot-app-kit/commit/1c1256da83c938037a47e930c127c2bf3bc14e90))
+
+
+### Bug Fixes
+
+* add range for table significant digits test ([ac53406](https://github.com/awslabs/iot-app-kit/commit/ac53406823e2c359e635720b918bccb1bf9fb0f7))
+* added the selection list reset in unmodeled section after clicking add [#2659](https://github.com/awslabs/iot-app-kit/issues/2659) ([7288bc7](https://github.com/awslabs/iot-app-kit/commit/7288bc75afe8f7dac66a6588cd1c21d674bac7dc))
+* **dashboard:** style updates to widget title bar ([1b224bf](https://github.com/awslabs/iot-app-kit/commit/1b224bf36768ed628946512be1feab2d0446985f))
+* fixed the issue with no aggregation change [#2605](https://github.com/awslabs/iot-app-kit/issues/2605) ([569854e](https://github.com/awslabs/iot-app-kit/commit/569854e1e0778b569a0dc9ca265e77f1d1508efc))
+* fixed the timezone issue in unit test [#2623](https://github.com/awslabs/iot-app-kit/issues/2623) ([a8200dc](https://github.com/awslabs/iot-app-kit/commit/a8200dc6ff783fbfda924ee52080582bd0a1f222))
+* grouped the style buttons together and associated with style label for screen reader [#2360](https://github.com/awslabs/iot-app-kit/issues/2360) ([da7f0c1](https://github.com/awslabs/iot-app-kit/commit/da7f0c1f5bbdb0735fec4ddfbf53726ba5c319cc))
+* pass in refresh rate through the query instead of props ([b6df585](https://github.com/awslabs/iot-app-kit/commit/b6df5856b4407c74d4746d12a1781d11976f9948))
+* **react components:** updating import for popper.js ([00c1707](https://github.com/awslabs/iot-app-kit/commit/00c17078163cc2ef48a8eb6e370652ca9823e8e2))
+* refresh rate defined in dashboard and on query ([43cc5e4](https://github.com/awslabs/iot-app-kit/commit/43cc5e437543aed60663620655044cba9437a226))
+* remove duplicate constants and types ([45c155b](https://github.com/awslabs/iot-app-kit/commit/45c155b414a29c767e276060f1c60ce8401ea456))
+* updated the viewport settings for dynamic input [#2565](https://github.com/awslabs/iot-app-kit/issues/2565) ([0e31d25](https://github.com/awslabs/iot-app-kit/commit/0e31d25b9a7001a6216057681ac5aa7b6ec327ed))
+
+
+### Reverts
+
+* "feat(dashboard): adding new property panel layout" ([880125b](https://github.com/awslabs/iot-app-kit/commit/880125baadbf5ce1b478566154d8f352143e9784))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/core bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/core-util bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/react-components bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.0.0 to 10.1.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/testing-util bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/ts-config bumped from 10.0.0 to 10.1.0
+    * eslint-config-iot-app-kit bumped from 10.0.0 to 10.1.0
+
 ## [10.0.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v9.15.0...dashboard-v10.0.0) (2024-02-28)
 
 

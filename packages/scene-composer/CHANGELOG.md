@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.1.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v10.0.0...scene-composer-v10.1.0) (2024-03-21)
+
+
+### Bug Fixes
+
+* **scene:** fix Scene Hierarchy Tree item for node with no components ([e341fa5](https://github.com/awslabs/iot-app-kit/commit/e341fa511cfec0630ec13b0dba22981b7307c6be))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/react-components bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/related-table bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.0.0 to 10.1.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 10.0.0 to 10.1.0
+
 ## [10.0.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v9.15.0...scene-composer-v10.0.0) (2024-02-28)
 
 

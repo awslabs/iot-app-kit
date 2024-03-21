@@ -1,5 +1,23 @@
 # Changelog
 
+## [10.1.0](https://github.com/awslabs/iot-app-kit/compare/testing-util-v10.0.0...testing-util-v10.1.0) (2024-03-21)
+
+
+### Bug Fixes
+
+* pass in refresh rate through the query instead of props ([b6df585](https://github.com/awslabs/iot-app-kit/commit/b6df5856b4407c74d4746d12a1781d11976f9948))
+* updated the viewport settings for dynamic input [#2565](https://github.com/awslabs/iot-app-kit/issues/2565) ([0e31d25](https://github.com/awslabs/iot-app-kit/commit/0e31d25b9a7001a6216057681ac5aa7b6ec327ed))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.0.0 to 10.1.0
+  * devDependencies
+    * @iot-app-kit/ts-config bumped from ^10.0.0 to ^10.1.0
+    * eslint-config-iot-app-kit bumped from ^10.0.0 to ^10.1.0
+
 ## [10.0.0](https://github.com/awslabs/iot-app-kit/compare/testing-util-v9.15.0...testing-util-v10.0.0) (2024-02-28)
 
 
