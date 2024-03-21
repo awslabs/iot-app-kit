@@ -16,7 +16,7 @@ export { toSiteWiseAssetProperty } from './common/dataStreamId';
 // Viewport utilities
 export { parseDuration } from './common/time';
 export { viewportManager } from './viewportManager/viewportManager';
-export { isHistoricalViewport } from './common/predicates';
+export { isHistoricalViewport, isDurationViewport } from './common/predicates';
 export { viewportEndDate, viewportStartDate } from './common/viewport';
 
 // Edge utilities

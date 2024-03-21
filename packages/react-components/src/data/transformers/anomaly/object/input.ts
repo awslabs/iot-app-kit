@@ -2,15 +2,8 @@ import { ObjectDataSourceValue } from '../../object';
 
 export type AnomalyObjectStyles = {
   decimalPlaces?: number;
-  color?: string;
-  backgroundColor?: string;
-  // used for datazoom customization
-  miniMapBackgroundColor?: string;
-  miniMapDataColor?: string;
-  contributingPropertiesTheme?: {
-    backgroundColor?: string;
-    color?: string[];
-  };
+  // color theme override for series data
+  color?: string[];
 };
 
 export type Diagnostic = {

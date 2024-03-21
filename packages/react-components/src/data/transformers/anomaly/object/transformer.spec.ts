@@ -6,11 +6,7 @@ const validDataSource: AnomalyObjectDataSource = {
   state: 'success',
   value: {
     styles: {
-      color: 'pink',
-      backgroundColor: 'orange',
-      contributingPropertiesTheme: {
-        color: ['red', 'white', 'blue'],
-      },
+      color: ['pink'],
     },
     data: [
       {
@@ -138,11 +134,7 @@ describe('Anomaly Object transformer', () => {
 
     expect(describedData).toEqual(
       expect.objectContaining({
-        color: expect.toBeString(),
-        backgroundColor: expect.toBeString(),
-        contributingPropertiesTheme: expect.objectContaining({
-          color: expect.arrayContaining([expect.toBeString()]),
-        }),
+        color: expect.arrayContaining([expect.toBeString()]),
         diagnostics: expect.arrayContaining([
           expect.objectContaining({
             id: expect.toBeString(),

@@ -1,6 +1,7 @@
 import { DATA_TYPE } from '../common/constants';
 import type { DataStream, DataType } from '../data-module/types';
 import type {
+  DurationViewport,
   HistoricalViewport,
   Viewport,
 } from '../data-module/data-cache/requestTypes';
@@ -58,3 +59,7 @@ export const isNumber = <T>(val: T | number): val is number =>
 export const isHistoricalViewport = (
   viewport: Viewport
 ): viewport is HistoricalViewport => 'start' in viewport && 'end' in viewport;
+
+export const isDurationViewport = (
+  viewport: Viewport
+): viewport is DurationViewport => 'duration' in viewport;
