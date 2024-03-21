@@ -5,6 +5,7 @@ import {
   isSupportedDataType,
   isValid,
   isHistoricalViewport,
+  isDurationViewport,
 } from './predicates';
 import type { DataStream } from '../data-module/types';
 import type {
@@ -160,5 +161,28 @@ describe('isHistoricalViewport', () => {
     expect(
       isHistoricalViewport({ end: new Date() } as unknown as DurationViewport)
     ).toBeFalse();
+  });
+});
+
+describe('isDurationViewport', () => {
+  it('returns false when the viewport is a historical viewport', () => {
+    const viewport: HistoricalViewport = {
+      start: new Date(),
+      end: new Date(),
+    };
+
+    expect(isDurationViewport(viewport)).toBeFalse();
+  });
+
+  it('returns true when the viewport is a duration viewport', () => {
+    const viewport: DurationViewport = {
+      duration: '5m',
+    };
+
+    expect(isDurationViewport(viewport)).toBeTrue();
+  });
+
+  it('returns false when the duration is missing', () => {
+    expect(isDurationViewport({} as unknown as DurationViewport)).toBeFalse();
   });
 });

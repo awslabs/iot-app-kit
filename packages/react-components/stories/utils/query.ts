@@ -4,7 +4,7 @@ import {
   initialize,
 } from '@iot-app-kit/source-iotsitewise';
 
-const getEnvCredentials = () => {
+export const getEnvCredentials = () => {
   if (
     process.env.AWS_ACCESS_KEY_ID == null ||
     process.env.AWS_SECRET_ACCESS_KEY == null
@@ -21,7 +21,7 @@ const getEnvCredentials = () => {
   };
 };
 
-const getRegion = () => {
+export const getRegion = () => {
   if (process.env.AWS_REGION == null) {
     throw new Error(
       'Missing credentials: Must provide the following env variables: AWS_REGION'
