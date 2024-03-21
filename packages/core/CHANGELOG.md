@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.1.0](https://github.com/awslabs/iot-app-kit/compare/core-v10.0.0...core-v10.1.0) (2024-03-21)
+
+
+### Features
+
+* add a widget level loading indicator for x-y plot ([9be5617](https://github.com/awslabs/iot-app-kit/commit/9be5617aabe7a1edf88876406aeb1e83f174a288))
+* add dataquality attribute to data-point ([5fb23de](https://github.com/awslabs/iot-app-kit/commit/5fb23de5473fa4f9c2377330b598711209514620))
+* user selected dashboard refresh-rate ([1c1256d](https://github.com/awslabs/iot-app-kit/commit/1c1256da83c938037a47e930c127c2bf3bc14e90))
+
+
+### Bug Fixes
+
+* pass in refresh rate through the query instead of props ([b6df585](https://github.com/awslabs/iot-app-kit/commit/b6df5856b4407c74d4746d12a1781d11976f9948))
+* refresh rate defined in dashboard and on query ([43cc5e4](https://github.com/awslabs/iot-app-kit/commit/43cc5e437543aed60663620655044cba9437a226))
+* remove duplicate constants and types ([45c155b](https://github.com/awslabs/iot-app-kit/commit/45c155b414a29c767e276060f1c60ce8401ea456))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/ts-config bumped from 10.0.0 to 10.1.0
+    * eslint-config-iot-app-kit bumped from 10.0.0 to 10.1.0
+
 ## [10.0.0](https://github.com/awslabs/iot-app-kit/compare/core-v9.15.0...core-v10.0.0) (2024-02-28)
 
 

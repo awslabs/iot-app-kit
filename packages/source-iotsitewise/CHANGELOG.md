@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.1.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v10.0.0...source-iotsitewise-v10.1.0) (2024-03-21)
+
+
+### Features
+
+* add a widget level loading indicator for x-y plot ([9be5617](https://github.com/awslabs/iot-app-kit/commit/9be5617aabe7a1edf88876406aeb1e83f174a288))
+* add dataquality attribute to data-point ([5fb23de](https://github.com/awslabs/iot-app-kit/commit/5fb23de5473fa4f9c2377330b598711209514620))
+
+
+### Bug Fixes
+
+* aws clients marked as peer dependencies ([d944df4](https://github.com/awslabs/iot-app-kit/commit/d944df4113822671b84737b98dee261cab692421))
+* pass in refresh rate through the query instead of props ([b6df585](https://github.com/awslabs/iot-app-kit/commit/b6df5856b4407c74d4746d12a1781d11976f9948))
+* refresh rate defined in dashboard and on query ([43cc5e4](https://github.com/awslabs/iot-app-kit/commit/43cc5e437543aed60663620655044cba9437a226))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/core-util bumped from 10.0.0 to 10.1.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/testing-util bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/ts-config bumped from 10.0.0 to 10.1.0
+    * eslint-config-iot-app-kit bumped from 10.0.0 to 10.1.0
+
 ## [10.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v9.15.0...source-iotsitewise-v10.0.0) (2024-02-28)
 
 

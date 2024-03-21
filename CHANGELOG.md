@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.1.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.0.0...root-v10.1.0) (2024-03-21)
+
+
+### Features
+
+* add a widget level loading indicator for x-y plot ([9be5617](https://github.com/awslabs/iot-app-kit/commit/9be5617aabe7a1edf88876406aeb1e83f174a288))
+* add dataquality attribute to data-point ([5fb23de](https://github.com/awslabs/iot-app-kit/commit/5fb23de5473fa4f9c2377330b598711209514620))
+* added data quality icon and text next to value in table [#2664](https://github.com/awslabs/iot-app-kit/issues/2664) ([91cd12f](https://github.com/awslabs/iot-app-kit/commit/91cd12f9e73fa5c77ab8e7209376116f4307526b))
+* added support for border theming options [#2668](https://github.com/awslabs/iot-app-kit/issues/2668) ([66e6680](https://github.com/awslabs/iot-app-kit/commit/66e6680fbea3f005aba7239c3c47bf13e5184462))
+* added validation for decimal places input and moved in section format data [#2599](https://github.com/awslabs/iot-app-kit/issues/2599) ([1cd97c1](https://github.com/awslabs/iot-app-kit/commit/1cd97c14f569df5867e8865151e76a457c8af52d))
+* chart legend support px rem em % unit type ([4e023e6](https://github.com/awslabs/iot-app-kit/commit/4e023e6c4a735189e2db04de886555a0199087b2))
+* **dashboard:** adding new property panel layout ([617c77c](https://github.com/awslabs/iot-app-kit/commit/617c77c06a5496641cc75df963a12a1a8dda7be6))
+* new KPI and update tests ([328e41a](https://github.com/awslabs/iot-app-kit/commit/328e41ae6f1b25c743a16f03d966a5b97408455a))
+* support theming using cloudscape mechanism [#2667](https://github.com/awslabs/iot-app-kit/issues/2667) ([c342310](https://github.com/awslabs/iot-app-kit/commit/c3423101f4f60410d2168a2605fadeb3c6c2d5bc))
+* user selected dashboard refresh-rate ([1c1256d](https://github.com/awslabs/iot-app-kit/commit/1c1256da83c938037a47e930c127c2bf3bc14e90))
+
+
+### Bug Fixes
+
+* add missing loading indication for widget values ([d90f9a6](https://github.com/awslabs/iot-app-kit/commit/d90f9a68e63b6280c1fb1187b8b34853fc2047ec))
+* add range for table significant digits test ([ac53406](https://github.com/awslabs/iot-app-kit/commit/ac53406823e2c359e635720b918bccb1bf9fb0f7))
+* added the selection list reset in unmodeled section after clicking add [#2659](https://github.com/awslabs/iot-app-kit/issues/2659) ([7288bc7](https://github.com/awslabs/iot-app-kit/commit/7288bc75afe8f7dac66a6588cd1c21d674bac7dc))
+* aws clients marked as peer dependencies ([d944df4](https://github.com/awslabs/iot-app-kit/commit/d944df4113822671b84737b98dee261cab692421))
+* **dashboard:** style updates to widget title bar ([1b224bf](https://github.com/awslabs/iot-app-kit/commit/1b224bf36768ed628946512be1feab2d0446985f))
+* datastream not show unit if it's undefined [#2660](https://github.com/awslabs/iot-app-kit/issues/2660) ([7418773](https://github.com/awslabs/iot-app-kit/commit/7418773d7a39ef978ad3663e12fcf87082767f54))
+* fixed the issue with no aggregation change [#2605](https://github.com/awslabs/iot-app-kit/issues/2605) ([569854e](https://github.com/awslabs/iot-app-kit/commit/569854e1e0778b569a0dc9ca265e77f1d1508efc))
+* fixed the timezone issue in unit test [#2623](https://github.com/awslabs/iot-app-kit/issues/2623) ([a8200dc](https://github.com/awslabs/iot-app-kit/commit/a8200dc6ff783fbfda924ee52080582bd0a1f222))
+* grouped the style buttons together and associated with style label for screen reader [#2360](https://github.com/awslabs/iot-app-kit/issues/2360) ([da7f0c1](https://github.com/awslabs/iot-app-kit/commit/da7f0c1f5bbdb0735fec4ddfbf53726ba5c319cc))
+* pass in refresh rate through the query instead of props ([b6df585](https://github.com/awslabs/iot-app-kit/commit/b6df5856b4407c74d4746d12a1781d11976f9948))
+* **react components:** updating import for popper.js ([00c1707](https://github.com/awslabs/iot-app-kit/commit/00c17078163cc2ef48a8eb6e370652ca9823e8e2))
+* **react-components:** lowered min/max throttle to match TC throttle ([e972b1b](https://github.com/awslabs/iot-app-kit/commit/e972b1bfe89a25094b9884c38afd2ac7faa35c5c))
+* refresh rate defined in dashboard and on query ([43cc5e4](https://github.com/awslabs/iot-app-kit/commit/43cc5e437543aed60663620655044cba9437a226))
+* remove duplicate constants and types ([45c155b](https://github.com/awslabs/iot-app-kit/commit/45c155b414a29c767e276060f1c60ce8401ea456))
+* **scene:** fix Scene Hierarchy Tree item for node with no components ([e341fa5](https://github.com/awslabs/iot-app-kit/commit/e341fa511cfec0630ec13b0dba22981b7307c6be))
+* update docs for KPI ([84a51f5](https://github.com/awslabs/iot-app-kit/commit/84a51f51c71527a4ffec72fbffb118f6e0b7f67d))
+* updated the viewport settings for dynamic input [#2565](https://github.com/awslabs/iot-app-kit/issues/2565) ([0e31d25](https://github.com/awslabs/iot-app-kit/commit/0e31d25b9a7001a6216057681ac5aa7b6ec327ed))
+
+
+### Reverts
+
+* "feat(dashboard): adding new property panel layout" ([880125b](https://github.com/awslabs/iot-app-kit/commit/880125baadbf5ce1b478566154d8f352143e9784))
+
 ## [10.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v9.15.0...root-v10.0.0) (2024-02-28)
 
 

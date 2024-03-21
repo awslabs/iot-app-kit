@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [10.1.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.0.0...react-components-v10.1.0) (2024-03-21)
+
+
+### Features
+
+* add a widget level loading indicator for x-y plot ([9be5617](https://github.com/awslabs/iot-app-kit/commit/9be5617aabe7a1edf88876406aeb1e83f174a288))
+* added data quality icon and text next to value in table [#2664](https://github.com/awslabs/iot-app-kit/issues/2664) ([91cd12f](https://github.com/awslabs/iot-app-kit/commit/91cd12f9e73fa5c77ab8e7209376116f4307526b))
+* added support for border theming options [#2668](https://github.com/awslabs/iot-app-kit/issues/2668) ([66e6680](https://github.com/awslabs/iot-app-kit/commit/66e6680fbea3f005aba7239c3c47bf13e5184462))
+* chart legend support px rem em % unit type ([4e023e6](https://github.com/awslabs/iot-app-kit/commit/4e023e6c4a735189e2db04de886555a0199087b2))
+* new KPI and update tests ([328e41a](https://github.com/awslabs/iot-app-kit/commit/328e41ae6f1b25c743a16f03d966a5b97408455a))
+* support theming using cloudscape mechanism [#2667](https://github.com/awslabs/iot-app-kit/issues/2667) ([c342310](https://github.com/awslabs/iot-app-kit/commit/c3423101f4f60410d2168a2605fadeb3c6c2d5bc))
+* user selected dashboard refresh-rate ([1c1256d](https://github.com/awslabs/iot-app-kit/commit/1c1256da83c938037a47e930c127c2bf3bc14e90))
+
+
+### Bug Fixes
+
+* add missing loading indication for widget values ([d90f9a6](https://github.com/awslabs/iot-app-kit/commit/d90f9a68e63b6280c1fb1187b8b34853fc2047ec))
+* datastream not show unit if it's undefined [#2660](https://github.com/awslabs/iot-app-kit/issues/2660) ([7418773](https://github.com/awslabs/iot-app-kit/commit/7418773d7a39ef978ad3663e12fcf87082767f54))
+* pass in refresh rate through the query instead of props ([b6df585](https://github.com/awslabs/iot-app-kit/commit/b6df5856b4407c74d4746d12a1781d11976f9948))
+* **react components:** updating import for popper.js ([00c1707](https://github.com/awslabs/iot-app-kit/commit/00c17078163cc2ef48a8eb6e370652ca9823e8e2))
+* **react-components:** lowered min/max throttle to match TC throttle ([e972b1b](https://github.com/awslabs/iot-app-kit/commit/e972b1bfe89a25094b9884c38afd2ac7faa35c5c))
+* refresh rate defined in dashboard and on query ([43cc5e4](https://github.com/awslabs/iot-app-kit/commit/43cc5e437543aed60663620655044cba9437a226))
+* remove duplicate constants and types ([45c155b](https://github.com/awslabs/iot-app-kit/commit/45c155b414a29c767e276060f1c60ce8401ea456))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/core bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/core-util bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.0.0 to 10.1.0
+  * devDependencies
+    * @iot-app-kit/core bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/jest-config bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/testing-util bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/ts-config bumped from 10.0.0 to 10.1.0
+    * eslint-config-iot-app-kit bumped from 10.0.0 to 10.1.0
+
 ## [10.0.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v9.15.0...react-components-v10.0.0) (2024-02-28)
 
 

@@ -1,5 +1,22 @@
 # Changelog
 
+## [10.1.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v10.0.0...core-util-v10.1.0) (2024-03-21)
+
+
+### Bug Fixes
+
+* aws clients marked as peer dependencies ([d944df4](https://github.com/awslabs/iot-app-kit/commit/d944df4113822671b84737b98dee261cab692421))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.0.0 to 10.1.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.0.0 to 10.1.0
+    * @iot-app-kit/ts-config bumped from 10.0.0 to 10.1.0
+
 ## [10.0.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v9.15.0...core-util-v10.0.0) (2024-02-28)
 
 
