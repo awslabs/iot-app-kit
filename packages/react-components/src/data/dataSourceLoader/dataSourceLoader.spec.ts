@@ -9,11 +9,7 @@ const validAnomalyObjectDataSource: AnomalyObjectDataSource = {
   state: 'success',
   value: {
     styles: {
-      color: 'pink',
-      backgroundColor: 'orange',
-      contributingPropertiesTheme: {
-        color: ['red', 'white', 'blue'],
-      },
+      color: ['pink'],
     },
     data: [
       {
