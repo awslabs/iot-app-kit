@@ -85,11 +85,15 @@ export const GroundPlaneSettingsEditor: React.FC = () => {
         } else {
           localTextureUri = `s3://${parseS3BucketFromArn(s3BucketArn)}/${contentLocation}`;
         }
-
+        let newOpacity = internalOpacity;
+        if (internalOpacity === 0) {
+          setInternalOpacity(1);
+          newOpacity = 1;
+        }
         setInternalUri(localTextureUri);
         setSceneProperty(KnownSceneProperty.GroundPlaneSettings, {
           textureUri: localTextureUri,
-          opacity: internalOpacity,
+          opacity: newOpacity,
         });
       }, TextureFileTypeList);
     } else {

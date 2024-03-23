@@ -68,7 +68,7 @@ describe('GroundPlaneSettingsEditor', () => {
   it('should open asset browser when select texture clicked and set texture uri', () => {
     getScenePropertyMock.mockReturnValue({
       color: '#cccccc',
-      opacity: 1,
+      opacity: 0,
     });
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });

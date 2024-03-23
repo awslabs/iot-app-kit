@@ -72,10 +72,14 @@ const useTwinMakerTextureLoader: (options?: TwinMakerTextureLoaderOptions) => {
         const oldTexture = material.map;
         material.color = new Color('#FFFFFF');
         loadTexture(uri, (result) => {
-          material.map = result as unknown as Texture;
-          material.needsUpdate = true;
+          if (result instanceof Texture) {
+            material.map = result as Texture;
+            material.needsUpdate = true;
+          } else {
+            console.error('Error parsing Texture file');
+          }
         });
-        if (oldTexture) {
+        if (oldTexture?.dispose) {
           oldTexture.dispose();
         }
       }
@@ -89,7 +93,7 @@ const useTwinMakerTextureLoader: (options?: TwinMakerTextureLoaderOptions) => {
       const oldTexture = material.map;
       material.map = null;
       material.needsUpdate = true;
-      if (oldTexture) {
+      if (oldTexture?.dispose) {
         oldTexture.dispose();
       }
     }
