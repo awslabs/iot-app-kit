@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.1.1](https://github.com/awslabs/iot-app-kit/compare/root-v10.1.0...root-v10.1.1) (2024-03-25)
+
+
+### Bug Fixes
+
+* **scene:** handle bad texture files gracefully and toggle opacity on selection ([dca5b10](https://github.com/awslabs/iot-app-kit/commit/dca5b10404d9dd1175e16284d9733abe38590175))
+
 ## [10.1.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.0.0...root-v10.1.0) (2024-03-21)
 
 
