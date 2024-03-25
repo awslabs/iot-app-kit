@@ -42,6 +42,12 @@ jest.mock('../helpers/sceneDocumentHelpers', () => {
   return { ...jest.requireActual('../helpers/sceneDocumentHelpers'), appendSceneNode: jest.fn() };
 });
 
+jest.mock('../helpers/serializationHelpers', () => ({
+  document: {
+    deserialize: jest.fn(),
+  },
+}));
+
 describe('createSceneDocumentSlice', () => {
   const defaultDocumentSliceState = {
     nodeMap: {},
@@ -67,7 +73,7 @@ describe('createSceneDocumentSlice', () => {
         document: hasErrors ? undefined : defaultDocumentSliceState,
         errors: hasErrors ? [{ category: 'Error', message: 'test Error' } as unknown as IErrorDetails] : [],
       };
-      jest.spyOn(serializationHelpers.document, 'deserialize').mockReturnValue(deserializeResult);
+      (serializationHelpers.document.deserialize as jest.Mock).mockReturnValue(deserializeResult);
       const draft = { lastOperation: undefined, document: deserializeResult.document, sceneLoaded: false };
       const getReturn = { resetEditorState: jest.fn(), addMessages: jest.fn() };
       const get = jest.fn().mockReturnValue(getReturn); // fake out get call
@@ -93,8 +99,25 @@ describe('createSceneDocumentSlice', () => {
         ]);
       }
       expect(draft.document).toEqual(hasErrors ? defaultDocumentSliceState : deserializeResult.document);
-      expect(jest.spyOn(serializationHelpers.document, 'deserialize')).toBeCalledWith('sceneContent', options);
+      expect(serializationHelpers.document.deserialize).toBeCalledWith('sceneContent', options);
     });
+  });
+
+  it('should load a scene with parsed document', () => {
+    const draft = { lastOperation: undefined, document: undefined, sceneLoaded: false };
+    const getReturn = { resetEditorState: jest.fn(), addMessages: jest.fn() };
+    const get = jest.fn().mockReturnValue(getReturn); // fake out get call
+    const set = jest.fn((callback) => callback(draft));
+
+    const { loadScene } = createSceneDocumentSlice(set, get);
+    loadScene(defaultDocumentSliceState);
+
+    expect(draft.lastOperation!).toEqual('loadScene');
+    expect(draft.sceneLoaded).toBeTruthy();
+    expect(get).toBeCalledTimes(1);
+    expect(getReturn.resetEditorState).toBeCalled();
+    expect(draft.document).toEqual(defaultDocumentSliceState);
+    expect(serializationHelpers.document.deserialize).not.toBeCalled();
   });
 
   it('should load a scene and initialize view options correctly', () => {
@@ -112,7 +135,7 @@ describe('createSceneDocumentSlice', () => {
       },
       errors: [],
     };
-    jest.spyOn(serializationHelpers.document, 'deserialize').mockReturnValue(deserializeResult);
+    (serializationHelpers.document.deserialize as jest.Mock).mockReturnValue(deserializeResult);
     const draft = {
       lastOperation: undefined,
       document: deserializeResult.document,
@@ -146,7 +169,7 @@ describe('createSceneDocumentSlice', () => {
       },
       errors: [],
     };
-    jest.spyOn(serializationHelpers.document, 'deserialize').mockReturnValue(deserializeResult);
+    (serializationHelpers.document.deserialize as jest.Mock).mockReturnValue(deserializeResult);
     const draft = {
       lastOperation: undefined,
       sceneLoaded: false,
@@ -178,7 +201,7 @@ describe('createSceneDocumentSlice', () => {
       },
       errors: [],
     };
-    jest.spyOn(serializationHelpers.document, 'deserialize').mockReturnValue(deserializeResult);
+    (serializationHelpers.document.deserialize as jest.Mock).mockReturnValue(deserializeResult);
     const draft = {
       lastOperation: undefined,
       sceneLoaded: false,

@@ -1,6 +1,7 @@
 import {
   CreateEntityCommandInput,
   CreateEntityCommandOutput,
+  ResourceNotFoundException,
   UpdateEntityCommandInput,
   UpdateEntityCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
@@ -19,20 +20,23 @@ import { generateUUID } from '../mathUtils';
 import { ISceneDocumentInternal, ISceneNodeInternal } from '../../store';
 import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
 import { findComponentByType, getFinalNodeTransform } from '../nodeUtils';
-import { ISceneDocument, KnownComponentType, KnownSceneProperty } from '../../interfaces';
+import { COMPOSER_FEATURES, ISceneDocument, KnownComponentType, KnownSceneProperty } from '../../interfaces';
 
 import { createNodeEntity } from './createNodeEntity';
-import { updateSceneEntityComponent } from './sceneComponent';
+import { createSceneEntityComponent, updateSceneEntityComponent } from './sceneComponent';
 
 export const createSceneEntityId = (sceneName: string): string => {
   return `SCENE_${sceneName}_${generateUUID()}`;
 };
 
-export const createSceneRootEntity = (): Promise<CreateEntityCommandOutput> | undefined => {
+export const createSceneRootEntity = (
+  scene: Omit<ISceneDocument, 'nodeMap' | 'rootNodeRefs'>,
+): Promise<CreateEntityCommandOutput> | undefined => {
   if (!getGlobalSettings().twinMakerSceneMetadataModule) {
     return;
   }
 
+  const isDynamicSceneAlphaEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicSceneAlpha];
   const sceneName = getGlobalSettings().twinMakerSceneMetadataModule!.getSceneId();
   const sceneEntityId = createSceneEntityId(sceneName);
   const input: CreateEntityCommandInput = {
@@ -40,6 +44,11 @@ export const createSceneRootEntity = (): Promise<CreateEntityCommandOutput> | un
     entityId: sceneEntityId,
     parentEntityId: SCENE_ROOT_ENTITY_ID,
     entityName: sceneEntityId,
+    components: isDynamicSceneAlphaEnabled
+      ? {
+          [SCENE_ROOT_ENTITY_COMPONENT_NAME]: createSceneEntityComponent(scene),
+        }
+      : undefined,
   };
 
   return getGlobalSettings().twinMakerSceneMetadataModule!.createSceneEntity(input);
@@ -64,7 +73,7 @@ export const updateSceneRootEntity = (
   return getGlobalSettings().twinMakerSceneMetadataModule!.updateSceneEntity(input);
 };
 
-export const checkIfEntityAvailable = async (
+export const checkIfEntityExists = async (
   entityId: string,
   sceneMetadataModule: TwinMakerSceneMetadataModule,
 ): Promise<boolean> => {
@@ -72,15 +81,18 @@ export const checkIfEntityAvailable = async (
     await sceneMetadataModule.getSceneEntity({ entityId });
     return true;
   } catch (e) {
-    return false;
+    if (e instanceof ResourceNotFoundException) {
+      return false;
+    }
+    throw e;
   }
 };
 
 export const prepareWorkspace = async (sceneMetadataModule: TwinMakerSceneMetadataModule): Promise<void> => {
   // Check if root entities exist
   const checkRoots = await Promise.all([
-    checkIfEntityAvailable(SCENE_ROOT_ENTITY_ID, sceneMetadataModule),
-    checkIfEntityAvailable(LAYER_ROOT_ENTITY_ID, sceneMetadataModule),
+    checkIfEntityExists(SCENE_ROOT_ENTITY_ID, sceneMetadataModule),
+    checkIfEntityExists(LAYER_ROOT_ENTITY_ID, sceneMetadataModule),
   ]);
 
   // Create root entities that do not exist
@@ -185,17 +197,23 @@ export const convertAllNodesToEntities = ({
     let retryCounts = 0;
     const interval = setInterval(async () => {
       retryCounts++;
-      const res = await checkIfEntityAvailable(req.parentRef!, getGlobalSettings().twinMakerSceneMetadataModule!);
-      if (res) {
-        createNodeEntity(req, req.parentRef || sceneRootEntityId, layerId)
-          .then(() => {
-            onSuccess?.(req);
-          })
-          .catch((error) => {
-            onFailure?.(req, error);
-          });
+      try {
+        const res = await checkIfEntityExists(req.parentRef!, getGlobalSettings().twinMakerSceneMetadataModule!);
+        if (res) {
+          createNodeEntity(req, req.parentRef || sceneRootEntityId, layerId)
+            .then(() => {
+              onSuccess?.(req);
+            })
+            .catch((error) => {
+              onFailure?.(req, error);
+            });
 
+          clearInterval(interval);
+          return;
+        }
+      } catch (e) {
         clearInterval(interval);
+        onFailure?.(req, e as Error);
         return;
       }
 

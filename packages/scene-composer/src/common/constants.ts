@@ -165,9 +165,7 @@ export const FONT_AWESOME_PREFIX = 'fas';
 /******************************************************************************
  * Matterport Constants
  ******************************************************************************/
-export const SCENE_CAPABILITY_MATTERPORT = 'MATTERPORT';
 export const SECRET_MANAGER_MATTERPORT_TAG = 'AWSIoTTwinMaker_Matterport';
-export const MATTERPORT_SECRET_ARN = 'MATTERPORT_SECRET_ARN';
 export const MATTERPORT_ACCESS_TOKEN = 'MATTERPORT_ACCESS_TOKEN';
 export const MATTERPORT_APPLICATION_KEY = 'MATTERPORT_APPLICATION_KEY';
 export const MATTERPORT_ERROR = 'MATTERPORT_ERROR';

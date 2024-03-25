@@ -1,9 +1,25 @@
-import { ComponentRequest, ComponentUpdateRequest, DataValue } from '@aws-sdk/client-iottwinmaker';
-import { isEmpty } from 'lodash';
+import {
+  ComponentRequest,
+  ComponentUpdateRequest,
+  DataValue,
+  GetEntityCommandOutput,
+} from '@aws-sdk/client-iottwinmaker';
+import { isEmpty, isFinite } from 'lodash';
 
-import { IComponentSettingsMap, IDataBindingConfig, ISceneDocument } from '../../interfaces';
+import {
+  IComponentSettingsMap,
+  IDataBindingConfig,
+  IOverlaySettings,
+  IRuleBasedMap,
+  IRuleStatement,
+  ISceneDocument,
+  ITagSettings,
+  KnownComponentType,
+  KnownSceneProperty,
+} from '../../interfaces';
 import { SCENE_COMPONENT_TYPE_ID } from '../../common/entityModelConstants';
-import { CURRENT_VERSION } from '../../common/constants';
+import { CURRENT_VERSION, DEFAULT_DISTANCE_UNIT, DEFAULT_TAG_GLOBAL_SETTINGS } from '../../common/constants';
+import { ISceneDocumentInternal } from '../../store';
 
 enum SceneComponentProperty {
   SpecVersion = 'specVersion',
@@ -169,4 +185,97 @@ export const updateSceneEntityComponent = (
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,
   };
+};
+
+export const parseSceneCompFromEntity = (entity: GetEntityCommandOutput): ISceneDocumentInternal | undefined => {
+  const comp = Object.values(entity.components || {}).find((c) => c.componentTypeId === SCENE_COMPONENT_TYPE_ID);
+  if (!comp || !comp.properties) {
+    return undefined;
+  }
+  const specVersion = comp.properties[SceneComponentProperty.SpecVersion]?.value?.stringValue;
+  const version = comp.properties[SceneComponentProperty.Version]?.value?.stringValue;
+  if (!specVersion || !version) {
+    return undefined;
+  }
+
+  const ruleMap: Record<string, IRuleBasedMap> = {};
+  const ruleProp = comp.properties[SceneComponentProperty.RuleStatements]?.value?.mapValue;
+  Object.keys(ruleProp || {}).forEach((id) => {
+    ruleMap[id] = { statements: [] };
+    const statements = ruleProp?.[id].listValue;
+    statements?.forEach((statement) => {
+      const parsedStatement = JSON.parse(statement.stringValue || '');
+      if (!(parsedStatement as IRuleStatement).expression || !(parsedStatement as IRuleStatement).target) {
+        throw new Error('Invalid rule statement');
+      }
+
+      ruleMap[id].statements.push(parsedStatement);
+    });
+  });
+
+  const dataBindingConfig: IDataBindingConfig = { fieldMapping: {}, template: {} };
+  const dataBindingConfigProp = comp.properties[SceneComponentProperty.PropertiesDataBindingConfig]?.value?.mapValue;
+  const fieldMappingProp = dataBindingConfigProp?.[DataBindingConfigPropertyKey.FieldMapping].mapValue;
+  if (fieldMappingProp) {
+    Object.keys(fieldMappingProp).forEach((key) => {
+      dataBindingConfig.fieldMapping[key] = JSON.parse(fieldMappingProp[key].stringValue || '');
+    });
+  }
+  const templateProp = dataBindingConfigProp?.[DataBindingConfigPropertyKey.Template].mapValue;
+  if (templateProp) {
+    Object.keys(templateProp).forEach((key) => {
+      if (templateProp[key].stringValue) {
+        dataBindingConfig.template![key] = templateProp[key].stringValue!;
+      }
+    });
+  }
+
+  const componentSettings: IComponentSettingsMap = {};
+  const componentSettingsProp = comp.properties[SceneComponentProperty.PropertiesComponentSettings]?.value?.mapValue;
+  if (componentSettingsProp?.[KnownComponentType.Tag]) {
+    const tagSettingsProp = componentSettingsProp[KnownComponentType.Tag].mapValue;
+    const scaleValue = Number(tagSettingsProp?.['scale']?.stringValue);
+    const tagSettings: ITagSettings = {
+      scale: isFinite(scaleValue) ? scaleValue : DEFAULT_TAG_GLOBAL_SETTINGS.scale,
+      autoRescale: tagSettingsProp?.['autoRescale']?.stringValue === 'true',
+      enableOcclusion: tagSettingsProp?.['enableOcclusion']?.stringValue === 'true',
+    };
+    componentSettings[KnownComponentType.Tag] = tagSettings;
+  }
+  if (componentSettingsProp?.[KnownComponentType.DataOverlay]) {
+    const overlaySettingsProp = componentSettingsProp[KnownComponentType.DataOverlay].mapValue;
+    const overlaySettings: IOverlaySettings = {
+      overlayPanelVisible: overlaySettingsProp?.['overlayPanelVisible']?.stringValue === 'true',
+    };
+    componentSettings[KnownComponentType.DataOverlay] = overlaySettings;
+  }
+
+  const document: ISceneDocumentInternal = {
+    version,
+    specVersion,
+    unit: comp.properties[SceneComponentProperty.Unit]?.value?.stringValue || DEFAULT_DISTANCE_UNIT,
+    ruleMap,
+    nodeMap: {},
+    componentNodeMap: {},
+    rootNodeRefs: [],
+    properties: {
+      [KnownSceneProperty.SceneRootEntityId]: entity.entityId,
+      [KnownSceneProperty.EnvironmentPreset]:
+        comp.properties[SceneComponentProperty.PropertiesEnvironmentPreset]?.value?.stringValue,
+      [KnownSceneProperty.DataBindingConfig]: dataBindingConfig,
+      [KnownSceneProperty.ComponentSettings]: componentSettings,
+      [KnownSceneProperty.MatterportModelId]:
+        comp.properties[SceneComponentProperty.PropertiesMatterportModelId]?.value?.stringValue,
+      [KnownSceneProperty.LayerIds]: comp.properties[SceneComponentProperty.ConnectedToLayers]?.value?.listValue?.map(
+        (layer) => layer.relationshipValue?.targetEntityId,
+      ),
+      [KnownSceneProperty.TagCustomColors]: comp.properties[
+        SceneComponentProperty.PropertiesTagCustomColors
+      ]?.value?.listValue?.map((color) => color.stringValue),
+      [KnownSceneProperty.LayerDefaultRefreshInterval]:
+        comp.properties[SceneComponentProperty.PropertiesLayerDefaultRefreshInterval]?.value?.integerValue,
+    },
+  };
+
+  return document;
 };

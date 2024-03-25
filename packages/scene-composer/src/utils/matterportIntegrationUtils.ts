@@ -1,8 +1,9 @@
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { IntlShape } from 'react-intl';
 
-import { MATTERPORT_SECRET_ARN, SCENE_CAPABILITY_MATTERPORT, SECRET_MANAGER_MATTERPORT_TAG } from '../common/constants';
+import { SECRET_MANAGER_MATTERPORT_TAG } from '../common/constants';
 import { OPTIONS_PLACEHOLDER_VALUE } from '../common/internalConstants';
+import { SceneCapabilities, SceneMetadataMapKeys } from '../common/sceneModelConstants';
 
 export const getMatterportConnectionList = async (
   intl: IntlShape,
@@ -46,25 +47,25 @@ export const getUpdatedSceneInfoForConnection = async (
   }
 
   if (connection === OPTIONS_PLACEHOLDER_VALUE) {
-    if (sceneCapabilities && sceneCapabilities.includes(SCENE_CAPABILITY_MATTERPORT)) {
-      sceneCapabilities = sceneCapabilities.filter((capability) => capability !== SCENE_CAPABILITY_MATTERPORT);
+    if (sceneCapabilities && sceneCapabilities.includes(SceneCapabilities.MATTERPORT)) {
+      sceneCapabilities = sceneCapabilities.filter((capability) => capability !== SceneCapabilities.MATTERPORT);
     }
 
-    if (sceneMetadata && sceneMetadata[MATTERPORT_SECRET_ARN]) {
-      delete sceneMetadata[MATTERPORT_SECRET_ARN];
+    if (sceneMetadata && sceneMetadata[SceneMetadataMapKeys.MATTERPORT_SECRET_ARN]) {
+      delete sceneMetadata[SceneMetadataMapKeys.MATTERPORT_SECRET_ARN];
     }
   } else {
     if (!sceneCapabilities) {
       sceneCapabilities = [];
     }
-    if (!sceneCapabilities.includes(SCENE_CAPABILITY_MATTERPORT)) {
-      sceneCapabilities.push(SCENE_CAPABILITY_MATTERPORT);
+    if (!sceneCapabilities.includes(SceneCapabilities.MATTERPORT)) {
+      sceneCapabilities.push(SceneCapabilities.MATTERPORT);
     }
 
     if (!sceneMetadata) {
       sceneMetadata = {};
     }
-    sceneMetadata[MATTERPORT_SECRET_ARN] = connection;
+    sceneMetadata[SceneMetadataMapKeys.MATTERPORT_SECRET_ARN] = connection;
   }
 
   return { capabilities: sceneCapabilities, sceneMetadata: sceneMetadata };

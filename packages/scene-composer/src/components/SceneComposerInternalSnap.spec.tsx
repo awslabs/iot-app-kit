@@ -2,6 +2,7 @@ import * as React from 'react';
 import { create, act } from 'react-test-renderer';
 import str2ab from 'string-to-arraybuffer';
 import flushPromises from 'flush-promises';
+import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import * as SceneLayoutComponents from '../layouts/SceneLayout';
 import { invalidTestScenes, testScenes } from '../../tests/testData';
@@ -33,15 +34,28 @@ function createSceneLoaderMock(sceneContent: string) {
 }
 
 describe('SceneComposerInternal', () => {
+  const getSceneInfo = jest.fn();
+  const mockSceneMetadataModule = {
+    getSceneInfo,
+  } as unknown as TwinMakerSceneMetadataModule;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    getSceneInfo.mockResolvedValue({
+      capabilities: [],
+      sceneMetadata: {},
+    });
   });
 
   it('should render correctly with an empty scene in editing mode', async () => {
     let container;
     await act(async () => {
       container = create(
-        <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock('')} />,
+        <SceneComposerInternal
+          config={{ mode: 'Editing' }}
+          sceneLoader={createSceneLoaderMock('')}
+          sceneMetadataModule={mockSceneMetadataModule}
+        />,
       );
 
       await flushPromises();
@@ -55,7 +69,11 @@ describe('SceneComposerInternal', () => {
     let container;
     await act(async () => {
       container = create(
-        <SceneComposerInternal config={{ mode: 'Viewing' }} sceneLoader={createSceneLoaderMock('')} />,
+        <SceneComposerInternal
+          config={{ mode: 'Viewing' }}
+          sceneLoader={createSceneLoaderMock('')}
+          sceneMetadataModule={mockSceneMetadataModule}
+        />,
       );
 
       await flushPromises();
@@ -69,7 +87,11 @@ describe('SceneComposerInternal', () => {
     let container;
     await act(async () => {
       container = create(
-        <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />,
+        <SceneComposerInternal
+          config={{ mode: 'Editing' }}
+          sceneLoader={createSceneLoaderMock(testScenes.scene1)}
+          sceneMetadataModule={mockSceneMetadataModule}
+        />,
       );
 
       await flushPromises();
@@ -86,6 +108,7 @@ describe('SceneComposerInternal', () => {
         <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.unsupportedMinorVersionScene)}
+          sceneMetadataModule={mockSceneMetadataModule}
         />,
       );
 
@@ -102,6 +125,7 @@ describe('SceneComposerInternal', () => {
         <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.unsupportedMajorVersion)}
+          sceneMetadataModule={mockSceneMetadataModule}
         />,
       );
 
@@ -118,6 +142,7 @@ describe('SceneComposerInternal', () => {
         <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.invalidSpecVersionScene)}
+          sceneMetadataModule={mockSceneMetadataModule}
         />,
       );
 
@@ -132,8 +157,16 @@ describe('SceneComposerInternal', () => {
     await act(async () => {
       container = create(
         <div>
-          <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />
-          <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene2)} />
+          <SceneComposerInternal
+            config={{ mode: 'Editing' }}
+            sceneLoader={createSceneLoaderMock(testScenes.scene1)}
+            sceneMetadataModule={mockSceneMetadataModule}
+          />
+          <SceneComposerInternal
+            config={{ mode: 'Editing' }}
+            sceneLoader={createSceneLoaderMock(testScenes.scene2)}
+            sceneMetadataModule={mockSceneMetadataModule}
+          />
         </div>,
       );
 
@@ -152,8 +185,13 @@ describe('SceneComposerInternal', () => {
           <SceneComposerInternal
             config={{ mode: 'Editing' }}
             sceneLoader={createSceneLoaderMock(invalidTestScenes.invalidJson)}
+            sceneMetadataModule={mockSceneMetadataModule}
           />
-          <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />
+          <SceneComposerInternal
+            config={{ mode: 'Editing' }}
+            sceneLoader={createSceneLoaderMock(testScenes.scene1)}
+            sceneMetadataModule={mockSceneMetadataModule}
+          />
         </div>,
       );
 
@@ -170,6 +208,7 @@ describe('SceneComposerInternal', () => {
         <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.invalidJson)}
+          sceneMetadataModule={mockSceneMetadataModule}
         />,
       );
 
@@ -185,7 +224,11 @@ describe('SceneComposerInternal', () => {
     });
 
     const container = create(
-      <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock('')} />,
+      <SceneComposerInternal
+        config={{ mode: 'Editing' }}
+        sceneLoader={createSceneLoaderMock('')}
+        sceneMetadataModule={mockSceneMetadataModule}
+      />,
     );
 
     await flushPromises();
