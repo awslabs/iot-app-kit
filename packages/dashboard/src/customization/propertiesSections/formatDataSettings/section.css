@@ -1,7 +1,8 @@
 .settings-property-label {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   flex-wrap: wrap;
+  font-weight: bold;
 }
 
 .settings-property-label-control {
