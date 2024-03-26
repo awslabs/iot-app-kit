@@ -1,6 +1,5 @@
 import React from 'react';
 import type { FC } from 'react';
-import ExpandableSection from '@cloudscape-design/components/expandable-section';
 import { LineStyleDropdown } from '../components/lineStyleDropdown';
 import { LineThicknessDropdown } from '../components/lineThicknessDropdown';
 import { Box, SpaceBetween } from '@cloudscape-design/components';
@@ -8,6 +7,7 @@ import { LineTypeSection } from '../components/lineTypeDropdown';
 import { DataPointStyleSection } from '../components/dataPointStyleSection';
 import { defaultThickness } from './constant';
 import './lineAndScatterStyleSettings.css';
+import { StyledExpandableSection } from '../components/StyledExpandableSection';
 
 type LineStyleSectionOptions = {
   lineType?: string;
@@ -31,7 +31,7 @@ export const LineStyleSection: FC<LineStyleSectionOptions> = ({
   updateDataPointStyle,
 }) => {
   return (
-    <ExpandableSection
+    <StyledExpandableSection
       className='accordian-header'
       headerText='Widget style'
       defaultExpanded
@@ -57,6 +57,6 @@ export const LineStyleSection: FC<LineStyleSectionOptions> = ({
           />
         </SpaceBetween>
       </Box>
-    </ExpandableSection>
+    </StyledExpandableSection>
   );
 };
