@@ -1,7 +1,5 @@
-import { MockData } from './fakeData';
 import { AnomalyValue } from './types';
 import { formatTooltip } from './utils/formatTooltip';
-const mappedEvents = MockData.map((ev) => [ev.value.timestamp, 100, ev.value]);
 
 // defines 2 x-axes:
 // 1. x axis for main timeline, which shows timie value
@@ -158,6 +156,13 @@ const L4E_SERIES = {
         x: 'time',
         y: 'value',
       },
+      selectedMode: 'multiple',
+      select: {
+        itemStyle: {
+          color: '#015b9d',
+          borderWidth: 0,
+        },
+      },
     },
     {
       id: 'l4e_slider',
@@ -186,8 +191,4 @@ export const DEFAULT_L4E_WIDGET_SETTINGS = {
   ...L4E_X_AXIS,
   ...L4E_Y_AXIS,
   ...L4E_SERIES,
-  dataset: {
-    dimensions: ['time', 'value', 'extraData'],
-    source: mappedEvents,
-  },
 };

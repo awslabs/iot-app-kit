@@ -1,12 +1,12 @@
-import { AnomalyResult } from './types';
+import { AnomalyResult } from '../../src/components/l4eWidget/types';
 
-const BaseAnomalyResult = {
+export const BaseAnomalyResult = {
   quality: 'GOOD',
   value: {
     anomalyScore: 50,
     predictionReason: 'bad stuff idk',
     diagnostics: [
-      { name: 'Average Power', value: 0.4 },
+      { name: 'Average Power', value: 0.1 },
       { name: 'Average Wind Speed', value: 0.22 },
       { name: 'RPM', value: 0.18 },
       { name: 'Torque', value: 0.1 },
@@ -29,7 +29,14 @@ const times = new Array(10)
     getRandomDate(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), new Date())
   );
 
-export const MockData: AnomalyResult[] = times.map((time) => ({
+export const mockData: AnomalyResult[] = times.map((time) => ({
   ...BaseAnomalyResult,
-  value: { ...BaseAnomalyResult.value, timestamp: time },
+  value: {
+    ...BaseAnomalyResult.value,
+    timestamp: time,
+    diagnostics: BaseAnomalyResult.value.diagnostics.map((d) => ({
+      name: d.name,
+      value: Math.random(),
+    })),
+  },
 }));
