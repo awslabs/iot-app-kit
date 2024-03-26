@@ -2,10 +2,6 @@
   overflow: hidden;
 }
 
-.accordian-header > :first-child {
-  background-color: #f8f8f8;
-}
-
 .accordian-header [class*="awsui_expand-button"] {
   padding-left: 8px;
   width: 100%;

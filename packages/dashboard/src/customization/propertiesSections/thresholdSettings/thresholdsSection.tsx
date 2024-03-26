@@ -8,12 +8,7 @@ import {
 } from '@iot-app-kit/core';
 import { nanoid } from '@reduxjs/toolkit';
 
-import {
-  Button,
-  ExpandableSection,
-  SpaceBetween,
-  Toggle,
-} from '@cloudscape-design/components';
+import { Button, SpaceBetween, Toggle } from '@cloudscape-design/components';
 
 import { DEFAULT_THRESHOLD_COLOR } from './defaultValues';
 import type { ThresholdWithId } from '~/customization/settings';
@@ -40,11 +35,12 @@ import {
   convertThresholdStyleToOption,
   styledOptions,
 } from './defaultThresholds';
+import { StyledExpandableSection } from '../components/StyledExpandableSection';
 
 const ThresholdsExpandableSection: React.FC<
   React.PropsWithChildren<{ title: string }>
 > = ({ children, title }) => (
-  <ExpandableSection
+  <StyledExpandableSection
     className='accordian-header'
     headerText={title}
     defaultExpanded
@@ -52,7 +48,7 @@ const ThresholdsExpandableSection: React.FC<
     <SpaceBetween size='m' direction='vertical'>
       {children}
     </SpaceBetween>
-  </ExpandableSection>
+  </StyledExpandableSection>
 );
 
 type ThresholdsSectionProps = {

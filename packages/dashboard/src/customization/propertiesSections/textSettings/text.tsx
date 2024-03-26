@@ -4,12 +4,7 @@ import type {
   NonCancelableCustomEvent,
   SelectProps,
 } from '@cloudscape-design/components';
-import {
-  Box,
-  ExpandableSection,
-  Select,
-  SpaceBetween,
-} from '@cloudscape-design/components';
+import { Box, Select, SpaceBetween } from '@cloudscape-design/components';
 import {
   colorBorderItemFocused,
   colorTextBodyDefault,
@@ -21,6 +16,7 @@ import ColorPicker from '../shared/colorPicker';
 import type { TextWidget } from '~/customization/widgets/types';
 
 import './text.css';
+import { StyledExpandableSection } from '../components/StyledExpandableSection';
 
 interface ButtonWithStateProps {
   checked: boolean;
@@ -116,7 +112,7 @@ const TextSettings: FC<TextSettingsProps> = ({
   };
 
   return (
-    <ExpandableSection
+    <StyledExpandableSection
       className='accordian-header'
       headerText={defaultMessages.title}
       defaultExpanded
@@ -172,7 +168,7 @@ const TextSettings: FC<TextSettingsProps> = ({
           />
         </div>
       </Box>
-    </ExpandableSection>
+    </StyledExpandableSection>
   );
 };
 

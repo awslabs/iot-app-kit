@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { useExpandable } from '../useExpandable';
-import ExpandableSection from '@cloudscape-design/components/expandable-section';
 import Toggle from '@cloudscape-design/components/toggle';
+import { StyledExpandableSection } from '../../components/StyledExpandableSection';
 
 type StyleExpandableSectionProps = {
   visible?: boolean;
@@ -41,7 +41,7 @@ const StyleExpandableSection: React.FC<StyleExpandableSectionProps> = ({
   const [expanded, setExpanded] = useExpandable(true);
 
   return (
-    <ExpandableSection
+    <StyledExpandableSection
       className='accordian-header'
       expanded={expanded}
       variant='footer'
@@ -54,7 +54,7 @@ const StyleExpandableSection: React.FC<StyleExpandableSectionProps> = ({
       }
     >
       {children || null}
-    </ExpandableSection>
+    </StyledExpandableSection>
   );
 };
 
