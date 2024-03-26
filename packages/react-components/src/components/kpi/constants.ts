@@ -1,3 +1,4 @@
+import { colorBackgroundSegmentDefault } from '@cloudscape-design/design-tokens';
 import type { KPISettings } from './types';
 
 export const DEFAULT_KPI_COLOR = '#16191f';
@@ -15,6 +16,6 @@ export const DEFAULT_KPI_SETTINGS: Required<KPISettings> = {
   fontSize: 30,
   secondaryFontSize: 15,
   aggregationFontSize: 12,
-  backgroundColor: '#ffffff',
+  backgroundColor: colorBackgroundSegmentDefault,
   showAssetName: true,
 };
