@@ -12,6 +12,7 @@ import {
 } from '@cloudscape-design/components';
 import {
   spaceScaledXl,
+  spaceStaticXl,
   spaceStaticXxs,
 } from '@cloudscape-design/design-tokens';
 
@@ -350,7 +351,7 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
             headerText={YAxisHeader}
             disableContentPaddings={true}
           >
-            <div style={{ padding: '0 24px', backgroundColor: '#fbfbfb' }}>
+            <div style={{ padding: `0 ${spaceStaticXl}` }}>
               <LineStylePropertyConfig
                 resetStyles={resetStyles}
                 onUpdate={updateStyle}

@@ -1,10 +1,10 @@
 import { SpaceBetween, Box } from '@cloudscape-design/components';
-import ExpandableSection from '@cloudscape-design/components/expandable-section';
 import FormField from '@cloudscape-design/components/form-field';
 import Select, { SelectProps } from '@cloudscape-design/components/select';
 import type { FC } from 'react';
 import React from 'react';
 import './lineAndScatterStyleSettings.css';
+import { StyledExpandableSection } from '../components/StyledExpandableSection';
 
 type AggregationAndResolutionSectionOptions = {
   aggregation: string | undefined;
@@ -31,7 +31,7 @@ export const AggregationAndResolutionSection: FC<
     aggregationOptions.find(({ value }) => value === aggregation) ?? null;
 
   return (
-    <ExpandableSection
+    <StyledExpandableSection
       className='accordian-header'
       headerText='Resolution and Aggregation'
       defaultExpanded
@@ -67,6 +67,6 @@ export const AggregationAndResolutionSection: FC<
           </FormField>
         </SpaceBetween>
       </Box>
-    </ExpandableSection>
+    </StyledExpandableSection>
   );
 };

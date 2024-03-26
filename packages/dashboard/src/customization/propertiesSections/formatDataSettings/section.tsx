@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 
 import {
   Box,
-  ExpandableSection,
   FormField,
   Input,
   SpaceBetween,
@@ -14,6 +13,7 @@ import { isNumeric } from '@iot-app-kit/core/dist/es/common/number';
 import { Controller, useForm } from 'react-hook-form';
 import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import { spaceScaledS } from '@cloudscape-design/design-tokens';
+import { StyledExpandableSection } from '../components/StyledExpandableSection';
 
 export const DecimalPlacesSection = ({
   significantDigits,
@@ -46,7 +46,7 @@ export const DecimalPlacesSection = ({
   };
 
   return (
-    <ExpandableSection
+    <StyledExpandableSection
       className='accordian-header'
       headerText='Format data'
       defaultExpanded
@@ -97,6 +97,6 @@ export const DecimalPlacesSection = ({
           </div>
         </SpaceBetween>
       </Box>
-    </ExpandableSection>
+    </StyledExpandableSection>
   );
 };
