@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ExpandableSection,
   Input,
   Toggle,
   SpaceBetween,
@@ -14,6 +13,7 @@ import type { TextWidget } from '~/customization/widgets/types';
 import * as awsui from '@cloudscape-design/design-tokens';
 
 import './text.css';
+import { StyledExpandableSection } from '../components/StyledExpandableSection';
 
 type LinkSettingsProps = Pick<TextWidget['properties'], 'href' | 'isUrl'> & {
   updateHref: (newValue: string | undefined) => void;
@@ -70,7 +70,7 @@ const LinkSettings: FC<LinkSettingsProps> = ({
   };
 
   return (
-    <ExpandableSection
+    <StyledExpandableSection
       className='accordian-header'
       headerText={header}
       headerAriaLabel='Text widget link settings'
@@ -91,7 +91,7 @@ const LinkSettings: FC<LinkSettingsProps> = ({
           </div>
         </div>
       </Box>
-    </ExpandableSection>
+    </StyledExpandableSection>
   );
 };
 

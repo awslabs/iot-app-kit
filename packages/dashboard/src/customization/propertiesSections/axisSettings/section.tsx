@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   Box,
-  ExpandableSection,
   Input,
   SpaceBetween,
   Toggle,
@@ -14,6 +13,7 @@ import type { AxisSettings } from '../../settings';
 import * as awsui from '@cloudscape-design/design-tokens';
 
 import './section.css';
+import { StyledExpandableSection } from '../components/StyledExpandableSection';
 
 const defaultAxisSetting: AxisSettings = {
   yAxisLabel: '',
@@ -61,7 +61,7 @@ const AxisSection: FC<AxisSectionProps> = ({
   };
 
   return (
-    <ExpandableSection
+    <StyledExpandableSection
       className='accordian-header'
       headerText={defaultMessages.header}
       defaultExpanded
@@ -112,7 +112,7 @@ const AxisSection: FC<AxisSectionProps> = ({
           )}
         </SpaceBetween>
       </Box>
-    </ExpandableSection>
+    </StyledExpandableSection>
   );
 };
 

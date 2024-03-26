@@ -1,7 +1,3 @@
-.accordian-header > div:first-child {
-  background-color: #f8f8f8;
-}
-
 .accordian-header [class*="awsui_expand-button"] {
   padding-left: 0.5rem;
   width: 100%;
