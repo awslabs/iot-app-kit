@@ -1,8 +1,9 @@
 import type { TimeSeriesSummary } from '@aws-sdk/client-iotsitewise';
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 
+import { usePagination } from '../helpers/paginator';
 import type { ListTimeSeries } from '../types/data-source';
-import { useRef, useState } from 'react';
 
 export interface UseTimeSeriesOptions {
   listTimeSeries: ListTimeSeries;
@@ -14,99 +15,35 @@ export interface UseTimeSeriesOptions {
   pageSize: number;
 }
 
-export interface UseTimeSeriesResult {
-  timeSeries: TimeSeriesSummary[];
-  isLoading: boolean;
-  hasNextPage: boolean;
-  nextPage: () => void;
-}
-
-function usePagination() {
-  const [currentQueryIndex, setCurrentQueryIndex] = useState<number>(0);
-
-  // Change next token and trigger re-render.
-  const [currentNextToken, setCurrentNextToken] = useState<string | undefined>(
-    undefined
-  );
-
-  // Store upcoming next token - swap on click next page
-  const nextNextTokenRef = useRef<string | undefined>(undefined);
-
-  const hasNextPage = nextNextTokenRef.current != null;
-
-  function nextPage(): void {
-    if (hasNextPage) {
-      setCurrentNextToken(nextNextTokenRef.current);
-      nextNextTokenRef.current = undefined;
-    }
-  }
-
-  function prepareNextToken(token: string | undefined) {
-    nextNextTokenRef.current = token;
-  }
-
-  return {
-    currentQueryIndex,
-    setCurrentQueryIndex,
-    currentNextToken,
-    prepareNextToken,
-    nextPage,
-    hasNextPage,
-  };
-}
-
 export function useTimeSeries({
   listTimeSeries,
   queries,
   pageSize,
-}: UseTimeSeriesOptions): UseTimeSeriesResult {
+}: UseTimeSeriesOptions) {
   const [timeSeries, setTimeSeries] = useState<TimeSeriesSummary[]>([]);
-  const {
-    currentQueryIndex,
-    setCurrentQueryIndex,
-    currentNextToken,
-    nextPage,
-    hasNextPage,
-    prepareNextToken,
-  } = usePagination();
-  const currentQuery = queries[currentQueryIndex];
-  const resourcesToRequest = useRef<number>(pageSize);
+  const { currentQuery, hasNextPage, nextPage, syncPaginator } = usePagination({
+    pageSize,
+    queries,
+  });
 
-  const { isLoading } = useQuery({
+  const queryResult = useQuery({
     refetchOnWindowFocus: false,
-    queryKey: createQueryKey({
-      ...currentQuery,
-      nextToken: currentNextToken,
-    }),
+    queryKey: createQueryKey(currentQuery),
     queryFn: async () => {
-      const response = await listTimeSeries({
-        ...currentQuery,
-        nextToken: currentNextToken,
-        maxResults: resourcesToRequest.current,
+      const { nextToken, TimeSeriesSummaries: newTimeSeries = [] } =
+        await listTimeSeries(currentQuery);
+
+      syncPaginator({
+        nextToken,
+        numberOfResourcesReturned: newTimeSeries.length,
       });
 
-      resourcesToRequest.current =
-        resourcesToRequest.current -
-        (response.TimeSeriesSummaries ?? []).length;
-
-      if (resourcesToRequest.current <= 0) {
-        resourcesToRequest.current = pageSize;
-      }
-
-      if (resourcesToRequest.current > 0 && response.nextToken == null) {
-        if (currentQueryIndex < queries.length - 1) {
-          setCurrentQueryIndex((index) => index + 1);
-        }
-      }
-
-      prepareNextToken(response.nextToken);
-      setTimeSeries((ts) => [...ts, ...(response.TimeSeriesSummaries ?? [])]);
-
-      return response;
+      // Update state of time series directly
+      setTimeSeries((ts) => [...ts, ...newTimeSeries]);
     },
   });
 
-  return { timeSeries, isLoading, hasNextPage, nextPage };
+  return { ...queryResult, timeSeries, hasNextPage, nextPage };
 }
 
 function createQueryKey({
@@ -130,24 +67,3 @@ function createQueryKey({
     },
   ] as const;
 }
-
-/*
-function createQueryFn(listTimeSeries: ListTimeSeries) {
-  const paginator = new Paginator(listTimeSeries);
-
-  return async function ({
-    queryKey: [{ timeSeriesType, aliasPrefix, assetId }],
-  }: QueryFunctionContext<ReturnType<typeof createQueryKey>>) {
-    const pages = await paginator.paginate({
-      timeSeriesType,
-      aliasPrefix,
-      assetId,
-    });
-    const timeSeries = pages.flatMap(
-      ({ TimeSeriesSummaries = [] }) => TimeSeriesSummaries
-    );
-
-    return timeSeries;
-  };
-}
-*/

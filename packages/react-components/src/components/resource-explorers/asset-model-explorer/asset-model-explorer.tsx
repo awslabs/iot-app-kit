@@ -30,13 +30,15 @@ export function AssetModelExplorer({
   selectedResources,
   onSelectionChange,
 }: AssetModelExplorerProps) {
-  const { assetModels, isLoading } = useAssetModels({
+  const { assetModels, isLoading, hasNextPage, nextPage } = useAssetModels({
     listAssetModels,
     assetModelTypes,
   });
 
   return (
     <ResourceTable
+      hasNextPage={hasNextPage}
+      onNextPageClick={nextPage}
       isLoading={isLoading}
       filterEnabled={filterEnabled}
       selectedResources={selectedResources}

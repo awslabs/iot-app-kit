@@ -1,6 +1,8 @@
-import { type QueryFunctionContext, useQuery } from '@tanstack/react-query';
+import type { AssetModelSummary } from '@aws-sdk/client-iotsitewise';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 
-import { Paginator } from '../helpers/paginator';
+import { usePagination } from '../helpers/paginator';
 import type { ListAssetModels } from '../types/data-source';
 
 export interface UseAssetModelsOptions {
@@ -12,38 +14,44 @@ export function useAssetModels({
   listAssetModels,
   assetModelTypes,
 }: UseAssetModelsOptions) {
-  const { data: assetModels = [], ...queryResult } = useQuery({
-    queryKey: createQueryKey({ assetModelTypes }),
-    queryFn: createQueryFn(listAssetModels),
+  const [assetModels, setAssetModels] = useState<AssetModelSummary[]>([]);
+  const { currentQuery, hasNextPage, nextPage, syncPaginator } = usePagination({
+    pageSize: 5,
+    queries: [{ assetModelTypes }],
   });
 
-  return { assetModels, ...queryResult };
+  const queryResult = useQuery({
+    refetchOnWindowFocus: false,
+    queryKey: createQueryKey(currentQuery),
+    queryFn: async () => {
+      const { assetModelSummaries = [], nextToken } = await listAssetModels(
+        currentQuery
+      );
+
+      syncPaginator({
+        nextToken,
+        numberOfResourcesReturned: assetModelSummaries.length,
+      });
+
+      setAssetModels((as) => [...as, ...assetModelSummaries]);
+    },
+  });
+
+  return { ...queryResult, assetModels, hasNextPage, nextPage };
 }
 
 function createQueryKey({
   assetModelTypes,
+  nextToken,
 }: {
   assetModelTypes?: Parameters<ListAssetModels>[0]['assetModelTypes'];
+  nextToken?: string;
 }) {
   return [
     {
       resource: 'Asset Model',
       assetModelTypes,
+      nextToken,
     },
   ] as const;
-}
-
-function createQueryFn(listAssetModels: ListAssetModels) {
-  const paginator = new Paginator(listAssetModels);
-
-  return async function queryFn({
-    queryKey: [{ assetModelTypes }],
-  }: QueryFunctionContext<ReturnType<typeof createQueryKey>>) {
-    const pages = await paginator.paginate({ assetModelTypes });
-    const assetModels = pages.flatMap(
-      ({ assetModelSummaries = [] }) => assetModelSummaries
-    );
-
-    return assetModels;
-  };
 }
