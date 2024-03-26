@@ -3,6 +3,10 @@ export type AnomalyDiagnostic = {
   value: number;
 };
 
+export type AnomalyDiagnosticWithTimestamp = AnomalyDiagnostic & {
+  timestamp: number;
+};
+
 export type AnomalyValue = {
   anomalyScore: number;
   predictionReason: string;
