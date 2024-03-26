@@ -1,10 +1,6 @@
-import {
-  Box,
-  Checkbox,
-  ExpandableSection,
-  FormField,
-} from '@cloudscape-design/components';
+import { Box, Checkbox, FormField } from '@cloudscape-design/components';
 import React from 'react';
+import { StyledExpandableSection } from '../components/StyledExpandableSection';
 import { PropertyLens } from '~/customization/propertiesSection';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import {
@@ -80,7 +76,7 @@ const RenderDisplaySettingsSection = ({
   const showDataQuality = maybeWithDefault(undefined, maybeShowDataQuality);
 
   return (
-    <ExpandableSection
+    <StyledExpandableSection
       className='accordian-header'
       headerText='Display'
       defaultExpanded
@@ -127,7 +123,7 @@ const RenderDisplaySettingsSection = ({
           </Checkbox>
         </FormField>
       </Box>
-    </ExpandableSection>
+    </StyledExpandableSection>
   );
 };
 
