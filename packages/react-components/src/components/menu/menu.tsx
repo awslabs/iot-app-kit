@@ -4,6 +4,7 @@ import {
   borderRadiusDropdown,
   colorBackgroundDropdownItemDefault,
   colorBorderButtonNormalDisabled,
+  colorTextBodyDefault,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
 import { useClickAway } from 'react-use';
@@ -50,6 +51,7 @@ export const Menu: React.FC<PropsWithChildren<MenuProps>> = ({
         border: `${spaceScaledXxxs} solid ${colorBorderButtonNormalDisabled}`,
         borderRadius: borderRadiusDropdown,
         background: colorBackgroundDropdownItemDefault,
+        color: colorTextBodyDefault,
         ...styles,
       }}
       onPointerDown={(e) => e.stopPropagation()} // prevent the parent from handling click events
