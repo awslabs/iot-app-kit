@@ -25,9 +25,9 @@ export const TimeSeriesExplorerExample: ComponentStory<
     <ResourceExplorerProvider>
       <TimeSeriesExplorer
         queries={[
-          // { timeSeriesType: 'DISASSOCIATED' },
-          // { assetId: '9a802ed9-7f28-4e20-8239-701a8aba7da1' },
-          // { assetId: 'd90ac8be-423c-4ec3-8d0d-a894a00565ce' },
+          { timeSeriesType: 'DISASSOCIATED' },
+          { assetId: '9a802ed9-7f28-4e20-8239-701a8aba7da1' },
+          { assetId: 'd90ac8be-423c-4ec3-8d0d-a894a00565ce' },
           {},
         ]}
         filterEnabled={filterEnabled}
