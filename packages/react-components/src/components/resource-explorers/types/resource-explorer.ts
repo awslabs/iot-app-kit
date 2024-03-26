@@ -21,8 +21,10 @@ export interface ResourceExplorerProps<Resource = unknown> {
 // Can be used for assets and asset properties at this time.
 export interface SearchableResourceExplorerProps {
   /** Optionally specify a valid IoT SiteWise ExecuteQuery query statement. */
-  queryStatement?: string;
+  // queryStatement?: string;
 
   /** Enable a simple search bar foor the resource. Default - false. */
   searchEnabled?: boolean;
+
+  // dataSource: { executeQuery }
 }

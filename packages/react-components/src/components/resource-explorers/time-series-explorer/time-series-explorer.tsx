@@ -26,6 +26,7 @@ export interface TimeSeriesExplorerProps
 export function TimeSeriesExplorer({
   dataSource,
   queries,
+  filterEnabled,
 }: TimeSeriesExplorerProps) {
   const { timeSeries, isLoading, hasNextPage, nextPage } = useTimeSeries({
     listTimeSeries: dataSource.listTimeSeries,
@@ -40,6 +41,7 @@ export function TimeSeriesExplorer({
       onNextPageClick={nextPage}
       isLoading={isLoading}
       resources={timeSeries}
+      filterEnabled={filterEnabled}
       schema={{
         name: 'Time series',
         pluralName: 'Time series',
@@ -49,6 +51,7 @@ export function TimeSeriesExplorer({
             name: 'Alias',
             pluralName: 'Aliases',
             render: ({ alias }) => alias,
+            filterOperators: ['!:'],
           },
           {
             id: 'assetId',
