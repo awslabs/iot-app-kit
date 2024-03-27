@@ -1,4 +1,4 @@
-import { Container } from '@awsui/components-react';
+import { Container } from '@cloudscape-design/components';
 import styled from 'styled-components';
 
 export default styled(Container)`

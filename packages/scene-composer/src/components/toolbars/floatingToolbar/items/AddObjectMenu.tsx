@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import { defineMessages, MessageDescriptor, useIntl } from 'react-intl';
 import * as THREE from 'three';
-import { IconProps } from '@awsui/components-react';
+import { IconProps } from '@cloudscape-design/components';
 
 import { getSceneResourceDefaultValue } from '../../../../utils/sceneResourceUtils';
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../common/constants';

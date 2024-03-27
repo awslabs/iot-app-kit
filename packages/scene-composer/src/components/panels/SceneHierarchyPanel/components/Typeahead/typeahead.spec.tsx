@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 
 import Typeahead from '.';
 
-jest.mock('@awsui/components-react/autosuggest', () => (props) => <div data-mocked='Autosuggest' {...props} />);
+jest.mock('@cloudscape-design/components/autosuggest', () => (props) => <div data-mocked='Autosuggest' {...props} />);
 
 describe('<Typeahead />', () => {
   it('should match snapshot', () => {

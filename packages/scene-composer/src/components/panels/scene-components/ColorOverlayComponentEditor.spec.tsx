@@ -1,7 +1,7 @@
 /* eslint-disable import/first */
 import React from 'react';
 import { render } from '@testing-library/react';
-import wrapper from '@awsui/components-react/test-utils/dom';
+import wrapper from '@cloudscape-design/components/test-utils/dom';
 
 import { IColorOverlayComponentInternal, useStore } from '../../../store';
 import {
@@ -16,8 +16,8 @@ import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
 import { ColorOverlayComponentEditor } from './ColorOverlayComponentEditor';
 
 /* TODO: This component needs to be refactored, and rely on mocks, but it's too deeply coupled to use mocks atm, so this fixes the tests */
-jest.mock('@awsui/components-react', () => ({
-  ...jest.requireActual('@awsui/components-react'),
+jest.mock('@cloudscape-design/components', () => ({
+  ...jest.requireActual('@cloudscape-design/components'),
 }));
 
 jest.mock('../../../utils/entityModelUtils/sceneUtils');

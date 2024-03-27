@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Checkbox, FormField } from '@awsui/components-react';
+import { Checkbox, FormField } from '@cloudscape-design/components';
 import { useIntl } from 'react-intl';
 
 import { IDataOverlayComponentInternal } from '../../../../store';

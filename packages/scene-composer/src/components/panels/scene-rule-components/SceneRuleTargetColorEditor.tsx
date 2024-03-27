@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useState } from 'react';
-import { Input, Grid } from '@awsui/components-react';
+import { Input, Grid } from '@cloudscape-design/components';
 import { ColorRepresentation } from 'three';
 
 import { colors } from '../../../utils/styleUtils';

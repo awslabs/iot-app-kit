@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react';
-import { Box, FormField, Select, SpaceBetween } from '@awsui/components-react';
+import { Box, FormField, Select, SpaceBetween } from '@cloudscape-design/components';
 import { useIntl, defineMessages } from 'react-intl';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';

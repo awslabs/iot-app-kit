@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import * as awsui from '@awsui/design-tokens';
+import * as awsui from '@cloudscape-design/design-tokens';
 
 export const Divider = styled.hr`
   height: 1px;

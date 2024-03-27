@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Autosuggest } from '@awsui/components-react';
+import { Autosuggest } from '@cloudscape-design/components';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { useSceneHierarchyData } from '../../SceneHierarchyDataProvider';

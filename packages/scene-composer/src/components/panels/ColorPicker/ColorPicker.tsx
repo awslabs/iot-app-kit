@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { debounce } from 'lodash';
-import { SpaceBetween } from '@awsui/components-react';
+import { SpaceBetween } from '@cloudscape-design/components';
 import { useIntl } from 'react-intl';
 import { ColorRepresentation } from 'three';
 

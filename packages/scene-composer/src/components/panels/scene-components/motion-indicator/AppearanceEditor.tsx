@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, FormField, Grid, Input, Select, SpaceBetween } from '@awsui/components-react';
+import { Box, FormField, Grid, Input, Select, SpaceBetween } from '@cloudscape-design/components';
 import { isEmpty } from 'lodash';
 import { useIntl } from 'react-intl';
 

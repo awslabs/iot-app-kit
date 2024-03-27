@@ -1,4 +1,4 @@
-import { colorBackgroundHomeHeader } from '@awsui/design-tokens';
+import { colorBackgroundHomeHeader } from '@cloudscape-design/design-tokens';
 import { CSSProperties } from 'react';
 
 export const tmIconPickerPopover: CSSProperties = {

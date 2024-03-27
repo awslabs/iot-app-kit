@@ -1,9 +1,9 @@
-import Box from '@awsui/components-react/box';
+import Box from '@cloudscape-design/components/box';
 import React, { FC, ReactNode, useCallback, useState } from 'react';
-import * as awsui from '@awsui/design-tokens';
-import { applyMode, Mode } from '@awsui/global-styles';
+import * as awsui from '@cloudscape-design/design-tokens';
+import { applyMode, Mode } from '@cloudscape-design/global-styles';
 import styled, { ThemeProvider } from 'styled-components';
-import Container from '@awsui/components-react/container';
+import Container from '@cloudscape-design/components/container';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
@@ -23,7 +23,7 @@ const FancyBox = styled(Box)`
 `;
 
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
-  applyMode(Mode.Dark);
+  // applyMode(Mode.Dark);
 
   return (
     <ThemeProvider theme={darkTheme}>

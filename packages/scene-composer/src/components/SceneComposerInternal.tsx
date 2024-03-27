@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { Mode } from '@awsui/global-styles';
+import { Mode } from '@cloudscape-design/global-styles';
 import { cloneDeep } from 'lodash';
 import { useViewport } from '@iot-app-kit/react-components';
 

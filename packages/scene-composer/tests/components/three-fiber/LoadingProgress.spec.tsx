@@ -25,7 +25,7 @@ function mockComponent(componentName) {
   };
 }
 
-jest.mock('@awsui/components-react', () => {
+jest.mock('@cloudscape-design/components', () => {
   return {
     Box: mockComponent('Box'),
     Container: mockComponent('Container'),

@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { Button, Container } from '@awsui/components-react';
+import { Button, Container } from '@cloudscape-design/components';
 import styled from 'styled-components';
 
 import { useSceneComposerApi } from '../../src';

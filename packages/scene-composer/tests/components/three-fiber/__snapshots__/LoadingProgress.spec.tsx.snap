@@ -12,6 +12,7 @@ exports[`<LoadingProgress /> should render loading indicator 1`] = `
     <div
       class="c0"
       data-mocked="Container"
+      data-testid="tm-loading"
     >
       <div
         additionalinfo="[object Object]"

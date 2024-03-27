@@ -1,4 +1,4 @@
-import { colorBackgroundHomeHeader, colorChartsStatusNeutral } from '@awsui/design-tokens';
+import { colorBackgroundHomeHeader, colorChartsStatusNeutral } from '@cloudscape-design/design-tokens';
 import { CSSProperties } from 'styled-components';
 
 export const tmColorPickerPopover: CSSProperties = {

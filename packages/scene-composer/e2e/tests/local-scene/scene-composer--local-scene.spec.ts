@@ -6,14 +6,11 @@ const localScene = '/iframe.html?args=&id=developer-scene-composer--local-scene'
 const canvas = '#tm-scene-unselectable-canvas';
 
 test.describe('scene-composer--local-scene', () => {
-  test('visual regression', async ({ page }, testInfo) => {
+  test('visual regression', async ({ page }) => {
     await page.goto(localScene);
-    const frame = page.locator('#root');
-
-    // Example on how to make sure the screenshot shows up in the test report
-    // TODO: Automate this so every screenshot is attached automatically to it's test.
-    const screenshot = await frame.locator(canvas).screenshot();
-    await testInfo.attach('local-scene-canvas.png', { body: screenshot, contentType: 'image/png' });
+    await page.evaluate(() => document.body.classList.add('awsui-dark-mode')); // TODO: Make this a utility, and tie it to the browser preferences so it just works with playwright's default colorScheme toggle
+    await page.waitForTimeout(500); // Wait for scene to load.
+    const screenshot = await page.locator(canvas).screenshot();
 
     expect(screenshot).toMatchSnapshot('local-scene-canvas.png');
   });

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Icon, IconProps } from '@awsui/components-react';
+import { Icon, IconProps } from '@cloudscape-design/components';
 
 import { Direction } from './utils';
 import './FoldableContainer.scss';

@@ -1,5 +1,5 @@
 import React from 'react';
-import * as awsui from '@awsui/design-tokens';
+import * as awsui from '@cloudscape-design/design-tokens';
 
 import { colors } from '../../utils/styleUtils';
 
