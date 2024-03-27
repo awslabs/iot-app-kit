@@ -341,7 +341,7 @@ export class TrendCursorView extends echarts.ComponentView {
 
     const value = {
       id: this.chartId + model.id,
-      value: precisionValue,
+      value: Number(precisionValue),
       name: model.name,
     };
     return [pointGraphic, value];
