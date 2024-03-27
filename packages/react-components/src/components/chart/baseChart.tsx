@@ -18,6 +18,7 @@ import { useChartConfiguration } from './chartOptions/useChartConfiguration';
 
 import './chart.css';
 import { useTrendCursors } from '../../echarts/extensions/trendCursors';
+import { getAdjustedTime } from '../../utils/time';
 import { useChartStoreDataStreamsSync } from './hooks/useChartStoreDataStreamsSync';
 import useIsRefreshing from './hooks/useIsrefreshing';
 import { convertViewportToMs } from './viewport/convertViewportToMs';
@@ -76,8 +77,8 @@ const BaseChart = ({
 
   // Convert viewport timestamps to ms
   const { initial, end } = convertViewportToMs(viewport);
-  const timestampStart = new Date(initial).toLocaleString();
-  const timestampEnd = new Date(end).toLocaleString();
+  const timestampStart = getAdjustedTime(new Date(initial)).toLocaleString();
+  const timestampEnd = getAdjustedTime(new Date(end)).toLocaleString();
 
   // Setup instance of echarts
   const { ref, chartRef } = useECharts(options?.theme);

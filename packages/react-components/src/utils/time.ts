@@ -155,3 +155,24 @@ export const parseDuration = (duration: number | string): number => {
   // if duration is a string but we cannot parse it, we default to 10 mins.
   return parsedTime != null ? parsedTime : 10 * MINUTE_IN_MS;
 };
+
+type TimeOffsetFunction = (date: Date) => number;
+
+export const getAdjustedTime = (
+  date: Date,
+  getTimeOffset?: TimeOffsetFunction
+): Date => {
+  let timezoneOffset: number;
+
+  if (getTimeOffset) {
+    timezoneOffset = getTimeOffset(date);
+  } else {
+    timezoneOffset = new Date().getTimezoneOffset();
+  }
+
+  return new Date(date.getTime() + timezoneOffset * 60000);
+};
+
+export const getTimeOffset = (date: Date): number => {
+  return date.getTimezoneOffset();
+};
