@@ -1,5 +1,5 @@
-import { Button, FormField, Icon, Input, InputProps, SpaceBetween, TextContent } from '@awsui/components-react';
-import { NonCancelableCustomEvent } from '@awsui/components-react/internal/events';
+import { Button, FormField, Icon, Input, InputProps, SpaceBetween, TextContent } from '@cloudscape-design/components';
+import { NonCancelableCustomEvent } from '@cloudscape-design/components/internal/events';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CirclePicker, ColorResult } from 'react-color';
 import { useIntl } from 'react-intl';

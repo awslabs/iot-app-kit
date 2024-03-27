@@ -79,11 +79,17 @@
   "peerDependencies": {
     "react": "^18",
     "react-dom": "^18",
-    "react-intl": "^6"
+    "react-intl": "^6",
+    "@cloudscape-design/components": "^3",
+    "@cloudscape-design/design-tokens": "^3",
+    "@cloudscape-design/global-styles": "^1"
   },
   "devDependencies": {
     "@aws-sdk/credential-providers": "3.395.0",
     "@aws-sdk/types": "^3.310.0",
+    "@cloudscape-design/components": "^3.0.590",
+    "@cloudscape-design/design-tokens": "^3.0.35",
+    "@cloudscape-design/global-styles": "^1.0.25",
     "@awsui/jest-preset": "^2.0.20",
     "@babel/preset-env": "^7.22.5",
     "@babel/preset-react": "^7.22.5",
@@ -141,10 +147,6 @@
   },
   "dependencies": {
     "@aws-sdk/client-iottwinmaker": "3.335.0",
-    "@awsui/collection-hooks": "^1.0.51",
-    "@awsui/components-react": "^3.0.900",
-    "@awsui/design-tokens": "^3.0.50",
-    "@awsui/global-styles": "^1.0.12",
     "@formatjs/ts-transformer": "3.13.3",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",

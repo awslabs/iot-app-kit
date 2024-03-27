@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { FormField } from '@awsui/components-react';
+import { FormField } from '@cloudscape-design/components';
 import { useIntl } from 'react-intl';
 import { isEmpty } from 'lodash';
 

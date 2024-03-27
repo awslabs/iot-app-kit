@@ -1,4 +1,4 @@
-import { Grid, Select } from '@awsui/components-react';
+import { Grid, Select } from '@cloudscape-design/components';
 import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import React, { useMemo, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';

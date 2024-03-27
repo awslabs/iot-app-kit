@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react';
-import { Button, FormField, Select, SpaceBetween } from '@awsui/components-react';
+import { Button, FormField, Select, SpaceBetween } from '@cloudscape-design/components';
 import { useIntl } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';

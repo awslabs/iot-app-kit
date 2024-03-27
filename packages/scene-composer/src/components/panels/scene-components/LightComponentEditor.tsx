@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useLayoutEffect, useState, useCallback } from 'react';
 import { useIntl, defineMessages } from 'react-intl';
-import { Checkbox, FormField, Select, SpaceBetween } from '@awsui/components-react';
+import { Checkbox, FormField, Select, SpaceBetween } from '@cloudscape-design/components';
 
 import useLogger from '../../../logger/react-logger/hooks/useLogger';
 import { Component, LightType } from '../../../models/SceneModels';

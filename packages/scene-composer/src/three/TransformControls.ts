@@ -30,7 +30,7 @@ import {
   Camera,
 } from 'three';
 // + Amazon
-import * as awsui from '@awsui/design-tokens';
+import * as awsui from '@cloudscape-design/design-tokens';
 
 import { hexColorFromDesignToken } from '../utils/styleUtils';
 

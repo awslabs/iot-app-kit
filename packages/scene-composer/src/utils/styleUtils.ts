@@ -5,7 +5,7 @@ import {
   colorTextNotificationDefault,
   colorBackgroundNotificationRed,
   colorBorderButtonNormalDefault,
-} from '@awsui/design-tokens';
+} from '@cloudscape-design/design-tokens';
 
 const designTokenRegex = /^var\(([0-9a-zA-Z-]+),\s*(#[0-9a-z]+)\)$/;
 

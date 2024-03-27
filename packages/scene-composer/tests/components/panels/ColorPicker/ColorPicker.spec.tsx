@@ -3,7 +3,7 @@ import React from 'react';
 
 import { ColorPicker } from '../../../../src/components/panels/ColorPicker/ColorPicker';
 
-jest.mock('@awsui/components-react', () => ({
+jest.mock('@cloudscape-design/components', () => ({
   SpaceBetween: 'space-between',
   Input: 'input',
   FormField: 'form-field',

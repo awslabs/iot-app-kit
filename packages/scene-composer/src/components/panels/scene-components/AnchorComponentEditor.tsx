@@ -1,4 +1,12 @@
-import { AttributeEditor, FormField, Grid, Input, Select, SpaceBetween, TextContent } from '@awsui/components-react';
+import {
+  AttributeEditor,
+  FormField,
+  Grid,
+  Input,
+  Select,
+  SpaceBetween,
+  TextContent,
+} from '@cloudscape-design/components';
 import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { debounce } from 'lodash';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';

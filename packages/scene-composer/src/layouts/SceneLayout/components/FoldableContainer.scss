@@ -1,4 +1,4 @@
-@use '@awsui/design-tokens/index.scss' as awsui;
+@use '@cloudscape-design/design-tokens/index.scss' as awsui;
 
 .tm-wrapper-left,
 .tm-wrapper-right {
@@ -17,10 +17,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-left: 1px solid awsui.$color-border-divider-default; 
-  border-right: 1px solid awsui.$color-border-divider-default; 
+  border-left: 1px solid awsui.$color-border-divider-default;
+  border-right: 1px solid awsui.$color-border-divider-default;
 
   &:hover {
-    background-color: awsui.$color-background-dropdown-item-hover; 
+    background-color: awsui.$color-background-dropdown-item-hover;
   }
 }

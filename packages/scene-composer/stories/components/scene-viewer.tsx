@@ -2,11 +2,10 @@ import React, { FC } from 'react';
 
 import { SceneViewerPropsShared, COMPOSER_FEATURES } from '../../src';
 
-import { ThemeManagerProps } from './theme-manager';
 import SceneComposerWrapper from './scene-composer';
 import { viewerArgTypes } from './argTypes';
 
-export interface StorybookSceneViewerProps extends SceneViewerPropsShared, ThemeManagerProps {
+export interface StorybookSceneViewerProps extends SceneViewerPropsShared {
   source: 'local' | 'aws';
   scene?: string;
   sceneId?: string;

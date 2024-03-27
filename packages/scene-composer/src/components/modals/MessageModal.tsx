@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Box, Button, Header, Icon, SpaceBetween, StatusIndicator, TextContent } from '@awsui/components-react';
+import { Box, Button, Header, Icon, SpaceBetween, StatusIndicator, TextContent } from '@cloudscape-design/components';
 import React, { Fragment, useContext, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 

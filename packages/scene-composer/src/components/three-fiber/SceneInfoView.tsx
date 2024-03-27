@@ -1,6 +1,6 @@
 import { Html } from '@react-three/drei/web/Html';
 import React, { useContext, useEffect, useState } from 'react';
-import { TextContent } from '@awsui/components-react';
+import { TextContent } from '@cloudscape-design/components';
 import { useIntl, defineMessages } from 'react-intl';
 import * as THREE from 'three';
 

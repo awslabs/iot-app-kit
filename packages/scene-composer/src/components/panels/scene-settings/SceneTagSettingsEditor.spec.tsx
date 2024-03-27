@@ -1,7 +1,7 @@
 /* eslint-disable import/first */
 import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import wrapper from '@awsui/components-react/test-utils/dom';
+import wrapper from '@cloudscape-design/components/test-utils/dom';
 
 import { useStore } from '../../../store';
 import { KnownComponentType, KnownSceneProperty } from '../../../interfaces';
@@ -10,8 +10,8 @@ import useTagSettings from '../../../hooks/useTagSettings';
 
 import { SceneTagSettingsEditor } from './SceneTagSettingsEditor';
 
-jest.mock('@awsui/components-react', () => ({
-  ...jest.requireActual('@awsui/components-react'),
+jest.mock('@cloudscape-design/components', () => ({
+  ...jest.requireActual('@cloudscape-design/components'),
 }));
 
 jest.mock('../../../hooks/useTagSettings', () => jest.fn());

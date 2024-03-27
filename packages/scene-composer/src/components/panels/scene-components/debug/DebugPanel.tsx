@@ -1,7 +1,7 @@
 /* istanbul ignore file */ // Ignored because this isn't visible in production builds
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { FormField, Input } from '@awsui/components-react';
+import { FormField, Input } from '@cloudscape-design/components';
 import { Mesh } from 'three';
 
 import { getGlobalSettings } from '../../../../common/GlobalSettings';

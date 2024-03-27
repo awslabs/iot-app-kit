@@ -1,4 +1,4 @@
-import { colorTextLinkDefault } from '@awsui/design-tokens';
+import { colorTextLinkDefault } from '@cloudscape-design/design-tokens';
 import React, { CSSProperties, FC } from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeSanitize from 'rehype-sanitize';

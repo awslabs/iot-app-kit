@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { Checkbox, FormField, Input, Select, SpaceBetween } from '@awsui/components-react';
+import { Checkbox, FormField, Input, Select, SpaceBetween } from '@cloudscape-design/components';
 import { useIntl, defineMessages } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';

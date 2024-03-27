@@ -1,4 +1,4 @@
-import wrapper from '@awsui/components-react/test-utils/dom';
+import wrapper from '@cloudscape-design/components/test-utils/dom';
 import { act, render } from '@testing-library/react';
 import React from 'react';
 
@@ -9,8 +9,8 @@ import { IDataOverlayComponentInternal } from '../../../../store';
 import { DataBindingMapEditor } from './DataBindingMapEditor';
 import { IValueDataBindingBuilderProps } from './ValueDataBindingBuilder';
 
-jest.mock('@awsui/components-react', () => ({
-  ...jest.requireActual('@awsui/components-react'),
+jest.mock('@cloudscape-design/components', () => ({
+  ...jest.requireActual('@cloudscape-design/components'),
 }));
 
 jest.mock('../../../../utils/mathUtils', () => ({

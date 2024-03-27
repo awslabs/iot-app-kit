@@ -7,7 +7,7 @@ import {
   InputProps,
   SpaceBetween,
   Textarea,
-} from '@awsui/components-react';
+} from '@cloudscape-design/components';
 import React, { useCallback, useContext, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 

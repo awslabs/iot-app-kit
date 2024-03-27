@@ -1,4 +1,4 @@
-import * as awsui from '@awsui/design-tokens';
+import * as awsui from '@cloudscape-design/design-tokens';
 /*
 TODO: Shadows are not exported from the design token library.
 Extract the below to a separate file and add dark mode support.
