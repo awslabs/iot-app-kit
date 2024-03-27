@@ -131,6 +131,8 @@ export const REFRESHING_DELAY_MS = 3000;
 
 // legend constants
 export const LEGEND_NAME_MIN_WIDTH_FACTOR = 3.5;
+export const LEGEND_ASSET_NAME_COL_MIN_WIDTH = 100;
+export const LEGEND_ASSET_NAME_COL_MAX_WIDTH = 200;
 
 export const PERFORMANCE_MODE_THRESHOLD = 4000;
 

@@ -13,6 +13,7 @@ const PROPERTY_STREAM = {
   id: 'alarm-asset-id---input-property-id',
   name: 'inputProperty',
   unit: 'Celsius',
+  assetName: 'NAME',
   resolution: 0,
   refId: undefined,
   isRefreshing: false,
