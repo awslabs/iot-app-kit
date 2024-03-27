@@ -47,23 +47,36 @@ export function usePagination<T>({
   );
 
   /** The pagination token which will be used when nextPage() is called. */
-  const nextNextTokenRef = useRef<string | undefined>(undefined);
+  // const nextNextTokenRef = useRef<string | undefined>(undefined);
+  const [nextNextToken, setNextNextToken] = useState<string | undefined>(
+    undefined
+  );
 
   /** The current query being requested. */
-  const currentQuery = {
-    ...queries[currentQueryIndex],
-    nextToken: currentNextToken,
-    maxResults: numToFillPage.current,
-  };
+  const currentQuery =
+    queries.length > 0
+      ? {
+          ...queries[currentQueryIndex],
+          nextToken: currentNextToken,
+          maxResults: numToFillPage.current,
+        }
+      : undefined;
+
+  const isNextNextToken = nextNextToken != null;
+  const isNextQuery = currentQueryIndex < queries.length - 1;
 
   /** Boolean indicating there are more pages to request. */
-  const hasNextPage = nextNextTokenRef.current != null;
+  const hasNextPage = isNextNextToken || isNextQuery;
 
   /** Call to paginate. */
   function nextPage(): void {
     if (hasNextPage) {
-      setCurrentNextToken(nextNextTokenRef.current);
-      nextNextTokenRef.current = undefined;
+      if (isNextNextToken) {
+        setCurrentNextToken(nextNextToken);
+        setNextNextToken(undefined);
+      } else if (isNextQuery) {
+        incrementQuery();
+      }
     }
   }
 
@@ -77,23 +90,26 @@ export function usePagination<T>({
   }) {
     numToFillPage.current = numToFillPage.current - numberOfResourcesReturned;
 
+    if (shouldIncrementQuery(nextToken)) {
+      incrementQuery();
+    }
+
     if (numToFillPage.current <= 0) {
       numToFillPage.current = pageSize;
     }
 
-    if (shouldIncrementQuery(nextToken)) {
-      nextNextTokenRef.current = undefined;
-      setCurrentNextToken(undefined);
-      setCurrentQueryIndex((index) => index + 1);
-    }
+    setNextNextToken(nextToken);
+  }
 
-    nextNextTokenRef.current = nextToken;
+  function incrementQuery() {
+    setNextNextToken(undefined);
+    setCurrentNextToken(undefined);
+    setCurrentQueryIndex((index) => index + 1);
   }
 
   function shouldIncrementQuery(nextToken?: string) {
     const pageIsNotFull = numToFillPage.current > 0;
     const isNotNextToken = !nextToken;
-    const isNextQuery = currentQueryIndex < queries.length - 1;
 
     return pageIsNotFull && isNotNextToken && isNextQuery;
   }
