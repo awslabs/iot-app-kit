@@ -149,14 +149,14 @@ const L4E_SERIES = {
       xAxisIndex: 0,
       yAxisIndex: 0,
       tooltip: {
-        formatter: ({ data }: { data: [number, number, AnomalyValue] }) =>
+        formatter: ({ data }: { data: [Date, number, AnomalyValue] }) =>
           formatTooltip(data),
       },
       encode: {
         x: 'time',
         y: 'value',
       },
-      selectedMode: 'multiple',
+      selectedMode: 'single',
       select: {
         itemStyle: {
           color: '#015b9d',

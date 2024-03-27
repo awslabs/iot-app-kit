@@ -1,11 +1,9 @@
 import { AnomalyValue } from '../types';
 
-export const formatTooltip = (data: [number, number, AnomalyValue]) => {
-  const { anomalyScore, diagnostics, predictionReason, timestamp } = data[2];
+export const formatTooltip = (data: [Date, number, AnomalyValue]) => {
+  const { anomalyScore, diagnostics, predictionReason } = data[2];
   const div = document.createElement('div');
-  const timestampString = `<div><b>${new Date(
-    timestamp
-  ).toLocaleString()}</b></div>`;
+  const timestampString = `<div><b>${data[0].toLocaleString()}</b></div>`;
   const anomalyScoreString = `<div><b>Anomaly Score</b> ${anomalyScore}</div>`;
   const predictionReasonString = `<div><b>Prediction reason</b> ${predictionReason}</div>`;
   const diagnosticString = diagnostics
