@@ -1,6 +1,6 @@
 import { act, render } from '@testing-library/react';
 import React from 'react';
-import wrapper from '@awsui/components-react/test-utils/dom';
+import wrapper from '@cloudscape-design/components/test-utils/dom';
 
 import { KnownComponentType, KnownSceneProperty } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
@@ -8,8 +8,8 @@ import { useStore } from '../../../store';
 
 import { OverlayPanelVisibilityToggle } from './OverlayPanelVisibilityToggle';
 
-jest.mock('@awsui/components-react', () => ({
-  ...jest.requireActual('@awsui/components-react'),
+jest.mock('@cloudscape-design/components', () => ({
+  ...jest.requireActual('@cloudscape-design/components'),
 }));
 
 describe('OverlayPanelVisibilityToggle', () => {

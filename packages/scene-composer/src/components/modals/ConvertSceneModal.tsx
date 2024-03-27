@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash';
-import { Alert, Box, Button, Header, SpaceBetween } from '@awsui/components-react';
+import { Alert, Box, Button, Header, SpaceBetween } from '@cloudscape-design/components';
 import React, { useCallback, useContext, useState } from 'react';
 import { useIntl } from 'react-intl';
 

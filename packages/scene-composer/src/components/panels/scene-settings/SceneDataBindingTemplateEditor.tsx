@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { cloneDeep } from 'lodash';
-import { FormField, Select } from '@awsui/components-react';
+import { FormField, Select } from '@cloudscape-design/components';
 
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE } from '../../../common/constants';

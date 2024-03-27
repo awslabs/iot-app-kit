@@ -1,7 +1,7 @@
 /* eslint-disable import/first */
 import React from 'react';
 import { act, render, screen } from '@testing-library/react';
-import wrapper from '@awsui/components-react/test-utils/dom';
+import wrapper from '@cloudscape-design/components/test-utils/dom';
 import flushPromises from 'flush-promises';
 
 import {
@@ -14,8 +14,8 @@ import {
 import { ValueDataBindingBuilder } from './ValueDataBindingBuilder';
 
 /* TODO: This component needs to be refactored, and rely on mocks, but it's too deeply coupled to use mocks atm, so this fixes the tests */
-jest.mock('@awsui/components-react', () => ({
-  ...jest.requireActual('@awsui/components-react'),
+jest.mock('@cloudscape-design/components', () => ({
+  ...jest.requireActual('@cloudscape-design/components'),
 }));
 
 describe('ValueDataBindingBuilder', () => {

@@ -1,4 +1,4 @@
-import { Density, Mode } from '@awsui/global-styles';
+import { Density, Mode } from '@cloudscape-design/global-styles';
 
 import { AssetType, COMPOSER_FEATURES } from '../../src';
 import scenes from '../scenes';
@@ -36,16 +36,6 @@ export const viewerArgTypes = {
     if: { arg: 'source', eq: 'aws' },
     table: { category: 'Scene' },
     control: 'text', //
-  },
-  theme: {
-    options: Object.values(Mode),
-    control: 'inline-radio',
-    table: { category: 'Theme' },
-  },
-  density: {
-    options: Object.values(Density),
-    control: 'inline-radio',
-    table: { category: 'Theme' },
   },
   features: {
     options: Object.values(COMPOSER_FEATURES),

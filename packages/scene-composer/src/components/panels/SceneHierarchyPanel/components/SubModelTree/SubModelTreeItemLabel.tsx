@@ -1,5 +1,5 @@
 import React, { DetailedHTMLProps, FC, LabelHTMLAttributes } from 'react';
-import { Button } from '@awsui/components-react';
+import { Button } from '@cloudscape-design/components';
 
 import VisibilityToggle from '../../../../VisibilityToggle';
 

@@ -1,4 +1,4 @@
-import { colorBackgroundContainerHeader, colorBorderButtonNormalDisabled } from '@awsui/design-tokens';
+import { colorBackgroundContainerHeader, colorBorderButtonNormalDisabled } from '@cloudscape-design/design-tokens';
 import { CSSProperties } from 'react';
 
 // DataRow

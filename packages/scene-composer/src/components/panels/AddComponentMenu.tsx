@@ -1,4 +1,4 @@
-import { IconProps } from '@awsui/components-react';
+import { IconProps } from '@cloudscape-design/components';
 import React, { useCallback, useContext, useMemo } from 'react';
 import { MessageDescriptor, defineMessages, useIntl } from 'react-intl';
 import * as THREE from 'three';

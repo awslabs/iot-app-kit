@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { Checkbox, FormField, Grid, Input, SpaceBetween, Toggle } from '@awsui/components-react';
+import { Checkbox, FormField, Grid, Input, SpaceBetween, Toggle } from '@cloudscape-design/components';
 
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { useStore, useViewOptionState } from '../../../store';

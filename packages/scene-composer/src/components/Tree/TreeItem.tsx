@@ -1,4 +1,4 @@
-import { Button } from '@awsui/components-react';
+import { Button } from '@cloudscape-design/components';
 import React, { ComponentPropsWithRef, FC, ReactNode, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 

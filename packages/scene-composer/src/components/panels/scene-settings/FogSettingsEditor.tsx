@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { FormField, Input, SpaceBetween, Toggle } from '@awsui/components-react';
+import { FormField, Input, SpaceBetween, Toggle } from '@cloudscape-design/components';
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IFogSettings, KnownSceneProperty } from '../../../interfaces';

@@ -1,11 +1,11 @@
 import React from 'react';
 import { act, render } from '@testing-library/react';
-import wrapper from '@awsui/components-react/test-utils/dom';
+import wrapper from '@cloudscape-design/components/test-utils/dom';
 
 import { DataOverlayPanelConfigEditor } from './DataOverlayPanelConfigEditor';
 
-jest.mock('@awsui/components-react', () => ({
-  ...jest.requireActual('@awsui/components-react'),
+jest.mock('@cloudscape-design/components', () => ({
+  ...jest.requireActual('@cloudscape-design/components'),
 }));
 
 describe('DataOverlayPanelConfigEditor', () => {

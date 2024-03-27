@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components';
-import { Box, Icon as PolarisIcon } from '@awsui/components-react';
+import { Box, Icon as PolarisIcon } from '@cloudscape-design/components';
 import {
   colorBackgroundDropdownItemDefault,
   colorBackgroundDropdownItemHover,
   colorBackgroundItemSelected,
   colorBorderDividerDefault,
   colorTextHeadingDefault,
-} from '@awsui/design-tokens';
+} from '@cloudscape-design/design-tokens';
 
 import { ToolbarItemIconProps, ToolbarItemOptions, ToolbarItemOrientation, ToolbarMenuPosition } from './types';
 

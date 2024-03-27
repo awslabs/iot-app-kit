@@ -7,7 +7,7 @@ import {
   Button,
   Popover,
   StatusIndicator,
-} from '@awsui/components-react';
+} from '@cloudscape-design/components';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 

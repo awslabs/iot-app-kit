@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from 'react';
 import { useIntl } from 'react-intl';
-import { Box, Button, Checkbox, CheckboxProps, NonCancelableCustomEvent } from '@awsui/components-react';
+import { Box, Button, Checkbox, CheckboxProps, NonCancelableCustomEvent } from '@cloudscape-design/components';
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { staticNodeCount } from '../../../utils/entityModelUtils/sceneUtils';

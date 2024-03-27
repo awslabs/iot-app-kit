@@ -9,7 +9,7 @@ import {
   SpaceBetween,
   StatusIndicator,
   TextContent,
-} from '@awsui/components-react';
+} from '@cloudscape-design/components';
 import { useIntl } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';

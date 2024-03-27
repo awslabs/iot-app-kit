@@ -1,6 +1,6 @@
 import React, { ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { colorBackgroundDropdownItemDefault } from '@awsui/design-tokens';
+import { colorBackgroundDropdownItemDefault } from '@cloudscape-design/design-tokens';
 
 import { ToolbarItemGroup } from '../common/styledComponents';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';

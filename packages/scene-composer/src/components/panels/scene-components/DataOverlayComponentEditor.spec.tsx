@@ -8,8 +8,8 @@ import { mockProvider } from '../../../../tests/components/panels/scene-componen
 
 import { DataOverlayComponentEditor } from './DataOverlayComponentEditor';
 
-jest.mock('@awsui/components-react', () => ({
-  ...jest.requireActual('@awsui/components-react'),
+jest.mock('@cloudscape-design/components', () => ({
+  ...jest.requireActual('@cloudscape-design/components'),
 }));
 
 jest.mock('./common/DataBindingMapEditor', () => {

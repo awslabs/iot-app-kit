@@ -1,4 +1,4 @@
-import { Grid, Select } from '@awsui/components-react';
+import { Grid, Select } from '@cloudscape-design/components';
 import React, { useContext, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 

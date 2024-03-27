@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Header, TextContent } from '@awsui/components-react';
+import { Header, TextContent } from '@cloudscape-design/components';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
 import { ERROR_MESSAGE_DICT, SceneComposerRuntimeError } from '../../common/errors';

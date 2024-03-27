@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import SceneRuleTargetOpacityEditor from '../SceneRuleTargetOpacityEditor';
 
-jest.mock('@awsui/components-react', () => ({
+jest.mock('@cloudscape-design/components', () => ({
   Grid: 'Grid',
   Input: 'input',
 }));

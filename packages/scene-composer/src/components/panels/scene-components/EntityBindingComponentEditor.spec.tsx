@@ -7,8 +7,8 @@ import { IEntityBindingComponentInternal, ISceneNodeInternal, useStore } from '.
 
 import { EntityBindingComponentEditor } from './EntityBindingComponentEditor';
 
-jest.mock('@awsui/components-react', () => ({
-  ...jest.requireActual('@awsui/components-react'),
+jest.mock('@cloudscape-design/components', () => ({
+  ...jest.requireActual('@cloudscape-design/components'),
 }));
 
 describe('EntityindingComponentEditor', () => {

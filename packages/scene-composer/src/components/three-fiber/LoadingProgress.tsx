@@ -1,9 +1,9 @@
-import { Box, Container, ProgressBar } from '@awsui/components-react';
+import { Box, Container, ProgressBar } from '@cloudscape-design/components';
 import { Html } from '@react-three/drei/web/Html';
 import React, { Fragment, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
-import * as awsui from '@awsui/design-tokens';
+import * as awsui from '@cloudscape-design/design-tokens';
 import * as THREE from 'three';
 
 import { humanFileSize } from '../../utils/mathUtils';
@@ -39,7 +39,7 @@ export const LoadingProgress = () => {
 
   return (
     <Html center calculatePosition={alwaysCenterLoadingPosition}>
-      <LoadingContainer>
+      <LoadingContainer data-testid='tm-loading'>
         <ProgressBar
           status='in-progress'
           value={progress.progress}
