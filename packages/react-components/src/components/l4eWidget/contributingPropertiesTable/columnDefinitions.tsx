@@ -1,9 +1,11 @@
 import React from 'react';
-import { AnomalyDiagnosticWithTimestamp } from '../types';
 import { Value } from '../../shared-components';
 import { colorChartsPaletteCategorical6 } from '@cloudscape-design/design-tokens';
+import { AnomalyDiagnostic } from '../types';
 
-export const getColumnDefinitions = (significantDigits?: number) => [
+type AnomalyDiagnosticWithTimestamp = AnomalyDiagnostic & { timestamp: Date };
+
+export const getColumnDefinitions = (decimalPlaces?: number) => [
   {
     id: 'property',
     header: 'Property',
@@ -20,7 +22,7 @@ export const getColumnDefinitions = (significantDigits?: number) => [
       return (
         <div style={{ display: 'grid', gridTemplateColumns: `75px 1fr` }}>
           <div>
-            <Value precision={significantDigits} value={percentage} unit='%' />
+            <Value precision={decimalPlaces} value={percentage} unit='%' />
           </div>
           <div
             style={{
@@ -38,6 +40,6 @@ export const getColumnDefinitions = (significantDigits?: number) => [
     sortingField: 'timestamp',
     header: 'Time',
     cell: (item: AnomalyDiagnosticWithTimestamp) =>
-      new Date(item.timestamp).toLocaleString(),
+      item.timestamp.toLocaleString(),
   },
 ];
