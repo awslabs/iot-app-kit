@@ -1,6 +1,10 @@
 import React from 'react';
 import type { MouseEvent } from 'react';
-import { spaceStaticL, spaceStaticM } from '@cloudscape-design/design-tokens';
+import {
+  colorBorderDividerSecondary,
+  spaceStaticL,
+  spaceStaticM,
+} from '@cloudscape-design/design-tokens';
 
 import { useECharts, useResizeableEChart } from '../../hooks/useECharts';
 import { ChartOptions } from './types';
@@ -195,6 +199,27 @@ const BaseChart = ({
     }
   };
 
+  const legendResizerStyle = () => {
+    const borderThin = `1px solid ${colorBorderDividerSecondary}`;
+    const borderThick = `2px solid ${colorBorderDividerSecondary}`;
+    if (isLegendPositionBottom) {
+      return {
+        borderTop: borderThick,
+        borderBottom: borderThin,
+      };
+    }
+    if (isLegendPositionLeft) {
+      return {
+        borderLeft: borderThin,
+        borderRight: borderThick,
+      };
+    }
+    return {
+      borderLeft: borderThick,
+      borderRight: borderThin,
+    };
+  };
+
   return (
     <div
       className={`base-chart-container ${options.legend?.position}-position`}
@@ -214,6 +239,7 @@ const BaseChart = ({
                   ? 'react-resizable-handle react-resizable-handle-se'
                   : ''
               }
+              style={options.legend?.visible ? legendResizerStyle() : {}}
               data-gesture='resize'
             />
           }

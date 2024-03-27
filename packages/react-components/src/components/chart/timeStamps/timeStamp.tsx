@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   colorBackgroundLayoutToggleActive,
-  colorTextHomeHeaderDefault,
+  colorBorderDividerSecondary,
+  colorTextBodyDefault,
   spaceStaticS,
   spaceStaticXl,
   spaceStaticXs,
@@ -31,7 +32,7 @@ export const Timestamp = ({
 }: TimestampProps) => {
   const timestampStyle = {
     ...styleProps,
-    borderTop: `${spaceStaticXxxs} solid ${colorTextHomeHeaderDefault}`,
+    borderTop: `${spaceStaticXxxs} solid ${colorBorderDividerSecondary}`,
     padding: `0 ${spaceStaticS} ${spaceStaticXxxs} ${spaceStaticXs}`,
     fontSize: `10px`,
     color: `${colorBackgroundLayoutToggleActive}`,
@@ -46,6 +47,7 @@ export const Timestamp = ({
         className='base-chart-timestamp'
         style={{
           paddingTop: spaceStaticXxs,
+          color: colorTextBodyDefault,
         }}
       >
         <span>{start}</span>

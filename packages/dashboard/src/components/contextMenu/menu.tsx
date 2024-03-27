@@ -10,6 +10,7 @@ import {
   borderRadiusDropdown,
   colorBackgroundDropdownItemDefault,
   colorBorderControlDefault,
+  colorTextBodyDefault,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
 
@@ -67,6 +68,7 @@ const Menu: React.FC<MenuProps> = ({ position, clickOutside, children }) => {
           minWidth: '192px', // 128+64, just picking a width which is a multiple of 8
           borderRadius: borderRadiusDropdown,
           background: colorBackgroundDropdownItemDefault,
+          color: colorTextBodyDefault,
         }}
         {...attributes.popper}
         onPointerDown={(e) => e.stopPropagation()} // prevent the grid from handling click events

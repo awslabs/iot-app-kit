@@ -10,7 +10,11 @@ import type { KPIBaseProperties, KPISettings } from './types';
 import './kpi.css';
 import { highContrastColor } from './highContrastColor';
 import { getAggregationFrequency } from '../../utils/aggregationFrequency';
-import { fontSizeBodyS } from '@cloudscape-design/design-tokens';
+import {
+  colorBackgroundButtonPrimaryDisabled,
+  colorTextBodyDefault,
+  fontSizeBodyS,
+} from '@cloudscape-design/design-tokens';
 import { DataQualityText } from '../data-quality/data-quality-text';
 
 export const KpiBase: React.FC<KPIBaseProperties> = ({
@@ -44,7 +48,9 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     !isFilledThreshold && isThresholdVisible ? '#ffffff' : backgroundColor;
   const highContrastFontColor =
     background === '#ffffff' ? '' : highContrastColor(background);
-  const fontColor = isFilledThreshold ? highContrastFontColor : '';
+  const fontColor = isFilledThreshold
+    ? highContrastFontColor
+    : colorTextBodyDefault;
 
   const point = propertyPoint;
   const aggregationResolutionString = getAggregationFrequency(
@@ -118,7 +124,9 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
               <>
                 <div
                   className='timestamp-border'
-                  style={{ backgroundColor: fontColor }}
+                  style={{
+                    backgroundColor: colorBackgroundButtonPrimaryDisabled,
+                  }}
                 />
                 <div className='timestamp' data-testid='kpi-timestamp'>
                   {isLoading ? '-' : new Date(point.x).toLocaleString()}
