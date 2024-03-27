@@ -3,11 +3,19 @@ import { useECharts } from '../../hooks/useECharts';
 import { DEFAULT_L4E_WIDGET_SETTINGS } from './constants';
 import { ContributingPropertiesTable } from './contributingPropertiesTable/contributingPropertiesTable';
 import { AnomalyResult } from './types';
-import { WidgetSettings } from '../../common/dataTypes';
+import { useSetXAxis } from './hooks/useSetXAxis';
+import { useSetTitle } from './hooks/useSetTitle';
+import { useSetDataSet } from './hooks/useSetDataSet';
 
 export interface L4EWidgetProps {
-  data: AnomalyResult[];
-  widgetSettings?: WidgetSettings;
+  // data: [some generic data type]; //// this will need its own doc to create a flexible data type
+  data: AnomalyResult[]; // placeholder data type
+  mode?: 'light' | 'dark'; // sets the theme of the widget
+  decimalPlaces?: number; // sets the number of decimal places values will be rounded to
+  title?: string; // title for the widget, can be used to display the prediction model name
+  // if no start / end is provided, start / end will be determined from the data
+  viewportStart?: Date;
+  viewportEnd?: Date;
 }
 
 type SelectEvent = {
@@ -15,8 +23,13 @@ type SelectEvent = {
   selected: { dataIndex: number[] }[];
 };
 
-export const L4EWidget = ({ data, widgetSettings }: L4EWidgetProps) => {
-  const mappedEvents = data.map((ev) => [ev.value.timestamp, 100, ev.value]);
+export const L4EWidget = ({
+  data,
+  title,
+  viewportStart,
+  viewportEnd,
+  decimalPlaces,
+}: L4EWidgetProps) => {
   const { ref, chartRef } = useECharts();
   const [selectedItems, setSelectedItems] = useState<AnomalyResult[]>([]);
 
@@ -25,7 +38,8 @@ export const L4EWidget = ({ data, widgetSettings }: L4EWidgetProps) => {
     // set default chart options
     l4e?.setOption({ ...DEFAULT_L4E_WIDGET_SETTINGS });
     // set event handlers
-    // @ts-expect-error TODO: Fix this
+
+    // @ts-expect-error TODO: Fix this SelectedEvent type
     l4e?.on('selectchanged', ({ fromAction, selected }: SelectEvent) => {
       if (fromAction === 'select' || !!selected.length) {
         const selectedIndices = selected[0].dataIndex;
@@ -36,15 +50,9 @@ export const L4EWidget = ({ data, widgetSettings }: L4EWidgetProps) => {
     });
   }, [chartRef, data]);
 
-  // set dataSet
-  useEffect(() => {
-    chartRef.current?.setOption({
-      dataset: {
-        dimensions: ['time', 'value', 'extraData'],
-        source: mappedEvents,
-      },
-    });
-  }, [chartRef, mappedEvents]);
+  useSetXAxis({ chartRef, viewportStart, viewportEnd });
+  useSetTitle({ chartRef, title });
+  useSetDataSet({ chartRef, data });
 
   return (
     <div style={{ background: 'white', width: '1000px', height: '600px' }}>
@@ -53,7 +61,7 @@ export const L4EWidget = ({ data, widgetSettings }: L4EWidgetProps) => {
         style={{ width: '100%', height: '200px', paddingBottom: '32px' }}
       />
       <ContributingPropertiesTable
-        significantDigits={widgetSettings?.significantDigits}
+        decimalPlaces={decimalPlaces}
         data={selectedItems}
       />
     </div>

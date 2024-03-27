@@ -13,12 +13,12 @@ import { getColumnDefinitions } from './columnDefinitions';
 
 interface ContributingPropertiesTableProps {
   data?: AnomalyResult[];
-  significantDigits?: number;
+  decimalPlaces?: number;
 }
 
 export const ContributingPropertiesTable = ({
   data,
-  significantDigits,
+  decimalPlaces,
 }: ContributingPropertiesTableProps) => {
   // give a timestamp to each diagnostic so table can be sorted by time
   const mappedItems =
@@ -26,7 +26,7 @@ export const ContributingPropertiesTable = ({
       ?.map((d) =>
         d.value.diagnostics.map((diag) => ({
           ...diag,
-          timestamp: d.value.timestamp,
+          timestamp: d.timestamp,
         }))
       )
       .flat() ?? [];
@@ -65,7 +65,7 @@ export const ContributingPropertiesTable = ({
       <Table
         {...collectionProps}
         pagination={<Pagination {...paginationProps} />}
-        columnDefinitions={getColumnDefinitions(significantDigits)}
+        columnDefinitions={getColumnDefinitions(decimalPlaces)}
         columnDisplay={[
           { id: 'property', visible: true },
           { id: 'contributingPercentage', visible: true },

@@ -31,9 +31,9 @@ const times = new Array(10)
 
 export const mockData: AnomalyResult[] = times.map((time) => ({
   ...BaseAnomalyResult,
+  timestamp: new Date(time),
   value: {
     ...BaseAnomalyResult.value,
-    timestamp: time,
     diagnostics: BaseAnomalyResult.value.diagnostics.map((d) => ({
       name: d.name,
       value: Math.random(),
