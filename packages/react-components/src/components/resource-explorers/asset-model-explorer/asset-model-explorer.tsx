@@ -33,10 +33,12 @@ export function AssetModelExplorer({
   const { assetModels, isLoading, hasNextPage, nextPage } = useAssetModels({
     listAssetModels,
     assetModelTypes,
+    pageSize: 5,
   });
 
   return (
     <ResourceTable
+      pageSize={5}
       hasNextPage={hasNextPage}
       onNextPageClick={nextPage}
       isLoading={isLoading}

@@ -1,22 +1,28 @@
 import type { AssetModelSummary } from '@aws-sdk/client-iotsitewise';
-import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { usePagination } from '../helpers/paginator';
+import { createBaseQueryKey, handleQueryError } from '../helpers/queries';
 import type { ListAssetModels } from '../types/data-source';
+import { ListAssetModelsParams } from './types';
+import { Paginated } from '../types/queries';
+
+const ASSET_MODEL_BASE_QUERY = createBaseQueryKey('asset model');
 
 export interface UseAssetModelsOptions {
   listAssetModels: ListAssetModels;
-  assetModelTypes?: Parameters<ListAssetModels>[0]['assetModelTypes'];
+  assetModelTypes?: ListAssetModelsParams['assetModelTypes'];
+  pageSize: number;
 }
 
 export function useAssetModels({
   listAssetModels,
   assetModelTypes,
+  pageSize,
 }: UseAssetModelsOptions) {
-  const [assetModels, setAssetModels] = useState<AssetModelSummary[]>([]);
+  const queryClient = useQueryClient();
   const { currentQuery, hasNextPage, nextPage, syncPaginator } = usePagination({
-    pageSize: 5,
+    pageSize,
     queries: [{ assetModelTypes }],
   });
 
@@ -24,18 +30,29 @@ export function useAssetModels({
     refetchOnWindowFocus: false,
     queryKey: createQueryKey(currentQuery),
     queryFn: async () => {
-      const { assetModelSummaries = [], nextToken } = await listAssetModels(
-        currentQuery
-      );
+      try {
+        const { assetModelSummaries = [], nextToken } = await listAssetModels(
+          currentQuery ?? {}
+        );
 
-      syncPaginator({
-        nextToken,
-        numberOfResourcesReturned: assetModelSummaries.length,
-      });
+        syncPaginator({
+          nextToken,
+          numberOfResourcesReturned: assetModelSummaries.length,
+        });
 
-      setAssetModels((as) => [...as, ...assetModelSummaries]);
+        return assetModelSummaries;
+      } catch (error) {
+        handleQueryError('asset models', error);
+      }
     },
   });
+
+  const queriesData = queryClient.getQueriesData<AssetModelSummary[]>(
+    ASSET_MODEL_BASE_QUERY
+  );
+  const assetModels = queriesData.flatMap(
+    ([_, assetModelSummaries = []]) => assetModelSummaries
+  );
 
   return { ...queryResult, assetModels, hasNextPage, nextPage };
 }
@@ -43,13 +60,12 @@ export function useAssetModels({
 function createQueryKey({
   assetModelTypes,
   nextToken,
-}: {
-  assetModelTypes?: Parameters<ListAssetModels>[0]['assetModelTypes'];
-  nextToken?: string;
-}) {
+}: Paginated<{
+  assetModelTypes?: ListAssetModelsParams['assetModelTypes'];
+}> = {}) {
   return [
     {
-      resource: 'Asset Model',
+      ...ASSET_MODEL_BASE_QUERY[0],
       assetModelTypes,
       nextToken,
     },

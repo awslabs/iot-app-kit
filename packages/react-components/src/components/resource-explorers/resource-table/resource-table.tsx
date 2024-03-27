@@ -28,6 +28,7 @@ export interface ResourceTableProps<Resource> {
   extendedHeader?: React.ReactNode;
   onNextPageClick?: () => void;
   hasNextPage?: boolean;
+  pageSize: number;
 }
 
 interface ResourceSchema<Resource> {
@@ -61,6 +62,7 @@ export function ResourceTable<Resource>({
   extendedHeader,
   onNextPageClick,
   hasNextPage,
+  pageSize,
 }: ResourceTableProps<Resource>) {
   const [preferences, setPreferences] = useExplorerPreferences({
     defaultVisibleContent: ['name'],
@@ -110,7 +112,7 @@ export function ResourceTable<Resource>({
   const { collectionProps, items, paginationProps, propertyFilterProps } =
     useCollection(resources, {
       propertyFiltering: { filteringProperties },
-      pagination: { pageSize: 5 },
+      pagination: { pageSize },
       selection: { keepSelection: true },
       sorting: {},
     });

@@ -1,18 +1,17 @@
 import type { TimeSeriesSummary } from '@aws-sdk/client-iotsitewise';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
+import type { TimeSeriesExplorerQuery } from './types';
 import { usePagination } from '../helpers/paginator';
+import { createBaseQueryKey, handleQueryError } from '../helpers/queries';
 import type { ListTimeSeries } from '../types/data-source';
+import { Paginated } from '../types/queries';
 
-const TIME_SERIES_QUERY_KEY = [{ resource: 'time series' }] as const;
+const TIME_SERIES_BASE_QUERY_KEY = createBaseQueryKey('time series');
 
 export interface UseTimeSeriesOptions {
   listTimeSeries: ListTimeSeries;
-  queries: {
-    timeSeriesType?: Parameters<ListTimeSeries>[0]['timeSeriesType'];
-    aliasPrefix?: Parameters<ListTimeSeries>[0]['aliasPrefix'];
-    assetId?: Parameters<ListTimeSeries>[0]['assetId'];
-  }[];
+  queries: TimeSeriesExplorerQuery[];
   pageSize: number;
 }
 
@@ -32,20 +31,24 @@ export function useTimeSeries({
     enabled: currentQuery != null,
     queryKey: createQueryKey(currentQuery),
     queryFn: async () => {
-      const { nextToken, TimeSeriesSummaries: newTimeSeries = [] } =
-        await listTimeSeries(currentQuery ?? {});
+      try {
+        const { nextToken, TimeSeriesSummaries: newTimeSeries = [] } =
+          await listTimeSeries(currentQuery ?? {});
 
-      syncPaginator({
-        nextToken,
-        numberOfResourcesReturned: newTimeSeries.length,
-      });
+        syncPaginator({
+          nextToken,
+          numberOfResourcesReturned: newTimeSeries.length,
+        });
 
-      return newTimeSeries;
+        return newTimeSeries;
+      } catch (error) {
+        handleQueryError('time series', error);
+      }
     },
   });
 
   const queriesData = queryClient.getQueriesData<TimeSeriesSummary[]>(
-    TIME_SERIES_QUERY_KEY
+    TIME_SERIES_BASE_QUERY_KEY
   );
   const timeSeries = queriesData.flatMap(
     ([_, timeSeriesSummaries = []]) => timeSeriesSummaries
@@ -59,15 +62,10 @@ function createQueryKey({
   aliasPrefix,
   assetId,
   nextToken,
-}: {
-  timeSeriesType?: Parameters<ListTimeSeries>[0]['timeSeriesType'];
-  aliasPrefix?: Parameters<ListTimeSeries>[0]['aliasPrefix'];
-  assetId?: Parameters<ListTimeSeries>[0]['assetId'];
-  nextToken?: string;
-} = {}) {
+}: Paginated<TimeSeriesExplorerQuery> = {}) {
   return [
     {
-      ...TIME_SERIES_QUERY_KEY[0],
+      ...TIME_SERIES_BASE_QUERY_KEY[0],
       timeSeriesType,
       aliasPrefix,
       assetId,
