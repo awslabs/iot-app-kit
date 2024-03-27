@@ -55,26 +55,20 @@ export function AssetExplorer({
 }: AssetExplorerProps) {
   const [assetId, setAssetId] = useState<string | undefined>(undefined);
 
-  const { assets, isLoading, isFetching, status, isRefetching, isPaused } =
-    useAssets({
-      assetId,
-      assetModelIds,
-      describeAsset: dataSource.describeAsset,
-      listAssets: dataSource.listAssets,
-      listAssociatedAssets: dataSource.listAssociatedAssets,
-    });
+  const { assets, isLoading, hasNextPage, nextPage } = useAssets({
+    assetId,
+    assetModelIds,
+    describeAsset: dataSource.describeAsset,
+    listAssets: dataSource.listAssets,
+    listAssociatedAssets: dataSource.listAssociatedAssets,
+    pageSize: 5,
+  });
 
   return (
     <ResourceTable
-      // TODO: Trying to figure out how to get it to immediately load when clicking a child asset.
-      // Did we fix this before?
-      isLoading={
-        isPaused ||
-        status === 'loading' ||
-        isLoading ||
-        isFetching ||
-        isRefetching
-      }
+      hasNextPage={hasNextPage}
+      onNextPageClick={nextPage}
+      isLoading={isLoading}
       resources={assets}
       extendedHeader={
         !isListingAssetsByAssetModel(assetModelIds) ? (

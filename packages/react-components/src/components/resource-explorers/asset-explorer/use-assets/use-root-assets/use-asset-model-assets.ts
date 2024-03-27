@@ -1,80 +1,69 @@
 import { type AssetSummary } from '@aws-sdk/client-iotsitewise';
-import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { usePagination } from '../../../helpers/paginator';
 import type { ListAssets } from '../../../types/data-source';
+
+const ROOT_ASSETS_QUERY_KEY = [{ resource: 'asset model asset' }] as const;
 
 export interface UseAssetModelAssetsOptions {
   assetModelIds?: string[];
   listAssets: ListAssets;
+  pageSize: number;
 }
 
 /** Use the list of assets created from the given asset models. */
 export function useAssetModelAssets({
   assetModelIds = [],
   listAssets,
+  pageSize,
 }: UseAssetModelAssetsOptions) {
-  const queries = useQueries({
-    queries: assetModelIds.map((assetModelId) => {
-      return {
-        queryKey: createQueryKey(assetModelId),
-        queryFn: createQueryFn(listAssets),
-      };
-    }),
+  const queryClient = useQueryClient();
+
+  const queries = assetModelIds.map((assetModelId) => ({ assetModelId }));
+  const { currentQuery, hasNextPage, nextPage, syncPaginator } = usePagination({
+    pageSize,
+    queries,
   });
 
-  const assets = queries.flatMap(({ data = [] }) => data);
+  const queryResult = useQuery({
+    enabled: currentQuery != null,
+    queryKey: createQueryKey(currentQuery),
+    queryFn: async () => {
+      console.log(currentQuery);
+      const { assetSummaries = [], nextToken } = await listAssets(
+        currentQuery ?? {}
+      );
 
-  return { assets };
-}
-
-function createQueryKey(assetModelId: string) {
-  const queryKey = [{ resource: 'root asset', assetModelId }] as const;
-
-  return queryKey;
-}
-
-function createQueryFn(listAssets: ListAssets) {
-  return async function ({
-    queryKey: [{ assetModelId }],
-    signal,
-  }: QueryFunctionContext<ReturnType<typeof createQueryKey>>) {
-    const assetPaginator = createPaginator(listAssets);
-    const assets = await assetPaginator({ assetModelId, signal });
-
-    return assets;
-  };
-}
-
-function createPaginator(listAssets: ListAssets) {
-  async function paginate({
-    assetModelId,
-    nextToken,
-    signal,
-  }: {
-    assetModelId: string;
-    nextToken?: string;
-    signal?: AbortSignal;
-  }): Promise<AssetSummary[]> {
-    const response = await listAssets(
-      {
-        assetModelId,
+      syncPaginator({
         nextToken,
-      },
-      { abortSignal: signal }
-    );
-
-    if (response.nextToken) {
-      const nextPage = await paginate({
-        assetModelId,
-        nextToken: response.nextToken,
-        signal,
+        numberOfResourcesReturned: assetSummaries.length,
       });
 
-      return [...(response.assetSummaries ?? []), ...nextPage];
-    } else {
-      return response.assetSummaries ?? [];
-    }
-  }
+      return assetSummaries;
+    },
+  });
 
-  return paginate;
+  const queriesData = queryClient.getQueriesData<AssetSummary[]>(
+    ROOT_ASSETS_QUERY_KEY
+  );
+  const assets = queriesData.flatMap(
+    ([_, assetSummaries = []]) => assetSummaries
+  );
+
+  return { ...queryResult, assets, hasNextPage, nextPage };
+}
+
+function createQueryKey({
+  assetModelId,
+  nextToken,
+}: {
+  assetModelId?: string;
+  nextToken?: string;
+} = {}) {
+  const queryKey = [
+    { resource: 'root asset', assetModelId, nextToken },
+  ] as const;
+
+  return queryKey;
 }
