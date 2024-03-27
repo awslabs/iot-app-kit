@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FormField, Button, SpaceBetween, Autosuggest } from '@awsui/components-react';
+import { FormField, Button, SpaceBetween, Autosuggest } from '@cloudscape-design/components';
 import { useIntl } from 'react-intl';
 
 import { IAnimationComponentInternal, useEditorState, ISceneNodeInternal } from '../../../store';

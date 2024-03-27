@@ -11,9 +11,9 @@ import {
   SelectProps,
   SpaceBetween,
   TextContent,
-} from '@awsui/components-react';
+} from '@cloudscape-design/components';
 import styled from 'styled-components';
-import * as awsui from '@awsui/design-tokens';
+import * as awsui from '@cloudscape-design/design-tokens';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
 

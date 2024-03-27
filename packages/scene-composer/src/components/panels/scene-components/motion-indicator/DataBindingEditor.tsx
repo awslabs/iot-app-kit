@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { FormField, Select, SpaceBetween } from '@awsui/components-react';
+import { FormField, Select, SpaceBetween } from '@cloudscape-design/components';
 import { useIntl } from 'react-intl';
 
 import { IValueDataBinding, IValueDataBindingProvider } from '../../../../interfaces';

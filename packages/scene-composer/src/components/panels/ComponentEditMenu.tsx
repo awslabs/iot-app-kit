@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import { defineMessages, MessageDescriptor, useIntl } from 'react-intl';
-import { IconProps } from '@awsui/components-react';
+import { IconProps } from '@cloudscape-design/components';
 
 import { ToolbarItemOptionRaw, ToolbarItemOptions } from '../toolbars/common/types';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';

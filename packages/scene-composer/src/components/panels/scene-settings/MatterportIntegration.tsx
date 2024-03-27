@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { Box, Button, FormField, Input, Select, SpaceBetween } from '@awsui/components-react';
+import { Box, Button, FormField, Input, Select, SpaceBetween } from '@cloudscape-design/components';
 import { useIntl } from 'react-intl';
 import { isEmpty } from 'lodash';
 

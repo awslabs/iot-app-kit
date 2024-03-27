@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { Button, Popover, StatusIndicator } from '@awsui/components-react';
+import { Button, Popover, StatusIndicator } from '@cloudscape-design/components';
 import { isEmpty } from 'lodash';
 
 import { KnownComponentType } from '../../../interfaces';

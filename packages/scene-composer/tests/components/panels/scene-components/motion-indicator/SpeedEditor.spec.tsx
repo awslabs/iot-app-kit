@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import wrapper from '@awsui/components-react/test-utils/dom';
+import wrapper from '@cloudscape-design/components/test-utils/dom';
 
 import { mockComponent, mockProvider } from '../MockComponents';
 import { IMotionIndicatorComponentInternal, useStore } from '../../../../../src/store';
@@ -31,8 +31,8 @@ jest.mock('../../../../../src/components/panels/Slider', () => {
 });
 
 /* TODO: This component needs to be refactored, and rely on mocks, but it's too deeply coupled to use mocks atm, so this fixes the tests */
-jest.mock('@awsui/components-react', () => ({
-  ...jest.requireActual('@awsui/components-react'),
+jest.mock('@cloudscape-design/components', () => ({
+  ...jest.requireActual('@cloudscape-design/components'),
 }));
 
 const baseState = {

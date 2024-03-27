@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useState } from 'react';
-import { Button } from '@awsui/components-react';
+import { Button } from '@cloudscape-design/components';
 
 import VisibilityToggle from '../../../../../components/VisibilityToggle';
 import { KnownComponentType } from '../../../../../interfaces';

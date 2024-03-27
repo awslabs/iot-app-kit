@@ -3,8 +3,8 @@ import { act, fireEvent, render } from '@testing-library/react';
 
 import { DataBindingMapNameEditor } from './DataBindingMapNameEditor';
 
-jest.mock('@awsui/components-react', () => ({
-  ...jest.requireActual('@awsui/components-react'),
+jest.mock('@cloudscape-design/components', () => ({
+  ...jest.requireActual('@cloudscape-design/components'),
 }));
 
 describe('DataBindingMapNameEditor', () => {

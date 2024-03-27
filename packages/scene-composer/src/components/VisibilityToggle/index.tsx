@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { Button, ButtonProps } from '@awsui/components-react';
+import { Button, ButtonProps } from '@cloudscape-design/components';
 import { useIntl } from 'react-intl';
 
 import { Show } from '../../assets/auto-gen/icons';

@@ -13,7 +13,7 @@ import {
   colorChartsTeal300,
   colorChartsTeal600,
   colorChartsYellow700,
-} from '@awsui/design-tokens';
+} from '@cloudscape-design/design-tokens';
 
 import { hexColorFromDesignToken } from '../../../../../../utils/styleUtils';
 

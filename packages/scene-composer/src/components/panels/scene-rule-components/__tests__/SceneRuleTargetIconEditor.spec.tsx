@@ -1,13 +1,13 @@
 /* eslint-disable import/first */
 import React from 'react';
 import { render } from '@testing-library/react';
-import wrapper from '@awsui/components-react/test-utils/dom';
+import wrapper from '@cloudscape-design/components/test-utils/dom';
 
 import { SceneRuleTargetIconEditor } from '../SceneRuleTargetIconEditor';
 import { DefaultAnchorStatus } from '../../../../interfaces/components';
 
-jest.mock('@awsui/components-react', () => ({
-  ...jest.requireActual('@awsui/components-react'),
+jest.mock('@cloudscape-design/components', () => ({
+  ...jest.requireActual('@cloudscape-design/components'),
 }));
 
 jest.mock('../../../../common/GlobalSettings');

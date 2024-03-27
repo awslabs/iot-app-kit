@@ -1,11 +1,11 @@
 import React from 'react';
-import { FormField, Input, InputProps } from '@awsui/components-react';
+import { FormField, Input, InputProps } from '@cloudscape-design/components';
 import { ColorRepresentation } from 'three';
 import tinycolor, { Color } from 'tinycolor2';
 import './ColorPicker.scss';
 import { HexColorPicker } from 'react-colorful';
-import { NonCancelableEventHandler } from '@awsui/components-react/internal/events';
-import { BaseChangeDetail } from '@awsui/components-react/input/interfaces';
+import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
+import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
 
 export const DEFAULT_COLOR = new tinycolor().toHexString();
 

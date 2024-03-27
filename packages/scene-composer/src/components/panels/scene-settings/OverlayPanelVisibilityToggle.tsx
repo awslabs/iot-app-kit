@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 import { useIntl } from 'react-intl';
-import { Box, Toggle } from '@awsui/components-react';
+import { Box, Toggle } from '@cloudscape-design/components';
 
 import { IDataOverlayComponentInternal, useStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';

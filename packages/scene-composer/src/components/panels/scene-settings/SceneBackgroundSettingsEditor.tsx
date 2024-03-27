@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { Button, FormField, Input, SpaceBetween } from '@awsui/components-react';
+import { Button, FormField, Input, SpaceBetween } from '@cloudscape-design/components';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';

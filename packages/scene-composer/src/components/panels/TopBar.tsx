@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useContext, useMemo } from 'react';
 import styled from 'styled-components';
-import { ButtonDropdown, SpaceBetween } from '@awsui/components-react';
+import { ButtonDropdown, SpaceBetween } from '@cloudscape-design/components';
 import { useIntl } from 'react-intl';
 
 import { KnownComponentType } from '../../interfaces';

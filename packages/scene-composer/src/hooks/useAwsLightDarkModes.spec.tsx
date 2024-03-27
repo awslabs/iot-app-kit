@@ -2,11 +2,11 @@ import React, { createRef } from 'react';
 import { render } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 const applyModeMock = jest.fn();
-jest.mock('@awsui/global-styles', () => ({
+jest.mock('@cloudscape-design/global-styles', () => ({
   applyMode: applyModeMock,
-  Mode: jest.requireActual('@awsui/global-styles').Mode,
+  Mode: jest.requireActual('@cloudscape-design/global-styles').Mode,
 }));
-import { Mode } from '@awsui/global-styles';
+import { Mode } from '@cloudscape-design/global-styles';
 
 import useAwsLightDarkModes from './useAwsLightDarkModes';
 

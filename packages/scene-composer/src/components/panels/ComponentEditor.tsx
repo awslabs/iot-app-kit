@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormField, Input, SpaceBetween } from '@awsui/components-react';
+import { FormField, Input, SpaceBetween } from '@cloudscape-design/components';
 
 import { IDataOverlayComponentInternal, ISceneComponentInternal, ISceneNodeInternal } from '../../store';
 import { KnownComponentType } from '../../interfaces';

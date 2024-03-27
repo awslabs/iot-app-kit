@@ -1,4 +1,4 @@
-import { IconProps } from '@awsui/components-react';
+import { IconProps } from '@cloudscape-design/components';
 
 import { COMPOSER_FEATURES } from '../../../interfaces';
 

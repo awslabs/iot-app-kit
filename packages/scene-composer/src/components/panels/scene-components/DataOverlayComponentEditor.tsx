@@ -1,4 +1,4 @@
-import { FormField, SpaceBetween, Textarea } from '@awsui/components-react';
+import { FormField, SpaceBetween, Textarea } from '@cloudscape-design/components';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { debounce } from 'lodash';

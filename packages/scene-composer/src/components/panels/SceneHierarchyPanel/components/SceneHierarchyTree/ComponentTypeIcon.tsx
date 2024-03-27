@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@awsui/components-react';
+import { Icon } from '@cloudscape-design/components';
 
 import { Camera, Light, Modelref, Tag } from '../../../../../assets/auto-gen/icons';
 import { KnownComponentType } from '../../../../../interfaces';

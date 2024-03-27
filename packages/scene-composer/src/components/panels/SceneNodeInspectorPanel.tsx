@@ -1,4 +1,4 @@
-import { Checkbox, FormField, TextContent } from '@awsui/components-react';
+import { Checkbox, FormField, TextContent } from '@cloudscape-design/components';
 import { debounce } from 'lodash';
 import React, { useCallback, useContext, useRef } from 'react';
 import { useIntl } from 'react-intl';

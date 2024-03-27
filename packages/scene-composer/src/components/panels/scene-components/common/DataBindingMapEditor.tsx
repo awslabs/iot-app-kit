@@ -1,4 +1,4 @@
-import { Box, Button, SpaceBetween } from '@awsui/components-react';
+import { Box, Button, SpaceBetween } from '@cloudscape-design/components';
 import { isEmpty } from 'lodash';
 import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';

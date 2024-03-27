@@ -1,9 +1,9 @@
 import React, { FC, useCallback, useMemo, useRef } from 'react';
-import { Mode, Density } from '@awsui/global-styles';
 import styled from 'styled-components';
 import { CredentialProvider, Credentials } from '@aws-sdk/types';
 import { Viewport } from '@iot-app-kit/core';
 import { TimeSync, TimeSelection } from '@iot-app-kit/react-components';
+import { useDarkMode } from 'storybook-dark-mode';
 
 import {
   AssetType,
@@ -23,7 +23,6 @@ import {
 } from '../../src/interfaces/sceneComposerInternal';
 import { SceneComposerInternal } from '../../src/components/SceneComposerInternal';
 
-import ThemeManager, { ThemeManagerProps } from './theme-manager';
 import useLoader from './hooks/useLoader';
 import useSceneMetadataModule from './hooks/useSceneMetadataModule';
 import { mapFeatures } from './utils';
@@ -43,7 +42,7 @@ const SceneComposerContainer = styled.div`
   }
 `;
 
-interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManagerProps {
+interface SceneComposerWrapperProps extends SceneViewerPropsShared {
   source: 'local' | 'aws';
   scene?: string;
   sceneId?: string;
@@ -63,8 +62,6 @@ interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManager
 const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   source = 'local',
   scene: localScene,
-  theme = Mode.Dark,
-  density = Density.Comfortable,
   mode = 'Editing',
   awsCredentials,
   workspaceId,
@@ -86,6 +83,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   const dataSource = useDataSource(awsCredentials, workspaceId);
   const { loader, bindingProvider } = useLoader(source, scene, dataSource, sceneId);
   const sceneMetadataModule = useSceneMetadataModule({ source, scene, sceneId }, dataSource);
+  const isDarkMode = useDarkMode();
 
   const config = useMemo(
     () => ({
@@ -93,10 +91,10 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
         enable: true,
       },
       mode,
-      colorTheme: theme,
+      colorTheme: isDarkMode ? 'dark' : 'light',
       featureConfig: mapFeatures(features),
     }),
-    [mode, theme, features],
+    [mode, isDarkMode, features],
   );
 
   const viewport: Viewport = useMemo(() => {
@@ -169,23 +167,21 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   if (loader) {
     return (
       <TimeSync group='scene-composer' initialViewport={viewport}>
-        <ThemeManager theme={theme} density={density}>
-          <SceneComposerContainer data-testid='webgl-root' className='sceneViewer'>
-            <TimeSelection />
-            <SceneComposerInternal
-              sceneLoader={loader}
-              sceneMetadataModule={sceneMetadataModule}
-              config={config}
-              externalLibraryConfig={externalLibraryConfig}
-              queries={queries}
-              valueDataBindingProviders={bindingProvider}
-              onSceneUpdated={handleSceneUpdated}
-              dataStreams={source === 'local' ? convertDataInputToDataStreams(getTestDataInputContinuous()) : undefined}
-              showAssetBrowserCallback={mockAssetBrowserCallback}
-              {...props}
-            />
-          </SceneComposerContainer>
-        </ThemeManager>
+        <SceneComposerContainer data-testid='webgl-root' className='sceneViewer'>
+          <TimeSelection />
+          <SceneComposerInternal
+            sceneLoader={loader}
+            sceneMetadataModule={sceneMetadataModule}
+            config={config}
+            externalLibraryConfig={externalLibraryConfig}
+            queries={queries}
+            valueDataBindingProviders={bindingProvider}
+            onSceneUpdated={handleSceneUpdated}
+            dataStreams={source === 'local' ? convertDataInputToDataStreams(getTestDataInputContinuous()) : undefined}
+            showAssetBrowserCallback={mockAssetBrowserCallback}
+            {...props}
+          />
+        </SceneComposerContainer>
       </TimeSync>
     );
   }

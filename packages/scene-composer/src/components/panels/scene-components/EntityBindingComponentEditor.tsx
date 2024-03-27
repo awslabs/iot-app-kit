@@ -1,4 +1,4 @@
-import { SpaceBetween } from '@awsui/components-react';
+import { SpaceBetween } from '@cloudscape-design/components';
 import React, { useCallback, useContext } from 'react';
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
