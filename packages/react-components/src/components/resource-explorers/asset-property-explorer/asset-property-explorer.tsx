@@ -116,6 +116,7 @@ export function AssetPropertyExplorer({
   if (isExtended(dataSource)) {
     return (
       <ResourceTable<AssetProperty>
+        pageSize={5}
         resources={assetProperties as AssetProperty[]}
         onSelectionChange={
           onSelectionChange != null
@@ -129,6 +130,7 @@ export function AssetPropertyExplorer({
 
   return (
     <ResourceTable<AssetPropertySummary>
+      pageSize={5}
       resources={assetProperties}
       onSelectionChange={
         onSelectionChange != null

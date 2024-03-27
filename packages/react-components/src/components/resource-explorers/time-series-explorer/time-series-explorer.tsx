@@ -5,17 +5,14 @@ import { useTimeSeries } from './use-time-series';
 import { ResourceTable } from '../resource-table/resource-table';
 import type { ListTimeSeries } from '../types/data-source';
 import type { ResourceExplorerProps } from '../types/resource-explorer';
+import type { TimeSeriesExplorerQuery } from './types';
 
 export interface TimeSeriesExplorerProps
   extends ResourceExplorerProps<TimeSeriesSummary> {
   dataSource: {
     listTimeSeries: ListTimeSeries;
   };
-  queries: {
-    timeSeriesType?: Parameters<ListTimeSeries>[0]['timeSeriesType'];
-    aliasPrefix?: Parameters<ListTimeSeries>[0]['aliasPrefix'];
-    assetId?: Parameters<ListTimeSeries>[0]['assetId'];
-  }[];
+  queries: TimeSeriesExplorerQuery[];
 }
 
 /**
@@ -31,11 +28,12 @@ export function TimeSeriesExplorer({
   const { timeSeries, isLoading, hasNextPage, nextPage } = useTimeSeries({
     listTimeSeries: dataSource.listTimeSeries,
     queries,
-    pageSize: 5,
+    pageSize: 10,
   });
 
   return (
     <ResourceTable
+      pageSize={10}
       hasNextPage={hasNextPage}
       trackBy={({ timeSeriesId }) => timeSeriesId}
       onNextPageClick={nextPage}

@@ -66,6 +66,7 @@ export function AssetExplorer({
 
   return (
     <ResourceTable
+      pageSize={5}
       hasNextPage={hasNextPage}
       onNextPageClick={nextPage}
       isLoading={isLoading}
