@@ -6,12 +6,21 @@ import Pagination, {
 } from '@cloudscape-design/components/pagination';
 import CollectionPreferences from '@cloudscape-design/components/collection-preferences';
 import React, { useMemo } from 'react';
+import { type CollectionPreferencesProps } from '@cloudscape-design/components/collection-preferences';
 
-import { useExplorerPreferences } from './use-explorer-preferences';
 import { Header, PropertyFilter } from '@cloudscape-design/components';
+import type { ResourceSchema } from './types';
+import { deriveSchema } from './schema';
 
 type SelectionType = TableProps['selectionType'];
 type OnSelectionChange = TableProps['onSelectionChange'];
+
+type ResourceTablePreferences = NonNullable<
+  CollectionPreferencesProps['preferences']
+>;
+type SetResourceTablePreferences = (
+  preferences: ResourceTablePreferences
+) => void;
 
 export interface ResourceTableProps<Resource> {
   readonly resources: Resource[];
@@ -28,21 +37,8 @@ export interface ResourceTableProps<Resource> {
   extendedHeader?: React.ReactNode;
   onNextPageClick?: () => void;
   hasNextPage?: boolean;
-  pageSize: number;
-}
-
-interface ResourceSchema<Resource> {
-  name: string;
-  pluralName: string;
-  properties: ResourcePropertySchema<Resource>[];
-}
-
-interface ResourcePropertySchema<Resource> {
-  id: string;
-  name: string;
-  pluralName: string;
-  render: (resource: Resource) => string | React.ReactNode;
-  filterOperators?: ('=' | '!=' | '>' | '>=' | '<' | '<=' | ':' | '!:')[];
+  preferences?: ResourceTablePreferences;
+  setPreferences?: SetResourceTablePreferences;
 }
 
 export const SUPPORTED_PAGE_SIZES = [10, 25, 100, 250];
@@ -62,57 +58,19 @@ export function ResourceTable<Resource>({
   extendedHeader,
   onNextPageClick,
   hasNextPage,
-  pageSize,
+  preferences = {},
+  setPreferences,
 }: ResourceTableProps<Resource>) {
-  const [preferences, setPreferences] = useExplorerPreferences({
-    defaultVisibleContent: ['name'],
-    resourceName: 'asset',
-  });
-
-  // Do not recalculate
-  const columnDefinitions = useMemo(
-    () =>
-      schema.properties.map((propertySchema) => ({
-        id: propertySchema.id,
-        header: propertySchema.name,
-        cell: propertySchema.render,
-        sortingField: propertySchema.id,
-      })),
-    []
-  );
-
-  // Do not recalculate
-  const filteringProperties = useMemo(() => {
-    const propertySchemasWithFilter = schema.properties.filter(
-      (
-        propertySchema:
-          | ResourcePropertySchema<Resource>
-          | (ResourcePropertySchema<Resource> &
-              Required<
-                Pick<ResourcePropertySchema<Resource>, 'filterOperators'>
-              >)
-      ): propertySchema is ResourcePropertySchema<Resource> &
-        Required<Pick<ResourcePropertySchema<Resource>, 'filterOperators'>> => {
-        return (
-          propertySchema.filterOperators != null &&
-          propertySchema.filterOperators.length > 0
-        );
-      }
-    );
-
-    return propertySchemasWithFilter.map((propertySchema) => {
-      return {
-        key: propertySchema.id,
-        propertyLabel: propertySchema.name,
-        groupValuesLabel: propertySchema.pluralName,
-      };
-    });
-  }, []);
+  const {
+    columnDefinitions,
+    filteringProperties,
+    contentDisplayPreferenceOptions,
+  } = useMemo(() => deriveSchema(schema), []);
 
   const { collectionProps, items, paginationProps, propertyFilterProps } =
     useCollection(resources, {
       propertyFiltering: { filteringProperties },
-      pagination: { pageSize },
+      pagination: { pageSize: preferences.pageSize },
       selection: { keepSelection: true },
       sorting: {},
     });
@@ -125,6 +83,8 @@ export function ResourceTable<Resource>({
       stickyColumns={preferences.stickyColumns}
       wrapLines={preferences.wrapLines}
       stripedRows={preferences.stripedRows}
+      columnDisplay={preferences.contentDisplay}
+      contentDensity={preferences.contentDensity}
       empty={
         <Box textAlign='center' color='inherit'>
           <b>No {schema.pluralName.toLowerCase()}.</b>
@@ -177,7 +137,7 @@ export function ResourceTable<Resource>({
             cancelLabel='Cancel'
             preferences={preferences}
             onConfirm={({ detail }) => {
-              setPreferences(detail as typeof preferences);
+              setPreferences && setPreferences(detail as typeof preferences);
             }}
             contentDensityPreference={{
               label: 'Content density',
@@ -200,7 +160,7 @@ export function ResourceTable<Resource>({
               description: 'Select to add alternating shaded rows',
             }}
             contentDisplayPreference={{
-              options: [],
+              options: contentDisplayPreferenceOptions,
             }}
           />
         ) : null

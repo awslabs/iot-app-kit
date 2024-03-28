@@ -1,16 +1,18 @@
 import type { AssetSummary } from '@aws-sdk/client-iotsitewise';
+import React, { useMemo, useState } from 'react';
 import { Link } from '@cloudscape-design/components';
-import React, { useState } from 'react';
 
 import { useAssets } from './use-assets';
 import { AssetTableHierarchyPath } from './asset-table-hierarchy-path';
 import { ResourceTable } from '../resource-table/resource-table';
+import { useResourceTablePreferences } from '../resource-table/use-resource-table-preferences';
 import type {
   DescribeAsset,
   ListAssets,
   ListAssociatedAssets,
 } from '../types/data-source';
 import type { ResourceExplorerProps } from '../types/resource-explorer';
+import { createAssetExplorerSchema } from './constants';
 
 // TODO: make these optional and handle correctly
 export interface AssetExplorerDataSource {
@@ -32,12 +34,6 @@ function isListingAssetsByAssetModel(assetModelIds: string[]): boolean {
   return assetModelIds.length > 0;
 }
 
-function isParentAsset({
-  hierarchies = [],
-}: Pick<AssetSummary, 'hierarchies'>): boolean {
-  return hierarchies?.length > 0;
-}
-
 /**
  * Explore AWS IoT SiteWise assets.
  *
@@ -55,18 +51,39 @@ export function AssetExplorer({
 }: AssetExplorerProps) {
   const [assetId, setAssetId] = useState<string | undefined>(undefined);
 
+  const schema = useMemo(
+    () =>
+      createAssetExplorerSchema({
+        renderName: ({ name, hierarchies = [], id }) => {
+          return !isListingAssetsByAssetModel(assetModelIds) &&
+            hierarchies.length > 0 ? (
+            <Link onFollow={() => setAssetId(id)}>{name}</Link>
+          ) : (
+            name
+          );
+        },
+      }),
+    [...assetModelIds]
+  );
+
+  const [preferences, setPreferences] = useResourceTablePreferences({
+    schema,
+  });
+
   const { assets, isLoading, hasNextPage, nextPage } = useAssets({
     assetId,
     assetModelIds,
     describeAsset: dataSource.describeAsset,
     listAssets: dataSource.listAssets,
     listAssociatedAssets: dataSource.listAssociatedAssets,
-    pageSize: 5,
+    pageSize: preferences.pageSize ?? 10,
   });
 
   return (
     <ResourceTable
-      pageSize={5}
+      preferences={preferences}
+      setPreferences={setPreferences}
+      schema={schema}
       hasNextPage={hasNextPage}
       onNextPageClick={nextPage}
       isLoading={isLoading}
@@ -91,47 +108,6 @@ export function AssetExplorer({
           ? ({ detail }) => onSelectionChange(detail.selectedItems)
           : undefined
       }
-      schema={{
-        name: 'Asset',
-        pluralName: 'Assets',
-        properties: [
-          {
-            id: 'arn',
-            name: 'ARN',
-            pluralName: 'ARNs',
-            render: (resource) => resource.arn,
-            filterOperators: ['=', '!=', ':', '!:'],
-          },
-          {
-            id: 'id',
-            name: 'ID',
-            pluralName: 'IDs',
-            render: (resource) => resource.id,
-            filterOperators: ['=', '!=', ':', '!:'],
-          },
-          {
-            id: 'description',
-            name: 'Description',
-            pluralName: 'Descriptions',
-            render: (resource) => resource.description,
-            filterOperators: ['=', '!=', ':', '!:'],
-          },
-          {
-            id: 'name',
-            name: 'Name',
-            pluralName: 'Names',
-            render: ({ name, hierarchies = [], id }) => {
-              return !isListingAssetsByAssetModel(assetModelIds) &&
-                isParentAsset({ hierarchies }) ? (
-                <Link onFollow={() => setAssetId(id)}>{name}</Link>
-              ) : (
-                name
-              );
-            },
-            filterOperators: ['=', '!=', ':', '!:'],
-          },
-        ],
-      }}
     />
   );
 }

@@ -26,6 +26,7 @@ export function useChildAssets({
   pageSize,
 }: UseChildAssetsOptions) {
   const queryClient = useQueryClient();
+
   const {
     assets: [{ assetId: describedAssetId = '', assetHierarchies = [] } = {}],
   } = useDescribedAssets({
@@ -52,7 +53,6 @@ export function useChildAssets({
     enabled: currentQuery != null,
     queryKey: createQueryKey(currentQuery),
     queryFn: async () => {
-      console.log(currentQuery);
       const { assetSummaries = [], nextToken } = await listAssociatedAssets(
         currentQuery ?? { assetId: '' }
       );

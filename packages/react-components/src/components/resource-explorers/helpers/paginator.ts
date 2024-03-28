@@ -47,7 +47,6 @@ export function usePagination<T>({
   );
 
   /** The pagination token which will be used when nextPage() is called. */
-  // const nextNextTokenRef = useRef<string | undefined>(undefined);
   const [nextNextToken, setNextNextToken] = useState<string | undefined>(
     undefined
   );
