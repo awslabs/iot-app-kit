@@ -7,6 +7,7 @@ import Pagination, {
 import CollectionPreferences from '@cloudscape-design/components/collection-preferences';
 import React, { useMemo } from 'react';
 import { type CollectionPreferencesProps } from '@cloudscape-design/components/collection-preferences';
+import { Alert, SpaceBetween } from '@cloudscape-design/components';
 
 import { Header, PropertyFilter } from '@cloudscape-design/components';
 import type { ResourceSchema } from './types';
@@ -39,6 +40,7 @@ export interface ResourceTableProps<Resource> {
   hasNextPage?: boolean;
   preferences?: ResourceTablePreferences;
   setPreferences?: SetResourceTablePreferences;
+  error?: Error | null;
 }
 
 export const SUPPORTED_PAGE_SIZES = [10, 25, 100, 250];
@@ -60,6 +62,7 @@ export function ResourceTable<Resource>({
   hasNextPage,
   preferences = {},
   setPreferences,
+  error,
 }: ResourceTableProps<Resource>) {
   const {
     columnDefinitions,
@@ -74,6 +77,23 @@ export function ResourceTable<Resource>({
       selection: { keepSelection: true },
       sorting: {},
     });
+
+  if (error) {
+    return (
+      <Box variant='h3'>
+        <SpaceBetween size='s'>
+          <Box variant='h3'>{`${schema.pluralName} (0)`}</Box>
+          <Alert
+            statusIconAriaLabel='Error'
+            type='error'
+            header='An error has occurred.'
+          >
+            {error instanceof Error ? error.message : error}
+          </Alert>
+        </SpaceBetween>
+      </Box>
+    );
+  }
 
   return (
     <Table<Resource>

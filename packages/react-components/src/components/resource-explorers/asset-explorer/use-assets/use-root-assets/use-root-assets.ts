@@ -19,10 +19,11 @@ export function useRootAssets({ listAssets, pageSize }: UseRootAssetsOptions) {
     queries: [{ filter: 'TOP_LEVEL' as const }],
   });
 
-  const queryResult = useQuery({
+  const queryResult = useQuery<AssetSummary[], Error>({
     enabled: currentQuery != null,
     queryKey: createQueryKey(currentQuery),
     queryFn: async () => {
+      // throw new Error('test');
       const { assetSummaries = [], nextToken } = await listAssets(
         currentQuery ?? {}
       );

@@ -49,7 +49,10 @@ export function AssetExplorer({
   preferencesEnabled,
   filterEnabled,
 }: AssetExplorerProps) {
-  const [assetId, setAssetId] = useState<string | undefined>(undefined);
+  // Store the current parent asset ID to list their child assets.
+  const [parentAssetId, setParentAssetId] = useState<string | undefined>(
+    undefined
+  );
 
   const schema = useMemo(
     () =>
@@ -57,7 +60,8 @@ export function AssetExplorer({
         renderName: ({ name, hierarchies = [], id }) => {
           return !isListingAssetsByAssetModel(assetModelIds) &&
             hierarchies.length > 0 ? (
-            <Link onFollow={() => setAssetId(id)}>{name}</Link>
+            // Clicking on the asset name causes the asset explorer to list the asset's children.
+            <Link onFollow={() => setParentAssetId(id)}>{name}</Link>
           ) : (
             name
           );
@@ -70,8 +74,8 @@ export function AssetExplorer({
     schema,
   });
 
-  const { assets, isLoading, hasNextPage, nextPage } = useAssets({
-    assetId,
+  const { assets, isLoading, hasNextPage, nextPage, error } = useAssets({
+    assetId: parentAssetId,
     assetModelIds,
     describeAsset: dataSource.describeAsset,
     listAssets: dataSource.listAssets,
@@ -81,6 +85,7 @@ export function AssetExplorer({
 
   return (
     <ResourceTable
+      error={error}
       preferences={preferences}
       setPreferences={setPreferences}
       schema={schema}
@@ -91,8 +96,8 @@ export function AssetExplorer({
       extendedHeader={
         !isListingAssetsByAssetModel(assetModelIds) ? (
           <AssetTableHierarchyPath
-            assetId={assetId}
-            onClickAssetName={setAssetId}
+            assetId={parentAssetId}
+            onClickAssetName={setParentAssetId}
             describeAsset={dataSource.describeAsset}
             listAssociatedAssets={dataSource.listAssociatedAssets}
           />

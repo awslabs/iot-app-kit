@@ -48,7 +48,7 @@ export function useChildAssets({
     queries,
   });
 
-  const queryResult = useQuery({
+  const queryResult = useQuery<AssetSummary[], Error>({
     refetchOnWindowFocus: false,
     enabled: currentQuery != null,
     queryKey: createQueryKey(currentQuery),

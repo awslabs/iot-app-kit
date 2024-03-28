@@ -26,7 +26,7 @@ export function useAssetModelAssets({
     queries,
   });
 
-  const queryResult = useQuery({
+  const queryResult = useQuery<AssetSummary[], Error>({
     enabled: currentQuery != null,
     queryKey: createQueryKey(currentQuery),
     queryFn: async () => {
