@@ -5,7 +5,6 @@ import type {
 import type {
   ComparisonOperator,
   DataStreamId,
-  DataStreamQuery,
   StatusIconType,
   TimeSeriesData,
 } from '../data-module/types';
@@ -28,22 +27,13 @@ export interface ProviderObserver<DataType> {
   error?: (error: any) => void;
 }
 
-export interface Provider<
-  Result,
-  Query extends DataStreamQuery = DataStreamQuery
-> {
+export interface Provider<Result> {
   subscribe(observer: ProviderObserver<Result>): void;
 
   unsubscribe(): void;
-
-  getSubscriptionHash?: () => string;
-  createSubscriptionHash?: (queries: Query[]) => string;
 }
 
-export interface ProviderWithViewport<
-  Result,
-  Query extends DataStreamQuery = DataStreamQuery
-> extends Provider<Result, Query> {
+export interface ProviderWithViewport<Result> extends Provider<Result> {
   updateViewport(viewport: Viewport): void;
 }
 
