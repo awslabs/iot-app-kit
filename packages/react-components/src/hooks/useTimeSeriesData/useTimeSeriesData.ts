@@ -1,3 +1,9 @@
+import { useEffect, useState, useRef } from 'react';
+import { combineProviders } from '@iot-app-kit/core';
+import {
+  SiteWiseAssetQuery,
+  SiteWisePropertyAliasQuery,
+} from '@iot-app-kit/source-iotsitewise';
 import type {
   Viewport,
   DataStream,
@@ -8,62 +14,143 @@ import type {
   TimeSeriesDataRequestSettings,
   StyleSettingsMap,
 } from '@iot-app-kit/core';
-import { useState } from 'react';
-import useDeepCompareEffect from 'react-use/lib/useDeepCompareEffect';
-
-import { DEFAULT_SETTINGS, DEFAULT_VIEWPORT } from './constants';
-import { useProviderManager } from './useProviderManager';
-import { useViewport } from '../useViewport';
-import { useDataStreamStyler } from '../useColoredDataStreams/useDataStreamColorer';
+import { v4 as uuid } from 'uuid';
 import { combineTimeSeriesData } from '../utils/combineTimeSeriesData';
 
-interface UseTimeSeriesDataOptions {
-  queries: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
-  viewport?: Viewport;
-  settings?: TimeSeriesDataRequestSettings;
-  styles?: StyleSettingsMap;
-}
+import { useViewport } from '../useViewport';
+import { ProviderStore } from './providerStore';
+import { useDataStreamStyler } from '../useColoredDataStreams/useDataStreamColorer';
+import isEqual from 'lodash.isequal';
 
-interface UseTimeSeriesDataResult {
-  dataStreams: DataStream[];
-  thresholds: Threshold[];
-}
+const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
+  resolution: '0',
+  fetchFromStartToEnd: true,
+};
 
-export function useTimeSeriesData({
+const DEFAULT_VIEWPORT = { duration: '10m' };
+
+const unsubscribeProvider = (id: string) => {
+  // provider subscribe is asynchronous and will not be complete until the next frame stack, so we
+  // defer the unsubscription to ensure that the subscription is always complete before unsubscribed.
+  setTimeout(() => {
+    const provider = ProviderStore.get(id);
+    if (!provider) return;
+    provider.unsubscribe();
+    ProviderStore.remove(id);
+  });
+};
+
+export const useTimeSeriesData = ({
   queries,
   viewport: passedInViewport,
   settings = DEFAULT_SETTINGS,
   styles,
-}: UseTimeSeriesDataOptions): UseTimeSeriesDataResult {
+}: {
+  queries: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+  viewport?: Viewport;
+  settings?: TimeSeriesDataRequestSettings;
+  styles?: StyleSettingsMap;
+}): { dataStreams: DataStream[]; thresholds: Threshold[] } => {
+  const previousStyles = useRef(styles);
+  const { styleDatastreams } = useDataStreamStyler(styles);
+
   const [dataStreams, setDataStreams] = useState<DataStream[]>([]);
   const [thresholds, setThresholds] = useState<Threshold[]>([]);
-  const { styleDatastreams } = useDataStreamStyler(styles);
-  const { viewport: injectedViewport } = useViewport();
-  const viewport = passedInViewport ?? injectedViewport ?? DEFAULT_VIEWPORT;
 
-  useProviderManager({
-    queries,
-    viewport,
-    settings,
-    onData: (timeSeriesDataCollection) => {
-      const {
-        dataStreams: combinedDataStreams,
-        thresholds: combinedThresholds,
-      } = combineTimeSeriesData(timeSeriesDataCollection, viewport);
-
-      setDataStreams(styleDatastreams(combinedDataStreams));
-      setThresholds(combinedThresholds);
-    },
-  });
-
-  // Re-style query if the style settings have changed.
-  useDeepCompareEffect(() => {
-    if (dataStreams.length === 0) {
-      return;
-    }
-
+  // re-style query if the style settings have changed
+  useEffect(() => {
+    if (isEqual(previousStyles.current, styles)) return;
+    previousStyles.current = styles;
     setDataStreams(styleDatastreams(dataStreams));
-  }, [styles ?? {}]);
+  }, [previousStyles, styles, styleDatastreams, setDataStreams, dataStreams]);
+
+  const { viewport: injectedViewport } = useViewport();
+  const viewport = passedInViewport || injectedViewport || DEFAULT_VIEWPORT;
+
+  const prevViewportRef = useRef<undefined | Viewport>(undefined);
+  const providerIdRef = useRef<undefined | string>(undefined);
+
+  const scrubbedQueries = queries
+    .map((query) => query.toQueryString())
+    .map(
+      (queryString) =>
+        JSON.parse(queryString) as unknown as {
+          source?: string;
+          queryType?: string;
+          query: Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>;
+        }
+    )
+    .map(({ source, queryType, query }) => ({
+      source,
+      queryType,
+      query: {
+        assets: query.assets?.map(({ assetId, properties }) => ({
+          assetId,
+          properties: properties.map(
+            ({ propertyId, aggregationType, resolution }) => ({
+              propertyId,
+              aggregationType,
+              resolution,
+            })
+          ),
+        })),
+        properties: query.properties?.map(
+          ({ propertyAlias, resolution, aggregationType }) => ({
+            propertyAlias,
+            aggregationType,
+            resolution,
+          })
+        ),
+        requestSettings: query.requestSettings,
+      },
+    }));
+
+  const queriesString = JSON.stringify(scrubbedQueries);
+
+  useEffect(() => {
+    const id = uuid();
+    providerIdRef.current = id;
+    const provider = ProviderStore.set(
+      id,
+      combineProviders(
+        queries.map((query) =>
+          query.build(id, {
+            viewport,
+            settings,
+          })
+        )
+      )
+    );
+
+    provider.subscribe({
+      next: (timeSeriesDataCollection: TimeSeriesData[]) => {
+        const {
+          dataStreams: combinedDataStreams,
+          thresholds: combinedThresholds,
+        } = combineTimeSeriesData(timeSeriesDataCollection, viewport);
+
+        previousStyles.current = styles;
+        setDataStreams(styleDatastreams(combinedDataStreams));
+        setThresholds(combinedThresholds);
+      },
+    });
+
+    return () => {
+      unsubscribeProvider(id);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [queriesString]);
+
+  useEffect(() => {
+    if (prevViewportRef.current != null) {
+      const provider =
+        providerIdRef.current && ProviderStore.get(providerIdRef.current);
+      if (provider) {
+        provider.updateViewport(viewport);
+      }
+    }
+    prevViewportRef.current = viewport;
+  }, [viewport]);
 
   return { dataStreams, thresholds };
-}
+};
