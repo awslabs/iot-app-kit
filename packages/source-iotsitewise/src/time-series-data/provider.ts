@@ -54,60 +54,6 @@ export class SiteWiseTimeSeriesDataProvider
     });
   }
 
-  createSubscriptionHash(queries: SiteWiseDataStreamQuery[]): string {
-    const hashableQueries = queries.map(
-      ({ assets, properties, cacheSettings, requestSettings }) => {
-        return {
-          cacheSettings,
-          requestSettings,
-          assets: assets?.map(({ assetId, properties }) => ({
-            assetId,
-            properties: properties.map(
-              ({
-                refId,
-                propertyId,
-                aggregationType,
-                resolution,
-                cacheSettings,
-              }) => ({
-                refId,
-                propertyId,
-                aggregationType,
-                resolution,
-                cacheSettings,
-              })
-            ),
-          })),
-          properties: properties?.map(
-            ({
-              refId,
-              propertyAlias,
-              aggregationType,
-              resolution,
-              cacheSettings,
-            }) => ({
-              refId,
-              propertyAlias,
-              aggregationType,
-              resolution,
-              cacheSettings,
-            })
-          ),
-        };
-      }
-    );
-
-    const hash = JSON.stringify(hashableQueries);
-
-    return hash;
-  }
-
-  getSubscriptionHash(): string {
-    const hash = this.createSubscriptionHash(this.input.queries);
-
-    return hash;
-  }
-
   updateSubscription(
     subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>
   ) {
