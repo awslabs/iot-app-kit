@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import type { TimeSeriesExplorerQuery } from './types';
 import { usePagination } from '../helpers/paginator';
-import { createBaseQueryKey, handleQueryError } from '../helpers/queries';
+import { createBaseQueryKey } from '../helpers/queries';
 import type { ListTimeSeries } from '../types/data-source';
 import { Paginated } from '../types/queries';
 
@@ -26,24 +26,20 @@ export function useTimeSeries({
     queries,
   });
 
-  const queryResult = useQuery({
+  const queryResult = useQuery<TimeSeriesSummary[], Error>({
     refetchOnWindowFocus: false,
     enabled: currentQuery != null,
     queryKey: createQueryKey(currentQuery),
     queryFn: async () => {
-      try {
-        const { nextToken, TimeSeriesSummaries: newTimeSeries = [] } =
-          await listTimeSeries(currentQuery ?? {});
+      const { nextToken, TimeSeriesSummaries: newTimeSeries = [] } =
+        await listTimeSeries(currentQuery ?? {});
 
-        syncPaginator({
-          nextToken,
-          numberOfResourcesReturned: newTimeSeries.length,
-        });
+      syncPaginator({
+        nextToken,
+        numberOfResourcesReturned: newTimeSeries.length,
+      });
 
-        return newTimeSeries;
-      } catch (error) {
-        handleQueryError('time series', error);
-      }
+      return newTimeSeries;
     },
   });
 

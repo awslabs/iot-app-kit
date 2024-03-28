@@ -1,25 +1,25 @@
 import {
   type AssetPropertySummary,
+  type AssetModelPropertySummary,
   type AssetProperty,
 } from '@aws-sdk/client-iotsitewise';
-import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { Paginator } from '../helpers/paginator';
+import { usePagination } from '../helpers/paginator';
 import type {
   DescribeAsset,
   ListAssetModelProperties,
   ListAssetProperties,
 } from '../types/data-source';
+import { useAssetModelProperties } from './use-asset-model-properties';
+import { useDescribedAssets } from '../asset-explorer/use-assets/use-child-assets/use-asset';
 
 export interface UseAssetPropertiesOptions {
   assetIds: string[];
   listAssetProperties: ListAssetProperties;
   describeAsset?: DescribeAsset;
   listAssetModelProperties?: ListAssetModelProperties;
-}
-
-export interface UseAssetPropertiesResult {
-  assetProperties: AssetProperty[] | AssetPropertySummary[];
+  pageSize: number;
 }
 
 export function useAssetProperties({
@@ -27,91 +27,106 @@ export function useAssetProperties({
   listAssetProperties,
   describeAsset,
   listAssetModelProperties,
-}: UseAssetPropertiesOptions): UseAssetPropertiesResult {
-  const queries = useQueries({
-    queries: assetIds.map((assetId) => {
-      return {
-        queryKey: createQueryKey(assetId),
-        queryFn: createQueryFn({
-          listAssetProperties,
-          describeAsset,
-          listAssetModelProperties,
-        }),
-      };
-    }),
+  pageSize,
+}: UseAssetPropertiesOptions) {
+  const queryClient = useQueryClient();
+  const { currentQuery, hasNextPage, nextPage, syncPaginator } = usePagination({
+    pageSize,
+    queries: assetIds.map((assetId) => ({ assetId })),
   });
 
-  const assetProperties = queries.flatMap(
-    ({ data = [] }) => data as unknown
-  ) as AssetProperty[] | AssetPropertySummary[];
-  return { assetProperties };
-}
+  const { assets } = useDescribedAssets({ assetIds, describeAsset });
 
-function createQueryKey(assetId: string) {
-  return [{ resource: 'Asset property', assetId }] as const;
-}
+  const { assetModelProperties, isFetched } = useAssetModelProperties({
+    listAssetModelProperties,
+    assetModelIds: assets.map(({ assetModelId }) => assetModelId ?? ''),
+    pageSize: 250,
+  });
 
-function createQueryFn({
-  listAssetProperties,
-  describeAsset,
-  listAssetModelProperties,
-}: {
-  listAssetProperties: ListAssetProperties;
-  describeAsset?: DescribeAsset;
-  listAssetModelProperties?: ListAssetModelProperties;
-}) {
-  const assetPropertyPaginator = new Paginator(listAssetProperties);
-  const assetModelPropertyPaginator =
-    listAssetModelProperties != null
-      ? new Paginator(listAssetModelProperties)
-      : undefined;
+  const assetModelPropertyMap = assetModelProperties.reduce<
+    Record<string, AssetModelPropertySummary>
+  >((acc, curr) => {
+    const propertyMap = {
+      ...acc,
+      [curr.id ?? '']: curr,
+    };
 
-  return async function ({
-    queryKey: [{ assetId }],
-  }: QueryFunctionContext<ReturnType<typeof createQueryKey>>) {
-    const assetPropertyPages = await assetPropertyPaginator.paginate({
-      assetId,
-    });
-    const assetProperties = assetPropertyPages.flatMap(
-      ({ assetPropertySummaries = [] }) => assetPropertySummaries
-    );
+    return propertyMap;
+  }, {});
 
-    if (describeAsset != null && listAssetModelProperties != null) {
-      const asset = await describeAsset({ assetId });
+  const queryResult = useQuery<AssetProperty[] | AssetPropertySummary[], Error>(
+    {
+      enabled:
+        (listAssetModelProperties != null &&
+          describeAsset != null &&
+          isFetched) ||
+        true,
+      refetchOnWindowFocus: false,
+      queryKey: createQueryKey(currentQuery),
+      queryFn: async () => {
+        if (!currentQuery) {
+          throw new Error('Expected currentQuery to be defined.');
+        }
 
-      if (asset.assetModelId != null) {
-        const assetModelPropertyPages =
-          await assetModelPropertyPaginator?.paginate({
-            assetModelId: asset.assetModelId,
-          });
+        const { assetPropertySummaries = [], nextToken } =
+          await listAssetProperties(currentQuery ?? {});
 
-        const assetModelProperties =
-          assetModelPropertyPages?.flatMap(
-            ({ assetModelPropertySummaries = [] }) =>
-              assetModelPropertySummaries
-          ) ?? [];
-
-        const combined: AssetProperty[] = assetProperties.map((ap) => {
-          const assetModelProperty = assetModelProperties.find(
-            (amp) => amp.id === ap.id
-          );
-          const combo: AssetProperty = {
-            id: ap.id,
-            dataType: assetModelProperty?.dataType,
-            dataTypeSpec: assetModelProperty?.dataTypeSpec,
-            path: ap.path,
-            notification: ap.notification,
-            unit: ap.unit,
-            name: assetModelProperty?.name,
-          };
-
-          return combo;
+        syncPaginator({
+          nextToken,
+          numberOfResourcesReturned: assetPropertySummaries.length,
         });
 
-        return combined;
-      }
-    }
+        if (assetModelProperties.length === 0) {
+          return assetPropertySummaries;
+        }
 
-    return assetProperties;
-  };
+        const assetProperties: AssetProperty[] = assetPropertySummaries.map(
+          (assetPropertySummary) => {
+            const assetModelProperty: AssetModelPropertySummary | undefined =
+              assetModelPropertyMap[assetPropertySummary.id ?? ''];
+
+            if (assetModelProperty) {
+              const assetProperty: AssetProperty = {
+                id: assetPropertySummary.id,
+                path: assetPropertySummary.path,
+                notification: assetPropertySummary.notification,
+                unit: assetPropertySummary.unit,
+                dataType: assetModelProperty?.dataType,
+                dataTypeSpec: assetModelProperty?.dataTypeSpec,
+                name: assetModelProperty?.name,
+              };
+
+              return assetProperty;
+            }
+
+            return assetPropertySummary as AssetProperty;
+          }
+        );
+
+        return assetProperties;
+      },
+    }
+  );
+
+  const queriesData = queryClient.getQueriesData<
+    AssetProperty[] | AssetPropertySummary[]
+  >([{ resource: 'asset property' }]);
+
+  const assetProperties: AssetProperty[] | AssetPropertySummary[] =
+    // @ts-ignore
+    queriesData.flatMap(([_, ap = []]) => ap);
+
+  console.log(queryResult);
+
+  return { ...queryResult, assetProperties, hasNextPage, nextPage };
+}
+
+function createQueryKey({
+  assetId,
+  nextToken,
+}: {
+  assetId?: string;
+  nextToken?: string;
+} = {}) {
+  return [{ resource: 'asset property', assetId, nextToken }] as const;
 }

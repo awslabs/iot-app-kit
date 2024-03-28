@@ -7,7 +7,7 @@ import type {
   ListAssociatedAssets,
 } from '../../../types/data-source';
 import { usePagination } from '../../../helpers/paginator';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 const CHILD_ASSETS_QUERY_KEY = [{ resource: 'child asset' }] as const;
 
@@ -43,10 +43,21 @@ export function useChildAssets({
     [describedAssetId]
   );
 
-  const { currentQuery, hasNextPage, nextPage, syncPaginator } = usePagination({
+  // TODO: Page number needs to be reset when changing child assets.
+  const {
+    currentQuery,
+    hasNextPage,
+    nextPage,
+    syncPaginator,
+    resetNumToFillPage,
+  } = usePagination({
     pageSize,
     queries,
   });
+
+  useEffect(() => {
+    resetNumToFillPage();
+  }, [assetId]);
 
   const queryResult = useQuery<AssetSummary[], Error>({
     refetchOnWindowFocus: false,

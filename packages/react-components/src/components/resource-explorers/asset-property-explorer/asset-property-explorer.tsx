@@ -15,6 +15,7 @@ import type {
   ListAssetProperties,
 } from '../types/data-source';
 import type { ResourceExplorerProps } from '../types/resource-explorer';
+import { useResourceTablePreferences } from '../resource-table/use-resource-table-preferences';
 
 export interface AssetPropertyExplorerDataSource {
   listAssetProperties: ListAssetProperties;
@@ -105,17 +106,34 @@ export function AssetPropertyExplorer({
   assetIds,
   onSelectionChange,
   dataSource,
+  preferencesEnabled,
+  filterEnabled,
 }: AssetPropertyExplorerProps) {
-  const { assetProperties } = useAssetProperties({
+  const [preferences, setPreferences] = useResourceTablePreferences({
+    schema:
+      dataSource.listAssetModelProperties != null
+        ? createExtendedSchema()
+        : createMinimalSchema(),
+  });
+
+  const { assetProperties, isLoading } = useAssetProperties({
     assetIds,
     listAssetProperties: dataSource.listAssetProperties,
     describeAsset: dataSource.describeAsset,
     listAssetModelProperties: dataSource.listAssetModelProperties,
+    pageSize: 5,
   });
+
+  console.log(isLoading);
 
   if (isExtended(dataSource)) {
     return (
       <ResourceTable<AssetProperty>
+        isLoading={isLoading}
+        preferences={preferences}
+        setPreferences={setPreferences}
+        preferencesEnabled={preferencesEnabled}
+        filterEnabled={filterEnabled}
         resources={assetProperties as AssetProperty[]}
         onSelectionChange={
           onSelectionChange != null
@@ -129,6 +147,11 @@ export function AssetPropertyExplorer({
 
   return (
     <ResourceTable<AssetPropertySummary>
+      isLoading={isLoading}
+      preferences={preferences}
+      setPreferences={setPreferences}
+      preferencesEnabled={preferencesEnabled}
+      filterEnabled={filterEnabled}
       resources={assetProperties}
       onSelectionChange={
         onSelectionChange != null

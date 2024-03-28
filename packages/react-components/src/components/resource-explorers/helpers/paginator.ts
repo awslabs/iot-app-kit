@@ -29,11 +29,13 @@ export class Paginator<Request extends Paginated, Response extends Paginated> {
 interface UsePaginationOptions<T> {
   pageSize: number;
   queries: T[];
+  unravel?: boolean;
 }
 
 export function usePagination<T>({
   pageSize,
   queries,
+  unravel,
 }: UsePaginationOptions<T>) {
   /** Number of resources remaining to fill page. Ref used to prevent re-renders when changed. */
   const numToFillPage = useRef<number>(pageSize);
@@ -98,6 +100,10 @@ export function usePagination<T>({
     }
 
     setNextNextToken(nextToken);
+
+    if (unravel) {
+      nextPage();
+    }
   }
 
   function incrementQuery() {
@@ -113,10 +119,15 @@ export function usePagination<T>({
     return pageIsNotFull && isNotNextToken && isNextQuery;
   }
 
+  function resetNumToFillPage() {
+    numToFillPage.current = pageSize;
+  }
+
   return {
     currentQuery,
     hasNextPage,
     nextPage,
     syncPaginator,
+    resetNumToFillPage,
   };
 }

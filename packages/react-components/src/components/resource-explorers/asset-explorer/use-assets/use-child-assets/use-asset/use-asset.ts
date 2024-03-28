@@ -3,7 +3,7 @@ import type { DescribeAsset } from '../../../../types/data-source';
 
 export interface UseDescribedAssetsOptions {
   assetIds: string[];
-  describeAsset: DescribeAsset;
+  describeAsset?: DescribeAsset;
 }
 
 export interface UseDescribedAssetsResult {
@@ -17,6 +17,7 @@ export function useDescribedAssets({
 }: UseDescribedAssetsOptions): UseDescribedAssetsResult {
   const queries = useQueries({
     queries: assetIds.map((assetId) => ({
+      enabled: describeAsset != null,
       queryKey: createQueryKey({ assetId }),
       queryFn: createQueryFn(describeAsset),
     })),
@@ -33,10 +34,13 @@ function createQueryKey({ assetId }: { assetId: string }) {
   return queryKey;
 }
 
-function createQueryFn(describeAsset: DescribeAsset) {
+function createQueryFn(describeAsset?: DescribeAsset) {
   return async function ({
     queryKey: [{ assetId }],
   }: QueryFunctionContext<ReturnType<typeof createQueryKey>>) {
+    if (describeAsset == null) {
+      throw new Error('Expected describeAsset to be defined.');
+    }
     const asset = await describeAsset({ assetId });
 
     return asset;

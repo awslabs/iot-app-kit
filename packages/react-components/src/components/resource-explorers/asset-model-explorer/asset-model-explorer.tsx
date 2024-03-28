@@ -36,14 +36,16 @@ export function AssetModelExplorer({
     schema: ASSET_MODEL_EXPLORER_SCHEMA,
   });
 
-  const { assetModels, isLoading, hasNextPage, nextPage } = useAssetModels({
-    listAssetModels,
-    assetModelTypes,
-    pageSize: preferences.pageSize ?? 10,
-  });
+  const { assetModels, isLoading, hasNextPage, nextPage, error } =
+    useAssetModels({
+      listAssetModels,
+      assetModelTypes,
+      pageSize: preferences.pageSize ?? 10,
+    });
 
   return (
     <ResourceTable
+      error={error}
       preferences={preferences}
       setPreferences={setPreferences}
       hasNextPage={hasNextPage}

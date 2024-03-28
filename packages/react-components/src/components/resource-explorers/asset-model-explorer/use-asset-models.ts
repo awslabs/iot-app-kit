@@ -2,7 +2,7 @@ import type { AssetModelSummary } from '@aws-sdk/client-iotsitewise';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { usePagination } from '../helpers/paginator';
-import { createBaseQueryKey, handleQueryError } from '../helpers/queries';
+import { createBaseQueryKey } from '../helpers/queries';
 import type { ListAssetModels } from '../types/data-source';
 import { ListAssetModelsParams } from './types';
 import { Paginated } from '../types/queries';
@@ -26,24 +26,20 @@ export function useAssetModels({
     queries: [{ assetModelTypes }],
   });
 
-  const queryResult = useQuery({
+  const queryResult = useQuery<AssetModelSummary[], Error>({
     refetchOnWindowFocus: false,
     queryKey: createQueryKey(currentQuery),
     queryFn: async () => {
-      try {
-        const { assetModelSummaries = [], nextToken } = await listAssetModels(
-          currentQuery ?? {}
-        );
+      const { assetModelSummaries = [], nextToken } = await listAssetModels(
+        currentQuery ?? {}
+      );
 
-        syncPaginator({
-          nextToken,
-          numberOfResourcesReturned: assetModelSummaries.length,
-        });
+      syncPaginator({
+        nextToken,
+        numberOfResourcesReturned: assetModelSummaries.length,
+      });
 
-        return assetModelSummaries;
-      } catch (error) {
-        handleQueryError('asset models', error);
-      }
+      return assetModelSummaries;
     },
   });
 

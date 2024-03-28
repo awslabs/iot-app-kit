@@ -33,14 +33,17 @@ export function TimeSeriesExplorer({
     schema: TIME_SERIES_EXPLORER_SCHEMA,
   });
 
-  const { timeSeries, isLoading, hasNextPage, nextPage } = useTimeSeries({
-    listTimeSeries: dataSource.listTimeSeries,
-    queries,
-    pageSize: preferences.pageSize ?? 10,
-  });
+  const { timeSeries, isLoading, hasNextPage, nextPage, error } = useTimeSeries(
+    {
+      listTimeSeries: dataSource.listTimeSeries,
+      queries,
+      pageSize: preferences.pageSize ?? 10,
+    }
+  );
 
   return (
     <ResourceTable
+      error={error}
       preferences={preferences}
       setPreferences={setPreferences}
       preferencesEnabled={preferencesEnabled}
