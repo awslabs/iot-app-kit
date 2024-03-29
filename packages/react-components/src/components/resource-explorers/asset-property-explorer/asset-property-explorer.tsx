@@ -4,7 +4,7 @@ import {
 } from '@aws-sdk/client-iotsitewise';
 import React from 'react';
 
-import { useAssetProperties } from './use-asset-properties';
+import { useAssetProperties } from '../queries/use-asset-properties';
 import {
   ResourceTable,
   type ResourceTableProps,
@@ -101,6 +101,8 @@ function isExtended<DS extends AssetPropertyExplorerDataSource>(
  * Explore AWS IoT SiteWise asset properties.
  *
  * @experimental
+ *
+ * Do not use in production.
  */
 export function AssetPropertyExplorer({
   assetIds,

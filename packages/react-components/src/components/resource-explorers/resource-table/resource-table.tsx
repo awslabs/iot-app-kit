@@ -1,27 +1,24 @@
 import { useCollection } from '@cloudscape-design/collection-hooks';
+import Alert from '@cloudscape-design/components/alert';
 import Box from '@cloudscape-design/components/box';
+import CollectionPreferences from '@cloudscape-design/components/collection-preferences';
+import Header from '@cloudscape-design/components/header';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import Table, { type TableProps } from '@cloudscape-design/components/table';
 import Pagination, {
   type PaginationProps,
 } from '@cloudscape-design/components/pagination';
-import CollectionPreferences from '@cloudscape-design/components/collection-preferences';
+import PropertyFilter from '@cloudscape-design/components/property-filter';
 import React, { useMemo } from 'react';
-import { type CollectionPreferencesProps } from '@cloudscape-design/components/collection-preferences';
-import { Alert, SpaceBetween } from '@cloudscape-design/components';
 
-import { Header, PropertyFilter } from '@cloudscape-design/components';
 import type { ResourceSchema } from './types';
 import { deriveSchema } from './schema';
 
+import type { SetResourceTablePreferences } from './use-resource-table-preferences';
+import type { ResourceTablePreferences } from './types';
+
 type SelectionType = TableProps['selectionType'];
 type OnSelectionChange = TableProps['onSelectionChange'];
-
-type ResourceTablePreferences = NonNullable<
-  CollectionPreferencesProps['preferences']
->;
-type SetResourceTablePreferences = (
-  preferences: ResourceTablePreferences
-) => void;
 
 export interface ResourceTableProps<Resource> {
   readonly resources: Resource[];
@@ -38,9 +35,9 @@ export interface ResourceTableProps<Resource> {
   extendedHeader?: React.ReactNode;
   onNextPageClick?: () => void;
   hasNextPage?: boolean;
-  preferences?: ResourceTablePreferences;
+  preferences?: Partial<ResourceTablePreferences>;
   setPreferences?: SetResourceTablePreferences;
-  error?: Error | null;
+  error?: Error | unknown | null;
 }
 
 export const SUPPORTED_PAGE_SIZES = [10, 25, 100, 250];
@@ -88,7 +85,7 @@ export function ResourceTable<Resource>({
             type='error'
             header='An error has occurred.'
           >
-            {error instanceof Error ? error.message : error}
+            {error instanceof Error ? error.message : String(error)}
           </Alert>
         </SpaceBetween>
       </Box>

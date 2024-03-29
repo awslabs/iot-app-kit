@@ -14,6 +14,7 @@ interface ResourcePropertySchema<Resource> {
   filterOperators?: ('=' | '!=' | '>' | '>=' | '<' | '<=' | ':' | '!:')[];
 }
 
-export type ResourceTablePreferences = NonNullable<
-  CollectionPreferencesProps['preferences']
+export type ResourceTablePreferences = Omit<
+  Required<NonNullable<CollectionPreferencesProps['preferences']>>,
+  'visibleContent' | 'custom'
 >;

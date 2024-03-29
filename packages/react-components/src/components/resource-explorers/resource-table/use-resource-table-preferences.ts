@@ -10,8 +10,8 @@ export type UseResourceTablePreferencesResult = readonly [
   SetResourceTablePreferences
 ];
 
-type SetResourceTablePreferences = (
-  preferences: ResourceTablePreferences
+export type SetResourceTablePreferences = (
+  preferences: Partial<ResourceTablePreferences>
 ) => void;
 
 const BASE_DEFAULT_PREFERENCES = {
@@ -20,7 +20,7 @@ const BASE_DEFAULT_PREFERENCES = {
   wrapLines: true,
   stripedRows: false,
   stickyColumns: { first: 1 },
-} satisfies ResourceTablePreferences;
+} as const satisfies Omit<ResourceTablePreferences, 'contentDisplay'>;
 
 export function useResourceTablePreferences<Resource>({
   schema,
@@ -34,7 +34,7 @@ export function useResourceTablePreferences<Resource>({
     defaultPreferences
   );
 
-  return [preferences, setPreferences] as const;
+  return [preferences, setPreferences as SetResourceTablePreferences] as const;
 }
 
 function deriveDefaultPreferences<Resource>(

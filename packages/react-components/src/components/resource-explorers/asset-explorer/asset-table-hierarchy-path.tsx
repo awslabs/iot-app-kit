@@ -2,7 +2,7 @@ import { type AssetSummary } from '@aws-sdk/client-iotsitewise';
 import BreadcrumbGroup from '@cloudscape-design/components/breadcrumb-group';
 import { useQuery, type QueryFunctionContext } from '@tanstack/react-query';
 import React from 'react';
-import { useDescribedAssets } from './use-assets/use-child-assets/use-asset';
+import { useDescribedAssets } from '../queries/use-described-assets';
 import { DescribeAsset, ListAssociatedAssets } from '../types/data-source';
 import invariant from 'tiny-invariant';
 

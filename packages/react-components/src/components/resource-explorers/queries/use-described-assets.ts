@@ -1,23 +1,19 @@
 import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
-import type { DescribeAsset } from '../../../../types/data-source';
+import type { DescribeAsset } from '../types/data-source';
 
 export interface UseDescribedAssetsOptions {
   assetIds: string[];
   describeAsset?: DescribeAsset;
 }
 
-export interface UseDescribedAssetsResult {
-  assets: Awaited<ReturnType<DescribeAsset>>[];
-}
-
-/** Use an AWS IoT SiteWise asset. */
+/** Use IoT SiteWise assets. */
 export function useDescribedAssets({
   assetIds,
   describeAsset,
-}: UseDescribedAssetsOptions): UseDescribedAssetsResult {
+}: UseDescribedAssetsOptions) {
   const queries = useQueries({
     queries: assetIds.map((assetId) => ({
-      enabled: describeAsset != null,
+      enabled: isEnabled(),
       queryKey: createQueryKey({ assetId }),
       queryFn: createQueryFn(describeAsset),
     })),
@@ -26,6 +22,12 @@ export function useDescribedAssets({
   const assets = queries.flatMap(({ data = [] }) => data);
 
   return { assets };
+}
+
+function isEnabled(
+  describeAsset?: DescribeAsset
+): describeAsset is DescribeAsset {
+  return describeAsset != null;
 }
 
 function createQueryKey({ assetId }: { assetId: string }) {
@@ -38,9 +40,10 @@ function createQueryFn(describeAsset?: DescribeAsset) {
   return async function ({
     queryKey: [{ assetId }],
   }: QueryFunctionContext<ReturnType<typeof createQueryKey>>) {
-    if (describeAsset == null) {
+    if (!isEnabled(describeAsset)) {
       throw new Error('Expected describeAsset to be defined.');
     }
+
     const asset = await describeAsset({ assetId });
 
     return asset;

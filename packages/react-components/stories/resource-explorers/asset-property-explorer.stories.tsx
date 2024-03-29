@@ -1,3 +1,4 @@
+/*
 import { type AssetPropertySummary } from '@aws-sdk/client-iotsitewise';
 import { ComponentStory, type ComponentMeta } from '@storybook/react';
 import React, { useState, type FC } from 'react';
@@ -73,3 +74,6 @@ export const AssetPropertyExplorerWithExtendedDataExample: ComponentStory<
     </ResourceExplorerProvider>
   );
 };
+
+*/
+export {};

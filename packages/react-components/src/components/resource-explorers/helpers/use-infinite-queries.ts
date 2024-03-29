@@ -1,74 +1,86 @@
-import { useQuery, useQueryClient, QueryOptions } from '@tanstack/react-query';
-import { usePagination } from '../helpers/paginator';
+import {
+  useQuery,
+  type UseBaseQueryOptions,
+  type UseBaseQueryResult,
+} from '@tanstack/react-query';
 
-export interface useInfiniteQueriesOptions<T>
-  extends Omit<QueryOptions<unknown, Error>, 'queryFn' | 'queryKey'> {
-  queryFn: QueryFn<T>;
-  createQueryKey: CreateQueryKey<T>;
-  queries: QueryParams<T>[];
+import { useQueryPagination } from './use-infinite-query-pagination';
+import { useQueryResources } from './use-infinite-query-resources';
+
+type TanstackQueryOptions = Omit<
+  UseBaseQueryOptions<unknown, Error>,
+  'queryFn' | 'queryKey'
+>;
+
+type QueryFn<Query, Resource> = (
+  query: Query
+) => Promise<{ resources: Resource[]; nextToken?: string }>;
+
+export interface UseInfiniteQueriesOptions<Query, Resource>
+  extends TanstackQueryOptions {
+  queryFn: QueryFn<Query, Resource>;
+  createQueryKey: (
+    query: Omit<Query, 'maxResults'>
+  ) => readonly [{ resource: string }];
+  queries: Query[];
   pageSize: number;
 }
 
-export type QueryFn<T> = T extends (
-  params: infer Params
-) => QueryFnResponse<infer Resource>
-  ? (params: Params) => QueryFnResponse<Resource>
-  : never;
+type TanstackQueryResult = Omit<UseBaseQueryResult<unknown, Error>, 'data'>;
 
-export type QueryFnResponse<Resource> = PromiseLike<{
-  nextToken?: string;
+export interface UseInfiniteQueriesResult<Resource = unknown>
+  extends TanstackQueryResult {
   resources: Resource[];
-}>;
+  hasNextPage: boolean;
+  fetchNextPage: () => void;
+}
 
-type QueryParams<T> = Parameters<QueryFn<T>>[0];
+function removeMaxResults<Query extends { maxResults: number }>(
+  query: Query
+): Omit<Query, 'maxResults'> {
+  const { maxResults: _maxResults, ...queryWithoutMaxResults } = query;
 
-type QueryResource<T> = Awaited<ReturnType<QueryFn<T>>> extends QueryFnResponse<
-  infer Resource
->
-  ? Resource
-  : never;
-
-type CreateQueryKey<T> = (params: QueryParams<T>) => QueryKey<T>;
-
-type QueryKey<T> = readonly [{ resource: string } & QueryParams<T>];
+  return queryWithoutMaxResults;
+}
 
 /** Use paginated resources across multiple queries. */
-export function useInfiniteQueries<QueryFn>({
+export function useInfiniteQueries<Query, Resource>({
   createQueryKey,
   queryFn,
   queries,
-  pageSize,
+  pageSize: defaultPageSize,
   ...queryOptions
-}: useInfiniteQueriesOptions<QueryFn>) {
-  const queryClient = useQueryClient();
-  const { currentQuery, hasNextPage, nextPage, syncPaginator } = usePagination({
-    pageSize,
-    queries,
-  });
+}: UseInfiniteQueriesOptions<
+  Query,
+  Resource
+>): UseInfiniteQueriesResult<Resource> {
+  const { query, hasNextPage, fetchNextPage, loadNextToken } =
+    useQueryPagination({ queries, defaultPageSize });
 
-  const queryKey = createQueryKey(currentQuery);
+  const queryWithoutMaxResults = removeMaxResults(query);
+  const queryKey = createQueryKey(queryWithoutMaxResults);
 
   const queryResult = useQuery<unknown, Error>({
     ...queryOptions,
     refetchOnWindowFocus: false,
     queryKey,
     queryFn: async () => {
-      const { resources, nextToken } = await queryFn(currentQuery);
+      const { resources, nextToken } = await queryFn(query);
 
-      syncPaginator({
-        nextToken: nextToken,
-        numberOfResourcesReturned: resources.length,
-      });
+      loadNextToken({ nextToken, resources });
 
       return resources;
     },
   });
 
-  const resourceKey = [{ resource: queryKey[0].resource }];
-  const queriesData =
-    queryClient.getQueriesData<QueryResource<QueryFn>>(resourceKey);
+  const resources = useQueryResources<Resource>({
+    resource: queryKey[0].resource,
+  });
 
-  const resources = queriesData.flatMap(([_, rs = []]) => rs);
-
-  return { ...queryResult, resources, hasNextPage, nextPage };
+  return {
+    ...queryResult,
+    resources,
+    hasNextPage,
+    fetchNextPage,
+  };
 }

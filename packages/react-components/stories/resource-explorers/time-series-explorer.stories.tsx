@@ -71,6 +71,3 @@ export const DisassociatedTimeSeriesExplorer: ComponentStory<
     </ResourceExplorerProvider>
   );
 };
-
-// TODO: example of modeled time series only
-// TODO: example of unmodeled time series only

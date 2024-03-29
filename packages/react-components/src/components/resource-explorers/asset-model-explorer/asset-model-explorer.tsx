@@ -1,7 +1,7 @@
 import type { AssetModelSummary } from '@aws-sdk/client-iotsitewise';
 import React from 'react';
 
-import { useAssetModels } from './use-asset-models';
+import { useAssetModels } from '../queries/use-asset-models';
 import { ASSET_MODEL_EXPLORER_SCHEMA } from './constants';
 import { ResourceTable } from '../resource-table/resource-table';
 import { useResourceTablePreferences } from '../resource-table/use-resource-table-preferences';
@@ -22,6 +22,8 @@ export interface AssetModelExplorerProps
  * Explore AWS IoT SiteWise asset models.
  *
  * @experimental
+ *
+ * Do not use in production.
  */
 export function AssetModelExplorer({
   dataSource: { listAssetModels },
@@ -36,7 +38,7 @@ export function AssetModelExplorer({
     schema: ASSET_MODEL_EXPLORER_SCHEMA,
   });
 
-  const { assetModels, isLoading, hasNextPage, nextPage, error } =
+  const { assetModels, isLoading, hasNextPage, fetchNextPage, error } =
     useAssetModels({
       listAssetModels,
       assetModelTypes,
@@ -49,7 +51,7 @@ export function AssetModelExplorer({
       preferences={preferences}
       setPreferences={setPreferences}
       hasNextPage={hasNextPage}
-      onNextPageClick={nextPage}
+      onNextPageClick={fetchNextPage}
       isLoading={isLoading}
       filterEnabled={filterEnabled}
       selectedResources={selectedResources}

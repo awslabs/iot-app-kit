@@ -2,7 +2,7 @@ import type { AssetSummary } from '@aws-sdk/client-iotsitewise';
 import React, { useMemo, useState } from 'react';
 import { Link } from '@cloudscape-design/components';
 
-import { useAssets } from './use-assets';
+import { useAssets } from '../queries/use-assets';
 import { AssetTableHierarchyPath } from './asset-table-hierarchy-path';
 import { ResourceTable } from '../resource-table/resource-table';
 import { useResourceTablePreferences } from '../resource-table/use-resource-table-preferences';
@@ -38,6 +38,8 @@ function isListingAssetsByAssetModel(assetModelIds: string[]): boolean {
  * Explore AWS IoT SiteWise assets.
  *
  * @experimental
+ *
+ * Do not use in production.
  */
 export function AssetExplorer({
   selectedResources,
@@ -74,10 +76,9 @@ export function AssetExplorer({
     schema,
   });
 
-  const { assets, isLoading, hasNextPage, nextPage, error } = useAssets({
+  const { assets, isLoading, hasNextPage, fetchNextPage, error } = useAssets({
     assetId: parentAssetId,
     assetModelIds,
-    describeAsset: dataSource.describeAsset,
     listAssets: dataSource.listAssets,
     listAssociatedAssets: dataSource.listAssociatedAssets,
     pageSize: preferences.pageSize ?? 10,
@@ -90,7 +91,7 @@ export function AssetExplorer({
       setPreferences={setPreferences}
       schema={schema}
       hasNextPage={hasNextPage}
-      onNextPageClick={nextPage}
+      onNextPageClick={fetchNextPage}
       isLoading={isLoading}
       resources={assets}
       extendedHeader={

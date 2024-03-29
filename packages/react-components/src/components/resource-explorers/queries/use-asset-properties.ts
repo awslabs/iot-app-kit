@@ -12,7 +12,7 @@ import type {
   ListAssetProperties,
 } from '../types/data-source';
 import { useAssetModelProperties } from './use-asset-model-properties';
-import { useDescribedAssets } from '../asset-explorer/use-assets/use-child-assets/use-asset';
+import { useDescribedAssets } from './use-described-assets';
 
 export interface UseAssetPropertiesOptions {
   assetIds: string[];

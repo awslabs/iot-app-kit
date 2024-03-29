@@ -2,26 +2,31 @@ import type { TimeSeriesSummary } from '@aws-sdk/client-iotsitewise';
 import React from 'react';
 
 import { TIME_SERIES_EXPLORER_SCHEMA } from './constants';
-import { useTimeSeries } from './use-time-series';
+import {
+  useTimeSeries,
+  type UseTimeSeriesOptions,
+} from '../queries/use-time-series';
 import { ResourceTable } from '../resource-table/resource-table';
 import { useResourceTablePreferences } from '../resource-table/use-resource-table-preferences';
 import type { ListTimeSeries } from '../types/data-source';
 import type { ResourceExplorerProps } from '../types/resource-explorer';
-import type { TimeSeriesExplorerQuery } from './types';
 
 export interface TimeSeriesExplorerProps
   extends ResourceExplorerProps<TimeSeriesSummary> {
-  dataSource: {
-    listTimeSeries: ListTimeSeries;
-  };
+  dataSource: TimeSeriesExplorerDataSource;
+  queries: UseTimeSeriesOptions['queries'];
+}
 
-  queries: TimeSeriesExplorerQuery[];
+interface TimeSeriesExplorerDataSource {
+  listTimeSeries: ListTimeSeries;
 }
 
 /**
  * Explore AWS IoT SiteWise time series.
  *
  * @experimental
+ *
+ * Do not use in production.
  */
 export function TimeSeriesExplorer({
   dataSource,
@@ -33,13 +38,12 @@ export function TimeSeriesExplorer({
     schema: TIME_SERIES_EXPLORER_SCHEMA,
   });
 
-  const { timeSeries, isLoading, hasNextPage, nextPage, error } = useTimeSeries(
-    {
+  const { timeSeries, isLoading, hasNextPage, fetchNextPage, error } =
+    useTimeSeries({
       listTimeSeries: dataSource.listTimeSeries,
       queries,
-      pageSize: preferences.pageSize ?? 10,
-    }
-  );
+      pageSize: preferences.pageSize,
+    });
 
   return (
     <ResourceTable
@@ -49,7 +53,7 @@ export function TimeSeriesExplorer({
       preferencesEnabled={preferencesEnabled}
       hasNextPage={hasNextPage}
       trackBy={({ timeSeriesId }) => timeSeriesId}
-      onNextPageClick={nextPage}
+      onNextPageClick={fetchNextPage}
       isLoading={isLoading}
       resources={timeSeries}
       filterEnabled={filterEnabled}

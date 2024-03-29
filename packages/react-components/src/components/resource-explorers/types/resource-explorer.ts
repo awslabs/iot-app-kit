@@ -11,6 +11,9 @@ export interface ResourceExplorerProps<Resource = unknown> {
   /** Specify to disable selection of a given resource. */
   isResourceDisabled?: (resource: Resource) => boolean;
 
+  /** Specify to hide a given resource. */
+  isResourceHidden?: (resource: Resource) => boolean;
+
   /** Allow for user client-side filtering of the resources. Default - false. */
   filterEnabled?: boolean;
 
