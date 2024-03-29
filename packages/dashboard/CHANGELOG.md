@@ -1,5 +1,39 @@
 # Changelog
 
+## [10.2.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.1.0...dashboard-v10.2.0) (2024-03-29)
+
+
+### Features
+
+* add data quality to kpi and status ([7248004](https://github.com/awslabs/iot-app-kit/commit/724800417bc8c74f518d6a39044c815848ef431f))
+* display assetname conditionally in legend [#2277](https://github.com/awslabs/iot-app-kit/issues/2277) ([c4c443f](https://github.com/awslabs/iot-app-kit/commit/c4c443fab77d6e337d32fbecebb308c7f339fab5))
+* **react-components:** add data quality to xy-plot ([ed18e0d](https://github.com/awslabs/iot-app-kit/commit/ed18e0d891035803dfc0cc646371ae1e20914d2a))
+* updated background color tokens to support theming [#2668](https://github.com/awslabs/iot-app-kit/issues/2668) ([a21fbe7](https://github.com/awslabs/iot-app-kit/commit/a21fbe7ca1c90dedb1ba024a1cc17682343e0c1f))
+* updated the theming support for kpi and tc [#2668](https://github.com/awslabs/iot-app-kit/issues/2668) ([d32a018](https://github.com/awslabs/iot-app-kit/commit/d32a0184518ef02222ef15359d49bccb68f6ee39))
+
+
+### Bug Fixes
+
+* added validation for the decimal places input [#2567](https://github.com/awslabs/iot-app-kit/issues/2567) ([57bcb3d](https://github.com/awslabs/iot-app-kit/commit/57bcb3ddd4d1b0d88d301838f736fbf601ba48d5))
+* dark mode support for expandable sections in config panel and text widget text color [#2668](https://github.com/awslabs/iot-app-kit/issues/2668) ([89ba559](https://github.com/awslabs/iot-app-kit/commit/89ba5596fb6c185e8c78e73617733c123a7ef1b3))
+* updated theming support for buttons [#2668](https://github.com/awslabs/iot-app-kit/issues/2668) ([1ffead0](https://github.com/awslabs/iot-app-kit/commit/1ffead0805048445b677f4cd63a31af7d5912095))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.1.0 to 10.2.0
+    * @iot-app-kit/core bumped from 10.1.0 to 10.2.0
+    * @iot-app-kit/core-util bumped from 10.1.0 to 10.2.0
+    * @iot-app-kit/react-components bumped from 10.1.0 to 10.2.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.1.0 to 10.2.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.1.0 to 10.2.0
+    * @iot-app-kit/testing-util bumped from 10.1.0 to 10.2.0
+    * @iot-app-kit/ts-config bumped from 10.1.0 to 10.2.0
+    * eslint-config-iot-app-kit bumped from 10.1.0 to 10.2.0
+
 ## [10.1.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.0.0...dashboard-v10.1.0) (2024-03-21)
 
 

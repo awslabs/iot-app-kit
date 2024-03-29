@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.2.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v10.1.0...scene-composer-v10.2.0) (2024-03-29)
+
+
+### Features
+
+* migrate from awsui to cloudscape ([37802b1](https://github.com/awslabs/iot-app-kit/commit/37802b18f12844dba6876cd7d94c50420cbece66))
+
+
+### Bug Fixes
+
+* **scene:** handle bad texture files gracefully and toggle opacity on selection ([dca5b10](https://github.com/awslabs/iot-app-kit/commit/dca5b10404d9dd1175e16284d9733abe38590175))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.1.0 to 10.2.0
+    * @iot-app-kit/react-components bumped from 10.1.0 to 10.2.0
+    * @iot-app-kit/related-table bumped from 10.1.0 to 10.2.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.1.0 to 10.2.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 10.1.0 to 10.2.0
+
 ## [10.1.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v10.0.0...scene-composer-v10.1.0) (2024-03-21)
 
 
