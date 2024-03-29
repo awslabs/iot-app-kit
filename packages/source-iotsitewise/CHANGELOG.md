@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.2.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v10.1.0...source-iotsitewise-v10.2.0) (2024-03-29)
+
+
+### Features
+
+* display assetname conditionally in legend [#2277](https://github.com/awslabs/iot-app-kit/issues/2277) ([c4c443f](https://github.com/awslabs/iot-app-kit/commit/c4c443fab77d6e337d32fbecebb308c7f339fab5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.1.0 to 10.2.0
+    * @iot-app-kit/core-util bumped from 10.1.0 to 10.2.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.1.0 to 10.2.0
+    * @iot-app-kit/testing-util bumped from 10.1.0 to 10.2.0
+    * @iot-app-kit/ts-config bumped from 10.1.0 to 10.2.0
+    * eslint-config-iot-app-kit bumped from 10.1.0 to 10.2.0
+
 ## [10.1.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v10.0.0...source-iotsitewise-v10.1.0) (2024-03-21)
 
 
