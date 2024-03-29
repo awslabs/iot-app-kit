@@ -26,7 +26,6 @@ export function useResourceTablePreferences<Resource>({
   schema,
 }: UseResourceTablePreferencesOptions<Resource>): UseResourceTablePreferencesResult {
   const defaultPreferences = deriveDefaultPreferences(schema);
-  console.log(defaultPreferences);
 
   // The storage name is unique to the resource name
   const storageKey = `${schema.name}-table-preferences`;

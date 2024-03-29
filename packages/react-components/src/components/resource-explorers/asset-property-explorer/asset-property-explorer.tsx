@@ -110,6 +110,7 @@ export function AssetPropertyExplorer({
   filterEnabled,
 }: AssetPropertyExplorerProps) {
   const [preferences, setPreferences] = useResourceTablePreferences({
+    // @ts-ignore
     schema:
       dataSource.listAssetModelProperties != null
         ? createExtendedSchema()
@@ -123,8 +124,6 @@ export function AssetPropertyExplorer({
     listAssetModelProperties: dataSource.listAssetModelProperties,
     pageSize: 5,
   });
-
-  console.log(isLoading);
 
   if (isExtended(dataSource)) {
     return (

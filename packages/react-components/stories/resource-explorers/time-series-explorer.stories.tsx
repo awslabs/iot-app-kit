@@ -24,7 +24,7 @@ export const TimeSeriesExplorerExample: ComponentStory<
   return (
     <ResourceExplorerProvider>
       <TimeSeriesExplorer
-        queries={[{ timeSeriesType: 'DISASSOCIATED' }]}
+        queries={[{ timeSeriesType: 'DISASSOCIATED' }, {}]}
         filterEnabled={filterEnabled}
         preferencesEnabled={preferencesEnabled}
         selectionType={selectionType}
