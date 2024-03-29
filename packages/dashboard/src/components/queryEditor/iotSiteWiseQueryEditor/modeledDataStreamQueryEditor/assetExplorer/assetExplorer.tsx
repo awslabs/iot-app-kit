@@ -12,6 +12,7 @@ export interface AssetExplorerProps {
   onSelect: (asset?: AssetSummary) => void;
   isWithoutHeader?: boolean;
   client: IoTSiteWiseClient;
+  assetModelId?: string;
 }
 
 /** User interface element enabling the exploration and selection of assets. */
@@ -19,6 +20,7 @@ export function AssetExplorer({
   onSelect,
   isWithoutHeader,
   client,
+  assetModelId,
 }: AssetExplorerProps) {
   const [parentAssetId, setParentAssetId] = useParentAssetId();
   const {
@@ -29,6 +31,7 @@ export function AssetExplorer({
     isError,
   } = useAssets({
     assetId: parentAssetId,
+    assetModelId,
     client,
   });
 
