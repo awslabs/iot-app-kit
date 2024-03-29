@@ -1,45 +1,44 @@
 import { useQuery, useQueryClient, QueryOptions } from '@tanstack/react-query';
 import { usePagination } from '../helpers/paginator';
 
-type UseQueryOptions = QueryOptions;
-type Options = UseQueryOptions & Required<Pick<UseQueryOptions, 'queryFn'>>;
-
-type QueryFn<T> = T extends (
-  params: infer Params,
-  ...args: unknown[]
-) => PromiseLike<{
-  nextToken?: string;
-  resources: (infer R)[];
-}>
-  ? (
-      params: Params,
-      ...args: unknown[]
-    ) => PromiseLike<{ nextToken?: string; resources: R[] }>
-  : never;
-
-type QueryParams<T> = Parameters<QueryFn<T>>[0];
-type QueryResources<T> = Awaited<ReturnType<QueryFn<T>>> extends {
-  nextToken?: string;
-  resources: (infer R)[];
-}
-  ? R
-  : never;
-
-type QueryKey<T> = readonly [{ resource: string } & QueryParams<T>];
-type CreateQueryKey<T> = (params: QueryParams<T>) => QueryKey<T>;
-
-interface useInfiniteQueriesOptions<T> extends Options {
-  createQueryKey: CreateQueryKey<T>;
+export interface useInfiniteQueriesOptions<T>
+  extends Omit<QueryOptions<unknown, Error>, 'queryFn' | 'queryKey'> {
   queryFn: QueryFn<T>;
+  createQueryKey: CreateQueryKey<T>;
   queries: QueryParams<T>[];
   pageSize: number;
 }
 
+export type QueryFn<T> = T extends (
+  params: infer Params
+) => QueryFnResponse<infer Resource>
+  ? (params: Params) => QueryFnResponse<Resource>
+  : never;
+
+export type QueryFnResponse<Resource> = PromiseLike<{
+  nextToken?: string;
+  resources: Resource[];
+}>;
+
+type QueryParams<T> = Parameters<QueryFn<T>>[0];
+
+type QueryResource<T> = Awaited<ReturnType<QueryFn<T>>> extends QueryFnResponse<
+  infer Resource
+>
+  ? Resource
+  : never;
+
+type CreateQueryKey<T> = (params: QueryParams<T>) => QueryKey<T>;
+
+type QueryKey<T> = readonly [{ resource: string } & QueryParams<T>];
+
+/** Use paginated resources across multiple queries. */
 export function useInfiniteQueries<QueryFn>({
   createQueryKey,
   queryFn,
   queries,
   pageSize,
+  ...queryOptions
 }: useInfiniteQueriesOptions<QueryFn>) {
   const queryClient = useQueryClient();
   const { currentQuery, hasNextPage, nextPage, syncPaginator } = usePagination({
@@ -48,15 +47,13 @@ export function useInfiniteQueries<QueryFn>({
   });
 
   const queryKey = createQueryKey(currentQuery);
-  const resourceKey = [{ resource: queryKey[0].resource }];
 
   const queryResult = useQuery<unknown, Error>({
+    ...queryOptions,
     refetchOnWindowFocus: false,
     queryKey,
     queryFn: async () => {
       const { resources, nextToken } = await queryFn(currentQuery);
-
-      console.log(resources, nextToken);
 
       syncPaginator({
         nextToken: nextToken,
@@ -67,8 +64,9 @@ export function useInfiniteQueries<QueryFn>({
     },
   });
 
+  const resourceKey = [{ resource: queryKey[0].resource }];
   const queriesData =
-    queryClient.getQueriesData<QueryResources<QueryFn>>(resourceKey);
+    queryClient.getQueriesData<QueryResource<QueryFn>>(resourceKey);
 
   const resources = queriesData.flatMap(([_, rs = []]) => rs);
 
