@@ -1,17 +1,13 @@
-import { useEffect } from 'react';
-import { ChartRef } from '../../../hooks/useECharts';
+import { useMemo } from 'react';
 
-export const useSetXAxis = ({
-  chartRef,
+export const useXAxis = ({
   viewportStart,
   viewportEnd,
 }: {
-  chartRef: ChartRef;
   viewportStart?: Date;
   viewportEnd?: Date;
 }) => {
-  useEffect(() => {
-    const l4e = chartRef.current;
+  return useMemo(() => {
     const customXAxis =
       viewportStart && viewportEnd
         ? [
@@ -25,8 +21,13 @@ export const useSetXAxis = ({
               min: viewportStart.getTime(),
               max: viewportEnd.getTime(),
             },
+            {
+              name: 'l4e-line',
+              min: viewportStart.getTime(),
+              max: viewportEnd.getTime(),
+            },
           ]
         : undefined;
-    l4e?.setOption({ xAxis: customXAxis });
-  }, [chartRef, viewportStart, viewportEnd]);
+    return { xAxis: customXAxis };
+  }, [viewportStart, viewportEnd]);
 };
