@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useECharts } from '../../hooks/useECharts';
-import { DEFAULT_L4E_WIDGET_SETTINGS } from './constants';
-import { ContributingPropertiesTable } from './contributingPropertiesTable/contributingPropertiesTable';
 import { AnomalyResult } from './types';
-import { useSetXAxis } from './hooks/useSetXAxis';
-import { useSetTitle } from './hooks/useSetTitle';
-import { useSetDataSet } from './hooks/useSetDataSet';
+import { useSetOptions } from './hooks/useSetOptions';
+import { useXAxis } from './hooks/useXAxis';
+import { useTitle } from './hooks/useTitle';
+import { useDataSet } from './hooks/useDataSet';
+import { useSeries } from './hooks/useSeries';
+import { useTooltip } from './hooks/useTooltip';
 
 export interface L4EWidgetProps {
   // data: [some generic data type]; //// this will need its own doc to create a flexible data type
@@ -18,51 +19,36 @@ export interface L4EWidgetProps {
   viewportEnd?: Date;
 }
 
-type SelectEvent = {
-  fromAction: string;
-  selected: { dataIndex: number[] }[];
-};
-
 export const L4EWidget = ({
   data,
   title,
+  decimalPlaces,
   viewportStart,
   viewportEnd,
-  decimalPlaces,
 }: L4EWidgetProps) => {
   const { ref, chartRef } = useECharts();
-  const [selectedItems, setSelectedItems] = useState<AnomalyResult[]>([]);
 
-  useEffect(() => {
-    const l4e = chartRef.current;
-    // set default chart options
-    l4e?.setOption({ ...DEFAULT_L4E_WIDGET_SETTINGS });
-    // set event handlers
+  const customXAxis = useXAxis({ viewportStart, viewportEnd });
+  const customTitle = useTitle({ title });
+  const customDataSet = useDataSet({ data });
+  const customSeries = useSeries({ data });
+  const customTooltip = useTooltip({ decimalPlaces });
 
-    // @ts-expect-error TODO: Fix this SelectedEvent type
-    l4e?.on('selectchanged', ({ fromAction, selected }: SelectEvent) => {
-      if (fromAction === 'select' || !!selected.length) {
-        const selectedIndices = selected[0].dataIndex;
-        setSelectedItems(selectedIndices.map((i: number) => data[i]));
-      } else {
-        setSelectedItems([]);
-      }
-    });
-  }, [chartRef, data]);
+  const customOptions = {
+    ...customXAxis,
+    ...customTitle,
+    ...customDataSet,
+    ...customSeries,
+    ...customTooltip,
+  };
 
-  useSetXAxis({ chartRef, viewportStart, viewportEnd });
-  useSetTitle({ chartRef, title });
-  useSetDataSet({ chartRef, data });
+  useSetOptions({ chartRef, customOptions });
 
   return (
     <div style={{ background: 'white', width: '1000px', height: '600px' }}>
       <div
         ref={ref}
-        style={{ width: '100%', height: '200px', paddingBottom: '32px' }}
-      />
-      <ContributingPropertiesTable
-        decimalPlaces={decimalPlaces}
-        data={selectedItems}
+        style={{ width: '100%', height: '100%', paddingBottom: '32px' }}
       />
     </div>
   );
