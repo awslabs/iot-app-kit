@@ -8,13 +8,20 @@ const L4E_TOOLTIP = {
   },
 };
 
-export const useTooltip = ({ decimalPlaces }: { decimalPlaces?: number }) => {
+export const useTooltip = ({
+  decimalPlaces,
+  tooltipSort,
+}: {
+  decimalPlaces?: number;
+  tooltipSort?: 'value' | 'alphabetical';
+}) => {
   return useMemo(() => {
     return {
       tooltip: {
         ...L4E_TOOLTIP,
-        formatter: (data: TooltipData) => formatTooltip(data, decimalPlaces),
+        formatter: (data: TooltipData) =>
+          formatTooltip(data, decimalPlaces, tooltipSort),
       },
     };
-  }, [decimalPlaces]);
+  }, [decimalPlaces, tooltipSort]);
 };
