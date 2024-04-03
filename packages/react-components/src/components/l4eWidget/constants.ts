@@ -25,26 +25,9 @@ const L4E_X_AXIS = {
         },
       },
       splitNumber: 6,
-      gridIndex: [0, 2],
+      gridIndex: [0, 1],
     },
-    // 2. hides the x-axis for slider zoom timeline
-    {
-      name: 'l4e-selection-axis',
-      type: 'time',
-      gridIndex: 1,
-      boundaryGap: false,
-      axisTick: { show: false },
-      splitLine: { show: false },
-      axisLabel: { show: false },
-      axisLine: {
-        onZero: false,
-        lineStyle: {
-          color: '#e9ebed',
-          width: 2,
-        },
-      },
-    },
-    // 3. x axis for step chart
+    // 2. x axis for step chart
     {
       name: 'l4e-step',
       type: 'time',
@@ -60,7 +43,24 @@ const L4E_X_AXIS = {
         },
       },
       splitNumber: 6,
+      gridIndex: 1,
+    },
+    // 3. hides the x-axis for slider zoom timeline
+    {
+      name: 'l4e-selection-axis',
+      type: 'time',
       gridIndex: 2,
+      boundaryGap: false,
+      axisTick: { show: false },
+      splitLine: { show: false },
+      axisLabel: { show: false },
+      axisLine: {
+        onZero: false,
+        lineStyle: {
+          color: '#e9ebed',
+          width: 2,
+        },
+      },
     },
   ],
 };
@@ -75,20 +75,24 @@ const L4E_Y_AXIS = {
       min: 0,
       gridIndex: 0,
     },
-    // 2. y axis for slider zoom timeline
+    // 2. y axis for step chart
     {
+      type: 'value',
+      min: 0,
+      max: 100,
       gridIndex: 1,
+      axisLabel: {
+        margin: 4,
+        formatter: (value: number) => `${value}%`,
+      },
+    },
+    // 3. y axis for slider zoom timeline
+    {
+      gridIndex: 2,
       axisLabel: { show: false },
       axisLine: { show: false },
       axisTick: { show: false },
       splitLine: { show: false },
-    },
-    // 3. y axis for step chart
-    {
-      type: 'value',
-      show: false,
-      min: 0,
-      gridIndex: 2,
     },
   ],
 };
@@ -99,7 +103,7 @@ const L4E_DATA_ZOOM = {
   dataZoom: [
     {
       type: 'inside',
-      xAxisIndex: [0, 2],
+      xAxisIndex: [0, 1],
       filterMode: 'none',
       start: 0,
       end: 100,
@@ -112,7 +116,7 @@ const L4E_DATA_ZOOM = {
       type: 'slider',
       filterMode: 'none',
       backgroundColor: 'rgba(255,255,255,0)',
-      xAxisIndex: [0, 2],
+      xAxisIndex: [0, 1],
       fillerColor: 'rgba(255, 110, 110, .25)',
       dataBackground: {
         lineStyle: { opacity: 0 },
@@ -122,16 +126,21 @@ const L4E_DATA_ZOOM = {
         lineStyle: { color: '#ffffff', opacity: 0 },
         areaStyle: { color: '#ffffff', opacity: 0 },
       },
+      textStyle: {
+        backgroundColor: '#ffffff',
+        borderWidth: 3,
+        borderColor: '#ffffff',
+      },
       moveHandleStyle: { color: '#C5C5C5' },
       handleStyle: { borderColor: '#C5C5C5' },
-      height: 30,
-      top: '30%',
+      height: '5%',
+      bottom: '4%',
     },
     // 3. disables zoom for the slider zoom's timeline, which should always show 100% of the data
     {
       type: 'inside',
       disabled: true,
-      xAxisIndex: [1],
+      xAxisIndex: [2],
       start: 0,
       end: 100,
     },
@@ -143,28 +152,28 @@ const L4E_GRID = {
   grid: [
     // 1. top section is the large timeline
     {
-      left: '10px',
+      left: '35px',
       right: '10px',
-      height: '20%',
-      top: '5%',
+      height: '40%',
+      top: '28px',
       show: true,
       borderColor: '#C5C5C5',
     },
-    // 2. middle section is a smaller slider zoom timeline
+    // 2. middle section is the step chart
     {
-      left: '12px',
+      left: '35px',
+      right: '10px',
+      top: '62%',
+      height: '22%',
+      show: true,
+      borderColor: '#C5C5C5',
+    },
+    // 3. bottom section is a smaller slider zoom timeline
+    {
+      left: '37px',
       right: '12px',
       height: '5%',
-      top: '31%',
-    },
-    // 3. bottom section is the step chart
-    {
-      left: '12px',
-      right: '12px',
-      bottom: '5%',
-      height: '50%',
-      show: true,
-      borderColor: '#C5C5C5',
+      bottom: '2%',
     },
   ],
 };
@@ -186,13 +195,6 @@ export const L4E_SERIES = {
         x: 'time',
         y: 'value',
       },
-      selectedMode: 'single',
-      select: {
-        itemStyle: {
-          color: '#015b9d',
-          borderWidth: 0,
-        },
-      },
     },
     // 2. smaller data zoom slider timeline, which always shows 100% of the data
     {
@@ -202,8 +204,8 @@ export const L4E_SERIES = {
       silent: true,
       barMinWidth: 5,
       barMaxWidth: 5,
-      xAxisIndex: 1,
-      yAxisIndex: 1,
+      xAxisIndex: 2,
+      yAxisIndex: 2,
       tooltip: {
         show: false,
       },
@@ -220,14 +222,17 @@ const L4E_TITLE = {
   title: [
     {
       id: 'widget-title',
-      top: '5px',
-      left: '5px',
+      top: '4px',
+      left: '32px',
     },
     {
       id: 'contributing-properties-title',
-      bottom: '55%',
-      left: '5px',
+      top: '55%',
+      left: '32px',
       text: 'Contributing properties',
+      textStyle: {
+        fontSize: 15,
+      },
     },
   ],
 };

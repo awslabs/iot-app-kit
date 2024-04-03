@@ -14,11 +14,12 @@ export default {
 export const MockDataKPI: ComponentStory<typeof L4EWidget> = () => {
   return (
     <div style={{ background: 'grey' }}>
-      <div style={{ height: '100%', width: '100%', padding: '20px' }}>
+      <div style={{ height: '350px', width: '500px', padding: '20px' }}>
         <L4EWidget
           data={mockData.sort(
             (a, b) => b.timestamp.getTime() - a.timestamp.getTime()
           )}
+          tooltipSort='value'
           decimalPlaces={2}
           viewportStart={new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)}
           viewportEnd={new Date()}

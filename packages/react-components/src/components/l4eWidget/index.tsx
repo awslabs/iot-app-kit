@@ -17,6 +17,7 @@ export interface L4EWidgetProps {
   // if no start / end is provided, start / end will be determined from the data
   viewportStart?: Date;
   viewportEnd?: Date;
+  tooltipSort?: 'value' | 'alphabetical';
 }
 
 export const L4EWidget = ({
@@ -25,6 +26,7 @@ export const L4EWidget = ({
   decimalPlaces,
   viewportStart,
   viewportEnd,
+  tooltipSort,
 }: L4EWidgetProps) => {
   const { ref, chartRef } = useECharts();
 
@@ -32,7 +34,7 @@ export const L4EWidget = ({
   const customTitle = useTitle({ title });
   const customDataSet = useDataSet({ data });
   const customSeries = useSeries({ data });
-  const customTooltip = useTooltip({ decimalPlaces });
+  const customTooltip = useTooltip({ decimalPlaces, tooltipSort });
 
   const customOptions = {
     ...customXAxis,
@@ -45,7 +47,7 @@ export const L4EWidget = ({
   useSetOptions({ chartRef, customOptions });
 
   return (
-    <div style={{ background: 'white', width: '1000px', height: '600px' }}>
+    <div style={{ background: 'white', width: '100%', height: '100%' }}>
       <div
         ref={ref}
         style={{ width: '100%', height: '100%', paddingBottom: '32px' }}
