@@ -10,12 +10,23 @@ export type TooltipData = {
   value: [Date, number];
 }[];
 
-export const formatTooltip = (data: TooltipData, decimalPlaces?: number) => {
+export const formatTooltip = (
+  data: TooltipData,
+  decimalPlaces?: number,
+  tooltipSort: 'value' | 'alphabetical' = 'alphabetical'
+) => {
   const div = document.createElement('div');
 
   let date = '';
   const diagnosticString = data
+    // filter data so we only se the diagnostic values
     .filter(({ componentSubType }) => componentSubType !== 'bar')
+    // sort diagnostics by value or alphabetical order
+    .sort((a, b) => {
+      if (tooltipSort === 'alphabetical') return 0;
+      return b.value[1] - a.value[1];
+    })
+    // convert each diagostic into a line containing its color, name, and value
     .map(({ seriesName, color, axisValueLabel, value }, index: number) => {
       if (index === 0) date = `<div><b>${axisValueLabel}</b></div>`;
 
