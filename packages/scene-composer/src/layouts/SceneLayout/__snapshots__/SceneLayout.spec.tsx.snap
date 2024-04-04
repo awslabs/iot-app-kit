@@ -135,18 +135,18 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
   transform: scaleX(-1);
 }
 
-.c20 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.06);
-  -ms-transform: scale(1.06);
-  transform: scale(1.06);
-}
-
 .c17 {
   shape-rendering: geometricPrecision;
   -webkit-transform: scale(1.04);
   -ms-transform: scale(1.04);
   transform: scale(1.04);
+}
+
+.c20 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1.06);
+  -ms-transform: scale(1.06);
+  transform: scale(1.06);
 }
 
 .c9 {
@@ -1395,18 +1395,18 @@ exports[`SceneLayout should render camera preview if editing and camera componen
   transform: scaleX(-1);
 }
 
-.c20 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.06);
-  -ms-transform: scale(1.06);
-  transform: scale(1.06);
-}
-
 .c17 {
   shape-rendering: geometricPrecision;
   -webkit-transform: scale(1.04);
   -ms-transform: scale(1.04);
   transform: scale(1.04);
+}
+
+.c20 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1.06);
+  -ms-transform: scale(1.06);
+  transform: scale(1.06);
 }
 
 .c9 {

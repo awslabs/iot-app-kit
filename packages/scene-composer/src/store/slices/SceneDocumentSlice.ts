@@ -1,6 +1,5 @@
 import { isDataBindingTemplate } from '@iot-app-kit/source-iottwinmaker';
 import { isEmpty } from 'lodash';
-import { GetState, SetState } from 'zustand';
 import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { Euler, Quaternion, Vector3 } from 'three';
 
@@ -43,6 +42,7 @@ import { isDynamicNode, isDynamicScene, updateSceneRootEntity } from '../../util
 import { createNodeEntity } from '../../utils/entityModelUtils/createNodeEntity';
 import { findComponentByType, getFinalNodeScale } from '../../utils/nodeUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
+import { SliceCreator } from '../middlewares';
 
 const LOG = new DebugLogger('stateStore');
 
@@ -105,7 +105,8 @@ function createEmptyDocumentState(): ISceneDocumentInternal {
   };
 }
 
-export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState<RootState>): ISceneDocumentSlice =>
+export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> = (
+  set, get): ISceneDocumentSlice =>
   ({
     document: createEmptyDocumentState(),
 
@@ -231,7 +232,7 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
               ]);
             });
         } else {
-          appendSceneNode(draft, node, disableAutoSelect);
+          appendSceneNode(draft as RootState, node, disableAutoSelect);
         }
       });
     },
@@ -252,7 +253,7 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
 
     updateSceneNodeInternal: (ref, partial, isTransient, skipEntityUpdate) => {
       set((draft) => {
-        updateSceneNode(draft, ref, partial, skipEntityUpdate);
+        updateSceneNode(draft as RootState, ref, partial, skipEntityUpdate);
 
         draft.lastOperation = isTransient ? 'updateSceneNodeInternalTransient' : 'updateSceneNodeInternal';
       });
@@ -262,7 +263,7 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
       set((draft) => {
         Object.keys(nodesMap).forEach((ref) => {
           const partial = nodesMap[ref];
-          updateSceneNode(draft, ref, partial, skipEntityUpdate);
+          updateSceneNode(draft as RootState, ref, partial, skipEntityUpdate);
         });
 
         draft.lastOperation = isTransient ? 'updateSceneNodeInternalBatchTransient' : 'updateSceneNodeInternalBatch';
