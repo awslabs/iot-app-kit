@@ -1,9 +1,9 @@
-import { SetState } from 'zustand';
 import { Viewport } from '@iot-app-kit/core';
 
 import { ITagSettings, KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
-import { RootState } from '../Store';
+import { ISharedState } from '../Store';
+import { SliceCreator } from '../middlewares';
 
 export interface IViewOptionStateSlice {
   componentVisibilities: Partial<{
@@ -23,7 +23,11 @@ export interface IViewOptionStateSlice {
   setConnectionNameForMatterportViewer: (connectionName?: string) => void;
 }
 
-export const createViewOptionStateSlice = (set: SetState<RootState>): IViewOptionStateSlice => ({
+export const createViewOptionStateSlice: SliceCreator<keyof ISharedState> = 
+(set): ISharedState => ({
+  lastOperation: undefined,
+  noHistoryStates:
+  {
   componentVisibilities: {
     [KnownComponentType.MotionIndicator]: true,
     [KnownComponentType.Tag]: true,
@@ -69,4 +73,4 @@ export const createViewOptionStateSlice = (set: SetState<RootState>): IViewOptio
       draft.lastOperation = 'setConnectionNameForMatterportViewer';
     });
   },
-});
+}});

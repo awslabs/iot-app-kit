@@ -1,7 +1,12 @@
 import { ITagSettings, KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
 
-import { createViewOptionStateSlice } from './ViewOptionStateSlice';
+import { createViewOptionStateSlice as _createViewOptionStateSlice } from './ViewOptionStateSlice';
+
+const createViewOptionStateSlice = (set) => {
+  const { noHistoryStates } = _createViewOptionStateSlice(set);
+  return noHistoryStates;
+}
 
 describe('createViewOptionStateSlice', () => {
   it('should be able to change motion indicator visibility', () => {
