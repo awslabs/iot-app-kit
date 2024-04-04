@@ -1,6 +1,4 @@
-import { GetState, SetState, StoreApi } from 'zustand';
-
-import { RootState } from '../Store';
+import { SliceCreator } from '../middlewares';
 
 export interface INodeErrorStateSlice {
   nodeErrorMap: { [nodeRef: string]: string };
@@ -9,10 +7,9 @@ export interface INodeErrorStateSlice {
   removeNodeError: (nodeRef: string) => void;
 }
 
-export const createNodeErrorStateSlice = (
-  set: SetState<RootState>,
-  get: GetState<RootState>,
-  _api: StoreApi<RootState>,
+export const createNodeErrorStateSlice: SliceCreator<keyof INodeErrorStateSlice> = (
+  set,
+  get,
 ): INodeErrorStateSlice => ({
   nodeErrorMap: {},
 
