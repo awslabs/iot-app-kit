@@ -5,6 +5,7 @@ import { Box, Modal, SpaceBetween } from '@cloudscape-design/components';
 import LabeledInput from '../util/labeledInput';
 import { useGridSettings } from './useGridSettings';
 import { numberFromDetail } from '~/util/inputEvent';
+import DecimalPlaces from './decimalPlaces';
 
 export type DashboardSettingsProps = {
   onClose: () => void;
@@ -35,13 +36,10 @@ const DashboardSettings: React.FC<DashboardSettingsProps> = ({
     >
       <Box>
         <SpaceBetween direction='vertical' size='l'>
-          <LabeledInput
-            label='Decimal Places'
-            type='number'
-            value={significantDigits.toFixed()}
-            onChange={(event) =>
-              onChangeSignificantDigits(numberFromDetail(event))
-            }
+          <DecimalPlaces
+            onChangeSignificantDigits={onChangeSignificantDigits}
+            significantDigits={significantDigits}
+            isVisible={isVisible}
           />
           <LabeledInput
             label='Cell Size'
