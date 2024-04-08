@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { ChartRef } from '../../../hooks/useECharts';
-import { DEFAULT_L4E_WIDGET_SETTINGS } from '../constants';
+import { DEFAULT_ANOMALY_WIDGET_SETTINGS } from '../constants';
 
 export const useSetOptions = ({
   chartRef,
@@ -11,14 +11,14 @@ export const useSetOptions = ({
   customOptions: any;
 }) => {
   useEffect(() => {
-    const l4e = chartRef.current;
+    const anomaly = chartRef.current;
     // set default chart options
-    l4e?.setOption({ ...DEFAULT_L4E_WIDGET_SETTINGS });
+    anomaly?.setOption({ ...DEFAULT_ANOMALY_WIDGET_SETTINGS });
   });
 
   useEffect(() => {
-    const l4e = chartRef.current;
+    const anomaly = chartRef.current;
     // set customOptions, which will merge with default options set above
-    l4e?.setOption({ ...customOptions });
+    anomaly?.setOption({ ...customOptions });
   }, [chartRef, customOptions]);
 };
