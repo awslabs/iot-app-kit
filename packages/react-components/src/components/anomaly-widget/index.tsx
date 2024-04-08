@@ -1,39 +1,44 @@
 import React from 'react';
 import { useECharts } from '../../hooks/useECharts';
-import { AnomalyResult } from './types';
+import { AnomalyWidgetOptions } from './types';
 import { useSetOptions } from './hooks/useSetOptions';
 import { useXAxis } from './hooks/useXAxis';
 import { useTitle } from './hooks/useTitle';
 import { useDataSet } from './hooks/useDataSet';
 import { useSeries } from './hooks/useSeries';
 import { useTooltip } from './hooks/useTooltip';
+import {
+  AnomalyObjectDataSourceTransformer,
+  DataSourceLoader,
+} from '../../data';
 
-export interface L4EWidgetProps {
-  // data: [some generic data type]; //// this will need its own doc to create a flexible data type
-  data: AnomalyResult[]; // placeholder data type
-  mode?: 'light' | 'dark'; // sets the theme of the widget
-  decimalPlaces?: number; // sets the number of decimal places values will be rounded to
-  title?: string; // title for the widget, can be used to display the prediction model name
-  // if no start / end is provided, start / end will be determined from the data
-  viewportStart?: Date;
-  viewportEnd?: Date;
-  tooltipSort?: 'value' | 'alphabetical';
-}
+const AnomalyDataSourceLoader = new DataSourceLoader([
+  new AnomalyObjectDataSourceTransformer(),
+]);
 
-export const L4EWidget = ({
-  data,
+export const AnomalyWidget = ({
+  datasources,
+  viewport,
   title,
   decimalPlaces,
-  viewportStart,
-  viewportEnd,
   tooltipSort,
-}: L4EWidgetProps) => {
+}: AnomalyWidgetOptions) => {
   const { ref, chartRef } = useECharts();
 
-  const customXAxis = useXAxis({ viewportStart, viewportEnd });
+  /**
+   * Datasources is a fixed length array of 1.
+   * The widget can only display 1 anomaly for now.
+   */
+  const data = AnomalyDataSourceLoader.transform([...datasources]).at(0);
+  const description = AnomalyDataSourceLoader.describe([...datasources]).at(0);
+
+  const customXAxis = useXAxis({
+    viewportStart: viewport.start,
+    viewportEnd: viewport.end,
+  });
   const customTitle = useTitle({ title });
   const customDataSet = useDataSet({ data });
-  const customSeries = useSeries({ data });
+  const customSeries = useSeries({ description });
   const customTooltip = useTooltip({ decimalPlaces, tooltipSort });
 
   const customOptions = {
