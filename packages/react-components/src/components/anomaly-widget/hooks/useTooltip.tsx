@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { TooltipData, formatTooltip } from '../utils/formatTooltip';
 
-const L4E_TOOLTIP = {
+const ANOMALY_TOOLTIP = {
   trigger: 'axis',
   axisPointer: {
     animation: false,
@@ -18,9 +18,10 @@ export const useTooltip = ({
   return useMemo(() => {
     return {
       tooltip: {
-        ...L4E_TOOLTIP,
-        formatter: (data: TooltipData) =>
-          formatTooltip(data, decimalPlaces, tooltipSort),
+        ...ANOMALY_TOOLTIP,
+        formatter: (params: TooltipData) => {
+          return formatTooltip(params, decimalPlaces, tooltipSort);
+        },
       },
     };
   }, [decimalPlaces, tooltipSort]);

@@ -6,9 +6,25 @@ export type TooltipData = {
   componentSubType: string;
   axisValueLabel: string;
   seriesName: string;
+  seriesId: string; // used to figure out the dimension
   color: string;
-  value: [Date, number];
+  dimensionNames: string[];
+  value: Record<string, number> | Array<number>;
 }[];
+
+const getDiagnosticValue = ({
+  value,
+  dimensionNames,
+  seriesId,
+}: TooltipData[number]) => {
+  if (Array.isArray(value)) {
+    const dimensionIndex = dimensionNames.findIndex(
+      (name) => name === seriesId
+    );
+    return value[dimensionIndex];
+  }
+  return value[seriesId];
+};
 
 export const formatTooltip = (
   data: TooltipData,
@@ -23,15 +39,23 @@ export const formatTooltip = (
     .filter(({ componentSubType }) => componentSubType !== 'bar')
     // sort diagnostics by value or alphabetical order
     .sort((a, b) => {
-      if (tooltipSort === 'alphabetical') return 0;
-      return b.value[1] - a.value[1];
+      if (tooltipSort === 'alphabetical')
+        return a.seriesName.localeCompare(b.seriesName);
+
+      // sort largest -> smallest
+      return getDiagnosticValue(b) - getDiagnosticValue(a);
     })
     // convert each diagostic into a line containing its color, name, and value
-    .map(({ seriesName, color, axisValueLabel, value }, index: number) => {
+    .map((d, index: number) => {
+      const { seriesName, color, axisValueLabel } = d;
       if (index === 0) date = `<div><b>${axisValueLabel}</b></div>`;
 
       const valueString = renderToString(
-        <Value value={value[1]} unit='%' precision={decimalPlaces} />
+        <Value
+          value={getDiagnosticValue(d) * 100}
+          unit='%'
+          precision={decimalPlaces}
+        />
       );
 
       return `<div style="display:flex;flex-wrap:nowrap;align-items:center;gap:4px">

@@ -12,17 +12,17 @@ export const useXAxis = ({
       viewportStart && viewportEnd
         ? [
             {
-              name: 'l4e-timeline-axis',
+              name: 'anomaly-timeline-axis',
               min: viewportStart.getTime(),
               max: viewportEnd.getTime(),
             },
             {
-              name: 'l4e-selection-axis',
+              name: 'anomaly-selection-axis',
               min: viewportStart.getTime(),
               max: viewportEnd.getTime(),
             },
             {
-              name: 'l4e-line',
+              name: 'anomaly-line',
               min: viewportStart.getTime(),
               max: viewportEnd.getTime(),
             },

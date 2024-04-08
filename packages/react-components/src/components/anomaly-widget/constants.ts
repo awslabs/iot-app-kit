@@ -1,5 +1,8 @@
+export const barHeightEncoding = 'BAR_HEIGHT_ENCODING';
+export const barHeight = 100;
+
 // defines 3 x-axes:
-const L4E_X_AXIS = {
+const ANOMALY_X_AXIS = {
   axisPointer: {
     link: [
       {
@@ -10,7 +13,7 @@ const L4E_X_AXIS = {
   xAxis: [
     // 1. x axis for large timeline, which shows a time value
     {
-      name: 'l4e-timeline-axis',
+      name: 'anomaly-timeline-axis',
       type: 'time',
       boundaryGap: false,
       show: true,
@@ -29,7 +32,7 @@ const L4E_X_AXIS = {
     },
     // 2. x axis for step chart
     {
-      name: 'l4e-step',
+      name: 'anomaly-step',
       type: 'time',
       show: true,
       axisLabel: {
@@ -47,7 +50,7 @@ const L4E_X_AXIS = {
     },
     // 3. hides the x-axis for slider zoom timeline
     {
-      name: 'l4e-selection-axis',
+      name: 'anomaly-selection-axis',
       type: 'time',
       gridIndex: 2,
       boundaryGap: false,
@@ -66,7 +69,7 @@ const L4E_X_AXIS = {
 };
 
 // defines 3 y-axes:
-const L4E_Y_AXIS = {
+const ANOMALY_Y_AXIS = {
   yAxis: [
     // 1. y axis for timeline
     {
@@ -79,11 +82,11 @@ const L4E_Y_AXIS = {
     {
       type: 'value',
       min: 0,
-      max: 100,
+      max: 1,
       gridIndex: 1,
       axisLabel: {
         margin: 4,
-        formatter: (value: number) => `${value}%`,
+        formatter: (value: number) => `${value * 100}%`,
       },
     },
     // 3. y axis for slider zoom timeline
@@ -98,7 +101,7 @@ const L4E_Y_AXIS = {
 };
 
 // defines 3 data zooms:
-const L4E_DATA_ZOOM = {
+const ANOMALY_DATA_ZOOM = {
   // 1. inside zoom (for gesture handling) used by timeline and step chart
   dataZoom: [
     {
@@ -148,7 +151,7 @@ const L4E_DATA_ZOOM = {
 };
 
 // grid layout with 3 sections:
-const L4E_GRID = {
+const ANOMALY_GRID = {
   grid: [
     // 1. top section is the large timeline
     {
@@ -179,26 +182,26 @@ const L4E_GRID = {
 };
 
 // defines 2 series:
-export const L4E_SERIES = {
+export const ANOMALY_SERIES = {
   series: [
     // 1. large timeline, which a user directly interacts with
     {
-      id: 'l4e_timeline',
+      id: 'anomaly_timeline',
       type: 'bar',
       color: '#D13212',
       barMinWidth: 5,
       barMaxWidth: 10,
       xAxisIndex: 0,
       yAxisIndex: 0,
+      datasetIndex: 1,
       encode: {
-        dataSetIndex: 0,
-        x: 'time',
-        y: 'value',
+        x: 'timestamp',
+        y: barHeightEncoding,
       },
     },
     // 2. smaller data zoom slider timeline, which always shows 100% of the data
     {
-      id: 'l4e_slider',
+      id: 'anomaly_slider',
       type: 'bar',
       color: '#D13212',
       silent: true,
@@ -206,19 +209,19 @@ export const L4E_SERIES = {
       barMaxWidth: 5,
       xAxisIndex: 2,
       yAxisIndex: 2,
+      datasetIndex: 1,
       tooltip: {
         show: false,
       },
       encode: {
-        datasetIndex: 0,
-        x: 'time',
-        y: 'value',
+        x: 'timestamp',
+        y: barHeightEncoding,
       },
     },
   ],
 };
 
-const L4E_TITLE = {
+const ANOMALY_TITLE = {
   title: [
     {
       id: 'widget-title',
@@ -237,10 +240,10 @@ const L4E_TITLE = {
   ],
 };
 
-export const DEFAULT_L4E_WIDGET_SETTINGS = {
-  ...L4E_GRID,
-  ...L4E_DATA_ZOOM,
-  ...L4E_X_AXIS,
-  ...L4E_Y_AXIS,
-  ...L4E_TITLE,
+export const DEFAULT_ANOMALY_WIDGET_SETTINGS = {
+  ...ANOMALY_GRID,
+  ...ANOMALY_DATA_ZOOM,
+  ...ANOMALY_X_AXIS,
+  ...ANOMALY_Y_AXIS,
+  ...ANOMALY_TITLE,
 };
