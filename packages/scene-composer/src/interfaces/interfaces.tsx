@@ -79,7 +79,7 @@ export enum KnownSceneProperty {
   BackgroundCustomColors = 'backgroundCustomColors',
   LayerDefaultRefreshInterval = 'layerDefaultRefreshInterval',
   GeometryCustomColors = 'geometryCustomColors',
-  GroundCustomColors = 'groundCustomColors,',
+  GroundCustomColors = 'groundCustomColors',
 }
 
 /************************************************
@@ -155,13 +155,19 @@ export interface IFogSettings {
   far: number;
 }
 
+export const DEFAULT_FOG_COLOR = '#cccccc';
+export const DEFAULT_FOG_NEAR = 1;
+export const DEFAULT_FOG_FAR = 1000;
+
 export interface ISceneBackgroundSetting {
   color?: string;
   textureUri?: string;
 }
+export const DEFAULT_SCENE_BACKGROUND_COLOR = '#2a2e33';
 
 export interface IGroundPlaneSettings {
   color?: string;
   textureUri?: string;
   opacity: number;
 }
+export const DEFAULT_GROUND_PLANE_COLOR = '#00FF00';

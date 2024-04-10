@@ -4,11 +4,18 @@ import { Button, FormField, Input, SpaceBetween } from '@cloudscape-design/compo
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { IGroundPlaneSettings, KnownSceneProperty, COMPOSER_FEATURES, TextureFileTypeList } from '../../../interfaces';
+import {
+  DEFAULT_GROUND_PLANE_COLOR,
+  IGroundPlaneSettings,
+  KnownSceneProperty,
+  COMPOSER_FEATURES,
+  TextureFileTypeList,
+} from '../../../interfaces';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { useStore } from '../../../store';
 import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
 import { parseS3BucketFromArn } from '../../../utils/pathUtils';
+import { isValidHexCode } from '../../../utils/colorUtils';
 
 export const GroundPlaneSettingsEditor: React.FC = () => {
   useLifecycleLogging('GroundPlaneSettingsEditor');
@@ -23,7 +30,7 @@ export const GroundPlaneSettingsEditor: React.FC = () => {
     state.getSceneProperty<IGroundPlaneSettings>(KnownSceneProperty.GroundPlaneSettings),
   );
 
-  const [internalColor, setInternalColor] = useState(groundSettings?.color || '#00FF00');
+  const [internalColor, setInternalColor] = useState(groundSettings?.color || DEFAULT_GROUND_PLANE_COLOR);
   const [internalUri, setInternalUri] = useState(groundSettings?.textureUri || '');
   const [internalOpacity, setInternalOpacity] = useState(groundSettings?.opacity || 0);
 
@@ -32,7 +39,9 @@ export const GroundPlaneSettingsEditor: React.FC = () => {
   );
 
   const groundColors = useStore(sceneComposerId)((state) =>
-    state.getSceneProperty<string[]>(KnownSceneProperty.GroundCustomColors, []),
+    state
+      .getSceneProperty<string[]>(KnownSceneProperty.GroundCustomColors, [])
+      ?.filter((color) => isValidHexCode(color)),
   );
   const setGroundColorsSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
 
@@ -154,7 +163,7 @@ export const GroundPlaneSettingsEditor: React.FC = () => {
                     })}
                   </Button>
                 )}
-                {internalUri && <Input value={internalUri} disabled />}
+                {internalUri && <Input value={encodeURI(internalUri)} disabled />}
               </SpaceBetween>
             </SpaceBetween>
           )}

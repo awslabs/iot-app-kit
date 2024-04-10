@@ -115,7 +115,7 @@ export const ModelRefComponentEditor: React.FC<IComponentEditorProps> = ({
       </FormField>
 
       <FormField label={formatMessage({ defaultMessage: 'Model Path', description: 'Form Field label' })}>
-        <Input value={modelRefComponent.uri} disabled />
+        <Input value={encodeURI(modelRefComponent.uri)} disabled />
       </FormField>
 
       <FormField label={formatMessage({ defaultMessage: 'Shadow Settings', description: 'Form Field label' })}>

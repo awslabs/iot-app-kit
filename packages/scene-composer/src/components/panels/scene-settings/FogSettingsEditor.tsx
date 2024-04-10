@@ -3,10 +3,17 @@ import { useIntl } from 'react-intl';
 import { FormField, Input, SpaceBetween, Toggle } from '@cloudscape-design/components';
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { IFogSettings, KnownSceneProperty } from '../../../interfaces';
+import {
+  DEFAULT_FOG_COLOR,
+  DEFAULT_FOG_FAR,
+  DEFAULT_FOG_NEAR,
+  IFogSettings,
+  KnownSceneProperty,
+} from '../../../interfaces';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { useStore } from '../../../store';
 import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
+import { isValidHexCode } from '../../../utils/colorUtils';
 
 export const FogSettingsEditor: React.FC = () => {
   useLifecycleLogging('FogSettingsEditor');
@@ -19,12 +26,12 @@ export const FogSettingsEditor: React.FC = () => {
   );
 
   const [fogEnabled, setFogEnabled] = useState(!!fogSettings);
-  const [internalColor, setInternalColor] = useState(fogSettings?.color || '#cccccc');
-  const [internalNearDistance, setInternalNearDistance] = useState(fogSettings?.near || 1);
-  const [internalFarDistance, setInternalFarDistance] = useState(fogSettings?.far || 1000);
+  const [internalColor, setInternalColor] = useState(fogSettings?.color || DEFAULT_FOG_COLOR);
+  const [internalNearDistance, setInternalNearDistance] = useState(fogSettings?.near || DEFAULT_FOG_NEAR);
+  const [internalFarDistance, setInternalFarDistance] = useState(fogSettings?.far || DEFAULT_FOG_FAR);
 
   const fogColors = useStore(sceneComposerId)((state) =>
-    state.getSceneProperty<string[]>(KnownSceneProperty.FogCustomColors, []),
+    state.getSceneProperty<string[]>(KnownSceneProperty.FogCustomColors, [])?.filter((color) => isValidHexCode(color)),
   );
   const setFogColorsSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
 

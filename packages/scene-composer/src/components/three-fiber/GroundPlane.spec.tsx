@@ -7,6 +7,7 @@ jest.useFakeTimers();
 import { useEditorState, useStore } from '../../store';
 import useTwinMakerTextureLoader from '../../hooks/useTwinMakerTextureLoader';
 import useAddWidget from '../../hooks/useAddWidget';
+import { DEFAULT_GROUND_PLANE_COLOR, KnownSceneProperty } from '../../interfaces';
 
 //we need actual drei code to test with r3f renderer
 jest.mock('@react-three/drei', () => {
@@ -67,9 +68,11 @@ jest.mock('../../store/', () => ({
 
 const mockHandleAddWidget = jest.fn();
 
+const setScenePropertyMock = jest.fn();
 const getScenePropertyMock = jest.fn();
 const baseState = {
   getSceneProperty: getScenePropertyMock,
+  setSceneProperty: setScenePropertyMock,
 };
 
 describe('GroundPlane', () => {
@@ -144,5 +147,26 @@ describe('GroundPlane', () => {
     const mesh = rendered.scene.children[0];
     await rendered.fireEvent(mesh, 'click', { delta: 0.1 });
     expect(mockHandleAddWidget).toBeCalled();
+  });
+
+  it(`should fix invalid values back to default`, async () => {
+    getScenePropertyMock.mockReturnValue({
+      color: 'NOTHEX',
+      textureUri: 'TE\n\nST',
+      opacity: -1,
+    });
+    (useEditorState as jest.Mock).mockImplementation(() => ({
+      isEditing: jest.fn().mockReturnValue(true),
+      addingWidget: true,
+    }));
+
+    (useRef as jest.Mock).mockReturnValue({ current: null });
+    await ReactThreeTestRenderer.create(<GroundPlane />);
+
+    expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.GroundPlaneSettings, {
+      color: DEFAULT_GROUND_PLANE_COLOR,
+      opacity: 0,
+      textureUri: 'TE\n\nST',
+    });
   });
 });

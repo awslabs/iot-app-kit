@@ -24,7 +24,14 @@ describe('FogSettingsEditor', () => {
   });
 
   it('should save fogsettings when enabled', async () => {
-    getScenePropertyMock.mockReturnValue(undefined);
+    getScenePropertyMock.mockImplementation((property: string) => {
+      if (property === KnownSceneProperty.FogSettings) {
+        return undefined;
+      } else if (property === KnownSceneProperty.FogCustomColors) {
+        const customColors: string[] = [];
+        return customColors;
+      }
+    });
     useStore('default').setState(baseState);
     const { container } = render(<FogSettingsEditor />);
     const polarisWrapper = wrapper(container);
@@ -45,10 +52,17 @@ describe('FogSettingsEditor', () => {
   });
 
   it('should clear fogsettings when untoggled', async () => {
-    getScenePropertyMock.mockReturnValue({
-      color: '#cccccc',
-      near: 1,
-      far: 1000,
+    getScenePropertyMock.mockImplementation((property: string) => {
+      if (property === KnownSceneProperty.FogSettings) {
+        return {
+          color: '#cccccc',
+          near: 1,
+          far: 1000,
+        };
+      } else if (property === KnownSceneProperty.FogCustomColors) {
+        const customColors: string[] = [];
+        return customColors;
+      }
     });
     useStore('default').setState(baseState);
     const { container } = render(<FogSettingsEditor />);
@@ -66,10 +80,17 @@ describe('FogSettingsEditor', () => {
   });
 
   it('should update fog when near changes', async () => {
-    getScenePropertyMock.mockReturnValue({
-      color: '#cccccc',
-      near: 1,
-      far: 1000,
+    getScenePropertyMock.mockImplementation((property: string) => {
+      if (property === KnownSceneProperty.FogSettings) {
+        return {
+          color: '#cccccc',
+          near: 1,
+          far: 1000,
+        };
+      } else if (property === KnownSceneProperty.FogCustomColors) {
+        const customColors: string[] = [];
+        return customColors;
+      }
     });
     useStore('default').setState(baseState);
     const { container } = render(<FogSettingsEditor />);
@@ -91,10 +112,17 @@ describe('FogSettingsEditor', () => {
   });
 
   it('should update fog when far changes', async () => {
-    getScenePropertyMock.mockReturnValue({
-      color: '#cccccc',
-      near: 1,
-      far: 1000,
+    getScenePropertyMock.mockImplementation((property: string) => {
+      if (property === KnownSceneProperty.FogSettings) {
+        return {
+          color: '#cccccc',
+          near: 1,
+          far: 1000,
+        };
+      } else if (property === KnownSceneProperty.FogCustomColors) {
+        const customColors: string[] = [];
+        return customColors;
+      }
     });
     useStore('default').setState(baseState);
     const { container } = render(<FogSettingsEditor />);

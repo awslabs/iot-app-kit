@@ -6,12 +6,19 @@ jest.doMock('@react-three/fiber', () => ({
 import { useThree } from '@react-three/fiber';
 import React from 'react';
 
-import { COMPOSER_FEATURES, ISceneBackgroundSetting } from '../../interfaces';
+import {
+  COMPOSER_FEATURES,
+  ISceneBackgroundSetting,
+  KnownSceneProperty,
+  DEFAULT_SCENE_BACKGROUND_COLOR,
+} from '../../interfaces';
 import { useStore } from '../../store';
 
+const setScenePropertyMock = jest.fn();
 const getScenePropertyMock = jest.fn();
 const baseState = {
   getSceneProperty: getScenePropertyMock,
+  setSceneProperty: setScenePropertyMock,
 };
 const mockTexture = new THREE.Texture();
 mockTexture.name = 'testTextureName';
@@ -103,5 +110,27 @@ describe('SceneBackground', () => {
     expect(testScene.background).toBeNull();
     render(<SceneBackground />);
     expect(testScene.background).toBeNull();
+  });
+
+  it(`should fix invalid values back to default`, () => {
+    const testScene = new THREE.Scene();
+    const mockThreeStates = {
+      scene: testScene,
+    };
+    const useThreeMock = useThree as jest.Mock;
+    useThreeMock.mockImplementation((s) => {
+      return s(mockThreeStates);
+    });
+
+    const backgroundSetting: ISceneBackgroundSetting = {
+      color: 'NOTHEX',
+    };
+    getScenePropertyMock.mockReturnValue(backgroundSetting);
+
+    expect(testScene.background).toBeNull();
+    render(<SceneBackground />);
+    expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.SceneBackgroundSettings, {
+      color: DEFAULT_SCENE_BACKGROUND_COLOR,
+    });
   });
 });

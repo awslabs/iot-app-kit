@@ -5,9 +5,15 @@ import { useThree } from '@react-three/fiber';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useStore } from '../../store';
-import { COMPOSER_FEATURES, ISceneBackgroundSetting, KnownSceneProperty } from '../../interfaces';
+import {
+  COMPOSER_FEATURES,
+  DEFAULT_SCENE_BACKGROUND_COLOR,
+  ISceneBackgroundSetting,
+  KnownSceneProperty,
+} from '../../interfaces';
 import useTwinMakerTextureLoader from '../../hooks/useTwinMakerTextureLoader';
 import { ResponseContentType } from '../../three/types';
+import { isValidHexCode } from '../../utils/colorUtils';
 
 const SceneBackground: FC = () => {
   const texturesEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Textures];
@@ -15,6 +21,9 @@ const SceneBackground: FC = () => {
   const scene = useThree((state) => state.scene);
   const sceneBackgroundSettings = useStore(sceneComposerId)((state) =>
     state.getSceneProperty<ISceneBackgroundSetting>(KnownSceneProperty.SceneBackgroundSettings),
+  );
+  const setSceneProperty = useStore(sceneComposerId)(
+    (state) => state.setSceneProperty<ISceneBackgroundSetting | undefined>,
   );
   const { loadTexture } = useTwinMakerTextureLoader({ imageOrientation: 'flipY' });
 
@@ -36,7 +45,24 @@ const SceneBackground: FC = () => {
     if (texturesEnabled && sceneBackgroundSettings?.textureUri) {
       loadTexture(sceneBackgroundSettings.textureUri, setBackgroundCallback);
     } else {
-      scene.background = sceneBackgroundSettings?.color ? new Color(sceneBackgroundSettings.color) : null;
+      if (sceneBackgroundSettings?.color) {
+        const color = isValidHexCode(sceneBackgroundSettings.color)
+          ? sceneBackgroundSettings.color
+          : DEFAULT_SCENE_BACKGROUND_COLOR;
+        scene.background = new Color(color);
+        if (color !== sceneBackgroundSettings.color) {
+          // something failed validation from scene json/entity load and
+          // had to be reverted to default
+          setSceneProperty(KnownSceneProperty.SceneBackgroundSettings, {
+            color: color,
+            textureUri: sceneBackgroundSettings.textureUri,
+          });
+        }
+      } else {
+        scene.background = null;
+      }
+
+      //scene.background = sceneBackgroundSettings?.color ? new Color(sceneBackgroundSettings.color) : null;
     }
   }, [scene, sceneBackgroundSettings, loadTexture]);
 

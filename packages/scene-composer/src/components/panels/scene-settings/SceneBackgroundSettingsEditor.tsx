@@ -6,6 +6,7 @@ import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import {
   COMPOSER_FEATURES,
+  DEFAULT_SCENE_BACKGROUND_COLOR,
   ISceneBackgroundSetting,
   KnownSceneProperty,
   TextureFileTypeList,
@@ -14,6 +15,7 @@ import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycle
 import { useStore } from '../../../store';
 import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
 import { parseS3BucketFromArn } from '../../../utils/pathUtils';
+import { isValidHexCode } from '../../../utils/colorUtils';
 
 export const SceneBackgroundSettingsEditor: React.FC = () => {
   useLifecycleLogging('SceneBackgroundSettingsEditor');
@@ -31,19 +33,28 @@ export const SceneBackgroundSettingsEditor: React.FC = () => {
     (state) => state.getEditorConfig().showAssetBrowserCallback,
   );
 
-  const [internalColor, setInternalColor] = useState(backgroundSettings?.color || '#2a2e33');
+  const [internalColor, setInternalColor] = useState(backgroundSettings?.color || DEFAULT_SCENE_BACKGROUND_COLOR);
   const [internalUri, setInternalUri] = useState(backgroundSettings?.textureUri || '');
   const backgroundColors = useStore(sceneComposerId)((state) =>
-    state.getSceneProperty<string[]>(KnownSceneProperty.BackgroundCustomColors, []),
+    state
+      .getSceneProperty<string[]>(KnownSceneProperty.BackgroundCustomColors, [])
+      ?.filter((color) => isValidHexCode(color)),
   );
   const setBackgroundColorsSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
 
-  //set default
+  //set default and restore editor when background failed validiation elsewhere
   useEffect(() => {
     if (!backgroundSettings?.color && !backgroundSettings?.textureUri) {
       setSceneProperty(KnownSceneProperty.SceneBackgroundSettings, {
         color: internalColor,
       });
+    } else {
+      if (backgroundSettings.color && backgroundSettings.color !== internalColor) {
+        setInternalColor(backgroundSettings?.color);
+      }
+      if (backgroundSettings.textureUri && backgroundSettings.textureUri !== internalUri) {
+        setInternalUri(backgroundSettings.textureUri);
+      }
     }
   }, [backgroundSettings]);
 
@@ -118,7 +129,7 @@ export const SceneBackgroundSettingsEditor: React.FC = () => {
                   </Button>
                 )}
               </SpaceBetween>
-              {internalUri && <Input value={internalUri} disabled />}
+              {internalUri && <Input value={encodeURI(internalUri)} disabled />}
             </SpaceBetween>
           )}
         </SpaceBetween>
