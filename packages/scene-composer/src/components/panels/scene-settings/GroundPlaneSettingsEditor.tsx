@@ -130,7 +130,7 @@ export const GroundPlaneSettingsEditor: React.FC = () => {
           <FormField label={intl.formatMessage({ defaultMessage: 'Opacity %', description: 'Form Field label' })}>
             <Input
               data-testid='ground-plane-opacity-input'
-              value={String(internalOpacity * 100)}
+              value={(internalOpacity * 100).toFixed(0)}
               type='number'
               onBlur={onInputBlur}
               onChange={onOpacityChange}
