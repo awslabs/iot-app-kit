@@ -4,7 +4,7 @@ export const DEFAULT_GAUGE_SETTINGS = {
     {
       type: 'gauge',
       center: ['50%', '50%'], //center of the gauge
-      radius: '90%', //radius of the gauge
+      radius: '84%', //radius of the gauge
       startAngle: 190, //start angle of the gauge in degrees
       endAngle: -10, //end angle of the gauge in degrees
       min: 0, //guage default start point
@@ -29,10 +29,15 @@ export const DEFAULT_GAUGE_SETTINGS = {
         },
       },
     },
+  ],
+};
+export const DEFAULT_GAUGE_PROGRESS_SETTINGS = {
+  series: [
+    ...DEFAULT_GAUGE_SETTINGS.series,
     {
       type: 'gauge',
       center: ['50%', '50%'], //center of the gauge progress bar
-      radius: '90%', //radius of the gauge progress bar
+      radius: '84%', //radius of the gauge progress bar
       startAngle: 190, //start angle of the gauge in degrees progress bar
       endAngle: -10, //end angle of the gauge in degrees progress bar
       silent: true, //control mouse hover actions
@@ -85,7 +90,7 @@ export const DEFAULT_GAUGE_SETTINGS = {
          * title settings for the position, width, overflow and ellipsis
          */
         show: false,
-        offsetCenter: [0, 10],
+        offsetCenter: [0, 15],
         width: 300, // width of the title in px
         overflow: 'truncate',
         ellipsis: '...',
@@ -93,13 +98,13 @@ export const DEFAULT_GAUGE_SETTINGS = {
     },
   ],
 };
-export const DEFAULT_GAUGE_SETTINGS_WITH_THRESHOLDS = {
+export const DEFAULT_GAUGE_PROGRESS_SETTINGS_WITH_THRESHOLDS = {
   series: [
-    ...DEFAULT_GAUGE_SETTINGS.series,
+    ...DEFAULT_GAUGE_PROGRESS_SETTINGS.series,
     {
       type: 'gauge',
       center: ['50%', '50%'], //center of the gauge outside the arc
-      radius: '92%', //radius of the gauge outside the arc
+      radius: '86%', //radius of the gauge outside the arc
       startAngle: 190, //start angle of the gauge in degrees
       endAngle: -10, //end angle of the gauge in degrees
       min: 0, //outside the arc default start point
@@ -128,18 +133,19 @@ export const DEFAULT_GAUGE_SETTINGS_WITH_THRESHOLDS = {
       },
       axisLabel: {
         /**
-         * make axis label distance to oustside arc, color and font size
+         * make axis label distance to oustside arc, color, rotate and font size
          */
-        distance: -30,
+        distance: -20,
         color: 'auto',
         fontSize: 10,
+        rotate: 'tangential', // Given tangential because if min and max are having four or more digit number and if the rotate is not tangential then the label is overlapping with the arc
       },
       axisLine: {
         /**
          * outside arc axis line thickness
          */
         lineStyle: {
-          width: 3,
+          width: -3,
         },
       },
       anchor: {

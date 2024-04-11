@@ -41,7 +41,18 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    baseURL: 'http://0.0.0.0:6007/',
+    baseURL: 'http://localhost:6007/',
+    storageState: {
+      cookies: [],
+      origins: [
+        {
+          origin: 'localhost',
+          localStorage: [
+            { name: 'USE_SVG_FOR_ECHARTS_PLAYWRIGHT_TEST_ONLY', value: 'true' },
+          ],
+        },
+      ],
+    },
   },
 
   /* Configure projects for major browsers */
@@ -59,7 +70,7 @@ export default defineConfig({
   webServer: {
     command: 'npm run start',
     reuseExistingServer: true,
-    url: 'http://0.0.0.0:6007',
+    url: 'http://localhost:6007',
     timeout: 300 * 1000, // 5 minutes
     stdout: 'pipe',
     stderr: 'pipe',

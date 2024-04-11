@@ -3,6 +3,9 @@ import React from 'react';
 import { useECharts, useLoadableEChart } from '../../hooks/useECharts';
 import { GaugeBaseProperties } from './types';
 import { useGaugeConfiguration } from './hooks/useGaugeConfiguration';
+import { GaugeErrorText } from './gaugeErrorText';
+import { GaugeDataQualityText } from './gaugeDataQualityText';
+import './gauge.css';
 
 /**
  * Renders a base gauge component.
@@ -25,9 +28,11 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
   name,
   isLoading,
   significantDigits,
+  error,
   ...options
 }) => {
   const gaugeValue = propertyPoint?.y;
+  const quality = propertyPoint?.quality;
 
   // Setup instance of echarts
   const { ref, chartRef } = useECharts(options?.theme);
@@ -42,7 +47,23 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
     settings,
     unit,
     significantDigits,
+    error,
   });
 
-  return <div ref={ref} style={{ width: '100%', height: '100%' }} />;
+  return (
+    <div
+      className='gauge-base-container gauge-base'
+      data-testid={
+        !error ? 'gauge-base-component' : 'gauge-base-component-error'
+      }
+    >
+      <div ref={ref} className='gauge-base' />
+      <GaugeErrorText error={error} />
+      <GaugeDataQualityText
+        error={error}
+        quality={quality}
+        showName={settings?.showName}
+      />
+    </div>
+  );
 };

@@ -52,7 +52,8 @@ export const useProgressBarGaugeSeries = ({
         width: settings?.gaugeThickness,
       },
       detail: {
-        formatter: getFormatterValue,
+        show: !hasThresholds,
+        formatter: !hasThresholds ? getFormatterValue : undefined,
         rich: {
           value: {
             fontSize: settings?.fontSize,
