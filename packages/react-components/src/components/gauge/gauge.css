@@ -1,0 +1,20 @@
+.gauge-base-container {
+  position: relative;
+}
+
+.gauge-base {
+  width: 100%;
+  height: 100%;
+}
+
+.gauge-data-quality {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.gauge-info-text {
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
