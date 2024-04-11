@@ -7,6 +7,7 @@ import type {
   YAXisComponentOption,
   EChartsOption,
 } from 'echarts';
+import { ChartAxisOptions, ChartLegend } from './types';
 
 export const DEFAULT_TOOLBOX_CONFIG: ToolboxComponentOption = {
   show: true,
@@ -150,4 +151,31 @@ export const DEFAULT_CHART_OPTION: EChartsOption = {
   yAxis: [DEFAULT_Y_AXIS],
   grid: DEFAULT_GRID,
   tooltip: DEFAULT_TOOLTIP,
+};
+
+export const DEFAULT_CHART_SETTINGS = {
+  line: {
+    connectionStyle: 'linear',
+    style: 'solid',
+  },
+  symbol: {
+    style: 'filled-circle',
+  },
+  axis: {
+    yVisible: true,
+    xVisible: true,
+  } as ChartAxisOptions,
+  legend: {
+    visible: true,
+    position: 'right',
+    width: '30%',
+    height: '30%',
+    visibleContent: {
+      unit: true,
+      asset: true,
+      latestValue: true,
+      maxValue: false,
+      minValue: false,
+    },
+  } as ChartLegend,
 };
