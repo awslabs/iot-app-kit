@@ -8,6 +8,7 @@ import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { DEFAULT_VIEWPORT, ECHARTS_GESTURE } from '../../common/constants';
 import { DataStream } from '@iot-app-kit/core';
+import { DEFAULT_GAUGE_STYLES } from './constants';
 
 export const Gauge = ({
   query,
@@ -51,7 +52,7 @@ export const Gauge = ({
       unit={unit}
       isLoading={isLoading}
       error={error?.msg}
-      settings={settings}
+      settings={{ ...DEFAULT_GAUGE_STYLES, ...settings }}
       thresholds={thresholds}
       significantDigits={significantDigits}
       theme={theme}
