@@ -177,3 +177,14 @@ export const DEFAULT_GAUGE_PROGRESS_SETTINGS_WITH_THRESHOLDS = {
     },
   ],
 };
+
+export const DEFAULT_GAUGE_STYLES = {
+  gaugeThickness: 30,
+  showName: false,
+  showUnit: true,
+  fontSize: 40,
+  labelFontSize: 12,
+  unitFontSize: 16,
+  yMin: 0,
+  yMax: 100,
+};

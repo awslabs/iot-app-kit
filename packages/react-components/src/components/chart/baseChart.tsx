@@ -59,7 +59,7 @@ const BaseChart = ({
   viewport,
   queries,
   onChartOptionsChange,
-  size = { width: 500, height: 500 },
+  size = { width: 650, height: 400 },
   ...options
 }: ChartOptions) => {
   const {
