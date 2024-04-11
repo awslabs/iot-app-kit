@@ -4,7 +4,13 @@ import { Button, FormField, Input, SpaceBetween } from '@cloudscape-design/compo
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { IGroundPlaneSettings, KnownSceneProperty, COMPOSER_FEATURES, TextureFileTypeList } from '../../../interfaces';
+import {
+  DEFAULT_GROUND_PLANE_COLOR,
+  IGroundPlaneSettings,
+  KnownSceneProperty,
+  COMPOSER_FEATURES,
+  TextureFileTypeList,
+} from '../../../interfaces';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { useStore } from '../../../store';
 import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
@@ -23,7 +29,7 @@ export const GroundPlaneSettingsEditor: React.FC = () => {
     state.getSceneProperty<IGroundPlaneSettings>(KnownSceneProperty.GroundPlaneSettings),
   );
 
-  const [internalColor, setInternalColor] = useState(groundSettings?.color || '#00FF00');
+  const [internalColor, setInternalColor] = useState(groundSettings?.color || DEFAULT_GROUND_PLANE_COLOR);
   const [internalUri, setInternalUri] = useState(groundSettings?.textureUri || '');
   const [internalOpacity, setInternalOpacity] = useState(groundSettings?.opacity || 0);
 
