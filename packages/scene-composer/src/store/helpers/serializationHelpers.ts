@@ -10,7 +10,18 @@ import {
   LEGACY_VERSION,
 } from '../../common/constants';
 import { ERROR_MESSAGE_DICT, ErrorCode, ErrorLevel, SceneComposerRuntimeError } from '../../common/errors';
-import { KnownComponentType } from '../../interfaces';
+import {
+  KnownComponentType,
+  KnownSceneProperty,
+  IFogSettings,
+  IGroundPlaneSettings,
+  ISceneBackgroundSetting,
+  DEFAULT_FOG_COLOR,
+  DEFAULT_FOG_NEAR,
+  DEFAULT_FOG_FAR,
+  DEFAULT_SCENE_BACKGROUND_COLOR,
+  DEFAULT_GROUND_PLANE_COLOR,
+} from '../../interfaces';
 import DebugLogger from '../../logger/DebugLogger';
 import { Component, DistanceUnit, ModelType, Node, Scene } from '../../models/SceneModels';
 import { isDynamicNode } from '../../utils/entityModelUtils/sceneUtils';
@@ -36,6 +47,7 @@ import {
   isISceneComponentInternal,
   IPlaneGeometryComponentInternal,
 } from '../internalInterfaces';
+import { isValidHexCode } from '../../utils/colorUtils';
 
 import { addComponentToComponentNodeMap } from './componentMapHelpers';
 
@@ -571,6 +583,53 @@ function createDocumentState(
         ];
       }),
     );
+  }
+
+  if (scene.properties) {
+    if (scene.properties[KnownSceneProperty.FogCustomColors]) {
+      scene.properties[KnownSceneProperty.FogCustomColors] = (
+        scene.properties[KnownSceneProperty.FogCustomColors] as string[]
+      ).filter((color) => isValidHexCode(color));
+    }
+    if (scene.properties[KnownSceneProperty.BackgroundCustomColors]) {
+      scene.properties[KnownSceneProperty.BackgroundCustomColors] = (
+        scene.properties[KnownSceneProperty.BackgroundCustomColors] as string[]
+      ).filter((color) => isValidHexCode(color));
+    }
+    if (scene.properties[KnownSceneProperty.GroundCustomColors]) {
+      scene.properties[KnownSceneProperty.GroundCustomColors] = (
+        scene.properties[KnownSceneProperty.GroundCustomColors] as string[]
+      ).filter((color) => isValidHexCode(color));
+    }
+    if (scene.properties[KnownSceneProperty.FogSettings]) {
+      const fogSettings = scene.properties[KnownSceneProperty.FogSettings] as IFogSettings;
+      fogSettings.color = isValidHexCode(fogSettings.color) ? fogSettings.color : DEFAULT_FOG_COLOR;
+      fogSettings.near = fogSettings.near && fogSettings.near > 0 ? fogSettings.near : DEFAULT_FOG_NEAR;
+      fogSettings.far = fogSettings.far && fogSettings.far > 0 ? fogSettings.far : DEFAULT_FOG_FAR;
+      scene.properties[KnownSceneProperty.FogSettings] = fogSettings;
+    }
+    if (scene.properties[KnownSceneProperty.SceneBackgroundSettings]) {
+      const backgroundSettings = scene.properties[
+        KnownSceneProperty.SceneBackgroundSettings
+      ] as ISceneBackgroundSetting;
+      backgroundSettings.color = backgroundSettings.color
+        ? isValidHexCode(backgroundSettings.color)
+          ? backgroundSettings.color
+          : DEFAULT_SCENE_BACKGROUND_COLOR
+        : undefined;
+      scene.properties[KnownSceneProperty.SceneBackgroundSettings] = backgroundSettings;
+    }
+    if (scene.properties[KnownSceneProperty.GroundPlaneSettings]) {
+      const groundPlaneSettings = scene.properties[KnownSceneProperty.GroundPlaneSettings] as IGroundPlaneSettings;
+      groundPlaneSettings.color = groundPlaneSettings.color
+        ? isValidHexCode(groundPlaneSettings.color)
+          ? groundPlaneSettings.color
+          : DEFAULT_GROUND_PLANE_COLOR
+        : undefined;
+      groundPlaneSettings.opacity =
+        groundPlaneSettings.opacity >= 0 && groundPlaneSettings.opacity <= 1 ? groundPlaneSettings.opacity : 0;
+      scene.properties[KnownSceneProperty.GroundPlaneSettings] = groundPlaneSettings;
+    }
   }
 
   const nodeMap = Object.fromEntries(internalNodes.map((node) => [node.ref, node]));

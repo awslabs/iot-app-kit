@@ -66,9 +66,16 @@ describe('GroundPlaneSettingsEditor', () => {
   });
 
   it('should open asset browser when select texture clicked and set texture uri', () => {
-    getScenePropertyMock.mockReturnValue({
-      color: '#cccccc',
-      opacity: 0,
+    getScenePropertyMock.mockImplementation((property: string) => {
+      if (property === KnownSceneProperty.GroundPlaneSettings) {
+        return {
+          color: '#cccccc',
+          opacity: 0,
+        };
+      } else if (property === KnownSceneProperty.GroundCustomColors) {
+        const customColors: string[] = [];
+        return customColors;
+      }
     });
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
@@ -94,9 +101,16 @@ describe('GroundPlaneSettingsEditor', () => {
   });
 
   it('should remove texture uri', () => {
-    getScenePropertyMock.mockReturnValue({
-      textureUri: 'filepath',
-      opacity: 1,
+    getScenePropertyMock.mockImplementation((property: string) => {
+      if (property === KnownSceneProperty.GroundPlaneSettings) {
+        return {
+          textureUri: 'filepath',
+          opacity: 1,
+        };
+      } else if (property === KnownSceneProperty.GroundCustomColors) {
+        const customColors: string[] = [];
+        return customColors;
+      }
     });
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
@@ -118,9 +132,16 @@ describe('GroundPlaneSettingsEditor', () => {
   });
 
   it('should update opacity', () => {
-    getScenePropertyMock.mockReturnValue({
-      textureUri: 'filepath',
-      opacity: 0,
+    getScenePropertyMock.mockImplementation((property: string) => {
+      if (property === KnownSceneProperty.GroundPlaneSettings) {
+        return {
+          textureUri: 'filepath',
+          opacity: 0,
+        };
+      } else if (property === KnownSceneProperty.GroundCustomColors) {
+        const customColors: string[] = [];
+        return customColors;
+      }
     });
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
