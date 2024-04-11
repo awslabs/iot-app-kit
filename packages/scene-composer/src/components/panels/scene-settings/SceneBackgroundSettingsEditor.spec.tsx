@@ -34,7 +34,14 @@ describe('SceneBackgroundSettingsEditor', () => {
   });
 
   it('should save background on clean scene', () => {
-    getScenePropertyMock.mockReturnValue(undefined);
+    getScenePropertyMock.mockImplementation((property: string) => {
+      if (property === KnownSceneProperty.SceneBackgroundSettings) {
+        return undefined;
+      } else if (property === KnownSceneProperty.BackgroundCustomColors) {
+        const customColors: string[] = [];
+        return customColors;
+      }
+    });
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
     useStore('default').setState(baseState);
@@ -78,8 +85,15 @@ describe('SceneBackgroundSettingsEditor', () => {
   });
 
   it('should open asset browser when select texture clicked and set texture uri', () => {
-    getScenePropertyMock.mockReturnValue({
-      color: '#cccccc',
+    getScenePropertyMock.mockImplementation((property: string) => {
+      if (property === KnownSceneProperty.SceneBackgroundSettings) {
+        return {
+          color: '#cccccc',
+        };
+      } else if (property === KnownSceneProperty.BackgroundCustomColors) {
+        const customColors: string[] = [];
+        return customColors;
+      }
     });
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
@@ -104,8 +118,15 @@ describe('SceneBackgroundSettingsEditor', () => {
   });
 
   it('should remove texture uri', () => {
-    getScenePropertyMock.mockReturnValue({
-      textureUri: 'filepath',
+    getScenePropertyMock.mockImplementation((property: string) => {
+      if (property === KnownSceneProperty.SceneBackgroundSettings) {
+        return {
+          textureUri: 'filepath',
+        };
+      } else if (property === KnownSceneProperty.BackgroundCustomColors) {
+        const customColors: string[] = [];
+        return customColors;
+      }
     });
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });

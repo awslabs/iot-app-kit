@@ -6,6 +6,7 @@ import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import {
   COMPOSER_FEATURES,
+  DEFAULT_SCENE_BACKGROUND_COLOR,
   ISceneBackgroundSetting,
   KnownSceneProperty,
   TextureFileTypeList,
@@ -31,19 +32,26 @@ export const SceneBackgroundSettingsEditor: React.FC = () => {
     (state) => state.getEditorConfig().showAssetBrowserCallback,
   );
 
-  const [internalColor, setInternalColor] = useState(backgroundSettings?.color || '#2a2e33');
+  const [internalColor, setInternalColor] = useState(backgroundSettings?.color || DEFAULT_SCENE_BACKGROUND_COLOR);
   const [internalUri, setInternalUri] = useState(backgroundSettings?.textureUri || '');
   const backgroundColors = useStore(sceneComposerId)((state) =>
     state.getSceneProperty<string[]>(KnownSceneProperty.BackgroundCustomColors, []),
   );
   const setBackgroundColorsSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
 
-  //set default
+  //set default and restore editor when background failed validiation elsewhere
   useEffect(() => {
     if (!backgroundSettings?.color && !backgroundSettings?.textureUri) {
       setSceneProperty(KnownSceneProperty.SceneBackgroundSettings, {
         color: internalColor,
       });
+    } else {
+      if (backgroundSettings.color && backgroundSettings.color !== internalColor) {
+        setInternalColor(backgroundSettings?.color);
+      }
+      if (backgroundSettings.textureUri && backgroundSettings.textureUri !== internalUri) {
+        setInternalUri(backgroundSettings.textureUri);
+      }
     }
   }, [backgroundSettings]);
 

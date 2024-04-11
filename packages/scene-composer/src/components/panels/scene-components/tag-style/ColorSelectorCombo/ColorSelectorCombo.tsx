@@ -7,6 +7,7 @@ import '../IconPicker/IconPickerUtils/IconPicker-aws-overrides.scss';
 import { ColorRepresentation } from 'three';
 
 import { colors } from '../../../../../utils/styleUtils';
+import { isValidHexCode } from '../../../../../utils/colorUtils';
 import { IColorPickerProps } from '../interface';
 import { ColorPicker } from '../../../ColorPicker/ColorPicker';
 import { hexString } from '../../../ColorPicker/ColorPickerHelpers';
@@ -39,19 +40,6 @@ export const ColorSelectorCombo = ({
   const generateRandomString = Math.random().toString(16).slice(2);
   const [randomDomId] = useState<string>(generateRandomString);
   const intl = useIntl();
-
-  /**
-   * This method uses a regular expression (`hexRegex`) to validate a hex color code.
-   * The regex checks if the hex code starts with a "#" symbol, followed by either a
-   * 6-digit or 3-digit combination of characters from A-F, a-f, and 0-9.
-   * The `test` method is then used to validate the `hexCode` against the regex pattern.
-   * @param hexCode
-   * @returns
-   */
-  const isValidHexCode = (hexCode: string) => {
-    const hexRegex = /^#([A-Fa-f0-9]{6})$/;
-    return hexRegex.test(hexCode);
-  };
 
   const handleOutsideClick = useCallback((event: MouseEvent) => {
     const target = event.target as HTMLElement;
