@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Primitive } from '@iot-app-kit/core';
 import {
+  DEFAULT_GAUGE_PROGRESS_SETTINGS,
+  DEFAULT_GAUGE_PROGRESS_SETTINGS_WITH_THRESHOLDS,
   DEFAULT_GAUGE_SETTINGS,
-  DEFAULT_GAUGE_SETTINGS_WITH_THRESHOLDS,
 } from '../constants';
 import { ChartRef } from '../../../hooks/useECharts';
 import { GaugeProps } from '../types';
@@ -10,13 +11,14 @@ import { useEmptyGaugeSeries } from '../gaugeOptions/series/useEmptyGaugeSeries'
 import { useProgressBarGaugeSeries } from '../gaugeOptions/series/useProgressBarGaugeSeries';
 import { useThresholdOutsideArcSeries } from '../gaugeOptions/series/useThresholdOutsideArcSeries';
 
-type GaugeConfigurationOptions = Pick<
+export type GaugeConfigurationOptions = Pick<
   GaugeProps,
   'thresholds' | 'settings' | 'significantDigits'
 > & {
   gaugeValue?: Primitive;
   name?: string;
   unit?: string;
+  error?: string;
 };
 
 export const useGaugeConfiguration = (
@@ -28,21 +30,26 @@ export const useGaugeConfiguration = (
     settings,
     unit,
     significantDigits,
+    error,
   }: GaugeConfigurationOptions
 ) => {
   const hasThresholds = Boolean(thresholds?.length ?? 0 > 0);
+
+  const defaultSettings = useMemo(() => {
+    if (error) return DEFAULT_GAUGE_SETTINGS;
+
+    return hasThresholds
+      ? DEFAULT_GAUGE_PROGRESS_SETTINGS_WITH_THRESHOLDS
+      : DEFAULT_GAUGE_PROGRESS_SETTINGS;
+  }, [error, hasThresholds]);
 
   useEffect(() => {
     const gauge = chartRef.current;
     if (!gauge) return;
 
     // Set default Gauge options
-    gauge?.setOption(
-      !hasThresholds
-        ? DEFAULT_GAUGE_SETTINGS
-        : DEFAULT_GAUGE_SETTINGS_WITH_THRESHOLDS
-    );
-  }, [chartRef, hasThresholds]);
+    gauge.setOption(defaultSettings);
+  }, [chartRef, defaultSettings]);
 
   const greySeries = useEmptyGaugeSeries({
     settings,

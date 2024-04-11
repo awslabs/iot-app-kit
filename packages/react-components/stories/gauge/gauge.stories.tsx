@@ -43,10 +43,11 @@ export default {
 export const MockDataGauge: ComponentStory<typeof Gauge> = ({ settings }) => (
   <div
     style={{
-      width: '100%',
-      height: '100%',
+      width: '800px',
+      height: '500px',
       display: 'flex',
       alignItems: 'center',
+      padding: '20px',
     }}
   >
     <Gauge
@@ -108,10 +109,18 @@ export const ConnectedGuageWidget: ComponentStory<typeof Gauge> = ({
   }
 
   return (
-    <Gauge
-      viewport={viewport}
-      query={getTimeSeriesDataQuery()}
-      settings={settings}
-    />
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        padding: '20px',
+      }}
+    >
+      <Gauge
+        viewport={viewport}
+        query={getTimeSeriesDataQuery()}
+        settings={settings}
+      />
+    </div>
   );
 };
