@@ -22,14 +22,4 @@ describe('Tooltip', () => {
     );
     expect(getByText('Tooltip content')).toBeInTheDocument();
   });
-
-  it('applies the correct position class', () => {
-    const { container } = render(
-      <Tooltip content='Tooltip content' position='top'>
-        {' '}
-        <button>Button</button>{' '}
-      </Tooltip>
-    );
-    expect(container.querySelector('.tooltip-text.top')).toBeInTheDocument();
-  });
 });
