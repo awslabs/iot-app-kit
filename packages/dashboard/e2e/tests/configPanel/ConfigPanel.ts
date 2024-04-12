@@ -34,7 +34,7 @@ export class ConfigPanel {
       .locator(CHECKBOX_LOCATOR)
       .locator('nth=1');
     this.decimalPlaceInput = this.container
-      .getByTestId('decimal-place-config')
+      .getByTestId('decimal-places')
       .locator('input');
     this.maxValueCheckbox = this.container
       .getByTestId('Maximum Value')
