@@ -5,6 +5,8 @@ import { Box, Modal, SpaceBetween } from '@cloudscape-design/components';
 import LabeledInput from '../util/labeledInput';
 import { useGridSettings } from './useGridSettings';
 import { numberFromDetail } from '~/util/inputEvent';
+import DecimalPlaces from '../decimalPlaces';
+import { isNumeric } from '@iot-app-kit/core-util';
 
 export type DashboardSettingsProps = {
   onClose: () => void;
@@ -26,6 +28,13 @@ const DashboardSettings: React.FC<DashboardSettingsProps> = ({
     onChangeSignificantDigits,
   } = useGridSettings();
 
+  const onSignificantDigitsChange = (value: string) => {
+    const newValue = (isNumeric(value) && parseInt(value)) || 0;
+    if (newValue >= 0 && newValue <= 100) {
+      onChangeSignificantDigits(newValue);
+    }
+  };
+
   return (
     <Modal
       onDismiss={onClose}
@@ -35,13 +44,11 @@ const DashboardSettings: React.FC<DashboardSettingsProps> = ({
     >
       <Box>
         <SpaceBetween direction='vertical' size='l'>
-          <LabeledInput
-            label='Decimal Places'
-            type='number'
-            value={significantDigits.toFixed()}
-            onChange={(event) =>
-              onChangeSignificantDigits(numberFromDetail(event))
-            }
+          <DecimalPlaces
+            showFormFieldLabel={true}
+            onSignificantDigitsChange={onSignificantDigitsChange}
+            significantDigits={significantDigits}
+            shouldClearErrors={isVisible}
           />
           <LabeledInput
             label='Cell Size'
