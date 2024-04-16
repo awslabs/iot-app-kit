@@ -1,42 +1,4 @@
-@import "../../../styles/variables.css";
-
 .palette-component-icon {
   position: relative;
   cursor: grab;
-}
-
-.palette-component-icon .tooltiptext {
-  position: absolute;
-  left: 50%;
-  top: 105%;
-  border-style: solid;
-  z-index: 9;
-  transform: translateX(-50%);
-}
-
-/* Can't style pseudo selectors with inline styling */
-.palette-component-icon .tooltiptext::before,
-.palette-component-icon .tooltiptext::after {
-  content: "";
-  position: absolute;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  left: 50%;
-  right: 50%;
-  margin: auto;
-  margin-left: -10px;
-  transform: rotate(180deg);
-}
-
-.palette-component-icon .tooltiptext::before {
-  bottom: 93%;
-  border-top: 11px solid #9ba7b6;
-  margin-bottom: 5px;
-}
-
-.palette-component-icon .tooltiptext::after {
-  bottom: 100%;
-  border-top: 10px solid var(--colors-white);
-  margin-top: -2px;
-  z-index: 1;
 }
