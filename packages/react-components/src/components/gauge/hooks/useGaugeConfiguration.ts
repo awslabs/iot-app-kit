@@ -19,11 +19,13 @@ export type GaugeConfigurationOptions = Pick<
   name?: string;
   unit?: string;
   error?: string;
+  isLoading?: boolean;
 };
 
 export const useGaugeConfiguration = (
   chartRef: ChartRef,
   {
+    isLoading,
     thresholds,
     gaugeValue,
     name,
@@ -36,12 +38,12 @@ export const useGaugeConfiguration = (
   const hasThresholds = Boolean(thresholds?.length ?? 0 > 0);
 
   const defaultSettings = useMemo(() => {
-    if (error) return DEFAULT_GAUGE_SETTINGS;
+    if (error || isLoading) return DEFAULT_GAUGE_SETTINGS;
 
     return hasThresholds
       ? DEFAULT_GAUGE_PROGRESS_SETTINGS_WITH_THRESHOLDS
       : DEFAULT_GAUGE_PROGRESS_SETTINGS;
-  }, [error, hasThresholds]);
+  }, [error, hasThresholds, isLoading]);
 
   useEffect(() => {
     const gauge = chartRef.current;
@@ -51,7 +53,7 @@ export const useGaugeConfiguration = (
     gauge.setOption(defaultSettings);
   }, [chartRef, defaultSettings]);
 
-  const greySeries = useEmptyGaugeSeries({
+  const emptySeries = useEmptyGaugeSeries({
     settings,
   });
 
@@ -78,12 +80,22 @@ export const useGaugeConfiguration = (
   useEffect(() => {
     // Update chart
     const gauge = chartRef.current;
-    gauge?.setOption({
-      series: [
-        greySeries,
-        progressSeries,
-        ...(hasThresholds ? [thresholdSeries] : []),
-      ],
-    });
-  }, [chartRef, hasThresholds, greySeries, progressSeries, thresholdSeries]);
+    !(isLoading || error)
+      ? gauge?.setOption({
+          series: [
+            emptySeries,
+            progressSeries,
+            ...(hasThresholds ? [thresholdSeries] : []),
+          ],
+        })
+      : null;
+  }, [
+    chartRef,
+    hasThresholds,
+    emptySeries,
+    progressSeries,
+    thresholdSeries,
+    isLoading,
+    error,
+  ]);
 };
