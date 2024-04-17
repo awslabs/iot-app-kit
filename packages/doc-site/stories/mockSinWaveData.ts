@@ -3,6 +3,7 @@ import {
   mockTimeSeriesDataQueryLiveStreamAggregated,
 } from '@iot-app-kit/testing-util';
 import { DATA_TYPE } from '@iot-app-kit/core';
+import { Quality } from '@aws-sdk/client-iotsitewise';
 
 export const mockSinWaveData = (frequency?: string) =>
   mockTimeSeriesDataQueryLiveStream({
@@ -14,6 +15,28 @@ export const mockSinWaveData = (frequency?: string) =>
         createDataPoint: (date: Date) => ({
           x: date.getTime(),
           y: 100 * Math.sin(date.getTime() / 1000),
+        }),
+      },
+    ],
+  });
+
+export const mockSinWaveDataWithQuality = ({
+  frequency,
+  quality,
+}: {
+  frequency?: string;
+  quality?: Quality;
+}) =>
+  mockTimeSeriesDataQueryLiveStream({
+    frequency: frequency || '0.25s',
+    dataType: DATA_TYPE.NUMBER,
+    requests: [
+      {
+        name: 'Windmill',
+        createDataPoint: (date: Date) => ({
+          x: date.getTime(),
+          y: 100 * Math.sin(date.getTime() / 1000),
+          quality,
         }),
       },
     ],

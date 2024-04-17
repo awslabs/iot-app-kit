@@ -11,6 +11,7 @@ export { LineChart } from './components/line-chart';
 export { BarChart } from './components/bar-chart';
 export { ScatterChart } from './components/scatter-chart';
 export { KPI } from './components/kpi/kpi';
+export { Gauge } from './components/gauge/gauge';
 export { StatusTimeline } from './components/status-timeline';
 export { Status } from './components/status/status';
 export { Tooltip } from './components/tooltip';
