@@ -1,4 +1,6 @@
 /** @type { import('@storybook/react').Preview } */
+import '@iot-app-kit/components/dist/iot-app-kit-components/iot-app-kit-components.css';
+
 const preview = {
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
