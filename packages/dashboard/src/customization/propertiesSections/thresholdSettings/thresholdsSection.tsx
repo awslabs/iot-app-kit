@@ -35,7 +35,7 @@ import {
   convertThresholdStyleToOption,
   styledOptions,
 } from './defaultThresholds';
-import { StyledExpandableSection } from '../components/StyledExpandableSection';
+import { StyledExpandableSection } from '../components/styledComponents';
 
 const ThresholdsExpandableSection: React.FC<
   React.PropsWithChildren<{ title: string }>

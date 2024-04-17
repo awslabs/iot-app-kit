@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import {
   colorBorderDividerDefault,
-  colorTextBodyDefault,
+  colorTextHeadingDefault,
   spaceScaledS,
   spaceScaledXxxs,
   spaceStaticXxl,
@@ -14,7 +14,7 @@ import PaletteComponent from './component';
 import './index.css';
 
 const widgetFont = {
-  color: colorTextBodyDefault,
+  color: colorTextHeadingDefault,
 };
 
 const divider = {

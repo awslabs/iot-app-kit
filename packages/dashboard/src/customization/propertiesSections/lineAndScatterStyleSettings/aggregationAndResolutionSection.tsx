@@ -4,7 +4,7 @@ import Select, { SelectProps } from '@cloudscape-design/components/select';
 import type { FC } from 'react';
 import React from 'react';
 import './lineAndScatterStyleSettings.css';
-import { StyledExpandableSection } from '../components/StyledExpandableSection';
+import { StyledExpandableSection } from '../components/styledComponents';
 
 type AggregationAndResolutionSectionOptions = {
   aggregation: string | undefined;
