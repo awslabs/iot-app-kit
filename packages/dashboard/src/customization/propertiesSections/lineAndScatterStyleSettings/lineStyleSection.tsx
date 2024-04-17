@@ -7,7 +7,7 @@ import { LineTypeSection } from '../components/lineTypeDropdown';
 import { DataPointStyleSection } from '../components/dataPointStyleSection';
 import { defaultThickness } from './constant';
 import './lineAndScatterStyleSettings.css';
-import { StyledExpandableSection } from '../components/StyledExpandableSection';
+import { StyledExpandableSection } from '../components/styledComponents';
 
 type LineStyleSectionOptions = {
   lineType?: string;

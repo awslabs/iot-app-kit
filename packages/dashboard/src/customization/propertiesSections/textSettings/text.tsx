@@ -16,7 +16,7 @@ import ColorPicker from '../shared/colorPicker';
 import type { TextWidget } from '~/customization/widgets/types';
 
 import './text.css';
-import { StyledExpandableSection } from '../components/StyledExpandableSection';
+import { StyledExpandableSection } from '../components/styledComponents';
 
 interface ButtonWithStateProps {
   checked: boolean;
