@@ -1,6 +1,6 @@
 import { Box, Checkbox, FormField } from '@cloudscape-design/components';
 import React from 'react';
-import { StyledExpandableSection } from '../components/StyledExpandableSection';
+import { StyledExpandableSection } from '../components/styledComponents';
 import { PropertyLens } from '~/customization/propertiesSection';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import {
