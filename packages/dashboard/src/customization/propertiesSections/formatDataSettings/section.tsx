@@ -7,7 +7,10 @@ import './section.css';
 import { isNumeric } from '@iot-app-kit/core/dist/es/common/number';
 import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import { spaceScaledS } from '@cloudscape-design/design-tokens';
-import { StyledExpandableSection } from '../components/StyledExpandableSection';
+import {
+  FormLabel,
+  StyledExpandableSection,
+} from '../components/styledComponents';
 import DecimalPlaces from '~/components/decimalPlaces';
 
 export const DecimalPlacesSection = ({
@@ -40,7 +43,7 @@ export const DecimalPlacesSection = ({
             className='settings-property-label'
             style={{ gap: spaceScaledS }}
           >
-            <label htmlFor='decimal-places'>Decimal places</label>
+            <FormLabel htmlFor='decimal-places'> Decimal places</FormLabel>
             <div className='settings-property-label-control'>
               <DecimalPlaces
                 onSignificantDigitsChange={onSignificantDigitsChange}

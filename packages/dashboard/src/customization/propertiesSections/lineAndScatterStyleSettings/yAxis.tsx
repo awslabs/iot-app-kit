@@ -6,6 +6,7 @@ import Input from '@cloudscape-design/components/input';
 import Box from '@cloudscape-design/components/box';
 
 import StyleExpandableSection from '../shared/styleExpandableSection/styleExpandableSection';
+import { FormLabel } from '../components/styledComponents';
 
 type YAxisSectionOptions = {
   visible: boolean;
@@ -59,7 +60,7 @@ export const YAxisSection: FC<YAxisSectionOptions> = ({
             description='Leave empty to auto-calculate based on all the values'
             label='Range'
           >
-            <label htmlFor='y-axis-min'>Min</label>
+            <FormLabel htmlFor='y-axis-min'>Min</FormLabel>
             <Input
               placeholder='Auto'
               controlId='y-axis-min'
@@ -69,7 +70,7 @@ export const YAxisSection: FC<YAxisSectionOptions> = ({
               disabled={!visible}
             />
 
-            <label htmlFor='y-axis-max'>Max</label>
+            <FormLabel htmlFor='y-axis-max'>Max</FormLabel>
             <Input
               placeholder='Auto'
               controlId='y-axis-max'

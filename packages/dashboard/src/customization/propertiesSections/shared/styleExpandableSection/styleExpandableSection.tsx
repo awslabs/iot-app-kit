@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { useExpandable } from '../useExpandable';
 import Toggle from '@cloudscape-design/components/toggle';
-import { StyledExpandableSection } from '../../components/StyledExpandableSection';
+import { StyledExpandableSection } from '../../components/styledComponents';
 
 type StyleExpandableSectionProps = {
   visible?: boolean;

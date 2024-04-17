@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-  colorTextBodySecondary,
+  colorBorderSegmentDefault,
+  colorTextBodyDefault,
   spaceStaticS,
   spaceStaticXs,
   spaceStaticXxl,
@@ -11,7 +12,7 @@ import { default as lineSvg } from '../../customization/widgets/lineScatterChart
 import './dashboardEmptyState.css';
 
 const emptyState = {
-  borderColor: colorTextBodySecondary,
+  borderColor: colorBorderSegmentDefault,
   borderRadius: spaceStaticXs,
   padding: spaceStaticXxxl,
 };
@@ -23,7 +24,7 @@ const DashboardEmptyState: React.FC = () => {
       className='dashboard-empty-state'
       style={emptyState}
     >
-      <div style={{ margin: spaceStaticXxl }}>
+      <div style={{ margin: spaceStaticXxl, color: colorTextBodyDefault }}>
         <img
           style={{ margin: spaceStaticS }}
           src={lineSvg}

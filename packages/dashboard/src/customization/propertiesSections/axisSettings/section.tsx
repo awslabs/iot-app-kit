@@ -13,7 +13,10 @@ import type { AxisSettings } from '../../settings';
 import * as awsui from '@cloudscape-design/design-tokens';
 
 import './section.css';
-import { StyledExpandableSection } from '../components/StyledExpandableSection';
+import {
+  FormLabel,
+  StyledExpandableSection,
+} from '../components/styledComponents';
 
 const defaultAxisSetting: AxisSettings = {
   yAxisLabel: '',
@@ -94,12 +97,12 @@ const AxisSection: FC<AxisSectionProps> = ({
               className='axis-property-label'
               style={{ gap: awsui.spaceScaledS }}
             >
-              <label
+              <FormLabel
                 htmlFor='axis-label-y'
                 data-test-id='axis-setting-y-label-content'
               >
                 {defaultMessages.yLabelContent}
-              </label>
+              </FormLabel>
               <div className='axis-property-label-y'>
                 <Input
                   controlId='axis-label-y'

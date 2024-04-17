@@ -13,7 +13,7 @@ import type { TextWidget } from '~/customization/widgets/types';
 import * as awsui from '@cloudscape-design/design-tokens';
 
 import './text.css';
-import { StyledExpandableSection } from '../components/StyledExpandableSection';
+import { StyledExpandableSection } from '../components/styledComponents';
 
 type LinkSettingsProps = Pick<TextWidget['properties'], 'href' | 'isUrl'> & {
   updateHref: (newValue: string | undefined) => void;
