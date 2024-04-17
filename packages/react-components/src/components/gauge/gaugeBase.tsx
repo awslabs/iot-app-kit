@@ -41,6 +41,7 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
   useLoadableEChart(chartRef, isLoading);
 
   useGaugeConfiguration(chartRef, {
+    isLoading,
     thresholds,
     gaugeValue,
     name,
