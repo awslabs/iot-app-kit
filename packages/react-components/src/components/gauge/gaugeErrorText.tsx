@@ -8,7 +8,7 @@ export const GaugeErrorText = ({ error }: { error?: string }) => {
     return null;
   }
   return (
-    <div className='gauge-data-quality'>
+    <div className='gauge-info'>
       <div
         className='gauge-info-text'
         style={{

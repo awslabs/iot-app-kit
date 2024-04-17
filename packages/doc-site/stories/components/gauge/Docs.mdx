@@ -1,0 +1,177 @@
+import { Canvas, Meta, Story } from '@storybook/blocks';
+
+import * as GaugeStories from './Gauge.stories';
+
+# Gauge
+
+The Gauge component provides a compact representation when you need an overview of your asset properties. This overview gives you the most critical insights into the overall performance of your devices, equipment, or processes. With the Gauge, you can interact with IoT data from one or more data sources.
+
+<Canvas
+  sourceState='none'
+  story={{ height: '500px' }}
+  of={GaugeStories.Standard}
+/>
+
+# Gauge with Thresholds
+
+To enhance visualization, you can also incorporate thresholds into your asset properties. This allows for better differentiation and highlighting of specific ranges or values. By defining thresholds, you can visually represent different levels or categories of data, making it easier to identify patterns or anomalies. This approach can provide clearer and more insightful visualizations for improved data analysis.
+
+<Canvas
+  sourceState='none'
+  story={{ height: '500px' }}
+  of={GaugeStories.StandardWithThresholds}
+/>
+
+## Properties
+
+The Gauge component contains the following properties that you can customize.
+
+### `viewport`
+
+(Optional) Specifies the interval of time the widget visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
+If there is no ViewportManager, and no `viewport` defined, the default viewport will be `{ duration: '10d' }`.
+
+[Learn about the viewport](/docs/core-viewport--docs).
+
+Type: Object
+
+### `thresholds`
+
+(Optional) Styled Thresholds define rules which effect how the data is visualized based on whether the data breaches the threshold as well as how the threshold is styled
+
+[Learn more about thresholds](/docs/core-thresholds--docs#thresholds).
+
+### `query`
+
+The query which specify the time series data to visualize.
+
+[Learn more about time series data queries](/docs/core-time-series-data--docs).
+
+Type: Object
+
+### `significantDigits`
+
+(Optional) this specifies the number of significant digits to be shown of the data
+
+Default value: `4`
+
+Type: Number
+
+### `settings`
+
+(Optional) Settings to customize the appearance of the widget.
+
+Type: Object
+
+The settings object contains the following properties:
+
+- `gaugeThickness`
+
+  (Optional) this specifies the thickness of the gauge
+
+  Type: Number
+
+- `showName`
+
+  (Optional) whether to display the name of the data being displayed. Defaults to true.
+
+  Type: Boolean
+
+- `showUnit`
+
+  (Optional) whether to display the unit if present. Defaults to true
+
+  Type: Boolean
+
+- `fontSize`
+
+  (Optional) font size in pixels for the value. Defaults to 40.
+
+  Type: Number
+
+- `labelFontSize`
+
+  (Optional) label font size in pixels for the label text. Defaults to 12.
+
+  Type: Number
+
+- `unitFontSize`
+
+  (Optional) unit font size in pixels for the unit value. Defaults to 16.
+
+  Type: Number
+
+- `yMin`
+
+  (Optional) yMin is the starting(Min) value of your gauge
+
+  Type: Number
+
+- `yMax`
+
+(Optional) yMax is the end(Max) value of your gauge
+
+    Type: Number
+
+**Example usage**:
+
+```jsx
+<Gauge
+  query={query.timeSeriesData({
+    assets: [
+      {
+        assetId: 'id',
+        properties: [{ propertyId: 'property', refId: 'my-property' }],
+      },
+    ],
+  })}
+  thresholds={[
+    {
+      value: 30,
+      id: 'abc',
+      color: '#1e8103',
+      comparisonOperator: 'GT',
+    },
+    {
+      value: 70,
+      id: 'xyz',
+      color: '#ed7211',
+      comparisonOperator: 'GT',
+    },
+    {
+      value: 100,
+      id: 'xyz',
+      color: '#d13211',
+      comparisonOperator: 'GT',
+    },
+  ]}
+  settings={{
+    gaugeThickness: 30,
+    showUnit: true,
+    showName: false,
+    fontSize: 40,
+    labelFontSize: 12,
+    unitFontSize: 16,
+    yMin: 0,
+    yMax: 100,
+  }}
+/>
+```
+
+# Examples
+
+## BAD Data Quality
+
+<Canvas sourceState='none' of={GaugeStories.BadDataQuality} />
+
+## UNCERTAIN Data Quality
+
+<Canvas sourceState='none' of={GaugeStories.UncertainDataQuality} />
+
+## Loading
+
+<Canvas sourceState='none' of={GaugeStories.Loading} />
+
+## Error
+
+<Canvas sourceState='none' of={GaugeStories.Error} />

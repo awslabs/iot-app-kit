@@ -7,10 +7,12 @@
   height: 100%;
 }
 
-.gauge-data-quality {
+.gauge-data-quality,
+.gauge-info {
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
+  bottom: 30%;
 }
 
 .gauge-info-text {

@@ -15,6 +15,7 @@ type MockRequest = {
   color?: string;
   dataType?: DataType;
   resolution?: number;
+  unit?: string;
 };
 
 const noop = () => {};
@@ -36,13 +37,14 @@ export const mockTimeSeriesDataQueryLiveStream = ({
 
   const id = uuid();
   let dataStreams: DataStream[] = requests.map(
-    ({ createDataPoint: _, name, ...rest }, i) => {
+    ({ createDataPoint: _, name, unit, ...rest }, i) => {
       return {
         id: name,
         name,
         color: 'black',
         isLoading: true,
         dataType,
+        unit,
         data: [requests[i].createDataPoint(new Date())],
         resolution: 0,
         ...rest,
