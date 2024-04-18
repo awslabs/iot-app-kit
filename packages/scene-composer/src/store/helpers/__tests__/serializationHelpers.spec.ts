@@ -1,5 +1,16 @@
 import SerializationHelpers, { exportsForTesting } from '../serializationHelpers';
-import { ERROR_MESSAGE_DICT, ErrorCode, ErrorLevel, IModelRefComponent, KnownComponentType } from '../../..';
+import {
+  DEFAULT_FOG_COLOR,
+  DEFAULT_FOG_FAR,
+  DEFAULT_FOG_NEAR,
+  DEFAULT_GROUND_PLANE_COLOR,
+  DEFAULT_SCENE_BACKGROUND_COLOR,
+  ERROR_MESSAGE_DICT,
+  ErrorCode,
+  ErrorLevel,
+  IModelRefComponent,
+  KnownComponentType,
+} from '../../..';
 import { generateUUID } from '../../../utils/mathUtils';
 import { Component, LightType, ModelType, Node } from '../../../models/SceneModels';
 import { ISceneComponentInternal, ISceneDocumentInternal, ISceneNodeInternal } from '../..';
@@ -797,5 +808,70 @@ describe('serializationHelpers', () => {
 
   it('will fail to deserialize non-json when calling desrialize', () => {
     expect(SerializationHelpers.document.deserialize('not json').errors).toHaveLength(1);
+  });
+
+  it('should revert invalid scene properties to defaults', () => {
+    jest.clearAllMocks();
+    let idCount = 0;
+    (generateUUID as jest.Mock).mockImplementation(() => {
+      idCount++;
+      return 'test-uuid' + idCount;
+    });
+    const scene = {
+      specVersion: '1.1',
+      version: '1.0',
+      nodes: [
+        {
+          components: [
+            {
+              type: Component.Type.ModelRef,
+              name: 'rootObj',
+              modelType: 'GLB',
+            },
+          ],
+          transform: {
+            position: [0, 1, 2],
+          },
+        },
+      ],
+      rootNodeIndexes: [0],
+      properties: {
+        fogSettings: {
+          color: 'NOTHEX',
+          near: -10,
+          far: 'undefined',
+        },
+        sceneBackgroundSettings: {
+          color: 'NOTHEX',
+        },
+        groundPlaneSettings: {
+          color: '#NOTHEX',
+          opacity: -1,
+        },
+        groundCustomColors: ['#ff0000', 'NOTHEX'],
+        fogCustomColors: ['#ff0000', 'NOTHEX'],
+        backgroundCustomColors: ['#ff0000', 'NOTHEX'],
+      },
+    };
+
+    const documentState = exportsForTesting.createDocumentState(scene as any, [], {}) as ISceneDocumentInternal;
+
+    expect(documentState.properties).toEqual({
+      fogSettings: {
+        color: DEFAULT_FOG_COLOR,
+        near: DEFAULT_FOG_NEAR,
+        far: DEFAULT_FOG_FAR,
+      },
+      sceneBackgroundSettings: {
+        color: DEFAULT_SCENE_BACKGROUND_COLOR,
+      },
+      groundPlaneSettings: {
+        color: DEFAULT_GROUND_PLANE_COLOR,
+        opacity: 0,
+      },
+      groundCustomColors: ['#ff0000'],
+      fogCustomColors: ['#ff0000'],
+      backgroundCustomColors: ['#ff0000'],
+    });
   });
 });
