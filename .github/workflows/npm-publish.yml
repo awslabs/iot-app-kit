@@ -85,3 +85,25 @@ jobs:
         with:
           package: './packages/tools-iottwinmaker/package.json'
           token: ${{ secrets.NPM_TOKEN }}
+
+  sync-npm-to-brazil:
+    needs: publish-to-npm
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # needed to interact with GitHub's OIDC Token endpoint
+
+    steps:
+      - name: Configure AWS credentials 🔑
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ secrets.BRAZIL_NPM_SYNC_ROLE }}
+          aws-region: us-west-2
+
+      - name: Invoke Sync Lambda 🔄
+        uses: gagoar/invoke-aws-lambda@master
+        with:
+          AWS_ACCESS_KEY_ID: ${{env.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{env.AWS_SECRET_ACCESS_KEY}}
+          AWS_SESSION_TOKEN: ${{env.AWS_SESSION_TOKEN}}
+          REGION: us-west-2
+          FunctionName: ${{ secrets.BRAZIL_NPM_SYNC_LAMBDA_NAME }}
