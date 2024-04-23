@@ -8,10 +8,6 @@ import { MOCK_DATA_VIEWPORT, mockDatasource } from './mockData';
 import { getEnvCredentials, getRegion } from '../utils/query';
 import { TimeSelection, TimeSync } from '../../src';
 import { ConnectedAnomalyWidget } from './connected-anomaly-widget';
-// import {
-//   colorTextHeadingDefault,
-//   colorTextButtonNormalActive
-// } from '@cloudscape-design/design-tokens';
 
 export default {
   title: 'Widgets/Anomaly',
