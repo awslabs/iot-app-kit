@@ -43,7 +43,7 @@ export default {
 export const MockDataGauge: ComponentStory<typeof Gauge> = ({ settings }) => (
   <div
     style={{
-      width: '800px',
+      width: '1500px',
       height: '500px',
       display: 'flex',
       alignItems: 'center',

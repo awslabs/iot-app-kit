@@ -3,8 +3,8 @@ export const DEFAULT_GAUGE_SETTINGS = {
   series: [
     {
       type: 'gauge',
-      center: ['50%', '50%'], //center of the gauge
-      radius: '84%', //radius of the gauge
+      center: ['50%', '70%'], //The first value '50%' is used to horizontally center the component, while the second value '70%' is used to vertically position the component starting from the top.
+      radius: '98%', //radius of the gauge
       startAngle: 190, //start angle of the gauge in degrees
       endAngle: -10, //end angle of the gauge in degrees
       min: 0, //guage default start point
@@ -36,8 +36,8 @@ export const DEFAULT_GAUGE_PROGRESS_SETTINGS = {
     ...DEFAULT_GAUGE_SETTINGS.series,
     {
       type: 'gauge',
-      center: ['50%', '50%'], //center of the gauge progress bar
-      radius: '84%', //radius of the gauge progress bar
+      center: ['50%', '70%'], //The first value '50%' is used to horizontally center the component, while the second value '70%' is used to vertically position the component starting from the top.
+      radius: '98%', //radius of the gauge progress bar
       startAngle: 190, //start angle of the gauge in degrees progress bar
       endAngle: -10, //end angle of the gauge in degrees progress bar
       silent: true, //control mouse hover actions
@@ -103,8 +103,8 @@ export const DEFAULT_GAUGE_PROGRESS_SETTINGS_WITH_THRESHOLDS = {
     ...DEFAULT_GAUGE_PROGRESS_SETTINGS.series,
     {
       type: 'gauge',
-      center: ['50%', '50%'], //center of the gauge outside the arc
-      radius: '86%', //radius of the gauge outside the arc
+      center: ['50%', '70%'], //The first value '50%' is used to horizontally center the component, while the second value '70%' is used to vertically position the component starting from the top.
+      radius: '100%', //radius of the gauge outside the arc
       startAngle: 190, //start angle of the gauge in degrees
       endAngle: -10, //end angle of the gauge in degrees
       min: 0, //outside the arc default start point

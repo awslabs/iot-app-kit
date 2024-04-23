@@ -1,0 +1,14 @@
+.gauge-widget-empty-state {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.gauge-widget-empty-state-message-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  text-align: center;
+}

@@ -238,6 +238,19 @@ export type LineProperties = {
   thickness?: number;
 };
 
+export type GaugeProperties = QueryProperties & {
+  gaugeThickness?: number;
+  showName?: boolean;
+  showUnit?: boolean;
+  fontSize?: number;
+  labelFontSize?: number;
+  unitFontSize?: number;
+  yMin?: number;
+  yMax?: number;
+  thresholds?: StyledThreshold[];
+  significantDigits?: number;
+};
+
 type ChartPropertiesUnion =
   | KPIProperties
   | StatusProperties
@@ -256,6 +269,7 @@ export type CommonChartProperties = Pick<
 
 export type QueryWidget = DashboardWidget<QueryProperties>;
 
+export type GaugeWidget = DashboardWidget<GaugeProperties>;
 export type KPIWidget = DashboardWidget<KPIProperties>;
 export type StatusWidget = DashboardWidget<StatusProperties>;
 export type LineScatterChartWidget =

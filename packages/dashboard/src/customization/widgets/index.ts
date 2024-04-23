@@ -1,5 +1,6 @@
 export * from './barChart/plugin';
 export * from './kpi/plugin';
+export * from './gauge/plugin';
 export * from './status-timeline/statusTimelinePlugin';
 export * from './table/plugin';
 export * from './text/plugin';
