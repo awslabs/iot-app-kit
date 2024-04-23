@@ -1,5 +1,4 @@
 import React, { FC, useCallback, useMemo, useRef } from 'react';
-import styled from 'styled-components';
 import { CredentialProvider, Credentials } from '@aws-sdk/types';
 import { Viewport } from '@iot-app-kit/core';
 import { TimeSync, TimeSelection } from '@iot-app-kit/react-components';
@@ -28,19 +27,6 @@ import useSceneMetadataModule from './hooks/useSceneMetadataModule';
 import { mapFeatures } from './utils';
 import { viewerArgTypes } from './argTypes';
 import useDataSource from './hooks/useDataSource';
-
-const SceneComposerContainer = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  canvas {
-    outline: none;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */
-  }
-`;
 
 interface SceneComposerWrapperProps extends SceneViewerPropsShared {
   source: 'local' | 'aws';
@@ -167,7 +153,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   if (loader) {
     return (
       <TimeSync group='scene-composer' initialViewport={viewport}>
-        <SceneComposerContainer data-testid='webgl-root' className='sceneViewer'>
+        <div data-testid='webgl-root' style={{ height: '100vh' }}>
           <TimeSelection />
           <SceneComposerInternal
             sceneLoader={loader}
@@ -181,7 +167,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
             showAssetBrowserCallback={mockAssetBrowserCallback}
             {...props}
           />
-        </SceneComposerContainer>
+        </div>
       </TimeSync>
     );
   }

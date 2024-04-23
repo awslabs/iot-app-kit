@@ -2,21 +2,17 @@ import { Canvas, Meta, Story } from '@storybook/addon-docs';
 
 import { useState, useCallback } from 'react';
 
-import SceneViewer, { argTypes, args } from './components/scene-viewer';
-import { testScenes } from '../tests/testData';
-import { COMPOSER_FEATURES } from '../src/interfaces/feature';
+import SceneViewer, { argTypes, args } from './../components/scene-viewer';
 
-<Meta title="Tests/Scene Viewer" component={SceneViewer} argTypes={argTypes} />
+<Meta title="Tests/Scene Viewer/Motion Indicator" component={SceneViewer} argTypes={argTypes} />
 
 export const defaultArgs = {
-  source: 'local',
-  scene: 'scene1',
+  source: 'aws',
+  sceneId: 'MotionIndicators',
+  workspaceId: 'CookieFactory',
   theme: 'dark',
   mode: 'Viewing',
   density: 'comfortable',
-  features: [
-    COMPOSER_FEATURES.Matterport,
-  ]
 }
 
 export const Template = (args) => {
@@ -41,9 +37,9 @@ export const MountToggle = (args) => {
   )
 }
 
-# Scene Viewer
-
 ## Motion Indicator
+
+For these tests, you should authenticate against our demo aws account `540844875673`
 
 ### Verification
 
@@ -58,9 +54,8 @@ Motion Indicators should disappear when turned off.
 
 <Canvas>
   <Story name='Motion Indicator'
-    height='500px'
     parameters={{ controls: { include: ['onSelectionChanged', 'onWidgetClick'], hideNoControlsWarning: true }}}
-    args={{ ...defaultArgs, scene: 'CookieFactoryWaterTank', sceneComposerId: "motion-indicator-view-options" }}>
+    args={{ ...defaultArgs, sceneComposerId: "motion-indicator-view-options" }}>
     {Template.bind({})}
   </Story>
 </Canvas>
@@ -78,9 +73,21 @@ during development Hot-Module-Reloaders (HMR) typically do this all the time, so
 
 <Canvas>
   <Story name='Remounting'
-    height='500px'
     parameters={{ controls: { include: ['onSelectionChanged', 'onWidgetClick'], hideNoControlsWarning: true }}}
-    args={{ ...defaultArgs, scene: 'CookieFactoryWaterTank' }}>
+    args={{ ...defaultArgs, sceneComposerId: "remount-test"}}>
     {MountToggle.bind({})}
+  </Story>
+</Canvas>
+
+## Editing
+
+This test is around editing motion indicators, see if you can add a motion indicator to achieve your desired
+results.
+
+<Canvas>
+  <Story name='Editing'
+    parameters={{ controls: { include: ['onSelectionChanged', 'onWidgetClick'], hideNoControlsWarning: true }}}
+    args={{ ...defaultArgs, sceneComposerId: "editor-test", mode: 'editing' }}>
+    {Template.bind({})}
   </Story>
 </Canvas>
