@@ -39,7 +39,11 @@ export const TooltipDiagnostic = ({
       </div>
       <div style={{ alignSelf: 'end' }}>
         <Box>
-          <Value value={value} unit='%' precision={decimalPlaces} />
+          <Value
+            value={value ? value * 100 : undefined}
+            unit='%'
+            precision={decimalPlaces}
+          />
         </Box>
       </div>
     </>
