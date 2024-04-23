@@ -49,7 +49,7 @@ export const MOCK_DATA_VIEWPORT = {
   end: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
 };
 // creates array of 10 random dates within last 7 days
-const times = new Array(10)
+const times = new Array(20)
   .fill(null)
   .map(() => getRandomDate(MOCK_DATA_VIEWPORT.end, MOCK_DATA_VIEWPORT.start));
 

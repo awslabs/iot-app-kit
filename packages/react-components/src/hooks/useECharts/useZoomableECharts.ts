@@ -1,7 +1,10 @@
 import { useRef, useEffect, MutableRefObject, useState } from 'react';
 import { init } from 'echarts';
 import type { ECharts } from 'echarts';
-import { configureEchartsPlugins } from '../../echarts';
+import {
+  configureEchartsPlugins,
+  registerCloudscapeThemes,
+} from '../../echarts';
 import { useUnboundedDataZoom } from '../../echarts/unboundedZoom';
 import { Viewport } from '@iot-app-kit/core';
 
@@ -32,6 +35,8 @@ export const useZoomableECharts = ({
 
   useEffect(() => {
     if (ref.current) {
+      registerCloudscapeThemes();
+
       chartRef.current = init(ref.current, theme, {
         renderer:
           localStorage.getItem('USE_SVG_FOR_ECHARTS_PLAYWRIGHT_TEST_ONLY') ===
