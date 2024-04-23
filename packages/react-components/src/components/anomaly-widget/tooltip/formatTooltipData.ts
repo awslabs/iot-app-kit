@@ -54,5 +54,5 @@ export const formatTooltipData = ({
     .sort((a, b) => {
       if (tooltipSort === 'alphabetical') return a.name.localeCompare(b.name);
 
-      return a.value - b.value;
+      return b.value - a.value;
     });

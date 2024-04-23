@@ -84,7 +84,7 @@ export const useAnomalyEchart = ({
   const [state, dispatch] = useReducer(reducer, initialEchartsState);
 
   const { ref, chartRef } = useZoomableECharts({
-    theme: mode,
+    theme: mode === 'dark' ? 'cloudscapeDarkTheme' : 'cloudscapeLightTheme',
     viewport: utilizedViewport,
   });
 
@@ -105,7 +105,7 @@ export const useAnomalyEchart = ({
   );
 
   useEffect(() => {
-    const mergedOptions = merge(DEFAULT_ANOMALY_WIDGET_SETTINGS, state);
+    const mergedOptions = merge({}, DEFAULT_ANOMALY_WIDGET_SETTINGS, state);
     chartRef.current?.setOption(mergedOptions);
   }, [chartRef, state, mode]);
 

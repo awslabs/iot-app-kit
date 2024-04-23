@@ -12,6 +12,7 @@ import {
 import { useViewport } from '../../hooks/useViewport';
 import {
   DEFAULT_DATA_ZOOM,
+  DEFAULT_TOOLBOX,
   ECHARTS_GESTURE,
   LIVE_MODE_REFRESH_RATE_MS,
 } from './constants';
@@ -101,6 +102,7 @@ export const useUnboundedDataZoom = ({
     if (chart && zoomCache.current) {
       chart.setOption({
         dataZoom: zoomCache.current,
+        toolbox: DEFAULT_TOOLBOX,
       });
     }
   }, [chart]);
@@ -114,6 +116,7 @@ export const useUnboundedDataZoom = ({
       zoomCache.current = dataZoomOption;
       chart?.setOption({
         dataZoom: dataZoomOption,
+        toolbox: DEFAULT_TOOLBOX,
       });
     },
     [chart]
