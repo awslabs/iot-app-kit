@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   colorTextBodyDefault,
   spaceScaledM,
@@ -6,6 +6,7 @@ import {
   spaceStaticXs,
   colorBackgroundContainerContent,
   colorBorderControlDefault,
+  colorBorderButtonNormalDisabled,
 } from '@cloudscape-design/design-tokens';
 import {
   MAX_TOOLTIP_WIDTH,
@@ -18,13 +19,16 @@ export const Tooltip = ({
   content,
   position,
   children,
+  widgetTooltip,
 }: {
   content: string;
   position: 'top' | 'bottom' | 'left' | 'right';
   children: React.ReactNode;
+  widgetTooltip?: boolean;
 }) => {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [isContentWrapped, setIsContentWrapped] = useState(false);
+  const [hover, setHover] = useState<boolean>(false);
   const tooltipStyle = {
     fontSize: spaceScaledM,
     color: colorTextBodyDefault,
@@ -40,6 +44,7 @@ export const Tooltip = ({
   };
 
   const handleMouseEnter = () => {
+    setHover(true);
     if (contentRef.current) {
       setIsContentWrapped(
         contentRef.current.clientWidth > WRAPPED_TOOLTIP_WIDTH
@@ -48,15 +53,32 @@ export const Tooltip = ({
   };
 
   const handleMouseLeave = () => {
+    setHover(false);
     setIsContentWrapped(false);
   };
+
+  useEffect(() => {
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && hover) {
+        event.stopPropagation();
+        setHover(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [hover]);
 
   const handleOnClick = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
 
   interface TooltipProps {
+    hover: boolean;
     position: 'bottom' | 'top' | 'right' | 'left';
+    widgetTooltip?: boolean;
   }
 
   const tooltipPositionStyles = {
@@ -66,7 +88,7 @@ export const Tooltip = ({
       transform: translateX(-50%) translateY(-100%);
     `,
     bottom: css`
-      top: 115%;
+      top: ${widgetTooltip ? '85%' : '110%'};
       left: 50%;
       transform: translateX(-50%) translateY(12px);
     `,
@@ -87,16 +109,16 @@ export const Tooltip = ({
     display: inline-block;
   `;
 
-  const TooltipText = styled.div<TooltipProps>`
+  const TooltipText = styled.span<TooltipProps>`
     position: absolute;
-    visibility: hidden;
     z-index: 99;
     text-align: center;
+    ${({ widgetTooltip }) =>
+      widgetTooltip &&
+      css`
+        box-shadow: 2px 2px 2px ${colorBorderButtonNormalDisabled};
+      `};
     ${({ position }) => tooltipPositionStyles[position]}
-
-    ${TooltipContainer}:hover & {
-      visibility: visible;
-    }
 
     &::before,
     &::after {
@@ -129,12 +151,12 @@ export const Tooltip = ({
         }
       `}
 
-    ${({ position }) =>
+    ${({ position, widgetTooltip }) =>
       position === 'bottom' &&
       css`
         &::after,
         &::before {
-          bottom: 100%;
+          bottom: ${widgetTooltip ? 101 : 100}%;
           left: 50%;
           transform: translateX(-50%);
           border-left: 12px solid transparent;
@@ -202,8 +224,11 @@ export const Tooltip = ({
       {content && (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <TooltipText
+          hover={hover}
           position={position}
+          widgetTooltip={widgetTooltip}
           style={{
+            visibility: `${hover ? 'visible' : 'hidden'}`,
             ...tooltipStyle,
             whiteSpace: !isContentWrapped ? 'nowrap' : 'pre-wrap',
           }}
