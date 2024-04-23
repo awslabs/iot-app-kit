@@ -3,7 +3,6 @@ import {
   colorBorderControlDefault,
 } from '@cloudscape-design/design-tokens';
 import { DEFAULT_X_AXIS } from '../../echarts/unboundedZoom/constants';
-import { colorPalette } from '@iot-app-kit/core-util';
 
 export const SORT_TRANSFORM = {
   // Transform using echarts so we don't need to care
@@ -20,10 +19,8 @@ const ANOMALY_X_AXIS = {
   xAxis: DEFAULT_X_AXIS,
 };
 
-// defines 3 y-axes:
 const ANOMALY_Y_AXIS = {
   yAxis: [
-    // 1. y axis for timeline
     {
       type: 'value',
       max: 1,
@@ -31,11 +28,13 @@ const ANOMALY_Y_AXIS = {
       axisLabel: {
         show: false,
       },
+      axisTick: {
+        show: false,
+      },
     },
   ],
 };
 
-// grid layout with 3 sections:
 const ANOMALY_GRID = {
   grid: {
     top: 35,
@@ -51,6 +50,7 @@ export const ANOMALY_LEGEND = {
   height: 35,
   right: 0,
   type: 'scroll',
+  selectedMode: false,
 };
 
 export const ANOMALY_LEGEND_LOADING_PADDING = [
@@ -68,15 +68,10 @@ export const ANOMALY_LEGEND_PADDING = [
 
 export const ANOMALY_TITLE = {
   id: 'widget-title',
-  // height: '25px',
   left: 15,
   top: 10,
   right: 15,
-  // right: '25px',
   padding: 0,
-  // textStyle: {
-  //   color: '#6c2eb9',
-  // }
 };
 
 export const ANOMALY_BAR_SERIES_CONFIGURATION = {
@@ -84,6 +79,7 @@ export const ANOMALY_BAR_SERIES_CONFIGURATION = {
   barMaxWidth: 10,
   stack: 'Total',
   type: 'bar',
+  animation: false,
   datasetIndex: 1,
   large: true,
   largeThreshold: 200,
@@ -94,10 +90,13 @@ export const ANOMALY_TOOLTIP = {
   axisPointer: {
     animation: false,
   },
-  // These only work because the tooltip is rendered
-  // as html
+  showDelay: 25,
+  // These only work because the tooltip is rendered as html
   borderColor: colorBorderControlDefault,
   backgroundColor: colorBackgroundContainerContent,
+  position: (point: [number, number]) => {
+    return [point[0] + 20, '0%'];
+  },
 };
 
 export const DEFAULT_ANOMALY_WIDGET_SETTINGS = {
@@ -105,5 +104,4 @@ export const DEFAULT_ANOMALY_WIDGET_SETTINGS = {
   ...ANOMALY_GRID,
   ...ANOMALY_X_AXIS,
   ...ANOMALY_Y_AXIS,
-  color: colorPalette,
 };
