@@ -1,0 +1,64 @@
+{
+  "name": "react-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@iot-app-kit/components": "*",
+    "@iot-app-kit/core": "*",
+    "@iot-app-kit/react-components": "*",
+    "@iot-app-kit/related-table": "*",
+    "@iot-app-kit/scene-composer": "*",
+    "@iot-app-kit/source-iotsitewise": "*",
+    "@iot-app-kit/source-iottwinmaker": "*",
+    "@iot-app-kit/table": "*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-focus-lock": "^2.9.6",
+    "react-router-dom": "^6.14.2",
+    "web-vitals": "^3.4.0",
+    "zustand": "^3.7.2"
+  },
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^7.0.0",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@tsconfig/recommended": "^1.0.1",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^18.16.18",
+    "@types/react": "^18.2.12",
+    "@types/react-dom": "^18.2.5",
+    "@vitejs/plugin-react": "^4.0.3",
+    "adjust-sourcemap-loader": "^5.0.0",
+    "node-polyfill-webpack-plugin": "^2.0.1",
+    "nodemon": "^2.0.22",
+    "postcss-initial": "^4.0.1",
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "sass": "^1.63.4",
+    "typescript": "^4.8.3",
+    "vite": "4.5.3"
+  }
+}
