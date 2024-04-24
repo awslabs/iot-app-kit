@@ -23,26 +23,28 @@ export const SceneLayers: React.FC = () => {
   const layerIds = useStore(sceneComposerId)((state) => state.getSceneProperty<string[]>(KnownSceneProperty.LayerIds));
   const layerId = layerIds?.[0];
 
+  const sceneRootEntityId = 'Mixers_sceneid';
+
   const nodes = useQuery({
     enabled: !isEmpty(layerIds),
     queryKey: ['scene-layers', layerIds, sceneComposerId],
     queryFn: async () => {
       const nodes = await processQueries(
         [
-          // Get node entities in the layer
-          `SELECT entity, r, e
-        FROM EntityGraph 
-        MATCH (entity)-[r]->(e)
-        WHERE r.relationshipName = '${DEFAULT_LAYER_RELATIONSHIP_NAME}'
-        AND e.entityId = '${layerId}'`,
-          // Get entityBinding and subModel parentRef for the nodes in the layer
+          // Get node entities under the sceneRootEntityId
+          `select entity, r, e
+          from EntityGraph
+          match (entity)-[r]->(e)
+          where r.relationshipName = 'isChildOf'
+          and e.entityId = '${sceneRootEntityId}'`,
+          // Get entityBinding and subModel parentRef for the nodes in the sceneRootEntityId
           `SELECT entity, r2, binding
         FROM EntityGraph 
         MATCH (binding)<-[r2]-(entity)-[r]->(e)
-        WHERE r.relationshipName = '${DEFAULT_LAYER_RELATIONSHIP_NAME}'
-        AND e.entityId = '${layerId}'
-        AND (r2.relationshipName = '${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}'
-        OR r2.relationshipName = '${SUB_MODEL_REF_PARENT_RELATIONSHIP_NAME}')`,
+        WHERE r.relationshipName = 'isChildOf'
+        AND e.entityId = '${sceneRootEntityId}'
+        AND (r2.relationshipName = 'isVisualOf'
+        OR r2.relationshipName = 'parentRef')`,
         ],
         (node) => (node.properties.layerIds = [...(node.properties.layerIds ?? []), layerId!]),
       );
