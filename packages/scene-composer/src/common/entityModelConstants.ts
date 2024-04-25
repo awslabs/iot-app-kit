@@ -5,7 +5,7 @@ export const MAX_PROPERTY_STRING_LENGTH = 2048;
 export const MAX_QUERY_HOP = 30;
 
 // Scene Nodes
-const SCENE_COMPONENT_TYPE_ID_PREFIX = 'com.amazon.iottwinmaker.3d';
+const SCENE_COMPONENT_TYPE_ID_PREFIX = 'com.example.3d';
 export const SCENE_COMPONENT_TYPE_ID = `${SCENE_COMPONENT_TYPE_ID_PREFIX}.scene`;
 export const NODE_COMPONENT_TYPE_ID = `${SCENE_COMPONENT_TYPE_ID_PREFIX}.node`;
 export const LAYER_COMPONENT_TYPE_ID = `${SCENE_COMPONENT_TYPE_ID_PREFIX}.layer`;

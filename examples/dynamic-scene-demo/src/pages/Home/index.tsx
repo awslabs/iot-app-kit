@@ -169,27 +169,11 @@ const ScenePage = () => {
       <TimeSync group={'main'}>
         <DashboardManager>
           <SpaceBetween size={'s'}>
-            <Container>
-              <TimeSelection />
-            </Container>
-            <Container>
-              <LineChart entityId={selectedEntityId} />
-            </Container>
+  
             <Container header={<Header>Scene</Header>}>
               <SceneViewer onSelectionChanged={onSelectionChanged} onWidgetClick={onWidgetClick} />
             </Container>
-            <Container>
-              <KnowledgeGraph
-                queryData={queryData}
-                onEntitySelected={onEntitySelected}
-                onEntityUnSelected={onEntityUnSelected}
-                onClearGraph={onClearGraph}
-                onGraphResultChange={onGraphResultChange}
-              />
-            </Container>
-            <Container header={<Header>Video Player</Header>}>
-              <VideoPlayer />
-            </Container>
+ 
           </SpaceBetween>
         </DashboardManager>
       </TimeSync>

@@ -24,6 +24,17 @@ import {
   TwinMakerSceneMetadataModule,
 } from '../types';
 
+enum SceneCapabilities {
+  MATTERPORT = 'MATTERPORT',
+  DYNAMIC_SCENE = 'DYNAMIC_SCENE',
+}
+
+enum SceneMetadataMapKeys {
+  MATTERPORT_SECRET_ARN = 'MATTERPORT_SECRET_ARN',
+  SCENE_ROOT_ENTITY_ID = 'SCENE_ROOT_ENTITY_ID',
+}
+
+
 export class SceneMetadataModule implements TwinMakerSceneMetadataModule {
   private workspaceId: string;
   private sceneId: string;
@@ -54,12 +65,25 @@ export class SceneMetadataModule implements TwinMakerSceneMetadataModule {
   };
 
   getSceneInfo = async (): Promise<GetSceneCommandOutput> => {
-    const sceneInfo: GetSceneCommandOutput = await this.twinMakerClient.send(
+    let sceneInfo: GetSceneCommandOutput = await this.twinMakerClient.send(
       new GetSceneCommand({
         workspaceId: this.workspaceId,
         sceneId: this.sceneId,
       })
     );
+
+    const description = sceneInfo.description;
+    if (description?.startsWith('SCENE_ROOT_ENTITY_ID')) {
+      const sceneRootEntityId = description.split('=')[1];
+      sceneInfo = {
+        ...sceneInfo,
+        capabilities: [...(sceneInfo.capabilities || []), SceneCapabilities.DYNAMIC_SCENE],
+        sceneMetadata: {
+              ...sceneInfo.sceneMetadata,
+              [SceneMetadataMapKeys.SCENE_ROOT_ENTITY_ID]: sceneRootEntityId,
+            },
+      };
+    }
 
     return sceneInfo;
   };

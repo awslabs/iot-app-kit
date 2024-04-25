@@ -8,10 +8,10 @@ export const awsCredentials = getEnvCredentials();
 // The pre-configured values below is based on the sample workspace created from
 // https://github.com/aws-samples/aws-iot-twinmaker-samples, update them for your own workspace.
 export const region = 'us-east-1';
-export const workspaceId = 'CookieFactory';
+export const workspaceId = 'CookieFactory2';
 
 // SceneViewer
-export const sceneId = 'CookieFactory';
+export const sceneId = 'MixerDSA';
 export const componentTypeQueries: TwinMakerQuery[] = [
   {
     componentTypeId: 'com.example.cookiefactory.alarm',
