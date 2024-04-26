@@ -39,6 +39,30 @@ export const SceneLayers: React.FC = () => {
           match (entity)-[r]->(e)
           where r.relationshipName = 'isChildOf'
           and e.entityId = '${sceneRootEntityId}'`, 
+
+          `select c, r, entity
+            from EntityGraph
+            match (c)-[r]->(entity)-[r]->(e)
+            where r.relationshipName = 'isChildOf'
+            and e.entityId = '${sceneRootEntityId}'`,
+
+          `select c2, r, c
+          from EntityGraph
+          match (c2)-[r]->(c)-[r]->(entity)-[r]->(e)
+          where r.relationshipName = 'isChildOf'
+          and e.entityId = '${sceneRootEntityId}'`,
+
+          `select c3, r, c2
+          from EntityGraph
+          match (c3)-[r]->(c2)-[r]->(c)-[r]->(entity)-[r]->(e)
+          where r.relationshipName = 'isChildOf'
+          and e.entityId = '${sceneRootEntityId}'`,
+
+          `select c4, r, c3
+          from EntityGraph
+          match (c4)-[r]->(c3)-[r]->(c2)-[r]->(c)-[r]->(entity)-[r]->(e)
+          where r.relationshipName = 'isChildOf'
+          and e.entityId = '${sceneRootEntityId}'`
         ],
       );
       return nodes;

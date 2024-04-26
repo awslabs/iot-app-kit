@@ -11,7 +11,7 @@ export const region = 'us-east-1';
 export const workspaceId = 'CookieFactory2';
 
 // SceneViewer
-export const sceneId = 'MixerDSA';
+export const sceneId = 'CookieFactoryDSA';
 export const componentTypeQueries: TwinMakerQuery[] = [
   {
     componentTypeId: 'com.example.cookiefactory.alarm',
