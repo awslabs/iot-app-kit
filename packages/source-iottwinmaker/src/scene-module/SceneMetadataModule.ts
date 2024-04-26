@@ -24,17 +24,6 @@ import {
   TwinMakerSceneMetadataModule,
 } from '../types';
 
-enum SceneCapabilities {
-  MATTERPORT = 'MATTERPORT',
-  DYNAMIC_SCENE = 'DYNAMIC_SCENE',
-}
-
-enum SceneMetadataMapKeys {
-  MATTERPORT_SECRET_ARN = 'MATTERPORT_SECRET_ARN',
-  SCENE_ROOT_ENTITY_ID = 'SCENE_ROOT_ENTITY_ID',
-}
-
-
 export class SceneMetadataModule implements TwinMakerSceneMetadataModule {
   private workspaceId: string;
   private sceneId: string;
