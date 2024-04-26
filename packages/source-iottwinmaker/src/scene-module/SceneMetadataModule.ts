@@ -72,19 +72,6 @@ export class SceneMetadataModule implements TwinMakerSceneMetadataModule {
       })
     );
 
-    const description = sceneInfo.description;
-    if (description?.startsWith('SCENE_ROOT_ENTITY_ID')) {
-      const sceneRootEntityId = description.split('=')[1];
-      sceneInfo = {
-        ...sceneInfo,
-        capabilities: [...(sceneInfo.capabilities || []), SceneCapabilities.DYNAMIC_SCENE],
-        sceneMetadata: {
-              ...sceneInfo.sceneMetadata,
-              [SceneMetadataMapKeys.SCENE_ROOT_ENTITY_ID]: sceneRootEntityId,
-            },
-      };
-    }
-
     return sceneInfo;
   };
 
