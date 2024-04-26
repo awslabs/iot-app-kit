@@ -23,11 +23,13 @@ export const SceneLayers: React.FC = () => {
   const layerIds = useStore(sceneComposerId)((state) => state.getSceneProperty<string[]>(KnownSceneProperty.LayerIds));
   const layerId = layerIds?.[0];
 
-  const sceneRootEntityId = 'Mixers_sceneid';
+  const sceneRootEntityId = useStore(sceneComposerId)(
+    (state) => state.getSceneProperty(KnownSceneProperty.SceneRootEntityId),
+  ) 
 
   const nodes = useQuery({
     enabled: !isEmpty(layerIds),
-    queryKey: ['scene-layers', layerIds, sceneComposerId],
+    queryKey: ['scene-layers', sceneRootEntityId, sceneComposerId],
     queryFn: async () => {
       const nodes = await processQueries(
         [
