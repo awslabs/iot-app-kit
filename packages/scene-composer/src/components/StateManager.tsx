@@ -108,6 +108,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     () => createStandardUriModifier(sceneContentUri || '', undefined),
     [sceneContentUri],
   );
+  const [sceneRootEntityId, setSceneRootEntityId] = useState(null);
 
   const isViewing = config.mode === 'Viewing';
 
@@ -245,20 +246,14 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       return;
     }
 
-    if (sceneInfo && sceneMetadataModule && sceneInfo.capabilities?.includes(SceneCapabilities.DYNAMIC_SCENE)) {
+    if (sceneRootEntityId && sceneInfo && sceneMetadataModule) {
       // Fetch scene level metadata for dynamic scene
-      const rootId = sceneInfo.sceneMetadata?.[SceneMetadataMapKeys.SCENE_ROOT_ENTITY_ID];
-      if (!rootId) {
-        setLoadSceneError(new Error('Failed to get scene root entity id'));
-        return;
-      }
-
       if (sceneInfo.contentLocation && sceneInfo.contentLocation.length > 0) {
         setSceneContentUri(sceneInfo.contentLocation!);
       }
 
       sceneMetadataModule
-        .getSceneEntity({ entityId: rootId })
+        .getSceneEntity({ entityId: sceneRootEntityId })
         .then((res) => {
           const document = parseSceneCompFromEntity(res);
           if (!document) {
@@ -286,7 +281,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       .catch((error) => {
         setLoadSceneError(error || new Error('Failed to get scene uri'));
       });
-  }, [sceneLoader, sceneMetadataModule, sceneInfo]);
+  }, [sceneLoader, sceneMetadataModule, sceneInfo, sceneRootEntityId]);
 
   useEffect(() => {
     if (sceneContentUri && sceneContentUri.length > 0) {
@@ -372,6 +367,10 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
         // Transient document update will also trigger onSceneUpdated, the app side will debounce the actual saving to S3 call.
         if (!state.sceneLoaded || !old.sceneLoaded || state.document === old.document) {
           return;
+        }
+        const rootId = state.document.properties?.sceneRootEntityId?? null; 
+        if (!!rootId) {
+          setSceneRootEntityId(rootId);
         }
         onSceneUpdated(sceneDocumentSnapshotCreator.create({ document: state.document }));
       });
