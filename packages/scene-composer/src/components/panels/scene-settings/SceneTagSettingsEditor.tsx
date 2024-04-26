@@ -19,12 +19,18 @@ export const SceneTagSettingsEditor: React.FC = () => {
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
   const setTagSettings = useViewOptionState(sceneComposerId).setTagSettings;
   const tagSettings: ITagSettings = useTagSettings();
-  const [dirty, setDirty] = useState(false);
   const [focusInput, setFocusInput] = useState(false);
   const [focusSlider, setFocusSlider] = useState(false);
   const [draggingSlider, setDraggingSlider] = useState(false);
-
   const [internalScale, setInternalScale] = useState(tagSettings.scale);
+
+  const handleInputFocus = useCallback(() => setFocusInput(true), []);
+  const handleInputBlur = useCallback(() => setFocusInput(false), []);
+
+  const handleSliderFocus = useCallback(() => setFocusSlider(true), []);
+  const handleSliderBlur = useCallback(() => setFocusSlider(false), []);
+  const handleSliderMouseUp = useCallback(() => setDraggingSlider(false), []);
+  const handleSliderMouseDown = useCallback(() => setDraggingSlider(true), []);
 
   const updateSettings = useCallback(
     (settingsPartial: Partial<ITagSettings>) => {
@@ -37,7 +43,6 @@ export const SceneTagSettingsEditor: React.FC = () => {
           ...getSceneProperty(KnownSceneProperty.ComponentSettings),
           [KnownComponentType.Tag]: newTagSettings,
         };
-
         setSceneProperty(KnownSceneProperty.ComponentSettings, newComponentSettings);
       }
       setTagSettings(newTagSettings);
@@ -48,20 +53,9 @@ export const SceneTagSettingsEditor: React.FC = () => {
   const onSliderChange = useCallback(
     (event) => {
       setInternalScale(Number(event.target.value));
-      setDirty(true);
     },
-    [setInternalScale, setDirty],
+    [internalScale],
   );
-
-  const onInputBlur = useCallback(() => {
-    // If slider is getting focus, this makes sure to execute setFocusSlider(true) first to keep showing it.
-    const id = setTimeout(() => {
-      setFocusInput(false);
-    }, 1);
-    return () => {
-      clearTimeout(id);
-    };
-  }, [setFocusInput]);
 
   const onInputChange = useCallback(
     (event) => {
@@ -69,30 +63,18 @@ export const SceneTagSettingsEditor: React.FC = () => {
       if (value < 0) {
         value = 0;
       }
-
       if (value !== internalScale) {
         setInternalScale(Number(value));
-        setDirty(true);
       }
     },
-    [setInternalScale, setDirty],
+    [internalScale],
   );
 
-  // Save scale changes to settings
   useEffect(() => {
-    // In viewing mode, dragging slider will update component immediately.
-    if (dirty && !focusInput && (!draggingSlider || isViewing)) {
+    if (internalScale !== tagSettings.scale) {
       updateSettings({ scale: internalScale });
-      setDirty(false);
     }
-  }, [updateSettings, setDirty, dirty, focusInput, internalScale, draggingSlider, isViewing]);
-
-  // Update internal when scale in store is changed
-  useEffect(() => {
-    if (!dirty && tagSettings.scale !== internalScale) {
-      setInternalScale(tagSettings.scale);
-    }
-  }, [dirty, draggingSlider, tagSettings.scale, internalScale]);
+  }, [internalScale]);
 
   return (
     <React.Fragment>
@@ -102,8 +84,8 @@ export const SceneTagSettingsEditor: React.FC = () => {
             <Input
               value={String(internalScale)}
               type='number'
-              onFocus={() => setFocusInput(true)}
-              onBlur={onInputBlur}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
               onChange={onInputChange}
             />
             <Checkbox
@@ -114,24 +96,16 @@ export const SceneTagSettingsEditor: React.FC = () => {
             </Checkbox>
           </Grid>
 
-          {(focusInput || focusSlider) && (
+          {(focusInput || focusSlider || draggingSlider) && (
             <Slider
               value={internalScale}
               step={0.1}
               min='0'
               max='10'
-              onFocus={() => {
-                setFocusSlider(true);
-              }}
-              onBlur={() => {
-                setFocusSlider(false);
-              }}
-              onMouseUp={() => {
-                setDraggingSlider(false);
-              }}
-              onMouseDown={() => {
-                setDraggingSlider(true);
-              }}
+              onFocus={handleSliderFocus}
+              onBlur={handleSliderBlur}
+              onMouseUp={handleSliderMouseUp}
+              onMouseDown={handleSliderMouseDown}
               onChange={onSliderChange}
             />
           )}

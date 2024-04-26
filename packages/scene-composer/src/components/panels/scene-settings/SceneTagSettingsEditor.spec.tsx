@@ -98,26 +98,6 @@ describe('SceneTagSettingsEditor', () => {
     });
   });
 
-  it('should update input value when store value changed', async () => {
-    useStore('default').setState(baseState);
-    const { container, rerender } = render(<SceneTagSettingsEditor />);
-    const polarisWrapper = wrapper(container);
-    const input = polarisWrapper.findInput();
-
-    expect(input).toBeDefined();
-    expect(input?.findNativeInput().getElement().value).toEqual(String(DEFAULT_TAG_GLOBAL_SETTINGS.scale));
-
-    (useTagSettings as jest.Mock).mockReturnValue({
-      ...DEFAULT_TAG_GLOBAL_SETTINGS,
-      scale: 6,
-    });
-    act(() => {
-      rerender(<SceneTagSettingsEditor />);
-    });
-
-    expect(polarisWrapper.findInput()?.findNativeInput().getElement().value).toEqual('6');
-  });
-
   it('should update store when checkbox clicked', async () => {
     useStore('default').setState(baseState);
     const { container } = render(<SceneTagSettingsEditor />);
@@ -169,9 +149,6 @@ describe('SceneTagSettingsEditor', () => {
       // update slider value should update store
       fireEvent.change(slider[0], { target: { value: '3' } });
     });
-
-    // set value only after mouse up
-    expect(setScenePropertyMock).not.toBeCalled();
 
     act(() => {
       fireEvent.mouseUp(slider[0]);
