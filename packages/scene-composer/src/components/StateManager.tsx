@@ -253,7 +253,9 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
         return;
       }
 
-      setSceneContentUri(sceneInfo.contentLocation!);
+      if (sceneInfo.contentLocation && sceneInfo.contentLocation.length > 0) {
+        setSceneContentUri(sceneInfo.contentLocation!);
+      }
 
       sceneMetadataModule
         .getSceneEntity({ entityId: rootId })
