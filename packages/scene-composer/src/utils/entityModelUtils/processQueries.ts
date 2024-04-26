@@ -89,7 +89,7 @@ export const processQueries = async (
 
   // Remove any nonexist parents and post process the nodes
   for (const node of Object.values(sceneNodes)) {
-    postProcessNode?.(node);
+    // postProcessNode?.(node);
 
     if (node.parentRef && !sceneNodes[node.parentRef]) {
       node.parentRef = undefined;

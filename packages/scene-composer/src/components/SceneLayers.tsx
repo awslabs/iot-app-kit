@@ -48,7 +48,7 @@ export const SceneLayers: React.FC = () => {
         AND (r2.relationshipName = 'isVisualOf'
         OR r2.relationshipName = 'parentRef')`,
         ],
-        (node) => (node.properties.layerIds = [...(node.properties.layerIds ?? []), layerId!]),
+        // (node) => (node.properties.layerIds = [...(node.properties.layerIds ?? []), layerId!]),
       );
       return nodes;
     },

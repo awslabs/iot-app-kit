@@ -266,9 +266,7 @@ export const parseSceneCompFromEntity = (entity: GetEntityCommandOutput): IScene
       [KnownSceneProperty.ComponentSettings]: componentSettings,
       [KnownSceneProperty.MatterportModelId]:
         comp.properties[SceneComponentProperty.PropertiesMatterportModelId]?.value?.stringValue,
-      [KnownSceneProperty.LayerIds]: comp.properties[SceneComponentProperty.ConnectedToLayers]?.value?.listValue?.map(
-        (layer) => layer.relationshipValue?.targetEntityId,
-      ),
+      [KnownSceneProperty.LayerIds]: ['dummy-layer-id'],
       [KnownSceneProperty.TagCustomColors]: comp.properties[
         SceneComponentProperty.PropertiesTagCustomColors
       ]?.value?.listValue?.map((color) => color.stringValue),
