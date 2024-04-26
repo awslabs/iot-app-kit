@@ -28,7 +28,7 @@ export const SceneLayers: React.FC = () => {
   ) 
 
   const nodes = useQuery({
-    enabled: !isEmpty(layerIds),
+    enabled: !!sceneRootEntityId,
     queryKey: ['scene-layers', sceneRootEntityId, sceneComposerId],
     queryFn: async () => {
       const nodes = await processQueries(
@@ -38,17 +38,8 @@ export const SceneLayers: React.FC = () => {
           from EntityGraph
           match (entity)-[r]->(e)
           where r.relationshipName = 'isChildOf'
-          and e.entityId = '${sceneRootEntityId}'`,
-          // Get entityBinding and subModel parentRef for the nodes in the sceneRootEntityId
-          `SELECT entity, r2, binding
-        FROM EntityGraph 
-        MATCH (binding)<-[r2]-(entity)-[r]->(e)
-        WHERE r.relationshipName = 'isChildOf'
-        AND e.entityId = '${sceneRootEntityId}'
-        AND (r2.relationshipName = 'isVisualOf'
-        OR r2.relationshipName = 'parentRef')`,
+          and e.entityId = '${sceneRootEntityId}'`, 
         ],
-        // (node) => (node.properties.layerIds = [...(node.properties.layerIds ?? []), layerId!]),
       );
       return nodes;
     },
