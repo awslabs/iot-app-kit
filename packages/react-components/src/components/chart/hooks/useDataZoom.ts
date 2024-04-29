@@ -9,7 +9,7 @@ import {
 } from '../eChartsConstants';
 import { DEFAULT_VIEWPORT } from '../../time-sync';
 import { useEffectOnce } from 'react-use';
-import { convertViewportToMs } from '../viewport/convertViewportToMs';
+import { convertViewportToMs } from '../../../utils/convertViewportToMs';
 
 type ValidOption = {
   startValue: number;

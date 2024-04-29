@@ -2,10 +2,12 @@ import { Viewport } from '@iot-app-kit/core';
 import { ConfigurationOptions, DataSetOptions } from './types';
 import {
   convertDataset,
+  convertGrid,
   convertLegend,
   convertSeries,
   convertTitle,
   convertTooltip,
+  convertYAxis,
 } from '../converters';
 import { AnomalyData } from '../../../data';
 import { useEffect, useReducer } from 'react';
@@ -21,6 +23,8 @@ type AnomalyChartOptionState = {
   legend: ReturnType<typeof convertLegend>;
   tooltip: ReturnType<typeof convertTooltip>;
   dataset: ReturnType<typeof convertDataset>;
+  yAxis: ReturnType<typeof convertYAxis>;
+  grid: ReturnType<typeof convertGrid>;
   color: string[] | undefined;
 };
 type UpdateAnomalyChartAction =
@@ -37,14 +41,23 @@ const reducer = (
       dataset: convertDataset(action.data),
     };
   } else if (action.type === 'updateConfiguration') {
-    const { title, description, loading, decimalPlaces, tooltipSort } =
-      action.configuration;
+    const {
+      title,
+      description,
+      loading,
+      decimalPlaces,
+      tooltipSort,
+      showYAxis,
+      showTimestamp,
+    } = action.configuration;
     return {
       ...state,
       title: convertTitle({ title }),
       series: convertSeries({ description }),
       legend: convertLegend({ loading }),
       tooltip: convertTooltip({ decimalPlaces, tooltipSort }),
+      yAxis: convertYAxis({ showYAxis }),
+      grid: convertGrid({ showYAxis, showTimestamp }),
       color: description?.color,
     };
   }
@@ -58,12 +71,16 @@ const initialState = ({
   decimalPlaces,
   tooltipSort,
   data,
+  showYAxis,
+  showTimestamp,
 }: AnomalyEChartOptions): Omit<AnomalyChartOptionState, 'chartRef'> => ({
   dataset: convertDataset(data),
   title: convertTitle({ title }),
   series: convertSeries({ description }),
   legend: convertLegend({ loading }),
   tooltip: convertTooltip({ decimalPlaces, tooltipSort }),
+  yAxis: convertYAxis({ showYAxis }),
+  grid: convertGrid({ showYAxis, showTimestamp }),
   color: description?.color,
 });
 

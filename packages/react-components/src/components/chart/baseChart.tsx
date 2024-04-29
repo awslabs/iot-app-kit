@@ -24,8 +24,6 @@ import './chart.css';
 import { useTrendCursors } from '../../echarts/extensions/trendCursors';
 import { useChartStoreDataStreamsSync } from './hooks/useChartStoreDataStreamsSync';
 import useIsRefreshing from './hooks/useIsrefreshing';
-import { convertViewportToMs } from './viewport/convertViewportToMs';
-import { Timestamp } from './timeStamps/timeStamp';
 import {
   REFRESHING_DELAY_MS,
   TIMESTAMP_HEIGHT_FACTOR_BOTTOM,
@@ -36,6 +34,7 @@ import { DataQualityPreferencesModal } from './preferences/dataQualityModal';
 import { useModalVisibility } from '../../hooks/useModalVisibility/useModalVisibility';
 import { PreferencesModalToggle } from './preferences/toggle';
 import { useDataQuality } from './hooks/useDataQuality';
+import { Timestamp } from '../timestampBar';
 
 /**
  * Developer Notes:
@@ -77,11 +76,6 @@ const BaseChart = ({
   const isLegendVisible = options.legend?.visible;
   const isLegendPositionLeft = options.legend?.position === 'left';
   const isLegendPositionBottom = options.legend?.position === 'bottom';
-
-  // Convert viewport timestamps to ms
-  const { initial, end } = convertViewportToMs(viewport);
-  const timestampStart = new Date(initial).toLocaleString();
-  const timestampEnd = new Date(end).toLocaleString();
 
   // Setup instance of echarts
   const { ref, chartRef } = useECharts(options?.theme);
@@ -306,9 +300,8 @@ const BaseChart = ({
           </HotKeys>
         </Resizable>
         <Timestamp
-          showLoadingIndicator={isPropertiesRefreshing}
-          start={timestampStart}
-          end={timestampEnd}
+          isLoading={isPropertiesRefreshing}
+          showLoadingIndicator={true}
           styleProps={timestampStyle}
         />
       </div>
