@@ -1,9 +1,9 @@
+import { StyledThreshold } from '@iot-app-kit/core';
 import type { WidgetSettings } from '../../common/dataTypes';
 
 export type KPIBaseProperties = WidgetSettings & {
   settings?: Partial<KPISettings>;
-  isFilledThreshold?: boolean;
-  isThresholdVisible?: boolean;
+  propertyThreshold?: StyledThreshold;
 };
 
 export type KPISettings = {
