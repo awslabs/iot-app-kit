@@ -8,6 +8,8 @@ export type ConfigurationOptions = {
   loading?: boolean;
   decimalPlaces?: number;
   tooltipSort?: TooltipSort;
+  showYAxis?: boolean;
+  showTimestamp?: boolean;
 };
 
 export type DataSetOptions = { data: AnomalyData | undefined };
