@@ -19,29 +19,25 @@ const ANOMALY_X_AXIS = {
   xAxis: DEFAULT_X_AXIS,
 };
 
-const ANOMALY_Y_AXIS = {
-  yAxis: [
-    {
-      type: 'value',
-      max: 1,
-      min: 0,
-      axisLabel: {
-        show: false,
-      },
-      axisTick: {
-        show: false,
-      },
+export const ANOMALY_Y_AXIS = {
+  type: 'value',
+  max: 1,
+  min: 0,
+  axisLabel: {
+    formatter: (value: number) => {
+      return `${value * 100}%`;
     },
-  ],
+  },
+  axisTick: {
+    show: false,
+  },
 };
 
-const ANOMALY_GRID = {
-  grid: {
-    top: 35,
-    left: 15,
-    right: 15,
-    bottom: 50,
-  },
+export const ANOMALY_GRID = {
+  top: 35,
+  left: 45,
+  right: 15,
+  bottom: 80,
 };
 
 export const ANOMALY_LEGEND = {
@@ -101,7 +97,5 @@ export const ANOMALY_TOOLTIP = {
 
 export const DEFAULT_ANOMALY_WIDGET_SETTINGS = {
   animation: false,
-  ...ANOMALY_GRID,
   ...ANOMALY_X_AXIS,
-  ...ANOMALY_Y_AXIS,
 };

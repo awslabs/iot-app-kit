@@ -9,6 +9,7 @@ import { colorBackgroundContainerContent } from '@cloudscape-design/design-token
 
 import { useAnomalyEchart } from './hooks/useAnomalyEchart';
 import { LoadingIcon } from './loading-icon';
+import { Timestamp } from '../timestampBar';
 
 /**
  * Setup the applicable data source transformers
@@ -18,7 +19,7 @@ const AnomalyDataSourceLoader = new DataSourceLoader([
 ]);
 
 export const AnomalyWidget = (options: AnomalyWidgetOptions) => {
-  const { datasources } = options;
+  const { datasources, showTimestamp = true, showYAxis = true } = options;
   /**
    * Datasources is a fixed length array of 1.
    * The widget can only display 1 anomaly for now.
@@ -29,6 +30,8 @@ export const AnomalyWidget = (options: AnomalyWidgetOptions) => {
 
   const { ref } = useAnomalyEchart({
     ...options,
+    showTimestamp,
+    showYAxis,
     data,
     description,
     loading,
@@ -46,6 +49,12 @@ export const AnomalyWidget = (options: AnomalyWidgetOptions) => {
     >
       <LoadingIcon loading={loading} />
       <div ref={ref} style={{ width: '100%', height: '100%' }} />
+      {showTimestamp && (
+        <Timestamp
+          showLoadingIndicator={false}
+          styleProps={{ width: 'calc(100% - 16px)', bottom: 35 }}
+        />
+      )}
     </div>
   );
 };
