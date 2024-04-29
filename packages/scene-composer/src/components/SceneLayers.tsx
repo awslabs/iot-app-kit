@@ -41,10 +41,10 @@ export const SceneLayers: React.FC = () => {
           and e.entityId = '${sceneRootEntityId}'`, 
 
           `select c, r, entity
-            from EntityGraph
-            match (c)-[r]->(entity)-[r]->(e)
-            where r.relationshipName = 'isChildOf'
-            and e.entityId = '${sceneRootEntityId}'`,
+          from EntityGraph
+          match (c)-[r]->(entity)-[r]->(e)
+          where r.relationshipName = 'isChildOf'
+          and e.entityId = '${sceneRootEntityId}'`,
 
           `select c2, r, c
           from EntityGraph
