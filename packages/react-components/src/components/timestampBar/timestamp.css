@@ -1,0 +1,12 @@
+.chart-timestamp-container {
+  display: flex;
+  position: absolute;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.chart-timestamp {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
