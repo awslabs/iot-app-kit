@@ -11,8 +11,7 @@ import './kpi.css';
 import { highContrastColor } from './highContrastColor';
 import { getAggregationFrequency } from '../../utils/aggregationFrequency';
 import {
-  colorBackgroundButtonPrimaryDisabled,
-  colorTextBodyDefault,
+  colorTextHeadingDefault,
   fontSizeBodyS,
 } from '@cloudscape-design/design-tokens';
 import { DataQualityText } from '../data-quality/data-quality-text';
@@ -27,8 +26,7 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
   isLoading,
   settings = {},
   significantDigits,
-  isFilledThreshold,
-  isThresholdVisible,
+  propertyThreshold,
 }) => {
   const {
     showUnit,
@@ -36,7 +34,6 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     showTimestamp,
     showDataQuality,
     showAggregationAndResolution,
-    backgroundColor,
     fontSize,
     secondaryFontSize,
   }: KPISettings = {
@@ -44,13 +41,21 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     ...omitBy(settings, (x) => x == null),
   };
 
-  const background =
-    !isFilledThreshold && isThresholdVisible ? '#ffffff' : backgroundColor;
-  const highContrastFontColor =
-    background === '#ffffff' ? '' : highContrastColor(background);
-  const fontColor = isFilledThreshold
-    ? highContrastFontColor
-    : colorTextBodyDefault;
+  const showFilledThreshold =
+    propertyThreshold?.fill && propertyThreshold?.color;
+  const nonThresholdBackground = settings.backgroundColor
+    ? settings.backgroundColor
+    : DEFAULT_KPI_SETTINGS.backgroundColor;
+  const nonThresholdFontColor = settings.backgroundColor
+    ? highContrastColor(nonThresholdBackground)
+    : colorTextHeadingDefault;
+
+  const backgroundColor = showFilledThreshold
+    ? propertyThreshold.color
+    : nonThresholdBackground;
+  const fontColor = showFilledThreshold
+    ? highContrastColor(propertyThreshold.color)
+    : nonThresholdFontColor;
 
   const point = propertyPoint;
   const aggregationResolutionString = getAggregationFrequency(
@@ -63,10 +68,14 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
       <div
         className='kpi'
         data-testid='kpi-error-component'
-        style={{ fontSize: `${secondaryFontSize}px` }}
+        style={{
+          fontSize: `${secondaryFontSize}px`,
+          backgroundColor: nonThresholdBackground,
+          color: nonThresholdFontColor,
+        }}
       >
         {error && (
-          <Box margin={{ vertical: 's' }}>
+          <Box margin={{ vertical: 's', horizontal: 's' }}>
             <Alert statusIconAriaLabel='Error' type='error'>
               {error}
             </Alert>
@@ -80,7 +89,7 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     <div
       className='kpi-container'
       data-testid='kpi-base-component'
-      style={{ backgroundColor: background }}
+      style={{ backgroundColor }}
     >
       <div className='kpi'>
         <div>
@@ -125,7 +134,7 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
                 <div
                   className='timestamp-border'
                   style={{
-                    backgroundColor: colorBackgroundButtonPrimaryDisabled,
+                    backgroundColor: fontColor,
                   }}
                 />
                 <div className='timestamp' data-testid='kpi-timestamp'>
@@ -136,10 +145,10 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
           </div>
         )}
       </div>
-      {!isFilledThreshold && isThresholdVisible && (
+      {!propertyThreshold?.fill && propertyThreshold?.color && (
         <div
           data-testid='kpi-side-threshold'
-          style={{ backgroundColor }}
+          style={{ backgroundColor: propertyThreshold?.color }}
           className='kpi-line-threshold'
         />
       )}
