@@ -7,9 +7,7 @@ import { useStore } from '../store';
 import { processQueries } from '../utils/entityModelUtils/processQueries';
 import { KnownSceneProperty } from '../interfaces';
 import {
-  DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
-  DEFAULT_LAYER_RELATIONSHIP_NAME,
-  SUB_MODEL_REF_PARENT_RELATIONSHIP_NAME,
+  DEFAULT_PARENT_RELATIONSHIP_NAME,
 } from '../common/entityModelConstants';
 
 export const SceneLayers: React.FC = () => {
@@ -37,31 +35,31 @@ export const SceneLayers: React.FC = () => {
           `select entity, r, e
           from EntityGraph
           match (entity)-[r]->(e)
-          where r.relationshipName = 'isChildOf'
+          where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
           and e.entityId = '${sceneRootEntityId}'`, 
 
           `select c, r, entity
           from EntityGraph
           match (c)-[r]->(entity)-[r]->(e)
-          where r.relationshipName = 'isChildOf'
+          where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
           and e.entityId = '${sceneRootEntityId}'`,
 
           `select c2, r, c
           from EntityGraph
           match (c2)-[r]->(c)-[r]->(entity)-[r]->(e)
-          where r.relationshipName = 'isChildOf'
+          where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
           and e.entityId = '${sceneRootEntityId}'`,
 
           `select c3, r, c2
           from EntityGraph
           match (c3)-[r]->(c2)-[r]->(c)-[r]->(entity)-[r]->(e)
-          where r.relationshipName = 'isChildOf'
+          where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
           and e.entityId = '${sceneRootEntityId}'`,
 
           `select c4, r, c3
           from EntityGraph
           match (c4)-[r]->(c3)-[r]->(c2)-[r]->(c)-[r]->(entity)-[r]->(e)
-          where r.relationshipName = 'isChildOf'
+          where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
           and e.entityId = '${sceneRootEntityId}'`
         ],
       );
