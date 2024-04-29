@@ -54,7 +54,7 @@ export class SceneMetadataModule implements TwinMakerSceneMetadataModule {
   };
 
   getSceneInfo = async (): Promise<GetSceneCommandOutput> => {
-    let sceneInfo: GetSceneCommandOutput = await this.twinMakerClient.send(
+    const sceneInfo: GetSceneCommandOutput = await this.twinMakerClient.send(
       new GetSceneCommand({
         workspaceId: this.workspaceId,
         sceneId: this.sceneId,
