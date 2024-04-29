@@ -55,10 +55,7 @@ export const KPI = ({
 
   const name = propertyStream?.name || alarmStream?.name;
   const unit = propertyStream?.unit || alarmStream?.unit;
-  const backgroundColor =
-    propertyThreshold?.color || settings?.color || settings?.backgroundColor;
-  const isThresholdVisible = !!propertyThreshold?.color;
-  const isFilledThreshold = !!propertyThreshold?.fill;
+  const backgroundColor = settings?.color || settings?.backgroundColor;
   const isLoading =
     alarmStream?.isLoading || propertyStream?.isLoading || false;
   const error = alarmStream?.error || propertyStream?.error;
@@ -68,8 +65,7 @@ export const KPI = ({
       propertyPoint={propertyPoint}
       alarmPoint={alarmPoint}
       settings={{ ...settings, backgroundColor }}
-      isThresholdVisible={isThresholdVisible}
-      isFilledThreshold={isFilledThreshold}
+      propertyThreshold={propertyThreshold}
       aggregationType={dataStreams[0]?.aggregationType}
       resolution={propertyResolution}
       name={name}
