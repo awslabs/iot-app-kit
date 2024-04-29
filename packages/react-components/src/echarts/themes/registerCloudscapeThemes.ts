@@ -377,7 +377,7 @@ export const registerCloudscapeThemes = () => {
       },
       emphasis: {
         iconStyle: {
-          borderColor: '#5f6b7a',
+          borderColor: '#033160',
         },
       },
     },

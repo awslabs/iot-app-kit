@@ -15,7 +15,7 @@ import { Viewport } from '@iot-app-kit/core';
 import { sub } from 'date-fns';
 import { useSiteWiseAnomalyDataSource } from '../../src/queries/useSiteWiseAnomalyDataSource';
 import { TimeSelection, TimeSync, useViewport } from '../../src';
-import { isDurationViewport } from '../../src/components/chart/viewport/isDurationViewport';
+import { isDurationViewport } from '../../src/utils/isDurationViewport';
 
 const ASSET_MODEL_ID = '4c8e3da0-d3ec-4818-86b3-44a1e6b98531';
 const ASSET_MODEL_COMPOSITE_MODEL_ID = 'a85b0fb2-b259-441c-aacc-d7d7495214f5';
