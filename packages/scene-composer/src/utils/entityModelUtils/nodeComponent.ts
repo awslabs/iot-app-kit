@@ -70,9 +70,8 @@ export const createNodeEntityComponent = (node: ISceneNode, layerId?: string): C
       },
     };
   }
-  if (layerId) {
-    comp.properties = Object.assign(comp.properties!, attachToLayerRequest(layerId));
-  }
+ comp.properties = Object.assign(comp.properties!, attachToLayerRequest(layerId?? 'reserved-layer-id'));
+  
 
   const params = {};
   Object.keys(node.properties || {}).forEach((k) => {
@@ -236,7 +235,7 @@ export const parseNode = (entity: DocumentType, nodeCompo: DocumentType): IScene
         (p) => p['propertyName'] === NodeComponentProperty.TransformConstraintSnapToFloor,
       )?.propertyValue,
     },
-    properties,
+    properties: { ...properties, [SceneNodeRuntimeProperty.LayerIds]: ['reserved-layer-id'] },
   };
 
   return node;

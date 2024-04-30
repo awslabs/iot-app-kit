@@ -38,27 +38,27 @@ export const SceneLayers: React.FC = () => {
           where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
           and e.entityId = '${sceneRootEntityId}'`, 
 
-          `select c, r, entity
+          `select c, r1, entity
           from EntityGraph
-          match (c)-[r]->(entity)-[r]->(e)
+          match (c)-[r1]->(entity)-[r]->(e)
           where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
           and e.entityId = '${sceneRootEntityId}'`,
 
-          `select c2, r, c
+          `select c2, r2, c
           from EntityGraph
-          match (c2)-[r]->(c)-[r]->(entity)-[r]->(e)
+          match (c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
           where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
           and e.entityId = '${sceneRootEntityId}'`,
 
-          `select c3, r, c2
+          `select c3, r3, c2
           from EntityGraph
-          match (c3)-[r]->(c2)-[r]->(c)-[r]->(entity)-[r]->(e)
+          match (c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
           where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
           and e.entityId = '${sceneRootEntityId}'`,
 
-          `select c4, r, c3
+          `select c4, r4, c3
           from EntityGraph
-          match (c4)-[r]->(c3)-[r]->(c2)-[r]->(c)-[r]->(entity)-[r]->(e)
+          match (c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
           where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
           and e.entityId = '${sceneRootEntityId}'`
         ],

@@ -246,28 +246,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       return;
     }
 
-    if (sceneRootEntityId && sceneInfo && sceneMetadataModule) {
-      // Fetch scene level metadata for dynamic scene
-      if (sceneInfo.contentLocation && sceneInfo.contentLocation.length > 0) {
-        setSceneContentUri(sceneInfo.contentLocation!);
-      }
-
-      sceneMetadataModule
-        .getSceneEntity({ entityId: sceneRootEntityId })
-        .then((res) => {
-          const document = parseSceneCompFromEntity(res);
-          if (!document) {
-            throw new Error('Failed to parse scene metadata');
-          }
-          setSceneContent(document);
-        })
-        .catch((e) => {
-          setLoadSceneError(e || new Error('Failed to get scene root entity'));
-        });
-
-      return;
-    }
-
     // Fetch scene uri for static scene
     sceneLoader
       .getSceneUri()
