@@ -84,6 +84,11 @@ export function AssetTable({
     onClickNextPage();
   }
 
+  function handleClickBreadCrumb(parentAssetId?: string) {
+    onSelectAsset(undefined);
+    onClickAsset(parentAssetId);
+  }
+
   const columnDefinitionFactory = new AssetTableColumnDefinitionsFactory({
     NameLink: AssetTableNameLink,
     onClickNameLink: handleClickAsset,
@@ -130,7 +135,7 @@ export function AssetTable({
           <AssetTableHierarchyPath
             client={client}
             parentAssetId={parentAssetId}
-            onClickAssetName={onClickAsset}
+            onClickAssetName={handleClickBreadCrumb}
           />
         </>
       }
