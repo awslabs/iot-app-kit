@@ -110,7 +110,6 @@ export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> =
     document: createEmptyDocumentState(),
 
     loadScene: (sceneContent, options) => {
-      console.log('loadScene: ', sceneContent);
       get().resetEditorState();
 
       let errors: ISerializationErrorDetails[] | undefined;
@@ -146,7 +145,6 @@ export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> =
           draft.sceneLoaded = true;
         }
         draft.lastOperation = 'loadScene';
-        console.log('document of loadScene: ', document);
       });
 
       // We cannot nest set operations in the store impl, so we'll need to delay

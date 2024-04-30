@@ -49,8 +49,6 @@ export const WebGLCanvasManager: React.FC = () => {
   const domRef = useRef<HTMLElement>(gl.domElement.parentElement);
   const environmentPreset = getSceneProperty<string>(KnownSceneProperty.EnvironmentPreset);
   const rootNodeRefs = document.rootNodeRefs;
-  console.log('document: ', document);
-  console.log('rootNodeRef: ', rootNodeRefs);
 
   const gridHelperRef = useRef<THREE.GridHelper>(null);
 
