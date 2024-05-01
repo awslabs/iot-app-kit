@@ -78,7 +78,11 @@ export const checkIfEntityExists = async (
   sceneMetadataModule: TwinMakerSceneMetadataModule,
 ): Promise<boolean> => {
   try {
-    await sceneMetadataModule.getSceneEntity({ entityId });
+    setTimeout(() => { 
+      console.log('sleep 1 second for ', entityId);
+    }, Math.floor(5000 + Math.random()*1000));  
+    const result = await sceneMetadataModule.getSceneEntity({ entityId });
+    console.log('entity: ', entityId, ' exists with result: ', result);
     return true;
   } catch (e) {
     if (e instanceof ResourceNotFoundException) {
@@ -139,10 +143,12 @@ export const convertAllNodesToEntities = ({
   getObject3DBySceneNodeRef: (nodeRef: string) => THREE.Object3D | undefined;
   onSuccess?: (node: ISceneNodeInternal) => void;
   onFailure?: (node: ISceneNodeInternal, error: Error) => void;
-}): void => {
+}) => {
   const subModelRequests: ISceneNodeInternal[] = [];
 
-  Object.keys(document.nodeMap).forEach((nodeRef) => {
+  const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
+
+  Object.keys(document.nodeMap).forEach(async (nodeRef) => {
     const node = document.nodeMap[nodeRef];
     const object3D = getObject3DBySceneNodeRef(nodeRef);
 
@@ -164,25 +170,52 @@ export const convertAllNodesToEntities = ({
         });
       } else {
         // Use world transform before supporting hierarchy relationship
-        const worldTransform = getFinalNodeTransform(node, object3D, null);
+        //const worldTransform = getFinalNodeTransform(node, object3D, null);
 
         const worldTransformNode: ISceneNodeInternal = {
           ...node,
-          parentRef: undefined,
-          transform: worldTransform,
+          parentRef: node.parentRef?? sceneRootEntityId,
           properties: {
             ...node.properties,
             [SceneNodeRuntimeProperty.LayerIds]: [layerId!],
           },
         };
 
-        createNodeEntity(worldTransformNode, sceneRootEntityId, layerId)
-          .then(() => {
-            onSuccess?.(worldTransformNode);
-          })
-          .catch((error) => {
-            onFailure?.(worldTransformNode, error);
-          });
+        console.log('create entity: ', worldTransformNode.parentRef, ' : ', worldTransformNode.ref);
+
+        let retryCounts = 0;
+        const interval = setInterval(async () => {
+          retryCounts++;
+          try {
+            setTimeout(() => { 
+              console.log('sleep 1 second for ', node.ref);
+            }, Math.floor(5000 + Math.random()*2000));  
+            const res = await checkIfEntityExists(worldTransformNode.parentRef!, sceneMetadataModule!);
+            if (res) {
+              console.log('parent Entity ', worldTransformNode.parentRef, ' exists');
+              try {
+                await createNodeEntity(worldTransformNode, worldTransformNode.parentRef?? sceneRootEntityId, layerId);
+                onSuccess?.(worldTransformNode);
+                console.log('parent: ', worldTransformNode.parentRef, ' create entity: ', worldTransformNode.ref);
+              } catch(error)  {
+                onFailure?.(worldTransformNode, error as Error);
+              }
+              clearInterval(interval);
+              return;
+            }
+            
+          } catch (error) {
+            clearInterval(interval);
+            onFailure?.(node, error as Error);
+            return; 
+          }
+
+          if (retryCounts > 10) {
+            clearInterval(interval);
+            onFailure?.(node, new Error('Parent entity ' + worldTransformNode.parentRef + ' does not exist in the workspace'));
+            return;
+          }
+        }, Math.floor(5000 + Math.random()*10000));
       }
     }
   });

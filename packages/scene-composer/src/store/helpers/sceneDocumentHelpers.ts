@@ -187,7 +187,8 @@ export const updateSceneNode = (
     if (!newParentRef) {
       draft.document.rootNodeRefs.push(ref);
     } else {
-      draft.document.nodeMap[newParentRef].childRefs.push(ref);
+      console.log('update doc ', newParentRef);
+      draft.document.nodeMap[newParentRef]?.childRefs.push(ref);
     }
   }
 

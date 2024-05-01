@@ -2,6 +2,7 @@ import {
   ComponentUpdateRequest,
   CreateEntityCommandInput,
   CreateEntityCommandOutput,
+  GetEntityCommandInput,
 } from '@aws-sdk/client-iottwinmaker';
 
 import { getGlobalSettings } from '../../common/GlobalSettings';
@@ -28,12 +29,13 @@ import { createModelShaderEntityComponent } from './modelShaderComponent';
 import { createLightEntityComponent } from './lightComponent';
 import { createSubModelRefEntityComponent } from './subModelRefComponent';
 import { createPlaneGeometryEntityComponent } from './planeGeometryComponent';
+import { checkIfEntityExists } from './sceneUtils';
 
-export const createNodeEntity = async (
+export const createNodeEntity =async (
   node: ISceneNodeInternal,
   parentRef: string,
   layerId: string,
-): Promise<CreateEntityCommandOutput | undefined> => {
+) => {
   const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
 
   const nodecomp = createNodeEntityComponent(node, layerId);
@@ -46,6 +48,11 @@ export const createNodeEntity = async (
     components: {
       Node: nodecomp,
     },
+  };
+
+  const getEntity: GetEntityCommandInput = {
+    workspaceId: undefined,
+    entityId: node.ref,
   };
 
   node.components?.forEach((compToBeCreated) => {
@@ -89,5 +96,18 @@ export const createNodeEntity = async (
     }
   });
 
-  return sceneMetadataModule?.createSceneEntity(createEntity);
-};
+  const res = await checkIfEntityExists(getEntity.entityId!, sceneMetadataModule!);
+  if (!res) {
+    setTimeout(() => { 
+      console.log('sleep 1 second for ', node.ref);
+    }, Math.floor(1000 + Math.random()*1000)); 
+    const createRes = await sceneMetadataModule?.createSceneEntity(createEntity);
+    console.log('createEntity: ', createRes);
+    setTimeout(() => { 
+      console.log('sleep 1 second for ', node.ref);
+    }, Math.floor(1000 + Math.random()*1000)); 
+    const getRes = await sceneMetadataModule?.getSceneEntity(getEntity);
+    console.log('getEntity: ', getRes);
+  }
+}
+

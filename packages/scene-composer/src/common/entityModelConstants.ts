@@ -37,6 +37,7 @@ export const MATTERPORT_TAG_LAYER_PREFIX = 'Matterport_Tag_';
 export const DEFAULT_LAYER_RELATIONSHIP_NAME = 'inLayerOf';
 export const DEFAULT_LAYER_COMPONENT_NAME = 'Layer';
 export const LAYER_ROOT_ENTITY_ID = 'LAYERS_EntityId';
+export const RESERVED_LAYER_ID = 'reserved_layer_id';
 export const LAYER_ROOT_ENTITY_NAME = '$LAYERS';
 export enum LayerType {
   Relationship = 'Relationship',

@@ -7,6 +7,7 @@ import {
   DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
   NODE_COMPONENT_TYPE_ID,
   componentTypeToId,
+  RESERVED_LAYER_ID,
 } from '../../common/entityModelConstants';
 import { ISceneComponentInternal, ISceneNodeInternal } from '../../store';
 import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
@@ -70,7 +71,7 @@ export const createNodeEntityComponent = (node: ISceneNode, layerId?: string): C
       },
     };
   }
- comp.properties = Object.assign(comp.properties!, attachToLayerRequest(layerId?? 'reserved-layer-id'));
+ comp.properties = Object.assign(comp.properties!, attachToLayerRequest(layerId?? RESERVED_LAYER_ID));
   
 
   const params = {};
@@ -235,7 +236,7 @@ export const parseNode = (entity: DocumentType, nodeCompo: DocumentType): IScene
         (p) => p['propertyName'] === NodeComponentProperty.TransformConstraintSnapToFloor,
       )?.propertyValue,
     },
-    properties: { ...properties, [SceneNodeRuntimeProperty.LayerIds]: ['reserved-layer-id'] },
+    properties: { ...properties, [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID] },
   };
 
   return node;
