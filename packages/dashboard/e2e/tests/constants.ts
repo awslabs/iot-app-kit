@@ -26,3 +26,4 @@ export const MAX_VALUE_TABLE_HEADER = 'base-chart-legend-max-header-container';
 export const MAX_TABLE_CELL = 'max-value';
 export const MIN_VALUE_TABLE_HEADER = 'base-chart-legend-min-header-container';
 export const MIN_TABLE_CELL = 'min-value';
+export const NEW_PROPERTY_NAME = 'New property name';

@@ -33,5 +33,6 @@ export const getDefaultStyles = (
     significantDigits: significantDigits ?? 4,
     emphasis: 'none',
     hidden: false,
+    name: '',
   };
 };

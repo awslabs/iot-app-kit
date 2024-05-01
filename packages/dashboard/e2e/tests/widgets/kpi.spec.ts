@@ -1,5 +1,6 @@
 import { expect, test } from '../test';
 import { getDecimalPlaces } from '../utils/getDecimalPlaces';
+import { NEW_PROPERTY_NAME } from '../constants';
 
 test.describe('Test KPI Widget', () => {
   test('KPI widget can be added to the dashboard', async ({
@@ -157,5 +158,38 @@ test.describe('Test KPI Widget', () => {
     const widgetValue =
       dashboardWithKPIWidget.gridArea.getByTestId('kpi-value');
     await expect(widgetValue).toHaveCSS('color', 'rgb(255, 255, 255)');
+  });
+
+  test('KPI widget can change label', async ({
+    page,
+    resourceExplorer,
+    configPanel,
+    dashboardWithKPIWidget,
+  }) => {
+    //add property and open config panel
+    await resourceExplorer.addModeledProperties(['Max Temperature']);
+    await configPanel.collapsedButton.click();
+    await configPanel.propertiesTab.click();
+
+    // wait one second for config panel to load
+    await page.waitForTimeout(1000);
+
+    // open up dropdowns
+    await configPanel.page
+      .getByRole('button', { name: 'Max Temperature (Reactor 1)' })
+      .click();
+    await configPanel.page.getByRole('button', { name: 'Label' }).click();
+
+    // uncheck default value
+    await configPanel.page.getByText('Use default datastream name').click();
+    await page.waitForTimeout(1000);
+
+    // click and change input value
+    await configPanel.labelInput.fill(NEW_PROPERTY_NAME);
+
+    // check if widget is updated
+    const widget =
+      dashboardWithKPIWidget.gridArea.getByTestId('kpi-base-component');
+    expect(await widget.textContent()).toContain(NEW_PROPERTY_NAME);
   });
 });

@@ -4,8 +4,12 @@ import { useClients } from '~/components/dashboard/clientContext';
 import { AssetCacheKeyFactory } from '~/components/queryEditor/iotSiteWiseQueryEditor/modeledDataStreamQueryEditor/assetExplorer/useAsset/assetCacheKeyFactory';
 import { createQueryFn } from '~/components/queryEditor/iotSiteWiseQueryEditor/modeledDataStreamQueryEditor/assetExplorer/useAsset/useAsset';
 import { SiteWiseQueryConfig } from '../types';
+import { StyleSettingsMap } from '@iot-app-kit/core';
 
-export const useTableItems = (query: SiteWiseQueryConfig['query']) => {
+export const useTableItems = (
+  query: SiteWiseQueryConfig['query'],
+  styles: StyleSettingsMap
+) => {
   const { iotSiteWiseClient } = useClients();
 
   const assets = query?.assets ?? [];
@@ -22,7 +26,7 @@ export const useTableItems = (query: SiteWiseQueryConfig['query']) => {
   });
 
   const assetItems = assets.flatMap(({ assetId, properties }) =>
-    properties.map(({ propertyId }) => {
+    properties.map(({ propertyId, refId }) => {
       const assetDescription = queries.find(
         ({ data }) => data?.assetId === assetId
       )?.data;
@@ -30,7 +34,10 @@ export const useTableItems = (query: SiteWiseQueryConfig['query']) => {
         ({ id }) => id === propertyId
       ) ?? { unit: '' };
       return {
-        property: `${name} (${assetDescription?.assetName ?? ''})`,
+        //if refId is undefined, use property name
+        property:
+          styles[refId ?? ''].name ??
+          `${name} (${assetDescription?.assetName ?? ''})`,
         unit,
         value: {
           $cellRef: {

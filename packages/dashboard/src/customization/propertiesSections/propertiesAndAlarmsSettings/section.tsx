@@ -82,6 +82,16 @@ export const GeneralPropertiesAlarmsSection: FC<
       });
     };
 
+    const onUpdatePropertyName = (refId: string) => (name: string) => {
+      updateStyleSettings({
+        ...styleSettingsValue,
+        [refId]: {
+          ...styleSettingsValue[refId],
+          name,
+        },
+      });
+    };
+
     const modeled =
       siteWiseAssetQuery?.assets?.flatMap(({ assetId, properties }) =>
         properties.map(({ propertyId, refId = propertyId }) =>
@@ -99,6 +109,7 @@ export const GeneralPropertiesAlarmsSection: FC<
                 updateSiteWiseAssetQuery,
               })}
               onUpdatePropertyColor={onUpdatePropertyColor(refId)}
+              onUpdatePropertyName={onUpdatePropertyName(refId)}
               colorable={colorable}
             />
           ) : null
@@ -126,6 +137,7 @@ export const GeneralPropertiesAlarmsSection: FC<
               updateSiteWiseAssetQuery,
             })}
             onUpdatePropertyColor={onUpdatePropertyColor(refId)}
+            onUpdatePropertyName={onUpdatePropertyName(refId)}
             colorable={colorable}
           />
         )
@@ -168,6 +180,7 @@ export const GeneralPropertiesAlarmsSection: FC<
                 })
               }
               onUpdatePropertyColor={onUpdatePropertyColor(refId)}
+              onUpdatePropertyName={onUpdatePropertyName(refId)}
               colorable={colorable}
             />
           );
