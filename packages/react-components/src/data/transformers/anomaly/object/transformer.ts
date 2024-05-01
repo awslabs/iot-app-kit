@@ -102,9 +102,10 @@ export class AnomalyObjectDataSourceTransformer extends ObjectDataSourceTransfor
    */
   #getUniqueDiagnostics(dataSource: AnomalyObjectDataSource) {
     return unique(
-      dataSource.value.data.flatMap(({ diagnostics }) =>
-        diagnostics.map(({ name }) => name)
-      )
+      dataSource.value.data
+        .flatMap(({ diagnostics }) => diagnostics.map(({ name }) => name))
+        .sort()
+        .reverse()
     );
   }
 

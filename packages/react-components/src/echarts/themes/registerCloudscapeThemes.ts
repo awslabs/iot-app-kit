@@ -385,6 +385,9 @@ export const registerCloudscapeThemes = () => {
       textStyle: {
         color: '#404d5c',
       },
+      pageTextStyle: {
+        color: '#404d5c',
+      },
     },
     tooltip: {
       axisPointer: {
@@ -833,6 +836,9 @@ export const registerCloudscapeThemes = () => {
     },
     legend: {
       textStyle: {
+        color: '#b6bec9',
+      },
+      pageTextStyle: {
         color: '#b6bec9',
       },
     },
