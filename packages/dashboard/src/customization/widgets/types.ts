@@ -125,6 +125,7 @@ export type SymbolStyles = {
 };
 
 export type AssetPropertyStyles = LineAndScatterStyles & {
+  name?: string;
   yAxis?: YAxisOptions;
 };
 export type StyledAssetPropertyQuery = AssetPropertyQuery & AssetPropertyStyles;

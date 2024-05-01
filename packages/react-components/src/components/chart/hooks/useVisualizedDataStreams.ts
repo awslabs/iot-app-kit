@@ -11,6 +11,7 @@ import isEqual from 'lodash.isequal';
 import { useTimeSeriesData } from '../../../hooks/useTimeSeriesData';
 import { useViewport } from '../../../hooks/useViewport';
 import { DEFAULT_VIEWPORT, StreamType } from '../../../common/constants';
+// import { ChartStyleSettings } from '../types';
 
 const isNotAlarmStream = ({ streamType }: DataStream) =>
   streamType !== StreamType.ALARM;
@@ -30,13 +31,13 @@ export const useVisualizedDataStreams = (
   const utilizedViewport =
     (lastUpdatedBy ? viewport : passedInViewport || viewport) ??
     DEFAULT_VIEWPORT;
-
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: utilizedViewport,
     queries,
     settings: {
       fetchFromStartToEnd: true,
     },
+    // styles: styleSettings,
   });
 
   useEffect(() => {

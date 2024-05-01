@@ -81,7 +81,6 @@ const useAdaptedStyleSettings = (
   const depStyles = JSON.stringify(rootStyles);
   return useMemo(() => {
     if (!styledAssetQuery) return {};
-
     const styleSettings: ChartOptions['styleSettings'] = {};
 
     styledAssetQuery.assets?.forEach((asset) => {
@@ -120,6 +119,7 @@ const mapStyledAssetPropertyToChartStyleSettings = (
     lineThickness: styles.line?.thickness ?? line?.thickness,
     yAxis: styles.yAxis?.visible ? styles.yAxis : undefined,
     significantDigits: styles.significantDigits,
+    name: styles.name,
   };
 };
 

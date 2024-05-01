@@ -30,6 +30,7 @@ import { LineStyleDropdown } from '../components/lineStyleDropdown';
 import { LineThicknessDropdown } from '../components/lineThicknessDropdown';
 
 import './propertyComponent.css';
+import { DataStreamLabelComponent } from '../components/dataStreamLabelComponent';
 
 const propertiesPadding = {
   paddingLeft: spaceScaledXl,
@@ -296,6 +297,8 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
     property.propertyId,
     assetSummary
   );
+
+  const name = property.name;
   const labelRef = useRef<HTMLDivElement | null>(null);
   const [isNameTruncated, setIsNameTruncated] = useState(false);
   const resetStyles = (styleToReset: object) => {
@@ -328,7 +331,7 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
             style={{ marginBlock: spaceStaticXxs }}
             ref={labelRef}
           >
-            {label}
+            {name ?? label}
           </div>
         </Tooltip>
         <div style={{ float: 'right' }}>
@@ -352,6 +355,11 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
             disableContentPaddings={true}
           >
             <div style={{ padding: `0 ${spaceStaticXl}` }}>
+              <DataStreamLabelComponent
+                name={name}
+                label={label}
+                updateName={(newName) => updateStyle({ name: newName })}
+              />
               <LineStylePropertyConfig
                 resetStyles={resetStyles}
                 onUpdate={updateStyle}
