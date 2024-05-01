@@ -1,3 +1,4 @@
+import { NEW_PROPERTY_NAME } from '../constants';
 import { expect, test } from '../test';
 import { getTrendCursorText } from './LineWidget';
 import { Locator } from '@playwright/test';
@@ -306,6 +307,7 @@ test.describe('Testing Line Widget property changes', () => {
     dashboardWithLineWidget,
     configPanel,
     resourceExplorer,
+    page,
   }) => {
     const widget = dashboardWithLineWidget.gridArea.locator(
       '[data-gesture=widget]'
@@ -315,6 +317,8 @@ test.describe('Testing Line Widget property changes', () => {
     await configPanel.container.getByText('Properties').click();
 
     await configPanel.container.getByLabel('delete property').first().click();
+
+    await page.waitForTimeout(1000);
 
     const legendText = await widget.textContent();
 
@@ -471,6 +475,40 @@ test.describe('Testing Line Widget property changes', () => {
     const max = multiYAxis.getByText('99');
     await expect(min).toBeVisible();
     await expect(max).toBeVisible();
+  });
+
+  test('Line widget can change label', async ({
+    page,
+    resourceExplorer,
+    configPanel,
+    dashboardWithLineWidget,
+  }) => {
+    //add property and open config panel
+    await resourceExplorer.addModeledProperties(['Max Temperature']);
+    await configPanel.collapsedButton.click();
+    await configPanel.propertiesTab.click();
+
+    // wait one second for config panel to load
+    await page.waitForTimeout(1000);
+
+    // open up dropdowns
+    await configPanel.page
+      .getByRole('button', { name: 'Max Temperature (Reactor 1)' })
+      .click();
+    await configPanel.page.getByRole('button', { name: 'Label' }).click();
+
+    // uncheck default value
+    await configPanel.page.getByText('Use default datastream name').click();
+    await page.waitForTimeout(1000);
+
+    // click and change input value
+    await configPanel.labelInput.fill(NEW_PROPERTY_NAME);
+
+    // check if widget is updated
+    const widgetText = await dashboardWithLineWidget.gridArea
+      .locator('[data-gesture=widget]')
+      .textContent();
+    expect(widgetText).toContain(NEW_PROPERTY_NAME);
   });
 });
 

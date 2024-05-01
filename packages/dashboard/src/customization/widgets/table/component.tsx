@@ -58,13 +58,15 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
     queryConfig,
     thresholds,
     significantDigits: widgetSignificantDigits,
+    styleSettings,
   } = widget.properties;
 
   const queries = useQueries(queryConfig.query);
   const key = createWidgetRenderKey(widget.id);
 
   const mappedQuery = assetModelQueryToSiteWiseAssetQuery(queryConfig.query);
-  const items = useTableItems(mappedQuery);
+  // if styleSettings is undefined, pass empty object so useTableItems does not pick name property
+  const items = useTableItems(mappedQuery, styleSettings ?? {});
 
   const significantDigits =
     widgetSignificantDigits ?? dashboardSignificantDigits;
@@ -119,6 +121,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
           items={items}
           thresholds={thresholds}
           significantDigits={significantDigits}
+          styles={styleSettings}
           sortingDisabled
           stickyHeader
           pageSize={widget.properties.pageSize ?? DEFAULT_PREFERENCES.pageSize}
