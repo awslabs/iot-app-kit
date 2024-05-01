@@ -18,6 +18,8 @@ export class ConfigPanel {
   readonly showHideName: Locator;
   readonly showHideTimestamp: Locator;
   readonly showHideAggregationResolution: Locator;
+  readonly propertiesTab: Locator;
+  readonly labelInput: Locator;
 
   constructor({ page }: { page: Page }) {
     this.page = page;
@@ -54,5 +56,9 @@ export class ConfigPanel {
     this.showHideAggregationResolution = this.container
       .getByTestId('show-hide-aggregation-resolution')
       .locator(CHECKBOX_LOCATOR);
+    this.propertiesTab = this.container.getByTestId('properties');
+    this.labelInput = this.container
+      .getByTestId('label-input')
+      .locator('input');
   }
 }

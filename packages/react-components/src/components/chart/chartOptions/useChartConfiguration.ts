@@ -9,7 +9,7 @@ import {
   useGroupableEChart,
   useLoadableEChart,
 } from '../../../hooks/useECharts';
-import { ChartDataQuality, ChartOptions } from '../types';
+import { ChartDataQuality, ChartOptions, ChartStyleSettings } from '../types';
 import { useXAxis } from './axes/xAxis';
 import { useTooltip } from './tooltip/convertTooltip';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -71,7 +71,8 @@ const toDataStreamIdentifiers = (dataStreams: DataStream[]) =>
 
 const toDataStreamMetaData = (
   datastreams: ReturnType<typeof toDataStreamIdentifiers>,
-  series: SeriesOption[]
+  series: SeriesOption[],
+  styleSettings?: ChartStyleSettings
 ) => {
   return datastreams.map(
     ({
@@ -89,9 +90,13 @@ const toDataStreamMetaData = (
         ({ id: seriesId }) => seriesId === id
       ) ?? { appKitColor: color };
       const colorUsed = (foundSeries as GenericSeries).appKitColor;
+
+      const styledName =
+        refId && styleSettings ? styleSettings[refId]?.name : undefined;
+
       return {
         id,
-        name,
+        name: styledName ?? name,
         refId,
         color: colorUsed,
         dataType,
@@ -162,7 +167,7 @@ export const useChartConfiguration = (
   );
 
   const [dataStreamMetaData, setDataStreamMetaData] = useState(
-    toDataStreamMetaData(dataSteamIdentifiers, [])
+    toDataStreamMetaData(dataSteamIdentifiers, [], styleSettings)
   );
 
   useEffect(() => {
@@ -243,7 +248,9 @@ export const useChartConfiguration = (
       : { replaceMerge: ['series'] };
     previousDataStreamIdentifiers.current = dataSteamIdentifiers;
 
-    setDataStreamMetaData(toDataStreamMetaData(dataSteamIdentifiers, series));
+    setDataStreamMetaData(
+      toDataStreamMetaData(dataSteamIdentifiers, series, styleSettings)
+    );
 
     chart.setOption(
       {
@@ -265,6 +272,7 @@ export const useChartConfiguration = (
     id,
     backgroundColor,
     significantDigits,
+    styleSettings,
     xAxis,
     tooltip,
     title,
