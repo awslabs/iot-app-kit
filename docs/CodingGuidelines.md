@@ -156,7 +156,7 @@ Guidelines that code authors and code reviewers are expected to adhere to in the
 
 ## Documentation
 
-- Documentation must be written in a style that is consistent with the rest of the documentation. Use the [AWS documentation style](https://docs.aws.amazon.com/iot-sitewise/) as a guide, as well as cross-referencing the other [iot-app-kit documentation](https://github.com/awslabs/iot-app-kit/tree/main/docs).
+- Documentation must be written in a style that is consistent with the rest of the documentation. Use the [AWS documentation style](https://docs.aws.amazon.com/iot-sitewise/) as a guide, as well as cross-referencing the other [iot-app-kit documentation](https://awslabs.github.io/iot-app-kit/?path=/docs/introduction--docs).
 
 - Ensure that all documentation is correctly referenced in the (table of contents)[https://github.com/awslabs/iot-app-kit/blob/main/README.md].
 
