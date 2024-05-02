@@ -17,7 +17,7 @@ import {
   KnownComponentType,
   KnownSceneProperty,
 } from '../../interfaces';
-import { SCENE_COMPONENT_TYPE_ID } from '../../common/entityModelConstants';
+import { SCENE_COMPONENT_TYPE_ID, RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 import { CURRENT_VERSION, DEFAULT_DISTANCE_UNIT, DEFAULT_TAG_GLOBAL_SETTINGS } from '../../common/constants';
 import { ISceneDocumentInternal } from '../../store';
 
@@ -266,9 +266,7 @@ export const parseSceneCompFromEntity = (entity: GetEntityCommandOutput): IScene
       [KnownSceneProperty.ComponentSettings]: componentSettings,
       [KnownSceneProperty.MatterportModelId]:
         comp.properties[SceneComponentProperty.PropertiesMatterportModelId]?.value?.stringValue,
-      [KnownSceneProperty.LayerIds]: comp.properties[SceneComponentProperty.ConnectedToLayers]?.value?.listValue?.map(
-        (layer) => layer.relationshipValue?.targetEntityId,
-      ),
+      [KnownSceneProperty.LayerIds]: [RESERVED_LAYER_ID],
       [KnownSceneProperty.TagCustomColors]: comp.properties[
         SceneComponentProperty.PropertiesTagCustomColors
       ]?.value?.listValue?.map((color) => color.stringValue),
