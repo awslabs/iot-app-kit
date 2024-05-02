@@ -34,7 +34,7 @@ export const ANOMALY_Y_AXIS = {
 };
 
 export const ANOMALY_GRID = {
-  top: 35,
+  top: 40,
   left: 45,
   right: 15,
   bottom: 80,
@@ -71,7 +71,7 @@ export const ANOMALY_TITLE = {
 };
 
 export const ANOMALY_BAR_SERIES_CONFIGURATION = {
-  barMinWidth: 5,
+  barMinWidth: 2,
   barMaxWidth: 10,
   stack: 'Total',
   type: 'bar',

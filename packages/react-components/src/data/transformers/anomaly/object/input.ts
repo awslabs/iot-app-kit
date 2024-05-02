@@ -13,7 +13,7 @@ export type Diagnostic = {
 export type Diagnostics = Diagnostic[];
 
 export type AnomalyObjectDataInput = {
-  timestamp: string;
+  timestamp: number;
   diagnostics: Diagnostics;
 }[];
 

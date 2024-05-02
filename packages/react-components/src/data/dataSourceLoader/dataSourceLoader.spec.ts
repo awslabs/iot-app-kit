@@ -13,7 +13,7 @@ const validAnomalyObjectDataSource: AnomalyObjectDataSource = {
     },
     data: [
       {
-        timestamp: '2024-03-21T21:37:02.000000',
+        timestamp: 1711078622000,
         diagnostics: [
           {
             name: 'Diagnostic Name 1',
@@ -30,7 +30,7 @@ const validAnomalyObjectDataSource: AnomalyObjectDataSource = {
         ],
       },
       {
-        timestamp: '2024-03-22T21:37:02.000000',
+        timestamp: 1711165022000,
         diagnostics: [
           {
             name: 'Diagnostic Name 1',
