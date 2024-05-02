@@ -2,10 +2,10 @@ import { ANOMALY_GRID } from '../constants';
 import { ConfigurationOptions } from '../hooks/types';
 
 export const convertGrid = ({
-  showYAxis,
+  axis,
   showTimestamp,
-}: Pick<ConfigurationOptions, 'showYAxis' | 'showTimestamp'>) => ({
+}: Pick<ConfigurationOptions, 'axis' | 'showTimestamp'>) => ({
   ...ANOMALY_GRID,
-  left: showYAxis ? 45 : 15,
+  left: axis?.showY ?? true ? 45 : 15,
   bottom: showTimestamp ? 80 : 50,
 });
