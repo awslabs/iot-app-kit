@@ -7,6 +7,7 @@ import {
   convertSeries,
   convertTitle,
   convertTooltip,
+  convertXAxis,
   convertYAxis,
 } from '../converters';
 import { AnomalyData } from '../../../data';
@@ -24,8 +25,10 @@ type AnomalyChartOptionState = {
   tooltip: ReturnType<typeof convertTooltip>;
   dataset: ReturnType<typeof convertDataset>;
   yAxis: ReturnType<typeof convertYAxis>;
+  xAxis: ReturnType<typeof convertXAxis>;
   grid: ReturnType<typeof convertGrid>;
   color: string[] | undefined;
+  replaceMerge: string[];
 };
 type UpdateAnomalyChartAction =
   | { type: 'updateData'; data?: AnomalyData }
@@ -39,6 +42,7 @@ const reducer = (
     return {
       ...state,
       dataset: convertDataset(action.data),
+      replaceMerge: [],
     };
   } else if (action.type === 'updateConfiguration') {
     const {
@@ -47,18 +51,26 @@ const reducer = (
       loading,
       decimalPlaces,
       tooltipSort,
-      showYAxis,
+      axis,
       showTimestamp,
     } = action.configuration;
+    // series will be empty when loading is true
+    // don't update until we have finished loading
+    // to avoid flickering in the chart
+    const series = loading ? state.series : convertSeries({ description });
+    // use the replace strategy if the series has changed
+    const replaceSeries = !loading && !isEqual(state.series, series);
     return {
       ...state,
       title: convertTitle({ title }),
-      series: convertSeries({ description }),
+      series,
       legend: convertLegend({ loading }),
       tooltip: convertTooltip({ decimalPlaces, tooltipSort }),
-      yAxis: convertYAxis({ showYAxis }),
-      grid: convertGrid({ showYAxis, showTimestamp }),
+      yAxis: convertYAxis({ axis }),
+      xAxis: convertXAxis({ axis }),
+      grid: convertGrid({ axis, showTimestamp }),
       color: description?.color,
+      replaceMerge: replaceSeries ? ['series'] : [],
     };
   }
   return state;
@@ -71,7 +83,7 @@ const initialState = ({
   decimalPlaces,
   tooltipSort,
   data,
-  showYAxis,
+  axis,
   showTimestamp,
 }: AnomalyEChartOptions): Omit<AnomalyChartOptionState, 'chartRef'> => ({
   dataset: convertDataset(data),
@@ -79,9 +91,11 @@ const initialState = ({
   series: convertSeries({ description }),
   legend: convertLegend({ loading }),
   tooltip: convertTooltip({ decimalPlaces, tooltipSort }),
-  yAxis: convertYAxis({ showYAxis }),
-  grid: convertGrid({ showYAxis, showTimestamp }),
+  yAxis: convertYAxis({ axis }),
+  xAxis: convertXAxis({ axis }),
+  grid: convertGrid({ axis, showTimestamp }),
   color: description?.color,
+  replaceMerge: [],
 });
 
 export type AnomalyEChartOptions = {
@@ -94,11 +108,14 @@ export const useAnomalyEchart = ({
   mode,
   ...options
 }: AnomalyEChartOptions) => {
-  const { viewport: passedInViewport, data } = options;
+  const { viewport: passedInViewport, data, ...configuration } = options;
   const utilizedViewport = passedInViewport ?? options.description?.dataExtent;
 
   const initialEchartsState = initialState({ ...options });
-  const [state, dispatch] = useReducer(reducer, initialEchartsState);
+  const [{ replaceMerge, ...echartOption }, dispatch] = useReducer(
+    reducer,
+    initialEchartsState
+  );
 
   const { ref, chartRef } = useZoomableECharts({
     theme: mode === 'dark' ? 'cloudscapeDarkTheme' : 'cloudscapeLightTheme',
@@ -115,16 +132,20 @@ export const useAnomalyEchart = ({
 
   useCustomCompareEffect(
     () => {
-      dispatch({ type: 'updateConfiguration', configuration: options });
+      dispatch({ type: 'updateConfiguration', configuration });
     },
-    [options],
+    [configuration],
     isEqual
   );
 
   useEffect(() => {
-    const mergedOptions = merge({}, DEFAULT_ANOMALY_WIDGET_SETTINGS, state);
-    chartRef.current?.setOption(mergedOptions);
-  }, [chartRef, state, mode]);
+    const mergedOptions = merge(
+      {},
+      DEFAULT_ANOMALY_WIDGET_SETTINGS,
+      echartOption
+    );
+    chartRef.current?.setOption(mergedOptions, { replaceMerge });
+  }, [chartRef, echartOption, mode, replaceMerge]);
 
   return {
     ref,
