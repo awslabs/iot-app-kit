@@ -28,6 +28,7 @@ export function useGetAssetPropertyValueHistory({
     propertyId,
     startDate,
     endDate,
+    fetchAll,
   });
 
   const {
@@ -50,8 +51,6 @@ export function useGetAssetPropertyValueHistory({
 
   const { pages } = data ?? { pages: [] };
 
-  if (fetchAll && hasNextPage) fetchNextPage();
-
   const assetPropertyValueHistory = createNonNullableList(
     pages.flatMap((res) => res.assetPropertyValueHistory)
   );
@@ -67,13 +66,7 @@ export function useGetAssetPropertyValueHistory({
     status,
     isError,
     error,
-    /**
-     * isLoading will flip true / false for a second
-     * after 1 page loads and fetchNextPage is called
-     * This makes using the boolean on the UI difficult becase
-     * components will flicker
-     */
-    isLoading: fetchAll ? hasNextPage : isLoading,
+    isLoading,
   };
 }
 
@@ -101,7 +94,7 @@ const isEnabled = ({
 
 const createQueryFn = (client: IoTSiteWiseClient) => {
   return async ({
-    queryKey: [{ assetId, propertyId, startDate, endDate }],
+    queryKey: [{ assetId, propertyId, startDate, endDate, fetchAll }],
     pageParam: nextToken,
     signal,
   }: QueryFunctionContext<
@@ -134,7 +127,7 @@ const createQueryFn = (client: IoTSiteWiseClient) => {
       signal,
     });
 
-    const response = await request.send();
+    const response = await request.send(fetchAll);
 
     return response;
   };

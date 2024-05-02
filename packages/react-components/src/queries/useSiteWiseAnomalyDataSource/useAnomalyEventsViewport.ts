@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   HistoricalViewport,
   Viewport,
@@ -9,7 +10,6 @@ import {
   DurationViewport,
 } from '@iot-app-kit/core';
 import { DEFAULT_ANOMALY_DATA_SOURCE_VIEWPORT } from './constants';
-import { useEffect, useState } from 'react';
 
 const getDurationViewportRefreshRate = (
   viewport: DurationViewport,
@@ -76,32 +76,11 @@ export const useAnomalyEventsViewport = ({
     };
   }, [liveModeRefreshRate, viewport]);
 
-  /**
-   * Update the start and end to be the largest observed window.
-   * Start and end are used to get the property value history
-   * for anomaly result properties. Because these are the raw values,
-   * and there are no aggregation based on the selected viewport
-   * we don't need to re-request data if we zoom in. The data
-   * will be the same at any fidelity.
-   *
-   * The data will be re-requested after the stale time is complete.
-   */
   useEffect(() => {
     if (!isHistoricalViewport(viewport)) return;
-
-    const updatedStartDate = Math.min(
-      viewport.start.getTime(),
-      startDate.getTime()
-    );
-    if (startDate.getTime() !== updatedStartDate) {
-      setStartDate(new Date(updatedStartDate));
-    }
-
-    const updatedEndDate = Math.max(viewport.end.getTime(), endDate.getTime());
-    if (endDate.getTime() !== updatedEndDate) {
-      setEndDate(new Date(updatedEndDate));
-    }
-  }, [viewport, startDate, endDate]);
+    setStartDate(new Date(viewport.start.getTime()));
+    setEndDate(new Date(viewport.end.getTime()));
+  }, [viewport]);
 
   return {
     start: startDate,
