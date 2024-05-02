@@ -20,7 +20,7 @@ const AnomalyDataSourceLoader = new DataSourceLoader([
 ]);
 
 export const AnomalyWidget = (options: AnomalyWidgetOptions) => {
-  const { datasources, showTimestamp = true, showYAxis = true } = options;
+  const { datasources, showTimestamp = true, ...configuration } = options;
   /**
    * Datasources is a fixed length array of 1.
    * The widget can only display 1 anomaly for now.
@@ -33,9 +33,8 @@ export const AnomalyWidget = (options: AnomalyWidgetOptions) => {
   );
 
   const { ref } = useAnomalyEchart({
-    ...options,
+    ...configuration,
     showTimestamp,
-    showYAxis,
     data,
     description,
     loading,

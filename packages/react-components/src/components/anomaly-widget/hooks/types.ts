@@ -8,7 +8,10 @@ export type ConfigurationOptions = {
   loading?: boolean;
   decimalPlaces?: number;
   tooltipSort?: TooltipSort;
-  showYAxis?: boolean;
+  axis?: {
+    showY?: boolean;
+    showX?: boolean;
+  };
   showTimestamp?: boolean;
 };
 

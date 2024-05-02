@@ -15,7 +15,7 @@ export const SORT_TRANSFORM = {
   ],
 };
 
-const ANOMALY_X_AXIS = {
+export const ANOMALY_X_AXIS = {
   xAxis: DEFAULT_X_AXIS,
 };
 
