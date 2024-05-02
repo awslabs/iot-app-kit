@@ -71,7 +71,9 @@ export const createNodeEntityComponent = (node: ISceneNode, layerId?: string): C
       },
     };
   }
- comp.properties = Object.assign(comp.properties!, attachToLayerRequest(layerId?? RESERVED_LAYER_ID));
+  if (layerId) {
+    comp.properties = Object.assign(comp.properties!, attachToLayerRequest(RESERVED_LAYER_ID));
+  }
   
 
   const params = {};
