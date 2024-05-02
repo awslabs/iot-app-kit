@@ -10,7 +10,7 @@ const validDataSource: AnomalyObjectDataSource = {
     },
     data: [
       {
-        timestamp: '2024-03-21T21:37:02.000000',
+        timestamp: 1711078622000,
         diagnostics: [
           {
             name: 'Diagnostic Name 1',
@@ -27,7 +27,7 @@ const validDataSource: AnomalyObjectDataSource = {
         ],
       },
       {
-        timestamp: '2024-03-22T21:37:02.000000',
+        timestamp: 1711165022000,
         diagnostics: [
           {
             name: 'Diagnostic Name 1',
@@ -53,7 +53,7 @@ const invalidDataSourcePropertyNames: DataSource = {
     styles: {},
     data: [
       {
-        time: '2024-03-22T21:37:02.000000',
+        time: 1711165022000,
         properties: [
           {
             name: 'Diagnostic Name 1',
@@ -79,7 +79,7 @@ const invalidDataSourceDataTypes: DataSource = {
     styles: {},
     data: [
       {
-        timestamp: 1000,
+        timestamp: new Date(1000),
         diagnostics: [
           {
             name: 'Diagnostic Name 1',

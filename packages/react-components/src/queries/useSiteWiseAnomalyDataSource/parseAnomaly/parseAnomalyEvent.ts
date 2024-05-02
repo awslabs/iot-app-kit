@@ -13,6 +13,7 @@ export const parseAnomalyEvent = (
   if (!stringValueIsAnomalyEvent) return;
   return {
     ...parsedStringValue,
+    timestamp: (assetPropertyValue.timestamp?.timeInSeconds ?? 0) * 1000,
     diagnostics: parseDiagnostics(parsedStringValue.diagnostics),
   };
 };
