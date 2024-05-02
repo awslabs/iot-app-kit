@@ -16,7 +16,7 @@ import { SCENE_ICONS } from '../../../common/constants';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { DefaultAnchorStatus, IValueDataBinding, KnownSceneProperty, SceneResourceType } from '../../../interfaces';
 import { IAnchorComponentInternal, ISceneComponentInternal, useSceneDocument, useStore } from '../../../store';
-import { isDynamicNode } from '../../../utils/entityModelUtils/sceneUtils';
+import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
 import { shallowEqualsArray } from '../../../utils/objectUtils';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
 import { convertToIotTwinMakerNamespace, getSceneResourceInfo } from '../../../utils/sceneResourceUtils';
@@ -58,13 +58,13 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
   const anchorComponent = component as IAnchorComponentInternal;
   const [items, setItems] = useState<{ key: string; value: string; constraintText?: string }[]>([]);
   const hasDuplicateKeyRef = useRef<boolean>(false);
-  const { listSceneRuleMapIds, getSceneProperty, getSceneRuleMapById } = useSceneDocument(sceneComposerId);
+  const { document, listSceneRuleMapIds, getSceneProperty, getSceneRuleMapById } = useSceneDocument(sceneComposerId);
   const tagStyleColors = getSceneProperty<string[]>(KnownSceneProperty.TagCustomColors, []);
   const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
 
   const intl = useIntl();
 
-  const isDynamic = isDynamicNode(node);
+  const isDynamic = isDynamicScene(document);
 
   const ruleMapIds = listSceneRuleMapIds();
   const filteredList: string[] = useMemo(

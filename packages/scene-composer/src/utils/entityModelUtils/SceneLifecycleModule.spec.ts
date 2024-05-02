@@ -4,7 +4,6 @@ import { setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
 import { SCENE_ROOT_ENTITY_COMPONENT_NAME } from '../../common/entityModelConstants';
 import { SceneCapabilities } from '../../common/sceneModelConstants';
 import { emptyScene } from '../emptyScene';
-import { KnownSceneProperty } from '../../interfaces';
 
 import { SceneLifecycleModule } from './SceneLifecycleModule';
 import { updateSceneEntityComponent } from './sceneComponent';
@@ -57,7 +56,6 @@ describe('createDynamicScene', () => {
       ...emptyScene,
       properties: {
         ...emptyScene.properties,
-        [KnownSceneProperty.LayerIds]: ['dynamic-scene-entity-id'],
       },
     };
     expect(updateSceneEntity).toBeCalledWith({

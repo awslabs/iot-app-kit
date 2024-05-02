@@ -13,6 +13,9 @@ import interfaceHelpers from './interfaceHelpers';
 
 export const removeNode = (document: ISceneDocumentInternal, nodeRef: string, logger: ILogger): ISceneNodeInternal => {
   const nodeToRemove = document.nodeMap[nodeRef]!;
+  if (!nodeToRemove) {
+    return nodeToRemove;
+  }
   const subTreeNodeRefs: string[] = [nodeRef];
   const findSubTreeNodes = (node: ISceneNodeInternal, accumulator: string[]) => {
     node.childRefs.forEach((childRef) => {
@@ -55,9 +58,8 @@ export const removeNode = (document: ISceneDocumentInternal, nodeRef: string, lo
   return nodeToRemove;
 };
 
-export const renderSceneNodesFromLayers = (
+export const renderSceneNodes = (
   nodes: ISceneNodeInternal[],
-  layerId: string,
   document: ISceneDocumentInternal,
   logger: ILogger,
 ): void => {
@@ -123,9 +125,9 @@ export const renderSceneNodesFromLayers = (
     document.nodeMap[parentRef].childRefs = childRefs;
   });
 
-  // Remove previous nodes from the layer that are not available any more
+  // Remove previous dynamic nodes that are not available any more
   existingNodeRefs.forEach((ref) => {
-    if (document.nodeMap[ref].properties.layerIds?.includes(layerId) && !newNodeRefs.find((newRef) => newRef === ref)) {
+    if (isDynamicNode(document.nodeMap[ref]) && !newNodeRefs.find((newRef) => newRef === ref)) {
       removeNode(document, ref, logger);
     }
   });
@@ -161,19 +163,15 @@ export const updateSceneNode = (
   partial: RecursivePartial<ISceneNodeInternal>,
   skipEntityUpdate?: boolean,
 ): void => {
-  const nodeToMove = draft.document.nodeMap[ref];
-  const oldParentRef = nodeToMove?.parentRef;
-  const oldParent = draft.document.nodeMap[oldParentRef || ''];
-
-  // Ignore childRefs from partial since it's determined by parentRef and handled by this function
-  const filteredPartial = partial;
-  delete partial.childRefs;
-
   // update target node
-  mergeDeep(draft.document.nodeMap[ref], filteredPartial);
+  mergeDeep(draft.document.nodeMap[ref], partial);
 
   // Reorder logics
   if ('parentRef' in partial) {
+    const nodeToMove = draft.document.nodeMap[ref];
+    const oldParentRef = nodeToMove?.parentRef;
+    const oldParent = draft.document.nodeMap[oldParentRef || ''];
+
     const newParentRef = partial.parentRef;
 
     // remove target node from old parent

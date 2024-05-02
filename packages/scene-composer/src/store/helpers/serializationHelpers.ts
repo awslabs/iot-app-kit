@@ -696,7 +696,7 @@ function convertNodes(
   const exportedNodes: Node[] = [];
   Object.getOwnPropertyNames(nodes).forEach((nodeRef) => {
     const node = nodes[nodeRef]!;
-    // Do not serialize dynamic nodes rendered from layers
+    // Do not serialize dynamic nodes
     if (isDynamicNode(node)) {
       return;
     }

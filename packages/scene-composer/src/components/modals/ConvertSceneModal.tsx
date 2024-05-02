@@ -5,21 +5,17 @@ import { useIntl } from 'react-intl';
 
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { ISceneNodeInternal, useStore } from '../../store';
-import { COMPOSER_FEATURES, KnownSceneProperty } from '../../interfaces';
+import { KnownSceneProperty } from '../../interfaces';
 import {
   checkIfEntityExists,
   convertAllNodesToEntities,
   createSceneRootEntity,
   prepareWorkspace,
   staticNodeCount,
-  updateSceneRootEntity,
 } from '../../utils/entityModelUtils/sceneUtils';
-import { createLayer } from '../../utils/entityModelUtils/sceneLayerUtils';
-import { LayerType, RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import CenteredContainer from '../CenteredContainer';
 import { ConvertingProgress } from '../ConvertingProgress';
-import { SceneCapabilities, SceneMetadataMapKeys } from '../../common/sceneModelConstants';
 
 interface ConvertProgress {
   total: number;
@@ -50,9 +46,6 @@ const ConvertSceneModal: React.FC = () => {
 
   const sceneRootId = useStore(sceneComposerId)((state) =>
     state.getSceneProperty<string>(KnownSceneProperty.SceneRootEntityId),
-  );
-  const sceneLayerIds = useStore(sceneComposerId)((state) =>
-    state.getSceneProperty<string[]>(KnownSceneProperty.LayerIds),
   );
 
   const { formatMessage } = useIntl();
@@ -91,50 +84,27 @@ const ConvertSceneModal: React.FC = () => {
       };
       setProgress(progressLocal);
 
-      let layerId = sceneLayerIds?.at(0);
       let rootId = sceneRootId;
       const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
-      const layerName = `${sceneMetadataModule?.getSceneId()}_Default`;
-      const isDynamicSceneAlphaEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicSceneAlpha];
 
       if (sceneMetadataModule) {
         // Before backend can create the new default roots, the client side code will
         // create them temporarily here.
         await prepareWorkspace(sceneMetadataModule);
 
-        // Create default layer and default scene root node
-        if (!layerId || isEmpty(layerId) || !(await checkIfEntityExists(layerId, sceneMetadataModule))) {
-          const layer = await createLayer(layerName, LayerType.Relationship);
-          layerId = RESERVED_LAYER_ID;
-          setSceneProperty(KnownSceneProperty.LayerIds, [layerId]);
-        }
+        // Create default scene root node
         const rootEntityExist = rootId && (await checkIfEntityExists(rootId, sceneMetadataModule));
         if (!rootId || isEmpty(rootId) || !rootEntityExist) {
           const root = await createSceneRootEntity(document);
           rootId = root?.entityId;
           setSceneProperty(KnownSceneProperty.SceneRootEntityId, rootId);
-        } else if (rootEntityExist && isDynamicSceneAlphaEnabled) {
-          await updateSceneRootEntity(rootId, document);
-        }
-
-        if (isDynamicSceneAlphaEnabled) {
-          // Update scene with dynamic scene capability
-          const sceneInfo = await sceneMetadataModule.getSceneInfo();
-          await sceneMetadataModule.updateSceneInfo({
-            capabilities: [...(sceneInfo.capabilities || []), SceneCapabilities.DYNAMIC_SCENE],
-            sceneMetadata: {
-              ...sceneInfo.sceneMetadata,
-              [SceneMetadataMapKeys.SCENE_ROOT_ENTITY_ID]: rootId!,
-            },
-          });
         }
       }
 
-      if (rootId && layerId) {
-        convertAllNodesToEntities({
+      if (rootId) {
+        await convertAllNodesToEntities({
           document,
           sceneRootEntityId: rootId,
-          layerId,
           getObject3DBySceneNodeRef,
           onSuccess: (convertedNode) => {
             progressLocal.succeededNodes[convertedNode.ref] = convertedNode;
@@ -150,7 +120,7 @@ const ConvertSceneModal: React.FC = () => {
       setProgress(undefined);
       setResult({ errorMessage: (e as Error).message });
     }
-  }, [document, sceneLayerIds, sceneRootId, setSceneProperty, updateSceneNodeInternalBatch, setProgress]);
+  }, [document, sceneRootId, setSceneProperty, updateSceneNodeInternalBatch, setProgress]);
 
   return (
     <CenteredContainer
