@@ -15,7 +15,7 @@ import {
   updateSceneRootEntity,
 } from '../../utils/entityModelUtils/sceneUtils';
 import { createLayer } from '../../utils/entityModelUtils/sceneLayerUtils';
-import { LayerType } from '../../common/entityModelConstants';
+import { LayerType, RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import CenteredContainer from '../CenteredContainer';
 import { ConvertingProgress } from '../ConvertingProgress';
@@ -105,7 +105,7 @@ const ConvertSceneModal: React.FC = () => {
         // Create default layer and default scene root node
         if (!layerId || isEmpty(layerId) || !(await checkIfEntityExists(layerId, sceneMetadataModule))) {
           const layer = await createLayer(layerName, LayerType.Relationship);
-          layerId = layer?.entityId;
+          layerId = RESERVED_LAYER_ID;
           setSceneProperty(KnownSceneProperty.LayerIds, [layerId]);
         }
         const rootEntityExist = rootId && (await checkIfEntityExists(rootId, sceneMetadataModule));
