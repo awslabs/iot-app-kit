@@ -3,8 +3,9 @@ import { cloneDeep } from 'lodash';
 import { ISceneDocumentInternal, ISceneNodeInternal, RootState } from '../..';
 import DebugLogger from '../../../logger/DebugLogger';
 import { ITransformInternal } from '../../internalInterfaces';
-import { appendSceneNode, removeNode, renderSceneNodesFromLayers, updateSceneNode } from '../sceneDocumentHelpers';
+import { appendSceneNode, removeNode, renderSceneNodes, updateSceneNode } from '../sceneDocumentHelpers';
 import { mergeDeep } from '../../../utils/objectUtils';
+import { RESERVED_LAYER_ID } from '../../../common/entityModelConstants';
 
 jest.mock('../../../utils/objectUtils', () => {
   return { mergeDeep: jest.fn() };
@@ -86,8 +87,8 @@ describe('sceneDocumentHelpers', () => {
     });
   });
 
-  describe('renderSceneNodesFromLayers', () => {
-    it('should be able to renderSceneNodesFromLayers correctly', () => {
+  describe('renderSceneNodes', () => {
+    it('should be able to renderSceneNodes correctly', () => {
       const document = {
         rootNodeRefs: ['root', 'testNode'],
         nodeMap: {
@@ -110,7 +111,7 @@ describe('sceneDocumentHelpers', () => {
             name: 'testNode',
             transform: defaultTransform,
             properties: {
-              layerIds: ['testLayer'],
+              layerIds: [RESERVED_LAYER_ID],
             },
             transformConstraint: {},
           },
@@ -122,7 +123,7 @@ describe('sceneDocumentHelpers', () => {
             name: 'deleteNode',
             transform: defaultTransform,
             properties: {
-              layerIds: ['testLayer'],
+              layerIds: [RESERVED_LAYER_ID],
             },
             transformConstraint: {},
           },
@@ -149,7 +150,7 @@ describe('sceneDocumentHelpers', () => {
           name: 'childNode',
           transform: defaultTransform,
           properties: {
-            layerIds: ['testLayer'],
+            layerIds: [RESERVED_LAYER_ID],
           },
           transformConstraint: {},
         },
@@ -160,13 +161,13 @@ describe('sceneDocumentHelpers', () => {
           name: 'newRoot',
           transform: defaultTransform,
           properties: {
-            layerIds: ['testLayer'],
+            layerIds: [RESERVED_LAYER_ID],
           },
           transformConstraint: {},
         },
       ];
 
-      renderSceneNodesFromLayers(nodes, 'testLayer', document, logger);
+      renderSceneNodes(nodes, document, logger);
       expect(document.nodeMap.deleteNode).toBeUndefined();
       expect(document.nodeMap.testNode.name).toEqual('testNode-new-name');
       expect(document.nodeMap.testNode.childRefs).toEqual(['childNode']);

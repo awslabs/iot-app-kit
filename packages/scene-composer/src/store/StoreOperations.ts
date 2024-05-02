@@ -27,7 +27,7 @@ export type SceneComposerEditorOperation =
 export type SceneComposerDocumentOperation =
   | 'loadScene'
   | 'appendSceneNodeInternal'
-  | 'renderSceneNodesFromLayers'
+  | 'renderSceneNodes'
   | 'updateSceneNodeInternal'
   | 'updateSceneNodeInternalTransient'
   | 'updateSceneNodeInternalBatch'
@@ -62,7 +62,7 @@ export const SceneComposerOperationTypeMap: Record<SceneComposerOperation, Opera
   loadScene: 'INITIALIZE',
 
   appendSceneNodeInternal: 'UPDATE_DOCUMENT',
-  renderSceneNodesFromLayers: 'UPDATE_DOCUMENT',
+  renderSceneNodes: 'UPDATE_DOCUMENT',
   updateSceneNodeInternal: 'UPDATE_DOCUMENT',
   updateSceneNodeInternalTransient: 'TRANSIENT',
   updateSceneNodeInternalBatch: 'UPDATE_DOCUMENT',

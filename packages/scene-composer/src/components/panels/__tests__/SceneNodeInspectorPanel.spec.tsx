@@ -50,10 +50,11 @@ describe('SceneNodeInspectorPanel returns expected elements.', () => {
 
   beforeEach(() => {
     useStore('default').setState({
+      document: {},
       selectedSceneNodeRef: 'testNodeRef',
       getSceneNodeByRef: getSceneNodeByRef,
       updateSceneNodeInternal: updateSceneNodeInternal,
-    });
+    } as any);
     jest.clearAllMocks();
     setFeatureConfig({});
   });

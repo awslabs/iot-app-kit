@@ -42,9 +42,10 @@ describe('DataOverlayComponentEditor', () => {
   const updateComponentInternalMock = jest.fn();
 
   const baseState = {
+    document: {},
     updateComponentInternal: updateComponentInternalMock,
     getEditorConfig: jest.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
-  };
+  } as any;
 
   beforeEach(() => {
     jest.clearAllMocks();

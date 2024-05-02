@@ -17,6 +17,7 @@ import { appendSceneNode } from '../helpers/sceneDocumentHelpers';
 import { createNodeEntity } from '../../utils/entityModelUtils/createNodeEntity';
 import { updateSceneRootEntity } from '../../utils/entityModelUtils/sceneUtils';
 import { setFeatureConfig, setOnFlashMessage } from '../../common/GlobalSettings';
+import { RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 
 import { createSceneDocumentSlice } from './SceneDocumentSlice';
 
@@ -164,7 +165,6 @@ describe('createSceneDocumentSlice', () => {
         ...defaultDocumentSliceState,
         properties: {
           [KnownSceneProperty.SceneRootEntityId]: 'root-id',
-          [KnownSceneProperty.LayerIds]: ['layer-id'],
         },
       },
       errors: [],
@@ -196,7 +196,6 @@ describe('createSceneDocumentSlice', () => {
         ...defaultDocumentSliceState,
         properties: {
           [KnownSceneProperty.SceneRootEntityId]: 'root-id',
-          [KnownSceneProperty.LayerIds]: ['layer-id'],
         },
       },
       errors: [],
@@ -324,7 +323,6 @@ describe('createSceneDocumentSlice', () => {
         ...cloneDeep(valid),
         properties: {
           [KnownSceneProperty.SceneRootEntityId]: 'scene-root',
-          [KnownSceneProperty.LayerIds]: ['layer-id'],
         },
       };
       const draft = { lastOperation: undefined, document, selectedSceneNodeRef: undefined };
@@ -343,18 +341,18 @@ describe('createSceneDocumentSlice', () => {
 
       await flushPromises();
 
-      expect(get).toBeCalledTimes(3);
+      expect(get).toBeCalledTimes(2);
       expect(createNodeEntity as jest.Mock).toBeCalledTimes(1);
-      expect(createNodeEntity as jest.Mock).toBeCalledWith(testNode, 'scene-root', 'layer-id');
+      expect(createNodeEntity as jest.Mock).toBeCalledWith(testNode, 'scene-root');
       expect(appendSceneNodeInternalMock).toBeCalledTimes(1);
       expect(appendSceneNodeInternalMock).toBeCalledWith(
-        { ...testNode, properties: { [SceneNodeRuntimeProperty.LayerIds]: ['layer-id'] } },
+        { ...testNode, properties: { [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID] } },
         undefined,
       );
       expect(appendSceneNode as jest.Mock).not.toBeCalled();
     });
 
-    it('should be able to appendSceneNodeInternal to a dynamic scene and reparent to root', async () => {
+    it('should be able to appendSceneNodeInternal to a dynamic scene not reparented to root', async () => {
       setFeatureConfig({ [COMPOSER_FEATURES.DynamicScene]: true });
 
       const testNode: Partial<ISceneNodeInternal> = {
@@ -372,7 +370,6 @@ describe('createSceneDocumentSlice', () => {
         ...cloneDeep(valid),
         properties: {
           [KnownSceneProperty.SceneRootEntityId]: 'scene-root',
-          [KnownSceneProperty.LayerIds]: ['layer-id'],
         },
       };
       const draft = { lastOperation: undefined, document, selectedSceneNodeRef: undefined };
@@ -397,24 +394,17 @@ describe('createSceneDocumentSlice', () => {
 
       await flushPromises();
 
-      expect(get).toBeCalledTimes(3);
+      expect(get).toBeCalledTimes(2);
       expect(createNodeEntity as jest.Mock).toBeCalledTimes(1);
       expect(createNodeEntity as jest.Mock).toBeCalledWith(
         {
           ...testNode,
-          parentRef: undefined,
-          transform: {
-            rotation: [-0, 0, -0],
-            position: parent.getWorldPosition(new Vector3()).toArray(),
-            scale: parent.getWorldScale(new Vector3()).toArray(),
-          },
         },
-        'scene-root',
-        'layer-id',
+        'parentNode',
       );
       expect(appendSceneNodeInternalMock).toBeCalledTimes(1);
       expect(appendSceneNodeInternalMock).toBeCalledWith(
-        { ...testNode, properties: { [SceneNodeRuntimeProperty.LayerIds]: ['layer-id'] } },
+        { ...testNode, properties: { [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID] } },
         undefined,
       );
       expect(appendSceneNode as jest.Mock).not.toBeCalled();
@@ -438,7 +428,6 @@ describe('createSceneDocumentSlice', () => {
         ...cloneDeep(valid),
         properties: {
           [KnownSceneProperty.SceneRootEntityId]: 'scene-root',
-          [KnownSceneProperty.LayerIds]: ['layer-id'],
         },
       };
       const draft = { lastOperation: undefined, document, selectedSceneNodeRef: undefined };
@@ -463,7 +452,7 @@ describe('createSceneDocumentSlice', () => {
 
       await flushPromises();
 
-      expect(get).toBeCalledTimes(3);
+      expect(get).toBeCalledTimes(2);
       expect(createNodeEntity as jest.Mock).toBeCalledTimes(1);
       expect(createNodeEntity as jest.Mock).toBeCalledWith(
         {
@@ -476,11 +465,10 @@ describe('createSceneDocumentSlice', () => {
           },
         },
         'parentNode',
-        'layer-id',
       );
       expect(appendSceneNodeInternalMock).toBeCalledTimes(1);
       expect(appendSceneNodeInternalMock).toBeCalledWith(
-        { ...testNode, properties: { [SceneNodeRuntimeProperty.LayerIds]: ['layer-id'] } },
+        { ...testNode, properties: { [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID] } },
         undefined,
       );
       expect(appendSceneNode as jest.Mock).not.toBeCalled();
@@ -494,7 +482,6 @@ describe('createSceneDocumentSlice', () => {
         ...cloneDeep(valid),
         properties: {
           [KnownSceneProperty.SceneRootEntityId]: 'scene-root',
-          [KnownSceneProperty.LayerIds]: ['layer-id'],
         },
       };
       const draft = { lastOperation: undefined, document, selectedSceneNodeRef: undefined };
@@ -511,9 +498,9 @@ describe('createSceneDocumentSlice', () => {
 
       await flushPromises();
 
-      expect(get).toBeCalledTimes(3);
+      expect(get).toBeCalledTimes(2);
       expect(createNodeEntity as jest.Mock).toBeCalledTimes(1);
-      expect(createNodeEntity as jest.Mock).toBeCalledWith(testNode, 'scene-root', 'layer-id');
+      expect(createNodeEntity as jest.Mock).toBeCalledWith(testNode, 'scene-root');
       expect(addMessagesMock).toBeCalledTimes(1);
       expect(addMessagesMock).toBeCalledWith([
         {
@@ -525,21 +512,21 @@ describe('createSceneDocumentSlice', () => {
     });
   });
 
-  describe('renderSceneNodesFromLayers', () => {
-    it('should not be able to renderSceneNodesFromLayers when document is undefined', () => {
+  describe('renderSceneNodes', () => {
+    it('should not be able to renderSceneNodes when document is undefined', () => {
       const draft = { document: undefined, lastOperation: undefined };
       const get = jest.fn();
       const set = jest.fn((callback) => callback(draft));
 
       // Act
-      const { renderSceneNodesFromLayers } = createSceneDocumentSlice(set, get);
+      const { renderSceneNodes } = createSceneDocumentSlice(set, get);
 
-      renderSceneNodesFromLayers([], 'layer');
+      renderSceneNodes([]);
 
       expect(draft.lastOperation).toBeUndefined();
     });
 
-    it('should be able to call renderSceneNodesFromLayers', () => {
+    it('should be able to call renderSceneNodes', () => {
       const document = {
         rootNodeRefs: [],
         nodeMap: {},
@@ -550,11 +537,11 @@ describe('createSceneDocumentSlice', () => {
       const set = jest.fn((callback) => callback(draft));
 
       // Act
-      const { renderSceneNodesFromLayers } = createSceneDocumentSlice(set, get);
+      const { renderSceneNodes } = createSceneDocumentSlice(set, get);
 
-      renderSceneNodesFromLayers([], 'layer');
+      renderSceneNodes([]);
 
-      expect(draft.lastOperation).toEqual('renderSceneNodesFromLayers');
+      expect(draft.lastOperation).toEqual('renderSceneNodes');
       expect(draft.sceneLoaded).toBeTruthy();
     });
   });

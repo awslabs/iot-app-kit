@@ -32,7 +32,7 @@ import { createPlaneGeometryEntityComponent } from './planeGeometryComponent';
 export const createNodeEntity = async (
   node: ISceneNodeInternal,
   parentRef: string,
-  layerId: string,
+  layerId?: string,
 ): Promise<CreateEntityCommandOutput | undefined> => {
   const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
 
