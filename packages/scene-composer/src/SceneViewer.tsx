@@ -73,6 +73,7 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
             ...((config as any)?.featureConfig || {}),
             [COMPOSER_FEATURES.Matterport]: true,
             [COMPOSER_FEATURES.SceneAppearance]: true,
+            [COMPOSER_FEATURES.DynamicScene]: true,
           },
         }}
         onSceneLoaded={onSceneLoaded}

@@ -15,7 +15,7 @@ import {
 import { createLayer } from '../../utils/entityModelUtils/sceneLayerUtils';
 import { COMPOSER_FEATURES, KnownSceneProperty } from '../../interfaces';
 import { setFeatureConfig, setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
-import { LayerType } from '../../common/entityModelConstants';
+import { LayerType, RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 import { defaultNode } from '../../../__mocks__/sceneNode';
 import { SceneCapabilities, SceneMetadataMapKeys } from '../../common/sceneModelConstants';
 
@@ -134,7 +134,7 @@ describe('ConvertSceneModal', () => {
     expect(createLayer as jest.Mock).toBeCalledWith('test-scene_Default', LayerType.Relationship);
     expect(createSceneRootEntity as jest.Mock).toBeCalledTimes(1);
     expect(setSceneProperty).toBeCalledTimes(2);
-    expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.LayerIds, ['test-scene_Default']);
+    expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.LayerIds, [RESERVED_LAYER_ID]);
     expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.SceneRootEntityId, 'scene-root-id');
   });
 
@@ -160,7 +160,7 @@ describe('ConvertSceneModal', () => {
     expect(createSceneRootEntity as jest.Mock).not.toBeCalled();
     expect(updateSceneRootEntity as jest.Mock).not.toBeCalled();
     expect(setSceneProperty).toBeCalledTimes(1);
-    expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.LayerIds, ['test-scene_Default']);
+    expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.LayerIds, [RESERVED_LAYER_ID]);
   });
 
   it('should call updateSceneRootEntity when root entity exists and DynamicSceneAlpha is enabled', async () => {
