@@ -267,6 +267,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
         .catch((e) => {
           setLoadSceneError(e || new Error('Failed to get scene root entity'));
         });
+
+        return
     }
   
 

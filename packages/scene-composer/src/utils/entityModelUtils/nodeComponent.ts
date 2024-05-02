@@ -236,7 +236,6 @@ export const parseNode = (entity: DocumentType, nodeCompo: DocumentType): IScene
         (p) => p['propertyName'] === NodeComponentProperty.TransformConstraintSnapToFloor,
       )?.propertyValue,
     },
-    properties: { ...properties, [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID] },
   };
 
   return node;
