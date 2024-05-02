@@ -19,7 +19,7 @@ exports[`SceneViewer should render correctly 1`] = `
   data-testid="webgl-root"
 >
   <div
-    config="{\\"mode\\":\\"Viewing\\",\\"featureConfig\\":{\\"Matterport\\":true,\\"SceneAppearance\\":true}}"
+    config="{\\"mode\\":\\"Viewing\\",\\"featureConfig\\":{\\"Matterport\\":true,\\"SceneAppearance\\":true,\\"DynamicScene\\":true}}"
     data-mocked="SceneComposerInternal"
     onSceneLoaded={[Function]}
     sceneComposerId="123"
