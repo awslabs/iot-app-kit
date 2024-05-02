@@ -1,6 +1,6 @@
 import { GetEntityCommandOutput } from '@aws-sdk/client-iottwinmaker';
 
-import { SCENE_COMPONENT_TYPE_ID } from '../../common/entityModelConstants';
+import { RESERVED_LAYER_ID, SCENE_COMPONENT_TYPE_ID } from '../../common/entityModelConstants';
 import {
   IDataBindingConfig,
   IOverlaySettings,
@@ -322,8 +322,14 @@ describe('parseSceneCompFromEntity', () => {
         [KnownSceneProperty.SceneRootEntityId]: emptyEntity.entityId,
         [KnownSceneProperty.DataBindingConfig]: { fieldMapping: {}, template: {} },
         [KnownSceneProperty.ComponentSettings]: {},
+        [KnownSceneProperty.EnvironmentPreset]: undefined,
+        [KnownSceneProperty.LayerDefaultRefreshInterval]: undefined,
+        [KnownSceneProperty.LayerIds]: [RESERVED_LAYER_ID],
+        [KnownSceneProperty.TagCustomColors]: undefined,
+        [KnownSceneProperty.MatterportModelId]: undefined,
       },
     };
+   
 
     expect(parseSceneCompFromEntity(sceneEntity)).toEqual(expected);
   });
@@ -613,7 +619,7 @@ describe('parseSceneCompFromEntity', () => {
       },
       [KnownSceneProperty.ComponentSettings]: {},
       [KnownSceneProperty.MatterportModelId]: 'matterport-id',
-      [KnownSceneProperty.LayerIds]: ['layer-1', 'layer-2'],
+      [KnownSceneProperty.LayerIds]: [RESERVED_LAYER_ID],
       [KnownSceneProperty.TagCustomColors]: ['red', 'blue'],
       [KnownSceneProperty.LayerDefaultRefreshInterval]: 1223,
     };

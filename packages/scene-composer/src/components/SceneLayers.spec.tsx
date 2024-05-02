@@ -8,6 +8,7 @@ import { KnownSceneProperty } from '../interfaces';
 import { LAYER_DEFAULT_REFRESH_INTERVAL } from '../utils/entityModelUtils/sceneLayerUtils';
 
 import { SceneLayers } from './SceneLayers';
+import { RESERVED_LAYER_ID } from '../common/entityModelConstants';
 
 jest.mock('../utils/entityModelUtils/processQueries', () => ({
   processQueries: jest.fn(),
@@ -40,20 +41,7 @@ describe('SceneLayers', () => {
     });
   });
 
-  it('should enable query when have layerId', async () => {
-    useStore('default').setState(baseState);
-    let enabledValue = false;
-    (useQuery as jest.Mock).mockImplementation(({ enabled, ..._ }) => {
-      enabledValue = enabled;
-      return {};
-    });
-
-    render(<SceneLayers />);
-
-    expect(enabledValue).toBe(true);
-  });
-
-  it('should not enable query when no layerId', async () => {
+  it('should enable query even no layerId specified', async () => {
     useStore('default').setState(baseState);
     getScenePropertyMock.mockReturnValue([]);
 
@@ -65,7 +53,7 @@ describe('SceneLayers', () => {
 
     render(<SceneLayers />);
 
-    expect(enabledValue).toBe(false);
+    expect(enabledValue).toBe(true);
   });
 
   it('should not refetch when not in viewing mode', async () => {
@@ -141,13 +129,6 @@ describe('SceneLayers', () => {
     await queryFunction();
 
     expect(processQueries as jest.Mock).toBeCalledTimes(1);
-    expect(processQueries as jest.Mock).toBeCalledWith(
-      [
-        expect.stringContaining("AND e.entityId = 'layer1'"),
-        expect.stringContaining(`MATCH (binding)<-[r2]-(entity)-[r]->(e)`),
-      ],
-      expect.anything(),
-    );
     expect(renderSceneNodesFromLayersMock).not.toBeCalled();
   });
 
@@ -164,6 +145,6 @@ describe('SceneLayers', () => {
 
     expect(processQueries as jest.Mock).toBeCalledTimes(1);
     expect(renderSceneNodesFromLayersMock).toBeCalledTimes(1);
-    expect(renderSceneNodesFromLayersMock).toBeCalledWith(['random'], 'layer1');
+    expect(renderSceneNodesFromLayersMock).toBeCalledWith(['random'], RESERVED_LAYER_ID);
   });
 });

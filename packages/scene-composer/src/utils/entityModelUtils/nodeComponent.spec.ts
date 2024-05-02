@@ -3,6 +3,7 @@ import {
   DEFAULT_LAYER_COMPONENT_NAME,
   DEFAULT_LAYER_RELATIONSHIP_NAME,
   NODE_COMPONENT_TYPE_ID,
+  RESERVED_LAYER_ID,
   componentTypeToId,
 } from '../../common/entityModelConstants';
 import { ISceneComponent, ISceneNode, KnownComponentType } from '../../interfaces';
@@ -166,6 +167,14 @@ describe('updateNodeEntityComponent', () => {
             stringValue: 'Test',
           },
         },
+        inLayerOf: {
+          value: {
+            relationshipValue: {
+              targetEntityId: RESERVED_LAYER_ID,
+            },
+          },
+        },
+        }
       },
     });
   });
@@ -320,6 +329,7 @@ describe('parseNode', () => {
       properties: {
         matterportId: 'abc def',
         alwaysVisible: true,
+        layerIds: [RESERVED_LAYER_ID],
       },
     });
   });
