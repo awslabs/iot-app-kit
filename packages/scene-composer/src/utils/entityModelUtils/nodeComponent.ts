@@ -238,6 +238,7 @@ export const parseNode = (entity: DocumentType, nodeCompo: DocumentType): IScene
         (p) => p['propertyName'] === NodeComponentProperty.TransformConstraintSnapToFloor,
       )?.propertyValue,
     },
+    properties,
   };
 
   return node;
