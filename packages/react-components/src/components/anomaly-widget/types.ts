@@ -13,6 +13,9 @@ export type AnomalyWidgetOptions = {
   datasources: FixedLengthArray<AnomalyWidgetDataSources, 1>;
   viewport?: Viewport;
   tooltipSort?: TooltipSort;
-  showYAxis?: boolean;
+  axis?: {
+    showY?: boolean;
+    showX?: boolean;
+  };
   showTimestamp?: boolean;
 };
