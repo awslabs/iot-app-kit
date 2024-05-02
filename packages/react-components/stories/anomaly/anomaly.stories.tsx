@@ -66,7 +66,6 @@ export const MockDataAnomalyWidget: ComponentStory<typeof AnomalyWidget> = (
           {...options}
           datasources={[mockDatasource]}
           viewport={MOCK_DATA_VIEWPORT}
-          showYAxis={true}
           showTimestamp={true}
         />
       </div>
