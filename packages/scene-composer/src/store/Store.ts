@@ -1,4 +1,4 @@
-import create, { StateCreator, StoreApi } from 'zustand';
+import { create, StateCreator, StoreApi } from 'zustand';
 import { shallow } from 'zustand/shallow';
 import { immer } from 'zustand/middleware/immer';
 

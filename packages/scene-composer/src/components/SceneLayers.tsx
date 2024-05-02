@@ -7,9 +7,8 @@ import { useStore } from '../store';
 import { processQueries } from '../utils/entityModelUtils/processQueries';
 import { KnownSceneProperty } from '../interfaces';
 import {
-  DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
-  DEFAULT_LAYER_RELATIONSHIP_NAME,
-  SUB_MODEL_REF_PARENT_RELATIONSHIP_NAME,
+  DEFAULT_PARENT_RELATIONSHIP_NAME,
+  RESERVED_LAYER_ID,
 } from '../common/entityModelConstants';
 
 export const SceneLayers: React.FC = () => {
@@ -21,30 +20,49 @@ export const SceneLayers: React.FC = () => {
 
   const renderSceneNodesFromLayers = useStore(sceneComposerId)((state) => state.renderSceneNodesFromLayers);
   const layerIds = useStore(sceneComposerId)((state) => state.getSceneProperty<string[]>(KnownSceneProperty.LayerIds));
-  const layerId = layerIds?.[0];
+  const layerId = RESERVED_LAYER_ID;
+
+  const sceneRootEntityId = useStore(sceneComposerId)(
+    (state) => state.getSceneProperty(KnownSceneProperty.SceneRootEntityId),
+  ) 
 
   const nodes = useQuery({
-    enabled: !isEmpty(layerIds),
-    queryKey: ['scene-layers', layerIds, sceneComposerId],
+    enabled: !!sceneRootEntityId,
+    queryKey: ['scene-layers', sceneRootEntityId, sceneComposerId],
     queryFn: async () => {
       const nodes = await processQueries(
         [
-          // Get node entities in the layer
-          `SELECT entity, r, e
-        FROM EntityGraph 
-        MATCH (entity)-[r]->(e)
-        WHERE r.relationshipName = '${DEFAULT_LAYER_RELATIONSHIP_NAME}'
-        AND e.entityId = '${layerId}'`,
-          // Get entityBinding and subModel parentRef for the nodes in the layer
-          `SELECT entity, r2, binding
-        FROM EntityGraph 
-        MATCH (binding)<-[r2]-(entity)-[r]->(e)
-        WHERE r.relationshipName = '${DEFAULT_LAYER_RELATIONSHIP_NAME}'
-        AND e.entityId = '${layerId}'
-        AND (r2.relationshipName = '${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}'
-        OR r2.relationshipName = '${SUB_MODEL_REF_PARENT_RELATIONSHIP_NAME}')`,
+          // Get node entities under the sceneRootEntityId
+          `select entity, r, e
+          from EntityGraph
+          match (entity)-[r]->(e)
+          where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
+          and e.entityId = '${sceneRootEntityId}'`, 
+
+          `select c, r1, entity
+          from EntityGraph
+          match (c)-[r1]->(entity)-[r]->(e)
+          where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
+          and e.entityId = '${sceneRootEntityId}'`,
+
+          `select c2, r2, c
+          from EntityGraph
+          match (c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+          where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
+          and e.entityId = '${sceneRootEntityId}'`,
+
+          `select c3, r3, c2
+          from EntityGraph
+          match (c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+          where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
+          and e.entityId = '${sceneRootEntityId}'`,
+
+          `select c4, r4, c3
+          from EntityGraph
+          match (c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+          where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
+          and e.entityId = '${sceneRootEntityId}'`
         ],
-        (node) => (node.properties.layerIds = [...(node.properties.layerIds ?? []), layerId!]),
       );
       return nodes;
     },
