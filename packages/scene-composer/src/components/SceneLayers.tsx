@@ -19,7 +19,6 @@ export const SceneLayers: React.FC = () => {
   );
 
   const renderSceneNodesFromLayers = useStore(sceneComposerId)((state) => state.renderSceneNodesFromLayers);
-  const layerIds = useStore(sceneComposerId)((state) => state.getSceneProperty<string[]>(KnownSceneProperty.LayerIds));
   const layerId = RESERVED_LAYER_ID;
 
   const sceneRootEntityId = useStore(sceneComposerId)(

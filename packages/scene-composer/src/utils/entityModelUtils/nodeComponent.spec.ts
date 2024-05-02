@@ -166,15 +166,7 @@ describe('updateNodeEntityComponent', () => {
           value: {
             stringValue: 'Test',
           },
-        },
-        inLayerOf: {
-          value: {
-            relationshipValue: {
-              targetEntityId: RESERVED_LAYER_ID,
-            },
-          },
-        },
-        }
+        }, 
       },
     });
   });
