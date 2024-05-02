@@ -4,7 +4,7 @@ export type AnomalyEventDiagnostic = {
 };
 
 export type AnomalyEvent = {
-  timestamp: string;
+  timestamp: number; // time in ms
   prediction: number;
   prediction_reason: string;
   anomaly_score: number;

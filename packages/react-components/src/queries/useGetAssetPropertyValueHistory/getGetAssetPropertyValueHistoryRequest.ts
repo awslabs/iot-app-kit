@@ -1,7 +1,9 @@
 import {
   GetAssetPropertyValueHistoryCommand,
+  GetAssetPropertyValueHistoryCommandOutput,
   type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
+import { createNonNullableList } from '../../utils/createNonNullableList';
 
 export class GetGetAssetPropertyValueHistoryRequest {
   readonly #command: GetAssetPropertyValueHistoryCommand;
@@ -36,13 +38,37 @@ export class GetGetAssetPropertyValueHistoryRequest {
     this.#signal = signal;
   }
 
-  public async send() {
-    try {
-      const response = await this.#client.send(this.#command, {
-        abortSignal: this.#signal,
-      });
+  public async send(
+    fetchAll?: boolean
+  ): Promise<GetAssetPropertyValueHistoryCommandOutput> {
+    const responses: GetAssetPropertyValueHistoryCommandOutput[] = [];
+    let nextToken = this.#command.input.nextToken;
 
-      return response;
+    try {
+      do {
+        this.#command.input.nextToken = nextToken;
+        const response = await this.#client.send(this.#command, {
+          abortSignal: this.#signal,
+        });
+        nextToken = response.nextToken;
+        responses.push(response);
+      } while (fetchAll && nextToken);
+      const lastResponse = responses.at(-1);
+
+      if (!lastResponse) {
+        throw new Error('Error fetching all asset property values');
+      }
+
+      const assetPropertyValueHistory = createNonNullableList(
+        responses.flatMap(
+          ({ assetPropertyValueHistory }) => assetPropertyValueHistory
+        )
+      );
+
+      return {
+        ...lastResponse,
+        assetPropertyValueHistory,
+      };
     } catch (error) {
       this.#handleError(error);
     }
