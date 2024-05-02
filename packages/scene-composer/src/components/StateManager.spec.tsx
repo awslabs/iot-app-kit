@@ -265,8 +265,6 @@ describe('StateManager', () => {
       capabilities: [SceneCapabilities.DYNAMIC_SCENE],
       sceneMetadata: { [SceneMetadataMapKeys.SCENE_ROOT_ENTITY_ID]: 'root-id' },
     });
-    const mockSceneContent = 'mock scene content';
-    (parseSceneCompFromEntity as jest.Mock).mockReturnValue(mockSceneContent);
 
     let container;
     await act(async () => {
@@ -286,9 +284,8 @@ describe('StateManager', () => {
     });
 
     expect(container).toMatchSnapshot();
-    expect(mockSceneLoader.getSceneUri).not.toBeCalled();
-    expect(mockSceneMetadataModule.getSceneEntity).toBeCalledTimes(1);
-    expect(mockSceneMetadataModule.getSceneEntity).toBeCalledWith({ entityId: 'root-id' });
+    expect(mockSceneLoader.getSceneUri).toBeCalled();
+    expect(mockSceneMetadataModule.getSceneEntity).not.toBeCalled();
     expect(baseState.loadScene).toBeCalledTimes(1);
     expect(baseState.loadScene).toBeCalledWith(mockSceneContent, { disableMotionIndicator: false });
   });
@@ -319,10 +316,9 @@ describe('StateManager', () => {
     });
 
     expect(container).toMatchSnapshot();
-    expect(mockSceneLoader.getSceneUri).not.toBeCalled();
-    expect(mockSceneMetadataModule.getSceneEntity).toBeCalledTimes(1);
-    expect(mockSceneMetadataModule.getSceneEntity).toBeCalledWith({ entityId: 'root-id' });
-    expect(baseState.loadScene).not.toBeCalled();
+    expect(mockSceneLoader.getSceneUri).toBeCalled();
+    expect(mockSceneMetadataModule.getSceneEntity).not.toBeCalled();
+    expect(baseState.loadScene).toBeCalled();
   });
 
   it('should load dynamic scene with error for getting scene entity failure', async () => {
@@ -353,10 +349,9 @@ describe('StateManager', () => {
     });
 
     expect(container).toMatchSnapshot();
-    expect(mockSceneLoader.getSceneUri).not.toBeCalled();
-    expect(mockSceneMetadataModule.getSceneEntity).toBeCalledTimes(1);
-    expect(mockSceneMetadataModule.getSceneEntity).toBeCalledWith({ entityId: 'root-id' });
-    expect(baseState.loadScene).not.toBeCalled();
+    expect(mockSceneLoader.getSceneUri).toBeCalled();
+    expect(mockSceneMetadataModule.getSceneEntity).not.toBeCalled();
+    expect(baseState.loadScene).toBeCalled();
   });
 
   it('should load dynamic scene with error for getting scene info failure', async () => {
