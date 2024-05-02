@@ -12,18 +12,11 @@ import {
   staticNodeCount,
   updateSceneRootEntity,
 } from '../../utils/entityModelUtils/sceneUtils';
-import { createLayer } from '../../utils/entityModelUtils/sceneLayerUtils';
-import { COMPOSER_FEATURES, KnownSceneProperty } from '../../interfaces';
+import { KnownSceneProperty } from '../../interfaces';
 import { setFeatureConfig, setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
-import { LayerType, RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 import { defaultNode } from '../../../__mocks__/sceneNode';
-import { SceneCapabilities, SceneMetadataMapKeys } from '../../common/sceneModelConstants';
 
 import ConvertSceneModal from './ConvertSceneModal';
-
-jest.mock('../../utils/entityModelUtils/sceneLayerUtils', () => ({
-  createLayer: jest.fn(),
-}));
 
 jest.mock('../../utils/entityModelUtils/sceneUtils', () => ({
   createSceneRootEntity: jest.fn(),
@@ -52,9 +45,6 @@ describe('ConvertSceneModal', () => {
       getObject3DBySceneNodeRef,
       getSceneProperty,
     });
-    (createLayer as jest.Mock).mockImplementation((name, _) => {
-      return Promise.resolve({ entityId: name });
-    });
     (createSceneRootEntity as jest.Mock).mockImplementation(() => {
       return Promise.resolve({ entityId: 'scene-root-id' });
     });
@@ -62,9 +52,7 @@ describe('ConvertSceneModal', () => {
     (prepareWorkspace as jest.Mock).mockResolvedValue(undefined);
 
     getSceneProperty.mockImplementation((p) => {
-      if (p == KnownSceneProperty.LayerIds) {
-        return ['layer-id'];
-      } else if (p == KnownSceneProperty.SceneRootEntityId) {
+      if (p == KnownSceneProperty.SceneRootEntityId) {
         return 'scene-root-id';
       } else {
         return undefined;
@@ -114,12 +102,11 @@ describe('ConvertSceneModal', () => {
     expect(queryByTestId('confirm-button')?.getAttribute('disabled')).not.toBeNull();
 
     expect(prepareWorkspace).toBeCalledTimes(1);
-    expect(createLayer as jest.Mock).not.toBeCalled();
     expect(createSceneRootEntity as jest.Mock).not.toBeCalled();
     expect(setSceneProperty).not.toBeCalled();
   });
 
-  it('should create a default layer and root entity when none available', async () => {
+  it('should create a root entity when none available', async () => {
     getSceneProperty.mockReturnValue(undefined);
     const { queryByTestId } = render(<ConvertSceneModal />);
 
@@ -130,60 +117,9 @@ describe('ConvertSceneModal', () => {
 
     await flushPromises();
 
-    expect(createLayer as jest.Mock).toBeCalledTimes(1);
-    expect(createLayer as jest.Mock).toBeCalledWith('test-scene_Default', LayerType.Relationship);
     expect(createSceneRootEntity as jest.Mock).toBeCalledTimes(1);
-    expect(setSceneProperty).toBeCalledTimes(2);
-    expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.LayerIds, [RESERVED_LAYER_ID]);
-    expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.SceneRootEntityId, 'scene-root-id');
-  });
-
-  it('should create a default layer entity when it does not exist', async () => {
-    (checkIfEntityExists as jest.Mock).mockImplementation((entityId) => {
-      if (entityId == 'layer-id') {
-        return Promise.resolve(false);
-      }
-      return Promise.resolve(true);
-    });
-
-    const { queryByTestId } = render(<ConvertSceneModal />);
-
-    const confirmButton = queryByTestId('confirm-button');
-    act(() => {
-      confirmButton!.click();
-    });
-
-    await flushPromises();
-
-    expect(createLayer as jest.Mock).toBeCalledTimes(1);
-    expect(createLayer as jest.Mock).toBeCalledWith('test-scene_Default', LayerType.Relationship);
-    expect(createSceneRootEntity as jest.Mock).not.toBeCalled();
-    expect(updateSceneRootEntity as jest.Mock).not.toBeCalled();
     expect(setSceneProperty).toBeCalledTimes(1);
-    expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.LayerIds, [RESERVED_LAYER_ID]);
-  });
-
-  it('should call updateSceneRootEntity when root entity exists and DynamicSceneAlpha is enabled', async () => {
-    (checkIfEntityExists as jest.Mock).mockImplementation((entityId) => {
-      if (entityId == 'layer-id') {
-        return Promise.resolve(false);
-      }
-      return Promise.resolve(true);
-    });
-    setFeatureConfig({ [COMPOSER_FEATURES.DynamicSceneAlpha]: true });
-
-    const { queryByTestId } = render(<ConvertSceneModal />);
-
-    const confirmButton = queryByTestId('confirm-button');
-    act(() => {
-      confirmButton!.click();
-    });
-
-    await flushPromises();
-
-    expect(createSceneRootEntity as jest.Mock).not.toBeCalled();
-    expect(updateSceneRootEntity as jest.Mock).toBeCalledTimes(1);
-    expect(updateSceneRootEntity as jest.Mock).toBeCalledWith('scene-root-id', useStore('default').getState().document);
+    expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.SceneRootEntityId, 'scene-root-id');
   });
 
   it('should create a default scene entity when it does not exist', async () => {
@@ -203,7 +139,6 @@ describe('ConvertSceneModal', () => {
 
     await flushPromises();
 
-    expect(createLayer as jest.Mock).not.toBeCalled();
     expect(createSceneRootEntity as jest.Mock).toBeCalledTimes(1);
     expect(setSceneProperty).toBeCalledTimes(1);
     expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.SceneRootEntityId, 'scene-root-id');
@@ -307,29 +242,5 @@ describe('ConvertSceneModal', () => {
     expect(errorMessage).toBeTruthy();
 
     expect(container).toMatchSnapshot();
-  });
-
-  it('should call updateSceneInfo when DynamicSceneAlpha is enabled', async () => {
-    const { queryByTestId } = render(<ConvertSceneModal />);
-    setFeatureConfig({ [COMPOSER_FEATURES.DynamicSceneAlpha]: true });
-    getSceneInfo.mockResolvedValue({ capabilities: ['RANDOM'], sceneMetadata: { randomKey: 'random-value' } });
-
-    const confirmButton = queryByTestId('confirm-button');
-    act(() => {
-      confirmButton!.click();
-    });
-
-    await flushPromises();
-    expect(queryByTestId('confirm-button')?.getAttribute('disabled')).not.toBeNull();
-
-    expect(getSceneInfo).toBeCalledTimes(1);
-    expect(updateSceneInfo).toBeCalledTimes(1);
-    expect(updateSceneInfo).toBeCalledWith({
-      capabilities: ['RANDOM', SceneCapabilities.DYNAMIC_SCENE],
-      sceneMetadata: {
-        randomKey: 'random-value',
-        [SceneMetadataMapKeys.SCENE_ROOT_ENTITY_ID]: 'scene-root-id',
-      },
-    });
   });
 });

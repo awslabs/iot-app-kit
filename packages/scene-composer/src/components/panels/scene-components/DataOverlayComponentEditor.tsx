@@ -7,7 +7,7 @@ import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { Component } from '../../../models/SceneModels';
 import { IDataOverlayComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
 import { IComponentEditorProps } from '../ComponentEditor';
-import { isDynamicNode } from '../../../utils/entityModelUtils/sceneUtils';
+import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
 
 import { ComponentWithDataBindings, DataBindingMapEditor } from './common/DataBindingMapEditor';
 
@@ -20,13 +20,14 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
   component,
 }: IDataOverlayComponentEditorProps) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
+  const document = useStore(sceneComposerId)((state) => state.document);
   const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
   const valueDataBindingProvider = useStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
   const [newRows, setNewRows] = useState<Component.DataOverlayMarkdownRow[]>(component.dataRows);
 
-  const isDynamic = isDynamicNode(node);
+  const isDynamic = isDynamicScene(document);
 
   const { formatMessage } = useIntl();
   const onUpdateCallback = useCallback(

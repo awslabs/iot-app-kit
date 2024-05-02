@@ -39,8 +39,7 @@ import { findComponentByType } from '../utils/nodeUtils';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
 import { createStandardUriModifier } from '../utils/uriModifiers';
 import { SceneComposerInternalProps } from '../interfaces/sceneComposerInternal';
-import { parseSceneCompFromEntity } from '../utils/entityModelUtils/sceneComponent';
-import { SceneCapabilities, SceneMetadataMapKeys } from '../common/sceneModelConstants';
+import { SceneMetadataMapKeys } from '../common/sceneModelConstants';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
@@ -240,35 +239,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
 
   // get scene uri
   useEffect(() => {
-    // If sceneMetadataModule is provided, wait for sceneInfo to check if it's a dynamic scene,
-    // otherwise always assume it's a static scene and get its scene uri.
-    if (sceneMetadataModule && !sceneInfo) {
-      return;
-    }
-
-    if (sceneRootEntityId && sceneInfo && sceneMetadataModule) {
-      if (sceneInfo.contentLocation && sceneInfo.contentLocation.length > 0) {
-        setSceneContentUri(sceneInfo.contentLocation!);
-      }
-
-      sceneMetadataModule
-        .getSceneEntity({ entityId: sceneRootEntityId })
-        .then((res) => {
-          if (res?.components?.length) {
-            const document = parseSceneCompFromEntity(res);
-            if (!document) {
-              throw new Error('Failed to parse scene metadata');
-            }
-            setSceneContent(document);
-          }
-        })
-        .catch((e) => {
-          setLoadSceneError(e || new Error('Failed to get scene root entity'));
-        });
-
-      return;
-    }
-
     // Fetch scene uri for static scene
     sceneLoader
       .getSceneUri()
@@ -282,7 +252,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       .catch((error) => {
         setLoadSceneError(error || new Error('Failed to get scene uri'));
       });
-  }, [sceneLoader, sceneMetadataModule, sceneInfo, sceneRootEntityId]);
+  }, [sceneLoader]);
 
   useEffect(() => {
     if (sceneContentUri && sceneContentUri.length > 0) {

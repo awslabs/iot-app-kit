@@ -9,18 +9,16 @@ import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { isEmpty } from 'lodash';
 
 import {
-  LAYER_ROOT_ENTITY_ID,
-  LAYER_ROOT_ENTITY_NAME,
   SCENE_ROOT_ENTITY_COMPONENT_NAME,
   SCENE_ROOT_ENTITY_ID,
   SCENE_ROOT_ENTITY_NAME,
+  RESERVED_LAYER_ID,
 } from '../../common/entityModelConstants';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { generateUUID } from '../mathUtils';
 import { ISceneDocumentInternal, ISceneNodeInternal } from '../../store';
+import { COMPOSER_FEATURES, ISceneDocument, KnownSceneProperty } from '../../interfaces';
 import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
-import { findComponentByType, getFinalNodeTransform } from '../nodeUtils';
-import { COMPOSER_FEATURES, ISceneDocument, KnownComponentType, KnownSceneProperty } from '../../interfaces';
 
 import { createNodeEntity } from './createNodeEntity';
 import { createSceneEntityComponent, updateSceneEntityComponent } from './sceneComponent';
@@ -90,24 +88,12 @@ export const checkIfEntityExists = async (
 
 export const prepareWorkspace = async (sceneMetadataModule: TwinMakerSceneMetadataModule): Promise<void> => {
   // Check if root entities exist
-  const checkRoots = await Promise.all([
-    checkIfEntityExists(SCENE_ROOT_ENTITY_ID, sceneMetadataModule),
-    checkIfEntityExists(LAYER_ROOT_ENTITY_ID, sceneMetadataModule),
-  ]);
+  const checkRoots = await checkIfEntityExists(SCENE_ROOT_ENTITY_ID, sceneMetadataModule);
 
   // Create root entities that do not exist
-  const createRootRequests: Promise<CreateEntityCommandOutput>[] = [];
-  if (!checkRoots[0]) {
-    createRootRequests.push(
-      sceneMetadataModule.createSceneEntity({ entityId: SCENE_ROOT_ENTITY_ID, entityName: SCENE_ROOT_ENTITY_NAME }),
-    );
+  if (!checkRoots) {
+    await sceneMetadataModule.createSceneEntity({ entityId: SCENE_ROOT_ENTITY_ID, entityName: SCENE_ROOT_ENTITY_NAME });
   }
-  if (!checkRoots[1]) {
-    createRootRequests.push(
-      sceneMetadataModule.createSceneEntity({ entityId: LAYER_ROOT_ENTITY_ID, entityName: LAYER_ROOT_ENTITY_NAME }),
-    );
-  }
-  await Promise.all(createRootRequests);
 };
 
 export const isDynamicNode = (node?: ISceneNodeInternal): boolean => {
@@ -115,32 +101,28 @@ export const isDynamicNode = (node?: ISceneNodeInternal): boolean => {
 };
 
 export const isDynamicScene = (document?: ISceneDocumentInternal): boolean => {
-  return (
-    !isEmpty(document?.properties?.[KnownSceneProperty.LayerIds]) &&
-    !isEmpty(document?.properties?.[KnownSceneProperty.SceneRootEntityId])
-  );
+  return !isEmpty(document?.properties?.[KnownSceneProperty.SceneRootEntityId]);
 };
 
 export const staticNodeCount = (nodeMap: { [key: string]: ISceneNodeInternal }): number => {
   return Object.values(nodeMap).filter((node) => !isDynamicNode(node)).length;
 };
 
-export const convertAllNodesToEntities = ({
+export const convertAllNodesToEntities = async ({
   document,
   sceneRootEntityId,
-  layerId,
   getObject3DBySceneNodeRef,
   onSuccess,
   onFailure,
 }: {
   document: ISceneDocumentInternal;
   sceneRootEntityId: string;
-  layerId: string;
   getObject3DBySceneNodeRef: (nodeRef: string) => THREE.Object3D | undefined;
   onSuccess?: (node: ISceneNodeInternal) => void;
   onFailure?: (node: ISceneNodeInternal, error: Error) => void;
-}): void => {
-  const subModelRequests: ISceneNodeInternal[] = [];
+}): Promise<void> => {
+  let nodeRequests: ISceneNodeInternal[] = [];
+  const completedNodeRefs: Set<string> = new Set<string>();
 
   Object.keys(document.nodeMap).forEach((nodeRef) => {
     const node = document.nodeMap[nodeRef];
@@ -149,79 +131,45 @@ export const convertAllNodesToEntities = ({
     if (isDynamicNode(node)) {
       return;
     }
-
+    // prepare nodes
     if (!object3D) {
       onFailure?.(node, new Error('Object not found'));
     } else {
-      // Create sub model nodes in the end to ensure their parents are created before them
-      if (findComponentByType(node, KnownComponentType.SubModelRef)) {
-        subModelRequests.push({
-          ...node,
-          properties: {
-            ...node.properties,
-            [SceneNodeRuntimeProperty.LayerIds]: [layerId!],
-          },
-        });
-      } else {
-        // Use world transform before supporting hierarchy relationship
-        const worldTransform = getFinalNodeTransform(node, object3D, null);
-
-        const worldTransformNode: ISceneNodeInternal = {
-          ...node,
-          parentRef: undefined,
-          transform: worldTransform,
-          properties: {
-            ...node.properties,
-            [SceneNodeRuntimeProperty.LayerIds]: [layerId!],
-          },
-        };
-
-        createNodeEntity(worldTransformNode, sceneRootEntityId, layerId)
-          .then(() => {
-            onSuccess?.(worldTransformNode);
-          })
-          .catch((error) => {
-            onFailure?.(worldTransformNode, error);
-          });
-      }
+      // This copy allows us to change data complete including property deletes if necessary
+      const tempNode: ISceneNodeInternal = {
+        ...node,
+        properties: {
+          ...node.properties,
+          [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID], //value doesn't matter here, just that's present and not empty
+        },
+      };
+      nodeRequests.push(tempNode);
     }
   });
 
-  // Make sure the parent entity of sub model node is available before creating sub model entity
-  subModelRequests.forEach(async (req) => {
-    if (!req.parentRef) {
-      onFailure?.(req, new Error('No parentRef found'));
-      return;
-    }
-
-    let retryCounts = 0;
-    const interval = setInterval(async () => {
-      retryCounts++;
-      try {
-        const res = await checkIfEntityExists(req.parentRef!, getGlobalSettings().twinMakerSceneMetadataModule!);
-        if (res) {
-          createNodeEntity(req, req.parentRef || sceneRootEntityId, layerId)
+  while (nodeRequests.length > 0) {
+    const remainingChildNodeRequests: ISceneNodeInternal[] = [];
+    // do all root nodes or children with ready parents
+    const createNodeEntityPromises: Promise<void>[] = [];
+    nodeRequests.forEach((node) => {
+      if (node.parentRef && !completedNodeRefs.has(node.parentRef!)) {
+        remainingChildNodeRequests.push(node);
+      } else {
+        createNodeEntityPromises.push(
+          createNodeEntity(node, node.parentRef ?? sceneRootEntityId)
             .then(() => {
-              onSuccess?.(req);
+              completedNodeRefs.add(node.ref);
+              onSuccess?.(node);
             })
             .catch((error) => {
-              onFailure?.(req, error);
-            });
-
-          clearInterval(interval);
-          return;
-        }
-      } catch (e) {
-        clearInterval(interval);
-        onFailure?.(req, e as Error);
-        return;
+              onFailure?.(node, error);
+            }),
+        );
       }
-
-      if (retryCounts > 3) {
-        clearInterval(interval);
-        onFailure?.(req, new Error('Parent entity does not exist in the workspace'));
-        return;
-      }
-    }, 1000);
-  });
+    });
+    //execute all possible requests
+    await Promise.all(createNodeEntityPromises);
+    //prepare for remaining requests
+    nodeRequests = remainingChildNodeRequests;
+  }
 };

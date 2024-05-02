@@ -1,7 +1,6 @@
 import { isDataBindingTemplate } from '@iot-app-kit/source-iottwinmaker';
 import { isEmpty, isString } from 'lodash';
 import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
-import { Euler, Quaternion, Vector3 } from 'three';
 
 import {
   COMPOSER_FEATURES,
@@ -19,12 +18,7 @@ import { RootState } from '../Store';
 import { addComponentToComponentNodeMap, deleteComponentFromComponentNodeMap } from '../helpers/componentMapHelpers';
 import editorStateHelpers from '../helpers/editorStateHelpers';
 import interfaceHelpers from '../helpers/interfaceHelpers';
-import {
-  appendSceneNode,
-  removeNode,
-  renderSceneNodesFromLayers,
-  updateSceneNode,
-} from '../helpers/sceneDocumentHelpers';
+import { appendSceneNode, removeNode, renderSceneNodes, updateSceneNode } from '../helpers/sceneDocumentHelpers';
 import serializationHelpers, { IDeserializeOptions } from '../helpers/serializationHelpers';
 import {
   DisplayMessageCategory,
@@ -40,9 +34,9 @@ import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity'
 import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
 import { isDynamicNode, isDynamicScene, updateSceneRootEntity } from '../../utils/entityModelUtils/sceneUtils';
 import { createNodeEntity } from '../../utils/entityModelUtils/createNodeEntity';
-import { findComponentByType, getFinalNodeScale } from '../../utils/nodeUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { SliceCreator } from '../middlewares';
+import { RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 
 const LOG = new DebugLogger('stateStore');
 
@@ -56,7 +50,7 @@ export interface ISceneDocumentSlice {
   getSceneNodesByRefs(refs: (string | undefined)[]): (ISceneNodeInternal | undefined)[];
   appendSceneNodeInternal(node: ISceneNodeInternal, disableAutoSelect?: boolean): void;
 
-  renderSceneNodesFromLayers(nodes: ISceneNodeInternal[], layerId: string): void;
+  renderSceneNodes(nodes: ISceneNodeInternal[]): void;
 
   updateSceneNodeInternal(
     ref: string,
@@ -185,45 +179,17 @@ export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> =
       set((draft) => {
         const dynamicSceneEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicScene];
 
+        // WJHH: Probably only occurs on node creation in a scene as the internal node model isn't being
+        // set to dynamic until here
         if (dynamicSceneEnabled && isDynamicScene(draft.document) && !isDynamicNode(node)) {
-          // Default to the first layer for now. Handle adding to current layer when supporting adding layer.
-          const layerId = draft.document.properties![KnownSceneProperty.LayerIds][0];
-
-          // Reparent the node to root since hierarchy relationship is not supported yet
-          const nodeTransform = node.transform;
-          const parent = get().getObject3DBySceneNodeRef(node.parentRef);
-          if (node.parentRef && parent && !findComponentByType(node, KnownComponentType.SubModelRef)) {
-            node.parentRef = undefined;
-
-            nodeTransform.position = parent
-              .localToWorld(
-                new Vector3(nodeTransform.position[0], nodeTransform.position[1], nodeTransform.position[2]),
-              )
-              .toArray();
-            nodeTransform.scale = getFinalNodeScale(
-              node,
-              new Vector3(nodeTransform.scale[0], nodeTransform.scale[1], nodeTransform.scale[2]).multiply(
-                parent.getWorldScale(new Vector3()),
-              ),
-            );
-
-            // Directly use parent's world rotation since a new node will have no local rotation for existing cases.
-            nodeTransform.rotation = new Vector3()
-              .setFromEuler(new Euler().setFromQuaternion(parent.getWorldQuaternion(new Quaternion())))
-              .toArray();
-
-            node.transform = nodeTransform;
-          }
-
-          createNodeEntity(
-            node,
-            node.parentRef ?? draft.document.properties![KnownSceneProperty.SceneRootEntityId],
-            layerId,
-          )
+          createNodeEntity(node, node.parentRef ?? draft.document.properties![KnownSceneProperty.SceneRootEntityId])
             .then(() => {
               // Add the node to the state after successful entity creation
               get().appendSceneNodeInternal(
-                { ...node, properties: { ...node.properties, [SceneNodeRuntimeProperty.LayerIds]: [layerId] } },
+                {
+                  ...node,
+                  properties: { ...node.properties, [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID] },
+                },
                 disableAutoSelect,
               );
             })
@@ -241,17 +207,17 @@ export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> =
       });
     },
 
-    renderSceneNodesFromLayers: (nodes, layerId) => {
+    renderSceneNodes: (nodes) => {
       set((draft) => {
         const document = draft.document;
         if (!document) {
           return;
         }
 
-        renderSceneNodesFromLayers(nodes, layerId, document, LOG);
+        renderSceneNodes(nodes, document, LOG);
 
         draft.sceneLoaded = true;
-        draft.lastOperation = 'renderSceneNodesFromLayers';
+        draft.lastOperation = 'renderSceneNodes';
       });
     },
 

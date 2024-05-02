@@ -16,7 +16,7 @@ import { findComponentByType } from '../../utils/nodeUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
 import { toNumber } from '../../utils/stringUtils';
 import { RecursivePartial } from '../../utils/typeUtils';
-import { isDynamicNode } from '../../utils/entityModelUtils/sceneUtils';
+import { isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
 import { getLocalizedComponentType } from '../../common/componentTypeStings';
 
 import { AddComponentMenu } from './AddComponentMenu';
@@ -29,7 +29,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   const log = useLifecycleLogging('SceneNodeInspectorPanel');
   const sceneComposerId = useContext(sceneComposerIdContext);
   const { selectedSceneNodeRef } = useEditorState(sceneComposerId);
-  const { getSceneNodeByRef, updateSceneNodeInternal } = useSceneDocument(sceneComposerId);
+  const { document, getSceneNodeByRef, updateSceneNodeInternal } = useSceneDocument(sceneComposerId);
   const selectedSceneNode = getSceneNodeByRef(selectedSceneNodeRef);
   const intl = useIntl();
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -48,7 +48,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   const isOverlayComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.DataOverlay);
   const isSubModelComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.SubModelRef);
 
-  const debounceInterval = isDynamicNode(selectedSceneNode) ? 1000 : 100;
+  const debounceInterval = isDynamicScene(document) ? 1000 : 100;
 
   const transformVisible = !isSubModelComponent || subModelMovementEnabled;
 

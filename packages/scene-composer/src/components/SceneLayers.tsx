@@ -1,12 +1,11 @@
 import React, { useContext, useEffect } from 'react';
-import { isEmpty } from 'lodash';
 import { useQuery } from '@tanstack/react-query';
 
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
 import { useStore } from '../store';
 import { processQueries } from '../utils/entityModelUtils/processQueries';
 import { KnownSceneProperty } from '../interfaces';
-import { DEFAULT_PARENT_RELATIONSHIP_NAME, RESERVED_LAYER_ID } from '../common/entityModelConstants';
+import { DEFAULT_PARENT_RELATIONSHIP_NAME } from '../common/entityModelConstants';
 
 export const SceneLayers: React.FC = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
@@ -15,8 +14,7 @@ export const SceneLayers: React.FC = () => {
     (state) => state.getSceneProperty(KnownSceneProperty.LayerDefaultRefreshInterval) as number,
   );
 
-  const renderSceneNodesFromLayers = useStore(sceneComposerId)((state) => state.renderSceneNodesFromLayers);
-  const layerId = RESERVED_LAYER_ID;
+  const renderSceneNodes = useStore(sceneComposerId)((state) => state.renderSceneNodes);
 
   const sceneRootEntityId = useStore(sceneComposerId)((state) =>
     state.getSceneProperty(KnownSceneProperty.SceneRootEntityId),
@@ -68,9 +66,9 @@ export const SceneLayers: React.FC = () => {
 
   useEffect(() => {
     if (nodes.data) {
-      renderSceneNodesFromLayers(nodes.data, layerId!);
+      renderSceneNodes(nodes.data);
     }
-  }, [nodes.data, renderSceneNodesFromLayers]);
+  }, [nodes.data, renderSceneNodes]);
 
   return <></>;
 };

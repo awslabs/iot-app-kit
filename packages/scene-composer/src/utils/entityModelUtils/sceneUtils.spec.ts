@@ -5,15 +5,14 @@ import { ResourceNotFoundException } from '@aws-sdk/client-iottwinmaker';
 
 import { setFeatureConfig, setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
 import {
-  LAYER_ROOT_ENTITY_ID,
-  LAYER_ROOT_ENTITY_NAME,
   SCENE_ROOT_ENTITY_COMPONENT_NAME,
   SCENE_ROOT_ENTITY_ID,
   SCENE_ROOT_ENTITY_NAME,
+  RESERVED_LAYER_ID,
 } from '../../common/entityModelConstants';
 import { ISceneDocumentInternal, ISceneNodeInternal, SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
 import { defaultNode } from '../../../__mocks__/sceneNode';
-import { findComponentByType, getFinalNodeTransform } from '../nodeUtils';
+import { findComponentByType } from '../nodeUtils';
 import { COMPOSER_FEATURES, KnownSceneProperty } from '../../interfaces';
 
 import {
@@ -195,39 +194,6 @@ describe('prepareWorkspace', () => {
     });
   });
 
-  it('should call createSceneEntity to create layers root entity', async () => {
-    getSceneEntity.mockImplementation(({ entityId }) => {
-      if (entityId === LAYER_ROOT_ENTITY_ID) {
-        throw new ResourceNotFoundException({ $metadata: {}, message: 'does not exist' });
-      }
-      return;
-    });
-
-    await prepareWorkspace(mockMetadataModule as TwinMakerSceneMetadataModule);
-
-    expect(createSceneEntity).toBeCalledTimes(1);
-    expect(createSceneEntity).toBeCalledWith({
-      entityId: LAYER_ROOT_ENTITY_ID,
-      entityName: LAYER_ROOT_ENTITY_NAME,
-    });
-  });
-
-  it('should call createSceneEntity to create both layers and scenes root entities', async () => {
-    getSceneEntity.mockRejectedValue(new ResourceNotFoundException({ $metadata: {}, message: 'does not exist' }));
-
-    await prepareWorkspace(mockMetadataModule as TwinMakerSceneMetadataModule);
-
-    expect(createSceneEntity).toBeCalledTimes(2);
-    expect(createSceneEntity).toBeCalledWith({
-      entityId: LAYER_ROOT_ENTITY_ID,
-      entityName: LAYER_ROOT_ENTITY_NAME,
-    });
-    expect(createSceneEntity).toBeCalledWith({
-      entityId: SCENE_ROOT_ENTITY_ID,
-      entityName: SCENE_ROOT_ENTITY_NAME,
-    });
-  });
-
   it('should not call createSceneEntity when root entities exist', async () => {
     getSceneEntity.mockResolvedValue(undefined);
 
@@ -265,7 +231,6 @@ describe('isDynamicScene', () => {
     expect(
       isDynamicScene({
         properties: {
-          [KnownSceneProperty.LayerIds]: ['layer'],
           [KnownSceneProperty.SceneRootEntityId]: 'scene-root',
         },
       } as ISceneDocumentInternal),
@@ -277,13 +242,6 @@ describe('isDynamicScene', () => {
       isDynamicScene({
         properties: {
           [KnownSceneProperty.LayerIds]: ['layer'],
-        },
-      } as ISceneDocumentInternal),
-    ).toEqual(false);
-    expect(
-      isDynamicScene({
-        properties: {
-          [KnownSceneProperty.SceneRootEntityId]: 'scene-root',
         },
       } as ISceneDocumentInternal),
     ).toEqual(false);
@@ -314,11 +272,20 @@ describe('staticNodeCount', () => {
 });
 
 describe('convertAllNodesToEntities', () => {
-  const dynamicNode = { ...defaultNode, properties: { [SceneNodeRuntimeProperty.LayerIds]: ['layer'] } };
+  const dynamicNode = { ...defaultNode, properties: { [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID] } };
   const staticNode: ISceneNodeInternal = {
     ...defaultNode,
     ref: 'staticNode',
-    parentRef: 'parent',
+    transform: {
+      position: [1, 1, 1],
+      rotation: [2, 2, 2],
+      scale: [3, 3, 3],
+    },
+  };
+  const staticChildNode: ISceneNodeInternal = {
+    ...defaultNode,
+    ref: 'staticChildNode',
+    parentRef: 'staticNode',
     transform: {
       position: [1, 1, 1],
       rotation: [2, 2, 2],
@@ -337,7 +304,7 @@ describe('convertAllNodesToEntities', () => {
     jest.clearAllMocks();
     setTwinMakerSceneMetadataModule(mockMetadataModule as unknown as TwinMakerSceneMetadataModule);
     (createNodeEntity as jest.Mock).mockResolvedValue(null);
-    (getFinalNodeTransform as jest.Mock).mockImplementation((n, _, __) => n.transform);
+    //(getFinalNodeTransform as jest.Mock).mockImplementation((n, _, __) => n.transform);
     (findComponentByType as jest.Mock).mockReturnValue(false);
   });
 
@@ -353,7 +320,6 @@ describe('convertAllNodesToEntities', () => {
       onFailure,
       getObject3DBySceneNodeRef: jest.fn().mockReturnValue(new Object3D()),
       sceneRootEntityId: 'scene-root',
-      layerId: 'layer',
     });
 
     await flushPromises();
@@ -376,7 +342,6 @@ describe('convertAllNodesToEntities', () => {
       onFailure,
       getObject3DBySceneNodeRef: jest.fn().mockReturnValue(undefined),
       sceneRootEntityId: 'scene-root',
-      layerId: 'layer',
     });
 
     await flushPromises();
@@ -399,7 +364,6 @@ describe('convertAllNodesToEntities', () => {
       onFailure,
       getObject3DBySceneNodeRef: jest.fn().mockReturnValue(new Object3D()),
       sceneRootEntityId: 'scene-root',
-      layerId: 'layer',
     });
 
     await flushPromises();
@@ -409,23 +373,20 @@ describe('convertAllNodesToEntities', () => {
     expect(onFailure).not.toBeCalled();
     expect(onSuccess).toBeCalledWith({
       ...staticNode,
-      parentRef: undefined,
       properties: {
         ...staticNode.properties,
-        [SceneNodeRuntimeProperty.LayerIds]: ['layer'],
+        [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID],
       },
     });
   });
 
-  it('should call createNodeEntity and use a world transform', async () => {
+  it('should call createNodeEntity for children nodes when node is static', async () => {
     const document: Partial<ISceneDocumentInternal> = {
       nodeMap: {
         staticNode,
+        staticChildNode,
       },
     };
-    const worldTransform = { position: [4, 4, 4], rotation: [5, 5, 5], scale: [6, 6, 6] };
-    (getFinalNodeTransform as jest.Mock).mockImplementation((_, __, ___) => worldTransform);
-    (findComponentByType as jest.Mock).mockReturnValue(false);
 
     convertAllNodesToEntities({
       document: document as ISceneDocumentInternal,
@@ -433,110 +394,27 @@ describe('convertAllNodesToEntities', () => {
       onFailure,
       getObject3DBySceneNodeRef: jest.fn().mockReturnValue(new Object3D()),
       sceneRootEntityId: 'scene-root',
-      layerId: 'layer',
     });
 
     await flushPromises();
 
-    expect(createNodeEntity).toBeCalledTimes(1);
-    expect(onSuccess).toBeCalledTimes(1);
+    expect(createNodeEntity).toBeCalledTimes(2);
+    expect(onSuccess).toBeCalledTimes(2);
     expect(onFailure).not.toBeCalled();
     expect(onSuccess).toBeCalledWith({
       ...staticNode,
-      parentRef: undefined,
-      transform: worldTransform,
       properties: {
         ...staticNode.properties,
-        [SceneNodeRuntimeProperty.LayerIds]: ['layer'],
+        [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID],
       },
     });
-  });
-
-  it('should call createNodeEntity and use a relative transform for sub model node', async () => {
-    const document: Partial<ISceneDocumentInternal> = {
-      nodeMap: {
-        staticNode,
-      },
-    };
-    const worldTransform = { position: [4, 4, 4], rotation: [5, 5, 5], scale: [6, 6, 6] };
-    (getFinalNodeTransform as jest.Mock).mockImplementation((_, __, ___) => worldTransform);
-    (findComponentByType as jest.Mock).mockReturnValue(true);
-    getSceneEntity.mockResolvedValue(true);
-    jest.useFakeTimers();
-
-    convertAllNodesToEntities({
-      document: document as ISceneDocumentInternal,
-      onSuccess,
-      onFailure,
-      getObject3DBySceneNodeRef: jest.fn().mockReturnValue(new Object3D()),
-      sceneRootEntityId: 'scene-root',
-      layerId: 'layer',
-    });
-
-    jest.advanceTimersByTime(1000);
-    await flushPromises();
-
-    expect(onFailure).not.toBeCalled();
-    expect(onSuccess).toBeCalledTimes(1);
-    expect(createNodeEntity).toBeCalledTimes(1);
-    expect(getFinalNodeTransform).not.toBeCalled();
     expect(onSuccess).toBeCalledWith({
-      ...staticNode,
+      ...staticChildNode,
       properties: {
-        ...staticNode.properties,
-        [SceneNodeRuntimeProperty.LayerIds]: ['layer'],
+        ...staticChildNode.properties,
+        [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID],
       },
     });
-  });
-
-  it('should call onFailure when parent entity does not available after retries', async () => {
-    const document: Partial<ISceneDocumentInternal> = {
-      nodeMap: {
-        staticNode,
-      },
-    };
-    const worldTransform = { position: [4, 4, 4], rotation: [5, 5, 5], scale: [6, 6, 6] };
-    (getFinalNodeTransform as jest.Mock).mockImplementation((_, __, ___) => worldTransform);
-    (findComponentByType as jest.Mock).mockReturnValue(true);
-    getSceneEntity.mockRejectedValue(new ResourceNotFoundException({ $metadata: {}, message: 'does not exist' }));
-    jest.useFakeTimers();
-    let error;
-    onFailure.mockImplementation((node, err) => (error = err));
-
-    convertAllNodesToEntities({
-      document: document as ISceneDocumentInternal,
-      onSuccess,
-      onFailure,
-      getObject3DBySceneNodeRef: jest.fn().mockReturnValue(new Object3D()),
-      sceneRootEntityId: 'scene-root',
-      layerId: 'layer',
-    });
-
-    // Mock 4 interval executions, need to flush promises in between to get the promise result before next execution.
-    jest.advanceTimersByTime(1000);
-    await flushPromises();
-    jest.advanceTimersByTime(1000);
-    await flushPromises();
-    jest.advanceTimersByTime(1000);
-    await flushPromises();
-    jest.advanceTimersByTime(1000);
-    await flushPromises();
-
-    expect(onSuccess).not.toBeCalled();
-    expect(onFailure).toBeCalledTimes(1);
-    expect(createNodeEntity).not.toBeCalled();
-    expect(getFinalNodeTransform).not.toBeCalled();
-    expect(onFailure).toBeCalledWith(
-      {
-        ...staticNode,
-        properties: {
-          ...staticNode.properties,
-          [SceneNodeRuntimeProperty.LayerIds]: ['layer'],
-        },
-      },
-      expect.anything(),
-    );
-    expect(error.message).toContain('Parent entity does not exist');
   });
 
   it('should call onFailure when createNodeEntity failed', async () => {
@@ -555,7 +433,6 @@ describe('convertAllNodesToEntities', () => {
       onFailure,
       getObject3DBySceneNodeRef: jest.fn().mockReturnValue(new Object3D()),
       sceneRootEntityId: 'scene-root',
-      layerId: 'layer',
     });
 
     await flushPromises();
@@ -566,10 +443,9 @@ describe('convertAllNodesToEntities', () => {
     expect(onFailure).toBeCalledWith(
       {
         ...staticNode,
-        parentRef: undefined,
         properties: {
           ...staticNode.properties,
-          [SceneNodeRuntimeProperty.LayerIds]: ['layer'],
+          [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID],
         },
       },
       error,

@@ -19,12 +19,12 @@ jest.mock('@tanstack/react-query', () => ({
 }));
 
 describe('SceneLayers', () => {
-  const renderSceneNodesFromLayersMock = jest.fn();
+  const renderSceneNodesMock = jest.fn();
   const isViewingMock = jest.fn();
   const getScenePropertyMock = jest.fn();
   const baseState = {
     getSceneProperty: getScenePropertyMock,
-    renderSceneNodesFromLayers: renderSceneNodesFromLayersMock,
+    renderSceneNodes: renderSceneNodesMock,
     isViewing: isViewingMock,
   };
 
@@ -129,7 +129,7 @@ describe('SceneLayers', () => {
     await queryFunction();
 
     expect(processQueries as jest.Mock).toBeCalledTimes(1);
-    expect(renderSceneNodesFromLayersMock).not.toBeCalled();
+    expect(renderSceneNodesMock).not.toBeCalled();
   });
 
   it('should call processQueries with expected data', async () => {
@@ -144,7 +144,7 @@ describe('SceneLayers', () => {
     await queryFunction();
 
     expect(processQueries as jest.Mock).toBeCalledTimes(1);
-    expect(renderSceneNodesFromLayersMock).toBeCalledTimes(1);
-    expect(renderSceneNodesFromLayersMock).toBeCalledWith(['random'], RESERVED_LAYER_ID);
+    expect(renderSceneNodesMock).toBeCalledTimes(1);
+    expect(renderSceneNodesMock).toBeCalledWith(['random']);
   });
 });
