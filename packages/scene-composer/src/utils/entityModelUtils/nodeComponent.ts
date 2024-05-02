@@ -7,6 +7,7 @@ import {
   DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
   NODE_COMPONENT_TYPE_ID,
   componentTypeToId,
+  RESERVED_LAYER_ID,
 } from '../../common/entityModelConstants';
 import { ISceneComponentInternal, ISceneNodeInternal } from '../../store';
 import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
@@ -71,7 +72,7 @@ export const createNodeEntityComponent = (node: ISceneNode, layerId?: string): C
     };
   }
   if (layerId) {
-    comp.properties = Object.assign(comp.properties!, attachToLayerRequest(layerId));
+    comp.properties = Object.assign(comp.properties!, attachToLayerRequest(RESERVED_LAYER_ID));
   }
 
   const params = {};
