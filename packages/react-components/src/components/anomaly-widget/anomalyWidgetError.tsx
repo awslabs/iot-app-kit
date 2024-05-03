@@ -13,6 +13,9 @@ export const AnomalyWidgetError = () => {
         width: '100%',
         height: '100%',
         position: 'relative',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
       <Box margin={{ vertical: 's', horizontal: 's' }}>
