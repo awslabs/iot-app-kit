@@ -4,7 +4,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { isEmpty } from 'lodash';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { findComponentByType, getFinalNodeTransform } from '../../../utils/nodeUtils';
+import { findComponentByType, getRelativeTransform } from '../../../utils/nodeUtils';
 import { ISceneNodeInternal, useNodeErrorState, useSceneDocument, useStore } from '../../../store';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { ITransform, KnownComponentType } from '../../../interfaces';
@@ -210,7 +210,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
         return;
       }
 
-      let newHierarchyParentObject = getObject3DBySceneNodeRef(newParentRef);
+      let newParentObject3D = getObject3DBySceneNodeRef(newParentRef);
       const newParent = getSceneNodeByRef(newParentRef);
 
       // If the direct new parent is a sub model node, use its modelRef parent
@@ -221,12 +221,12 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
         while (hierarchyParent && !findComponentByType(hierarchyParent, KnownComponentType.ModelRef)) {
           hierarchyParent = getSceneNodeByRef(hierarchyParent.parentRef);
         }
-        newHierarchyParentObject = getObject3DBySceneNodeRef(hierarchyParent?.ref);
+        newParentObject3D = getObject3DBySceneNodeRef(hierarchyParent?.ref);
       }
 
       let maintainedTransform: ITransform | null = null;
       if (originalObject3D) {
-        maintainedTransform = getFinalNodeTransform(originalObject, originalObject3D, newHierarchyParentObject);
+        maintainedTransform = getRelativeTransform(originalObject!, newParent!, getSceneNodeByRef);
       }
 
       // Create updates to the moving object
