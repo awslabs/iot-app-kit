@@ -94,9 +94,7 @@ describe('Chart slider testing', () => {
     };
 
     const { container } = render(<Chart {...options} />);
-    expect(
-      container.getElementsByClassName('base-chart-timestamp').length
-    ).toBe(1);
+    expect(container.getElementsByClassName('chart-timestamp').length).toBe(1);
     expect(
       container.getElementsByClassName('react-resizable-handle-se').length
     ).toBe(1);
@@ -125,9 +123,7 @@ describe('Chart slider testing', () => {
     };
 
     const { container } = render(<Chart {...options} />);
-    expect(
-      container.getElementsByClassName('base-chart-timestamp').length
-    ).toBe(1);
+    expect(container.getElementsByClassName('chart-timestamp').length).toBe(1);
     expect(
       container.getElementsByClassName('react-resizable-handle-se').length
     ).toBe(0);

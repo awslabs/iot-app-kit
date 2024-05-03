@@ -68,14 +68,14 @@
   position: relative;
 }
 
-.base-chart-timestamp-container {
+.chart-timestamp-container {
   display: flex;
   position: absolute;
   overflow: hidden;
   white-space: nowrap;
 }
 
-.base-chart-timestamp {
+.chart-timestamp {
   display: flex;
   justify-content: space-between;
   width: 100%;
