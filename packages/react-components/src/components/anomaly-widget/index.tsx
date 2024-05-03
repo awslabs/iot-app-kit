@@ -10,6 +10,7 @@ import { colorBackgroundContainerContent } from '@cloudscape-design/design-token
 import { useAnomalyEchart } from './hooks/useAnomalyEchart';
 import { LoadingIcon } from './loading-icon';
 import { Timestamp } from '../timestampBar';
+import { AnomalyWidgetError } from './anomalyWidgetError';
 
 /**
  * Setup the applicable data source transformers
@@ -27,6 +28,9 @@ export const AnomalyWidget = (options: AnomalyWidgetOptions) => {
   const data = AnomalyDataSourceLoader.transform([...datasources]).at(0);
   const description = AnomalyDataSourceLoader.describe([...datasources]).at(0);
   const loading = datasources.some(({ state }) => state === 'loading');
+  const error = datasources.some(
+    ({ state }) => state === 'error' || state === 'failed'
+  );
 
   const { ref } = useAnomalyEchart({
     ...options,
@@ -36,6 +40,10 @@ export const AnomalyWidget = (options: AnomalyWidgetOptions) => {
     description,
     loading,
   });
+
+  if (error) {
+    return <AnomalyWidgetError />;
+  }
 
   return (
     <div

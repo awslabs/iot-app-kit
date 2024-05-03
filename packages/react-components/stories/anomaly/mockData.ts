@@ -66,3 +66,23 @@ export const mockDatasource: AnomalyObjectDataSource = {
     })),
   },
 };
+
+export const emptyMockDatasource: AnomalyObjectDataSource = {
+  state: 'success',
+  value: { data: [] },
+};
+
+export const loadingMockDatasource: AnomalyObjectDataSource = {
+  state: 'loading',
+  value: { data: [] },
+};
+
+export const failedMockDatasource: AnomalyObjectDataSource = {
+  state: 'failed',
+  value: { data: [] },
+};
+
+export const errorMockDatasource: AnomalyObjectDataSource = {
+  state: 'error',
+  value: { data: [] },
+};
