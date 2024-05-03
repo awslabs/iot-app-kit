@@ -83,7 +83,7 @@ Type: Object `{ width: Number, height: Number }`
 
 ### `styleSettings`
 
-(Optional) This is an object which groups all the styling options available for the chart
+(Optional) This is an object which groups all the styling options available for the chart by `refId`. [Learn more about reference IDs here](/docs/core-styles--docs).
 
 Type: Object
 
@@ -130,7 +130,6 @@ __Properties__:
   Default value: `'solid'`
 
   Type: one of `'solid' | 'dotted' | 'dashed'`
-
 
 - `lineThickness`
 
@@ -183,7 +182,57 @@ __Properties__:
 
   Type: Number
 
+- `name`
 
+  (Optional) this specifies the name of the property to be shown on the widget
+
+  Default value: undefined
+
+  Type: String
+
+
+__Example usage__:
+
+Simple way to set the color and name of the property in the line chart. This one will color the property red on the chart and display it as 'Demo Property'.
+
+```jsx
+<LineChart
+  /** Specifying a query which provides a `refId` */
+  queries={[
+    query.timeSeriesData({ 
+      assets: [{
+        assetId: 'id', 
+        properties: [{ propertyId: 'property', refId: 'my-property' }]
+      }]
+    })
+ ]}
+ 
+ /** Mapping the provided `refId` to the line chart style settings */
+ styleSettings={{ 'my-property': { color: 'red', name: 'Demo Property' }}}
+/>
+```
+
+Other styles such as data point symbols, line type, and significant digits of values can be customized. This style setting will display a 
+dashed red line with rounded rectangle datapoints whose values are truncated to 5 significant digits for the property 'Demo Property'.
+
+```jsx
+const styleObject = { color: 'red', name: 'Demo Property', symbol: 'roundRect', lineStyle: 'dashed', significantDigits: 5 }
+
+<LineChart
+  /** Specifying a query which provides a `refId` */
+  queries={[
+    query.timeSeriesData({ 
+      assets: [{
+        assetId: 'id', 
+        properties: [{ propertyId: 'property', refId: 'my-property' }]
+      }]
+    })
+ ]}
+ 
+ /** Mapping the provided `refId` to the line chart style settings */
+ styleSettings={{ 'my-property': styleObject}}
+/>
+```
 
 
 ### `viewport`
