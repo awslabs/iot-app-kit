@@ -4,7 +4,14 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { queryClient } from '../../src/queries';
 import { AnomalyWidget } from '../../src/components/anomaly-widget';
-import { MOCK_DATA_VIEWPORT, mockDatasource } from './mockData';
+import {
+  MOCK_DATA_VIEWPORT,
+  emptyMockDatasource,
+  errorMockDatasource,
+  failedMockDatasource,
+  loadingMockDatasource,
+  mockDatasource,
+} from './mockData';
 import { getEnvCredentials, getRegion } from '../utils/query';
 import { TimeSelection, TimeSync } from '../../src';
 import { ConnectedAnomalyWidget } from './connected-anomaly-widget';
@@ -94,5 +101,55 @@ export const SiteWiseConnectedAnomalyWidget: ComponentStory<
         predictionDefinitionId={predictionDefinitionId}
       />
     </TimeSync>
+  );
+};
+
+export const AnomalyWidgetOtherStates: ComponentStory<typeof AnomalyWidget> = (
+  options
+) => {
+  return (
+    <div
+      style={{
+        background: 'grey',
+        display: 'grid',
+        gridTemplateColumns: '500px 500px',
+        gridRow: 'auto auto',
+        gridColumnGap: '20px',
+        gridRowGap: '20px',
+      }}
+    >
+      <div style={{ height: '350px', width: '500px', padding: '20px' }}>
+        <AnomalyWidget
+          {...options}
+          title='empty mock data'
+          datasources={[emptyMockDatasource]}
+          viewport={MOCK_DATA_VIEWPORT}
+        />
+      </div>
+      <div style={{ height: '350px', width: '500px', padding: '20px' }}>
+        <AnomalyWidget
+          {...options}
+          title='loading mock data'
+          datasources={[loadingMockDatasource]}
+          viewport={MOCK_DATA_VIEWPORT}
+        />
+      </div>
+      <div style={{ height: '350px', width: '500px', padding: '20px' }}>
+        <AnomalyWidget
+          {...options}
+          title='failed mock data'
+          datasources={[failedMockDatasource]}
+          viewport={MOCK_DATA_VIEWPORT}
+        />
+      </div>
+      <div style={{ height: '350px', width: '500px', padding: '20px' }}>
+        <AnomalyWidget
+          {...options}
+          title='error mock data'
+          datasources={[errorMockDatasource]}
+          viewport={MOCK_DATA_VIEWPORT}
+        />
+      </div>
+    </div>
   );
 };
