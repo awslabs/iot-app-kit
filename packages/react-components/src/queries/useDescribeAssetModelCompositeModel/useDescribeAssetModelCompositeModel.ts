@@ -3,6 +3,7 @@ import { QueryFunctionContext, useQuery } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 import { AssetModelCompositeModelCacheKeyFactory } from './assetModelCompositeModelQueryKeyFactory';
 import { GetDescribeAssetCompositeModelRequest } from './getDescribeAssetModelCompositeModelRequest';
+import { queryClient } from '../queryClient';
 
 export type UseDescribeAssetModelCompositeModelOptions = {
   assetModelId?: string;
@@ -24,11 +25,14 @@ export function useDescribeAssetModelCompositeModel({
     assetModelCompositeModelId,
   });
 
-  return useQuery({
-    enabled: isEnabled({ assetModelId, assetModelCompositeModelId }),
-    queryKey: cacheKeyFactory.create(),
-    queryFn: createQueryFn(client),
-  });
+  return useQuery(
+    {
+      enabled: isEnabled({ assetModelId, assetModelCompositeModelId }),
+      queryKey: cacheKeyFactory.create(),
+      queryFn: createQueryFn(client),
+    },
+    queryClient
+  );
 }
 
 const isAssetModelId = (assetModelId?: string): assetModelId is string =>

@@ -6,6 +6,7 @@ import {
 } from '../useDescribeAssetProperty';
 import { createNonNullableList } from '../../utils/createNonNullableList';
 import { DescribeAssetPropertyCacheKeyFactory } from '../useDescribeAssetProperty/describeAssetPropertyQueryKeyFactory';
+import { queryClient } from '../queryClient';
 
 export interface UseDescribeAssetPropertiesOptions {
   client: IoTSiteWiseClient;
@@ -17,16 +18,21 @@ export const useDescribeAssetProperties = ({
   describeAssetPropertyRequests,
 }: UseDescribeAssetPropertiesOptions) => {
   const queries =
-    useQueries({
-      queries: describeAssetPropertyRequests.map(({ assetId, propertyId }) => ({
-        enabled: isDescribeAssetPropertyEnabled({ assetId, propertyId }),
-        queryKey: new DescribeAssetPropertyCacheKeyFactory({
-          assetId,
-          propertyId,
-        }).create(),
-        queryFn: createDescribeAssetPropertyQueryFn(client),
-      })),
-    }) ?? [];
+    useQueries(
+      {
+        queries: describeAssetPropertyRequests.map(
+          ({ assetId, propertyId }) => ({
+            enabled: isDescribeAssetPropertyEnabled({ assetId, propertyId }),
+            queryKey: new DescribeAssetPropertyCacheKeyFactory({
+              assetId,
+              propertyId,
+            }).create(),
+            queryFn: createDescribeAssetPropertyQueryFn(client),
+          })
+        ),
+      },
+      queryClient
+    ) ?? [];
 
   const data = createNonNullableList(queries.flatMap(({ data }) => data));
 

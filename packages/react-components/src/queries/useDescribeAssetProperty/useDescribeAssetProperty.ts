@@ -3,6 +3,7 @@ import { QueryFunctionContext, useQuery } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 import { DescribeAssetPropertyCacheKeyFactory } from './describeAssetPropertyQueryKeyFactory';
 import { GetDescribeAssetPropertyRequest } from './getDescribeAssetPropertyRequest';
+import { queryClient } from '../queryClient';
 
 export interface UseDescribeAssetPropertyOptions {
   client: IoTSiteWiseClient;
@@ -21,11 +22,14 @@ export function useDescribeAssetProperty({
     propertyId,
   });
 
-  return useQuery({
-    enabled: isDescribeAssetPropertyEnabled({ assetId, propertyId }),
-    queryKey: cacheKeyFactory.create(),
-    queryFn: createDescribeAssetPropertyQueryFn(client),
-  });
+  return useQuery(
+    {
+      enabled: isDescribeAssetPropertyEnabled({ assetId, propertyId }),
+      queryKey: cacheKeyFactory.create(),
+      queryFn: createDescribeAssetPropertyQueryFn(client),
+    },
+    queryClient
+  );
 }
 
 const isAssetId = (assetId?: string): assetId is string => Boolean(assetId);
