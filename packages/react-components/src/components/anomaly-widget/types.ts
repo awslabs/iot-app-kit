@@ -7,10 +7,10 @@ export type ThemeMode = 'light' | 'dark';
 
 type AnomalyWidgetDataSources = AnomalyObjectDataSource;
 export type AnomalyWidgetOptions = {
+  datasources: FixedLengthArray<AnomalyWidgetDataSources, 1>;
   title?: string;
   mode?: ThemeMode;
   decimalPlaces?: number;
-  datasources: FixedLengthArray<AnomalyWidgetDataSources, 1>;
   viewport?: Viewport;
   tooltipSort?: TooltipSort;
   axis?: {
