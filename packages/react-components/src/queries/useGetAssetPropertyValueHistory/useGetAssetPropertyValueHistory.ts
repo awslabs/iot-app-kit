@@ -4,6 +4,7 @@ import invariant from 'tiny-invariant';
 import { AssetPropertyValueHistoryCacheKeyFactory } from './getAssetPropertyValueHistoryQueryKeyFactory';
 import { GetGetAssetPropertyValueHistoryRequest } from './getGetAssetPropertyValueHistoryRequest';
 import { createNonNullableList } from '../../utils/createNonNullableList';
+import { queryClient } from '../queryClient';
 
 export interface UseGetAssetPropertyValueHistoryOptions {
   client: IoTSiteWiseClient;
@@ -42,12 +43,16 @@ export function useGetAssetPropertyValueHistory({
     isError,
     error,
     isLoading,
-  } = useInfiniteQuery({
-    enabled: isEnabled({ assetId, propertyId, startDate, endDate }),
-    queryKey: cacheKeyFactory.create(),
-    queryFn: createQueryFn(client),
-    getNextPageParam: ({ nextToken }) => nextToken,
-  });
+  } = useInfiniteQuery(
+    {
+      enabled: isEnabled({ assetId, propertyId, startDate, endDate }),
+      queryKey: cacheKeyFactory.create(),
+      queryFn: createQueryFn(client),
+      getNextPageParam: ({ nextToken }) => nextToken,
+      initialPageParam: undefined,
+    },
+    queryClient
+  );
 
   const { pages } = data ?? { pages: [] };
 
@@ -122,7 +127,7 @@ const createQueryFn = (client: IoTSiteWiseClient) => {
       propertyId,
       startDate: new Date(startDate),
       endDate: new Date(endDate),
-      nextToken,
+      nextToken: nextToken as string | undefined,
       client,
       signal,
     });
