@@ -2,7 +2,6 @@ import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import type { FC } from 'react';
 import { getSiteWiseClient } from '@iot-app-kit/core-util';
-import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import {
   queryClient,
@@ -52,10 +51,10 @@ export default {
   },
   decorators: [
     (Story) => (
-      <QueryClientProvider client={queryClient}>
+      <>
         <Story />
-        <ReactQueryDevtools initialIsOpen={true} />
-      </QueryClientProvider>
+        <ReactQueryDevtools client={queryClient} initialIsOpen={true} />
+      </>
     ),
   ],
 } as ComponentMeta<typeof RenderQueries>;

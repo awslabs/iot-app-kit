@@ -3,6 +3,7 @@ import { QueryFunctionContext, useQuery } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 import { DescribeAssetCacheKeyFactory } from './describeAssetQueryKeyFactory';
 import { GetDescribeAssetRequest } from './getDescribeAssetRequest';
+import { queryClient } from '../queryClient';
 
 export interface UseDescribeAssetOptions {
   client: IoTSiteWiseClient;
@@ -13,11 +14,14 @@ export interface UseDescribeAssetOptions {
 export function useDescribeAsset({ client, assetId }: UseDescribeAssetOptions) {
   const cacheKeyFactory = new DescribeAssetCacheKeyFactory({ assetId });
 
-  return useQuery({
-    enabled: isEnabled(assetId),
-    queryKey: cacheKeyFactory.create(),
-    queryFn: createQueryFn(client),
-  });
+  return useQuery(
+    {
+      enabled: isEnabled(assetId),
+      queryKey: cacheKeyFactory.create(),
+      queryFn: createQueryFn(client),
+    },
+    queryClient
+  );
 }
 
 const isEnabled = (assetId?: string): assetId is string => Boolean(assetId);
