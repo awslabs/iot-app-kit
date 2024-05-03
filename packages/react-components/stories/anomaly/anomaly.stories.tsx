@@ -3,17 +3,11 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { queryClient } from '../../src/queries';
 import { AnomalyWidget } from '../../src/components/anomaly-widget';
-import {
-  MOCK_DATA_VIEWPORT,
-  emptyMockDatasource,
-  errorMockDatasource,
-  failedMockDatasource,
-  loadingMockDatasource,
-  mockDatasource,
-} from './mockData';
+import { errorMockDatasource } from './mockData';
 import { getEnvCredentials, getRegion } from '../utils/query';
 import { TimeSelection, TimeSync } from '../../src';
 import { ConnectedAnomalyWidget } from './connected-anomaly-widget';
+import { MOCK_DATA_SOURCE_SUCCESS } from '../../src/components/anomaly-widget/tests/mockDataSources';
 
 export default {
   title: 'Widgets/Anomaly',
@@ -49,23 +43,45 @@ export default {
     (Story) => (
       <>
         <Story />
-        <ReactQueryDevtools client={queryClient} initialIsOpen={true} />
+        <ReactQueryDevtools client={queryClient} initialIsOpen={false} />
       </>
     ),
   ],
 } as ComponentMeta<typeof AnomalyWidget>;
 
-export const MockDataAnomalyWidget: ComponentStory<typeof AnomalyWidget> = (
-  options
-) => {
+export const DefaultSettingsAnomalyWidget: ComponentStory<
+  typeof AnomalyWidget
+> = (options) => {
   return (
     <div style={{ background: 'grey' }}>
       <div style={{ height: '350px', width: '500px', padding: '20px' }}>
         <AnomalyWidget
           {...options}
-          datasources={[mockDatasource]}
-          viewport={MOCK_DATA_VIEWPORT}
-          showTimestamp={true}
+          datasources={[MOCK_DATA_SOURCE_SUCCESS]}
+          viewport={{
+            start: new Date(1714409978348),
+            end: new Date(1714999073631),
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+export const AnomalyWidgetHiddenAxisAndTimestamp: ComponentStory<
+  typeof AnomalyWidget
+> = () => {
+  return (
+    <div style={{ background: 'grey' }}>
+      <div style={{ height: '350px', width: '500px', padding: '20px' }}>
+        <AnomalyWidget
+          datasources={[MOCK_DATA_SOURCE_SUCCESS]}
+          axis={{ showY: false }}
+          showTimestamp={false}
+          viewport={{
+            start: new Date(1714409978348),
+            end: new Date(1714999073631),
+          }}
         />
       </div>
     </div>
@@ -102,50 +118,20 @@ export const SiteWiseConnectedAnomalyWidget: ComponentStory<
   );
 };
 
-export const AnomalyWidgetOtherStates: ComponentStory<typeof AnomalyWidget> = (
+export const AnomalyWidgetErrorState: ComponentStory<typeof AnomalyWidget> = (
   options
 ) => {
   return (
-    <div
-      style={{
-        background: 'grey',
-        display: 'grid',
-        gridTemplateColumns: '500px 500px',
-        gridRow: 'auto auto',
-        gridColumnGap: '20px',
-        gridRowGap: '20px',
-      }}
-    >
-      <div style={{ height: '350px', width: '500px', padding: '20px' }}>
-        <AnomalyWidget
-          {...options}
-          title='empty mock data'
-          datasources={[emptyMockDatasource]}
-          viewport={MOCK_DATA_VIEWPORT}
-        />
-      </div>
-      <div style={{ height: '350px', width: '500px', padding: '20px' }}>
-        <AnomalyWidget
-          {...options}
-          title='loading mock data'
-          datasources={[loadingMockDatasource]}
-          viewport={MOCK_DATA_VIEWPORT}
-        />
-      </div>
-      <div style={{ height: '350px', width: '500px', padding: '20px' }}>
-        <AnomalyWidget
-          {...options}
-          title='failed mock data'
-          datasources={[failedMockDatasource]}
-          viewport={MOCK_DATA_VIEWPORT}
-        />
-      </div>
+    <div style={{ background: 'grey' }}>
       <div style={{ height: '350px', width: '500px', padding: '20px' }}>
         <AnomalyWidget
           {...options}
           title='error mock data'
           datasources={[errorMockDatasource]}
-          viewport={MOCK_DATA_VIEWPORT}
+          viewport={{
+            start: new Date(1714409978348),
+            end: new Date(1714999073631),
+          }}
         />
       </div>
     </div>

@@ -40,13 +40,10 @@ export const AnomalyWidget = (options: AnomalyWidgetOptions) => {
     loading,
   });
 
-  if (error) {
-    return <AnomalyWidgetError />;
-  }
-
   return (
     <div
       className='anomaly-widget'
+      data-testid='anomaly-widget-container'
       style={{
         background: colorBackgroundContainerContent,
         width: '100%',
@@ -54,9 +51,18 @@ export const AnomalyWidget = (options: AnomalyWidgetOptions) => {
         position: 'relative',
       }}
     >
-      <LoadingIcon loading={loading} />
-      <div ref={ref} style={{ width: '100%', height: '100%' }} />
-      {showTimestamp && (
+      {error && <AnomalyWidgetError />}
+      {!error && <LoadingIcon loading={loading} />}
+      <div
+        ref={ref}
+        data-testid='anomaly-widget'
+        style={{
+          width: '100%',
+          height: '100%',
+          display: error ? 'none' : 'default',
+        }}
+      />
+      {showTimestamp && !error && (
         <Timestamp
           showLoadingIndicator={false}
           styleProps={{ width: 'calc(100% - 16px)', bottom: 35 }}

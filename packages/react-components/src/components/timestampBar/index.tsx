@@ -47,7 +47,11 @@ export const Timestamp = ({
     color: `${colorBackgroundLayoutToggleActive}`,
   };
   return (
-    <div className='base-chart-timestamp-container' style={timestampStyle}>
+    <div
+      className='chart-timestamp-container'
+      style={timestampStyle}
+      data-testid='chart-timestamp-container'
+    >
       {showLoadingIndicator && (
         <span style={{ minWidth: spaceStaticXl }}>
           {isLoading && <Spinner />}
@@ -55,7 +59,7 @@ export const Timestamp = ({
       )}
 
       <div
-        className='base-chart-timestamp'
+        className='chart-timestamp'
         style={{
           paddingTop: showLoadingIndicator ? spaceStaticXxs : 0,
           color: colorTextBodyDefault,
