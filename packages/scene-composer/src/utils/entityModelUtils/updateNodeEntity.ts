@@ -35,7 +35,7 @@ export const updateEntity = async (
 
   const nodecomp = updateNodeEntityComponent(node, undefined);
 
-  const updateEntity: UpdateEntityCommandInput = {
+  let updateEntity: UpdateEntityCommandInput = {
     workspaceId: undefined,
     entityId: node.ref,
     entityName: node.name + '_' + node.ref,
@@ -43,6 +43,16 @@ export const updateEntity = async (
       Node: nodecomp,
     },
   };
+
+  if (node.parentRef) {
+    updateEntity = {
+      ...updateEntity,
+      parentEntityUpdate: {
+        updateType: 'UPDATE',
+        parentEntityId: node.parentRef,
+      },
+    };
+  }
 
   compsToBeUpdated?.forEach((compToBeUpdated) => {
     if (compToBeUpdated?.type !== KnownComponentType.EntityBinding) {

@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash';
 
 import ILogger from '../../logger/ILogger';
-import { isDynamicNode } from '../../utils/entityModelUtils/sceneUtils';
+import { isDynamicNode, isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
 import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
 import { mergeDeep } from '../../utils/objectUtils';
 import { RecursivePartial } from '../../utils/typeUtils';
@@ -190,7 +190,7 @@ export const updateSceneNode = (
   }
 
   const updatedNode = draft.document.nodeMap[ref];
-  if (isDynamicNode(updatedNode) && !skipEntityUpdate) {
+  if (isDynamicScene(draft.document) && !skipEntityUpdate) {
     const compsToBeUpdated = !isEmpty(partial.components) ? updatedNode.components : undefined;
     updateEntity(updatedNode, compsToBeUpdated);
   }

@@ -1142,6 +1142,9 @@ describe('createSceneDocumentSlice', () => {
   describe('update entity', () => {
     const documentBase = {
       rootNodeRefs: ['testNode'],
+      properties: {
+        [KnownSceneProperty.SceneRootEntityId]: 'sceneRootEntityId',
+      },
       nodeMap: {
         testNode: {
           properties: {
