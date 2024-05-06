@@ -11,7 +11,6 @@ import {
   convertAllNodesToEntities,
   createSceneRootEntity,
   prepareWorkspace,
-  staticNodeCount,
 } from '../../utils/entityModelUtils/sceneUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import CenteredContainer from '../CenteredContainer';
@@ -77,7 +76,7 @@ const ConvertSceneModal: React.FC = () => {
   const onConfirm = useCallback(async () => {
     try {
       const progressLocal: ConvertProgress = {
-        total: staticNodeCount(document.nodeMap),
+        total: Object.keys(document.nodeMap).length,
         converted: 0,
         succeededNodes: {},
         failedNodes: [],
@@ -95,7 +94,7 @@ const ConvertSceneModal: React.FC = () => {
         // Create default scene root node
         const rootEntityExist = rootId && (await checkIfEntityExists(rootId, sceneMetadataModule));
         if (!rootId || isEmpty(rootId) || !rootEntityExist) {
-          const root = await createSceneRootEntity(document);
+          const root = await createSceneRootEntity();
           rootId = root?.entityId;
           setSceneProperty(KnownSceneProperty.SceneRootEntityId, rootId);
         }
