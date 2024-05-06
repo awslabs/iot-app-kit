@@ -17,6 +17,8 @@ import {
   LIVE_MODE_REFRESH_RATE_MS,
 } from './constants';
 import { DEFAULT_VIEWPORT } from '../../components/time-sync';
+import merge from 'lodash.merge';
+import useIntlStore, { getMessageKey } from '../../translations';
 
 const isDurationViewport = (viewport: Viewport | undefined) =>
   !!(viewport && !isHistoricalViewport(viewport));
@@ -91,6 +93,21 @@ export const useUnboundedDataZoom = ({
   chart: ECharts | null;
   viewport: Viewport | undefined;
 }) => {
+  const intl = useIntlStore((state) => state.intl);
+
+  const zoomTitle = intl.formatMessage({
+    id: getMessageKey('echarts.toolbox.features.dataZoom.title.zoom'),
+    description:
+      'Title for the dataZoom toolbox feature in an echarts instance',
+    defaultMessage: 'Zoom',
+  });
+  const backZoomTitle = intl.formatMessage({
+    id: getMessageKey('echarts.toolbox.features.dataZoom.title.back'),
+    description:
+      'Title for the undo dataZoom toolbox feature in an echarts instance',
+    defaultMessage: 'Undo\nzoom',
+  });
+
   const { setViewport, group } = useViewport();
   const [{ mode, convertedViewport }, dispatch] = useReducer(
     reducer,
@@ -102,10 +119,14 @@ export const useUnboundedDataZoom = ({
     if (chart && zoomCache.current) {
       chart.setOption({
         dataZoom: zoomCache.current,
-        toolbox: DEFAULT_TOOLBOX,
+        toolbox: merge({}, DEFAULT_TOOLBOX, {
+          feature: {
+            dataZoom: { title: { zoom: zoomTitle, back: backZoomTitle } },
+          },
+        }),
       });
     }
-  }, [chart]);
+  }, [chart, zoomTitle, backZoomTitle]);
 
   /**
    * function for setting the dataZoom chart option on the echart instance

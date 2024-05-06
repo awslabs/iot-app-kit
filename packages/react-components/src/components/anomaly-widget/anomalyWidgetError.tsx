@@ -2,8 +2,11 @@ import React from 'react';
 
 import { colorBackgroundContainerContent } from '@cloudscape-design/design-tokens';
 import { Alert, Box } from '@cloudscape-design/components';
+import useIntlStore, { getMessageKey } from '../../translations';
 
 export const AnomalyWidgetError = () => {
+  const intl = useIntlStore((state) => state.intl);
+
   return (
     <div
       className='kpi'
@@ -20,7 +23,12 @@ export const AnomalyWidgetError = () => {
     >
       <Box margin={{ vertical: 's', horizontal: 's' }}>
         <Alert statusIconAriaLabel='Error' type='error'>
-          Error: failed to load the requested data
+          {intl.formatMessage({
+            id: getMessageKey('anomaly-widget.error'),
+            description:
+              'Error message if the anomaly widget fails to load data',
+            defaultMessage: 'Error: failed to load anomaly results',
+          })}
         </Alert>
       </Box>
     </div>
