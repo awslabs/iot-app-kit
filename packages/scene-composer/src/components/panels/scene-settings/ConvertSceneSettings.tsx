@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { Box, Button, Checkbox, CheckboxProps, NonCancelableCustomEvent } from '@cloudscape-design/components';
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { staticNodeCount } from '../../../utils/entityModelUtils/sceneUtils';
+import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
 import { useStore } from '../../../store';
 import { KnownSceneProperty } from '../../../interfaces';
 import { LAYER_DEFAULT_REFRESH_INTERVAL } from '../../../utils/entityModelUtils/sceneLayerUtils';
@@ -45,7 +45,7 @@ export const ConvertSceneSettings: React.FC = () => {
         })}
       </Box>
 
-      <Button data-testid='convert-button' onClick={convertScene} disabled={staticNodeCount(document.nodeMap) === 0}>
+      <Button data-testid='convert-button' onClick={convertScene} disabled={isDynamicScene(document)}>
         {formatMessage({ description: 'Button text', defaultMessage: 'Convert scene' })}
       </Button>
 

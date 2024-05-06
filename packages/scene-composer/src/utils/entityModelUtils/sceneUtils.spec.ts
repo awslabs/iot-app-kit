@@ -13,7 +13,7 @@ import {
 import { ISceneDocumentInternal, ISceneNodeInternal, SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
 import { defaultNode } from '../../../__mocks__/sceneNode';
 import { findComponentByType } from '../nodeUtils';
-import { COMPOSER_FEATURES, KnownSceneProperty } from '../../interfaces';
+import { KnownSceneProperty } from '../../interfaces';
 
 import {
   checkIfEntityExists,
@@ -23,7 +23,6 @@ import {
   isDynamicNode,
   isDynamicScene,
   prepareWorkspace,
-  staticNodeCount,
   updateSceneRootEntity,
 } from './sceneUtils';
 import { createNodeEntity } from './createNodeEntity';
@@ -60,14 +59,11 @@ describe('createSceneRootEntity', () => {
     getSceneId: jest.fn().mockReturnValue('test'),
   };
 
-  it('should call createSceneEntity with expected input when DynamicSceneAlpha is off', () => {
+  it('should call createSceneEntity with expected input', () => {
     setTwinMakerSceneMetadataModule(mockMetadataModule as unknown as TwinMakerSceneMetadataModule);
     setFeatureConfig({});
 
-    createSceneRootEntity({
-      ruleMap: {},
-      version: '1',
-    });
+    createSceneRootEntity();
 
     expect(createSceneEntity).toBeCalledWith({
       workspaceId: undefined,
@@ -76,26 +72,6 @@ describe('createSceneRootEntity', () => {
       entityName: createSceneEntityId('test'),
     });
     expect(createSceneEntityComponent).not.toBeCalled();
-  });
-
-  it('should call createSceneEntity with expected input when DynamicSceneAlpha is on', () => {
-    setTwinMakerSceneMetadataModule(mockMetadataModule as unknown as TwinMakerSceneMetadataModule);
-    setFeatureConfig({ [COMPOSER_FEATURES.DynamicSceneAlpha]: true });
-    (createSceneEntityComponent as jest.Mock).mockReturnValue('random');
-
-    createSceneRootEntity({
-      ruleMap: {},
-      version: '1',
-    });
-
-    expect(createSceneEntity).toBeCalledWith({
-      workspaceId: undefined,
-      entityId: createSceneEntityId('test'),
-      parentEntityId: SCENE_ROOT_ENTITY_ID,
-      entityName: createSceneEntityId('test'),
-      components: { [SCENE_ROOT_ENTITY_COMPONENT_NAME]: 'random' },
-    });
-    expect(createSceneEntityComponent).toBeCalledTimes(1);
   });
 });
 
@@ -250,24 +226,6 @@ describe('isDynamicScene', () => {
         properties: {},
       } as ISceneDocumentInternal),
     ).toEqual(false);
-  });
-});
-
-describe('staticNodeCount', () => {
-  it('should return 0', () => {
-    expect(staticNodeCount({})).toEqual(0);
-    expect(staticNodeCount({ dynamic: { properties: { layerIds: ['layer'] } } as ISceneNodeInternal })).toEqual(0);
-  });
-
-  it('should return correct number', () => {
-    expect(staticNodeCount({})).toEqual(0);
-    expect(
-      staticNodeCount({
-        dynamic: { properties: { layerIds: ['layer'] } } as ISceneNodeInternal,
-        static1: { properties: { layerIds: [] } } as unknown as ISceneNodeInternal,
-        static2: { properties: {} } as ISceneNodeInternal,
-      }),
-    ).toEqual(2);
   });
 });
 

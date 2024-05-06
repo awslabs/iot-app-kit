@@ -7,6 +7,7 @@ import { mergeDeep } from '../../utils/objectUtils';
 import { RecursivePartial } from '../../utils/typeUtils';
 import { RootState } from '../Store';
 import { ISceneDocumentInternal, ISceneNodeInternal } from '../internalInterfaces';
+import { RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 
 import { addNodeToComponentNodeMap, deleteNodeFromComponentNodeMap } from './componentMapHelpers';
 import interfaceHelpers from './interfaceHelpers';
@@ -75,6 +76,10 @@ export const renderSceneNodes = (
     }
     const newNode = interfaceHelpers.createSceneNodeInternal(node);
 
+    if (!newNode.properties.layerIds) {
+      // required for isDynamicNode checks still
+      newNode.properties.layerIds = [RESERVED_LAYER_ID];
+    }
     // check if node already exists
     if (document.nodeMap[newNode.ref]) {
       logger.warn('adding an exising node will override it with the new version.');
