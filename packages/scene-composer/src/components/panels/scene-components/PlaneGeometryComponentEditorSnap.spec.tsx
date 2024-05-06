@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import React from 'react';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
-import { IPlaneGeometryComponentInternal, useStore } from '../../../store';
+import { IPlaneGeometryComponentInternal, accessStore } from '../../../store';
 import { KnownComponentType, COMPOSER_FEATURES } from '../../../interfaces';
 import { mockNode, mockComponent } from '../../../../tests/components/panels/scene-components/MockComponents';
 
@@ -55,7 +55,7 @@ describe('PlaneGeometryComponentEditor', () => {
   it('should render correctly', () => {
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfig });
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(
       <PlaneGeometryComponentEditor node={{ ...mockNode, components: [component] }} component={component} />,
@@ -66,7 +66,7 @@ describe('PlaneGeometryComponentEditor', () => {
   it('should render correctly with color', () => {
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfig });
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(
       <PlaneGeometryComponentEditor
@@ -81,7 +81,7 @@ describe('PlaneGeometryComponentEditor', () => {
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfig });
 
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(
       <PlaneGeometryComponentEditor

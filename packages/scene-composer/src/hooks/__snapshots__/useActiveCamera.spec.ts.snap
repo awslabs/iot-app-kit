@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`useSelectedObject should return the object from the store 1`] = `
-Object {
+{
   "activeCameraName": undefined,
-  "activeCameraSettings": Object {
+  "activeCameraSettings": {
     "cameraType": "Perspective",
     "far": 1000,
     "fov": 53.13,
     "near": 0.1,
-    "transform": Object {
-      "position": Array [
+    "transform": {
+      "position": [
         5,
         5,
         5,

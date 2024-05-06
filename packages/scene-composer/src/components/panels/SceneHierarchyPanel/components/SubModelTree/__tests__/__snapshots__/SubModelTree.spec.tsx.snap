@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SubModelTree callbacks should append node onCreate 1`] = `
-Array [
-  Object {
-    "childRefs": Array [],
-    "components": Array [
-      Object {
+[
+  {
+    "childRefs": [],
+    "components": [
+      {
         "parentRef": "112",
         "ref": "40B59050-EBAE-497F-A366-201E775341DD",
         "selector": "RootObject",
@@ -14,26 +14,26 @@ Array [
     ],
     "name": "RootObject",
     "parentRef": "112",
-    "properties": Object {},
+    "properties": {},
     "ref": "40B59050-EBAE-497F-A366-201E775341DD",
-    "transform": Object {
-      "position": Array [
+    "transform": {
+      "position": [
         1,
         1,
         1,
       ],
-      "rotation": Array [
+      "rotation": [
         1,
         1,
         1,
       ],
-      "scale": Array [
+      "scale": [
         1,
         1,
         1,
       ],
     },
-    "transformConstraint": Object {
+    "transformConstraint": {
       "snapToFloor": false,
     },
   },

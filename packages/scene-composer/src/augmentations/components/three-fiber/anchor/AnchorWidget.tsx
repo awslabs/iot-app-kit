@@ -26,7 +26,7 @@ import {
   SelectedAnchor,
 } from '../../../../interfaces';
 import { IIconLookup } from '../../../../models/SceneModels';
-import { IAnchorComponentInternal, ISceneNodeInternal, useStore, useViewOptionState } from '../../../../store';
+import { IAnchorComponentInternal, ISceneNodeInternal, accessStore, useViewOptionState } from '../../../../store';
 import { applyDataBindingTemplate } from '../../../../utils/dataBindingTemplateUtils';
 import { findComponentByType } from '../../../../utils/nodeUtils';
 import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
@@ -64,8 +64,8 @@ export function AsyncLoadedAnchorWidget({
     setHighlightedSceneNodeRef,
     getSceneNodeByRef,
     dataBindingTemplate,
-  } = useStore(sceneComposerId)((state) => state);
-  const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
+  } = accessStore(sceneComposerId)((state) => state);
+  const isViewing = accessStore(sceneComposerId)((state) => state.isViewing());
   const tagSettings: ITagSettings = useTagSettings();
   const autoRescale = useMemo(() => {
     return tagSettings.autoRescale;
@@ -78,8 +78,8 @@ export function AsyncLoadedAnchorWidget({
 
   const tagVisible = useViewOptionState(sceneComposerId).componentVisibilities[KnownComponentType.Tag];
 
-  const onWidgetClick = useStore(sceneComposerId)((state) => state.getEditorConfig().onWidgetClick);
-  const getObject3DFromSceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
+  const onWidgetClick = accessStore(sceneComposerId)((state) => state.getEditorConfig().onWidgetClick);
+  const getObject3DFromSceneNodeRef = accessStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
 
   const isSelected = useMemo(() => highlightedSceneNodeRef === node.ref, [highlightedSceneNodeRef, node.ref]);
 

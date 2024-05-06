@@ -4,7 +4,7 @@ import { Checkbox, FormField, Select, SpaceBetween } from '@cloudscape-design/co
 
 import useLogger from '../../../logger/react-logger/hooks/useLogger';
 import { Component, LightType } from '../../../models/SceneModels';
-import { ILightComponentInternal, useStore } from '../../../store';
+import { ILightComponentInternal, accessStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IComponentEditorProps } from '../ComponentEditor';
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../common/constants';
@@ -14,7 +14,7 @@ import { ColorPicker } from '../ColorPicker/ColorPicker';
 
 type OnLightSettingsUpdatedCallback = (lightSettings: Component.ILightSettings) => void;
 
-function createInputForField(
+function CreateInputForField(
   fieldName: string,
   index: number,
   lightSettings,
@@ -147,7 +147,7 @@ function LightSettingsEditor(props: {
     <React.Fragment>
       <SpaceBetween size='s'>
         {Object.keys(lightSettings).map((field, index) =>
-          createInputForField(field, index, lightSettings, setLightSettings, setDirty),
+          CreateInputForField(field, index, lightSettings, setLightSettings, setDirty),
         )}
       </SpaceBetween>
     </React.Fragment>
@@ -173,9 +173,9 @@ export const LightComponentEditor: React.FC<IComponentEditorProps> = ({ node, co
   const lightComponent = component as ILightComponentInternal;
   const intl = useIntl();
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
+  const updateComponentInternal = accessStore(sceneComposerId)((state) => state.updateComponentInternal);
   const log = useLogger('LightComponentEditor');
-  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const getSceneNodeByRef = accessStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const i18nLightTypestrings = defineMessages({
     Directional: {
       defaultMessage: 'Directional',

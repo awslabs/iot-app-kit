@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { Box, Toggle } from '@cloudscape-design/components';
 
-import { IDataOverlayComponentInternal, useStore, useViewOptionState } from '../../../store';
+import { IDataOverlayComponentInternal, accessStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IComponentSettingsMap, IOverlaySettings, KnownComponentType, KnownSceneProperty } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
@@ -15,17 +15,17 @@ export const OverlayPanelVisibilityToggle: React.FC = () => {
   const overlayPanelVisible =
     useViewOptionState(sceneComposerId).componentVisibilities[Component.DataOverlaySubType.OverlayPanel];
   const toggleComponentVisibility = useViewOptionState(sceneComposerId).toggleComponentVisibility;
-  const getComponentRefByType = useStore(sceneComposerId)((state) => state.getComponentRefByType);
-  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
-  const componentNodeMap = useStore(sceneComposerId)((state) => state.document.componentNodeMap);
+  const getComponentRefByType = accessStore(sceneComposerId)((state) => state.getComponentRefByType);
+  const getSceneNodeByRef = accessStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const componentNodeMap = accessStore(sceneComposerId)((state) => state.document.componentNodeMap);
 
-  const documentSettings: IOverlaySettings = useStore(sceneComposerId)(
+  const documentSettings: IOverlaySettings = accessStore(sceneComposerId)(
     (state) => componentSettingsSelector(state, KnownComponentType.DataOverlay) as IOverlaySettings,
   );
 
-  const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
-  const getSceneProperty = useStore(sceneComposerId)((state) => state.getSceneProperty);
-  const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
+  const setSceneProperty = accessStore(sceneComposerId)((state) => state.setSceneProperty);
+  const getSceneProperty = accessStore(sceneComposerId)((state) => state.getSceneProperty);
+  const isViewing = accessStore(sceneComposerId)((state) => state.isViewing());
 
   // When the document settings is changed from other places (e.g. undo/redo),
   // sync the view options visibility value with document settings.

@@ -5,7 +5,7 @@ import { BoxGeometry, Group, Mesh } from 'three';
 import { DataOverlayComponent } from '../DataOverlayComponent';
 import { Component } from '../../../../models/SceneModels';
 import { KnownComponentType } from '../../../../interfaces';
-import { IDataOverlayComponentInternal, ISceneNodeInternal, useStore } from '../../../../store';
+import { IDataOverlayComponentInternal, ISceneNodeInternal, accessStore } from '../../../../store';
 
 jest.mock('@react-three/fiber', () => {
   const originalModule = jest.requireActual('@react-three/fiber');
@@ -55,7 +55,7 @@ describe('DataOverlayComponent', () => {
 
   beforeEach(() => {
     jest.resetAllMocks();
-    useStore('default').setState({ getObject3DBySceneNodeRef });
+    accessStore('default').setState({ getObject3DBySceneNodeRef });
   });
 
   it('should render the component correctly', () => {

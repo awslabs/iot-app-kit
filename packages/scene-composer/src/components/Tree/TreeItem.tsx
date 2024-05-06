@@ -3,7 +3,7 @@ import React, { ComponentPropsWithRef, FC, ReactNode, useCallback } from 'react'
 import { useIntl } from 'react-intl';
 
 import RadioButton from '../RadioButton';
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 import { useSceneComposerId } from '../../common/sceneComposerIdContext';
 
 export type SelectionMode = 'single' | 'multi';
@@ -38,7 +38,7 @@ const TreeItemInner: FC<TreeItemInnerProps & { children: ReactNode }> = ({
   onActivated = () => {},
 }) => {
   const sceneComposerId = useSceneComposerId();
-  const setSelectedSceneNodeRef = useStore(sceneComposerId).getState().setSelectedSceneNodeRef;
+  const setSelectedSceneNodeRef = accessStore(sceneComposerId).getState().setSelectedSceneNodeRef;
 
   const selectFromChildren = () => {
     (children as any)?.forEach((child) => {

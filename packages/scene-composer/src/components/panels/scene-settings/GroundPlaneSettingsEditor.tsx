@@ -12,7 +12,7 @@ import {
   TextureFileTypeList,
 } from '../../../interfaces';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
 import { parseS3BucketFromArn } from '../../../utils/pathUtils';
 
@@ -22,10 +22,10 @@ export const GroundPlaneSettingsEditor: React.FC = () => {
 
   const sceneComposerId = useContext(sceneComposerIdContext);
   const intl = useIntl();
-  const setSceneProperty = useStore(sceneComposerId)(
+  const setSceneProperty = accessStore(sceneComposerId)(
     (state) => state.setSceneProperty<IGroundPlaneSettings | undefined>,
   );
-  const groundSettings = useStore(sceneComposerId)((state) =>
+  const groundSettings = accessStore(sceneComposerId)((state) =>
     state.getSceneProperty<IGroundPlaneSettings>(KnownSceneProperty.GroundPlaneSettings),
   );
 
@@ -33,14 +33,14 @@ export const GroundPlaneSettingsEditor: React.FC = () => {
   const [internalUri, setInternalUri] = useState(groundSettings?.textureUri || '');
   const [internalOpacity, setInternalOpacity] = useState(groundSettings?.opacity || 0);
 
-  const showAssetBrowserCallback = useStore(sceneComposerId)(
+  const showAssetBrowserCallback = accessStore(sceneComposerId)(
     (state) => state.getEditorConfig().showAssetBrowserCallback,
   );
 
-  const groundColors = useStore(sceneComposerId)((state) =>
+  const groundColors = accessStore(sceneComposerId)((state) =>
     state.getSceneProperty<string[]>(KnownSceneProperty.GroundCustomColors, []),
   );
-  const setGroundColorsSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
+  const setGroundColorsSceneProperty = accessStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
 
   const onInputBlur = useCallback(() => {
     if (groundSettings?.opacity !== internalOpacity) {

@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import { IValueDataBinding } from '../interfaces';
-import { useStore } from '../store';
+import { accessStore } from '../store';
 import { applyDataBindingTemplate } from '../utils/dataBindingTemplateUtils';
 
 /**
@@ -19,10 +19,10 @@ const useBindingQueries = (
   bindings: IValueDataBinding[] | undefined,
 ): { queries: (Query<TimeSeriesData[] | DataBase[], DataRequest> | undefined)[] | undefined } => {
   const sceneComposerId = useSceneComposerId();
-  const valueDataBindingProvider = useStore(sceneComposerId)(
+  const valueDataBindingProvider = accessStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
-  const dataBindingTemplate = useStore(sceneComposerId)((state) => state.dataBindingTemplate);
+  const dataBindingTemplate = accessStore(sceneComposerId)((state) => state.dataBindingTemplate);
 
   const queries = useMemo(() => {
     if (isEmpty(bindings) || !valueDataBindingProvider) {

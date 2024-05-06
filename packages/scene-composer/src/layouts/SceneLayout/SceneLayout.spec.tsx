@@ -4,7 +4,7 @@ import * as React from 'react';
 import { create } from 'react-test-renderer';
 
 import { SceneLayout } from '.';
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 import { KnownComponentType } from '../../interfaces';
 import useSelectedNode from '../../hooks/useSelectedNode';
 
@@ -41,7 +41,7 @@ describe('SceneLayout', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    useStore('default').setState({
+    accessStore('default').setState({
       getComponentRefByType: getComponentRefByTypeMock,
       document: { componentNodeMap: {} } as any,
     });

@@ -3,7 +3,7 @@ import { MpSdk } from '@matterport/r3f/dist';
 
 import { generateUUID } from '../utils/mathUtils';
 import { IAnchorComponent, ISceneNode, KnownComponentType } from '../interfaces';
-import { IDataOverlayComponentInternal, ISceneNodeInternal, useStore } from '../store';
+import { IDataOverlayComponentInternal, ISceneNodeInternal, accessStore } from '../store';
 import { MattertagItem, TagItem } from '../utils/matterportTagUtils';
 import { Component } from '../models/SceneModels';
 
@@ -105,7 +105,7 @@ ${mattertagItem.description}`,
   beforeEach(() => {
     jest.clearAllMocks();
 
-    useStore('default').setState({
+    accessStore('default').setState({
       appendSceneNode,
       updateSceneNodeInternal,
       removeSceneNode,

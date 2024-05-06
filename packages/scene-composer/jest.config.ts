@@ -30,6 +30,25 @@ export default merge.recursive(tsPreset, awsuiPreset, {
   transform: {
     '^.+\\.(js|jsx)$': 'babel-jest',
     '\\.(ts|tsx)$': 'ts-jest',
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        //the content you'd placed at "global"
+        isolatedModules: true,
+        astTransformers: {
+          before: [
+            {
+              path: '@formatjs/ts-transformer/ts-jest-integration',
+              options: {
+                // options
+                overrideIdFn: '[sha512:contenthash:base64:6]',
+                ast: true,
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   transformIgnorePatterns: ['<rootDir>/build', '<rootDir>/coverage', '<rootDir>/dist'],
   testPathIgnorePatterns: ['node_modules', 'dist', 'storybook-static'],
@@ -41,21 +60,4 @@ export default merge.recursive(tsPreset, awsuiPreset, {
     '\\.(css|less|scss)$': 'identity-obj-proxy',
   },
   testEnvironment: 'jsdom',
-  globals: {
-    'ts-jest': {
-      isolatedModules: true,
-      astTransformers: {
-        before: [
-          {
-            path: '@formatjs/ts-transformer/ts-jest-integration',
-            options: {
-              // options
-              overrideIdFn: '[sha512:contenthash:base64:6]',
-              ast: true,
-            },
-          },
-        ],
-      },
-    },
-  },
 });

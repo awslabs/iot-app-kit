@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 import { DisplayMessageCategory } from '../../store/internalInterfaces';
 
 import MessageModal from './MessageModal';
@@ -12,13 +12,13 @@ jest.mock('../../store', () => {
   const originalModule = jest.requireActual('../../store');
   return {
     ...originalModule,
-    useStore: jest.fn(),
+    accessStore: jest.fn(),
   };
 });
 
 describe('MessageModalSnap', () => {
   const clearMessages = jest.fn();
-  const mockUseStore = useStore as Mock;
+  const mockUseStore = accessStore as Mock;
 
   [
     { category: DisplayMessageCategory.Info, messageText: 'Info Test' },

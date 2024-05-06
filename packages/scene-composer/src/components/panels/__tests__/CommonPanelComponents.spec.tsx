@@ -21,7 +21,7 @@ describe('render correct panels.', () => {
 
     const input = container.querySelectorAll('[data-mocked="Input"]')[0];
 
-    expect(input.outerHTML).toMatchInlineSnapshot(`"<div data-mocked=\\"Input\\" value=\\"2\\"></div>"`);
+    expect(input.outerHTML).toMatchInlineSnapshot(`"<div data-mocked="Input" value="2"></div>"`);
 
     fireEvent.change(input, { detail: { value: 2 } });
     fireEvent.blur(input);
@@ -122,6 +122,6 @@ describe('TextInput', () => {
     const { container } = render(<TextInput value='test' setValue={setValue} />);
     const input = container.querySelectorAll('[data-mocked="Input"]')[0];
 
-    expect(input.outerHTML).toMatchInlineSnapshot(`"<div data-mocked=\\"Input\\" value=\\"test\\"></div>"`);
+    expect(input.outerHTML).toMatchInlineSnapshot(`"<div data-mocked="Input" value="test"></div>"`);
   });
 });

@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 
 import { KnownComponentType } from '../../interfaces';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { ICameraComponentInternal, useStore } from '../../store';
+import { ICameraComponentInternal, accessStore } from '../../store';
 import useActiveCamera from '../../hooks/useActiveCamera';
 import useMatterportViewer from '../../hooks/useMatterportViewer';
 import { findComponentByType } from '../../utils/nodeUtils';
@@ -20,9 +20,9 @@ const StyledSpaceBetween = styled(SpaceBetween)`
 
 export const TopBar: FC = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const nodeMap = useStore(sceneComposerId)((state) => state.document.nodeMap);
-  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
-  const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
+  const nodeMap = accessStore(sceneComposerId)((state) => state.document.nodeMap);
+  const getSceneNodeByRef = accessStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const getObject3DBySceneNodeRef = accessStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
   const { setActiveCameraSettings } = useActiveCamera();
   const { enableMatterportViewer } = useMatterportViewer();
   const intl = useIntl();

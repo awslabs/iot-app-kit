@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 
-import { useStore } from '../store';
+import { accessStore } from '../store';
 
 import useSceneModal from './useSceneModal';
 
@@ -23,7 +23,7 @@ describe('useSceneModal() hook', () => {
   });
 
   it('should render with no modal', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { result } = renderHook(() => useSceneModal());
 
@@ -39,7 +39,7 @@ describe('useSceneModal() hook', () => {
   });
 
   it('should render with convert scene modal', () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
       convertSceneModalVisible: true,
     });
@@ -50,7 +50,7 @@ describe('useSceneModal() hook', () => {
   });
 
   it('should render with delete node modal', () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
       deleteConfirmationModalVisible: true,
       deleteConfirmationModalParams: {
@@ -65,7 +65,7 @@ describe('useSceneModal() hook', () => {
   });
 
   it('should render with delete component modal', () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
       deleteConfirmationModalVisible: true,
       deleteConfirmationModalParams: {

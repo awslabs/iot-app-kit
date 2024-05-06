@@ -4,7 +4,7 @@ import React, { useCallback, useContext, useState } from 'react';
 import { useIntl } from 'react-intl';
 
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { ISceneNodeInternal, useStore } from '../../store';
+import { ISceneNodeInternal, accessStore } from '../../store';
 import { KnownSceneProperty } from '../../interfaces';
 import {
   checkIfEntityExists,
@@ -36,14 +36,14 @@ interface ConvertResult {
 
 const ConvertSceneModal: React.FC = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const setConvertSceneModalVisibility = useStore(sceneComposerId)((state) => state.setConvertSceneModalVisibility);
-  const document = useStore(sceneComposerId)((state) => state.document);
+  const setConvertSceneModalVisibility = accessStore(sceneComposerId)((state) => state.setConvertSceneModalVisibility);
+  const document = accessStore(sceneComposerId)((state) => state.document);
 
-  const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
-  const updateSceneNodeInternalBatch = useStore(sceneComposerId)((state) => state.updateSceneNodeInternalBatch);
-  const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
+  const setSceneProperty = accessStore(sceneComposerId)((state) => state.setSceneProperty);
+  const updateSceneNodeInternalBatch = accessStore(sceneComposerId)((state) => state.updateSceneNodeInternalBatch);
+  const getObject3DBySceneNodeRef = accessStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
 
-  const sceneRootId = useStore(sceneComposerId)((state) =>
+  const sceneRootId = accessStore(sceneComposerId)((state) =>
     state.getSceneProperty<string>(KnownSceneProperty.SceneRootEntityId),
   );
 

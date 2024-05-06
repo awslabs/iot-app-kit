@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 
-import { IMotionIndicatorComponentInternal, useStore } from '../../../store';
+import { IMotionIndicatorComponentInternal, accessStore } from '../../../store';
 import { KnownComponentType } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
 import { mockNode, mockComponent } from '../../../../tests/components/panels/scene-components/MockComponents';
@@ -45,7 +45,7 @@ describe('MotionIndicatorComponentEditor', () => {
   };
 
   it('should change shape selection and trigger update component call', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(
       <MotionIndicatorComponentEditor node={{ ...mockNode, components: [component] }} component={component} />,

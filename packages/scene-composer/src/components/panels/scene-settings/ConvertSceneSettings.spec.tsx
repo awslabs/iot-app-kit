@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
 
 import { ConvertSceneSettings } from './ConvertSceneSettings';
@@ -19,7 +19,7 @@ describe('ConvertSceneSettings', () => {
   });
 
   it('should render correctly with convert button disabled', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     (isDynamicScene as jest.Mock).mockReturnValue(true);
 
     const { container, queryByTestId } = render(<ConvertSceneSettings />);
@@ -29,7 +29,7 @@ describe('ConvertSceneSettings', () => {
   });
 
   it('should render correctly with convert button enabled', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     (isDynamicScene as jest.Mock).mockReturnValue(false);
 
     const { container, queryByTestId } = render(<ConvertSceneSettings />);
@@ -39,7 +39,7 @@ describe('ConvertSceneSettings', () => {
   });
 
   it('should set convert scene modal to visible on convert button click', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     (isDynamicScene as jest.Mock).mockReturnValue(false);
 
     const { queryByTestId } = render(<ConvertSceneSettings />);

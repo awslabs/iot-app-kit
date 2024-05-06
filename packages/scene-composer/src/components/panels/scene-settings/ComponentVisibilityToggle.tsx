@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import { Box, Toggle } from '@cloudscape-design/components';
 
-import { IDataOverlayComponentInternal, useStore, useViewOptionState } from '../../../store';
+import { IDataOverlayComponentInternal, accessStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { KnownComponentType } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
@@ -21,9 +21,9 @@ export const ComponentVisibilityToggle: React.FC<ComponentVisibilityToggleProps>
   const sceneComposerId = useContext(sceneComposerIdContext);
   const toggleComponentVisibility = useViewOptionState(sceneComposerId).toggleComponentVisibility;
   const componentVisible = useViewOptionState(sceneComposerId).componentVisibilities[componentType];
-  const getComponentRefByType = useStore(sceneComposerId)((state) => state.getComponentRefByType);
-  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
-  const componentNodeMap = useStore(sceneComposerId)((state) => state.document.componentNodeMap);
+  const getComponentRefByType = accessStore(sceneComposerId)((state) => state.getComponentRefByType);
+  const getSceneNodeByRef = accessStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const componentNodeMap = accessStore(sceneComposerId)((state) => state.document.componentNodeMap);
 
   const hasComponent = useMemo(() => {
     if (Component.DataOverlaySubType[componentType]) {

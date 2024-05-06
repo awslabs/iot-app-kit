@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 
-import { IAnimationComponentInternal, useStore } from '../../../store';
+import { IAnimationComponentInternal, accessStore } from '../../../store';
 import { mockNode, mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
 import { generateUUID } from '../../../utils/mathUtils';
 
@@ -54,7 +54,7 @@ describe('AnimationViewStateEditor', () => {
   });
 
   it('should fire the remove button and render the correct component', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const onUpdate = jest.fn();
     const { getByTestId } = render(
       <AnimationViewStateEditor node={mockNode} component={mockComponentExtraPanel} onUpdate={onUpdate} />,

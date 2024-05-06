@@ -31,7 +31,7 @@ import useMatterportViewer from '../hooks/useMatterportViewer';
 import { AdditionalComponentData, ExternalLibraryConfig, KnownComponentType, KnownSceneProperty } from '../interfaces';
 import { SceneLayout } from '../layouts/SceneLayout';
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
-import { ICameraComponentInternal, ISceneDocumentInternal, RootState, useStore, useViewOptionState } from '../store';
+import { ICameraComponentInternal, ISceneDocumentInternal, RootState, accessStore, useViewOptionState } from '../store';
 import { getCameraSettings } from '../utils/cameraUtils';
 import { getAdditionalComponentData } from '../utils/eventDataUtils';
 import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/dataStreamUtils';
@@ -77,7 +77,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     getSceneNodeByRef,
     getObject3DBySceneNodeRef,
     addMessages,
-  } = useStore(sceneComposerId)((state) => state);
+  } = accessStore(sceneComposerId)((state) => state);
   const [sceneContentUri, setSceneContentUri] = useState<string>('');
   const [sceneContent, setSceneContent] = useState<string | ISceneDocumentInternal | undefined>();
   const [loadSceneError, setLoadSceneError] = useState<Error | undefined>();
@@ -85,7 +85,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const [updatedExternalLibraryConfig, setUpdatedExternalLibraryConfig] = useState<ExternalLibraryConfig | undefined>(
     externalLibraryConfig,
   );
-  const matterportModelId = useStore(sceneComposerId)((state) =>
+  const matterportModelId = accessStore(sceneComposerId)((state) =>
     state.getSceneProperty<string>(KnownSceneProperty.MatterportModelId),
   );
   const {
@@ -330,7 +330,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   // Subscribe to store update
   useEffect(() => {
     if (onSceneUpdated) {
-      return useStore(sceneComposerId).subscribe((state, old: Pick<RootState, 'document' | 'sceneLoaded'>) => {
+      return accessStore(sceneComposerId).subscribe((state, old: Pick<RootState, 'document' | 'sceneLoaded'>) => {
         // Do not call onSceneUpdated when
         //  - scene is not loaded
         //  - scene is just loaded

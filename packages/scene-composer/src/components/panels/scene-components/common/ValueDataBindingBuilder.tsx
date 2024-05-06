@@ -20,7 +20,7 @@ import {
   IValueDataBindingProviderState,
 } from '../../../../interfaces';
 import useLifecycleLogging from '../../../../logger/react-logger/hooks/useLifecycleLogging';
-import { useStore } from '../../../../store';
+import { accessStore } from '../../../../store';
 import { dataBindingConfigSelector } from '../../../../utils/dataBindingTemplateUtils';
 import { pascalCase } from '../../../../utils/stringUtils';
 
@@ -49,7 +49,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
   useLifecycleLogging(`ValueDataBindingBuilder[${componentRef}]`);
 
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const dataBindingConfig = useStore(sceneComposerId)(dataBindingConfigSelector);
+  const dataBindingConfig = accessStore(sceneComposerId)(dataBindingConfigSelector);
   const valueDataBindingStore = useMemo(
     () => valueDataBindingProvider.createStore(false),
     [valueDataBindingProvider, componentRef],

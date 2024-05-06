@@ -15,7 +15,7 @@ exports[`LinearPlaneMotionIndicator should render correctly 1`] = `
   <planeGeometry
     attach="geometry"
     parameters={
-      Object {
+      {
         "height": 1,
         "heightSegments": 1,
         "width": 1,
@@ -27,7 +27,7 @@ exports[`LinearPlaneMotionIndicator should render correctly 1`] = `
     attach="material"
     color="white"
     depthWrite={true}
-    map={Object {}}
+    map={{}}
     onBeforeCompile={[Function]}
     opacity={0.6}
     side={2}

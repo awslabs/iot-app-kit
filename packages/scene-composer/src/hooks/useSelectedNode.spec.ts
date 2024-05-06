@@ -1,4 +1,4 @@
-import { useEditorState, useStore } from '../store';
+import { useEditorState, accessStore } from '../store';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 
 import useSelectedNode from './useSelectedNode';
@@ -6,7 +6,7 @@ import useSelectedNode from './useSelectedNode';
 jest.mock('../store', () => ({
   ...jest.requireActual('../store'),
   useEditorState: jest.fn(),
-  useStore: jest.fn(),
+  accessStore: jest.fn(),
 }));
 
 jest.mock('../common/sceneComposerIdContext', () => ({
@@ -36,7 +36,7 @@ describe('useSelectedObject', () => {
       setSelectedSceneSubmodelRef: jest.fn(),
     }));
 
-    (useStore as jest.Mock).mockImplementation(
+    (accessStore as jest.Mock).mockImplementation(
       () => (cb) =>
         cb({
           getSceneNodeByRef,

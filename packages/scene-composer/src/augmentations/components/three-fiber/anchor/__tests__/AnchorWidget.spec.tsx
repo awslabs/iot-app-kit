@@ -11,7 +11,7 @@ import {
   KnownComponentType,
 } from '../../../../..';
 import useTagSettings from '../../../../../hooks/useTagSettings';
-import { ISceneNodeInternal, useStore } from '../../../../../store/Store';
+import { ISceneNodeInternal, accessStore } from '../../../../../store/Store';
 import { AnchorWidget, AsyncLoadedAnchorWidget } from '../AnchorWidget';
 
 jest.mock('../../common/SvgIconToWidgetSprite', () =>
@@ -60,13 +60,14 @@ describe('AnchorWidget', () => {
   };
 
   const getSceneRuleMapByIdMock = jest.fn();
+  const states = accessStore('default').getState().noHistoryStates;
   const setStore = (
     selectedSceneNodeRef: string,
     highlightedSceneNodeRef: string,
     isViewing = true,
     tagVisible = true,
   ) => {
-    useStore('default').setState({
+    accessStore('default').setState({
       getSceneRuleMapById: getSceneRuleMapByIdMock,
       selectedSceneNodeRef,
       setSelectedSceneNodeRef,
@@ -77,7 +78,7 @@ describe('AnchorWidget', () => {
       dataInput: { dataFrames: [], timeRange: { from: 0, to: 1 } },
       getObject3DBySceneNodeRef,
       noHistoryStates: {
-        ...useStore('default').getState().noHistoryStates,
+        ...states,
         componentVisibilities: { [KnownComponentType.Tag]: tagVisible },
       },
     });
@@ -249,7 +250,7 @@ describe('AnchorWidget onWidgetClick', () => {
     isViewing = true,
     tagVisible = true,
   ) => {
-    useStore('default').setState({
+    accessStore('default').setState({
       selectedSceneNodeRef,
       setSelectedSceneNodeRef,
       highlightedSceneNodeRef,
@@ -259,7 +260,7 @@ describe('AnchorWidget onWidgetClick', () => {
       dataInput: { dataFrames: [], timeRange: { from: 0, to: 1 } },
       getObject3DBySceneNodeRef,
       noHistoryStates: {
-        ...useStore('default').getState().noHistoryStates,
+        ...accessStore('default').getState().noHistoryStates,
         componentVisibilities: { [KnownComponentType.Tag]: tagVisible },
       },
     });

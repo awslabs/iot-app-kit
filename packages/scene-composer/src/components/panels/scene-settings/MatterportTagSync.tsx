@@ -6,7 +6,7 @@ import { isEmpty } from 'lodash';
 import { KnownComponentType } from '../../../interfaces';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { ISceneNodeInternal, useStore } from '../../../store';
+import { ISceneNodeInternal, accessStore } from '../../../store';
 import useMatterportTags from '../../../hooks/useMatterportTags';
 import useMatterportObserver from '../../../hooks/useMatterportObserver';
 import { DisplayMessageCategory, IDisplayMessage } from '../../../store/internalInterfaces';
@@ -16,9 +16,9 @@ export const MatterportTagSync: React.FC = () => {
   const intl = useIntl();
 
   const sceneComposerId = useSceneComposerId();
-  const getComponentRefByType = useStore(sceneComposerId)((state) => state.getComponentRefByType);
-  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
-  const addMessages = useStore(sceneComposerId)((state) => state.addMessages);
+  const getComponentRefByType = accessStore(sceneComposerId)((state) => state.getComponentRefByType);
+  const getSceneNodeByRef = accessStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const addMessages = accessStore(sceneComposerId)((state) => state.addMessages);
 
   const { handleAddMatterportTag, handleUpdateMatterportTag, handleRemoveMatterportTag } = useMatterportTags();
   const { mattertagObserver, tagObserver } = useMatterportObserver();

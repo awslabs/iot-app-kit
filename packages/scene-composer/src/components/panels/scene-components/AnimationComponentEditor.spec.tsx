@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { IAnimationComponentInternal, useStore } from '../../../store';
+import { IAnimationComponentInternal, accessStore } from '../../../store';
 import { mockNode, mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
 import { generateUUID } from '../../../utils/mathUtils';
 
@@ -36,7 +36,7 @@ describe('AnimationComponentEditor', () => {
   } as IAnimationComponentInternal;
 
   it('should render as expected', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<AnimationComponentEditor node={mockNode} component={mockComponent} />);
     expect(container).toMatchSnapshot();
   });

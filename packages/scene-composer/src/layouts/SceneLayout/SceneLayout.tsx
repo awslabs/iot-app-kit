@@ -21,7 +21,7 @@ import {
   TopBar,
 } from '../../components/panels';
 import { sceneComposerIdContext, useSceneComposerId } from '../../common/sceneComposerIdContext';
-import { useSceneDocument, useStore } from '../../store';
+import { useSceneDocument, accessStore } from '../../store';
 import LogProvider from '../../logger/react-logger/log-provider';
 import DefaultErrorFallback from '../../components/DefaultErrorFallback';
 import { ExternalLibraryConfig, KnownComponentType, MatterportConfig } from '../../interfaces';
@@ -132,7 +132,7 @@ interface SceneLayoutProps {
 }
 const SceneLayout: FC<SceneLayoutProps> = ({ isViewing, LoadingView = null, externalLibraryConfig }) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const valueDataBindingProvider = useStore(sceneComposerId)((state) => state.getEditorConfig)()
+  const valueDataBindingProvider = accessStore(sceneComposerId)((state) => state.getEditorConfig)()
     .valueDataBindingProvider;
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
   const intl = useIntl();

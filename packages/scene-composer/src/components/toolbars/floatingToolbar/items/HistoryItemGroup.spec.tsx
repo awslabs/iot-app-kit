@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 
 import useDynamicScene from '../../../../hooks/useDynamicScene';
 import { createUndoStore } from '../../../../store/middlewares';
-import { useStore } from '../../../../store';
+import { accessStore } from '../../../../store';
 import { ToolbarOrientation } from '../../common/types';
 
 import { HistoryItemGroup } from './HistoryItemGroup';
@@ -22,7 +22,7 @@ describe('HistoryItemGroup', () => {
 
   it('should render correctly with undo enabled', () => {
     const undoStore = createUndoStore();
-    useStore('default').setState({ undoStore });
+    accessStore('default').setState({ undoStore });
 
     undoStore.setState({ prevStates: [{}] });
     let container;
@@ -34,7 +34,7 @@ describe('HistoryItemGroup', () => {
 
   it('should render correctly with undo disabled', () => {
     const undoStore = createUndoStore();
-    useStore('default').setState({ undoStore });
+    accessStore('default').setState({ undoStore });
     (useDynamicScene as jest.Mock).mockReturnValue(true);
 
     undoStore.setState({ prevStates: [{}] });
@@ -47,7 +47,7 @@ describe('HistoryItemGroup', () => {
 
   it('should render correctly with redo enabled', () => {
     const undoStore = createUndoStore();
-    useStore('default').setState({ undoStore });
+    accessStore('default').setState({ undoStore });
 
     undoStore.setState({ futureStates: [{}] });
     let container;
@@ -59,7 +59,7 @@ describe('HistoryItemGroup', () => {
 
   it('should render correctly with redo disabled', () => {
     const undoStore = createUndoStore();
-    useStore('default').setState({ undoStore });
+    accessStore('default').setState({ undoStore });
     (useDynamicScene as jest.Mock).mockReturnValue(true);
 
     undoStore.setState({ futureStates: [{}] });

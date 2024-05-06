@@ -3,7 +3,7 @@ import { act, render } from '@testing-library/react';
 import * as THREE from 'three';
 
 import ColorOverlayComponent from '..';
-import { useStore } from '../../../../store';
+import { accessStore } from '../../../../store';
 import { getComponentsGroupName } from '../../../../utils/objectThreeUtils';
 import { DefaultAnchorStatus, SceneResourceType } from '../../../../interfaces';
 import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
@@ -60,7 +60,7 @@ describe('ColorOverlayComponent', () => {
   });
 
   it('should change color', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const transform = jest.fn();
     const restore = jest.fn();
     (useMaterialEffect as jest.Mock).mockImplementation(() => [transform, restore]);
@@ -78,7 +78,7 @@ describe('ColorOverlayComponent', () => {
     (getSceneResourceInfo as jest.Mock).mockReturnValue({ type: SceneResourceType.Color, value: 'rgba(100%,0%,0%,2)' });
 
     act(() => {
-      useStore('default').setState({ ...baseState, dataInput: {} as any });
+      accessStore('default').setState({ ...baseState, dataInput: {} as any });
       rerender(<ColorOverlayComponent node={mockNode} component={mockComponent} />);
     });
 
@@ -93,7 +93,7 @@ describe('ColorOverlayComponent', () => {
   });
 
   it('should not change color when there is no mesh', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const transform = jest.fn();
     const restore = jest.fn();
 
@@ -111,7 +111,7 @@ describe('ColorOverlayComponent', () => {
     const { rerender } = render(<ColorOverlayComponent node={mockNode} component={mockComponent} />);
 
     act(() => {
-      useStore('default').setState({ ...baseState, dataInput: {} as any });
+      accessStore('default').setState({ ...baseState, dataInput: {} as any });
       rerender(<ColorOverlayComponent node={mockNode} component={mockComponent} />);
     });
 

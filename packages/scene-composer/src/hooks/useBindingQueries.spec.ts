@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 
-import { useStore } from '../store';
+import { accessStore } from '../store';
 
 import useBindingQueries from './useBindingQueries';
 
@@ -10,7 +10,7 @@ describe('useBindingQueries', () => {
   };
 
   beforeEach(() => {
-    useStore('default').setState({
+    accessStore('default').setState({
       getEditorConfig: jest.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
       dataBindingTemplate: {
         sel_entity: 'BB',

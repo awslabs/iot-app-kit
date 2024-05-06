@@ -91,7 +91,7 @@ describe('useMaterialEffect', () => {
     const transformedColors = object.children.map((c) => (c as any).material.color);
 
     expect(transformedColors).toMatchInlineSnapshot(`
-      Array [
+      [
         0,
         0,
         0,
@@ -107,7 +107,7 @@ describe('useMaterialEffect', () => {
     const restoredColors = object.children.map((c) => (c as any).material.color);
 
     expect(restoredColors).toMatchInlineSnapshot(`
-      Array [
+      [
         65280,
         65280,
         65280,
@@ -154,7 +154,7 @@ describe('useMaterialEffect', () => {
     const transformedColors = object.children.map((c) => (c as any).material.color);
 
     expect(transformedColors).toMatchInlineSnapshot(`
-      Array [
+      [
         65280,
         65280,
         65280,
@@ -170,7 +170,7 @@ describe('useMaterialEffect', () => {
     const restoredColors = object.children.map((c) => (c as any).material.color);
 
     expect(restoredColors).toMatchInlineSnapshot(`
-      Array [
+      [
         65280,
         65280,
         65280,

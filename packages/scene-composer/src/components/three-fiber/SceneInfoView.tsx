@@ -5,7 +5,7 @@ import { useIntl, defineMessages } from 'react-intl';
 import * as THREE from 'three';
 
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 
 const SCENE_INFO_VIEW_WIDTH = 140; //in px
 
@@ -37,7 +37,7 @@ export function SceneInfoView() {
   const { formatMessage } = useIntl();
 
   useEffect(() => {
-    return useStore(sceneComposerId).subscribe((state) => {
+    return accessStore(sceneComposerId).subscribe((state) => {
       let objects = 0;
       let vertices = 0;
       let triangles = 0;

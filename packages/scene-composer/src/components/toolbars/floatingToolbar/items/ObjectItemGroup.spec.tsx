@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 
-import { useStore } from '../../../../store';
+import { accessStore } from '../../../../store';
 import { ToolbarOrientation } from '../../common/types';
 import { isDynamicScene } from '../../../../utils/entityModelUtils/sceneUtils';
 
@@ -17,7 +17,7 @@ describe('ObjectItemGroup', () => {
   const setDeleteConfirmationModalVisible = jest.fn();
 
   beforeEach(() => {
-    useStore('default').setState({
+    accessStore('default').setState({
       selectedSceneNodeRef,
       removeSceneNode,
       transformControlMode: 'translate',
@@ -53,7 +53,7 @@ describe('ObjectItemGroup', () => {
   });
 
   it('should not call removeSceneNode when clicking delete without a selected node', () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       selectedSceneNodeRef: undefined,
     });
     render(<ObjectItemGroup canvasHeight={undefined} toolbarOrientation={ToolbarOrientation.Vertical} />);

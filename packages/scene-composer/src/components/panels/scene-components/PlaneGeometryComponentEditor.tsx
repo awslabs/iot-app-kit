@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { IComponentEditorProps } from '../ComponentEditor';
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { COMPOSER_FEATURES, KnownSceneProperty, TextureFileTypeList } from '../../../interfaces';
-import { IPlaneGeometryComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
+import { IPlaneGeometryComponentInternal, ISceneComponentInternal, accessStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
 import { parseS3BucketFromArn } from '../../../utils/pathUtils';
@@ -18,15 +18,15 @@ export const PlaneGeometryComponentEditor: React.FC<IPlaneGeometryComponentEdito
 }: IPlaneGeometryComponentEditorProps) => {
   const texturesEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Textures];
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
+  const updateComponentInternal = accessStore(sceneComposerId)((state) => state.updateComponentInternal);
   const planeGeometryComponent = component as IPlaneGeometryComponentInternal;
   const intl = useIntl();
 
-  const geometryColors = useStore(sceneComposerId)((state) =>
+  const geometryColors = accessStore(sceneComposerId)((state) =>
     state.getSceneProperty<string[]>(KnownSceneProperty.GeometryCustomColors, []),
   );
-  const setGeometryColorsSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
-  const showAssetBrowserCallback = useStore(sceneComposerId)(
+  const setGeometryColorsSceneProperty = accessStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
+  const showAssetBrowserCallback = accessStore(sceneComposerId)(
     (state) => state.getEditorConfig().showAssetBrowserCallback,
   );
 

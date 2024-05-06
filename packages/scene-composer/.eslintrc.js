@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
-  extends: ['iot-app-kit'],
-  plugins: ['formatjs'],
+  extends: ['iot-app-kit', 'plugin:react-hooks/recommended'],
+  plugins: ['formatjs', 'react-hooks'],
   rules: {
     'import/order': [
       'error',

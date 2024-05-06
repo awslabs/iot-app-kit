@@ -7,7 +7,7 @@ import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { MAX_CLICK_DISTANCE } from '../../../common/constants';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { Vector3, KnownComponentType } from '../../../interfaces';
-import { IModelRefComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../store';
+import { IModelRefComponentInternal, ISceneNodeInternal, useEditorState, accessStore } from '../../../store';
 import { appendFunction } from '../../../utils/objectUtils';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import {
@@ -50,9 +50,9 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   const log = useLifecycleLogging('GLTFModelComponent');
   const { gl } = useThree();
   const maxAnisotropy = useMemo(() => gl.capabilities.getMaxAnisotropy(), []);
-  const uriModifier = useStore(sceneComposerId)((state) => state.getEditorConfig().uriModifier);
-  const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
-  const { getSceneNodeByRef } = useStore(sceneComposerId)((state) => state);
+  const uriModifier = accessStore(sceneComposerId)((state) => state.getEditorConfig().uriModifier);
+  const appendSceneNode = accessStore(sceneComposerId)((state) => state.appendSceneNode);
+  const { getSceneNodeByRef } = accessStore(sceneComposerId)((state) => state);
   const { isEditing, addingWidget, setAddingWidget, cursorLookAt, cursorVisible, setCursorVisible } =
     useEditorState(sceneComposerId);
 
@@ -69,19 +69,19 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
       loader.manager.onStart = appendFunction(loader.manager.onStart, () => {
         // Use setTimeout to avoid mutating the state during rendering process
         setTimeout(() => {
-          useStore(sceneComposerId).getState().setLoadingModelState(true);
+          accessStore(sceneComposerId).getState().setLoadingModelState(true);
         }, 0);
       });
       loader.manager.onLoad = appendFunction(loader.manager.onLoad, () => {
         // Use setTimeout to avoid mutating the state during rendering process
         setTimeout(() => {
-          useStore(sceneComposerId).getState().setLoadingModelState(false);
+          accessStore(sceneComposerId).getState().setLoadingModelState(false);
         }, 0);
       });
       loader.manager.onError = appendFunction(loader.manager.onError, () => {
         // Use setTimeout to avoid mutating the state during rendering process
         setTimeout(() => {
-          useStore(sceneComposerId).getState().setLoadingModelState(false);
+          accessStore(sceneComposerId).getState().setLoadingModelState(false);
         }, 0);
       });
     },

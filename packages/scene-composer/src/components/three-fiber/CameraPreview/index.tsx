@@ -5,7 +5,7 @@ import { PerspectiveCamera } from '@react-three/drei/core/PerspectiveCamera';
 
 import { findComponentByType } from '../../../utils/nodeUtils';
 import { KnownComponentType } from '../../../interfaces';
-import { ICameraComponentInternal, useStore } from '../../../store';
+import { ICameraComponentInternal, accessStore } from '../../../store';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { getCameraSettings } from '../../../utils/cameraUtils';
 
@@ -31,7 +31,7 @@ export const CameraPreview: React.FC<CameraPreviewProps> = ({ track, clearColor 
   const rect = useRef<DOMRect>(null!);
   const cameraRef = useRef<THREE.PerspectiveCamera>(null);
   const sceneComposerId = useSceneComposerId();
-  const { selectedSceneNodeRef, getSceneNodeByRef, getObject3DBySceneNodeRef } = useStore(sceneComposerId)();
+  const { selectedSceneNodeRef, getSceneNodeByRef, getObject3DBySceneNodeRef } = accessStore(sceneComposerId)();
 
   const previewClearColor = new THREE.Color(clearColor);
 

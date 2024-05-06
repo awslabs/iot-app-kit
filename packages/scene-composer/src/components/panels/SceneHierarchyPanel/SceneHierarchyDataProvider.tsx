@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { findComponentByType, getFinalNodeTransform } from '../../../utils/nodeUtils';
-import { ISceneNodeInternal, useNodeErrorState, useSceneDocument, useStore } from '../../../store';
+import { ISceneNodeInternal, useNodeErrorState, useSceneDocument, accessStore } from '../../../store';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { ITransform, KnownComponentType } from '../../../interfaces';
 import { RecursivePartial } from '../../../utils/typeUtils';
@@ -110,12 +110,12 @@ const sortNodes = (a, b) => {
 const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selectionMode, children }) => {
   const log = useLifecycleLogging('SceneHierarchyDataProvider');
   const sceneComposerId = useSceneComposerId();
-  const { document, removeSceneNode } = useStore(sceneComposerId)((state) => state);
+  const { document, removeSceneNode } = accessStore(sceneComposerId)((state) => state);
   const { updateSceneNodeInternal } = useSceneDocument(sceneComposerId);
-  const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
-  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
-  const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
-  const isViewing = useStore(sceneComposerId)((state) => state.isViewing);
+  const selectedSceneNodeRef = accessStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
+  const getSceneNodeByRef = accessStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const getObject3DBySceneNodeRef = accessStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
+  const isViewing = accessStore(sceneComposerId)((state) => state.isViewing);
   const { nodeMap } = document;
   const { nodeErrorMap: validationErrors } = useNodeErrorState(sceneComposerId);
 
@@ -173,7 +173,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
 
   const activate = useCallback(
     (nodeRef: string) => {
-      const setCameraTarget = useStore(sceneComposerId).getState().setCameraTarget;
+      const setCameraTarget = accessStore(sceneComposerId).getState().setCameraTarget;
       const node = getSceneNodeByRef(nodeRef);
       if (!isViewing() || !findComponentByType(node, KnownComponentType.Camera)) {
         setCameraTarget(nodeRef, 'transition');
@@ -189,7 +189,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
   const select = useCallback(
     (objectRef?: string) => {
       if (sceneComposerId) {
-        useStore(sceneComposerId).getState().setSelectedSceneNodeRef(objectRef);
+        accessStore(sceneComposerId).getState().setSelectedSceneNodeRef(objectRef);
       }
     },
     [sceneComposerId],

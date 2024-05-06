@@ -5,12 +5,12 @@ import { useIntl } from 'react-intl';
 
 import { AWS_USER_GUIDE_DOC_URL } from '../../common/constants';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 import { DisplayMessageCategory } from '../../store/internalInterfaces';
 import { evalStringTemplate } from '../../utils/stringUtils';
 import CenteredContainer from '../CenteredContainer';
 
-function mapMessageCategoryToModalTitle(category: DisplayMessageCategory) {
+function MapMessageCategoryToModalTitle(category: DisplayMessageCategory) {
   const intl = useIntl();
   switch (category) {
     case DisplayMessageCategory.Error:
@@ -24,18 +24,18 @@ function mapMessageCategoryToModalTitle(category: DisplayMessageCategory) {
 
 const MessageModal = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const messages = useStore(sceneComposerId)((state) => state.getMessages());
-  const clearMessages = useStore(sceneComposerId)((state) => state.clearMessages);
+  const messages = accessStore(sceneComposerId)((state) => state.getMessages());
+  const clearMessages = accessStore(sceneComposerId)((state) => state.clearMessages);
   const intl = useIntl();
 
   const containsError = messages.find((m) => m.category === DisplayMessageCategory.Error);
   const containsWarning = messages.find((m) => m.category === DisplayMessageCategory.Warning);
 
   const title = containsError
-    ? mapMessageCategoryToModalTitle(DisplayMessageCategory.Error)
+    ? MapMessageCategoryToModalTitle(DisplayMessageCategory.Error)
     : containsWarning
-    ? mapMessageCategoryToModalTitle(DisplayMessageCategory.Warning)
-    : mapMessageCategoryToModalTitle(DisplayMessageCategory.Info);
+    ? MapMessageCategoryToModalTitle(DisplayMessageCategory.Warning)
+    : MapMessageCategoryToModalTitle(DisplayMessageCategory.Info);
   const allowDismiss = !containsError;
   const showUserGuideLink = containsError || containsWarning;
 

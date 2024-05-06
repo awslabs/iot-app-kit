@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useContext, useEffect, useRef, useSta
 
 import { IDataOverlayComponentInternal, ISceneNodeInternal } from '../../../store/internalInterfaces';
 import { Component } from '../../../models/SceneModels';
-import { useStore, useViewOptionState } from '../../../store';
+import { accessStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { applyDataBindingTemplate } from '../../../utils/dataBindingTemplateUtils';
 
@@ -27,17 +27,17 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
   const sceneComposerId = useContext(sceneComposerIdContext);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
-  const setSelectedSceneNodeRef = useStore(sceneComposerId)((state) => state.setSelectedSceneNodeRef);
+  const selectedSceneNodeRef = accessStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
+  const setSelectedSceneNodeRef = accessStore(sceneComposerId)((state) => state.setSelectedSceneNodeRef);
   const subType = component.subType;
   const isAnnotation = component.subType === Component.DataOverlaySubType.TextAnnotation;
 
   const componentVisible = useViewOptionState(sceneComposerId).componentVisibilities[subType];
   const initialVisibilitySkipped = useRef(false);
 
-  const onWidgetClick = useStore(sceneComposerId)((state) => state.getEditorConfig().onWidgetClick);
-  const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
-  const dataBindingTemplate = useStore(sceneComposerId)((state) => state.dataBindingTemplate);
+  const onWidgetClick = accessStore(sceneComposerId)((state) => state.getEditorConfig().onWidgetClick);
+  const isViewing = accessStore(sceneComposerId)((state) => state.isViewing());
+  const dataBindingTemplate = accessStore(sceneComposerId)((state) => state.dataBindingTemplate);
 
   // TODO: config.isPinned is not supported in milestone 1
   // const [visible, setVisible] = useState(component.config?.isPinned || componentVisible);

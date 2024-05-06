@@ -4,7 +4,7 @@ import { Object3D } from 'three';
 
 import { MAX_CLICK_DISTANCE } from '../../../common/constants';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { IModelRefComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../store';
+import { IModelRefComponentInternal, ISceneNodeInternal, useEditorState, accessStore } from '../../../store';
 import { acceleratedRaycasting, getComponentGroupName } from '../../../utils/objectThreeUtils';
 import {
   findComponentByType,
@@ -25,9 +25,9 @@ interface TilesModelProps {
 export const TilesModelComponent: React.FC<TilesModelProps> = ({ node, component }: TilesModelProps) => {
   const sceneComposerId = useSceneComposerId();
   useLifecycleLogging('TilesModelComponent');
-  const { getSceneNodeByRef } = useStore(sceneComposerId)((state) => state);
-  const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
-  const uriModifier = useStore(sceneComposerId)((state) => state.getEditorConfig().uriModifier);
+  const { getSceneNodeByRef } = accessStore(sceneComposerId)((state) => state);
+  const appendSceneNode = accessStore(sceneComposerId)((state) => state.appendSceneNode);
+  const uriModifier = accessStore(sceneComposerId)((state) => state.getEditorConfig().uriModifier);
   const { isEditing, addingWidget, setAddingWidget, cursorLookAt } = useEditorState(sceneComposerId);
 
   // TODO: tilesRenderer holds "group" and it'll load tiles and B3DM/I3DM files dynanimcally, so we don't need

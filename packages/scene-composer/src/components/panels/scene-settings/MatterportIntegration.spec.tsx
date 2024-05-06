@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 import { KnownSceneProperty } from '../../../interfaces';
 
 import { MatterportIntegration } from './MatterportIntegration';
@@ -16,7 +16,7 @@ describe('MatterportIntegration', () => {
     getSceneProperty: getScenePropertyMock,
     isViewing: isViewingMock,
     noHistoryStates: {
-      ...useStore('default').getState().noHistoryStates,
+      ...accessStore('default').getState().noHistoryStates,
       setTagSettings: setTagSettingsMock,
     },
   };
@@ -30,7 +30,7 @@ describe('MatterportIntegration', () => {
   });
 
   it('should render correctly', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<MatterportIntegration />);
 
     expect(container).toMatchSnapshot();

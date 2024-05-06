@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 
-import { useStore } from '../store';
+import { accessStore } from '../store';
 
 import useBindingData from './useBindingData';
 
@@ -10,15 +10,15 @@ describe('useBindingData', () => {
   };
 
   beforeEach(() => {
-    useStore('default').getState().noHistoryStates.setAutoQueryEnabled(true);
-    useStore('default').getState().noHistoryStates.setViewport({ duration: '5m' });
-    useStore('default').setState({
+    accessStore('default').getState().noHistoryStates.setAutoQueryEnabled(true);
+    accessStore('default').getState().noHistoryStates.setViewport({ duration: '5m' });
+    accessStore('default').setState({
       getEditorConfig: jest.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
     });
   });
 
   it('should return undefined when auto query is not enabled', () => {
-    useStore('default').getState().noHistoryStates.setAutoQueryEnabled(false);
+    accessStore('default').getState().noHistoryStates.setAutoQueryEnabled(false);
 
     const data = renderHook(() => useBindingData([])).result.current.data;
 
@@ -32,7 +32,7 @@ describe('useBindingData', () => {
   });
 
   it('should return undefined when viewport is undefined', () => {
-    useStore('default').getState().noHistoryStates.setViewport(undefined);
+    accessStore('default').getState().noHistoryStates.setViewport(undefined);
 
     const data = renderHook(() => useBindingData([])).result.current.data;
 

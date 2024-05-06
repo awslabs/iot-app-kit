@@ -2,7 +2,7 @@ import wrapper from '@cloudscape-design/components/test-utils/dom';
 import { act, render } from '@testing-library/react';
 import React from 'react';
 
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 import { KnownSceneProperty } from '../../../interfaces';
 
 import { FogSettingsEditor } from './FogSettingsEditor';
@@ -32,7 +32,7 @@ describe('FogSettingsEditor', () => {
         return customColors;
       }
     });
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<FogSettingsEditor />);
     const polarisWrapper = wrapper(container);
     const toggle = polarisWrapper.findToggle();
@@ -64,7 +64,7 @@ describe('FogSettingsEditor', () => {
         return customColors;
       }
     });
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<FogSettingsEditor />);
     const polarisWrapper = wrapper(container);
     const toggle = polarisWrapper.findToggle();
@@ -92,7 +92,7 @@ describe('FogSettingsEditor', () => {
         return customColors;
       }
     });
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<FogSettingsEditor />);
     const polarisWrapper = wrapper(container);
     const nearInput = polarisWrapper.findInput('[data-testid="fog-near-input"]');
@@ -124,7 +124,7 @@ describe('FogSettingsEditor', () => {
         return customColors;
       }
     });
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<FogSettingsEditor />);
     const polarisWrapper = wrapper(container);
     const farInput = polarisWrapper.findInput('[data-testid="fog-far-input"]');
@@ -155,7 +155,7 @@ describe('FogSettingsEditor', () => {
         return customColors;
       }
     });
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<FogSettingsEditor />);
     const polarisWrapper = wrapper(container);
     const colorInput = polarisWrapper.findInput('[data-testid="hexcode"]');

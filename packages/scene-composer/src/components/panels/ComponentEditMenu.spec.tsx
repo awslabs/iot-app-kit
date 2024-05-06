@@ -5,7 +5,7 @@ import React from 'react';
 import { setMetricRecorder } from '../../common/GlobalSettings';
 import { KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 import { isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
 
 import { ComponentEditMenu } from './ComponentEditMenu';
@@ -25,7 +25,7 @@ describe('ComponentEditMenu', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    useStore('default').setState({
+    accessStore('default').setState({
       removeComponent,
       updateComponentInternal,
       setDeleteConfirmationModalVisible,

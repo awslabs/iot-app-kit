@@ -4,7 +4,7 @@ import { IconProps } from '@cloudscape-design/components';
 
 import { ToolbarItemOptionRaw, ToolbarItemOptions } from '../toolbars/common/types';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { IDataOverlayComponentInternal, useStore } from '../../store';
+import { IDataOverlayComponentInternal, accessStore } from '../../store';
 import { KnownComponentType } from '../../interfaces';
 import { ToolbarItem } from '../toolbars/common/ToolbarItem';
 import { getGlobalSettings } from '../../common/GlobalSettings';
@@ -45,10 +45,10 @@ const textStrings = defineMessages({
 
 export const ComponentEditMenu: React.FC<ComponentEditMenuProps> = ({ nodeRef, currentComponent }) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
-  const removeComponent = useStore(sceneComposerId)((state) => state.removeComponent);
-  const document = useStore(sceneComposerId)((state) => state.document);
-  const setDeleteConfirmationModalVisible = useStore(sceneComposerId)(
+  const updateComponentInternal = accessStore(sceneComposerId)((state) => state.updateComponentInternal);
+  const removeComponent = accessStore(sceneComposerId)((state) => state.removeComponent);
+  const document = accessStore(sceneComposerId)((state) => state.document);
+  const setDeleteConfirmationModalVisible = accessStore(sceneComposerId)(
     (state) => state.setDeleteConfirmationModalVisible,
   );
   const isDynamic = isDynamicScene(document);

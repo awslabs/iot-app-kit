@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { ThreeEvent } from '@react-three/fiber';
 
 import { AddingWidgetInfo, KnownComponentType } from '../interfaces';
-import { ISceneNodeInternal, ISubModelRefComponentInternal, useStore } from '../../src/store';
+import { ISceneNodeInternal, ISubModelRefComponentInternal, accessStore } from '../../src/store';
 
 import useAddWidget from './useAddWidget';
 
@@ -35,7 +35,7 @@ describe('useOverwriteRaycaster', () => {
     const addingWidget: AddingWidgetInfo = {
       node: node,
     };
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
       addingWidget: addingWidget,
       cursorLookAt: new THREE.Vector3(),
@@ -111,7 +111,7 @@ describe('useOverwriteRaycaster', () => {
       properties: { hiddenWhileImmersive: true },
     };
     getSceneNodeByRefMock.mockReturnValue(parentNode);
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
       addingWidget: addingWidget,
       cursorLookAt: new THREE.Vector3(),

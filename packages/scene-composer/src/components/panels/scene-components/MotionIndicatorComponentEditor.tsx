@@ -3,7 +3,7 @@ import { FormField, Select, SpaceBetween } from '@cloudscape-design/components';
 import { useIntl, defineMessages } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';
-import { IMotionIndicatorComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
+import { IMotionIndicatorComponentInternal, ISceneComponentInternal, accessStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { Component } from '../../../models/SceneModels';
 import { Divider } from '../../Divider';
@@ -18,7 +18,7 @@ export const MotionIndicatorComponentEditor: React.FC<IMotionIndicatorComponentE
   component,
 }: IMotionIndicatorComponentEditorProps) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
+  const updateComponentInternal = accessStore(sceneComposerId)((state) => state.updateComponentInternal);
   const motionIndicatorComponent = component as IMotionIndicatorComponentInternal;
   const selectedShape = motionIndicatorComponent.shape;
   const intl = useIntl();

@@ -12,7 +12,7 @@ import {
   TextureFileTypeList,
 } from '../../../interfaces';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
 import { parseS3BucketFromArn } from '../../../utils/pathUtils';
 
@@ -22,22 +22,22 @@ export const SceneBackgroundSettingsEditor: React.FC = () => {
 
   const sceneComposerId = useContext(sceneComposerIdContext);
   const intl = useIntl();
-  const setSceneProperty = useStore(sceneComposerId)(
+  const setSceneProperty = accessStore(sceneComposerId)(
     (state) => state.setSceneProperty<ISceneBackgroundSetting | undefined>,
   );
-  const backgroundSettings = useStore(sceneComposerId)((state) =>
+  const backgroundSettings = accessStore(sceneComposerId)((state) =>
     state.getSceneProperty<ISceneBackgroundSetting>(KnownSceneProperty.SceneBackgroundSettings),
   );
-  const showAssetBrowserCallback = useStore(sceneComposerId)(
+  const showAssetBrowserCallback = accessStore(sceneComposerId)(
     (state) => state.getEditorConfig().showAssetBrowserCallback,
   );
 
   const [internalColor, setInternalColor] = useState(backgroundSettings?.color || DEFAULT_SCENE_BACKGROUND_COLOR);
   const [internalUri, setInternalUri] = useState(backgroundSettings?.textureUri || '');
-  const backgroundColors = useStore(sceneComposerId)((state) =>
+  const backgroundColors = accessStore(sceneComposerId)((state) =>
     state.getSceneProperty<string[]>(KnownSceneProperty.BackgroundCustomColors, []),
   );
-  const setBackgroundColorsSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
+  const setBackgroundColorsSceneProperty = accessStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
 
   //set default and restore editor when background failed validiation elsewhere
   useEffect(() => {

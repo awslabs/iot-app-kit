@@ -6,7 +6,7 @@ import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import useBindingData from '../../../hooks/useBindingData';
 import { IValueDataBinding, KnownComponentType, SceneResourceType } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
-import { IMotionIndicatorComponentInternal, ISceneNodeInternal, useStore, useViewOptionState } from '../../../store';
+import { IMotionIndicatorComponentInternal, ISceneNodeInternal, accessStore, useViewOptionState } from '../../../store';
 import { dataBindingValuesProvider, ruleEvaluator } from '../../../utils/dataBindingUtils';
 import { getComponentGroupName } from '../../../utils/objectThreeUtils';
 import { getSceneResourceInfo, parseColorWithAlpha } from '../../../utils/sceneResourceUtils';
@@ -28,19 +28,19 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
   const motionIndicatorVisible =
     useViewOptionState(sceneComposerId).componentVisibilities[KnownComponentType.MotionIndicator];
 
-  const dataInput = useStore(sceneComposerId)((state) => state.dataInput);
-  const dataBindingTemplate = useStore(sceneComposerId)((state) => state.dataBindingTemplate);
-  const speedRule = useStore(sceneComposerId)((state) =>
+  const dataInput = accessStore(sceneComposerId)((state) => state.dataInput);
+  const dataBindingTemplate = accessStore(sceneComposerId)((state) => state.dataBindingTemplate);
+  const speedRule = accessStore(sceneComposerId)((state) =>
     state.getSceneRuleMapById(
       component.valueDataBindings[Component.MotionIndicatorDataBindingName.Speed]?.ruleBasedMapId,
     ),
   );
-  const foregroundColorRule = useStore(sceneComposerId)((state) =>
+  const foregroundColorRule = accessStore(sceneComposerId)((state) =>
     state.getSceneRuleMapById(
       component.valueDataBindings[Component.MotionIndicatorDataBindingName.ForegroundColor]?.ruleBasedMapId,
     ),
   );
-  const backgroundColorRule = useStore(sceneComposerId)((state) =>
+  const backgroundColorRule = accessStore(sceneComposerId)((state) =>
     state.getSceneRuleMapById(
       component.valueDataBindings[Component.MotionIndicatorDataBindingName.BackgroundColor]?.ruleBasedMapId,
     ),

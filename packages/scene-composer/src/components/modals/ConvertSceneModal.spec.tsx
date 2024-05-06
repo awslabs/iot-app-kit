@@ -3,7 +3,7 @@ import { act, render, waitFor } from '@testing-library/react';
 import flushPromises from 'flush-promises';
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 import {
   checkIfEntityExists,
   convertAllNodesToEntities,
@@ -36,7 +36,7 @@ describe('ConvertSceneModal', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    useStore('default').setState({
+    accessStore('default').setState({
       document: {
         nodeMap: {
           'test-uuid': 'mockNode',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 import { setFeatureConfig } from '../../common/GlobalSettings';
 import { mockProvider } from '../../../tests/components/panels/scene-components/MockComponents';
 import useDynamicScene from '../../hooks/useDynamicScene';
@@ -37,7 +37,7 @@ describe('SettingsPanel contains expected elements.', () => {
     jest.clearAllMocks();
 
     setFeatureConfig({});
-    useStore('default').setState({
+    accessStore('default').setState({
       setSceneProperty: jest.fn(),
       getSceneProperty: jest.fn().mockReturnValue('neutral'),
       isEditing: jest.fn(),
@@ -46,7 +46,7 @@ describe('SettingsPanel contains expected elements.', () => {
   });
 
   it('should contains default elements in editing mode.', async () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       isEditing: jest.fn().mockReturnValue(true),
     });
 
@@ -60,7 +60,7 @@ describe('SettingsPanel contains expected elements.', () => {
   });
 
   it('should contains default elements in viewing mode.', async () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       isEditing: jest.fn().mockReturnValue(false),
     });
 
@@ -74,7 +74,7 @@ describe('SettingsPanel contains expected elements.', () => {
   });
 
   it('should contains settings element for overlay in editing.', async () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       isEditing: jest.fn().mockReturnValue(true),
     });
 
@@ -88,7 +88,7 @@ describe('SettingsPanel contains expected elements.', () => {
   });
 
   it('should contains settings element for overlay in viewing.', async () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       isEditing: jest.fn().mockReturnValue(false),
     });
 
@@ -103,7 +103,7 @@ describe('SettingsPanel contains expected elements.', () => {
 
   it('should contains settings element for converting scene in editing.', async () => {
     (useDynamicScene as jest.Mock).mockReturnValue(true);
-    useStore('default').setState({
+    accessStore('default').setState({
       isEditing: jest.fn().mockReturnValue(true),
     });
 
@@ -115,7 +115,7 @@ describe('SettingsPanel contains expected elements.', () => {
 
   it('should not contain settings element for converting scene in viewing.', async () => {
     (useDynamicScene as jest.Mock).mockReturnValue(true);
-    useStore('default').setState({
+    accessStore('default').setState({
       isEditing: jest.fn().mockReturnValue(false),
     });
 

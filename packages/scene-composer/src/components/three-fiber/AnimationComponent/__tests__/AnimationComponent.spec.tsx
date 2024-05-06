@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { ISceneNodeInternal, useStore, IAnimationComponentInternal } from '../../../../store';
+import { ISceneNodeInternal, accessStore, IAnimationComponentInternal } from '../../../../store';
 import AnimationComponent, { toggleIsAnimationPaused } from '../AnimationComponent';
 import { generateUUID } from '../../../../utils/mathUtils';
 
@@ -99,7 +99,7 @@ describe('<AnimationComponent />', () => {
       currentAnimations: ['Action.018'],
     } as IAnimationComponentInternal;
 
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<AnimationComponent node={mockNode} component={mockComponent as IComponent} />);
 
     expect(container).toMatchSnapshot();
@@ -128,7 +128,7 @@ describe('<AnimationComponent />', () => {
         useEditorState: { getObject3DBySceneNodeRef: getObject3DMock },
       };
     });
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<AnimationComponent node={mockNode} component={mockComponent as IComponent} />);
     expect(container).toMatchSnapshot();
   });

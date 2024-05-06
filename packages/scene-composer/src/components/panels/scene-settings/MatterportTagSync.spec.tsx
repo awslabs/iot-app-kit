@@ -2,7 +2,7 @@ import React from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
 import { MpSdk } from '@matterport/r3f/dist';
 
-import { ISceneNodeInternal, useStore } from '../../../store';
+import { ISceneNodeInternal, accessStore } from '../../../store';
 import { MattertagItem, TagItem } from '../../../utils/matterportTagUtils';
 
 import { MatterportTagSync } from './MatterportTagSync';
@@ -95,14 +95,14 @@ describe('MatterportTagSync', () => {
   });
 
   it('should render correctly', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<MatterportTagSync />);
 
     expect(container).toMatchSnapshot();
   });
 
   it('should sync mattertags by deleting id1, updating id2, and adding id3', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     getComponentRefByTypeMock.mockImplementation(() => {
       const deletableTag: Record<string, string[]> = {
@@ -157,7 +157,7 @@ describe('MatterportTagSync', () => {
   });
 
   it('should sync matterport tags by deleting id1, updating id2, and adding id3', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     getComponentRefByTypeMock.mockImplementation(() => {
       const deletableTag: Record<string, string[]> = {

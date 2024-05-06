@@ -3,7 +3,7 @@ import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 import { KnownComponentType, KnownSceneProperty } from '../../../interfaces';
 import { DEFAULT_TAG_GLOBAL_SETTINGS } from '../../../common/constants';
 import useTagSettings from '../../../hooks/useTagSettings';
@@ -30,7 +30,7 @@ describe('SceneTagSettingsEditor', () => {
     getSceneProperty: getScenePropertyMock,
     isViewing: isViewingMock,
     noHistoryStates: {
-      ...useStore('default').getState().noHistoryStates,
+      ...accessStore('default').getState().noHistoryStates,
       tagSettings: DEFAULT_TAG_GLOBAL_SETTINGS,
       setTagSettings: setTagSettingsMock,
     },
@@ -47,7 +47,7 @@ describe('SceneTagSettingsEditor', () => {
   });
 
   it('should update store and view options when input value changed', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<SceneTagSettingsEditor />);
     const polarisWrapper = wrapper(container);
     const input = polarisWrapper.findInput();
@@ -80,7 +80,7 @@ describe('SceneTagSettingsEditor', () => {
   });
 
   it('should only store input value change to view options when in viewing mode', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     isViewingMock.mockReturnValue(true);
     const { container } = render(<SceneTagSettingsEditor />);
     const polarisWrapper = wrapper(container);
@@ -99,7 +99,7 @@ describe('SceneTagSettingsEditor', () => {
   });
 
   it('should update store when checkbox clicked', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<SceneTagSettingsEditor />);
     const polarisWrapper = wrapper(container);
     const checkbox = polarisWrapper.findCheckbox();
@@ -123,7 +123,7 @@ describe('SceneTagSettingsEditor', () => {
   });
 
   it('should update store when slider value changed', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<SceneTagSettingsEditor />);
     const polarisWrapper = wrapper(container);
 
@@ -172,7 +172,7 @@ describe('SceneTagSettingsEditor', () => {
   });
 
   it('should update view options immediately when slider value changed in viewing mode', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     isViewingMock.mockReturnValue(true);
     const { container } = render(<SceneTagSettingsEditor />);
     const polarisWrapper = wrapper(container);
@@ -207,14 +207,14 @@ describe('SceneTagSettingsEditor', () => {
 
   describe('Show tag through objects - enableOcclusion', () => {
     it('should update view option with document settings', () => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
       render(<SceneTagSettingsEditor />);
 
       expect(baseState.noHistoryStates.tagSettings?.enableOcclusion).toBeFalsy();
     });
 
     it('should update tag settings when toggled', () => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
       const { container } = render(<SceneTagSettingsEditor />);
       const polarisWrapper = wrapper(container);
       const toggle = polarisWrapper.findToggle();
@@ -235,7 +235,7 @@ describe('SceneTagSettingsEditor', () => {
     });
 
     it('should not update scene property when toggled in viewing mode', () => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
       isViewingMock.mockReturnValue(true);
       const { container } = render(<SceneTagSettingsEditor />);
       const polarisWrapper = wrapper(container);

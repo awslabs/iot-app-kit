@@ -3,7 +3,7 @@ import { Checkbox, FormField, Input, Select, SpaceBetween } from '@cloudscape-de
 import { useIntl, defineMessages } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';
-import { IModelRefComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
+import { IModelRefComponentInternal, ISceneComponentInternal, accessStore } from '../../../store';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { DistanceUnits } from '../../../interfaces';
 import { NumericInput } from '../CommonPanelComponents';
@@ -67,7 +67,7 @@ export const ModelRefComponentEditor: React.FC<IComponentEditorProps> = ({
   const { formatMessage } = useIntl();
 
   const sceneComposerId = useSceneComposerId();
-  const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
+  const updateComponentInternal = accessStore(sceneComposerId)((state) => state.updateComponentInternal);
   const isCustomUoM = !!modelRefComponent.localScale;
 
   const update = useCallback(

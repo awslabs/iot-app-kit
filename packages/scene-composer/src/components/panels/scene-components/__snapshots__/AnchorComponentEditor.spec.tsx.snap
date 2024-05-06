@@ -11,15 +11,15 @@ exports[`AnchorComponentEditor should render with tag style 1`] = `
     >
       <div
         data-mocked="Grid"
-        griddefinition="[{\\"colspan\\":10},{\\"colspan\\":2}]"
+        griddefinition="[{"colspan":10},{"colspan":2}]"
       >
         <div
           data-mocked="Select"
           data-testid="anchor-default-icon-select"
-          options="[{\\"label\\":\\"Info\\",\\"value\\":\\"Info\\"},{\\"label\\":\\"Warning\\",\\"value\\":\\"Warning\\"},{\\"label\\":\\"Error\\",\\"value\\":\\"Error\\"},{\\"label\\":\\"Video\\",\\"value\\":\\"Video\\"},{\\"label\\":\\"Custom style\\",\\"value\\":\\"Custom\\"}]"
+          options="[{"label":"Info","value":"Info"},{"label":"Warning","value":"Warning"},{"label":"Error","value":"Error"},{"label":"Video","value":"Video"},{"label":"Custom style","value":"Custom"}]"
           placeholder="Choose an icon"
           selectedarialabel="Selected"
-          selectedoption="{\\"label\\":\\"Info\\",\\"value\\":\\"Info\\"}"
+          selectedoption="{"label":"Info","value":"Info"}"
         />
         <img
           aria-label="Info icon"
@@ -39,7 +39,7 @@ exports[`AnchorComponentEditor should render with tag style 1`] = `
         <div
           data-mocked="Autosuggest"
           data-testid="select-entityId"
-          options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+          options="[{"label":"label1","value":"value1"},{"label":"label2","value":"value2"}]"
           value="value1"
         />
       </div>
@@ -62,7 +62,7 @@ exports[`AnchorComponentEditor should render with tag style 1`] = `
             <div
               data-mocked="Select"
               data-testid="value-data-binding-builder-select"
-              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              options="[{"label":"label1","value":"value1"},{"label":"label2","value":"value2"}]"
               placeholder="Select an option"
               selectedoption="null"
             />
@@ -91,7 +91,7 @@ exports[`AnchorComponentEditor should render with tag style 1`] = `
             <div
               data-mocked="Select"
               data-testid="value-data-binding-builder-select"
-              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              options="[{"label":"label1","value":"value1"},{"label":"label2","value":"value2"}]"
               placeholder="Select an option"
               selectedoption="null"
             />
@@ -106,10 +106,10 @@ exports[`AnchorComponentEditor should render with tag style 1`] = `
       <div
         data-mocked="Select"
         data-testid="anchor-rule-id-select"
-        options="[{\\"label\\":\\"No Rule\\",\\"value\\":\\"No Rule\\"}]"
+        options="[{"label":"No Rule","value":"No Rule"}]"
         placeholder="Choose a rule"
         selectedarialabel="Selected"
-        selectedoption="{\\"label\\":\\"rule1\\",\\"value\\":\\"rule1\\"}"
+        selectedoption="{"label":"rule1","value":"rule1"}"
       />
     </div>
     <div
@@ -131,7 +131,7 @@ exports[`AnchorComponentEditor should render with tag style 1`] = `
       addbuttontext="Add parameter"
       data-mocked="AttributeEditor"
       data-testid="anchor-attribute-editor-select"
-      definition="[{\\"label\\":\\"Key\\"},{\\"label\\":\\"Value\\"}]"
+      definition="[{"label":"Key"},{"label":"Value"}]"
       empty="No parameter"
       items="[]"
       removebuttontext="Remove parameter"
