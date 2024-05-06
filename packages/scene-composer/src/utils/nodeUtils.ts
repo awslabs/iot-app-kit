@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 import { ISceneComponentInternal, ISceneNodeInternal } from '../store';
-import { AddingWidgetInfo, KnownComponentType } from '../interfaces';
+import { AddingWidgetInfo, ITransform, KnownComponentType } from '../interfaces';
 import { Vector3 } from '../models/SceneModels';
 import { ITransformInternal } from '../store/internalInterfaces';
 
@@ -71,6 +71,85 @@ export const getFinalTransform = (transform: Transform, parent?: THREE.Object3D 
     rotation: finalRotation,
     scale: transform.scale.divide(parentWorldScale),
   };
+};
+
+const getWorldTranfromFromParent = (relativeTransform: Transform, parentTransform: Transform): Transform => {
+  const position = parentTransform.position.clone().add(relativeTransform.position);
+  const scale = parentTransform.scale.clone().multiply(relativeTransform.scale);
+  const quaternion = new THREE.Quaternion();
+  quaternion.setFromEuler(parentTransform.rotation);
+  const rotation = relativeTransform.rotation.clone().setFromQuaternion(quaternion);
+
+  return {
+    position,
+    rotation,
+    scale,
+  };
+};
+
+const getRelativeTransformFromParent = (nodeTransform: Transform, parentTransform: Transform) => {
+  const position = nodeTransform.position.clone().sub(parentTransform.position);
+  const scale = nodeTransform.scale.clone().divide(parentTransform.scale);
+  const quaternion = new THREE.Quaternion();
+  quaternion.setFromEuler(parentTransform.rotation).invert();
+  const rotation = nodeTransform.rotation.clone().setFromQuaternion(quaternion);
+
+  return {
+    position,
+    rotation,
+    scale,
+  };
+};
+
+const defaultTransform: Transform = {
+  position: new THREE.Vector3(0, 0, 0),
+  rotation: new THREE.Euler(0, 0, 0),
+  scale: new THREE.Vector3(1, 1, 1),
+};
+
+const iTransformToTransform = (iTransform: ITransform): Transform => {
+  return {
+    position: iTransform.position ? new THREE.Vector3(...iTransform.position) : defaultTransform.position.clone(),
+    rotation: iTransform.rotation ? new THREE.Euler(...iTransform.rotation) : defaultTransform.rotation.clone(),
+    scale: iTransform.scale ? new THREE.Vector3(...iTransform.scale) : defaultTransform.scale.clone(),
+  };
+};
+
+const transformToITransform = (transform: Transform): ITransform => {
+  return {
+    position: transform.position.toArray(),
+    rotation: [transform.rotation.x, transform.rotation.y, transform.rotation.z],
+    scale: transform.scale.toArray(),
+  };
+};
+
+const getNodeWorldTransform = (sceneNode: ISceneNodeInternal, getSceneNodeByRef): Transform => {
+  let node: ISceneNodeInternal | null = sceneNode;
+
+  let transform: Transform = { ...defaultTransform };
+
+  while (node) {
+    const nodeTransform = node.transform;
+    if (nodeTransform) {
+      transform = getWorldTranfromFromParent({ ...transform }, iTransformToTransform(nodeTransform));
+    }
+    node = getSceneNodeByRef(node.parentRef);
+  }
+
+  return transform;
+};
+
+export const getRelativeTransform = (
+  sceneNode: ISceneNodeInternal,
+  newParentNode: ISceneNodeInternal,
+  getSceneNodeByRef,
+): ITransform => {
+  const nodeWorldTransform = getNodeWorldTransform(sceneNode, getSceneNodeByRef);
+  const newParentWorldTransform = getNodeWorldTransform(newParentNode, getSceneNodeByRef);
+
+  const transform = getRelativeTransformFromParent(nodeWorldTransform, newParentWorldTransform);
+
+  return transformToITransform(transform);
 };
 
 /**

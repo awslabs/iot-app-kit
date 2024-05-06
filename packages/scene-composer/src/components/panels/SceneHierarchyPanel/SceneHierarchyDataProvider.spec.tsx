@@ -40,46 +40,60 @@ describe('SceneHierarchyDataProvider', () => {
   });
 
   describe('move', () => {
+    /**
+     * oldParent
+     *   original
+     *   newParent
+     */
+    const oldParentNode = {
+      ref: 'oldParent',
+      parentRef: undefined,
+      components: [],
+      transform: {
+        position: [0, 0, 0],
+        rotation: [0, 0, 0],
+        scale: [1, 1, 1],
+      },
+    };
+
     const originalNode = {
       ref: 'original',
       parentRef: 'oldParent',
-      components: [],
+      components: [{ type: KnownComponentType.ModelRef }],
       transform: {
+        position: [1, 2, 3],
+        rotation: [0, 0, 0],
         scale: [6, 6, 6],
       },
     };
-    const modelRefNode = {
-      ref: 'modelRef',
+    const newParentNode = {
+      ref: 'newParent',
+      parentRef: 'oldParent',
       components: [{ type: KnownComponentType.ModelRef }],
+      transform: {
+        position: [1, 1, 1],
+        rotation: [0, 0, 0],
+        scale: [2, 2, 2],
+      },
     };
-    const subModelNode = {
-      ref: 'subModel',
-      parentRef: modelRefNode.ref,
-      components: [{ type: KnownComponentType.SubModelRef }],
+
+    const sceneNodeMap = {
+      oldParent: oldParentNode,
+      original: originalNode,
+      newParent: newParentNode,
     };
 
     const originalObject = new THREE.Object3D();
     originalObject.name = 'original';
-    const modelRefObject = new THREE.Object3D();
-    modelRefObject.name = 'modelRef';
-    const subModelObject = new THREE.Object3D();
-    subModelObject.name = 'subModel';
+    const newParentObject = new THREE.Object3D();
+    newParentObject.name = 'newParent';
+    const oldParentObject = new THREE.Object3D();
+    oldParentObject.name = 'oldParent';
 
-    const sceneNodeMap = {
-      original: originalNode,
-      subModel: subModelNode,
-      modelRef: modelRefNode,
-    };
     const objectMap = {
       original: originalObject,
-      subModel: subModelObject,
-      modelRef: modelRefObject,
-    };
-
-    const mockFinalTransform = {
-      position: new THREE.Vector3(1, 1, 1),
-      rotation: new THREE.Euler(1, 1, 1),
-      scale: new THREE.Vector3(1, 1, 1),
+      oldParent: oldParentObject,
+      newParentNode: newParentObject,
     };
 
     beforeEach(() => {
@@ -109,8 +123,8 @@ describe('SceneHierarchyDataProvider', () => {
       expect(baseState.updateSceneNodeInternal).not.toBeCalled();
     });
 
-    it(`should use correct ModelRef node to calculate transforms when new parent is SubModelRef`, () => {
-      const getFinalTransformSpy = jest.spyOn(nodeUtils, 'getFinalTransform').mockReturnValue(mockFinalTransform);
+    it(`should set new relative position and scale when moved to new parent`, () => {
+      const getRelativeTransformSpy = jest.spyOn(nodeUtils, 'getRelativeTransform');
 
       let context;
       render(
@@ -125,109 +139,43 @@ describe('SceneHierarchyDataProvider', () => {
         </SceneHierarchyDataProvider>,
       );
 
-      context.move(originalNode.ref, subModelNode.ref);
+      context.move(originalNode.ref, newParentNode.ref);
 
-      expect(getFinalTransformSpy).toBeCalledTimes(1);
-      expect(getFinalTransformSpy).toBeCalledWith(expect.anything(), modelRefObject);
+      expect(getRelativeTransformSpy).toBeCalledTimes(1);
       expect(baseState.updateSceneNodeInternal).toMatchInlineSnapshot(`
-        [MockFunction] {
-          "calls": Array [
-            Array [
-              "original",
-              Object {
-                "parentRef": "subModel",
-                "transform": Object {
-                  "position": Array [
-                    1,
-                    1,
-                    1,
-                  ],
-                  "rotation": Array [
-                    1,
-                    1,
-                    1,
-                  ],
-                  "scale": Array [
-                    1,
-                    1,
-                    1,
-                  ],
-                },
-              },
-            ],
-          ],
-          "results": Array [
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            "original",
             Object {
-              "type": "return",
-              "value": undefined,
+              "parentRef": "newParent",
+              "transform": Object {
+                "position": Array [
+                  0,
+                  1,
+                  2,
+                ],
+                "rotation": Array [
+                  0,
+                  0,
+                  0,
+                ],
+                "scale": Array [
+                  3,
+                  3,
+                  3,
+                ],
+              },
             },
           ],
-        }
-      `);
-    });
-
-    it(`should keep Tag's original scale`, () => {
-      const getFinalTransformSpy = jest.spyOn(nodeUtils, 'getFinalTransform').mockReturnValue(mockFinalTransform);
-      const customSceneNodeMap = {
-        ...sceneNodeMap,
-        original: {
-          ...originalNode,
-          components: [{ type: KnownComponentType.Tag }],
-        },
-      };
-      baseState.getSceneNodeByRef.mockImplementation((ref) => customSceneNodeMap[ref]);
-
-      let context;
-      render(
-        <SceneHierarchyDataProvider selectionMode='single'>
-          <Context.Consumer>
-            {
-              ((value) => {
-                context = value;
-              }) as any
-            }
-          </Context.Consumer>
-        </SceneHierarchyDataProvider>,
-      );
-
-      context.move(originalNode.ref, modelRefNode.ref);
-
-      expect(getFinalTransformSpy).toBeCalledTimes(1);
-      expect(getFinalTransformSpy).toBeCalledWith(expect.anything(), modelRefObject);
-      expect(baseState.updateSceneNodeInternal).toMatchInlineSnapshot(`
-        [MockFunction] {
-          "calls": Array [
-            Array [
-              "original",
-              Object {
-                "parentRef": "modelRef",
-                "transform": Object {
-                  "position": Array [
-                    1,
-                    1,
-                    1,
-                  ],
-                  "rotation": Array [
-                    1,
-                    1,
-                    1,
-                  ],
-                  "scale": Array [
-                    6,
-                    6,
-                    6,
-                  ],
-                },
-              },
-            ],
-          ],
-          "results": Array [
-            Object {
-              "type": "return",
-              "value": undefined,
-            },
-          ],
-        }
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      }
       `);
     });
   });
