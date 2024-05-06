@@ -9,7 +9,6 @@ import {
   convertAllNodesToEntities,
   createSceneRootEntity,
   prepareWorkspace,
-  staticNodeCount,
   updateSceneRootEntity,
 } from '../../utils/entityModelUtils/sceneUtils';
 import { KnownSceneProperty } from '../../interfaces';
@@ -23,7 +22,6 @@ jest.mock('../../utils/entityModelUtils/sceneUtils', () => ({
   updateSceneRootEntity: jest.fn(),
   prepareWorkspace: jest.fn(),
   checkIfEntityExists: jest.fn(),
-  staticNodeCount: jest.fn(),
   convertAllNodesToEntities: jest.fn(),
 }));
 
@@ -39,6 +37,12 @@ describe('ConvertSceneModal', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     useStore('default').setState({
+      document: {
+        nodeMap: {
+          'test-uuid': 'mockNode',
+          'test-uuid2': 'mockNode2',
+        },
+      } as any,
       setConvertSceneModalVisibility,
       setSceneProperty,
       updateSceneNodeInternalBatch,
@@ -60,7 +64,6 @@ describe('ConvertSceneModal', () => {
     });
 
     (checkIfEntityExists as jest.Mock).mockReturnValue(true);
-    (staticNodeCount as jest.Mock).mockReturnValue(2);
 
     setTwinMakerSceneMetadataModule({
       getSceneId: jest.fn().mockReturnValue('test-scene'),

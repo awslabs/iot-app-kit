@@ -17,24 +17,21 @@ import {
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { generateUUID } from '../mathUtils';
 import { ISceneDocumentInternal, ISceneNodeInternal } from '../../store';
-import { COMPOSER_FEATURES, ISceneDocument, KnownSceneProperty } from '../../interfaces';
+import { ISceneDocument, KnownSceneProperty } from '../../interfaces';
 import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
 
 import { createNodeEntity } from './createNodeEntity';
-import { createSceneEntityComponent, updateSceneEntityComponent } from './sceneComponent';
+import { updateSceneEntityComponent } from './sceneComponent';
 
 export const createSceneEntityId = (sceneName: string): string => {
   return `SCENE_${sceneName}_${generateUUID()}`;
 };
 
-export const createSceneRootEntity = (
-  scene: Omit<ISceneDocument, 'nodeMap' | 'rootNodeRefs'>,
-): Promise<CreateEntityCommandOutput> | undefined => {
+export const createSceneRootEntity = (): Promise<CreateEntityCommandOutput> | undefined => {
   if (!getGlobalSettings().twinMakerSceneMetadataModule) {
     return;
   }
 
-  const isDynamicSceneAlphaEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicSceneAlpha];
   const sceneName = getGlobalSettings().twinMakerSceneMetadataModule!.getSceneId();
   const sceneEntityId = createSceneEntityId(sceneName);
   const input: CreateEntityCommandInput = {
@@ -42,11 +39,7 @@ export const createSceneRootEntity = (
     entityId: sceneEntityId,
     parentEntityId: SCENE_ROOT_ENTITY_ID,
     entityName: sceneEntityId,
-    components: isDynamicSceneAlphaEnabled
-      ? {
-          [SCENE_ROOT_ENTITY_COMPONENT_NAME]: createSceneEntityComponent(scene),
-        }
-      : undefined,
+    components: undefined,
   };
 
   return getGlobalSettings().twinMakerSceneMetadataModule!.createSceneEntity(input);
@@ -102,10 +95,6 @@ export const isDynamicNode = (node?: ISceneNodeInternal): boolean => {
 
 export const isDynamicScene = (document?: ISceneDocumentInternal): boolean => {
   return !isEmpty(document?.properties?.[KnownSceneProperty.SceneRootEntityId]);
-};
-
-export const staticNodeCount = (nodeMap: { [key: string]: ISceneNodeInternal }): number => {
-  return Object.values(nodeMap).filter((node) => !isDynamicNode(node)).length;
 };
 
 export const convertAllNodesToEntities = async ({

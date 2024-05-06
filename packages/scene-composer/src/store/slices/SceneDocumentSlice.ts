@@ -32,7 +32,7 @@ import {
 } from '../internalInterfaces';
 import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity';
 import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
-import { isDynamicNode, isDynamicScene, updateSceneRootEntity } from '../../utils/entityModelUtils/sceneUtils';
+import { isDynamicNode, isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
 import { createNodeEntity } from '../../utils/entityModelUtils/createNodeEntity';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { SliceCreator } from '../middlewares';
@@ -244,12 +244,6 @@ export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> =
       set((draft) => {
         mergeDeep(draft.document, partial);
 
-        const sceneRootEntityId = draft.document.properties?.sceneRootEntityId;
-        const dynamicSceneAlphaEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicSceneAlpha];
-        if (dynamicSceneAlphaEnabled && sceneRootEntityId) {
-          updateSceneRootEntity(sceneRootEntityId, draft.document);
-        }
-
         draft.lastOperation = 'updateDocumentInternal';
       });
     },
@@ -317,12 +311,6 @@ export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> =
       set((draft) => {
         draft.document.ruleMap[id] = ruleMap;
 
-        const sceneRootEntityId = draft.document.properties?.sceneRootEntityId;
-        const dynamicSceneAlphaEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicSceneAlpha];
-        if (dynamicSceneAlphaEnabled && sceneRootEntityId) {
-          updateSceneRootEntity(sceneRootEntityId, draft.document);
-        }
-
         draft.lastOperation = 'updateSceneRuleMapById';
       });
     },
@@ -330,12 +318,6 @@ export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> =
     removeSceneRuleMapById: (id: string) => {
       set((draft) => {
         delete draft.document.ruleMap[id];
-
-        const sceneRootEntityId = draft.document.properties?.sceneRootEntityId;
-        const dynamicSceneAlphaEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicSceneAlpha];
-        if (dynamicSceneAlphaEnabled && sceneRootEntityId) {
-          updateSceneRootEntity(sceneRootEntityId, draft.document);
-        }
 
         draft.lastOperation = 'removeSceneRuleMapById';
       });
@@ -466,12 +448,6 @@ export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> =
                 }
               });
             });
-        }
-
-        const sceneRootEntityId = draft.document.properties?.sceneRootEntityId;
-        const dynamicSceneAlphaEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DynamicSceneAlpha];
-        if (dynamicSceneAlphaEnabled && sceneRootEntityId) {
-          updateSceneRootEntity(sceneRootEntityId, draft.document);
         }
 
         draft.lastOperation = 'setSceneProperty';
