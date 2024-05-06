@@ -4,7 +4,7 @@ import wrapper from '@cloudscape-design/components/test-utils/dom';
 
 import { KnownComponentType, KnownSceneProperty } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 
 import { OverlayPanelVisibilityToggle } from './OverlayPanelVisibilityToggle';
 
@@ -21,7 +21,7 @@ describe('OverlayPanelVisibilityToggle', () => {
 
   const createState = (visible: boolean) => ({
     noHistoryStates: {
-      ...useStore('default').getState().noHistoryStates,
+      ...accessStore('default').getState().noHistoryStates,
       componentVisibilities: { [Component.DataOverlaySubType.OverlayPanel]: visible },
     },
     setSceneProperty,
@@ -37,14 +37,16 @@ describe('OverlayPanelVisibilityToggle', () => {
       components: [{ type: KnownComponentType.DataOverlay, subType: Component.DataOverlaySubType.OverlayPanel }],
     });
     getComponentRefByType.mockReturnValue({ ref: ['comp'] });
-    useStore('default').setState(createState(true));
+    accessStore('default').setState(createState(true));
   });
 
   it('should update view option with document settings', () => {
     render(<OverlayPanelVisibilityToggle />);
 
     expect(
-      useStore('default').getState().noHistoryStates.componentVisibilities[Component.DataOverlaySubType.OverlayPanel],
+      accessStore('default').getState().noHistoryStates.componentVisibilities[
+        Component.DataOverlaySubType.OverlayPanel
+      ],
     ).toBeFalsy();
   });
 
@@ -55,7 +57,9 @@ describe('OverlayPanelVisibilityToggle', () => {
 
     expect(toggle).not.toBeNull();
     expect(
-      useStore('default').getState().noHistoryStates.componentVisibilities[Component.DataOverlaySubType.OverlayPanel],
+      accessStore('default').getState().noHistoryStates.componentVisibilities[
+        Component.DataOverlaySubType.OverlayPanel
+      ],
     ).toBeFalsy();
 
     // Toggle to true
@@ -74,7 +78,9 @@ describe('OverlayPanelVisibilityToggle', () => {
     render(<OverlayPanelVisibilityToggle />);
 
     expect(
-      useStore('default').getState().noHistoryStates.componentVisibilities[Component.DataOverlaySubType.OverlayPanel],
+      accessStore('default').getState().noHistoryStates.componentVisibilities[
+        Component.DataOverlaySubType.OverlayPanel
+      ],
     ).toBeTruthy();
   });
 
@@ -86,7 +92,9 @@ describe('OverlayPanelVisibilityToggle', () => {
 
     expect(toggle).not.toBeNull();
     expect(
-      useStore('default').getState().noHistoryStates.componentVisibilities[Component.DataOverlaySubType.OverlayPanel],
+      accessStore('default').getState().noHistoryStates.componentVisibilities[
+        Component.DataOverlaySubType.OverlayPanel
+      ],
     ).toBeTruthy();
 
     // Toggle to false

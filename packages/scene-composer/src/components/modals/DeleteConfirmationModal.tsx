@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { Alert, Box, Button, Header, SpaceBetween } from '@cloudscape-design/components';
 
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 import CenteredContainer from '../CenteredContainer';
 
 interface DeleteConfirmationModalProps {
@@ -23,7 +23,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
 }: DeleteConfirmationModalProps) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const { formatMessage } = useIntl();
-  const setDeleteConfirmationModalVisible = useStore(sceneComposerId)(
+  const setDeleteConfirmationModalVisible = accessStore(sceneComposerId)(
     (state) => state.setDeleteConfirmationModalVisible,
   );
 

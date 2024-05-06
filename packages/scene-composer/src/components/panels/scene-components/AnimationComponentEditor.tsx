@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from 'react';
 
-import { useStore, ISceneNodeInternal, IAnimationComponentInternal } from '../../../store';
+import { accessStore, ISceneNodeInternal, IAnimationComponentInternal } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 
 import { AnimationViewStateEditor } from './AnimationViewStateEditor';
@@ -12,7 +12,7 @@ export type AnimationEditorProps = {
 
 export const AnimationComponentEditor: React.FC<AnimationEditorProps> = ({ ...props }) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
+  const updateComponentInternal = accessStore(sceneComposerId)((state) => state.updateComponentInternal);
   // istanbul ignore next
   const onUpdate = useCallback(
     (currentAnimations, noderef, component) => {

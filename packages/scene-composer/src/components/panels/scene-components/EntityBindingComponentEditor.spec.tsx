@@ -3,7 +3,7 @@ import React from 'react';
 
 import { mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
 import { KnownComponentType } from '../../../interfaces';
-import { IEntityBindingComponentInternal, ISceneNodeInternal, useStore } from '../../../store';
+import { IEntityBindingComponentInternal, ISceneNodeInternal, accessStore } from '../../../store';
 
 import { EntityBindingComponentEditor } from './EntityBindingComponentEditor';
 
@@ -37,14 +37,14 @@ describe('EntityindingComponentEditor', () => {
   });
 
   it('should not have remove button', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     render(<EntityBindingComponentEditor node={node} component={component} />);
     expect(screen.queryByText('remove-binding-button')).toBeNull();
     expect(updateComponentInternalMock).toBeCalledTimes(0);
   });
 
   it('should have entity search field', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     render(<EntityBindingComponentEditor node={node} component={component} />);
     expect(screen.getByTestId('select-entityId')).toBeTruthy();
     expect(updateComponentInternalMock).toBeCalledTimes(0);

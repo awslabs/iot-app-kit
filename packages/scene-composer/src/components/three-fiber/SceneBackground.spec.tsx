@@ -7,7 +7,7 @@ import { useThree } from '@react-three/fiber';
 import React from 'react';
 
 import { COMPOSER_FEATURES, ISceneBackgroundSetting } from '../../interfaces';
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 
 const getScenePropertyMock = jest.fn();
 const baseState = {
@@ -39,7 +39,7 @@ describe('SceneBackground', () => {
   const setup = () => {
     jest.resetAllMocks();
 
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
   };
 
   beforeEach(() => {

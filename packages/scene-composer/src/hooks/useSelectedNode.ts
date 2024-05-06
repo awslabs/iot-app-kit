@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
-import { useEditorState, useStore } from '../store';
+import { useEditorState, accessStore } from '../store';
 
 const useSelectedNode = () => {
   const sceneComposerId = useSceneComposerId();
@@ -13,7 +13,7 @@ const useSelectedNode = () => {
     setSelectedSceneSubmodelRef,
   } = useEditorState(sceneComposerId);
 
-  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const getSceneNodeByRef = accessStore(sceneComposerId)((state) => state.getSceneNodeByRef);
 
   const selectedSceneNode = useMemo(() => getSceneNodeByRef(selectedSceneNodeRef), [selectedSceneNodeRef]);
 

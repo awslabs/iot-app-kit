@@ -12,10 +12,10 @@ exports[`SceneRulesPanel returns expected elements. SceneRulesPanel returns expe
       <div
         addbuttontext="Add new statement"
         data-mocked="AttributeEditor"
-        definition="[{\\"label\\":\\"Expression\\"},{\\"label\\":\\"Target\\"}]"
+        definition="[{"label":"Expression"},{"label":"Target"}]"
         empty="No statements"
-        i18nstrings="{\\"itemRemovedAriaLive\\":\\"Removed statement\\"}"
-        items="[{\\"expression\\":\\"exp1\\",\\"target\\":\\"target1\\"},\\"mapId\\"]"
+        i18nstrings="{"itemRemovedAriaLive":"Removed statement"}"
+        items="[{"expression":"exp1","target":"target1"},"mapId"]"
         removebuttontext="Remove statement"
       />
       <div
@@ -26,7 +26,7 @@ exports[`SceneRulesPanel returns expected elements. SceneRulesPanel returns expe
     </div>
     <div
       data-mocked="Box"
-      padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      padding="{"left":"m","right":"m","top":"xxs","bottom":"xxs"}"
     >
       <div
         data-mocked="SpaceBetween"

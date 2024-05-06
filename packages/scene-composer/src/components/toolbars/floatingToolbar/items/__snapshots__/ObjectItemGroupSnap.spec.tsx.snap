@@ -1,26 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ObjectItemGroupSnap should correctly render horizontally 1`] = `
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  border-left: 3px solid colorBorderDividerDefault;
-}
-
-.c0:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-fqkvVR eA-dzJj"
   >
     <div
       data-testid="ToolbarItem"
@@ -37,26 +20,9 @@ exports[`ObjectItemGroupSnap should correctly render horizontally 1`] = `
 `;
 
 exports[`ObjectItemGroupSnap should render with disabled rotate and scale when Overlay is selected 1`] = `
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-top: 3px solid colorBorderDividerDefault;
-}
-
-.c0:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-fqkvVR qzUpD"
   >
     <div
       data-testid="ToolbarItem"
@@ -73,26 +39,9 @@ exports[`ObjectItemGroupSnap should render with disabled rotate and scale when O
 `;
 
 exports[`ObjectItemGroupSnap should render with disabled rotate and scale when Tag is selected 1`] = `
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-top: 3px solid colorBorderDividerDefault;
-}
-
-.c0:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-fqkvVR qzUpD"
   >
     <div
       data-testid="ToolbarItem"

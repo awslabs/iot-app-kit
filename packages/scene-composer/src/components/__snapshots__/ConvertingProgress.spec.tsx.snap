@@ -1,20 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ConvertingProgress should render with correct progress with 0% done 1`] = `
-.c0 {
-  width: 100%;
-}
-
-.c1 {
-  color: !important;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-aXZVg jRVSTR"
     data-mocked="Container"
     data-testid="progress-container"
   >
@@ -26,7 +15,7 @@ exports[`ConvertingProgress should render with correct progress with 0% done 1`]
     >
       <div>
         <div
-          class="c1"
+          class="sc-gEvEer jzVSqD"
           data-mocked="Box"
         >
           0 out of 10 converted
@@ -38,20 +27,9 @@ exports[`ConvertingProgress should render with correct progress with 0% done 1`]
 `;
 
 exports[`ConvertingProgress should render with correct progress with all done 1`] = `
-.c0 {
-  width: 100%;
-}
-
-.c1 {
-  color: !important;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-aXZVg jRVSTR"
     data-mocked="Container"
     data-testid="progress-container"
   >
@@ -63,7 +41,7 @@ exports[`ConvertingProgress should render with correct progress with all done 1`
     >
       <div>
         <div
-          class="c1"
+          class="sc-gEvEer jzVSqD"
           data-mocked="Box"
         >
           10 out of 10 converted
@@ -75,20 +53,9 @@ exports[`ConvertingProgress should render with correct progress with all done 1`
 `;
 
 exports[`ConvertingProgress should render with correct progress with partially done 1`] = `
-.c0 {
-  width: 100%;
-}
-
-.c1 {
-  color: !important;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-aXZVg jRVSTR"
     data-mocked="Container"
     data-testid="progress-container"
   >
@@ -100,7 +67,7 @@ exports[`ConvertingProgress should render with correct progress with partially d
     >
       <div>
         <div
-          class="c1"
+          class="sc-gEvEer jzVSqD"
           data-mocked="Box"
         >
           2 out of 9 converted

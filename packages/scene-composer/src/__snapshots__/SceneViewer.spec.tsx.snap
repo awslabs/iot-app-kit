@@ -1,25 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SceneViewer should render correctly 1`] = `
-.c0 {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-.c0 canvas {
-  outline: none;
-  -webkit-tap-highlight-color: rgba(255,255,255,0);
-}
-
 <div
-  className="c0 sceneViewer"
+  className="sc-cWSHoV icqfWN sceneViewer"
   data-testid="webgl-root"
 >
   <div
-    config="{\\"mode\\":\\"Viewing\\",\\"featureConfig\\":{\\"Matterport\\":true,\\"SceneAppearance\\":true,\\"DynamicScene\\":true}}"
+    config="{"mode":"Viewing","featureConfig":{"Matterport":true,"SceneAppearance":true,"DynamicScene":true}}"
     data-mocked="SceneComposerInternal"
     onSceneLoaded={[Function]}
     sceneComposerId="123"

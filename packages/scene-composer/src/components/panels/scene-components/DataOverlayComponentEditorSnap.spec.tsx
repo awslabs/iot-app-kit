@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import { mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
-import { IDataOverlayComponentInternal, ISceneNodeInternal, useStore } from '../../../store';
+import { IDataOverlayComponentInternal, ISceneNodeInternal, accessStore } from '../../../store';
 import { Component } from '../../../models/SceneModels';
 import { KnownComponentType } from '../../../interfaces';
 
@@ -58,7 +58,7 @@ describe('DataOverlayComponentEditorSnap', () => {
   };
 
   it('should render data rows for text annotation', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<DataOverlayComponentEditor node={node} component={component} />);
 
@@ -66,7 +66,7 @@ describe('DataOverlayComponentEditorSnap', () => {
   });
 
   it('should render editor for overlay panel', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(
       <DataOverlayComponentEditor

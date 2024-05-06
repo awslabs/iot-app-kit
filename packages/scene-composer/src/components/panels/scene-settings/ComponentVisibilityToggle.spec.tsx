@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import React from 'react';
 
 import { KnownComponentType } from '../../../interfaces';
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 
 import { ComponentVisibilityToggle } from './ComponentVisibilityToggle';
 
@@ -11,7 +11,7 @@ describe('ComponentVisibilityToggle', () => {
 
   const createState = (visible: boolean) => ({
     noHistoryStates: {
-      ...useStore('default').getState().noHistoryStates,
+      ...accessStore('default').getState().noHistoryStates,
       componentVisibilities: { [KnownComponentType.MotionIndicator]: visible },
       toggleComponentVisibility: jest.fn(),
     },
@@ -20,7 +20,7 @@ describe('ComponentVisibilityToggle', () => {
 
   it('should render correctly for motion indicator', async () => {
     getComponentRefByType.mockReturnValue({ type: KnownComponentType.MotionIndicator });
-    useStore('default').setState(createState(true));
+    accessStore('default').setState(createState(true));
     const { container } = render(
       <ComponentVisibilityToggle componentType={KnownComponentType.MotionIndicator} label='Motion indicator label' />,
     );

@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { MutableRefObject, useEffect, useRef } from 'react';
 import { useThree, useFrame } from '@react-three/fiber';
 
-import { useStore } from '../store';
+import { accessStore } from '../store';
 
 type Helper = THREE.Object3D & {
   update: () => void;
@@ -47,7 +47,7 @@ export function useEditorHelper<T>(
     };
   }, [isRendered, scene, proto, object3D, args]);
 
-  useStore(sceneComposerId).subscribe((state) => {
+  accessStore(sceneComposerId).subscribe((state) => {
     if (helper.current) {
       helper.current.visible = !state.isLoadingModel;
     }

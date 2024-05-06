@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
 import { mockComponent, mockProvider } from '../../../../../tests/components/panels/scene-components/MockComponents';
-import { IMotionIndicatorComponentInternal, useStore } from '../../../../store';
+import { IMotionIndicatorComponentInternal, accessStore } from '../../../../store';
 import { KnownComponentType } from '../../../../interfaces';
 import { Component } from '../../../../models/SceneModels';
 
@@ -55,7 +55,7 @@ describe('ColorEditor', () => {
   const onUpdateCallback = jest.fn();
 
   it('should render correctly for background color with data binding', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(
       <ColorEditor
@@ -68,7 +68,7 @@ describe('ColorEditor', () => {
   });
 
   it('should render correctly for background color without data binding', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const rendered = render(
       <ColorEditor
@@ -93,7 +93,7 @@ describe('ColorEditor', () => {
   });
 
   it('should render correctly for background color with slider and color picker shown', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const rendered = render(
       <ColorEditor
@@ -120,7 +120,7 @@ describe('ColorEditor', () => {
   });
 
   it('should render correctly for foreground color with data binding', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(
       <ColorEditor
@@ -133,7 +133,7 @@ describe('ColorEditor', () => {
   });
 
   it('should render correctly for foreground color without data binding', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(
       <ColorEditor
@@ -146,7 +146,7 @@ describe('ColorEditor', () => {
   });
 
   it('should render correctly for foreground color with  color picker shown', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const rendered = render(
       <ColorEditor

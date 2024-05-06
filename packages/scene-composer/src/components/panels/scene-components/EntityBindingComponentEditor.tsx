@@ -2,7 +2,7 @@ import { SpaceBetween } from '@cloudscape-design/components';
 import React, { useCallback, useContext } from 'react';
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 import { IEntityBindingComponentInternal } from '../../../store/internalInterfaces';
 import { IComponentEditorProps } from '../ComponentEditor';
 
@@ -17,9 +17,9 @@ export const EntityBindingComponentEditor: React.FC<IEntityBindingComponentEdito
   component,
 }: IEntityBindingComponentEditorProps) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
-  const removeComponent = useStore(sceneComposerId)((state) => state.removeComponent);
-  const valueDataBindingProvider = useStore(sceneComposerId)(
+  const updateComponentInternal = accessStore(sceneComposerId)((state) => state.updateComponentInternal);
+  const removeComponent = accessStore(sceneComposerId)((state) => state.removeComponent);
+  const valueDataBindingProvider = accessStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
   const onUpdateCallback = useCallback(

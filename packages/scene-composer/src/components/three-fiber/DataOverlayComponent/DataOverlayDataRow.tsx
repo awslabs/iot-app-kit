@@ -4,7 +4,7 @@ import { Primitive } from '@iot-app-kit/core';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { ITwinMakerEntityDataBindingContext } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 import { dataBindingValuesProvider } from '../../../utils/dataBindingUtils';
 import { replaceBindingVariables } from '../../../utils/dataBindingVariableUtils';
 import { ReactMarkdownWrapper } from '../../wrappers/ReactMarkdownWrapper';
@@ -24,9 +24,9 @@ export const DataOverlayDataRow = ({
   valueDataBindings,
 }: DataOverlayDataRowProps): ReactElement => {
   const sceneComposerId = useSceneComposerId();
-  const dataInput = useStore(sceneComposerId)((state) => state.dataInput);
-  const dataBindingTemplate = useStore(sceneComposerId)((state) => state.dataBindingTemplate);
-  const isEditing = useStore(sceneComposerId)((state) => state.isEditing());
+  const dataInput = accessStore(sceneComposerId)((state) => state.dataInput);
+  const dataBindingTemplate = accessStore(sceneComposerId)((state) => state.dataBindingTemplate);
+  const isEditing = accessStore(sceneComposerId)((state) => state.isEditing());
   const isAnnotation = overlayType === Component.DataOverlaySubType.TextAnnotation;
   const bindings = useMemo(() => valueDataBindings.map((b) => b.valueDataBinding ?? {}), [valueDataBindings]);
   const bindingData = useBindingData(bindings);

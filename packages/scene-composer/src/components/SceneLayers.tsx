@@ -2,21 +2,21 @@ import React, { useContext, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
-import { useStore } from '../store';
+import { accessStore } from '../store';
 import { processQueries } from '../utils/entityModelUtils/processQueries';
 import { KnownSceneProperty } from '../interfaces';
 import { DEFAULT_PARENT_RELATIONSHIP_NAME } from '../common/entityModelConstants';
 
 export const SceneLayers: React.FC = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
-  const autoUpdateInterval = useStore(sceneComposerId)(
+  const isViewing = accessStore(sceneComposerId)((state) => state.isViewing());
+  const autoUpdateInterval = accessStore(sceneComposerId)(
     (state) => state.getSceneProperty(KnownSceneProperty.LayerDefaultRefreshInterval) as number,
   );
 
-  const renderSceneNodes = useStore(sceneComposerId)((state) => state.renderSceneNodes);
+  const renderSceneNodes = accessStore(sceneComposerId)((state) => state.renderSceneNodes);
 
-  const sceneRootEntityId = useStore(sceneComposerId)((state) =>
+  const sceneRootEntityId = accessStore(sceneComposerId)((state) =>
     state.getSceneProperty(KnownSceneProperty.SceneRootEntityId),
   );
 

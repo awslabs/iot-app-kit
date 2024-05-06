@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import * as THREE from 'three';
 
 import { TopBar } from '../TopBar';
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 import { DEFAULT_CAMERA_OPTIONS, DEFAULT_CAMERA_POSITION, KnownComponentType } from '../../..';
 import useActiveCamera from '../../../hooks/useActiveCamera';
 
@@ -58,7 +58,7 @@ const baseState = {
 
 describe('<TopBar />', () => {
   it('should not render without camera view', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<TopBar />);
     expect(container).toMatchSnapshot();
@@ -71,7 +71,7 @@ describe('<TopBar />', () => {
       },
     };
 
-    useStore('default').setState({ ...baseState, document });
+    accessStore('default').setState({ ...baseState, document });
 
     const { container } = render(<TopBar />);
     expect(container).toMatchSnapshot();
@@ -84,7 +84,7 @@ describe('<TopBar />', () => {
       },
     };
 
-    useStore('default').setState({ ...baseState, document });
+    accessStore('default').setState({ ...baseState, document });
     const { setActiveCameraSettings } = useActiveCamera();
 
     const { getByTestId } = render(<TopBar />);
@@ -97,23 +97,23 @@ describe('<TopBar />', () => {
     const arg = (setActiveCameraSettings as jest.Mock).mock.calls[0][0];
 
     expect(arg).toMatchInlineSnapshot(`
-      Object {
+      {
         "cameraType": "Perspective",
         "far": 1000,
         "fov": 53.13,
         "near": 0.1,
-        "transform": Object {
-          "position": Array [
+        "transform": {
+          "position": [
             5,
             5,
             5,
           ],
-          "rotation": Array [
+          "rotation": [
             -0,
             0,
             -0,
           ],
-          "scale": Array [
+          "scale": [
             1,
             1,
             1,

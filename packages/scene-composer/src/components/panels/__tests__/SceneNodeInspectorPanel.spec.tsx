@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import { SceneNodeInspectorPanel } from '../SceneNodeInspectorPanel';
 import { KnownComponentType } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
-import { ISceneNodeInternal, useStore } from '../../../store';
+import { ISceneNodeInternal, accessStore } from '../../../store';
 import { setFeatureConfig } from '../../../common/GlobalSettings';
 
 const getSceneNodeByRef = jest.fn();
@@ -49,7 +49,7 @@ describe('SceneNodeInspectorPanel returns expected elements.', () => {
   };
 
   beforeEach(() => {
-    useStore('default').setState({
+    accessStore('default').setState({
       document: {},
       selectedSceneNodeRef: 'testNodeRef',
       getSceneNodeByRef: getSceneNodeByRef,

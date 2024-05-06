@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 
 import { ModelRefComponentEditor } from '../../../../src/components/panels/scene-components/ModelRefComponentEditor';
-import { useStore } from '../../../../src/store';
+import { accessStore } from '../../../../src/store';
 
 import { mockNode, mockComponent } from './MockComponents';
 
@@ -25,7 +25,7 @@ describe('ModelRefComponentEditor', () => {
   });
 
   it('should toggle cast shadow check box', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<ModelRefComponentEditor node={mockNode} component={mockComponent} />);
     const polarisWrapper = wrapper(container);
@@ -39,7 +39,7 @@ describe('ModelRefComponentEditor', () => {
   });
 
   it('should toggle cast receive check box', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<ModelRefComponentEditor node={mockNode} component={mockComponent} />);
     const polarisWrapper = wrapper(container);
     const checkBox = polarisWrapper.findCheckbox('[data-testid="receive-shadow-checkbox"]');
@@ -52,7 +52,7 @@ describe('ModelRefComponentEditor', () => {
   });
 
   it('should update local scale numeric', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const scaledComponent = {
       ...mockComponent,
       localScale: [1, 1, 1],
@@ -71,7 +71,7 @@ describe('ModelRefComponentEditor', () => {
   });
 
   it('should update unit measure select', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const measuredComponent = {
       ...mockComponent,
       unitOfMeasure: 'meters',

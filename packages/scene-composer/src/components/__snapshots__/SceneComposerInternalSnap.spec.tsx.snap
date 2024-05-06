@@ -3,7 +3,7 @@
 exports[`SceneComposerInternal should render a default error view when loading a bad scene content 1`] = `
 <div
   style={
-    Object {
+    {
       "height": "100%",
       "minHeight": "100%",
       "minWidth": "100%",
@@ -17,7 +17,7 @@ exports[`SceneComposerInternal should render a default error view when loading a
       <ScenePanel
         direction="Left"
         panels={
-          Object {
+          {
             "Hierarchy": <SceneHierarchyPanel />,
             "Rules": <SceneRulesPanel />,
             "Settings": <SettingsPanel />,
@@ -60,7 +60,7 @@ exports[`SceneComposerInternal should render a default error view when loading a
       <ScenePanel
         direction="Right"
         panels={
-          Object {
+          {
             "Inspector": <SceneNodeInspectorPanel />,
           }
         }
@@ -74,7 +74,7 @@ exports[`SceneComposerInternal should render a default error view when loading a
 exports[`SceneComposerInternal should render a default error view when unknown error happens 1`] = `
 <div
   style={
-    Object {
+    {
       "height": "100%",
       "minHeight": "100%",
       "minWidth": "100%",
@@ -108,7 +108,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
 <div>
   <div
     style={
-      Object {
+      {
         "height": "100%",
         "minHeight": "100%",
         "minWidth": "100%",
@@ -122,7 +122,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
         <ScenePanel
           direction="Left"
           panels={
-            Object {
+            {
               "Hierarchy": <SceneHierarchyPanel />,
               "Rules": <SceneRulesPanel />,
               "Settings": <SettingsPanel />,
@@ -165,7 +165,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
         <ScenePanel
           direction="Right"
           panels={
-            Object {
+            {
               "Inspector": <SceneNodeInspectorPanel />,
             }
           }
@@ -176,7 +176,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
   </div>
   <div
     style={
-      Object {
+      {
         "height": "100%",
         "minHeight": "100%",
         "minWidth": "100%",
@@ -190,7 +190,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
         <ScenePanel
           direction="Left"
           panels={
-            Object {
+            {
               "Hierarchy": <SceneHierarchyPanel />,
               "Rules": <SceneRulesPanel />,
               "Settings": <SettingsPanel />,
@@ -233,7 +233,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
         <ScenePanel
           direction="Right"
           panels={
-            Object {
+            {
               "Inspector": <SceneNodeInspectorPanel />,
             }
           }
@@ -248,7 +248,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
 exports[`SceneComposerInternal should render correctly with a valid scene in editing mode 1`] = `
 <div
   style={
-    Object {
+    {
       "height": "100%",
       "minHeight": "100%",
       "minWidth": "100%",
@@ -262,7 +262,7 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
       <ScenePanel
         direction="Left"
         panels={
-          Object {
+          {
             "Hierarchy": <SceneHierarchyPanel />,
             "Rules": <SceneRulesPanel />,
             "Settings": <SettingsPanel />,
@@ -305,7 +305,7 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
       <ScenePanel
         direction="Right"
         panels={
-          Object {
+          {
             "Inspector": <SceneNodeInspectorPanel />,
           }
         }
@@ -319,7 +319,7 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
 exports[`SceneComposerInternal should render correctly with an empty scene in editing mode 1`] = `
 <div
   style={
-    Object {
+    {
       "height": "100%",
       "minHeight": "100%",
       "minWidth": "100%",
@@ -333,7 +333,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in ed
       <ScenePanel
         direction="Left"
         panels={
-          Object {
+          {
             "Hierarchy": <SceneHierarchyPanel />,
             "Rules": <SceneRulesPanel />,
             "Settings": <SettingsPanel />,
@@ -369,7 +369,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in ed
       <ScenePanel
         direction="Right"
         panels={
-          Object {
+          {
             "Inspector": <SceneNodeInspectorPanel />,
           }
         }
@@ -383,7 +383,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in ed
 exports[`SceneComposerInternal should render correctly with an empty scene in viewing mode 1`] = `
 <div
   style={
-    Object {
+    {
       "height": "100%",
       "minHeight": "100%",
       "minWidth": "100%",
@@ -398,7 +398,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in vi
         collapse={true}
         direction="Left"
         panels={
-          Object {
+          {
             "Hierarchy": <SceneHierarchyPanel />,
             "Settings": <SettingsPanel />,
           }
@@ -438,7 +438,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in vi
 exports[`SceneComposerInternal should render error when major version is newer 1`] = `
 <div
   style={
-    Object {
+    {
       "height": "100%",
       "minHeight": "100%",
       "minWidth": "100%",
@@ -452,7 +452,7 @@ exports[`SceneComposerInternal should render error when major version is newer 1
       <ScenePanel
         direction="Left"
         panels={
-          Object {
+          {
             "Hierarchy": <SceneHierarchyPanel />,
             "Rules": <SceneRulesPanel />,
             "Settings": <SettingsPanel />,
@@ -495,7 +495,7 @@ exports[`SceneComposerInternal should render error when major version is newer 1
       <ScenePanel
         direction="Right"
         panels={
-          Object {
+          {
             "Inspector": <SceneNodeInspectorPanel />,
           }
         }
@@ -509,7 +509,7 @@ exports[`SceneComposerInternal should render error when major version is newer 1
 exports[`SceneComposerInternal should render error when specVersion is invalid 1`] = `
 <div
   style={
-    Object {
+    {
       "height": "100%",
       "minHeight": "100%",
       "minWidth": "100%",
@@ -523,7 +523,7 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
       <ScenePanel
         direction="Left"
         panels={
-          Object {
+          {
             "Hierarchy": <SceneHierarchyPanel />,
             "Rules": <SceneRulesPanel />,
             "Settings": <SettingsPanel />,
@@ -566,7 +566,7 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
       <ScenePanel
         direction="Right"
         panels={
-          Object {
+          {
             "Inspector": <SceneNodeInspectorPanel />,
           }
         }
@@ -580,7 +580,7 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
 exports[`SceneComposerInternal should render warning when minor version is newer 1`] = `
 <div
   style={
-    Object {
+    {
       "height": "100%",
       "minHeight": "100%",
       "minWidth": "100%",
@@ -594,7 +594,7 @@ exports[`SceneComposerInternal should render warning when minor version is newer
       <ScenePanel
         direction="Left"
         panels={
-          Object {
+          {
             "Hierarchy": <SceneHierarchyPanel />,
             "Rules": <SceneRulesPanel />,
             "Settings": <SettingsPanel />,
@@ -637,7 +637,7 @@ exports[`SceneComposerInternal should render warning when minor version is newer
       <ScenePanel
         direction="Right"
         panels={
-          Object {
+          {
             "Inspector": <SceneNodeInspectorPanel />,
           }
         }
@@ -652,7 +652,7 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
 <div>
   <div
     style={
-      Object {
+      {
         "height": "100%",
         "minHeight": "100%",
         "minWidth": "100%",
@@ -666,7 +666,7 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
         <ScenePanel
           direction="Left"
           panels={
-            Object {
+            {
               "Hierarchy": <SceneHierarchyPanel />,
               "Rules": <SceneRulesPanel />,
               "Settings": <SettingsPanel />,
@@ -709,7 +709,7 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
         <ScenePanel
           direction="Right"
           panels={
-            Object {
+            {
               "Inspector": <SceneNodeInspectorPanel />,
             }
           }
@@ -720,7 +720,7 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
   </div>
   <div
     style={
-      Object {
+      {
         "height": "100%",
         "minHeight": "100%",
         "minWidth": "100%",
@@ -734,7 +734,7 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
         <ScenePanel
           direction="Left"
           panels={
-            Object {
+            {
               "Hierarchy": <SceneHierarchyPanel />,
               "Rules": <SceneRulesPanel />,
               "Settings": <SettingsPanel />,
@@ -777,7 +777,7 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
         <ScenePanel
           direction="Right"
           panels={
-            Object {
+            {
               "Inspector": <SceneNodeInspectorPanel />,
             }
           }

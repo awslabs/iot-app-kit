@@ -5,7 +5,7 @@ import { debounce } from 'lodash';
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { Component } from '../../../models/SceneModels';
-import { IDataOverlayComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
+import { IDataOverlayComponentInternal, ISceneComponentInternal, accessStore } from '../../../store';
 import { IComponentEditorProps } from '../ComponentEditor';
 import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
 
@@ -20,9 +20,9 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
   component,
 }: IDataOverlayComponentEditorProps) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const document = useStore(sceneComposerId)((state) => state.document);
-  const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
-  const valueDataBindingProvider = useStore(sceneComposerId)(
+  const document = accessStore(sceneComposerId)((state) => state.document);
+  const updateComponentInternal = accessStore(sceneComposerId)((state) => state.updateComponentInternal);
+  const valueDataBindingProvider = accessStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
   const [newRows, setNewRows] = useState<Component.DataOverlayMarkdownRow[]>(component.dataRows);

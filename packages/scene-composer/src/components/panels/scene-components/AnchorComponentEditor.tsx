@@ -15,7 +15,7 @@ import { defineMessages, useIntl } from 'react-intl';
 import { SCENE_ICONS } from '../../../common/constants';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { DefaultAnchorStatus, IValueDataBinding, KnownSceneProperty, SceneResourceType } from '../../../interfaces';
-import { IAnchorComponentInternal, ISceneComponentInternal, useSceneDocument, useStore } from '../../../store';
+import { IAnchorComponentInternal, ISceneComponentInternal, useSceneDocument, accessStore } from '../../../store';
 import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
 import { shallowEqualsArray } from '../../../utils/objectUtils';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
@@ -51,8 +51,8 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
   component,
 }: IAnchorComponentEditorProps) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
-  const valueDataBindingProvider = useStore(sceneComposerId)(
+  const updateComponentInternal = accessStore(sceneComposerId)((state) => state.updateComponentInternal);
+  const valueDataBindingProvider = accessStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
   const anchorComponent = component as IAnchorComponentInternal;
@@ -60,7 +60,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
   const hasDuplicateKeyRef = useRef<boolean>(false);
   const { document, listSceneRuleMapIds, getSceneProperty, getSceneRuleMapById } = useSceneDocument(sceneComposerId);
   const tagStyleColors = getSceneProperty<string[]>(KnownSceneProperty.TagCustomColors, []);
-  const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
+  const setSceneProperty = accessStore(sceneComposerId)((state) => state.setSceneProperty);
 
   const intl = useIntl();
 

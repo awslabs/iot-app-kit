@@ -4,20 +4,20 @@ import { Box, Button, Checkbox, CheckboxProps, NonCancelableCustomEvent } from '
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 import { KnownSceneProperty } from '../../../interfaces';
 import { LAYER_DEFAULT_REFRESH_INTERVAL } from '../../../utils/entityModelUtils/sceneLayerUtils';
 
 export const ConvertSceneSettings: React.FC = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const { formatMessage } = useIntl();
-  const document = useStore(sceneComposerId)((state) => state.document);
+  const document = accessStore(sceneComposerId)((state) => state.document);
 
-  const setConvertSceneModalVisibility = useStore(sceneComposerId)((state) => state.setConvertSceneModalVisibility);
-  const autoUpdateOn = useStore(sceneComposerId)(
+  const setConvertSceneModalVisibility = accessStore(sceneComposerId)((state) => state.setConvertSceneModalVisibility);
+  const autoUpdateOn = accessStore(sceneComposerId)(
     (state) => (state.getSceneProperty(KnownSceneProperty.LayerDefaultRefreshInterval) as number) > 0,
   );
-  const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
+  const setSceneProperty = accessStore(sceneComposerId)((state) => state.setSceneProperty);
 
   const convertScene = useCallback(() => {
     setConvertSceneModalVisibility(true);

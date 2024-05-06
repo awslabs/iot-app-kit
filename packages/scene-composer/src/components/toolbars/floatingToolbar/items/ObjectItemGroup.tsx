@@ -4,7 +4,7 @@ import { defineMessages, useIntl } from 'react-intl';
 import { DeleteSvg, RotateIconSvg, ScaleIconSvg, TranslateIconSvg } from '../../../../assets/svgs';
 import { KnownComponentType, TransformControlMode } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
-import { useEditorState, useSceneDocument, useStore } from '../../../../store';
+import { useEditorState, useSceneDocument, accessStore } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { TOOLBAR_ITEM_CONTAINER_HEIGHT, ToolbarItemGroup } from '../../common/styledComponents';
 import { ToolbarItemOptions, ToolbarOrientation } from '../../common/types';
@@ -39,7 +39,7 @@ export function ObjectItemGroup({ toolbarOrientation, canvasHeight }: ObjectItem
   const sceneComposerId = useContext(sceneComposerIdContext);
   const intl = useIntl();
   const { selectedSceneNodeRef, transformControlMode, setTransformControlMode } = useEditorState(sceneComposerId);
-  const setDeleteConfirmationModalVisible = useStore(sceneComposerId)(
+  const setDeleteConfirmationModalVisible = accessStore(sceneComposerId)(
     (state) => state.setDeleteConfirmationModalVisible,
   );
   const { getSceneNodeByRef, removeSceneNode, document } = useSceneDocument(sceneComposerId);

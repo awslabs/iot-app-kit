@@ -3,7 +3,7 @@ import { Canvas, useThree } from '@react-three/fiber';
 import { BoxGeometry, Mesh, MeshBasicMaterial, Group } from 'three';
 import { create } from 'react-test-renderer';
 
-import { useStore } from '../store';
+import { accessStore } from '../store';
 import { setFeatureConfig } from '../common/GlobalSettings';
 
 import { WebGLCanvasManager } from './WebGLCanvasManager';
@@ -125,7 +125,7 @@ describe('WebGLCanvasManagerSnap', () => {
   });
 
   it('should render editing correctly without immersive view feature', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     baseState.isEditing.mockReturnValue(true);
     baseState.getSceneNodeByRef.mockReturnValue('childNode');
 
@@ -134,7 +134,7 @@ describe('WebGLCanvasManagerSnap', () => {
   });
 
   it('should render viewing correctly without immersive view feature', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     baseState.isEditing.mockReturnValue(false);
     baseState.getSceneNodeByRef.mockReturnValue('childNode');
 

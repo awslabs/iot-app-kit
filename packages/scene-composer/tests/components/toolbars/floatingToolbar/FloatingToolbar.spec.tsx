@@ -6,7 +6,7 @@ import { render } from '@testing-library/react';
 import { AddObjectMenu } from '../../../../src/components/toolbars/floatingToolbar/items/AddObjectMenu';
 
 import { FloatingToolbar } from '../../../../src/components/toolbars';
-import { useStore } from '../../../../src/store';
+import { accessStore } from '../../../../src/store';
 import { ToolbarOrientation } from '../../../../src/components/toolbars/common/types';
 import { act } from 'react-dom/test-utils';
 
@@ -22,7 +22,7 @@ jest.mock('../../../../src/components/toolbars/floatingToolbar/items/AddObjectMe
 
 describe('FloatingToolbar', () => {
   beforeEach(() => {
-    useStore('default').setState({
+    accessStore('default').setState({
       addingWidget: undefined,
     } as any);
     jest.clearAllMocks();
@@ -54,7 +54,7 @@ describe('FloatingToolbar', () => {
   });
 
   it('should render correctly when addingWidget', () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       addingWidget: {},
     } as any);
     const container = create(<FloatingToolbar enableDefaultItems={true} />);

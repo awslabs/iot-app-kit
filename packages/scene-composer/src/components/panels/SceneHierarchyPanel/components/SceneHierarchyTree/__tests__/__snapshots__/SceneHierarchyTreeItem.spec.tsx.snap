@@ -4,7 +4,7 @@ exports[`SceneHierarchyTreeItem should bubble up when expanded 1`] = `
 <div>
   <div
     acceptdrop="AcceptableDropTypes"
-    data="{\\"ref\\":\\"1\\"}"
+    data="{"ref":"1"}"
     data-mocked="EnhancedTreeItem"
     datatype="modelRef"
     labeltext="Label 1"
@@ -12,7 +12,7 @@ exports[`SceneHierarchyTreeItem should bubble up when expanded 1`] = `
   >
     <div>
       <div
-        componenttypes="[\\"modelRef\\"]"
+        componenttypes="["modelRef"]"
         data-mocked="SceneNodeLabel"
         labeltext="Label 1"
         objectref="1"
@@ -26,7 +26,7 @@ exports[`SceneHierarchyTreeItem should render SubModelTree when item has a model
 <div>
   <div
     acceptdrop="AcceptableDropTypes"
-    data="{\\"ref\\":\\"1\\"}"
+    data="{"ref":"1"}"
     data-mocked="EnhancedTreeItem"
     datatype="ModelRef"
     labeltext="Label 1"
@@ -34,7 +34,7 @@ exports[`SceneHierarchyTreeItem should render SubModelTree when item has a model
   >
     <div>
       <div
-        componenttypes="[\\"ModelRef\\"]"
+        componenttypes="["ModelRef"]"
         data-mocked="SceneNodeLabel"
         labeltext="Label 1"
         objectref="1"
@@ -48,7 +48,7 @@ exports[`SceneHierarchyTreeItem should render dynamic node with drag and drop 1`
 <div>
   <div
     acceptdrop="AcceptableDropTypes"
-    data="{\\"ref\\":\\"1\\"}"
+    data="{"ref":"1"}"
     data-mocked="EnhancedTreeItem"
     datatype="Tag"
     labeltext="Label 1"
@@ -56,7 +56,7 @@ exports[`SceneHierarchyTreeItem should render dynamic node with drag and drop 1`
   >
     <div>
       <div
-        componenttypes="[\\"Tag\\"]"
+        componenttypes="["Tag"]"
         data-mocked="SceneNodeLabel"
         labeltext="Label 1"
         objectref="1"

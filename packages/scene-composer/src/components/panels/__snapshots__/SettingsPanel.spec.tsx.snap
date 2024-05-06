@@ -1,12 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SettingsPanel contains expected elements. should contains default elements in editing mode. 1`] = `
-.c0 {
-  height: 1px;
-  border-width: 0px;
-  background-color: colorBorderDividerDefault;
-}
-
 <div>
   <div
     data-mocked="ExpandableInfoSection"
@@ -25,12 +19,12 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
       </div>
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Motion indicator
@@ -46,16 +40,16 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
         </div>
       </div>
       <hr
-        class="c0"
+        class="sc-cPiKLX bUylbr"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Tag
@@ -71,16 +65,16 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
         </div>
       </div>
       <hr
-        class="c0"
+        class="sc-cPiKLX bUylbr"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Overlay
@@ -96,16 +90,16 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
         </div>
       </div>
       <hr
-        class="c0"
+        class="sc-cPiKLX bUylbr"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Annotation
@@ -135,10 +129,10 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
       >
         <div
           data-mocked="Select"
-          options="[{\\"label\\":\\"No Preset\\",\\"value\\":\\"n/a\\"},{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"},{\\"label\\":\\"Directional\\",\\"value\\":\\"directional\\"},{\\"label\\":\\"Chromatic\\",\\"value\\":\\"chromatic\\"}]"
+          options="[{"label":"No Preset","value":"n/a"},{"label":"Neutral","value":"neutral"},{"label":"Directional","value":"directional"},{"label":"Chromatic","value":"chromatic"}]"
           placeholder="Choose an environment"
           selectedarialabel="Selected"
-          selectedoption="{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"}"
+          selectedoption="{"label":"Neutral","value":"neutral"}"
         />
       </div>
     </div>
@@ -151,14 +145,14 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
     <div
       data-mocked="Box"
       font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
+      margin="{"bottom":"xxs"}"
       variant="p"
     >
       Overlay
     </div>
     <div
       data-mocked="Box"
-      margin="{\\"bottom\\":\\"xxs\\"}"
+      margin="{"bottom":"xxs"}"
       variant="p"
     >
       Visibility settings
@@ -182,12 +176,6 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
 `;
 
 exports[`SettingsPanel contains expected elements. should contains default elements in viewing mode. 1`] = `
-.c0 {
-  height: 1px;
-  border-width: 0px;
-  background-color: colorBorderDividerDefault;
-}
-
 <div>
   <div
     data-mocked="ExpandableInfoSection"
@@ -206,12 +194,12 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
       </div>
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Motion indicator
@@ -227,16 +215,16 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
         </div>
       </div>
       <hr
-        class="c0"
+        class="sc-cPiKLX bUylbr"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Tag
@@ -252,16 +240,16 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
         </div>
       </div>
       <hr
-        class="c0"
+        class="sc-cPiKLX bUylbr"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Overlay
@@ -277,16 +265,16 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
         </div>
       </div>
       <hr
-        class="c0"
+        class="sc-cPiKLX bUylbr"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Annotation
@@ -313,12 +301,6 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
 `;
 
 exports[`SettingsPanel contains expected elements. should contains settings element for converting scene in editing. 1`] = `
-.c0 {
-  height: 1px;
-  border-width: 0px;
-  background-color: colorBorderDividerDefault;
-}
-
 <div>
   <div
     data-mocked="ExpandableInfoSection"
@@ -337,12 +319,12 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
       </div>
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Motion indicator
@@ -358,16 +340,16 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
         </div>
       </div>
       <hr
-        class="c0"
+        class="sc-cPiKLX bUylbr"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Tag
@@ -383,16 +365,16 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
         </div>
       </div>
       <hr
-        class="c0"
+        class="sc-cPiKLX bUylbr"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Overlay
@@ -408,16 +390,16 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
         </div>
       </div>
       <hr
-        class="c0"
+        class="sc-cPiKLX bUylbr"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Annotation
@@ -447,10 +429,10 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
       >
         <div
           data-mocked="Select"
-          options="[{\\"label\\":\\"No Preset\\",\\"value\\":\\"n/a\\"},{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"},{\\"label\\":\\"Directional\\",\\"value\\":\\"directional\\"},{\\"label\\":\\"Chromatic\\",\\"value\\":\\"chromatic\\"}]"
+          options="[{"label":"No Preset","value":"n/a"},{"label":"Neutral","value":"neutral"},{"label":"Directional","value":"directional"},{"label":"Chromatic","value":"chromatic"}]"
           placeholder="Choose an environment"
           selectedarialabel="Selected"
-          selectedoption="{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"}"
+          selectedoption="{"label":"Neutral","value":"neutral"}"
         />
       </div>
     </div>
@@ -463,14 +445,14 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
     <div
       data-mocked="Box"
       font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
+      margin="{"bottom":"xxs"}"
       variant="p"
     >
       Overlay
     </div>
     <div
       data-mocked="Box"
-      margin="{\\"bottom\\":\\"xxs\\"}"
+      margin="{"bottom":"xxs"}"
       variant="p"
     >
       Visibility settings
@@ -494,12 +476,6 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
 `;
 
 exports[`SettingsPanel contains expected elements. should contains settings element for overlay in editing. 1`] = `
-.c0 {
-  height: 1px;
-  border-width: 0px;
-  background-color: colorBorderDividerDefault;
-}
-
 <div>
   <div
     data-mocked="ExpandableInfoSection"
@@ -518,12 +494,12 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
       </div>
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Motion indicator
@@ -539,16 +515,16 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
         </div>
       </div>
       <hr
-        class="c0"
+        class="sc-cPiKLX bUylbr"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Tag
@@ -564,16 +540,16 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
         </div>
       </div>
       <hr
-        class="c0"
+        class="sc-cPiKLX bUylbr"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Overlay
@@ -589,16 +565,16 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
         </div>
       </div>
       <hr
-        class="c0"
+        class="sc-cPiKLX bUylbr"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Annotation
@@ -628,10 +604,10 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
       >
         <div
           data-mocked="Select"
-          options="[{\\"label\\":\\"No Preset\\",\\"value\\":\\"n/a\\"},{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"},{\\"label\\":\\"Directional\\",\\"value\\":\\"directional\\"},{\\"label\\":\\"Chromatic\\",\\"value\\":\\"chromatic\\"}]"
+          options="[{"label":"No Preset","value":"n/a"},{"label":"Neutral","value":"neutral"},{"label":"Directional","value":"directional"},{"label":"Chromatic","value":"chromatic"}]"
           placeholder="Choose an environment"
           selectedarialabel="Selected"
-          selectedoption="{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"}"
+          selectedoption="{"label":"Neutral","value":"neutral"}"
         />
       </div>
     </div>
@@ -644,14 +620,14 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
     <div
       data-mocked="Box"
       font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
+      margin="{"bottom":"xxs"}"
       variant="p"
     >
       Overlay
     </div>
     <div
       data-mocked="Box"
-      margin="{\\"bottom\\":\\"xxs\\"}"
+      margin="{"bottom":"xxs"}"
       variant="p"
     >
       Visibility settings
@@ -667,12 +643,6 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
 `;
 
 exports[`SettingsPanel contains expected elements. should contains settings element for overlay in viewing. 1`] = `
-.c0 {
-  height: 1px;
-  border-width: 0px;
-  background-color: colorBorderDividerDefault;
-}
-
 <div>
   <div
     data-mocked="ExpandableInfoSection"
@@ -691,12 +661,12 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
       </div>
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Motion indicator
@@ -712,16 +682,16 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
         </div>
       </div>
       <hr
-        class="c0"
+        class="sc-cPiKLX bUylbr"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Tag
@@ -737,16 +707,16 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
         </div>
       </div>
       <hr
-        class="c0"
+        class="sc-cPiKLX bUylbr"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Overlay
@@ -762,16 +732,16 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
         </div>
       </div>
       <hr
-        class="c0"
+        class="sc-cPiKLX bUylbr"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="Box"
           display="inline"
-          margin="{\\"bottom\\":\\"xxs\\"}"
+          margin="{"bottom":"xxs"}"
           variant="p"
         >
           Annotation

@@ -1,10 +1,10 @@
-import { useStore } from '../../src/store';
+import { accessStore } from '../../src/store';
 
-describe('useStore', () => {
+describe('accessStore', () => {
   it('should get store by id', () => {
-    const initialStore = useStore('test1');
-    const getStore = useStore('test1');
-    const otherStore = useStore('test2');
+    const initialStore = accessStore('test1');
+    const getStore = accessStore('test1');
+    const otherStore = accessStore('test2');
 
     expect(initialStore).toEqual(getStore);
     expect(otherStore).not.toEqual(getStore);

@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
 import { mockComponent, mockProvider } from '../MockComponents';
-import { IMotionIndicatorComponentInternal, useStore } from '../../../../../src/store';
+import { IMotionIndicatorComponentInternal, accessStore } from '../../../../../src/store';
 import { KnownComponentType } from '../../../../../src/interfaces';
 import { Component } from '../../../../../src/models/SceneModels';
 import { SpeedEditor } from '../../../../../src/components/panels/scene-components/motion-indicator/SpeedEditor';
@@ -45,14 +45,14 @@ describe('SpeedEditor', () => {
   const onUpdateCallback = jest.fn();
 
   it('should render correctly with data binding', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<SpeedEditor component={component} onUpdateCallback={onUpdateCallback} />);
     expect(container).toMatchSnapshot();
   });
 
   it('should render correctly without data binding', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const rendered = render(
       <SpeedEditor component={{ ...component, valueDataBindings: {} }} onUpdateCallback={onUpdateCallback} />,
@@ -62,7 +62,7 @@ describe('SpeedEditor', () => {
   });
 
   it('should render correctly with slider shown', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const rendered = render(
       <SpeedEditor component={{ ...component, valueDataBindings: {} }} onUpdateCallback={onUpdateCallback} />,

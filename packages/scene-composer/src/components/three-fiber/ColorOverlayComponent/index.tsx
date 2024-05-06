@@ -3,7 +3,7 @@ import { Material, Mesh } from 'three';
 import { isEmpty } from 'lodash';
 
 import { SceneResourceType } from '../../../interfaces';
-import { ISceneNodeInternal, IColorOverlayComponentInternal, useStore } from '../../../store';
+import { ISceneNodeInternal, IColorOverlayComponentInternal, accessStore } from '../../../store';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { getSceneResourceInfo, parseColorWithAlpha } from '../../../utils/sceneResourceUtils';
 import useMaterialEffect from '../../../hooks/useMaterialEffect';
@@ -20,7 +20,7 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
 }: IColorOverlayComponentProps) => {
   const { ruleBasedMapId, valueDataBinding } = component;
   const sceneComposerId = useSceneComposerId();
-  const entityObject3D = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef(node.ref));
+  const entityObject3D = accessStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef(node.ref));
 
   const ruleResult = useRuleResult({ ruleMapId: ruleBasedMapId, dataBinding: valueDataBinding });
 

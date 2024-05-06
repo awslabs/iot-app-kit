@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 
-import { useStore } from '../store';
+import { accessStore } from '../store';
 
 import useRuleResult from './useRuleResult';
 
@@ -10,7 +10,7 @@ jest.mock('./useBindingData', () =>
 
 describe('useRuleResult', () => {
   beforeEach(() => {
-    useStore('default').setState({
+    accessStore('default').setState({
       getSceneRuleMapById: jest.fn().mockImplementation((id) =>
         id == 'rule-id'
           ? {

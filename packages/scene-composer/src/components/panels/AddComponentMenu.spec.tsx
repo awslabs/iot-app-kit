@@ -4,7 +4,7 @@ import React from 'react';
 import { setMetricRecorder } from '../../common/GlobalSettings';
 import { KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 
 import { AddComponentMenu } from './AddComponentMenu';
 
@@ -21,7 +21,7 @@ describe('AddComponentMenu', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    useStore('default').setState({
+    accessStore('default').setState({
       selectedSceneNodeRef,
       addComponentInternal,
       updateComponentInternal,

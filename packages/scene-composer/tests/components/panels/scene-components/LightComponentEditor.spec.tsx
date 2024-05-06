@@ -7,7 +7,7 @@ import _ from 'lodash';
 import { LightComponentEditor } from '../../../../src/components/panels/scene-components/LightComponentEditor';
 import { LightType } from '../../../../src/models/SceneModels';
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../src/common/constants';
-import { ILightComponentInternal, useStore } from '../../../../src/store';
+import { ILightComponentInternal, accessStore } from '../../../../src/store';
 
 import { mockNode, mockComponent } from './MockComponents';
 
@@ -50,7 +50,7 @@ describe('LightComponentEditor', () => {
   });
 
   it('should select light types', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<LightComponentEditor node={mockNode} component={lightComponent} />);
 
@@ -107,7 +107,7 @@ describe('LightComponentEditor', () => {
   });
 
   it('should select edit light settings', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<LightComponentEditor node={mockNode} component={lightComponent} />);
     const polarisWrapper = wrapper(container);

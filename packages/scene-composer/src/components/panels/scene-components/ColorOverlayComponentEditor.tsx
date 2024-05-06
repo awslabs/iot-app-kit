@@ -3,7 +3,7 @@ import { Button, FormField, Select, SpaceBetween } from '@cloudscape-design/comp
 import { useIntl } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';
-import { IColorOverlayComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
+import { IColorOverlayComponentInternal, ISceneComponentInternal, accessStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IValueDataBinding } from '../../../interfaces';
 import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
@@ -17,15 +17,15 @@ export const ColorOverlayComponentEditor: React.FC<IColorOverlayComponentEditor>
   component,
 }: IColorOverlayComponentEditor) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
-  const valueDataBindingProvider = useStore(sceneComposerId)(
+  const updateComponentInternal = accessStore(sceneComposerId)((state) => state.updateComponentInternal);
+  const valueDataBindingProvider = accessStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
-  const listSceneRuleMapIds = useStore(sceneComposerId)((state) => state.listSceneRuleMapIds);
-  const removeComponent = useStore(sceneComposerId)((state) => state.removeComponent);
+  const listSceneRuleMapIds = accessStore(sceneComposerId)((state) => state.listSceneRuleMapIds);
+  const removeComponent = accessStore(sceneComposerId)((state) => state.removeComponent);
   const intl = useIntl();
-  const document = useStore(sceneComposerId)((state) => state.document);
-  const setDeleteConfirmationModalVisible = useStore(sceneComposerId)(
+  const document = accessStore(sceneComposerId)((state) => state.document);
+  const setDeleteConfirmationModalVisible = accessStore(sceneComposerId)(
     (state) => state.setDeleteConfirmationModalVisible,
   );
   const isDynamic = isDynamicScene(document);

@@ -4,7 +4,7 @@ import { useThree } from '@react-three/fiber';
 
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 import { COMPOSER_FEATURES, ISceneBackgroundSetting, KnownSceneProperty } from '../../interfaces';
 import useTwinMakerTextureLoader from '../../hooks/useTwinMakerTextureLoader';
 import { ResponseContentType } from '../../three/types';
@@ -13,7 +13,7 @@ const SceneBackground: FC = () => {
   const texturesEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Textures];
   const sceneComposerId = useContext(sceneComposerIdContext);
   const scene = useThree((state) => state.scene);
-  const sceneBackgroundSettings = useStore(sceneComposerId)((state) =>
+  const sceneBackgroundSettings = accessStore(sceneComposerId)((state) =>
     state.getSceneProperty<ISceneBackgroundSetting>(KnownSceneProperty.SceneBackgroundSettings),
   );
   const { loadTexture } = useTwinMakerTextureLoader({ imageOrientation: 'flipY' });

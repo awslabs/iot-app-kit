@@ -106,7 +106,6 @@ export const DragNDrop = () => {
             i.parentId = parentId;
           }
         });
-
         setItems(newItems);
       }
     },
@@ -116,6 +115,7 @@ export const DragNDrop = () => {
   const buildTree = (baseItems) => {
     return baseItems?.map((item) => {
       const children = items?.filter((i) => i.parentId === item.id);
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [expanded, setExpanded] = useState(true);
 
       return (

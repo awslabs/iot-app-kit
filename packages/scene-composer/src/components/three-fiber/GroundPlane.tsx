@@ -9,7 +9,7 @@ import { MAX_CLICK_DISTANCE } from '../../common/constants';
 import useAddWidget from '../../hooks/useAddWidget';
 import useMatterportViewer from '../../hooks/useMatterportViewer';
 import useTwinMakerTextureLoader from '../../hooks/useTwinMakerTextureLoader';
-import { useEditorState, useStore } from '../../store';
+import { useEditorState, accessStore } from '../../store';
 import { acceleratedRaycasting } from '../../utils/objectThreeUtils';
 
 const GroundPlane: React.FC = () => {
@@ -18,7 +18,7 @@ const GroundPlane: React.FC = () => {
   const { isEditing, addingWidget } = useEditorState(sceneComposerId);
   const { handleAddWidget } = useAddWidget();
   const { loadTextureOnMesh, clearTextureOnMesh } = useTwinMakerTextureLoader();
-  const groundPlaneSettings = useStore(sceneComposerId)((state) =>
+  const groundPlaneSettings = accessStore(sceneComposerId)((state) =>
     state.getSceneProperty<IGroundPlaneSettings>(KnownSceneProperty.GroundPlaneSettings),
   );
   const { enableMatterportViewer } = useMatterportViewer();

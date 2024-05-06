@@ -1,16 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
-.c0 {
-  height: 1px;
-  border-width: 0px;
-  background-color: colorBorderDividerDefault;
-}
-
-.c1 {
-  height: 8px;
-}
-
 <div>
   <div
     data-mocked="SpaceBetween"
@@ -19,10 +9,10 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
       data-mocked="Box"
     >
       <hr
-        class="c0"
+        class="sc-aXZVg gAgFZw"
       />
       <div
-        class="c1"
+        class="sc-jXbUNg fCsUCC"
       />
       <div
         data-mocked="FormField"
@@ -37,7 +27,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
       </div>
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="SpaceBetween"
@@ -49,7 +39,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
             <div
               data-mocked="Autosuggest"
               data-testid="select-entityId"
-              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              options="[{"label":"label1","value":"value1"},{"label":"label2","value":"value2"}]"
               value="value1"
             />
           </div>
@@ -72,7 +62,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
                 <div
                   data-mocked="Select"
                   data-testid="value-data-binding-builder-select"
-                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  options="[{"label":"label1","value":"value1"},{"label":"label2","value":"value2"}]"
                   placeholder="Select an option"
                   selectedoption="null"
                 />
@@ -101,7 +91,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
                 <div
                   data-mocked="Select"
                   data-testid="value-data-binding-builder-select"
-                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  options="[{"label":"label1","value":"value1"},{"label":"label2","value":"value2"}]"
                   placeholder="Select an option"
                   selectedoption="null"
                 />
@@ -115,10 +105,10 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
       data-mocked="Box"
     >
       <hr
-        class="c0"
+        class="sc-aXZVg gAgFZw"
       />
       <div
-        class="c1"
+        class="sc-jXbUNg fCsUCC"
       />
       <div
         data-mocked="FormField"
@@ -133,7 +123,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
       </div>
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="SpaceBetween"
@@ -145,7 +135,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
             <div
               data-mocked="Autosuggest"
               data-testid="select-entityId"
-              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              options="[{"label":"label1","value":"value1"},{"label":"label2","value":"value2"}]"
               value="value1"
             />
           </div>
@@ -168,7 +158,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
                 <div
                   data-mocked="Select"
                   data-testid="value-data-binding-builder-select"
-                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  options="[{"label":"label1","value":"value1"},{"label":"label2","value":"value2"}]"
                   placeholder="Select an option"
                   selectedoption="null"
                 />
@@ -197,7 +187,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
                 <div
                   data-mocked="Select"
                   data-testid="value-data-binding-builder-select"
-                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  options="[{"label":"label1","value":"value1"},{"label":"label2","value":"value2"}]"
                   placeholder="Select an option"
                   selectedoption="null"
                 />
@@ -212,16 +202,6 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
 `;
 
 exports[`DataBindingMapEditor should render existing maps with bindings without binding name 1`] = `
-.c1 {
-  height: 1px;
-  border-width: 0px;
-  background-color: colorBorderDividerDefault;
-}
-
-.c0 {
-  height: 8px;
-}
-
 <div>
   <div
     data-mocked="SpaceBetween"
@@ -230,11 +210,11 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
       data-mocked="Box"
     >
       <div
-        class="c0"
+        class="sc-jXbUNg fCsUCC"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="SpaceBetween"
@@ -246,7 +226,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
             <div
               data-mocked="Autosuggest"
               data-testid="select-entityId"
-              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              options="[{"label":"label1","value":"value1"},{"label":"label2","value":"value2"}]"
               value="value1"
             />
           </div>
@@ -269,7 +249,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
                 <div
                   data-mocked="Select"
                   data-testid="value-data-binding-builder-select"
-                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  options="[{"label":"label1","value":"value1"},{"label":"label2","value":"value2"}]"
                   placeholder="Select an option"
                   selectedoption="null"
                 />
@@ -298,7 +278,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
                 <div
                   data-mocked="Select"
                   data-testid="value-data-binding-builder-select"
-                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  options="[{"label":"label1","value":"value1"},{"label":"label2","value":"value2"}]"
                   placeholder="Select an option"
                   selectedoption="null"
                 />
@@ -312,14 +292,14 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
       data-mocked="Box"
     >
       <hr
-        class="c1"
+        class="sc-aXZVg gAgFZw"
       />
       <div
-        class="c0"
+        class="sc-jXbUNg fCsUCC"
       />
       <div
         data-mocked="Box"
-        margin="{\\"vertical\\":\\"s\\"}"
+        margin="{"vertical":"s"}"
       >
         <div
           data-mocked="SpaceBetween"
@@ -331,7 +311,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
             <div
               data-mocked="Autosuggest"
               data-testid="select-entityId"
-              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              options="[{"label":"label1","value":"value1"},{"label":"label2","value":"value2"}]"
               value="value1"
             />
           </div>
@@ -354,7 +334,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
                 <div
                   data-mocked="Select"
                   data-testid="value-data-binding-builder-select"
-                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  options="[{"label":"label1","value":"value1"},{"label":"label2","value":"value2"}]"
                   placeholder="Select an option"
                   selectedoption="null"
                 />
@@ -383,7 +363,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
                 <div
                   data-mocked="Select"
                   data-testid="value-data-binding-builder-select"
-                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  options="[{"label":"label1","value":"value1"},{"label":"label2","value":"value2"}]"
                   placeholder="Select an option"
                   selectedoption="null"
                 />

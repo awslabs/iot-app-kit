@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import { KnownComponentType } from '../interfaces';
-import { useEditorState, useStore } from '../store';
+import { useEditorState, accessStore } from '../store';
 import {
   createNodeWithPositionAndNormal,
   findComponentByType,
@@ -16,8 +16,8 @@ const useAddWidget: () => {
 } = () => {
   const sceneComposerId = useSceneComposerId();
   const { addingWidget, setAddingWidget, cursorLookAt } = useEditorState(sceneComposerId);
-  const { getSceneNodeByRef } = useStore(sceneComposerId)((state) => state);
-  const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
+  const { getSceneNodeByRef } = accessStore(sceneComposerId)((state) => state);
+  const appendSceneNode = accessStore(sceneComposerId)((state) => state.appendSceneNode);
 
   const handleAddWidget = useCallback(
     (e: ThreeEvent<MouseEvent>) => {

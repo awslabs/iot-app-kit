@@ -11,7 +11,7 @@ import {
   KnownSceneProperty,
 } from '../../../interfaces';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
 
 export const FogSettingsEditor: React.FC = () => {
@@ -19,8 +19,8 @@ export const FogSettingsEditor: React.FC = () => {
 
   const sceneComposerId = useContext(sceneComposerIdContext);
   const intl = useIntl();
-  const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty<IFogSettings | undefined>);
-  const fogSettings = useStore(sceneComposerId)((state) =>
+  const setSceneProperty = accessStore(sceneComposerId)((state) => state.setSceneProperty<IFogSettings | undefined>);
+  const fogSettings = accessStore(sceneComposerId)((state) =>
     state.getSceneProperty<IFogSettings>(KnownSceneProperty.FogSettings),
   );
 
@@ -29,10 +29,10 @@ export const FogSettingsEditor: React.FC = () => {
   const [internalNearDistance, setInternalNearDistance] = useState(fogSettings?.near || DEFAULT_FOG_NEAR);
   const [internalFarDistance, setInternalFarDistance] = useState(fogSettings?.far || DEFAULT_FOG_FAR);
 
-  const fogColors = useStore(sceneComposerId)((state) =>
+  const fogColors = accessStore(sceneComposerId)((state) =>
     state.getSceneProperty<string[]>(KnownSceneProperty.FogCustomColors, []),
   );
-  const setFogColorsSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
+  const setFogColorsSceneProperty = accessStore(sceneComposerId)((state) => state.setSceneProperty<string[]>);
 
   const onToggleFog = useCallback(
     (checked: boolean) => {

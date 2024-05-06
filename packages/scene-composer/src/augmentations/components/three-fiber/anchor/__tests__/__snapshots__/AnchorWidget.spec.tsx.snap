@@ -27,14 +27,14 @@ exports[`AnchorWidget should render correctly 1`] = `
       isSelected={true}
       onClick={[Function]}
       position={
-        Array [
+        [
           0,
           0,
           0,
         ]
       }
       scale={
-        Array [
+        [
           0.5,
           0.5,
           1,
@@ -92,14 +92,14 @@ exports[`AnchorWidget should render correctly when not visible 1`] = `
       isSelected={true}
       onClick={[Function]}
       position={
-        Array [
+        [
           0,
           0,
           0,
         ]
       }
       scale={
-        Array [
+        [
           0.5,
           0.5,
           1,
@@ -157,14 +157,14 @@ exports[`AnchorWidget should render correctly with an offset 1`] = `
       isSelected={true}
       onClick={[Function]}
       position={
-        Array [
+        [
           1,
           0,
           1,
         ]
       }
       scale={
-        Array [
+        [
           0.5,
           0.5,
           1,
@@ -222,14 +222,14 @@ exports[`AnchorWidget should render correctly with data binding custom rule 1`] 
       isSelected={true}
       onClick={[Function]}
       position={
-        Array [
+        [
           0,
           0,
           0,
         ]
       }
       scale={
-        Array [
+        [
           0.5,
           0.5,
           1,
@@ -287,14 +287,14 @@ exports[`AnchorWidget should render correctly with data binding rule 1`] = `
       isSelected={true}
       onClick={[Function]}
       position={
-        Array [
+        [
           0,
           0,
           0,
         ]
       }
       scale={
-        Array [
+        [
           0.5,
           0.5,
           1,
@@ -352,14 +352,14 @@ exports[`AnchorWidget should render correctly with non default tag settings 1`] 
       isSelected={true}
       onClick={[Function]}
       position={
-        Array [
+        [
           0,
           0,
           0,
         ]
       }
       scale={
-        Array [
+        [
           0.15000000000000002,
           0.15000000000000002,
           3,
@@ -417,14 +417,14 @@ exports[`AnchorWidget should render with a countered size when parent is scaled 
       isSelected={true}
       onClick={[Function]}
       position={
-        Array [
+        [
           0,
           0,
           0,
         ]
       }
       scale={
-        Array [
+        [
           0.5,
           0.5,
           1,

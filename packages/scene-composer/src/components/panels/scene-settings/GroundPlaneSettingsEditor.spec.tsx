@@ -3,7 +3,7 @@ import { act, render } from '@testing-library/react';
 import React from 'react';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 import { KnownSceneProperty, COMPOSER_FEATURES } from '../../../interfaces';
 
 import { GroundPlaneSettingsEditor } from './GroundPlaneSettingsEditor';
@@ -47,7 +47,7 @@ describe('GroundPlaneSettingsEditor', () => {
     });
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<GroundPlaneSettingsEditor />);
     const polarisWrapper = wrapper(container);
     const colorInput = polarisWrapper.findInput('[data-testid="hexcode"]');
@@ -82,7 +82,7 @@ describe('GroundPlaneSettingsEditor', () => {
     showAssetBrowserCallbackMock.mockImplementation((cb) => {
       cb(null, 'c:\file.jpg');
     });
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<GroundPlaneSettingsEditor />);
     const polarisWrapper = wrapper(container);
     const selectTextureButton = polarisWrapper.findButton('[data-testid="select-texture-button"]');
@@ -114,7 +114,7 @@ describe('GroundPlaneSettingsEditor', () => {
     });
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<GroundPlaneSettingsEditor />);
     const polarisWrapper = wrapper(container);
     const removeTextureButton = polarisWrapper.findButton('[data-testid="remove-texture-button"]');
@@ -145,7 +145,7 @@ describe('GroundPlaneSettingsEditor', () => {
     });
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(<GroundPlaneSettingsEditor />);
     const polarisWrapper = wrapper(container);
     const opacityInput = polarisWrapper.findInput('[data-testid="ground-plane-opacity-input"]');

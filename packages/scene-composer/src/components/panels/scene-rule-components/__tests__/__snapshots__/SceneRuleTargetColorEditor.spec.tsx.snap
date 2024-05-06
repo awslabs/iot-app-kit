@@ -4,7 +4,7 @@ exports[`SceneRuleTargetColorEditor should render as expected 1`] = `
 <div>
   <div
     data-mocked="Grid"
-    griddefinition="[{\\"colspan\\":9},{\\"colspan\\":3}]"
+    griddefinition="[{"colspan":9},{"colspan":3}]"
   >
     <div
       data-mocked="Input"
@@ -23,7 +23,7 @@ exports[`SceneRuleTargetColorEditor should toggle color picker on click 1`] = `
 <div>
   <div
     data-mocked="Grid"
-    griddefinition="[{\\"colspan\\":9},{\\"colspan\\":3}]"
+    griddefinition="[{"colspan":9},{"colspan":3}]"
   >
     <div
       data-mocked="Input"

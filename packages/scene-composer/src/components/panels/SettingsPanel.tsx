@@ -5,7 +5,7 @@ import { useIntl, defineMessages } from 'react-intl';
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
 import { presets } from '../three-fiber/Environment';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 import { COMPOSER_FEATURES, IValueDataBindingProvider, KnownComponentType, KnownSceneProperty } from '../../interfaces';
 import { pascalCase } from '../../utils/stringUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
@@ -30,8 +30,8 @@ const NO_PRESET_VALUE = 'n/a';
 export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingProvider }) => {
   const log = useLifecycleLogging('SettingsPanel');
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
-  const isEditing = useStore(sceneComposerId)((state) => state.isEditing());
+  const setSceneProperty = accessStore(sceneComposerId)((state) => state.setSceneProperty);
+  const isEditing = accessStore(sceneComposerId)((state) => state.isEditing());
   const intl = useIntl();
 
   const matterportEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Matterport];
@@ -39,7 +39,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
   const animationComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Animations];
   const dynamicSceneEnabled = useDynamicScene();
 
-  const selectedEnvPreset = useStore(sceneComposerId)((state) =>
+  const selectedEnvPreset = accessStore(sceneComposerId)((state) =>
     state.getSceneProperty<string>(KnownSceneProperty.EnvironmentPreset),
   );
 

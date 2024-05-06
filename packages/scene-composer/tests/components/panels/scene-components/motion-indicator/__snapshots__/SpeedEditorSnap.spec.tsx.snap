@@ -12,16 +12,16 @@ exports[`SpeedEditor should render correctly with data binding 1`] = `
       <div
         data-mocked="Select"
         data-testid="motion-indicator-speed-select"
-        options="[{\\"label\\":\\"Select speed\\",\\"value\\":\\"default\\"},{\\"label\\":\\"Add speed rule\\",\\"value\\":\\"binding\\"}]"
+        options="[{"label":"Select speed","value":"default"},{"label":"Add speed rule","value":"binding"}]"
         placeholder="Choose a speed value"
         selectedarialabel="Selected"
-        selectedoption="{\\"label\\":\\"Add speed rule\\",\\"value\\":\\"binding\\"}"
+        selectedoption="{"label":"Add speed rule","value":"binding"}"
       />
     </div>
     <div
       data-mocked="Box"
       font-weight="bold"
-      padding="{\\"top\\":\\"s\\"}"
+      padding="{"top":"s"}"
     >
       Configure Rule
     </div>
@@ -46,10 +46,10 @@ exports[`SpeedEditor should render correctly with slider shown 1`] = `
       <div
         data-mocked="Select"
         data-testid="motion-indicator-speed-select"
-        options="[{\\"label\\":\\"Select speed\\",\\"value\\":\\"default\\"},{\\"label\\":\\"Add speed rule\\",\\"value\\":\\"binding\\"}]"
+        options="[{"label":"Select speed","value":"default"},{"label":"Add speed rule","value":"binding"}]"
         placeholder="Choose a speed value"
         selectedarialabel="Selected"
-        selectedoption="{\\"label\\":\\"Select speed\\",\\"value\\":\\"default\\"}"
+        selectedoption="{"label":"Select speed","value":"default"}"
       />
     </div>
     <div
@@ -61,7 +61,7 @@ exports[`SpeedEditor should render correctly with slider shown 1`] = `
       <div
         data-mocked="Box"
         display="inline"
-        margin="{\\"left\\":\\"s\\"}"
+        margin="{"left":"s"}"
       >
         <div
           data-mocked="Icon"
@@ -90,10 +90,10 @@ exports[`SpeedEditor should render correctly without data binding 1`] = `
       <div
         data-mocked="Select"
         data-testid="motion-indicator-speed-select"
-        options="[{\\"label\\":\\"Select speed\\",\\"value\\":\\"default\\"},{\\"label\\":\\"Add speed rule\\",\\"value\\":\\"binding\\"}]"
+        options="[{"label":"Select speed","value":"default"},{"label":"Add speed rule","value":"binding"}]"
         placeholder="Choose a speed value"
         selectedarialabel="Selected"
-        selectedoption="{\\"label\\":\\"Select speed\\",\\"value\\":\\"default\\"}"
+        selectedoption="{"label":"Select speed","value":"default"}"
       />
     </div>
     <div
@@ -105,7 +105,7 @@ exports[`SpeedEditor should render correctly without data binding 1`] = `
       <div
         data-mocked="Box"
         display="inline"
-        margin="{\\"left\\":\\"s\\"}"
+        margin="{"left":"s"}"
       >
         <div
           data-mocked="Icon"
