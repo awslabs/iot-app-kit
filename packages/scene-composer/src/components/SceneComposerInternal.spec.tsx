@@ -8,7 +8,7 @@ import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import { useSceneComposerApi, SceneComposerApi } from '..';
 import { testScenes } from '../../tests/testData';
-import { useStore } from '../store';
+import { accessStore } from '../store';
 
 import { SceneComposerInternal } from './SceneComposerInternal';
 
@@ -105,7 +105,7 @@ describe('SceneComposerInternal', () => {
 
       //mocking after the scene loads so this doesn't get overwritten
       act(() => {
-        useStore(sceneComposerId).setState({
+        accessStore(sceneComposerId).setState({
           getObject3DBySceneNodeRef: () => object3D,
         });
       });

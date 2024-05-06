@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 
 import { mockComponent, mockProvider } from '../MockComponents';
-import { IMotionIndicatorComponentInternal, useStore } from '../../../../../src/store';
+import { IMotionIndicatorComponentInternal, accessStore } from '../../../../../src/store';
 import { KnownComponentType } from '../../../../../src/interfaces';
 import { Component } from '../../../../../src/models/SceneModels';
 import { SpeedEditor } from '../../../../../src/components/panels/scene-components/motion-indicator/SpeedEditor';
@@ -59,7 +59,7 @@ describe('SpeedEditor', () => {
   });
 
   it('should update correctly when speed selection change with data binding', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const rendered = render(<SpeedEditor component={component} onUpdateCallback={onUpdateCallback} />);
     const polarisWrapper = wrapper(rendered.container);
@@ -101,7 +101,7 @@ describe('SpeedEditor', () => {
   });
 
   it('should slider update speed correctly', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const rendered = render(
       <SpeedEditor component={{ ...component, valueDataBindings: {} }} onUpdateCallback={onUpdateCallback} />,

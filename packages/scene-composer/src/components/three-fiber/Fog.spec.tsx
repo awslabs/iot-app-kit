@@ -10,7 +10,7 @@ const baseState = {
 import { useThree } from '@react-three/fiber';
 import React from 'react';
 
-import { useStore } from '../../../src/store';
+import { accessStore } from '../../../src/store';
 import { IFogSettings } from '../../interfaces';
 
 import Fog from './Fog';
@@ -21,7 +21,7 @@ describe('Fog', () => {
   const setup = () => {
     jest.resetAllMocks();
 
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
   };
 
   beforeEach(() => {

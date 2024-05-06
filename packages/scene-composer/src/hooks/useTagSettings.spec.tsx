@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 
-import { useStore } from '../store';
+import { accessStore } from '../store';
 import { componentSettingsSelector } from '../utils/componentSettingsUtils';
 
 import useTagSettings from './useTagSettings';
@@ -14,9 +14,9 @@ describe('useTagSettings', () => {
 
   beforeEach(() => {
     (componentSettingsSelector as jest.Mock).mockReturnValue(settingsDocument);
-    useStore('default').setState({
+    accessStore('default').setState({
       noHistoryStates: {
-        ...useStore('default').getState().noHistoryStates,
+        ...accessStore('default').getState().noHistoryStates,
         tagSettings: settingsViewOption,
       },
       isViewing: isViewingMock,
@@ -32,9 +32,9 @@ describe('useTagSettings', () => {
   });
 
   it('should get tag settings from document in viewing mode when viewing settings is not defined', () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       noHistoryStates: {
-        ...useStore('default').getState().noHistoryStates,
+        ...accessStore('default').getState().noHistoryStates,
         tagSettings: undefined,
       },
     });

@@ -6,7 +6,7 @@ exports[`CameraPreview should render correctly 1`] = `
   fov={53.13}
   near={0.1}
   position={
-    Array [
+    [
       5,
       5,
       5,

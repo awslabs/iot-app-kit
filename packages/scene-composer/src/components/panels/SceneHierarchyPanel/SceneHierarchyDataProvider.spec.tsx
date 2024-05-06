@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import * as THREE from 'three';
 
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 import * as nodeUtils from '../../../utils/nodeUtils';
 import { KnownComponentType } from '../../../interfaces';
 
@@ -20,7 +20,7 @@ describe('SceneHierarchyDataProvider', () => {
   });
 
   it(`should return correct path from selected node to root`, () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     baseState.getSceneNodeByRef.mockReturnValueOnce({ ref: 'node-1' });
     baseState.getSceneNodeByRef.mockReturnValueOnce({ ref: 'sub-parent-1' });
     baseState.getSceneNodeByRef.mockReturnValueOnce({ ref: 'parent-1' });
@@ -85,7 +85,7 @@ describe('SceneHierarchyDataProvider', () => {
     beforeEach(() => {
       jest.clearAllMocks();
 
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
       baseState.getSceneNodeByRef.mockImplementation((ref) => sceneNodeMap[ref]);
       baseState.getObject3DBySceneNodeRef.mockImplementation((ref) => objectMap[ref]);
     });
@@ -131,23 +131,23 @@ describe('SceneHierarchyDataProvider', () => {
       expect(getFinalTransformSpy).toBeCalledWith(expect.anything(), modelRefObject);
       expect(baseState.updateSceneNodeInternal).toMatchInlineSnapshot(`
         [MockFunction] {
-          "calls": Array [
-            Array [
+          "calls": [
+            [
               "original",
-              Object {
+              {
                 "parentRef": "subModel",
-                "transform": Object {
-                  "position": Array [
+                "transform": {
+                  "position": [
                     1,
                     1,
                     1,
                   ],
-                  "rotation": Array [
+                  "rotation": [
                     1,
                     1,
                     1,
                   ],
-                  "scale": Array [
+                  "scale": [
                     1,
                     1,
                     1,
@@ -156,8 +156,8 @@ describe('SceneHierarchyDataProvider', () => {
               },
             ],
           ],
-          "results": Array [
-            Object {
+          "results": [
+            {
               "type": "return",
               "value": undefined,
             },
@@ -196,23 +196,23 @@ describe('SceneHierarchyDataProvider', () => {
       expect(getFinalTransformSpy).toBeCalledWith(expect.anything(), modelRefObject);
       expect(baseState.updateSceneNodeInternal).toMatchInlineSnapshot(`
         [MockFunction] {
-          "calls": Array [
-            Array [
+          "calls": [
+            [
               "original",
-              Object {
+              {
                 "parentRef": "modelRef",
-                "transform": Object {
-                  "position": Array [
+                "transform": {
+                  "position": [
                     1,
                     1,
                     1,
                   ],
-                  "rotation": Array [
+                  "rotation": [
                     1,
                     1,
                     1,
                   ],
-                  "scale": Array [
+                  "scale": [
                     6,
                     6,
                     6,
@@ -221,8 +221,8 @@ describe('SceneHierarchyDataProvider', () => {
               },
             ],
           ],
-          "results": Array [
-            Object {
+          "results": [
+            {
               "type": "return",
               "value": undefined,
             },

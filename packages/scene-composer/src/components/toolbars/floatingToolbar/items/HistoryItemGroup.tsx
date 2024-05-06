@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
-import { useStore } from '../../../../store';
+import { accessStore } from '../../../../store';
 import { UndoStoreState } from '../../../../store/middlewares';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemGroup } from '../../common/styledComponents';
@@ -15,8 +15,8 @@ interface HistoryItemGroupProps {
 
 export function HistoryItemGroup({ toolbarOrientation }: HistoryItemGroupProps) {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const [redo, undo] = useStore(sceneComposerId)((state) => [state.redo, state.undo]);
-  const undoStore = useStore(sceneComposerId)((state) => state.undoStore);
+  const [redo, undo] = accessStore(sceneComposerId)((state) => [state.redo, state.undo]);
+  const undoStore = accessStore(sceneComposerId)((state) => state.undoStore);
   const [undoState, setUndoSate] = useState<UndoStoreState | undefined>(undoStore?.getState());
   const dynamicSceneEnabled = useDynamicScene();
 

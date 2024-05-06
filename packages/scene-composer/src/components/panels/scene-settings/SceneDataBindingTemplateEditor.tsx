@@ -5,7 +5,7 @@ import { FormField, Select } from '@cloudscape-design/components';
 
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE } from '../../../common/constants';
-import { useStore } from '../../../store';
+import { accessStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import {
   IDataBindingConfig,
@@ -28,8 +28,8 @@ export const SceneDataBindingTemplateEditor: React.FC<SceneDataBindingTemplateEd
 
   const sceneComposerId = useContext(sceneComposerIdContext);
   const intl = useIntl();
-  const { setSceneProperty } = useStore(sceneComposerId)();
-  const dataBindingConfig: IDataBindingConfig = useStore(sceneComposerId)(dataBindingConfigSelector);
+  const { setSceneProperty } = accessStore(sceneComposerId)();
+  const dataBindingConfig: IDataBindingConfig = accessStore(sceneComposerId)(dataBindingConfigSelector);
   const valueDataBindingStore = useMemo(() => valueDataBindingProvider.createStore(true), [valueDataBindingProvider]);
   const [dirty, setDirty] = useState(false);
   const [builderState, setBuilderState] = useState<IValueDataBindingProviderState>(

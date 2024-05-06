@@ -2,13 +2,13 @@ import { useMemo } from 'react';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import { ITagSettings, KnownComponentType } from '../interfaces';
-import { useStore, useViewOptionState } from '../store';
+import { accessStore, useViewOptionState } from '../store';
 import { componentSettingsSelector } from '../utils/componentSettingsUtils';
 
 const useTagSettings = (): ITagSettings => {
   const sceneComposerId = useSceneComposerId();
-  const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
-  const documentTagSettings: ITagSettings = useStore(sceneComposerId)(
+  const isViewing = accessStore(sceneComposerId)((state) => state.isViewing());
+  const documentTagSettings: ITagSettings = accessStore(sceneComposerId)(
     (state) => componentSettingsSelector(state, KnownComponentType.Tag) as ITagSettings,
   );
   const viewingTagSettings: ITagSettings | undefined = useViewOptionState(sceneComposerId).tagSettings;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 
@@ -11,7 +11,7 @@ describe('DeleteConfirmationModal', () => {
   };
 
   it('should render correctly', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(
       <DeleteConfirmationModal
@@ -25,7 +25,7 @@ describe('DeleteConfirmationModal', () => {
   });
 
   it('should render correctly with delete button disabled', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(
       <DeleteConfirmationModal

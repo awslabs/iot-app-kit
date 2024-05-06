@@ -2,7 +2,7 @@ import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 
 import { KnownComponentType } from '../../../interfaces';
-import { IDataOverlayComponentInternal, ISceneNodeInternal, useStore } from '../../../store';
+import { IDataOverlayComponentInternal, ISceneNodeInternal, accessStore } from '../../../store';
 import { Component } from '../../../models/SceneModels';
 import { mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
 
@@ -52,7 +52,7 @@ describe('DataOverlayComponentEditor', () => {
   });
 
   it('should add new binding by clicking add button', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { getByDisplayValue } = render(<DataOverlayComponentEditor node={node} component={component} />);
 

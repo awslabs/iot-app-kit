@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { Checkbox, FormField, Grid, Input, SpaceBetween, Toggle } from '@cloudscape-design/components';
 
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { useStore, useViewOptionState } from '../../../store';
+import { accessStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IComponentSettingsMap, ITagSettings, KnownComponentType, KnownSceneProperty } from '../../../interfaces';
 import { Slider } from '../Slider';
@@ -14,9 +14,9 @@ export const SceneTagSettingsEditor: React.FC = () => {
 
   const sceneComposerId = useContext(sceneComposerIdContext);
   const intl = useIntl();
-  const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
-  const getSceneProperty = useStore(sceneComposerId)((state) => state.getSceneProperty);
-  const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
+  const setSceneProperty = accessStore(sceneComposerId)((state) => state.setSceneProperty);
+  const getSceneProperty = accessStore(sceneComposerId)((state) => state.getSceneProperty);
+  const isViewing = accessStore(sceneComposerId)((state) => state.isViewing());
   const setTagSettings = useViewOptionState(sceneComposerId).setTagSettings;
   const tagSettings: ITagSettings = useTagSettings();
   const [focusInput, setFocusInput] = useState(false);
@@ -26,7 +26,6 @@ export const SceneTagSettingsEditor: React.FC = () => {
 
   const handleInputFocus = useCallback(() => setFocusInput(true), []);
   const handleInputBlur = useCallback(() => setFocusInput(false), []);
-
   const handleSliderFocus = useCallback(() => setFocusSlider(true), []);
   const handleSliderBlur = useCallback(() => setFocusSlider(false), []);
   const handleSliderMouseUp = useCallback(() => setDraggingSlider(false), []);

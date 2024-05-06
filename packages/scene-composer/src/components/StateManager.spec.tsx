@@ -22,7 +22,7 @@ import flushPromises from 'flush-promises';
 
 import StateManager from './StateManager';
 import ErrorBoundary from '../logger/react-logger/components/error-boundary';
-import { ICameraComponentInternal, useStore } from '../store';
+import { ICameraComponentInternal, accessStore } from '../store';
 import DefaultErrorFallback from './DefaultErrorFallback';
 import { numberStream, stringStream, viewport } from '../../tests/data/mockDataStreams';
 import { DataStream } from '@iot-app-kit/core';
@@ -72,10 +72,11 @@ describe('StateManager', () => {
   const setViewportMock = jest.fn();
   const setDataBindingQueryRefreshRateMock = jest.fn();
   const setAutoQueryEnabledMock = jest.fn();
+  const states = accessStore('default').getState().noHistoryStates;
   const createState = (connectionName: string) => ({
     ...baseState,
     noHistoryStates: {
-      ...useStore('default').getState().noHistoryStates,
+      ...states,
       connectionNameForMatterportViewer: connectionName,
       setConnectionNameForMatterportViewer: jest.fn(),
       setViewport: setViewportMock,
@@ -116,7 +117,7 @@ describe('StateManager', () => {
   });
 
   it('should render correctly', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     let container;
     await act(async () => {
@@ -139,7 +140,7 @@ describe('StateManager', () => {
   });
 
   it('should render with empty scene url error', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const loader = {
       ...mockSceneLoader,
       getSceneUri: () => Promise.resolve(null),
@@ -169,7 +170,7 @@ describe('StateManager', () => {
   });
 
   it('should render with get scene uri error', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const loader = {
       ...mockSceneLoader,
@@ -199,7 +200,7 @@ describe('StateManager', () => {
   });
 
   it('should render with Failed to fetch scene content', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const loader = {
       ...mockSceneLoader,
@@ -229,7 +230,7 @@ describe('StateManager', () => {
   });
 
   it('should render with fetch scene content API error', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const loader = {
       ...mockSceneLoader,
@@ -259,7 +260,7 @@ describe('StateManager', () => {
   });
 
   it('should load dynamic scene correctly', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     getSceneInfo.mockResolvedValue({});
 
     let container;
@@ -287,7 +288,7 @@ describe('StateManager', () => {
   });
 
   it('should load dynamic scene with error for empty document', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     getSceneInfo.mockResolvedValue({});
 
     let container;
@@ -314,7 +315,7 @@ describe('StateManager', () => {
   });
 
   it('should load dynamic scene with error for getting scene entity failure', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     getSceneInfo.mockResolvedValue({});
     getSceneEntity.mockRejectedValue(new Error('get scene entity failure'));
 
@@ -342,7 +343,7 @@ describe('StateManager', () => {
   });
 
   it('should render correctly with Matterport configuration', async () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...createState('mockConnectionName'),
       getSceneProperty: jest.fn().mockReturnValue('mockMatterportModelId'),
     });
@@ -372,7 +373,7 @@ describe('StateManager', () => {
   });
 
   it('should render correctly with error in Matterport configuration', async () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...createState('mockConnectionName'),
       getSceneProperty: jest.fn().mockReturnValue('mockMatterportModelId'),
     });
@@ -397,7 +398,7 @@ describe('StateManager', () => {
   });
 
   it("should subscribe to query's provider succcessfully", async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const mockBuild = jest.fn();
 
     let container;
@@ -485,7 +486,7 @@ describe('StateManager', () => {
       components: [component],
     };
 
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
       selectedSceneNodeRef: 'testRef',
       getSceneNodeByRef: jest.fn().mockReturnValue(testNode),
@@ -506,7 +507,7 @@ describe('StateManager', () => {
   });
 
   it('should call setActiveCameraName if activeCamera is set', async () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
     });
 
@@ -526,7 +527,7 @@ describe('StateManager', () => {
   });
 
   it('should not call setActiveCameraName if activeCamera is set and selectedDataBinding is set', async () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
     });
 
@@ -547,7 +548,7 @@ describe('StateManager', () => {
   });
 
   it('should call onSceneLoaded', async () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
     });
     const onSceneLoaded = jest.fn();
@@ -565,7 +566,7 @@ describe('StateManager', () => {
       );
       await flushPromises();
 
-      useStore('default').setState({
+      accessStore('default').setState({
         ...baseState,
         sceneLoaded: true,
       });
@@ -586,7 +587,7 @@ describe('StateManager', () => {
   });
 
   it('should call onSceneLoaded for matterport scene', async () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...createState('mockConnectionName'),
       sceneLoaded: true,
       getSceneProperty: jest.fn().mockReturnValue('mockMatterportModelId'),
@@ -635,7 +636,7 @@ describe('StateManager', () => {
   });
 
   it('should call onSelectionChanged as expected', async () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
     });
     const onSelectionChanged = jest.fn();
@@ -657,7 +658,7 @@ describe('StateManager', () => {
 
     await act(async () => {
       // called when selection is changed
-      useStore('default').setState({
+      accessStore('default').setState({
         ...baseState,
         selectedSceneNodeRef: 'abc',
       });
@@ -676,7 +677,7 @@ describe('StateManager', () => {
 
     await act(async () => {
       // not called when selection is not changed
-      useStore('default').setState({
+      accessStore('default').setState({
         ...baseState,
         selectedSceneNodeRef: 'abc',
       });
@@ -695,7 +696,7 @@ describe('StateManager', () => {
   });
 
   it('should call setViewport when changed', async () => {
-    useStore('default').setState(createState('random'));
+    accessStore('default').setState(createState('random'));
     const viewport = { duration: '5m' };
 
     let container;
@@ -732,7 +733,7 @@ describe('StateManager', () => {
   });
 
   it('should call setDataBindingQueryRefreshRate when changed', async () => {
-    useStore('default').setState(createState('random'));
+    accessStore('default').setState(createState('random'));
     let container;
     await act(async () => {
       container = create(
@@ -767,7 +768,7 @@ describe('StateManager', () => {
   });
 
   it('should call setAutoQueryEnabled with true', async () => {
-    useStore('default').setState(createState('random'));
+    accessStore('default').setState(createState('random'));
 
     await act(async () => {
       create(
@@ -786,7 +787,7 @@ describe('StateManager', () => {
   });
 
   it('should call setAutoQueryEnabled with false when mode is Editing', async () => {
-    useStore('default').setState(createState('random'));
+    accessStore('default').setState(createState('random'));
 
     await act(async () => {
       create(
@@ -805,7 +806,7 @@ describe('StateManager', () => {
   });
 
   it('should call setAutoQueryEnabled with false when queries are passed in', async () => {
-    useStore('default').setState(createState('random'));
+    accessStore('default').setState(createState('random'));
 
     await act(async () => {
       create(
@@ -825,7 +826,7 @@ describe('StateManager', () => {
   });
 
   it('should call setAutoQueryEnabled with false when dataStreams are passed in', async () => {
-    useStore('default').setState(createState('random'));
+    accessStore('default').setState(createState('random'));
 
     await act(async () => {
       create(

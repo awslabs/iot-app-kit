@@ -7,7 +7,7 @@ import { MatterportModel } from '@matterport/r3f/dist';
 
 import { KnownSceneProperty, COMPOSER_FEATURES } from '../interfaces';
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
-import { useEditorState, useSceneDocument, useStore } from '../store';
+import { useEditorState, useSceneDocument, accessStore } from '../store';
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
 import { hexColorFromDesignToken } from '../utils/styleUtils';
 import { Layers, ROOT_OBJECT_3D_NAME, MAX_CLICK_DISTANCE } from '../common/constants';
@@ -43,7 +43,7 @@ export const WebGLCanvasManager: React.FC = () => {
   const sceneAppearanceEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SceneAppearance];
   const { enableMatterportViewer } = useMatterportViewer();
   const { document, getSceneNodeByRef, getSceneProperty } = useSceneDocument(sceneComposerId);
-  const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
+  const appendSceneNode = accessStore(sceneComposerId)((state) => state.appendSceneNode);
   const { gl } = useThree();
 
   const domRef = useRef<HTMLElement>(gl.domElement.parentElement);

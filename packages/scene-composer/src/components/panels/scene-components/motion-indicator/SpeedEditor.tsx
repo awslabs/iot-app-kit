@@ -3,7 +3,7 @@ import { Box, Button, FormField, Icon, Select, SpaceBetween } from '@cloudscape-
 import { isEmpty } from 'lodash';
 import { useIntl } from 'react-intl';
 
-import { IMotionIndicatorComponentInternal, useStore } from '../../../../store';
+import { IMotionIndicatorComponentInternal, accessStore } from '../../../../store';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component } from '../../../../models/SceneModels';
 import { Slider } from '../../Slider';
@@ -18,7 +18,7 @@ interface ISpeedEditorProps {
 export const SpeedEditor: React.FC<ISpeedEditorProps> = ({ component, onUpdateCallback }) => {
   const intl = useIntl();
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const valueDataBindingProvider = useStore(sceneComposerId)(
+  const valueDataBindingProvider = accessStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
   const [showSpeedDataBinding, setShowSpeedDataBinding] = useState(

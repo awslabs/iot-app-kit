@@ -10,14 +10,13 @@ import useSelectedNode from '../../../../hooks/useSelectedNode';
 
 const DebugInfoPanel = () => {
   const { debugMode } = getGlobalSettings();
-  if (!debugMode) return <></>;
-
   const { formatMessage } = useIntl();
   const { selectedSceneNode, getSelectedObject } = useSelectedNode();
-
   const selectedObject = getSelectedObject();
 
-  return (
+  return debugMode ? (
+    <></>
+  ) : (
     <ExpandableInfoSection
       title={formatMessage({ defaultMessage: 'Debug Info', description: 'Section title' })}
       defaultExpanded={false}

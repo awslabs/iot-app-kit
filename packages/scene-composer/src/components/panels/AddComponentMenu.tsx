@@ -7,7 +7,7 @@ import { getGlobalSettings } from '../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
-import { IDataOverlayComponentInternal, IModelRefComponentInternal, useStore, useEditorState } from '../../store';
+import { IDataOverlayComponentInternal, IModelRefComponentInternal, accessStore, useEditorState } from '../../store';
 import { IEntityBindingComponentInternal, IAnimationComponentInternal } from '../../store/internalInterfaces';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { ToolbarItem } from '../toolbars/common/ToolbarItem';
@@ -44,10 +44,10 @@ const textStrings = defineMessages({
 });
 export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const addComponentInternal = useStore(sceneComposerId)((state) => state.addComponentInternal);
-  const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
-  const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
-  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const addComponentInternal = accessStore(sceneComposerId)((state) => state.addComponentInternal);
+  const updateComponentInternal = accessStore(sceneComposerId)((state) => state.updateComponentInternal);
+  const selectedSceneNodeRef = accessStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
+  const getSceneNodeByRef = accessStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const { formatMessage } = useIntl();
   const selectedSceneNode = getSceneNodeByRef(selectedSceneNodeRef);
   const AnimationComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Animations];

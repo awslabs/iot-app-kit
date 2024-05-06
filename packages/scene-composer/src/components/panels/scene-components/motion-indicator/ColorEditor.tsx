@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash';
 import styled from 'styled-components';
 import { defineMessages, useIntl } from 'react-intl';
 
-import { IMotionIndicatorComponentInternal, useStore } from '../../../../store';
+import { IMotionIndicatorComponentInternal, accessStore } from '../../../../store';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component } from '../../../../models/SceneModels';
 import { colors } from '../../../../utils/styleUtils';
@@ -33,7 +33,7 @@ interface IColorEditorProps {
 
 const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedColorType, onUpdateCallback }) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const valueDataBindingProvider = useStore(sceneComposerId)(
+  const valueDataBindingProvider = accessStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
   const { formatMessage } = useIntl();

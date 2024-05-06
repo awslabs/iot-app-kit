@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react';
 import { useIntl } from 'react-intl';
 
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 import { getLocalizedComponentType } from '../../common/componentTypeStings';
 
 import DeleteConfirmationModal from './DeleteConfirmationModal';
@@ -10,12 +10,12 @@ import DeleteConfirmationModal from './DeleteConfirmationModal';
 const DeleteComponentModal: React.FC = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const intl = useIntl();
-  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
-  const setDeleteConfirmationModalVisible = useStore(sceneComposerId)(
+  const getSceneNodeByRef = accessStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const setDeleteConfirmationModalVisible = accessStore(sceneComposerId)(
     (state) => state.setDeleteConfirmationModalVisible,
   );
-  const deleteConfirmationModalParams = useStore(sceneComposerId)((state) => state.deleteConfirmationModalParams);
-  const removeComponent = useStore(sceneComposerId)((state) => state.removeComponent);
+  const deleteConfirmationModalParams = accessStore(sceneComposerId)((state) => state.deleteConfirmationModalParams);
+  const removeComponent = accessStore(sceneComposerId)((state) => state.removeComponent);
 
   const nodeRef = deleteConfirmationModalParams?.nodeRef;
   const node = getSceneNodeByRef(nodeRef);

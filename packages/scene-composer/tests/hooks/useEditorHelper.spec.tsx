@@ -4,7 +4,7 @@ import { unmountComponentAtNode, render } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 
 import { useEditorHelper as UseEditorHelper } from '../../src/hooks/useEditorHelper';
-import { useStore } from '../../src/store';
+import { accessStore } from '../../src/store';
 
 let container = null;
 let helper = null;
@@ -65,7 +65,7 @@ describe('return correct editor helper.', () => {
 
     expect((scene as any).remove).toBeCalledTimes(1);
     expect((helper as any).current.visible).toBe(undefined);
-    useStore('sceneComposerId').setState({});
+    accessStore('sceneComposerId').setState({});
     expect((helper as any).current.visible).toBe(true);
   });
 
@@ -77,7 +77,7 @@ describe('return correct editor helper.', () => {
     unmountComponentAtNode(container as any);
     expect((scene as any).remove).toBeCalledTimes(0);
     expect((helper as any).current).toBe(undefined);
-    useStore('sceneComposerId').setState({});
+    accessStore('sceneComposerId').setState({});
     expect((helper as any).current).toBe(undefined);
   });
 });

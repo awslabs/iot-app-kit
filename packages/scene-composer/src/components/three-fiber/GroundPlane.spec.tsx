@@ -4,7 +4,7 @@ import { Mesh, Texture, MeshStandardMaterial } from 'three';
 import { useFrame } from '@react-three/fiber';
 jest.useFakeTimers();
 
-import { useEditorState, useStore } from '../../store';
+import { useEditorState, accessStore } from '../../store';
 import useTwinMakerTextureLoader from '../../hooks/useTwinMakerTextureLoader';
 import useAddWidget from '../../hooks/useAddWidget';
 
@@ -84,7 +84,7 @@ describe('GroundPlane', () => {
       handleAddWidget: mockHandleAddWidget,
     }));
 
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
   };
 
   beforeEach(() => {

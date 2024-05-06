@@ -3,7 +3,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import { SceneItemGroup } from '../../../../../src/components/toolbars/floatingToolbar/items';
-import { useStore } from '../../../../../src/store';
+import { accessStore } from '../../../../../src/store';
 import { ToolbarOrientation } from '../../../../../src/components/toolbars/common/types';
 
 describe('SceneItemGroup', () => {
@@ -11,7 +11,7 @@ describe('SceneItemGroup', () => {
   const setCameraControlsType = jest.fn();
 
   beforeEach(() => {
-    useStore('default').setState({
+    accessStore('default').setState({
       cameraControlsType,
       setCameraControlsType,
     } as any);

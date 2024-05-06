@@ -3,7 +3,7 @@ import { act, render } from '@testing-library/react';
 import React from 'react';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
-import { IPlaneGeometryComponentInternal, useStore } from '../../../store';
+import { IPlaneGeometryComponentInternal, accessStore } from '../../../store';
 import { KnownComponentType, COMPOSER_FEATURES } from '../../../interfaces';
 import { mockNode, mockComponent } from '../../../../tests/components/panels/scene-components/MockComponents';
 
@@ -57,7 +57,7 @@ describe('PlaneGeometryComponentEditor', () => {
   it('should update width when width changes', () => {
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(
       <PlaneGeometryComponentEditor node={{ ...mockNode, components: [component] }} component={component} />,
     );
@@ -78,7 +78,7 @@ describe('PlaneGeometryComponentEditor', () => {
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
 
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(
       <PlaneGeometryComponentEditor node={{ ...mockNode, components: [component] }} component={component} />,
     );
@@ -99,7 +99,7 @@ describe('PlaneGeometryComponentEditor', () => {
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
 
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(
       <PlaneGeometryComponentEditor
         node={{ ...mockNode, components: [componentWithColor] }}
@@ -126,7 +126,7 @@ describe('PlaneGeometryComponentEditor', () => {
     showAssetBrowserCallbackMock.mockImplementation((cb) => {
       cb(null, 'c:\file.jpg');
     });
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(
       <PlaneGeometryComponentEditor
         node={{ ...mockNode, components: [componentWithColor] }}
@@ -155,7 +155,7 @@ describe('PlaneGeometryComponentEditor', () => {
     const globalSettingsMock = getGlobalSettings as jest.Mock;
     globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfigOn });
 
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     const { container } = render(
       <PlaneGeometryComponentEditor
         node={{ ...mockNode, components: [componentWithTexturedPlane] }}

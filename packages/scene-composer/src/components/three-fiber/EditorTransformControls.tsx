@@ -4,7 +4,7 @@ import { useThree } from '@react-three/fiber';
 
 import useLogger from '../../logger/react-logger/hooks/useLogger';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 import { TransformControls as TransformControlsImpl } from '../../three/TransformControls';
 import { snapObjectToFloor } from '../../three/transformUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
@@ -17,13 +17,13 @@ export function EditorTransformControls() {
   const log = useLogger('EditorTransformControls');
   const camera = useThree(({ camera }) => camera);
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const transformControlMode = useStore(sceneComposerId)((state) => state.transformControlMode);
-  const setTransformControlsMode = useStore(sceneComposerId)((state) => state.setTransformControlMode);
-  const setTransformControls = useStore(sceneComposerId)((state) => state.setTransformControls);
-  const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
-  const selectedSceneNode = useStore(sceneComposerId)((state) => state.getSceneNodeByRef(selectedSceneNodeRef));
-  const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
-  const addingWidget = useStore(sceneComposerId)((state) => state.addingWidget);
+  const transformControlMode = accessStore(sceneComposerId)((state) => state.transformControlMode);
+  const setTransformControlsMode = accessStore(sceneComposerId)((state) => state.setTransformControlMode);
+  const setTransformControls = accessStore(sceneComposerId)((state) => state.setTransformControls);
+  const selectedSceneNodeRef = accessStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
+  const selectedSceneNode = accessStore(sceneComposerId)((state) => state.getSceneNodeByRef(selectedSceneNodeRef));
+  const getObject3DBySceneNodeRef = accessStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
+  const addingWidget = accessStore(sceneComposerId)((state) => state.addingWidget);
 
   const [transformControls] = useState(() => new TransformControlsImpl(camera, domElement));
   const subModelMovementEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SubModelMovement];
@@ -99,7 +99,7 @@ export function EditorTransformControls() {
     function transformControlsEventCallback() {
       const controlledObject = (transformControls as any).object as THREE.Object3D;
       // getting the state from zustand store directly in ThreeJS callback for performance consideration
-      const rootState = useStore(sceneComposerId).getState();
+      const rootState = accessStore(sceneComposerId).getState();
       const selectedSceneNodeRef = rootState.selectedSceneNodeRef;
       const sceneNode = rootState.getSceneNodeByRef(selectedSceneNodeRef);
 

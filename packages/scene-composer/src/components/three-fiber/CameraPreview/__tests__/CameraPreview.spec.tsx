@@ -2,7 +2,7 @@ import React from 'react';
 import { create } from 'react-test-renderer';
 
 import { CameraPreview } from '../index';
-import { useStore } from '../../../../store';
+import { accessStore } from '../../../../store';
 import { KnownComponentType } from '../../../../interfaces';
 import { DEFAULT_CAMERA_POSITION, DEFAULT_CAMERA_SETTINGS } from '../../../../common/constants';
 
@@ -31,7 +31,7 @@ describe('CameraPreview', () => {
   };
 
   it('should render correctly', () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       selectedSceneNodeRef: 'test-ref',
       getSceneNodeByRef: jest.fn().mockReturnValue(node),
     });

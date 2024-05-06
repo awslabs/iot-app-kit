@@ -13,7 +13,7 @@ jest.mock('../../../../store', () => {
   const originalModule = jest.requireActual('../../../../store');
   return {
     ...originalModule,
-    useStore: jest.fn(() => () => ({ rule: { expression: 'test' } })),
+    accessStore: jest.fn(() => () => ({ rule: { expression: 'test' } })),
   };
 });
 

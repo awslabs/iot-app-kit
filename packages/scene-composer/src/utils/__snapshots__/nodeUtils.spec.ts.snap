@@ -1,26 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`nodeUtils createNodeWithTransform should create a node with the local parent coordinates 1`] = `
-Object {
-  "components": Array [
-    Object {
+{
+  "components": [
+    {
       "type": "Camera",
     },
   ],
   "parentRef": "parent-ref",
   "ref": "test-ref",
-  "transform": Object {
-    "position": Array [
+  "transform": {
+    "position": [
       1,
       1,
       1,
     ],
-    "rotation": Array [
+    "rotation": [
       -1.5707963267948963,
       1.5707963267948966,
       0,
     ],
-    "scale": Array [
+    "scale": [
       1,
       1,
       1,
@@ -30,26 +30,26 @@ Object {
 `;
 
 exports[`nodeUtils createNodeWithTransform should create a node with the world coordinates 1`] = `
-Object {
-  "components": Array [
-    Object {
+{
+  "components": [
+    {
       "type": "Camera",
     },
   ],
   "parentRef": undefined,
   "ref": "test-ref",
-  "transform": Object {
-    "position": Array [
+  "transform": {
+    "position": [
       5,
       5,
       5,
     ],
-    "rotation": Array [
+    "rotation": [
       0,
       0,
       0,
     ],
-    "scale": Array [
+    "scale": [
       1,
       1,
       1,

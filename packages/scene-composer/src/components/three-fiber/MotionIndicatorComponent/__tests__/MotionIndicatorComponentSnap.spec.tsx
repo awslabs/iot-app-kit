@@ -3,7 +3,7 @@ import React from 'react';
 
 import { SceneResourceType } from '../../../../interfaces';
 import { Component } from '../../../../models/SceneModels';
-import { useStore } from '../../../../store';
+import { accessStore } from '../../../../store';
 import { dataBindingValuesProvider, ruleEvaluator } from '../../../../utils/dataBindingUtils';
 import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
 import MotionIndicatorComponent from '../MotionIndicatorComponent';
@@ -80,7 +80,7 @@ describe('MotionIndicatorComponent', () => {
   });
 
   it('should render with correct speed and values from rule evaluating', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<MotionIndicatorComponent node={mockNode} component={mockComponent} />);
 
@@ -93,7 +93,7 @@ describe('MotionIndicatorComponent', () => {
   });
 
   it('should render with correct default values from config when dataBinding not set', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     mockGetSceneResourceInfo.mockReturnValue({ type: SceneResourceType.Icon });
 
     const container = render(

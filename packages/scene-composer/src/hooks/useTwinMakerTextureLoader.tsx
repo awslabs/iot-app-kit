@@ -3,7 +3,7 @@ import { useCallback, useState, useEffect } from 'react';
 
 import { getGlobalSettings } from '../common/GlobalSettings';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
-import { useStore } from '../store';
+import { accessStore } from '../store';
 import { TwinMakerTextureLoader, TwinMakerTextureLoaderOptions } from '../three/TwinMakerTextureLoader';
 import { OnFileLoaderLoadFunc } from '../three/types';
 import { appendFunction } from '../utils/objectUtils';
@@ -16,7 +16,7 @@ const useTwinMakerTextureLoader: (options?: TwinMakerTextureLoaderOptions) => {
   const sceneComposerId = useSceneComposerId();
   const globalSettings = getGlobalSettings();
   const [textureLoader, setTextureLoader] = useState<TwinMakerTextureLoader | undefined>(undefined);
-  const uriModifier = useStore(sceneComposerId)((state) => state.getEditorConfig().uriModifier);
+  const uriModifier = accessStore(sceneComposerId)((state) => state.getEditorConfig().uriModifier);
 
   useEffect(() => {
     if (textureLoader && options) {
@@ -33,19 +33,19 @@ const useTwinMakerTextureLoader: (options?: TwinMakerTextureLoaderOptions) => {
         newTextureLoader.manager.onStart = appendFunction(newTextureLoader.manager.onStart, () => {
           // Use setTimeout to avoid mutating the state during rendering process
           setTimeout(() => {
-            useStore(sceneComposerId).getState().setLoadingModelState(true);
+            accessStore(sceneComposerId).getState().setLoadingModelState(true);
           }, 0);
         });
         newTextureLoader.manager.onLoad = appendFunction(newTextureLoader.manager.onLoad, () => {
           // Use setTimeout to avoid mutating the state during rendering process
           setTimeout(() => {
-            useStore(sceneComposerId).getState().setLoadingModelState(false);
+            accessStore(sceneComposerId).getState().setLoadingModelState(false);
           }, 0);
         });
         newTextureLoader.manager.onError = appendFunction(newTextureLoader.manager.onError, () => {
           // Use setTimeout to avoid mutating the state during rendering process
           setTimeout(() => {
-            useStore(sceneComposerId).getState().setLoadingModelState(false);
+            accessStore(sceneComposerId).getState().setLoadingModelState(false);
           }, 0);
         });
         setTextureLoader(newTextureLoader);

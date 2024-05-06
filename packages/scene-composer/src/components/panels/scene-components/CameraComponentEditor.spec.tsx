@@ -6,7 +6,7 @@ import wrapper from '@cloudscape-design/components/test-utils/dom';
 
 import { CameraType } from '../../../models/SceneModels';
 import { DEFAULT_CAMERA_SETTINGS } from '../../../common/constants';
-import { ICameraComponentInternal, useStore } from '../../../store';
+import { ICameraComponentInternal, accessStore } from '../../../store';
 import { mockNode, mockComponent } from '../../../../tests/components/panels/scene-components/MockComponents';
 
 import CameraComponentEditor from './CameraComponentEditor';
@@ -34,7 +34,7 @@ describe('CameraComponentEditor', () => {
   });
 
   it('should update camera settings when selecting focal length', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<CameraComponentEditor node={mockNode} component={cameraComponent} />);
 
@@ -66,7 +66,7 @@ describe('CameraComponentEditor', () => {
   });
 
   it('should update focal length when updating fov', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<CameraComponentEditor node={mockNode} component={cameraComponent} />);
 
@@ -104,7 +104,7 @@ describe('CameraComponentEditor', () => {
   });
 
   it('should not update if FOV is below the minimum value', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<CameraComponentEditor node={mockNode} component={cameraComponent} />);
 
@@ -119,7 +119,7 @@ describe('CameraComponentEditor', () => {
   });
 
   it('should update camera node when updating far', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<CameraComponentEditor node={mockNode} component={cameraComponent} />);
 
@@ -153,7 +153,7 @@ describe('CameraComponentEditor', () => {
   });
 
   it('should update camera node when updating near', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<CameraComponentEditor node={mockNode} component={cameraComponent} />);
 
@@ -187,7 +187,7 @@ describe('CameraComponentEditor', () => {
   });
 
   it('should update camera node when updating zoom', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<CameraComponentEditor node={mockNode} component={cameraComponent} />);
 

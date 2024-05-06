@@ -76,7 +76,7 @@ import * as THREE from 'three';
 import { act, render } from '@testing-library/react';
 
 import { EditorMainCamera, findBestViewingPosition } from '../../../src/components/three-fiber/EditorCamera';
-import { useStore } from '../../../src/store';
+import { accessStore } from '../../../src/store';
 
 import { useThree } from '@react-three/fiber';
 
@@ -117,7 +117,7 @@ describe('EditorMainCamera', () => {
     });
 
     it('should render OrbitControl', async () => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
 
       const rendered = render(<EditorMainCamera />);
 
@@ -128,7 +128,7 @@ describe('EditorMainCamera', () => {
     });
 
     it('should render MapControl', async () => {
-      useStore('default').setState({ ...baseState, cameraControlsType: 'pan' });
+      accessStore('default').setState({ ...baseState, cameraControlsType: 'pan' });
 
       const rendered = render(<EditorMainCamera />);
 
@@ -139,7 +139,7 @@ describe('EditorMainCamera', () => {
     });
 
     it('should render PointerLockControl', async () => {
-      useStore('default').setState({ ...baseState, cameraControlsType: 'pointerLock' });
+      accessStore('default').setState({ ...baseState, cameraControlsType: 'pointerLock' });
 
       const rendered = render(<EditorMainCamera />);
 
@@ -150,7 +150,7 @@ describe('EditorMainCamera', () => {
     });
 
     it('should not render if ImmersiveViewControl', async () => {
-      useStore('default').setState({ ...baseState, cameraControlsType: 'immersive' });
+      accessStore('default').setState({ ...baseState, cameraControlsType: 'immersive' });
 
       const rendered = render(<EditorMainCamera />);
 
@@ -161,7 +161,7 @@ describe('EditorMainCamera', () => {
     });
 
     it('should not render control on mouseDown and render control on mouseUp', async () => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
       let handler;
       MockTransformControls.addEventListener.mockImplementation((_, cb) => {
         handler = cb;
@@ -214,7 +214,7 @@ describe('EditorMainCamera', () => {
     });
 
     it('should setTween to default camera target on mount', async () => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
       mockMergeRefs.mockImplementation((refs) => {
         if (refs[1]) refs[1].current = mockCamera;
       });
@@ -236,7 +236,7 @@ describe('EditorMainCamera', () => {
     });
 
     it('should setTween to correct camera target when camera command changes to fixed camera target with no intersections ahead', async () => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
       const setPositionSpy = jest.spyOn(mockCamera.position, 'set');
       mockMergeRefs.mockImplementation((refs) => {
         if (refs[1]) refs[1].current = mockCamera;
@@ -261,7 +261,7 @@ describe('EditorMainCamera', () => {
       const rendered = render(<EditorMainCamera />);
 
       await act(async () => {
-        useStore('default').setState({
+        accessStore('default').setState({
           ...baseState,
           cameraCommand: {
             target: {
@@ -288,7 +288,7 @@ describe('EditorMainCamera', () => {
     });
 
     it('should setTween to correct camera target when camera command changes to fixed camera target with intersections ahead', async () => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
       const setPositionSpy = jest.spyOn(mockCamera.position, 'set');
       mockMergeRefs.mockImplementation((refs) => {
         if (refs[1]) refs[1].current = mockCamera;
@@ -328,7 +328,7 @@ describe('EditorMainCamera', () => {
       const rendered = render(<EditorMainCamera />);
 
       await act(async () => {
-        useStore('default').setState({
+        accessStore('default').setState({
           ...baseState,
           cameraCommand: {
             target: {
@@ -359,7 +359,7 @@ describe('EditorMainCamera', () => {
     });
 
     it('should setTween to correct camera target when camera command changes to named camera target', async () => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
       mockMergeRefs.mockImplementation((refs) => {
         if (refs[1]) refs[1].current = mockCamera;
       });
@@ -379,7 +379,7 @@ describe('EditorMainCamera', () => {
       mockGetObject3DBySceneNodeRef.mockReturnValue(mockObject);
 
       await act(async () => {
-        useStore('default').setState({
+        accessStore('default').setState({
           ...baseState,
           cameraCommand: {
             target: 'mock-node',
@@ -399,7 +399,7 @@ describe('EditorMainCamera', () => {
   });
 
   it('should call updateTweem with frame update', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     let callback;
     mockUseFrame.mockImplementation((cb) => (callback = cb));
 

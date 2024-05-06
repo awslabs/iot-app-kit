@@ -5,7 +5,7 @@ import { defineMessages, useIntl } from 'react-intl';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { KnownSceneProperty, SceneResourceType, TargetMetadata } from '../../../interfaces';
 import { IIconLookup } from '../../../models/SceneModels';
-import { useSceneDocument, useStore } from '../../../store';
+import { useSceneDocument, accessStore } from '../../../store';
 import {
   convertToIotTwinMakerNamespace,
   getSceneResourceDefaultValue,
@@ -64,7 +64,7 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
   const { getSceneProperty } = useSceneDocument(sceneComposerId);
 
   const tagStyleColors = getSceneProperty<string[]>(KnownSceneProperty.TagCustomColors, []);
-  const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
+  const setSceneProperty = accessStore(sceneComposerId)((state) => state.setSceneProperty);
 
   const isCustomStyle = targetInfo.value === 'Custom';
   return (

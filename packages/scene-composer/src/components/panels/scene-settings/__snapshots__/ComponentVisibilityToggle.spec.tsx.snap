@@ -4,12 +4,12 @@ exports[`ComponentVisibilityToggle should render correctly for motion indicator 
 <div>
   <div
     data-mocked="Box"
-    margin="{\\"vertical\\":\\"s\\"}"
+    margin="{"vertical":"s"}"
   >
     <div
       data-mocked="Box"
       display="inline"
-      margin="{\\"bottom\\":\\"xxs\\"}"
+      margin="{"bottom":"xxs"}"
       variant="p"
     >
       Motion indicator label

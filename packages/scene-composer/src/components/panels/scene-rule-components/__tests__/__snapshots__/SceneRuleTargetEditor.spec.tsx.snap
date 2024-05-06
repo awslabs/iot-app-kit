@@ -4,13 +4,13 @@ exports[`SceneRuleTargetEditor should render a drop down with appropriate resour
 <div>
   <div
     data-mocked="Grid"
-    griddefinition="[{\\"colspan\\":4},{\\"colspan\\":8}]"
+    griddefinition="[{"colspan":4},{"colspan":8}]"
   >
     <div
       data-mocked="Select"
-      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Opacity\\"}]"
+      options="[{"label":"test message","value":"Icon"},{"label":"test message","value":"Color"},{"label":"test message","value":"Number"},{"label":"test message","value":"Opacity"}]"
       selectedarialabel="test message"
-      selectedoption="{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"}"
+      selectedoption="{"label":"test message","value":"Color"}"
     />
     SceneRuleTargetColorEditor
   </div>
@@ -21,13 +21,13 @@ exports[`SceneRuleTargetEditor should render a drop down with appropriate resour
 <div>
   <div
     data-mocked="Grid"
-    griddefinition="[{\\"colspan\\":4},{\\"colspan\\":8}]"
+    griddefinition="[{"colspan":4},{"colspan":8}]"
   >
     <div
       data-mocked="Select"
-      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Opacity\\"}]"
+      options="[{"label":"test message","value":"Icon"},{"label":"test message","value":"Color"},{"label":"test message","value":"Number"},{"label":"test message","value":"Opacity"}]"
       selectedarialabel="test message"
-      selectedoption="{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"}"
+      selectedoption="{"label":"test message","value":"Icon"}"
     />
     SceneRuleTargetIconEditor
   </div>
@@ -38,13 +38,13 @@ exports[`SceneRuleTargetEditor should render a drop down with appropriate resour
 <div>
   <div
     data-mocked="Grid"
-    griddefinition="[{\\"colspan\\":4},{\\"colspan\\":8}]"
+    griddefinition="[{"colspan":4},{"colspan":8}]"
   >
     <div
       data-mocked="Select"
-      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Opacity\\"}]"
+      options="[{"label":"test message","value":"Icon"},{"label":"test message","value":"Color"},{"label":"test message","value":"Number"},{"label":"test message","value":"Opacity"}]"
       selectedarialabel="test message"
-      selectedoption="{\\"label\\":\\"test message\\",\\"value\\":\\"Opacity\\"}"
+      selectedoption="{"label":"test message","value":"Opacity"}"
     />
     SceneRuleTargetOpacityEditor
   </div>

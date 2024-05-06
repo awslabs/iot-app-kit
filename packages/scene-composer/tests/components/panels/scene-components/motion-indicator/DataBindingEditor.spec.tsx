@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 
 import { mockComponent, mockProvider } from '../MockComponents';
-import { IMotionIndicatorComponentInternal, useStore } from '../../../../../src/store';
+import { IMotionIndicatorComponentInternal, accessStore } from '../../../../../src/store';
 import { KnownComponentType } from '../../../../../src/interfaces';
 import { Component } from '../../../../../src/models/SceneModels';
 import { DataBindingEditor } from '../../../../../src/components/panels/scene-components/motion-indicator/DataBindingEditor';
@@ -53,7 +53,7 @@ describe('DataBindingEditor', () => {
   });
 
   it('should update correctly when rule selection changed', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const rendered = render(
       <DataBindingEditor
@@ -89,7 +89,7 @@ describe('DataBindingEditor', () => {
   });
 
   it('should update correctly when data binding changed', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     render(
       <DataBindingEditor

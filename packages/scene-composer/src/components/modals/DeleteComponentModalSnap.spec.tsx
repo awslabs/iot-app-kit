@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 import { KnownComponentType } from '../../interfaces';
 
 import DeleteComponentModal from './DeleteComponentModal';
@@ -19,7 +19,7 @@ describe('DeleteComponentModal', () => {
   };
 
   it('should render correctly', () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
       deleteConfirmationModalParams: {
         type: 'deleteComponent',

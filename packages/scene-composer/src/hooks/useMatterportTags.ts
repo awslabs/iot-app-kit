@@ -10,7 +10,7 @@ import {
   KnownComponentType,
   SceneResourceType,
 } from '../interfaces';
-import { IAnchorComponentInternal, IDataOverlayComponentInternal, ISceneNodeInternal, useStore } from '../store';
+import { IAnchorComponentInternal, IDataOverlayComponentInternal, ISceneNodeInternal, accessStore } from '../store';
 import { MattertagItem, TagItem } from '../utils/matterportTagUtils';
 import { RecursivePartial } from '../utils/typeUtils';
 import { Component } from '../models/SceneModels';
@@ -148,9 +148,9 @@ const useMatterportTags = (): {
   handleRemoveMatterportTag: (nodeRef: string) => void;
 } => {
   const sceneComposerId = useSceneComposerId();
-  const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
-  const updateSceneNodeInternal = useStore(sceneComposerId)((state) => state.updateSceneNodeInternal);
-  const removeSceneNode = useStore(sceneComposerId)((state) => state.removeSceneNode);
+  const appendSceneNode = accessStore(sceneComposerId)((state) => state.appendSceneNode);
+  const updateSceneNodeInternal = accessStore(sceneComposerId)((state) => state.updateSceneNodeInternal);
+  const removeSceneNode = accessStore(sceneComposerId)((state) => state.removeSceneNode);
 
   const handleAddMatterportTag = useCallback(
     async (inputs: AddTagInputs) => {

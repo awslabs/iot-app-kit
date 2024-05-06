@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { Spinner } from '@cloudscape-design/components';
 
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { useSceneDocument, useStore } from '../../store';
+import { useSceneDocument, accessStore } from '../../store';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { DEFAULT_PARENT_RELATIONSHIP_NAME, MAX_QUERY_HOP } from '../../common/entityModelConstants';
 
@@ -13,11 +13,11 @@ import DeleteConfirmationModal from './DeleteConfirmationModal';
 const DeleteNodeModal: React.FC = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const { formatMessage } = useIntl();
-  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
-  const setDeleteConfirmationModalVisible = useStore(sceneComposerId)(
+  const getSceneNodeByRef = accessStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const setDeleteConfirmationModalVisible = accessStore(sceneComposerId)(
     (state) => state.setDeleteConfirmationModalVisible,
   );
-  const deleteConfirmationModalParams = useStore(sceneComposerId)((state) => state.deleteConfirmationModalParams);
+  const deleteConfirmationModalParams = accessStore(sceneComposerId)((state) => state.deleteConfirmationModalParams);
   const { removeSceneNode } = useSceneDocument(sceneComposerId);
 
   const [childCount, setChildCount] = useState<number | undefined>();

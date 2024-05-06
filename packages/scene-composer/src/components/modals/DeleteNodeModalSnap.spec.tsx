@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render } from '@testing-library/react';
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
-import { useStore } from '../../store';
+import { accessStore } from '../../store';
 import { setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
 
 import DeleteNodeModal from './DeleteNodeModal';
@@ -25,7 +25,7 @@ describe('DeleteNodeModal', () => {
   });
 
   it('should render correctly for loading status', () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
       deleteConfirmationModalParams: {
         type: 'deleteNode',
@@ -38,7 +38,7 @@ describe('DeleteNodeModal', () => {
   });
 
   it('should render correctly when query returns error', async () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
       deleteConfirmationModalParams: {
         type: 'deleteNode',
@@ -56,7 +56,7 @@ describe('DeleteNodeModal', () => {
   });
 
   it('should render correctly when query returns invalid number', async () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
       deleteConfirmationModalParams: {
         type: 'deleteNode',
@@ -74,7 +74,7 @@ describe('DeleteNodeModal', () => {
   });
 
   it('should render correctly when query returns 0 children', async () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
       deleteConfirmationModalParams: {
         type: 'deleteNode',
@@ -92,7 +92,7 @@ describe('DeleteNodeModal', () => {
   });
 
   it('should render correctly when query returns 1 children', async () => {
-    useStore('default').setState({
+    accessStore('default').setState({
       ...baseState,
       deleteConfirmationModalParams: {
         type: 'deleteNode',

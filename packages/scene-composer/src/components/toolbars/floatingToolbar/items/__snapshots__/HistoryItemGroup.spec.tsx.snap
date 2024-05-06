@@ -1,26 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HistoryItemGroup should correctly render horizontally 1`] = `
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  border-left: 3px solid colorBorderDividerDefault;
-}
-
-.c0:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-fqkvVR eA-dzJj"
   >
     <toolbaritem
       items="[object Object]"
@@ -35,31 +18,14 @@ exports[`HistoryItemGroup should correctly render horizontally 1`] = `
 `;
 
 exports[`HistoryItemGroup should render correctly with redo disabled 1`] = `
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-top: 3px solid colorBorderDividerDefault;
-}
-
-.c0:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
 <div
-  className="c0"
+  className="sc-fqkvVR qzUpD"
 >
   <ToolbarItem
     items={
-      Array [
-        Object {
-          "icon": Object {
+      [
+        {
+          "icon": {
             "name": "undo",
           },
           "isDisabled": true,
@@ -73,9 +39,9 @@ exports[`HistoryItemGroup should render correctly with redo disabled 1`] = `
   />
   <ToolbarItem
     items={
-      Array [
-        Object {
-          "icon": Object {
+      [
+        {
+          "icon": {
             "isMirrored": true,
             "name": "undo",
           },
@@ -92,31 +58,14 @@ exports[`HistoryItemGroup should render correctly with redo disabled 1`] = `
 `;
 
 exports[`HistoryItemGroup should render correctly with redo enabled 1`] = `
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-top: 3px solid colorBorderDividerDefault;
-}
-
-.c0:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
 <div
-  className="c0"
+  className="sc-fqkvVR qzUpD"
 >
   <ToolbarItem
     items={
-      Array [
-        Object {
-          "icon": Object {
+      [
+        {
+          "icon": {
             "name": "undo",
           },
           "isDisabled": true,
@@ -130,9 +79,9 @@ exports[`HistoryItemGroup should render correctly with redo enabled 1`] = `
   />
   <ToolbarItem
     items={
-      Array [
-        Object {
-          "icon": Object {
+      [
+        {
+          "icon": {
             "isMirrored": true,
             "name": "undo",
           },
@@ -149,31 +98,14 @@ exports[`HistoryItemGroup should render correctly with redo enabled 1`] = `
 `;
 
 exports[`HistoryItemGroup should render correctly with undo disabled 1`] = `
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-top: 3px solid colorBorderDividerDefault;
-}
-
-.c0:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
 <div
-  className="c0"
+  className="sc-fqkvVR qzUpD"
 >
   <ToolbarItem
     items={
-      Array [
-        Object {
-          "icon": Object {
+      [
+        {
+          "icon": {
             "name": "undo",
           },
           "isDisabled": true,
@@ -187,9 +119,9 @@ exports[`HistoryItemGroup should render correctly with undo disabled 1`] = `
   />
   <ToolbarItem
     items={
-      Array [
-        Object {
-          "icon": Object {
+      [
+        {
+          "icon": {
             "isMirrored": true,
             "name": "undo",
           },
@@ -206,31 +138,14 @@ exports[`HistoryItemGroup should render correctly with undo disabled 1`] = `
 `;
 
 exports[`HistoryItemGroup should render correctly with undo enabled 1`] = `
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-top: 3px solid colorBorderDividerDefault;
-}
-
-.c0:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
 <div
-  className="c0"
+  className="sc-fqkvVR qzUpD"
 >
   <ToolbarItem
     items={
-      Array [
-        Object {
-          "icon": Object {
+      [
+        {
+          "icon": {
             "name": "undo",
           },
           "isDisabled": false,
@@ -244,9 +159,9 @@ exports[`HistoryItemGroup should render correctly with undo enabled 1`] = `
   />
   <ToolbarItem
     items={
-      Array [
-        Object {
-          "icon": Object {
+      [
+        {
+          "icon": {
             "isMirrored": true,
             "name": "undo",
           },

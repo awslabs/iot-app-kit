@@ -1,18 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MessageModalSnap should render correctly with: [object Object] 1`] = `
-.c0 {
-  width: 600px;
-  margin: auto;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  z-index: 1000;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-aXZVg eWvTss"
     data-mocked="Container"
   >
     <div>
@@ -27,7 +18,7 @@ exports[`MessageModalSnap should render correctly with: [object Object] 1`] = `
       <div
         data-mocked="Box"
         float="right"
-        padding="{\\"bottom\\":\\"s\\"}"
+        padding="{"bottom":"s"}"
       >
         <div
           data-mocked="Button"
@@ -56,18 +47,9 @@ exports[`MessageModalSnap should render correctly with: [object Object] 1`] = `
 `;
 
 exports[`MessageModalSnap should render correctly with: [object Object] 2`] = `
-.c0 {
-  width: 600px;
-  margin: auto;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  z-index: 1000;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-aXZVg eWvTss"
     data-mocked="Container"
   >
     <div>
@@ -82,7 +64,7 @@ exports[`MessageModalSnap should render correctly with: [object Object] 2`] = `
       <div
         data-mocked="Box"
         float="right"
-        padding="{\\"bottom\\":\\"s\\"}"
+        padding="{"bottom":"s"}"
       >
         <div
           data-mocked="Button"
@@ -134,18 +116,9 @@ exports[`MessageModalSnap should render correctly with: [object Object] 2`] = `
 `;
 
 exports[`MessageModalSnap should render correctly with: [object Object] 3`] = `
-.c0 {
-  width: 600px;
-  margin: auto;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  z-index: 1000;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-aXZVg eWvTss"
     data-mocked="Container"
   >
     <div>

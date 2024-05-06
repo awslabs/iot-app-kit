@@ -5,7 +5,7 @@ import { OrbitCameraSvg, PanCameraSvg } from '../../../../assets/svgs';
 import { CameraControlsType, COMPOSER_FEATURES } from '../../../../interfaces';
 import { getGlobalSettings } from '../../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
-import { useStore } from '../../../../store';
+import { accessStore } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { TOOLBAR_ITEM_CONTAINER_HEIGHT, ToolbarItemGroup } from '../../common/styledComponents';
 import { ToolbarItemOptions, ToolbarOrientation } from '../../common/types';
@@ -87,8 +87,8 @@ export function SceneItemGroup({
   canvasHeight,
 }: SceneItemGroupProps): JSX.Element {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const cameraControlsType = useStore(sceneComposerId)((state) => state.cameraControlsType);
-  const setCameraControlsType = useStore(sceneComposerId)((state) => state.setCameraControlsType);
+  const cameraControlsType = accessStore(sceneComposerId)((state) => state.cameraControlsType);
+  const setCameraControlsType = accessStore(sceneComposerId)((state) => state.setCameraControlsType);
   const { enableMatterportViewer } = useMatterportViewer();
   const firstPersonOn = getGlobalSettings().featureConfig[COMPOSER_FEATURES.FirstPerson];
   const intl = useIntl();

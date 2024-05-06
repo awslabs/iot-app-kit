@@ -47,7 +47,7 @@ jest.doMock('../../../../utils/objectThreeUtils', () => {
 });
 
 import { useThree } from '@react-three/fiber';
-import { IModelRefComponentInternal, useStore } from '../../../../store';
+import { IModelRefComponentInternal, accessStore } from '../../../../store';
 import { GLTFModelComponent } from '../GLTFModelComponent';
 import { KnownComponentType } from '../../../..';
 import { getScaleFactor } from '../../../../utils/mathUtils';
@@ -97,7 +97,7 @@ describe('GLTFLoader', () => {
   });
 
   it('should call enableShadow in useFrame', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const rendered = await ReactThreeTestRenderer.create(
       <GLTFModelComponent node={baseNode} component={baseComponent} hiddenWhileImmersive={false} />,
@@ -129,7 +129,7 @@ describe('GLTFLoader', () => {
     });
 
     it('should be called with correct path and uriModifier', async () => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
 
       await ReactThreeTestRenderer.create(
         <GLTFModelComponent node={baseNode} component={baseComponent} hiddenWhileImmersive={false} />,
@@ -140,7 +140,7 @@ describe('GLTFLoader', () => {
     });
 
     it('should set loading modal state correctly', async () => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
       const mockLoader = {
         manager: {
           onStart: () => null,
@@ -174,7 +174,7 @@ describe('GLTFLoader', () => {
     });
 
     it('should update downloading progress correctly', async () => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
       const mockProcessEvent = {
         lengthComputable: true,
         total: 123,
@@ -201,7 +201,7 @@ describe('GLTFLoader', () => {
     });
 
     it('should use defalt scale when component does not specify it', async () => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
 
       const rendered = await ReactThreeTestRenderer.create(
         <GLTFModelComponent node={baseNode} component={baseComponent} hiddenWhileImmersive={false} />,
@@ -211,7 +211,7 @@ describe('GLTFLoader', () => {
     });
 
     it('should use local scale set in component', async () => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
       const expected: any = [2, 3, 4];
 
       const rendered = await ReactThreeTestRenderer.create(
@@ -226,7 +226,7 @@ describe('GLTFLoader', () => {
     });
 
     it('should return correct scale for centimeter', async () => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
       const scale = getScaleFactor('centimeters', 'meters');
       const expected: any = [scale, scale, scale];
 
@@ -243,7 +243,7 @@ describe('GLTFLoader', () => {
   });
 
   it('should clone and attach the scene', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     mockThreeStates.gl.capabilities.getMaxAnisotropy.mockReturnValue(1);
 
     await ReactThreeTestRenderer.create(

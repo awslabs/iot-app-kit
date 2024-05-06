@@ -8,7 +8,7 @@ jest.doMock('../../../../../src/utils/nodeUtils', () => ({
 }));
 
 import { AddObjectMenu } from './AddObjectMenu';
-import { IColorOverlayComponentInternal, useStore } from '../../../../store';
+import { IColorOverlayComponentInternal, accessStore } from '../../../../store';
 import {
   AssetType,
   COMPOSER_FEATURES,
@@ -50,7 +50,7 @@ describe('AddObjectMenu', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    useStore('default').setState({
+    accessStore('default').setState({
       selectedSceneNodeRef,
       addComponentInternal,
       appendSceneNode,

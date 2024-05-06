@@ -11,7 +11,7 @@ import { GlobalStyles } from '../GlobalStyles';
 import useAwsLightDarkModes from '../hooks/useAwsLightDarkModes';
 import { KnownComponentType, StyleTarget } from '../interfaces';
 import { materialReducer, initialMaterialMaps, addMaterial, removeMaterial, backUpOriginalMaterial } from '../reducers';
-import { useStore } from '../store';
+import { accessStore } from '../store';
 import { IDataBoundSceneComponentInternal, ISceneComponentInternal } from '../store/internalInterfaces';
 import { darkTheme, lightTheme } from '../theme';
 import { containsMatchingEntityComponent } from '../utils/dataBindingUtils';
@@ -72,13 +72,13 @@ export const SceneComposerInternal: React.FC<SceneComposerInternalProps> = ({
 };
 
 export function useSceneComposerApi(sceneComposerId: string) {
-  const document = useStore(sceneComposerId)((state) => state.document);
-  const findSceneNodeRefBy = useStore(sceneComposerId)((state) => state.findSceneNodeRefBy);
-  const setCameraTarget = useStore(sceneComposerId)((state) => state.setCameraTarget);
-  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
-  const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
-  const setSelectedSceneNodeRef = useStore(sceneComposerId)((state) => state.setSelectedSceneNodeRef);
-  const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
+  const document = accessStore(sceneComposerId)((state) => state.document);
+  const findSceneNodeRefBy = accessStore(sceneComposerId)((state) => state.findSceneNodeRefBy);
+  const setCameraTarget = accessStore(sceneComposerId)((state) => state.setCameraTarget);
+  const getSceneNodeByRef = accessStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const selectedSceneNodeRef = accessStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
+  const setSelectedSceneNodeRef = accessStore(sceneComposerId)((state) => state.setSelectedSceneNodeRef);
+  const getObject3DBySceneNodeRef = accessStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
   const [materialMaps, dispatch] = useReducer(materialReducer, initialMaterialMaps);
 
   const findBindingComponent = (components: ISceneComponentInternal[], dataBindingContext: unknown) => {

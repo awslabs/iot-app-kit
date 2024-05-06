@@ -2,14 +2,14 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import { useStore } from '../../../../../src/store';
+import { accessStore } from '../../../../../src/store';
 import { CancelMenuItem } from '../../../../../src/components/toolbars/floatingToolbar/items';
 
 describe('CancelMenuItem', () => {
   const setAddingWidget = jest.fn();
 
   beforeEach(() => {
-    useStore('default').setState({
+    accessStore('default').setState({
       setAddingWidget,
     } as any);
     jest.clearAllMocks();

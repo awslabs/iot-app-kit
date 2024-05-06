@@ -3,11 +3,10 @@ import * as React from 'react';
 import { render } from '@testing-library/react';
 import { useQuery } from '@tanstack/react-query';
 
-import { useStore } from '../store';
+import { accessStore } from '../store';
 import { processQueries } from '../utils/entityModelUtils/processQueries';
 import { KnownSceneProperty } from '../interfaces';
 import { LAYER_DEFAULT_REFRESH_INTERVAL } from '../utils/entityModelUtils/sceneLayerUtils';
-import { RESERVED_LAYER_ID } from '../common/entityModelConstants';
 import { SceneLayers } from './SceneLayers';
 
 jest.mock('../utils/entityModelUtils/processQueries', () => ({
@@ -42,7 +41,7 @@ describe('SceneLayers', () => {
   });
 
   it('should enable query even no layerId specified', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     getScenePropertyMock.mockReturnValue([]);
 
     let enabledValue = true;
@@ -57,7 +56,7 @@ describe('SceneLayers', () => {
   });
 
   it('should not refetch when not in viewing mode', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     isViewingMock.mockReturnValue(false);
     let interval;
     (useQuery as jest.Mock).mockImplementation(({ refetchInterval, ..._ }) => {
@@ -71,7 +70,7 @@ describe('SceneLayers', () => {
   });
 
   it('should not refetch when previous query failed', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     let interval;
     (useQuery as jest.Mock).mockImplementation(({ refetchInterval, ..._ }) => {
       interval = refetchInterval(undefined, { state: { error: 'error' } });
@@ -92,7 +91,7 @@ describe('SceneLayers', () => {
       }
     });
 
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     let interval;
     (useQuery as jest.Mock).mockImplementation(({ refetchInterval, ..._ }) => {
       interval = refetchInterval(undefined, { state: {} });
@@ -105,7 +104,7 @@ describe('SceneLayers', () => {
   });
 
   it('should refetch with expected interval', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     let interval;
     (useQuery as jest.Mock).mockImplementation(({ refetchInterval, ..._ }) => {
       interval = refetchInterval(undefined, { state: {} });
@@ -118,7 +117,7 @@ describe('SceneLayers', () => {
   });
 
   it('should call processQueries with expected data', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     let queryFunction;
     (useQuery as jest.Mock).mockImplementation(({ queryFn, ..._ }) => {
       queryFunction = queryFn;
@@ -133,7 +132,7 @@ describe('SceneLayers', () => {
   });
 
   it('should call processQueries with expected data', async () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
     let queryFunction;
     (useQuery as jest.Mock).mockImplementation(({ queryFn, ..._ }) => {
       queryFunction = queryFn;

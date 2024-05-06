@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { act } from 'react-test-renderer';
 
-import { useStore } from '../../../../store';
+import { accessStore } from '../../../../store';
 import { KnownComponentType } from '../../../../interfaces';
 import { ToolbarOrientation } from '../../common/types';
 
@@ -26,7 +26,7 @@ describe('ObjectItemGroupSnap', () => {
   const getSceneNodeByRef = jest.fn();
 
   beforeEach(() => {
-    useStore('default').setState({
+    accessStore('default').setState({
       selectedSceneNodeRef,
       removeSceneNode,
       transformControlMode: 'translate',

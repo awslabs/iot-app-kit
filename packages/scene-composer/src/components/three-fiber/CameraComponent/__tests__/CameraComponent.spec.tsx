@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { render } from '@testing-library/react';
 import { useThree } from '@react-three/fiber';
 
-import { ICameraComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../../store';
+import { ICameraComponentInternal, ISceneNodeInternal, useEditorState, accessStore } from '../../../../store';
 import useActiveCamera from '../../../../hooks/useActiveCamera';
 import CameraComponent from '..';
 
@@ -13,7 +13,7 @@ jest.mock('../../../../store', () => {
   const originalModule = jest.requireActual('../../../../store');
   return {
     ...originalModule,
-    useStore: jest.fn(),
+    accessStore: jest.fn(),
     useSceneDocument: jest.fn(() => ({ document: { defaultCameraRef: { ref: 'testCamera' } } })),
     useEditorState: jest.fn(),
   };
@@ -60,8 +60,8 @@ describe('CameraComponent', () => {
   beforeEach(() => {
     const mockState = { isEditing: true, isLoadingModel: false };
 
-    const useStoreMock = useStore as Mock;
-    useStoreMock.mockReturnValue({ getState: jest.fn(() => mockState) });
+    const accessStoreMock = accessStore as Mock;
+    accessStoreMock.mockReturnValue({ getState: jest.fn(() => mockState) });
 
     const useThreeMock = useThree as Mock;
     useThreeMock.mockReturnValue({ width: 1920, height: 1080 });
@@ -163,23 +163,23 @@ describe('CameraComponent', () => {
     const argValue = (useActiveCamera().setActiveCameraSettings as jest.Mock).mock.calls[0][0];
 
     expect(argValue).toMatchInlineSnapshot(`
-      Object {
+      {
         "cameraType": "Perspective",
         "far": 100,
         "fov": 60,
         "near": 0,
-        "transform": Object {
-          "position": Array [
+        "transform": {
+          "position": [
             5,
             5,
             5,
           ],
-          "rotation": Array [
+          "rotation": [
             -0,
             0,
             -0,
           ],
-          "scale": Array [
+          "scale": [
             1,
             1,
             1,

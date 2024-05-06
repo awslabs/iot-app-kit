@@ -3,7 +3,7 @@ import { Box, Button, FormField, Input, Select, SpaceBetween } from '@cloudscape
 import { useIntl } from 'react-intl';
 import { isEmpty } from 'lodash';
 
-import { useStore, useViewOptionState } from '../../../store';
+import { accessStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { KnownSceneProperty } from '../../../interfaces';
 import { getGlobalSettings, subscribe, unsubscribe } from '../../../common/GlobalSettings';
@@ -21,9 +21,9 @@ import { MatterportTagSync } from './MatterportTagSync';
 export const MatterportIntegration: React.FC = () => {
   const intl = useIntl();
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const { setSceneProperty, addMessages } = useStore(sceneComposerId)((state) => state);
+  const { setSceneProperty, addMessages } = accessStore(sceneComposerId)((state) => state);
 
-  const matterportModelId = useStore(sceneComposerId)((state) =>
+  const matterportModelId = accessStore(sceneComposerId)((state) =>
     state.getSceneProperty<string>(KnownSceneProperty.MatterportModelId),
   );
   const [matterportModelIdInternal, setMatterportModelIdInternal] = useState(matterportModelId);

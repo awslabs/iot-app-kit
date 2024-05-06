@@ -1,354 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SceneLayout should not render camera preview if editing and non-camera component is on selectedNode 1`] = `
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  background-color: colorBackgroundLayoutMain;
-}
-
-.c1 {
-  background-color: colorBackgroundContainerHeader;
-  z-index: 100;
-}
-
-.c2 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  position: relative;
-  overflow: hidden;
-}
-
-.c4 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-}
-
-.c5 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  position: relative;
-  background-color: colorBackgroundContainerContent;
-}
-
-.c6 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  overflow: hidden;
-  padding: 4px;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.c3 {
-  background-color: colorBackgroundContainerContent;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  z-index: 99;
-}
-
-.c21 {
-  background-color: colorBackgroundContainerContent;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  height: 100%;
-}
-
-.c14 {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 16%;
-  height: 16%;
-  pointer-events: none;
-  z-index: 1;
-  color: colorTextHeadingDefault;
-}
-
-.c14 > svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-
-.c11 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-}
-
-.c12 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-  -webkit-transform: scaleX(-1);
-  -ms-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
-
-.c17 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.04);
-  -ms-transform: scale(1.04);
-  transform: scale(1.04);
-}
-
-.c20 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.06);
-  -ms-transform: scale(1.06);
-  transform: scale(1.06);
-}
-
-.c9 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: default;
-  pointer-events: none;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c9:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c13 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: pointer;
-  pointer-events: initial;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c13:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c13:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c18 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: default;
-  pointer-events: none;
-  background-color: colorBackgroundItemSelected;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c18:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c8 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-top: 3px solid colorBorderDividerDefault;
-}
-
-.c8:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c10 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  width: 40px;
-  height: 100%;
-}
-
-.c15 {
-  display: none;
-  position: absolute;
-  left: 100%;
-  top: 0;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  background-color: colorBackgroundDropdownItemDefault;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 1;
-}
-
-.c15 > div {
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c15 > div:first-of-type {
-  border-top: 0;
-}
-
-.c16 {
-  padding: 0 20px 0 20px;
-  white-space: nowrap;
-}
-
-.c19 {
-  padding: 0 20px 0 0px;
-  white-space: nowrap;
-}
-
-.c7 {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 999;
-  background-color: colorBackgroundDropdownItemDefault;
-}
-
 <div
-  className="c0"
+  className="sc-aXZVg bXfOXf"
   data-mocked="Box"
 >
   <div
-    className="c1"
+    className="sc-gEvEer iHsuBI"
     data-mocked="Box"
   />
   <div
-    className="c2"
+    className="sc-eqUAAy lplIYk"
     data-mocked="Box"
   >
     <div
-      className="c3"
+      className="sc-kAyceB cqfbWr"
       data-mocked="Box"
       isFloating={false}
     >
@@ -365,18 +31,18 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
               className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
-                Array [
-                  Object {
+                [
+                  {
                     "content": <SceneHierarchyPanel />,
                     "id": "Hierarchy",
                     "label": "Hierarchy",
                   },
-                  Object {
+                  {
                     "content": <SceneRulesPanel />,
                     "id": "Rules",
                     "label": "Rules",
                   },
-                  Object {
+                  {
                     "content": <SettingsPanel />,
                     "id": "Settings",
                     "label": "Settings",
@@ -401,31 +67,31 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
       </div>
     </div>
     <div
-      className="c4"
+      className="sc-fqkvVR hhwHuy"
       data-mocked="Box"
     >
       <div
-        className="c5"
+        className="sc-dcJsrY cda-DkI"
         data-mocked="Box"
         padding="xxs"
       >
         <TopBar />
       </div>
       <div
-        className="c6"
+        className="sc-iGgWBj hzaGuy"
         data-mocked="Box"
       >
         <div
-          className="c7"
+          className="sc-fPXMVe czwHhD"
         >
           <div
-            className="c8"
+            className="sc-jEACwC hlbzfk"
           >
             <div
-              className="c8"
+              className="sc-jEACwC hlbzfk"
             >
               <div
-                className="c9"
+                className="sc-cwHptR emptQu"
                 data-testid="undo"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -436,7 +102,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Undo"
@@ -444,7 +110,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                     title="Undo"
                   >
                     <div
-                      className="c11"
+                      className="sc-jlZhew eMcyRT"
                       data-mocked="Icon"
                       name="undo"
                       variant="disabled"
@@ -453,7 +119,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                 </div>
               </div>
               <div
-                className="c9"
+                className="sc-cwHptR emptQu"
                 data-testid="redo"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -464,7 +130,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Redo"
@@ -472,7 +138,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                     title="Redo"
                   >
                     <div
-                      className="c12"
+                      className="sc-jlZhew ipCodt"
                       data-mocked="Icon"
                       isMirrored={true}
                       name="undo"
@@ -483,10 +149,10 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
               </div>
             </div>
             <div
-              className="c8"
+              className="sc-jEACwC hlbzfk"
             >
               <div
-                className="c13"
+                className="sc-cwHptR fayzaJ"
                 data-testid="add-object"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -497,7 +163,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Add object"
@@ -505,7 +171,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                     title="Add object"
                   >
                     <div
-                      className="c11"
+                      className="sc-jlZhew eMcyRT"
                       data-mocked="Icon"
                       name="add-plus"
                       variant="normal"
@@ -513,7 +179,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                   </span>
                 </div>
                 <div
-                  className="c14"
+                  className="sc-dAlyuH hCrGyX"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -525,18 +191,18 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                   </svg>
                 </div>
                 <div
-                  className="c15"
+                  className="sc-dLMFU bUIqXt"
                 >
                   <div
                     style={
-                      Object {
+                      {
                         "maxHeight": undefined,
                         "overflowY": "auto",
                       }
                     }
                   >
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-empty"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -547,7 +213,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -556,7 +222,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       </div>
                     </div>
                     <div
-                      className="c9"
+                      className="sc-cwHptR emptQu"
                       data-testid="add-object-model"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -567,7 +233,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="text-status-inactive"
                         data-mocked="Box"
                         variant="small"
@@ -576,7 +242,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-light"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -587,7 +253,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -596,7 +262,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-view-camera"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -607,7 +273,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -616,7 +282,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-tag"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -627,7 +293,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -636,7 +302,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-annotation"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -647,7 +313,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -656,7 +322,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       </div>
                     </div>
                     <div
-                      className="c9"
+                      className="sc-cwHptR emptQu"
                       data-testid="add-effect-model-shader"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -667,7 +333,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="text-status-inactive"
                         data-mocked="Box"
                         variant="small"
@@ -676,7 +342,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-motion-indicator"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -687,7 +353,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -699,7 +365,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                 </div>
               </div>
               <div
-                className="c13"
+                className="sc-cwHptR fayzaJ"
                 data-testid="camera-controls-orbit"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -710,7 +376,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Orbit"
@@ -718,7 +384,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                     title="Orbit"
                   >
                     <div
-                      className="c17"
+                      className="sc-jlZhew MYXmJ"
                       data-mocked="Icon"
                       scale={1.04}
                       variant="normal"
@@ -756,7 +422,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                   </span>
                 </div>
                 <div
-                  className="c14"
+                  className="sc-dAlyuH hCrGyX"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -768,18 +434,18 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                   </svg>
                 </div>
                 <div
-                  className="c15"
+                  className="sc-dLMFU bUIqXt"
                 >
                   <div
                     style={
-                      Object {
+                      {
                         "maxHeight": undefined,
                         "overflowY": "auto",
                       }
                     }
                   >
                     <div
-                      className="c18"
+                      className="sc-cwHptR hiMRzF"
                       data-testid="camera-controls-orbit"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -790,7 +456,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       tabIndex={0}
                     >
                       <div
-                        className="c10"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Orbit"
@@ -798,7 +464,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                           title="Orbit"
                         >
                           <div
-                            className="c17"
+                            className="sc-jlZhew MYXmJ"
                             data-mocked="Icon"
                             scale={1.04}
                             variant="normal"
@@ -836,7 +502,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                         </span>
                       </div>
                       <div
-                        className="c19"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -846,7 +512,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="camera-controls-pan"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -857,7 +523,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       tabIndex={0}
                     >
                       <div
-                        className="c10"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Pan"
@@ -865,7 +531,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                           title="Pan"
                         >
                           <div
-                            className="c17"
+                            className="sc-jlZhew MYXmJ"
                             data-mocked="Icon"
                             scale={1.04}
                             variant="normal"
@@ -888,7 +554,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                         </span>
                       </div>
                       <div
-                        className="c19"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -902,10 +568,10 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
               </div>
             </div>
             <div
-              className="c8"
+              className="sc-jEACwC hlbzfk"
             >
               <div
-                className="c9"
+                className="sc-cwHptR emptQu"
                 data-testid="delete"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -916,7 +582,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Delete"
@@ -924,7 +590,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                     title="Delete"
                   >
                     <div
-                      className="c11"
+                      className="sc-jlZhew eMcyRT"
                       data-mocked="Icon"
                       variant="disabled"
                     >
@@ -946,7 +612,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                 </div>
               </div>
               <div
-                className="c13"
+                className="sc-cwHptR fayzaJ"
                 data-testid="transform-translate"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -957,7 +623,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Translate"
@@ -965,7 +631,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                     title="Translate"
                   >
                     <div
-                      className="c20"
+                      className="sc-jlZhew fNNQrn"
                       data-mocked="Icon"
                       scale={1.06}
                       variant="normal"
@@ -993,7 +659,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                   </span>
                 </div>
                 <div
-                  className="c14"
+                  className="sc-dAlyuH hCrGyX"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -1005,18 +671,18 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                   </svg>
                 </div>
                 <div
-                  className="c15"
+                  className="sc-dLMFU bUIqXt"
                 >
                   <div
                     style={
-                      Object {
+                      {
                         "maxHeight": undefined,
                         "overflowY": "auto",
                       }
                     }
                   >
                     <div
-                      className="c18"
+                      className="sc-cwHptR hiMRzF"
                       data-testid="transform-translate"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -1027,7 +693,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       tabIndex={0}
                     >
                       <div
-                        className="c10"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Translate"
@@ -1035,7 +701,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                           title="Translate"
                         >
                           <div
-                            className="c20"
+                            className="sc-jlZhew fNNQrn"
                             data-mocked="Icon"
                             scale={1.06}
                             variant="normal"
@@ -1063,7 +729,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                         </span>
                       </div>
                       <div
-                        className="c19"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -1073,7 +739,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="transform-rotate"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -1084,7 +750,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       tabIndex={0}
                     >
                       <div
-                        className="c10"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Rotate"
@@ -1092,7 +758,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                           title="Rotate"
                         >
                           <div
-                            className="c20"
+                            className="sc-jlZhew fNNQrn"
                             data-mocked="Icon"
                             scale={1.06}
                             variant="normal"
@@ -1133,7 +799,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                         </span>
                       </div>
                       <div
-                        className="c19"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -1143,7 +809,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="transform-scale"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -1154,7 +820,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                       tabIndex={0}
                     >
                       <div
-                        className="c10"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Scale"
@@ -1162,7 +828,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                           title="Scale"
                         >
                           <div
-                            className="c20"
+                            className="sc-jlZhew fNNQrn"
                             data-mocked="Icon"
                             scale={1.06}
                             variant="normal"
@@ -1197,7 +863,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                         </span>
                       </div>
                       <div
-                        className="c19"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -1215,7 +881,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
       </div>
     </div>
     <div
-      className="c21"
+      className="sc-imWYAI fdOAXN"
       data-mocked="Box"
     >
       <div
@@ -1231,8 +897,8 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
               className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
-                Array [
-                  Object {
+                [
+                  {
                     "content": <SceneNodeInspectorPanel />,
                     "id": "Inspector",
                     "label": "Inspector",
@@ -1261,354 +927,20 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
 `;
 
 exports[`SceneLayout should render camera preview if editing and camera component is on selectedNode 1`] = `
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  background-color: colorBackgroundLayoutMain;
-}
-
-.c1 {
-  background-color: colorBackgroundContainerHeader;
-  z-index: 100;
-}
-
-.c2 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  position: relative;
-  overflow: hidden;
-}
-
-.c4 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-}
-
-.c5 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  position: relative;
-  background-color: colorBackgroundContainerContent;
-}
-
-.c6 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  overflow: hidden;
-  padding: 4px;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.c3 {
-  background-color: colorBackgroundContainerContent;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  z-index: 99;
-}
-
-.c21 {
-  background-color: colorBackgroundContainerContent;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  height: 100%;
-}
-
-.c14 {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 16%;
-  height: 16%;
-  pointer-events: none;
-  z-index: 1;
-  color: colorTextHeadingDefault;
-}
-
-.c14 > svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-
-.c11 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-}
-
-.c12 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-  -webkit-transform: scaleX(-1);
-  -ms-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
-
-.c17 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.04);
-  -ms-transform: scale(1.04);
-  transform: scale(1.04);
-}
-
-.c20 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.06);
-  -ms-transform: scale(1.06);
-  transform: scale(1.06);
-}
-
-.c9 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: default;
-  pointer-events: none;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c9:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c13 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: pointer;
-  pointer-events: initial;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c13:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c13:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c18 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: default;
-  pointer-events: none;
-  background-color: colorBackgroundItemSelected;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c18:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c8 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-top: 3px solid colorBorderDividerDefault;
-}
-
-.c8:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c10 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  width: 40px;
-  height: 100%;
-}
-
-.c15 {
-  display: none;
-  position: absolute;
-  left: 100%;
-  top: 0;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  background-color: colorBackgroundDropdownItemDefault;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 1;
-}
-
-.c15 > div {
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c15 > div:first-of-type {
-  border-top: 0;
-}
-
-.c16 {
-  padding: 0 20px 0 20px;
-  white-space: nowrap;
-}
-
-.c19 {
-  padding: 0 20px 0 0px;
-  white-space: nowrap;
-}
-
-.c7 {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 999;
-  background-color: colorBackgroundDropdownItemDefault;
-}
-
 <div
-  className="c0"
+  className="sc-aXZVg bXfOXf"
   data-mocked="Box"
 >
   <div
-    className="c1"
+    className="sc-gEvEer iHsuBI"
     data-mocked="Box"
   />
   <div
-    className="c2"
+    className="sc-eqUAAy lplIYk"
     data-mocked="Box"
   >
     <div
-      className="c3"
+      className="sc-kAyceB cqfbWr"
       data-mocked="Box"
       isFloating={false}
     >
@@ -1625,18 +957,18 @@ exports[`SceneLayout should render camera preview if editing and camera componen
               className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
-                Array [
-                  Object {
+                [
+                  {
                     "content": <SceneHierarchyPanel />,
                     "id": "Hierarchy",
                     "label": "Hierarchy",
                   },
-                  Object {
+                  {
                     "content": <SceneRulesPanel />,
                     "id": "Rules",
                     "label": "Rules",
                   },
-                  Object {
+                  {
                     "content": <SettingsPanel />,
                     "id": "Settings",
                     "label": "Settings",
@@ -1661,31 +993,31 @@ exports[`SceneLayout should render camera preview if editing and camera componen
       </div>
     </div>
     <div
-      className="c4"
+      className="sc-fqkvVR hhwHuy"
       data-mocked="Box"
     >
       <div
-        className="c5"
+        className="sc-dcJsrY cda-DkI"
         data-mocked="Box"
         padding="xxs"
       >
         <TopBar />
       </div>
       <div
-        className="c6"
+        className="sc-iGgWBj hzaGuy"
         data-mocked="Box"
       >
         <div
-          className="c7"
+          className="sc-fPXMVe czwHhD"
         >
           <div
-            className="c8"
+            className="sc-jEACwC hlbzfk"
           >
             <div
-              className="c8"
+              className="sc-jEACwC hlbzfk"
             >
               <div
-                className="c9"
+                className="sc-cwHptR emptQu"
                 data-testid="undo"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -1696,7 +1028,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Undo"
@@ -1704,7 +1036,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                     title="Undo"
                   >
                     <div
-                      className="c11"
+                      className="sc-jlZhew eMcyRT"
                       data-mocked="Icon"
                       name="undo"
                       variant="disabled"
@@ -1713,7 +1045,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                 </div>
               </div>
               <div
-                className="c9"
+                className="sc-cwHptR emptQu"
                 data-testid="redo"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -1724,7 +1056,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Redo"
@@ -1732,7 +1064,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                     title="Redo"
                   >
                     <div
-                      className="c12"
+                      className="sc-jlZhew ipCodt"
                       data-mocked="Icon"
                       isMirrored={true}
                       name="undo"
@@ -1743,10 +1075,10 @@ exports[`SceneLayout should render camera preview if editing and camera componen
               </div>
             </div>
             <div
-              className="c8"
+              className="sc-jEACwC hlbzfk"
             >
               <div
-                className="c13"
+                className="sc-cwHptR fayzaJ"
                 data-testid="add-object"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -1757,7 +1089,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Add object"
@@ -1765,7 +1097,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                     title="Add object"
                   >
                     <div
-                      className="c11"
+                      className="sc-jlZhew eMcyRT"
                       data-mocked="Icon"
                       name="add-plus"
                       variant="normal"
@@ -1773,7 +1105,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                   </span>
                 </div>
                 <div
-                  className="c14"
+                  className="sc-dAlyuH hCrGyX"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -1785,18 +1117,18 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                   </svg>
                 </div>
                 <div
-                  className="c15"
+                  className="sc-dLMFU bUIqXt"
                 >
                   <div
                     style={
-                      Object {
+                      {
                         "maxHeight": undefined,
                         "overflowY": "auto",
                       }
                     }
                   >
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-empty"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -1807,7 +1139,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -1816,7 +1148,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       </div>
                     </div>
                     <div
-                      className="c9"
+                      className="sc-cwHptR emptQu"
                       data-testid="add-object-model"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -1827,7 +1159,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="text-status-inactive"
                         data-mocked="Box"
                         variant="small"
@@ -1836,7 +1168,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-light"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -1847,7 +1179,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -1856,7 +1188,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-view-camera"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -1867,7 +1199,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -1876,7 +1208,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-tag"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -1887,7 +1219,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -1896,7 +1228,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-annotation"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -1907,7 +1239,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -1916,7 +1248,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       </div>
                     </div>
                     <div
-                      className="c9"
+                      className="sc-cwHptR emptQu"
                       data-testid="add-effect-model-shader"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -1927,7 +1259,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="text-status-inactive"
                         data-mocked="Box"
                         variant="small"
@@ -1936,7 +1268,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-motion-indicator"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -1947,7 +1279,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -1959,7 +1291,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                 </div>
               </div>
               <div
-                className="c13"
+                className="sc-cwHptR fayzaJ"
                 data-testid="camera-controls-orbit"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -1970,7 +1302,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Orbit"
@@ -1978,7 +1310,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                     title="Orbit"
                   >
                     <div
-                      className="c17"
+                      className="sc-jlZhew MYXmJ"
                       data-mocked="Icon"
                       scale={1.04}
                       variant="normal"
@@ -2016,7 +1348,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                   </span>
                 </div>
                 <div
-                  className="c14"
+                  className="sc-dAlyuH hCrGyX"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -2028,18 +1360,18 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                   </svg>
                 </div>
                 <div
-                  className="c15"
+                  className="sc-dLMFU bUIqXt"
                 >
                   <div
                     style={
-                      Object {
+                      {
                         "maxHeight": undefined,
                         "overflowY": "auto",
                       }
                     }
                   >
                     <div
-                      className="c18"
+                      className="sc-cwHptR hiMRzF"
                       data-testid="camera-controls-orbit"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -2050,7 +1382,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       tabIndex={0}
                     >
                       <div
-                        className="c10"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Orbit"
@@ -2058,7 +1390,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                           title="Orbit"
                         >
                           <div
-                            className="c17"
+                            className="sc-jlZhew MYXmJ"
                             data-mocked="Icon"
                             scale={1.04}
                             variant="normal"
@@ -2096,7 +1428,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                         </span>
                       </div>
                       <div
-                        className="c19"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -2106,7 +1438,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="camera-controls-pan"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -2117,7 +1449,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       tabIndex={0}
                     >
                       <div
-                        className="c10"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Pan"
@@ -2125,7 +1457,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                           title="Pan"
                         >
                           <div
-                            className="c17"
+                            className="sc-jlZhew MYXmJ"
                             data-mocked="Icon"
                             scale={1.04}
                             variant="normal"
@@ -2148,7 +1480,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                         </span>
                       </div>
                       <div
-                        className="c19"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -2162,10 +1494,10 @@ exports[`SceneLayout should render camera preview if editing and camera componen
               </div>
             </div>
             <div
-              className="c8"
+              className="sc-jEACwC hlbzfk"
             >
               <div
-                className="c9"
+                className="sc-cwHptR emptQu"
                 data-testid="delete"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -2176,7 +1508,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Delete"
@@ -2184,7 +1516,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                     title="Delete"
                   >
                     <div
-                      className="c11"
+                      className="sc-jlZhew eMcyRT"
                       data-mocked="Icon"
                       variant="disabled"
                     >
@@ -2206,7 +1538,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                 </div>
               </div>
               <div
-                className="c13"
+                className="sc-cwHptR fayzaJ"
                 data-testid="transform-translate"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -2217,7 +1549,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Translate"
@@ -2225,7 +1557,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                     title="Translate"
                   >
                     <div
-                      className="c20"
+                      className="sc-jlZhew fNNQrn"
                       data-mocked="Icon"
                       scale={1.06}
                       variant="normal"
@@ -2253,7 +1585,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                   </span>
                 </div>
                 <div
-                  className="c14"
+                  className="sc-dAlyuH hCrGyX"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -2265,18 +1597,18 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                   </svg>
                 </div>
                 <div
-                  className="c15"
+                  className="sc-dLMFU bUIqXt"
                 >
                   <div
                     style={
-                      Object {
+                      {
                         "maxHeight": undefined,
                         "overflowY": "auto",
                       }
                     }
                   >
                     <div
-                      className="c18"
+                      className="sc-cwHptR hiMRzF"
                       data-testid="transform-translate"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -2287,7 +1619,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       tabIndex={0}
                     >
                       <div
-                        className="c10"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Translate"
@@ -2295,7 +1627,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                           title="Translate"
                         >
                           <div
-                            className="c20"
+                            className="sc-jlZhew fNNQrn"
                             data-mocked="Icon"
                             scale={1.06}
                             variant="normal"
@@ -2323,7 +1655,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                         </span>
                       </div>
                       <div
-                        className="c19"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -2333,7 +1665,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="transform-rotate"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -2344,7 +1676,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       tabIndex={0}
                     >
                       <div
-                        className="c10"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Rotate"
@@ -2352,7 +1684,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                           title="Rotate"
                         >
                           <div
-                            className="c20"
+                            className="sc-jlZhew fNNQrn"
                             data-mocked="Icon"
                             scale={1.06}
                             variant="normal"
@@ -2393,7 +1725,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                         </span>
                       </div>
                       <div
-                        className="c19"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -2403,7 +1735,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="transform-scale"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -2414,7 +1746,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                       tabIndex={0}
                     >
                       <div
-                        className="c10"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Scale"
@@ -2422,7 +1754,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                           title="Scale"
                         >
                           <div
-                            className="c20"
+                            className="sc-jlZhew fNNQrn"
                             data-mocked="Icon"
                             scale={1.06}
                             variant="normal"
@@ -2457,7 +1789,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                         </span>
                       </div>
                       <div
-                        className="c19"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -2487,7 +1819,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
       </div>
     </div>
     <div
-      className="c21"
+      className="sc-imWYAI fdOAXN"
       data-mocked="Box"
     >
       <div
@@ -2503,8 +1835,8 @@ exports[`SceneLayout should render camera preview if editing and camera componen
               className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
-                Array [
-                  Object {
+                [
+                  {
                     "content": <SceneNodeInspectorPanel />,
                     "id": "Inspector",
                     "label": "Inspector",
@@ -2533,354 +1865,20 @@ exports[`SceneLayout should render camera preview if editing and camera componen
 `;
 
 exports[`SceneLayout should render correctly in Edit mode 1`] = `
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  background-color: colorBackgroundLayoutMain;
-}
-
-.c1 {
-  background-color: colorBackgroundContainerHeader;
-  z-index: 100;
-}
-
-.c2 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  position: relative;
-  overflow: hidden;
-}
-
-.c4 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-}
-
-.c5 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  position: relative;
-  background-color: colorBackgroundContainerContent;
-}
-
-.c6 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  overflow: hidden;
-  padding: 4px;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.c3 {
-  background-color: colorBackgroundContainerContent;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  z-index: 99;
-}
-
-.c21 {
-  background-color: colorBackgroundContainerContent;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  height: 100%;
-}
-
-.c14 {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 16%;
-  height: 16%;
-  pointer-events: none;
-  z-index: 1;
-  color: colorTextHeadingDefault;
-}
-
-.c14 > svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-
-.c11 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-}
-
-.c12 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-  -webkit-transform: scaleX(-1);
-  -ms-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
-
-.c17 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.04);
-  -ms-transform: scale(1.04);
-  transform: scale(1.04);
-}
-
-.c20 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.06);
-  -ms-transform: scale(1.06);
-  transform: scale(1.06);
-}
-
-.c9 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: default;
-  pointer-events: none;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c9:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c13 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: pointer;
-  pointer-events: initial;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c13:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c13:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c18 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: default;
-  pointer-events: none;
-  background-color: colorBackgroundItemSelected;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c18:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c8 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-top: 3px solid colorBorderDividerDefault;
-}
-
-.c8:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c10 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  width: 40px;
-  height: 100%;
-}
-
-.c15 {
-  display: none;
-  position: absolute;
-  left: 100%;
-  top: 0;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  background-color: colorBackgroundDropdownItemDefault;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 1;
-}
-
-.c15 > div {
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c15 > div:first-of-type {
-  border-top: 0;
-}
-
-.c16 {
-  padding: 0 20px 0 20px;
-  white-space: nowrap;
-}
-
-.c19 {
-  padding: 0 20px 0 0px;
-  white-space: nowrap;
-}
-
-.c7 {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 999;
-  background-color: colorBackgroundDropdownItemDefault;
-}
-
 <div
-  className="c0"
+  className="sc-aXZVg bXfOXf"
   data-mocked="Box"
 >
   <div
-    className="c1"
+    className="sc-gEvEer iHsuBI"
     data-mocked="Box"
   />
   <div
-    className="c2"
+    className="sc-eqUAAy lplIYk"
     data-mocked="Box"
   >
     <div
-      className="c3"
+      className="sc-kAyceB cqfbWr"
       data-mocked="Box"
       isFloating={false}
     >
@@ -2897,18 +1895,18 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
               className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
-                Array [
-                  Object {
+                [
+                  {
                     "content": <SceneHierarchyPanel />,
                     "id": "Hierarchy",
                     "label": "Hierarchy",
                   },
-                  Object {
+                  {
                     "content": <SceneRulesPanel />,
                     "id": "Rules",
                     "label": "Rules",
                   },
-                  Object {
+                  {
                     "content": <SettingsPanel />,
                     "id": "Settings",
                     "label": "Settings",
@@ -2933,31 +1931,31 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
       </div>
     </div>
     <div
-      className="c4"
+      className="sc-fqkvVR hhwHuy"
       data-mocked="Box"
     >
       <div
-        className="c5"
+        className="sc-dcJsrY cda-DkI"
         data-mocked="Box"
         padding="xxs"
       >
         <TopBar />
       </div>
       <div
-        className="c6"
+        className="sc-iGgWBj hzaGuy"
         data-mocked="Box"
       >
         <div
-          className="c7"
+          className="sc-fPXMVe czwHhD"
         >
           <div
-            className="c8"
+            className="sc-jEACwC hlbzfk"
           >
             <div
-              className="c8"
+              className="sc-jEACwC hlbzfk"
             >
               <div
-                className="c9"
+                className="sc-cwHptR emptQu"
                 data-testid="undo"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -2968,7 +1966,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Undo"
@@ -2976,7 +1974,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     title="Undo"
                   >
                     <div
-                      className="c11"
+                      className="sc-jlZhew eMcyRT"
                       data-mocked="Icon"
                       name="undo"
                       variant="disabled"
@@ -2985,7 +1983,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 </div>
               </div>
               <div
-                className="c9"
+                className="sc-cwHptR emptQu"
                 data-testid="redo"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -2996,7 +1994,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Redo"
@@ -3004,7 +2002,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     title="Redo"
                   >
                     <div
-                      className="c12"
+                      className="sc-jlZhew ipCodt"
                       data-mocked="Icon"
                       isMirrored={true}
                       name="undo"
@@ -3015,10 +2013,10 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
               </div>
             </div>
             <div
-              className="c8"
+              className="sc-jEACwC hlbzfk"
             >
               <div
-                className="c13"
+                className="sc-cwHptR fayzaJ"
                 data-testid="add-object"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -3029,7 +2027,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Add object"
@@ -3037,7 +2035,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     title="Add object"
                   >
                     <div
-                      className="c11"
+                      className="sc-jlZhew eMcyRT"
                       data-mocked="Icon"
                       name="add-plus"
                       variant="normal"
@@ -3045,7 +2043,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                   </span>
                 </div>
                 <div
-                  className="c14"
+                  className="sc-dAlyuH hCrGyX"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -3057,18 +2055,18 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                   </svg>
                 </div>
                 <div
-                  className="c15"
+                  className="sc-dLMFU bUIqXt"
                 >
                   <div
                     style={
-                      Object {
+                      {
                         "maxHeight": undefined,
                         "overflowY": "auto",
                       }
                     }
                   >
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-empty"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -3079,7 +2077,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -3088,7 +2086,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       </div>
                     </div>
                     <div
-                      className="c9"
+                      className="sc-cwHptR emptQu"
                       data-testid="add-object-model"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -3099,7 +2097,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="text-status-inactive"
                         data-mocked="Box"
                         variant="small"
@@ -3108,7 +2106,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-light"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -3119,7 +2117,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -3128,7 +2126,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-view-camera"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -3139,7 +2137,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -3148,7 +2146,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-tag"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -3159,7 +2157,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -3168,7 +2166,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-annotation"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -3179,7 +2177,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -3188,7 +2186,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       </div>
                     </div>
                     <div
-                      className="c9"
+                      className="sc-cwHptR emptQu"
                       data-testid="add-effect-model-shader"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -3199,7 +2197,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="text-status-inactive"
                         data-mocked="Box"
                         variant="small"
@@ -3208,7 +2206,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="add-object-motion-indicator"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -3219,7 +2217,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       tabIndex={0}
                     >
                       <div
-                        className="c16"
+                        className="sc-eDPEul ljVrvz"
                         color="inherit"
                         data-mocked="Box"
                         variant="small"
@@ -3231,7 +2229,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 </div>
               </div>
               <div
-                className="c13"
+                className="sc-cwHptR fayzaJ"
                 data-testid="camera-controls-orbit"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -3242,7 +2240,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Orbit"
@@ -3250,7 +2248,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     title="Orbit"
                   >
                     <div
-                      className="c17"
+                      className="sc-jlZhew MYXmJ"
                       data-mocked="Icon"
                       scale={1.04}
                       variant="normal"
@@ -3288,7 +2286,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                   </span>
                 </div>
                 <div
-                  className="c14"
+                  className="sc-dAlyuH hCrGyX"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -3300,18 +2298,18 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                   </svg>
                 </div>
                 <div
-                  className="c15"
+                  className="sc-dLMFU bUIqXt"
                 >
                   <div
                     style={
-                      Object {
+                      {
                         "maxHeight": undefined,
                         "overflowY": "auto",
                       }
                     }
                   >
                     <div
-                      className="c18"
+                      className="sc-cwHptR hiMRzF"
                       data-testid="camera-controls-orbit"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -3322,7 +2320,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       tabIndex={0}
                     >
                       <div
-                        className="c10"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Orbit"
@@ -3330,7 +2328,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                           title="Orbit"
                         >
                           <div
-                            className="c17"
+                            className="sc-jlZhew MYXmJ"
                             data-mocked="Icon"
                             scale={1.04}
                             variant="normal"
@@ -3368,7 +2366,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                         </span>
                       </div>
                       <div
-                        className="c19"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -3378,7 +2376,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="camera-controls-pan"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -3389,7 +2387,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       tabIndex={0}
                     >
                       <div
-                        className="c10"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Pan"
@@ -3397,7 +2395,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                           title="Pan"
                         >
                           <div
-                            className="c17"
+                            className="sc-jlZhew MYXmJ"
                             data-mocked="Icon"
                             scale={1.04}
                             variant="normal"
@@ -3420,7 +2418,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                         </span>
                       </div>
                       <div
-                        className="c19"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -3434,10 +2432,10 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
               </div>
             </div>
             <div
-              className="c8"
+              className="sc-jEACwC hlbzfk"
             >
               <div
-                className="c9"
+                className="sc-cwHptR emptQu"
                 data-testid="delete"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -3448,7 +2446,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Delete"
@@ -3456,7 +2454,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     title="Delete"
                   >
                     <div
-                      className="c11"
+                      className="sc-jlZhew eMcyRT"
                       data-mocked="Icon"
                       variant="disabled"
                     >
@@ -3478,7 +2476,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 </div>
               </div>
               <div
-                className="c13"
+                className="sc-cwHptR fayzaJ"
                 data-testid="transform-translate"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -3489,7 +2487,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 tabIndex={0}
               >
                 <div
-                  className="c10"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Translate"
@@ -3497,7 +2495,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     title="Translate"
                   >
                     <div
-                      className="c20"
+                      className="sc-jlZhew fNNQrn"
                       data-mocked="Icon"
                       scale={1.06}
                       variant="normal"
@@ -3525,7 +2523,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                   </span>
                 </div>
                 <div
-                  className="c14"
+                  className="sc-dAlyuH hCrGyX"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -3537,18 +2535,18 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                   </svg>
                 </div>
                 <div
-                  className="c15"
+                  className="sc-dLMFU bUIqXt"
                 >
                   <div
                     style={
-                      Object {
+                      {
                         "maxHeight": undefined,
                         "overflowY": "auto",
                       }
                     }
                   >
                     <div
-                      className="c18"
+                      className="sc-cwHptR hiMRzF"
                       data-testid="transform-translate"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -3559,7 +2557,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       tabIndex={0}
                     >
                       <div
-                        className="c10"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Translate"
@@ -3567,7 +2565,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                           title="Translate"
                         >
                           <div
-                            className="c20"
+                            className="sc-jlZhew fNNQrn"
                             data-mocked="Icon"
                             scale={1.06}
                             variant="normal"
@@ -3595,7 +2593,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                         </span>
                       </div>
                       <div
-                        className="c19"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -3605,7 +2603,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="transform-rotate"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -3616,7 +2614,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       tabIndex={0}
                     >
                       <div
-                        className="c10"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Rotate"
@@ -3624,7 +2622,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                           title="Rotate"
                         >
                           <div
-                            className="c20"
+                            className="sc-jlZhew fNNQrn"
                             data-mocked="Icon"
                             scale={1.06}
                             variant="normal"
@@ -3665,7 +2663,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                         </span>
                       </div>
                       <div
-                        className="c19"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -3675,7 +2673,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       </div>
                     </div>
                     <div
-                      className="c13"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="transform-scale"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -3686,7 +2684,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       tabIndex={0}
                     >
                       <div
-                        className="c10"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Scale"
@@ -3694,7 +2692,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                           title="Scale"
                         >
                           <div
-                            className="c20"
+                            className="sc-jlZhew fNNQrn"
                             data-mocked="Icon"
                             scale={1.06}
                             variant="normal"
@@ -3729,7 +2727,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                         </span>
                       </div>
                       <div
-                        className="c19"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -3747,7 +2745,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
       </div>
     </div>
     <div
-      className="c21"
+      className="sc-imWYAI fdOAXN"
       data-mocked="Box"
     >
       <div
@@ -3763,8 +2761,8 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
               className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
-                Array [
-                  Object {
+                [
+                  {
                     "content": <SceneNodeInspectorPanel />,
                     "id": "Inspector",
                     "label": "Inspector",
@@ -3793,277 +2791,16 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
 `;
 
 exports[`SceneLayout should render correctly in Viewing mode 1`] = `
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  background-color: colorBackgroundLayoutMain;
-}
-
-.c1 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  position: relative;
-  overflow: hidden;
-}
-
-.c3 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-}
-
-.c4 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  position: relative;
-  background-color: colorBackgroundContainerContent;
-}
-
-.c5 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  overflow: hidden;
-  padding: 4px;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.c2 {
-  background-color: colorBackgroundContainerContent;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  z-index: 99;
-}
-
-.c11 {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 16%;
-  height: 16%;
-  pointer-events: none;
-  z-index: 1;
-  color: colorTextHeadingDefault;
-}
-
-.c11 > svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-
-.c10 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.04);
-  -ms-transform: scale(1.04);
-  transform: scale(1.04);
-}
-
-.c8 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: pointer;
-  pointer-events: initial;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c8:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c8:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c13 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: default;
-  pointer-events: none;
-  background-color: colorBackgroundItemSelected;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c13:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c7 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-top: 3px solid colorBorderDividerDefault;
-}
-
-.c7:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c9 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  width: 40px;
-  height: 100%;
-}
-
-.c12 {
-  display: none;
-  position: absolute;
-  left: 100%;
-  top: 0;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  background-color: colorBackgroundDropdownItemDefault;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 1;
-}
-
-.c12 > div {
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c12 > div:first-of-type {
-  border-top: 0;
-}
-
-.c14 {
-  padding: 0 20px 0 0px;
-  white-space: nowrap;
-}
-
-.c6 {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 999;
-  background-color: colorBackgroundDropdownItemDefault;
-}
-
 <div
-  className="c0"
+  className="sc-aXZVg bXfOXf"
   data-mocked="Box"
 >
   <div
-    className="c1"
+    className="sc-eqUAAy lplIYk"
     data-mocked="Box"
   >
     <div
-      className="c2"
+      className="sc-kAyceB cqfbWr"
       data-mocked="Box"
       isFloating={false}
     >
@@ -4085,31 +2822,31 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
       </div>
     </div>
     <div
-      className="c3"
+      className="sc-fqkvVR hhwHuy"
       data-mocked="Box"
     >
       <div
-        className="c4"
+        className="sc-dcJsrY cda-DkI"
         data-mocked="Box"
         padding="xxs"
       >
         <TopBar />
       </div>
       <div
-        className="c5"
+        className="sc-iGgWBj hzaGuy"
         data-mocked="Box"
       >
         <div
-          className="c6"
+          className="sc-fPXMVe czwHhD"
         >
           <div
-            className="c7"
+            className="sc-jEACwC hlbzfk"
           >
             <div
-              className="c7"
+              className="sc-jEACwC hlbzfk"
             >
               <div
-                className="c8"
+                className="sc-cwHptR fayzaJ"
                 data-testid="camera-controls-orbit"
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -4120,7 +2857,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                 tabIndex={0}
               >
                 <div
-                  className="c9"
+                  className="sc-cPiKLX jMnHgK"
                 >
                   <span
                     aria-label="Orbit"
@@ -4128,7 +2865,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                     title="Orbit"
                   >
                     <div
-                      className="c10"
+                      className="sc-jlZhew MYXmJ"
                       data-mocked="Icon"
                       scale={1.04}
                       variant="normal"
@@ -4166,7 +2903,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                   </span>
                 </div>
                 <div
-                  className="c11"
+                  className="sc-dAlyuH hCrGyX"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -4178,18 +2915,18 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                   </svg>
                 </div>
                 <div
-                  className="c12"
+                  className="sc-dLMFU bUIqXt"
                 >
                   <div
                     style={
-                      Object {
+                      {
                         "maxHeight": undefined,
                         "overflowY": "auto",
                       }
                     }
                   >
                     <div
-                      className="c13"
+                      className="sc-cwHptR hiMRzF"
                       data-testid="camera-controls-orbit"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -4200,7 +2937,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                       tabIndex={0}
                     >
                       <div
-                        className="c9"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Orbit"
@@ -4208,7 +2945,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                           title="Orbit"
                         >
                           <div
-                            className="c10"
+                            className="sc-jlZhew MYXmJ"
                             data-mocked="Icon"
                             scale={1.04}
                             variant="normal"
@@ -4246,7 +2983,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                         </span>
                       </div>
                       <div
-                        className="c14"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}
@@ -4256,7 +2993,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                       </div>
                     </div>
                     <div
-                      className="c8"
+                      className="sc-cwHptR fayzaJ"
                       data-testid="camera-controls-pan"
                       onClick={[Function]}
                       onKeyDown={[Function]}
@@ -4267,7 +3004,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                       tabIndex={0}
                     >
                       <div
-                        className="c9"
+                        className="sc-cPiKLX jMnHgK"
                       >
                         <span
                           aria-label="Pan"
@@ -4275,7 +3012,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                           title="Pan"
                         >
                           <div
-                            className="c10"
+                            className="sc-jlZhew MYXmJ"
                             data-mocked="Icon"
                             scale={1.04}
                             variant="normal"
@@ -4298,7 +3035,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                         </span>
                       </div>
                       <div
-                        className="c14"
+                        className="sc-eDPEul lkQLxJ"
                         color="inherit"
                         data-mocked="Box"
                         leftPadding={0}

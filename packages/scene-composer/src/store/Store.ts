@@ -89,7 +89,7 @@ const createStateImpl: () => StoreState<RootState> = () =>
 // We may want to fine-tune the undo/redo experience.
 const stores = new Map<string, StoreState<RootState>>();
 
-const useStore = (id: string) => {
+const accessStore = (id: string) => {
   if (!stores.has(id)) {
     stores.set(id, createStateImpl());
   }
@@ -185,23 +185,23 @@ const viewOptionStateSelector = (state: RootState): IViewOptionStateSlice => ({
  * You should use a smaller granular state if that's not your intention.
  */
 const useSceneDocument = (id: string) => {
-  return useStore(id)(sceneDocumentSelector, shallow);
+  return accessStore(id)(sceneDocumentSelector, shallow);
 };
 
 const useEditorState = (id: string) => {
-  return useStore(id)(editorStateSelector, shallow);
+  return accessStore(id)(editorStateSelector, shallow);
 };
 
 const useDataStore = (id: string): IDataStoreSlice => {
-  return useStore(id)(dataStoreSelector, shallow);
+  return accessStore(id)(dataStoreSelector, shallow);
 };
 
 const useNodeErrorState = (id: string): INodeErrorStateSlice => {
-  return useStore(id)(nodeErrorStateSelector, shallow);
+  return accessStore(id)(nodeErrorStateSelector, shallow);
 };
 
 const useViewOptionState = (id: string): IViewOptionStateSlice => {
-  return useStore(id)(viewOptionStateSelector, shallow);
+  return accessStore(id)(viewOptionStateSelector, shallow);
 };
 
 const isDocumentStateChanged = (current: ISceneDocumentInternal, previous: ISceneDocumentInternal): boolean => {
@@ -210,7 +210,7 @@ const isDocumentStateChanged = (current: ISceneDocumentInternal, previous: IScen
 };
 
 export {
-  useStore,
+  accessStore,
   sceneDocumentSelector,
   editorStateSelector,
   useSceneDocument,

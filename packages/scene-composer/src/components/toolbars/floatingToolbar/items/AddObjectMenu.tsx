@@ -20,7 +20,7 @@ import {
 } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component, LightType } from '../../../../models/SceneModels';
-import { IColorOverlayComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../../store';
+import { IColorOverlayComponentInternal, ISceneNodeInternal, useEditorState, accessStore } from '../../../../store';
 import { parseS3BucketFromArn } from '../../../../utils/pathUtils';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemOptionRaw, ToolbarItemOptions, ToolbarOrientation } from '../../common/types';
@@ -80,16 +80,16 @@ interface AddObjectMenuProps {
 
 export const AddObjectMenu = ({ canvasHeight, toolbarOrientation }: AddObjectMenuProps): JSX.Element => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const addComponentInternal = useStore(sceneComposerId)((state) => state.addComponentInternal);
-  const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
-  const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
-  const showAssetBrowserCallback = useStore(sceneComposerId)(
+  const addComponentInternal = accessStore(sceneComposerId)((state) => state.addComponentInternal);
+  const appendSceneNode = accessStore(sceneComposerId)((state) => state.appendSceneNode);
+  const selectedSceneNodeRef = accessStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
+  const showAssetBrowserCallback = accessStore(sceneComposerId)(
     (state) => state.getEditorConfig().showAssetBrowserCallback,
   );
-  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
-  const document = useStore(sceneComposerId)((state) => state.document);
-  const nodeMap = useStore(sceneComposerId)((state) => state.document.nodeMap);
-  const addMessages = useStore(sceneComposerId)((state) => state.addMessages);
+  const getSceneNodeByRef = accessStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const document = accessStore(sceneComposerId)((state) => state.document);
+  const nodeMap = accessStore(sceneComposerId)((state) => state.document.nodeMap);
+  const addMessages = accessStore(sceneComposerId)((state) => state.addMessages);
   const { setAddingWidget, getObject3DBySceneNodeRef } = useEditorState(sceneComposerId);
   const { enableMatterportViewer } = useMatterportViewer();
   const { formatMessage } = useIntl();

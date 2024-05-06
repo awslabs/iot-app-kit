@@ -16,7 +16,7 @@ import { IComponentEditorProps } from '../ComponentEditor';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { ICameraBasics } from '../../../interfaces';
 import { parseFloatOrDefault } from '../../../utils/mathUtils';
-import { ICameraComponentInternal, useStore } from '../../../store';
+import { ICameraComponentInternal, accessStore } from '../../../store';
 import { DynamicSelect, NumericInput } from '../CommonPanelComponents';
 import useActiveCamera from '../../../hooks/useActiveCamera';
 import { Divider } from '../../Divider';
@@ -36,9 +36,9 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
 }: ICameraComponentEditorProps) => {
   const sceneComposerId = useSceneComposerId();
   const intl = useIntl();
-  const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
-  const updateSceneNodeInternal = useStore(sceneComposerId)((state) => state.updateSceneNodeInternal);
-  const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
+  const updateComponentInternal = accessStore(sceneComposerId)((state) => state.updateComponentInternal);
+  const updateSceneNodeInternal = accessStore(sceneComposerId)((state) => state.updateSceneNodeInternal);
+  const getObject3DBySceneNodeRef = accessStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
 
   const [fovError, setFovError] = useState<boolean>(false);
 

@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 
 import { Component } from '../../../../models/SceneModels';
 import { DataOverlayDataRow } from '../DataOverlayDataRow';
-import { useStore } from '../../../../store';
+import { accessStore } from '../../../../store';
 import { IDataInput } from '../../../../interfaces';
 
 jest.mock('../../../../hooks/useBindingData', () => jest.fn().mockReturnValue({ data: [{ 'prop-1': 'ACTIVE' }] }));
@@ -66,7 +66,7 @@ describe('DataOverlayDataRow', () => {
     };
 
     beforeEach(() => {
-      useStore('default').setState(baseState);
+      accessStore('default').setState(baseState);
     });
 
     it('should render markdown row for overlay panel correctly', () => {

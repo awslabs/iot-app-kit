@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import { MotionIndicatorComponentEditor } from '../../../../src/components/panels/scene-components/MotionIndicatorComponentEditor';
-import { IMotionIndicatorComponentInternal, useStore } from '../../../../src/store';
+import { IMotionIndicatorComponentInternal, accessStore } from '../../../../src/store';
 import { KnownComponentType } from '../../../../src/interfaces';
 import { Component } from '../../../models/SceneModels';
 import { mockNode, mockComponent } from '../../../../tests/components/panels/scene-components/MockComponents';
@@ -38,7 +38,7 @@ describe('MotionIndicatorComponentEditor', () => {
   };
 
   it('should render correctly', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(
       <MotionIndicatorComponentEditor node={{ ...mockNode, components: [component] }} component={component} />,

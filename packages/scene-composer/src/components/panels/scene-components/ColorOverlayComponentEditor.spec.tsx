@@ -3,7 +3,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 
-import { IColorOverlayComponentInternal, useStore } from '../../../store';
+import { IColorOverlayComponentInternal, accessStore } from '../../../store';
 import {
   mockBinding,
   mockBuilderState,
@@ -56,7 +56,7 @@ describe('ColorOverlayComponentEditor', () => {
   });
 
   it('should select bindings', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<ColorOverlayComponentEditor node={mockNode} component={colorComponent} />);
 
@@ -71,7 +71,7 @@ describe('ColorOverlayComponentEditor', () => {
   });
 
   it('should select rule ids', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<ColorOverlayComponentEditor node={mockNode} component={colorComponent} />);
 
@@ -102,7 +102,7 @@ describe('ColorOverlayComponentEditor', () => {
   });
 
   it('should remove components', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<ColorOverlayComponentEditor node={mockNode} component={colorComponent} />);
 
@@ -115,7 +115,7 @@ describe('ColorOverlayComponentEditor', () => {
 
   it('should remove components for dynamic scene', () => {
     (isDynamicScene as jest.Mock).mockReturnValue(true);
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const { container } = render(<ColorOverlayComponentEditor node={mockNode} component={colorComponent} />);
 
@@ -133,7 +133,7 @@ describe('ColorOverlayComponentEditor', () => {
   });
 
   it('should build with no rule selected', () => {
-    useStore('default').setState(baseState);
+    accessStore('default').setState(baseState);
 
     const colorComponentNoRule: IColorOverlayComponentInternal = {
       ...mockComponent,
