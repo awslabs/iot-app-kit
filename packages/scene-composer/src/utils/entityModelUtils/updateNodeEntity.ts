@@ -49,7 +49,7 @@ export const updateEntity = async (
   if (sceneRootEntityId) {
     const oldParentEntityId = oldParentRef ?? sceneRootEntityId;
     const newParentEntityId = node.parentRef ?? sceneRootEntityId;
-    if (newParentEntityId !== newParentEntityId) {
+    if (newParentEntityId !== oldParentEntityId) {
       updateEntity = {
         ...updateEntity,
         parentEntityUpdate: {
