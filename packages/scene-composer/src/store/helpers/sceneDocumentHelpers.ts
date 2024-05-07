@@ -163,15 +163,20 @@ export const updateSceneNode = (
   partial: RecursivePartial<ISceneNodeInternal>,
   skipEntityUpdate?: boolean,
 ): void => {
+  // cache these values before merge deep overwrites them
+  const nodeToMove = draft.document.nodeMap[ref];
+  const oldParentRef = nodeToMove?.parentRef;
+  const oldParent = draft.document.nodeMap[oldParentRef || ''];
+
+  // Ignore childRefs from partial since it's determined by parentRef and handled by this function
+  const filteredPartial = partial;
+  delete partial.childRefs;
+
   // update target node
-  mergeDeep(draft.document.nodeMap[ref], partial);
+  mergeDeep(draft.document.nodeMap[ref], filteredPartial);
 
   // Reorder logics
   if ('parentRef' in partial) {
-    const nodeToMove = draft.document.nodeMap[ref];
-    const oldParentRef = nodeToMove?.parentRef;
-    const oldParent = draft.document.nodeMap[oldParentRef || ''];
-
     const newParentRef = partial.parentRef;
 
     // remove target node from old parent
