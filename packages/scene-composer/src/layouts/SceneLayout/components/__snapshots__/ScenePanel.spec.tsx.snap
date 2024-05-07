@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ScenePanel /> should render the left panel as closed by default 1`] = `
-Object {
+{
   "asFragment": [Function],
   "baseElement": <body>
     <div>
@@ -92,7 +92,7 @@ Object {
 `;
 
 exports[`<ScenePanel /> should render the left panel as open when .open class is applied 1`] = `
-Object {
+{
   "asFragment": [Function],
   "baseElement": <body>
     <div>
@@ -183,7 +183,7 @@ Object {
 `;
 
 exports[`<ScenePanel /> should render the right panel as closed by default 1`] = `
-Object {
+{
   "asFragment": [Function],
   "baseElement": <body>
     <div>
@@ -274,7 +274,7 @@ Object {
 `;
 
 exports[`<ScenePanel /> should render the right panel as open when .open class is applied 1`] = `
-Object {
+{
   "asFragment": [Function],
   "baseElement": <body>
     <div>

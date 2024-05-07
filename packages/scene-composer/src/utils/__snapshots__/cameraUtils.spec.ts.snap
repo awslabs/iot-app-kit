@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`cameraUtils getCameraSettings should return default position and camera basics 1`] = `
-Object {
+{
   "cameraType": "Perspective",
   "far": 500,
   "fov": 45,
   "near": 0.2,
-  "transform": Object {
-    "position": Array [
+  "transform": {
+    "position": [
       5,
       5,
       5,
@@ -18,13 +18,13 @@ Object {
 `;
 
 exports[`cameraUtils getCameraSettings should return defaults 1`] = `
-Object {
+{
   "cameraType": "Perspective",
   "far": 1000,
   "fov": 53.13,
   "near": 0.1,
-  "transform": Object {
-    "position": Array [
+  "transform": {
+    "position": [
       5,
       5,
       5,
@@ -35,23 +35,23 @@ Object {
 `;
 
 exports[`cameraUtils getCameraSettings should return object3D world coordinates and camera basics if provided 1`] = `
-Object {
+{
   "cameraType": "Perspective",
   "far": 500,
   "fov": 45,
   "near": 0.2,
-  "transform": Object {
-    "position": Array [
+  "transform": {
+    "position": [
       5,
       5,
       5,
     ],
-    "rotation": Array [
+    "rotation": [
       -0,
       0,
       -0,
     ],
-    "scale": Array [
+    "scale": [
       1,
       1,
       1,
@@ -62,23 +62,23 @@ Object {
 `;
 
 exports[`cameraUtils getCameraSettings should return object3D world coordinates and camera component if provided 1`] = `
-Object {
+{
   "cameraType": "Perspective",
   "far": 500,
   "fov": 45,
   "near": 0.2,
-  "transform": Object {
-    "position": Array [
+  "transform": {
+    "position": [
       5,
       5,
       5,
     ],
-    "rotation": Array [
+    "rotation": [
       -0,
       0,
       -0,
     ],
-    "scale": Array [
+    "scale": [
       1,
       1,
       1,
@@ -89,23 +89,23 @@ Object {
 `;
 
 exports[`cameraUtils getCameraSettings should return object3D world coordinates and default camera settings 1`] = `
-Object {
+{
   "cameraType": "Perspective",
   "far": 1000,
   "fov": 53.13,
   "near": 0.1,
-  "transform": Object {
-    "position": Array [
+  "transform": {
+    "position": [
       5,
       5,
       5,
     ],
-    "rotation": Array [
+    "rotation": [
       -0,
       0,
       -0,
     ],
-    "scale": Array [
+    "scale": [
       1,
       1,
       1,

@@ -5,14 +5,14 @@ exports[`ConvertSceneSettings should render correctly with convert button disabl
   <div
     data-mocked="Box"
     font-weight="bold"
-    margin="{\\"bottom\\":\\"xxs\\"}"
+    margin="{"bottom":"xxs"}"
     variant="p"
   >
     Convert to entities
   </div>
   <div
     data-mocked="Box"
-    margin="{\\"bottom\\":\\"xxs\\"}"
+    margin="{"bottom":"xxs"}"
     variant="p"
   >
     Converting your scene to entities enables auto updating, filtering and querying your scene.
@@ -27,7 +27,7 @@ exports[`ConvertSceneSettings should render correctly with convert button disabl
   <div
     data-mocked="Box"
     font-weight="bold"
-    margin="{\\"bottom\\":\\"xxs\\",\\"top\\":\\"s\\"}"
+    margin="{"bottom":"xxs","top":"s"}"
     variant="p"
   >
     Refresh cycle
@@ -46,14 +46,14 @@ exports[`ConvertSceneSettings should render correctly with convert button enable
   <div
     data-mocked="Box"
     font-weight="bold"
-    margin="{\\"bottom\\":\\"xxs\\"}"
+    margin="{"bottom":"xxs"}"
     variant="p"
   >
     Convert to entities
   </div>
   <div
     data-mocked="Box"
-    margin="{\\"bottom\\":\\"xxs\\"}"
+    margin="{"bottom":"xxs"}"
     variant="p"
   >
     Converting your scene to entities enables auto updating, filtering and querying your scene.
@@ -67,7 +67,7 @@ exports[`ConvertSceneSettings should render correctly with convert button enable
   <div
     data-mocked="Box"
     font-weight="bold"
-    margin="{\\"bottom\\":\\"xxs\\",\\"top\\":\\"s\\"}"
+    margin="{"bottom":"xxs","top":"s"}"
     variant="p"
   >
     Refresh cycle

@@ -88,12 +88,12 @@ describe('convertParamsToKeyValuePairs', () => {
     const result = convertParamsToKeyValuePairs({ 'item 1': 'value', 'item 2': 'value' });
 
     expect(result).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "key": "item 1",
           "value": "value",
         },
-        Object {
+        {
           "key": "item 2",
           "value": "value",
         },

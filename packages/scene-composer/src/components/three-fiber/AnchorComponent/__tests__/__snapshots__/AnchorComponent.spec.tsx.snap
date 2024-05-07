@@ -8,13 +8,13 @@ exports[`AnchorComponent should render correctly with default icon 1`] = `
     defaultIcon="Info"
     navLink="https://test.url"
     node={
-      Object {
+      {
         "ref": "testRef",
       }
     }
     ruleBasedMapId="testId"
     valueDataBinding={
-      Object {
+      {
         "test": "test",
       }
     }
@@ -30,13 +30,13 @@ exports[`AnchorComponent should render correctly with set icon 1`] = `
     defaultIcon="Error"
     navLink="https://test.url"
     node={
-      Object {
+      {
         "ref": "testRef",
       }
     }
     ruleBasedMapId="testId"
     valueDataBinding={
-      Object {
+      {
         "test": "test",
       }
     }

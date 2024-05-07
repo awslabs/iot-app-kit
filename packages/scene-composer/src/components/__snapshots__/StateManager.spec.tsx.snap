@@ -7,7 +7,7 @@ exports[`StateManager should load dynamic scene correctly 1`] = `
       <LoadingProgress />
     </Provider>
   }
-  externalLibraryConfig={Object {}}
+  externalLibraryConfig={{}}
   isViewing={false}
   onPointerMissed={[Function]}
 />
@@ -20,7 +20,7 @@ exports[`StateManager should load dynamic scene with error for empty document 1`
       <LoadingProgress />
     </Provider>
   }
-  externalLibraryConfig={Object {}}
+  externalLibraryConfig={{}}
   isViewing={false}
   onPointerMissed={[Function]}
 />
@@ -33,7 +33,7 @@ exports[`StateManager should load dynamic scene with error for getting scene ent
       <LoadingProgress />
     </Provider>
   }
-  externalLibraryConfig={Object {}}
+  externalLibraryConfig={{}}
   isViewing={false}
   onPointerMissed={[Function]}
 />
@@ -46,7 +46,7 @@ exports[`StateManager should render correctly 1`] = `
       <LoadingProgress />
     </Provider>
   }
-  externalLibraryConfig={Object {}}
+  externalLibraryConfig={{}}
   isViewing={false}
   onPointerMissed={[Function]}
 />
@@ -60,8 +60,8 @@ exports[`StateManager should render correctly with Matterport configuration 1`] 
     </Provider>
   }
   externalLibraryConfig={
-    Object {
-      "matterport": Object {
+    {
+      "matterport": {
         "accessToken": "mockAccessToken",
         "applicationKey": "mockApplicationKey",
         "modelId": "mockMatterportModelId",
@@ -74,103 +74,61 @@ exports[`StateManager should render correctly with Matterport configuration 1`] 
 `;
 
 exports[`StateManager should render with Failed to fetch scene content 1`] = `
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  background-color: colorBackgroundLayoutMain;
-}
-
-.c3 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  position: relative;
-  overflow: hidden;
-}
-
-.c4 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-}
-
-.c5 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  overflow: hidden;
-  padding: 4px;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.c1 {
-  position: absolute;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1000;
-  background-color: rgba(0,0,0,0.7);
-}
-
-.c2 {
-  width: 600px;
-  margin: auto;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  z-index: 1000;
-}
-
 <div
-  className="c0"
+  className="sc-eqUAAy gibenV"
   data-mocked="Box"
 >
   <div
-    className="c1"
+    className="sc-imWYAI garats"
   >
     <div
-      className="c2"
+      className="sc-dAlyuH exYAMD"
+      data-mocked="Container"
+    >
+      <div>
+        <div
+          data-mocked="Header"
+          variant="h2"
+        >
+          Error
+        </div>
+      </div>
+      <div
+        data-mocked="TextContent"
+      >
+        <p>
+          get scene uri error
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    className="sc-dcJsrY iRIcXR"
+    data-mocked="Box"
+  >
+    <div
+      className="sc-iGgWBj dbIDHC"
+      data-mocked="Box"
+    >
+      <div
+        className="sc-kAyceB dBfuLL"
+        data-mocked="Box"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`StateManager should render with Failed to fetch scene content 2`] = `
+<div
+  className="sc-eqUAAy gibenV"
+  data-mocked="Box"
+>
+  <div
+    className="sc-imWYAI garats"
+  >
+    <div
+      className="sc-dAlyuH exYAMD"
       data-mocked="Container"
     >
       <div>
@@ -191,15 +149,15 @@ exports[`StateManager should render with Failed to fetch scene content 1`] = `
     </div>
   </div>
   <div
-    className="c3"
+    className="sc-dcJsrY iRIcXR"
     data-mocked="Box"
   >
     <div
-      className="c4"
+      className="sc-iGgWBj dbIDHC"
       data-mocked="Box"
     >
       <div
-        className="c5"
+        className="sc-kAyceB dBfuLL"
         data-mocked="Box"
       />
     </div>
@@ -208,103 +166,15 @@ exports[`StateManager should render with Failed to fetch scene content 1`] = `
 `;
 
 exports[`StateManager should render with empty scene url error 1`] = `
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  background-color: colorBackgroundLayoutMain;
-}
-
-.c3 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  position: relative;
-  overflow: hidden;
-}
-
-.c4 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-}
-
-.c5 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  overflow: hidden;
-  padding: 4px;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.c1 {
-  position: absolute;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1000;
-  background-color: rgba(0,0,0,0.7);
-}
-
-.c2 {
-  width: 600px;
-  margin: auto;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  z-index: 1000;
-}
-
 <div
-  className="c0"
+  className="sc-eqUAAy gibenV"
   data-mocked="Box"
 >
   <div
-    className="c1"
+    className="sc-imWYAI garats"
   >
     <div
-      className="c2"
+      className="sc-dAlyuH exYAMD"
       data-mocked="Container"
     >
       <div>
@@ -325,15 +195,15 @@ exports[`StateManager should render with empty scene url error 1`] = `
     </div>
   </div>
   <div
-    className="c3"
+    className="sc-dcJsrY iRIcXR"
     data-mocked="Box"
   >
     <div
-      className="c4"
+      className="sc-iGgWBj dbIDHC"
       data-mocked="Box"
     >
       <div
-        className="c5"
+        className="sc-kAyceB dBfuLL"
         data-mocked="Box"
       />
     </div>
@@ -342,103 +212,15 @@ exports[`StateManager should render with empty scene url error 1`] = `
 `;
 
 exports[`StateManager should render with fetch scene content API error 1`] = `
-.c0 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  background-color: colorBackgroundLayoutMain;
-}
-
-.c3 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  position: relative;
-  overflow: hidden;
-}
-
-.c4 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-}
-
-.c5 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  overflow: hidden;
-  padding: 4px;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.c1 {
-  position: absolute;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1000;
-  background-color: rgba(0,0,0,0.7);
-}
-
-.c2 {
-  width: 600px;
-  margin: auto;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  z-index: 1000;
-}
-
 <div
-  className="c0"
+  className="sc-eqUAAy gibenV"
   data-mocked="Box"
 >
   <div
-    className="c1"
+    className="sc-imWYAI garats"
   >
     <div
-      className="c2"
+      className="sc-dAlyuH exYAMD"
       data-mocked="Container"
     >
       <div>
@@ -459,15 +241,15 @@ exports[`StateManager should render with fetch scene content API error 1`] = `
     </div>
   </div>
   <div
-    className="c3"
+    className="sc-dcJsrY iRIcXR"
     data-mocked="Box"
   >
     <div
-      className="c4"
+      className="sc-iGgWBj dbIDHC"
       data-mocked="Box"
     >
       <div
-        className="c5"
+        className="sc-kAyceB dBfuLL"
         data-mocked="Box"
       />
     </div>

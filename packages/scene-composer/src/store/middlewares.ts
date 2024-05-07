@@ -1,6 +1,6 @@
 import { State, StateCreator, StoreMutatorIdentifier } from 'zustand';
 import { produce, Draft } from 'immer';
-import createVanilla, { GetState, SetState, StoreApi } from 'zustand/vanilla';
+import createStore, { GetState, SetState, StoreApi } from 'zustand/vanilla';
 
 import DebugLogger from '../logger/DebugLogger';
 
@@ -77,7 +77,7 @@ function filterNoHistoryStates(newState: RootState, currentState: RootState) {
 
 // factory to create undoStore. contains memory about past and future states and has methods to traverse states
 export const createUndoStore = () => {
-  return createVanilla<UndoStoreState>((set, get) => {
+  return createStore<UndoStoreState>((set, get) => {
     return {
       prevStates: [],
       futureStates: [],

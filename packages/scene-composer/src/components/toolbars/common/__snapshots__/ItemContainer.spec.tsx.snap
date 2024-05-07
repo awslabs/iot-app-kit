@@ -1,44 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ItemContainer should render properly and trigger onClick when clicking on item 1`] = `
-.c0 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: pointer;
-  pointer-events: initial;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c0:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c0:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-eqUAAy eaVBYP"
     data-testid="item1-uuid"
     tabindex="0"
   />
@@ -46,189 +11,14 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
 `;
 
 exports[`ItemContainer should render properly and trigger onClick when clicking on sub item 1`] = `
-.c2 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-}
-
-.c0 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: pointer;
-  pointer-events: initial;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c0:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c0:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c7 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: default;
-  pointer-events: none;
-  background-color: colorBackgroundItemSelected;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c7:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c8 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: default;
-  pointer-events: none;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c8:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
-.c1 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  width: 40px;
-  height: 100%;
-}
-
-.c5 {
-  display: none;
-  position: absolute;
-  left: 100%;
-  top: 0;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  background-color: colorBackgroundDropdownItemDefault;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 1;
-}
-
-.c5 > div {
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c5 > div:first-of-type {
-  border-top: 0;
-}
-
-.c3 {
-  padding: 0 20px 0 0px;
-  white-space: nowrap;
-}
-
-.c6 {
-  padding: 0 20px 0 20px;
-  white-space: nowrap;
-}
-
-.c4 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  padding-right: 6px;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-eqUAAy eaVBYP"
     data-testid="item1-uuid"
     tabindex="0"
   >
     <div
-      class="c1"
+      class="sc-dcJsrY inVwNW"
     >
       <span
         aria-label="item1"
@@ -236,7 +26,7 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
         title="item1"
       >
         <div
-          class="c2"
+          class="sc-gEvEer BvlCj"
           data-mocked="Icon"
           name="add-plus"
           variant="normal"
@@ -244,7 +34,7 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
       </span>
     </div>
     <div
-      class="c3"
+      class="sc-gsFSXq htvJUY"
       color="inherit"
       data-mocked="Box"
       leftpadding="0"
@@ -253,25 +43,25 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
       item1 text
     </div>
     <div
-      class="c4"
+      class="sc-kAyceB feIvxF"
     >
       <div
-        class="c2"
+        class="sc-gEvEer BvlCj"
         data-mocked="Icon"
         name="caret-right-filled"
       />
     </div>
     <div
-      class="c5"
+      class="sc-iGgWBj jnOJhl"
       tabindex="0"
     >
       <div
-        class="c0"
+        class="sc-eqUAAy eaVBYP"
         data-testid="item2-uuid"
         tabindex="0"
       >
         <div
-          class="c1"
+          class="sc-dcJsrY inVwNW"
         >
           <span
             aria-label="item2"
@@ -279,7 +69,7 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
             title="item2"
           >
             <div
-              class="c2"
+              class="sc-gEvEer BvlCj"
               data-mocked="Icon"
               name="add-plus"
               variant="normal"
@@ -287,7 +77,7 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
           </span>
         </div>
         <div
-          class="c3"
+          class="sc-gsFSXq htvJUY"
           color="inherit"
           data-mocked="Box"
           leftpadding="0"
@@ -297,12 +87,12 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
         </div>
       </div>
       <div
-        class="c0"
+        class="sc-eqUAAy eaVBYP"
         data-testid="item3-uuid"
         tabindex="0"
       >
         <div
-          class="c6"
+          class="sc-gsFSXq eyMTAq"
           color="inherit"
           data-mocked="Box"
           variant="small"
@@ -310,25 +100,25 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
           item3 text
         </div>
         <div
-          class="c4"
+          class="sc-kAyceB feIvxF"
         >
           <div
-            class="c2"
+            class="sc-gEvEer BvlCj"
             data-mocked="Icon"
             name="caret-right-filled"
           />
         </div>
         <div
-          class="c5"
+          class="sc-iGgWBj jnOJhl"
           tabindex="0"
         >
           <div
-            class="c7"
+            class="sc-eqUAAy bKeEyr"
             data-testid="item4-uuid"
             tabindex="0"
           >
             <div
-              class="c6"
+              class="sc-gsFSXq eyMTAq"
               color="inherit"
               data-mocked="Box"
               variant="small"
@@ -337,12 +127,12 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
             </div>
           </div>
           <div
-            class="c0"
+            class="sc-eqUAAy eaVBYP"
             data-testid="item5-uuid"
             tabindex="0"
           >
             <div
-              class="c6"
+              class="sc-gsFSXq eyMTAq"
               color="inherit"
               data-mocked="Box"
               variant="small"
@@ -351,12 +141,12 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
             </div>
           </div>
           <div
-            class="c8"
+            class="sc-eqUAAy cmYpRs"
             data-testid="item6-uuid"
             tabindex="0"
           >
             <div
-              class="c6"
+              class="sc-gsFSXq eyMTAq"
               color="text-status-inactive"
               data-mocked="Box"
               variant="small"
@@ -372,44 +162,9 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
 `;
 
 exports[`ItemContainer should render properly when horizontal 1`] = `
-.c0 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: pointer;
-  pointer-events: initial;
-  border-left: 1px solid colorBorderDividerDefault;
-}
-
-.c0:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c0:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-eqUAAy dpGazn"
     data-testid="item1-uuid"
     tabindex="0"
   />
@@ -417,41 +172,9 @@ exports[`ItemContainer should render properly when horizontal 1`] = `
 `;
 
 exports[`ItemContainer should render selected item properly with custom menuHeight 1`] = `
-.c0 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 100px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: default;
-  pointer-events: none;
-  background-color: colorBackgroundItemSelected;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c0:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-eqUAAy ktBtPa"
     data-testid="item1-uuid"
     height="100px"
     tabindex="0"
@@ -460,44 +183,9 @@ exports[`ItemContainer should render selected item properly with custom menuHeig
 `;
 
 exports[`ItemContainer should render when feature is enabled 1`] = `
-.c0 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: pointer;
-  pointer-events: initial;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c0:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c0:first-of-type {
-  border-top: 0;
-  border-left: 0;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-eqUAAy eaVBYP"
     data-testid="item1-uuid"
     tabindex="0"
   />

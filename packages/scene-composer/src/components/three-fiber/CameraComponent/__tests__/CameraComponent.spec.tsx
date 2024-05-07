@@ -163,23 +163,23 @@ describe('CameraComponent', () => {
     const argValue = (useActiveCamera().setActiveCameraSettings as jest.Mock).mock.calls[0][0];
 
     expect(argValue).toMatchInlineSnapshot(`
-      Object {
+      {
         "cameraType": "Perspective",
         "far": 100,
         "fov": 60,
         "near": 0,
-        "transform": Object {
-          "position": Array [
+        "transform": {
+          "position": [
             5,
             5,
             5,
           ],
-          "rotation": Array [
+          "rotation": [
             -0,
             0,
             -0,
           ],
-          "scale": Array [
+          "scale": [
             1,
             1,
             1,

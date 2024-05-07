@@ -11,15 +11,15 @@ exports[`AppearanceEditor should render correctly with background color binding 
     >
       <div
         data-mocked="Grid"
-        griddefinition="[{\\"colspan\\":10},{\\"colspan\\":2}]"
+        griddefinition="[{"colspan":10},{"colspan":2}]"
       >
         <div
           data-mocked="Select"
           data-testid="motion-indicator-color-type-select"
-          options="[{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"},{\\"label\\":\\"Arrow color\\",\\"value\\":\\"foregroundColor\\"}]"
+          options="[{"label":"Arrow with background","value":"backgroundColor"},{"label":"Arrow color","value":"foregroundColor"}]"
           placeholder="Choose a color"
           selectedarialabel="Selected"
-          selectedoption="{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"}"
+          selectedoption="{"label":"Arrow with background","value":"backgroundColor"}"
         />
       </div>
       <div
@@ -65,15 +65,15 @@ exports[`AppearanceEditor should render correctly with foreground color binding 
     >
       <div
         data-mocked="Grid"
-        griddefinition="[{\\"colspan\\":10},{\\"colspan\\":2}]"
+        griddefinition="[{"colspan":10},{"colspan":2}]"
       >
         <div
           data-mocked="Select"
           data-testid="motion-indicator-color-type-select"
-          options="[{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"},{\\"label\\":\\"Arrow color\\",\\"value\\":\\"foregroundColor\\"}]"
+          options="[{"label":"Arrow with background","value":"backgroundColor"},{"label":"Arrow color","value":"foregroundColor"}]"
           placeholder="Choose a color"
           selectedarialabel="Selected"
-          selectedoption="{\\"label\\":\\"Arrow color\\",\\"value\\":\\"foregroundColor\\"}"
+          selectedoption="{"label":"Arrow color","value":"foregroundColor"}"
         />
       </div>
       <div
@@ -119,15 +119,15 @@ exports[`AppearanceEditor should render correctly without data binding 1`] = `
     >
       <div
         data-mocked="Grid"
-        griddefinition="[{\\"colspan\\":10},{\\"colspan\\":2}]"
+        griddefinition="[{"colspan":10},{"colspan":2}]"
       >
         <div
           data-mocked="Select"
           data-testid="motion-indicator-color-type-select"
-          options="[{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"},{\\"label\\":\\"Arrow color\\",\\"value\\":\\"foregroundColor\\"}]"
+          options="[{"label":"Arrow with background","value":"backgroundColor"},{"label":"Arrow color","value":"foregroundColor"}]"
           placeholder="Choose a color"
           selectedarialabel="Selected"
-          selectedoption="{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"}"
+          selectedoption="{"label":"Arrow with background","value":"backgroundColor"}"
         />
       </div>
       <div

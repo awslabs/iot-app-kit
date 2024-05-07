@@ -97,23 +97,23 @@ describe('<TopBar />', () => {
     const arg = (setActiveCameraSettings as jest.Mock).mock.calls[0][0];
 
     expect(arg).toMatchInlineSnapshot(`
-      Object {
+      {
         "cameraType": "Perspective",
         "far": 1000,
         "fov": 53.13,
         "near": 0.1,
-        "transform": Object {
-          "position": Array [
+        "transform": {
+          "position": [
             5,
             5,
             5,
           ],
-          "rotation": Array [
+          "rotation": [
             -0,
             0,
             -0,
           ],
-          "scale": Array [
+          "scale": [
             1,
             1,
             1,

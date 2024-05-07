@@ -1,6 +1,7 @@
-import { create, StateCreator, StoreApi } from 'zustand';
+import { StateCreator, StoreApi } from 'zustand';
 import { shallow } from 'zustand/shallow';
 import { immer } from 'zustand/middleware/immer';
+import { createWithEqualityFn } from 'zustand/traditional';
 
 import { log, undoMiddleware, UndoState } from './middlewares';
 import { SceneComposerOperation } from './StoreOperations';
@@ -71,7 +72,7 @@ type StoreState<T> = {
 } & StoreApi<T>;
 
 const createStateImpl: () => StoreState<RootState> = () =>
-  create<RootState>()(
+  createWithEqualityFn<RootState>()(
     undoMiddleware(
       log(
         immer((...args) => ({

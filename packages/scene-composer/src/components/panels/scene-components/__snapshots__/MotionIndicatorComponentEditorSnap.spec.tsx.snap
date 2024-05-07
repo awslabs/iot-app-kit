@@ -1,12 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MotionIndicatorComponentEditor should render correctly 1`] = `
-.c0 {
-  height: 1px;
-  border-width: 0px;
-  background-color: colorBorderDividerDefault;
-}
-
 <div>
   <div
     data-mocked="SpaceBetween"
@@ -18,14 +12,14 @@ exports[`MotionIndicatorComponentEditor should render correctly 1`] = `
       <div
         data-mocked="Select"
         data-testid="motion-indicator-shape-select"
-        options="[{\\"label\\":\\"Linear Plane\\",\\"value\\":\\"LinearPlane\\"},{\\"label\\":\\"Linear Cylinder\\",\\"value\\":\\"LinearCylinder\\"},{\\"label\\":\\"Circular Cylinder\\",\\"value\\":\\"CircularCylinder\\"}]"
+        options="[{"label":"Linear Plane","value":"LinearPlane"},{"label":"Linear Cylinder","value":"LinearCylinder"},{"label":"Circular Cylinder","value":"CircularCylinder"}]"
         placeholder="Choose a shape"
         selectedarialabel="Selected"
-        selectedoption="{\\"label\\":\\"Linear Plane\\",\\"value\\":\\"LinearPlane\\"}"
+        selectedoption="{"label":"Linear Plane","value":"LinearPlane"}"
       />
     </div>
     <hr
-      class="c0"
+      class="sc-aXZVg gAgFZw"
     />
     <div
       id="SpeedEditor"
@@ -33,7 +27,7 @@ exports[`MotionIndicatorComponentEditor should render correctly 1`] = `
       [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5}}},{}]
     </div>
     <hr
-      class="c0"
+      class="sc-aXZVg gAgFZw"
     />
     <div
       id="AppearanceEditor"

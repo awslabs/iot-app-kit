@@ -131,23 +131,23 @@ describe('SceneHierarchyDataProvider', () => {
       expect(getFinalTransformSpy).toBeCalledWith(expect.anything(), modelRefObject);
       expect(baseState.updateSceneNodeInternal).toMatchInlineSnapshot(`
         [MockFunction] {
-          "calls": Array [
-            Array [
+          "calls": [
+            [
               "original",
-              Object {
+              {
                 "parentRef": "subModel",
-                "transform": Object {
-                  "position": Array [
+                "transform": {
+                  "position": [
                     1,
                     1,
                     1,
                   ],
-                  "rotation": Array [
+                  "rotation": [
                     1,
                     1,
                     1,
                   ],
-                  "scale": Array [
+                  "scale": [
                     1,
                     1,
                     1,
@@ -156,8 +156,8 @@ describe('SceneHierarchyDataProvider', () => {
               },
             ],
           ],
-          "results": Array [
-            Object {
+          "results": [
+            {
               "type": "return",
               "value": undefined,
             },
@@ -196,23 +196,23 @@ describe('SceneHierarchyDataProvider', () => {
       expect(getFinalTransformSpy).toBeCalledWith(expect.anything(), modelRefObject);
       expect(baseState.updateSceneNodeInternal).toMatchInlineSnapshot(`
         [MockFunction] {
-          "calls": Array [
-            Array [
+          "calls": [
+            [
               "original",
-              Object {
+              {
                 "parentRef": "modelRef",
-                "transform": Object {
-                  "position": Array [
+                "transform": {
+                  "position": [
                     1,
                     1,
                     1,
                   ],
-                  "rotation": Array [
+                  "rotation": [
                     1,
                     1,
                     1,
                   ],
-                  "scale": Array [
+                  "scale": [
                     6,
                     6,
                     6,
@@ -221,8 +221,8 @@ describe('SceneHierarchyDataProvider', () => {
               },
             ],
           ],
-          "results": Array [
-            Object {
+          "results": [
+            {
               "type": "return",
               "value": undefined,
             },

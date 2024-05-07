@@ -1,18 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DeleteConfirmationModal should render correctly 1`] = `
-.c0 {
-  width: 600px;
-  margin: auto;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  z-index: 1000;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-aXZVg eWvTss"
     data-mocked="Container"
   >
     <div>
@@ -27,7 +18,7 @@ exports[`DeleteConfirmationModal should render correctly 1`] = `
       <div
         data-mocked="Box"
         float="right"
-        padding="{\\"bottom\\":\\"s\\"}"
+        padding="{"bottom":"s"}"
       >
         <div
           data-mocked="SpaceBetween"
@@ -66,18 +57,9 @@ exports[`DeleteConfirmationModal should render correctly 1`] = `
 `;
 
 exports[`DeleteConfirmationModal should render correctly with delete button disabled 1`] = `
-.c0 {
-  width: 600px;
-  margin: auto;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  z-index: 1000;
-}
-
 <div>
   <div
-    class="c0"
+    class="sc-aXZVg eWvTss"
     data-mocked="Container"
   >
     <div>
@@ -92,7 +74,7 @@ exports[`DeleteConfirmationModal should render correctly with delete button disa
       <div
         data-mocked="Box"
         float="right"
-        padding="{\\"bottom\\":\\"s\\"}"
+        padding="{"bottom":"s"}"
       >
         <div
           data-mocked="SpaceBetween"

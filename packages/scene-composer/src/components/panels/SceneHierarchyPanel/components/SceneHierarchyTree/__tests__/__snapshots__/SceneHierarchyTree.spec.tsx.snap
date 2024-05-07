@@ -4,19 +4,19 @@ exports[`<SceneHierarchyTree /> should render as per snapshot 1`] = `
 <div>
   <div
     data-mocked="EnhancedTree"
-    data-props="{\\"droppable\\":true}"
+    data-props="{"droppable":true}"
   >
     <div
       data-mocked="SceneHierarchyTreeItem"
-      data-props="{\\"enableDragAndDrop\\":true,\\"objectRef\\":\\"1\\",\\"someProp\\":\\"yes\\"}"
+      data-props="{"enableDragAndDrop":true,"objectRef":"1","someProp":"yes"}"
     />
     <div
       data-mocked="SceneHierarchyTreeItem"
-      data-props="{\\"enableDragAndDrop\\":true,\\"objectRef\\":\\"2\\",\\"someProp\\":\\"yes\\"}"
+      data-props="{"enableDragAndDrop":true,"objectRef":"2","someProp":"yes"}"
     />
     <div
       data-mocked="SceneHierarchyTreeItem"
-      data-props="{\\"enableDragAndDrop\\":true,\\"objectRef\\":\\"3\\",\\"someProp\\":\\"yes\\"}"
+      data-props="{"enableDragAndDrop":true,"objectRef":"3","someProp":"yes"}"
     />
   </div>
 </div>
