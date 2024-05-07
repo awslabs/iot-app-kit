@@ -1142,6 +1142,9 @@ describe('createSceneDocumentSlice', () => {
   describe('update entity', () => {
     const documentBase = {
       rootNodeRefs: ['testNode'],
+      properties: {
+        [KnownSceneProperty.SceneRootEntityId]: 'sceneRootEntityId',
+      },
       nodeMap: {
         testNode: {
           properties: {
@@ -1191,7 +1194,13 @@ describe('createSceneDocumentSlice', () => {
       expect(mergeDeep).toBeCalledWith(document.nodeMap.testNode, { name: 'test' });
       expect(draft.lastOperation!).toEqual('updateSceneNodeInternal');
       expect(updateEntity).toBeCalledTimes(1);
-      expect(updateEntity).toBeCalledWith(document.nodeMap.testNode, undefined);
+      expect(updateEntity).toBeCalledWith(
+        document.nodeMap.testNode,
+        undefined,
+        undefined,
+        undefined,
+        'sceneRootEntityId',
+      );
     });
 
     it('should call update entity for updateSceneNodeInternal action with components update', () => {
@@ -1211,7 +1220,13 @@ describe('createSceneDocumentSlice', () => {
       });
       expect(draft.lastOperation!).toEqual('updateSceneNodeInternal');
       expect(updateEntity).toBeCalledTimes(1);
-      expect(updateEntity).toBeCalledWith(document.nodeMap.testNode, document.nodeMap.testNode.components);
+      expect(updateEntity).toBeCalledWith(
+        document.nodeMap.testNode,
+        document.nodeMap.testNode.components,
+        undefined,
+        undefined,
+        'sceneRootEntityId',
+      );
     });
 
     it('should call update entity for addComponentInternal action', () => {
