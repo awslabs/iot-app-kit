@@ -9,7 +9,6 @@ import { KnownComponentType } from '../../../../../interfaces';
 import { IModelRefComponentInternal, useSceneDocument } from '../../../../../store';
 import { findComponentByType } from '../../../../../utils/nodeUtils';
 import { sceneComposerIdContext } from '../../../../../common/sceneComposerIdContext';
-import { isDynamicNode } from '../../../../../utils/entityModelUtils/sceneUtils';
 import { ModelType } from '../../../../../models/SceneModels';
 
 import SceneNodeLabel from './SceneNodeLabel';
@@ -51,7 +50,6 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
     return component && component.modelType !== ModelType.Tiles3D && !!model && !isViewing();
   }, [component, model]);
   const isSubModel = !!findComponentByType(node, KnownComponentType.SubModelRef);
-  const isDynamic = isDynamicNode(node);
 
   const { searchTerms } = useSceneHierarchyData();
   const isSearching = searchTerms !== '';
@@ -110,9 +108,9 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
       selectionMode={selectionMode}
       onSelected={isViewing() ? onActivated : onToggle}
       onActivated={onActivated}
-      acceptDrop={isDynamic ? [] : AcceptableDropTypes} // TODO: dynamic scene doesn't support hierarchy yet, disable drag for dynamic node
+      acceptDrop={AcceptableDropTypes}
       onDropped={dropHandler}
-      draggable={enableDragAndDrop && !isViewing() && !isSubModel && !isDynamic} // TODO: dynamic scene doesn't support hierarchy yet, disable drag for dynamic node
+      draggable={enableDragAndDrop && !isViewing() && !isSubModel}
       dataType={componentTypes && componentTypes.length > 0 ? componentTypes[0] : /* istanbul ignore next */ 'default'} // TODO: This is somewhat based on the current assumption that items will currently only really have one componentType
       data={{ ref: key }}
     >
