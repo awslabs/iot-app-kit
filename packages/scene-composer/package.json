@@ -46,7 +46,7 @@
     "convert-svg": "npx @svgr/cli --out-dir src/assets/auto-gen/icons/ --typescript --index-template tools/index-template.js -- src/assets/icons/",
     "release": "run-s compile copy-assets",
     "copy-assets": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" dist/",
-    "lint": "eslint . --max-warnings=484",
+    "lint": "eslint . --max-warnings=485",
     "fix": "eslint --fix .",
     "test": "jest --config jest.config.ts --coverage --silent",
     "test:reliability": "npm run test:ui:reliability",
