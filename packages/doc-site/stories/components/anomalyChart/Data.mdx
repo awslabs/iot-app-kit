@@ -1,0 +1,123 @@
+import { Canvas, Meta, Story } from '@storybook/blocks';
+
+# Data for Anomaly chart
+
+[Learn more about the Anomaly Chart](/docs/components-anomalychart-docs--docs).
+
+The Anomaly chart will visualize raw data as long as it is in the following format:
+
+### Data
+
+Fixed length array containing an object specifiying the state and value of the data
+
+Type: Array with a single object (fixed length of 1)
+
+---
+
+- **`state`**
+
+  String representing the data's state
+
+  Type: 'loading' | 'success' | 'failed' | 'error'
+
+---
+
+- **`value`**
+
+  Object containing the raw data and style overrides
+
+  Type: Object
+
+  - **`data`**
+
+    Array of objects, where each object represents a single Diagnostic event with a timestamp and Diagnostic object
+
+    Type: Array
+
+      - **`timestamp`**
+
+        The time of the diagnostic point, in milliseconds
+
+        Type: number
+
+      - **`diagnostic`**
+
+        Object representing a single data point value and its name
+
+        Type: Object
+        
+        - **`name`**
+
+          String name of the diagnostic point
+
+          Type: string
+
+        - **`value`**
+
+          Value of the diagnostic point, should be number between 0 and 1
+
+          Type: number
+
+  - **`styles`** (Optional)
+
+    Object which overrides global style settings
+
+    - **`decimalPlaces`** (Optional)
+
+      type: number
+
+    - **`color` (Optional)
+
+      Array which represents the color pallette used to render the diagnostics
+
+      type: Array
+
+
+### Example 
+```
+{
+  state: 'success',
+  value: {
+    styles: {
+      // defines the color pallette for the diagnostics
+      color: ['pink', 'blue', 'green', 'red'],
+    },
+    data: [
+      {
+        timestamp: 1711078622000,
+        diagnostics: [
+          {
+            name: 'Diagnostic Name 1',
+            value: 0.25,
+          },
+          {
+            name: 'Diagnostic Name 2',
+            value: 0.25,
+          },
+          {
+            name: 'Diagnostic Name 3',
+            value: 0.5,
+          },
+        ],
+      },
+      {
+        timestamp: 1711165022000,
+        diagnostics: [
+          {
+            name: 'Diagnostic Name 1',
+            value: 0.25,
+          },
+          {
+            name: 'Diagnostic Name 2',
+            value: 0.25,
+          },
+          {
+            name: 'Diagnostic Name 3',
+            value: 0.5,
+          },
+        ],
+      },
+    ],
+  },
+};
+```
