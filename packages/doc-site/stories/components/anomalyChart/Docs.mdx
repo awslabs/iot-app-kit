@@ -1,0 +1,110 @@
+import { Canvas, Meta, Story } from '@storybook/blocks';
+
+# Anomaly chart
+
+The Anomaly chart provides a timeline view of a given anomaly prediction.
+
+## Properties
+
+The Anomaly chart contains the following properties that you can customize.
+
+### `queriesquery` and `data`
+
+Used to specify the data displayed by chart. You can use either query or data. Only 1 anomaly can be visualized at a time. One of query or data properties must be defined.
+
+- `query`
+
+  The query which specify the anomaly data to visualize
+
+  [Learn more about the anomaly widget's queries](/docs/components-anomalychart-queries--docs).
+
+  Type: AnomalyDataQuery
+
+- `data`
+
+  Raw data which component will visualize.
+
+  [Learn more about data](/docs/components-anomalychart-data--docs)
+
+  Type: Object
+
+---
+
+### `viewport (Optional)`
+
+Specifies the interval of time the chart visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
+If there is no ViewportManager, and no `viewport` defined, the default viewport will be calculated from the data's minimum and maximum dates.
+
+[Learn about the viewport](/docs/core-viewport--docs).
+
+Type: Object
+
+---
+
+### `title (Optional)`
+
+Specifies a title for the chart
+
+Default value: `undefined`
+
+Type: String
+
+---
+
+### `mode (Optional)`
+
+Sets the chart's light or dark mode theme
+
+Please note that the chart's tooltip will utilize the browser's light or dark mode setting
+
+Type: 'light' | 'dark'
+
+---
+
+### `decimalPlaces (Optional)`
+
+Specifies the number of significant digits to be shown of the data
+
+Type: Number
+
+---
+
+### `showTimestamp (Optional)`
+
+Specifies if timestamp bar is shown below the X-Axis
+
+Default value: true
+
+Type: Boolean
+
+---
+
+### `tooltipSort (Optional)`
+
+Specifies the sorting of tooltip data, either alphabetical or descending percentages
+
+Type: 'value' | 'alphabetical'
+
+---
+
+### `axis (Optional)`
+
+Specifies the axis settings for the chart
+
+Type: Object
+
+The axis settings contains the following:
+
+- **`showX (Optional)`**
+
+  Setting to determine whether we show the x-axis and the horizontal grid lines. Defaults to true.
+
+  Type: Boolean
+
+
+- **`showY`**
+
+  (Optional) Setting to determine whether we show the y-axis and the horizontal grid lines. Defaults to true.
+
+  Type: Boolean
+

@@ -1,0 +1,61 @@
+import { Canvas, Meta, Story } from '@storybook/blocks';
+
+# Queries for Anomaly chart
+
+[Learn more about the Anomaly Chart](/docs/components-anomalychart-docs--docs).
+
+If provided, the queries will request the provided predictions and visualize them on the Anomaly chart
+
+The queries should be in the following format:
+
+### `Query`
+
+The query which specify the anomaly data to visualize.
+
+[Learn more about anomaly data queries](/docs/data-sources-aws-iot-sitewise--docs).
+
+Type: AnomalyDataQuery
+
+...
+
+
+### Example usage
+
+```
+import { IoTEventsClient } from '@aws-sdk/client-iot-events';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { AnomalyChart } from '@iot-app-kit/react-components';
+
+const MyExampleComponent = ({ assetId, predictionDefinitionId }: {
+  assetId: string;
+  predictionDefinitionId: string;
+}) => {
+
+  const iotEventsClient = new IoTEventsClient({
+    credentials: awsCredentials,
+    region: awsRegion,
+  });
+
+  const iotSiteWiseClient = new IoTSiteWiseClient({
+    credentials: awsCredentials,
+    region: awsRegion,
+  });
+  
+  const iotSiteWiseQuery = initialize({
+    iotSiteWiseClient: iotSiteWiseClient,
+    iotEventsClient: iotEventsClient,
+    settings: {
+      batchDuration: 100,
+      edgeMode,
+    },
+  }).query;
+  
+  const query = iotSiteWiseQuery.anomalyData({
+    assetId,
+    predictionDefinitionId,
+  });
+
+  return <AnomalyChart query={query} />;
+};
+
+```
