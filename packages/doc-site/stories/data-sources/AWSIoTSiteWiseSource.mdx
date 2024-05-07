@@ -322,6 +322,53 @@ Type: Boolean
 
 ---
 
+### `anomalyData`
+
+A method that is used to construct the query to process AWS IoT SiteWise anomaly data.
+
+The first parameter is the query.
+
+Type: Function
+
+### Query parameter
+
+Controls what data to request from AWS IoT SiteWise.
+
+- `assetId`
+
+  The ID of the asset in which the specified prediction model was created.
+
+  Type: String
+
+- `predictionDefinitionId`
+
+  The ID of the prediction definition.
+
+  Type: String
+
+```
+const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
+import { initialize } from '@iot-app-kit/source-iotsitewise';
+import { AnomalyChart } from '@iot-app-kit/react-components';
+
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
+
+// initialize source-iotsitewise
+const { query } = initialize({ iotSiteWiseClient });
+
+// jsx
+<AnomalyChart
+  query={
+    query.anomalyData({
+      assetId: 'engine-turbine',
+      predictionDefinitionId: 'engine-turbine-prediction-model',
+    })
+  }
+/>
+```
+
+---
+
 ## SiteWiseDataSourceSettings
 
 (Optional) Settings that can be provided when initializing the AWS IoT SiteWise source.
