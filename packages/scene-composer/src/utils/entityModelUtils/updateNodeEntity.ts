@@ -30,12 +30,14 @@ export const updateEntity = async (
   node: ISceneNodeInternal,
   compsToBeUpdated?: ISceneComponentInternal[],
   updateType?: ComponentUpdateType,
+  oldParentRef?: string | undefined,
+  sceneRootEntityId?: string | undefined,
 ): Promise<void> => {
   const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
 
   const nodecomp = updateNodeEntityComponent(node, undefined);
 
-  const updateEntity: UpdateEntityCommandInput = {
+  let updateEntity: UpdateEntityCommandInput = {
     workspaceId: undefined,
     entityId: node.ref,
     entityName: node.name + '_' + node.ref,
@@ -43,6 +45,20 @@ export const updateEntity = async (
       Node: nodecomp,
     },
   };
+
+  if (sceneRootEntityId) {
+    const oldParentEntityId = oldParentRef ?? sceneRootEntityId;
+    const newParentEntityId = node.parentRef ?? sceneRootEntityId;
+    if (newParentEntityId !== newParentEntityId) {
+      updateEntity = {
+        ...updateEntity,
+        parentEntityUpdate: {
+          updateType: 'UPDATE',
+          parentEntityId: newParentEntityId,
+        },
+      };
+    }
+  }
 
   compsToBeUpdated?.forEach((compToBeUpdated) => {
     if (compToBeUpdated?.type !== KnownComponentType.EntityBinding) {

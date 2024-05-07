@@ -44,10 +44,10 @@ exports[`SceneHierarchyTreeItem should render SubModelTree when item has a model
 </div>
 `;
 
-exports[`SceneHierarchyTreeItem should render dynamic node with drag and drop disabled 1`] = `
+exports[`SceneHierarchyTreeItem should render dynamic node with drag and drop 1`] = `
 <div>
   <div
-    acceptdrop="[]"
+    acceptdrop="AcceptableDropTypes"
     data="{\\"ref\\":\\"1\\"}"
     data-mocked="EnhancedTreeItem"
     datatype="Tag"
