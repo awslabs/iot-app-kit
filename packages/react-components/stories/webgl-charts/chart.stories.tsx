@@ -4,7 +4,7 @@ import {
   MOCK_TIME_SERIES_DATA_QUERY,
   MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY,
   VIEWPORT,
-} from './mock-data';
+} from '../chart/mock-data';
 // Should be part of the public API, i.e. exported from src
 import {
   LineChart,
@@ -40,7 +40,7 @@ const ViewportConsumer = () => {
 };
 
 export default {
-  title: 'Widgets/Charts',
+  title: 'Widgets/WebGL Charts',
   component: LineChart,
   argTypes: {
     name: { control: { type: 'text' }, defaultValue: 'Windmill' },

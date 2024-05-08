@@ -1,10 +1,7 @@
 // eslint-disable-next-line import/default
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import {
-  MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY,
-  MOCK_TIME_SERIES_DATA_QUERY,
-} from './mock-data';
+
 import { getTimeSeriesDataQuery, queryConfigured } from '../utils/query';
 import { useViewport } from '../../src';
 import { Gauge } from '../../src/components/gauge/gauge';
@@ -13,7 +10,7 @@ const ASSET_ID = 'efd79acf-bbf4-4528-936a-a79cda837c59';
 const PROPERTY_ID = '118fdb82-8739-426b-bda5-9147915a5165';
 
 export default {
-  title: 'Widgets/Gauge/Gauge',
+  title: 'Widgets/Gauge',
   component: Gauge,
   argTypes: {
     settings: {
@@ -40,54 +37,8 @@ export default {
   },
 } as ComponentMeta<typeof Gauge>;
 
-export const MockDataGauge: ComponentStory<typeof Gauge> = ({ settings }) => (
-  <div
-    style={{
-      width: '800px',
-      height: '500px',
-      display: 'flex',
-      alignItems: 'center',
-      padding: '20px',
-    }}
-  >
-    <Gauge
-      thresholds={[]}
-      viewport={{ duration: '5m' }}
-      query={MOCK_TIME_SERIES_DATA_QUERY}
-      settings={settings}
-    />
-    <Gauge
-      thresholds={[
-        {
-          value: 30,
-          id: 'abc',
-          color: '#1e8103',
-          comparisonOperator: 'GT',
-        },
-        {
-          value: 70,
-          id: 'xyz',
-          color: '#ed7211',
-          comparisonOperator: 'GT',
-        },
-        {
-          value: 100,
-          id: 'xyz',
-          color: '#d13211',
-          comparisonOperator: 'GT',
-        },
-      ]}
-      viewport={{ duration: '5m' }}
-      query={MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY}
-      settings={settings}
-    />
-  </div>
-);
-
 //TODO: Getting the data from token not working
-export const ConnectedGuageWidget: ComponentStory<typeof Gauge> = ({
-  settings,
-}) => {
+export const ConnectedGuage: ComponentStory<typeof Gauge> = ({ settings }) => {
   const { viewport } = useViewport();
   if (!queryConfigured()) {
     return (
@@ -109,13 +60,7 @@ export const ConnectedGuageWidget: ComponentStory<typeof Gauge> = ({
   }
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        padding: '20px',
-      }}
-    >
+    <div style={{ height: '500px', width: '500px', padding: '20px' }}>
       <Gauge
         viewport={viewport}
         query={getTimeSeriesDataQuery()}
