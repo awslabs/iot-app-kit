@@ -59,7 +59,6 @@ export const AnomalyWidget = (options: AnomalyWidgetOptions) => {
         style={{
           width: '100%',
           height: '100%',
-          display: error ? 'none' : 'default',
         }}
       />
       {showTimestamp && !error && (

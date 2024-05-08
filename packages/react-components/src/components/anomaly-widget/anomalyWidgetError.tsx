@@ -15,10 +15,11 @@ export const AnomalyWidgetError = () => {
         background: colorBackgroundContainerContent,
         width: '100%',
         height: '100%',
-        position: 'relative',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        position: 'absolute',
+        zIndex: 1,
       }}
     >
       <Box margin={{ vertical: 's', horizontal: 's' }}>
