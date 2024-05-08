@@ -1,5 +1,5 @@
 import { useRef, useEffect, MutableRefObject, useState } from 'react';
-import { init } from 'echarts';
+import { init, connect, disconnect } from 'echarts';
 import type { ECharts } from 'echarts';
 import {
   configureEchartsPlugins,
@@ -7,6 +7,7 @@ import {
 } from '../../echarts';
 import { useUnboundedDataZoom } from '../../echarts/unboundedZoom';
 import { Viewport } from '@iot-app-kit/core';
+import { useViewport } from '../useViewport';
 
 configureEchartsPlugins();
 
@@ -32,6 +33,16 @@ export const useZoomableECharts = ({
   const ref = useRef<HTMLDivElement>(null);
   const chartRef = useRef<ECharts | null>(null);
   const [chart, setChart] = useState<ECharts | null>(null);
+
+  const { group } = useViewport();
+
+  useEffect(() => {
+    if (group && chart) {
+      chart.group = group;
+      disconnect(group);
+      connect(group);
+    }
+  }, [group, chart]);
 
   useEffect(() => {
     if (ref.current) {
