@@ -217,6 +217,7 @@ const BaseChart = ({
   return (
     <div
       className={`base-chart-container ${options.legend?.position}-position`}
+      data-testid='base-chart-container'
     >
       <div className='base-chart-container-element'>
         <Resizable
