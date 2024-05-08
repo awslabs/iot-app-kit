@@ -55,14 +55,7 @@ export const DefaultSettingsAnomalyWidget: ComponentStory<
   return (
     <div style={{ background: 'grey' }}>
       <div style={{ height: '350px', width: '500px', padding: '20px' }}>
-        <AnomalyWidget
-          {...options}
-          datasources={[MOCK_DATA_SOURCE_SUCCESS]}
-          viewport={{
-            start: new Date(1714409978348),
-            end: new Date(1714999073631),
-          }}
-        />
+        <AnomalyWidget {...options} datasources={[MOCK_DATA_SOURCE_SUCCESS]} />
       </div>
     </div>
   );
