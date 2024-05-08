@@ -6,6 +6,7 @@ import {
   MINUTE_IN_MS,
   MONTH_IN_MS,
   SECOND_IN_MS,
+  toTimestamp,
   YEAR_IN_MS,
 } from './time';
 
@@ -241,3 +242,41 @@ describe('display date', () => {
     });
   });
 });
+
+describe('toTimestamp', () => {
+  it('can handle an undefined time', () => {
+    expect(
+      toTimestamp(undefined)
+    ).toBe(0);
+    expect(
+      toTimestamp({
+        timeInSeconds: undefined,
+        offsetInNanos: undefined,
+      })
+    ).toBe(0);
+  });
+  it('converts a time with seconds and nanos to milliseconds', () => {
+    expect(
+      toTimestamp({
+        timeInSeconds: 0.1,
+        offsetInNanos: 1000
+      })
+    ).toBe(100.001);
+  });
+  it('converts a time with only seconds to milliseconds', () => {
+    expect(
+      toTimestamp({
+        timeInSeconds: 0.1,
+      })
+    ).toBe(100);
+  });
+  it('converts a time with only nanos to milliseconds', () => {
+    expect(
+      toTimestamp({
+        timeInSeconds: undefined,
+        offsetInNanos: 1000
+      })
+    ).toBe(0.001);
+  });
+});
+

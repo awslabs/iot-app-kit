@@ -1,3 +1,7 @@
+import type {
+  TimeInNanos,
+} from '@aws-sdk/client-iotsitewise';
+import { NANO_SECOND_IN_MS } from '@iot-app-kit/core';
 import parse from 'parse-duration';
 
 export const SECOND_IN_MS = 1000;
@@ -155,3 +159,12 @@ export const parseDuration = (duration: number | string): number => {
   // if duration is a string but we cannot parse it, we default to 10 mins.
   return parsedTime != null ? parsedTime : 10 * MINUTE_IN_MS;
 };
+
+/** converts the TimeInNanos to milliseconds */
+export const toTimestamp = (time: TimeInNanos | undefined): number =>
+  (time &&
+    Math.floor(
+      (time.timeInSeconds || 0) * SECOND_IN_MS +
+        (time.offsetInNanos || 0) * NANO_SECOND_IN_MS
+    )) ||
+  0;
