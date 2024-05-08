@@ -54,7 +54,7 @@ export const MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY = mockTimeSeriesDataQuery([
           {
             x: new Date(2000, 5, 13).getTime(),
             y: (10 * 8) ^ 2,
-            quality: 'UNCERTAIN',
+            quality: 'GOOD',
           },
         ],
       },

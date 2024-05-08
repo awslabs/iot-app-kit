@@ -107,7 +107,6 @@ test.describe('Data Stream Maxes', () => {
       .getByTestId(MAX_TABLE_CELL)
       .first()
       .innerText();
-    console.log('value', updatedMaxValueString);
     expect(getDecimalPlaces(updatedMaxValueString)).toBe(1);
   });
 });

@@ -26,6 +26,28 @@ export const MOCK_TIME_SERIES_DATA_QUERY = mockTimeSeriesDataQuery([
           {
             x: new Date(2005, 6, 13).getTime(),
             y: (2 * (10 * 13)) ^ 2,
+          },
+        ],
+        unit: 'Minutes',
+        name: `stream-1`,
+        refId: `stream-1`,
+        id: '1',
+      },
+    ],
+    thresholds: [],
+    viewport: VIEWPORT,
+  },
+]);
+
+export const MOCK_TIME_SERIES_DATA_QUERY_BAD_QUALITY = mockTimeSeriesDataQuery([
+  {
+    dataStreams: [
+      {
+        ...DATA_STREAM,
+        data: [
+          {
+            x: new Date(2005, 6, 13).getTime(),
+            y: (2 * (10 * 13)) ^ 2,
             quality: 'BAD',
           },
         ],
@@ -54,7 +76,6 @@ export const MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY = mockTimeSeriesDataQuery([
           {
             x: new Date(2000, 5, 13).getTime(),
             y: (10 * 14) ^ 2,
-            quality: 'UNCERTAIN',
           },
         ],
       },
@@ -63,3 +84,28 @@ export const MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY = mockTimeSeriesDataQuery([
     viewport: VIEWPORT,
   },
 ]);
+
+export const MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY_UNCERTAIN_DATA =
+  mockTimeSeriesDataQuery([
+    {
+      dataStreams: [
+        {
+          ...DATA_STREAM,
+          name: `stream-2`,
+          id: '2',
+          resolution: DAY_IN_MS * 300,
+          aggregationType: 'AVERAGE',
+          unit: 'MPH',
+          data: [
+            {
+              x: new Date(2000, 5, 13).getTime(),
+              y: (10 * 14) ^ 2,
+              quality: 'UNCERTAIN',
+            },
+          ],
+        },
+      ],
+      thresholds: [],
+      viewport: VIEWPORT,
+    },
+  ]);
