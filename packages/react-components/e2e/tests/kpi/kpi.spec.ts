@@ -1,38 +1,30 @@
 import { test, expect } from '@playwright/test';
 
-const TEST_PAGE = '/?path=/story/widgets-kpi-kpi-base--main';
-const TEST_IFRAME = '#storybook-preview-iframe';
+const TEST_PAGE = '/iframe.html?id=widgets-kpi--default-kpi';
+const TEST_PAGE_HIDDEN_SETTINGS =
+  '/iframe.html?id=widgets-kpi--kpi-hidden-settings';
+const TEST_PAGE_THRESHOLD = '/iframe.html?id=widgets-kpi--kpi-thresholds';
 
 test('kpi', async ({ page }) => {
   await page.goto(TEST_PAGE);
-  await page.evaluate(() => document.fonts.ready);
-  const frame = page.frameLocator(TEST_IFRAME); // Need to go into frame otherwise the `locator` won't locate the selection.
-  const KPIComponent = frame.getByTestId('kpi-base-component');
-  const KPIError = frame.getByTestId('kpi-error-component');
+  const KPIComponent = page.getByTestId('kpi-base-component');
 
-  // KPI will always show value
-  await expect(KPIComponent).toContainText('100');
+  // screenshot comparison with everything showing
+  await expect(KPIComponent).toHaveScreenshot('kpi-default-settings.png');
+});
 
-  // unit will display
-  const unit = 'mph';
-  await page.goto(`${TEST_PAGE}&args=unit:${unit}`);
-  await expect(KPIComponent).toContainText(unit);
+test('kpi hidden settings', async ({ page }) => {
+  await page.goto(TEST_PAGE_HIDDEN_SETTINGS);
+  const KPIComponent = page.getByTestId('kpi-base-component');
 
-  // name will display
-  const name = 'windmill-name';
-  await page.goto(`${TEST_PAGE}&args=name:${name}`);
-  await expect(KPIComponent).toContainText(name);
+  // screenshot comparison with everything hidden
+  await expect(KPIComponent).toHaveScreenshot('kpi-hidden-settings.png');
+});
 
-  // displays as loading
-  await page.goto(`${TEST_PAGE}&args=isLoading:true`);
-  await expect(KPIComponent).toContainText('-');
+test('kpi with thresholds', async ({ page }) => {
+  await page.goto(TEST_PAGE_THRESHOLD);
+  const AllKPIs = page.getByTestId('mock-data-kpi-story');
 
-  // error will display
-  const errorMsg = 'my-custom-error-msg';
-  await page.goto(`${TEST_PAGE}&args=error:${errorMsg}`);
-  await expect(KPIError).toContainText(errorMsg);
-
-  // displays empty state
-  await page.goto(`${TEST_PAGE}&args=propertyPoint:!null`);
-  await expect(KPIComponent).toContainText('-');
+  // screenshot comparison
+  await expect(AllKPIs).toHaveScreenshot('kpi-with-thresholds.png');
 });

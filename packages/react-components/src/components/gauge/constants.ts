@@ -180,7 +180,7 @@ export const DEFAULT_GAUGE_PROGRESS_SETTINGS_WITH_THRESHOLDS = {
 
 export const DEFAULT_GAUGE_STYLES = {
   gaugeThickness: 30,
-  showName: false,
+  showName: true,
   showUnit: true,
   fontSize: 40,
   labelFontSize: 12,
