@@ -84,7 +84,7 @@ const useKeyPress = (
       window.removeEventListener('keydown', downHandler);
       window.removeEventListener('keyup', upHandler);
     };
-  }, [enabled]); // We don't pass more than enabled here, because it adds unnecessary event listeners. This ensures we only bind once, and we unbind when disabled.
+  }, [downHandler, enabled, upHandler]); // We don't pass more than enabled here, because it adds unnecessary event listeners. This ensures we only bind once, and we unbind when disabled.
 
   return keyPressed;
 };

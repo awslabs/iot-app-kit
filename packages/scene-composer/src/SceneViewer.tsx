@@ -54,7 +54,7 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
     } else {
       composerApis.setSelectedSceneNodeRef(undefined);
     }
-  }, [props.selectedDataBinding, sceneLoaded]);
+  }, [props.selectedDataBinding, sceneLoaded, composerApis]);
 
   const onSceneLoaded = useCallback(() => {
     setSceneLoaded(true);

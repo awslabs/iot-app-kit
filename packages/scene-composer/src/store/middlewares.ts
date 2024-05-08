@@ -1,5 +1,4 @@
 import { State, StateCreator, StoreMutatorIdentifier } from 'zustand';
-import { produce, Draft } from 'immer';
 import createVanilla, { GetState, SetState, StoreApi } from 'zustand/vanilla';
 
 import DebugLogger from '../logger/DebugLogger';

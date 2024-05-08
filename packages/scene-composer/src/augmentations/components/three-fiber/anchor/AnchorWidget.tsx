@@ -105,7 +105,7 @@ export function AsyncLoadedAnchorWidget({
 
   useEffect(() => {
     setParent(node.parentRef ? getObject3DFromSceneNodeRef(node.parentRef) : undefined);
-  }, [node.parentRef]);
+  }, [node.parentRef, getObject3DFromSceneNodeRef]);
   // Evaluate visual state based on data binding
   const visualState = useMemo(() => {
     // Anchor widget only accepts icon, otherwise, default to Info icon
@@ -142,7 +142,7 @@ export function AsyncLoadedAnchorWidget({
       return ruleTargetInfo.value;
     }
     return defaultIcon;
-  }, [ruleResult]);
+  }, [ruleResult, defaultIcon, overrideCustomColor, overrideCustomIcon]);
 
   const visualRuleCustomColor = overrideCustomColor !== undefined ? overrideCustomColor : chosenColor;
   const visualCustomIcon =
@@ -195,17 +195,21 @@ export function AsyncLoadedAnchorWidget({
     });
   }, [
     autoRescale,
-    CustomIconSvgString,
     visualRuleCustomColor,
-    visualCustomIcon,
     newCustomIcon,
     tagSettings.enableOcclusion,
+    newIconHeight,
+    newIconWidth,
+    node.properties.alwaysVisible,
   ]);
 
-  const isAnchor = (nodeRef?: string) => {
-    const node = getSceneNodeByRef(nodeRef);
-    return findComponentByType(node, KnownComponentType.Tag) ?? false;
-  };
+  const isAnchor = useCallback(
+    (nodeRef?: string) => {
+      const node = getSceneNodeByRef(nodeRef);
+      return findComponentByType(node, KnownComponentType.Tag) ?? false;
+    },
+    [getSceneNodeByRef],
+  );
 
   useEffect(() => {
     // Initialize isSelected to false on mount
@@ -228,14 +232,16 @@ export function AsyncLoadedAnchorWidget({
       }
     }
   }, [
-    selectedSceneNodeRef,
     highlightedSceneNodeRef,
+    isAnchor,
     isViewing,
+    navLink,
+    newCustomIcon,
     node,
     valueDataBinding,
-    navLink,
+    selectedSceneNodeRef,
+    setHighlightedSceneNodeRef,
     visualRuleCustomColor,
-    newCustomIcon,
     visualCustomIcon,
   ]);
 
@@ -263,7 +269,17 @@ export function AsyncLoadedAnchorWidget({
         }
       }
     },
-    [onWidgetClick, selectedSceneNodeRef],
+    [
+      onWidgetClick,
+      chosenColor,
+      customIcon,
+      dataBindingTemplate,
+      isViewing,
+      navLink,
+      node.components,
+      node.ref,
+      valueDataBinding,
+    ],
   );
 
   const position = useMemo(() => {
@@ -285,7 +301,7 @@ export function AsyncLoadedAnchorWidget({
       const points = [new THREE.Vector3(), position];
       geometry.setFromPoints(points);
     }
-  }, [position, bufferGeometryRef.current]);
+  }, [position]);
 
   useEffect(() => {
     const lines = linesRef.current;
@@ -294,7 +310,7 @@ export function AsyncLoadedAnchorWidget({
       lines.layers.disable(Layers.RaycastAndRender);
       lines.layers.enable(Layers.RenderOnly);
     }
-  }, [linesRef.current]);
+  }, []);
 
   const finalScale = new THREE.Vector3(1, 1, 1);
 

@@ -15,7 +15,10 @@ const useSelectedNode = () => {
 
   const getSceneNodeByRef = accessStore(sceneComposerId)((state) => state.getSceneNodeByRef);
 
-  const selectedSceneNode = useMemo(() => getSceneNodeByRef(selectedSceneNodeRef), [selectedSceneNodeRef]);
+  const selectedSceneNode = useMemo(
+    () => getSceneNodeByRef(selectedSceneNodeRef),
+    [selectedSceneNodeRef, getSceneNodeByRef],
+  );
 
   // callback, not memo because this object could be very large, and we want to avoid creating multiple copies in memory
   const getSelectedObject = useCallback(() => {
@@ -32,7 +35,7 @@ const useSelectedNode = () => {
 
       return object3D.getObjectByName(selectedSceneSubmodelRef as string);
     }
-  }, [selectedSceneSubmodelRef]);
+  }, [selectedSceneSubmodelRef, getSelectedObject]);
 
   return {
     selectedSceneNodeRef,

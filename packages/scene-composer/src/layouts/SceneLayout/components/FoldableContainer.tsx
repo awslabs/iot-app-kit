@@ -26,7 +26,7 @@ const FoldableContainer: React.FC<FoldableContainerProps> = ({
 
   useEffect(() => {
     setIsOpen(!fold);
-  }, [fold]);
+  }, [fold, setIsOpen]);
 
   return (
     <div className={wrapper}>

@@ -86,7 +86,7 @@ describe('snapObjectToFloor', () => {
         useEffect(() => {
           activate();
           setIsDone(true);
-        });
+        }, [activate]);
 
         if (isDone) {
           return <div data-testid='rendered' />;
