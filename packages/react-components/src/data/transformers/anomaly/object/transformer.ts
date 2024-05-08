@@ -67,10 +67,10 @@ export class AnomalyObjectDataSourceTransformer extends ObjectDataSourceTransfor
     let end: Date | null = null;
     dataSource.value.data.forEach(({ timestamp }) => {
       const date = new Date(timestamp);
-      if (start === null || isAfter(date, start)) {
+      if (start === null || isBefore(date, start)) {
         start = date;
       }
-      if (end === null || isBefore(date, end)) {
+      if (end === null || isAfter(date, end)) {
         end = date;
       }
     });
