@@ -9,20 +9,24 @@ import { DescribeAssetPropertyCacheKeyFactory } from '../useDescribeAssetPropert
 import { queryClient } from '../queryClient';
 
 export interface UseDescribeAssetPropertiesOptions {
-  client: IoTSiteWiseClient;
-  describeAssetPropertyRequests: { assetId?: string; propertyId?: string }[];
+  client?: IoTSiteWiseClient;
+  describeAssetPropertyRequests?: { assetId?: string; propertyId?: string }[];
 }
 
 export const useDescribeAssetProperties = ({
   client,
-  describeAssetPropertyRequests,
+  describeAssetPropertyRequests = [],
 }: UseDescribeAssetPropertiesOptions) => {
   const queries =
     useQueries(
       {
         queries: describeAssetPropertyRequests.map(
           ({ assetId, propertyId }) => ({
-            enabled: isDescribeAssetPropertyEnabled({ assetId, propertyId }),
+            enabled: isDescribeAssetPropertyEnabled({
+              assetId,
+              propertyId,
+              client,
+            }),
             queryKey: new DescribeAssetPropertyCacheKeyFactory({
               assetId,
               propertyId,

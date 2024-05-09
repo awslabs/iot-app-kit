@@ -27,10 +27,7 @@ afterAll(() => {
 describe('Anomaly Chart Component Tests', () => {
   it('Anomaly chart renders', () => {
     const element = render(
-      <AnomalyChart
-        viewport={VIEWPORT}
-        datasources={[MOCK_DATA_SOURCE_SUCCESS]}
-      />
+      <AnomalyChart viewport={VIEWPORT} data={[MOCK_DATA_SOURCE_SUCCESS]} />
     );
     expect(element).not.toBeNull();
   });
@@ -39,7 +36,7 @@ describe('Anomaly Chart Component Tests', () => {
     const element = render(
       <AnomalyChart
         viewport={VIEWPORT}
-        datasources={[MOCK_DATA_SOURCE_EMPTY_SUCCESS]}
+        data={[MOCK_DATA_SOURCE_EMPTY_SUCCESS]}
       />
     );
     expect(element).not.toBeNull();

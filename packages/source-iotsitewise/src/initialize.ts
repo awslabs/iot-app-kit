@@ -27,6 +27,7 @@ import { createDataSource } from './time-series-data';
 import { assetSession } from './sessions';
 import { SiteWiseAlarmModule } from './alarms/iotevents';
 import type {
+  SiteWiseAnomalyDataStreamQuery,
   SiteWiseDataSourceSettings,
   SiteWiseDataStreamQuery,
 } from './time-series-data/types';
@@ -39,6 +40,11 @@ import type {
 import { fetchTimeSeriesData } from './time-series-data/fetchTimeSeriesData';
 
 const SOURCE = 'iotsitewise';
+
+export type AnomalyDataQuery = {
+  query: SiteWiseAnomalyDataStreamQuery;
+  iotSiteWiseClient: IoTSiteWiseClient;
+};
 
 export type SiteWiseDataSourceInitInputs = {
   iotSiteWiseClient?: IoTSiteWiseClient;
@@ -61,6 +67,7 @@ export type SiteWiseQuery = {
     settings?: TimeSeriesDataRequestSettings;
   }) => Promise<DataStream[]>;
   timeSeriesData: (query: SiteWiseDataStreamQuery) => TimeSeriesDataQuery;
+  anomalyData: (query: SiteWiseAnomalyDataStreamQuery) => AnomalyDataQuery;
   assetTree: {
     fromRoot: (
       query?: SiteWiseAssetTreeQueryArguments
@@ -117,6 +124,10 @@ export const initialize = (input: SiteWiseDataSourceInitInputs) => {
               request: params,
             }
           ),
+      }),
+      anomalyData: (query: SiteWiseAnomalyDataStreamQuery) => ({
+        query,
+        iotSiteWiseClient: siteWiseClient,
       }),
 
       assetTree: {

@@ -5,9 +5,16 @@ import { AssetPropertyValueHistoryCacheKeyFactory } from './getAssetPropertyValu
 import { GetGetAssetPropertyValueHistoryRequest } from './getGetAssetPropertyValueHistoryRequest';
 import { createNonNullableList } from '../../utils/createNonNullableList';
 import { queryClient } from '../queryClient';
+import {
+  hasClient,
+  isAssetId,
+  isEndDate,
+  isPropertyId,
+  isStartDate,
+} from '../predicates';
 
 export interface UseGetAssetPropertyValueHistoryOptions {
-  client: IoTSiteWiseClient;
+  client?: IoTSiteWiseClient;
   assetId?: string;
   propertyId?: string;
   startDate?: Date;
@@ -45,7 +52,7 @@ export function useGetAssetPropertyValueHistory({
     isLoading,
   } = useInfiniteQuery(
     {
-      enabled: isEnabled({ assetId, propertyId, startDate, endDate }),
+      enabled: isEnabled({ client, assetId, propertyId, startDate, endDate }),
       queryKey: cacheKeyFactory.create(),
       queryFn: createQueryFn(client),
       getNextPageParam: ({ nextToken }) => nextToken,
@@ -75,29 +82,26 @@ export function useGetAssetPropertyValueHistory({
   };
 }
 
-const isAssetId = (assetId?: string): assetId is string => Boolean(assetId);
-const isPropertyId = (propertyId?: string): propertyId is string =>
-  Boolean(propertyId);
-const isStartDate = (startDate?: number): startDate is number =>
-  Boolean(startDate);
-const isEndDate = (endDate?: number): endDate is number => Boolean(endDate);
 const isEnabled = ({
+  client,
   assetId,
   propertyId,
   startDate,
   endDate,
 }: {
+  client?: IoTSiteWiseClient;
   assetId?: string;
   propertyId?: string;
   startDate?: Date;
   endDate?: Date;
 }) =>
+  hasClient(client) &&
   isAssetId(assetId) &&
   isPropertyId(propertyId) &&
   isStartDate(startDate?.getTime()) &&
   isEndDate(endDate?.getTime());
 
-const createQueryFn = (client: IoTSiteWiseClient) => {
+const createQueryFn = (client?: IoTSiteWiseClient) => {
   return async ({
     queryKey: [{ assetId, propertyId, startDate, endDate, fetchAll }],
     pageParam: nextToken,
@@ -105,6 +109,10 @@ const createQueryFn = (client: IoTSiteWiseClient) => {
   }: QueryFunctionContext<
     ReturnType<AssetPropertyValueHistoryCacheKeyFactory['create']>
   >) => {
+    invariant(
+      hasClient(client),
+      'Expected client to be defined as required by the enabled flag.'
+    );
     invariant(
       isAssetId(assetId),
       'Expected assetId to be defined as required by the enabled flag.'
