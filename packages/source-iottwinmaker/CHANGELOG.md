@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.3.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v10.2.0...source-iottwinmaker-v10.3.0) (2024-05-09)
+
+
+### Features
+
+* **composer:** update convert to attached scene component and load data from it ([86c92ce](https://github.com/awslabs/iot-app-kit/commit/86c92ce5e4361b563be799cc367c0da14a7a0c2c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.2.0 to 10.3.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.2.0 to 10.3.0
+    * @iot-app-kit/ts-config bumped from 10.2.0 to 10.3.0
+    * eslint-config-iot-app-kit bumped from 10.2.0 to 10.3.0
+
 ## [10.2.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v10.1.0...source-iottwinmaker-v10.2.0) (2024-03-29)
 
 

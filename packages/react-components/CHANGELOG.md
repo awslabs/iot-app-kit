@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [10.3.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.2.0...react-components-v10.3.0) (2024-05-09)
+
+
+### Miscellaneous Chores
+
+* **react-components:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.2.0 to 10.3.0
+    * @iot-app-kit/core bumped from 10.2.0 to 10.3.0
+    * @iot-app-kit/core-util bumped from 10.2.0 to 10.3.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.2.0 to 10.3.0
+  * devDependencies
+    * @iot-app-kit/core bumped from 10.2.0 to 10.3.0
+    * @iot-app-kit/jest-config bumped from 10.2.0 to 10.3.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.2.0 to 10.3.0
+    * @iot-app-kit/testing-util bumped from 10.2.0 to 10.3.0
+    * @iot-app-kit/ts-config bumped from 10.2.0 to 10.3.0
+    * eslint-config-iot-app-kit bumped from 10.2.0 to 10.3.0
+
 ## [10.2.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.1.0...react-components-v10.2.0) (2024-03-29)
 
 
