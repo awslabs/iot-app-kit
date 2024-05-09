@@ -1,9 +1,9 @@
 import { Messages } from '../types';
 
-export type AnomalyWidgetMessageKeys = 'anomaly-widget.error';
+export type AnomalyChartMessageKeys = 'anomaly-chart.error';
 
-export const AnomalyWidget: Messages<AnomalyWidgetMessageKeys> = {
+export const AnomalyChart: Messages<AnomalyChartMessageKeys> = {
   en: {
-    'anomaly-widget.error': 'Error: failed to load anomaly results',
+    'anomaly-chart.error': 'Error: failed to load anomaly results',
   },
 } as const;

@@ -3,7 +3,7 @@ import { TooltipDate } from './date';
 import { TooltipSort } from '../types';
 import { TooltipDiagnostics } from './diagnostics';
 import {
-  AnomalyWidgetTooltipData,
+  AnomalyChartTooltipData,
   formatTooltipData,
 } from './formatTooltipData';
 import {
@@ -12,16 +12,16 @@ import {
   spaceScaledXxs,
 } from '@cloudscape-design/design-tokens';
 
-export type AnomalyWidgetTooltipOptions = {
-  data: AnomalyWidgetTooltipData[];
+export type AnomalyChartTooltipOptions = {
+  data: AnomalyChartTooltipData[];
   decimalPlaces?: number;
   tooltipSort?: TooltipSort;
 };
 
-export const AnomalyWidgetTooltip = ({
+export const AnomalyChartTooltip = ({
   decimalPlaces,
   ...options
-}: AnomalyWidgetTooltipOptions) => {
+}: AnomalyChartTooltipOptions) => {
   const data = formatTooltipData({ ...options });
   // Each series option has the same date
   const date = data.at(0)?.date ?? '';
