@@ -9,6 +9,7 @@ import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { isEmpty } from 'lodash';
 
 import {
+  DEFAULT_PARENT_RELATIONSHIP_NAME,
   SCENE_ROOT_ENTITY_COMPONENT_NAME,
   SCENE_ROOT_ENTITY_ID,
   SCENE_ROOT_ENTITY_NAME,
@@ -21,6 +22,7 @@ import { ISceneDocument, KnownSceneProperty } from '../../interfaces';
 import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
 
 import { createNodeEntity } from './createNodeEntity';
+import { processQueries } from './processQueries';
 import { updateSceneEntityComponent } from './sceneComponent';
 
 export const createSceneEntityId = (sceneName: string): string => {
@@ -97,44 +99,18 @@ export const isDynamicScene = (document?: ISceneDocumentInternal): boolean => {
   return !isEmpty(document?.properties?.[KnownSceneProperty.SceneRootEntityId]);
 };
 
-export const convertAllNodesToEntities = async ({
-  document,
-  sceneRootEntityId,
-  getObject3DBySceneNodeRef,
-  onSuccess,
-  onFailure,
-}: {
-  document: ISceneDocumentInternal;
-  sceneRootEntityId: string;
-  getObject3DBySceneNodeRef: (nodeRef: string) => THREE.Object3D | undefined;
-  onSuccess?: (node: ISceneNodeInternal) => void;
-  onFailure?: (node: ISceneNodeInternal, error: Error) => void;
-}): Promise<void> => {
-  let nodeRequests: ISceneNodeInternal[] = [];
+export const useSceneRootEntityId = (document?: ISceneDocumentInternal): string => {
+  const sceneRootEntityId = document?.properties?.[KnownSceneProperty.SceneRootEntityId];
+  return sceneRootEntityId;
+};
+
+export const saveSceneNodes = async (
+  nodeRequests: ISceneNodeInternal[],
+  sceneRootEntityId: string,
+  onSuccess?: (node: ISceneNodeInternal) => void,
+  onFailure?: (node: ISceneNodeInternal, error: Error) => void,
+): Promise<void> => {
   const completedNodeRefs: Set<string> = new Set<string>();
-
-  Object.keys(document.nodeMap).forEach((nodeRef) => {
-    const node = document.nodeMap[nodeRef];
-    const object3D = getObject3DBySceneNodeRef(nodeRef);
-
-    if (isDynamicNode(node)) {
-      return;
-    }
-    // prepare nodes
-    if (!object3D) {
-      onFailure?.(node, new Error('Object not found'));
-    } else {
-      // This copy allows us to change data complete including property deletes if necessary
-      const tempNode: ISceneNodeInternal = {
-        ...node,
-        properties: {
-          ...node.properties,
-          [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID], //value doesn't matter here, just that's present and not empty
-        },
-      };
-      nodeRequests.push(tempNode);
-    }
-  });
 
   while (nodeRequests.length > 0) {
     const remainingChildNodeRequests: ISceneNodeInternal[] = [];
@@ -161,4 +137,131 @@ export const convertAllNodesToEntities = async ({
     //prepare for remaining requests
     nodeRequests = remainingChildNodeRequests;
   }
+};
+
+export const convertAllNodesToEntities = async ({
+  document,
+  sceneRootEntityId,
+  getObject3DBySceneNodeRef,
+  onSuccess,
+  onFailure,
+}: {
+  document: ISceneDocumentInternal;
+  sceneRootEntityId: string;
+  getObject3DBySceneNodeRef: (nodeRef: string) => THREE.Object3D | undefined;
+  onSuccess?: (node: ISceneNodeInternal) => void;
+  onFailure?: (node: ISceneNodeInternal, error: Error) => void;
+}): Promise<void> => {
+  const nodeRequests: ISceneNodeInternal[] = [];
+
+  Object.keys(document.nodeMap).forEach((nodeRef) => {
+    const node = document.nodeMap[nodeRef];
+    const object3D = getObject3DBySceneNodeRef(nodeRef);
+
+    if (isDynamicNode(node)) {
+      return;
+    }
+    // prepare nodes
+    if (!object3D) {
+      onFailure?.(node, new Error('Object not found'));
+    } else {
+      // This copy allows us to change data complete including property deletes if necessary
+      const tempNode: ISceneNodeInternal = {
+        ...node,
+        properties: {
+          ...node.properties,
+          [SceneNodeRuntimeProperty.LayerIds]: [RESERVED_LAYER_ID], //value doesn't matter here, just that's present and not empty
+        },
+      };
+      nodeRequests.push(tempNode);
+    }
+  });
+
+  await saveSceneNodes(nodeRequests, sceneRootEntityId, onSuccess, onFailure);
+};
+
+export const fetchSceneNodes = async (sceneRootEntityId: string): Promise<ISceneNodeInternal[]> => {
+  const nodes = await processQueries([
+    // Get node entities under the sceneRootEntityId
+    `select entity, r, e
+      from EntityGraph
+      match (entity)-[r]->(e)
+      where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
+      and e.entityId = '${sceneRootEntityId}'`,
+
+    `select c, r1, entity
+      from EntityGraph
+      match (c)-[r1]->(entity)-[r]->(e)
+      where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
+      and e.entityId = '${sceneRootEntityId}'`,
+
+    `select c2, r2, c
+      from EntityGraph
+      match (c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
+      and e.entityId = '${sceneRootEntityId}'`,
+
+    `select c3, r3, c2
+      from EntityGraph
+      match (c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
+      and e.entityId = '${sceneRootEntityId}'`,
+
+    `select c4, r4, c3
+      from EntityGraph
+      match (c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
+      and e.entityId = '${sceneRootEntityId}'`,
+
+    `select c5, r5, c4
+      from EntityGraph
+      match (c5)-[r5]->(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
+      and e.entityId = '${sceneRootEntityId}'`,
+
+    `select c6, r6, c5
+      from EntityGraph
+      match (c6)-[r6]->(c5)-[r5]->(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
+      and e.entityId = '${sceneRootEntityId}'`,
+
+    `select c7, r7, c6
+      from EntityGraph
+      match (c7)-[r7]->(c6)-[r6]->(c5)-[r5]->(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
+      and e.entityId = '${sceneRootEntityId}'`,
+
+    `select c8, r8, c7
+      from EntityGraph
+      match (c8)-[r8]->(c7)-[r7]->(c6)-[r6]->(c5)-[r5]->(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
+      and e.entityId = '${sceneRootEntityId}'`,
+
+    `select c9, r9, c8
+      from EntityGraph
+      match (c9)-[r9]->(c8)-[r8]->(c7)-[r7]->(c6)-[r6]->(c5)-[r5]->(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
+      and e.entityId = '${sceneRootEntityId}'`,
+  ]);
+
+  return nodes;
+};
+
+export const cloneSceneNodes = async (nodes: ISceneNodeInternal[]): Promise<ISceneNodeInternal[]> => {
+  const map = {};
+  nodes.forEach((node) => {
+    map[node.ref] = generateUUID();
+  });
+
+  return nodes.map((node) => {
+    return {
+      ...node,
+      ref: map[node.ref],
+      parentRef: node.parentRef ? map[node.parentRef] : undefined,
+      properties: {
+        ...node.properties,
+        [SceneNodeRuntimeProperty.LayerIds]: [],
+      },
+    };
+  });
 };
