@@ -1,7 +1,7 @@
 import { TooltipSort } from '../types';
 
 // This is what comes from echarts formatter
-export type AnomalyWidgetTooltipData = {
+export type AnomalyChartTooltipData = {
   componentSubType: string;
   axisValueLabel: string;
   seriesName: string;
@@ -12,7 +12,7 @@ export type AnomalyWidgetTooltipData = {
 };
 
 export type FormatTooltipDataOptions = {
-  data: AnomalyWidgetTooltipData[];
+  data: AnomalyChartTooltipData[];
   tooltipSort?: TooltipSort;
 };
 
@@ -20,7 +20,7 @@ const getDiagnosticValue = ({
   value,
   dimensionNames,
   seriesId,
-}: Pick<AnomalyWidgetTooltipData, 'value' | 'seriesId' | 'dimensionNames'>) => {
+}: Pick<AnomalyChartTooltipData, 'value' | 'seriesId' | 'dimensionNames'>) => {
   if (Array.isArray(value)) {
     const dimensionIndex = dimensionNames.findIndex(
       (name) => name === seriesId

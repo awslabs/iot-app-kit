@@ -2,50 +2,50 @@ import { test, expect } from '@playwright/test';
 
 const TEST_IFRAME = '#storybook-preview-iframe';
 const TEST_PAGE_DEFAULT_SETTINGS =
-  '/?path=/story/widgets-anomaly--default-settings-anomaly-widget';
+  '/?path=/story/widgets-anomaly--default-settings-anomaly-chart';
 const TEST_PAGE_HIDDEN_SECTIONS =
-  '/?path=/story/widgets-anomaly--anomaly-widget-hidden-axis-and-timestamp';
+  '/?path=/story/widgets-anomaly--anomaly-chart-hidden-axis-and-timestamp';
 const TEST_PAGE_ERROR_STATE =
-  '/?path=/story/widgets-anomaly--anomaly-widget-error-state';
+  '/?path=/story/widgets-anomaly--anomaly-chart-error-state';
 
-test.describe('test anomaly widget', () => {
-  test('anomaly widget default settings', async ({ page }) => {
+test.describe('test anomaly chart', () => {
+  test('anomaly chart default settings', async ({ page }) => {
     await page.goto(TEST_PAGE_DEFAULT_SETTINGS);
     const frame = page.frameLocator(TEST_IFRAME);
-    const AnomalyContainer = frame.getByTestId('anomaly-widget-container');
-    const AnomalyWidget = AnomalyContainer.getByTestId('anomaly-widget');
+    const AnomalyContainer = frame.getByTestId('anomaly-chart-container');
+    const AnomalyChart = AnomalyContainer.getByTestId('anomaly-chart');
 
-    // Anomaly widget should be visible
-    await expect(AnomalyWidget).toBeVisible();
+    // Anomaly chart should be visible
+    await expect(AnomalyChart).toBeVisible();
 
     // screenshot comparison
-    await expect(AnomalyWidget).toHaveScreenshot('anomaly-widget.png');
+    await expect(AnomalyChart).toHaveScreenshot('anomaly-chart.png');
   });
 
-  test('anomaly widget everything hidden', async ({ page }) => {
+  test('anomaly chart everything hidden', async ({ page }) => {
     await page.goto(TEST_PAGE_HIDDEN_SECTIONS);
     const frame = page.frameLocator(TEST_IFRAME);
-    const AnomalyContainer = frame.getByTestId('anomaly-widget-container');
-    const AnomalyWidget = AnomalyContainer.getByTestId('anomaly-widget');
+    const AnomalyContainer = frame.getByTestId('anomaly-chart-container');
+    const AnomalyChart = AnomalyContainer.getByTestId('anomaly-chart');
 
-    // Anomaly widget should be visible
-    await expect(AnomalyWidget).toBeVisible();
+    // Anomaly chart should be visible
+    await expect(AnomalyChart).toBeVisible();
 
     // screenshot comparison
-    await expect(AnomalyWidget).toHaveScreenshot(
-      'anomaly-widget-hidden-axis-timestamp.png'
+    await expect(AnomalyChart).toHaveScreenshot(
+      'anomaly-chart-hidden-axis-timestamp.png'
     );
   });
 
-  test('anomaly widget error state', async ({ page }) => {
+  test('anomaly chart error state', async ({ page }) => {
     await page.goto(TEST_PAGE_ERROR_STATE);
     const frame = page.frameLocator(TEST_IFRAME);
-    const AnomalyContainer = frame.getByTestId('anomaly-widget-container');
+    const AnomalyContainer = frame.getByTestId('anomaly-chart-container');
 
-    // Anomaly widget should be visible
+    // Anomaly chart should be visible
     await expect(AnomalyContainer).toBeVisible();
 
     // screenshot comparison
-    await expect(AnomalyContainer).toHaveScreenshot('anomaly-widget-error.png');
+    await expect(AnomalyContainer).toHaveScreenshot('anomaly-chart-error.png');
   });
 });
