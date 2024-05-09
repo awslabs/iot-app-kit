@@ -1,5 +1,5 @@
 import merge from 'lodash.merge';
-import { AnomalyWidget, AnomalyWidgetMessageKeys } from './anomalyWidget';
+import { AnomalyChart, AnomalyChartMessageKeys } from './anomalyWidget';
 import { Messages } from './types';
 import { Echarts, EchartsMessageKeys } from './echarts';
 
@@ -19,11 +19,11 @@ import { Echarts, EchartsMessageKeys } from './echarts';
  */
 
 // List of all of the keys for all components
-export type MessageKeys = AnomalyWidgetMessageKeys | EchartsMessageKeys;
+export type MessageKeys = AnomalyChartMessageKeys | EchartsMessageKeys;
 export type AllMessages = Messages<MessageKeys>;
 
 // List of all component messages to be merged by locale.
-const componentMessages = [AnomalyWidget, Echarts];
+const componentMessages = [AnomalyChart, Echarts];
 
 // All merged messages
 export const mergedMessages = componentMessages.reduce(

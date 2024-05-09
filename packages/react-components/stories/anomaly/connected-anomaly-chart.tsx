@@ -3,17 +3,17 @@ import { useViewport } from '../../src';
 import { getEnvCredentials, getRegion } from '../utils/query';
 import { useSiteWiseAnomalyDataSource } from '../../src/queries';
 import React from 'react';
-import { AnomalyWidget } from '../../src/components/anomaly-widget';
-import { AnomalyWidgetOptions } from '../../src/components/anomaly-widget/types';
+import { AnomalyChart } from '../../src/components/anomaly-chart';
+import { AnomalyChartOptions } from '../../src/components/anomaly-chart/types';
 
-export const ConnectedAnomalyWidget = ({
+export const ConnectedAnomalyChart = ({
   assetId,
   predictionDefinitionId,
   ...options
 }: {
   assetId: string;
   predictionDefinitionId: string;
-} & AnomalyWidgetOptions) => {
+} & AnomalyChartOptions) => {
   const { viewport } = useViewport();
 
   const clientConfiguration = {
@@ -32,7 +32,7 @@ export const ConnectedAnomalyWidget = ({
   return (
     <div style={{ background: 'grey' }}>
       <div style={{ height: '350px', width: '500px', padding: '20px' }}>
-        <AnomalyWidget {...options} datasources={[datasource]} />
+        <AnomalyChart {...options} datasources={[datasource]} />
       </div>
     </div>
   );

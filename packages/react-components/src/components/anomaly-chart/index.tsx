@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnomalyWidgetOptions } from './types';
+import { AnomalyChartOptions } from './types';
 import {
   AnomalyObjectDataSourceTransformer,
   DataSourceLoader,
@@ -10,7 +10,7 @@ import { colorBackgroundContainerContent } from '@cloudscape-design/design-token
 import { useAnomalyEchart } from './hooks/useAnomalyEchart';
 import { LoadingIcon } from './loading-icon';
 import { Timestamp } from '../timestampBar';
-import { AnomalyWidgetError } from './anomalyWidgetError';
+import { AnomalyChartError } from './anomalyChartError';
 
 /**
  * Setup the applicable data source transformers
@@ -19,7 +19,7 @@ const AnomalyDataSourceLoader = new DataSourceLoader([
   new AnomalyObjectDataSourceTransformer(),
 ]);
 
-export const AnomalyWidget = (options: AnomalyWidgetOptions) => {
+export const AnomalyChart = (options: AnomalyChartOptions) => {
   const { datasources, showTimestamp = true, ...configuration } = options;
   /**
    * Datasources is a fixed length array of 1.
@@ -42,8 +42,8 @@ export const AnomalyWidget = (options: AnomalyWidgetOptions) => {
 
   return (
     <div
-      className='anomaly-widget'
-      data-testid='anomaly-widget-container'
+      className='anomaly-chart'
+      data-testid='anomaly-chart-container'
       style={{
         background: colorBackgroundContainerContent,
         width: '100%',
@@ -51,11 +51,11 @@ export const AnomalyWidget = (options: AnomalyWidgetOptions) => {
         position: 'relative',
       }}
     >
-      {error && <AnomalyWidgetError />}
+      {error && <AnomalyChartError />}
       {!error && <LoadingIcon loading={loading} />}
       <div
         ref={ref}
-        data-testid='anomaly-widget'
+        data-testid='anomaly-chart'
         style={{
           width: '100%',
           height: '100%',
