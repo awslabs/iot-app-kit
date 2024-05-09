@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.3.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.2.0...root-v10.3.0) (2024-05-09)
+
+
+### Features
+
+* **composer:** update convert to attached scene component and load data from it ([86c92ce](https://github.com/awslabs/iot-app-kit/commit/86c92ce5e4361b563be799cc367c0da14a7a0c2c))
+* ds ga ([4a07ece](https://github.com/awslabs/iot-app-kit/commit/4a07ece255b189d5d9d9693abe75046d8c0458bd))
+* ds ga ([dbc396b](https://github.com/awslabs/iot-app-kit/commit/dbc396b1ade912f7cfa7f25e591afcc6d0e84cf4))
+* ds ga ([5b241d0](https://github.com/awslabs/iot-app-kit/commit/5b241d09196aa50a0c8798a7214a338ba7031ec4))
+* ds ga ([b503fcf](https://github.com/awslabs/iot-app-kit/commit/b503fcf62367ceff847010c845adafa9154f7c6b))
+* **tmdt:** support endpoint-url parameter and respect S3 bucket name character limit ([b4ea8fb](https://github.com/awslabs/iot-app-kit/commit/b4ea8fbdf3970abfedee4e2465572e20f8f0a707))
+
+
+### Bug Fixes
+
+* add @babel/traverse ^7.23.7 to package.json overrides ([8c32328](https://github.com/awslabs/iot-app-kit/commit/8c32328f213b90e169ea399e98f1efea7918fbb3))
+* babel vulnerable to arbitrary code execution ([8c32328](https://github.com/awslabs/iot-app-kit/commit/8c32328f213b90e169ea399e98f1efea7918fbb3))
+* **scene composer:** correcting state logic for tag settings ([f149ac9](https://github.com/awslabs/iot-app-kit/commit/f149ac94f5f78a6798dbefa95435134989859f68))
+* **scene composer:** implemented react-hooks linter & converted useStore to accessStore ([d95f684](https://github.com/awslabs/iot-app-kit/commit/d95f684ad6c14405d8c9c1f5b2ac84cb5f3355e1))
+* **scene:** fix regression in updateSceneNode for reparenting nodes ([016e9f5](https://github.com/awslabs/iot-app-kit/commit/016e9f59ff755ff8d1522117d159df7246aebe22))
+* **scene:** round ground plane opacity to whole percent ([760aa8c](https://github.com/awslabs/iot-app-kit/commit/760aa8cac2511717e0fa1f9b1974125ee97c569a))
+* **scene:** validation scene json on deserialize ([3f2ad73](https://github.com/awslabs/iot-app-kit/commit/3f2ad737c7c85a1d3e14e2fb5a74d7213780e581))
+
 ## [10.2.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.1.0...root-v10.2.0) (2024-03-29)
 
 

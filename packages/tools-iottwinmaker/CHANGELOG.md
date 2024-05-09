@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.3.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v10.2.0...tools-iottwinmaker-v10.3.0) (2024-05-09)
+
+
+### Features
+
+* **tmdt:** support endpoint-url parameter and respect S3 bucket name character limit ([b4ea8fb](https://github.com/awslabs/iot-app-kit/commit/b4ea8fbdf3970abfedee4e2465572e20f8f0a707))
+
 ## [10.2.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v10.1.0...tools-iottwinmaker-v10.2.0) (2024-03-29)
 
 
