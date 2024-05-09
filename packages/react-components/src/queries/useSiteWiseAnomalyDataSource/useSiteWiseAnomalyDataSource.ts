@@ -11,6 +11,7 @@ import { completeAnomalyEvents } from './parseAnomaly/completeAnomalyEvents';
 import { AnomalyObjectDataSource } from '../../data';
 import { DataSource } from '../../data/types';
 import { useAnomalyEventsViewport } from './useAnomalyEventsViewport';
+import { useViewport } from '../../hooks/useViewport';
 
 const parseQueryState = ({
   isError,
@@ -30,12 +31,13 @@ const parseQueryState = ({
 };
 
 export type SiteWiseAnomalyDataSourceOptions = {
-  client: IoTSiteWiseClient;
+  client?: IoTSiteWiseClient;
   assetId?: string;
   assetModelId?: string;
   predictionDefinitionId?: string;
   viewport?: Viewport;
   liveModeQueryRefreshRate?: number;
+  styles?: AnomalyObjectDataSource['value']['styles'];
 };
 
 /**
@@ -51,16 +53,23 @@ export type SiteWiseAnomalyDataSourceOptions = {
  * The AssetPropertyValue complex types are parsed into plain
  * javascript objects
  */
-export const useSiteWiseAnomalyDataSource = ({
-  client,
-  assetId,
-  assetModelId,
-  predictionDefinitionId,
-  viewport,
-  liveModeQueryRefreshRate,
-}: SiteWiseAnomalyDataSourceOptions): AnomalyObjectDataSource => {
+export const useSiteWiseAnomalyDataSource = (
+  options: SiteWiseAnomalyDataSourceOptions = {}
+): AnomalyObjectDataSource => {
+  const {
+    client,
+    assetId,
+    assetModelId,
+    predictionDefinitionId,
+    viewport: passedInViewport,
+    liveModeQueryRefreshRate,
+    styles,
+  } = options;
+
+  const { viewport: injectedViewport } = useViewport();
+
   const { start, end } = useAnomalyEventsViewport({
-    viewport,
+    viewport: passedInViewport ?? injectedViewport,
     liveModeRefreshRate: liveModeQueryRefreshRate,
   });
 
@@ -118,6 +127,7 @@ export const useSiteWiseAnomalyDataSource = ({
   return {
     state: parseQueryState({ isError, isFetching, isLoading, isSuccess }),
     value: {
+      styles,
       data: completedAnomalyEvents,
     },
   };

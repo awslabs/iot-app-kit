@@ -55,7 +55,7 @@ export const DefaultSettingsAnomalyChart: ComponentStory<
   return (
     <div style={{ background: 'grey' }}>
       <div style={{ height: '350px', width: '500px', padding: '20px' }}>
-        <AnomalyChart {...options} datasources={[MOCK_DATA_SOURCE_SUCCESS]} />
+        <AnomalyChart {...options} data={[MOCK_DATA_SOURCE_SUCCESS]} />
       </div>
     </div>
   );
@@ -68,7 +68,7 @@ export const AnomalyChartHiddenAxisAndTimestamp: ComponentStory<
     <div style={{ background: 'grey' }}>
       <div style={{ height: '350px', width: '500px', padding: '20px' }}>
         <AnomalyChart
-          datasources={[MOCK_DATA_SOURCE_SUCCESS]}
+          data={[MOCK_DATA_SOURCE_SUCCESS]}
           axis={{ showY: false }}
           showTimestamp={false}
           viewport={{
@@ -120,7 +120,7 @@ export const AnomalyChartErrorState: ComponentStory<typeof AnomalyChart> = (
         <AnomalyChart
           {...options}
           title='error mock data'
-          datasources={[errorMockDatasource]}
+          data={[errorMockDatasource]}
           viewport={{
             start: new Date(1714409978348),
             end: new Date(1714999073631),
