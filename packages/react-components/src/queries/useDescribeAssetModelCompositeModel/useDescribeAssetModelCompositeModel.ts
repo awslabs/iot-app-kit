@@ -4,11 +4,16 @@ import invariant from 'tiny-invariant';
 import { AssetModelCompositeModelCacheKeyFactory } from './assetModelCompositeModelQueryKeyFactory';
 import { GetDescribeAssetCompositeModelRequest } from './getDescribeAssetModelCompositeModelRequest';
 import { queryClient } from '../queryClient';
+import {
+  hasClient,
+  isAssetModelCompositeModelId,
+  isAssetModelId,
+} from '../predicates';
 
 export type UseDescribeAssetModelCompositeModelOptions = {
   assetModelId?: string;
   assetModelCompositeModelId?: string;
-  client: IoTSiteWiseClient;
+  client?: IoTSiteWiseClient;
 };
 
 /**
@@ -27,7 +32,7 @@ export function useDescribeAssetModelCompositeModel({
 
   return useQuery(
     {
-      enabled: isEnabled({ assetModelId, assetModelCompositeModelId }),
+      enabled: isEnabled({ assetModelId, assetModelCompositeModelId, client }),
       queryKey: cacheKeyFactory.create(),
       queryFn: createQueryFn(client),
     },
@@ -35,28 +40,31 @@ export function useDescribeAssetModelCompositeModel({
   );
 }
 
-const isAssetModelId = (assetModelId?: string): assetModelId is string =>
-  Boolean(assetModelId);
-const isAssetModelCompositeModelId = (
-  assetModelCompositeModelId?: string
-): assetModelCompositeModelId is string => Boolean(assetModelCompositeModelId);
 const isEnabled = ({
   assetModelId,
   assetModelCompositeModelId,
+  client,
 }: {
   assetModelId?: string;
   assetModelCompositeModelId?: string;
+  client?: IoTSiteWiseClient;
 }) =>
   isAssetModelId(assetModelId) &&
-  isAssetModelCompositeModelId(assetModelCompositeModelId);
+  isAssetModelCompositeModelId(assetModelCompositeModelId) &&
+  hasClient(client);
 
-const createQueryFn = (client: IoTSiteWiseClient) => {
+const createQueryFn = (client?: IoTSiteWiseClient) => {
   return async ({
     queryKey: [{ assetModelId, assetModelCompositeModelId }],
     signal,
   }: QueryFunctionContext<
     ReturnType<AssetModelCompositeModelCacheKeyFactory['create']>
   >) => {
+    invariant(
+      hasClient(client),
+      'Expected client to be defined as required by the enabled flag.'
+    );
+
     invariant(
       isAssetModelId(assetModelId),
       'Expected assetModelId to be defined given the enabled condition.'

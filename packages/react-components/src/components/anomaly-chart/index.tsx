@@ -11,6 +11,7 @@ import { useAnomalyEchart } from './hooks/useAnomalyEchart';
 import { LoadingIcon } from './loading-icon';
 import { Timestamp } from '../timestampBar';
 import { AnomalyChartError } from './anomalyChartError';
+import { useTransformedData } from './hooks/useTransformedData';
 
 /**
  * Setup the applicable data source transformers
@@ -20,17 +21,13 @@ const AnomalyDataSourceLoader = new DataSourceLoader([
 ]);
 
 export const AnomalyChart = (options: AnomalyChartOptions) => {
-  const { datasources, showTimestamp = true, ...configuration } = options;
-  /**
-   * Datasources is a fixed length array of 1.
-   * The widget can only display 1 anomaly for now.
-   */
-  const data = AnomalyDataSourceLoader.transform([...datasources]).at(0);
-  const description = AnomalyDataSourceLoader.describe([...datasources]).at(0);
-  const loading = datasources.some(({ state }) => state === 'loading');
-  const error = datasources.some(
-    ({ state }) => state === 'error' || state === 'failed'
-  );
+  const { showTimestamp = true, viewport, ...configuration } = options;
+
+  const { data, description, loading, error } = useTransformedData({
+    ...configuration,
+    loader: AnomalyDataSourceLoader,
+    viewport,
+  });
 
   const { ref } = useAnomalyEchart({
     ...configuration,

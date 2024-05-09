@@ -4,9 +4,10 @@ import invariant from 'tiny-invariant';
 import { DescribeAssetCacheKeyFactory } from './describeAssetQueryKeyFactory';
 import { GetDescribeAssetRequest } from './getDescribeAssetRequest';
 import { queryClient } from '../queryClient';
+import { hasClient, isAssetId } from '../predicates';
 
 export interface UseDescribeAssetOptions {
-  client: IoTSiteWiseClient;
+  client?: IoTSiteWiseClient;
   assetId?: string;
 }
 
@@ -16,7 +17,7 @@ export function useDescribeAsset({ client, assetId }: UseDescribeAssetOptions) {
 
   return useQuery(
     {
-      enabled: isEnabled(assetId),
+      enabled: isEnabled({ assetId, client }),
       queryKey: cacheKeyFactory.create(),
       queryFn: createQueryFn(client),
     },
@@ -24,9 +25,15 @@ export function useDescribeAsset({ client, assetId }: UseDescribeAssetOptions) {
   );
 }
 
-const isEnabled = (assetId?: string): assetId is string => Boolean(assetId);
+const isEnabled = ({
+  assetId,
+  client,
+}: {
+  assetId?: string;
+  client?: IoTSiteWiseClient;
+}) => isAssetId(assetId) && hasClient(client);
 
-const createQueryFn = (client: IoTSiteWiseClient) => {
+const createQueryFn = (client?: IoTSiteWiseClient) => {
   return async ({
     queryKey: [{ assetId }],
     signal,
@@ -34,7 +41,12 @@ const createQueryFn = (client: IoTSiteWiseClient) => {
     ReturnType<DescribeAssetCacheKeyFactory['create']>
   >) => {
     invariant(
-      isEnabled(assetId),
+      hasClient(client),
+      'Expected client to be defined as required by the enabled flag.'
+    );
+
+    invariant(
+      isAssetId(assetId),
       'Expected assetId to be defined as required by the enabled flag.'
     );
 
