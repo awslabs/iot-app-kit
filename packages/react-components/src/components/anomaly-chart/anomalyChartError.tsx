@@ -4,7 +4,7 @@ import { colorBackgroundContainerContent } from '@cloudscape-design/design-token
 import { Alert, Box } from '@cloudscape-design/components';
 import useIntlStore, { getMessageKey } from '../../translations';
 
-export const AnomalyWidgetError = () => {
+export const AnomalyChartError = () => {
   const intl = useIntlStore((state) => state.intl);
 
   return (
@@ -25,7 +25,7 @@ export const AnomalyWidgetError = () => {
       <Box margin={{ vertical: 's', horizontal: 's' }}>
         <Alert statusIconAriaLabel='Error' type='error'>
           {intl.formatMessage({
-            id: getMessageKey('anomaly-widget.error'),
+            id: getMessageKey('anomaly-chart.error'),
             description:
               'Error message if the anomaly widget fails to load data',
             defaultMessage: 'Error: failed to load anomaly results',

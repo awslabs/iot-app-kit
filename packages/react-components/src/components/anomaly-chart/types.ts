@@ -5,9 +5,9 @@ import { AnomalyObjectDataSource } from '../../data/transformers/anomaly/object/
 export type TooltipSort = 'value' | 'alphabetical';
 export type ThemeMode = 'light' | 'dark';
 
-type AnomalyWidgetDataSources = AnomalyObjectDataSource;
-export type AnomalyWidgetOptions = {
-  datasources: FixedLengthArray<AnomalyWidgetDataSources, 1>;
+type AnomalyChartDataSources = AnomalyObjectDataSource;
+export type AnomalyChartOptions = {
+  datasources: FixedLengthArray<AnomalyChartDataSources, 1>;
   title?: string;
   mode?: ThemeMode;
   decimalPlaces?: number;

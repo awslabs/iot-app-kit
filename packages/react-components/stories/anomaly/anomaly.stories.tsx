@@ -2,16 +2,16 @@ import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { queryClient } from '../../src/queries';
-import { AnomalyWidget } from '../../src/components/anomaly-widget';
+import { AnomalyChart } from '../../src/components/anomaly-chart';
 import { errorMockDatasource } from './mockData';
 import { getEnvCredentials, getRegion } from '../utils/query';
 import { TimeSelection, TimeSync } from '../../src';
-import { ConnectedAnomalyWidget } from './connected-anomaly-widget';
-import { MOCK_DATA_SOURCE_SUCCESS } from '../../src/components/anomaly-widget/tests/mockDataSources';
+import { ConnectedAnomalyChart } from './connected-anomaly-chart';
+import { MOCK_DATA_SOURCE_SUCCESS } from '../../src/components/anomaly-chart/tests/mockDataSources';
 
 export default {
   title: 'Widgets/Anomaly',
-  component: AnomalyWidget,
+  component: AnomalyChart,
   argTypes: {
     assetId: {
       control: { type: 'text' },
@@ -47,27 +47,27 @@ export default {
       </>
     ),
   ],
-} as ComponentMeta<typeof AnomalyWidget>;
+} as ComponentMeta<typeof AnomalyChart>;
 
-export const DefaultSettingsAnomalyWidget: ComponentStory<
-  typeof AnomalyWidget
+export const DefaultSettingsAnomalyChart: ComponentStory<
+  typeof AnomalyChart
 > = (options) => {
   return (
     <div style={{ background: 'grey' }}>
       <div style={{ height: '350px', width: '500px', padding: '20px' }}>
-        <AnomalyWidget {...options} datasources={[MOCK_DATA_SOURCE_SUCCESS]} />
+        <AnomalyChart {...options} datasources={[MOCK_DATA_SOURCE_SUCCESS]} />
       </div>
     </div>
   );
 };
 
-export const AnomalyWidgetHiddenAxisAndTimestamp: ComponentStory<
-  typeof AnomalyWidget
+export const AnomalyChartHiddenAxisAndTimestamp: ComponentStory<
+  typeof AnomalyChart
 > = () => {
   return (
     <div style={{ background: 'grey' }}>
       <div style={{ height: '350px', width: '500px', padding: '20px' }}>
-        <AnomalyWidget
+        <AnomalyChart
           datasources={[MOCK_DATA_SOURCE_SUCCESS]}
           axis={{ showY: false }}
           showTimestamp={false}
@@ -81,8 +81,8 @@ export const AnomalyWidgetHiddenAxisAndTimestamp: ComponentStory<
   );
 };
 
-export const SiteWiseConnectedAnomalyWidget: ComponentStory<
-  typeof ConnectedAnomalyWidget
+export const SiteWiseConnectedAnomalyChart: ComponentStory<
+  typeof ConnectedAnomalyChart
 > = ({ assetId, predictionDefinitionId, ...options }) => {
   if (!getEnvCredentials() || !getRegion()) {
     return (
@@ -102,7 +102,7 @@ export const SiteWiseConnectedAnomalyWidget: ComponentStory<
   return (
     <TimeSync>
       <TimeSelection />
-      <ConnectedAnomalyWidget
+      <ConnectedAnomalyChart
         {...options}
         assetId={assetId}
         predictionDefinitionId={predictionDefinitionId}
@@ -111,13 +111,13 @@ export const SiteWiseConnectedAnomalyWidget: ComponentStory<
   );
 };
 
-export const AnomalyWidgetErrorState: ComponentStory<typeof AnomalyWidget> = (
+export const AnomalyChartErrorState: ComponentStory<typeof AnomalyChart> = (
   options
 ) => {
   return (
     <div style={{ background: 'grey' }}>
       <div style={{ height: '350px', width: '500px', padding: '20px' }}>
-        <AnomalyWidget
+        <AnomalyChart
           {...options}
           title='error mock data'
           datasources={[errorMockDatasource]}

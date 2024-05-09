@@ -1,6 +1,6 @@
 import { ANOMALY_TOOLTIP } from '../constants';
 import { ConfigurationOptions } from '../hooks/types';
-import { AnomalyWidgetTooltipData, tooltipAsString } from '../tooltip';
+import { AnomalyChartTooltipData, tooltipAsString } from '../tooltip';
 
 import {
   colorBorderControlDefault,
@@ -12,7 +12,7 @@ export const convertTooltip = ({
   tooltipSort,
 }: Pick<ConfigurationOptions, 'decimalPlaces' | 'tooltipSort'>) => ({
   ...ANOMALY_TOOLTIP,
-  formatter: (data: AnomalyWidgetTooltipData[]) =>
+  formatter: (data: AnomalyChartTooltipData[]) =>
     tooltipAsString({ data, decimalPlaces, tooltipSort }),
   borderColor: colorBorderControlDefault,
   backgroundColor: colorBackgroundContainerContent,

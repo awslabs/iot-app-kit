@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { AnomalyWidget } from '..';
+import { AnomalyChart } from '..';
 import {
   MOCK_DATA_SOURCE_EMPTY_SUCCESS,
   MOCK_DATA_SOURCE_SUCCESS,
@@ -27,7 +27,7 @@ afterAll(() => {
 describe('Anomaly Chart Component Tests', () => {
   it('Anomaly chart renders', () => {
     const element = render(
-      <AnomalyWidget
+      <AnomalyChart
         viewport={VIEWPORT}
         datasources={[MOCK_DATA_SOURCE_SUCCESS]}
       />
@@ -37,7 +37,7 @@ describe('Anomaly Chart Component Tests', () => {
 
   it('Anomaly chart renders when data is empty', () => {
     const element = render(
-      <AnomalyWidget
+      <AnomalyChart
         viewport={VIEWPORT}
         datasources={[MOCK_DATA_SOURCE_EMPTY_SUCCESS]}
       />
