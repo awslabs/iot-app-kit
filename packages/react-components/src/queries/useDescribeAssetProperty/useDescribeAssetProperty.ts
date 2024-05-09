@@ -4,9 +4,10 @@ import invariant from 'tiny-invariant';
 import { DescribeAssetPropertyCacheKeyFactory } from './describeAssetPropertyQueryKeyFactory';
 import { GetDescribeAssetPropertyRequest } from './getDescribeAssetPropertyRequest';
 import { queryClient } from '../queryClient';
+import { hasClient, isAssetId, isPropertyId } from '../predicates';
 
 export interface UseDescribeAssetPropertyOptions {
-  client: IoTSiteWiseClient;
+  client?: IoTSiteWiseClient;
   assetId?: string;
   propertyId?: string;
 }
@@ -24,7 +25,7 @@ export function useDescribeAssetProperty({
 
   return useQuery(
     {
-      enabled: isDescribeAssetPropertyEnabled({ assetId, propertyId }),
+      enabled: isDescribeAssetPropertyEnabled({ client, assetId, propertyId }),
       queryKey: cacheKeyFactory.create(),
       queryFn: createDescribeAssetPropertyQueryFn(client),
     },
@@ -32,21 +33,18 @@ export function useDescribeAssetProperty({
   );
 }
 
-const isAssetId = (assetId?: string): assetId is string => Boolean(assetId);
-
-const isPropertyId = (propertyId?: string): propertyId is string =>
-  Boolean(propertyId);
-
 export const isDescribeAssetPropertyEnabled = ({
+  client,
   assetId,
   propertyId,
 }: {
+  client?: IoTSiteWiseClient;
   assetId?: string;
   propertyId?: string;
-}) => isAssetId(assetId) && isPropertyId(propertyId);
+}) => hasClient(client) && isAssetId(assetId) && isPropertyId(propertyId);
 
 export const createDescribeAssetPropertyQueryFn = (
-  client: IoTSiteWiseClient
+  client?: IoTSiteWiseClient
 ) => {
   return async ({
     queryKey: [{ assetId, propertyId }],
@@ -54,6 +52,11 @@ export const createDescribeAssetPropertyQueryFn = (
   }: QueryFunctionContext<
     ReturnType<DescribeAssetPropertyCacheKeyFactory['create']>
   >) => {
+    invariant(
+      hasClient(client),
+      'Expected client to be defined as required by the enabled flag.'
+    );
+
     invariant(
       isAssetId(assetId),
       'Expected assetId to be defined as required by the enabled flag.'

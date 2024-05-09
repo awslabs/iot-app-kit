@@ -61,6 +61,16 @@ export type AssetModelQuery = {
   properties: AssetModelPropertyQuery[];
 };
 
+// Styled anomaly query
+export type AnomalyQuery = {
+  assetId: string;
+  predictionDefinitionId: string;
+
+  decimalPlaces?: number;
+  // color theme override for series data
+  color?: string[];
+};
+
 export type SiteWiseAssetQuery = DataStreamQuery & {
   assets: AssetQuery[];
   requestSettings?: RequestSettings;
@@ -78,6 +88,8 @@ export type SiteWiseAssetModelQuery = DataStreamQuery & {
 
 export type SiteWiseDataStreamQuery = Partial<SiteWiseAssetQuery> &
   Partial<SiteWisePropertyAliasQuery>;
+
+export type SiteWiseAnomalyDataStreamQuery = Partial<AnomalyQuery>;
 
 export type SiteWiseDataSourceSettings = {
   batchDuration?: number;
