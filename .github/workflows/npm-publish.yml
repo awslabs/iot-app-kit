@@ -94,7 +94,7 @@ jobs:
 
     steps:
       - name: Configure AWS credentials 🔑
-        uses: aws-actions/configure-aws-credentials@v3
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.BRAZIL_NPM_SYNC_ROLE }}
           aws-region: us-west-2
