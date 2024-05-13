@@ -1,7 +1,9 @@
+import { PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
+
 import { componentTypeToId } from '../../common/entityModelConstants';
 import { KnownComponentType } from '../../interfaces';
 
-import { createTagEntityComponent, parseTagComp, updateTagEntityComponent } from './tagComponent';
+import { TagComponentProperty, createTagEntityComponent, parseTagComp, updateTagEntityComponent } from './tagComponent';
 
 describe('createTagEntityComponent', () => {
   it('should return expected empty tag component', () => {
@@ -154,6 +156,61 @@ describe('updateTagEntityComponent', () => {
     expect(updateTagEntityComponent({ type: KnownComponentType.Tag })).toEqual({
       componentTypeId: componentTypeToId[KnownComponentType.Tag],
       propertyUpdates: {},
+    });
+  });
+
+  it('should reset properties that are no longer present', () => {
+    const tag = {
+      type: KnownComponentType.Tag,
+    };
+    expect(
+      updateTagEntityComponent(tag, {
+        ...tag,
+        icon: '',
+        valueDataBinding: {},
+        ruleBasedMapId: '',
+        navLink: {
+          params: [{ a: 'b' }],
+          destination: 'a',
+        },
+        offset: [1, 1, 1],
+        chosenColor: '',
+        customIcon: {
+          prefix: 'a',
+          iconName: 'a',
+        },
+      }),
+    ).toEqual({
+      componentTypeId: componentTypeToId[KnownComponentType.Tag],
+      propertyUpdates: {
+        [TagComponentProperty.Icon]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        [TagComponentProperty.StyleBinding]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        [TagComponentProperty.RuleBasedMapId]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        [TagComponentProperty.NavLinkDestination]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        [TagComponentProperty.NavLinkParams]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        [TagComponentProperty.ChosenColor]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        [TagComponentProperty.Offset]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        [TagComponentProperty.CustomIconName]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        [TagComponentProperty.CustomIconPrefix]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+      },
     });
   });
 });

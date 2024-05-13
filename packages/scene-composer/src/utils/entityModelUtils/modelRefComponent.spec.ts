@@ -1,5 +1,7 @@
+import { PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
+
 import { componentTypeToId } from '../../common/entityModelConstants';
-import { KnownComponentType } from '../../interfaces';
+import { DistanceUnits, KnownComponentType } from '../../interfaces';
 
 import { createModelRefEntityComponent, parseModelRefComp, updateModelRefEntityComponent } from './modelRefComponent';
 
@@ -118,6 +120,43 @@ describe('updateModelRefEntityComponent', () => {
           value: {
             stringValue: 'modelType',
           },
+        },
+      },
+    });
+  });
+
+  it('should reset properties that are no longer present', () => {
+    const model = { type: KnownComponentType.ModelRef, uri: 'abc', modelType: 'modelType' };
+    expect(
+      updateModelRefEntityComponent(model, {
+        ...model,
+        unitOfMeasure: DistanceUnits.kilometers,
+        localScale: [1, 1, 1],
+        castShadow: true,
+        receiveShadow: false,
+      }),
+    ).toEqual({
+      componentTypeId: componentTypeToId[KnownComponentType.ModelRef],
+      propertyUpdates: {
+        uri: {
+          value: { stringValue: 'abc' },
+        },
+        modelType: {
+          value: {
+            stringValue: 'modelType',
+          },
+        },
+        unitOfMeasure: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        localScale: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        castShadow: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        receiveShadow: {
+          updateType: PropertyUpdateType.RESET_VALUE,
         },
       },
     });

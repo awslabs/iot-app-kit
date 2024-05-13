@@ -9,8 +9,9 @@ import { IMotionIndicatorComponentInternal } from '../../store';
 import { Component } from '../../models/SceneModels';
 
 import { createDataBindingMap, parseDataBinding } from './dataBindingUtils';
+import { resetProperties } from './updateNodeEntity';
 
-enum MotionIndicatorComponentProperty {
+export enum MotionIndicatorComponentProperty {
   Shape = 'shape',
   ConfigNumOfRepeatInY = 'config_numOfRepeatInY',
   ConfigBackgroundColorOpacity = 'config_backgroundColorOpacity',
@@ -91,8 +92,12 @@ export const createMotionIndicatorEntityComponent = (indicator: IMotionIndicator
 
 export const updateMotionIndicatorEntityComponent = (
   motionIndicator: IMotionIndicatorComponent,
+  oldComponent?: IMotionIndicatorComponent,
 ): ComponentUpdateRequest => {
   const request = createMotionIndicatorEntityComponent(motionIndicator);
+  if (oldComponent) {
+    resetProperties(motionIndicator, oldComponent, request, Object.values(MotionIndicatorComponentProperty));
+  }
   return {
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,

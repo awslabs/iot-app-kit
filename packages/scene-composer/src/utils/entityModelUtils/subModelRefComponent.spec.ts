@@ -1,3 +1,5 @@
+import { PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
+
 import { componentTypeToId } from '../../common/entityModelConstants';
 import { KnownComponentType } from '../../interfaces';
 
@@ -50,6 +52,24 @@ describe('updateSubModelRefEntityComponent', () => {
     };
 
     expect(result).toEqual(expected);
+  });
+
+  it('should reset properties that are no longer present', () => {
+    const sub = {
+      type: KnownComponentType.SubModelRef,
+      selector: 'abc',
+    };
+    expect(updateSubModelRefEntityComponent(sub, { ...sub, parentRef: '' })).toEqual({
+      componentTypeId: componentTypeToId[KnownComponentType.SubModelRef],
+      propertyUpdates: {
+        parentRef: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        selector: {
+          value: { stringValue: 'abc' },
+        },
+      },
+    });
   });
 });
 

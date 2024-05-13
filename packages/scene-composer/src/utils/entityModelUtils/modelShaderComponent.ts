@@ -1,4 +1,4 @@
-import { ComponentRequest, ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
+import { ComponentRequest, ComponentUpdateRequest, PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { DocumentType } from '@aws-sdk/types';
 
 import { IColorOverlayComponent, KnownComponentType } from '../../interfaces';
@@ -8,7 +8,7 @@ import { generateUUID } from '../mathUtils';
 
 import { createDataBindingMap, parseDataBinding } from './dataBindingUtils';
 
-enum ModelShaderComponentProperty {
+export enum ModelShaderComponentProperty {
   DataBinding = 'dataBinding',
   RuleBasedMapId = 'ruleBasedMapId',
 }
@@ -34,8 +34,20 @@ export const createModelShaderEntityComponent = (shader: IColorOverlayComponent)
   return comp;
 };
 
-export const updateModelShaderEntityComponent = (modelShader: IColorOverlayComponent): ComponentUpdateRequest => {
+export const updateModelShaderEntityComponent = (
+  modelShader: IColorOverlayComponent,
+  oldComponent?: IColorOverlayComponent,
+): ComponentUpdateRequest => {
   const request = createModelShaderEntityComponent(modelShader);
+  if (
+    !modelShader.ruleBasedMapId &&
+    !modelShader.valueDataBinding &&
+    (oldComponent?.ruleBasedMapId || oldComponent?.valueDataBinding)
+  ) {
+    request.properties![ModelShaderComponentProperty.DataBinding] = {
+      updateType: PropertyUpdateType.RESET_VALUE,
+    };
+  }
   return {
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,

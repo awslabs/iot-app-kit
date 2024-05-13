@@ -1,4 +1,4 @@
-import { ComponentRequest, ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
+import { ComponentRequest, ComponentUpdateRequest, PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { DocumentType } from '@aws-sdk/types';
 
 import { ILightComponent, KnownComponentType } from '../../interfaces';
@@ -8,7 +8,7 @@ import { generateUUID } from '../mathUtils';
 import { Component, LightType } from '../../models/SceneModels';
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../common/constants';
 
-enum LightComponentProperty {
+export enum LightComponentProperty {
   LightType = 'lightType',
   LightSettingsColor = 'lightSettings_color',
   LightSettingsIntensity = 'lightSettings_intensity',
@@ -76,8 +76,40 @@ export const createLightEntityComponent = (light: ILightComponent): ComponentReq
   return comp;
 };
 
-export const updateLightEntityComponent = (light: ILightComponent): ComponentUpdateRequest => {
+export const updateLightEntityComponent = (
+  light: ILightComponent,
+  oldComponent?: ILightComponent,
+): ComponentUpdateRequest => {
   const request = createLightEntityComponent(light);
+  if (oldComponent?.lightType === LightType.Point) {
+    if (light.lightType === LightType.Point) {
+      if (!('distance' in light.lightSettings) && 'distance' in oldComponent.lightSettings) {
+        request.properties![LightComponentProperty.LightSettingsDistance] = {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        };
+      }
+      if (!('decay' in light.lightSettings) && 'decay' in oldComponent.lightSettings) {
+        request.properties![LightComponentProperty.LightSettingsDecay] = {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        };
+      }
+    } else {
+      request.properties![LightComponentProperty.LightSettingsDistance] = {
+        updateType: PropertyUpdateType.RESET_VALUE,
+      };
+      request.properties![LightComponentProperty.LightSettingsDecay] = {
+        updateType: PropertyUpdateType.RESET_VALUE,
+      };
+      request.properties![LightComponentProperty.LightSettingsCastShadow] = {
+        updateType: PropertyUpdateType.RESET_VALUE,
+      };
+    }
+  }
+  if (oldComponent?.lightType === LightType.Hemisphere && light.lightType !== LightType.Hemisphere) {
+    request.properties![LightComponentProperty.LightSettingsGroundColor] = {
+      updateType: PropertyUpdateType.RESET_VALUE,
+    };
+  }
   return {
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,

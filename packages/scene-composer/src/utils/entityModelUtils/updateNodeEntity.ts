@@ -1,4 +1,10 @@
-import { ComponentUpdateRequest, ComponentUpdateType, UpdateEntityCommandInput } from '@aws-sdk/client-iottwinmaker';
+import {
+  ComponentUpdateRequest,
+  ComponentRequest,
+  ComponentUpdateType,
+  UpdateEntityCommandInput,
+  PropertyUpdateType,
+} from '@aws-sdk/client-iottwinmaker';
 
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import {
@@ -30,12 +36,13 @@ export const updateEntity = async (
   node: ISceneNodeInternal,
   compsToBeUpdated?: ISceneComponentInternal[],
   updateType?: ComponentUpdateType,
-  oldParentRef?: string | undefined,
+  oldNode?: ISceneNodeInternal,
+  //oldParentRef?: string | undefined,
   sceneRootEntityId?: string | undefined,
 ): Promise<void> => {
   const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
 
-  const nodecomp = updateNodeEntityComponent(node, undefined);
+  const nodecomp = updateNodeEntityComponent(node, oldNode, undefined);
 
   let updateEntity: UpdateEntityCommandInput = {
     workspaceId: undefined,
@@ -47,7 +54,7 @@ export const updateEntity = async (
   };
 
   if (sceneRootEntityId) {
-    const oldParentEntityId = oldParentRef ?? sceneRootEntityId;
+    const oldParentEntityId = oldNode?.parentRef ?? sceneRootEntityId;
     const newParentEntityId = node.parentRef ?? sceneRootEntityId;
     if (newParentEntityId !== oldParentEntityId) {
       updateEntity = {
@@ -69,33 +76,54 @@ export const updateEntity = async (
           updateType: updateType,
         };
       } else {
+        const oldComponent = oldNode?.components.find((comp) => {
+          return comp.ref === compToBeUpdated.ref;
+        });
         switch (compToBeUpdated?.type) {
           case KnownComponentType.Tag:
-            comp = updateTagEntityComponent(compToBeUpdated);
+            comp = updateTagEntityComponent(compToBeUpdated, oldComponent);
             break;
           case KnownComponentType.DataOverlay:
-            comp = updateOverlayEntityComponent(compToBeUpdated as IDataOverlayComponent);
+            comp = updateOverlayEntityComponent(
+              compToBeUpdated as IDataOverlayComponent,
+              oldComponent as IDataOverlayComponent,
+            );
             break;
           case KnownComponentType.ModelRef:
-            comp = updateModelRefEntityComponent(compToBeUpdated as IModelRefComponent);
+            comp = updateModelRefEntityComponent(
+              compToBeUpdated as IModelRefComponent,
+              oldComponent as IModelRefComponent,
+            );
             break;
           case KnownComponentType.Camera:
-            comp = updateCameraEntityComponent(compToBeUpdated as ICameraComponent);
+            comp = updateCameraEntityComponent(compToBeUpdated as ICameraComponent, oldComponent as ICameraComponent);
             break;
           case KnownComponentType.MotionIndicator:
-            comp = updateMotionIndicatorEntityComponent(compToBeUpdated as IMotionIndicatorComponent);
+            comp = updateMotionIndicatorEntityComponent(
+              compToBeUpdated as IMotionIndicatorComponent,
+              oldComponent as IMotionIndicatorComponent,
+            );
             break;
           case KnownComponentType.ModelShader:
-            comp = updateModelShaderEntityComponent(compToBeUpdated as IColorOverlayComponent);
+            comp = updateModelShaderEntityComponent(
+              compToBeUpdated as IColorOverlayComponent,
+              oldComponent as IColorOverlayComponent,
+            );
             break;
           case KnownComponentType.Light:
-            comp = updateLightEntityComponent(compToBeUpdated as ILightComponent);
+            comp = updateLightEntityComponent(compToBeUpdated as ILightComponent, oldComponent as ILightComponent);
             break;
           case KnownComponentType.SubModelRef:
-            comp = updateSubModelRefEntityComponent(compToBeUpdated as ISubModelRefComponent);
+            comp = updateSubModelRefEntityComponent(
+              compToBeUpdated as ISubModelRefComponent,
+              oldComponent as ISubModelRefComponent,
+            );
             break;
           case KnownComponentType.PlaneGeometry:
-            comp = updatePlaneGeometryEntityComponent(compToBeUpdated as IPlaneGeometryComponent);
+            comp = updatePlaneGeometryEntityComponent(
+              compToBeUpdated as IPlaneGeometryComponent,
+              oldComponent as IPlaneGeometryComponent,
+            );
             break;
           default:
             throw new Error('Component type not supported');
@@ -112,5 +140,25 @@ export const updateEntity = async (
     await sceneMetadataModule?.updateSceneEntity(updateEntity);
   } catch (e) {
     console.error('Update scene node entity failed', e);
+  }
+};
+
+// resets top level properties, doesn't handle properties with object that have sub properties
+// also doesn't handle when the scene composer component property has a different name then the
+// Entity component property name
+// this makes it a useful first pass tool, but additional custom handling can be required for a specific
+// component type
+export const resetProperties = (
+  newComponent: object,
+  oldComponent: object,
+  request: ComponentRequest,
+  propValues: string[],
+): void => {
+  for (const property of propValues) {
+    if (!(property in newComponent) && property in oldComponent) {
+      request.properties![property] = {
+        updateType: PropertyUpdateType.RESET_VALUE,
+      };
+    }
   }
 };

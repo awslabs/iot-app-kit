@@ -38,13 +38,6 @@ export const getComponentType1Resp: GetComponentTypeCommandOutput = {
   componentTypeName: 'componentType1Name',
   creationDateTime: new Date(),
   description: 'description',
-  status: {
-    error: {
-      code: '',
-      message: '',
-    },
-    state: '',
-  },
   updateDateTime: new Date(),
 };
 
@@ -57,13 +50,6 @@ export const oneCtListComponentTypesResp: ListComponentTypesCommandOutput = {
       componentTypeName: getComponentType1Resp.componentTypeName,
       creationDateTime: getComponentType1Resp.creationDateTime,
       description: getComponentType1Resp.description,
-      status: {
-        error: {
-          code: '',
-          message: '',
-        },
-        state: '',
-      },
       updateDateTime: getComponentType1Resp.updateDateTime,
     },
   ],
@@ -144,13 +130,7 @@ export const getEntity1Resp: GetEntityCommandOutput = {
   entityName: 'entity1Name',
   creationDateTime: new Date(),
   description: 'description',
-  status: {
-    error: {
-      code: '',
-      message: '',
-    },
-    state: '',
-  },
+  status: {},
   updateDateTime: new Date(),
 };
 
@@ -163,13 +143,7 @@ export const oneEntityListEntitiesResp: ListEntitiesCommandOutput = {
       entityName: getEntity1Resp.entityName,
       creationDateTime: getEntity1Resp.creationDateTime,
       description: getEntity1Resp.description,
-      status: {
-        error: {
-          code: '',
-          message: '',
-        },
-        state: '',
-      },
+      status: {},
       updateDateTime: getEntity1Resp.updateDateTime,
     },
   ],

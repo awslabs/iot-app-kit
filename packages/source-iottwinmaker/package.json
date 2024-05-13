@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-iotsitewise": "3.456.0",
-    "@aws-sdk/client-iottwinmaker": "3.335.0",
+    "@aws-sdk/client-iottwinmaker": "3.589.0",
     "@aws-sdk/client-kinesis-video": "3.354.0",
     "@aws-sdk/client-kinesis-video-archived-media": "3.354.0",
     "@aws-sdk/client-s3": "3.335.0",

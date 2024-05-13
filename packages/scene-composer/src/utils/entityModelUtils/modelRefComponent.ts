@@ -1,4 +1,4 @@
-import { ComponentRequest, ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
+import { ComponentRequest, ComponentUpdateRequest, PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { DocumentType } from '@aws-sdk/types';
 
 import { IModelRefComponent, KnownComponentType } from '../../interfaces';
@@ -6,7 +6,7 @@ import { componentTypeToId } from '../../common/entityModelConstants';
 import { IModelRefComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
 
-enum ModelRefComponentProperty {
+export enum ModelRefComponentProperty {
   Uri = 'uri',
   ModelType = 'modelType',
   UnitOfMeasure = 'unitOfMeasure',
@@ -63,8 +63,33 @@ export const createModelRefEntityComponent = (model: IModelRefComponent): Compon
   return comp;
 };
 
-export const updateModelRefEntityComponent = (model: IModelRefComponent): ComponentUpdateRequest => {
+export const updateModelRefEntityComponent = (
+  model: IModelRefComponent,
+  oldComponent?: IModelRefComponent,
+): ComponentUpdateRequest => {
   const request = createModelRefEntityComponent(model);
+  //Not using resetProperty because model get's passed in as a Proxy object for some reason
+  // and that breaks checks likes 'property' in object
+  if (model.unitOfMeasure === undefined && oldComponent?.unitOfMeasure) {
+    request.properties![ModelRefComponentProperty.UnitOfMeasure] = {
+      updateType: PropertyUpdateType.RESET_VALUE,
+    };
+  }
+  if (model.castShadow === undefined && oldComponent?.castShadow !== undefined) {
+    request.properties![ModelRefComponentProperty.CastShadow] = {
+      updateType: PropertyUpdateType.RESET_VALUE,
+    };
+  }
+  if (model.localScale === undefined && oldComponent?.localScale) {
+    request.properties![ModelRefComponentProperty.LocalScale] = {
+      updateType: PropertyUpdateType.RESET_VALUE,
+    };
+  }
+  if (model.receiveShadow === undefined && oldComponent?.receiveShadow !== undefined) {
+    request.properties![ModelRefComponentProperty.ReceiveShadow] = {
+      updateType: PropertyUpdateType.RESET_VALUE,
+    };
+  }
   return {
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,

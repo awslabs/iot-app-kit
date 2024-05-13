@@ -2,6 +2,7 @@
 import { cloneDeep } from 'lodash';
 import flushPromises from 'flush-promises';
 import { Object3D, Vector3 } from 'three';
+import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
 
 import { IAnchorComponentInternal, IDataOverlayComponentInternal, ISceneNodeInternal } from '..';
 import { COMPOSER_FEATURES, IErrorDetails, KnownComponentType, KnownSceneProperty } from '../..';
@@ -1198,7 +1199,7 @@ describe('createSceneDocumentSlice', () => {
         document.nodeMap.testNode,
         undefined,
         undefined,
-        undefined,
+        documentBase.nodeMap.testNode,
         'sceneRootEntityId',
       );
     });
@@ -1224,7 +1225,7 @@ describe('createSceneDocumentSlice', () => {
         document.nodeMap.testNode,
         document.nodeMap.testNode.components,
         undefined,
-        undefined,
+        documentBase.nodeMap.testNode,
         'sceneRootEntityId',
       );
     });
@@ -1259,7 +1260,12 @@ describe('createSceneDocumentSlice', () => {
       updateComponentInternal('testNode', { ref: 'test-comp-2', type: 'updated' });
 
       expect(updateEntity).toBeCalledTimes(1);
-      expect(updateEntity).toBeCalledWith(document.nodeMap.testNode, [{ type: 'def', ref: 'test-comp-2' }]);
+      expect(updateEntity).toBeCalledWith(
+        document.nodeMap.testNode,
+        [{ type: 'def', ref: 'test-comp-2' }],
+        ComponentUpdateType.UPDATE,
+        documentBase.nodeMap.testNode,
+      );
       expect(draft.lastOperation!).toEqual('updateComponentInternal');
     });
 
@@ -1304,7 +1310,12 @@ describe('createSceneDocumentSlice', () => {
 
       expect(draft.lastOperation!).toEqual('removeComponent');
       expect(updateEntity).toBeCalledTimes(1);
-      expect(updateEntity).toBeCalledWith(document.nodeMap.testNode, [{ type: 'abc', ref: 'test-comp-1' }], 'DELETE');
+      expect(updateEntity).toBeCalledWith(
+        document.nodeMap.testNode,
+        [{ type: 'abc', ref: 'test-comp-1' }],
+        'DELETE',
+        documentBase.nodeMap.testNode,
+      );
       expect(onFlashMessage).toBeCalledTimes(1);
       expect(onFlashMessage).toBeCalledWith(expect.objectContaining({ type: 'success' }));
     });
