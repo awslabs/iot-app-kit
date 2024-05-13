@@ -104,7 +104,8 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
     isQueryEmpty(widget.properties.queryConfig as StyledSiteWiseQueryConfig);
   const cannotDownload = canOnlyDownloadLiveMode.some((t) => t === widget.type);
 
-  if (readOnly && (isEmptyQuery || cannotDownload)) return <></>;
+  if (readOnly && (isEmptyQuery || cannotDownload || isEdgeModeEnabled))
+    return <></>;
 
   return (
     <div
