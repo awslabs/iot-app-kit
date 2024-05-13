@@ -1,3 +1,5 @@
+import { PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
+
 import { DEFAULT_CAMERA_OPTIONS } from '../../common/constants';
 import { componentTypeToId } from '../../common/entityModelConstants';
 import { ICameraComponent, KnownComponentType } from '../../interfaces';
@@ -58,6 +60,48 @@ describe('updateCameraEntityComponent', () => {
           },
         },
       }),
+    });
+  });
+
+  it('should reset properties that are no longer present', () => {
+    expect(
+      updateCameraEntityComponent(
+        {
+          type: KnownComponentType.Camera,
+          cameraType: camera.cameraType,
+          near: camera.near,
+          far: camera.far,
+          zoom: camera.zoom,
+        },
+        camera,
+      ),
+    ).toEqual({
+      componentTypeId: componentTypeToId[KnownComponentType.Camera],
+      propertyUpdates: {
+        cameraType: {
+          value: {
+            stringValue: CameraType.Orthographic,
+          },
+        },
+        fov: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        near: {
+          value: {
+            doubleValue: DEFAULT_CAMERA_OPTIONS.near,
+          },
+        },
+        far: {
+          value: {
+            doubleValue: DEFAULT_CAMERA_OPTIONS.far,
+          },
+        },
+        zoom: {
+          value: {
+            doubleValue: 1,
+          },
+        },
+      },
     });
   });
 });

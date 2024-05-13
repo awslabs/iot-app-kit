@@ -45,6 +45,7 @@
     "vite": "^4.5.3"
   },
   "devDependencies": {
+    "@aws-sdk/util-endpoints": "file:./tempLibraries/aws-sdk-util-endpoints-v3.567.0.tgz",
     "@commitlint/cli": "^17.6.7",
     "@commitlint/config-conventional": "^17.6.5",
     "@playwright/test": "^1.39.0",

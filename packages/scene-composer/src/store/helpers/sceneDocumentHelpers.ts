@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 
 import ILogger from '../../logger/ILogger';
 import { isDynamicNode, isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
@@ -169,7 +169,7 @@ export const updateSceneNode = (
   skipEntityUpdate?: boolean,
 ): void => {
   // cache these values before merge deep overwrites them
-  const nodeToMove = draft.document.nodeMap[ref];
+  const nodeToMove = cloneDeep(draft.document.nodeMap[ref]);
   const oldParentRef = nodeToMove?.parentRef;
   const oldParent = draft.document.nodeMap[oldParentRef || ''];
 
@@ -203,6 +203,6 @@ export const updateSceneNode = (
   if (isDynamicScene(draft.document) && !skipEntityUpdate) {
     const compsToBeUpdated = !isEmpty(partial.components) ? updatedNode.components : undefined;
     const sceneRootEntityId = draft.document.properties?.sceneRootEntityId;
-    updateEntity(updatedNode, compsToBeUpdated, undefined, oldParentRef, sceneRootEntityId);
+    updateEntity(updatedNode, compsToBeUpdated, undefined, nodeToMove, sceneRootEntityId);
   }
 };

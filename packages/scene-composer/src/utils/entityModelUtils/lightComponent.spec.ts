@@ -1,9 +1,16 @@
+import { PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
+
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../common/constants';
 import { componentTypeToId } from '../../common/entityModelConstants';
 import { ILightComponent, KnownComponentType } from '../../interfaces';
 import { LightType } from '../../models/SceneModels';
 
-import { createLightEntityComponent, parseLightComp, updateLightEntityComponent } from './lightComponent';
+import {
+  createLightEntityComponent,
+  parseLightComp,
+  updateLightEntityComponent,
+  LightComponentProperty,
+} from './lightComponent';
 
 const ambientLight: ILightComponent = {
   type: KnownComponentType.Light,
@@ -192,6 +199,111 @@ describe('updateLightEntityComponent', () => {
           },
         },
       }),
+    });
+  });
+
+  it('should return reset point light values not supplied', () => {
+    expect(
+      updateLightEntityComponent(
+        {
+          type: KnownComponentType.Light,
+          lightType: LightType.Point,
+          lightSettings: {
+            color: DEFAULT_LIGHT_SETTINGS_MAP.Point.color,
+            intensity: DEFAULT_LIGHT_SETTINGS_MAP.Point.intensity,
+            castShadow: DEFAULT_LIGHT_SETTINGS_MAP.Point.castShadow,
+          },
+        },
+        pointLight,
+      ),
+    ).toEqual({
+      componentTypeId: componentTypeToId[KnownComponentType.Light],
+      propertyUpdates: {
+        lightType: {
+          value: {
+            stringValue: LightType.Point,
+          },
+        },
+        lightSettings_color: {
+          value: {
+            stringValue: DEFAULT_LIGHT_SETTINGS_MAP.Point.color,
+          },
+        },
+        lightSettings_intensity: {
+          value: {
+            doubleValue: DEFAULT_LIGHT_SETTINGS_MAP.Point.intensity,
+          },
+        },
+        lightSettings_castShadow: {
+          value: {
+            booleanValue: DEFAULT_LIGHT_SETTINGS_MAP.Point.castShadow,
+          },
+        },
+        [LightComponentProperty.LightSettingsDecay]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        [LightComponentProperty.LightSettingsDistance]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+      },
+    });
+  });
+
+  it('should return reset point light values when changing light type', () => {
+    expect(updateLightEntityComponent(ambientLight, pointLight)).toEqual({
+      componentTypeId: componentTypeToId[KnownComponentType.Light],
+      propertyUpdates: {
+        lightType: {
+          value: {
+            stringValue: LightType.Ambient,
+          },
+        },
+        lightSettings_color: {
+          value: {
+            stringValue: DEFAULT_LIGHT_SETTINGS_MAP.Ambient.color,
+          },
+        },
+        lightSettings_intensity: {
+          value: {
+            doubleValue: DEFAULT_LIGHT_SETTINGS_MAP.Ambient.intensity,
+          },
+        },
+        [LightComponentProperty.LightSettingsDecay]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        [LightComponentProperty.LightSettingsDistance]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+        [LightComponentProperty.LightSettingsCastShadow]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+      },
+    });
+  });
+
+  it('should return reset hemisphere light values when changing light type', () => {
+    expect(updateLightEntityComponent(ambientLight, hemisphereLight)).toEqual({
+      componentTypeId: componentTypeToId[KnownComponentType.Light],
+      propertyUpdates: {
+        lightType: {
+          value: {
+            stringValue: LightType.Ambient,
+          },
+        },
+        lightSettings_color: {
+          value: {
+            stringValue: DEFAULT_LIGHT_SETTINGS_MAP.Ambient.color,
+          },
+        },
+        lightSettings_intensity: {
+          value: {
+            doubleValue: DEFAULT_LIGHT_SETTINGS_MAP.Ambient.intensity,
+          },
+        },
+        [LightComponentProperty.LightSettingsGroundColor]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+      },
     });
   });
 });

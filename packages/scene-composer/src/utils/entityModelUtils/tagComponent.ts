@@ -1,5 +1,6 @@
-import { ComponentRequest, ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
+import { ComponentRequest, ComponentUpdateRequest, PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { DocumentType } from '@aws-sdk/types';
+import { isEmpty } from 'lodash';
 
 import { IAnchorComponent, KnownComponentType } from '../../interfaces';
 import { componentTypeToId } from '../../common/entityModelConstants';
@@ -7,8 +8,9 @@ import { IAnchorComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
 
 import { createDataBindingMap, parseDataBinding } from './dataBindingUtils';
+import { resetProperties } from './updateNodeEntity';
 
-enum TagComponentProperty {
+export enum TagComponentProperty {
   Icon = 'icon',
   NavLinkDestination = 'navLink_destination',
   NavLinkParams = 'navLink_params',
@@ -96,8 +98,38 @@ export const createTagEntityComponent = (tag: IAnchorComponent): ComponentReques
   return comp;
 };
 
-export const updateTagEntityComponent = (tag: IAnchorComponent): ComponentUpdateRequest => {
+export const updateTagEntityComponent = (
+  tag: IAnchorComponent,
+  oldComponent?: IAnchorComponent,
+): ComponentUpdateRequest => {
   const request = createTagEntityComponent(tag);
+  if (oldComponent) {
+    resetProperties(tag, oldComponent, request, Object.values(TagComponentProperty));
+    //handle special tags properties that are objects
+    if (!tag.navLink?.destination && oldComponent.navLink?.destination) {
+      request.properties![TagComponentProperty.NavLinkDestination] = {
+        updateType: PropertyUpdateType.RESET_VALUE,
+      };
+    }
+    if ((!tag.navLink?.params || isEmpty(tag.navLink.params)) && oldComponent.navLink?.params) {
+      request.properties![TagComponentProperty.NavLinkParams] = {
+        updateType: PropertyUpdateType.RESET_VALUE,
+      };
+    }
+    if (!tag.customIcon && oldComponent.customIcon) {
+      request.properties![TagComponentProperty.CustomIconPrefix] = {
+        updateType: PropertyUpdateType.RESET_VALUE,
+      };
+      request.properties![TagComponentProperty.CustomIconName] = {
+        updateType: PropertyUpdateType.RESET_VALUE,
+      };
+    }
+    if (!tag.valueDataBinding && oldComponent.valueDataBinding) {
+      request.properties![TagComponentProperty.StyleBinding] = {
+        updateType: PropertyUpdateType.RESET_VALUE,
+      };
+    }
+  }
   return {
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,

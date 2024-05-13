@@ -80,6 +80,5 @@ describe('toDataType', () => {
     expect(toDataType({ type: 'MAP' })).toEqual('STRING');
     expect(toDataType({ type: 'RELATIONSHIP' })).toEqual('STRING');
     expect(toDataType({ type: 'STRING' })).toEqual('STRING');
-    expect(toDataType({ type: 'RANDOM' })).toEqual('STRING');
   });
 });

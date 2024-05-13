@@ -6,6 +6,8 @@ import { componentTypeToId } from '../../common/entityModelConstants';
 import { ISubModelRefComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
 
+import { resetProperties } from './updateNodeEntity';
+
 export enum SubModelRefComponentProperty {
   Selector = 'selector',
   ParentRef = 'parentRef',
@@ -35,8 +37,14 @@ export const createSubModelRefEntityComponent = (subModel: ISubModelRefComponent
   return comp;
 };
 
-export const updateSubModelRefEntityComponent = (model: ISubModelRefComponent): ComponentUpdateRequest => {
+export const updateSubModelRefEntityComponent = (
+  model: ISubModelRefComponent,
+  oldComponent?: ISubModelRefComponent,
+): ComponentUpdateRequest => {
   const request = createSubModelRefEntityComponent(model);
+  if (oldComponent) {
+    resetProperties(model, oldComponent, request, Object.values(SubModelRefComponentProperty));
+  }
   return {
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,

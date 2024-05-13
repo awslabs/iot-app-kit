@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "10.3.0",
+  "version": "10.3.0-beta",
   "description": "AWS IoT TwinMaker Scene Composer Library",
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "license": "Apache-2.0",
@@ -77,6 +77,8 @@
     "svglint": "svglint src/assets/**/*.svg"
   },
   "peerDependencies": {
+    "@aws-sdk/client-iottwinmaker": "^3.571.0",
+    "@aws-sdk/core": "^3.567.0",
     "react": "^18",
     "react-dom": "^18",
     "react-intl": "^6",
@@ -85,8 +87,10 @@
     "@cloudscape-design/global-styles": "^1"
   },
   "devDependencies": {
-    "@aws-sdk/credential-providers": "3.395.0",
-    "@aws-sdk/types": "^3.310.0",
+    "@aws-sdk/credential-providers": "^3.395.0",
+    "@aws-sdk/client-iottwinmaker": "file:./../../tempLibraries/aws-sdk-client-iottwinmaker-3.571.0.tgz",
+    "@aws-sdk/core": "file:./../../tempLibraries/aws-sdk-core-3.567.0.tgz",
+    "@aws-sdk/types": "file:./../../tempLibraries/aws-sdk-types-3.567.0.tgz",
     "@cloudscape-design/components": "^3.0.590",
     "@cloudscape-design/design-tokens": "^3.0.35",
     "@cloudscape-design/global-styles": "^1.0.25",
@@ -147,7 +151,6 @@
     "webpack": "^5.88.2"
   },
   "dependencies": {
-    "@aws-sdk/client-iottwinmaker": "3.335.0",
     "@formatjs/ts-transformer": "3.13.3",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
@@ -155,7 +158,7 @@
     "@iot-app-kit/core": "10.3.0",
     "@iot-app-kit/react-components": "10.3.0",
     "@iot-app-kit/related-table": "10.3.0",
-    "@iot-app-kit/source-iottwinmaker": "10.3.0",
+    "@iot-app-kit/source-iottwinmaker": "10.3.0-beta",
     "@matterport/r3f": "0.2.7",
     "@matterport/webcomponent": "0.1.35",
     "@react-three/drei": "9.56.27",

@@ -1,4 +1,4 @@
-import { ComponentRequest, ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
+import { ComponentRequest, ComponentUpdateRequest, PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { DocumentType } from '@aws-sdk/types';
 import { isEmpty } from 'lodash';
 
@@ -23,7 +23,7 @@ import { parseLightComp } from './lightComponent';
 import { parseSubModelRefComp } from './subModelRefComponent';
 import { parsePlaneGeometryComp } from './planeGeometryComponent';
 
-enum NodeComponentProperty {
+export enum NodeComponentProperty {
   Name = 'name',
   TransformPosition = 'transform_position',
   TransformRotation = 'transform_rotation',
@@ -104,16 +104,34 @@ export const createNodeEntityComponent = (node: ISceneNode, layerId?: string): C
         },
       },
     };
-  } else {
-    // TODO: handle clear entity binding
-    console.warn('Delete Entity Binding is not currently supported.');
   }
 
   return comp;
 };
 
-export const updateNodeEntityComponent = (node: ISceneNode, layerId?: string): ComponentUpdateRequest => {
+export const updateNodeEntityComponent = (
+  node: ISceneNode,
+  oldNode?: ISceneNode,
+  layerId?: string,
+): ComponentUpdateRequest => {
   const request = createNodeEntityComponent(node, layerId);
+
+  if (oldNode) {
+    const entityBinding = node.components?.find(
+      (component) => component.type === 'EntityBinding',
+    ) as IEntityBindingComponent;
+    const oldEntityBinding = oldNode.components?.find(
+      (component) => component.type === 'EntityBinding',
+    ) as IEntityBindingComponent;
+    if (
+      !entityBinding?.valueDataBinding?.dataBindingContext?.entityId &&
+      oldEntityBinding?.valueDataBinding?.dataBindingContext?.entityId
+    ) {
+      request.properties![DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME] = {
+        updateType: PropertyUpdateType.RESET_VALUE,
+      };
+    }
+  }
 
   return {
     componentTypeId: request.componentTypeId,

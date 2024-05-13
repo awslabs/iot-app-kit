@@ -14,7 +14,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "10.3.0",
+  "version": "10.3.0-beta",
   "scripts": {
     "start": "npm run build && npx start-storybook -p 6007",
     "dev": "npm-watch build",
@@ -55,6 +55,7 @@
     }
   },
   "devDependencies": {
+    "@aws-sdk/client-iottwinmaker": "file:./../../tempLibraries/aws-sdk-client-iottwinmaker-3.571.0.tgz",
     "@iot-app-kit/core": "10.3.0",
     "@iot-app-kit/jest-config": "10.3.0",
     "@iot-app-kit/source-iotsitewise": "10.3.0",
@@ -115,7 +116,7 @@
     "@iot-app-kit/components": "10.3.0",
     "@iot-app-kit/core": "10.3.0",
     "@iot-app-kit/core-util": "10.3.0",
-    "@iot-app-kit/source-iottwinmaker": "10.3.0",
+    "@iot-app-kit/source-iottwinmaker": "10.3.0-beta",
     "color": "^4.2.3",
     "copy-to-clipboard": "^3.3.3",
     "d3-array": "^3.2.3",

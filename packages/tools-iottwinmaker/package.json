@@ -37,6 +37,7 @@
     "package-mac": "pkg . --targets node16-macos-x64 --output tmdt_local"
   },
   "devDependencies": {
+    "@aws-sdk/client-iottwinmaker": "file:./../../tempLibraries/aws-sdk-client-iottwinmaker-3.571.0.tgz",
     "@types/node": "^18.16.18",
     "@types/prompts": "^2.4.4",
     "@types/yargs": "^17.0.24",
@@ -49,13 +50,15 @@
   "dependencies": {
     "@aws-sdk/client-cloudformation": "^3.376.0",
     "@aws-sdk/client-iam": "^3.292.0",
-    "@aws-sdk/client-iottwinmaker": "^3.335.0",
     "@aws-sdk/client-kinesis-video": "^3.354.0",
     "@aws-sdk/client-s3": "^3.335.0",
     "@aws-sdk/client-sts": "^3.335.0",
     "@aws-sdk/types": "^3.310.0",
     "prompts": "^2.4.2",
     "yargs": "^17.7.2"
+  },
+  "peerDependencies": {
+    "@aws-sdk/client-iottwinmaker": "^3.571.0"
   },
   "pkg": {
     "scripts": "dist/cjs/**/*.js"

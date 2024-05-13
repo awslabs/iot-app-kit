@@ -42,6 +42,10 @@
     ]
   },
   "devDependencies": {
+    "@aws-sdk/client-iottwinmaker": "file:./../../tempLibraries/aws-sdk-client-iottwinmaker-3.571.0.tgz",
+    "@aws-sdk/core": "file:./../../tempLibraries/aws-sdk-core-3.567.0.tgz",
+    "@aws-sdk/types": "file:./../../tempLibraries/aws-sdk-types-3.567.0.tgz",
+    "@aws-sdk/util-endpoints": "file:./../../tempLibraries/aws-sdk-util-endpoints-v3.567.0.tgz",
     "@svgr/webpack": "^7.0.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
