@@ -16,7 +16,7 @@ export function getValidRefreshRate(refreshRate: number) {
   try {
     if (refreshRate && refreshRate < 1000) {
       throw new Error(
-        'Refresh rate has minimum value of 1000 miliseconds. Setting rerfesh rate to 1 second.'
+        'Refresh rate has minimum value of 1000 milliseconds. Setting refresh rate to 1 second.'
       );
     }
     return refreshRate;
