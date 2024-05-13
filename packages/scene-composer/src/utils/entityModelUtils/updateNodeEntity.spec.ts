@@ -73,7 +73,7 @@ describe('updateEntity', () => {
     });
 
     expect(updateNodeEntityComponent).toBeCalledTimes(1);
-    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined);
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, undefined);
     expect(updateTagEntityComponent).not.toBeCalled();
     expect(updateOverlayEntityComponent).not.toBeCalled();
   });
@@ -115,25 +115,25 @@ describe('updateEntity', () => {
     });
 
     expect(updateNodeEntityComponent).toBeCalledTimes(1);
-    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined);
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, undefined);
     expect(updateTagEntityComponent).toBeCalledTimes(1);
-    expect(updateTagEntityComponent).toBeCalledWith(tag);
+    expect(updateTagEntityComponent).toBeCalledWith(tag, undefined);
     expect(updateOverlayEntityComponent).toBeCalledTimes(1);
-    expect(updateOverlayEntityComponent).toBeCalledWith(overlay);
+    expect(updateOverlayEntityComponent).toBeCalledWith(overlay, undefined);
     expect(updateCameraEntityComponent).toBeCalledTimes(1);
-    expect(updateCameraEntityComponent).toBeCalledWith(camera);
+    expect(updateCameraEntityComponent).toBeCalledWith(camera, undefined);
     expect(updateMotionIndicatorEntityComponent).toBeCalledTimes(1);
-    expect(updateMotionIndicatorEntityComponent).toBeCalledWith(motionIndicator);
+    expect(updateMotionIndicatorEntityComponent).toBeCalledWith(motionIndicator, undefined);
     expect(updateModelRefEntityComponent).toBeCalledTimes(1);
-    expect(updateModelRefEntityComponent).toBeCalledWith(modelRef);
+    expect(updateModelRefEntityComponent).toBeCalledWith(modelRef, undefined);
     expect(updateModelShaderEntityComponent).toBeCalledTimes(1);
-    expect(updateModelShaderEntityComponent).toBeCalledWith(modelShader);
+    expect(updateModelShaderEntityComponent).toBeCalledWith(modelShader, undefined);
     expect(updateLightEntityComponent).toBeCalledTimes(1);
-    expect(updateLightEntityComponent).toBeCalledWith(light);
+    expect(updateLightEntityComponent).toBeCalledWith(light, undefined);
     expect(updateSubModelRefEntityComponent).toBeCalledTimes(1);
-    expect(updateSubModelRefEntityComponent).toBeCalledWith(subModelRef);
+    expect(updateSubModelRefEntityComponent).toBeCalledWith(subModelRef, undefined);
     expect(updatePlaneGeometryEntityComponent).toBeCalledTimes(1);
-    expect(updatePlaneGeometryEntityComponent).toBeCalledWith(planeGeometry);
+    expect(updatePlaneGeometryEntityComponent).toBeCalledWith(planeGeometry, undefined);
   });
 
   it('should call update entity to update tag component', async () => {
@@ -153,9 +153,9 @@ describe('updateEntity', () => {
     });
 
     expect(updateNodeEntityComponent).toBeCalledTimes(1);
-    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined);
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, undefined);
     expect(updateTagEntityComponent).toBeCalledTimes(1);
-    expect(updateTagEntityComponent).toBeCalledWith(compToUpdate);
+    expect(updateTagEntityComponent).toBeCalledWith(compToUpdate, undefined);
     expect(updateOverlayEntityComponent).not.toBeCalled();
   });
 
@@ -176,9 +176,9 @@ describe('updateEntity', () => {
     });
 
     expect(updateNodeEntityComponent).toBeCalledTimes(1);
-    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined);
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, undefined);
     expect(updateOverlayEntityComponent).toBeCalledTimes(1);
-    expect(updateOverlayEntityComponent).toBeCalledWith(compToUpdate);
+    expect(updateOverlayEntityComponent).toBeCalledWith(compToUpdate, undefined);
     expect(updateTagEntityComponent).not.toBeCalled();
   });
 
@@ -198,7 +198,7 @@ describe('updateEntity', () => {
     });
 
     expect(updateNodeEntityComponent).toBeCalledTimes(1);
-    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined);
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, undefined);
     expect(updateOverlayEntityComponent).not.toBeCalled();
     expect(updateTagEntityComponent).not.toBeCalled();
   });
@@ -220,7 +220,7 @@ describe('updateEntity', () => {
     });
 
     expect(updateNodeEntityComponent).toBeCalledTimes(1);
-    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined);
+    expect(updateNodeEntityComponent).toBeCalledWith(defaultNode, undefined, undefined);
     expect(updateOverlayEntityComponent).not.toBeCalled();
     expect(updateTagEntityComponent).not.toBeCalled();
   });

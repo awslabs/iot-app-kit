@@ -6,6 +6,8 @@ import { componentTypeToId } from '../../common/entityModelConstants';
 import { IPlaneGeometryComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
 
+import { resetProperties } from './updateNodeEntity';
+
 enum PlaneGeometryComponentProperty {
   Width = 'width',
   Height = 'height',
@@ -47,8 +49,14 @@ export const createPlaneGeometryEntityComponent = (geometry: IPlaneGeometryCompo
   return comp;
 };
 
-export const updatePlaneGeometryEntityComponent = (geometry: IPlaneGeometryComponent): ComponentUpdateRequest => {
+export const updatePlaneGeometryEntityComponent = (
+  geometry: IPlaneGeometryComponent,
+  oldComponent?: IPlaneGeometryComponent,
+): ComponentUpdateRequest => {
   const request = createPlaneGeometryEntityComponent(geometry);
+  if (oldComponent) {
+    resetProperties(geometry, oldComponent, request, Object.values(PlaneGeometryComponentProperty));
+  }
   return {
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,

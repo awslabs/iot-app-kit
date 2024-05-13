@@ -1,3 +1,5 @@
+import { PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
+
 import { componentTypeToId } from '../../common/entityModelConstants';
 import { IPlaneGeometryComponent, KnownComponentType } from '../../interfaces';
 
@@ -154,6 +156,30 @@ describe('createPlaneGeometryEntityComponent', () => {
             },
           },
         }),
+      });
+    });
+
+    it('should reset properties that are no longer present', () => {
+      expect(updatePlaneGeometryEntityComponent(plane, { ...plane, textureUri: '', color: '' })).toEqual({
+        componentTypeId: componentTypeToId[KnownComponentType.PlaneGeometry],
+        propertyUpdates: {
+          textureUri: {
+            updateType: PropertyUpdateType.RESET_VALUE,
+          },
+          color: {
+            updateType: PropertyUpdateType.RESET_VALUE,
+          },
+          width: {
+            value: {
+              doubleValue: 10,
+            },
+          },
+          height: {
+            value: {
+              doubleValue: 20,
+            },
+          },
+        },
       });
     });
   });

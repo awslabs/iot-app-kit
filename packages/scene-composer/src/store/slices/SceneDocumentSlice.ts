@@ -1,5 +1,5 @@
 import { isDataBindingTemplate } from '@iot-app-kit/source-iottwinmaker';
-import { isEmpty, isString } from 'lodash';
+import { cloneDeep, isEmpty, isString } from 'lodash';
 import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
 
 import {
@@ -348,7 +348,7 @@ export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> =
       if (!component.ref) {
         throw new Error('Error: missing component ref');
       }
-      const node = get().getSceneNodeByRef(nodeRef);
+      const node = cloneDeep(get().getSceneNodeByRef(nodeRef));
 
       if (!node) {
         throw new Error('Error: invalid nodeRef ' + nodeRef);
@@ -370,7 +370,7 @@ export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> =
         const updatedComponenet = updatedNode?.components[componentToUpdateIndex];
 
         if (updatedComponenet && isDynamicNode(updatedNode)) {
-          updateEntity(updatedNode, [updatedComponenet]);
+          updateEntity(updatedNode, [updatedComponenet], ComponentUpdateType.UPDATE, node);
         }
 
         draft.lastOperation = 'updateComponentInternal';
@@ -378,7 +378,7 @@ export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> =
     },
 
     removeComponent: (nodeRef, componentRef) => {
-      const node = get().getSceneNodeByRef(nodeRef);
+      const node = cloneDeep(get().getSceneNodeByRef(nodeRef));
       if (!node) return;
 
       const componentIndex = node.components.findIndex((c) => c.ref === componentRef);
@@ -394,13 +394,15 @@ export const createSceneDocumentSlice: SliceCreator<keyof ISceneDocumentSlice> =
         const removedComponenet = draft.document.nodeMap[nodeRef].components.splice(componentIndex, 1).at(0);
 
         if (removedComponenet && isDynamicNode(draft.document.nodeMap[nodeRef])) {
-          updateEntity(draft.document.nodeMap[nodeRef], [removedComponenet], ComponentUpdateType.DELETE).then(() => {
-            // TODO: localize strings
-            getGlobalSettings().onFlashMessage?.({
-              type: 'success',
-              header: `Successfully deleted ${removedComponenet.type} component from ${node.name}.`,
-            });
-          });
+          updateEntity(draft.document.nodeMap[nodeRef], [removedComponenet], ComponentUpdateType.DELETE, node).then(
+            () => {
+              // TODO: localize strings
+              getGlobalSettings().onFlashMessage?.({
+                type: 'success',
+                header: `Successfully deleted ${removedComponenet.type} component from ${node.name}.`,
+              });
+            },
+          );
         }
 
         draft.lastOperation = 'removeComponent';

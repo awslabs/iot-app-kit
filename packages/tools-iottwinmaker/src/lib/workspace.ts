@@ -18,6 +18,7 @@ import {
   NoSuchEntityException,
 } from '@aws-sdk/client-iam';
 import {
+  BucketLocationConstraint,
   CreateBucketCommandOutput,
   CreateBucketRequest,
   GetBucketLoggingCommandOutput,
@@ -161,7 +162,7 @@ async function createS3Bucket(
    */
   if (region !== 'us-east-1') {
     params.CreateBucketConfiguration = {
-      LocationConstraint: region,
+      LocationConstraint: region as BucketLocationConstraint,
     };
   }
   const createBucketResponse: CreateBucketCommandOutput =

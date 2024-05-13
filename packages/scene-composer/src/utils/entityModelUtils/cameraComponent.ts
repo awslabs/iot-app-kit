@@ -8,7 +8,9 @@ import { generateUUID } from '../mathUtils';
 import { CameraType } from '../../models/SceneModels';
 import { DEFAULT_CAMERA_OPTIONS } from '../../common/constants';
 
-enum CameraComponentProperty {
+import { resetProperties } from './updateNodeEntity';
+
+export enum CameraComponentProperty {
   CameraType = 'cameraType',
   Fov = 'fov',
   Near = 'near',
@@ -60,8 +62,14 @@ export const createCameraEntityComponent = (camera: ICameraComponent): Component
   return comp;
 };
 
-export const updateCameraEntityComponent = (camera: ICameraComponent): ComponentUpdateRequest => {
+export const updateCameraEntityComponent = (
+  camera: ICameraComponent,
+  oldComponent?: ICameraComponent,
+): ComponentUpdateRequest => {
   const request = createCameraEntityComponent(camera);
+  if (oldComponent) {
+    resetProperties(camera, oldComponent, request, Object.values(CameraComponentProperty));
+  }
   return {
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,

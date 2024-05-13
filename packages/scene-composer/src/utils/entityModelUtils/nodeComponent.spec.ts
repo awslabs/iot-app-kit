@@ -1,3 +1,5 @@
+import { PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
+
 import {
   DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
   DEFAULT_LAYER_COMPONENT_NAME,
@@ -166,6 +168,37 @@ describe('updateNodeEntityComponent', () => {
           value: {
             stringValue: 'Test',
           },
+        },
+      },
+    });
+  });
+
+  it('should remove entity binding', () => {
+    expect(
+      updateNodeEntityComponent(
+        { name: 'Test' },
+        {
+          name: 'Test',
+          components: [
+            {
+              type: KnownComponentType.EntityBinding,
+              valueDataBinding: {
+                dataBindingContext: { entityId: 'data-entity-id' },
+              },
+            } as ISceneComponent,
+          ],
+        },
+      ),
+    ).toEqual({
+      componentTypeId: NODE_COMPONENT_TYPE_ID,
+      propertyUpdates: {
+        name: {
+          value: {
+            stringValue: 'Test',
+          },
+        },
+        [DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
         },
       },
     });

@@ -1,4 +1,4 @@
-import { ComponentRequest, ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
+import { ComponentRequest, ComponentUpdateRequest, PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { isEmpty } from 'lodash';
 import { DocumentType } from '@aws-sdk/types';
 
@@ -9,8 +9,9 @@ import { IDataOverlayComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
 
 import { createDataBindingMap, parseDataBinding } from './dataBindingUtils';
+import { resetProperties } from './updateNodeEntity';
 
-enum OverlayComponentProperty {
+export enum OverlayComponentProperty {
   SubType = 'subType',
   DataRows = 'dataRows',
   RowType = 'rowType',
@@ -81,8 +82,22 @@ export const createOverlayEntityComponent = (overlay: IDataOverlayComponent): Co
   return comp;
 };
 
-export const updateOverlayEntityComponent = (overlay: IDataOverlayComponent): ComponentUpdateRequest => {
+export const updateOverlayEntityComponent = (
+  overlay: IDataOverlayComponent,
+  oldComponent?: IDataOverlayComponent,
+): ComponentUpdateRequest => {
   const request = createOverlayEntityComponent(overlay);
+  if (oldComponent) {
+    resetProperties(overlay, oldComponent, request, Object.values(OverlayComponentProperty));
+    if (
+      (!overlay.valueDataBindings || isEmpty(overlay.valueDataBindings)) &&
+      !isEmpty(oldComponent.valueDataBindings)
+    ) {
+      request.properties![OverlayComponentProperty.RowBindings] = {
+        updateType: PropertyUpdateType.RESET_VALUE,
+      };
+    }
+  }
   return {
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,

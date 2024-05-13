@@ -1,3 +1,5 @@
+import { PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
+
 import { componentTypeToId } from '../../common/entityModelConstants';
 import { KnownComponentType } from '../../interfaces';
 
@@ -5,6 +7,7 @@ import {
   createModelShaderEntityComponent,
   parseModelShaderComp,
   updateModelShaderEntityComponent,
+  ModelShaderComponentProperty,
 } from './modelShaderComponent';
 
 describe('createModelShaderEntityComponent', () => {
@@ -71,6 +74,26 @@ describe('updateModelShaderEntityComponent', () => {
     expect(updateModelShaderEntityComponent({ type: KnownComponentType.ModelShader })).toEqual({
       componentTypeId: componentTypeToId[KnownComponentType.ModelShader],
       propertyUpdates: {},
+    });
+  });
+
+  it('should reset properties that are no longer present', () => {
+    const shader = { type: KnownComponentType.ModelShader };
+    expect(updateModelShaderEntityComponent(shader, { ...shader, ruleBasedMapId: 'rule' })).toEqual({
+      componentTypeId: componentTypeToId[KnownComponentType.ModelShader],
+      propertyUpdates: {
+        [ModelShaderComponentProperty.DataBinding]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+      },
+    });
+    expect(updateModelShaderEntityComponent(shader, { ...shader, valueDataBinding: {} })).toEqual({
+      componentTypeId: componentTypeToId[KnownComponentType.ModelShader],
+      propertyUpdates: {
+        [ModelShaderComponentProperty.DataBinding]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
+        },
+      },
     });
   });
 });

@@ -1,8 +1,15 @@
+import { PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
+
 import { MAX_PROPERTY_STRING_LENGTH, componentTypeToId } from '../../common/entityModelConstants';
 import { KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
 
-import { createOverlayEntityComponent, parseOverlayComp, updateOverlayEntityComponent } from './overlayComponent';
+import {
+  OverlayComponentProperty,
+  createOverlayEntityComponent,
+  parseOverlayComp,
+  updateOverlayEntityComponent,
+} from './overlayComponent';
 
 describe('createOverlayEntityComponent', () => {
   it('should return expected default overlay component', () => {
@@ -213,6 +220,48 @@ describe('updateOverlayEntityComponent', () => {
           value: {
             listValue: [],
           },
+        },
+      },
+    });
+  });
+
+  it('should reset removed bindings', () => {
+    const overlay = {
+      type: KnownComponentType.DataOverlay,
+      subType: Component.DataOverlaySubType.OverlayPanel,
+      dataRows: [],
+      valueDataBindings: [],
+    };
+    expect(
+      updateOverlayEntityComponent(overlay, {
+        ...overlay,
+        valueDataBindings: [
+          {
+            valueDataBinding: {
+              dataBindingContext: {
+                entityId: 'eid',
+                componentName: 'cname',
+                propertyName: 'pname',
+              },
+              isStaticData: true,
+            },
+            bindingName: 'binding-a',
+          },
+        ],
+      }),
+    ).toEqual({
+      componentTypeId: componentTypeToId[KnownComponentType.DataOverlay],
+      propertyUpdates: {
+        subType: {
+          value: { stringValue: Component.DataOverlaySubType.OverlayPanel },
+        },
+        dataRows: {
+          value: {
+            listValue: [],
+          },
+        },
+        [OverlayComponentProperty.RowBindings]: {
+          updateType: PropertyUpdateType.RESET_VALUE,
         },
       },
     });
