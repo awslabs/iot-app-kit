@@ -11,6 +11,7 @@ import { DataStream } from '@iot-app-kit/core';
 import { DEFAULT_GAUGE_STYLES } from './constants';
 
 export const Gauge = ({
+  size,
   query,
   viewport: passedInViewport,
   thresholds = [],
@@ -47,6 +48,7 @@ export const Gauge = ({
 
   return (
     <GaugeBase
+      size={size}
       propertyPoint={propertyPoint}
       name={name}
       unit={unit}
