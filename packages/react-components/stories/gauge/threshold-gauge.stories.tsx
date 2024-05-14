@@ -20,7 +20,7 @@ export default {
 
 export const ThresholdGauge: ComponentStory<typeof Gauge> = ({ settings }) => {
   return (
-    <div style={{ height: '500px', width: '500px', padding: '20px' }}>
+    <div style={{ height: '500px', width: '600px', padding: '20px' }}>
       <Gauge
         thresholds={[
           {
