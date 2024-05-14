@@ -6,6 +6,9 @@ import { kpiPlugin } from './kpi/plugin';
 import { statusTimelineChartPlugin } from './status-timeline/statusTimelinePlugin';
 import { tablePlugin } from './table/plugin';
 import { statusPlugin } from './status/plugin';
+import { gaugePlugin } from './gauge/plugin';
+
+const hasGauge = !!localStorage.getItem('HAS_GAUGE_WIDGET');
 
 export const appKitPlugin: DashboardPlugin = {
   install: (options) => {
@@ -13,6 +16,7 @@ export const appKitPlugin: DashboardPlugin = {
     barChartPlugin.install(options);
     statusTimelineChartPlugin.install(options);
     kpiPlugin.install(options);
+    hasGauge && gaugePlugin.install(options);
     statusPlugin.install(options);
     tablePlugin.install(options);
   },

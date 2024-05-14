@@ -9,6 +9,7 @@ import {
 import type { WidgetSettings } from '../../common/dataTypes';
 
 export type GaugeProps = {
+  size?: { width: number; height: number };
   query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
   viewport?: Viewport;
   thresholds?: Threshold[];
@@ -21,7 +22,7 @@ export type GaugeProps = {
 export type GaugeBaseProperties = WidgetSettings &
   Pick<
     GaugeProps,
-    'thresholds' | 'settings' | 'significantDigits' | 'theme'
+    'thresholds' | 'settings' | 'significantDigits' | 'theme' | 'size'
   > & {
     isLoading?: boolean;
   };
