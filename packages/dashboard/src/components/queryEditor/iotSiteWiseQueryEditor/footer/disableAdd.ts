@@ -11,7 +11,8 @@ export const disableAdd = (
   let widgetBasedDisable = false;
   switch (currWidgetType) {
     case 'status':
-    case 'kpi': {
+    case 'kpi':
+    case 'gauge': {
       const modeledProperties =
         get(selectedWidget, 'properties.queryConfig.query.assets') ?? [];
       const unmodeledProperties =
