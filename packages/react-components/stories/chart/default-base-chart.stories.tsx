@@ -12,7 +12,6 @@ export default {
       defaultValue: false,
     },
     id: { control: { type: 'text' }, defaultValue: undefined },
-    titleText: { control: { type: 'text' }, defaultValue: undefined },
     significantDigits: { control: { type: 'number', defaultValue: undefined } },
     size: {
       control: { type: 'object' },

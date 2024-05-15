@@ -6,7 +6,7 @@ import {
 import React, { useRef } from 'react';
 import { useHoverDirty } from 'react-use';
 
-type HighlgihtToggleOptions = {
+type HighlightToggleOptions = {
   title?: string;
   disabled?: boolean;
   color?: string;
@@ -20,7 +20,7 @@ export const HighlightToggle = ({
   color,
   highlighted,
   onToggle,
-}: HighlgihtToggleOptions) => {
+}: HighlightToggleOptions) => {
   const titleText = highlighted
     ? `Un-Highlight ${title} Property`
     : `Highlight ${title} Proprerty`;
