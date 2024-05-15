@@ -119,7 +119,6 @@ export const AnomalyChartErrorState: ComponentStory<typeof AnomalyChart> = (
       <div style={{ height: '350px', width: '500px', padding: '20px' }}>
         <AnomalyChart
           {...options}
-          title='error mock data'
           data={[errorMockDatasource]}
           viewport={{
             start: new Date(1714409978348),

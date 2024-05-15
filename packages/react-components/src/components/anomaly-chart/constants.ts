@@ -62,14 +62,6 @@ export const ANOMALY_LEGEND_PADDING = [
   15, // left
 ];
 
-export const ANOMALY_TITLE = {
-  id: 'widget-title',
-  left: 15,
-  top: 10,
-  right: 15,
-  padding: 0,
-};
-
 export const ANOMALY_BAR_SERIES_CONFIGURATION = {
   barMinWidth: 2,
   barMaxWidth: 10,
@@ -79,6 +71,7 @@ export const ANOMALY_BAR_SERIES_CONFIGURATION = {
   datasetIndex: 1,
   large: true,
   largeThreshold: 200,
+  silent: true,
 };
 
 export const ANOMALY_TOOLTIP = {
