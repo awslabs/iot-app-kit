@@ -111,11 +111,12 @@ export type ChartOptions = {
   significantDigits?: number;
   theme?: string;
   id?: string;
-  titleText?: string;
   dataQuality?: ChartDataQuality;
   onChartOptionsChange?: (
     options: Pick<ChartOptions, 'legend' | 'dataQuality'>
   ) => void;
+  /** @deprecated */
+  titleText?: string;
 };
 
 export interface ViewportInMs {

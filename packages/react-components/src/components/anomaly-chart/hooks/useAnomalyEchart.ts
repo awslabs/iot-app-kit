@@ -5,7 +5,6 @@ import {
   convertGrid,
   convertLegend,
   convertSeries,
-  convertTitle,
   convertTooltip,
   convertXAxis,
   convertYAxis,
@@ -19,7 +18,6 @@ import { useZoomableECharts } from '../../../hooks/useECharts/useZoomableECharts
 import merge from 'lodash.merge';
 
 type AnomalyChartOptionState = {
-  title: ReturnType<typeof convertTitle>;
   series: ReturnType<typeof convertSeries>;
   legend: ReturnType<typeof convertLegend>;
   tooltip: ReturnType<typeof convertTooltip>;
@@ -46,7 +44,6 @@ const reducer = (
     };
   } else if (action.type === 'updateConfiguration') {
     const {
-      title,
       description,
       loading,
       decimalPlaces,
@@ -62,7 +59,6 @@ const reducer = (
     const replaceSeries = !loading && !isEqual(state.series, series);
     return {
       ...state,
-      title: convertTitle({ title }),
       series,
       legend: convertLegend({ loading }),
       tooltip: convertTooltip({ decimalPlaces, tooltipSort }),
@@ -77,7 +73,6 @@ const reducer = (
 };
 
 const initialState = ({
-  title,
   description,
   loading,
   decimalPlaces,
@@ -87,7 +82,6 @@ const initialState = ({
   showTimestamp,
 }: AnomalyEChartOptions): Omit<AnomalyChartOptionState, 'chartRef'> => ({
   dataset: convertDataset(data),
-  title: convertTitle({ title }),
   series: convertSeries({ description }),
   legend: convertLegend({ loading }),
   tooltip: convertTooltip({ decimalPlaces, tooltipSort }),

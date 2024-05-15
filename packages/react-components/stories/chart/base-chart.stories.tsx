@@ -21,7 +21,6 @@ export default {
       defaultValue: false,
     },
     id: { control: { type: 'text' }, defaultValue: undefined },
-    titleText: { control: { type: 'text' }, defaultValue: undefined },
     defaultVisualizationType: {
       control: 'select',
       options: chartTypes,
@@ -84,7 +83,6 @@ export const SiteWiseConnectedBaseChartExample: ComponentStory<
   showAllVisualizationTypes,
   id,
   significantDigits,
-  titleText,
   defaultVisualizationType,
   size,
   styleSettings,
@@ -115,7 +113,6 @@ export const SiteWiseConnectedBaseChartExample: ComponentStory<
 
   const options = {
     id,
-    titleText,
     defaultVisualizationType,
     significantDigits,
     size,
