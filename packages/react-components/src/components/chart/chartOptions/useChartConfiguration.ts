@@ -22,28 +22,6 @@ import { useSeriesAndYAxis } from './seriesAndYAxis/convertSeriesAndYAxis';
 import { SeriesOption } from 'echarts';
 import { GenericSeries } from '../../../echarts/types';
 
-const useTitle = ({
-  chartWidth,
-  titleText,
-  hasSeries,
-}: {
-  chartWidth: number;
-  titleText?: string;
-  hasSeries: boolean;
-}) => {
-  return useMemo(
-    () => ({
-      text: hasSeries ? titleText ?? '' : 'No data present',
-      padding: [4, 12],
-      textStyle: {
-        width: chartWidth - 90, // Decreased 90px width from chart width for title to avoid overlapping with the title and zoom in and out buttons
-        overflow: 'truncate',
-      },
-    }),
-    [hasSeries, titleText, chartWidth]
-  );
-};
-
 const toDataStreamIdentifiers = (dataStreams: DataStream[]) =>
   dataStreams.map(
     ({
@@ -112,7 +90,6 @@ const toDataStreamMetaData = (
 type ChartConfigurationOptions = Pick<
   ChartOptions,
   | 'axis'
-  | 'titleText'
   | 'backgroundColor'
   | 'significantDigits'
   | 'legend'
@@ -144,11 +121,9 @@ export const useChartConfiguration = (
     dataStreams,
     visibleData,
     id,
-    titleText,
     axis,
     backgroundColor,
     significantDigits,
-    chartWidth,
     styleSettings,
     thresholds,
     defaultVisualizationType,
@@ -219,12 +194,6 @@ export const useChartConfiguration = (
     showUncertainDataIcons,
   });
 
-  const title = useTitle({
-    chartWidth,
-    hasSeries: series.length > 0,
-    titleText,
-  });
-
   /*
    * Setup all of the changeable chart configuration options
    */
@@ -259,7 +228,6 @@ export const useChartConfiguration = (
         backgroundColor,
         xAxis,
         tooltip,
-        title,
         series,
         yAxis,
       },
@@ -275,7 +243,6 @@ export const useChartConfiguration = (
     styleSettings,
     xAxis,
     tooltip,
-    title,
     series,
     yAxis,
     dataSteamIdentifiers,
