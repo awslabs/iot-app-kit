@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { GaugeProps } from '../types';
-import { getThresholds } from '../utils/getThresholds';
+import { convertThresholdsToEchartsValuePair } from '../utils/convertThresholdsToEchartsValuePair';
 
 export const useGaugeThresholds = ({
   hasThresholds,
@@ -10,6 +10,8 @@ export const useGaugeThresholds = ({
   hasThresholds: boolean;
 }) => {
   return useMemo(() => {
-    return hasThresholds ? getThresholds({ settings, thresholds }) : null;
+    return hasThresholds
+      ? convertThresholdsToEchartsValuePair({ settings, thresholds })
+      : null;
   }, [hasThresholds, settings, thresholds]);
 };

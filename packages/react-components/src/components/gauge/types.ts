@@ -28,6 +28,7 @@ export type GaugeBaseProperties = WidgetSettings &
   };
 export type GaugeSettings = {
   gaugeThickness?: number;
+  color?: string; // hex string
   showName?: boolean;
   showUnit?: boolean;
   fontSize?: number; // pixels

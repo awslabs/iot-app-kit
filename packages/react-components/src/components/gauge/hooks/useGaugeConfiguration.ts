@@ -35,7 +35,13 @@ export const useGaugeConfiguration = (
     error,
   }: GaugeConfigurationOptions
 ) => {
-  const hasThresholds = Boolean(thresholds?.length ?? 0 > 0);
+  const hasThresholds = Boolean(
+    // hasThresholds filters EQ and CONTAINS operators since they are not supported as gauge thresholds
+    thresholds?.filter(
+      (t) =>
+        t.comparisonOperator !== 'EQ' && t.comparisonOperator !== 'CONTAINS'
+    )?.length ?? 0 > 0
+  );
 
   const defaultSettings = useMemo(() => {
     if (error || isLoading) return DEFAULT_GAUGE_SETTINGS;
