@@ -41,6 +41,7 @@ export function useGetAssetPropertyValueHistory({
     isError,
     error,
     isLoading,
+    // @ts-expect-error Upgrade issue
   } = useInfiniteQuery({
     enabled: isEnabled({ assetId, propertyId, startDate, endDate }),
     queryKey: cacheKeyFactory.create(),
@@ -129,6 +130,7 @@ const createQueryFn = (client: IoTSiteWiseClient) => {
       propertyId,
       startDate: new Date(startDate),
       endDate: new Date(endDate),
+      // @ts-expect-error upgrade issue
       nextToken,
       client,
       signal,
