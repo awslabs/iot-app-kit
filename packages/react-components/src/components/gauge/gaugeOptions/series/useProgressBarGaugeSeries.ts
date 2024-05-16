@@ -46,7 +46,9 @@ export const useProgressBarGaugeSeries = ({
       min: settings?.yMin,
       max: settings?.yMax,
       itemStyle: {
-        color: hasThresholds ? gaugeThresholds : DEFAULT_GAUGE_PROGRESS_COLOR,
+        color: hasThresholds
+          ? gaugeThresholds
+          : settings?.color ?? DEFAULT_GAUGE_PROGRESS_COLOR,
       },
       progress: {
         width: settings?.gaugeThickness,
@@ -80,6 +82,7 @@ export const useProgressBarGaugeSeries = ({
     settings?.fontSize,
     settings?.unitFontSize,
     settings?.showName,
+    settings?.color,
     hasThresholds,
     gaugeThresholds,
     getFormatterValue,
