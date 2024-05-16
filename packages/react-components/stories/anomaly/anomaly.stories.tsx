@@ -21,19 +21,20 @@ export default {
       control: { type: 'text' },
       defaultValue: 'a85b0fb2-b259-441c-aacc-d7d7495214f5',
     },
-    title: {
-      control: { type: 'text' },
-      defaultValue: 'Prediction Model 1',
-    },
     decimalPlaces: { control: { type: 'number', defaultValue: undefined } },
-    tooltipSort: {
-      control: { type: 'text' },
-      defaultValue: undefined,
-    },
     mode: {
       control: 'select',
       options: ['light', 'dark'],
       defaultValue: 'light',
+    },
+    tooltipSort: {
+      control: 'select',
+      options: ['value', 'alphabetical'],
+      defaultValue: 'alphabetical',
+    },
+    showTimestamp: {
+      control: { type: 'boolean' },
+      defaultValue: true,
     },
   },
   parameters: {

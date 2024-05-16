@@ -1,0 +1,102 @@
+import { Canvas, Meta, Story } from '@storybook/blocks';
+
+import * as AnomalyChartStories from './AnomalyChart.stories';
+
+<Meta of={AnomalyChartStories} />
+
+# Anomaly Chart
+
+The Anomaly chart is a visualization tool that provides a timeline view of anomaly predictions. It helps you identify and analyze anomalies in your data over time. The chart can be customized using various properties to fit your specific requirements.
+
+## Demo
+
+<Canvas  story={{ height: '350px' }}  sourceState="none" of={AnomalyChartStories.Standard} />
+
+**📈👆 Interact with the chart!**
+
+**_Pan_**: hold shift, click and drag within the data-visualization area of the chart.
+
+**_Zoom in_**: you can zoom in by scrolling up on the chart OR clicking on the zoom icon on the top tight corner of the chart and select the desired window.
+
+**_Zoom out:_** you can zoom out by scrolling down on the chart.
+
+**_Restrict time span_:** click on the zoom icon in the top right corner of the chart and drag through the interval of time you wish to restrict the viewport to.
+
+**_Reset time span_:** click on the zoom reset icon in the top right corner of the chart.
+
+---
+
+### Anomaly Chart Properties
+
+
+**query and data**:
+These properties are used to specify the data that the chart will display, at least one of these must be defined. You can use either query or data, but not both. Only one anomaly can be visualized at a time.
+
+- **query (object)**: This property specifies the query that will retrieve the anomaly data to be visualized.
+
+  [Learn more about the anomaly widget's queries](/docs/components-anomalychart--query).
+
+- **data (array)**: This property allows you to provide raw data that the component will visualize.
+
+  [Learn more about the anomaly widget's data](/docs/components-anomalychart--data)
+
+**viewport (optional, object)**: Specifies the time interval that the chart will visualize. If not provided, the chart will utilize the viewport specified by its ViewportManager. If there is no ViewportManager and no viewport defined, the default viewport will be calculated based on the minimum and maximum dates in the data.
+
+[Learn more about the viewport](/docs/core-viewport--docs).
+
+**mode (optional, string)**: Sets the chart's light or dark mode theme. Can be one of the following strings:
+* 'light'
+* 'dark'
+
+**decimalPlaces (optional, number)**: Specifies the number of significant digits to be shown for the data.
+
+**showTimestamp (optional, boolean)**: Determines whether the timestamp bar is shown below the X-axis. Defaults to `true`
+
+**tooltipSort (optional, string)**: Specifies how the tooltip data should be sorted. It can be one of the following strings:
+* 'value' (sorts by descending percentages)
+* 'alphabetical' (sorts in alphabetical order)
+
+**axis (optional, object)**: Specifies the axis settings for the chart.
+includes the following options:
+* **showX (optional, boolean)**: Setting to determine whether we show the x-axis and the horizontal grid lines. Defaults to true.
+* **showY (optional, boolean)**: Setting to determine whether we show the y-axis and the horizontal grid lines. Defaults to true.
+
+### Example
+
+```
+import { AnomalyChart, TimeSync } from '@iot-app-kit/react-components';
+import { initialize } from '@iot-app-kit/source-iotsitewise';
+
+// Chart component within a TimeSync
+const App = () => {
+  const query = initialize({
+    iotSiteWiseClient, // create an instance of the sitewise client
+    iotEventsClient, // create an instance of the events client
+  }).query;
+
+  const anomalyQuery = query.anomalyData({
+    assetId: 'asset-1',
+    predictionDefinitionId: 'prediction-definition-1'
+  });
+
+  return (
+    <TimeSync>
+      <AnomalyChart
+        query={anomalyQuery}
+        viewport={viewport}
+        mode="dark"
+        decimalPlaces={2}
+        showTimestamp={false}
+        tooltipSort="value"
+        axis={{
+          showX: true,
+          showY: false,
+        }}
+      />
+    </TimeSync>
+  )
+};
+```
+
+In this example, the Anomaly Chart is configured with an anomalyQuery, a viewport, mode, decimalPlaces, showTimestamp, tooltipSort, and axis settings. The chart will display the anomaly data specified by anomalyQuery, with a dark mode theme, showing two decimal places for the data values, hiding the timestamp bar, sorting the tooltip data by value, and displaying the x-axis but not the y-axis.
+By adjusting these properties, you can customize the appearance and behavior of the Anomaly chart to suit your specific needs. Remember to refer to the documentation for more detailed information and examples.
