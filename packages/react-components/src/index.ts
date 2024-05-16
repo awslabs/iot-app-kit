@@ -34,6 +34,15 @@ export { useGetConfigValue } from './store/index';
 
 export { Chart } from './components/chart';
 
+export { AnomalyChart } from './components/anomaly-chart';
+export type {
+  AnomalyChartWithData,
+  AnomalyChartOptions,
+  AnomalyChartDataSources,
+  AnomalyChartDataSourceOption,
+  AnomalyChartQueryOption,
+} from './components/anomaly-chart/types';
+
 export type {
   TableColumnDefinition,
   TableItem,

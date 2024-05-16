@@ -1,79 +1,50 @@
 import { Canvas, Meta, Story } from '@storybook/blocks';
+import * as AnomalyChartStories from './AnomalyChart.stories';
 
-# Data for Anomaly chart
+<Meta of={AnomalyChartStories} />
+
+# Anomaly Chart Data Structure
 
 [Learn more about the Anomaly Chart](/docs/components-anomalychart-docs--docs).
 
-The Anomaly chart will visualize raw data as long as it is in the following format:
+The Anomaly provides a timeline view of anomaly predictions, visualizing the raw data in a specific format.
 
-### Data
-
-Fixed length array containing an object specifiying the state and value of the data
-
-Type: Array with a single object (fixed length of 1)
+The data structure for the Anomaly chart is an array with a single object, which contains the following properties:
 
 ---
 
-- **`state`**
+**state (string)** : Represents the state of the data, which can be one of the following values:
 
-  String representing the data's state
-
-  Type: 'loading' | 'success' | 'failed' | 'error'
+  * 'loading': Indicates that the data is currently being loaded.
+  * 'success': Indicates that the data was loaded successfully.
+  * 'failed': Indicates that the data loading failed.
+  * 'error': Indicates an error occurred during data loading.
 
 ---
 
-- **`value`**
+**value (object)** : An object containing the raw data and optional style overrides. It has the following properties:
 
-  Object containing the raw data and style overrides
+  - **data (array)**: An array of objects, where each object represents a single Diagnostic event with a timestamp and Diagnostic object.
 
-  Type: Object
+      - **timestamp (number)**: The time of the diagnostic point, in milliseconds.
 
-  - **`data`**
-
-    Array of objects, where each object represents a single Diagnostic event with a timestamp and Diagnostic object
-
-    Type: Array
-
-      - **`timestamp`**
-
-        The time of the diagnostic point, in milliseconds
-
-        Type: number
-
-      - **`diagnostic`**
-
-        Object representing a single data point value and its name
-
-        Type: Object
+      - **diagnostics (array)**: An array of objects representing individual data points, where each object has the following properties:
         
-        - **`name`**
+        - **name (string)**: The name of the diagnostic point.
 
-          String name of the diagnostic point
+        - **value (number)**: The value of the diagnostic point, which should be a number between 0 and 1.
 
-          Type: string
+  - **styles (optional, object)**: An object that overrides global style settings. It can have the following properties:
 
-        - **`value`**
+    - **decimalPlaces (optional, number)**: Defines the number of decimal places to display for the diagnostic values.
 
-          Value of the diagnostic point, should be number between 0 and 1
-
-          Type: number
-
-  - **`styles`** (Optional)
-
-    Object which overrides global style settings
-
-    - **`decimalPlaces`** (Optional)
-
-      type: number
-
-    - **`color` (Optional)
-
-      Array which represents the color pallette used to render the diagnostics
-
-      type: Array
+    - **color (optional, array)**: An array representing the color palette used to render the diagnostics.
 
 
 ### Example 
+
+Here's an example of the Anomaly chart data structure:
+
 ```
 {
   state: 'success',
@@ -121,3 +92,5 @@ Type: Array with a single object (fixed length of 1)
   },
 };
 ```
+
+In this example, the state is 'success', indicating that the data was loaded successfully. The value object contains two diagnostic events, each with a timestamp and an array of diagnostic objects. Each diagnostic object has a name and a value between 0 and 1. The styles object overrides the global color palette for rendering the diagnostics, specifying an array of colors (['pink', 'blue', 'green', 'red']).

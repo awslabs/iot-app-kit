@@ -1,3 +1,4 @@
+import React from 'react';
 import { Chart } from '@iot-app-kit/react-components';
 import { Meta, StoryObj } from '@storybook/react';
 import {

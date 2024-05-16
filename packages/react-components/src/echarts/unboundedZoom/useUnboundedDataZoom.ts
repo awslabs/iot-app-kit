@@ -18,7 +18,7 @@ import {
 } from './constants';
 import { DEFAULT_VIEWPORT } from '../../components/time-sync';
 import merge from 'lodash.merge';
-import useIntlStore, { getMessageKey } from '../../translations';
+import useIntlStore from '../../translations';
 
 const isDurationViewport = (viewport: Viewport | undefined) =>
   !!(viewport && !isHistoricalViewport(viewport));
@@ -96,13 +96,13 @@ export const useUnboundedDataZoom = ({
   const intl = useIntlStore((state) => state.intl);
 
   const zoomTitle = intl.formatMessage({
-    id: getMessageKey('echarts.toolbox.features.dataZoom.title.zoom'),
+    id: 'echarts.toolbox.features.dataZoom.title.zoom',
     description:
       'Title for the dataZoom toolbox feature in an echarts instance',
     defaultMessage: 'Zoom',
   });
   const backZoomTitle = intl.formatMessage({
-    id: getMessageKey('echarts.toolbox.features.dataZoom.title.back'),
+    id: 'echarts.toolbox.features.dataZoom.title.back',
     description:
       'Title for the undo dataZoom toolbox feature in an echarts instance',
     defaultMessage: 'Undo\nzoom',
