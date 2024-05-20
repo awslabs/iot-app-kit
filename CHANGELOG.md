@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.4.1](https://github.com/awslabs/iot-app-kit/compare/root-v10.4.0...root-v10.4.1) (2024-05-20)
+
+
+### Bug Fixes
+
+* **react-components:** update date-fns dependency ([1267b65](https://github.com/awslabs/iot-app-kit/commit/1267b6583034f17b14b8ca1de52125640bfdf3ea))
+
 ## [10.4.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.3.0...root-v10.4.0) (2024-05-20)
 
 

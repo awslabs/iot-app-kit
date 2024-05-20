@@ -1,6 +1,6 @@
 {
   "name": "@iot-app-kit/ts-config",
-  "version": "10.4.0",
+  "version": "10.4.1",
   "type": "module",
   "private": true,
   "files": [
