@@ -56,7 +56,7 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
                   updateColor={onUpdatePropertyColor}
                 />
               )}
-              {name ?? label}
+              <span>{name ?? label}</span>
             </SpaceBetween>
           </Box>
         </SpaceBetween>
