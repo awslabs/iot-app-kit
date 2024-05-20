@@ -1,5 +1,43 @@
 # Changelog
 
+## [10.4.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.3.0...dashboard-v10.4.0) (2024-05-20)
+
+
+### Features
+
+* add anomaly query ([3c11512](https://github.com/awslabs/iot-app-kit/commit/3c115121db6fc8248bcd6b36989f6ebea3212ba7))
+* gauge widget to dashboard ([17cde64](https://github.com/awslabs/iot-app-kit/commit/17cde64259ab6b69beec2f2de4eaca9750504a5c))
+* **react-components:** l4e anomaly tests ([fbff596](https://github.com/awslabs/iot-app-kit/commit/fbff5968b7ddb406fa0eaaa21b84489010d55591))
+* **widgets:** add name style settings for line/table + edit label in config panel ([f5e9b3f](https://github.com/awslabs/iot-app-kit/commit/f5e9b3fc99a176b3d9eb54ef0a387d171791aaf9))
+
+
+### Bug Fixes
+
+* add trailing zeros to decimal point rounding, fix rounding function ([9c13177](https://github.com/awslabs/iot-app-kit/commit/9c131779c5a3f5b2ce7c6d1239e54ed82bfbf572))
+* added validation for decimal places input in dashboard settings [#2723](https://github.com/awslabs/iot-app-kit/issues/2723) ([ac39b8d](https://github.com/awslabs/iot-app-kit/commit/ac39b8db8ad71e08e1cea4f612b4806f861ffaec))
+* clearing the properties table when user navigates using breadcrumbs [#2751](https://github.com/awslabs/iot-app-kit/issues/2751) ([0653565](https://github.com/awslabs/iot-app-kit/commit/065356516252be2d07c84d0c4a8d9d3d6e392d1c))
+* fixed the view mode edge mode actions issue [#2650](https://github.com/awslabs/iot-app-kit/issues/2650) ([4298a6b](https://github.com/awslabs/iot-app-kit/commit/4298a6b1981db2e2bd3a9c00947fd90573baed50))
+* migrated widget tooltip css to styled-components for theming [#2668](https://github.com/awslabs/iot-app-kit/issues/2668) ([2ee5eca](https://github.com/awslabs/iot-app-kit/commit/2ee5ecad15ea7aa200693b4922128191e1808106))
+* **react-components:** add snapshot tests ([178f0e7](https://github.com/awslabs/iot-app-kit/commit/178f0e7bbba316c711ff7c8fc18455cdccf939fb))
+* tooltip styled component issue is fixed ([5af6e22](https://github.com/awslabs/iot-app-kit/commit/5af6e2285cfc2e346e417e13f305f3a0a0c05439))
+* updated the new set of design tokens [#2668](https://github.com/awslabs/iot-app-kit/issues/2668) ([7bdb8b0](https://github.com/awslabs/iot-app-kit/commit/7bdb8b08db1dcdc06153d71eff191a5e5a93a48b))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.3.0 to 10.4.0
+    * @iot-app-kit/core bumped from 10.3.0 to 10.4.0
+    * @iot-app-kit/core-util bumped from 10.3.0 to 10.4.0
+    * @iot-app-kit/react-components bumped from 10.3.0 to 10.4.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.3.0 to 10.4.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.3.0 to 10.4.0
+    * @iot-app-kit/testing-util bumped from 10.3.0 to 10.4.0
+    * @iot-app-kit/ts-config bumped from 10.3.0 to 10.4.0
+    * eslint-config-iot-app-kit bumped from 10.3.0 to 10.4.0
+
 ## [10.3.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.2.0...dashboard-v10.3.0) (2024-05-09)
 
 

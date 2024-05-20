@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.4.0](https://github.com/awslabs/iot-app-kit/compare/core-v10.3.0...core-v10.4.0) (2024-05-20)
+
+
+### Features
+
+* **react-components:** add l4e queries ([328da8e](https://github.com/awslabs/iot-app-kit/commit/328da8ed9341c68c8c0a3a6b672170f1fa8eeb37))
+
+
+### Bug Fixes
+
+* corrected the spelling in refresh rate error in documentation [#2777](https://github.com/awslabs/iot-app-kit/issues/2777) ([03e58e7](https://github.com/awslabs/iot-app-kit/commit/03e58e7403fbc501e00dd1b216d710a5a4dafcdb))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.3.0 to 10.4.0
+    * @iot-app-kit/ts-config bumped from 10.3.0 to 10.4.0
+    * eslint-config-iot-app-kit bumped from 10.3.0 to 10.4.0
+
 ## [10.3.0](https://github.com/awslabs/iot-app-kit/compare/core-v10.2.0...core-v10.3.0) (2024-05-09)
 
 

@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.4.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.3.0...root-v10.4.0) (2024-05-20)
+
+
+### Features
+
+* add anomaly query ([3c11512](https://github.com/awslabs/iot-app-kit/commit/3c115121db6fc8248bcd6b36989f6ebea3212ba7))
+* add gauge component in doc site package ([17a02f5](https://github.com/awslabs/iot-app-kit/commit/17a02f54ac811ab384aa6b8ad2dd4f61e0cc1514))
+* add step chart to l4e ([0983438](https://github.com/awslabs/iot-app-kit/commit/0983438c28ad7603e689697b0bd68cc10ce6fb50))
+* gauge widget to dashboard ([17cde64](https://github.com/awslabs/iot-app-kit/commit/17cde64259ab6b69beec2f2de4eaca9750504a5c))
+* guage component data quality and error text ([2dca188](https://github.com/awslabs/iot-app-kit/commit/2dca1889462a6002980b105ae5338265c187b502))
+* guage component initail commit ([305657a](https://github.com/awslabs/iot-app-kit/commit/305657a7aa761883da7a9839d0ae0a3914751a51))
+* **react-components:** add axis option to anomaly widget ([d0733e1](https://github.com/awslabs/iot-app-kit/commit/d0733e12863f4ee2db1e29576c8ea6b1d5964f62))
+* **react-components:** add intl ([c7c30c3](https://github.com/awslabs/iot-app-kit/commit/c7c30c3f969c71de6856d98d59e1043a6c785a45))
+* **react-components:** add l4e datasource ([748f8c1](https://github.com/awslabs/iot-app-kit/commit/748f8c17d56bbef0f2190fde38b5717c29d1d942))
+* **react-components:** add l4e queries ([328da8e](https://github.com/awslabs/iot-app-kit/commit/328da8ed9341c68c8c0a3a6b672170f1fa8eeb37))
+* **react-components:** l4e anomaly tests ([fbff596](https://github.com/awslabs/iot-app-kit/commit/fbff5968b7ddb406fa0eaaa21b84489010d55591))
+* **react-components:** y axis and timestamp options ([bfe2520](https://github.com/awslabs/iot-app-kit/commit/bfe2520a731dc6ea24d0ad928084546d45ed8643))
+* **widgets:** add name style settings for line/table + edit label in config panel ([f5e9b3f](https://github.com/awslabs/iot-app-kit/commit/f5e9b3fc99a176b3d9eb54ef0a387d171791aaf9))
+
+
+### Bug Fixes
+
+* add default settings to charts ([5917c83](https://github.com/awslabs/iot-app-kit/commit/5917c83674ffe67ced2bc7fe18c226460c115e80))
+* add trailing zeros to decimal point rounding, fix rounding function ([9c13177](https://github.com/awslabs/iot-app-kit/commit/9c131779c5a3f5b2ce7c6d1239e54ed82bfbf572))
+* added validation for decimal places input in dashboard settings [#2723](https://github.com/awslabs/iot-app-kit/issues/2723) ([ac39b8d](https://github.com/awslabs/iot-app-kit/commit/ac39b8db8ad71e08e1cea4f612b4806f861ffaec))
+* better handling of light and dark mode w thresholds ([bd70051](https://github.com/awslabs/iot-app-kit/commit/bd70051944a9a21e21479f4793614f85a4716b2b))
+* clearing the properties table when user navigates using breadcrumbs [#2751](https://github.com/awslabs/iot-app-kit/issues/2751) ([0653565](https://github.com/awslabs/iot-app-kit/commit/065356516252be2d07c84d0c4a8d9d3d6e392d1c))
+* corrected the spelling in refresh rate error in documentation [#2777](https://github.com/awslabs/iot-app-kit/issues/2777) ([03e58e7](https://github.com/awslabs/iot-app-kit/commit/03e58e7403fbc501e00dd1b216d710a5a4dafcdb))
+* fix bugs on l4e widget ([17a4896](https://github.com/awslabs/iot-app-kit/commit/17a489631da778b13fcb194b8bd527874e9e2858))
+* fix for css style issue in doc site [#2718](https://github.com/awslabs/iot-app-kit/issues/2718) ([e50f2ae](https://github.com/awslabs/iot-app-kit/commit/e50f2aeeee42e337e0a3327f5989f224241bdf74))
+* fixed the view mode edge mode actions issue [#2650](https://github.com/awslabs/iot-app-kit/issues/2650) ([4298a6b](https://github.com/awslabs/iot-app-kit/commit/4298a6b1981db2e2bd3a9c00947fd90573baed50))
+* l4e bug fixes ([a71673c](https://github.com/awslabs/iot-app-kit/commit/a71673c9fbc701a5e26ed8d8c9bda191bc9b9285))
+* l4e widget quick fixes ([286f724](https://github.com/awslabs/iot-app-kit/commit/286f7244ac501ffc877dd0e0d40d76e97ab98bda))
+* migrated tooltip css to styled component for customizing theming options [#2668](https://github.com/awslabs/iot-app-kit/issues/2668) ([515ad24](https://github.com/awslabs/iot-app-kit/commit/515ad2478abf20a9490ac725ee80ce7cc6ae111f))
+* migrated widget tooltip css to styled-components for theming [#2668](https://github.com/awslabs/iot-app-kit/issues/2668) ([2ee5eca](https://github.com/awslabs/iot-app-kit/commit/2ee5ecad15ea7aa200693b4922128191e1808106))
+* **react-components:** add error state ([e16671f](https://github.com/awslabs/iot-app-kit/commit/e16671f11bbae4b768220b93b8cae0fe9ffee9c3))
+* **react-components:** add snapshot tests ([178f0e7](https://github.com/awslabs/iot-app-kit/commit/178f0e7bbba316c711ff7c8fc18455cdccf939fb))
+* **react-components:** center error ([12da428](https://github.com/awslabs/iot-app-kit/commit/12da428c354b999a8dc350e3811cd9f3a44ef782))
+* **react-components:** export anomaly chart ([30ae675](https://github.com/awslabs/iot-app-kit/commit/30ae675d92acd26d0414f6aa2da953bc0b37d5e7))
+* **react-components:** fix error state display ([dead60a](https://github.com/awslabs/iot-app-kit/commit/dead60a175b236b4d74d1ca65a882821c5e49e26))
+* **react-components:** fix get value history request ([a701ef4](https://github.com/awslabs/iot-app-kit/commit/a701ef48519807612715eaf2714f3eb6a306de05))
+* **react-components:** gauge thresholds ([8e3bec3](https://github.com/awslabs/iot-app-kit/commit/8e3bec3f6058c9c96ac42439c1b33b90a0d3912e))
+* **react-components:** support nanoseconds for datapoints ([34d2dff](https://github.com/awslabs/iot-app-kit/commit/34d2dff489ff77d9eb9226443218b4c7cf725ff2))
+* **react-components:** viewport fixes ([b5846ed](https://github.com/awslabs/iot-app-kit/commit/b5846edf5c795c2bccdfee2a71d6b65f44dd56e5))
+* sort and pagination colors ([4dd6bb9](https://github.com/awslabs/iot-app-kit/commit/4dd6bb94198cd4c40fb1bde2d0b350c97d4ec540))
+* tooltip styled component issue is fixed ([5af6e22](https://github.com/awslabs/iot-app-kit/commit/5af6e2285cfc2e346e417e13f305f3a0a0c05439))
+* updated the new set of design tokens [#2668](https://github.com/awslabs/iot-app-kit/issues/2668) ([7bdb8b0](https://github.com/awslabs/iot-app-kit/commit/7bdb8b08db1dcdc06153d71eff191a5e5a93a48b))
+
 ## [10.3.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.2.0...root-v10.3.0) (2024-05-09)
 
 
