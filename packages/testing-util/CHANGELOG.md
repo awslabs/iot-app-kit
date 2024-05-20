@@ -1,5 +1,22 @@
 # Changelog
 
+## [10.4.0](https://github.com/awslabs/iot-app-kit/compare/testing-util-v10.3.0...testing-util-v10.4.0) (2024-05-20)
+
+
+### Features
+
+* add gauge component in doc site package ([17a02f5](https://github.com/awslabs/iot-app-kit/commit/17a02f54ac811ab384aa6b8ad2dd4f61e0cc1514))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.3.0 to 10.4.0
+  * devDependencies
+    * @iot-app-kit/ts-config bumped from ^10.3.0 to ^10.4.0
+    * eslint-config-iot-app-kit bumped from ^10.3.0 to ^10.4.0
+
 ## [10.3.0](https://github.com/awslabs/iot-app-kit/compare/testing-util-v10.2.0...testing-util-v10.3.0) (2024-05-09)
 
 

@@ -1,5 +1,30 @@
 # Changelog
 
+## [10.4.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v10.3.0...doc-site-v10.4.0) (2024-05-20)
+
+
+### Features
+
+* add gauge component in doc site package ([17a02f5](https://github.com/awslabs/iot-app-kit/commit/17a02f54ac811ab384aa6b8ad2dd4f61e0cc1514))
+
+
+### Bug Fixes
+
+* fix for css style issue in doc site [#2718](https://github.com/awslabs/iot-app-kit/issues/2718) ([e50f2ae](https://github.com/awslabs/iot-app-kit/commit/e50f2aeeee42e337e0a3327f5989f224241bdf74))
+* l4e bug fixes ([a71673c](https://github.com/awslabs/iot-app-kit/commit/a71673c9fbc701a5e26ed8d8c9bda191bc9b9285))
+* **react-components:** export anomaly chart ([30ae675](https://github.com/awslabs/iot-app-kit/commit/30ae675d92acd26d0414f6aa2da953bc0b37d5e7))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^10.3.0 to ^10.4.0
+    * @iot-app-kit/react-components bumped from ^10.3.0 to ^10.4.0
+  * devDependencies
+    * @iot-app-kit/testing-util bumped from ^10.3.0 to ^10.4.0
+    * eslint-config-iot-app-kit bumped from ^10.3.0 to ^10.4.0
+
 ## [10.3.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v10.2.0...doc-site-v10.3.0) (2024-05-09)
 
 
