@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [10.4.1](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.4.0...react-components-v10.4.1) (2024-05-20)
+
+
+### Bug Fixes
+
+* **react-components:** update date-fns dependency ([1267b65](https://github.com/awslabs/iot-app-kit/commit/1267b6583034f17b14b8ca1de52125640bfdf3ea))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.4.0 to 10.4.1
+    * @iot-app-kit/core bumped from 10.4.0 to 10.4.1
+    * @iot-app-kit/core-util bumped from 10.4.0 to 10.4.1
+    * @iot-app-kit/source-iottwinmaker bumped from 10.4.0 to 10.4.1
+  * devDependencies
+    * @iot-app-kit/core bumped from 10.4.0 to 10.4.1
+    * @iot-app-kit/jest-config bumped from 10.4.0 to 10.4.1
+    * @iot-app-kit/source-iotsitewise bumped from 10.4.0 to 10.4.1
+    * @iot-app-kit/testing-util bumped from 10.4.0 to 10.4.1
+    * @iot-app-kit/ts-config bumped from 10.4.0 to 10.4.1
+    * eslint-config-iot-app-kit bumped from 10.4.0 to 10.4.1
+
 ## [10.4.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.3.0...react-components-v10.4.0) (2024-05-20)
 
 
