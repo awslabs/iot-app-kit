@@ -50,9 +50,6 @@ export const useThresholdOutsideArcSeries = ({
       itemStyle: {
         color: gaugeThresholds,
       },
-      axisLabel: {
-        fontSize: settings?.labelFontSize,
-      },
       axisLine: {
         lineStyle: {
           color: gaugeThresholds,
@@ -79,7 +76,6 @@ export const useThresholdOutsideArcSeries = ({
   }, [
     settings?.yMin,
     settings?.yMax,
-    settings?.labelFontSize,
     settings?.fontSize,
     settings?.unitFontSize,
     gaugeValue,
