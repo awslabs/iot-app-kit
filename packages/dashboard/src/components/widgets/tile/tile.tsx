@@ -43,7 +43,7 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ widget, title, children }) => {
   // temporary solution for fixing title
   // once gestures are correctly handled, we can move
   // the title back into the react-components
-  const widgetsWithTitle = ['xy-plot', 'bar-chart', 'status-timeline'];
+  const widgetsWithTitle = ['gauge', 'xy-plot', 'bar-chart', 'status-timeline'];
 
   return (
     <div

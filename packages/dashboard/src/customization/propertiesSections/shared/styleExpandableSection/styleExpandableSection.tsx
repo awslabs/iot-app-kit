@@ -2,10 +2,12 @@ import React, { ReactNode } from 'react';
 import { useExpandable } from '../useExpandable';
 import Toggle from '@cloudscape-design/components/toggle';
 import { StyledExpandableSection } from '../../components/styledComponents';
+import { isFunction } from 'lodash';
 
 type StyleExpandableSectionProps = {
   visible?: boolean;
-  setVisible: (visible: boolean) => void;
+  showToggle?: boolean;
+  setVisible?: (visible: boolean) => void;
   header: string;
   children: ReactNode;
 };
@@ -23,7 +25,7 @@ const StyleToggle = ({
   >
     <Toggle
       onChange={(e) => {
-        setVisible(e.detail.checked);
+        if (isFunction(setVisible)) setVisible(e.detail.checked);
       }}
       checked={visible}
     >
@@ -36,6 +38,7 @@ const StyleExpandableSection: React.FC<StyleExpandableSectionProps> = ({
   header,
   children,
   visible,
+  showToggle = true,
   setVisible,
 }) => {
   const [expanded, setExpanded] = useExpandable(true);
@@ -49,7 +52,9 @@ const StyleExpandableSection: React.FC<StyleExpandableSectionProps> = ({
       headerText={
         <div className='expand-header'>
           <span>{header}</span>
-          <StyleToggle setVisible={setVisible} visible={visible} />
+          {showToggle && (
+            <StyleToggle setVisible={setVisible} visible={visible} />
+          )}
         </div>
       }
     >

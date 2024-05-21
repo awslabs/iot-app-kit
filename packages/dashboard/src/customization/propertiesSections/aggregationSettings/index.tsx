@@ -23,7 +23,12 @@ import { SelectProps } from '@cloudscape-design/components';
 
 const isOnlyRawData: readonly string[] = ['status-timeline', 'table'];
 const isOnlyAggregated: readonly string[] = ['bar-chart'];
-const isRawAndAggregated: readonly string[] = ['xy-plot', 'kpi', 'status'];
+const isRawAndAggregated: readonly string[] = [
+  'xy-plot',
+  'kpi',
+  'status',
+  'gauge',
+];
 
 // TODO: Fix lying type
 export const isOnlyRawDataWidget = (

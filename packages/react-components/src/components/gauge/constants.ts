@@ -43,6 +43,7 @@ export const DEFAULT_GAUGE_PROGRESS_SETTINGS = {
       silent: true, //control mouse hover actions
       min: 0, //guage progress bar default start point
       max: 100, //gauge progress bar default end point
+      animation: false, // no animation while value changes
       itemStyle: {
         color: DEFAULT_GAUGE_PROGRESS_COLOR, // default color for gauge progress bar
       },
@@ -69,7 +70,7 @@ export const DEFAULT_GAUGE_PROGRESS_SETTINGS = {
         /**
          * center value settings for color, position, animation, value font size & font weigth and unit size & font weight etc..
          */
-        valueAnimation: true, // show animation while value changes
+        valueAnimation: false, // no animation while value changes
         offsetCenter: [0, '-10%'], // position of the center value
         fontSize: 25, // font size of the center value in px
         fontWeight: '500', // font weight of the center value in px
@@ -94,6 +95,12 @@ export const DEFAULT_GAUGE_PROGRESS_SETTINGS = {
         width: 300, // width of the title in px
         overflow: 'truncate',
         ellipsis: '...',
+        rich: {
+          name: {
+            fontSize: 12, // font size of the title in px
+            color: '#000', // color of the title
+          },
+        },
       },
     },
   ],
@@ -137,7 +144,7 @@ export const DEFAULT_GAUGE_PROGRESS_SETTINGS_WITH_THRESHOLDS = {
          */
         distance: -20,
         color: 'auto',
-        fontSize: 10,
+        fontSize: 12,
         rotate: 'tangential', // Given tangential because if min and max are having four or more digit number and if the rotate is not tangential then the label is overlapping with the arc
       },
       axisLine: {
@@ -155,7 +162,7 @@ export const DEFAULT_GAUGE_PROGRESS_SETTINGS_WITH_THRESHOLDS = {
         /**
          * center value settings for color, position, animation, value font size, font weigth and unit size, font weight etc..
          */
-        valueAnimation: true, // show animation while value changes
+        valueAnimation: false, // no animation while value changes
         offsetCenter: [0, '-10%'], // position of the center value
         fontSize: 25, //font size of the center value
         fontWeight: '500', //font weight of the center value

@@ -8,7 +8,10 @@ import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { DEFAULT_VIEWPORT, ECHARTS_GESTURE } from '../../common/constants';
 import { DataStream } from '@iot-app-kit/core';
-import { DEFAULT_GAUGE_STYLES } from './constants';
+import {
+  DEFAULT_GAUGE_PROGRESS_COLOR,
+  DEFAULT_GAUGE_STYLES,
+} from './constants';
 
 export const Gauge = ({
   size,
@@ -46,6 +49,10 @@ export const Gauge = ({
   const isLoading = streamToUse?.isLoading || false;
   const error = streamToUse?.error;
 
+  const refId = dataStreams[0]?.refId;
+  const color =
+    styles && refId ? styles[refId]?.color : DEFAULT_GAUGE_PROGRESS_COLOR;
+
   return (
     <GaugeBase
       size={size}
@@ -54,7 +61,7 @@ export const Gauge = ({
       unit={unit}
       isLoading={isLoading}
       error={error?.msg}
-      settings={{ ...DEFAULT_GAUGE_STYLES, ...settings }}
+      settings={{ ...DEFAULT_GAUGE_STYLES, ...settings, color }}
       thresholds={thresholds}
       significantDigits={significantDigits}
       theme={theme}
