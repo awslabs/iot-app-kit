@@ -240,6 +240,7 @@ export type LineProperties = {
 };
 
 export type GaugeProperties = QueryProperties & {
+  title?: string;
   gaugeThickness?: number;
   showName?: boolean;
   showUnit?: boolean;

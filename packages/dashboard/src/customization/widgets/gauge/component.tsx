@@ -20,10 +20,14 @@ const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
   );
 
   const {
+    title,
     styleSettings,
     queryConfig,
     showUnit,
     showName,
+    fontSize,
+    unitFontSize,
+    labelFontSize,
     thresholds,
     significantDigits: widgetSignificantDigits,
     yMin,
@@ -50,6 +54,9 @@ const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
       yMax,
       showName,
       showUnit,
+      fontSize,
+      unitFontSize,
+      labelFontSize,
     },
     isDefined
   );
@@ -57,10 +64,12 @@ const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
   const significantDigits =
     widgetSignificantDigits ?? dashboardSignificantDigits;
 
-  const size = { width: chartSize.width - 8, height: chartSize.height - 8 };
+  // the 44 is from the widget tile header and top, bottom boder lines height
+  // the 8 is from the left and right border lines width
+  const size = { width: chartSize.width - 8, height: chartSize.height - 44 };
 
   return (
-    <WidgetTile widget={widget} key={key}>
+    <WidgetTile widget={widget} title={title} key={key}>
       <Gauge
         size={size}
         query={queries[0]}
