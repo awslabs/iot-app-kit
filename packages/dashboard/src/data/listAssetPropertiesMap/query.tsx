@@ -29,12 +29,21 @@ const listAssetProperties = (client: IoTSiteWiseClient, assetId: string) => {
 const listPropertiesSiteWiseAssetQuery = async (
   client: IoTSiteWiseClient,
   siteWiseQuery: Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>
-) =>
-  Promise.all(
-    siteWiseQuery.assets?.map(({ assetId }: { assetId: string }) =>
-      listAssetProperties(client, assetId)
-    ) ?? []
-  );
+) => {
+  const assetPropertiesPromises =
+    siteWiseQuery.assets?.map(async ({ assetId }: { assetId: string }) => {
+      try {
+        return await listAssetProperties(client, assetId);
+      } catch (error) {
+        console.error(
+          `Error retrieving asset properties for asset ID ${assetId}:`,
+          error
+        );
+        return [];
+      }
+    }) ?? [];
+  return Promise.all(assetPropertiesPromises);
+};
 
 export const createFetchSiteWiseAssetQueryDescription =
   (
