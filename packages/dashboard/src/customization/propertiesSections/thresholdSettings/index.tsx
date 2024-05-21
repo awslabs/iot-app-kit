@@ -11,6 +11,7 @@ import { Maybe, maybeWithDefault } from '~/util/maybe';
 
 const thresholdsWithContainsOperator: readonly string[] = [
   'kpi',
+  'gauge',
   'status',
   'status-timeline',
   'table',
