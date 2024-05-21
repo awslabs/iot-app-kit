@@ -1,4 +1,5 @@
 import { test, expect, Page, Locator } from '@playwright/test';
+import { parse } from 'date-fns';
 import {
   ADD_TREND_CURSOR,
   ASSET_MODEL_TAB,
@@ -185,8 +186,16 @@ test('can drag a trend cursor', async ({ page }) => {
   expect(initialTrendCursorDateString).not.toEqual(
     updatedTrendCursorDateString
   );
-  const initialDate = new Date(initialTrendCursorDateString);
-  const updatedDate = new Date(updatedTrendCursorDateString);
+  const initialDate = parse(
+    `${initialTrendCursorDateString.split('\n').join(' ')}`,
+    'dd/MM/yyyy HH:mm:ss',
+    new Date()
+  );
+  const updatedDate = parse(
+    `${updatedTrendCursorDateString.split('\n').join(' ')}`,
+    'dd/MM/yyyy HH:mm:ss',
+    new Date()
+  );
   expect(initialDate.getTime()).toBeGreaterThan(updatedDate.getTime());
 
   // trend cursor should have some value
