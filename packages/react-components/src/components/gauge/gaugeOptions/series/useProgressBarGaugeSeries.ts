@@ -67,11 +67,16 @@ export const useProgressBarGaugeSeries = ({
       },
       title: {
         show: settings?.showName,
+        rich: {
+          name: {
+            fontSize: settings?.labelFontSize,
+          },
+        },
       },
       data: [
         {
           value: gaugeValue,
-          name,
+          name: name ? `{name|${name}}` : '',
         },
       ],
     };
@@ -79,6 +84,7 @@ export const useProgressBarGaugeSeries = ({
     settings?.yMin,
     settings?.yMax,
     settings?.gaugeThickness,
+    settings?.labelFontSize,
     settings?.fontSize,
     settings?.unitFontSize,
     settings?.showName,

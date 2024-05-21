@@ -36,10 +36,12 @@ export const useGaugeConfiguration = (
   }: GaugeConfigurationOptions
 ) => {
   const hasThresholds = Boolean(
-    // hasThresholds filters EQ and CONTAINS operators since they are not supported as gauge thresholds
+    // hasThresholds filters if value is an empty string, EQ and CONTAINS operators since they are not supported as gauge thresholds
     thresholds?.filter(
       (t) =>
-        t.comparisonOperator !== 'EQ' && t.comparisonOperator !== 'CONTAINS'
+        t.comparisonOperator !== 'EQ' &&
+        t.comparisonOperator !== 'CONTAINS' &&
+        t.value !== ''
     )?.length ?? 0 > 0
   );
 

@@ -8,7 +8,7 @@ import {
 } from '~/customization/widgets/types';
 import { DashboardWidget } from '~/types';
 import { LineStyleSection } from './lineStyleSection';
-import { YAxisSection } from './yAxis';
+import { YAxisSection } from '../yAxisSettings';
 import { LegendSection } from './legendSection';
 import { maybeWithDefault } from '~/util/maybe';
 import { PropertyLens } from '~/customization/propertiesSection';
