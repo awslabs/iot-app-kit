@@ -1,0 +1,9 @@
+.filter-field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.filter-field-input {
+  flex: 1;
+}
