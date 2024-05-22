@@ -36,7 +36,8 @@ export const configureDashboardStore = (
 export const toDashboardState = (
   dashboardConfiguration: DashboardConfiguration
 ): RecursivePartial<DashboardState> => {
-  const { widgets, displaySettings, querySettings } = dashboardConfiguration;
+  const { widgets, displaySettings, querySettings, defaultViewport } =
+    dashboardConfiguration;
   const { numRows, numColumns, cellSize } = displaySettings;
 
   return {
@@ -48,6 +49,7 @@ export const toDashboardState = (
     dashboardConfiguration: {
       widgets,
       querySettings,
+      defaultViewport: JSON.stringify(defaultViewport),
     },
   };
 };

@@ -47,7 +47,7 @@ const Dashboard: React.FC<DashboardProperties> = ({
   name,
 }) => {
   useDashboardPlugins();
-  useDashboardViewport(dashboardConfiguration.viewport);
+  useDashboardViewport(dashboardConfiguration.defaultViewport);
 
   const readOnly = initialViewMode && initialViewMode === 'preview';
   return (
@@ -77,7 +77,7 @@ const Dashboard: React.FC<DashboardProperties> = ({
                   editable={true}
                   name={name}
                   propertiesPanel={<PropertiesPanel />}
-                  viewport={dashboardConfiguration.viewport}
+                  defaultViewport={dashboardConfiguration.defaultViewport}
                 />
               </DndProvider>
             </Provider>

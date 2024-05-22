@@ -11,6 +11,7 @@ import type { DashboardState } from '~/store/state';
 import { DashboardSave } from '~/types';
 import DashboardSettings from './settings';
 import CustomOrangeButton from '../customOrangeButton';
+import { parseViewport } from '~/util/parseViewport';
 
 const DEFAULT_VIEWPORT = { duration: '10m' };
 
@@ -50,6 +51,7 @@ const Actions: React.FC<ActionsProps> = ({
           significantDigits,
         },
         ...dashboardConfiguration,
+        defaultViewport: parseViewport(dashboardConfiguration.defaultViewport),
         viewport: viewport ?? DEFAULT_VIEWPORT,
       },
       readOnly ? 'preview' : 'edit'
