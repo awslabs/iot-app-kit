@@ -16,6 +16,7 @@ import {
   updateSignificantDigits,
   updateWidgets,
   updateRefreshRate,
+  updateDefaultViewport,
 } from './actions';
 
 import { createWidgets } from './actions/createWidget';
@@ -94,6 +95,10 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'UPDATE_REFRESH_RATE': {
       return updateRefreshRate(state, action);
+    }
+
+    case 'UPDATE_DEFAULT_VIEWPORT': {
+      return updateDefaultViewport(state, action);
     }
 
     default:
