@@ -1,0 +1,9 @@
+.search-field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.search-field-input {
+  flex: 1;
+}
