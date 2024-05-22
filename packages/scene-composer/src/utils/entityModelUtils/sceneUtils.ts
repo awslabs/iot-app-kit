@@ -29,13 +29,13 @@ export const createSceneEntityId = (sceneName: string): string => {
   return `SCENE_${sceneName}_${generateUUID()}`;
 };
 
-export const createSceneRootEntity = (): Promise<CreateEntityCommandOutput> | undefined => {
+export const createSceneRootEntity = (sceneId?: string): Promise<CreateEntityCommandOutput> | undefined => {
   if (!getGlobalSettings().twinMakerSceneMetadataModule) {
     return;
   }
 
-  const sceneName = getGlobalSettings().twinMakerSceneMetadataModule!.getSceneId();
-  const sceneEntityId = createSceneEntityId(sceneName);
+  const _sceneId = sceneId ?? getGlobalSettings().twinMakerSceneMetadataModule!.getSceneId();
+  const sceneEntityId = createSceneEntityId(_sceneId);
   const input: CreateEntityCommandInput = {
     workspaceId: undefined,
     entityId: sceneEntityId,
