@@ -7,16 +7,16 @@ import SpaceBetween from '@cloudscape-design/components/space-between';
 import type { DateRangePickerProps } from '@cloudscape-design/components/date-range-picker';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 
-import {
-  dateRangeToViewport,
-  relativeOptions,
-  viewportToDateRange,
-  getViewportDateRelativeToAbsolute,
-} from './viewportAdapter';
-
-import { rangeValidator } from './rangeValidator';
+// import { rangeValidator } from './rangeValidator';
 import { useViewport } from '../../hooks/useViewport';
 import { Tooltip } from '../tooltip/index';
+import {
+  dateRangeToViewport,
+  getViewportDateRelativeToAbsolute,
+  relativeViewportOptions,
+  viewportToDateRange,
+  rangeValidator,
+} from '@iot-app-kit/core-util';
 
 export type ViewportMessages = DateRangePickerProps.I18nStrings & {
   title: string;
@@ -179,7 +179,7 @@ export const TimeSelection = ({
             onChange={handleChangeDateRange}
             value={viewportToDateRange(viewport)}
             showClearButton={false}
-            relativeOptions={relativeOptions}
+            relativeOptions={relativeViewportOptions}
             isValidRange={rangeValidator({
               dateRangeIncompleteError,
               dateRangeInvalidError,

@@ -7,6 +7,11 @@ import { DashboardClientConfiguration } from '../../src/types';
 import { DEFAULT_REGION } from '~/msw/constants';
 import { useWorker } from '~/msw/useWorker';
 import { RefreshRate } from '~/components/refreshRate/types';
+import {
+  DEMO_TURBINE_ASSET_1,
+  DEMO_TURBINE_ASSET_1_PROPERTY_1,
+  DEMO_TURBINE_ASSET_1_PROPERTY_2,
+} from 'testing/siteWiseQueries';
 
 /**
  * Data is mocked by the service worker started above.
@@ -25,14 +30,14 @@ const displaySettings = {
   numRows: 100,
 };
 
-const viewport = { duration: '5m' };
+const defaultViewport = { duration: '10m' };
 const querySettings = { refreshRate: 5000 as RefreshRate };
 
 const emptyDashboardConfiguration: DashboardProperties = {
   clientConfiguration,
   dashboardConfiguration: {
     displaySettings,
-    viewport,
+    defaultViewport,
     widgets: [],
     querySettings,
   },
@@ -43,7 +48,7 @@ const widgetDashboardConfiguration = {
   clientConfiguration,
   dashboardConfiguration: {
     displaySettings,
-    viewport,
+    defaultViewport,
     querySettings,
     widgets: [
       {
@@ -54,7 +59,22 @@ const widgetDashboardConfiguration = {
         x: 5,
         y: 5,
         z: 0,
-        properties: {},
+        properties: {
+          queryConfig: {
+            source: 'iotsitewise',
+            query: {
+              assets: [
+                {
+                  assetId: DEMO_TURBINE_ASSET_1,
+                  properties: [
+                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
+                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
+                  ],
+                },
+              ],
+            },
+          },
+        },
       },
     ],
   },

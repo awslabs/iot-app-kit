@@ -7,6 +7,7 @@ import { useGridSettings } from './useGridSettings';
 import { numberFromDetail } from '~/util/inputEvent';
 import DecimalPlaces from '../decimalPlaces';
 import { isNumeric } from '@iot-app-kit/core-util';
+import { DefaultViewport } from '../defaultViewport';
 
 export type DashboardSettingsProps = {
   onClose: () => void;
@@ -44,6 +45,7 @@ const DashboardSettings: React.FC<DashboardSettingsProps> = ({
     >
       <Box>
         <SpaceBetween direction='vertical' size='l'>
+          <DefaultViewport />
           <DecimalPlaces
             showFormFieldLabel={true}
             onSignificantDigitsChange={onSignificantDigitsChange}

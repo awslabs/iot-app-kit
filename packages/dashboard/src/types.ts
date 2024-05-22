@@ -70,7 +70,9 @@ export type DashboardConfiguration<
   displaySettings: DashboardDisplaySettings;
   querySettings?: DashboardTimeSeriesSettings;
   widgets: DashboardWidget<Properties>[];
-  viewport: Viewport;
+  defaultViewport?: Viewport;
+  /** @deprecated */
+  viewport?: Viewport;
 };
 
 export type DashboardWidgetsConfiguration<

@@ -20,7 +20,7 @@ const DEFAULT_DASHBOARD_CONFIG = {
     numRows: 100,
   },
   widgets: [],
-  viewport: { duration: '10m' },
+  defaultViewport: { duration: '10m' },
 };
 
 const CLIENT_CONFIGURATION: DashboardClientConfiguration = {
@@ -62,10 +62,6 @@ export const Main: ComponentStory<typeof Dashboard> = () => {
     dashboard: DashboardConfiguration,
     viewModeOnSave?: 'preview' | 'edit'
   ) => {
-    console.log(dashboard);
-    if (!('duration' in dashboard.viewport)) {
-      dashboard = { ...dashboard, viewport: { duration: '5m' } };
-    }
     viewModeOnSave && setInitialViewMode(viewModeOnSave);
     window.localStorage.setItem(
       DASHBOARD_STORAGE_NAMESPACE,
