@@ -37,7 +37,8 @@ describe('copySceneNodes', () => {
 
   it('should call related functions', async () => {
     const sourceSceneRootEntityId = 'src-scene-root-entity-id';
-    await copySceneNodes(sourceSceneRootEntityId);
+    const sceneCopyId = 'mockCopyScene';
+    await copySceneNodes({ sourceSceneRootEntityId, sceneCopyId });
 
     expect(createSceneRootEntity).toBeCalledTimes(1);
     expect(fetchSceneNodes).toBeCalledTimes(1);

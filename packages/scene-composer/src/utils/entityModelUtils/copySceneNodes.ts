@@ -4,14 +4,16 @@ import { cloneSceneNodes, createSceneRootEntity, fetchSceneNodes, saveSceneNodes
 
 export const copySceneNodes = async ({
   sourceSceneRootEntityId,
+  sceneCopyId,
   onSuccess,
   onFailure,
 }: {
   sourceSceneRootEntityId: string;
+  sceneCopyId?: string;
   onSuccess?: (node: ISceneNodeInternal) => void;
   onFailure?: (node: ISceneNodeInternal, error: Error) => void;
 }): Promise<string> => {
-  const root = await createSceneRootEntity();
+  const root = await createSceneRootEntity(sceneCopyId);
   const targetSceneRootEntityId = root?.entityId as string;
 
   const sourceNodes = await fetchSceneNodes(sourceSceneRootEntityId);

@@ -53,17 +53,35 @@ describe('createSceneEntityId', () => {
 });
 
 describe('createSceneRootEntity', () => {
-  const createSceneEntity = jest.fn();
-  const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
-    createSceneEntity,
-    getSceneId: jest.fn().mockReturnValue('test'),
-  };
-
-  it('should call createSceneEntity with expected input', () => {
+  it('should call createSceneEntity with metadataModule sceneId', () => {
+    const createSceneEntity = jest.fn();
+    const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
+      createSceneEntity,
+      getSceneId: jest.fn().mockReturnValue('test'),
+    };
     setTwinMakerSceneMetadataModule(mockMetadataModule as unknown as TwinMakerSceneMetadataModule);
     setFeatureConfig({});
 
     createSceneRootEntity();
+
+    expect(createSceneEntity).toBeCalledWith({
+      workspaceId: undefined,
+      entityId: createSceneEntityId('test'),
+      parentEntityId: SCENE_ROOT_ENTITY_ID,
+      entityName: createSceneEntityId('test'),
+    });
+    expect(createSceneEntityComponent).not.toBeCalled();
+  });
+
+  it('should call createSceneEntity with provided sceneName', () => {
+    const createSceneEntity = jest.fn();
+    const mockMetadataModule: Partial<TwinMakerSceneMetadataModule> = {
+      createSceneEntity,
+    };
+    setTwinMakerSceneMetadataModule(mockMetadataModule as unknown as TwinMakerSceneMetadataModule);
+    setFeatureConfig({});
+
+    createSceneRootEntity('test');
 
     expect(createSceneEntity).toBeCalledWith({
       workspaceId: undefined,
