@@ -10,6 +10,8 @@ import {
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
 import { ContentLayout } from '@cloudscape-design/components';
+import messages from '@cloudscape-design/components/i18n/messages/all.all';
+import { I18nProvider } from '@cloudscape-design/components/i18n';
 
 import { selectedRect } from '~/util/select';
 
@@ -65,7 +67,7 @@ type InternalDashboardProperties = {
   editable?: boolean;
   name?: string;
   propertiesPanel?: ReactNode;
-  viewport?: Viewport;
+  defaultViewport?: Viewport;
 };
 
 const defaultUserSelect: CSSProperties = { userSelect: 'initial' };
@@ -76,7 +78,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   editable,
   name,
   propertiesPanel,
-  viewport,
+  defaultViewport,
 }) => {
   const { iotSiteWiseClient, iotTwinMakerClient } = useClients();
 
@@ -384,36 +386,38 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   );
 
   return (
-    <TimeSync
-      initialViewport={viewport ?? { duration: '5m' }}
-      group='dashboard-timesync'
-    >
-      {readOnly ? ReadOnlyComponent : EditComponent}
-      <ConfirmDeleteModal
-        visible={visible}
-        headerTitle={`Delete selected widget${
-          selectedWidgets.length > 1 ? 's' : ''
-        }?`}
-        cancelTitle='Cancel'
-        submitTitle='Delete'
-        description={
-          <Box>
-            <Box variant='p'>
-              {`Are you sure you want to delete the selected widget${
-                selectedWidgets.length > 1 ? 's' : ''
-              }? You'll lose all the progress you made to the
+    <I18nProvider locale='en' messages={[messages]}>
+      <TimeSync
+        initialViewport={defaultViewport ?? { duration: '5m' }}
+        group='dashboard-timesync'
+      >
+        {readOnly ? ReadOnlyComponent : EditComponent}
+        <ConfirmDeleteModal
+          visible={visible}
+          headerTitle={`Delete selected widget${
+            selectedWidgets.length > 1 ? 's' : ''
+          }?`}
+          cancelTitle='Cancel'
+          submitTitle='Delete'
+          description={
+            <Box>
+              <Box variant='p'>
+                {`Are you sure you want to delete the selected widget${
+                  selectedWidgets.length > 1 ? 's' : ''
+                }? You'll lose all the progress you made to the
                         widget${selectedWidgets.length > 1 ? 's' : ''}`}
+              </Box>
+              <Box variant='p' padding={{ top: 'm' }}>
+                You cannot undo this action.
+              </Box>
             </Box>
-            <Box variant='p' padding={{ top: 'm' }}>
-              You cannot undo this action.
-            </Box>
-          </Box>
-        }
-        handleDismiss={() => setVisible(false)}
-        handleCancel={() => setVisible(false)}
-        handleSubmit={onDelete}
-      />
-    </TimeSync>
+          }
+          handleDismiss={() => setVisible(false)}
+          handleCancel={() => setVisible(false)}
+          handleSubmit={onDelete}
+        />
+      </TimeSync>
+    </I18nProvider>
   );
 };
 

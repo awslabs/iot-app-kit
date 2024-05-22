@@ -18,6 +18,7 @@ export type DashboardState<
   dashboardConfiguration: {
     widgets: DashboardWidget<Properties>[];
     querySettings?: DashboardTimeSeriesSettings;
+    defaultViewport?: string;
   };
   significantDigits: number;
 };

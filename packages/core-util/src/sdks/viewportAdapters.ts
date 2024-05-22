@@ -17,7 +17,7 @@ const relativeOption = (
   type: 'relative',
 });
 
-export const relativeOptions: DateRangePickerProps.RelativeOption[] = [
+export const relativeViewportOptions: DateRangePickerProps.RelativeOption[] = [
   relativeOption(1, 'minute'),
   relativeOption(5, 'minute'),
   relativeOption(10, 'minute'),
@@ -121,7 +121,7 @@ export const viewportToDateRange = (
     const key = relativeOptionKey(amount, unit);
     return {
       // If key is undefined, cloudscape will default to selecting the custom option.
-      key: relativeOptions.find((ro) => ro.key === key)?.key,
+      key: relativeViewportOptions.find((ro) => ro.key === key)?.key,
       amount,
       unit,
       type: 'relative',
