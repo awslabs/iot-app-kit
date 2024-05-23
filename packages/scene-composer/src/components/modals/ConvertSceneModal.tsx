@@ -100,7 +100,11 @@ const ConvertSceneModal: React.FC = () => {
         }
       }
 
-      if (rootId) {
+      if (progressLocal.total == 0) {
+        // Bump up total to one because onResult has success branch
+        // on the condition of converted+++ == total
+        onResult({ ...progressLocal, total: 1 });
+      } else if (rootId) {
         await convertAllNodesToEntities({
           document,
           sceneRootEntityId: rootId,
