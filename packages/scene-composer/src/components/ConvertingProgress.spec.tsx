@@ -27,4 +27,11 @@ describe('ConvertingProgress', () => {
     expect(progressBar).toBeTruthy();
     expect(container).toMatchSnapshot();
   });
+
+  it('should not render with 0 total', () => {
+    const { container, queryByText } = render(<ConvertingProgress total={0} converted={0} />);
+
+    const progressBar = queryByText('0 out of 0 converted');
+    expect(progressBar).toBeNull();
+  });
 });

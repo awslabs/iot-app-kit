@@ -20,22 +20,24 @@ export const ConvertingProgress: React.FC<{ total: number; converted: number }> 
 
   return (
     <ConvertingProgressContainer data-testid='progress-container'>
-      <ProgressBar
-        status='in-progress'
-        value={(converted / total) * 100}
-        additionalInfo={
-          <ConvertingProgressDescriptionBox>
-            {formatMessage(
-              {
-                defaultMessage: '{convertedNumber} out of {totalNumber} converted',
-                description: 'Progress Bar description',
-              },
-              { convertedNumber: converted, totalNumber: total },
-            )}
-          </ConvertingProgressDescriptionBox>
-        }
-        label={formatMessage({ defaultMessage: 'Converting nodes', description: 'Progress Bar label' })}
-      />
+      {total > 0 && (
+        <ProgressBar
+          status='in-progress'
+          value={(converted / total) * 100}
+          additionalInfo={
+            <ConvertingProgressDescriptionBox>
+              {formatMessage(
+                {
+                  defaultMessage: '{convertedNumber} out of {totalNumber} converted',
+                  description: 'Progress Bar description',
+                },
+                { convertedNumber: converted, totalNumber: total },
+              )}
+            </ConvertingProgressDescriptionBox>
+          }
+          label={formatMessage({ defaultMessage: 'Converting nodes', description: 'Progress Bar label' })}
+        />
+      )}
     </ConvertingProgressContainer>
   );
 };
