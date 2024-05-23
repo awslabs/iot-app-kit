@@ -14,6 +14,7 @@ const validAnomalyObjectDataSource: AnomalyObjectDataSource = {
     data: [
       {
         timestamp: 1711078622000,
+        prediction: 1,
         diagnostics: [
           {
             name: 'Diagnostic Name 1',
@@ -31,6 +32,7 @@ const validAnomalyObjectDataSource: AnomalyObjectDataSource = {
       },
       {
         timestamp: 1711165022000,
+        prediction: 1,
         diagnostics: [
           {
             name: 'Diagnostic Name 1',

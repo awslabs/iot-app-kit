@@ -14,6 +14,7 @@ export type Diagnostics = Diagnostic[];
 
 export type AnomalyObjectDataInput = {
   timestamp: number;
+  prediction: number;
   diagnostics: Diagnostics;
 }[];
 

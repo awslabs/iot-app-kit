@@ -8,9 +8,22 @@ import {
   ObjectDataSourceValue,
 } from '../../object';
 import { AnomalyObjectDataSource } from './datasource';
-import { AnomalyObjectDataSourceValue, Diagnostic, Diagnostics } from './input';
+import {
+  AnomalyObjectDataInput,
+  AnomalyObjectDataSourceValue,
+  Diagnostic,
+  Diagnostics,
+} from './input';
 import { AnomalyData, AnomalyDescription, DiagnosticData } from './output';
 import { isAfter, isBefore } from 'date-fns';
+
+/**
+ * there can be points that have an anomaly score
+ * with diagnostics, that are not actually anomalous.
+ * The prediction value of 0 means NO_ANOMALY_DETECTED
+ */
+const isAnomalous = ({ prediction }: AnomalyObjectDataInput[number]) =>
+  prediction > 0;
 
 /**
  * Transformer for AnomalyResult type responses from
@@ -32,6 +45,8 @@ export class AnomalyObjectDataSourceTransformer extends ObjectDataSourceTransfor
     return datasource.value.data.every(
       (item) =>
         'timestamp' in item &&
+        'prediction' in item &&
+        typeof item['prediction'] === 'number' &&
         'diagnostics' in item &&
         Array.isArray(item['diagnostics']) &&
         item['diagnostics'].every(
@@ -121,8 +136,9 @@ export class AnomalyObjectDataSourceTransformer extends ObjectDataSourceTransfor
 
   transform(dataSource: AnomalyObjectDataSource): AnomalyData {
     const { data } = dataSource.value;
+    const onlyAnomalousData = data.filter(isAnomalous);
     const diagnosticOrdering = this.#getUniqueDiagnostics(dataSource);
-    return data.map(({ timestamp, diagnostics }) => {
+    return onlyAnomalousData.map(({ timestamp, diagnostics }) => {
       return {
         timestamp: new Date(timestamp).getTime(),
         ...this.#flattenDiagnostics(diagnosticOrdering, diagnostics),
