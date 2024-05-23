@@ -28,6 +28,7 @@ export const useTransformedData = ({
     viewport,
     styles: anomalyQueryStyles,
   });
+  const empty = !query && !data;
   const inputData = (query ? [queryDataSource] : data) ?? [];
 
   const transformedData = loader.transform([...inputData]).at(0);
@@ -42,5 +43,6 @@ export const useTransformedData = ({
     description,
     loading,
     error,
+    empty,
   };
 };

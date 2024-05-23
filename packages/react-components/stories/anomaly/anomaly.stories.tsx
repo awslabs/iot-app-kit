@@ -130,3 +130,21 @@ export const AnomalyChartErrorState: ComponentStory<typeof AnomalyChart> = (
     </div>
   );
 };
+
+export const AnomalyChartEmptyState: ComponentStory<typeof AnomalyChart> = (
+  options
+) => {
+  return (
+    <div style={{ background: 'grey' }}>
+      <div style={{ height: '350px', width: '500px', padding: '20px' }}>
+        <AnomalyChart
+          {...options}
+          viewport={{
+            start: new Date(1714409978348),
+            end: new Date(1714999073631),
+          }}
+        />
+      </div>
+    </div>
+  );
+};
