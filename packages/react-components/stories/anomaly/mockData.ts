@@ -58,6 +58,7 @@ export const mockDatasource: AnomalyObjectDataSource = {
   value: {
     data: times.map((t) => ({
       timestamp: t,
+      prediction: 1,
       diagnostics: BaseAnomalyResult.value.diagnostics.map((d) => ({
         id: d.name,
         name: d.name,
