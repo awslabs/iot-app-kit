@@ -12,6 +12,7 @@ import { LoadingIcon } from './loading-icon';
 import { Timestamp } from '../timestampBar';
 import { AnomalyChartError } from './anomalyChartError';
 import { useTransformedData } from './hooks/useTransformedData';
+import { AnomalyChartEmpty } from './anomalyChartEmpty';
 
 /**
  * Setup the applicable data source transformers
@@ -23,7 +24,7 @@ const AnomalyDataSourceLoader = new DataSourceLoader([
 export const AnomalyChart = (options: AnomalyChartOptions) => {
   const { showTimestamp = true, viewport, ...configuration } = options;
 
-  const { data, description, loading, error } = useTransformedData({
+  const { data, description, loading, error, empty } = useTransformedData({
     ...configuration,
     loader: AnomalyDataSourceLoader,
     viewport,
@@ -48,6 +49,7 @@ export const AnomalyChart = (options: AnomalyChartOptions) => {
         position: 'relative',
       }}
     >
+      {empty && <AnomalyChartEmpty />}
       {error && <AnomalyChartError />}
       {!error && <LoadingIcon loading={loading} />}
       <div
