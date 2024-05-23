@@ -1,7 +1,10 @@
 import React from 'react';
 
-import { colorBackgroundContainerContent } from '@cloudscape-design/design-tokens';
-import { Alert, Box } from '@cloudscape-design/components';
+import {
+  colorBackgroundContainerContent,
+  colorTextStatusError,
+} from '@cloudscape-design/design-tokens';
+import { Icon } from '@cloudscape-design/components';
 import useIntlStore from '../../translations';
 
 export const AnomalyChartError = () => {
@@ -9,29 +12,30 @@ export const AnomalyChartError = () => {
 
   return (
     <div
-      className='kpi'
-      data-testid='kpi-error-component'
+      data-testid='anomaly-error-component'
       style={{
         background: colorBackgroundContainerContent,
+        color: colorTextStatusError,
+        boxSizing: 'border-box',
         width: '100%',
         height: '100%',
+        padding: '16px',
         display: 'flex',
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',
         zIndex: 1,
       }}
     >
-      <Box margin={{ vertical: 's', horizontal: 's' }}>
-        <Alert statusIconAriaLabel='Error' type='error'>
-          {intl.formatMessage({
-            id: 'anomaly-chart.error',
-            description:
-              'Error message if the anomaly widget fails to load data',
-            defaultMessage: 'Error: failed to load anomaly results',
-          })}
-        </Alert>
-      </Box>
+      <Icon name='status-negative' />
+      <div style={{ paddingLeft: '4px' }}>
+        {intl.formatMessage({
+          id: 'anomaly-chart.error',
+          description: 'Error message if the anomaly widget fails to load data',
+          defaultMessage: "The data couldn't be fetched. Try again later.",
+        })}
+      </div>
     </div>
   );
 };
