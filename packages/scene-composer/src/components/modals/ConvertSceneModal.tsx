@@ -100,7 +100,7 @@ const ConvertSceneModal: React.FC = () => {
         }
       }
 
-      if (rootId) {
+      if (rootId && progressLocal.total > 0) {
         await convertAllNodesToEntities({
           document,
           sceneRootEntityId: rootId,
@@ -114,6 +114,8 @@ const ConvertSceneModal: React.FC = () => {
             onResult(progressLocal);
           },
         });
+      } else {
+        onClose();
       }
     } catch (e) {
       setProgress(undefined);
