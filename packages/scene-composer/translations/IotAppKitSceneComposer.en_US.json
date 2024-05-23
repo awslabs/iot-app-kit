@@ -1299,6 +1299,10 @@
     "note": "Light Type in a dropdown menu",
     "text": "Directional"
   },
+  "ytZC0H": {
+    "note": "Scene Entity Error",
+    "text": "Dynamic Scene is missing root scene entity"
+  },
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "Camera"
