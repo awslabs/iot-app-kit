@@ -246,4 +246,27 @@ describe('ConvertSceneModal', () => {
 
     expect(container).toMatchSnapshot();
   });
+
+  it('should convert empty scene successfully', async () => {
+    accessStore('default').setState({
+      document: {
+        nodeMap: {},
+      } as any,
+    });
+
+    getSceneProperty.mockReturnValue(undefined);
+    const { queryByTestId } = render(<ConvertSceneModal />);
+
+    const confirmButton = queryByTestId('confirm-button');
+    act(() => {
+      confirmButton!.click();
+    });
+
+    await flushPromises();
+
+    expect(createSceneRootEntity as jest.Mock).toBeCalledTimes(1);
+    expect(setSceneProperty).toBeCalledTimes(1);
+    expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.SceneRootEntityId, 'scene-root-id');
+    expect(convertAllNodesToEntities).not.toBeCalled();
+  });
 });
