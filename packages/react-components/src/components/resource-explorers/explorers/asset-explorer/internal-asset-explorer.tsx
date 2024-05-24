@@ -57,7 +57,7 @@ export function InternalAssetExplorer({
   const tableResourceDefinition =
     customTableResourceDefinition ??
     createDefaultAssetTableDefinition((asset) => {
-      if ((asset.hierarchies ?? []).length > 0) {
+      if ((asset.hierarchies ?? []).length > 0 && parameters === undefined) {
         return (
           <Link onFollow={() => onClickAssetName(asset)}>{asset.name}</Link>
         );
