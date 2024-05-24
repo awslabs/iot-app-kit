@@ -77,7 +77,9 @@ export const checkIfEntityExists = async (
     if (e instanceof ResourceNotFoundException) {
       return false;
     }
-    throw e;
+    console.log('swallowing exception: ', e);
+    return false;
+    //throw e;
   }
 };
 
