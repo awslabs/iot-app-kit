@@ -47,7 +47,7 @@ describe('asset model table', () => {
       expect(screen.getByText('(0)')).toBeVisible();
 
       // Search
-      expect(screen.queryByLabelText('Search')).not.toBeInTheDocument();
+      expect(table.querySearchField()).not.toBeInTheDocument();
 
       // Filter
       expect(screen.queryByLabelText('Filter')).not.toBeInTheDocument();

@@ -17,7 +17,7 @@ import {
 } from './drop-down';
 
 /** Props common to all resource explorers. */
-export type CommonResourceExplorerProps<Resource> = {
+export type CommonResourceExplorerProps<Resource = unknown> = {
   /** TODO */
   requestFns?: unknown;
 

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { useQueryPagination } from './use-two-dimensional-pagination';
 import { useCachedResources } from './use-cached-resources';
+import type { QueryKey } from './types';
 import {
   ListRequestBaseParams,
   ListRequestBaseResponse,
@@ -23,16 +24,6 @@ export interface UseMultipleListRequestsResult<Resource>
   extends UseListAPIBaseResult {
   resources: Resource[];
 }
-
-type Parameters = readonly unknown[];
-
-type QueryKey = [
-  {
-    resourceId: string;
-    allParameters: Parameters;
-    currentParameters: Parameters[number];
-  }
-];
 
 /** Use paginated resources across multiple queries. */
 export function useMultipleListRequests<
@@ -99,6 +90,7 @@ export function useMultipleListRequests<
   );
 
   const resources = useCachedResources<Resource>({
+    resourceId,
     allParameters: parameters,
   });
 
