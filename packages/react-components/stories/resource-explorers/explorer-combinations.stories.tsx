@@ -1,32 +1,29 @@
 import { type Meta } from '@storybook/react';
 import React, { useState } from 'react';
 
-import { SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES } from './constants';
+import {
+  StoryWithClearedResourceCache,
+  StoryWithTanstackDevTools,
+} from './decorators';
 import { client } from './data-source';
-
 import {
   AssetModelExplorer,
   AssetExplorer,
   AssetPropertyExplorer,
+  TimeSeriesExplorer,
   type AssetModelExplorerProps,
   type AssetExplorerProps,
-  type AssetPropertyExplorerProps,
 } from '../../src/components/resource-explorers';
 
 export default {
   title: 'Resource Explorers/Combinations',
   component: AssetExplorer,
-  argTypes: {
-    ...SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES,
-  },
+  decorators: [StoryWithTanstackDevTools, StoryWithClearedResourceCache],
 } satisfies Meta<typeof AssetExplorer>;
 
-export function AssetPlusAssetPropertyExplorer() {
+export function AssetExplorerPlusAssetPropertyExplorer() {
   const [selectedAssets, setSelectedAssets] = useState<
     NonNullable<AssetExplorerProps['selectedAssets']>
-  >([]);
-  const [selectedAssetProperties, setSelectedAssetProperties] = useState<
-    NonNullable<AssetPropertyExplorerProps['selectedAssetProperties']>
   >([]);
 
   return (
@@ -38,18 +35,95 @@ export function AssetPlusAssetPropertyExplorer() {
         selectionMode='multi'
       />
 
-      <AssetPropertyExplorer
-        onSelectAssetProperty={setSelectedAssetProperties}
-        selectedAssetProperties={selectedAssetProperties}
-        parameters={selectedAssets}
+      <AssetPropertyExplorer requestFns={client} parameters={selectedAssets} />
+    </>
+  );
+}
+
+export function AssetExplorerPlusTimeSeriesExplorer() {
+  const [selectedAssets, setSelectedAssets] = useState<
+    NonNullable<AssetExplorerProps['selectedAssets']>
+  >([]);
+
+  return (
+    <>
+      <AssetExplorer
         requestFns={client}
+        onSelectAsset={setSelectedAssets}
+        selectedAssets={selectedAssets}
         selectionMode='multi'
+        tableSettings={{
+          isSearchEnabled: true,
+          isFilterEnabled: true,
+          isUserSettingsEnabled: true,
+        }}
+      />
+
+      <TimeSeriesExplorer
+        requestFns={client}
+        parameters={selectedAssets}
+        tableSettings={{ isFilterEnabled: true, isUserSettingsEnabled: true }}
       />
     </>
   );
 }
 
-export function AssetModelPlusAssetExplorer() {
+export function AssetExplorerPlusAssetExplorer() {
+  const [selectedAssets, setSelectedAssets] = useState<
+    NonNullable<AssetExplorerProps['selectedAssets']>
+  >([]);
+
+  return (
+    <>
+      <AssetExplorer
+        requestFns={client}
+        onSelectAsset={setSelectedAssets}
+        selectedAssets={selectedAssets}
+        selectionMode='multi'
+        tableSettings={{
+          isSearchEnabled: true,
+          isFilterEnabled: true,
+          isUserSettingsEnabled: true,
+        }}
+      />
+
+      <AssetExplorer
+        requestFns={client}
+        parameters={selectedAssets}
+        tableSettings={{ isFilterEnabled: true, isUserSettingsEnabled: true }}
+      />
+    </>
+  );
+}
+
+export function AssetModelExplorerPlusAssetExplorer() {
+  const [selectedAssetModels, setSelectedAssetModels] = useState<
+    NonNullable<AssetModelExplorerProps['selectedAssetModels']>
+  >([]);
+
+  return (
+    <>
+      <AssetModelExplorer
+        requestFns={client}
+        onSelectAssetModel={setSelectedAssetModels}
+        selectedAssetModels={selectedAssetModels}
+        selectionMode='multi'
+        tableSettings={{
+          isFilterEnabled: true,
+          isUserSettingsEnabled: true,
+        }}
+      />
+
+      <AssetExplorer
+        requestFns={client}
+        parameters={selectedAssetModels}
+        tableSettings={{ isFilterEnabled: true, isUserSettingsEnabled: true }}
+      />
+    </>
+  );
+}
+
+export function AssetModelExplorerPlusAssetExplorerPlusAssetPropertyExplorer() {
   const [selectedAssetModels, setSelectedAssetModels] = useState<
     NonNullable<AssetModelExplorerProps['selectedAssetModels']>
   >([]);
@@ -60,19 +134,80 @@ export function AssetModelPlusAssetExplorer() {
   return (
     <>
       <AssetModelExplorer
-        variant='drop-down'
         requestFns={client}
         onSelectAssetModel={setSelectedAssetModels}
         selectedAssetModels={selectedAssetModels}
         selectionMode='multi'
+        tableSettings={{
+          isFilterEnabled: true,
+          isUserSettingsEnabled: true,
+        }}
       />
 
       <AssetExplorer
-        parameters={selectedAssetModels}
         requestFns={client}
+        parameters={selectedAssetModels}
         onSelectAsset={setSelectedAssets}
         selectedAssets={selectedAssets}
         selectionMode='multi'
+        tableSettings={{
+          isFilterEnabled: true,
+          isUserSettingsEnabled: true,
+        }}
+      />
+
+      <AssetPropertyExplorer
+        requestFns={client}
+        parameters={selectedAssets}
+        tableSettings={{
+          isFilterEnabled: true,
+          isUserSettingsEnabled: true,
+        }}
+      />
+    </>
+  );
+}
+
+export function AssetModelExplorerPlusAssetExplorerPlusTimeSeriesExplorer() {
+  const [selectedAssetModels, setSelectedAssetModels] = useState<
+    NonNullable<AssetModelExplorerProps['selectedAssetModels']>
+  >([]);
+  const [selectedAssets, setSelectedAssets] = useState<
+    NonNullable<AssetExplorerProps['selectedAssets']>
+  >([]);
+
+  return (
+    <>
+      <AssetModelExplorer
+        requestFns={client}
+        onSelectAssetModel={setSelectedAssetModels}
+        selectedAssetModels={selectedAssetModels}
+        selectionMode='multi'
+        tableSettings={{
+          isFilterEnabled: true,
+          isUserSettingsEnabled: true,
+        }}
+      />
+
+      <AssetExplorer
+        requestFns={client}
+        parameters={selectedAssetModels}
+        onSelectAsset={setSelectedAssets}
+        selectedAssets={selectedAssets}
+        selectionMode='multi'
+        tableSettings={{
+          isFilterEnabled: true,
+          isUserSettingsEnabled: true,
+        }}
+      />
+
+      <TimeSeriesExplorer
+        requestFns={client}
+        parameters={selectedAssets}
+        tableSettings={{
+          isFilterEnabled: true,
+          isUserSettingsEnabled: true,
+        }}
       />
     </>
   );

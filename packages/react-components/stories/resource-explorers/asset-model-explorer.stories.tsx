@@ -1,76 +1,123 @@
 import { type Meta } from '@storybook/react';
-import React, { useState } from 'react';
+import React from 'react';
 
-import { SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES } from './constants';
+import {
+  SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES,
+  type CommonResourceExplorerControls,
+} from './controls';
 import { client } from './data-source';
-import type { ResourceExplorerStoryControls } from './types';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import {
   AssetModelExplorer,
   type AssetModelExplorerProps,
 } from '../../src/components/resource-explorers';
-import type { AssetModelResource } from '../../src/components/resource-explorers/types/resources';
-import { resourceExplorerQueryClient } from '../../src/components/resource-explorers/requests/resource-explorer-query-client';
+import {
+  StoryWithClearedResourceCache,
+  StoryWithSelectableResource,
+  StoryWithTanstackDevTools,
+} from './decorators';
+import { StoryFnReactReturnType } from '@storybook/react/dist/ts3.9/client/preview/types';
 
 export default {
   title: 'Resource Explorers/Asset Model Explorer',
   component: AssetModelExplorer,
+  parameters: {
+    controls: {
+      expanded: true,
+      exclude: ['tableSettings.isSearchEnabled'],
+    },
+  },
+  decorators: [
+    StoryWithTanstackDevTools,
+    StoryWithClearedResourceCache,
+    StoryWithSelectableResource,
+  ],
   argTypes: {
     ...SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES,
-    assetModelTypes: {
-      type: 'radio',
-      default: undefined,
-      options: [undefined, 'ASSET_MODEL', 'COMPONENT_MODEL'],
-      mapping: {
-        undefined: [undefined],
-        ASSET_MODEL: ['ASSET_MODEL'],
-        COMPONENT_MODEL: ['COMPONENT_MODEL'],
-      },
-    },
   },
 } satisfies Meta<typeof AssetModelExplorer>;
 
-type AssetModelExplorerStoryControls =
-  ResourceExplorerStoryControls<AssetModelResource> &
-    Pick<AssetModelExplorerProps, 'parameters'>;
+type AssetModelExplorerStory = (
+  controls: AssetModelExplorerStoryControls,
+  context: AssetModelExplorerStoryContext
+) => StoryFnReactReturnType;
 
-export function StandardExample({
-  isTitleEnabled,
-  isFilterEnabled,
-  isUserSettingsEnabled,
-  ...assetModelExplorerProps
-}: AssetModelExplorerStoryControls) {
-  const [selectedAssetModels, setSelectedAssetModels] = useState<
-    NonNullable<AssetModelExplorerProps['selectedAssetModels']>
-  >([]);
+type AssetModelExplorerStoryControls = CommonResourceExplorerControls;
+
+interface AssetModelExplorerStoryContext {
+  selectedResources: NonNullable<
+    AssetModelExplorerProps['selectedAssetModels']
+  >;
+  onSelectResource: NonNullable<AssetModelExplorerProps['onSelectAssetModel']>;
+}
+
+function storyArgsToProps(
+  {
+    isTableTitleEnabled,
+    isTableSearchEnabled,
+    isTableFilterEnabled,
+    isTableUserSettingsEnabled,
+    isDropDownFilterEnabled,
+    ...controls
+  }: AssetModelExplorerStoryControls,
+  { selectedResources, onSelectResource }: AssetModelExplorerStoryContext
+): AssetModelExplorerProps {
+  return {
+    selectedAssetModels: selectedResources,
+    onSelectAssetModel: onSelectResource,
+    tableSettings: {
+      isTitleEnabled: isTableTitleEnabled,
+      isSearchEnabled: isTableSearchEnabled,
+      isFilterEnabled: isTableFilterEnabled,
+      isUserSettingsEnabled: isTableUserSettingsEnabled,
+    },
+    dropDownSettings: {
+      isFilterEnabled: isDropDownFilterEnabled,
+    },
+    ...controls,
+  };
+}
+
+export const AssetAndComponentModels: AssetModelExplorerStory = (
+  controls,
+  context
+) => {
+  const props = storyArgsToProps(controls, context);
+
+  return <AssetModelExplorer {...props} requestFns={client} />;
+};
+
+export const OnlyAssetModels: AssetModelExplorerStory = (controls, context) => {
+  const props = storyArgsToProps(controls, context);
 
   return (
-    <>
-      <AssetModelExplorer
-        {...assetModelExplorerProps}
-        requestFns={client}
-        parameters={[
-          { assetModelTypes: ['ASSET_MODEL'] },
-          { assetModelTypes: ['COMPONENT_MODEL'] },
-        ]}
-        tableSettings={{
-          isTitleEnabled,
-          isFilterEnabled,
-          isUserSettingsEnabled,
-        }}
-        onSelectAssetModel={setSelectedAssetModels}
-        selectedAssetModels={selectedAssetModels}
-      />
-      <ReactQueryDevtools client={resourceExplorerQueryClient} />
-    </>
+    <AssetModelExplorer
+      {...props}
+      requestFns={client}
+      parameters={[{ assetModelTypes: ['ASSET_MODEL'] }]}
+    />
   );
-}
+};
 
-export function ZeroConfigurationTable() {
+export const OnlyComponentModels: AssetModelExplorerStory = (
+  controls,
+  context
+) => {
+  const props = storyArgsToProps(controls, context);
+
+  return (
+    <AssetModelExplorer
+      {...props}
+      requestFns={client}
+      parameters={[{ assetModelTypes: ['COMPONENT_MODEL'] }]}
+    />
+  );
+};
+
+export const ZeroConfigurationTable: AssetModelExplorerStory = () => {
   return <AssetModelExplorer />;
-}
+};
 
-export function ZeroConfigurationDropDown() {
+export const ZeroConfigurationDropDown: AssetModelExplorerStory = () => {
   return <AssetModelExplorer variant='drop-down' />;
-}
+};

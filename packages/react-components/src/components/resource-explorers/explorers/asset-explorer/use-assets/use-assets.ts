@@ -53,7 +53,9 @@ export function useAssets({
   const shouldRequestAssetModelAssets =
     !shouldRequestChildAssets && isEveryAssetModelAssetsParameters(parameters);
   const shouldRequestRootAssets =
-    !shouldRequestAssetModelAssets && !shouldRequestChildAssets;
+    !shouldRequestAssetModelAssets &&
+    !shouldRequestChildAssets &&
+    parameters === undefined;
 
   const assetSearchResult = useAssetSearch({
     parameters: shouldRequestSearchedAssets ? parameters : [],
@@ -85,7 +87,15 @@ export function useAssets({
     ? assetModelAssetsQueryResult
     : shouldRequestChildAssets
     ? childAssetsQueryResult
-    : rootAssetsQueryResult;
+    : shouldRequestRootAssets
+    ? rootAssetsQueryResult
+    : {
+        assets: [],
+        isLoading: false,
+        error: undefined,
+        hasNextPage: false,
+        nextPage: () => {},
+      };
 
   return queryResult;
 }
