@@ -1,78 +1,117 @@
 import { type Meta } from '@storybook/react';
-import React, { useState } from 'react';
-import { SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES } from './constants';
+import React from 'react';
+import {
+  CommonResourceExplorerControls,
+  SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES,
+} from './controls';
 import { client } from './data-source';
 import {
   AssetPropertyExplorer,
   type AssetPropertyExplorerProps,
 } from '../../src/components/resource-explorers';
-import { ResourceExplorerStoryControls } from './types';
-import type { AssetPropertyResource } from '../../src/components/resource-explorers/types/resources';
+import { StoryFnReactReturnType } from '@storybook/react/dist/ts3.9/client/preview/types';
+import {
+  StoryWithClearedResourceCache,
+  StoryWithSelectableResource,
+  StoryWithTanstackDevTools,
+} from './decorators';
 
 export default {
   title: 'Resource Explorers/Asset Property Explorer',
   component: AssetPropertyExplorer,
+  parameters: {
+    controls: {
+      expanded: true,
+    },
+  },
+  decorators: [
+    StoryWithTanstackDevTools,
+    StoryWithClearedResourceCache,
+    StoryWithSelectableResource,
+  ],
   argTypes: {
     ...SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES,
   },
 } satisfies Meta<typeof AssetPropertyExplorer>;
 
-type AssetPropertyExplorerStoryControls =
-  ResourceExplorerStoryControls<AssetPropertyResource>;
+type AssetPropertyExplorerStory = (
+  controls: AssetPropertyExplorerStoryControls,
+  context: AssetPropertyExplorerStoryContext
+) => StoryFnReactReturnType;
 
-export function AssetPropertyExplorerExample({
-  isTitleEnabled,
-  isSearchEnabled,
-  isFilterEnabled,
-  isUserSettingsEnabled,
-  ...assetPropertyExplorerProps
-}: AssetPropertyExplorerStoryControls) {
-  const [selectedAssetProperties, setSelectedAssetProperties] = useState<
-    NonNullable<AssetPropertyExplorerProps['selectedAssetProperties']>
-  >([]);
+type AssetPropertyExplorerStoryControls = CommonResourceExplorerControls;
+
+interface AssetPropertyExplorerStoryContext {
+  selectedResources: NonNullable<
+    AssetPropertyExplorerProps['selectedAssetProperties']
+  >;
+  onSelectResource: NonNullable<
+    AssetPropertyExplorerProps['onSelectAssetProperty']
+  >;
+}
+
+function storyArgsToProps(
+  {
+    isTableTitleEnabled,
+    isTableSearchEnabled,
+    isTableFilterEnabled,
+    isTableUserSettingsEnabled,
+    isDropDownFilterEnabled,
+    ...controls
+  }: AssetPropertyExplorerStoryControls,
+  { selectedResources, onSelectResource }: AssetPropertyExplorerStoryContext
+): AssetPropertyExplorerProps {
+  return {
+    selectedAssetProperties: selectedResources,
+    onSelectAssetProperty: onSelectResource,
+    tableSettings: {
+      isTitleEnabled: isTableTitleEnabled,
+      isSearchEnabled: isTableSearchEnabled,
+      isFilterEnabled: isTableFilterEnabled,
+      isUserSettingsEnabled: isTableUserSettingsEnabled,
+    },
+    dropDownSettings: {
+      isFilterEnabled: isDropDownFilterEnabled,
+    },
+    ...controls,
+  };
+}
+
+// Requires setting parameters manually (or using search)
+export const WithLatestValues: AssetPropertyExplorerStory = (
+  controls,
+  context
+) => {
+  const props = storyArgsToProps(controls, context);
+
+  return (
+    <AssetPropertyExplorer {...props} requestFns={client} parameters={[]} />
+  );
+};
+
+// Requires setting parameters manually (or using search)
+export const WithoutLatestValues: AssetPropertyExplorerStory = (
+  controls,
+  context
+) => {
+  const props = storyArgsToProps(controls, context);
 
   return (
     <AssetPropertyExplorer
-      {...assetPropertyExplorerProps}
-      onSelectAssetProperty={setSelectedAssetProperties}
-      selectedAssetProperties={selectedAssetProperties}
-      parameters={[
-        {
-          assetId: 'fe77512c-542e-48f0-8aed-6437bcd13ada',
-          assetModelId: '0ea4b401-1fae-492b-bd26-509bc97bfd34',
-        },
-        {
-          assetId: '5488de7d-01e6-405e-b4f7-de4767273ac5',
-          assetModelId: '0ea4b401-1fae-492b-bd26-509bc97bfd34',
-        },
-        {
-          assetId: 'c04755c2-e1c5-4674-a2ff-8f66e7de6d29',
-          assetModelId: '0ea4b401-1fae-492b-bd26-509bc97bfd34',
-        },
-        {
-          assetId: '759f73df-811c-4a29-9bf0-447228c19d9c',
-          assetModelId: '0ea4b401-1fae-492b-bd26-509bc97bfd34',
-        },
-        {
-          assetId: '3d1d17a4-2655-4405-aee8-67cd1ca5c166',
-          assetModelId: '0ea4b401-1fae-492b-bd26-509bc97bfd34',
-        },
-        {
-          assetId: '6c16d9ac-0eac-4c16-801d-1b8480c89ebb',
-          assetModelId: '0ea4b401-1fae-492b-bd26-509bc97bfd34',
-        },
-      ]}
-      requestFns={client}
-      tableSettings={{
-        isTitleEnabled,
-        isFilterEnabled,
-        isUserSettingsEnabled,
-        isSearchEnabled,
+      {...props}
+      requestFns={{
+        executeQuery: client.executeQuery.bind(client),
+        listAssetProperties: client.listAssetProperties.bind(client),
+        listAssetModelProperties: client.listAssetModelProperties.bind(client),
       }}
     />
   );
-}
+};
 
-export function ZeroConfiguration() {
+export const ZeroConfigurationTable: AssetPropertyExplorerStory = () => {
   return <AssetPropertyExplorer />;
-}
+};
+
+export const ZeroConfigurationDropDown: AssetPropertyExplorerStory = () => {
+  return <AssetPropertyExplorer variant='drop-down' />;
+};

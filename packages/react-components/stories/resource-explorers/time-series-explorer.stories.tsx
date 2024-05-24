@@ -1,106 +1,138 @@
 import { type Meta } from '@storybook/react';
-import React, { useState } from 'react';
+import React from 'react';
 
-import { SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES } from './constants';
+import {
+  CommonResourceExplorerControls,
+  SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES,
+} from './controls';
 import { client } from './data-source';
 
 import {
   TimeSeriesExplorer,
   type TimeSeriesExplorerProps,
 } from '../../src/components/resource-explorers';
-import type { ResourceExplorerStoryControls } from './types';
-import type { TimeSeriesResource } from '../../src/components/resource-explorers/types/resources';
+import { StoryFnReactReturnType } from '@storybook/react/dist/ts3.9/client/preview/types';
+import {
+  StoryWithClearedResourceCache,
+  StoryWithSelectableResource,
+  StoryWithTanstackDevTools,
+} from './decorators';
 
 export default {
   title: 'Resource Explorers/Time Series Explorer',
   component: TimeSeriesExplorer,
+  parameters: {
+    controls: {
+      expanded: true,
+      exclude: ['tableSettings.isSearchEnabled'],
+    },
+  },
+  decorators: [
+    StoryWithTanstackDevTools,
+    StoryWithClearedResourceCache,
+    StoryWithSelectableResource,
+  ],
   argTypes: {
     ...SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES,
   },
 } satisfies Meta<typeof TimeSeriesExplorer>;
 
-type TimeSeriesExplorerStoryControls =
-  ResourceExplorerStoryControls<TimeSeriesResource> &
-    Pick<TimeSeriesExplorerProps, 'parameters'>;
+type TimeSeriesExplorerStory = (
+  controls: TimeSeriesExplorerStoryControls,
+  context: AssetPropertyExplorerStoryContext
+) => StoryFnReactReturnType;
 
-export function AllTimeSeries({
-  isTitleEnabled,
-  isFilterEnabled,
-  isUserSettingsEnabled,
-  ...timeSeriesExplorerProps
-}: TimeSeriesExplorerStoryControls) {
-  const [selectedTimeSeries, setSeletedTimeSeries] = useState<
-    NonNullable<TimeSeriesExplorerProps['selectedTimeSeries']>
-  >([]);
+type TimeSeriesExplorerStoryControls = CommonResourceExplorerControls;
 
-  return (
-    <TimeSeriesExplorer
-      {...timeSeriesExplorerProps}
-      requestFns={client}
-      selectedTimeSeries={selectedTimeSeries}
-      onSelectTimeSeries={setSeletedTimeSeries}
-      parameters={[{}]}
-      tableSettings={{
-        isTitleEnabled,
-        isFilterEnabled,
-        isUserSettingsEnabled,
-      }}
-    />
-  );
+interface AssetPropertyExplorerStoryContext {
+  selectedResources: NonNullable<TimeSeriesExplorerProps['selectedTimeSeries']>;
+  onSelectResource: NonNullable<TimeSeriesExplorerProps['onSelectTimeSeries']>;
 }
 
-export function AllAssociatedTimeSeries({
-  isTitleEnabled,
-  isFilterEnabled,
-  isUserSettingsEnabled,
-  ...timeSeriesExplorerProps
-}: TimeSeriesExplorerStoryControls) {
-  const [selectedTimeSeries, setSeletedTimeSeries] = useState<
-    NonNullable<TimeSeriesExplorerProps['selectedTimeSeries']>
-  >([]);
+function storyArgsToProps(
+  {
+    isTableTitleEnabled,
+    isTableSearchEnabled,
+    isTableFilterEnabled,
+    isTableUserSettingsEnabled,
+    isDropDownFilterEnabled,
+    ...controls
+  }: TimeSeriesExplorerStoryControls,
+  { selectedResources, onSelectResource }: AssetPropertyExplorerStoryContext
+): TimeSeriesExplorerProps {
+  return {
+    selectedTimeSeries: selectedResources,
+    onSelectTimeSeries: onSelectResource,
+    tableSettings: {
+      isTitleEnabled: isTableTitleEnabled,
+      isSearchEnabled: isTableSearchEnabled,
+      isFilterEnabled: isTableFilterEnabled,
+      isUserSettingsEnabled: isTableUserSettingsEnabled,
+    },
+    dropDownSettings: {
+      isFilterEnabled: isDropDownFilterEnabled,
+    },
+    ...controls,
+  };
+}
+
+export const AllTimeSeriesWithLatestValues: TimeSeriesExplorerStory = (
+  controls,
+  context
+) => {
+  const props = storyArgsToProps(controls, context);
+
+  return <TimeSeriesExplorer {...props} requestFns={client} />;
+};
+
+export const AllTimeSeriesWithoutLatestValues: TimeSeriesExplorerStory = (
+  controls,
+  context
+) => {
+  const props = storyArgsToProps(controls, context);
 
   return (
     <TimeSeriesExplorer
-      {...timeSeriesExplorerProps}
+      {...props}
+      requestFns={{ listTimeSeries: client.listTimeSeries.bind(client) }}
+    />
+  );
+};
+
+export const AllAssociatedTimeSeries: TimeSeriesExplorerStory = (
+  controls,
+  context
+) => {
+  const props = storyArgsToProps(controls, context);
+
+  return (
+    <TimeSeriesExplorer
+      {...props}
       requestFns={client}
-      selectedTimeSeries={selectedTimeSeries}
-      onSelectTimeSeries={setSeletedTimeSeries}
       parameters={[{ timeSeriesType: 'ASSOCIATED' }]}
-      tableSettings={{
-        isTitleEnabled,
-        isFilterEnabled,
-        isUserSettingsEnabled,
-      }}
     />
   );
-}
+};
 
-export function AllDisassociatedTimeSeries({
-  isTitleEnabled,
-  isFilterEnabled,
-  isUserSettingsEnabled,
-  ...timeSeriesExplorerProps
-}: TimeSeriesExplorerStoryControls) {
-  const [selectedTimeSeries, setSeletedTimeSeries] = useState<
-    NonNullable<TimeSeriesExplorerProps['selectedTimeSeries']>
-  >([]);
+export const AllDisassociatedTimeSeries: TimeSeriesExplorerStory = (
+  controls,
+  context
+) => {
+  const props = storyArgsToProps(controls, context);
 
   return (
     <TimeSeriesExplorer
-      {...timeSeriesExplorerProps}
+      {...props}
       requestFns={client}
-      selectedTimeSeries={selectedTimeSeries}
-      onSelectTimeSeries={setSeletedTimeSeries}
       parameters={[{ timeSeriesType: 'DISASSOCIATED' }]}
-      tableSettings={{
-        isTitleEnabled,
-        isFilterEnabled,
-        isUserSettingsEnabled,
-      }}
     />
   );
-}
+};
 
-export function ZeroConfiguration() {
+export const ZeroConfigurationTable: TimeSeriesExplorerStory = () => {
   return <TimeSeriesExplorer />;
-}
+};
+
+export const ZeroConfigurationDropDown: TimeSeriesExplorerStory = () => {
+  return <TimeSeriesExplorer variant='drop-down' />;
+};

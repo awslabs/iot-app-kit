@@ -1,107 +1,101 @@
 import { type Meta } from '@storybook/react';
-import React, { useState } from 'react';
+import React from 'react';
 
-import { SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES } from './constants';
+import {
+  CommonResourceExplorerControls,
+  SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES,
+} from './controls';
 import { client } from './data-source';
 
 import {
   AssetExplorer,
   type AssetExplorerProps,
 } from '../../src/components/resource-explorers';
-import type { ResourceExplorerStoryControls } from './types';
-import type { AssetResource } from '../../src/components/resource-explorers/types/resources';
+import {
+  StoryWithClearedResourceCache,
+  StoryWithSelectableResource,
+  StoryWithTanstackDevTools,
+} from './decorators';
+import { StoryFnReactReturnType } from '@storybook/react/dist/ts3.9/client/preview/types';
 
 export default {
   title: 'Resource Explorers/Asset Explorer',
   component: AssetExplorer,
+  parameters: {
+    controls: {
+      expanded: true,
+    },
+  },
+  decorators: [
+    StoryWithTanstackDevTools,
+    StoryWithClearedResourceCache,
+    StoryWithSelectableResource,
+  ],
   argTypes: {
     ...SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES,
   },
 } satisfies Meta<typeof AssetExplorer>;
 
-type AssetExplorerStoryControls = ResourceExplorerStoryControls<AssetResource>;
+type AssetExplorerStory = (
+  controls: AssetExplorerStoryControls,
+  context: AssetExplorerStoryContext
+) => StoryFnReactReturnType;
 
-export function StandardExample({
-  isTitleEnabled,
-  isSearchEnabled,
-  isFilterEnabled,
-  isUserSettingsEnabled,
-  ...assetExplorerProps
-}: AssetExplorerStoryControls) {
-  const [selectedAssets, setSelectedAssets] = useState<
-    NonNullable<AssetExplorerProps['selectedAssets']>
-  >([]);
+type AssetExplorerStoryControls = CommonResourceExplorerControls;
 
-  return (
-    <AssetExplorer
-      {...assetExplorerProps}
-      requestFns={client}
-      onSelectAsset={setSelectedAssets}
-      selectedAssets={selectedAssets}
-      tableSettings={{
-        isTitleEnabled,
-        isFilterEnabled,
-        isUserSettingsEnabled,
-        isSearchEnabled,
-      }}
-    />
-  );
+interface AssetExplorerStoryContext {
+  selectedResources: NonNullable<AssetExplorerProps['selectedAssets']>;
+  onSelectResource: NonNullable<AssetExplorerProps['onSelectAsset']>;
 }
 
-export function SearchOnly() {
+function storyArgsToProps(
+  {
+    isTableTitleEnabled,
+    isTableSearchEnabled,
+    isTableFilterEnabled,
+    isTableUserSettingsEnabled,
+    isDropDownFilterEnabled,
+    ...controls
+  }: AssetExplorerStoryControls,
+  { selectedResources, onSelectResource }: AssetExplorerStoryContext
+): AssetExplorerProps {
+  return {
+    selectedAssets: selectedResources,
+    onSelectAsset: onSelectResource,
+    tableSettings: {
+      isTitleEnabled: isTableTitleEnabled,
+      isSearchEnabled: isTableSearchEnabled,
+      isFilterEnabled: isTableFilterEnabled,
+      isUserSettingsEnabled: isTableUserSettingsEnabled,
+    },
+    dropDownSettings: {
+      isFilterEnabled: isDropDownFilterEnabled,
+    },
+    ...controls,
+  };
+}
+
+export const HierarchyNavigation: AssetExplorerStory = (controls, context) => {
+  const props = storyArgsToProps(controls, context);
+
+  return <AssetExplorer {...props} requestFns={client} />;
+};
+
+export const SearchOnly: AssetExplorerStory = (controls, context) => {
+  const props = storyArgsToProps(controls, context);
+
   return (
     <AssetExplorer
+      {...props}
       requestFns={{ executeQuery: client.executeQuery.bind(client) }}
-      tableSettings={{
-        isSearchEnabled: true,
-      }}
     />
   );
-}
+};
 
-export function ZeroConfiguration() {
+export const ZeroConfigurationTable: AssetExplorerStory = () => {
   return <AssetExplorer />;
-}
+};
 
-export function ZeroConfigurationDropDown() {
+export const ZeroConfigurationDropDown: AssetExplorerStory = () => {
   return <AssetExplorer variant='drop-down' />;
-}
-
-export function GrafanaThemeTable() {
-  const [selectedAssets, setSelectedAssets] = useState<
-    NonNullable<AssetExplorerProps['selectedAssets']>
-  >([]);
-
-  return (
-    <AssetExplorer
-      requestFns={client}
-      onSelectAsset={setSelectedAssets}
-      selectedAssets={selectedAssets}
-      tableSettings={{
-        isFilterEnabled: true,
-        isUserSettingsEnabled: true,
-        isSearchEnabled: true,
-      }}
-    />
-  );
-}
-
-export function GrafanaThemeDropDown() {
-  const [selectedAssets, setSelectedAssets] = useState<
-    NonNullable<AssetExplorerProps['selectedAssets']>
-  >([]);
-
-  return (
-    <AssetExplorer
-      requestFns={client}
-      onSelectAsset={setSelectedAssets}
-      selectedAssets={selectedAssets}
-      tableSettings={{
-        isFilterEnabled: true,
-        isUserSettingsEnabled: true,
-        isSearchEnabled: true,
-      }}
-      variant='drop-down'
-    />
-  );
-}
+};

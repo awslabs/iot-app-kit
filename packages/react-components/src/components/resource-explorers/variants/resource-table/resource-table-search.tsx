@@ -20,6 +20,12 @@ export function ResourceTableSearch({
 }: ResourceTableSearchProps) {
   const [searchInputValue, setSearchInputValue] = useState('');
 
+  function handleKeyDown(key: string) {
+    if (key === 'Enter') {
+      onClickSearch(searchInputValue);
+    }
+  }
+
   function handleClickSearch() {
     onClickSearch(searchInputValue);
   }
@@ -49,6 +55,7 @@ export function ResourceTableSearch({
           onChange={({ detail: { value } }) => setSearchInputValue(value)}
           placeholder='Search for resources'
           controlId='search'
+          onKeyDown={({ detail: { key } }) => handleKeyDown(key)}
         />
       </div>
 

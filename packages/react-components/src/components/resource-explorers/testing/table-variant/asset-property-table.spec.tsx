@@ -59,7 +59,7 @@ describe('asset property table', () => {
       expect(screen.getByText('(0)')).toBeVisible();
 
       // Search
-      expect(screen.queryByLabelText('Search')).not.toBeInTheDocument();
+      expect(table.querySearchField()).not.toBeInTheDocument();
 
       // Filter
       expect(screen.queryByLabelText('Filter')).not.toBeInTheDocument();
@@ -90,7 +90,7 @@ describe('asset property table', () => {
         <AssetPropertyExplorer tableSettings={{ isSearchEnabled: true }} />
       );
 
-      expect(screen.getByLabelText('Search')).toBeVisible();
+      expect(table.getSearchField()).toBeVisible();
     });
 
     it('renders with filter enabled', () => {
@@ -364,14 +364,13 @@ describe('asset property table', () => {
         .mockResolvedValue({ rows: [] } satisfies Awaited<
           ReturnType<ExecuteQuery>
         >);
-      const user = userEvent.setup();
       render(
         <AssetPropertyExplorer
           requestFns={{ executeQuery }}
           tableSettings={{ isSearchEnabled: true }}
         />
       );
-      await user.type(screen.getByLabelText('Search'), 'Asset Property');
+      await table.typeSearchStatement('Asset Property');
       await table.clickSearch();
 
       const queryStatement = executeQuery.mock.calls[0][0].queryStatement;
@@ -415,7 +414,6 @@ describe('asset property table', () => {
       const executeQuery = jest.fn().mockResolvedValue({
         rows: [assetPropertyRow1, assetPropertyRow2, assetPropertyRow3],
       } satisfies Awaited<ReturnType<ExecuteQuery>>);
-      const user = userEvent.setup();
       render(
         <AssetPropertyExplorer
           requestFns={{ executeQuery }}
@@ -423,7 +421,7 @@ describe('asset property table', () => {
         />
       );
 
-      await user.type(screen.getByLabelText('Search'), 'Asset Property');
+      await table.typeSearchStatement('Asset Property');
       await table.clickSearch();
 
       // Name is rendered
@@ -547,6 +545,24 @@ describe('asset property table', () => {
       expect(
         screen.queryByText(assetPropertyRow3.data[3].scalarValue)
       ).not.toBeInTheDocument();
+    });
+
+    it('initiates search when user presses enter/return key', async () => {
+      const executeQuery = jest
+        .fn()
+        .mockResolvedValue({ rows: [] } satisfies Awaited<
+          ReturnType<ExecuteQuery>
+        >);
+      render(
+        <AssetPropertyExplorer
+          requestFns={{ executeQuery }}
+          tableSettings={{ isSearchEnabled: true }}
+        />
+      );
+      await table.typeSearchStatement('Asset Property');
+      await table.pressReturnKeyToSearch();
+
+      expect(executeQuery).toHaveBeenCalledOnce();
     });
   });
 

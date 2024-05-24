@@ -32,7 +32,7 @@ import { DEFAULT_TIME_SERIES_DROP_DOWN_DEFINITION } from '../../constants/drop-d
 
 export function InternalTimeSeriesExplorer({
   requestFns,
-  parameters = [],
+  parameters = [{}],
   resourceName = DEFAULT_TIME_SERIES_RESOURCE_NAME,
   pluralResourceName = DEFAULT_PLURAL_TIME_SERIES_RESOURCE_NAME,
   isTimeSeriesDisabled = DEFAULT_IS_RESOURCE_DISABLED,
