@@ -62,9 +62,32 @@ export function queryColumnDisplayCheckbox(columnName: string) {
   return screen.queryByRole('checkbox', { name: columnName });
 }
 
+export function getSearchField() {
+  return screen.getByLabelText('Search');
+}
+
+export function querySearchField() {
+  return screen.queryByLabelText('Search');
+}
+
+export async function typeSearchStatement(searchStatement: string) {
+  await userEvent.type(getSearchField(), searchStatement);
+}
+
 export async function clickSearch() {
   await waitFor(() => {
     userEvent.click(screen.getByRole('button', { name: 'Search' }));
+    expect(screen.getByText(/Loading/)).toBeVisible();
+  });
+
+  await waitFor(() => {
+    expect(screen.queryByText(/Loading/)).not.toBeInTheDocument();
+  });
+}
+
+export async function pressReturnKeyToSearch() {
+  await waitFor(() => {
+    userEvent.keyboard('{Enter}');
     expect(screen.getByText(/Loading/)).toBeVisible();
   });
 

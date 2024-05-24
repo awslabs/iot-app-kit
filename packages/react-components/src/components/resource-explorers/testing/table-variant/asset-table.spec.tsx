@@ -45,7 +45,7 @@ describe('asset table', () => {
       expect(screen.getByText('(0)')).toBeVisible();
 
       // Search
-      expect(screen.queryByLabelText('Search')).not.toBeInTheDocument();
+      expect(table.querySearchField()).not.toBeInTheDocument();
 
       // Filter
       expect(screen.queryByLabelText('Filter')).not.toBeInTheDocument();
@@ -72,7 +72,7 @@ describe('asset table', () => {
     it('renders with search enabled', () => {
       render(<AssetExplorer tableSettings={{ isSearchEnabled: true }} />);
 
-      expect(screen.getByLabelText('Search')).toBeVisible();
+      expect(table.getSearchField()).toBeVisible();
     });
 
     it('renders with filter enabled', () => {
@@ -249,14 +249,13 @@ describe('asset table', () => {
         .mockResolvedValue({ rows: [] } satisfies Awaited<
           ReturnType<ExecuteQuery>
         >);
-      const user = userEvent.setup();
       render(
         <AssetExplorer
           requestFns={{ executeQuery }}
           tableSettings={{ isSearchEnabled: true }}
         />
       );
-      await user.type(screen.getByLabelText('Search'), 'Asset');
+      await table.typeSearchStatement('Asset');
       await table.clickSearch();
 
       const queryStatement = executeQuery.mock.calls[0][0].queryStatement;
@@ -299,7 +298,6 @@ describe('asset table', () => {
       const executeQuery = jest.fn().mockResolvedValue({
         rows: [assetRow1, assetRow2, assetRow3],
       } satisfies Awaited<ReturnType<ExecuteQuery>>);
-      const user = userEvent.setup();
       render(
         <AssetExplorer
           requestFns={{ executeQuery }}
@@ -307,7 +305,7 @@ describe('asset table', () => {
         />
       );
 
-      await user.type(screen.getByLabelText('Search'), 'Asset');
+      await table.typeSearchStatement('Asset');
       await table.clickSearch();
 
       // Name is rendered
@@ -407,6 +405,24 @@ describe('asset table', () => {
       expect(
         screen.queryByText(assetRow3.data[3].scalarValue)
       ).not.toBeInTheDocument();
+    });
+
+    it('initiates search when user presses enter/return key', async () => {
+      const executeQuery = jest
+        .fn()
+        .mockResolvedValue({ rows: [] } satisfies Awaited<
+          ReturnType<ExecuteQuery>
+        >);
+      render(
+        <AssetExplorer
+          requestFns={{ executeQuery }}
+          tableSettings={{ isSearchEnabled: true }}
+        />
+      );
+      await table.typeSearchStatement('Asset');
+      await table.pressReturnKeyToSearch();
+
+      expect(executeQuery).toHaveBeenCalledOnce();
     });
   });
 
