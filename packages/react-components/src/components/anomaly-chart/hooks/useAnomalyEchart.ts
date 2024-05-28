@@ -95,6 +95,7 @@ const initialState = ({
 export type AnomalyEChartOptions = {
   mode?: 'light' | 'dark';
   viewport?: Viewport;
+  setViewport?: (viewport: Viewport, lastUpdatedBy?: string) => void;
 } & ConfigurationOptions &
   DataSetOptions;
 
@@ -102,7 +103,12 @@ export const useAnomalyEchart = ({
   mode,
   ...options
 }: AnomalyEChartOptions) => {
-  const { viewport: passedInViewport, data, ...configuration } = options;
+  const {
+    viewport: passedInViewport,
+    setViewport,
+    data,
+    ...configuration
+  } = options;
   const utilizedViewport = passedInViewport ?? options.description?.dataExtent;
 
   const initialEchartsState = initialState({ ...options });
@@ -114,6 +120,7 @@ export const useAnomalyEchart = ({
   const { ref, chartRef } = useZoomableECharts({
     theme: mode === 'dark' ? 'cloudscapeDarkTheme' : 'cloudscapeLightTheme',
     viewport: utilizedViewport,
+    setViewport,
   });
 
   useCustomCompareEffect(
