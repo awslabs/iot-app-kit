@@ -89,9 +89,11 @@ const reducer = (state: TickState, action: TickAction): TickState => {
 export const useUnboundedDataZoom = ({
   chart,
   viewport,
+  setViewport,
 }: {
   chart: ECharts | null;
   viewport: Viewport | undefined;
+  setViewport?: (viewport: Viewport, lastUpdatedBy?: string) => void;
 }) => {
   const intl = useIntlStore((state) => state.intl);
 
@@ -108,7 +110,7 @@ export const useUnboundedDataZoom = ({
     defaultMessage: 'Undo\nzoom',
   });
 
-  const { setViewport, group } = useViewport();
+  const { group } = useViewport();
   const [{ mode, convertedViewport }, dispatch] = useReducer(
     reducer,
     stateFromViewport(viewport)
@@ -194,6 +196,7 @@ export const useUnboundedDataZoom = ({
 
       // Synchronize animation with refresh rate
       frame = requestAnimationFrame(() => {
+        if (!setViewport) return;
         // there should only be 1 datazoom option for the x axis
         const dataZoomOptions = chart.getOption()
           .dataZoom as DataZoomComponentOption[];
