@@ -13,6 +13,8 @@ import { Timestamp } from '../timestampBar';
 import { AnomalyChartError } from './anomalyChartError';
 import { useTransformedData } from './hooks/useTransformedData';
 import { AnomalyChartEmpty } from './anomalyChartEmpty';
+import { useUtilizedViewport } from '../../hooks/useViewport/useUtilizedViewport';
+import { DEFAULT_ANOMALY_DATA_SOURCE_VIEWPORT } from '../../queries/useSiteWiseAnomalyDataSource/constants';
 
 /**
  * Setup the applicable data source transformers
@@ -24,10 +26,15 @@ const AnomalyDataSourceLoader = new DataSourceLoader([
 export const AnomalyChart = (options: AnomalyChartOptions) => {
   const { showTimestamp = true, viewport, ...configuration } = options;
 
+  const { viewport: utilizedViewport, setViewport } = useUtilizedViewport({
+    passedInViewport: viewport,
+    defaultViewport: DEFAULT_ANOMALY_DATA_SOURCE_VIEWPORT,
+  });
+
   const { data, description, loading, error, empty } = useTransformedData({
     ...configuration,
     loader: AnomalyDataSourceLoader,
-    viewport,
+    viewport: utilizedViewport,
   });
 
   const { ref } = useAnomalyEchart({
@@ -36,6 +43,7 @@ export const AnomalyChart = (options: AnomalyChartOptions) => {
     data,
     description,
     loading,
+    setViewport,
   });
 
   return (

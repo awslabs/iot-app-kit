@@ -26,9 +26,11 @@ export interface EChartsWrapperProps {
 export const useZoomableECharts = ({
   theme,
   viewport,
+  setViewport,
 }: {
   theme?: string;
   viewport?: Viewport;
+  setViewport?: (viewport: Viewport, lastUpdatedBy?: string) => void;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const chartRef = useRef<ECharts | null>(null);
@@ -64,7 +66,7 @@ export const useZoomableECharts = ({
     };
   }, [theme]);
 
-  useUnboundedDataZoom({ chart, viewport });
+  useUnboundedDataZoom({ chart, viewport, setViewport });
 
   return { chartRef, ref };
 };
