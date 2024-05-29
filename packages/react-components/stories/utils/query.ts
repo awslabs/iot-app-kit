@@ -77,14 +77,14 @@ export const getTimeSeriesDataQuery = (
           {
             refId: '1',
             propertyId: propertyId1,
-            aggregationType: 'AVERAGE',
-            resolution: '1m',
+            // aggregationType: 'AVERAGE',
+            // resolution: '1m',
           },
           {
             refId: '2',
             propertyId: propertyId2,
-            aggregationType: 'AVERAGE',
-            resolution: '1m',
+            // aggregationType: 'AVERAGE',
+            // resolution: '1m',
           },
           {
             refId: '3',
