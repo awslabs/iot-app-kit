@@ -8,6 +8,7 @@ import { getEnvCredentials, getRegion } from '../utils/query';
 import { TimeSelection, TimeSync } from '../../src';
 import { ConnectedAnomalyChart } from './connected-anomaly-chart';
 import { MOCK_DATA_SOURCE_SUCCESS } from '../../src/components/anomaly-chart/tests/mockDataSources';
+import { DEFAULT_ANOMALY_DATA_SOURCE_VIEWPORT } from '../../src/queries/useSiteWiseAnomalyDataSource/constants';
 
 export default {
   title: 'Widgets/Anomaly',
@@ -55,7 +56,7 @@ export const DefaultSettingsAnomalyChart: ComponentStory<
 > = (options) => {
   return (
     <div style={{ background: 'grey' }}>
-      <div style={{ height: '350px', width: '500px', padding: '20px' }}>
+      <div style={{ padding: '20px' }}>
         <AnomalyChart {...options} data={[MOCK_DATA_SOURCE_SUCCESS]} />
       </div>
     </div>
@@ -101,7 +102,12 @@ export const SiteWiseConnectedAnomalyChart: ComponentStory<
   }
 
   return (
-    <TimeSync>
+    <TimeSync
+      initialViewport={{
+        end: new Date('2024-03-30T10:40:10Z'),
+        start: new Date('2024-03-29T15:23:39Z'),
+      }}
+    >
       <TimeSelection />
       <ConnectedAnomalyChart
         {...options}

@@ -4,6 +4,9 @@ import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from './mock-data';
 import { TimeSelection, TimeSync, useViewport, Chart } from '../../src';
 import { getTimeSeriesDataQuery, queryConfigured } from '../utils/query';
 import { ChartOptions, Visualization } from '../../src/components/chart/types';
+import { sub } from 'date-fns';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { queryClient } from '../../src/queries';
 
 const chartTypes: Visualization[] = [
   'line',
@@ -39,6 +42,14 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
+  decorators: [
+    (Story) => (
+      <>
+        <Story />
+        <ReactQueryDevtools client={queryClient} initialIsOpen={false} />
+      </>
+    ),
+  ],
 } as ComponentMeta<typeof Chart>;
 
 type StoryInputs = ChartOptions & { showAllVisualizationTypes: boolean };
@@ -125,7 +136,13 @@ export const SiteWiseConnectedBaseChartExample: ComponentStory<
   };
 
   return (
-    <TimeSync>
+    <TimeSync
+      initialViewport={{
+        duration: '2m',
+        // start: sub(Date.now(), { minutes: 90 }),
+        // end: sub(Date.now(), { minutes: 80 }),
+      }}
+    >
       <div id='story-container' style={{ width: '100vw', height: '100vh' }}>
         <TimeSelection />
         <br />

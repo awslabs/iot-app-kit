@@ -1,7 +1,7 @@
-import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+// import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { Viewport } from '@iot-app-kit/core';
 import { useDescribeAssetModelCompositeModel } from '../useDescribeAssetModelCompositeModel';
-import { useGetAssetPropertyValueHistory } from '../useGetAssetPropertyValueHistory';
+// import { useGetAssetPropertyValueHistory } from '../useGetAssetPropertyValueHistory';
 import { useDescribeAsset } from '../useDescribeAsset';
 import { useDescribeAssetProperties } from '../useDescribeAssetProperties';
 import { getAnomalyResultProperty } from './getAnomalyResultProperty';
@@ -10,8 +10,10 @@ import { extractDiagnoticProperties } from './parseAnomaly/extractDiagnoticPrope
 import { completeAnomalyEvents } from './parseAnomaly/completeAnomalyEvents';
 import { AnomalyObjectDataSource } from '../../data';
 import { DataSource } from '../../data/types';
-import { useAnomalyEventsViewport } from './useAnomalyEventsViewport';
+// import { useAnomalyEventsViewport } from './useAnomalyEventsViewport';
 import { useViewport } from '../../hooks/useViewport';
+import { useAssetPropertyValueHistory } from '../useAssetPropertyValueHistory/useAssetPropertyValueHistory';
+import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 
 const parseQueryState = ({
   isError,
@@ -31,7 +33,7 @@ const parseQueryState = ({
 };
 
 export type SiteWiseAnomalyDataSourceOptions = {
-  client?: IoTSiteWiseClient;
+  client?: IoTSiteWise;
   assetId?: string;
   assetModelId?: string;
   predictionDefinitionId?: string;
@@ -62,16 +64,16 @@ export const useSiteWiseAnomalyDataSource = (
     assetModelId,
     predictionDefinitionId,
     viewport: passedInViewport,
-    liveModeQueryRefreshRate,
+    // liveModeQueryRefreshRate,
     styles,
   } = options;
 
   const { viewport: injectedViewport } = useViewport();
 
-  const { start, end } = useAnomalyEventsViewport({
-    viewport: passedInViewport ?? injectedViewport,
-    liveModeRefreshRate: liveModeQueryRefreshRate,
-  });
+  // const { start, end } = useAnomalyEventsViewport({
+  //   viewport: passedInViewport ?? injectedViewport,
+  //   liveModeRefreshRate: liveModeQueryRefreshRate,
+  // });
 
   const asset = useDescribeAsset({ client, assetId });
 
@@ -81,17 +83,29 @@ export const useSiteWiseAnomalyDataSource = (
     assetModelCompositeModelId: predictionDefinitionId,
   });
 
-  const anomalyEvents = useGetAssetPropertyValueHistory({
-    client,
-    assetId,
-    propertyId: getAnomalyResultProperty(anomalyModel.data)?.id,
-    startDate: start,
-    endDate: end,
-    fetchAll: true,
+  // const anomalyEvents = useGetAssetPropertyValueHistory({
+  //   client,
+  //   assetId,
+  //   propertyId: getAnomalyResultProperty(anomalyModel.data)?.id,
+  //   startDate: start,
+  //   endDate: end,
+  //   fetchAll: true,
+  // });
+
+  const test = useAssetPropertyValueHistory({
+    queries: [
+      {
+        assetId: assetId,
+        propertyId: getAnomalyResultProperty(anomalyModel.data)?.id,
+        viewport: passedInViewport ?? injectedViewport,
+      },
+    ],
+    getAssetPropertyValueHistory:
+      client?.getAssetPropertyValueHistory.bind(client),
   });
 
   const parsedAnomalyEvents = parseAnomalyEvents(
-    anomalyEvents.assetPropertyValueHistory
+    test.flatMap((t) => t.data ?? [])
   );
   const parsedProperties = extractDiagnoticProperties(parsedAnomalyEvents);
 
@@ -116,7 +130,7 @@ export const useSiteWiseAnomalyDataSource = (
     asset,
     anomalyModel,
     describedAssetProperties,
-    anomalyEvents,
+    ...test,
   ] as const;
 
   const isError = queries.some(({ isError }) => isError);

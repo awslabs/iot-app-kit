@@ -6,6 +6,7 @@ import {
 } from '../../../data';
 import { useSiteWiseAnomalyDataSource } from '../../../queries';
 import { AnomalyChartWithData } from '../types';
+import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 
 type UseTransformedDataOptions = AnomalyChartWithData & {
   loader: DataSourceLoader<AnomalyDescription, AnomalyData>;
@@ -21,8 +22,13 @@ export const useTransformedData = ({
     query: { assetId, predictionDefinitionId, ...anomalyQueryStyles },
     iotSiteWiseClient: client,
   } = query ?? { query: {} };
+  // console.log(client?.config.credentials);
+  const a = new IoTSiteWise({
+    credentials: client?.config.credentials,
+    region: client?.config.region,
+  });
   const queryDataSource = useSiteWiseAnomalyDataSource({
-    client,
+    client: a,
     assetId,
     predictionDefinitionId,
     viewport,
