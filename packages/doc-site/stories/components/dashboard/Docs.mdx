@@ -70,6 +70,21 @@ Type: Object
 The `dashboardConfiguration` contains the following properties:
 
 ---
+#### -  `defaultViewport` (optional, object): 
+
+Specifies the time interval that the dashboard will initially visualize. If not provided, the dashboard will utilize the viewport specified by its ViewportManager. If there is no ViewportManager and no viewport defined, the default viewport will be set to `last 5 minutes`
+
+[Learn more about the viewport](/docs/core-viewport--docs).
+
+---
+  
+#### - `viewport` (optional, object) (⛔️ Deprecated)
+
+Specifies the time interval that the dashboard will visualize. If not provided, the dashboard will utilize the viewport specified by its ViewportManager. If there is no ViewportManager and no viewport defined, the default viewport will be calculated based on the minimum and maximum dates in the data.
+
+[Learn more about the viewport](/docs/core-viewport--docs).
+
+---
 
 #### - `displaySettings`
 
@@ -84,14 +99,10 @@ The `displaySettings` contains the following properties:
 
   Type: number
 
----
-
 - `numColumns`
   The number of columns that make up the grid. Each column will have a width as specified by `cellSize`.
 
   Type: number
-
----
 
 - `cellSize`
   (Optional) The size which cell represents in pixels. i.e. if the cell size is 20, then each "cell" in the grid is 20px by 20px.
