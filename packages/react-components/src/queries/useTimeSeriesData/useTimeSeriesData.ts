@@ -1,15 +1,13 @@
 import {
-  AssetPropertyValueHistoryRequest,
-  GetAssetPropertyValueHistoryRequestFunction,
-} from '../useAssetPropertyValueHistory';
-import { useAssetPropertyValueHistory } from '../useAssetPropertyValueHistory/useAssetPropertyValueHistory';
+  AssetPropertyValuesRequest,
+  AssetPropertyValuesRequestFunctions,
+} from '../useAssetPropertyValues';
+import { useAssetPropertyValues } from '../useAssetPropertyValues/useAssetPropertyValues';
 import { RequestSettings } from './requestManager';
 import { Viewport } from './types';
 
-type Request = AssetPropertyValueHistoryRequest;
-type RequestFunctions = {
-  getAssetPropertyValueHistory?: GetAssetPropertyValueHistoryRequestFunction;
-};
+type Request = AssetPropertyValuesRequest;
+type RequestFunctions = AssetPropertyValuesRequestFunctions;
 
 export type UseTimeSeriesDataOptions = {
   requests: Request[];
@@ -18,29 +16,18 @@ export type UseTimeSeriesDataOptions = {
   settings?: RequestSettings;
 };
 
-const filterRequests = (requests: Request[]) => {
-  return {
-    assetPropertyValueHistoryRequests: requests,
-  };
-};
-
 export const useTimeSeriesData = ({
   requests,
   viewport,
   requestFns = {},
   settings = {},
 }: UseTimeSeriesDataOptions) => {
-  const { assetPropertyValueHistoryRequests } = filterRequests(requests);
-
-  /**
-   * Raw historical data
-   */
-  const assetPropertyValueHistory = useAssetPropertyValueHistory({
-    requests: assetPropertyValueHistoryRequests,
+  const assetPropertyValues = useAssetPropertyValues({
+    requests,
     viewport,
     requestFns,
     settings,
   });
 
-  return assetPropertyValueHistory;
+  return assetPropertyValues;
 };
