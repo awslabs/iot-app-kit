@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [10.5.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.4.1...react-components-v10.5.0) (2024-05-29)
+
+
+### Features
+
+* **dashboard:** default viewport setting ([0c3f3ef](https://github.com/awslabs/iot-app-kit/commit/0c3f3efa3a48be537d0eed0e6a1a02ecaa7c1f03))
+* resource explorers ([f604b15](https://github.com/awslabs/iot-app-kit/commit/f604b15dd35e014e78e1f56fd666602767e6b5bd))
+
+
+### Bug Fixes
+
+* **react-components:** anomaly widget error and empty states ([2d70b79](https://github.com/awslabs/iot-app-kit/commit/2d70b79467fe94621dd722bb95e7f52c21b477f2))
+* **react-components:** comment out flaky resource expl tests ([ca1039d](https://github.com/awslabs/iot-app-kit/commit/ca1039dc5c66cd30cc578651184463c889febd83))
+* **react-components:** filter out non anomalous data ([70f0a1c](https://github.com/awslabs/iot-app-kit/commit/70f0a1cdbada92336d9597c6e2a5f456896a15f5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/core bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/core-util bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.4.1 to 10.5.0
+  * devDependencies
+    * @iot-app-kit/core bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/jest-config bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/testing-util bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/ts-config bumped from 10.4.1 to 10.5.0
+    * eslint-config-iot-app-kit bumped from 10.4.1 to 10.5.0
+
 ## [10.4.1](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.4.0...react-components-v10.4.1) (2024-05-20)
 
 
