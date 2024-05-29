@@ -1,5 +1,34 @@
 # Changelog
 
+## [10.5.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.4.1...dashboard-v10.5.0) (2024-05-29)
+
+
+### Features
+
+* **dashboard:** default viewport setting ([0c3f3ef](https://github.com/awslabs/iot-app-kit/commit/0c3f3efa3a48be537d0eed0e6a1a02ecaa7c1f03))
+
+
+### Bug Fixes
+
+* fixed the properties tab child key error [#2809](https://github.com/awslabs/iot-app-kit/issues/2809) ([370e1f7](https://github.com/awslabs/iot-app-kit/commit/370e1f7061908d4c1334fca9b8454c2ba0e32e5c))
+* loads properties panel if some of the assets do not exist [#2808](https://github.com/awslabs/iot-app-kit/issues/2808) ([c4a98a5](https://github.com/awslabs/iot-app-kit/commit/c4a98a5f04143a827aba4176117b049bcacb946c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/core bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/core-util bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/react-components bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.4.1 to 10.5.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/testing-util bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/ts-config bumped from 10.4.1 to 10.5.0
+    * eslint-config-iot-app-kit bumped from 10.4.1 to 10.5.0
+
 ## [10.4.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.4.0...dashboard-v10.4.1) (2024-05-20)
 
 

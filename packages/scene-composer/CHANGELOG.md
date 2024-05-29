@@ -4,6 +4,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.5.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v10.4.1...scene-composer-v10.5.0) (2024-05-29)
+
+
+### Bug Fixes
+
+* **dynamicscene:** converting empty scene locks ui ([cc8efff](https://github.com/awslabs/iot-app-kit/commit/cc8efffb80eeb17a64b1b8f021f42b7e5f52570f))
+* **DynamicScenes:** copySceneNodes should take the new sceneId as an argument ([37f8251](https://github.com/awslabs/iot-app-kit/commit/37f8251db97b6ee6320e9cdf810c1e317717e7ac))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/react-components bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/related-table bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.4.1 to 10.5.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 10.4.1 to 10.5.0
+
 ## [10.4.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v10.4.0...scene-composer-v10.4.1) (2024-05-20)
 
 

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.5.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.4.1...root-v10.5.0) (2024-05-29)
+
+
+### Features
+
+* **dashboard:** default viewport setting ([0c3f3ef](https://github.com/awslabs/iot-app-kit/commit/0c3f3efa3a48be537d0eed0e6a1a02ecaa7c1f03))
+* resource explorers ([f604b15](https://github.com/awslabs/iot-app-kit/commit/f604b15dd35e014e78e1f56fd666602767e6b5bd))
+
+
+### Bug Fixes
+
+* **dynamicscene:** converting empty scene locks ui ([cc8efff](https://github.com/awslabs/iot-app-kit/commit/cc8efffb80eeb17a64b1b8f021f42b7e5f52570f))
+* **DynamicScenes:** copySceneNodes should take the new sceneId as an argument ([37f8251](https://github.com/awslabs/iot-app-kit/commit/37f8251db97b6ee6320e9cdf810c1e317717e7ac))
+* fixed the properties tab child key error [#2809](https://github.com/awslabs/iot-app-kit/issues/2809) ([370e1f7](https://github.com/awslabs/iot-app-kit/commit/370e1f7061908d4c1334fca9b8454c2ba0e32e5c))
+* loads properties panel if some of the assets do not exist [#2808](https://github.com/awslabs/iot-app-kit/issues/2808) ([c4a98a5](https://github.com/awslabs/iot-app-kit/commit/c4a98a5f04143a827aba4176117b049bcacb946c))
+* **react-components:** anomaly widget error and empty states ([2d70b79](https://github.com/awslabs/iot-app-kit/commit/2d70b79467fe94621dd722bb95e7f52c21b477f2))
+* **react-components:** comment out flaky resource expl tests ([ca1039d](https://github.com/awslabs/iot-app-kit/commit/ca1039dc5c66cd30cc578651184463c889febd83))
+* **react-components:** filter out non anomalous data ([70f0a1c](https://github.com/awslabs/iot-app-kit/commit/70f0a1cdbada92336d9597c6e2a5f456896a15f5))
+
 ## [10.4.1](https://github.com/awslabs/iot-app-kit/compare/root-v10.4.0...root-v10.4.1) (2024-05-20)
 
 

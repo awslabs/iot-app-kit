@@ -1,5 +1,22 @@
 # Changelog
 
+## [10.5.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v10.4.1...core-util-v10.5.0) (2024-05-29)
+
+
+### Features
+
+* **dashboard:** default viewport setting ([0c3f3ef](https://github.com/awslabs/iot-app-kit/commit/0c3f3efa3a48be537d0eed0e6a1a02ecaa7c1f03))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.4.1 to 10.5.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.4.1 to 10.5.0
+    * @iot-app-kit/ts-config bumped from 10.4.1 to 10.5.0
+
 ## [10.4.1](https://github.com/awslabs/iot-app-kit/compare/core-util-v10.4.0...core-util-v10.4.1) (2024-05-20)
 
 
