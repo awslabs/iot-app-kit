@@ -20,7 +20,7 @@ export const Standard: Story = {
     </div>
   ),
   args: {
-    data: [MOCK_DATA],
+    data: MOCK_DATA.data,
     viewport: { duration: '30s' },
   },
 };
@@ -28,20 +28,20 @@ export const Standard: Story = {
 export const Error: Story = {
   ...Standard,
   args: {
-    data: [MOCK_DATA_ERROR],
+    data: MOCK_DATA_ERROR.data,
   },
 };
 
 export const Empty: Story = {
   ...Standard,
   args: {
-    data: [],
+    data: [{state: 'success', value: {data: []}}],
   },
 };
 
 export const Loading: Story = {
   ...Standard,
   args: {
-    data: [MOCK_DATA_LOADING],
+    data: MOCK_DATA_LOADING.data,
   },
 };
