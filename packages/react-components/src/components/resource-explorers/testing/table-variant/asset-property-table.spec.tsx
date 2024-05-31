@@ -378,7 +378,7 @@ describe('asset property table', () => {
       // White space is removed to match
       expect(queryStatement.replace(/\s/g, '')).toEqual(
         `
-          SELECT p.property_id, p.property_name, p.asset_id, p.property_alias
+          SELECT p.property_id, p.property_name, p.asset_id, p.property_alias, p.property_data_type
           FROM asset_property p
           WHERE p.property_name LIKE '%Asset Property%'
         `.replace(/\s/g, '')
@@ -392,6 +392,7 @@ describe('asset property table', () => {
           { scalarValue: 'Asset Property 1' },
           { scalarValue: 'asset-id-1' },
           { scalarValue: 'alias-1' },
+          { scalarValue: 'STRING' },
         ],
       };
       const assetPropertyRow2 = {
@@ -400,6 +401,7 @@ describe('asset property table', () => {
           { scalarValue: 'Asset Property 2' },
           { scalarValue: 'asset-id-2' },
           { scalarValue: 'alias-2' },
+          { scalarValue: 'INTEGER' },
         ],
       };
       const assetPropertyRow3 = {
@@ -408,6 +410,7 @@ describe('asset property table', () => {
           { scalarValue: 'Asset Property 3' },
           { scalarValue: 'asset-id-3' },
           { scalarValue: 'alias-3' },
+          { scalarValue: 'DOUBLE' },
         ],
       };
 
@@ -464,6 +467,16 @@ describe('asset property table', () => {
       expect(
         screen.queryByText(assetPropertyRow3.data[3].scalarValue)
       ).not.toBeInTheDocument();
+      // DataType is rendered by default
+      expect(
+        screen.queryByText(assetPropertyRow1.data[4].scalarValue)
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText(assetPropertyRow2.data[4].scalarValue)
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText(assetPropertyRow3.data[4].scalarValue)
+      ).toBeInTheDocument();
     });
 
     it('supports searching for asset properties with parameters', async () => {
@@ -473,6 +486,7 @@ describe('asset property table', () => {
           { scalarValue: 'Asset Property 1' },
           { scalarValue: 'asset-id-1' },
           { scalarValue: 'alias-1' },
+          { scalarValue: 'STRING' },
         ],
       };
       const assetPropertyRow2 = {
@@ -481,6 +495,7 @@ describe('asset property table', () => {
           { scalarValue: 'Asset Property 2' },
           { scalarValue: 'asset-id-2' },
           { scalarValue: 'alias-2' },
+          { scalarValue: 'INTEGER' },
         ],
       };
       const assetPropertyRow3 = {
@@ -489,6 +504,7 @@ describe('asset property table', () => {
           { scalarValue: 'Asset Property 3' },
           { scalarValue: 'asset-id-3' },
           { scalarValue: 'alias-3' },
+          { scalarValue: 'DOUBLE' },
         ],
       };
 
@@ -545,6 +561,16 @@ describe('asset property table', () => {
       expect(
         screen.queryByText(assetPropertyRow3.data[3].scalarValue)
       ).not.toBeInTheDocument();
+      // DataType is rendered by default
+      expect(
+        screen.queryByText(assetPropertyRow1.data[4].scalarValue)
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText(assetPropertyRow2.data[4].scalarValue)
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText(assetPropertyRow3.data[4].scalarValue)
+      ).toBeInTheDocument();
     });
 
     it('initiates search when user presses enter/return key', async () => {
