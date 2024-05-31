@@ -24,21 +24,21 @@ The data structure for the Anomaly chart is an array with a single object, which
 
 **value (object)** : An object containing the raw data and optional style overrides. It has the following properties:
 
-  - **data (array)**: An array of objects, where each object represents a single Diagnostic event with a timestamp and Diagnostic object.
+  - **data** (array): An array of objects, where each object represents a single Diagnostic event with a timestamp and Diagnostic object.
 
-      - **timestamp (number)**: The time of the diagnostic point, in milliseconds.
+      - **timestamp** (number): The time of the diagnostic point, in milliseconds.
 
-      - **diagnostics (array)**: An array of objects representing individual data points, where each object has the following properties:
+      - **diagnostics** (array): An array of objects representing individual data points, where each object has the following properties:
         
-        - **name (string)**: The name of the diagnostic point.
+        - **name** (string): The name of the diagnostic point.
 
-        - **value (number)**: The value of the diagnostic point, which should be a number between 0 and 1.
+        - **value** (number): The value of the diagnostic point, which should be a number between 0 and 1.
 
-  - **styles (optional, object)**: An object that overrides global style settings. It can have the following properties:
+  - **styles** (object, optional): An object that overrides global style settings. It can have the following properties:
 
-    - **decimalPlaces (optional, number)**: Defines the number of decimal places to display for the diagnostic values.
+    - **decimalPlaces** (number, optional): Defines the number of decimal places to display for the diagnostic values.
 
-    - **color (optional, array)**: An array representing the color palette used to render the diagnostics.
+    - **color** (array, optional): An array representing the color palette used to render the diagnostics.
 
 
 ### Example 
