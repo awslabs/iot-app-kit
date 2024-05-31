@@ -23,7 +23,7 @@ export function useAssetPropertySearch({
 }: UseAssetPropertySearchOptions): UseAssetPropertySearchResult {
   const executeQueryParameters = parameters.map(({ searchStatement }) => {
     const queryStatement = `
-      SELECT p.property_id, p.property_name, p.asset_id, p.property_alias
+      SELECT p.property_id, p.property_name, p.asset_id, p.property_alias, p.property_data_type
       FROM asset_property p
       WHERE p.property_name LIKE '%${searchStatement}%'
     `;
@@ -47,6 +47,7 @@ export function useAssetPropertySearch({
               { scalarValue?: string },
               { scalarValue?: string },
               { scalarValue?: string },
+              { scalarValue?: string },
               { scalarValue?: string }
             ];
           };
@@ -56,7 +57,7 @@ export function useAssetPropertySearch({
             name: searchResult.data[1].scalarValue ?? '',
             assetId: searchResult.data[2].scalarValue ?? '',
             alias: searchResult.data[3].scalarValue ?? undefined,
-            dataType: '',
+            dataType: searchResult.data[4].scalarValue ?? '',
           } satisfies AssetPropertyResource;
 
           return assetProperty;
