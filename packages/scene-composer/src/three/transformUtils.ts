@@ -63,7 +63,7 @@ export function useSnapObjectToFloor(
     if (node?.parentRef) {
       return getObject3DBySceneNodeRef(node.parentRef);
     }
-  }, [node]);
+  }, [node, getObject3DBySceneNodeRef]);
 
   function applyConstraint() {
     setState(true);
@@ -87,7 +87,7 @@ export function useSnapObjectToFloor(
         }
       }
     }
-  }, [state, node, nodeObject3D, parentObject3D]);
+  }, [state, node, nodeObject3D, parentObject3D, callback]);
 
   return applyConstraint;
 }

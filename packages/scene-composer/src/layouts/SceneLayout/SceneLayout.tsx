@@ -1,4 +1,4 @@
-import React, { FC, Fragment, ReactNode, Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { FC, Fragment, ReactNode, Suspense, useContext, useEffect, useMemo, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import styled, { ThemeContext } from 'styled-components';
 import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
@@ -88,7 +88,7 @@ const R3FWrapper = (props: { matterportConfig?: MatterportConfig; children?: Rea
       This is required to revert/reset the changes done by the Matterport viewer. */
       window.THREE.Cache.clear();
     }
-  }, [loadMatterport]);
+  }, [loadMatterport, sceneComposerId]);
 
   if (!sceneLoaded) {
     return null;
@@ -142,7 +142,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({ isViewing, LoadingView = null, exte
 
   const shouldShowPreview = useMemo(() => {
     return isViewing ? false : !!findComponentByType(selectedNode.selectedSceneNode, KnownComponentType.Camera);
-  }, [selectedNode]);
+  }, [selectedNode, isViewing]);
 
   const dynamicSceneEnabled = useDynamicScene();
 

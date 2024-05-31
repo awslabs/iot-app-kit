@@ -1,18 +1,18 @@
-import React, { ForwardRefExoticComponent, useCallback } from 'react';
+import React, { forwardRef, ForwardRefExoticComponent, RefAttributes, useCallback } from 'react';
 import { useDrag } from 'react-dnd';
 import './draggable.scss';
 
 export interface DraggableProps {
   dataType: string;
-  data: {};
+  data: NonNullable<unknown>;
   draggable?: boolean;
   className?: string;
 }
 
 const draggable = function <TProps, TBaseElement>(
-  Component: ForwardRefExoticComponent<TProps & React.RefAttributes<TBaseElement>>,
+  Component: ForwardRefExoticComponent<TProps & RefAttributes<TBaseElement>>,
 ) {
-  const DraggableComponent = React.forwardRef<TBaseElement, DraggableProps & TProps>(
+  const DraggableComponent = forwardRef<TBaseElement, DraggableProps & TProps>(
     // eslint-disable-next-line react/prop-types
     ({ draggable = true, dataType, data, className = '', ...props }, ref) => {
       const [collected, dragRef] = useDrag(() => ({

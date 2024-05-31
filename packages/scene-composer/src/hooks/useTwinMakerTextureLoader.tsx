@@ -53,7 +53,7 @@ const useTwinMakerTextureLoader: (options?: TwinMakerTextureLoaderOptions) => {
         textureLoader.setGetSceneObjectFunction(globalSettings.getSceneObjectFunction);
       }
     }
-  }, [globalSettings.getSceneObjectFunction, textureLoader]);
+  }, [globalSettings.getSceneObjectFunction, textureLoader, sceneComposerId]);
 
   const loadTexture = useCallback(
     (uri: string, onLoadCallback: OnFileLoaderLoadFunc) => {
@@ -62,7 +62,7 @@ const useTwinMakerTextureLoader: (options?: TwinMakerTextureLoaderOptions) => {
         textureLoader.load(path, onLoadCallback);
       }
     },
-    [textureLoader],
+    [textureLoader, uriModifier],
   );
 
   const loadTextureOnMesh = useCallback(

@@ -1,7 +1,7 @@
 /* eslint-disable dot-notation, jest/no-conditional-expect */
 import { cloneDeep } from 'lodash';
 import flushPromises from 'flush-promises';
-import { Object3D, Vector3 } from 'three';
+import { Object3D } from 'three';
 
 import { IAnchorComponentInternal, IDataOverlayComponentInternal, ISceneNodeInternal } from '..';
 import { COMPOSER_FEATURES, IErrorDetails, KnownComponentType, KnownSceneProperty } from '../..';

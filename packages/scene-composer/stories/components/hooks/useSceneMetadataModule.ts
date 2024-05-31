@@ -15,7 +15,7 @@ const useSceneMetadataModule = (
     const sceneMetadataModule = dataSource.sceneMetadataModule(sceneMetadatModuleProps.sceneId!);
 
     return sceneMetadataModule as TwinMakerSceneMetadataModule;
-  }, [sceneMetadatModuleProps]);
+  }, [sceneMetadatModuleProps, dataSource]);
 
   const sceneMetadataModule = useMemo(() => {
     switch (sceneMetadatModuleProps.source) {
@@ -24,7 +24,7 @@ const useSceneMetadataModule = (
       default:
         return undefined;
     }
-  }, [sceneMetadatModuleProps.sceneId, sceneMetadatModuleProps.source]);
+  }, [sceneMetadatModuleProps.source, awsSceneMetadataModule]);
 
   return sceneMetadataModule;
 };

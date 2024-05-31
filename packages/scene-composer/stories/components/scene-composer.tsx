@@ -129,10 +129,13 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     };
   }
 
-  const handleSceneUpdated: OnSceneUpdateCallback = useCallback((sceneSnapshot) => {
-    stagedScene.current = sceneSnapshot;
-    onSceneUpdated(sceneSnapshot);
-  }, []);
+  const handleSceneUpdated: OnSceneUpdateCallback = useCallback(
+    (sceneSnapshot) => {
+      stagedScene.current = sceneSnapshot;
+      onSceneUpdated(sceneSnapshot);
+    },
+    [onSceneUpdated],
+  );
 
   const defaultAssetBrowserCallback = (cb: AssetBrowserResultCallback) => {
     cb(null, 'PALLET_JACK.glb');
@@ -161,7 +164,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
         cb(null, 'CookieFactoryMixer.glb'); // Update the string to a model available in your S3 bucket
       }
     },
-    [source, assetType],
+    [source, assetType, actionRecorderShowAssetBrowserCallback],
   );
 
   if (loader) {

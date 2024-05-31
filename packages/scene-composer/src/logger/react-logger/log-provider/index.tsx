@@ -32,7 +32,7 @@ const LogProvider: FC<LogProviderProps> = ({ namespace, logger: overrideLogger, 
     return /* istanbul ignore next */ () => {
       logger?.verbose('unloaded');
     };
-  }, []);
+  }, [logger]);
 
   return (
     <LoggingContext.Provider
