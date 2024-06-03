@@ -104,9 +104,6 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   );
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const selectedWidgets = useSelectedWidgets();
-  const significantDigits = useSelector(
-    (state: DashboardState) => state.significantDigits
-  );
   const { assetModelId, hasModelBasedQuery } = useModelBasedQuery();
 
   const hasValidAssetModelData = !!(hasModelBasedQuery && assetModelId);
@@ -287,7 +284,6 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
           readOnly={readOnly}
           dashboardConfiguration={dashboardConfiguration}
           grid={grid}
-          significantDigits={significantDigits}
           onSave={onSave}
         />
       }
@@ -352,7 +348,6 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
           readOnly={readOnly}
           dashboardConfiguration={dashboardConfiguration}
           grid={grid}
-          significantDigits={significantDigits}
           onSave={onSave}
         />
       }
