@@ -32,7 +32,6 @@ type DashboardHeaderProps = {
     height: number;
     cellSize: number;
   };
-  significantDigits: number;
   onSave?: DashboardSave;
 };
 
@@ -54,7 +53,6 @@ const DashboardHeader = ({
   onSave,
   dashboardConfiguration,
   grid,
-  significantDigits,
 }: DashboardHeaderProps) => (
   <Box padding={{ horizontal: 's', top: 'm' }}>
     <Box float='left'>
@@ -73,7 +71,6 @@ const DashboardHeader = ({
               onSave={onSave}
               dashboardConfiguration={dashboardConfiguration}
               grid={grid}
-              significantDigits={significantDigits}
               editable={editable}
             />
           </>

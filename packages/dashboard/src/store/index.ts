@@ -51,5 +51,6 @@ export const toDashboardState = (
       querySettings,
       defaultViewport: JSON.stringify(defaultViewport),
     },
+    significantDigits: dashboardConfiguration.displaySettings.significantDigits,
   };
 };
