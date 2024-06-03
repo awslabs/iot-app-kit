@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { isEqual, pick } from 'lodash';
 
 import { getPlugin } from '@iot-app-kit/core';
@@ -19,19 +19,20 @@ export type ActionsProps = {
   grid: DashboardState['grid'];
   readOnly: boolean;
   dashboardConfiguration: DashboardState['dashboardConfiguration'];
-  significantDigits: DashboardState['significantDigits'];
   onSave?: DashboardSave;
   editable?: boolean;
 };
 
 const Actions: React.FC<ActionsProps> = ({
   dashboardConfiguration,
-  significantDigits,
   editable,
   grid,
   readOnly,
   onSave,
 }) => {
+  const significantDigits = useSelector(
+    (state: DashboardState) => state.significantDigits
+  );
   const [dashboardSettingsVisible, setDashboardSettingsVisible] =
     useState(false);
   const dispatch = useDispatch();

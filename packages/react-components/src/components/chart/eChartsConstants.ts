@@ -41,11 +41,11 @@ export const DEFAULT_LEGEND: LegendComponentOption = {
 };
 
 export const DEFAULT_GRID = {
-  left: DEFAULT_MARGIN,
+  left: 8,
   top: DEFAULT_MARGIN,
   right: DEFAULT_MARGIN,
   bottom: DEFAULT_MARGIN,
-  containLabel: false,
+  containLabel: true,
 } as const;
 
 export const DEFAULT_TOOLTIP: TooltipComponentOption = {
