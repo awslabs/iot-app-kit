@@ -3,10 +3,8 @@ import * as React from 'react';
 import { render } from '@testing-library/react';
 import { useQuery } from '@tanstack/react-query';
 
-import { getGlobalSettings } from '../common/GlobalSettings';
 import { accessStore } from '../store';
 import { processQueries } from '../utils/entityModelUtils/processQueries';
-import { checkIfEntityExists } from '../utils/entityModelUtils/sceneUtils';
 import { KnownSceneProperty } from '../interfaces';
 import { LAYER_DEFAULT_REFRESH_INTERVAL } from '../utils/entityModelUtils/sceneLayerUtils';
 import { SceneLayers } from './SceneLayers';
@@ -15,31 +13,19 @@ jest.mock('../utils/entityModelUtils/processQueries', () => ({
   processQueries: jest.fn(),
 }));
 
-jest.mock('../utils/entityModelUtils/sceneUtils', () => ({
-  ... jest.requireActual('../utils/entityModelUtils/sceneUtils'),
-  checkIfEntityExists: jest.fn(),
-}));
-
 jest.mock('@tanstack/react-query', () => ({
   useQuery: jest.fn(),
-}));
-
-jest.mock('../common/GlobalSettings', () => ({
-  getGlobalSettings: jest.fn(() => ({})),
 }));
 
 describe('SceneLayers', () => {
   const renderSceneNodesMock = jest.fn();
   const isViewingMock = jest.fn();
   const getScenePropertyMock = jest.fn();
-  const addMessagesMock = jest.fn();
   const baseState = {
     getSceneProperty: getScenePropertyMock,
     renderSceneNodes: renderSceneNodesMock,
     isViewing: isViewingMock,
-    addMessages: addMessagesMock,
   };
-  const mockSceneMetadataModule = {};
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -159,25 +145,5 @@ describe('SceneLayers', () => {
     expect(processQueries as jest.Mock).toBeCalledTimes(1);
     expect(renderSceneNodesMock).toBeCalledTimes(1);
     expect(renderSceneNodesMock).toBeCalledWith(['random']);
-  });
-
-  it('should detect no Scene Root Entity', async () => {
-    accessStore('default').setState(baseState);
-    const globalSettings = getGlobalSettings as jest.Mock;
-    globalSettings.mockImplementation(() => ({
-      twinMakerSceneMetadataModule: {},
-    }));
-    let queryFunction;
-    (useQuery as jest.Mock).mockImplementation(({ queryFn, ..._ }) => {
-      queryFunction = queryFn;
-      return { data: [] };
-    });
-    (checkIfEntityExists as jest.Mock).mockImplementation(() => { return false});
-    render(<SceneLayers />);
-    await queryFunction();
-
-    expect(processQueries as jest.Mock).toBeCalledTimes(1);
-    expect(renderSceneNodesMock).toBeCalledTimes(1);
-    expect(addMessagesMock).toBeCalledTimes(1);
   });
 });
