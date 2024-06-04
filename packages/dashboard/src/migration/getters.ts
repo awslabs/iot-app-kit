@@ -1,0 +1,111 @@
+import { colorPalette } from '@iot-app-kit/core-util';
+import { randomUUID } from 'crypto';
+import {
+  barChartProperties,
+  defaultAggregationType,
+  lineChartProperties,
+  scatterChartProperties,
+  timelineProperties,
+} from './constants';
+import {
+  ApplicationProperty,
+  MonitorMetric,
+  MonitorWidget,
+  MonitorWidgetType,
+} from './types';
+import { convertResolution } from './convert-monitor-to-app-defintion';
+
+export const getStaticProperties = (widgetType: MonitorWidgetType) => {
+  switch (widgetType) {
+    case MonitorWidgetType.LineChart:
+      return lineChartProperties;
+    case MonitorWidgetType.BarChart:
+      return barChartProperties;
+    case MonitorWidgetType.ScatterChart:
+      return scatterChartProperties;
+    case MonitorWidgetType.StatusTimeline:
+      return timelineProperties;
+    case MonitorWidgetType.Table:
+      return {};
+    default:
+      return lineChartProperties;
+  }
+};
+
+export const getProperty = (
+  metric: MonitorMetric,
+  widgetType: MonitorWidgetType,
+  index: number
+) => {
+  let property: ApplicationProperty = {
+    aggregationType: defaultAggregationType, // Monitor has no aggregationType and appliation defaults to AVERAGE
+    propertyId: metric.propertyId,
+    resolution: convertResolution(widgetType, metric.resolution),
+  };
+
+  if (
+    widgetType === MonitorWidgetType.BarChart ||
+    widgetType === MonitorWidgetType.StatusTimeline ||
+    widgetType === MonitorWidgetType.Table
+  ) {
+    const refId = randomUUID();
+    property = {
+      ...property,
+      refId,
+    };
+  } else if (
+    widgetType === MonitorWidgetType.LineChart ||
+    widgetType === MonitorWidgetType.ScatterChart
+  ) {
+    const refId = randomUUID();
+    property = {
+      ...property,
+      refId,
+      color: colorPalette[index],
+    };
+  }
+  return property;
+};
+
+export const getStyleSettings = (
+  widgetType: MonitorWidgetType,
+  refIds: string[]
+) => {
+  let styleSettings = {};
+  if (
+    widgetType === MonitorWidgetType.BarChart ||
+    widgetType === MonitorWidgetType.StatusTimeline ||
+    widgetType === MonitorWidgetType.Table
+  ) {
+    for (const [index, refId] of refIds.entries()) {
+      styleSettings = {
+        ...styleSettings,
+        [refId]: {
+          color: colorPalette[index],
+        },
+      };
+    }
+    return { styleSettings };
+  }
+  return undefined;
+};
+
+export const getKPIAndGridData = (monitorWidget: MonitorWidget) => {
+  const numWidgets = monitorWidget.metrics?.length;
+  let widgetHeight = 1;
+  let widgetWidth = 1;
+
+  if (numWidgets && numWidgets >= 1 && numWidgets < monitorWidget.width) {
+    widgetWidth = Math.floor(monitorWidget.width / numWidgets);
+    widgetHeight = monitorWidget.height;
+  }
+
+  // max x value is the end of the monitor widget (monitor x + monitor width - (individual widget length))
+  const maxXCoord = monitorWidget.x + monitorWidget.width - widgetWidth;
+
+  return {
+    widgetWidth,
+    widgetHeight,
+    maxXCoord,
+  };
+};

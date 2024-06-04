@@ -8,6 +8,7 @@ import type {
   DashboardClientConfiguration,
   DashboardWidget,
 } from './types';
+import { migrateDashboard } from './migration/convert-monitor-to-app-defintion';
 
 export {
   Dashboard,
@@ -18,4 +19,5 @@ export {
   DashboardDisplaySettings,
   DashboardClientConfiguration,
   DashboardWidget,
+  migrateDashboard,
 };
