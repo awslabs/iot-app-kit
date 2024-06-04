@@ -39,7 +39,8 @@ export const SceneLayers: React.FC = () => {
   const checkForSceneRootEntity = useCallback(async () => {
     const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
     if (sceneMetadataModule) {
-      if (!(await checkIfEntityExists(sceneRootEntityId, sceneMetadataModule))) {
+      const doesRootEntityExist = await checkIfEntityExists(sceneRootEntityId, sceneMetadataModule);
+      if (!doesRootEntityExist) {
         addMessages([
           {
             category: DisplayMessageCategory.Error,
@@ -54,13 +55,15 @@ export const SceneLayers: React.FC = () => {
   }, [sceneRootEntityId, addMessages, formatMessage]);
 
   useEffect(() => {
-    if (nodes.data) {
-      if (nodes.data.length > 0) {
+    const doAsync = async () => {
+      if (nodes.data) {
+        if (nodes.data.length === 0) {
+          await checkForSceneRootEntity();
+        }
         renderSceneNodes(nodes.data);
-      } else {
-        checkForSceneRootEntity();
       }
-    }
+    };
+    doAsync();
   }, [nodes.data, renderSceneNodes, checkForSceneRootEntity]);
 
   return <></>;

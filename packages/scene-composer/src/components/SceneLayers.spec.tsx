@@ -177,7 +177,7 @@ describe('SceneLayers', () => {
     await queryFunction();
 
     expect(processQueries as jest.Mock).toBeCalledTimes(1);
-    expect(renderSceneNodesMock).toBeCalledTimes(0);
+    expect(renderSceneNodesMock).toBeCalledTimes(1);
     expect(addMessagesMock).toBeCalledTimes(1);
   });
 });
