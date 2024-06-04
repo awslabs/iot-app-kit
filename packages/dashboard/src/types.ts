@@ -1,5 +1,9 @@
 import type { Viewport } from '@iot-app-kit/core';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  IoTSiteWiseClient,
+  DescribeDashboardRequest,
+  DescribeDashboardResponse,
+} from '@aws-sdk/client-iotsitewise';
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
 import {
@@ -107,3 +111,30 @@ export type PickRequiredOptional<
   TRequired extends keyof T,
   TOptional extends keyof T
 > = Pick<T, TRequired> & RecursivePartial<Pick<T, TOptional>>;
+
+export type RequestTimeout = number;
+
+/** First-class function used to send requests to AWS. */
+export type RequestFunction<Request, Response> = (
+  request: Request,
+  options?: {
+    abortSignal?: AbortSignal;
+    requestTimeout?: RequestTimeout;
+  }
+) => PromiseLike<Response>;
+
+/**
+ * First-class function for requesting IoT SiteWise asset model summary
+ * resources from AWS.
+ *
+ * @see {@link https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_DescribeDashboard.html}
+ */
+export type DescribeDashboard = RequestFunction<
+  DescribeDashboardRequest,
+  DescribeDashboardResponse
+>;
+
+export type MigrateDashboard = (
+  params: { dashboardId?: string },
+  requestFns?: { describeDashboard?: DescribeDashboard } //request fucntion type for call
+) => Promise<DashboardConfiguration>;
