@@ -15,6 +15,10 @@
     "note": "Light Type in a dropdown menu",
     "text": "环境"
   },
+  "+RIFYb": {
+    "note": "alert body text",
+    "text": "所有节点已成功转换"
+  },
   "+SQx9E": {
     "note": "Menu Item label",
     "text": "添加组件"
@@ -31,6 +35,14 @@
     "note": "Distance Units in a dropdown menu",
     "text": "自定义比例"
   },
+  "/RFl5Q": {
+    "note": "Label for button that triggers a expandable section",
+    "text": "展开"
+  },
+  "/j+uhN": {
+    "note": "Select an icon",
+    "text": "选择一个图标"
+  },
   "/kZshs": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "颜色"
@@ -46,6 +58,10 @@
   "03Uxre": {
     "note": "Menu Item",
     "text": "旋转对象"
+  },
+  "051ah6": {
+    "note": "select texture Button Text",
+    "text": "选择纹理"
   },
   "07ZORc": {
     "note": "Toggle label",
@@ -67,9 +83,21 @@
     "note": "Input error message",
     "text": "名称无效"
   },
+  "1Zas7b": {
+    "note": "Abbreviation for blue",
+    "text": "B"
+  },
+  "1ZqGeQ": {
+    "note": "checkbox label",
+    "text": "自动更新（每 30 秒一次）"
+  },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
     "text": "箭头数量"
+  },
+  "1fLT/q": {
+    "note": "button label",
+    "text": "取消"
   },
   "1kXRWn": {
     "note": "Progress Bar status",
@@ -103,6 +131,10 @@
     "note": "Menu Item",
     "text": "添加标签"
   },
+  "3KmpMx": {
+    "note": "Toggle label",
+    "text": "通过对象显示标签"
+  },
   "3fXLy/": {
     "note": "Menu label",
     "text": "转换"
@@ -126,6 +158,10 @@
   "4YbINk": {
     "note": "Expandable Section title",
     "text": "注释"
+  },
+  "5F/kwX": {
+    "note": "Icon name label",
+    "text": "“错误”图标"
   },
   "5pV1+0": {
     "note": "Form field label",
@@ -187,6 +223,10 @@
     "note": "Status indicator label",
     "text": "标签同步成功"
   },
+  "81kEJb": {
+    "note": "Menu Item",
+    "text": "3D 指针锁"
+  },
   "89bwEi": {
     "note": "Environment presets drop down menu options",
     "text": "色彩"
@@ -211,6 +251,10 @@
     "note": "Menu Item label",
     "text": "空节点"
   },
+  "9D+o0B": {
+    "note": "alert body text",
+    "text": "继续执行此操作将永久改变您的场景。您无法撤消此操作"
+  },
   "9I3nDM": {
     "note": "Menu Item label",
     "text": "撤销"
@@ -227,6 +271,10 @@
     "note": "label",
     "text": "选择速度"
   },
+  "9yVMfn": {
+    "note": "Form Field label",
+    "text": "远距离"
+  },
   "A/Q8OL": {
     "note": "Status indicator label",
     "text": "相机视图已保存"
@@ -234,6 +282,10 @@
   "AEkvpm": {
     "note": "Input error message",
     "text": "名称中的字符无效"
+  },
+  "AePRVy": {
+    "note": "Icon name label",
+    "text": "“自定义”图标"
   },
   "As6z+e": {
     "note": "ExpandableInfoSection Title",
@@ -243,6 +295,14 @@
     "note": "Menu Item",
     "text": "添加 3D 模型"
   },
+  "B6QsMN": {
+    "note": "button label",
+    "text": "确认"
+  },
+  "BK/UYP": {
+    "note": "alert header text",
+    "text": "转换为实体失败"
+  },
   "BNscqX": {
     "note": "Default Message for before an animation is selected",
     "text": "输入值"
@@ -250,6 +310,10 @@
   "BPH9Er": {
     "note": "Environment presets drop down menu options",
     "text": "中性"
+  },
+  "BZ1qKo": {
+    "note": "Abbreviation for red",
+    "text": "R"
   },
   "BZPp7d": {
     "note": "Form field label",
@@ -270,6 +334,14 @@
   "Bzw++H": {
     "note": "label for the remove animation button",
     "text": "删除"
+  },
+  "C11Rim": {
+    "note": "Form Field label",
+    "text": "近距离"
+  },
+  "C9z9wU": {
+    "note": "Abbreviation for green",
+    "text": "G"
   },
   "CyWR+b": {
     "note": "placeholder",
@@ -315,6 +387,10 @@
     "note": "rule Id label",
     "text": "规则 ID"
   },
+  "FgS5ks": {
+    "note": "Delete action confirmation message",
+    "text": "删除 {nodeName}？这将删除 1 个实体及其 {childCount} 个子项。尽管此操作可以撤消，但可能无法恢复到其原始状态。"
+  },
   "FvIdJC": {
     "note": "chrome picker",
     "text": "ChromePicker"
@@ -334,6 +410,10 @@
   "GesjrB": {
     "note": "Rule has no statements",
     "text": "没有声明"
+  },
+  "Gp31Xy": {
+    "note": "Delete action confirmation warning message",
+    "text": "如果您在删除 {componentName} 后尝试撤消此操作，则可能会出现问题，例如某些属性仍被删除或与数据断开连接。"
   },
   "Gv0vX8": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
@@ -359,6 +439,14 @@
     "note": "Menu Item",
     "text": "从当前视图添加相机"
   },
+  "IsC9Hg": {
+    "note": "Menu Item",
+    "text": "指针锁"
+  },
+  "J+haL1": {
+    "note": "Aria live announcement for when a statement is removed",
+    "text": "已删除语句"
+  },
   "JTUN+G": {
     "note": "Form field label",
     "text": "焦距"
@@ -375,6 +463,10 @@
     "note": "Placeholder",
     "text": "选择速度值"
   },
+  "KCtA9Z": {
+    "note": "Form Field label",
+    "text": "不透明度 %"
+  },
   "Kchdc4": {
     "note": "Placeholder",
     "text": "选择规则"
@@ -382,6 +474,10 @@
   "KnEACH": {
     "note": "Hyperlink title",
     "text": "了解详情"
+  },
+  "KoTFFN": {
+    "note": "Button text",
+    "text": "转换场景"
   },
   "KsFvzR": {
     "note": "Placeholder hint message for searching across entities",
@@ -431,6 +527,10 @@
     "note": "75mm lens",
     "text": "75mm"
   },
+  "MrbJ0V": {
+    "note": "Delete action confirmation message",
+    "text": "删除 {nodeName} 的 {componentName} 组件？尽管此操作可以撤消，但可能无法恢复到其原始状态。"
+  },
   "NXP1Hm": {
     "note": "Form field errorText",
     "text": "FOV 不能小于 10"
@@ -451,6 +551,10 @@
     "note": "Menu Item",
     "text": "平移"
   },
+  "OgfeEl": {
+    "note": "Toggle label",
+    "text": "启用标签"
+  },
   "OpGIbY": {
     "note": "Scene Icon types in a dropdown menu",
     "text": "错误"
@@ -463,6 +567,10 @@
     "note": "Label clarifying the exact text a user is searching for.",
     "text": "使用: {value}"
   },
+  "PIF5h2": {
+    "note": "Label for button that triggers a collapsable section",
+    "text": "折叠"
+  },
   "PLTmIg": {
     "note": "circle picker",
     "text": "CirclePicker"
@@ -474,6 +582,10 @@
   "PT1lRG": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "不透明度"
+  },
+  "PUKBon": {
+    "note": "Sub-Section Header",
+    "text": "刷新周期"
   },
   "PiJTq0": {
     "note": "remove rule Button Text",
@@ -495,6 +607,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "毫米"
   },
+  "QVa0GF": {
+    "note": "Label for button that toggles visibility of nodes in the scene",
+    "text": "切换可见性"
+  },
   "R+xDel": {
     "note": "Form Field label",
     "text": "实体 ID"
@@ -511,13 +627,13 @@
     "note": "Expandable Section title",
     "text": "标签"
   },
+  "RZeAOs": {
+    "note": "Aria label for remove statement button",
+    "text": "删除语句"
+  },
   "SYAG+q": {
     "note": "Form Field label",
     "text": "环境预设"
-  },
-  "Sm/FY5": {
-    "note": "Menu Item",
-    "text": "添加环境模型"
   },
   "SqR3jj": {
     "note": "Distance Units in a dropdown menu",
@@ -535,10 +651,6 @@
     "note": "label for when the user searches for a nonexistent animation",
     "text": "未找到匹配项"
   },
-  "TaxKIJ": {
-    "note": "Menu Item label",
-    "text": "移除所有数据绑定"
-  },
   "TicaWZ": {
     "note": "Progress Bar label",
     "text": "正在加载资产"
@@ -555,9 +667,17 @@
     "note": "remove Button text",
     "text": "删除"
   },
+  "UHsPN6": {
+    "note": "Delete component confirmation header text",
+    "text": "删除 {nodeName} 的 {componentName} 组件"
+  },
   "UoOmLE": {
     "note": "Form Field label",
     "text": "模型类型"
+  },
+  "V1T3We": {
+    "note": "Status indicator label",
+    "text": "同步标签"
   },
   "VObiQu": {
     "note": "option text of a Select component",
@@ -611,9 +731,9 @@
     "note": "checkbox option",
     "text": "启用影子"
   },
-  "YGtqhG": {
-    "note": "button label",
-    "text": "添加叠加"
+  "YPkcJC": {
+    "note": "alert header text",
+    "text": "正在转换场景"
   },
   "ZKJ6Ci": {
     "note": "Toolbar label",
@@ -643,13 +763,13 @@
     "note": "Menu Item",
     "text": "移除实体绑定"
   },
-  "aUtGJh": {
-    "note": "button label",
-    "text": "删除叠加"
-  },
   "aX7AgI": {
     "note": "select box option text value",
     "text": "投影"
+  },
+  "aiakkN": {
+    "note": "Form Field label",
+    "text": "宽度"
   },
   "ay/pmK": {
     "note": "Form field label",
@@ -658,6 +778,10 @@
   "azq+4C": {
     "note": "Form section title",
     "text": "链接参数"
+  },
+  "bO1OgH": {
+    "note": "Progress Bar label",
+    "text": "正在转换节点"
   },
   "bVAsrx": {
     "note": "Form Field label",
@@ -670,6 +794,10 @@
   "cu3XSb": {
     "note": "FormField label",
     "text": "切换可见性"
+  },
+  "cxZDHy": {
+    "note": "Form field error message",
+    "text": "十六进制无效"
   },
   "d/nRJX": {
     "note": "Menu Item",
@@ -687,6 +815,10 @@
     "note": "Placeholder",
     "text": "选择颜色值"
   },
+  "duq5aL": {
+    "note": "Icon name label",
+    "text": "“警告”图标"
+  },
   "dw/mQp": {
     "note": "Light Type in a dropdown menu",
     "text": "半球"
@@ -698,6 +830,10 @@
   "e9HZHd": {
     "note": "FormField label",
     "text": "指示符形状"
+  },
+  "eElB3q": {
+    "note": "Sub-Section Description",
+    "text": "将场景转换为实体可以实现自动更新、筛选和查询场景。"
   },
   "eKQvAU": {
     "note": "placeholder",
@@ -747,6 +883,10 @@
     "note": "times",
     "text": "x"
   },
+  "gIcLg9": {
+    "note": "Warning for selecting an unsupported file type",
+    "text": "扩展名为 {modelType} 的文件不属于受支持的模型类型"
+  },
   "gOijHE": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
     "text": "已选"
@@ -754,6 +894,10 @@
   "gZDAVH": {
     "note": "Menu Item label",
     "text": "添加动画"
+  },
+  "gc20C0": {
+    "note": "Icon name label",
+    "text": "“信息”图标"
   },
   "ggiL3k": {
     "note": "Form Field label",
@@ -771,9 +915,25 @@
     "note": "Menu Item label",
     "text": "添加对象"
   },
+  "hFIpcF": {
+    "note": "Copies the property name",
+    "text": "复制按钮"
+  },
   "hYPMUc": {
     "note": "Form button text",
     "text": "固定视图"
+  },
+  "hiEi3h": {
+    "note": "Expandable Section title",
+    "text": "平面几何"
+  },
+  "hkc541": {
+    "note": "button label",
+    "text": "删除"
+  },
+  "hyIDNW": {
+    "note": "Delete action confirmation warning message",
+    "text": "如果您在删除 {nodeName} 后尝试撤消此操作，则可能会出现问题，例如子项仍被删除或与数据断开连接。"
   },
   "ifspRT": {
     "note": "Expandable Section title",
@@ -794,6 +954,10 @@
   "jkdxk0": {
     "note": "Button text for color opacity percentage",
     "text": "不透明度: {opacityPercentage, number, percent}"
+  },
+  "k0JbYO": {
+    "note": "Form Field label",
+    "text": "场景背景"
   },
   "k5xCpx": {
     "note": "Form field label",
@@ -823,10 +987,6 @@
     "note": "placeholder",
     "text": "选择选项"
   },
-  "kdEHiD": {
-    "note": "Menu Item",
-    "text": "移除所有数据绑定"
-  },
   "ksfSZA": {
     "note": "Distance Units in a dropdown menu",
     "text": "英尺"
@@ -839,6 +999,10 @@
     "note": "Warning message",
     "text": "警告"
   },
+  "lXOqtn": {
+    "note": "Delete node confirmation header text",
+    "text": "删除 {nodeName}"
+  },
   "lbVroy": {
     "note": "checkbox option",
     "text": "默认情况下打开"
@@ -846,6 +1010,10 @@
   "lbd69l": {
     "note": "Menu Item",
     "text": "添加光"
+  },
+  "lgxHg3": {
+    "note": "Form Field label",
+    "text": "高度"
   },
   "lnTuMX": {
     "note": "label",
@@ -875,21 +1043,33 @@
     "note": "Form Field label",
     "text": "箭头"
   },
-  "nXBzxA": {
-    "note": "Menu Item label",
-    "text": "环境模型"
+  "nJP/oB": {
+    "note": "Delete action confirmation message",
+    "text": "删除 {nodeName}？无法加载子项的数量。尽管此操作可以撤消，但可能无法恢复到其原始状态。"
   },
   "nhcDIE": {
     "note": "select box option text value",
     "text": "接收影子"
   },
+  "nwQbTY": {
+    "note": "Icon name label",
+    "text": "“视频”图标"
+  },
   "o3PtbU": {
     "note": "Sub-Section Description",
     "text": "连接 Matterport 账户让您可以在 TwinMaker 场景中查看空间。"
   },
+  "oECZco": {
+    "note": "button label",
+    "text": "确定"
+  },
   "oEXVJ5": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "线性平面"
+  },
+  "oEnP1z": {
+    "note": "Form Field label",
+    "text": "地面平面"
   },
   "oRdrN4": {
     "note": "Menu Item",
@@ -911,6 +1091,14 @@
     "note": "placeholder",
     "text": "选择规则"
   },
+  "osIcJX": {
+    "note": "Status indicator label",
+    "text": "标签同步失败"
+  },
+  "pqZzsr": {
+    "note": "alert header text",
+    "text": "转换为实体成功"
+  },
   "pyg21P": {
     "note": "Number of Triangles in a scene",
     "text": "三角形：{sceneInfoTriangles, number}"
@@ -922,6 +1110,14 @@
   "qU9dRt": {
     "note": "Form Field label",
     "text": "扩展"
+  },
+  "qYJQjk": {
+    "note": "Delete action confirmation message",
+    "text": "删除 {nodeName}？这将删除 1 个实体。尽管此操作可以撤消，但可能无法恢复到其原始状态。"
+  },
+  "qZiKXL": {
+    "note": "ExpandableInfoSection Title",
+    "text": "转换场景"
   },
   "r0JN3A": {
     "note": "Menu Item",
@@ -959,9 +1155,17 @@
     "note": "Menu label",
     "text": "旋转"
   },
+  "s9468I": {
+    "note": "Abbreviation for hexidecimal",
+    "text": "十六进制"
+  },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
     "text": "厘米"
+  },
+  "sevj7L": {
+    "note": "remove texture Button Text",
+    "text": "移除纹理"
   },
   "skIt5u": {
     "note": "Menu Item",
@@ -1011,6 +1215,10 @@
     "note": "Enter your Matterport model id placeholder",
     "text": "输入您的 Matterport 模型 ID"
   },
+  "ujFSQs": {
+    "note": "alert body text",
+    "text": "部分节点转换失败："
+  },
   "v+Dj24": {
     "note": "hex validations messages",
     "text": "十六进制代码无效"
@@ -1018,6 +1226,10 @@
   "v+tpx1": {
     "note": "Menu Item label",
     "text": "光"
+  },
+  "v6Z7tj": {
+    "note": "Progress Bar description",
+    "text": "{convertedNumber} 项（共 {totalNumber} 项）已完成转换"
   },
   "v7BBG+": {
     "note": "Error message wrong input",
@@ -1062,6 +1274,14 @@
   "x8NTqi": {
     "note": "Menu Item",
     "text": "添加空节点"
+  },
+  "xyFy7p": {
+    "note": "modal header text",
+    "text": "转换场景"
+  },
+  "y9R3yg": {
+    "note": "Sub-Section Header",
+    "text": "转换为实体"
   },
   "yXdV0F": {
     "note": "ExpandableInfoSection Title",

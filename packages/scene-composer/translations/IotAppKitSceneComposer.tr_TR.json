@@ -1,87 +1,87 @@
 {
   "+06qIR": {
     "note": "Sub section label",
-    "text": "Tag"
+    "text": "Etiket"
   },
   "+9ZAkk": {
     "note": "Find icons",
-    "text": "Find icons"
+    "text": "Simgeleri bul"
   },
   "+FW9s9": {
     "note": "signify No rule option to be selected in a drop down menu",
-    "text": "No rule"
+    "text": "Kural Yok"
   },
   "+IFLW6": {
     "note": "Light Type in a dropdown menu",
-    "text": "Ambient"
+    "text": "Çevresel"
   },
   "+RIFYb": {
     "note": "alert body text",
-    "text": "All nodes have been converted successfully"
+    "text": "Tüm düğümler başarıyla dönüştürüldü"
   },
   "+SQx9E": {
     "note": "Menu Item label",
-    "text": "Add component"
+    "text": "Bileşen ekle"
   },
   "+fx4Dg": {
     "note": "FormField label",
-    "text": "Rule ID"
+    "text": "Kural ID'si"
   },
   "/N+x/y": {
     "note": "Expandable Section title",
-    "text": "Overlay"
+    "text": "Yer paylaşımı"
   },
   "/OvfUw": {
     "note": "Distance Units in a dropdown menu",
-    "text": "Customised scale"
+    "text": "Özel Ölçek"
   },
   "/RFl5Q": {
     "note": "Label for button that triggers a expandable section",
-    "text": "Expand"
+    "text": "Genişlet"
   },
   "/j+uhN": {
     "note": "Select an icon",
-    "text": "Select an icon"
+    "text": "Simge seçin"
   },
   "/kZshs": {
     "note": "Scene Resource types in a dropdown menu",
-    "text": "Colour"
+    "text": "Renk"
   },
   "/vhhhq": {
     "note": "Menu Item label",
-    "text": "Remove entity binding"
+    "text": "Varlık bağını kaldır"
   },
   "0/GZ0l": {
     "note": "Box label",
-    "text": "Configure rule"
+    "text": "Kuralı Yapılandır"
   },
   "03Uxre": {
     "note": "Menu Item",
-    "text": "Rotate object"
+    "text": "Nesneyi döndür"
   },
   "051ah6": {
     "note": "select texture Button Text",
-    "text": "Select Texture"
+    "text": "Doku seç"
   },
   "07ZORc": {
     "note": "Toggle label",
-    "text": "Always on"
+    "text": "Her zaman açık"
   },
   "0H9lsx": {
     "note": "Menu Item label",
-    "text": "Add data binding"
+    "text": "Veri bağı ekle"
   },
   "0JZgMB": {
     "note": "Sub section label",
-    "text": "Motion indicator"
+    "text": "Hareket göstergesi"
   },
   "0awbFz": {
     "note": "ExpandableInfoSection Title",
-    "text": "Tag settings"
+    "text": "Etiket Ayarları"
   },
   "15KXQ/": {
     "note": "Input error message",
-    "text": "Invalid name"
+    "text": "Geçersiz ad"
   },
   "1Zas7b": {
     "note": "Abbreviation for blue",
@@ -89,79 +89,79 @@
   },
   "1ZqGeQ": {
     "note": "checkbox label",
-    "text": "Auto update (every 30s)"
+    "text": "Otomatik güncelleme (her 30 saniyede bir)"
   },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
-    "text": "No. of arrows"
+    "text": "Ok sayısı"
   },
   "1fLT/q": {
     "note": "button label",
-    "text": "Cancel"
+    "text": "İptal et"
   },
   "1kXRWn": {
     "note": "Progress Bar status",
-    "text": "Downloading {fileName}"
+    "text": "{fileName} indiriliyor"
   },
   "1tQnYv": {
     "note": "Form Field label",
-    "text": "Cast shadow"
+    "text": "Gölge Oluştur"
   },
   "1vHHGn": {
     "note": "Error message",
-    "text": "Error – unable to render the scene"
+    "text": "Hata: Sahne işlenemiyor"
   },
   "2F5/qR": {
     "note": "ExpandableInfoSection Title",
-    "text": "Scene settings"
+    "text": "Sahne Ayarları"
   },
   "2U30Fu": {
     "note": "placeholder",
-    "text": "Choose a colour"
+    "text": "Renk seçin"
   },
   "2ZWQG0": {
     "note": "color picker preview",
-    "text": "colourPreview"
+    "text": "colorPreview"
   },
   "31K3U4": {
     "note": "add new rule Button Text",
-    "text": "Add new rule"
+    "text": "Yeni Kural Ekle"
   },
   "3EkiNu": {
     "note": "Menu Item",
-    "text": "Add tag"
+    "text": "Etiket ekle"
   },
   "3KmpMx": {
     "note": "Toggle label",
-    "text": "Show tag through objects"
+    "text": "Etiketi nesneler aracılığıyla göster"
   },
   "3fXLy/": {
     "note": "Menu label",
-    "text": "Translate"
+    "text": "Çevir"
   },
   "3gg6HF": {
     "note": "placeholder",
-    "text": "Choose an icon"
+    "text": "Simge seçin"
   },
   "4MjBPD": {
     "note": "placeholder",
-    "text": "Key"
+    "text": "Anahtar"
   },
   "4VTbf7": {
     "note": "FormField label suffix",
-    "text": "optional"
+    "text": "isteğe bağlı"
   },
   "4WwqM8": {
     "note": "Add parameter Button Text",
-    "text": "Add parameter"
+    "text": "Parametre ekle"
   },
   "4YbINk": {
     "note": "Expandable Section title",
-    "text": "Annotation"
+    "text": "Ek açıklama"
   },
   "5F/kwX": {
     "note": "Icon name label",
-    "text": "Error icon"
+    "text": "Hata simgesi"
   },
   "5pV1+0": {
     "note": "Form field label",
@@ -169,15 +169,15 @@
   },
   "5yMgAV": {
     "note": "45mm lens",
-    "text": "45mm"
+    "text": "45 mm"
   },
   "5yrWhr": {
     "note": "placeholder",
-    "text": "Choose a focal length"
+    "text": "Odak uzaklığı seçin"
   },
   "63Fz8B": {
     "note": "Expandable Section title",
-    "text": "Model reference"
+    "text": "Model Referansı"
   },
   "67SVMm": {
     "note": "Scene Icon types in a dropdown menu",
@@ -185,167 +185,167 @@
   },
   "6bw/XW": {
     "note": "Form Field label",
-    "text": "Component type ID"
+    "text": "Bileşen Türü ID'si"
   },
   "6gTEPn": {
     "note": "Form Field label",
-    "text": "Connection name"
+    "text": "Bağlantı Adı"
   },
   "6y5r/N": {
     "note": "Menu Item",
-    "text": "Add motion indicator"
+    "text": "Hareket göstergesi ekle"
   },
   "73cUv/": {
     "note": "Menu Item",
-    "text": "Add data binding"
+    "text": "Veri bağı ekle"
   },
   "7H9+6Y": {
     "note": "Expandable Section Title",
-    "text": "Model reference"
+    "text": "Model Referansı"
   },
   "7OIPQG": {
     "note": "Section title",
-    "text": "Properties"
+    "text": "Özellikler"
   },
   "7Qrkle": {
     "note": "Scene Icon types in a dropdown menu",
-    "text": "Customised style"
+    "text": "Özel stil"
   },
   "7TxQn1": {
     "note": "50mm lens",
-    "text": "50mm"
+    "text": "50 mm"
   },
   "7r0VXc": {
     "note": "Input field label",
-    "text": "Expression"
+    "text": "İfade"
   },
   "80grlm": {
     "note": "Status indicator label",
-    "text": "Tags sync successful"
+    "text": "Etiket senkronizasyonu başarılı"
   },
   "81kEJb": {
     "note": "Menu Item",
-    "text": "3D Pointer Lock"
+    "text": "3D İşaretçi Kilidi"
   },
   "89bwEi": {
     "note": "Environment presets drop down menu options",
-    "text": "Chromatic"
+    "text": "Kromatik"
   },
   "8E0idx": {
     "note": "Section title",
-    "text": "Debug info"
+    "text": "Hata Ayıklama Bilgisi"
   },
   "8MX6Wq": {
     "note": "Form Field label",
-    "text": "Model path"
+    "text": "Model Yolu"
   },
   "8W3SiU": {
     "note": "Menu Item label",
-    "text": "Overlay"
+    "text": "Yer paylaşımı"
   },
   "8YlbtM": {
     "note": "Form field label",
-    "text": "Near"
+    "text": "Yakın"
   },
   "8oGZ1W": {
     "note": "Menu Item label",
-    "text": "Empty node"
+    "text": "Boş düğüm"
   },
   "9D+o0B": {
     "note": "alert body text",
-    "text": "Proceeding with this action will permanently change your scene. You cannot undo this action"
+    "text": "Bu eyleme devam edildiğinde sahneniz kalıcı olarak değişir. Bu eylemi geri alamazsınız"
   },
   "9I3nDM": {
     "note": "Menu Item label",
-    "text": "Undo"
+    "text": "Geri al"
   },
   "9IX39X": {
     "note": "add Button Text",
-    "text": "Add new statement"
+    "text": "Yeni ifade ekle"
   },
   "9gpdIR": {
     "note": "Number of Vertices in a scene",
-    "text": "Vertices : {sceneInfoVertices, number}"
+    "text": "Köşeler: {sceneInfoVertices, number}"
   },
   "9nkZdw": {
     "note": "label",
-    "text": "Select speed"
+    "text": "Hız seç"
   },
   "9yVMfn": {
     "note": "Form Field label",
-    "text": "Far distance"
+    "text": "Uzak Mesafe"
   },
   "A/Q8OL": {
     "note": "Status indicator label",
-    "text": "Camera view saved"
+    "text": "Kamera görünümü kaydedildi"
   },
   "AEkvpm": {
     "note": "Input error message",
-    "text": "Invalid character in the name"
+    "text": "Adda geçersiz karakter var"
   },
   "AePRVy": {
     "note": "Icon name label",
-    "text": "Custom icon"
+    "text": "Özel simge"
   },
   "As6z+e": {
     "note": "ExpandableInfoSection Title",
-    "text": "Current view settings"
+    "text": "Geçerli Görünüm Ayarları"
   },
   "B5EPL8": {
     "note": "Menu Item",
-    "text": "Add 3D model"
+    "text": "3D model ekle"
   },
   "B6QsMN": {
     "note": "button label",
-    "text": "Confirm"
+    "text": "Onayla"
   },
   "BK/UYP": {
     "note": "alert header text",
-    "text": "Convert to entities failed"
+    "text": "Varlıklara dönüştürme başarısız"
   },
   "BNscqX": {
     "note": "Default Message for before an animation is selected",
-    "text": "Enter value"
+    "text": "Değer Girin"
   },
   "BPH9Er": {
     "note": "Environment presets drop down menu options",
-    "text": "Neutral"
+    "text": "Nötr"
   },
   "BZ1qKo": {
     "note": "Abbreviation for red",
-    "text": "R"
+    "text": "K"
   },
   "BZPp7d": {
     "note": "Form field label",
-    "text": "Fix camera to current view"
+    "text": "Kamerayı mevcut görünümde sabitle"
   },
   "Bi/rbH": {
     "note": "Motion Indicator Shape in a dropdown menu",
-    "text": "Circular cylinder"
+    "text": "Dairesel Silindir"
   },
   "BsdN3D": {
     "note": "Placeholder",
-    "text": "Choose a shape"
+    "text": "Şekil seçin"
   },
   "BvOcQf": {
     "note": "Custom colors",
-    "text": "Customised colours"
+    "text": "Özel renkler"
   },
   "Bzw++H": {
     "note": "label for the remove animation button",
-    "text": "remove"
+    "text": "kaldır"
   },
   "C11Rim": {
     "note": "Form Field label",
-    "text": "Near distance"
+    "text": "Yakın Mesafe"
   },
   "C9z9wU": {
     "note": "Abbreviation for green",
-    "text": "G"
+    "text": "Y"
   },
   "CyWR+b": {
     "note": "placeholder",
-    "text": "Value"
+    "text": "Değer"
   },
   "D9sm7a": {
     "note": "Menu Item label",
@@ -353,27 +353,27 @@
   },
   "DsNVlc": {
     "note": "Input error message",
-    "text": "Duplicate name"
+    "text": "Yinelenen ad"
   },
   "EK6rUQ": {
     "note": "Sub section label",
-    "text": "Visibility settings"
+    "text": "Görünürlük ayarları"
   },
   "ENcryP": {
     "note": "Panel Tab title",
-    "text": "Hierarchy"
+    "text": "Hiyerarşi"
   },
   "EZImtK": {
     "note": "Distance Units in a dropdown menu",
-    "text": "decimetres"
+    "text": "desimetre"
   },
   "En7GUj": {
     "note": "20mm lens",
-    "text": "20mm"
+    "text": "20 mm"
   },
   "F9epTp": {
     "note": "Motion Indicator Shape in a dropdown menu",
-    "text": "Linear cylinder"
+    "text": "Lineer Silindir"
   },
   "FE5gwY": {
     "note": "Panel Tab title",
@@ -381,15 +381,15 @@
   },
   "FOvFZQ": {
     "note": "Sub section label",
-    "text": "Annotation"
+    "text": "Ek açıklama"
   },
   "FeC0Eo": {
     "note": "rule Id label",
-    "text": "Rule ID"
+    "text": "Kural ID'si"
   },
   "FgS5ks": {
     "note": "Delete action confirmation message",
-    "text": "Delete {nodeName}? This will delete one entity and its {childCount} children. While this action may be undone, it may not return to its original state."
+    "text": "{nodeName} silinsin mi? Bu eylem, 1 varlığı ve {childCount} alt varlığını silecektir. Bu eylem geri alınabilse de, orijinal durumuna geri dönmeyebilir."
   },
   "FvIdJC": {
     "note": "chrome picker",
@@ -397,179 +397,179 @@
   },
   "Fy5tAf": {
     "note": "Sub-Section Header",
-    "text": "Matterport Integration"
+    "text": "Matterport Entegrasyonu"
   },
   "GRIkbq": {
     "note": "Menu Item label",
-    "text": "Camera"
+    "text": "Kamera"
   },
   "Ge+8nD": {
     "note": "Form field label",
-    "text": "Link target"
+    "text": "Bağlantı Hedefi"
   },
   "GesjrB": {
     "note": "Rule has no statements",
-    "text": "No statements"
+    "text": "İfade yok"
   },
   "Gp31Xy": {
     "note": "Delete action confirmation warning message",
-    "text": "If you attempt to undo this action after {componentName} is deleted, it may have issues such as some properties still being deleted or disconnection from data."
+    "text": "{componentName} silindikten sonra bu eylemi geri almaya çalışırsanız, bazı özelliklerin hala siliniyor olması veya verilerle bağlantının kesilmesi gibi sorunlar yaşanabilir."
   },
   "Gv0vX8": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
-    "text": "Selected"
+    "text": "Seçildi"
   },
   "H+OF2y": {
     "note": "Specifies the animation thats being selected",
-    "text": "Autosuggest example with suggestions"
+    "text": "Önerilerin bulunduğu otomatik önerme örneği"
   },
   "H+PCjr": {
     "note": "Button label",
-    "text": "Remove data binding"
+    "text": "Veri bağını kaldır"
   },
   "H2sELG": {
     "note": "Distance Units in a dropdown menu",
-    "text": "None"
+    "text": "Yok"
   },
   "H99IoI": {
     "note": "Menu Item label",
-    "text": "Redo"
+    "text": "Yeniden yap"
   },
   "IRTrH8": {
     "note": "Menu Item",
-    "text": "Add camera from current view"
+    "text": "Mevcut görünümden kamera ekle"
   },
   "IsC9Hg": {
     "note": "Menu Item",
-    "text": "Pointer Lock"
+    "text": "İşaretçi Kilidi"
   },
   "J+haL1": {
     "note": "Aria live announcement for when a statement is removed",
-    "text": "Removed statement"
+    "text": "İfade kaldırıldı"
   },
   "JTUN+G": {
     "note": "Form field label",
-    "text": "Focal length"
+    "text": "Odak uzaklığı"
   },
   "JWLSUC": {
     "note": "Expandable Section title",
-    "text": "Light"
+    "text": "Işık"
   },
   "JXLA2d": {
     "note": "Light Type in a dropdown menu",
-    "text": "Point"
+    "text": "Nokta"
   },
   "JregTa": {
     "note": "Placeholder",
-    "text": "Choose a speed value"
+    "text": "Hız değeri seçin"
   },
   "KCtA9Z": {
     "note": "Form Field label",
-    "text": "Opacity %"
+    "text": "Opaklık %"
   },
   "Kchdc4": {
     "note": "Placeholder",
-    "text": "Choose a rule"
+    "text": "Kural seçin"
   },
   "KnEACH": {
     "note": "Hyperlink title",
-    "text": "Find out more"
+    "text": "Daha Fazla Bilgi"
   },
   "KoTFFN": {
     "note": "Button text",
-    "text": "Convert scene"
+    "text": "Sahneyi dönüştür"
   },
   "KsFvzR": {
     "note": "Placeholder hint message for searching across entities",
-    "text": "Find resources"
+    "text": "Kaynakları bulun"
   },
   "KsP/hu": {
     "note": "Form section header",
-    "text": "Clipping planes"
+    "text": "Kesme Düzlemleri"
   },
   "L06DWy": {
     "note": "35mm lens",
-    "text": "35mm"
+    "text": "35 mm"
   },
   "LKHm9B": {
     "note": "Expandable Section title",
-    "text": "Motion indicator"
+    "text": "Hareket Göstergesi"
   },
   "LR0R26": {
     "note": "Form field label",
-    "text": "Name"
+    "text": "Ad"
   },
   "LkZDYc": {
     "note": "Environment presets drop down menu options",
-    "text": "No preset"
+    "text": "Ön Ayar Yok"
   },
   "LowIlR": {
     "note": "Menu Item",
-    "text": "Add model shader"
+    "text": "Model tonlayıcı ekle"
   },
   "Lu2iml": {
     "note": "Form Field label",
-    "text": "Indicator appearance"
+    "text": "Gösterge görünümü"
   },
   "Lv7cKF": {
     "note": "label",
-    "text": "Add colour rule"
+    "text": "Renk kuralı ekle"
   },
   "LztKh8": {
     "note": "Menu label",
-    "text": "Scale"
+    "text": "Ölçek"
   },
   "MBlVpx": {
     "note": "Menu Item",
-    "text": "Add animations"
+    "text": "Animasyon Ekle"
   },
   "MZtQw3": {
     "note": "75mm lens",
-    "text": "75mm"
+    "text": "75 mm"
   },
   "MrbJ0V": {
     "note": "Delete action confirmation message",
-    "text": "Delete {nodeName}'s {componentName} component? While this action may be undone, it may not return to its original state."
+    "text": "{nodeName} düğümünün {componentName} bileşeni silinsin mi? Bu eylem geri alınabilse de, orijinal durumuna geri dönmeyebilir."
   },
   "NXP1Hm": {
     "note": "Form field errorText",
-    "text": "FOV cannot be less than 10"
+    "text": "Görüş alanı 10'dan az olamaz"
   },
   "Nj6Ob1": {
     "note": "Select Color type option",
-    "text": "Define arrow colour"
+    "text": "Ok rengini tanımlayın"
   },
   "NzrG+F": {
     "note": "Section title",
-    "text": "Select an option"
+    "text": "Seçenek seçin"
   },
   "OEq4rq": {
     "note": "Environment presets drop down menu options",
-    "text": "Directional"
+    "text": "Yönlü"
   },
   "OUX68J": {
     "note": "Menu Item",
-    "text": "Pan"
+    "text": "Yatay kaydır"
   },
   "OgfeEl": {
     "note": "Toggle label",
-    "text": "Enable fog"
+    "text": "Sisi Etkinleştir"
   },
   "OpGIbY": {
     "note": "Scene Icon types in a dropdown menu",
-    "text": "Error"
+    "text": "Hata"
   },
   "P65d2J": {
     "note": "60mm lens",
-    "text": "60mm"
+    "text": "60 mm"
   },
   "PCMnme": {
     "note": "Label clarifying the exact text a user is searching for.",
-    "text": "Use: {value}"
+    "text": "Şunu kullan: {value}"
   },
   "PIF5h2": {
     "note": "Label for button that triggers a collapsable section",
-    "text": "Collapse"
+    "text": "Daralt"
   },
   "PLTmIg": {
     "note": "circle picker",
@@ -577,307 +577,307 @@
   },
   "PQ0+rL": {
     "note": "Expandable section title",
-    "text": "Transform"
+    "text": "Dönüştür"
   },
   "PT1lRG": {
     "note": "Scene Resource types in a dropdown menu",
-    "text": "Opacity"
+    "text": "Opaklık"
   },
   "PUKBon": {
     "note": "Sub-Section Header",
-    "text": "Refresh cycle"
+    "text": "Döngüyü yenile"
   },
   "PiJTq0": {
     "note": "remove rule Button Text",
-    "text": "Remove rule"
+    "text": "Kuralı Kaldır"
   },
   "PkpFRi": {
     "note": "placeholder",
-    "text": "Choose an option"
+    "text": "Seçenek seçin"
   },
   "Q02j8m": {
     "note": "Textarea placeholder text",
-    "text": "Example: current temperature {variable}"
+    "text": "Örnek: Mevcut sıcaklık {variable}"
   },
   "QTGyuZ": {
     "note": "Form field label",
-    "text": "Far"
+    "text": "Uzak"
   },
   "QU6P87": {
     "note": "Distance Units in a dropdown menu",
-    "text": "millimetres"
+    "text": "milimetre"
   },
   "QVa0GF": {
     "note": "Label for button that toggles visibility of nodes in the scene",
-    "text": "Toggle visibility"
+    "text": "Görünürlüğü değiştir"
   },
   "R+xDel": {
     "note": "Form Field label",
-    "text": "Entity ID"
+    "text": "Varlık ID'si"
   },
   "R84Wop": {
     "note": "Distance Units in a dropdown menu",
-    "text": "metres"
+    "text": "metre"
   },
   "RErn0z": {
     "note": "Scene Icon types in a dropdown menu",
-    "text": "Warning"
+    "text": "Uyarı"
   },
   "RNZ9kW": {
     "note": "Expandable Section title",
-    "text": "Tag"
+    "text": "Etiket"
   },
   "RZeAOs": {
     "note": "Aria label for remove statement button",
-    "text": "Remove statement"
+    "text": "İfadeyi kaldır"
   },
   "SYAG+q": {
     "note": "Form Field label",
-    "text": "Environment preset"
+    "text": "Ortam Ön Ayarı"
   },
   "SqR3jj": {
     "note": "Distance Units in a dropdown menu",
-    "text": "yards"
+    "text": "yarda"
   },
   "SrYi3M": {
     "note": "Field label",
-    "text": "Key"
+    "text": "Anahtar"
   },
   "T1kJTq": {
     "note": "label",
-    "text": "Select colour"
+    "text": "Renk seç"
   },
   "TZDmnV": {
     "note": "label for when the user searches for a nonexistent animation",
-    "text": "No matches found"
+    "text": "Eşleşme bulunamadı"
   },
   "TicaWZ": {
     "note": "Progress Bar label",
-    "text": "Loading assets"
+    "text": "Öğeler yükleniyor"
   },
   "TtIkAc": {
     "note": "Panel Tab title",
-    "text": "Rules"
+    "text": "Kurallar"
   },
   "U0go9y": {
     "note": "degrees",
-    "text": "deg"
+    "text": "derece"
   },
   "U5Wazx": {
     "note": "remove Button text",
-    "text": "Remove"
+    "text": "Kaldır"
   },
   "UHsPN6": {
     "note": "Delete component confirmation header text",
-    "text": "Delete {nodeName}'s {componentName} component"
+    "text": "{nodeName} düğümünün {componentName} bileşenini sil"
   },
   "UoOmLE": {
     "note": "Form Field label",
-    "text": "Model type"
+    "text": "Model Türü"
   },
   "V1T3We": {
     "note": "Status indicator label",
-    "text": "Syncing tags"
+    "text": "Etiketler senkronize ediliyor"
   },
   "VObiQu": {
     "note": "option text of a Select component",
-    "text": "Arrow with background"
+    "text": "Arka plan ile ok"
   },
   "W5mTpF": {
     "note": "Button label",
-    "text": "Find out more"
+    "text": "Daha fazla bilgi"
   },
   "WAYi01": {
     "note": "checkbox option",
-    "text": "Snap to floor"
+    "text": "Yere sabitle"
   },
   "WEMQNi": {
     "note": "Menu Item label",
-    "text": "Annotation"
+    "text": "Ek açıklama"
   },
   "WVVCRr": {
     "note": "Form Field label",
-    "text": "Unit of measure"
+    "text": "Ölçü Birimi"
   },
   "WcF0fE": {
     "note": "Menu Item label",
-    "text": "Cancel"
+    "text": "İptal"
   },
   "WgHblZ": {
     "note": "Menu Item label",
-    "text": "Add entity binding"
+    "text": "Varlık bağı ekle"
   },
   "WmskB6": {
     "note": "Filter icons",
-    "text": "Filter icons"
+    "text": "Filtre simgeleri"
   },
   "X0B/sj": {
     "note": "Colors",
-    "text": "Colours"
+    "text": "Renkler"
   },
   "X4zSHQ": {
     "note": "Form Field label",
-    "text": "Distance"
+    "text": "Mesafe"
   },
   "XXnvtK": {
     "note": "Error message",
-    "text": "Error: invalid props to Matrix3XInputGrid, labels and values must be of length: 3"
+    "text": "Hata: Matrix3XInputGrid için geçersiz özellikler; etiketlerin ve değerlerin uzunluğu 3 olmalıdır"
   },
   "XgLlgW": {
     "note": "Input Grid title name",
-    "text": "Rotation"
+    "text": "Döndürme"
   },
   "YAKCuf": {
     "note": "checkbox option",
-    "text": "Enable shadow"
+    "text": "Gölgeyi Etkinleştir"
   },
   "YPkcJC": {
     "note": "alert header text",
-    "text": "Converting scene"
+    "text": "Sahne dönüştürülüyor"
   },
   "ZKJ6Ci": {
     "note": "Toolbar label",
-    "text": "Delete"
+    "text": "Sil"
   },
   "ZMF4/V": {
     "note": "Sub section label",
-    "text": "Animation"
+    "text": "Animasyon"
   },
   "ZQBP1v": {
     "note": "Menu Item label",
-    "text": "Edit component"
+    "text": "Bileşeni düzenle"
   },
   "ZlSNc5": {
     "note": "Menu Item",
-    "text": "Translate object"
+    "text": "Nesneyi çevir"
   },
   "Zo5ZTQ": {
     "note": "Form Field label",
-    "text": "Colour"
+    "text": "Renk"
   },
   "a2V9FB": {
     "note": "FormField label",
-    "text": "Define arrow speed"
+    "text": "Ok hızını tanımlayın"
   },
   "aSj5vI": {
     "note": "Menu Item",
-    "text": "Remove entity binding"
+    "text": "Varlık bağını kaldır"
   },
   "aX7AgI": {
     "note": "select box option text value",
-    "text": "Cast shadow"
+    "text": "Gölge Oluştur"
   },
   "aiakkN": {
     "note": "Form Field label",
-    "text": "Width"
+    "text": "Genişlik"
   },
   "ay/pmK": {
     "note": "Form field label",
-    "text": "Constraints"
+    "text": "Kısıtlamalar"
   },
   "azq+4C": {
     "note": "Form section title",
-    "text": "Link parameters"
+    "text": "Bağlantı Parametreleri"
   },
   "bO1OgH": {
     "note": "Progress Bar label",
-    "text": "Converting nodes"
+    "text": "Düğümler dönüştürülüyor"
   },
   "bVAsrx": {
     "note": "Form Field label",
-    "text": "Ground colour"
+    "text": "Zemin Rengi"
   },
   "cMkK+t": {
     "note": "Distance Units in a dropdown menu",
-    "text": "inches"
+    "text": "inç"
   },
   "cu3XSb": {
     "note": "FormField label",
-    "text": "Toggle visibility"
+    "text": "Görünürlüğü değiştir"
   },
   "cxZDHy": {
     "note": "Form field error message",
-    "text": "Invalid Hex"
+    "text": "Geçersiz On Altılı"
   },
   "d/nRJX": {
     "note": "Menu Item",
-    "text": "3D orbit"
+    "text": "3D Yörünge"
   },
   "dEPfkG": {
     "note": "drop down menu label",
-    "text": "Target"
+    "text": "Hedef"
   },
   "dLVgDJ": {
     "note": "Select a connection placeholder",
-    "text": "Select a connection"
+    "text": "Bağlantı seçin"
   },
   "dlo3Px": {
     "note": "Placeholder",
-    "text": "Choose a colour value"
+    "text": "Renk değeri seçin"
   },
   "duq5aL": {
     "note": "Icon name label",
-    "text": "Warning icon"
+    "text": "Uyarı simgesi"
   },
   "dw/mQp": {
     "note": "Light Type in a dropdown menu",
-    "text": "Hemisphere"
+    "text": "Yarım Küre"
   },
   "e8Crfd": {
     "note": "choose environment placeholder",
-    "text": "Choose an environment"
+    "text": "Ortam seçin"
   },
   "e9HZHd": {
     "note": "FormField label",
-    "text": "Indicator shape"
+    "text": "Gösterge şekli"
   },
   "eElB3q": {
     "note": "Sub-Section Description",
-    "text": "Converting your scene to entities enables auto updating, filtering and querying your scene."
+    "text": "Sahnenizin varlıklara dönüştürülmesi sahnenizi otomatik olarak güncellemenizi, filtrelemenizi ve sorgulamanızı sağlar."
   },
   "eKQvAU": {
     "note": "placeholder",
-    "text": "Choose a zoom level"
+    "text": "Yakınlaştırma seviyesi seçin"
   },
   "eo5qZz": {
     "note": "Select Color type option",
-    "text": "Define a background colour"
+    "text": "Arka plan rengini tanımlayın"
   },
   "erOaLy": {
     "note": "Expandable Section title",
-    "text": "Animation"
+    "text": "Animasyon"
   },
   "eznlx7": {
     "note": "Form Field label",
-    "text": "Matterport model ID"
+    "text": "Matterport Model ID'si"
   },
   "fD6Gup": {
     "note": "Form Field label",
-    "text": "Decay"
+    "text": "Bozulma"
   },
   "fLNO7R": {
     "note": "FormField label",
-    "text": "Panel config"
+    "text": "Panel Yapılandırması"
   },
   "fOCzxm": {
     "note": "Form Field label",
-    "text": "Component name"
+    "text": "Bileşen Adı"
   },
   "fOhk5w": {
     "note": "Menu Item",
-    "text": "3D pan"
+    "text": "3D yatay kaydır"
   },
   "fWrngr": {
     "note": "FormField label",
-    "text": "Markdown content"
+    "text": "Markdown İçerik"
   },
   "fdMW6X": {
     "note": "FormField label",
-    "text": "Background"
+    "text": "Arka Plan"
   },
   "g9Sknw": {
     "note": "ExpandableInfoSection Title",
-    "text": "Data binding template"
+    "text": "Veri Bağı Şablonu"
   },
   "gBjNC4": {
     "note": "times",
@@ -885,422 +885,422 @@
   },
   "gIcLg9": {
     "note": "Warning for selecting an unsupported file type",
-    "text": "File with extension {modelType} is not a supported model type"
+    "text": "{modelType} uzantılı dosya desteklenen bir model türü değil"
   },
   "gOijHE": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
-    "text": "Selected"
+    "text": "Seçildi"
   },
   "gZDAVH": {
     "note": "Menu Item label",
-    "text": "Add animations"
+    "text": "Animasyon Ekle"
   },
   "gc20C0": {
     "note": "Icon name label",
-    "text": "Info icon"
+    "text": "Bilgi simgesi"
   },
   "ggiL3k": {
     "note": "Form Field label",
-    "text": "Intensity"
+    "text": "Yoğunluk"
   },
   "h1sju5": {
     "note": "Input Grid title name",
-    "text": "Position"
+    "text": "Pozisyon"
   },
   "h4UkNS": {
     "note": "Expandable Section title",
-    "text": "Entity data binding"
+    "text": "Varlık verisi bağı"
   },
   "h8sKYl": {
     "note": "Menu Item label",
-    "text": "Add object"
+    "text": "Nesne ekle"
   },
   "hFIpcF": {
     "note": "Copies the property name",
-    "text": "Copy button"
+    "text": "Kopyala düğmesi"
   },
   "hYPMUc": {
     "note": "Form button text",
-    "text": "Fix view"
+    "text": "Görünümü düzelt"
   },
   "hiEi3h": {
     "note": "Expandable Section title",
-    "text": "Plane geometry"
+    "text": "Düzlem Geometrisi"
   },
   "hkc541": {
     "note": "button label",
-    "text": "Delete"
+    "text": "Sil"
   },
   "hyIDNW": {
     "note": "Delete action confirmation warning message",
-    "text": "If you attempt to undo this action after {nodeName} is deleted, it may have issues, such as the children still being deleted or disconnection from data."
+    "text": "{nodeName} silindikten sonra bu eylemi geri almaya çalışırsanız, alt varlıkların hala siliniyor olması veya verilerle bağlantının kesilmesi gibi sorunlar yaşanabilir."
   },
   "ifspRT": {
     "note": "Expandable Section title",
-    "text": "Model shader"
+    "text": "Model Tonlayıcı"
   },
   "ih/KdC": {
     "note": "Scene Icon types in a dropdown menu",
-    "text": "Info"
+    "text": "Bilgi"
   },
   "ixlhvz": {
     "note": "Form Field label",
-    "text": "Shadow settings"
+    "text": "Gölge Ayarları"
   },
   "jVpmNU": {
     "note": "Sub section label",
-    "text": "Overlay"
+    "text": "Yer paylaşımı"
   },
   "jkdxk0": {
     "note": "Button text for color opacity percentage",
-    "text": "Opacity : {opacityPercentage, number, percent}"
+    "text": "Opaklık: {opacityPercentage, number, percent}"
   },
   "k0JbYO": {
     "note": "Form Field label",
-    "text": "Scene Background"
+    "text": "Sahne Arka Planı"
   },
   "k5xCpx": {
     "note": "Form field label",
-    "text": "FOV"
+    "text": "Görüş alanı"
   },
   "kBjBg/": {
     "note": "Distance Units in a dropdown menu",
-    "text": "miles"
+    "text": "mil"
   },
   "kC5uoy": {
     "note": "Input Grid title name",
-    "text": "Scale"
+    "text": "Ölçek"
   },
   "kCQSQo": {
     "note": "Form field label",
-    "text": "Rule ID"
+    "text": "Kural ID'si"
   },
   "kSk2hi": {
     "note": "Menu Item",
-    "text": "Add entity binding"
+    "text": "Varlık bağı ekle"
   },
   "kVFLh1": {
     "note": "Form field label",
-    "text": "Tag style"
+    "text": "Etiket stili"
   },
   "kYpWHA": {
     "note": "placeholder",
-    "text": "Select an option"
+    "text": "Seçenek seçin"
   },
   "ksfSZA": {
     "note": "Distance Units in a dropdown menu",
-    "text": "feet"
+    "text": "fit"
   },
   "ktbuWm": {
     "note": "Notice message",
-    "text": "Notice"
+    "text": "Bildirim"
   },
   "ktlbsg": {
     "note": "Warning message",
-    "text": "Warning"
+    "text": "Uyarı"
   },
   "lXOqtn": {
     "note": "Delete node confirmation header text",
-    "text": "Delete {nodeName}"
+    "text": "{nodeName} öğesini sil"
   },
   "lbVroy": {
     "note": "checkbox option",
-    "text": "Open by default"
+    "text": "Varsayılan olarak aç"
   },
   "lbd69l": {
     "note": "Menu Item",
-    "text": "Add light"
+    "text": "Işık ekle"
   },
   "lgxHg3": {
     "note": "Form Field label",
-    "text": "Height"
+    "text": "Yükseklik"
   },
   "lnTuMX": {
     "note": "label",
-    "text": "Selected"
+    "text": "Seçildi"
   },
   "mhM85K": {
     "note": "Form Field label",
-    "text": "Entity path"
+    "text": "Varlık Yolu"
   },
   "mulbfR": {
     "note": "Form section listing out properties about a 3D models materials and textures",
-    "text": "Material details"
+    "text": "Materyal Ayrıntılar"
   },
   "mvyO33": {
     "note": "Menu Item label",
-    "text": "Remove overlay"
+    "text": "Yer paylaşımını kaldır"
   },
   "n3n7Lj": {
     "note": "FormField label",
-    "text": "Choose animations"
+    "text": "Animasyonları Seçin"
   },
   "nGEVE7": {
     "note": "Desction label",
-    "text": "No connections"
+    "text": "Bağlantı Yok"
   },
   "nGlTEq": {
     "note": "Form Field label",
-    "text": "Arrow"
+    "text": "Ok"
   },
   "nJP/oB": {
     "note": "Delete action confirmation message",
-    "text": "Delete {nodeName}? Unable to load the number of children. While this action may be undone, it may not return to its original state."
+    "text": "{nodeName} silinsin mi? Alt varlık sayısı yüklenemiyor. Bu eylem geri alınabilse de, orijinal durumuna geri dönmeyebilir."
   },
   "nhcDIE": {
     "note": "select box option text value",
-    "text": "Receive shadow"
+    "text": "Gölgeyi Al"
   },
   "nwQbTY": {
     "note": "Icon name label",
-    "text": "Video icon"
+    "text": "Video simgesi"
   },
   "o3PtbU": {
     "note": "Sub-Section Description",
-    "text": "Connecting your Matterport account enables the viewing of spaces in your TwinMaker scene."
+    "text": "Matterport hesabınızın bağlanması, TwinMaker sahnenizdeki alanları görüntülemenizi sağlar."
   },
   "oECZco": {
     "note": "button label",
-    "text": "OK"
+    "text": "Tamam"
   },
   "oEXVJ5": {
     "note": "Motion Indicator Shape in a dropdown menu",
-    "text": "Linear plane"
+    "text": "Doğrusal Düzlem"
   },
   "oEnP1z": {
     "note": "Form Field label",
-    "text": "Ground plane"
+    "text": "Yer Düzlemi"
   },
   "oRdrN4": {
     "note": "Menu Item",
-    "text": "Remove overlay"
+    "text": "Yer paylaşımını kaldır"
   },
   "oiGDox": {
     "note": "Field label",
-    "text": "Value"
+    "text": "Değer"
   },
   "oiaALZ": {
     "note": "AttributeEditor control placeholder",
-    "text": "e.g. value > 0"
+    "text": "ör. değer > 0"
   },
   "ojZOGH": {
     "note": "Title",
-    "text": "Scene statistics"
+    "text": "Sahne İstatistikleri"
   },
   "oppsQx": {
     "note": "placeholder",
-    "text": "Choose a rule"
+    "text": "Kural seçin"
   },
   "osIcJX": {
     "note": "Status indicator label",
-    "text": "Tags sync failed"
+    "text": "Etiket senkronizasyonu başarısız"
   },
   "pqZzsr": {
     "note": "alert header text",
-    "text": "Convert to entities successful"
+    "text": "Varlıklara dönüştürme başarılı"
   },
   "pyg21P": {
     "note": "Number of Triangles in a scene",
-    "text": "Triangles: {sceneInfoTriangles, number}"
+    "text": "Üçgenler: {sceneInfoTriangles, number}"
   },
   "qRfadk": {
     "note": "Form field label",
-    "text": "Zoom"
+    "text": "Yakınlaştırma"
   },
   "qU9dRt": {
     "note": "Form Field label",
-    "text": "Scale"
+    "text": "Ölçek"
   },
   "qYJQjk": {
     "note": "Delete action confirmation message",
-    "text": "Delete {nodeName}? This will delete one entity. While this action may be undone, it may not return to its original state."
+    "text": "{nodeName} silinsin mi? Bu eylem, 1 varlığı silecektir. Bu eylem geri alınabilse de, orijinal durumuna geri dönmeyebilir."
   },
   "qZiKXL": {
     "note": "ExpandableInfoSection Title",
-    "text": "Convert scene"
+    "text": "Sahneyi dönüştür"
   },
   "r0JN3A": {
     "note": "Menu Item",
-    "text": "Orbit"
+    "text": "Yörünge"
   },
   "r8dlzj": {
     "note": "Distance Units in a dropdown menu",
-    "text": "kilometres"
+    "text": "kilometre"
   },
   "rBzizm": {
     "note": "label",
-    "text": "Add speed rule"
+    "text": "Hız kuralı ekle"
   },
   "rDIRVn": {
     "note": "Menu Item label",
-    "text": "Motion indicator"
+    "text": "Hareket göstergesi"
   },
   "rH0oex": {
     "note": "Menu Item",
-    "text": "Add overlay"
+    "text": "Yer paylaşımı ekle"
   },
   "rKeM3X": {
     "note": "Form Field label",
-    "text": "Light type"
+    "text": "Işık Türü"
   },
   "rOfF7C": {
     "note": "remove Button Text",
-    "text": "Remove statement"
+    "text": "İfadeyi kaldır"
   },
   "rkzZjO": {
     "note": "Color",
-    "text": "Colour"
+    "text": "Renk"
   },
   "rlcAuK": {
     "note": "Menu label",
-    "text": "Rotate"
+    "text": "Döndür"
   },
   "s9468I": {
     "note": "Abbreviation for hexidecimal",
-    "text": "Hex"
+    "text": "On altılı"
   },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
-    "text": "centimetres"
+    "text": "santimetre"
   },
   "sevj7L": {
     "note": "remove texture Button Text",
-    "text": "Remove Texture"
+    "text": "Dokuyu kaldır"
   },
   "skIt5u": {
     "note": "Menu Item",
-    "text": "Scale object"
+    "text": "Nesneyi ölçeklendir"
   },
   "souLfa": {
     "note": "Form Field label",
-    "text": "Property name"
+    "text": "Özellik Adı"
   },
   "tDP3Lo": {
     "note": "visual text to show there are no parameters",
-    "text": "No parameter"
+    "text": "Parametre yok"
   },
   "tQfsJu": {
     "note": "Scene Resource types in a dropdown menu",
-    "text": "Number"
+    "text": "Sayı"
   },
   "tbdJX9": {
     "note": "Placeholder one no node selected",
-    "text": "No node selected."
+    "text": "Düğüm seçilmedi."
   },
   "tgB/SP": {
     "note": "Progress Bar description",
-    "text": "{fileSize} downloaded"
+    "text": "{fileSize} indirildi"
   },
   "ty9k3i": {
     "note": "matterport tag sync button",
-    "text": "Sync Matterport tags"
+    "text": "Matterport Etiketlerini Senkronize Et"
   },
   "tz4SMZ": {
     "note": "Panel Tab title",
-    "text": "Settings"
+    "text": "Ayarlar"
   },
   "uJjz0b": {
     "note": "Form section header",
-    "text": "Lens"
+    "text": "Mercek"
   },
   "ua6Icd": {
     "note": "Menu Item",
-    "text": "Add annotation"
+    "text": "Ek açıklama ekle"
   },
   "ubyV0D": {
     "note": "Remove parameter Button Text",
-    "text": "Remove parameter"
+    "text": "Parametreyi kaldır"
   },
   "ugCkWy": {
     "note": "Enter your Matterport model id placeholder",
-    "text": "Enter your Matterport model ID"
+    "text": "Matterport model ID'nizi girin"
   },
   "ujFSQs": {
     "note": "alert body text",
-    "text": "Some node conversion failed:"
+    "text": "Bazı düğüm dönüşümleri başarısız:"
   },
   "v+Dj24": {
     "note": "hex validations messages",
-    "text": "Invalid hex code"
+    "text": "Geçersiz on altılı kod"
   },
   "v+tpx1": {
     "note": "Menu Item label",
-    "text": "Light"
+    "text": "Işık"
   },
   "v6Z7tj": {
     "note": "Progress Bar description",
-    "text": "{convertedNumber} out of {totalNumber} converted"
+    "text": "{convertedNumber}/{totalNumber} dönüştürüldü"
   },
   "v7BBG+": {
     "note": "Error message wrong input",
-    "text": "Rule ID must be alphanumeric and can contain underscore and hyphen, and end with an alphanumeric character"
+    "text": "Kural ID'si alfasayısal olmalıdır, alt çizgi ve tire içerebilir ve alfasayısal karakterle biter"
   },
   "v8Zq9U": {
     "note": "Icon",
-    "text": "Icon"
+    "text": "Simge"
   },
   "vL33EB": {
     "note": "option text of a Select component",
-    "text": "Arrow colour"
+    "text": "Ok rengi"
   },
   "vMsay3": {
     "note": "Scene Resource types in a dropdown menu",
-    "text": "Icon"
+    "text": "Simge"
   },
   "vlWCF3": {
     "note": "FormField label",
-    "text": "Binding name"
+    "text": "Bağ Adı"
   },
   "w4ByXF": {
     "note": "15mm lens",
-    "text": "15mm"
+    "text": "15 mm"
   },
   "wGR8O4": {
     "note": "Menu Item label",
-    "text": "Model shader"
+    "text": "Model tonlayıcı"
   },
   "wHFaeN": {
     "note": "checkbox label",
-    "text": "Fixed scaling"
+    "text": "Sabit ölçeklendirme"
   },
   "wSVRLA": {
     "note": "camera views dropdown button text",
-    "text": "Camera view"
+    "text": "Kamera Görünümü"
   },
   "wkyFAx": {
     "note": "Menu Item label",
-    "text": "Tag"
+    "text": "Etiket"
   },
   "x8NTqi": {
     "note": "Menu Item",
-    "text": "Add empty node"
+    "text": "Boş düğüm ekle"
   },
   "xyFy7p": {
     "note": "modal header text",
-    "text": "Convert scene"
+    "text": "Sahneyi dönüştür"
   },
   "y9R3yg": {
     "note": "Sub-Section Header",
-    "text": "Convert to entities"
+    "text": "Varlıklara dönüştür"
   },
   "yXdV0F": {
     "note": "ExpandableInfoSection Title",
-    "text": "Third-party resources"
+    "text": "Üçüncü Taraflara Ait Kaynaklar"
   },
   "yhy2xw": {
     "note": "color picker label",
-    "text": "Hex code"
+    "text": "On altılı kod"
   },
   "ylDLGq": {
     "note": "FormField label",
-    "text": "Arrow colour"
+    "text": "Ok rengi"
   },
   "yqHWZ4": {
     "note": "Light Type in a dropdown menu",
-    "text": "Directional"
+    "text": "Yönlü"
   },
   "z4V95/": {
     "note": "Expandable Section title",
-    "text": "Camera"
+    "text": "Kamera"
   }
 }
