@@ -1,106 +1,20 @@
 import {
   DashboardWidgetType,
-  MonitorAnnotations,
-  MonitorMetric,
   MonitorWidgetType,
   SiteWiseMonitorDashboardDefinition,
 } from './types';
 import { migrateDashboard } from './convert-monitor-to-app-defintion';
-
-const createMonitorChartWidget = (
-  widgetType: MonitorWidgetType,
-  metrics: MonitorMetric[],
-  annotations?: MonitorAnnotations,
-  title?: string,
-  x?: number,
-  y?: number
-) => {
-  return {
-    type: widgetType,
-    title: title ?? 'test',
-    x: x ?? 0,
-    y: y ?? 0,
-    height: 3,
-    width: 3,
-    metrics,
-    alarms: [],
-    properties: {
-      colorDataAcrossThresholds: true,
-    },
-    annotations,
-  };
-};
-
-const createApplicationChartDefinition = (
-  widgetType: string,
-  properties: object,
-  height = 23.5,
-  width = 41.5,
-  x = 0,
-  y = 0,
-  z = 0
-) => {
-  return {
-    type: widgetType,
-    x,
-    y,
-    z,
-    width,
-    height,
-    properties,
-  };
-};
+import {
+  createMonitorChartWidget,
+  metrics,
+  createApplicationChartDefinition,
+  expectedProperties,
+} from './constants';
 
 describe('Dashboard definition conversion', () => {
   it('converts a single SiteWise Monitor line chart into an application line chart', async () => {
-    const metrics = [
-      {
-        type: 'iotsitewise',
-        label: 'Total Average Power (Demo Wind Farm Asset)',
-        assetId: '3d196ab5-85db-4c90-854f-4e29d579b898',
-        propertyId: 'c07c2fa5-265e-4ed4-bbf0-e94fe01e4d54',
-        dataType: 'DOUBLE',
-      },
-    ];
     const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
       widgets: [createMonitorChartWidget(MonitorWidgetType.LineChart, metrics)],
-    };
-
-    const expectedProperties = {
-      title: 'test',
-      symbol: {
-        style: 'filled-circle',
-      },
-      axis: {
-        yVisible: true,
-        xVisible: true,
-      },
-      line: {
-        connectionStyle: 'linear',
-        style: 'solid',
-      },
-      legend: {
-        visible: true,
-      },
-      queryConfig: {
-        source: 'iotsitewise',
-        query: {
-          properties: [],
-          assets: [
-            {
-              assetId: '3d196ab5-85db-4c90-854f-4e29d579b898',
-              properties: [
-                {
-                  aggregationType: 'AVERAGE',
-                  propertyId: 'c07c2fa5-265e-4ed4-bbf0-e94fe01e4d54',
-                  resolution: '1m',
-                  color: '#7d2105',
-                },
-              ],
-            },
-          ],
-        },
-      },
     };
 
     const expectedDefinition = {
@@ -212,16 +126,6 @@ describe('Dashboard definition conversion', () => {
   });
 
   it('convers a single SiteWise Monitor bar chart into an application bar chart', async () => {
-    const metrics = [
-      {
-        type: 'iotsitewise',
-        label: 'Total Average Power (Demo Wind Farm Asset)',
-        assetId: '3d196ab5-85db-4c90-854f-4e29d579b898',
-        propertyId: 'c07c2fa5-265e-4ed4-bbf0-e94fe01e4d54',
-        dataType: 'DOUBLE',
-      },
-    ];
-
     const barChartDefinition: SiteWiseMonitorDashboardDefinition = {
       widgets: [createMonitorChartWidget(MonitorWidgetType.BarChart, metrics)],
     };
@@ -270,16 +174,6 @@ describe('Dashboard definition conversion', () => {
   });
 
   it('convers a single SiteWise Monitor scatter chart into an application scatter chart', async () => {
-    const metrics = [
-      {
-        type: 'iotsitewise',
-        label: 'Total Average Power (Demo Wind Farm Asset)',
-        assetId: '3d196ab5-85db-4c90-854f-4e29d579b898',
-        propertyId: 'c07c2fa5-265e-4ed4-bbf0-e94fe01e4d54',
-        dataType: 'DOUBLE',
-      },
-    ];
-
     const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
       widgets: [
         createMonitorChartWidget(MonitorWidgetType.ScatterChart, metrics),
@@ -338,16 +232,6 @@ describe('Dashboard definition conversion', () => {
   });
 
   it('convers a single SiteWise Monitor timeline chart into an application timeline chart', async () => {
-    const metrics = [
-      {
-        type: 'iotsitewise',
-        label: 'Total Average Power (Demo Wind Farm Asset)',
-        assetId: '3d196ab5-85db-4c90-854f-4e29d579b898',
-        propertyId: 'c07c2fa5-265e-4ed4-bbf0-e94fe01e4d54',
-        dataType: 'DOUBLE',
-      },
-    ];
-
     const timelineChartDefinition: SiteWiseMonitorDashboardDefinition = {
       widgets: [
         createMonitorChartWidget(MonitorWidgetType.StatusTimeline, metrics),
@@ -393,16 +277,6 @@ describe('Dashboard definition conversion', () => {
   });
 
   it('convers a single SiteWise Monitor table chart into an application table chart', async () => {
-    const metrics = [
-      {
-        type: 'iotsitewise',
-        label: 'Total Average Power (Demo Wind Farm Asset)',
-        assetId: '3d196ab5-85db-4c90-854f-4e29d579b898',
-        propertyId: 'c07c2fa5-265e-4ed4-bbf0-e94fe01e4d54',
-        dataType: 'DOUBLE',
-      },
-    ];
-
     const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
       widgets: [createMonitorChartWidget(MonitorWidgetType.Table, metrics)],
     };
@@ -444,16 +318,6 @@ describe('Dashboard definition conversion', () => {
   });
 
   it('convers a single SiteWise Monitor KPI widget into an application KPI', async () => {
-    const metrics = [
-      {
-        type: 'iotsitewise',
-        label: 'Total Average Power (Demo Wind Farm Asset)',
-        assetId: '3d196ab5-85db-4c90-854f-4e29d579b898',
-        propertyId: 'c07c2fa5-265e-4ed4-bbf0-e94fe01e4d54',
-        dataType: 'DOUBLE',
-      },
-    ];
-
     const kpiDefinition: SiteWiseMonitorDashboardDefinition = {
       widgets: [createMonitorChartWidget(MonitorWidgetType.Kpi, metrics)],
     };
@@ -616,16 +480,6 @@ describe('Dashboard definition conversion', () => {
   });
 
   it('convers a single SiteWise Monitor status grid widget into an application status widget', async () => {
-    const metrics = [
-      {
-        type: 'iotsitewise',
-        label: 'Total Average Power (Demo Wind Farm Asset)',
-        assetId: '3d196ab5-85db-4c90-854f-4e29d579b898',
-        propertyId: 'c07c2fa5-265e-4ed4-bbf0-e94fe01e4d54',
-        dataType: 'DOUBLE',
-      },
-    ];
-
     const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
       widgets: [
         createMonitorChartWidget(MonitorWidgetType.StatusGrid, metrics),
@@ -671,16 +525,6 @@ describe('Dashboard definition conversion', () => {
     const comparisonOperator = 'LT';
     const showValue = true;
     const value = 100;
-
-    const metrics = [
-      {
-        type: 'iotsitewise',
-        label: 'Total Average Power (Demo Wind Farm Asset)',
-        assetId: '3d196ab5-85db-4c90-854f-4e29d579b898',
-        propertyId: 'c07c2fa5-265e-4ed4-bbf0-e94fe01e4d54',
-        dataType: 'DOUBLE',
-      },
-    ];
 
     const annotations = {
       y: [
@@ -762,18 +606,10 @@ describe('Dashboard definition conversion', () => {
     );
     expect(applicationDefinition).toMatchObject(expectedDefinition);
   });
+});
 
-  it('Dropping widgets in SWM can cause overlap', async () => {
-    const metrics = [
-      {
-        type: 'iotsitewise',
-        label: 'Total Average Power (Demo Wind Farm Asset)',
-        assetId: '3d196ab5-85db-4c90-854f-4e29d579b898',
-        propertyId: 'c07c2fa5-265e-4ed4-bbf0-e94fe01e4d54',
-        dataType: 'DOUBLE',
-      },
-    ];
-
+describe('Widgets dont overlap after migration', () => {
+  it('Widgets that are pushed down are migrated correctly ', async () => {
     const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
       widgets: [
         createMonitorChartWidget(
@@ -795,41 +631,6 @@ describe('Dashboard definition conversion', () => {
       ],
     };
 
-    const expectedProperties = {
-      title: 'test',
-      symbol: {
-        style: 'filled-circle',
-      },
-      axis: {
-        yVisible: true,
-        xVisible: true,
-      },
-      line: {
-        connectionStyle: 'linear',
-        style: 'solid',
-      },
-      legend: {
-        visible: true,
-      },
-      queryConfig: {
-        source: 'iotsitewise',
-        query: {
-          properties: [],
-          assets: [
-            {
-              assetId: '3d196ab5-85db-4c90-854f-4e29d579b898',
-              properties: [
-                {
-                  aggregationType: 'AVERAGE',
-                  propertyId: 'c07c2fa5-265e-4ed4-bbf0-e94fe01e4d54',
-                  resolution: '1m',
-                },
-              ],
-            },
-          ],
-        },
-      },
-    };
     const expectedDefinition = {
       widgets: [
         createApplicationChartDefinition(
@@ -847,8 +648,227 @@ describe('Dashboard definition conversion', () => {
           23.5,
           41.5,
           14,
-          16,
+          24,
           1
+        ),
+      ],
+    };
+
+    const describeDashboard = jest.fn().mockResolvedValue({
+      dashboardDefinition: JSON.stringify(lineChartDefinition),
+    });
+
+    const applicationDefinition = await migrateDashboard(
+      { dashboardId: 'test-id' },
+      { describeDashboard: describeDashboard }
+    );
+    expect(applicationDefinition).toMatchObject(expectedDefinition);
+  });
+
+  it('Widgets that are pushed up are migrated correctly ', async () => {
+    const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
+      widgets: [
+        createMonitorChartWidget(
+          MonitorWidgetType.LineChart,
+          metrics,
+          undefined,
+          undefined,
+          0,
+          5
+        ),
+        createMonitorChartWidget(
+          MonitorWidgetType.LineChart,
+          metrics,
+          undefined,
+          undefined,
+          0,
+          3
+        ),
+        createMonitorChartWidget(
+          MonitorWidgetType.LineChart,
+          metrics,
+          undefined,
+          undefined,
+          0,
+          6
+        ),
+      ],
+    };
+
+    const expectedDefinition = {
+      widgets: [
+        createApplicationChartDefinition(
+          'xy-plot',
+          expectedProperties,
+          23.5,
+          41.5,
+          0,
+          0,
+          0
+        ),
+        createApplicationChartDefinition(
+          'xy-plot',
+          expectedProperties,
+          23.5,
+          41.5,
+          0,
+          24,
+          1
+        ),
+        createApplicationChartDefinition(
+          'xy-plot',
+          expectedProperties,
+          23.5,
+          41.5,
+          0,
+          48,
+          2
+        ),
+      ],
+    };
+
+    const describeDashboard = jest.fn().mockResolvedValue({
+      dashboardDefinition: JSON.stringify(lineChartDefinition),
+    });
+
+    const applicationDefinition = await migrateDashboard(
+      { dashboardId: 'test-id' },
+      { describeDashboard: describeDashboard }
+    );
+    expect(applicationDefinition).toMatchObject(expectedDefinition);
+  });
+
+  it('Nested overlaps are fixed ', async () => {
+    const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
+      widgets: [
+        createMonitorChartWidget(
+          MonitorWidgetType.LineChart,
+          metrics,
+          undefined,
+          undefined,
+          0,
+          0
+        ),
+        createMonitorChartWidget(
+          MonitorWidgetType.LineChart,
+          metrics,
+          undefined,
+          undefined,
+          1,
+          2
+        ),
+        createMonitorChartWidget(
+          MonitorWidgetType.LineChart,
+          metrics,
+          undefined,
+          undefined,
+          2,
+          5
+        ),
+      ],
+    };
+
+    const expectedDefinition = {
+      widgets: [
+        createApplicationChartDefinition(
+          'xy-plot',
+          expectedProperties,
+          23.5,
+          41.5,
+          0,
+          0,
+          0
+        ),
+        createApplicationChartDefinition(
+          'xy-plot',
+          expectedProperties,
+          23.5,
+          41.5,
+          14,
+          24,
+          1
+        ),
+        createApplicationChartDefinition(
+          'xy-plot',
+          expectedProperties,
+          23.5,
+          41.5,
+          28,
+          48,
+          2
+        ),
+      ],
+    };
+
+    const describeDashboard = jest.fn().mockResolvedValue({
+      dashboardDefinition: JSON.stringify(lineChartDefinition),
+    });
+
+    const applicationDefinition = await migrateDashboard(
+      { dashboardId: 'test-id' },
+      { describeDashboard: describeDashboard }
+    );
+    expect(applicationDefinition).toMatchObject(expectedDefinition);
+  });
+
+  it('Widgets placed at same point in SWM are migrated correctly ', async () => {
+    const lineChartDefinition: SiteWiseMonitorDashboardDefinition = {
+      widgets: [
+        createMonitorChartWidget(
+          MonitorWidgetType.LineChart,
+          metrics,
+          undefined,
+          undefined,
+          0,
+          0
+        ),
+        createMonitorChartWidget(
+          MonitorWidgetType.LineChart,
+          metrics,
+          undefined,
+          undefined,
+          2,
+          2
+        ),
+        createMonitorChartWidget(
+          MonitorWidgetType.LineChart,
+          metrics,
+          undefined,
+          undefined,
+          2,
+          2
+        ),
+      ],
+    };
+
+    const expectedDefinition = {
+      widgets: [
+        createApplicationChartDefinition(
+          'xy-plot',
+          expectedProperties,
+          23.5,
+          41.5,
+          0,
+          0,
+          0
+        ),
+        createApplicationChartDefinition(
+          'xy-plot',
+          expectedProperties,
+          23.5,
+          41.5,
+          28,
+          24,
+          1
+        ),
+        createApplicationChartDefinition(
+          'xy-plot',
+          expectedProperties,
+          23.5,
+          41.5,
+          28,
+          48,
+          2
         ),
       ],
     };
