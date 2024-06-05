@@ -117,7 +117,7 @@ export const useAnomalyEchart = ({
     initialEchartsState
   );
 
-  const { ref, chartRef } = useZoomableECharts({
+  const { ref, chartRef, sizeRef } = useZoomableECharts({
     theme: mode === 'dark' ? 'cloudscapeDarkTheme' : 'cloudscapeLightTheme',
     viewport: utilizedViewport,
     setViewport,
@@ -150,5 +150,6 @@ export const useAnomalyEchart = ({
 
   return {
     ref,
+    sizeRef,
   };
 };

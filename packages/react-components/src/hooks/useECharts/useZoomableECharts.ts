@@ -8,6 +8,7 @@ import {
 import { useUnboundedDataZoom } from '../../echarts/unboundedZoom';
 import { Viewport } from '@iot-app-kit/core';
 import { useViewport } from '../useViewport';
+import { useMeasure } from 'react-use';
 
 configureEchartsPlugins();
 
@@ -66,9 +67,17 @@ export const useZoomableECharts = ({
     };
   }, [theme]);
 
+  const [sizeRef, { width, height }] = useMeasure<HTMLDivElement>();
+
+  useEffect(() => {
+    if (chartRef.current) {
+      chartRef.current.resize({ width, height });
+    }
+  }, [width, height]);
+
   useUnboundedDataZoom({ chart, viewport, setViewport });
 
-  return { chartRef, ref };
+  return { chartRef, ref, sizeRef };
 };
 
 export type ChartRef = MutableRefObject<ECharts | null>;
