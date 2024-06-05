@@ -28,6 +28,7 @@ import {
   getStaticProperties,
   getStyleSettings,
 } from './getters';
+import { removeCollisions } from './collision-logic';
 
 const convertType = (monitorChartType: string) => {
   switch (monitorChartType) {
@@ -305,13 +306,18 @@ export const migrateDashboard: MigrateDashboard = async (
     if (monitorDashboardDefinitionString) {
       const monitorDashboardDefinition: SiteWiseMonitorDashboardDefinition =
         JSON.parse(monitorDashboardDefinitionString);
-      if (monitorDashboardDefinition.widgets)
+      if (monitorDashboardDefinition.widgets) {
+        // run collision algorithm to remove overlaps
+        monitorDashboardDefinition.widgets = removeCollisions(
+          monitorDashboardDefinition.widgets
+        );
         for (const [
           index,
           widget,
         ] of monitorDashboardDefinition.widgets.entries()) {
           newDashboardDefinition.widgets.push(...convertWidget(widget, index));
         }
+      }
     }
   }
   return newDashboardDefinition;
