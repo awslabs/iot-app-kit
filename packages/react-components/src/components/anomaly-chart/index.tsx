@@ -37,7 +37,7 @@ export const AnomalyChart = (options: AnomalyChartOptions) => {
     viewport: utilizedViewport,
   });
 
-  const { ref } = useAnomalyEchart({
+  const { ref, sizeRef } = useAnomalyEchart({
     ...configuration,
     showTimestamp,
     data,
@@ -55,7 +55,10 @@ export const AnomalyChart = (options: AnomalyChartOptions) => {
         width: '100%',
         height: '100%',
         position: 'relative',
+        minHeight: 200,
+        minWidth: 200,
       }}
+      ref={sizeRef}
     >
       {empty && <AnomalyChartEmpty />}
       {error && <AnomalyChartError />}
