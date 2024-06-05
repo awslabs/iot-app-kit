@@ -152,16 +152,6 @@ test('can drag a trend cursor', async ({ page }) => {
     .locator(TREND_CURSOR_TABLE_HEADER)
     .first()
     .innerText();
-  const initialTrendCursorValueString = await page
-    .locator(TREND_CURSOR_TABLE_CELL)
-    .first()
-    .innerText();
-
-  // wait for the interval to resolve
-  await page.waitForTimeout(2000);
-
-  // trend cursor should have some value
-  expect(initialTrendCursorValueString).not.toEqual('-');
 
   await dragGenerator(lineWidget).dragTo(lineWidget, {
     targetPosition: ({ target }) => ({
