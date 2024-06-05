@@ -15,6 +15,10 @@
     "note": "Light Type in a dropdown menu",
     "text": "Ambien"
   },
+  "+RIFYb": {
+    "note": "alert body text",
+    "text": "Semua simpul telah berhasil dikonversi"
+  },
   "+SQx9E": {
     "note": "Menu Item label",
     "text": "Tambahkan komponen"
@@ -31,6 +35,14 @@
     "note": "Distance Units in a dropdown menu",
     "text": "Skala Kustom"
   },
+  "/RFl5Q": {
+    "note": "Label for button that triggers a expandable section",
+    "text": "Luaskan"
+  },
+  "/j+uhN": {
+    "note": "Select an icon",
+    "text": "Pilih ikon"
+  },
   "/kZshs": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "Warna"
@@ -41,11 +53,15 @@
   },
   "0/GZ0l": {
     "note": "Box label",
-    "text": "Konfigurasi Aturan"
+    "text": "Konfigurasikan Aturan"
   },
   "03Uxre": {
     "note": "Menu Item",
     "text": "Rotasikan objek"
+  },
+  "051ah6": {
+    "note": "select texture Button Text",
+    "text": "Pilih Tekstur"
   },
   "07ZORc": {
     "note": "Toggle label",
@@ -67,9 +83,21 @@
     "note": "Input error message",
     "text": "Nama tidak valid"
   },
+  "1Zas7b": {
+    "note": "Abbreviation for blue",
+    "text": "B"
+  },
+  "1ZqGeQ": {
+    "note": "checkbox label",
+    "text": "Pembaruan otomatis (setiap 30 detik)"
+  },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
     "text": "# panah"
+  },
+  "1fLT/q": {
+    "note": "button label",
+    "text": "Batalkan"
   },
   "1kXRWn": {
     "note": "Progress Bar status",
@@ -103,6 +131,10 @@
     "note": "Menu Item",
     "text": "Tambahkan tanda"
   },
+  "3KmpMx": {
+    "note": "Toggle label",
+    "text": "Tampilkan tanda melalui objek"
+  },
   "3fXLy/": {
     "note": "Menu label",
     "text": "Terjemahkan"
@@ -126,6 +158,10 @@
   "4YbINk": {
     "note": "Expandable Section title",
     "text": "Anotasi"
+  },
+  "5F/kwX": {
+    "note": "Icon name label",
+    "text": "Ikon kesalahan"
   },
   "5pV1+0": {
     "note": "Form field label",
@@ -187,6 +223,10 @@
     "note": "Status indicator label",
     "text": "Sinkronisasi tanda berhasil"
   },
+  "81kEJb": {
+    "note": "Menu Item",
+    "text": "Kunci Penunjuk 3D"
+  },
   "89bwEi": {
     "note": "Environment presets drop down menu options",
     "text": "Kromatik"
@@ -211,6 +251,10 @@
     "note": "Menu Item label",
     "text": "Simpul kosong"
   },
+  "9D+o0B": {
+    "note": "alert body text",
+    "text": "Melanjutkan tindakan ini akan mengubah adegan Anda secara permanen. Anda tidak dapat membatalkan tindakan ini"
+  },
   "9I3nDM": {
     "note": "Menu Item label",
     "text": "Batalkan"
@@ -227,6 +271,10 @@
     "note": "label",
     "text": "Pilih kecepatan"
   },
+  "9yVMfn": {
+    "note": "Form Field label",
+    "text": "Jarak Jauh"
+  },
   "A/Q8OL": {
     "note": "Status indicator label",
     "text": "Tampilan kamera disimpan"
@@ -234,6 +282,10 @@
   "AEkvpm": {
     "note": "Input error message",
     "text": "Karakter di nama tidak valid"
+  },
+  "AePRVy": {
+    "note": "Icon name label",
+    "text": "Ikon kustom"
   },
   "As6z+e": {
     "note": "ExpandableInfoSection Title",
@@ -243,6 +295,14 @@
     "note": "Menu Item",
     "text": "Tambahkan model 3D"
   },
+  "B6QsMN": {
+    "note": "button label",
+    "text": "Konfirmasi"
+  },
+  "BK/UYP": {
+    "note": "alert header text",
+    "text": "Konversi ke entitas gagal"
+  },
   "BNscqX": {
     "note": "Default Message for before an animation is selected",
     "text": "Masukkan Nilai"
@@ -250,6 +310,10 @@
   "BPH9Er": {
     "note": "Environment presets drop down menu options",
     "text": "Netral"
+  },
+  "BZ1qKo": {
+    "note": "Abbreviation for red",
+    "text": "R"
   },
   "BZPp7d": {
     "note": "Form field label",
@@ -270,6 +334,14 @@
   "Bzw++H": {
     "note": "label for the remove animation button",
     "text": "hapus"
+  },
+  "C11Rim": {
+    "note": "Form Field label",
+    "text": "Jarak Dekat"
+  },
+  "C9z9wU": {
+    "note": "Abbreviation for green",
+    "text": "G"
   },
   "CyWR+b": {
     "note": "placeholder",
@@ -315,6 +387,10 @@
     "note": "rule Id label",
     "text": "Id Aturan"
   },
+  "FgS5ks": {
+    "note": "Delete action confirmation message",
+    "text": "Hapus {nodeName}? Ini akan menghapus 1 entitas dan {childCount} turunannya. Meskipun tindakan ini mungkin dibatalkan, tindakan ini mungkin tidak kembali ke status awalnya."
+  },
   "FvIdJC": {
     "note": "chrome picker",
     "text": "chromePicker"
@@ -334,6 +410,10 @@
   "GesjrB": {
     "note": "Rule has no statements",
     "text": "Tidak ada pernyataan"
+  },
+  "Gp31Xy": {
+    "note": "Delete action confirmation warning message",
+    "text": "Jika Anda mencoba membatalkan tindakan ini setelah {componentName} dihapus, mungkin akan terjadi masalah seperti beberapa properti masih dihapus atau pemutusan koneksi dari data."
   },
   "Gv0vX8": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
@@ -359,6 +439,14 @@
     "note": "Menu Item",
     "text": "Tambahkan kamera dari tampilan saat ini"
   },
+  "IsC9Hg": {
+    "note": "Menu Item",
+    "text": "Kunci Penunjuk"
+  },
+  "J+haL1": {
+    "note": "Aria live announcement for when a statement is removed",
+    "text": "Pernyataan dihapus"
+  },
   "JTUN+G": {
     "note": "Form field label",
     "text": "Jarak fokus"
@@ -375,6 +463,10 @@
     "note": "Placeholder",
     "text": "Pilih nilai kecepatan"
   },
+  "KCtA9Z": {
+    "note": "Form Field label",
+    "text": "Opasitas %"
+  },
   "Kchdc4": {
     "note": "Placeholder",
     "text": "Pilih aturan"
@@ -382,6 +474,10 @@
   "KnEACH": {
     "note": "Hyperlink title",
     "text": "Pelajari Selengkapnya"
+  },
+  "KoTFFN": {
+    "note": "Button text",
+    "text": "Konversikan adegan"
   },
   "KsFvzR": {
     "note": "Placeholder hint message for searching across entities",
@@ -431,6 +527,10 @@
     "note": "75mm lens",
     "text": "75 mm"
   },
+  "MrbJ0V": {
+    "note": "Delete action confirmation message",
+    "text": "Hapus {nodeName} komponen {componentName}? Meskipun tindakan ini mungkin dibatalkan, tindakan ini mungkin tidak kembali ke status awalnya."
+  },
   "NXP1Hm": {
     "note": "Form field errorText",
     "text": "FOV tidak boleh kurang dari 10"
@@ -451,6 +551,10 @@
     "note": "Menu Item",
     "text": "Panorama"
   },
+  "OgfeEl": {
+    "note": "Toggle label",
+    "text": "Aktifkan Kabut"
+  },
   "OpGIbY": {
     "note": "Scene Icon types in a dropdown menu",
     "text": "Kesalahan"
@@ -463,6 +567,10 @@
     "note": "Label clarifying the exact text a user is searching for.",
     "text": "Gunakan: {value}"
   },
+  "PIF5h2": {
+    "note": "Label for button that triggers a collapsable section",
+    "text": "Ciutkan"
+  },
   "PLTmIg": {
     "note": "circle picker",
     "text": "circlePicker"
@@ -474,6 +582,10 @@
   "PT1lRG": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "Opasitas"
+  },
+  "PUKBon": {
+    "note": "Sub-Section Header",
+    "text": "Siklus penyegaran"
   },
   "PiJTq0": {
     "note": "remove rule Button Text",
@@ -495,6 +607,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "milimeter"
   },
+  "QVa0GF": {
+    "note": "Label for button that toggles visibility of nodes in the scene",
+    "text": "Alihkan visibilitas"
+  },
   "R+xDel": {
     "note": "Form Field label",
     "text": "Id Entitas"
@@ -511,13 +627,13 @@
     "note": "Expandable Section title",
     "text": "Tanda"
   },
+  "RZeAOs": {
+    "note": "Aria label for remove statement button",
+    "text": "Hapus pernyataan"
+  },
   "SYAG+q": {
     "note": "Form Field label",
     "text": "Prasetel Lingkungan"
-  },
-  "Sm/FY5": {
-    "note": "Menu Item",
-    "text": "Tambahkan model Lingkungan"
   },
   "SqR3jj": {
     "note": "Distance Units in a dropdown menu",
@@ -535,10 +651,6 @@
     "note": "label for when the user searches for a nonexistent animation",
     "text": "Tidak ditemukan kecocokan"
   },
-  "TaxKIJ": {
-    "note": "Menu Item label",
-    "text": "Hapus semua pengikatan data"
-  },
   "TicaWZ": {
     "note": "Progress Bar label",
     "text": "Memuat aset"
@@ -555,9 +667,17 @@
     "note": "remove Button text",
     "text": "Hapus"
   },
+  "UHsPN6": {
+    "note": "Delete component confirmation header text",
+    "text": "Hapus {nodeName} komponen {componentName}"
+  },
   "UoOmLE": {
     "note": "Form Field label",
     "text": "Tipe Model"
+  },
+  "V1T3We": {
+    "note": "Status indicator label",
+    "text": "Menyinkronkan tanda"
   },
   "VObiQu": {
     "note": "option text of a Select component",
@@ -611,9 +731,9 @@
     "note": "checkbox option",
     "text": "Aktifkan Bayangan"
   },
-  "YGtqhG": {
-    "note": "button label",
-    "text": "Tambahkan overlay"
+  "YPkcJC": {
+    "note": "alert header text",
+    "text": "Mengonversi adegan"
   },
   "ZKJ6Ci": {
     "note": "Toolbar label",
@@ -643,13 +763,13 @@
     "note": "Menu Item",
     "text": "Hapus pengikatan entitas"
   },
-  "aUtGJh": {
-    "note": "button label",
-    "text": "Hapus overlay"
-  },
   "aX7AgI": {
     "note": "select box option text value",
     "text": "Buang Bayangan"
+  },
+  "aiakkN": {
+    "note": "Form Field label",
+    "text": "Lebar"
   },
   "ay/pmK": {
     "note": "Form field label",
@@ -658,6 +778,10 @@
   "azq+4C": {
     "note": "Form section title",
     "text": "Parameter Tautan"
+  },
+  "bO1OgH": {
+    "note": "Progress Bar label",
+    "text": "Mengonversi simpul"
   },
   "bVAsrx": {
     "note": "Form Field label",
@@ -670,6 +794,10 @@
   "cu3XSb": {
     "note": "FormField label",
     "text": "Beralih visibilitas"
+  },
+  "cxZDHy": {
+    "note": "Form field error message",
+    "text": "Hex Tidak Valid"
   },
   "d/nRJX": {
     "note": "Menu Item",
@@ -687,6 +815,10 @@
     "note": "Placeholder",
     "text": "Pilih nilai warna"
   },
+  "duq5aL": {
+    "note": "Icon name label",
+    "text": "Ikon peringatan"
+  },
   "dw/mQp": {
     "note": "Light Type in a dropdown menu",
     "text": "Hemisfer"
@@ -698,6 +830,10 @@
   "e9HZHd": {
     "note": "FormField label",
     "text": "Bentuk indikator"
+  },
+  "eElB3q": {
+    "note": "Sub-Section Description",
+    "text": "Mengonversi adegan Anda ke entitas memungkinkan pembaruan otomatis, pemfilteran, dan kueri adegan Anda."
   },
   "eKQvAU": {
     "note": "placeholder",
@@ -747,6 +883,10 @@
     "note": "times",
     "text": "x"
   },
+  "gIcLg9": {
+    "note": "Warning for selecting an unsupported file type",
+    "text": "File dengan ekstensi {modelType} bukan tipe model yang didukung"
+  },
   "gOijHE": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
     "text": "Dipilih"
@@ -754,6 +894,10 @@
   "gZDAVH": {
     "note": "Menu Item label",
     "text": "Tambahkan Animasi"
+  },
+  "gc20C0": {
+    "note": "Icon name label",
+    "text": "Ikon info"
   },
   "ggiL3k": {
     "note": "Form Field label",
@@ -771,9 +915,25 @@
     "note": "Menu Item label",
     "text": "Tambahkan objek"
   },
+  "hFIpcF": {
+    "note": "Copies the property name",
+    "text": "Tombol Salin"
+  },
   "hYPMUc": {
     "note": "Form button text",
     "text": "Perbaiki tampilan"
+  },
+  "hiEi3h": {
+    "note": "Expandable Section title",
+    "text": "Geometri Bidang"
+  },
+  "hkc541": {
+    "note": "button label",
+    "text": "Hapus"
+  },
+  "hyIDNW": {
+    "note": "Delete action confirmation warning message",
+    "text": "Jika Anda mencoba membatalkan tindakan ini setelah {nodeName} dihapus, mungkin akan terjadi masalah seperti turunan masih dihapus atau pemutusan koneksi dari data."
   },
   "ifspRT": {
     "note": "Expandable Section title",
@@ -794,6 +954,10 @@
   "jkdxk0": {
     "note": "Button text for color opacity percentage",
     "text": "Keburaman: {opacityPercentage, number, percent}"
+  },
+  "k0JbYO": {
+    "note": "Form Field label",
+    "text": "Latar Belakang Adegan"
   },
   "k5xCpx": {
     "note": "Form field label",
@@ -823,10 +987,6 @@
     "note": "placeholder",
     "text": "Pilih opsi"
   },
-  "kdEHiD": {
-    "note": "Menu Item",
-    "text": "Hapus semua pengikatan data"
-  },
   "ksfSZA": {
     "note": "Distance Units in a dropdown menu",
     "text": "kaki"
@@ -839,6 +999,10 @@
     "note": "Warning message",
     "text": "Peringatan"
   },
+  "lXOqtn": {
+    "note": "Delete node confirmation header text",
+    "text": "Hapus {nodeName}"
+  },
   "lbVroy": {
     "note": "checkbox option",
     "text": "Buka secara default"
@@ -846,6 +1010,10 @@
   "lbd69l": {
     "note": "Menu Item",
     "text": "Tambahkan cahaya"
+  },
+  "lgxHg3": {
+    "note": "Form Field label",
+    "text": "Tinggi"
   },
   "lnTuMX": {
     "note": "label",
@@ -875,21 +1043,33 @@
     "note": "Form Field label",
     "text": "Panah"
   },
-  "nXBzxA": {
-    "note": "Menu Item label",
-    "text": "Model lingkungan"
+  "nJP/oB": {
+    "note": "Delete action confirmation message",
+    "text": "Hapus {nodeName}? Tidak dapat memuat jumlah turunan. Meskipun tindakan ini mungkin dibatalkan, tindakan ini mungkin tidak kembali ke status awalnya."
   },
   "nhcDIE": {
     "note": "select box option text value",
     "text": "Terima Bayangan"
   },
+  "nwQbTY": {
+    "note": "Icon name label",
+    "text": "Ikon video"
+  },
   "o3PtbU": {
     "note": "Sub-Section Description",
     "text": "Menghubungkan akun Matterport Anda memungkinkan ruang tampilan di adegan TwinMaker Anda."
   },
+  "oECZco": {
+    "note": "button label",
+    "text": "Oke"
+  },
   "oEXVJ5": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Bidang Linear"
+  },
+  "oEnP1z": {
+    "note": "Form Field label",
+    "text": "Bidang Dasar"
   },
   "oRdrN4": {
     "note": "Menu Item",
@@ -911,6 +1091,14 @@
     "note": "placeholder",
     "text": "Pilih aturan"
   },
+  "osIcJX": {
+    "note": "Status indicator label",
+    "text": "Sinkronisasi tanda gagal"
+  },
+  "pqZzsr": {
+    "note": "alert header text",
+    "text": "Konversi ke entitas berhasil"
+  },
   "pyg21P": {
     "note": "Number of Triangles in a scene",
     "text": "Segitiga: {sceneInfoTriangles, number}"
@@ -922,6 +1110,14 @@
   "qU9dRt": {
     "note": "Form Field label",
     "text": "Skalakan"
+  },
+  "qYJQjk": {
+    "note": "Delete action confirmation message",
+    "text": "Hapus {nodeName}? Ini akan menghapus 1 entitas. Meskipun tindakan ini mungkin dibatalkan, tindakan ini mungkin tidak kembali ke status awalnya."
+  },
+  "qZiKXL": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Konversikan adegan"
   },
   "r0JN3A": {
     "note": "Menu Item",
@@ -959,9 +1155,17 @@
     "note": "Menu label",
     "text": "Putar"
   },
+  "s9468I": {
+    "note": "Abbreviation for hexidecimal",
+    "text": "Hex"
+  },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
     "text": "sentimeter"
+  },
+  "sevj7L": {
+    "note": "remove texture Button Text",
+    "text": "Hapus Tekstur"
   },
   "skIt5u": {
     "note": "Menu Item",
@@ -1011,6 +1215,10 @@
     "note": "Enter your Matterport model id placeholder",
     "text": "Masukkan id model Matterport Anda"
   },
+  "ujFSQs": {
+    "note": "alert body text",
+    "text": "Beberapa konversi simpul gagal:"
+  },
   "v+Dj24": {
     "note": "hex validations messages",
     "text": "Kode heksa tidak valid"
@@ -1018,6 +1226,10 @@
   "v+tpx1": {
     "note": "Menu Item label",
     "text": "Cahaya"
+  },
+  "v6Z7tj": {
+    "note": "Progress Bar description",
+    "text": "{convertedNumber} dari {totalNumber} dikonversi"
   },
   "v7BBG+": {
     "note": "Error message wrong input",
@@ -1062,6 +1274,14 @@
   "x8NTqi": {
     "note": "Menu Item",
     "text": "Tambahkan simpul kosong"
+  },
+  "xyFy7p": {
+    "note": "modal header text",
+    "text": "Konversikan adegan"
+  },
+  "y9R3yg": {
+    "note": "Sub-Section Header",
+    "text": "Konversikan ke entitas"
   },
   "yXdV0F": {
     "note": "ExpandableInfoSection Title",

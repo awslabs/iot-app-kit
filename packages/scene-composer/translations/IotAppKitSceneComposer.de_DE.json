@@ -15,6 +15,10 @@
     "note": "Light Type in a dropdown menu",
     "text": "Umgebung"
   },
+  "+RIFYb": {
+    "note": "alert body text",
+    "text": "Alle Knoten wurden erfolgreich konvertiert"
+  },
   "+SQx9E": {
     "note": "Menu Item label",
     "text": "Komponente hinzufügen"
@@ -31,6 +35,14 @@
     "note": "Distance Units in a dropdown menu",
     "text": "Benutzerdefinierter Maßstab"
   },
+  "/RFl5Q": {
+    "note": "Label for button that triggers a expandable section",
+    "text": "Erweitern"
+  },
+  "/j+uhN": {
+    "note": "Select an icon",
+    "text": "Symbol auswählen"
+  },
   "/kZshs": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "Farbe"
@@ -46,6 +58,10 @@
   "03Uxre": {
     "note": "Menu Item",
     "text": "Objekt drehen"
+  },
+  "051ah6": {
+    "note": "select texture Button Text",
+    "text": "Wählen Sie Textur"
   },
   "07ZORc": {
     "note": "Toggle label",
@@ -67,9 +83,21 @@
     "note": "Input error message",
     "text": "Ungültiger Name"
   },
+  "1Zas7b": {
+    "note": "Abbreviation for blue",
+    "text": "B"
+  },
+  "1ZqGeQ": {
+    "note": "checkbox label",
+    "text": "Automatische Aktualisierung (alle 30 s)"
+  },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
     "text": "Anzahl der Pfeile"
+  },
+  "1fLT/q": {
+    "note": "button label",
+    "text": "Abbrechen"
   },
   "1kXRWn": {
     "note": "Progress Bar status",
@@ -103,6 +131,10 @@
     "note": "Menu Item",
     "text": "Tag hinzufügen"
   },
+  "3KmpMx": {
+    "note": "Toggle label",
+    "text": "Tag durch Objekte anzeigen"
+  },
   "3fXLy/": {
     "note": "Menu label",
     "text": "Übersetzen"
@@ -126,6 +158,10 @@
   "4YbINk": {
     "note": "Expandable Section title",
     "text": "Anmerkung"
+  },
+  "5F/kwX": {
+    "note": "Icon name label",
+    "text": "Symbol „Fehler“"
   },
   "5pV1+0": {
     "note": "Form field label",
@@ -187,6 +223,10 @@
     "note": "Status indicator label",
     "text": "Die Tag-Synchronisierung war erfolgreich"
   },
+  "81kEJb": {
+    "note": "Menu Item",
+    "text": "3D-Zeigersperre"
+  },
   "89bwEi": {
     "note": "Environment presets drop down menu options",
     "text": "Chromatisch"
@@ -211,6 +251,10 @@
     "note": "Menu Item label",
     "text": "Leerer Knoten"
   },
+  "9D+o0B": {
+    "note": "alert body text",
+    "text": "Wenn Sie mit dieser Aktion fortfahren, wird sich Ihre Szene dauerhaft ändern. Sie können diese Aktion nicht rückgängig machen"
+  },
   "9I3nDM": {
     "note": "Menu Item label",
     "text": "Rückgängig machen"
@@ -227,6 +271,10 @@
     "note": "label",
     "text": "Geschwindigkeit wählen"
   },
+  "9yVMfn": {
+    "note": "Form Field label",
+    "text": "Weite Entfernung"
+  },
   "A/Q8OL": {
     "note": "Status indicator label",
     "text": "Kameraansicht gespeichert"
@@ -234,6 +282,10 @@
   "AEkvpm": {
     "note": "Input error message",
     "text": "Ungültiges Zeichen im Namen"
+  },
+  "AePRVy": {
+    "note": "Icon name label",
+    "text": "Benutzerdefiniertes Symbol"
   },
   "As6z+e": {
     "note": "ExpandableInfoSection Title",
@@ -243,6 +295,14 @@
     "note": "Menu Item",
     "text": "3D-Modell hinzufügen"
   },
+  "B6QsMN": {
+    "note": "button label",
+    "text": "Bestätigen"
+  },
+  "BK/UYP": {
+    "note": "alert header text",
+    "text": "Konvertierung in Entitäten ist fehlgeschlagen"
+  },
   "BNscqX": {
     "note": "Default Message for before an animation is selected",
     "text": "Wert eingeben"
@@ -250,6 +310,10 @@
   "BPH9Er": {
     "note": "Environment presets drop down menu options",
     "text": "Neutral"
+  },
+  "BZ1qKo": {
+    "note": "Abbreviation for red",
+    "text": "R"
   },
   "BZPp7d": {
     "note": "Form field label",
@@ -270,6 +334,14 @@
   "Bzw++H": {
     "note": "label for the remove animation button",
     "text": "entfernen"
+  },
+  "C11Rim": {
+    "note": "Form Field label",
+    "text": "Nahe Entfernung"
+  },
+  "C9z9wU": {
+    "note": "Abbreviation for green",
+    "text": "G"
   },
   "CyWR+b": {
     "note": "placeholder",
@@ -315,6 +387,10 @@
     "note": "rule Id label",
     "text": "Regel-ID"
   },
+  "FgS5ks": {
+    "note": "Delete action confirmation message",
+    "text": "{nodeName} löschen? Dadurch werden 1 Entität und ihre {childCount} untergeordneten Elemente gelöscht. Diese Aktion kann rückgängig gemacht werden, möglicherweise wird aber nicht der ursprüngliche Zustand wiederhergestellt."
+  },
   "FvIdJC": {
     "note": "chrome picker",
     "text": "chromePicker"
@@ -334,6 +410,10 @@
   "GesjrB": {
     "note": "Rule has no statements",
     "text": "Keine Anweisungen"
+  },
+  "Gp31Xy": {
+    "note": "Delete action confirmation warning message",
+    "text": "Wenn Sie versuchen, diese Aktion rückgängig zu machen, nachdem {componentName} gelöscht wurde, kann es zu Problemen kommen, z. B. dass einige Eigenschaften dennoch gelöscht werden oder dass die Verbindung zu den Daten verloren geht."
   },
   "Gv0vX8": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
@@ -359,6 +439,14 @@
     "note": "Menu Item",
     "text": "Kamera aus aktueller Ansicht hinzufügen"
   },
+  "IsC9Hg": {
+    "note": "Menu Item",
+    "text": "Zeigersperre"
+  },
+  "J+haL1": {
+    "note": "Aria live announcement for when a statement is removed",
+    "text": "Anweisung entfernt"
+  },
   "JTUN+G": {
     "note": "Form field label",
     "text": "Brennweite"
@@ -375,6 +463,10 @@
     "note": "Placeholder",
     "text": "Geschwindigkeitswert auswählen"
   },
+  "KCtA9Z": {
+    "note": "Form Field label",
+    "text": "Deckkraft in %"
+  },
   "Kchdc4": {
     "note": "Placeholder",
     "text": "Regel auswählen"
@@ -382,6 +474,10 @@
   "KnEACH": {
     "note": "Hyperlink title",
     "text": "Weitere Informationen"
+  },
+  "KoTFFN": {
+    "note": "Button text",
+    "text": "Szene konvertieren"
   },
   "KsFvzR": {
     "note": "Placeholder hint message for searching across entities",
@@ -431,6 +527,10 @@
     "note": "75mm lens",
     "text": "75 mm"
   },
+  "MrbJ0V": {
+    "note": "Delete action confirmation message",
+    "text": "{nodeName}s {componentName}-Komponente löschen? Diese Aktion kann rückgängig gemacht werden, möglicherweise wird aber nicht der ursprüngliche Zustand wiederhergestellt."
+  },
   "NXP1Hm": {
     "note": "Form field errorText",
     "text": "FOV darf nicht kleiner als 10 sein"
@@ -451,6 +551,10 @@
     "note": "Menu Item",
     "text": "Schwenken"
   },
+  "OgfeEl": {
+    "note": "Toggle label",
+    "text": "Nebel aktivieren"
+  },
   "OpGIbY": {
     "note": "Scene Icon types in a dropdown menu",
     "text": "Fehler"
@@ -463,6 +567,10 @@
     "note": "Label clarifying the exact text a user is searching for.",
     "text": "Verwenden Sie {value}"
   },
+  "PIF5h2": {
+    "note": "Label for button that triggers a collapsable section",
+    "text": "Abstürzen"
+  },
   "PLTmIg": {
     "note": "circle picker",
     "text": "circlePicker"
@@ -474,6 +582,10 @@
   "PT1lRG": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "Deckkraft"
+  },
+  "PUKBon": {
+    "note": "Sub-Section Header",
+    "text": "Aktualisierungszyklus"
   },
   "PiJTq0": {
     "note": "remove rule Button Text",
@@ -495,6 +607,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "Millimeter"
   },
+  "QVa0GF": {
+    "note": "Label for button that toggles visibility of nodes in the scene",
+    "text": "Sichtbarkeit ein-/ausschalten"
+  },
   "R+xDel": {
     "note": "Form Field label",
     "text": "Entitäts-ID"
@@ -511,13 +627,13 @@
     "note": "Expandable Section title",
     "text": "Tag"
   },
+  "RZeAOs": {
+    "note": "Aria label for remove statement button",
+    "text": "Anweisung entfernen"
+  },
   "SYAG+q": {
     "note": "Form Field label",
     "text": "Voreingestellte Umgebung"
-  },
-  "Sm/FY5": {
-    "note": "Menu Item",
-    "text": "Umgebungsmodell hinzufügen"
   },
   "SqR3jj": {
     "note": "Distance Units in a dropdown menu",
@@ -535,10 +651,6 @@
     "note": "label for when the user searches for a nonexistent animation",
     "text": "Keine Übereinstimmungen gefunden"
   },
-  "TaxKIJ": {
-    "note": "Menu Item label",
-    "text": "Alle Datenbindungen entfernen"
-  },
   "TicaWZ": {
     "note": "Progress Bar label",
     "text": "Assets werden geladen"
@@ -555,9 +667,17 @@
     "note": "remove Button text",
     "text": "Entfernen"
   },
+  "UHsPN6": {
+    "note": "Delete component confirmation header text",
+    "text": "{nodeName}s {componentName}-Komponente löschen"
+  },
   "UoOmLE": {
     "note": "Form Field label",
     "text": "Modelltyp"
+  },
+  "V1T3We": {
+    "note": "Status indicator label",
+    "text": "Tags werden synchronisiert"
   },
   "VObiQu": {
     "note": "option text of a Select component",
@@ -611,9 +731,9 @@
     "note": "checkbox option",
     "text": "Schatten aktivieren"
   },
-  "YGtqhG": {
-    "note": "button label",
-    "text": "Überlagerung hinzufügen"
+  "YPkcJC": {
+    "note": "alert header text",
+    "text": "Szene wird konvertiert"
   },
   "ZKJ6Ci": {
     "note": "Toolbar label",
@@ -643,21 +763,25 @@
     "note": "Menu Item",
     "text": "Entitätsbindung entfernen"
   },
-  "aUtGJh": {
-    "note": "button label",
-    "text": "Überlagerung entfernen"
-  },
   "aX7AgI": {
     "note": "select box option text value",
     "text": "Schatten werfen"
   },
+  "aiakkN": {
+    "note": "Form Field label",
+    "text": "Breite"
+  },
   "ay/pmK": {
     "note": "Form field label",
-    "text": "Zwänge"
+    "text": "Einschränkungen"
   },
   "azq+4C": {
     "note": "Form section title",
     "text": "Parameter verknüpfen"
+  },
+  "bO1OgH": {
+    "note": "Progress Bar label",
+    "text": "Knoten wird konvertiert"
   },
   "bVAsrx": {
     "note": "Form Field label",
@@ -670,6 +794,10 @@
   "cu3XSb": {
     "note": "FormField label",
     "text": "Sichtbarkeit ein-/ausschalten"
+  },
+  "cxZDHy": {
+    "note": "Form field error message",
+    "text": "Ungültiges Hex"
   },
   "d/nRJX": {
     "note": "Menu Item",
@@ -687,6 +815,10 @@
     "note": "Placeholder",
     "text": "Farbwert auswählen"
   },
+  "duq5aL": {
+    "note": "Icon name label",
+    "text": "Warnsymbol"
+  },
   "dw/mQp": {
     "note": "Light Type in a dropdown menu",
     "text": "Halbkugel"
@@ -698,6 +830,10 @@
   "e9HZHd": {
     "note": "FormField label",
     "text": "Indikator-Form"
+  },
+  "eElB3q": {
+    "note": "Sub-Section Description",
+    "text": "Wenn Sie Ihre Szene in Entitäten konvertieren, können Sie Ihre Szene automatisch aktualisieren, filtern und abfragen."
   },
   "eKQvAU": {
     "note": "placeholder",
@@ -747,6 +883,10 @@
     "note": "times",
     "text": "x"
   },
+  "gIcLg9": {
+    "note": "Warning for selecting an unsupported file type",
+    "text": "Datei mit Erweiterung {modelType} ist kein unterstützter Modelltyp"
+  },
   "gOijHE": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
     "text": "Ausgewählt"
@@ -754,6 +894,10 @@
   "gZDAVH": {
     "note": "Menu Item label",
     "text": "Animationen hinzufügen"
+  },
+  "gc20C0": {
+    "note": "Icon name label",
+    "text": "Info-Symbol"
   },
   "ggiL3k": {
     "note": "Form Field label",
@@ -771,9 +915,25 @@
     "note": "Menu Item label",
     "text": "Objekt hinzufügen"
   },
+  "hFIpcF": {
+    "note": "Copies the property name",
+    "text": "Schaltfläche „Kopieren“"
+  },
   "hYPMUc": {
     "note": "Form button text",
     "text": "Ansicht korrigieren"
+  },
+  "hiEi3h": {
+    "note": "Expandable Section title",
+    "text": "Ebenengeometrie"
+  },
+  "hkc541": {
+    "note": "button label",
+    "text": "Löschen"
+  },
+  "hyIDNW": {
+    "note": "Delete action confirmation warning message",
+    "text": "Wenn Sie versuchen, diese Aktion rückgängig zu machen, nachdem {nodeName} gelöscht wurde, kann es zu Problemen kommen, z. B. dass untergeordnete Elemente dennoch gelöscht werden oder dass die Verbindung zu den Daten verloren geht."
   },
   "ifspRT": {
     "note": "Expandable Section title",
@@ -794,6 +954,10 @@
   "jkdxk0": {
     "note": "Button text for color opacity percentage",
     "text": "Deckkraft:{opacityPercentage, number, percent}"
+  },
+  "k0JbYO": {
+    "note": "Form Field label",
+    "text": "Hintergrund der Szene"
   },
   "k5xCpx": {
     "note": "Form field label",
@@ -823,10 +987,6 @@
     "note": "placeholder",
     "text": "Wählen Sie eine Option aus"
   },
-  "kdEHiD": {
-    "note": "Menu Item",
-    "text": "Alle Datenbindungen entfernen"
-  },
   "ksfSZA": {
     "note": "Distance Units in a dropdown menu",
     "text": "Fuß"
@@ -839,6 +999,10 @@
     "note": "Warning message",
     "text": "Warnung"
   },
+  "lXOqtn": {
+    "note": "Delete node confirmation header text",
+    "text": "{nodeName} löschen"
+  },
   "lbVroy": {
     "note": "checkbox option",
     "text": "Standardmäßig geöffnet"
@@ -846,6 +1010,10 @@
   "lbd69l": {
     "note": "Menu Item",
     "text": "Licht hinzufügen"
+  },
+  "lgxHg3": {
+    "note": "Form Field label",
+    "text": "Höhe"
   },
   "lnTuMX": {
     "note": "label",
@@ -875,21 +1043,33 @@
     "note": "Form Field label",
     "text": "Pfeil"
   },
-  "nXBzxA": {
-    "note": "Menu Item label",
-    "text": "Umgebungsmodell"
+  "nJP/oB": {
+    "note": "Delete action confirmation message",
+    "text": "{nodeName} löschen? Die Anzahl der untergeordneten Elemente kann nicht geladen werden. Diese Aktion kann rückgängig gemacht werden, möglicherweise wird aber nicht der ursprüngliche Zustand wiederhergestellt."
   },
   "nhcDIE": {
     "note": "select box option text value",
     "text": "Schatten erhalten"
   },
+  "nwQbTY": {
+    "note": "Icon name label",
+    "text": "Video-Symbol"
+  },
   "o3PtbU": {
     "note": "Sub-Section Description",
     "text": "Wenn Sie Ihr Matterport-Konto verbinden, können Sie Bereiche in Ihrer TwinMaker-Szene anzeigen."
   },
+  "oECZco": {
+    "note": "button label",
+    "text": "Ok"
+  },
   "oEXVJ5": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Lineare Ebene"
+  },
+  "oEnP1z": {
+    "note": "Form Field label",
+    "text": "Grundebene"
   },
   "oRdrN4": {
     "note": "Menu Item",
@@ -911,6 +1091,14 @@
     "note": "placeholder",
     "text": "Regel auswählen"
   },
+  "osIcJX": {
+    "note": "Status indicator label",
+    "text": "Fehler beim Synchronisieren der Tags"
+  },
+  "pqZzsr": {
+    "note": "alert header text",
+    "text": "Konvertierung in Entitäten erfolgreich"
+  },
   "pyg21P": {
     "note": "Number of Triangles in a scene",
     "text": "Dreiecke: {sceneInfoTriangles, number}"
@@ -922,6 +1110,14 @@
   "qU9dRt": {
     "note": "Form Field label",
     "text": "Skala"
+  },
+  "qYJQjk": {
+    "note": "Delete action confirmation message",
+    "text": "{nodeName} löschen? Dadurch wird 1 Entität gelöscht. Diese Aktion kann rückgängig gemacht werden, möglicherweise wird aber nicht der ursprüngliche Zustand wiederhergestellt."
+  },
+  "qZiKXL": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Szene konvertieren"
   },
   "r0JN3A": {
     "note": "Menu Item",
@@ -959,9 +1155,17 @@
     "note": "Menu label",
     "text": "Drehen"
   },
+  "s9468I": {
+    "note": "Abbreviation for hexidecimal",
+    "text": "Hex"
+  },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
     "text": "Zentimeter"
+  },
+  "sevj7L": {
+    "note": "remove texture Button Text",
+    "text": "Textur entfernen"
   },
   "skIt5u": {
     "note": "Menu Item",
@@ -1011,6 +1215,10 @@
     "note": "Enter your Matterport model id placeholder",
     "text": "Ihre Matterport-Model-ID eingeben"
   },
+  "ujFSQs": {
+    "note": "alert body text",
+    "text": "Einige Knotenkonvertierungen sind fehlgeschlagen:"
+  },
   "v+Dj24": {
     "note": "hex validations messages",
     "text": "Ungültiger Hexadezimalcode"
@@ -1018,6 +1226,10 @@
   "v+tpx1": {
     "note": "Menu Item label",
     "text": "Leicht"
+  },
+  "v6Z7tj": {
+    "note": "Progress Bar description",
+    "text": "{convertedNumber} aus {totalNumber} konvertierten"
   },
   "v7BBG+": {
     "note": "Error message wrong input",
@@ -1062,6 +1274,14 @@
   "x8NTqi": {
     "note": "Menu Item",
     "text": "Leeren Knoten hinzufügen"
+  },
+  "xyFy7p": {
+    "note": "modal header text",
+    "text": "Szene konvertieren"
+  },
+  "y9R3yg": {
+    "note": "Sub-Section Header",
+    "text": "In Entitäten konvertieren"
   },
   "yXdV0F": {
     "note": "ExpandableInfoSection Title",

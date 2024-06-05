@@ -15,6 +15,10 @@
     "note": "Light Type in a dropdown menu",
     "text": "Ambiente"
   },
+  "+RIFYb": {
+    "note": "alert body text",
+    "text": "Todos os nós foram convertidos com êxito"
+  },
   "+SQx9E": {
     "note": "Menu Item label",
     "text": "Adicionar componente"
@@ -31,6 +35,14 @@
     "note": "Distance Units in a dropdown menu",
     "text": "Escala personalizada"
   },
+  "/RFl5Q": {
+    "note": "Label for button that triggers a expandable section",
+    "text": "Expandir"
+  },
+  "/j+uhN": {
+    "note": "Select an icon",
+    "text": "Selecione um ícone"
+  },
   "/kZshs": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "Cor"
@@ -46,6 +58,10 @@
   "03Uxre": {
     "note": "Menu Item",
     "text": "Alternar objeto"
+  },
+  "051ah6": {
+    "note": "select texture Button Text",
+    "text": "Selecione a textura"
   },
   "07ZORc": {
     "note": "Toggle label",
@@ -67,9 +83,21 @@
     "note": "Input error message",
     "text": "Nome inválido"
   },
+  "1Zas7b": {
+    "note": "Abbreviation for blue",
+    "text": "B"
+  },
+  "1ZqGeQ": {
+    "note": "checkbox label",
+    "text": "Atualização automática (a cada 30s)"
+  },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
     "text": "Nº de flechas"
+  },
+  "1fLT/q": {
+    "note": "button label",
+    "text": "Cancelar"
   },
   "1kXRWn": {
     "note": "Progress Bar status",
@@ -103,6 +131,10 @@
     "note": "Menu Item",
     "text": "Adicionar etiqueta"
   },
+  "3KmpMx": {
+    "note": "Toggle label",
+    "text": "Mostrar etiqueta por meio de objetos"
+  },
   "3fXLy/": {
     "note": "Menu label",
     "text": "Traduzir"
@@ -126,6 +158,10 @@
   "4YbINk": {
     "note": "Expandable Section title",
     "text": "Anotação"
+  },
+  "5F/kwX": {
+    "note": "Icon name label",
+    "text": "Ícone de erro"
   },
   "5pV1+0": {
     "note": "Form field label",
@@ -187,6 +223,10 @@
     "note": "Status indicator label",
     "text": "Sincronização de etiquetas bem-sucedida"
   },
+  "81kEJb": {
+    "note": "Menu Item",
+    "text": "Bloqueio de ponteiro 3D"
+  },
   "89bwEi": {
     "note": "Environment presets drop down menu options",
     "text": "Cromático"
@@ -211,6 +251,10 @@
     "note": "Menu Item label",
     "text": "Nó vazio"
   },
+  "9D+o0B": {
+    "note": "alert body text",
+    "text": "Prosseguir com essa ação mudará permanentemente sua cena. Não é possível desfazer essa ação"
+  },
   "9I3nDM": {
     "note": "Menu Item label",
     "text": "Desfazer"
@@ -227,6 +271,10 @@
     "note": "label",
     "text": "Selecionar velocidade"
   },
+  "9yVMfn": {
+    "note": "Form Field label",
+    "text": "Longa distância"
+  },
   "A/Q8OL": {
     "note": "Status indicator label",
     "text": "Modo de exibição da câmera salvo"
@@ -234,6 +282,10 @@
   "AEkvpm": {
     "note": "Input error message",
     "text": "Caractere inválido no nome"
+  },
+  "AePRVy": {
+    "note": "Icon name label",
+    "text": "Ícone personalizado"
   },
   "As6z+e": {
     "note": "ExpandableInfoSection Title",
@@ -243,6 +295,14 @@
     "note": "Menu Item",
     "text": "Adicionar modelo 3D"
   },
+  "B6QsMN": {
+    "note": "button label",
+    "text": "Confirmar"
+  },
+  "BK/UYP": {
+    "note": "alert header text",
+    "text": "Falha na conversão em entidades"
+  },
   "BNscqX": {
     "note": "Default Message for before an animation is selected",
     "text": "Inserir valor"
@@ -250,6 +310,10 @@
   "BPH9Er": {
     "note": "Environment presets drop down menu options",
     "text": "Neutro"
+  },
+  "BZ1qKo": {
+    "note": "Abbreviation for red",
+    "text": "R"
   },
   "BZPp7d": {
     "note": "Form field label",
@@ -270,6 +334,14 @@
   "Bzw++H": {
     "note": "label for the remove animation button",
     "text": "remover"
+  },
+  "C11Rim": {
+    "note": "Form Field label",
+    "text": "Distância próxima"
+  },
+  "C9z9wU": {
+    "note": "Abbreviation for green",
+    "text": "G"
   },
   "CyWR+b": {
     "note": "placeholder",
@@ -315,6 +387,10 @@
     "note": "rule Id label",
     "text": "ID da regra"
   },
+  "FgS5ks": {
+    "note": "Delete action confirmation message",
+    "text": "Excluir {nodeName}? Isso excluirá 1 entidade e seus {childCount} filhos. Embora essa ação possa ser desfeita, ela pode não retornar ao seu estado original."
+  },
   "FvIdJC": {
     "note": "chrome picker",
     "text": "chromePicker"
@@ -334,6 +410,10 @@
   "GesjrB": {
     "note": "Rule has no statements",
     "text": "Sem declarações"
+  },
+  "Gp31Xy": {
+    "note": "Delete action confirmation warning message",
+    "text": "Se você tentar desfazer essa ação após a exclusão do componente {componentName}, poderá haver problemas, como algumas propriedades ainda sendo excluídas ou a desconexão dos dados."
   },
   "Gv0vX8": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
@@ -359,6 +439,14 @@
     "note": "Menu Item",
     "text": "Adicionar câmera da exibição atual"
   },
+  "IsC9Hg": {
+    "note": "Menu Item",
+    "text": "Bloqueio de ponteiro"
+  },
+  "J+haL1": {
+    "note": "Aria live announcement for when a statement is removed",
+    "text": "Declaração removida"
+  },
   "JTUN+G": {
     "note": "Form field label",
     "text": "Distância focal"
@@ -375,6 +463,10 @@
     "note": "Placeholder",
     "text": "Escolher um valor de velocidade"
   },
+  "KCtA9Z": {
+    "note": "Form Field label",
+    "text": "Opacidade %"
+  },
   "Kchdc4": {
     "note": "Placeholder",
     "text": "Escolher uma regra"
@@ -382,6 +474,10 @@
   "KnEACH": {
     "note": "Hyperlink title",
     "text": "Saiba mais"
+  },
+  "KoTFFN": {
+    "note": "Button text",
+    "text": "Converter cena"
   },
   "KsFvzR": {
     "note": "Placeholder hint message for searching across entities",
@@ -431,6 +527,10 @@
     "note": "75mm lens",
     "text": "75 mm"
   },
+  "MrbJ0V": {
+    "note": "Delete action confirmation message",
+    "text": "Excluir o componente {componentName} do nó {nodeName}? Embora essa ação possa ser desfeita, ela pode não retornar ao seu estado original."
+  },
   "NXP1Hm": {
     "note": "Form field errorText",
     "text": "FOV não pode ser menor que 10"
@@ -451,6 +551,10 @@
     "note": "Menu Item",
     "text": "Panorama"
   },
+  "OgfeEl": {
+    "note": "Toggle label",
+    "text": "Habilitar neblina"
+  },
   "OpGIbY": {
     "note": "Scene Icon types in a dropdown menu",
     "text": "Erro"
@@ -463,6 +567,10 @@
     "note": "Label clarifying the exact text a user is searching for.",
     "text": "Usar: {value}"
   },
+  "PIF5h2": {
+    "note": "Label for button that triggers a collapsable section",
+    "text": "Recolher"
+  },
   "PLTmIg": {
     "note": "circle picker",
     "text": "circlePicker"
@@ -474,6 +582,10 @@
   "PT1lRG": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "Opacidade"
+  },
+  "PUKBon": {
+    "note": "Sub-Section Header",
+    "text": "Ciclo de atualização"
   },
   "PiJTq0": {
     "note": "remove rule Button Text",
@@ -495,6 +607,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "milímetros"
   },
+  "QVa0GF": {
+    "note": "Label for button that toggles visibility of nodes in the scene",
+    "text": "Alternar visibilidade"
+  },
   "R+xDel": {
     "note": "Form Field label",
     "text": "ID da entidade"
@@ -511,13 +627,13 @@
     "note": "Expandable Section title",
     "text": "Etiqueta"
   },
+  "RZeAOs": {
+    "note": "Aria label for remove statement button",
+    "text": "Remover declaração"
+  },
   "SYAG+q": {
     "note": "Form Field label",
     "text": "Predefinição de ambiente"
-  },
-  "Sm/FY5": {
-    "note": "Menu Item",
-    "text": "Adicionar modelo de ambiente"
   },
   "SqR3jj": {
     "note": "Distance Units in a dropdown menu",
@@ -535,10 +651,6 @@
     "note": "label for when the user searches for a nonexistent animation",
     "text": "Nenhuma correspondência encontrada"
   },
-  "TaxKIJ": {
-    "note": "Menu Item label",
-    "text": "Remover toda a vinculação de dados"
-  },
   "TicaWZ": {
     "note": "Progress Bar label",
     "text": "Carregando ativos"
@@ -555,9 +667,17 @@
     "note": "remove Button text",
     "text": "Remover"
   },
+  "UHsPN6": {
+    "note": "Delete component confirmation header text",
+    "text": "Excluir o componente{componentName} do nó {nodeName}"
+  },
   "UoOmLE": {
     "note": "Form Field label",
     "text": "Tipo do modelo"
+  },
+  "V1T3We": {
+    "note": "Status indicator label",
+    "text": "Sincronizando tags"
   },
   "VObiQu": {
     "note": "option text of a Select component",
@@ -611,9 +731,9 @@
     "note": "checkbox option",
     "text": "Habilitar sombra"
   },
-  "YGtqhG": {
-    "note": "button label",
-    "text": "Adicionar sobreposição"
+  "YPkcJC": {
+    "note": "alert header text",
+    "text": "Convertendo cena"
   },
   "ZKJ6Ci": {
     "note": "Toolbar label",
@@ -643,13 +763,13 @@
     "note": "Menu Item",
     "text": "Remover vinculação de entidade"
   },
-  "aUtGJh": {
-    "note": "button label",
-    "text": "Remover sobreposição"
-  },
   "aX7AgI": {
     "note": "select box option text value",
     "text": "Projetar sombra"
+  },
+  "aiakkN": {
+    "note": "Form Field label",
+    "text": "Largura"
   },
   "ay/pmK": {
     "note": "Form field label",
@@ -658,6 +778,10 @@
   "azq+4C": {
     "note": "Form section title",
     "text": "Parâmetros do link"
+  },
+  "bO1OgH": {
+    "note": "Progress Bar label",
+    "text": "Convertendo nós"
   },
   "bVAsrx": {
     "note": "Form Field label",
@@ -670,6 +794,10 @@
   "cu3XSb": {
     "note": "FormField label",
     "text": "Alternar visibilidade"
+  },
+  "cxZDHy": {
+    "note": "Form field error message",
+    "text": "Hex inválido"
   },
   "d/nRJX": {
     "note": "Menu Item",
@@ -687,6 +815,10 @@
     "note": "Placeholder",
     "text": "Escolher um valor de cor"
   },
+  "duq5aL": {
+    "note": "Icon name label",
+    "text": "Ícone de advertência"
+  },
   "dw/mQp": {
     "note": "Light Type in a dropdown menu",
     "text": "Hemisfério"
@@ -698,6 +830,10 @@
   "e9HZHd": {
     "note": "FormField label",
     "text": "Forma do indicador"
+  },
+  "eElB3q": {
+    "note": "Sub-Section Description",
+    "text": "Converter sua cena em entidades permite a atualização automática, a filtragem e a consulta da sua cena."
   },
   "eKQvAU": {
     "note": "placeholder",
@@ -747,6 +883,10 @@
     "note": "times",
     "text": "x"
   },
+  "gIcLg9": {
+    "note": "Warning for selecting an unsupported file type",
+    "text": "O arquivo com extensão {modelType} não é um tipo de modelo compatível"
+  },
   "gOijHE": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
     "text": "Selecionado"
@@ -754,6 +894,10 @@
   "gZDAVH": {
     "note": "Menu Item label",
     "text": "Adicionar animações"
+  },
+  "gc20C0": {
+    "note": "Icon name label",
+    "text": "Ícone de informações"
   },
   "ggiL3k": {
     "note": "Form Field label",
@@ -771,9 +915,25 @@
     "note": "Menu Item label",
     "text": "Adicionar objeto"
   },
+  "hFIpcF": {
+    "note": "Copies the property name",
+    "text": "Botão Copiar"
+  },
   "hYPMUc": {
     "note": "Form button text",
     "text": "Visão fixa"
+  },
+  "hiEi3h": {
+    "note": "Expandable Section title",
+    "text": "Geometria plana"
+  },
+  "hkc541": {
+    "note": "button label",
+    "text": "Excluir"
+  },
+  "hyIDNW": {
+    "note": "Delete action confirmation warning message",
+    "text": "Se você tentar desfazer essa ação após a exclusão do nó {nodeName}, poderá haver problemas, como a continuação da exclusão dos filhos ou a desconexão dos dados."
   },
   "ifspRT": {
     "note": "Expandable Section title",
@@ -794,6 +954,10 @@
   "jkdxk0": {
     "note": "Button text for color opacity percentage",
     "text": "Opacidade:{opacityPercentage, number, percent}"
+  },
+  "k0JbYO": {
+    "note": "Form Field label",
+    "text": "Plano de fundo da cena"
   },
   "k5xCpx": {
     "note": "Form field label",
@@ -823,10 +987,6 @@
     "note": "placeholder",
     "text": "Selecione uma opção"
   },
-  "kdEHiD": {
-    "note": "Menu Item",
-    "text": "Remover toda a vinculação de dados"
-  },
   "ksfSZA": {
     "note": "Distance Units in a dropdown menu",
     "text": "pés"
@@ -839,6 +999,10 @@
     "note": "Warning message",
     "text": "Advertência"
   },
+  "lXOqtn": {
+    "note": "Delete node confirmation header text",
+    "text": "Excluir nó {nodeName}"
+  },
   "lbVroy": {
     "note": "checkbox option",
     "text": "Aberto por padrão"
@@ -846,6 +1010,10 @@
   "lbd69l": {
     "note": "Menu Item",
     "text": "Adicionar luz"
+  },
+  "lgxHg3": {
+    "note": "Form Field label",
+    "text": "Altura"
   },
   "lnTuMX": {
     "note": "label",
@@ -875,21 +1043,33 @@
     "note": "Form Field label",
     "text": "Seta"
   },
-  "nXBzxA": {
-    "note": "Menu Item label",
-    "text": "Modelo de ambiente"
+  "nJP/oB": {
+    "note": "Delete action confirmation message",
+    "text": "Excluir nó {nodeName}? Não é possível carregar o número de filhos. Embora essa ação possa ser desfeita, ela pode não retornar ao seu estado original."
   },
   "nhcDIE": {
     "note": "select box option text value",
     "text": "Receber sombra"
   },
+  "nwQbTY": {
+    "note": "Icon name label",
+    "text": "Ícone de vídeo"
+  },
   "o3PtbU": {
     "note": "Sub-Section Description",
     "text": "Conectar sua conta do Matterport permite visualizar espaços em sua cena do TwinMaker."
   },
+  "oECZco": {
+    "note": "button label",
+    "text": "OK"
+  },
   "oEXVJ5": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Plano linear"
+  },
+  "oEnP1z": {
+    "note": "Form Field label",
+    "text": "Plano terrestre"
   },
   "oRdrN4": {
     "note": "Menu Item",
@@ -911,6 +1091,14 @@
     "note": "placeholder",
     "text": "Escolher uma regra"
   },
+  "osIcJX": {
+    "note": "Status indicator label",
+    "text": "Falha na sincronização de tags"
+  },
+  "pqZzsr": {
+    "note": "alert header text",
+    "text": "Êxito ao converter em entidades"
+  },
   "pyg21P": {
     "note": "Number of Triangles in a scene",
     "text": "Triângulos: {sceneInfoTriangles, number}"
@@ -922,6 +1110,14 @@
   "qU9dRt": {
     "note": "Form Field label",
     "text": "Escala"
+  },
+  "qYJQjk": {
+    "note": "Delete action confirmation message",
+    "text": "Excluir nó {nodeName}? Isso excluirá 1 entidade. Embora essa ação possa ser desfeita, ela pode não retornar ao seu estado original."
+  },
+  "qZiKXL": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Converter cena"
   },
   "r0JN3A": {
     "note": "Menu Item",
@@ -959,9 +1155,17 @@
     "note": "Menu label",
     "text": "Alternar"
   },
+  "s9468I": {
+    "note": "Abbreviation for hexidecimal",
+    "text": "Hex"
+  },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
     "text": "centímetros"
+  },
+  "sevj7L": {
+    "note": "remove texture Button Text",
+    "text": "Remover textura"
   },
   "skIt5u": {
     "note": "Menu Item",
@@ -1011,6 +1215,10 @@
     "note": "Enter your Matterport model id placeholder",
     "text": "Insira seu ID de modelo do Matterport"
   },
+  "ujFSQs": {
+    "note": "alert body text",
+    "text": "Houve falha na conversão de alguns nós:"
+  },
   "v+Dj24": {
     "note": "hex validations messages",
     "text": "Código hexadecimal inválido"
@@ -1018,6 +1226,10 @@
   "v+tpx1": {
     "note": "Menu Item label",
     "text": "Luz"
+  },
+  "v6Z7tj": {
+    "note": "Progress Bar description",
+    "text": "{convertedNumber} de {totalNumber} convertidos"
   },
   "v7BBG+": {
     "note": "Error message wrong input",
@@ -1062,6 +1274,14 @@
   "x8NTqi": {
     "note": "Menu Item",
     "text": "Adicionar nó vazio"
+  },
+  "xyFy7p": {
+    "note": "modal header text",
+    "text": "Converter cena"
+  },
+  "y9R3yg": {
+    "note": "Sub-Section Header",
+    "text": "Converter em entidades"
   },
   "yXdV0F": {
     "note": "ExpandableInfoSection Title",

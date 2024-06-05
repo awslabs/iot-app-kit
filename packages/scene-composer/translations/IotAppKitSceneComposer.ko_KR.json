@@ -15,6 +15,10 @@
     "note": "Light Type in a dropdown menu",
     "text": "주변"
   },
+  "+RIFYb": {
+    "note": "alert body text",
+    "text": "모든 노드가 변환됨"
+  },
   "+SQx9E": {
     "note": "Menu Item label",
     "text": "구성 요소 추가"
@@ -31,6 +35,14 @@
     "note": "Distance Units in a dropdown menu",
     "text": "사용자 지정 크기 조정"
   },
+  "/RFl5Q": {
+    "note": "Label for button that triggers a expandable section",
+    "text": "확장"
+  },
+  "/j+uhN": {
+    "note": "Select an icon",
+    "text": "아이콘 선택"
+  },
   "/kZshs": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "색상"
@@ -46,6 +58,10 @@
   "03Uxre": {
     "note": "Menu Item",
     "text": "객체 회전"
+  },
+  "051ah6": {
+    "note": "select texture Button Text",
+    "text": "텍스처 선택"
   },
   "07ZORc": {
     "note": "Toggle label",
@@ -67,9 +83,21 @@
     "note": "Input error message",
     "text": "잘못된 이름"
   },
+  "1Zas7b": {
+    "note": "Abbreviation for blue",
+    "text": "B"
+  },
+  "1ZqGeQ": {
+    "note": "checkbox label",
+    "text": "자동 업데이트(30초마다)"
+  },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
     "text": "화살표 수"
+  },
+  "1fLT/q": {
+    "note": "button label",
+    "text": "취소"
   },
   "1kXRWn": {
     "note": "Progress Bar status",
@@ -103,6 +131,10 @@
     "note": "Menu Item",
     "text": "태그 추가"
   },
+  "3KmpMx": {
+    "note": "Toggle label",
+    "text": "객체를 통해 태그 표시"
+  },
   "3fXLy/": {
     "note": "Menu label",
     "text": "번역"
@@ -126,6 +158,10 @@
   "4YbINk": {
     "note": "Expandable Section title",
     "text": "주석"
+  },
+  "5F/kwX": {
+    "note": "Icon name label",
+    "text": "오류 아이콘"
   },
   "5pV1+0": {
     "note": "Form field label",
@@ -187,6 +223,10 @@
     "note": "Status indicator label",
     "text": "태그 동기화 성공"
   },
+  "81kEJb": {
+    "note": "Menu Item",
+    "text": "3D 포인터 잠금"
+  },
   "89bwEi": {
     "note": "Environment presets drop down menu options",
     "text": "색채"
@@ -211,6 +251,10 @@
     "note": "Menu Item label",
     "text": "빈 노드"
   },
+  "9D+o0B": {
+    "note": "alert body text",
+    "text": "이 작업을 계속하면 장면이 영구적으로 변경됩니다. 이 동작은 취소할 수 없음"
+  },
   "9I3nDM": {
     "note": "Menu Item label",
     "text": "실행 취소"
@@ -227,6 +271,10 @@
     "note": "label",
     "text": "속도 선택"
   },
+  "9yVMfn": {
+    "note": "Form Field label",
+    "text": "원거리"
+  },
   "A/Q8OL": {
     "note": "Status indicator label",
     "text": "카메라 뷰 저장됨"
@@ -234,6 +282,10 @@
   "AEkvpm": {
     "note": "Input error message",
     "text": "이름에 잘못된 문자가 있음"
+  },
+  "AePRVy": {
+    "note": "Icon name label",
+    "text": "사용자 지정 아이콘"
   },
   "As6z+e": {
     "note": "ExpandableInfoSection Title",
@@ -243,6 +295,14 @@
     "note": "Menu Item",
     "text": "3D 모델 추가"
   },
+  "B6QsMN": {
+    "note": "button label",
+    "text": "확인"
+  },
+  "BK/UYP": {
+    "note": "alert header text",
+    "text": "엔터티로 변환 실패"
+  },
   "BNscqX": {
     "note": "Default Message for before an animation is selected",
     "text": "값 입력"
@@ -250,6 +310,10 @@
   "BPH9Er": {
     "note": "Environment presets drop down menu options",
     "text": "중립"
+  },
+  "BZ1qKo": {
+    "note": "Abbreviation for red",
+    "text": "R"
   },
   "BZPp7d": {
     "note": "Form field label",
@@ -270,6 +334,14 @@
   "Bzw++H": {
     "note": "label for the remove animation button",
     "text": "제거"
+  },
+  "C11Rim": {
+    "note": "Form Field label",
+    "text": "근거리"
+  },
+  "C9z9wU": {
+    "note": "Abbreviation for green",
+    "text": "G"
   },
   "CyWR+b": {
     "note": "placeholder",
@@ -315,6 +387,10 @@
     "note": "rule Id label",
     "text": "규칙 ID"
   },
+  "FgS5ks": {
+    "note": "Delete action confirmation message",
+    "text": "{nodeName}을(를) 삭제하시겠습니까? 이렇게 하면 1개의 개체 {childCount}개의 하위 개체가 삭제됩니다. 작업을 취소할 수 있지만 원래 상태로 돌아갈 수는 없습니다."
+  },
   "FvIdJC": {
     "note": "chrome picker",
     "text": "chromePicker"
@@ -334,6 +410,10 @@
   "GesjrB": {
     "note": "Rule has no statements",
     "text": "명령문 없음"
+  },
+  "Gp31Xy": {
+    "note": "Delete action confirmation warning message",
+    "text": "{componentName}을(를) 삭제한 후 작업 취소를 시도할 시 일부 속성이 삭제 중이거나 데이터 연결이 끊기는 등의 문제가 발생할 수 있습니다."
   },
   "Gv0vX8": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
@@ -359,6 +439,14 @@
     "note": "Menu Item",
     "text": "현재 보기에서 카메라 추가"
   },
+  "IsC9Hg": {
+    "note": "Menu Item",
+    "text": "포인터 잠금"
+  },
+  "J+haL1": {
+    "note": "Aria live announcement for when a statement is removed",
+    "text": "제거된 명령문"
+  },
   "JTUN+G": {
     "note": "Form field label",
     "text": "초점 거리"
@@ -375,6 +463,10 @@
     "note": "Placeholder",
     "text": "속도 값 선택"
   },
+  "KCtA9Z": {
+    "note": "Form Field label",
+    "text": "불투명도 %"
+  },
   "Kchdc4": {
     "note": "Placeholder",
     "text": "규칙 선택"
@@ -382,6 +474,10 @@
   "KnEACH": {
     "note": "Hyperlink title",
     "text": "자세히 알아보기"
+  },
+  "KoTFFN": {
+    "note": "Button text",
+    "text": "장면 변환"
   },
   "KsFvzR": {
     "note": "Placeholder hint message for searching across entities",
@@ -431,6 +527,10 @@
     "note": "75mm lens",
     "text": "75mm"
   },
+  "MrbJ0V": {
+    "note": "Delete action confirmation message",
+    "text": "{nodeName}의 {componentName} 구성 요소를 삭제하시겠습니까? 작업은 취소할 수 있지만 원래 상태로 돌아갈 수는 없습니다."
+  },
   "NXP1Hm": {
     "note": "Form field errorText",
     "text": "FOV는 10보다 작을 수 없음"
@@ -451,6 +551,10 @@
     "note": "Menu Item",
     "text": "팬"
   },
+  "OgfeEl": {
+    "note": "Toggle label",
+    "text": "포그 활성화"
+  },
   "OpGIbY": {
     "note": "Scene Icon types in a dropdown menu",
     "text": "오류"
@@ -463,6 +567,10 @@
     "note": "Label clarifying the exact text a user is searching for.",
     "text": "{value} 사용"
   },
+  "PIF5h2": {
+    "note": "Label for button that triggers a collapsable section",
+    "text": "축소"
+  },
   "PLTmIg": {
     "note": "circle picker",
     "text": "circlePicker"
@@ -474,6 +582,10 @@
   "PT1lRG": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "불투명도"
+  },
+  "PUKBon": {
+    "note": "Sub-Section Header",
+    "text": "새로 고침 주기"
   },
   "PiJTq0": {
     "note": "remove rule Button Text",
@@ -495,6 +607,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "밀리미터"
   },
+  "QVa0GF": {
+    "note": "Label for button that toggles visibility of nodes in the scene",
+    "text": "가시성 전환"
+  },
   "R+xDel": {
     "note": "Form Field label",
     "text": "엔터티 ID"
@@ -511,13 +627,13 @@
     "note": "Expandable Section title",
     "text": "태그"
   },
+  "RZeAOs": {
+    "note": "Aria label for remove statement button",
+    "text": "명령문 제거"
+  },
   "SYAG+q": {
     "note": "Form Field label",
     "text": "환경 사전 설정"
-  },
-  "Sm/FY5": {
-    "note": "Menu Item",
-    "text": "환경 모델 추가"
   },
   "SqR3jj": {
     "note": "Distance Units in a dropdown menu",
@@ -535,10 +651,6 @@
     "note": "label for when the user searches for a nonexistent animation",
     "text": "일치하는 항목을 찾을 수 없음"
   },
-  "TaxKIJ": {
-    "note": "Menu Item label",
-    "text": "모든 데이터 바인딩 제거"
-  },
   "TicaWZ": {
     "note": "Progress Bar label",
     "text": "자산 로드 중"
@@ -555,9 +667,17 @@
     "note": "remove Button text",
     "text": "제거"
   },
+  "UHsPN6": {
+    "note": "Delete component confirmation header text",
+    "text": "{nodeName}의 {componentName} 구성 요소 삭제"
+  },
   "UoOmLE": {
     "note": "Form Field label",
     "text": "모델 유형"
+  },
+  "V1T3We": {
+    "note": "Status indicator label",
+    "text": "태그 동기화 중"
   },
   "VObiQu": {
     "note": "option text of a Select component",
@@ -611,9 +731,9 @@
     "note": "checkbox option",
     "text": "섀도우 활성화"
   },
-  "YGtqhG": {
-    "note": "button label",
-    "text": "오버레이 추가"
+  "YPkcJC": {
+    "note": "alert header text",
+    "text": "장면 변환하는 중"
   },
   "ZKJ6Ci": {
     "note": "Toolbar label",
@@ -643,13 +763,13 @@
     "note": "Menu Item",
     "text": "엔터티 바인딩 제거"
   },
-  "aUtGJh": {
-    "note": "button label",
-    "text": "오버레이 제거"
-  },
   "aX7AgI": {
     "note": "select box option text value",
     "text": "섀도우 캐스트"
+  },
+  "aiakkN": {
+    "note": "Form Field label",
+    "text": "너비"
   },
   "ay/pmK": {
     "note": "Form field label",
@@ -658,6 +778,10 @@
   "azq+4C": {
     "note": "Form section title",
     "text": "링크 파라미터"
+  },
+  "bO1OgH": {
+    "note": "Progress Bar label",
+    "text": "노드 변환하는 중"
   },
   "bVAsrx": {
     "note": "Form Field label",
@@ -670,6 +794,10 @@
   "cu3XSb": {
     "note": "FormField label",
     "text": "가시성 전환"
+  },
+  "cxZDHy": {
+    "note": "Form field error message",
+    "text": "잘못된 16진수"
   },
   "d/nRJX": {
     "note": "Menu Item",
@@ -687,6 +815,10 @@
     "note": "Placeholder",
     "text": "색상 값 선택"
   },
+  "duq5aL": {
+    "note": "Icon name label",
+    "text": "경고 아이콘"
+  },
   "dw/mQp": {
     "note": "Light Type in a dropdown menu",
     "text": "반구"
@@ -698,6 +830,10 @@
   "e9HZHd": {
     "note": "FormField label",
     "text": "표시기 모양"
+  },
+  "eElB3q": {
+    "note": "Sub-Section Description",
+    "text": "장면을 엔터티로 변환하면 장면을 자동 업데이트, 필터링, 쿼리할 수 있습니다."
   },
   "eKQvAU": {
     "note": "placeholder",
@@ -747,6 +883,10 @@
     "note": "times",
     "text": "배"
   },
+  "gIcLg9": {
+    "note": "Warning for selecting an unsupported file type",
+    "text": "{modelType} 확장자가 있는 파일은 지원되는 모델 유형이 아닙니다."
+  },
   "gOijHE": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
     "text": "선택됨"
@@ -754,6 +894,10 @@
   "gZDAVH": {
     "note": "Menu Item label",
     "text": "애니메이션 추가"
+  },
+  "gc20C0": {
+    "note": "Icon name label",
+    "text": "정보 아이콘"
   },
   "ggiL3k": {
     "note": "Form Field label",
@@ -771,9 +915,25 @@
     "note": "Menu Item label",
     "text": "객체 추가"
   },
+  "hFIpcF": {
+    "note": "Copies the property name",
+    "text": "복사 버튼"
+  },
   "hYPMUc": {
     "note": "Form button text",
     "text": "고정 보기"
+  },
+  "hiEi3h": {
+    "note": "Expandable Section title",
+    "text": "플레인 지오메트리"
+  },
+  "hkc541": {
+    "note": "button label",
+    "text": "삭제"
+  },
+  "hyIDNW": {
+    "note": "Delete action confirmation warning message",
+    "text": "{nodeName}을(를) 삭제한 후 작업 취소를 시도할 시 하위 항목이 삭제 중이거나 데이터와의 연결이 끊기는 등의 문제가 발생할 수 있습니다."
   },
   "ifspRT": {
     "note": "Expandable Section title",
@@ -794,6 +954,10 @@
   "jkdxk0": {
     "note": "Button text for color opacity percentage",
     "text": "불투명도: {opacityPercentage, number, percent}"
+  },
+  "k0JbYO": {
+    "note": "Form Field label",
+    "text": "장면 배경"
   },
   "k5xCpx": {
     "note": "Form field label",
@@ -823,10 +987,6 @@
     "note": "placeholder",
     "text": "옵션 선택"
   },
-  "kdEHiD": {
-    "note": "Menu Item",
-    "text": "모든 데이터 바인딩 제거"
-  },
   "ksfSZA": {
     "note": "Distance Units in a dropdown menu",
     "text": "피트"
@@ -839,6 +999,10 @@
     "note": "Warning message",
     "text": "경고"
   },
+  "lXOqtn": {
+    "note": "Delete node confirmation header text",
+    "text": "{nodeName} 삭제"
+  },
   "lbVroy": {
     "note": "checkbox option",
     "text": "기본으로 열기"
@@ -846,6 +1010,10 @@
   "lbd69l": {
     "note": "Menu Item",
     "text": "라이트 추가"
+  },
+  "lgxHg3": {
+    "note": "Form Field label",
+    "text": "높이"
   },
   "lnTuMX": {
     "note": "label",
@@ -875,21 +1043,33 @@
     "note": "Form Field label",
     "text": "화살표"
   },
-  "nXBzxA": {
-    "note": "Menu Item label",
-    "text": "환경 모델"
+  "nJP/oB": {
+    "note": "Delete action confirmation message",
+    "text": "{nodeName}을(를) 삭제하시겠습니까? 하위 항목을 로드할 수 없습니다. 작업은 취소할 수 있지만 원래 상태로 돌아갈 수는 없습니다."
   },
   "nhcDIE": {
     "note": "select box option text value",
     "text": "섀도우 수신"
   },
+  "nwQbTY": {
+    "note": "Icon name label",
+    "text": "비디오 아이콘"
+  },
   "o3PtbU": {
     "note": "Sub-Section Description",
     "text": "Matterport 계정을 연결하면 TwinMaker 장면의 공간을 볼 수 있습니다."
   },
+  "oECZco": {
+    "note": "button label",
+    "text": "확인"
+  },
   "oEXVJ5": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "선형 평면"
+  },
+  "oEnP1z": {
+    "note": "Form Field label",
+    "text": "그라운드 플레인"
   },
   "oRdrN4": {
     "note": "Menu Item",
@@ -911,6 +1091,14 @@
     "note": "placeholder",
     "text": "규칙 선택"
   },
+  "osIcJX": {
+    "note": "Status indicator label",
+    "text": "태그 동기화 실패"
+  },
+  "pqZzsr": {
+    "note": "alert header text",
+    "text": "엔터티로 전환 성공"
+  },
   "pyg21P": {
     "note": "Number of Triangles in a scene",
     "text": "삼각형: {sceneInfoTriangles, number}"
@@ -922,6 +1110,14 @@
   "qU9dRt": {
     "note": "Form Field label",
     "text": "크기 조정"
+  },
+  "qYJQjk": {
+    "note": "Delete action confirmation message",
+    "text": "{nodeName}을(를) 삭제하시겠습니까? 이렇게 하면 1개의 개체가 삭제됩니다. 작업은 취소할 수 있지만 원래 상태로 돌아갈 수는 없습니다."
+  },
+  "qZiKXL": {
+    "note": "ExpandableInfoSection Title",
+    "text": "장면 변환"
   },
   "r0JN3A": {
     "note": "Menu Item",
@@ -959,9 +1155,17 @@
     "note": "Menu label",
     "text": "회전"
   },
+  "s9468I": {
+    "note": "Abbreviation for hexidecimal",
+    "text": "16진수"
+  },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
     "text": "센티미터"
+  },
+  "sevj7L": {
+    "note": "remove texture Button Text",
+    "text": "텍스처 제거"
   },
   "skIt5u": {
     "note": "Menu Item",
@@ -1011,6 +1215,10 @@
     "note": "Enter your Matterport model id placeholder",
     "text": "Matterport 모델 ID를 입력하세요"
   },
+  "ujFSQs": {
+    "note": "alert body text",
+    "text": "일부 노드 변환 실패:"
+  },
   "v+Dj24": {
     "note": "hex validations messages",
     "text": "잘못된 16진수 코드"
@@ -1018,6 +1226,10 @@
   "v+tpx1": {
     "note": "Menu Item label",
     "text": "라이트"
+  },
+  "v6Z7tj": {
+    "note": "Progress Bar description",
+    "text": "{totalNumber} 중 {convertedNumber} 변환됨"
   },
   "v7BBG+": {
     "note": "Error message wrong input",
@@ -1062,6 +1274,14 @@
   "x8NTqi": {
     "note": "Menu Item",
     "text": "빈 노드 추가"
+  },
+  "xyFy7p": {
+    "note": "modal header text",
+    "text": "장면 변환"
+  },
+  "y9R3yg": {
+    "note": "Sub-Section Header",
+    "text": "엔터티로 변환"
   },
   "yXdV0F": {
     "note": "ExpandableInfoSection Title",
