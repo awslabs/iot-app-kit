@@ -27,10 +27,10 @@ describe('Dashboard definition conversion', () => {
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
-    const applicationDefinition = await migrateDashboard(
-      { dashboardId: 'test-id' },
-      { describeDashboard: describeDashboard }
-    );
+    const applicationDefinition = await migrateDashboard({
+      parameters: { dashboardId: 'test-id' },
+      iotSiteWiseClient: { describeDashboard: describeDashboard },
+    });
 
     expect(applicationDefinition).toMatchObject(expectedDefinition);
   });
@@ -117,10 +117,10 @@ describe('Dashboard definition conversion', () => {
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
-    const applicationDefinition = await migrateDashboard(
-      { dashboardId: 'test-id' },
-      { describeDashboard: describeDashboard }
-    );
+    const applicationDefinition = await migrateDashboard({
+      parameters: { dashboardId: 'test-id' },
+      iotSiteWiseClient: { describeDashboard: describeDashboard },
+    });
 
     expect(applicationDefinition).toMatchObject(expectedDefinition);
   });
@@ -166,10 +166,11 @@ describe('Dashboard definition conversion', () => {
       dashboardDefinition: JSON.stringify(barChartDefinition),
     });
 
-    const applicationDefinition = await migrateDashboard(
-      { dashboardId: 'test-id' },
-      { describeDashboard: describeDashboard }
-    );
+    const applicationDefinition = await migrateDashboard({
+      parameters: { dashboardId: 'test-id' },
+      iotSiteWiseClient: { describeDashboard: describeDashboard },
+    });
+
     expect(applicationDefinition).toMatchObject(expectedDefinition);
   });
 
@@ -224,10 +225,10 @@ describe('Dashboard definition conversion', () => {
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
-    const applicationDefinition = await migrateDashboard(
-      { dashboardId: 'test-id' },
-      { describeDashboard: describeDashboard }
-    );
+    const applicationDefinition = await migrateDashboard({
+      parameters: { dashboardId: 'test-id' },
+      iotSiteWiseClient: { describeDashboard: describeDashboard },
+    });
     expect(applicationDefinition).toMatchObject(expectedDefinition);
   });
 
@@ -269,10 +270,10 @@ describe('Dashboard definition conversion', () => {
       dashboardDefinition: JSON.stringify(timelineChartDefinition),
     });
 
-    const applicationDefinition = await migrateDashboard(
-      { dashboardId: 'test-id' },
-      { describeDashboard: describeDashboard }
-    );
+    const applicationDefinition = await migrateDashboard({
+      parameters: { dashboardId: 'test-id' },
+      iotSiteWiseClient: { describeDashboard: describeDashboard },
+    });
     expect(applicationDefinition).toMatchObject(expectedDefinition);
   });
 
@@ -310,10 +311,10 @@ describe('Dashboard definition conversion', () => {
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
-    const applicationDefinition = await migrateDashboard(
-      { dashboardId: 'test-id' },
-      { describeDashboard: describeDashboard }
-    );
+    const applicationDefinition = await migrateDashboard({
+      parameters: { dashboardId: 'test-id' },
+      iotSiteWiseClient: { describeDashboard: describeDashboard },
+    });
     expect(applicationDefinition).toMatchObject(expectedDefinition);
   });
 
@@ -349,10 +350,10 @@ describe('Dashboard definition conversion', () => {
       dashboardDefinition: JSON.stringify(kpiDefinition),
     });
 
-    const applicationDefinition = await migrateDashboard(
-      { dashboardId: 'test-id' },
-      { describeDashboard: describeDashboard }
-    );
+    const applicationDefinition = await migrateDashboard({
+      parameters: { dashboardId: 'test-id' },
+      iotSiteWiseClient: { describeDashboard: describeDashboard },
+    });
     expect(applicationDefinition).toMatchObject(expectedDefinition);
   });
 
@@ -472,10 +473,10 @@ describe('Dashboard definition conversion', () => {
       dashboardDefinition: JSON.stringify(kpiDefinition),
     });
 
-    const applicationDefinition = await migrateDashboard(
-      { dashboardId: 'test-id' },
-      { describeDashboard: describeDashboard }
-    );
+    const applicationDefinition = await migrateDashboard({
+      parameters: { dashboardId: 'test-id' },
+      iotSiteWiseClient: { describeDashboard: describeDashboard },
+    });
     expect(applicationDefinition).toMatchObject(expectedDefinition);
   });
 
@@ -513,10 +514,10 @@ describe('Dashboard definition conversion', () => {
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
-    const applicationDefinition = await migrateDashboard(
-      { dashboardId: 'test-id' },
-      { describeDashboard: describeDashboard }
-    );
+    const applicationDefinition = await migrateDashboard({
+      parameters: { dashboardId: 'test-id' },
+      iotSiteWiseClient: { describeDashboard: describeDashboard },
+    });
     expect(applicationDefinition).toMatchObject(expectedDefinition);
   });
 
@@ -600,10 +601,10 @@ describe('Dashboard definition conversion', () => {
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
-    const applicationDefinition = await migrateDashboard(
-      { dashboardId: 'test-id' },
-      { describeDashboard: describeDashboard }
-    );
+    const applicationDefinition = await migrateDashboard({
+      parameters: { dashboardId: 'test-id' },
+      iotSiteWiseClient: { describeDashboard: describeDashboard },
+    });
     expect(applicationDefinition).toMatchObject(expectedDefinition);
   });
 });
@@ -658,10 +659,10 @@ describe('Widgets dont overlap after migration', () => {
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
-    const applicationDefinition = await migrateDashboard(
-      { dashboardId: 'test-id' },
-      { describeDashboard: describeDashboard }
-    );
+    const applicationDefinition = await migrateDashboard({
+      parameters: { dashboardId: 'test-id' },
+      iotSiteWiseClient: { describeDashboard: describeDashboard },
+    });
     expect(applicationDefinition).toMatchObject(expectedDefinition);
   });
 
@@ -731,10 +732,10 @@ describe('Widgets dont overlap after migration', () => {
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
-    const applicationDefinition = await migrateDashboard(
-      { dashboardId: 'test-id' },
-      { describeDashboard: describeDashboard }
-    );
+    const applicationDefinition = await migrateDashboard({
+      parameters: { dashboardId: 'test-id' },
+      iotSiteWiseClient: { describeDashboard: describeDashboard },
+    });
     expect(applicationDefinition).toMatchObject(expectedDefinition);
   });
 
@@ -804,10 +805,10 @@ describe('Widgets dont overlap after migration', () => {
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
-    const applicationDefinition = await migrateDashboard(
-      { dashboardId: 'test-id' },
-      { describeDashboard: describeDashboard }
-    );
+    const applicationDefinition = await migrateDashboard({
+      parameters: { dashboardId: 'test-id' },
+      iotSiteWiseClient: { describeDashboard: describeDashboard },
+    });
     expect(applicationDefinition).toMatchObject(expectedDefinition);
   });
 
@@ -877,10 +878,10 @@ describe('Widgets dont overlap after migration', () => {
       dashboardDefinition: JSON.stringify(lineChartDefinition),
     });
 
-    const applicationDefinition = await migrateDashboard(
-      { dashboardId: 'test-id' },
-      { describeDashboard: describeDashboard }
-    );
+    const applicationDefinition = await migrateDashboard({
+      parameters: { dashboardId: 'test-id' },
+      iotSiteWiseClient: { describeDashboard: describeDashboard },
+    });
     expect(applicationDefinition).toMatchObject(expectedDefinition);
   });
 });

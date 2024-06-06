@@ -124,8 +124,8 @@ export type RequestFunction<Request, Response> = (
 ) => PromiseLike<Response>;
 
 /**
- * First-class function for requesting IoT SiteWise asset model summary
- * resources from AWS.
+ * First-class function for requesting IoT SiteWise dashboard descriptions
+ * from AWS.
  *
  * @see {@link https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_DescribeDashboard.html}
  */
@@ -134,7 +134,7 @@ export type DescribeDashboard = RequestFunction<
   DescribeDashboardResponse
 >;
 
-export type MigrateDashboard = (
-  params: { dashboardId?: string },
-  requestFns?: { describeDashboard?: DescribeDashboard } //request fucntion type for call
-) => Promise<DashboardConfiguration>;
+export type MigrateDashboard = (options: {
+  parameters: { dashboardId: string };
+  iotSiteWiseClient: { describeDashboard: DescribeDashboard };
+}) => Promise<DashboardConfiguration>;
