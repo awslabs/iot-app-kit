@@ -26,7 +26,11 @@ const AnomalyDataSourceLoader = new DataSourceLoader([
 export const AnomalyChart = (options: AnomalyChartOptions) => {
   const { showTimestamp = true, viewport, ...configuration } = options;
 
-  const { viewport: utilizedViewport, setViewport } = useUtilizedViewport({
+  const {
+    viewport: utilizedViewport,
+    setViewport,
+    viewportType,
+  } = useUtilizedViewport({
     passedInViewport: viewport,
     defaultViewport: DEFAULT_ANOMALY_DATA_SOURCE_VIEWPORT,
   });
@@ -36,6 +40,11 @@ export const AnomalyChart = (options: AnomalyChartOptions) => {
     loader: AnomalyDataSourceLoader,
     viewport: utilizedViewport,
   });
+  const anomalyViewport =
+    description?.dataExtent != null &&
+    (viewportType === 'default' || viewportType === 'none')
+      ? description.dataExtent
+      : utilizedViewport;
 
   const { ref, sizeRef } = useAnomalyEchart({
     ...configuration,
@@ -44,6 +53,7 @@ export const AnomalyChart = (options: AnomalyChartOptions) => {
     description,
     loading,
     setViewport,
+    viewport: anomalyViewport,
   });
 
   return (
@@ -73,6 +83,7 @@ export const AnomalyChart = (options: AnomalyChartOptions) => {
       />
       {showTimestamp && !error && (
         <Timestamp
+          viewport={anomalyViewport}
           showLoadingIndicator={false}
           styleProps={{ width: 'calc(100% - 16px)', bottom: 35 }}
         />
