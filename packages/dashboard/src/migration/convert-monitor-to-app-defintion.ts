@@ -290,17 +290,21 @@ export const convertWidget = (
   }
 };
 
-export const migrateDashboard: MigrateDashboard = async (
-  params,
-  requestFns
-) => {
+export const migrateDashboard: MigrateDashboard = async ({
+  parameters,
+  iotSiteWiseClient,
+}) => {
   const newDashboardDefinition: DashboardConfiguration = {
     widgets: [],
     displaySettings: defaultDisplaySettings,
   };
-  if (params.dashboardId && requestFns && requestFns.describeDashboard) {
-    const response = await requestFns.describeDashboard({
-      dashboardId: params.dashboardId,
+  if (
+    parameters.dashboardId &&
+    iotSiteWiseClient &&
+    iotSiteWiseClient.describeDashboard
+  ) {
+    const response = await iotSiteWiseClient.describeDashboard({
+      dashboardId: parameters.dashboardId,
     });
     const monitorDashboardDefinitionString = response.dashboardDefinition;
     if (monitorDashboardDefinitionString) {
