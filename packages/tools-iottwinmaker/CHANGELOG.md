@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.6.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v10.5.0...tools-iottwinmaker-v10.6.0) (2024-06-06)
+
+
+### Features
+
+* **DynamicScenes:** upgrade the AWS SDK and use RESET_VALUE for clearing property values ([3c03272](https://github.com/awslabs/iot-app-kit/commit/3c03272ca3d6b32acd6a7a1518ca088300933dcd))
+
 ## [10.5.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v10.4.1...tools-iottwinmaker-v10.5.0) (2024-05-29)
 
 

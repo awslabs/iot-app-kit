@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.6.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.5.0...root-v10.6.0) (2024-06-06)
+
+
+### Features
+
+* **DynamicScenes:** upgrade the AWS SDK and use RESET_VALUE for clearing property values ([3c03272](https://github.com/awslabs/iot-app-kit/commit/3c03272ca3d6b32acd6a7a1518ca088300933dcd))
+
+
+### Bug Fixes
+
+* anomaly chart docs not loading ([8e01a69](https://github.com/awslabs/iot-app-kit/commit/8e01a69f48b0632b80cb432f6a5f0decdf3301d4))
+* **DynamicScenes:** fix bug to render empty scenes ([2c25827](https://github.com/awslabs/iot-app-kit/commit/2c25827f4fc2b9bc745eacd81e9b7d875fb3a086))
+* **DynamicScenes:** revert detect dynamic scenes missing their root entity ([8593b33](https://github.com/awslabs/iot-app-kit/commit/8593b3304faf9933f9050400201fc0a1c6aae0ef))
+
 ## [10.5.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.4.1...root-v10.5.0) (2024-05-29)
 
 

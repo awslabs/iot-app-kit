@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.6.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v10.5.0...source-iottwinmaker-v10.6.0) (2024-06-06)
+
+
+### Features
+
+* **DynamicScenes:** upgrade the AWS SDK and use RESET_VALUE for clearing property values ([3c03272](https://github.com/awslabs/iot-app-kit/commit/3c03272ca3d6b32acd6a7a1518ca088300933dcd))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.5.0 to 10.6.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.5.0 to 10.6.0
+    * @iot-app-kit/ts-config bumped from 10.5.0 to 10.6.0
+    * eslint-config-iot-app-kit bumped from 10.5.0 to 10.6.0
+
 ## [10.5.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v10.4.1...source-iottwinmaker-v10.5.0) (2024-05-29)
 
 

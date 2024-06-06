@@ -1,5 +1,23 @@
 # Changelog
 
+## [10.6.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v10.5.0...doc-site-v10.6.0) (2024-06-06)
+
+
+### Bug Fixes
+
+* anomaly chart docs not loading ([8e01a69](https://github.com/awslabs/iot-app-kit/commit/8e01a69f48b0632b80cb432f6a5f0decdf3301d4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^10.5.0 to ^10.6.0
+    * @iot-app-kit/react-components bumped from ^10.5.0 to ^10.6.0
+  * devDependencies
+    * @iot-app-kit/testing-util bumped from ^10.5.0 to ^10.6.0
+    * eslint-config-iot-app-kit bumped from ^10.5.0 to ^10.6.0
+
 ## [10.5.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v10.4.1...doc-site-v10.5.0) (2024-05-29)
 
 
