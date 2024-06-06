@@ -12,10 +12,11 @@ import {
 import { Spinner } from '@cloudscape-design/components';
 
 import './timestamp.css';
-import { useViewport } from '../../hooks/useViewport';
 import { convertViewportToMs } from '../../utils/convertViewportToMs';
+import { Viewport } from '@iot-app-kit/core';
 
 type TimestampProps = {
+  viewport?: Viewport;
   showLoadingIndicator: boolean;
   isLoading?: boolean;
   styleProps: {
@@ -31,8 +32,8 @@ export const Timestamp = ({
   showLoadingIndicator,
   isLoading,
   styleProps,
+  viewport,
 }: TimestampProps) => {
-  const { viewport } = useViewport();
   const { initial, end } = convertViewportToMs(viewport);
   const timestampStart = new Date(initial).toLocaleString();
   const timestampEnd = new Date(end).toLocaleString();
