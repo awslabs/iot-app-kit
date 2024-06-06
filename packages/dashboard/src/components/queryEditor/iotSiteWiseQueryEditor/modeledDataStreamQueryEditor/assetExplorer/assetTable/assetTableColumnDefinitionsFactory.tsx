@@ -2,8 +2,8 @@ import { AssetSummary } from '@aws-sdk/client-iotsitewise';
 import { type TableProps } from '@cloudscape-design/components/table';
 import React from 'react';
 
+import { DateTime } from '@iot-app-kit/react-components';
 import type { AssetTableNameLinkProps } from './assetTableNameLink';
-import { getFormattedDateTime } from '~/components/util/dateTimeUtil';
 
 type AssetTableColumnDefinitions =
   TableProps<AssetSummary>['columnDefinitions'];
@@ -87,7 +87,7 @@ export class AssetTableColumnDefinitionsFactory {
       id: 'creationDate',
       header: 'Creation Date',
       cell: ({ creationDate }) =>
-        creationDate ? getFormattedDateTime(creationDate) : '-',
+        creationDate ? <DateTime dateTime={creationDate.getTime()} /> : '-',
       sortingField: 'creationDate',
     };
   }
@@ -97,7 +97,7 @@ export class AssetTableColumnDefinitionsFactory {
       id: 'lastUpdateDate',
       header: 'Last Update Date',
       cell: ({ lastUpdateDate }) =>
-        lastUpdateDate ? getFormattedDateTime(lastUpdateDate) : '-',
+        lastUpdateDate ? <DateTime dateTime={lastUpdateDate.getTime()} /> : '-',
       sortingField: 'lastUpdateDate',
     };
   }

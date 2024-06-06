@@ -1,7 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
+import { format } from 'date-fns-tz';
 import { KPI } from './kpi';
+import { FULL_DATE_TIME } from '../../utils/time';
 
 const VIEWPORT = { duration: '5m' };
 
@@ -35,6 +37,6 @@ it('renders', async () => {
     `${DATA_STREAM.data[0].y} `
   );
   expect(screen.getByTestId('kpi-timestamp').textContent).toContain(
-    new Date(DATA_STREAM.data[0].x).toLocaleString()
+    format(new Date(DATA_STREAM.data[0].x), FULL_DATE_TIME)
   );
 });

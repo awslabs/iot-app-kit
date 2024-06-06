@@ -125,6 +125,7 @@
     "d3-format": "^3.1.0",
     "d3-shape": "^3.2.0",
     "date-fns": "^3.4.0",
+    "date-fns-tz": "^2.0.1",
     "dompurify": "3.0.5",
     "echarts": "^5.4.3",
     "is-hotkey": "^0.2.0",

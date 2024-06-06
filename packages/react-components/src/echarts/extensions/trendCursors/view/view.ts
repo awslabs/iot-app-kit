@@ -6,7 +6,12 @@ import { SeriesModel } from 'echarts';
 import Axis2D from 'echarts/types/src/coord/cartesian/Axis2D';
 import { round } from '@iot-app-kit/core-util';
 import useDataStore from '../../../../store';
-import { getGrid, getXAxisCoord, getXAxisDataValue } from './utils';
+import {
+  getGrid,
+  getDateTime,
+  getXAxisCoord,
+  getXAxisDataValue,
+} from './utils';
 import {
   onDeleteTrendCursor,
   onUpdateTrendCursor,
@@ -131,9 +136,8 @@ export class TrendCursorView extends echarts.ComponentView {
   }
 
   toDateTimeText(date: number) {
-    const localeDateString = new Date(date).toLocaleDateString();
-    const localeTimeString = new Date(date).toLocaleTimeString();
-    const dateTimeText = `{timestamp|${localeDateString} ${localeTimeString}}`;
+    const dateTime = getDateTime(date);
+    const dateTimeText = `{timestamp|${dateTime}}`;
     return dateTimeText;
   }
 

@@ -590,6 +590,24 @@ describe('asset property table', () => {
 
       expect(executeQuery).toHaveBeenCalledOnce();
     });
+
+    it('initiates search when user presses enter/return key', async () => {
+      const executeQuery = jest
+        .fn()
+        .mockResolvedValue({ rows: [] } satisfies Awaited<
+          ReturnType<ExecuteQuery>
+        >);
+      render(
+        <AssetPropertyExplorer
+          requestFns={{ executeQuery }}
+          tableSettings={{ isSearchEnabled: true }}
+        />
+      );
+      await table.typeSearchStatement('Asset Property');
+      await table.pressReturnKeyToSearch();
+
+      expect(executeQuery).toHaveBeenCalledOnce();
+    });
   });
 
   describe('latest values', () => {
