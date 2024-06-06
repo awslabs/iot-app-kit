@@ -1,5 +1,22 @@
 # Changelog
 
+## [10.6.0](https://github.com/awslabs/iot-app-kit/compare/testing-util-v10.5.0...testing-util-v10.6.0) (2024-06-06)
+
+
+### Miscellaneous Chores
+
+* **testing-util:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.5.0 to 10.6.0
+  * devDependencies
+    * @iot-app-kit/ts-config bumped from ^10.5.0 to ^10.6.0
+    * eslint-config-iot-app-kit bumped from ^10.5.0 to ^10.6.0
+
 ## [10.5.0](https://github.com/awslabs/iot-app-kit/compare/testing-util-v10.4.1...testing-util-v10.5.0) (2024-05-29)
 
 
