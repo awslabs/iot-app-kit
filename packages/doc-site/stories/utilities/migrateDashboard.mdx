@@ -1,0 +1,54 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Utilities/migrateDashboard" />
+
+# migrateDashboard
+
+`migrateDashboard` is a function which allows you to easily migrate your Sitwise Monitor dashboards into applications developed using [Iot Application Kit](https://github.com/awslabs/iot-app-kit).
+
+## Usage
+
+To use `migrateDashboard` provide the `dashboardId` of your Sitewise Montitor dashboard and an object that contains the implementation of a `describeDashboard` API call. It returns
+a promise with the dashboard configuration of the now migrated AppKit dashboard which can be passed into the dashboard component.
+ 
+[Learn more about the dashboard](/docs/components-dashboard--docs) 
+
+## Example
+```
+    import { migrateDashboard } from '@iot-app-kit/dashboard';
+    import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+    import { Dashboard } from '@iot-app-kit/dashboard';
+
+    const client = new IoTSiteWise({
+        credentials: awsCredentials,
+        region: awsRegion,
+    });
+
+    const MyDashboard = () => {
+        const options = {
+            parameterss: {dashboardId: "sitewiseMonitorDashboardId"}
+            iotSitewiseClient: client
+        }
+        const appKitDashboardConfiguration = await migrateDashboard(options);
+
+        return <Dashboard dashboardConfig={appKitDashboardConfiguration} />;
+    };
+```
+
+## Parameters
+
+**options (object, required)** 
+These properties are used to specify which dashboard is to be migrated from Sitewise Monitor and the authenticated API call to allow it.
+
+- **parameters (object, required)**
+    
+    - **dashboardId (string, required)**: Specifies the id of the Sitwise Monitor dashboard to be converted to into an Application Kit dashboard.
+
+- **iotSitewiseClient (required)**: An instance of the AWS Sitewise Client. The following methods are required for this component.
+
+    - **describeDashboard (required)**: A request function describing an AWS IoT SiteWise dashboard. It is similar to the DescribeDashboard implemented in the [AWS IoT SiteWise API](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_DescribeDashboard.html).
+
+## Returned value
+
+The function returns a promise with the converted dashboard configuration that is passed into the Iot Application Kit dashboard component.
+[Learn more about the dashboard](/docs/components-dashboard--docs) 
