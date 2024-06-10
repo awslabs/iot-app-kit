@@ -14,6 +14,7 @@ import {
 } from '@iot-app-kit/source-iotsitewise';
 import { RefreshRate } from './components/refreshRate/types';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import { ReactElement } from 'react';
 
 export type DashboardClientCredentials = {
   awsCredentials: AwsCredentialIdentity | Provider<AwsCredentialIdentity>;
@@ -140,3 +141,13 @@ export type MigrateDashboard = (options: {
   parameters: { dashboardId: string };
   iotSiteWiseClient: { describeDashboard: DescribeDashboard };
 }) => Promise<DashboardConfiguration>;
+
+export type DashboardToolbar = ({
+  viewmode,
+  viewport,
+  dashboardConfiguration,
+}: {
+  viewmode: 'preview' | 'edit';
+  dashboardConfiguration: DashboardConfiguration;
+  viewport?: Viewport;
+}) => ReactElement;

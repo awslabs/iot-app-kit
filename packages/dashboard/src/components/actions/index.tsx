@@ -12,20 +12,40 @@ import { DashboardSave } from '~/types';
 import DashboardSettings from './settings';
 import CustomOrangeButton from '../customOrangeButton';
 import { parseViewport } from '~/util/parseViewport';
+import { RefreshRateDropDown } from '../refreshRate/refreshRateDropdown';
+import {
+  colorChartsLineGrid,
+  spaceScaledXs,
+  spaceScaledXxxl,
+  spaceScaledXxxs,
+} from '@cloudscape-design/design-tokens';
 
 const DEFAULT_VIEWPORT = { duration: '10m' };
 
 export type ActionsProps = {
   grid: DashboardState['grid'];
   readOnly: boolean;
+  defaultToolbar?: boolean;
   dashboardConfiguration: DashboardState['dashboardConfiguration'];
   onSave?: DashboardSave;
   editable?: boolean;
 };
 
+const Divider = () => (
+  <div
+    style={{
+      width: spaceScaledXxxs,
+      height: spaceScaledXxxl,
+      margin: `0 ${spaceScaledXs}`,
+      background: colorChartsLineGrid,
+    }}
+  />
+);
+
 const Actions: React.FC<ActionsProps> = ({
   dashboardConfiguration,
   editable,
+  defaultToolbar = true,
   grid,
   readOnly,
   onSave,
@@ -96,9 +116,13 @@ const Actions: React.FC<ActionsProps> = ({
         //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       >
-        <SpaceBetween size='s' direction='horizontal'>
-          {onSave && <Button onClick={handleOnSave}>Save</Button>}
-          {editable && (
+        <SpaceBetween size='s' direction='horizontal' alignItems='end'>
+          <RefreshRateDropDown />
+          {editable && <Divider />}
+          {onSave && editable && defaultToolbar && (
+            <Button onClick={handleOnSave}>Save</Button>
+          )}
+          {editable && defaultToolbar && (
             <CustomOrangeButton
               title={readOnly ? 'Edit' : 'Preview'}
               handleClick={handleOnReadOnly}
@@ -109,6 +133,7 @@ const Actions: React.FC<ActionsProps> = ({
               onClick={() => setSettingVisibility(true)}
               iconName='settings'
               variant='icon'
+              data-testid='dashboard-visibility-button'
               ariaLabel='Dashboard settings'
             />
           )}
