@@ -1,7 +1,7 @@
 import React, { CSSProperties, ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Viewport, getPlugin } from '@iot-app-kit/core';
-import { WebglContext, TimeSync } from '@iot-app-kit/react-components';
+import { WebglContext } from '@iot-app-kit/react-components';
 import Box from '@cloudscape-design/components/box';
 import {
   colorBackgroundCellShaded,
@@ -61,6 +61,8 @@ import DashboardHeader from './dashboardHeader';
 
 import '@iot-app-kit/components/styles.css';
 import './index.css';
+import { useDashboardViewport } from '~/hooks/useDashboardViewport';
+import { parseViewport } from '~/util/parseViewport';
 
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
@@ -68,6 +70,7 @@ type InternalDashboardProperties = {
   name?: string;
   propertiesPanel?: ReactNode;
   defaultViewport?: Viewport;
+  currentViewport?: Viewport;
 };
 
 const defaultUserSelect: CSSProperties = { userSelect: 'initial' };
@@ -78,10 +81,9 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   editable,
   name,
   propertiesPanel,
-  defaultViewport,
+  currentViewport,
 }) => {
   const { iotSiteWiseClient, iotTwinMakerClient } = useClients();
-
   /**
    * disable user select styles on drag to prevent highlighting of text under the pointer
    */
@@ -112,6 +114,10 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     undefined
   );
   const [visible, setVisible] = useState<boolean>(false);
+
+  useDashboardViewport(
+    currentViewport || parseViewport(dashboardConfiguration?.defaultViewport)
+  );
 
   const dispatch = useDispatch();
 
@@ -382,36 +388,31 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
 
   return (
     <I18nProvider locale='en' messages={[messages]}>
-      <TimeSync
-        initialViewport={defaultViewport ?? { duration: '5m' }}
-        group='dashboard-timesync'
-      >
-        {readOnly ? ReadOnlyComponent : EditComponent}
-        <ConfirmDeleteModal
-          visible={visible}
-          headerTitle={`Delete selected widget${
-            selectedWidgets.length > 1 ? 's' : ''
-          }?`}
-          cancelTitle='Cancel'
-          submitTitle='Delete'
-          description={
-            <Box>
-              <Box variant='p'>
-                {`Are you sure you want to delete the selected widget${
-                  selectedWidgets.length > 1 ? 's' : ''
-                }? You'll lose all the progress you made to the
+      {readOnly ? ReadOnlyComponent : EditComponent}
+      <ConfirmDeleteModal
+        visible={visible}
+        headerTitle={`Delete selected widget${
+          selectedWidgets.length > 1 ? 's' : ''
+        }?`}
+        cancelTitle='Cancel'
+        submitTitle='Delete'
+        description={
+          <Box>
+            <Box variant='p'>
+              {`Are you sure you want to delete the selected widget${
+                selectedWidgets.length > 1 ? 's' : ''
+              }? You'll lose all the progress you made to the
                         widget${selectedWidgets.length > 1 ? 's' : ''}`}
-              </Box>
-              <Box variant='p' padding={{ top: 'm' }}>
-                You cannot undo this action.
-              </Box>
             </Box>
-          }
-          handleDismiss={() => setVisible(false)}
-          handleCancel={() => setVisible(false)}
-          handleSubmit={onDelete}
-        />
-      </TimeSync>
+            <Box variant='p' padding={{ top: 'm' }}>
+              You cannot undo this action.
+            </Box>
+          </Box>
+        }
+        handleDismiss={() => setVisible(false)}
+        handleCancel={() => setVisible(false)}
+        handleSubmit={onDelete}
+      />
     </I18nProvider>
   );
 };

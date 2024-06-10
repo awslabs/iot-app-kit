@@ -44,6 +44,8 @@ export type DashboardSave = (
   viewModeOnSave?: 'preview' | 'edit'
 ) => Promise<void>;
 
+export type ViewportChange = (viewport: Viewport) => void;
+
 export type DashboardWidget<
   Properties extends Record<string, unknown> = Record<string, unknown>
 > = {
