@@ -16,6 +16,7 @@ import type {
   DashboardConfiguration,
   DashboardSave,
   ViewportChange,
+  DashboardToolbar,
 } from '~/types';
 import { ClientContext } from './clientContext';
 import { QueryContext } from './queryContext';
@@ -35,6 +36,7 @@ export type DashboardProperties = {
   clientConfiguration: DashboardClientConfiguration;
   dashboardConfiguration: DashboardConfiguration;
   edgeMode?: EdgeMode;
+  toolbar?: DashboardToolbar;
   initialViewMode?: 'preview' | 'edit';
   name?: string;
   onViewportChange?: ViewportChange;
@@ -48,6 +50,7 @@ const Dashboard: React.FC<DashboardProperties> = ({
   dashboardConfiguration,
   edgeMode = 'disabled',
   initialViewMode,
+  toolbar,
   name,
   currentViewport,
   onViewportChange,
@@ -89,6 +92,7 @@ const Dashboard: React.FC<DashboardProperties> = ({
                   onViewportChange={debounceOnViewportChange}
                 >
                   <InternalDashboard
+                    toolbar={toolbar}
                     onSave={onSave}
                     editable={true}
                     name={name}

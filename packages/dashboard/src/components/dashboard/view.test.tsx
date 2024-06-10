@@ -32,6 +32,6 @@ it('renders', function () {
   );
 
   expect(queryByText(/component library/i)).not.toBeInTheDocument();
-  expect(queryByTestId(/dashboard-actions/i)).not.toBeInTheDocument();
+  expect(queryByTestId(/dashboard-visibility-button/i)).not.toBeInTheDocument();
   expect(queryByTestId(/time-selection/i)).toBeInTheDocument();
 });

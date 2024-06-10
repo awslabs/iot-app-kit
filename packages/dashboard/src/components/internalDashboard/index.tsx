@@ -47,7 +47,12 @@ import { useGestures } from './gestures';
 import { useKeyboardShortcuts } from './keyboardShortcuts';
 
 import { DefaultDashboardMessages } from '~/messages';
-import type { DashboardSave, Position, DashboardWidget } from '~/types';
+import type {
+  DashboardSave,
+  Position,
+  DashboardWidget,
+  DashboardToolbar,
+} from '~/types';
 import type { ContextMenuProps } from '../contextMenu';
 import type { DropEvent, GesturableGridProps } from '../grid';
 import type { WidgetsProps } from '../widgets/list';
@@ -63,6 +68,7 @@ import '@iot-app-kit/components/styles.css';
 import './index.css';
 import { useDashboardViewport } from '~/hooks/useDashboardViewport';
 import { parseViewport } from '~/util/parseViewport';
+import Actions from '../actions';
 
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
@@ -71,6 +77,7 @@ type InternalDashboardProperties = {
   propertiesPanel?: ReactNode;
   defaultViewport?: Viewport;
   currentViewport?: Viewport;
+  toolbar?: DashboardToolbar;
 };
 
 const defaultUserSelect: CSSProperties = { userSelect: 'initial' };
@@ -82,6 +89,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   name,
   propertiesPanel,
   currentViewport,
+  toolbar,
 }) => {
   const { iotSiteWiseClient, iotTwinMakerClient } = useClients();
   /**
@@ -285,12 +293,10 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
       disableOverlap
       header={
         <DashboardHeader
-          name={name}
           editable={editable}
-          readOnly={readOnly}
-          dashboardConfiguration={dashboardConfiguration}
-          grid={grid}
+          toolbar={toolbar}
           onSave={onSave}
+          name={name}
         />
       }
     >
@@ -311,9 +317,27 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
           //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
           tabIndex={0}
         >
-          <Box float='left' padding='s'>
+          <div
+            style={{
+              padding: '12px',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
             <ComponentPalette onAddWidget={onAddWidgetFromPalette} />
-          </Box>
+            {toolbar && (
+              <Actions
+                key='3'
+                defaultToolbar={false}
+                readOnly={readOnly}
+                dashboardConfiguration={dashboardConfiguration}
+                grid={grid}
+                editable={editable}
+              />
+            )}
+          </div>
         </div>
         <ResizablePanes
           leftPane={
@@ -349,12 +373,10 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
       disableOverlap
       header={
         <DashboardHeader
-          name={name}
           editable={editable}
-          readOnly={readOnly}
-          dashboardConfiguration={dashboardConfiguration}
-          grid={grid}
+          toolbar={toolbar}
           onSave={onSave}
+          name={name}
         />
       }
     >
