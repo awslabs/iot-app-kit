@@ -16,6 +16,7 @@ import {
 } from '@aws-sdk/client-iottwinmaker';
 import { verifyWorkspaceExists } from '../lib/utils';
 import { streamToBuffer } from '../lib/stream-to-buffer';
+import { Readable } from 'stream';
 
 export type Options = {
   region: string;
@@ -256,13 +257,19 @@ async function import_scenes_and_models(
           }
         }
 
+        // Stream S3 content and write to disk
         const data = await aws().s3.getObject({ Bucket: s3bucket, Key: s3key });
-        const bodyContents = (await streamToBuffer(data.Body)) as Buffer;
-        fs.writeFileSync(path.join(outDir, '3d_models', s3key), bodyContents);
+        const writeStream = fs.createWriteStream(
+          path.join(outDir, '3d_models', s3key)
+        );
+        (data.Body as Readable).pipe(writeStream);
         tmdt_config['models'].push(s3key);
 
         // handle binary data references in gltf files - https://www.khronos.org/files/gltf20-reference-guide.pdf
         if (s3key.endsWith('.gltf')) {
+          // Load S3 content in memory
+          const bodyContents = (await streamToBuffer(data.Body)) as Buffer;
+
           const gltfData = JSON.parse(bodyContents.toString('utf-8'));
           if (gltfData['buffers']) {
             for (const buffer of gltfData['buffers']) {
