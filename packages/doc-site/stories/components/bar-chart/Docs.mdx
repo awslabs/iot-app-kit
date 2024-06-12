@@ -1,14 +1,12 @@
 import { Canvas, Meta, Story } from '@storybook/blocks';
-
 import * as BarChartStories from './BarChart.stories';
 
 <Meta of={BarChartStories} />
 
 # Bar Chart
 
-The bar chart component provides a way to visualize and navigate time series data from one or more [data sources](http://localhost:6006/?path=/docs/core-datasources--docs).
-
-Bar chart supports a rich set of features including alarms, thresholds, high performance live-streaming and smooth syncing across other IoT App Kit components.
+The Bar Chart component is a powerful visualization tool that displays time-series data from one or more [data sources](http://localhost:6006/?path=/docs/core-datasources--docs). It supports a wide range of features, including alarms, thresholds, high-performance live-streaming, and smooth synchronization with other IoT App Kit components.
+The Bar Chart is rendered via WebGL and users **must** include the WebGL Context for chart to properly render.
 
 ## Demo
 
@@ -24,148 +22,84 @@ Bar chart supports a rich set of features including alarms, thresholds, high per
 
 **_Restrict time span_:** click and drag through the interval of time you wish to restrict the viewport to.
 
-## Basic usage
+---
 
-
-```jsx
-import { BarChart, WebglContext } from '@iot-app-kit/react-components';
-import '@iot-app-kit/react-components/styles.css';
-
-const Page = () => (
-  <div>
-    <BarChart queries={[/** add your queries here *//]} />
-    <WebglContext />
-  </div>
-);
-```
-
-## Properties
+## Bar Chart Properties
 
 The bar chart component contains the following properties.
 
-### `viewport`
+**queries** (array): An array of queries that specify the time-series data to visualize. [Learn more about time series data queries](/docs/core-time-series-data--docs).
 
-(Optional) Specifies the interval of time the widget visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](http://localhost:6006/?path=/docs/components-viewportmanager--docs).
-If there is no ViewportManager, and no `viewport` defined, the default viewport will be `{ duration: '10d' }`.
+**viewport** (object, optional): Specifies the interval of time the widget visualizes. If a value is not provided, it utilizes the `viewport` specified by its [ViewportManager](http://localhost:6006/?path=/docs/components-viewportmanager--docs). If there is no ViewportManager and no `viewport` defined, the default viewport will be `{ duration: '10d' }`.  [Learn more about viewports](/docs/core-viewport--docs).
 
-[Learn about the viewport](/docs/core-viewport--docs).
+**thresholds** (object, optional): Thresholds define rules that affect how the data is visualized based on whether the data breaches the threshold. [Learn more about thresholds](/docs/core-thresholds--docs#thresholds).
 
-Type: Object
+**thresholdSettings** (object, optional): Customize settings on how thresholds are visualized within the widget. Defaults to `{ colorBreachedData: true }`. [Learn more about thresholds settings](/docs/core-thresholds--docs#thresholdsettings).
 
-### `thresholds`
+**yMin** (number, optional): Minimum y value displayed on component. Defaults to automatically determining yMin based on data present within the `viewport`.
 
-(Optional) Thresholds define rules which effect how the data is visualized based on whether the data breaches the threshold.
+**yMax** (number, optional):  Maximum y value displayed on component. Defaults to automatically determining yMax based on data present within the `viewport`.
 
-[Learn more about thresholds](/docs/core-thresholds--docs#thresholds).
+**gestures** (boolean, optional): Specifies whether gestures (pan, zoom and restrict time-span) are enabled. Defaults to `true`.
 
-### `thresholdSettings`
+**axis** (object, optional): Specifies x and y-axis related settings. Defaults to `{ showX: true, showY: true, yAxisLabel: undefined }`.
 
-(Optional) Customize settings on how thresholds are visualized within the widget. Defaults to `{ colorBreachedData: true }`
+- Properties:
 
-[Learn more about thresholds settings](/docs/core-thresholds--docs#thresholdsettings).
+  * `showX` (boolean, optional): Determines whether to show the x-axis. Defaults to true.
 
-Type: Object
+  * `showY` (boolean, optional): Determines whether to show the y-axis and the horizontal grid lines. Defaults to true.
 
-### `yMin`
-(Optional) Minimum y value displayed on component. Defaults to automatically determining yMin based on data present within the `viewport`.
+  * `yAxisLabel` (string, optional): The y-axis label content. Defaults to empty.
 
-Type: Number
+**styles** (object, optional): The styles prop lets you customize the appearance of each data stream based on its `refId` or [reference ID](/docs/core-styles--docs). 
 
-### `yMax`
-(Optional) Maximum y value displayed on component. Defaults to automatically determining yMax based on data present within the `viewport`.
+- Properties:
 
-Type: Number
+  *  `name` (string, optional): Specify a name to replace the name of the data set given by its source.
 
-### `queries`
+  *  `unit` (string, optional): The unit given to the data (for example, `m/s` and `count`).
 
-The queries which specify the time series data to visualize.
+  *  `color` (string, optional): A detailed name presented in the tooltip.
+  
+---
 
-[Learn more about time series data queries](/docs/core-time-series-data--docs).
+### Example Bar Chart Implementation
 
-Type: Array
-
-### `gestures`
-
-(Optional) Specifies whether gestures (pan, zoom and restrict time-span) are enabled. Defaults to `true`.
-
-### `axis`
-
-(Optional) Specifies x and y-axis related settings. Defaults to `{ showX: true, showY: true, yAxisLabel: undefined }`.
-
-__Example usage__:
 ```jsx
-<BarChart axis={{ showX: false, showY: true, yAxisLabel: 'mph' }} {...otherFields} />
+import { BarChart, WebglContext } from '@iot-app-kit/react-components';
+import { initialize } from '@iot-app-kit/source-iotsitewise';
+
+
+const Page = () => {
+  const iotSiteWiseQuery = initialize({
+    iotSiteWiseClient, // create an instance of the sitewise client
+    iotEventsClient, // create an instance of the events client
+  });
+
+  const barChartQuery = iotSiteWiseQuery.timeSeriesData({ 
+    assets: [{
+      assetId: 'id', 
+      properties: [{ propertyId: 'property', refId: 'my-property' }]
+    }]
+  })
+
+
+  <div>
+    <BarChart 
+      /** Providing a query with ref-id of 'my-property' */
+      queries={[barChartQuery]}  
+      
+      /** Mapping the provided 'my-property' refId to the bar chart style settings */
+      styles={{ 'my-property': { color: 'red', name: 'My Cool Property' }}}
+
+      /** Customizing the axis to hide x-axis, show y-axis, and set y-axis label */
+      axis={{ showX: false, showY: true, yAxisLabel: 'mph' }}
+    />
+
+    /** WebglContext is must be present for chart to render. */
+    /** Note you only need one WebglContext per project. Do not add one per chart. */
+    <WebglContext />
+  </div>
+};
 ```
-
-__Properties__:
-
-- `showX`
-
-  (Optional) Setting to determine whether we show the x-axis. Defaults to true.
-
-  Type: Boolean
-
-- `showY`
-
-  (Optional) Setting to determine whether we show the y-axis and the horizontal grid lines. Defaults to true.
-
-  Type: Boolean
-
-- `yAxisLabel`
-
-  (Optional) The y-axis label content. Defaults to empty.
-
-  Type: String
-
-### `styles`
-
-(Optional) A map of `refId` to style settings for the component. [Learn more about reference IDs here](/docs/core-styles--docs).
-
-The bar chart provides the following style settings that you can customize.
-
-__Example usage__:
-```jsx
-
-<BarChart
-  /** Specifying a query which provides a `refId` */
-  queries={[
-    query.timeSeriesData({
-      assets: [{
-        assetId: 'id',
-        properties: [{ propertyId: 'property', refId: 'my-property' }]
-      }]
-    })
- ]}
-
- /** Mapping the provided `refId` to the bar chart style settings */
- styles={{ 'my-property': { color: 'red', name: 'My Cool Property' }}}
-/>
-
-```
-
-__Properties__:
-
-* `name`
-
-    (Optional) Specify a name to replace the name of the data set given by its source.
-
-    Type: String
-
-* `unit`
-
-    (Optional) The unit given to the data (for example, `"m/s"` and `"count"`).
-
-    Type: String
-
-* `color`
-
-    (Optional) The color of the data stream visualized on the component. Must be a [css color string](https://www.w3schools.com/howto/default.asp).
-
-    Type: String
-
-* `detailedName`
-
-    (Optional) A detailed name that is presented in the tooltip.
-
-    Type: String
-

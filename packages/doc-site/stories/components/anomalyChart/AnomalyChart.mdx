@@ -32,34 +32,34 @@ The Anomaly chart is a visualization tool that provides a timeline view of anoma
 **query and data**:
 These properties are used to specify the data that the chart will display, at least one of these must be defined. You can use either query or data, but not both. Only one anomaly can be visualized at a time.
 
-- **query (object)**: This property specifies the query that will retrieve the anomaly data to be visualized.
+- **query** (object) This property specifies the query that will retrieve the anomaly data to be visualized.
 
   [Learn more about the anomaly widget's queries](/docs/components-anomalychart--query).
 
-- **data (array)**: This property allows you to provide raw data that the component will visualize.
+- **data** (array) This property allows you to provide raw data that the component will visualize.
 
   [Learn more about the anomaly widget's data](/docs/components-anomalychart--data)
 
-**viewport (optional, object)**: Specifies the time interval that the chart will visualize. If not provided, the chart will utilize the viewport specified by its ViewportManager. If there is no ViewportManager and no viewport defined, the default viewport will be calculated based on the minimum and maximum dates in the data.
+**viewport** (object, optional) Specifies the time interval that the chart will visualize. If not provided, the chart will utilize the viewport specified by its ViewportManager. If there is no ViewportManager and no viewport defined, the default viewport will be calculated based on the minimum and maximum dates in the data.
 
 [Learn more about the viewport](/docs/core-viewport--docs).
 
-**mode (optional, string)**: Sets the chart's light or dark mode theme. Can be one of the following strings:
+**mode** (string, optional) Sets the chart's light or dark mode theme. Can be one of the following strings:
 * 'light'
 * 'dark'
 
-**decimalPlaces (optional, number)**: Specifies the number of significant digits to be shown for the data.
+**decimalPlaces** (number, optional) Specifies the number of significant digits to be shown for the data.
 
-**showTimestamp (optional, boolean)**: Determines whether the timestamp bar is shown below the X-axis. Defaults to `true`
+**showTimestamp** (boolean, optional) Determines whether the timestamp bar is shown below the X-axis. Defaults to `true`
 
-**tooltipSort (optional, string)**: Specifies how the tooltip data should be sorted. It can be one of the following strings:
+**tooltipSort** (string, optional) Specifies how the tooltip data should be sorted. It can be one of the following strings:
 * 'value' (sorts by descending percentages)
 * 'alphabetical' (sorts in alphabetical order)
 
-**axis (optional, object)**: Specifies the axis settings for the chart.
+**axis** (object, optional) Specifies the axis settings for the chart.
 includes the following options:
-* **showX (optional, boolean)**: Setting to determine whether we show the x-axis and the horizontal grid lines. Defaults to true.
-* **showY (optional, boolean)**: Setting to determine whether we show the y-axis and the horizontal grid lines. Defaults to true.
+- **showX** (boolean, optional) Setting to determine whether we show the x-axis and the horizontal grid lines. Defaults to true.
+- **showY** (boolean, optional) Setting to determine whether we show the y-axis and the horizontal grid lines. Defaults to true.
 
 ### Example
 
