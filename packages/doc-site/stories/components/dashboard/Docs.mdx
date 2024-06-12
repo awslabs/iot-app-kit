@@ -4,8 +4,7 @@ import { Meta } from '@storybook/blocks';
 
 # Dashboard
 
-The dashboard package provides react components to view dashboards, and to edit/create new dashboards of IoT App Kit components with intuitive drag and drop support for
-viewing your AWS IoT SiteWise data.
+The dashboard package provides a resource explorer to navigate IoT Sitewise assets, a grid with intuitive drag and drop support for IoT App Kit components, and configuration panels to edit dashboards.
 
 ## Initial setup
 
@@ -15,193 +14,76 @@ To utilize the dashboard package, install it in your react application as follow
 npm install --save @iot-app-kit/dashboard
 ```
 
-## Dashboard component
-The dashboard component allows users to both edit, and view dashboards.
+### Dashboard Properties
 
-You can now include a dashboard in your React application as follows which supports both editing and viewing dashboards:
+**clientConfiguration** (object) Configuration information for the AWS SDK Clients required to utilize AWS IoT SiteWise data within the dashboard. Contains the following properties:
 
-## Properties
+- **iotSiteWiseClient** (IoTSiteWiseClient, optional) The AWS IoT SiteWise Client. Required if `awsCredentials` and `awsRegion` are not specified. [Learn more about IoTSiteWiseClient in the AWS SDK documentation.](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iotsitewise/) 
 
-### `clientConfiguration`
+- **iotEventsClient** (IoTEventsClient, optional) The AWS IoT SiteWise Client. Required if `awsCredentials` and `awsRegion` are not specified. [Learn more about IotEventsClient in the AWS SDK documentation.](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iot-events/)
 
-Configuration information for the AWS SDK Clients required to utilize AWS IoT SiteWise data within the dashboard.
+- **awsCredentials** (object, optional) Credentials or credential providers to authenticate to the required SDK services. Required if either the `iotEventsClient` or `iotSiteWiseClient` are not provided. [Learn more about credential providers in the AWS SDK documentation.](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/modules/_aws_sdk_credential_providers.html).
 
-Type: Object
+- **awsRegion** (object, optional) Region or region providers to authenticate to the required SDK services. Required if either the `iotEventsClient` or `iotSiteWiseClient` are not provided. [can be found in the AWS SDK documentation.](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/index.html)
 
-The `clientConfiguration` contains the following properties:
-
-- `iotSiteWiseClient`
-
-  (Optional) The AWS IoT SiteWise Client. (View the AWS SDK documentation for more information.)[https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iotsitewise/]
-  Required if `awsCredentials` and `awsRegion` are not specified.
-
-  Type: `IoTSiteWiseClient`
-
-- `iotEventsClient`
-
-  (Optional) The AWS IoT SiteWise Client. (View the AWS SDK documentation for more information.)[https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iot-events/]
-  Required if `awsCredentials` and `awsRegion` are not specified.
-
-  Type: `IoTEventsClient`
-
-- `awsCredentials`
-
-  (Optional) Credentials or credential providers to authenticate to the required SDK services. (Learn more about credential providers in the AWS SDK documentation.)[https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/modules/_aws_sdk_credential_providers.html].
-  Required if either the `iotEventsClient` or `iotSiteWiseClient` are not provided.
-
-- `awsRegion`
-  (Optional) Region or region providers to authenticate to the required SDK services. More details in specifying region (can be found in the AWS SDK documentation.)[https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/index.html]
-  Required if either the `iotEventsClient` or `iotSiteWiseClient` are not provided.
-
-### `onSave`
-
-The function called when the dashboard is saved. Expected to return promise which resolves when the saving is complete. A rejected promise
+**onSave** (`(dashboardConfiguartion: DashboardConfiguration) => Promise(void)`, optional) The function called when the dashboard is saved. Expected to return promise which resolves when the saving is complete. A rejected promise
 will represent a failure to save.
 
-Type: `(dashboardConfiguartion: DashboardConfiguration) => Promise<void>`
+**currentViewport** (object, optional) If provided, this viewport will represent the viewport all charts should render. To be used alongside `onViewportChange` when users want to manage their own dashbaord viewports. 
 
-### `dashboardConfiguration`
+**onViewportChange** (`(viewport: Viewport) => void`) Callback which will be called any time the viewport changes. This includes when a user gestures on a widget (zooms in, zooms out, and scrolls).
 
-Specifies the widgets contained within the dashboard, the configuration of those widgets, which data is displayed within the widgets, the default viewport of the dashboard
-as well as display configurations for the dashboard.
+**edgeMode** ('enabled' | 'disabled', optional) replaces/hides certain APIs and UI elements in order to support the dashboard in [AWS Edge](https://aws.amazon.com/edge/)
 
-Type: Object
+**initialViewMode** ('preview' | 'edit', optional) represents the initial viewmode in which the dashboard will load in.
 
-The `dashboardConfiguration` contains the following properties:
+**name** (string, optional) Specifies the dashboard name which will be visible in the default toolbar.
 
----
-#### -  `defaultViewport` (optional, object): 
+**toolbar** (`({viewport?: Viewport, viewmode: 'preview' | 'edit', }, optional) => ReactElement`) Render function which replaces the defaul dashboard toolbar with a user-provided component.
 
-Specifies the time interval that the dashboard will initially visualize. If not provided, the dashboard will utilize the viewport specified by its ViewportManager. If there is no ViewportManager and no viewport defined, the default viewport will be set to `last 5 minutes`
+**onDashboardConfigurationChange** ((dashboardConfiguartion: DashboardConfiguration) => void, optional) Callback which will be called any time the dashboard configuration is updated. This will be called when a widget is added/deleted, a widget is updated, or when a widget is moved.
 
-[Learn more about the viewport](/docs/core-viewport--docs).
+**dashboardConfiguration** (object) Specifies the widgets contained within the dashboard, the configuration of those widgets, which data is displayed within the widgets, the default viewport of the dashboard
+as well as display configurations for the dashboard. Contains the following properties:
 
----
-  
-#### - `viewport` (optional, object) (⛔️ Deprecated)
+- **defaultViewport** (object, optional) Specifies the time interval that the dashboard will initially visualize. If not provided, the dashboard will utilize the viewport specified by its ViewportManager. If there is no ViewportManager and no viewport defined, the default viewport will be set to `last 5 minutes`. [Learn more about the viewport](/docs/core-viewport--docs).
 
-Specifies the time interval that the dashboard will visualize. If not provided, the dashboard will utilize the viewport specified by its ViewportManager. If there is no ViewportManager and no viewport defined, the default viewport will be calculated based on the minimum and maximum dates in the data.
+- **viewport** (object, optional) (⛔️ Deprecated) Specifies the time interval that the dashboard will visualize. If not provided, the dashboard will utilize the viewport specified by its ViewportManager. If there is no ViewportManager and no viewport defined, the default viewport will be calculated based on the minimum and maximum dates in the data. [Learn more about the viewport](/docs/core-viewport--docs).
 
-[Learn more about the viewport](/docs/core-viewport--docs).
+- **querySettings** (object, optional) Settings specific to the query. Includes the following:
+  - **refreshRate** (1000 | 5000 | 10000 | 60000 | 300000, optional) Specifies how often data will be fetched in milliseconds
 
----
+- **displaySettings** (object) Defines global dashboard settings such as the grid and decimal places:
+  - **numRows** (number) The number of rows that make up the grid. Each row will have a width as specified by `cellSize`.
 
-#### - `displaySettings`
+  - **numColumns** (number) The number of columns that make up the grid. Each column will have a width as specified by `cellSize`.
 
-Defines how the grid is displayed
+  - **cellSize** (number, optional) The size which cell represents in pixels. i.e. if the cell size is 20, then each "cell" in the grid is 20px by 20px. Defaults to 10.
 
-Type: Object
+  - **significantDigits** (number, optional) The number of decimal places which all values will be rounded to. Defaults to 4.
 
-The `displaySettings` contains the following properties:
+- **widgets** (array) Defines widgets displayed within the dashboard, as well as the associated configuration and AWS IoT SiteWise data displayed within the widget. Each widget contains the following properties:
+  - **type** ('line-chart' | 'scatter-chart' | 'bar-chart' | 'kpi' | 'status-timeline' | 'table' | 'text') The type of widget to be visualized.
 
-- `numRows`
-  The number of rows that make up the grid. Each row will have a width as specified by `cellSize`.
+  - **id** (string) A unique identifier for the widget. Must be unique within the `dashboardConfiguration`.
 
-  Type: number
+  - **x** (number) The "x" position of the widget, defined as the number of cells the left side of the widget has from the left edge of the dashboard grid area.
 
-- `numColumns`
-  The number of columns that make up the grid. Each column will have a width as specified by `cellSize`.
+  - **y** (number) The "y" position of the widget, defined as the number of cells the top of the widget has from the top of the dashboard grid area.
 
-  Type: number
+  - **z** (nubmer) The relative ordering of widgets. A widget with a larger `z` value will be displayed in front of widgets with a lower `z` value.
 
-- `cellSize`
-  (Optional) The size which cell represents in pixels. i.e. if the cell size is 20, then each "cell" in the grid is 20px by 20px.
-  Defaults to 10.
+  - **height** (number) The height of the widget, in terms of 'cells'. i.e. a widget with a height of 10 on a dashboard with a cell size of 10px, will be 100px in height.
 
-  Type: number
+  - **width** (number) The width of the widget, in terms of 'cells'. i.e. a widget with a width of 10 on a dashboard with a cell size of 10px, will be 100px in width.
 
+  - **properties** (object) The properties of the widget. Available properties to customize will vary based on the widget `type`. The properties will contain all widget level customizations
+    and configuration of data within the widget.
 
-####  - `widgets`
 
-Defines widgets displayed within the dashboard, as well as the associated configuration and AWS IoT SiteWise data displayed within the widget
+### Example
 
-Type: Array
+```
 
-Each widget contains the following properties:
 
-  - `type`
-
-    The type of widget, such as 'line-chart' to specify that the widget will be visualized as a line chart.
-
-    Type: String
-    Below are the supported values for `type`:
-      - 'line-chart'
-      - 'scatter-chart'
-      - 'bar-chart'
-      - 'kpi'
-      - 'status-timeline'
-      - 'table'
-      - 'text'
-
----
-
-  - `id`
-
-    A unique identifier for the widget. Must be unique within the `dashboardConfiguration`.
-
-    Type: String
-
----
-
-  - `x`
-
-    The "x" position of the widget, defined as the number of cells the left side of the widget has from the left edge of the dashboard grid area.
-
-    Type: Number
-
----
-
-  - `y`
-
-    The "y" position of the widget, defined as the number of cells the top of the widget has from the top of the dashboard grid area.
-
----
-
-  - `z`
-
-    The relative ordering of widgets. A widget with a larger `z` value will be displayed in front of widgets with a lower `z` value.
-
-    Type: Number
-___
-  - `height`
-
-    The height of the widget, in terms of 'cells'. i.e. a widget with a height of 10 on a dashboard with a cell size of 10px, will be 100px in height.
-
-    Type: Number
-
----
-
-  - `width`
-
-    The width of the widget, in terms of 'cells'. i.e. a widget with a width of 10 on a dashboard with a cell size of 10px, will be 100px in width.
-
-    Type: Number
-
----
-
-  - `properties`
-
-    The properties of the widget. Available properties to customize will vary based on the widget `type`. The properties will contain all widget level customizations
-    and configuration of data within the widget. [A list of widget properties is found here.](#available-widget-properties)
-
-    Type: Object
-
-### Available widget properties
-
-The following widget types are available.
-
-More documentation to be added on properties available within each later.
-
-#### 'line-chart' widget
-
-#### 'scatter-chart' widget
-
-#### 'bar-chart' widget
-
-#### 'status' widget
-
-#### 'kpi' widget
-
-#### 'table' widget
-
-#### 'text' widget
+```
