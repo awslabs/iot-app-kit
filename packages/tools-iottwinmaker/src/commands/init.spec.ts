@@ -52,6 +52,7 @@ beforeEach(() => {
   s3Mock.reset();
   twinmakerMock.reset();
   jest.spyOn(fs, 'writeFileSync');
+  jest.spyOn(fs, 'createWriteStream');
 });
 
 it('throws error when given tmdt project that does not exist', async () => {
@@ -148,33 +149,28 @@ it('creates a tmdt project with one model and one scene when given one scene and
     .resolves(emptyListComponentTypesResp);
   twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
   twinmakerMock.on(ListScenesCommand).resolves(oneSceneListScenesResp);
+  const filePipeMock = jest.fn();
+  const s3ResponseBodyMock = (content: string) => {
+    return {
+      transformToString: () => {
+        return Promise.resolve(content);
+      },
+      pipe: filePipeMock,
+    } as unknown as SdkStream<Blob>;
+  };
+
   s3Mock
     .on(GetObjectCommand, { Bucket: 'workspace-bucket', Key: 'scene1.json' })
     .resolves({
       $metadata: {},
-      Body: {
-        transformToString: () => {
-          return Promise.resolve(JSON.stringify(scene1, null, 4));
-        },
-      } as SdkStream<Blob>,
+      Body: s3ResponseBodyMock(JSON.stringify(scene1, null, 4)),
     });
   s3Mock
     .on(GetObjectCommand, { Bucket: 'workspace-bucket', Key: 'model1.glb' })
     .resolves({
       $metadata: {},
-      Body: {
-        transformToString: () => {
-          return Promise.resolve(fakeModelData);
-        },
-      } as SdkStream<Blob>,
+      Body: s3ResponseBodyMock(fakeModelData),
     });
-  expect(
-    streamToBuffer({
-      transformToString: () => {
-        return Promise.resolve(JSON.stringify(scene1, null, 4));
-      },
-    } as SdkStream<Blob>)
-  ).toEqual('mock');
 
   const argv2 = {
     _: ['init'],
@@ -204,6 +200,7 @@ it('creates a tmdt project with one model and one scene when given one scene and
     `${outDir}/scene1.json`,
     JSON.stringify(scene1, null, 4)
   );
+  expect(filePipeMock).toBeCalledTimes(1);
 });
 
 it('creates a tmdt project with one entity when given one entity', async () => {
@@ -249,25 +246,27 @@ it('creates a fully populated tmdt project when given a full workspace', async (
   twinmakerMock.on(ListEntitiesCommand).resolves(oneEntityListEntitiesResp);
   twinmakerMock.on(GetEntityCommand).resolves(getEntity1Resp);
   twinmakerMock.on(ListScenesCommand).resolves(oneSceneListScenesResp);
+  const filePipeMock = jest.fn();
+  const s3ResponseBodyMock = (content: string) => {
+    return {
+      transformToString: () => {
+        return Promise.resolve(content);
+      },
+      pipe: filePipeMock,
+    } as unknown as SdkStream<Blob>;
+  };
+
   s3Mock
     .on(GetObjectCommand, { Bucket: 'workspace-bucket', Key: 'scene1.json' })
     .resolves({
       $metadata: {},
-      Body: {
-        transformToString: () => {
-          return Promise.resolve(JSON.stringify(scene1, null, 4));
-        },
-      } as SdkStream<Blob>,
+      Body: s3ResponseBodyMock(JSON.stringify(scene1, null, 4)),
     });
   s3Mock
     .on(GetObjectCommand, { Bucket: 'workspace-bucket', Key: 'model1.glb' })
     .resolves({
       $metadata: {},
-      Body: {
-        transformToString: () => {
-          return Promise.resolve(fakeModelData);
-        },
-      } as SdkStream<Blob>,
+      Body: s3ResponseBodyMock(fakeModelData),
     });
   expect(
     streamToBuffer({
@@ -309,4 +308,5 @@ it('creates a fully populated tmdt project when given a full workspace', async (
     `${outDir}/scene1.json`,
     JSON.stringify(scene1, null, 4)
   );
+  expect(filePipeMock).toBeCalledTimes(1);
 });
