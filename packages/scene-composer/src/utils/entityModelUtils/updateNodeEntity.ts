@@ -37,7 +37,6 @@ export const updateEntity = async (
   compsToBeUpdated?: ISceneComponentInternal[],
   updateType?: ComponentUpdateType,
   oldNode?: ISceneNodeInternal,
-  //oldParentRef?: string | undefined,
   sceneRootEntityId?: string | undefined,
 ): Promise<void> => {
   const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
