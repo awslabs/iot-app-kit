@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.6.1](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v10.6.0...tools-iottwinmaker-v10.6.1) (2024-06-12)
+
+
+### Bug Fixes
+
+* **tmdt:** stream 3D assets from S3 on init ([ee0e11b](https://github.com/awslabs/iot-app-kit/commit/ee0e11b30c331f7ec341e8cf58f155e41011a0bd))
+
 ## [10.6.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v10.5.0...tools-iottwinmaker-v10.6.0) (2024-06-06)
 
 

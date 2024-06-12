@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.6.1](https://github.com/awslabs/iot-app-kit/compare/root-v10.6.0...root-v10.6.1) (2024-06-12)
+
+
+### Bug Fixes
+
+* **scene:** fix dynamic scene entity binding reload on query ([d8a1b89](https://github.com/awslabs/iot-app-kit/commit/d8a1b89c189dc7694b83b0819199b54711a34109))
+* **tmdt:** stream 3D assets from S3 on init ([ee0e11b](https://github.com/awslabs/iot-app-kit/commit/ee0e11b30c331f7ec341e8cf58f155e41011a0bd))
+
 ## [10.6.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.5.0...root-v10.6.0) (2024-06-06)
 
 
