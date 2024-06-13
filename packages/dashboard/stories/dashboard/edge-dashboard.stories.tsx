@@ -5,13 +5,12 @@ import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { registerPlugin } from '@iot-app-kit/core';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import Dashboard from '../../src/components/dashboard';
+import { Dashboard, DashboardView } from '../../src';
 
 import {
   DashboardClientConfiguration,
   DashboardConfiguration,
 } from '../../src/types';
-import { DashboardView } from '~/index';
 
 import { getEnvCredentials } from '../../testing/getEnvCredentials';
 import { getEndpoints } from '../../testing/getEndpoints';
