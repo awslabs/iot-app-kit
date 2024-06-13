@@ -1,4 +1,4 @@
-import Dashboard from './components/dashboard';
+import { DashboardWrapper as Dashboard } from './components/dashboard/wrapper';
 import DashboardView from './components/dashboard/view';
 import type { DashboardProperties } from './components/dashboard';
 import type { DashboardViewProperties } from './components/dashboard/view';

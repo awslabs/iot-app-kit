@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { registerPlugin } from '@iot-app-kit/core';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import Dashboard from '../../src/components/dashboard';
+import { Dashboard, DashboardView } from '../../src';
 import { REGION } from '../../testing/siteWiseQueries';
 
 import { getEnvCredentials } from '../../testing/getEnvCredentials';
@@ -10,7 +10,6 @@ import {
   DashboardClientConfiguration,
   DashboardConfiguration,
 } from '../../src/types';
-import { DashboardView } from '~/index';
 
 const DASHBOARD_STORAGE_NAMESPACE = 'connected-dashboard';
 
@@ -58,22 +57,33 @@ export const Main: ComponentStory<typeof Dashboard> = () => {
 
   // on save not only updates local storage but forces the dashboard to reload given the updated config
   // this is done to more realistically match the dashboard implementation in iot-application
-  const onSave = async (
-    dashboard: DashboardConfiguration,
-    viewModeOnSave?: 'preview' | 'edit'
-  ) => {
-    viewModeOnSave && setInitialViewMode(viewModeOnSave);
-    window.localStorage.setItem(
-      DASHBOARD_STORAGE_NAMESPACE,
-      JSON.stringify(dashboard)
-    );
-    return new Promise(() => setDashboardConfig(dashboard)) as Promise<void>;
-  };
+  const onSave = useCallback(
+    async (
+      dashboard: DashboardConfiguration,
+      viewModeOnSave?: 'preview' | 'edit'
+    ) => {
+      viewModeOnSave && setInitialViewMode(viewModeOnSave);
+      window.localStorage.setItem(
+        DASHBOARD_STORAGE_NAMESPACE,
+        JSON.stringify(dashboard)
+      );
+      return new Promise(() => setDashboardConfig(dashboard)) as Promise<void>;
+    },
+    [setInitialViewMode, setDashboardConfig]
+  );
+
+  const onDashboardConfigurationChange = useCallback(
+    (dashboard: DashboardConfiguration) => {
+      setDashboardConfig(dashboard);
+    },
+    [setDashboardConfig]
+  );
 
   return (
     <Dashboard
       clientConfiguration={CLIENT_CONFIGURATION}
       onSave={onSave}
+      onDashboardConfigurationChange={onDashboardConfigurationChange}
       initialViewMode={initialViewMode}
       dashboardConfiguration={dashboardConfig}
     />
