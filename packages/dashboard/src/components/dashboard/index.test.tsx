@@ -4,7 +4,7 @@ import {
   createMockSiteWiseSDK,
 } from '@iot-app-kit/testing-util';
 
-import Dashboard from './index';
+import { DashboardWrapper as Dashboard } from './wrapper';
 import React from 'react';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
@@ -120,7 +120,6 @@ it('passes the correct viewMode to onSave', function () {
       refreshRate: 5000 as RefreshRate,
     },
     widgets: [],
-    viewport: { duration: '5m' },
   };
 
   render(
