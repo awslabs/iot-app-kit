@@ -47,6 +47,10 @@ export type DashboardSave = (
 
 export type ViewportChange = (viewport: Viewport) => void;
 
+export type DashboardConfigurationChange = (
+  dashboardConfiguration: DashboardConfiguration
+) => void;
+
 export type DashboardWidget<
   Properties extends Record<string, unknown> = Record<string, unknown>
 > = {

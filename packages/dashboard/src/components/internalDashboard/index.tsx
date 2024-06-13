@@ -52,6 +52,7 @@ import type {
   Position,
   DashboardWidget,
   DashboardToolbar,
+  DashboardConfigurationChange,
 } from '~/types';
 import type { ContextMenuProps } from '../contextMenu';
 import type { DropEvent, GesturableGridProps } from '../grid';
@@ -69,6 +70,7 @@ import './index.css';
 import { useDashboardViewport } from '~/hooks/useDashboardViewport';
 import { parseViewport } from '~/util/parseViewport';
 import Actions from '../actions';
+import { useSyncDashboardConfiguration } from '~/hooks/useSyncDashboardConfiguration';
 
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
@@ -78,6 +80,7 @@ type InternalDashboardProperties = {
   defaultViewport?: Viewport;
   currentViewport?: Viewport;
   toolbar?: DashboardToolbar;
+  onDashboardConfigurationChange?: DashboardConfigurationChange;
 };
 
 const defaultUserSelect: CSSProperties = { userSelect: 'initial' };
@@ -85,13 +88,17 @@ const disabledUserSelect: CSSProperties = { userSelect: 'none' };
 
 const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   onSave,
+  onDashboardConfigurationChange,
   editable,
   name,
   propertiesPanel,
   currentViewport,
   toolbar,
 }) => {
+  useSyncDashboardConfiguration({ onDashboardConfigurationChange });
+
   const { iotSiteWiseClient, iotTwinMakerClient } = useClients();
+
   /**
    * disable user select styles on drag to prevent highlighting of text under the pointer
    */
@@ -332,8 +339,6 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
                 key='3'
                 defaultToolbar={false}
                 readOnly={readOnly}
-                dashboardConfiguration={dashboardConfiguration}
-                grid={grid}
                 editable={editable}
               />
             )}

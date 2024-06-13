@@ -4,15 +4,11 @@ import { Box, Header, SpaceBetween } from '@cloudscape-design/components';
 import { TimeSelection, useViewport } from '@iot-app-kit/react-components';
 
 import Actions from '../actions';
-import type {
-  DashboardSave,
-  DashboardTimeSeriesSettings,
-  DashboardToolbar,
-  DashboardWidget,
-} from '~/types';
+import type { DashboardSave, DashboardToolbar } from '~/types';
 import { useSelector } from 'react-redux';
 import { DashboardState } from '~/store/state';
-import { parseViewport } from '~/util/parseViewport';
+import { convertToDashboardConfiguration } from '~/util/convertToDashbaoardConfiguration';
+import isEqual from 'lodash/isEqual';
 
 type DashboardHeaderProps = {
   name?: string;
@@ -22,16 +18,6 @@ type DashboardHeaderProps = {
 };
 
 type DefaultDashboardHeaderProps = DashboardHeaderProps & {
-  dashboardConfiguration: {
-    widgets: DashboardWidget<Record<string, unknown>>[];
-    querySettings?: DashboardTimeSeriesSettings;
-  };
-  grid: {
-    enabled: boolean;
-    width: number;
-    height: number;
-    cellSize: number;
-  };
   readOnly: boolean;
 };
 
@@ -48,8 +34,6 @@ const DefaultDashboardHeader = ({
   editable,
   readOnly,
   onSave,
-  dashboardConfiguration,
-  grid,
 }: DefaultDashboardHeaderProps) => (
   <HeaderContainer>
     <Box padding='xs'>
@@ -63,8 +47,6 @@ const DefaultDashboardHeader = ({
             key='3'
             readOnly={readOnly}
             onSave={onSave}
-            dashboardConfiguration={dashboardConfiguration}
-            grid={grid}
             editable={editable}
           />
         </SpaceBetween>
@@ -80,29 +62,17 @@ const DashboardHeader = ({
   name,
 }: DashboardHeaderProps) => {
   const { viewport } = useViewport();
-  const dashboardConfiguration = useSelector(
-    (state: DashboardState) => state.dashboardConfiguration
+  const mappedDashboardConfiguration = useSelector(
+    convertToDashboardConfiguration,
+    isEqual
   );
-  const grid = useSelector((state: DashboardState) => state.grid);
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
-  const significantDigits = useSelector(
-    (state: DashboardState) => state.significantDigits
-  );
 
   if (toolbar) {
     const userProvidedToolbar = toolbar({
       viewport,
       viewmode: readOnly ? 'preview' : 'edit',
-      dashboardConfiguration: {
-        displaySettings: {
-          numColumns: grid.width,
-          numRows: grid.height,
-          cellSize: grid.cellSize,
-          significantDigits,
-        },
-        defaultViewport: parseViewport(dashboardConfiguration.defaultViewport),
-        ...dashboardConfiguration,
-      },
+      dashboardConfiguration: mappedDashboardConfiguration,
     });
     return <HeaderContainer>{userProvidedToolbar}</HeaderContainer>;
   }
@@ -112,8 +82,6 @@ const DashboardHeader = ({
       name={name}
       editable={editable}
       readOnly={readOnly}
-      dashboardConfiguration={dashboardConfiguration}
-      grid={grid}
       onSave={onSave}
     />
   );

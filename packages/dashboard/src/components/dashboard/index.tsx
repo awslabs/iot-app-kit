@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
@@ -14,6 +14,7 @@ import { useDashboardPlugins } from '~/customization/api';
 import type {
   DashboardClientConfiguration,
   DashboardConfiguration,
+  DashboardConfigurationChange,
   DashboardSave,
   ViewportChange,
   DashboardToolbar,
@@ -33,6 +34,7 @@ import { debounce } from 'lodash';
 
 export type DashboardProperties = {
   onSave: DashboardSave;
+  onDashboardConfigurationChange?: DashboardConfigurationChange;
   clientConfiguration: DashboardClientConfiguration;
   dashboardConfiguration: DashboardConfiguration;
   edgeMode?: EdgeMode;
@@ -54,6 +56,7 @@ const Dashboard: React.FC<DashboardProperties> = ({
   name,
   currentViewport,
   onViewportChange,
+  onDashboardConfigurationChange,
 }) => {
   useDashboardPlugins();
 
@@ -62,6 +65,7 @@ const Dashboard: React.FC<DashboardProperties> = ({
     : undefined;
 
   const readOnly = initialViewMode && initialViewMode === 'preview';
+
   return (
     <>
       {showFPSMonitor && <FpsView height={50} width={80} />}
@@ -99,6 +103,9 @@ const Dashboard: React.FC<DashboardProperties> = ({
                     propertiesPanel={<PropertiesPanel />}
                     defaultViewport={dashboardConfiguration.defaultViewport}
                     currentViewport={currentViewport}
+                    onDashboardConfigurationChange={
+                      onDashboardConfigurationChange
+                    }
                   />
                 </TimeSync>
               </DndProvider>
@@ -111,4 +118,4 @@ const Dashboard: React.FC<DashboardProperties> = ({
   );
 };
 
-export default Dashboard;
+export default memo(Dashboard);

@@ -1,17 +1,14 @@
 import React, { memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isEqual, pick } from 'lodash';
+import { isEqual } from 'lodash';
 
 import { getPlugin } from '@iot-app-kit/core';
-import { useViewport } from '@iot-app-kit/react-components';
 import { Button, SpaceBetween, Box } from '@cloudscape-design/components';
 
 import { onSelectWidgetsAction, onToggleReadOnly } from '~/store/actions';
-import type { DashboardState } from '~/store/state';
 import { DashboardSave } from '~/types';
 import DashboardSettings from './settings';
 import CustomOrangeButton from '../customOrangeButton';
-import { parseViewport } from '~/util/parseViewport';
 import { RefreshRateDropDown } from '../refreshRate/refreshRateDropdown';
 import {
   colorChartsLineGrid,
@@ -20,13 +17,11 @@ import {
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
 
-const DEFAULT_VIEWPORT = { duration: '10m' };
+import { convertToDashboardConfiguration } from '~/util/convertToDashbaoardConfiguration';
 
 export type ActionsProps = {
-  grid: DashboardState['grid'];
   readOnly: boolean;
   defaultToolbar?: boolean;
-  dashboardConfiguration: DashboardState['dashboardConfiguration'];
   onSave?: DashboardSave;
   editable?: boolean;
 };
@@ -43,40 +38,25 @@ const Divider = () => (
 );
 
 const Actions: React.FC<ActionsProps> = ({
-  dashboardConfiguration,
   editable,
   defaultToolbar = true,
-  grid,
   readOnly,
   onSave,
 }) => {
-  const significantDigits = useSelector(
-    (state: DashboardState) => state.significantDigits
+  const mappedDashboardConfiguration = useSelector(
+    convertToDashboardConfiguration,
+    isEqual
   );
+
   const [dashboardSettingsVisible, setDashboardSettingsVisible] =
     useState(false);
   const dispatch = useDispatch();
-
-  const { viewport } = useViewport();
 
   const metricsRecorder = getPlugin('metricsRecorder');
 
   const handleOnSave = () => {
     if (!onSave) return;
-    onSave(
-      {
-        displaySettings: {
-          numColumns: grid.width,
-          numRows: grid.height,
-          cellSize: grid.cellSize,
-          significantDigits,
-        },
-        ...dashboardConfiguration,
-        defaultViewport: parseViewport(dashboardConfiguration.defaultViewport),
-        viewport: viewport ?? DEFAULT_VIEWPORT,
-      },
-      readOnly ? 'preview' : 'edit'
-    );
+    onSave(mappedDashboardConfiguration, readOnly ? 'preview' : 'edit');
 
     metricsRecorder?.record({
       metricName: 'DashboardSave',
@@ -147,22 +127,12 @@ const Actions: React.FC<ActionsProps> = ({
   );
 };
 
-const gridAsComparable = (grid: DashboardState['grid']) =>
-  pick(grid, ['height', 'width', 'cellSize']);
 const actionsComparator = (
   a: Readonly<ActionsProps>,
   b: Readonly<ActionsProps>
 ): boolean => {
   const readOnlyIsSame = a.readOnly === b.readOnly;
-  const gridIsSame = isEqual(
-    gridAsComparable(a.grid),
-    gridAsComparable(b.grid)
-  );
-  const dashboardConfigurationIsSame = isEqual(
-    a.dashboardConfiguration,
-    b.dashboardConfiguration
-  );
-  return gridIsSame && dashboardConfigurationIsSame && readOnlyIsSame;
+  return readOnlyIsSame;
 };
 
 export default memo(Actions, actionsComparator);

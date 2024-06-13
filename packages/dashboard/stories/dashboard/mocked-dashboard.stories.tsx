@@ -2,7 +2,7 @@ import React from 'react';
 import { registerPlugin } from '@iot-app-kit/core';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import Dashboard, { DashboardProperties } from '../../src/components/dashboard';
+import { Dashboard, DashboardProperties } from '../../src';
 import { DashboardClientConfiguration } from '../../src/types';
 import { DEFAULT_REGION } from '~/msw/constants';
 import { useWorker } from '~/msw/useWorker';
