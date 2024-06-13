@@ -1,11 +1,9 @@
 import { YAXisComponentOption } from 'echarts';
 import { ChartAxisOptions } from '../../types';
 import { DEFAULT_Y_AXIS } from '../../eChartsConstants';
-import { round } from '@iot-app-kit/core-util';
 
 export const convertYAxis = (
-  axis?: ChartAxisOptions,
-  significantDigits?: number
+  axis?: ChartAxisOptions
 ): YAXisComponentOption => ({
   ...DEFAULT_Y_AXIS,
   name: axis?.yLabel,
@@ -17,7 +15,6 @@ export const convertYAxis = (
   axisLabel: {
     hideOverlap: true,
     color: '#5f6b7a',
-    formatter: (value: number) => `${round(value, significantDigits)}`,
   },
   nameLocation: 'middle',
   //TODO: Increased nameGap to solve label collides with y-axis issue, but the issue is in echarts and waiting for this(https://github.com/apache/echarts/issues/9265) CR to be merged from echart team.
