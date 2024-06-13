@@ -79,6 +79,7 @@ export interface ApplicationProperty {
   resolution?: string;
   refId?: string;
   color?: string;
+  name?: string;
 }
 
 interface ApplicationAsset {

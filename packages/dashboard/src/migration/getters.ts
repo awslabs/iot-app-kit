@@ -1,5 +1,5 @@
 import { colorPalette } from '@iot-app-kit/core-util';
-import { randomUUID } from 'crypto';
+import { v4 as uuid } from 'uuid';
 import {
   barChartProperties,
   defaultAggregationType,
@@ -40,6 +40,7 @@ export const getProperty = (
   let property: ApplicationProperty = {
     aggregationType: defaultAggregationType, // Monitor has no aggregationType and appliation defaults to AVERAGE
     propertyId: metric.propertyId,
+    name: metric.label,
     resolution: convertResolution(widgetType, metric.resolution),
   };
 
@@ -48,7 +49,7 @@ export const getProperty = (
     widgetType === MonitorWidgetType.StatusTimeline ||
     widgetType === MonitorWidgetType.Table
   ) {
-    const refId = randomUUID();
+    const refId = uuid();
     property = {
       ...property,
       refId,
@@ -57,7 +58,7 @@ export const getProperty = (
     widgetType === MonitorWidgetType.LineChart ||
     widgetType === MonitorWidgetType.ScatterChart
   ) {
-    const refId = randomUUID();
+    const refId = uuid();
     property = {
       ...property,
       refId,

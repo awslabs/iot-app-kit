@@ -309,7 +309,14 @@ export const migrateDashboard: MigrateDashboard = async ({
     const monitorDashboardDefinitionString = response.dashboardDefinition;
     if (monitorDashboardDefinitionString) {
       const monitorDashboardDefinition: SiteWiseMonitorDashboardDefinition =
-        JSON.parse(monitorDashboardDefinitionString);
+        JSON.parse(
+          // sitewise dashboards with custom property names add a new line to the end of the string,
+          // which was erroring in JSON.parse. ex: "label":"Custom Name\n" would throw the error
+          // "JSON.parse: bad control character in string literal"
+
+          // eslint-disable-next-line no-control-regex
+          monitorDashboardDefinitionString.replace(/[\u0000-\u0019]+/g, '')
+        );
       if (monitorDashboardDefinition.widgets) {
         // run collision algorithm to remove overlaps
         monitorDashboardDefinition.widgets = removeCollisions(
