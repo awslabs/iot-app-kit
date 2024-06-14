@@ -26,12 +26,14 @@ npm install --save @iot-app-kit/dashboard
 
 - **awsRegion** (object, optional) Region or region providers to authenticate to the required SDK services. Required if either the `iotEventsClient` or `iotSiteWiseClient` are not provided. [can be found in the AWS SDK documentation.](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/index.html)
 
-**onSave** (`(dashboardConfiguartion: DashboardConfiguration) => Promise(void)`, optional) The function called when the dashboard is saved. Expected to return promise which resolves when the saving is complete. A rejected promise
-will represent a failure to save.
+**onSave** (function, optional) The function called when the dashboard is saved. Expected to return promise which resolves when the saving is complete. A rejected promise
+will represent a failure to save. The function should be of the following type:
+- `(dashboardConfiguartion: DashboardConfiguration) => void`
 
 **currentViewport** (object, optional) If provided, this viewport will represent the viewport all charts should render. To be used alongside `onViewportChange` when users want to manage their own dashbaord viewports. 
 
-**onViewportChange** (`(viewport: Viewport) => void`) Callback which will be called any time the viewport changes. This includes when a user gestures on a widget (zooms in, zooms out, and scrolls).
+**onViewportChange** (function, optional) Callback which will be called any time the viewport changes. This includes when a user gestures on a widget (zooms in, zooms out, and scrolls). The function should be of the following type:
+- `(viewport: Viewport) => void`
 
 **edgeMode** ('enabled' | 'disabled', optional) replaces/hides certain APIs and UI elements in order to support the dashboard in [AWS Edge](https://aws.amazon.com/edge/)
 
@@ -39,9 +41,11 @@ will represent a failure to save.
 
 **name** (string, optional) Specifies the dashboard name which will be visible in the default toolbar.
 
-**toolbar** (`({viewport?: Viewport, viewmode: 'preview' | 'edit', }, optional) => ReactElement`) Render function which replaces the defaul dashboard toolbar with a user-provided component.
+**toolbar** (function, optional) Render function which replaces the defaul dashboard toolbar with a user-provided component. The render function should be of the following type:
+- `({dashboardConfiguartion: DashboardConfiguration, viewport?: Viewport, viewmode: 'preview' | 'edit'}) => ReactElement`
 
-**onDashboardConfigurationChange** ((dashboardConfiguartion: DashboardConfiguration) => void, optional) Callback which will be called any time the dashboard configuration is updated. This will be called when a widget is added/deleted, a widget is updated, or when a widget is moved.
+**onDashboardConfigurationChange** (function, optional) Callback which will be called any time the dashboard configuration is updated. This will be called when a widget is added/deleted, a widget is updated, or when a widget is moved. The function should be of the following type:
+- `(dashboardConfiguartion: DashboardConfiguration) => void`
 
 **dashboardConfiguration** (object) Specifies the widgets contained within the dashboard, the configuration of those widgets, which data is displayed within the widgets, the default viewport of the dashboard
 as well as display configurations for the dashboard. Contains the following properties:
@@ -84,6 +88,63 @@ as well as display configurations for the dashboard. Contains the following prop
 ### Example
 
 ```
+import { Dashboard } from '@iot-app-kit/dashboard';
+import { initialize } from '@iot-app-kit/source-iotsitewise';
 
+const DashboardPage = () => {
+  const [dashboardConfig, setDashboardConfig] = useState({})
+
+  <Dashboard
+    /** The credentials which the dashboard will use to make requests */
+    clientConfiguration={
+      awsCredentials: {
+        accessKeyId: [USER_ACCESS_KEY],
+        secretAccessKey: [USER_SECRET_KEY],
+      },
+      awsRegion: [USER_REGION],
+    }
+
+    /** A dashboard configuration with one line chart widget */
+    /** The widget has 2 data streams, one for PROPERTY_ID_1 and the other for PROPERTY_ID_2 */
+    dashboardConfiguration={
+      displaySettings: { numColumns: 100, numRows: 100 },
+      querySettings: { refreshRate: 5000 },
+      defaultViewport: { duration: '10m' },
+      widgets: widgets: [
+        {
+          type: 'line-chart',
+          id: 'some id',
+          height: 15,
+          width: 27,
+          x: 5,
+          y: 5,
+          z: 0,
+          properties: {
+            queryConfig: {
+              source: 'iotsitewise',
+              query: {
+                assets: [
+                  {
+                    assetId: [ASSET_ID],
+                    properties: [
+                      { propertyId: [PROPERTY_ID_1] },
+                      { propertyId: [PROPERTY_ID_2] },
+                    ],
+                  },
+                ],
+              },
+            },
+          },
+        },
+      ],
+    }
+
+    /** On save, the new dashboard config is stored in the state */
+    onSave={(newConfig) => setDashboardConfig(newConfig)}
+
+    /** On load, dashboard will be in edit mode */
+    initialViewMode='edit'
+  /> 
+};
 
 ```
