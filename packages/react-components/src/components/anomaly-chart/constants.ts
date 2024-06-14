@@ -65,6 +65,7 @@ export const ANOMALY_LEGEND_PADDING = [
 export const ANOMALY_BAR_SERIES_CONFIGURATION = {
   barMinWidth: 2,
   barMaxWidth: 10,
+  sampling: 'lttb',
   stack: 'Total',
   type: 'bar',
   animation: false,
