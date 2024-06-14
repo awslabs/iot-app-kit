@@ -95,6 +95,8 @@ export const useUnboundedDataZoom = ({
   viewport: Viewport | undefined;
   setViewport?: (viewport: Viewport, lastUpdatedBy?: string) => void;
 }) => {
+  const frameRef = useRef<number>(0);
+
   const intl = useIntlStore((state) => state.intl);
 
   const zoomTitle = intl.formatMessage({
@@ -135,11 +137,14 @@ export const useUnboundedDataZoom = ({
    */
   const zoomChart = useCallback(
     ({ startValue, endValue }: { startValue: number; endValue: number }) => {
-      const dataZoomOption = { ...DEFAULT_DATA_ZOOM, startValue, endValue };
-      zoomCache.current = dataZoomOption;
-      chart?.setOption({
-        dataZoom: dataZoomOption,
-        toolbox: DEFAULT_TOOLBOX,
+      cancelAnimationFrame(frameRef.current);
+      frameRef.current = requestAnimationFrame(() => {
+        const dataZoomOption = { ...DEFAULT_DATA_ZOOM, startValue, endValue };
+        zoomCache.current = dataZoomOption;
+        chart?.setOption({
+          dataZoom: dataZoomOption,
+          toolbox: DEFAULT_TOOLBOX,
+        });
       });
     },
     [chart]
@@ -180,7 +185,6 @@ export const useUnboundedDataZoom = ({
 
   useEffect(() => {
     if (!chart) return;
-    let frame: number;
     let interval: NodeJS.Timer;
 
     /**
@@ -188,6 +192,8 @@ export const useUnboundedDataZoom = ({
      * to the viewport context
      */
     const handleZoom = () => {
+      cancelAnimationFrame(frameRef.current);
+
       // clear the viewport tick interval
       clearInterval(interval);
       dispatch({ type: 'pause' });
@@ -195,7 +201,7 @@ export const useUnboundedDataZoom = ({
       if (!chart) return;
 
       // Synchronize animation with refresh rate
-      frame = requestAnimationFrame(() => {
+      frameRef.current = requestAnimationFrame(() => {
         if (!setViewport) return;
         // there should only be 1 datazoom option for the x axis
         const dataZoomOptions = chart.getOption()
@@ -217,7 +223,7 @@ export const useUnboundedDataZoom = ({
       interval = setInterval(() => {
         zoomCache.current = undefined;
         // clear any pending manual zoom gestures
-        cancelAnimationFrame(frame);
+        cancelAnimationFrame(frameRef.current);
 
         dispatch({ type: 'tick' });
       }, LIVE_MODE_REFRESH_RATE_MS);
@@ -225,7 +231,7 @@ export const useUnboundedDataZoom = ({
 
     return () => {
       chart?.off('dataZoom', handleZoom);
-      cancelAnimationFrame(frame);
+      cancelAnimationFrame(frameRef.current);
       clearInterval(interval);
     };
   }, [chart, mode, dispatch, setViewport]);
