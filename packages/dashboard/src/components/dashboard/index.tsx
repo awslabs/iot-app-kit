@@ -33,8 +33,8 @@ import { TimeSync } from '@iot-app-kit/react-components';
 import { debounce } from 'lodash';
 
 export type DashboardProperties = {
-  onSave: DashboardSave;
   onDashboardConfigurationChange?: DashboardConfigurationChange;
+  onSave?: DashboardSave;
   clientConfiguration: DashboardClientConfiguration;
   dashboardConfiguration: DashboardConfiguration;
   edgeMode?: EdgeMode;
