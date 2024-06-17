@@ -10,6 +10,7 @@ import {
   spaceStaticXxxs,
 } from '@cloudscape-design/design-tokens';
 import { Spinner } from '@cloudscape-design/components';
+import { format } from 'date-fns';
 
 import './timestamp.css';
 import { convertViewportToMs } from '../../utils/convertViewportToMs';
@@ -35,8 +36,14 @@ export const Timestamp = ({
   viewport,
 }: TimestampProps) => {
   const { initial, end } = convertViewportToMs(viewport);
-  const timestampStart = new Date(initial).toLocaleString();
-  const timestampEnd = new Date(end).toLocaleString();
+  const timestampStart = format(
+    new Date(initial),
+    "MM/dd/yyyy, kk:mm:ss aa '(UTC'x')'"
+  );
+  const timestampEnd = format(
+    new Date(end),
+    "MM/dd/yyyy, kk:mm:ss aa '(UTC'x')'"
+  );
   const timestampStyle = {
     ...styleProps,
     backgroundColor: showLoadingIndicator ? '' : colorBorderDividerSecondary,
