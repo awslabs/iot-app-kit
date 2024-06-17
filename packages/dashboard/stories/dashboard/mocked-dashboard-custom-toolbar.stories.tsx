@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Viewport, registerPlugin } from '@iot-app-kit/core';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
@@ -10,6 +10,17 @@ import {
 import { DEFAULT_REGION } from '~/msw/constants';
 import { useWorker } from '~/msw/useWorker';
 import { RefreshRate } from '~/components/refreshRate/types';
+import {
+  DateRangePicker,
+  DateRangePickerProps,
+  FormField,
+} from '@cloudscape-design/components';
+import { Controller, useForm } from 'react-hook-form';
+import {
+  dateRangeToViewport,
+  rangeValidator,
+  viewportToDateRange,
+} from '@iot-app-kit/core-util';
 
 /**
  * Data is mocked by the service worker started above.
@@ -63,8 +74,56 @@ export default {
   ],
 } as ComponentMeta<typeof Dashboard>;
 
+const ViewportPicker = (props: {
+  onChangeValue: (value: DateRangePickerProps.Value) => void;
+  viewport?: Viewport;
+}) => {
+  const { control, setValue, clearErrors } = useForm<{
+    currentViewport: Viewport | undefined;
+  }>({
+    mode: 'onChange',
+  });
+
+  useEffect(() => {
+    clearErrors();
+  }, [clearErrors, setValue]);
+
+  return (
+    <Controller
+      control={control}
+      name='currentViewport'
+      render={({ field, fieldState }) => {
+        return (
+          <FormField label='asjdalksdlka' errorText={fieldState.error?.message}>
+            <DateRangePicker
+              expandToViewport={true}
+              onChange={({ detail: { value } }) => {
+                if (!value) return;
+                field.onChange(value);
+                props.onChangeValue(value);
+              }}
+              value={viewportToDateRange(props.viewport)}
+              showClearButton={false}
+              relativeOptions={[]}
+              isValidRange={rangeValidator({
+                dateRangeIncompleteError: 'no',
+                dateRangeInvalidError: 'yes no',
+              })}
+            />
+          </FormField>
+        );
+      }}
+    />
+  );
+};
+
 export const Empty: ComponentStory<typeof Dashboard> = () => {
   const [viewmode, setViewmode] = useState<'edit' | 'preview'>('edit');
+  const [viewport, setViewport] = useState<Viewport | undefined>(undefined);
+  const onViewportChange = useCallback(
+    (v: Viewport) => setViewport(v),
+    [setViewport]
+  );
 
   const customToolbar = ({
     viewmode,
@@ -90,8 +149,14 @@ export const Empty: ComponentStory<typeof Dashboard> = () => {
         <button
           onClick={() => setViewmode(viewmode === 'edit' ? 'preview' : 'edit')}
         >
-          Change viewmode
+          viewmode
         </button>
+        <ViewportPicker
+          viewport={viewport}
+          onChangeValue={(value: DateRangePickerProps.Value) => {
+            setViewport(dateRangeToViewport(value));
+          }}
+        />
       </div>
     );
   };
@@ -100,7 +165,10 @@ export const Empty: ComponentStory<typeof Dashboard> = () => {
     <Dashboard
       {...emptyDashboardConfiguration}
       initialViewMode={viewmode}
+      currentViewport={viewport}
+      onViewportChange={onViewportChange}
       toolbar={customToolbar}
+      onDashboardConfigurationChange={(config) => console.log('##', config)}
     />
   );
 };
