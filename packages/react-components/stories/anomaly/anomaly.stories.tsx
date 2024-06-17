@@ -17,6 +17,9 @@ export default {
       control: { type: 'text' },
       defaultValue: '4a89a6b3-4a85-4ece-a598-a1ca4661d466',
     },
+    axis: {
+      control: { type: 'object' },
+    },
     predictionDefinitionId: {
       control: { type: 'text' },
       defaultValue: 'a85b0fb2-b259-441c-aacc-d7d7495214f5',
@@ -35,6 +38,9 @@ export default {
     showTimestamp: {
       control: { type: 'boolean' },
       defaultValue: true,
+    },
+    viewport: {
+      control: { type: 'object' },
     },
   },
   parameters: {

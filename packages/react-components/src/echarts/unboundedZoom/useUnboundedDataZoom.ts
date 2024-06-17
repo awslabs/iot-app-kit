@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useReducer, useRef } from 'react';
-import { useEffectOnce } from 'react-use';
+import { useEffectOnce, useUpdateEffect } from 'react-use';
 import { DataZoomComponentOption, ECharts } from 'echarts';
 import {
   Viewport,
@@ -19,6 +19,7 @@ import {
 import { DEFAULT_VIEWPORT } from '../../components/time-sync';
 import merge from 'lodash.merge';
 import useIntlStore from '../../translations';
+import { UtilizedViewportType } from '../../hooks/useViewport/useUtilizedViewport';
 
 const isDurationViewport = (viewport: Viewport | undefined) =>
   !!(viewport && !isHistoricalViewport(viewport));
@@ -90,10 +91,12 @@ export const useUnboundedDataZoom = ({
   chart,
   viewport,
   setViewport,
+  viewportType,
 }: {
   chart: ECharts | null;
   viewport: Viewport | undefined;
   setViewport?: (viewport: Viewport, lastUpdatedBy?: string) => void;
+  viewportType: UtilizedViewportType;
 }) => {
   const intl = useIntlStore((state) => state.intl);
 
@@ -263,4 +266,14 @@ export const useUnboundedDataZoom = ({
   useEffectOnce(() => {
     handleViewportUpdate(viewport ?? DEFAULT_VIEWPORT);
   });
+
+  /**
+   * ensure the updates to the viewport that are
+   * from the top level prop are applied
+   */
+  useUpdateEffect(() => {
+    if (viewportType === 'passed-in') {
+      handleViewportUpdate(viewport ?? DEFAULT_VIEWPORT);
+    }
+  }, [viewportType, viewport]);
 };
