@@ -54,6 +54,7 @@ export const AnomalyChart = (options: AnomalyChartOptions) => {
     loading,
     setViewport,
     viewport: anomalyViewport,
+    viewportType,
   });
 
   return (
