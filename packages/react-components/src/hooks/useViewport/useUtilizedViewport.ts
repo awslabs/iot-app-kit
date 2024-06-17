@@ -4,7 +4,11 @@ import { useCallback, useState } from 'react';
 import { useCustomCompareEffect, useEffectOnce } from 'react-use';
 import { isEqual } from 'lodash';
 
-type UtilizedViewportType = 'passed-in' | 'injected' | 'default' | 'none';
+export type UtilizedViewportType =
+  | 'passed-in'
+  | 'injected'
+  | 'default'
+  | 'none';
 
 const resolveVieport = ({
   passedInViewport,
@@ -77,6 +81,7 @@ export const useUtilizedViewport = ({
     (updatedViewport: Viewport, updatedBy?: string) => {
       setViewport(updatedViewport);
       updateViewportGroup(updatedViewport, updatedBy);
+      setViewportType('injected');
     },
     [setViewport, updateViewportGroup]
   );

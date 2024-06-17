@@ -16,6 +16,7 @@ import isEqual from 'lodash.isequal';
 import { DEFAULT_ANOMALY_WIDGET_SETTINGS } from '../constants';
 import { useZoomableECharts } from '../../../hooks/useECharts/useZoomableECharts';
 import merge from 'lodash.merge';
+import { UtilizedViewportType } from '../../../hooks/useViewport/useUtilizedViewport';
 
 type AnomalyChartOptionState = {
   series: ReturnType<typeof convertSeries>;
@@ -95,6 +96,7 @@ const initialState = ({
 export type AnomalyEChartOptions = {
   mode?: 'light' | 'dark';
   viewport?: Viewport;
+  viewportType: UtilizedViewportType;
   setViewport?: (viewport: Viewport, lastUpdatedBy?: string) => void;
 } & ConfigurationOptions &
   DataSetOptions;
@@ -106,6 +108,7 @@ export const useAnomalyEchart = ({
   const {
     viewport: passedInViewport,
     setViewport,
+    viewportType,
     data,
     ...configuration
   } = options;
@@ -121,6 +124,7 @@ export const useAnomalyEchart = ({
     theme: mode === 'dark' ? 'cloudscapeDarkTheme' : 'cloudscapeLightTheme',
     viewport: utilizedViewport,
     setViewport,
+    viewportType,
   });
 
   useCustomCompareEffect(
