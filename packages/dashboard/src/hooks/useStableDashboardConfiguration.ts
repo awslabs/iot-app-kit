@@ -11,6 +11,18 @@ export const useStableDashboardConfiguration = ({
   dashboardConfiguration: DashboardConfiguration;
   onDashboardConfigurationChange?: DashboardConfigurationChange;
 }) => {
+  /**
+   * This is a temporary change to prevent infinite rerenders.
+   * The correct fix requires us to remove the internal dependency
+   * on redux to manage the dashboard configuration.
+   */
+
+  /* eslint-disable react-hooks/exhaustive-deps */
+  const memoizedOnDashboardConfigurationChange = useMemo(
+    () => onDashboardConfigurationChange,
+    []
+  );
+
   const [stableDashboardConfiguration, setStableDashboardconfiguration] =
     useState(dashboardConfiguration);
 
@@ -18,10 +30,10 @@ export const useStableDashboardConfiguration = ({
 
   const handleDashboardConfigurationChange = useCallback(
     (dc: DashboardConfiguration) => {
-      onDashboardConfigurationChange(dc);
+      memoizedOnDashboardConfigurationChange(dc);
       configRef.current = dc;
     },
-    [onDashboardConfigurationChange, configRef]
+    [memoizedOnDashboardConfigurationChange, configRef]
   );
 
   const onStableDashboardConfigurationChange = useMemo(
