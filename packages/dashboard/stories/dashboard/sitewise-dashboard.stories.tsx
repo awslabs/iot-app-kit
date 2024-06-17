@@ -72,12 +72,11 @@ export const Main: ComponentStory<typeof Dashboard> = () => {
     [setInitialViewMode, setDashboardConfig]
   );
 
-  const onDashboardConfigurationChange = useCallback(
-    (dashboard: DashboardConfiguration) => {
-      setDashboardConfig(dashboard);
-    },
-    [setDashboardConfig]
-  );
+  const onDashboardConfigurationChange = (
+    dashboard: DashboardConfiguration
+  ) => {
+    setDashboardConfig(dashboard);
+  };
 
   return (
     <Dashboard
