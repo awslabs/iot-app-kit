@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 
@@ -127,12 +127,4 @@ const Actions: React.FC<ActionsProps> = ({
   );
 };
 
-const actionsComparator = (
-  a: Readonly<ActionsProps>,
-  b: Readonly<ActionsProps>
-): boolean => {
-  const readOnlyIsSame = a.readOnly === b.readOnly;
-  return readOnlyIsSame;
-};
-
-export default memo(Actions, actionsComparator);
+export default Actions;

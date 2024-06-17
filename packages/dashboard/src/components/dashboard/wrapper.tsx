@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useStableDashboardConfiguration } from '~/hooks/useStableDashboardConfiguration';
 import Dashboard, { DashboardProperties } from './index';
+
+const DEFAULT_DASHBOARD_VIEWPORT = { duration: '10m' };
 
 export const DashboardWrapper: React.FC<DashboardProperties> = ({
   onSave,
@@ -9,10 +11,13 @@ export const DashboardWrapper: React.FC<DashboardProperties> = ({
   edgeMode = 'disabled',
   initialViewMode,
   name,
-  currentViewport,
+  currentViewport = DEFAULT_DASHBOARD_VIEWPORT,
   onViewportChange,
   onDashboardConfigurationChange,
 }) => {
+  /* eslint-disable react-hooks/exhaustive-deps */
+  const stableOnViewportChange = useMemo(() => onViewportChange, []);
+
   /**
    * The purpose of this component is to ensure that the dashboard configuration
    * object is stable across onDashboardConfigurationChange events. These events
@@ -36,7 +41,7 @@ export const DashboardWrapper: React.FC<DashboardProperties> = ({
       initialViewMode={initialViewMode}
       name={name}
       currentViewport={currentViewport}
-      onViewportChange={onViewportChange}
+      onViewportChange={stableOnViewportChange}
       onDashboardConfigurationChange={onStableDashboardConfigurationChange}
     />
   );
