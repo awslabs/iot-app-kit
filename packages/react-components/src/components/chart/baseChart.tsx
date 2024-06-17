@@ -304,6 +304,7 @@ const BaseChart = ({
           isLoading={isPropertiesRefreshing}
           showLoadingIndicator={true}
           styleProps={timestampStyle}
+          viewport={utilizedViewport}
         />
       </div>
       {options.legend?.visible && (
