@@ -1,12 +1,13 @@
 import { RequestFunction } from '@iot-app-kit/core';
-import type { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import type { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import {
   InvokeAssistantRequest,
   InvokeAssistantResponse,
   ChatMessage,
   EventSummaryRequest,
 } from './assistantTypes';
-import { InvokeAssistantCommand } from './assistantClientMockResponse';
+import { FakeInvokeAssistant } from './assistantClientMockResponse';
+import { v4 as uuidv4 } from 'uuid';
 
 type UniqueId = string;
 type InvokeAssistantRequestFunction = RequestFunction<
@@ -15,7 +16,16 @@ type InvokeAssistantRequestFunction = RequestFunction<
 >;
 
 export namespace AssistantClient {
-  export type Options<T> = Partial<{
+  export type RequestFns = {
+    /**
+     * Specify an implementation for `invokeAssistant`.
+     */
+    invokeAssistant?: InvokeAssistantRequestFunction;
+  };
+
+  export type InstanceParams<T> = {
+    requestFns: AssistantClient.RequestFns;
+
     defaultContext: string;
 
     // onResponse is called for each chunk returned from the streaming api response.
@@ -23,13 +33,6 @@ export namespace AssistantClient {
 
     // onComplete is called when all chunk have returned from the streaming api response.
     onComplete: AssistantClient.InvocationCompleteHandler;
-  }>;
-
-  export type RequestFns = {
-    /**
-     * Specify an implementation for `invokeAssistant`.
-     */
-    invokeAssistant?: InvokeAssistantRequestFunction;
   };
 
   export type ClientInstance<T> = {
@@ -66,13 +69,12 @@ export namespace AssistantClient {
   };
 }
 
-export const createAssistantClient = <T>(
-  requestFns: AssistantClient.RequestFns,
-  options: AssistantClient.Options<T>
-) => {
-  const { defaultContext, onComplete, onResponse } = options;
-  //  let credentials = awsCredentials;
-
+export const createAssistantClient = <T>({
+  requestFns,
+  defaultContext,
+  onResponse,
+  onComplete,
+}: AssistantClient.InstanceParams<T>) => {
   return {
     /**
      * Invoke the generative AI assistant.
@@ -84,11 +86,11 @@ export const createAssistantClient = <T>(
       utterance: string,
       options: { context?: string; conversationId?: UniqueId } = {}
     ) {
-      const conversationId = options.conversationId ?? crypto.randomUUID();
+      const conversationId = options.conversationId ?? uuidv4();
       const context = `${defaultContext ?? ''} ${options.context ?? ''}`.trim();
 
       invokeAssistant({
-        client: requestFns as IoTSiteWiseClient,
+        client: requestFns as IoTSiteWise,
         payload: {
           context,
           conversationId,
@@ -115,17 +117,15 @@ async function invokeAssistant<T>({
   onComplete,
   onResponse,
 }: {
-  client: IoTSiteWiseClient;
+  client: IoTSiteWise;
   payload: AssistantClient.InvocationDetail;
   onComplete?: AssistantClient.InvocationCompleteHandler;
   onResponse?: AssistantClient.InvocationResponseHandler<T>;
 }) {
-  const command = new InvokeAssistantCommand(payload);
-
-  // Correct implementation
-  // const { body } = await client.send(command);
+  // TODO: Correct implementation
+  // const { body } = await client.invokeAssistant(payload);
   // Temporary
-  const responses = await command.send();
+  const responses = await FakeInvokeAssistant(payload);
 
   // Each `event` is a chunk of the streamed response.
   for await (const response of responses.StreamReponse) {

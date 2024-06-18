@@ -10,32 +10,103 @@ interface StreamingInvokeAssistantResponse {
   StreamReponse: AsyncIterable<InvokeAssistantResponse>;
 }
 
-// Temporary implementation for InvokeAssistantCommand
-export class InvokeAssistantCommand {
-  private input: InvokeAssistantRequest;
-  /**
-   * @public
-   */
-  constructor(_input: InvokeAssistantRequest) {
-    this.input = _input;
-  }
+// TODO: Temporary implementation for InvokeAssistant operation
+export const FakeInvokeAssistant = async (
+  request: InvokeAssistantRequest
+): Promise<StreamingInvokeAssistantResponse> => {
+  return new Promise((resolve) => {
+    const response1 = {
+      step: {
+        stepId: 'step1',
+        rationale: {
+          text: 'contains the reasoning of the agent given the user input',
+        },
+        toolInvocation: {
+          toolName: 'toolName',
+          toolInputsJson: 'toolInputsJson',
+        },
+        observation: {
+          toolOutputsJson: 'toolOutputsJson',
+          response: 'response',
+        },
+      },
+      response: {
+        message: {
+          content: [
+            {
+              text: 'assistant response',
+            },
+          ],
+        },
+      },
+    };
+    const response2 = {
+      step: {
+        stepId: 'step2',
+        rationale: {
+          text: 'contains the reasoning of the agent given the user input',
+        },
+        toolInvocation: {
+          toolName: 'toolName',
+          toolInputsJson: 'toolInputsJson',
+        },
+        observation: {
+          toolOutputsJson: 'toolOutputsJson',
+          response: 'response',
+        },
+      },
+      response: {
+        message: {
+          content: [
+            {
+              text: 'assistant response 2',
+            },
+          ],
+        },
+      },
+    };
+    const response3 = {
+      step: {
+        stepId: 'end',
+        rationale: {
+          text: 'contains the reasoning of the agent given the user input',
+        },
+        toolInvocation: {
+          toolName: 'toolName',
+          toolInputsJson: 'toolInputsJson',
+        },
+        observation: {
+          toolOutputsJson: 'toolOutputsJson',
+          response: 'response',
+        },
+      },
+      response: {
+        message: {
+          content: [
+            {
+              text: 'assistant response end',
+            },
+          ],
+        },
+      },
+    };
 
-  public send(): Promise<StreamingInvokeAssistantResponse> {
-    return new Promise((resolve) => {
-      const response1 = {} as InvokeAssistantResponse;
-      const response2 = {} as InvokeAssistantResponse;
-      const response3 = {} as InvokeAssistantResponse;
+    const asyncIterator = (async function* () {
+      await sleep(500);
+      yield response1;
+      await sleep(1000);
+      yield response2;
+      await sleep(2000);
+      yield response3;
+    })();
 
-      const asyncIterator = (async function* () {
-        setTimeout(() => yield response1, 500);
-        setTimeout(() => yield response2, 1000);
-        setTimeout(() => yield response3, 1000);
-      })();
-
-      resolve({
-        StatusCode: 200,
-        StreamReponse: asyncIterator,
-      });
+    resolve({
+      StatusCode: 200,
+      StreamReponse: asyncIterator,
     });
-  }
+  });
+};
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

@@ -79,7 +79,7 @@ export interface InvokeAssistantResponse {
       content: ChatMessage[];
     };
 
-    citations: [
+    citations?: [
       // The citation that supports the
       // content generated
       {
@@ -108,12 +108,12 @@ export interface InvokeAssistantResponse {
   // Since the API natively supports streaming, the exception must be returned as
   // an API response.
 
-  internalFailureException: {
+  internalFailureException?: {
     // e.g. System crashed (5xx)
     message: string;
   };
 
-  accessDeniedException: {
+  accessDeniedException?: {
     // e.g. Access Iot Resource Denied
     // in tools. It can happen when
     // the builder does not give full
@@ -121,12 +121,12 @@ export interface InvokeAssistantResponse {
     message: string;
   };
 
-  limitExceededException: {
+  limitExceededException?: {
     // e.g Too much messages
     message: string;
   };
 
-  resourceNotFoundException: {
+  resourceNotFoundException?: {
     // e.g We might need this
     message: string;
   };
