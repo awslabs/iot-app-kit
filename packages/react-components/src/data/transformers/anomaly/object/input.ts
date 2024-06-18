@@ -1,10 +1,5 @@
 import { ObjectDataSourceValue } from '../../object';
-
-export type AnomalyObjectStyles = {
-  decimalPlaces?: number;
-  // color theme override for series data
-  color?: string[];
-};
+import { AnomalyStyles } from '../input';
 
 export type Diagnostic = {
   name: string;
@@ -20,6 +15,6 @@ export type AnomalyObjectDataInput = {
 
 // DataSource input shape
 export type AnomalyObjectDataSourceValue = ObjectDataSourceValue<
-  AnomalyObjectStyles,
+  AnomalyStyles,
   AnomalyObjectDataInput
 >;

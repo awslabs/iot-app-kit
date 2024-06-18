@@ -14,8 +14,8 @@ import {
   Diagnostic,
   Diagnostics,
 } from './input';
-import { AnomalyData, AnomalyDescription, DiagnosticData } from './output';
 import { isAfter, isBefore } from 'date-fns';
+import { AnomalyData, AnomalyDescription, DiagnosticData } from '../output';
 
 /**
  * there can be points that have an anomaly score
