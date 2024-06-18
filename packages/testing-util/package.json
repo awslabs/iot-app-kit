@@ -2,12 +2,12 @@
   "name": "@iot-app-kit/testing-util",
   "license": "Apache-2.0",
   "private": true,
-  "version": "10.6.1",
+  "version": "10.7.0",
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
   "types": "./dist/es/index.d.ts",
   "dependencies": {
-    "@iot-app-kit/core": "10.6.1",
+    "@iot-app-kit/core": "10.7.0",
     "@aws-sdk/client-iot-events": "3.354.0",
     "@aws-sdk/client-iotsitewise": "3.456.0",
     "parse-duration": "^1.1.0"
@@ -21,7 +21,7 @@
     "lint-fix": "eslint --fix ."
   },
   "devDependencies": {
-    "@iot-app-kit/ts-config": "^10.6.1",
-    "eslint-config-iot-app-kit": "^10.6.1"
+    "@iot-app-kit/ts-config": "^10.7.0",
+    "eslint-config-iot-app-kit": "^10.7.0"
   }
 }
