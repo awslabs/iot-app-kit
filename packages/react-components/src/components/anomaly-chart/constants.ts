@@ -34,10 +34,10 @@ export const ANOMALY_Y_AXIS = {
 };
 
 export const ANOMALY_GRID = {
-  top: 40,
+  top: 32,
   left: 45,
   right: 15,
-  bottom: 80,
+  bottom: 0,
 };
 
 export const ANOMALY_LEGEND = {
