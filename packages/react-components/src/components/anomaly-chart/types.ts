@@ -1,12 +1,14 @@
 import { Viewport } from '@iot-app-kit/core';
 import type { FixedLengthArray } from 'type-fest';
-import { AnomalyObjectDataSource } from '../../data/transformers/anomaly/object/datasource';
 import { AnomalyDataQuery } from '@iot-app-kit/source-iotsitewise';
+import { AnomalyArrowDataSource, AnomalyObjectDataSource } from '../../data';
 
 export type TooltipSort = 'value' | 'alphabetical';
 export type ThemeMode = 'light' | 'dark';
 
-export type AnomalyChartDataSources = AnomalyObjectDataSource;
+export type AnomalyChartDataSources =
+  | AnomalyObjectDataSource
+  | AnomalyArrowDataSource;
 
 export type AnomalyChartDataSourceOption = {
   /**

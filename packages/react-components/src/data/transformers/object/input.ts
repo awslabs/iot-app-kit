@@ -1,10 +1,10 @@
-export type StylesKey = string;
+import { StylesObject } from '../input';
+
 export type ObjectKey = string;
 
-export type ObjectStyles = { [key in StylesKey]: unknown };
 export type ObjectData = { [key in ObjectKey]: unknown }[];
 
-export type ObjectDataSourceValue<Styles = ObjectStyles, Data = ObjectData> = {
+export type ObjectDataSourceValue<Styles = StylesObject, Data = ObjectData> = {
   styles?: Styles;
   data: Data;
 };

@@ -1,6 +1,6 @@
 import { HistoricalViewport } from '@iot-app-kit/core';
-import { Data } from '../../../types';
-import { AnomalyObjectStyles } from './input';
+import { Data } from '../../types';
+import { AnomalyStyles } from './input';
 
 export type DiagnosticData = {
   [key: `diagnostic_${string}`]: number;
@@ -19,7 +19,7 @@ export type DiagnosticDescription = {
 
 export type DiagnosticDescriptions = DiagnosticDescription[];
 
-export type AnomalyDescription = AnomalyObjectStyles & {
+export type AnomalyDescription = AnomalyStyles & {
   diagnostics: DiagnosticDescriptions;
   dataExtent?: HistoricalViewport;
 };
