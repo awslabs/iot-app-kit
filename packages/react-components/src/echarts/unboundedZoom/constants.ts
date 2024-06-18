@@ -35,7 +35,7 @@ export const DEFAULT_X_AXIS: XAXisComponentOption = {
 export const DEFAULT_TOOLBOX = {
   show: true,
   top: 0,
-  right: 15,
+  right: 8,
   feature: {
     dataZoom: {
       title: { back: 'Undo\nzoom' },
