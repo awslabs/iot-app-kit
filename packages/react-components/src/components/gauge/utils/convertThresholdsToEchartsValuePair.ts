@@ -34,8 +34,12 @@ const getColorValuePairsForLTandLTE = (allThresholds: ThresholdRange[]) => {
   );
 
   lteThresholds.forEach((thresholdRange) => {
-    const { end, color } = thresholdRange;
-    end && lineStylesLTandLTE.push([end, color]);
+    const { end, color, comparisonOperator } = thresholdRange;
+    if (end) {
+      const thresholdEnd =
+        comparisonOperator === 'LT' ? end - 0.0000000001 : end;
+      lineStylesLTandLTE.push([thresholdEnd, color]);
+    }
   });
 
   return lineStylesLTandLTE;
@@ -92,8 +96,13 @@ const getColorValuePairsForGTandGTE = (
     if (!lastThreshold) {
       start !== undefined && lineStylesGTandGTE.push([1, color]);
     } else {
-      lastThreshold.start !== undefined &&
-        lineStylesGTandGTE.push([lastThreshold.start, color]);
+      if (lastThreshold.start !== undefined) {
+        const thresholdEnd =
+          lastThreshold.comparisonOperator === 'GTE'
+            ? lastThreshold.start - 0.0000000001
+            : lastThreshold.start;
+        lineStylesGTandGTE.push([thresholdEnd, color]);
+      }
     }
     lastThreshold = thresholdRange;
   });
