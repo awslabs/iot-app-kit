@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Viewport, registerPlugin } from '@iot-app-kit/core';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import Dashboard, { DashboardProperties } from '../../src/components/dashboard';
+import { Dashboard } from '../../src/index';
 import {
   DashboardClientConfiguration,
   DashboardConfiguration,
@@ -42,15 +42,8 @@ const displaySettings = {
 const defaultViewport = { duration: '10m' };
 const querySettings = { refreshRate: 5000 as RefreshRate };
 
-const emptyDashboardConfiguration: DashboardProperties = {
+const emptyDashboardConfiguration = {
   clientConfiguration,
-  dashboardConfiguration: {
-    displaySettings,
-    defaultViewport,
-    widgets: [],
-    querySettings,
-  },
-  onSave: () => Promise.resolve(),
 };
 
 registerPlugin('metricsRecorder', {
@@ -117,13 +110,25 @@ const ViewportPicker = (props: {
   );
 };
 
-export const Empty: ComponentStory<typeof Dashboard> = () => {
+export const CustomToolbar: ComponentStory<typeof Dashboard> = () => {
   const [viewmode, setViewmode] = useState<'edit' | 'preview'>('edit');
   const [viewport, setViewport] = useState<Viewport | undefined>(undefined);
-  const onViewportChange = useCallback(
-    (v: Viewport) => setViewport(v),
-    [setViewport]
-  );
+  const [dashboardConfiguration, setDashboardConfiguration] =
+    useState<DashboardConfiguration>({
+      displaySettings,
+      defaultViewport,
+      widgets: [],
+      querySettings,
+    });
+
+  const onViewportChange = (v: Viewport) => {
+    console.log('### onViewportChange', v);
+    setViewport(v);
+  };
+  const onConfigChange = (config: DashboardConfiguration) => {
+    console.log('### onConfigChange', config);
+    setDashboardConfiguration(config);
+  };
 
   const customToolbar = ({
     viewmode,
@@ -164,11 +169,12 @@ export const Empty: ComponentStory<typeof Dashboard> = () => {
   return (
     <Dashboard
       {...emptyDashboardConfiguration}
+      dashboardConfiguration={dashboardConfiguration}
       initialViewMode={viewmode}
       currentViewport={viewport}
       onViewportChange={onViewportChange}
       toolbar={customToolbar}
-      onDashboardConfigurationChange={(config) => console.log('##', config)}
+      onDashboardConfigurationChange={onConfigChange}
     />
   );
 };
