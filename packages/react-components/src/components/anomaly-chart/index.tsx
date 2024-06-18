@@ -2,6 +2,7 @@ import React from 'react';
 import { AnomalyChartOptions } from './types';
 import {
   AnomalyObjectDataSourceTransformer,
+  AnomalyArrowDataSourceTransformer,
   DataSourceLoader,
 } from '../../data';
 
@@ -21,6 +22,7 @@ import { DEFAULT_ANOMALY_DATA_SOURCE_VIEWPORT } from '../../queries/useSiteWiseA
  */
 const AnomalyDataSourceLoader = new DataSourceLoader([
   new AnomalyObjectDataSourceTransformer(),
+  new AnomalyArrowDataSourceTransformer(),
 ]);
 
 export const AnomalyChart = (options: AnomalyChartOptions) => {
