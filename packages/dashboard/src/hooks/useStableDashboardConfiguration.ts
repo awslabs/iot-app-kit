@@ -3,13 +3,18 @@ import noop from 'lodash/noop';
 import throttle from 'lodash/throttle';
 import isEqual from 'lodash/isEqual';
 import { DashboardConfiguration, DashboardConfigurationChange } from '~/types';
+import { Viewport } from '@iot-app-kit/core';
 
 export const useStableDashboardConfiguration = ({
   dashboardConfiguration,
   onDashboardConfigurationChange = noop,
+  viewport,
+  viewmode,
 }: {
   dashboardConfiguration: DashboardConfiguration;
   onDashboardConfigurationChange?: DashboardConfigurationChange;
+  viewport?: Viewport;
+  viewmode?: string;
 }) => {
   /**
    * This is a temporary change to prevent infinite rerenders.
@@ -45,7 +50,7 @@ export const useStableDashboardConfiguration = ({
     if (!isEqual(dashboardConfiguration, configRef.current)) {
       setStableDashboardconfiguration(dashboardConfiguration);
     }
-  }, [dashboardConfiguration]);
+  }, [dashboardConfiguration, viewport, viewmode]);
 
   return {
     stableDashboardConfiguration,

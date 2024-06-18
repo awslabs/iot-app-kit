@@ -13,10 +13,12 @@ export const DashboardWrapper: React.FC<DashboardProperties> = ({
   name,
   currentViewport = DEFAULT_DASHBOARD_VIEWPORT,
   onViewportChange,
+  toolbar,
   onDashboardConfigurationChange,
 }) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   const stableOnViewportChange = useMemo(() => onViewportChange, []);
+  const stableToolbar = useMemo(() => toolbar, []);
 
   /**
    * The purpose of this component is to ensure that the dashboard configuration
@@ -30,6 +32,8 @@ export const DashboardWrapper: React.FC<DashboardProperties> = ({
     useStableDashboardConfiguration({
       dashboardConfiguration,
       onDashboardConfigurationChange,
+      viewmode: initialViewMode,
+      viewport: currentViewport,
     });
 
   return (
@@ -43,6 +47,7 @@ export const DashboardWrapper: React.FC<DashboardProperties> = ({
       currentViewport={currentViewport}
       onViewportChange={stableOnViewportChange}
       onDashboardConfigurationChange={onStableDashboardConfigurationChange}
+      toolbar={stableToolbar}
     />
   );
 };

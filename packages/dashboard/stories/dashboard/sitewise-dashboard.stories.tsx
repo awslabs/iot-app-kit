@@ -48,9 +48,7 @@ const getInitialDashboardConfig = (): DashboardConfiguration => {
 };
 
 export const Main: ComponentStory<typeof Dashboard> = () => {
-  const [dashboardConfig, setDashboardConfig] = useState(
-    getInitialDashboardConfig()
-  );
+  const dashboardConfig = getInitialDashboardConfig();
   const [initialViewMode, setInitialViewMode] = useState<'preview' | 'edit'>(
     'edit'
   );
@@ -67,22 +65,14 @@ export const Main: ComponentStory<typeof Dashboard> = () => {
         DASHBOARD_STORAGE_NAMESPACE,
         JSON.stringify(dashboard)
       );
-      return new Promise(() => setDashboardConfig(dashboard)) as Promise<void>;
     },
-    [setInitialViewMode, setDashboardConfig]
+    [setInitialViewMode]
   );
-
-  const onDashboardConfigurationChange = (
-    dashboard: DashboardConfiguration
-  ) => {
-    setDashboardConfig(dashboard);
-  };
 
   return (
     <Dashboard
       clientConfiguration={CLIENT_CONFIGURATION}
       onSave={onSave}
-      onDashboardConfigurationChange={onDashboardConfigurationChange}
       initialViewMode={initialViewMode}
       dashboardConfiguration={dashboardConfig}
     />
