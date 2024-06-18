@@ -3,11 +3,6 @@ import {
   colorBackgroundLayoutToggleActive,
   colorBorderDividerSecondary,
   colorTextBodyDefault,
-  spaceStaticS,
-  spaceStaticXl,
-  spaceStaticXs,
-  spaceStaticXxs,
-  spaceStaticXxxs,
 } from '@cloudscape-design/design-tokens';
 import { Spinner } from '@cloudscape-design/components';
 import { format } from 'date-fns';
@@ -47,10 +42,8 @@ export const Timestamp = ({
   const timestampStyle = {
     ...styleProps,
     backgroundColor: showLoadingIndicator ? '' : colorBorderDividerSecondary,
-    borderTop: `${spaceStaticXxxs} solid ${colorBorderDividerSecondary}`,
-    padding: showLoadingIndicator
-      ? `0 ${spaceStaticS} ${spaceStaticXxxs} ${spaceStaticXs}`
-      : `${spaceStaticXxs} ${spaceStaticXs}`,
+    borderTop: `${2} solid ${colorBorderDividerSecondary}`,
+    padding: showLoadingIndicator ? '0 12px 2px 8px' : '4px 8px',
     fontSize: `10px`,
     color: `${colorBackgroundLayoutToggleActive}`,
   };
@@ -61,15 +54,13 @@ export const Timestamp = ({
       data-testid='chart-timestamp-container'
     >
       {showLoadingIndicator && (
-        <span style={{ minWidth: spaceStaticXl }}>
-          {isLoading && <Spinner />}
-        </span>
+        <span style={{ minWidth: '12px' }}>{isLoading && <Spinner />}</span>
       )}
 
       <div
         className='chart-timestamp'
         style={{
-          paddingTop: showLoadingIndicator ? spaceStaticXxs : 0,
+          paddingTop: showLoadingIndicator ? '4px' : '0px',
           color: colorTextBodyDefault,
         }}
       >
