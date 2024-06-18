@@ -1,9 +1,10 @@
 import { createAssistantClient } from './assistantClient';
-// TODO: need to mock InvokeAssistant when API is ready
+import { FakeInvokeAssistant } from './assistantClientMockResponse';
 
 function flushPromises() {
   return new Promise(jest.requireActual('timers').setImmediate);
 }
+
 
 describe('AssistantClient', () => {
   const responsesTotal = 3;
@@ -11,10 +12,12 @@ describe('AssistantClient', () => {
   beforeAll(() => jest.useFakeTimers());
   afterAll(() => jest.useRealTimers());
 
+  beforeEach(() => jest.clearAllMocks());
+
   it('createAssistantClient return a new instance', () => {
     const client = createAssistantClient({
       requestFns: {
-        invokeAssistant: () => {},
+        invokeAssistant: FakeInvokeAssistant,
       },
       defaultContext: '',
       onResponse: () => {},
@@ -25,10 +28,10 @@ describe('AssistantClient', () => {
   });
 
   it('can set RequestFunctions aka AWS SDK clients', () => {
-    const mockInvokeAssistant = jest.fn();
+    const mockInvokeAssistant = jest.fn().mockResolvedValue({ StreamResponse: [] });
     const client = createAssistantClient({
       requestFns: {
-        invokeAssistant: () => {},
+        invokeAssistant: FakeInvokeAssistant,
       },
       defaultContext: '',
       onResponse: () => {},
@@ -39,20 +42,25 @@ describe('AssistantClient', () => {
       invokeAssistant: mockInvokeAssistant,
     });
 
-    expect(client).toBeDefined();
+    client.invoke('customer message', { context: 'additional context' });
+
+    expect(mockInvokeAssistant).toBeCalled();
   });
 
   it('call invoke and return all responses', async () => {
     const onResponse = jest.fn();
     const client = createAssistantClient({
       requestFns: {
-        invokeAssistant: () => {},
+        invokeAssistant: FakeInvokeAssistant,
       },
       defaultContext: '',
       onResponse,
       onComplete: () => {},
     });
     expect(client).toBeDefined();
+
+    jest.runAllTimers(); // run sleep timeout
+    await flushPromises(); // move to next tick and return yield
 
     client.invoke('customer message', { context: 'additional context' });
 
@@ -73,7 +81,7 @@ describe('AssistantClient', () => {
     const onComplete = jest.fn();
     const client = createAssistantClient({
       requestFns: {
-        invokeAssistant: () => {},
+        invokeAssistant: FakeInvokeAssistant,
       },
       defaultContext: '',
       onResponse: () => {},

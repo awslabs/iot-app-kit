@@ -1,5 +1,67 @@
+import { RequestFunction } from '@iot-app-kit/core';
+
+export type UniqueId = string;
+export type InvokeAssistantRequestFunction = RequestFunction<
+  InvokeAssistantRequest,
+  InvokeAssistantResponse
+>;
+
+export type AssistantClientRequestFns = {
+  /**
+   * Specify an implementation for `invokeAssistant`.
+   */
+  invokeAssistant?: InvokeAssistantRequestFunction;
+};
+
+export type AssistantClientInstanceParams<T> = {
+  requestFns: AssistantClientRequestFns;
+
+  defaultContext: string;
+
+  // onResponse is called for each chunk returned from the streaming api response.
+  onResponse: AssistantClientInvocationResponseHandler<T>;
+
+  // onComplete is called when all chunk have returned from the streaming api response.
+  onComplete: AssistantClientInvocationCompleteHandler;
+};
+
+export type AssistantClientInstance<T> = {
+  invoke: (
+    utterance: string,
+    options: { context?: string; conversationId?: UniqueId }
+  ) => string;
+  setRequestFns(requestFns: AssistantClientRequestFns);
+};
+
+export type AssistantClientInvocationCompleteHandler = () => void;
+
+export type AssistantClientInvocationResponse = {
+  conversationId: UniqueId;
+  body: InvokeAssistantResponse;
+  statusCode?: number;
+};
+
+export type AssistantClientInvocationResponseHandler<T> = (
+  response: AssistantClientInvocationResponse,
+  invocationDetail: AssistantClientInvocationDetail
+) => void;
+
+
+export type AssistantClientInvocationDetail = {
+  context?: string;
+  conversationId: UniqueId;
+  message: {
+    chatMessage?: ChatMessage[];
+    siteWisePropertyHistoriesSummarization?: EventSummaryRequest[];
+    alarmsSummarizationMessage?: EventSummaryRequest[];
+  };
+  endConversation?: boolean;
+  returnExecutionSteps?: boolean;
+};
+
+
 /*
-### This file will be replaced by a new AWS SDK after the Sophon API are available
+### The below types will be removed when a new AWS SDK after the Sophon API are available
 import type {
   InvokeAssistantRequest, 
   InvokeAssistantResponse,

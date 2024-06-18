@@ -7,7 +7,7 @@ import {
 
 interface StreamingInvokeAssistantResponse {
   StatusCode: number;
-  StreamReponse: AsyncIterable<InvokeAssistantResponse>;
+  StreamResponse: AsyncIterable<InvokeAssistantResponse>;
 }
 
 // TODO: Temporary implementation for InvokeAssistant operation
@@ -102,7 +102,7 @@ export const FakeInvokeAssistant = async (
 
     resolve({
       StatusCode: 200,
-      StreamReponse: asyncIterator,
+      StreamResponse: asyncIterator,
     });
   });
 };

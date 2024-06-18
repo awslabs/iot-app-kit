@@ -22,7 +22,7 @@
     "lint": "eslint . --max-warnings=0",
     "fix": "eslint --fix .",
     "test": "npm run test:jest && npm run test:typescript",
-    "test:jest": "TZ=UTC jest",
+    "test:jest": "TZ=UTC jest --runInBand",
     "test:typescript": "tsc --noEmit"
   },
   "dependencies": {
