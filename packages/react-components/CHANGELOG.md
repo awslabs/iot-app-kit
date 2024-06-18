@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [10.7.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.6.1...react-components-v10.7.0) (2024-06-18)
+
+
+### Features
+
+* customize gauge in dashboard config ([8af089e](https://github.com/awslabs/iot-app-kit/commit/8af089e94a2c11cab1c9473d384ed241da7f6461))
+* onViewportChange and currentViewport ([d63c9e3](https://github.com/awslabs/iot-app-kit/commit/d63c9e3a416e78a78b3a453755be39a6879eb07c))
+
+
+### Bug Fixes
+
+* **dashboard:** decimal places fixes ([710a6ae](https://github.com/awslabs/iot-app-kit/commit/710a6aeee8e16fbf7f204d9214dbd8c86fce16e2))
+* **react-components:** add timezone to anomaly chart ([5379bd1](https://github.com/awslabs/iot-app-kit/commit/5379bd19d0d47e62f42a19230e9cf52e2a715d95))
+* **react-components:** anomaly chart timestamp padding ([b376bf4](https://github.com/awslabs/iot-app-kit/commit/b376bf4861f58bd5489c907d2ae72107a2178eb3))
+* **react-components:** do not use decimal places setting in y axis ([f9fbf74](https://github.com/awslabs/iot-app-kit/commit/f9fbf74311af528b89ad34333b36508eeb3d9ae5))
+* **react-components:** ensure chart uses initial passed in viewport ([0b17318](https://github.com/awslabs/iot-app-kit/commit/0b173182adb4180ca0065b4238549cd30a0af3d2))
+* **react-components:** fix chart flickering and bugginess in live mode ([3cc3b41](https://github.com/awslabs/iot-app-kit/commit/3cc3b41d59d5c799b750eb76d809007b30dfe2a8))
+* **react-components:** fix passed in viewport for anomaly widget ([f73fafc](https://github.com/awslabs/iot-app-kit/commit/f73fafcd5dfdf7238f69848f1808fbbb0b17f281))
+* **react-components:** fix support for anomaly datasource outside of time sync ([d45cc6b](https://github.com/awslabs/iot-app-kit/commit/d45cc6b45adb67b8bc44b975a2a65c5942f0d746))
+* **react-components:** make anomaly chart responsive ([4b31b8c](https://github.com/awslabs/iot-app-kit/commit/4b31b8cece18f1a1e1e91447c31ca79ec0b3867f))
+* **react-components:** timestamp bar correct date ([2063935](https://github.com/awslabs/iot-app-kit/commit/20639352a433cea9abfceee439f7aa9c36db05b9))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.6.1 to 10.7.0
+    * @iot-app-kit/core bumped from 10.6.1 to 10.7.0
+    * @iot-app-kit/core-util bumped from 10.6.1 to 10.7.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.6.1 to 10.7.0
+  * devDependencies
+    * @iot-app-kit/core bumped from 10.6.1 to 10.7.0
+    * @iot-app-kit/jest-config bumped from 10.6.1 to 10.7.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.6.1 to 10.7.0
+    * @iot-app-kit/testing-util bumped from 10.6.1 to 10.7.0
+    * @iot-app-kit/ts-config bumped from 10.6.1 to 10.7.0
+    * eslint-config-iot-app-kit bumped from 10.6.1 to 10.7.0
+
 ## [10.6.1](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.6.0...react-components-v10.6.1) (2024-06-12)
 
 

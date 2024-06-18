@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.7.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.6.1...root-v10.7.0) (2024-06-18)
+
+
+### Features
+
+* customize gauge in dashboard config ([8af089e](https://github.com/awslabs/iot-app-kit/commit/8af089e94a2c11cab1c9473d384ed241da7f6461))
+* **dashboard:** add on configuration change ([e386353](https://github.com/awslabs/iot-app-kit/commit/e386353f8bc1888e3cc1c9a21b24e9012ae8682a))
+* **dashboard:** migration logic now supports avoiding collisions that lead to overlap ([c64e184](https://github.com/awslabs/iot-app-kit/commit/c64e184ad883c0515c3f6106e6e58f27b0ff69d3))
+* **dashboard:** move dashboard migration utility to app-kit ([99a9aa8](https://github.com/awslabs/iot-app-kit/commit/99a9aa81ea6feb20364fd6305f0e36627c1ae163))
+* **dashboard:** support custom toolbar ([c5374b5](https://github.com/awslabs/iot-app-kit/commit/c5374b5f8f3a4b399f83cc5c9a3adad604a64bff))
+* onViewportChange and currentViewport ([d63c9e3](https://github.com/awslabs/iot-app-kit/commit/d63c9e3a416e78a78b3a453755be39a6879eb07c))
+
+
+### Bug Fixes
+
+* **dashboard:** decimal places fixes ([710a6ae](https://github.com/awslabs/iot-app-kit/commit/710a6aeee8e16fbf7f204d9214dbd8c86fce16e2))
+* **dashboard:** ensure there is a current viewport ([dc31ecf](https://github.com/awslabs/iot-app-kit/commit/dc31ecfa29cc1fd809daf992027670ae8cb39519))
+* **dashboard:** make onSave optional ([1e92359](https://github.com/awslabs/iot-app-kit/commit/1e92359faa2c4ce3e8c169491729187b02e4562e))
+* **dashboard:** migration migrates custom name for properties ([bd7862b](https://github.com/awslabs/iot-app-kit/commit/bd7862b5faabe379821385e7cfb2f14a647da803))
+* **dashboard:** missing dependency for dashboard wrapper ([c6b73db](https://github.com/awslabs/iot-app-kit/commit/c6b73db473948be887e0968864a0f896fdc4d680))
+* **react-components:** add timezone to anomaly chart ([5379bd1](https://github.com/awslabs/iot-app-kit/commit/5379bd19d0d47e62f42a19230e9cf52e2a715d95))
+* **react-components:** anomaly chart timestamp padding ([b376bf4](https://github.com/awslabs/iot-app-kit/commit/b376bf4861f58bd5489c907d2ae72107a2178eb3))
+* **react-components:** do not use decimal places setting in y axis ([f9fbf74](https://github.com/awslabs/iot-app-kit/commit/f9fbf74311af528b89ad34333b36508eeb3d9ae5))
+* **react-components:** ensure chart uses initial passed in viewport ([0b17318](https://github.com/awslabs/iot-app-kit/commit/0b173182adb4180ca0065b4238549cd30a0af3d2))
+* **react-components:** fix chart flickering and bugginess in live mode ([3cc3b41](https://github.com/awslabs/iot-app-kit/commit/3cc3b41d59d5c799b750eb76d809007b30dfe2a8))
+* **react-components:** fix passed in viewport for anomaly widget ([f73fafc](https://github.com/awslabs/iot-app-kit/commit/f73fafcd5dfdf7238f69848f1808fbbb0b17f281))
+* **react-components:** fix support for anomaly datasource outside of time sync ([d45cc6b](https://github.com/awslabs/iot-app-kit/commit/d45cc6b45adb67b8bc44b975a2a65c5942f0d746))
+* **react-components:** make anomaly chart responsive ([4b31b8c](https://github.com/awslabs/iot-app-kit/commit/4b31b8cece18f1a1e1e91447c31ca79ec0b3867f))
+* **react-components:** timestamp bar correct date ([2063935](https://github.com/awslabs/iot-app-kit/commit/20639352a433cea9abfceee439f7aa9c36db05b9))
+
 ## [10.6.1](https://github.com/awslabs/iot-app-kit/compare/root-v10.6.0...root-v10.6.1) (2024-06-12)
 
 

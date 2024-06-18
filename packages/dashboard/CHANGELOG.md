@@ -1,5 +1,43 @@
 # Changelog
 
+## [10.7.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.6.1...dashboard-v10.7.0) (2024-06-18)
+
+
+### Features
+
+* customize gauge in dashboard config ([8af089e](https://github.com/awslabs/iot-app-kit/commit/8af089e94a2c11cab1c9473d384ed241da7f6461))
+* **dashboard:** add on configuration change ([e386353](https://github.com/awslabs/iot-app-kit/commit/e386353f8bc1888e3cc1c9a21b24e9012ae8682a))
+* **dashboard:** migration logic now supports avoiding collisions that lead to overlap ([c64e184](https://github.com/awslabs/iot-app-kit/commit/c64e184ad883c0515c3f6106e6e58f27b0ff69d3))
+* **dashboard:** move dashboard migration utility to app-kit ([99a9aa8](https://github.com/awslabs/iot-app-kit/commit/99a9aa81ea6feb20364fd6305f0e36627c1ae163))
+* **dashboard:** support custom toolbar ([c5374b5](https://github.com/awslabs/iot-app-kit/commit/c5374b5f8f3a4b399f83cc5c9a3adad604a64bff))
+* onViewportChange and currentViewport ([d63c9e3](https://github.com/awslabs/iot-app-kit/commit/d63c9e3a416e78a78b3a453755be39a6879eb07c))
+
+
+### Bug Fixes
+
+* **dashboard:** decimal places fixes ([710a6ae](https://github.com/awslabs/iot-app-kit/commit/710a6aeee8e16fbf7f204d9214dbd8c86fce16e2))
+* **dashboard:** ensure there is a current viewport ([dc31ecf](https://github.com/awslabs/iot-app-kit/commit/dc31ecfa29cc1fd809daf992027670ae8cb39519))
+* **dashboard:** make onSave optional ([1e92359](https://github.com/awslabs/iot-app-kit/commit/1e92359faa2c4ce3e8c169491729187b02e4562e))
+* **dashboard:** migration migrates custom name for properties ([bd7862b](https://github.com/awslabs/iot-app-kit/commit/bd7862b5faabe379821385e7cfb2f14a647da803))
+* **dashboard:** missing dependency for dashboard wrapper ([c6b73db](https://github.com/awslabs/iot-app-kit/commit/c6b73db473948be887e0968864a0f896fdc4d680))
+* **react-components:** timestamp bar correct date ([2063935](https://github.com/awslabs/iot-app-kit/commit/20639352a433cea9abfceee439f7aa9c36db05b9))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.6.1 to 10.7.0
+    * @iot-app-kit/core bumped from 10.6.1 to 10.7.0
+    * @iot-app-kit/core-util bumped from 10.6.1 to 10.7.0
+    * @iot-app-kit/react-components bumped from 10.6.1 to 10.7.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.6.1 to 10.7.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.6.1 to 10.7.0
+    * @iot-app-kit/testing-util bumped from 10.6.1 to 10.7.0
+    * @iot-app-kit/ts-config bumped from 10.6.1 to 10.7.0
+    * eslint-config-iot-app-kit bumped from 10.6.1 to 10.7.0
+
 ## [10.6.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.6.0...dashboard-v10.6.1) (2024-06-12)
 
 
