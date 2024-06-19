@@ -1,4 +1,4 @@
-import { RequestFunction } from '@iot-app-kit/core';
+import type { RequestFunction } from '@iot-app-kit/core';
 
 export type UniqueId = string;
 export type InvokeAssistantRequestFunction = RequestFunction<
@@ -18,10 +18,14 @@ export type AssistantClientInstanceParams<T> = {
 
   defaultContext: string;
 
-  // onResponse is called for each chunk returned from the streaming api response.
+  /**
+   * onResponse is called for each chunk returned from the streaming api response.
+   */
   onResponse: AssistantClientInvocationResponseHandler<T>;
 
-  // onComplete is called when all chunk have returned from the streaming api response.
+  /**
+   * onComplete is called when all chunk have returned from the streaming api response.
+   */
   onComplete: AssistantClientInvocationCompleteHandler;
 };
 
@@ -46,7 +50,6 @@ export type AssistantClientInvocationResponseHandler<T> = (
   invocationDetail: AssistantClientInvocationDetail
 ) => void;
 
-
 export type AssistantClientInvocationDetail = {
   context?: string;
   conversationId: UniqueId;
@@ -59,14 +62,21 @@ export type AssistantClientInvocationDetail = {
   returnExecutionSteps?: boolean;
 };
 
+export type AssistantClientSummarizationProperty = {
+  assetId: string;
+  propertyId: string;
+};
 
-/*
-### The below types will be removed when a new AWS SDK after the Sophon API are available
-import type {
-  InvokeAssistantRequest, 
-  InvokeAssistantResponse,
-} from '@aws-sdk/client-iotsitewise';
-*/
+export type AssistantClientSummarizationProperties =
+  AssistantClientSummarizationProperty[];
+
+/**
+ * ### The below types will be removed when a new AWS SDK after the Sophon API are available
+ * import type {
+ *   InvokeAssistantRequest,
+ *   InvokeAssistantResponse,
+ * } from '@aws-sdk/client-iotsitewise';
+ */
 
 export interface ChatMessage {
   text: string;
@@ -83,19 +93,27 @@ export interface EventSummaryRequest {
 }
 
 export interface InvokeAssistantRequest {
-  conversationId: string; // (Required) Creates a new conversation if
-  // the Id exists and is active. Otherwise,
-  // continue a conversation.
+  /**
+   * (Required) Creates a new conversation if
+   * the Id exists and is active. Otherwise,
+   * continue a conversation.
+   */
+  conversationId: string;
 
-  endConversation?: boolean; // (Optional) Whether to end the current
-  // conversation.
-  // Default to false, meaning continue the
-  // current conversation. Each conversation
-  // is automatically ended after 24 hours
+  /**
+   * (Optional) Whether to end the current conversation.
+   * Default to false, meaning continue the
+   * current conversation. Each conversation
+   * is automatically ended after 24 hours
+   */
+  endConversation?: boolean;
 
-  returnExecutionSteps?: boolean; // (Optional) Indicates whether API should
-  // stream back intermediate execution steps
-  // Default value is false
+  /**
+   * (Optional) Indicates whether API should
+   * stream back intermediate execution steps
+   * Default value is false
+   */
+  returnExecutionSteps?: boolean;
 
   message: {
     chatMessage?: ChatMessage[];
@@ -105,35 +123,41 @@ export interface InvokeAssistantRequest {
 }
 
 export interface InvokeAssistantResponse {
+  /**
+   * The intermediate step of an assistant invocation
+   */
   step: {
-    // The intermediate step of an assistant invocation
-
-    stepId: string; // An identifier of execution step
-    // that are total ordered within
-    // a turn
+    /**
+     * An identifier of execution step
+     * that are total ordered within a turn
+     */
+    stepId: string;
 
     rationale: {
-      // contains the reasoning of the agent given the user input
+      /**
+       * contains the reasoning of the agent given the user input
+       */
       text: string;
     };
 
+    /**
+     * contains information that will be input to the action group or
+     * knowledge base that is to be invoked or queried.
+     * tool indicates native tool or knowledgebase.
+     */
     toolInvocation: {
       toolName: string;
       toolInputsJson: string;
-    }; // contains information that will be
-    // input to the action group or
-    // knowledge base that is to be
-    // invoked or queried.
-    // tool indicates native tool or
-    // knowledgebase.
+    };
 
+    /**
+     * The Observation object contains the result or output of an action group
+     * or knowledge base, or the response to the user
+     */
     observation: {
       toolOutputsJson: string;
       response: string;
-    }; // The Observation object contains the
-    // result or output of an action group
-    // or knowledge base, or the response
-    // to the user
+    };
   };
 
   response: {
@@ -141,15 +165,17 @@ export interface InvokeAssistantResponse {
       content: ChatMessage[];
     };
 
+    /**
+     * The citation that supports the content generated
+     */
     citations?: [
-      // The citation that supports the
-      // content generated
       {
+        /**
+         * References to the actual data in user's S3 or other storage system
+         * as well as the file segment (if it is text-based reference)
+         */
         references: [
-          // References to the actual data
-          // in user's S3 or other storage system
-          // as well as the file segment (if
-          // it is text-based reference)
+          //
           {
             content: {
               text: string;
@@ -166,30 +192,35 @@ export interface InvokeAssistantResponse {
     ];
   };
 
-  // Exceptions
-  // Since the API natively supports streaming, the exception must be returned as
-  // an API response.
-
+  /**
+   * Exceptions
+   * Since the API natively supports streaming, the exception must be returned as
+   * an API response.
+   * e.g. System crashed (5xx)
+   */
   internalFailureException?: {
-    // e.g. System crashed (5xx)
     message: string;
   };
 
+  /**
+   * e.g. Access Iot Resource Denied in tools. It can happen when
+   * the builder does not give full access to an OTE.
+   */
   accessDeniedException?: {
-    // e.g. Access Iot Resource Denied
-    // in tools. It can happen when
-    // the builder does not give full
-    // access to an OTE.
     message: string;
   };
 
+  /**
+   * e.g Too much messages
+   */
   limitExceededException?: {
-    // e.g Too much messages
     message: string;
   };
 
+  /**
+   * e.g We might need this
+   */
   resourceNotFoundException?: {
-    // e.g We might need this
     message: string;
   };
 }

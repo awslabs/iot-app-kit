@@ -1,21 +1,16 @@
-import { createAssistantClient } from './assistantClient';
-import { FakeInvokeAssistant } from './assistantClientMockResponse';
+import { IoTSitewiseAssistantClient } from './client';
+import { FakeInvokeAssistant } from './mockedResponse';
 
 function flushPromises() {
   return new Promise(jest.requireActual('timers').setImmediate);
 }
 
-
 describe('AssistantClient', () => {
-  const responsesTotal = 3;
-
-  beforeAll(() => jest.useFakeTimers());
-  afterAll(() => jest.useRealTimers());
-
+  const conversationId = 'myAssistantConversation';
   beforeEach(() => jest.clearAllMocks());
 
   it('createAssistantClient return a new instance', () => {
-    const client = createAssistantClient({
+    const client = new IoTSitewiseAssistantClient({
       requestFns: {
         invokeAssistant: FakeInvokeAssistant,
       },
@@ -28,8 +23,10 @@ describe('AssistantClient', () => {
   });
 
   it('can set RequestFunctions aka AWS SDK clients', () => {
-    const mockInvokeAssistant = jest.fn().mockResolvedValue({ StreamResponse: [] });
-    const client = createAssistantClient({
+    const mockInvokeAssistant = jest
+      .fn()
+      .mockResolvedValue({ StreamResponse: [] });
+    const client = new IoTSitewiseAssistantClient({
       requestFns: {
         invokeAssistant: FakeInvokeAssistant,
       },
@@ -42,14 +39,14 @@ describe('AssistantClient', () => {
       invokeAssistant: mockInvokeAssistant,
     });
 
-    client.invoke('customer message', { context: 'additional context' });
+    client.invoke(conversationId, 'customer message');
 
     expect(mockInvokeAssistant).toBeCalled();
   });
 
   it('call invoke and return all responses', async () => {
     const onResponse = jest.fn();
-    const client = createAssistantClient({
+    const client = new IoTSitewiseAssistantClient({
       requestFns: {
         invokeAssistant: FakeInvokeAssistant,
       },
@@ -59,27 +56,17 @@ describe('AssistantClient', () => {
     });
     expect(client).toBeDefined();
 
-    jest.runAllTimers(); // run sleep timeout
-    await flushPromises(); // move to next tick and return yield
-
-    client.invoke('customer message', { context: 'additional context' });
+    client.invoke(conversationId, 'customer message', 'additional context');
 
     // simulate streaming API latency and partial responses
-    for (
-      let responseIndex = 0;
-      responseIndex < responsesTotal;
-      responseIndex += 1
-    ) {
-      jest.runAllTimers(); // run sleep timeout
-      await flushPromises(); // move to next tick and return yield
-    }
+    await flushPromises(); // move to next tick and return yield
 
     expect(onResponse).toBeCalledTimes(2);
   });
 
   it('call invoke and listen all responses have completed', async () => {
     const onComplete = jest.fn();
-    const client = createAssistantClient({
+    const client = new IoTSitewiseAssistantClient({
       requestFns: {
         invokeAssistant: FakeInvokeAssistant,
       },
@@ -89,17 +76,10 @@ describe('AssistantClient', () => {
     });
     expect(client).toBeDefined();
 
-    client.invoke('customer message', { context: 'additional context' });
+    client.invoke(conversationId, 'customer message', 'additional context');
 
     // simulate streaming API latency and partial responses
-    for (
-      let responseIndex = 0;
-      responseIndex <= responsesTotal;
-      responseIndex += 1
-    ) {
-      jest.runAllTimers(); // run sleep timeout
-      await flushPromises(); // move to next tick and return yield
-    }
+    await flushPromises(); // move to next tick and return yield
 
     expect(onComplete).toBeCalled();
   });

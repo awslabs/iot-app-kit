@@ -1,9 +1,4 @@
-import {
-  InvokeAssistantRequest,
-  InvokeAssistantResponse,
-  ChatMessage,
-  EventSummaryRequest,
-} from './assistantTypes';
+import type { InvokeAssistantRequest, InvokeAssistantResponse } from './types';
 
 interface StreamingInvokeAssistantResponse {
   StatusCode: number;
@@ -92,11 +87,8 @@ export const FakeInvokeAssistant = async (
     };
 
     const asyncIterator = (async function* () {
-      await sleep(500);
       yield response1;
-      await sleep(1000);
       yield response2;
-      await sleep(2000);
       yield response3;
     })();
 
@@ -106,7 +98,3 @@ export const FakeInvokeAssistant = async (
     });
   });
 };
-
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
