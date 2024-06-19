@@ -83,4 +83,64 @@ describe('AssistantClient', () => {
 
     expect(onComplete).toBeCalled();
   });
+
+  it('call endConversation and invoke assistant with endConversation flag as true', async () => {
+    const mockInvokeAssistant = jest
+      .fn()
+      .mockResolvedValue({ StreamResponse: [] });
+    const client = new IoTSitewiseAssistantClient({
+      requestFns: {
+        invokeAssistant: mockInvokeAssistant,
+      },
+      defaultContext: '',
+      onResponse: () => {},
+      onComplete: () => {},
+    });
+
+    client.endConversation(conversationId);
+
+    expect(mockInvokeAssistant).toBeCalledWith(
+      expect.objectContaining({
+        context: expect.any(String),
+        conversationId,
+        endConversation: true,
+        message: {
+          chatMessage: [{ text: expect.any(String) }],
+        },
+      })
+    );
+  });
+
+  it('call generateSummary and invoke assistant with summary utterance and context', async () => {
+    const mockInvokeAssistant = jest
+      .fn()
+      .mockResolvedValue({ StreamResponse: [] });
+    const client = new IoTSitewiseAssistantClient({
+      requestFns: {
+        invokeAssistant: mockInvokeAssistant,
+      },
+      defaultContext: '',
+      onResponse: () => {},
+      onComplete: () => {},
+    });
+
+    const summaryUtterance = 'generate a summary';
+    const summaryInstructions = 'some instructions';
+    client.generateSummary(
+      conversationId,
+      [],
+      summaryUtterance,
+      summaryInstructions
+    );
+
+    expect(mockInvokeAssistant).toBeCalledWith(
+      expect.objectContaining({
+        context: summaryInstructions,
+        conversationId,
+        message: {
+          chatMessage: [{ text: summaryUtterance }],
+        },
+      })
+    );
+  });
 });
