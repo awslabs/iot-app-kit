@@ -21,6 +21,8 @@ import {
   rangeValidator,
   viewportToDateRange,
 } from '@iot-app-kit/core-util';
+import DashboardView from '~/components/dashboard/view';
+import { MOCK_DASHBOARD_CONFIG } from './mockData';
 
 /**
  * Data is mocked by the service worker started above.
@@ -110,7 +112,7 @@ const ViewportPicker = (props: {
   );
 };
 
-export const CustomToolbar: ComponentStory<typeof Dashboard> = () => {
+export const EditableDashboard: ComponentStory<typeof Dashboard> = () => {
   const [viewmode, setViewmode] = useState<'edit' | 'preview'>('edit');
   const [viewport, setViewport] = useState<Viewport | undefined>(undefined);
   const [dashboardConfiguration, setDashboardConfiguration] =
@@ -175,6 +177,57 @@ export const CustomToolbar: ComponentStory<typeof Dashboard> = () => {
       onViewportChange={onViewportChange}
       toolbar={customToolbar}
       onDashboardConfigurationChange={onConfigChange}
+    />
+  );
+};
+
+export const ViewOnlyDashboard: ComponentStory<typeof DashboardView> = () => {
+  const [viewport, setViewport] = useState<Viewport | undefined>(undefined);
+
+  const onViewportChange = (v: Viewport) => {
+    console.log('### onViewportChange', v);
+    setViewport(v);
+  };
+
+  const customToolbar = () => {
+    return (
+      <div
+        style={{
+          color: 'pink',
+          fontWeight: 'bold',
+          height: '20px',
+          padding: '20px',
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE
+        ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW
+        MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN
+        VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR
+        IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM
+        TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE
+        ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW
+        MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN
+        VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR IN VIEW MODE ❤️❤️❤️❤️❤️CUSTOM TOOLBAR
+        IN VIEW MODE ❤️❤️❤️❤️❤️
+        <ViewportPicker
+          viewport={viewport}
+          onChangeValue={(value: DateRangePickerProps.Value) => {
+            setViewport(dateRangeToViewport(value));
+          }}
+        />
+      </div>
+    );
+  };
+
+  return (
+    <DashboardView
+      {...emptyDashboardConfiguration}
+      dashboardConfiguration={MOCK_DASHBOARD_CONFIG}
+      currentViewport={viewport}
+      onViewportChange={onViewportChange}
+      toolbar={customToolbar}
     />
   );
 };

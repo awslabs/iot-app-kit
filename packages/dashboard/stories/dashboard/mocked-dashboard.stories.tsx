@@ -7,11 +7,8 @@ import { DashboardClientConfiguration } from '../../src/types';
 import { DEFAULT_REGION } from '~/msw/constants';
 import { useWorker } from '~/msw/useWorker';
 import { RefreshRate } from '~/components/refreshRate/types';
-import {
-  DEMO_TURBINE_ASSET_1,
-  DEMO_TURBINE_ASSET_1_PROPERTY_1,
-  DEMO_TURBINE_ASSET_1_PROPERTY_2,
-} from 'testing/siteWiseQueries';
+import DashboardView from '~/components/dashboard/view';
+import { MOCK_DASHBOARD_CONFIG } from './mockData';
 
 /**
  * Data is mocked by the service worker started above.
@@ -44,44 +41,6 @@ const emptyDashboardConfiguration: DashboardProperties = {
   onSave: () => Promise.resolve(),
 };
 
-const widgetDashboardConfiguration = {
-  clientConfiguration,
-  dashboardConfiguration: {
-    displaySettings,
-    defaultViewport,
-    querySettings,
-    widgets: [
-      {
-        type: 'iot-line-chart',
-        id: 'some id',
-        height: 15,
-        width: 27,
-        x: 5,
-        y: 5,
-        z: 0,
-        properties: {
-          queryConfig: {
-            source: 'iotsitewise',
-            query: {
-              assets: [
-                {
-                  assetId: DEMO_TURBINE_ASSET_1,
-                  properties: [
-                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
-                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
-                  ],
-                },
-              ],
-            },
-          },
-        },
-      },
-    ],
-  },
-  name: 'EC2 test dashboard',
-  onSave: () => Promise.resolve(),
-};
-
 registerPlugin('metricsRecorder', {
   provider: () => ({
     record: (...args) => console.log('record metric:', ...args),
@@ -107,6 +66,9 @@ export const Empty: ComponentStory<typeof Dashboard> = () => (
   <Dashboard {...emptyDashboardConfiguration} />
 );
 
-export const SingleWidget: ComponentStory<typeof Dashboard> = () => (
-  <Dashboard {...widgetDashboardConfiguration} />
+export const ViewOnly: ComponentStory<typeof Dashboard> = () => (
+  <DashboardView
+    {...emptyDashboardConfiguration}
+    dashboardConfiguration={MOCK_DASHBOARD_CONFIG}
+  />
 );
