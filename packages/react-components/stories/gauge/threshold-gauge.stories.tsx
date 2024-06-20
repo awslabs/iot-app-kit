@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Gauge } from '../../src';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY } from './mock-data';
@@ -7,6 +7,7 @@ import {
   DEFAULT_GAUGE_STYLES,
 } from '../../src/components/gauge/constants';
 import { GaugeSettings } from '../../src/components/gauge/types';
+import { Threshold } from '@iot-app-kit/core';
 
 const THRESHOLD_1 = {
   value: 30,
@@ -83,6 +84,39 @@ export const ThresholdGauge: ComponentStory<typeof Gauge> = ({
 }) => {
   return (
     <div style={{ height: '500px', width: '600px', padding: '20px' }}>
+      <Gauge
+        viewport={{ duration: '5m' }}
+        significantDigits={significantDigits}
+        query={MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY}
+        settings={settings as GaugeSettings}
+        thresholds={thresholds}
+      />
+
+      <div>
+        Thresholds:
+        {thresholds?.map(({ value, comparisonOperator }) => (
+          <div>
+            {comparisonOperator} {value}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export const DeleteableThresholdsGauge: ComponentStory<typeof Gauge> = ({
+  significantDigits,
+  ...settings
+}) => {
+  const [thresholds, setThresholds] = useState([
+    THRESHOLD_1,
+    THRESHOLD_2,
+    THRESHOLD_3,
+  ] as Threshold[]);
+
+  return (
+    <div style={{ height: '500px', width: '600px', padding: '20px' }}>
+      <button onClick={() => setThresholds([])}>Remove thresholds</button>
       <Gauge
         viewport={{ duration: '5m' }}
         significantDigits={significantDigits}
