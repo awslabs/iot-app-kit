@@ -20,6 +20,9 @@ export default {
     axis: {
       control: { type: 'object' },
     },
+    gestures: {
+      control: { type: 'boolean' },
+    },
     predictionDefinitionId: {
       control: { type: 'text' },
       defaultValue: 'a85b0fb2-b259-441c-aacc-d7d7495214f5',
