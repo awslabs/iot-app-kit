@@ -25,6 +25,7 @@ export type AnomalyChartWithData = Partial<AnomalyChartDataSourceOption> &
   (AnomalyChartDataSourceOption | AnomalyChartQueryOption);
 
 export type AnomalyChartOptions = AnomalyChartWithData & {
+  gestures?: boolean;
   mode?: ThemeMode;
   decimalPlaces?: number;
   viewport?: Viewport;

@@ -26,11 +26,13 @@ export interface EChartsWrapperProps {
  *  - chartRef: ref to an Echarts instance
  */
 export const useZoomableECharts = ({
+  gestures,
   theme,
   viewport,
   setViewport,
   viewportType,
 }: {
+  gestures?: boolean;
   theme?: string;
   viewport?: Viewport;
   setViewport?: (viewport: Viewport, lastUpdatedBy?: string) => void;
@@ -78,7 +80,13 @@ export const useZoomableECharts = ({
     }
   }, [width, height]);
 
-  useUnboundedDataZoom({ chart, viewport, setViewport, viewportType });
+  useUnboundedDataZoom({
+    chart,
+    viewport,
+    setViewport,
+    viewportType,
+    gestures,
+  });
 
   return { chartRef, ref, sizeRef };
 };

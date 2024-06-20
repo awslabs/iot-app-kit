@@ -102,6 +102,7 @@ export type AnomalyEChartOptions = {
   DataSetOptions;
 
 export const useAnomalyEchart = ({
+  gestures = true,
   mode,
   ...options
 }: AnomalyEChartOptions) => {
@@ -121,6 +122,7 @@ export const useAnomalyEchart = ({
   );
 
   const { ref, chartRef, sizeRef } = useZoomableECharts({
+    gestures,
     theme: mode === 'dark' ? 'cloudscapeDarkTheme' : 'cloudscapeLightTheme',
     viewport: utilizedViewport,
     setViewport,
