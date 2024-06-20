@@ -5,6 +5,7 @@ import {
   TimeSeriesData,
   TimeSeriesDataRequest,
   Viewport,
+  Primitive,
 } from '@iot-app-kit/core';
 import type { WidgetSettings } from '../../common/dataTypes';
 
@@ -36,4 +37,15 @@ export type GaugeSettings = {
   unitFontSize?: number; // pixels
   yMin?: number;
   yMax?: number;
+};
+
+export type GaugeConfigurationOptions = Pick<
+  GaugeProps,
+  'thresholds' | 'settings' | 'significantDigits'
+> & {
+  gaugeValue?: Primitive;
+  name?: string;
+  unit?: string;
+  error?: string;
+  isLoading?: boolean;
 };

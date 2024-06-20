@@ -1,109 +1,124 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useReducer } from 'react';
 import { Primitive } from '@iot-app-kit/core';
-import {
-  DEFAULT_GAUGE_PROGRESS_SETTINGS,
-  DEFAULT_GAUGE_PROGRESS_SETTINGS_WITH_THRESHOLDS,
-  DEFAULT_GAUGE_SETTINGS,
-} from '../constants';
 import { ChartRef } from '../../../hooks/useECharts';
-import { GaugeProps } from '../types';
-import { useEmptyGaugeSeries } from '../gaugeOptions/series/useEmptyGaugeSeries';
-import { useProgressBarGaugeSeries } from '../gaugeOptions/series/useProgressBarGaugeSeries';
-import { useThresholdOutsideArcSeries } from '../gaugeOptions/series/useThresholdOutsideArcSeries';
+import { GaugeConfigurationOptions } from '../types';
+import { isEqual, merge } from 'lodash';
+import { useCustomCompareEffect } from 'react-use';
+import { convertSeries } from '../converters/convertSeries';
+import { convertDataset } from '../converters/convertDataset';
 
-export type GaugeConfigurationOptions = Pick<
-  GaugeProps,
-  'thresholds' | 'settings' | 'significantDigits'
-> & {
-  gaugeValue?: Primitive;
-  name?: string;
-  unit?: string;
-  error?: string;
-  isLoading?: boolean;
+type GaugeOptionState = {
+  series: ReturnType<typeof convertSeries>;
+  dataset: ReturnType<typeof convertDataset>;
+  replaceMerge: string[];
+  mergeOption?: { notMerge: boolean };
+};
+
+type UpdateGaugeAction =
+  | { type: 'updateData'; value?: Primitive }
+  | { type: 'updateConfiguration'; configuration: GaugeConfigurationOptions };
+
+const initialState = (
+  config: GaugeConfigurationOptions
+): Omit<GaugeOptionState, 'chartRef'> => {
+  const {
+    settings,
+    name,
+    gaugeValue,
+    unit,
+    significantDigits,
+    thresholds,
+    isLoading,
+    error,
+  } = config;
+
+  return {
+    dataset: convertDataset(gaugeValue),
+    series: convertSeries({
+      name,
+      unit,
+      significantDigits,
+      thresholds,
+      settings,
+      isLoading,
+      error,
+    }),
+    replaceMerge: [],
+  };
+};
+
+const reducer = (
+  state: GaugeOptionState,
+  action: UpdateGaugeAction
+): GaugeOptionState => {
+  if (action.type === 'updateData') {
+    return {
+      ...state,
+      dataset: convertDataset(action.value),
+      replaceMerge: [],
+    };
+  } else if (action.type === 'updateConfiguration') {
+    const series = action.configuration.isLoading
+      ? state.series
+      : convertSeries(action.configuration);
+    // use the replace strategy if the series has changed
+    const replaceSeries =
+      !action.configuration.isLoading && !isEqual(state.series, series);
+
+    return {
+      ...state,
+      series,
+      replaceMerge: replaceSeries ? ['series'] : [],
+    };
+  }
+  return state;
 };
 
 export const useGaugeConfiguration = (
   chartRef: ChartRef,
-  {
-    isLoading,
-    thresholds,
-    gaugeValue,
-    name,
+  config: GaugeConfigurationOptions,
+  mode?: string
+) => {
+  const {
     settings,
+    gaugeValue,
     unit,
     significantDigits,
+    thresholds,
+    isLoading,
     error,
-  }: GaugeConfigurationOptions
-) => {
-  const hasThresholds = Boolean(
-    // hasThresholds filters if value is an empty string, EQ and CONTAINS operators since they are not supported as gauge thresholds
-    thresholds?.filter(
-      (t) =>
-        t.comparisonOperator !== 'EQ' &&
-        t.comparisonOperator !== 'CONTAINS' &&
-        t.value !== ''
-    )?.length ?? 0 > 0
+  } = config;
+
+  const initialEchartsState = initialState(config);
+  const [{ replaceMerge, ...echartOption }, dispatch] = useReducer(
+    reducer,
+    initialEchartsState
   );
 
-  const defaultSettings = useMemo(() => {
-    if (error || isLoading) return DEFAULT_GAUGE_SETTINGS;
-
-    return hasThresholds
-      ? DEFAULT_GAUGE_PROGRESS_SETTINGS_WITH_THRESHOLDS
-      : DEFAULT_GAUGE_PROGRESS_SETTINGS;
-  }, [error, hasThresholds, isLoading]);
+  useEffect(() => {
+    const mergedOptions = merge({}, {}, echartOption);
+    chartRef.current?.setOption(mergedOptions, { replaceMerge });
+  }, [chartRef, echartOption, mode, replaceMerge]);
 
   useEffect(() => {
-    const gauge = chartRef.current;
-    if (!gauge) return;
+    dispatch({ type: 'updateData', value: gaugeValue });
+  }, [gaugeValue]);
 
-    // Set default Gauge options
-    gauge.setOption(defaultSettings);
-  }, [chartRef, defaultSettings]);
-
-  const emptySeries = useEmptyGaugeSeries({
-    settings,
-  });
-
-  const progressSeries = useProgressBarGaugeSeries({
-    hasThresholds,
-    name,
-    gaugeValue,
-    unit,
-    significantDigits,
-    thresholds,
-    settings,
-  });
-
-  const thresholdSeries = useThresholdOutsideArcSeries({
-    hasThresholds,
-    name,
-    gaugeValue,
-    unit,
-    significantDigits,
-    thresholds,
-    settings,
-  });
-
-  useEffect(() => {
-    // Update chart
-    const gauge = chartRef.current;
-    !(isLoading || error)
-      ? gauge?.setOption({
-          series: [
-            emptySeries,
-            progressSeries,
-            ...(hasThresholds ? [thresholdSeries] : []),
-          ],
-        })
-      : null;
-  }, [
-    chartRef,
-    hasThresholds,
-    emptySeries,
-    progressSeries,
-    thresholdSeries,
-    isLoading,
-    error,
-  ]);
+  useCustomCompareEffect(
+    () => {
+      dispatch({
+        type: 'updateConfiguration',
+        configuration: {
+          unit,
+          significantDigits,
+          thresholds,
+          settings,
+          isLoading,
+          error,
+        },
+      });
+    },
+    [{ unit, significantDigits, thresholds, settings, isLoading, error }],
+    isEqual
+  );
 };
