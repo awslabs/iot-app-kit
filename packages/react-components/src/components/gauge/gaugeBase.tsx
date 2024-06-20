@@ -42,16 +42,20 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
   // apply loading animation to echart instance
   useLoadableEChart(chartRef, isLoading);
 
-  useGaugeConfiguration(chartRef, {
-    isLoading,
-    thresholds,
-    gaugeValue,
-    name,
-    settings,
-    unit,
-    significantDigits,
-    error,
-  });
+  useGaugeConfiguration(
+    chartRef,
+    {
+      isLoading,
+      thresholds,
+      gaugeValue,
+      name,
+      settings,
+      unit,
+      significantDigits,
+      error,
+    },
+    options.theme
+  );
 
   // resize on widget resize
   useResizableGauge(chartRef, size);
