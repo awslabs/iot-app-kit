@@ -24,7 +24,12 @@ const AnomalyDataSourceLoader = new DataSourceLoader([
 ]);
 
 export const AnomalyChart = (options: AnomalyChartOptions) => {
-  const { showTimestamp = true, viewport, ...configuration } = options;
+  const {
+    gestures = true,
+    showTimestamp = true,
+    viewport,
+    ...configuration
+  } = options;
 
   const {
     viewport: utilizedViewport,
@@ -48,6 +53,7 @@ export const AnomalyChart = (options: AnomalyChartOptions) => {
 
   const { ref, sizeRef } = useAnomalyEchart({
     ...configuration,
+    gestures,
     showTimestamp,
     data,
     description,

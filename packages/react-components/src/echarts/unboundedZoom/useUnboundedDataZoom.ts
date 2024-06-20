@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useReducer, useRef } from 'react';
 import { useEffectOnce, useUpdateEffect } from 'react-use';
-import { DataZoomComponentOption, ECharts } from 'echarts';
+import {
+  DataZoomComponentOption,
+  ECharts,
+  ToolboxComponentOption,
+} from 'echarts';
 import {
   Viewport,
   isHistoricalViewport,
@@ -12,7 +16,10 @@ import {
 import { useViewport } from '../../hooks/useViewport';
 import {
   DEFAULT_DATA_ZOOM,
-  DEFAULT_TOOLBOX,
+  DEFAULT_DATA_ZOOM_GESTURES_DISABLED,
+  DEFAULT_DATA_ZOOM_GESTURES_ENABLED,
+  DEFAULT_TOOLBOX_GESTURES_ENABLED,
+  DEFAULT_TOOLBOX_GESTURES_DISABLED,
   ECHARTS_GESTURE,
   LIVE_MODE_REFRESH_RATE_MS,
 } from './constants';
@@ -87,13 +94,51 @@ const reducer = (state: TickState, action: TickAction): TickState => {
   return state;
 };
 
+const updateGesturesOptions = (
+  gestures: boolean | undefined,
+  dataZoomOption: DataZoomComponentOption,
+  toolboxOption: ToolboxComponentOption
+) => {
+  if (gestures) {
+    // enabled gestures specific option settings
+    dataZoomOption = {
+      ...dataZoomOption,
+      ...DEFAULT_DATA_ZOOM_GESTURES_ENABLED,
+    };
+    toolboxOption = DEFAULT_TOOLBOX_GESTURES_ENABLED;
+  } else {
+    // disabled gestures specific option settings
+    dataZoomOption = {
+      ...dataZoomOption,
+      ...DEFAULT_DATA_ZOOM_GESTURES_DISABLED,
+    };
+    toolboxOption = DEFAULT_TOOLBOX_GESTURES_DISABLED;
+  }
+  return { dataZoomOption, toolboxOption };
+};
+
+const dispatchGesturesEnablement = (
+  gestures?: boolean,
+  chart?: ECharts | null
+) => {
+  if (!gestures) {
+    chart?.dispatchAction({
+      type: 'takeGlobalCursor',
+      key: 'dataZoomSelect',
+      dataZoomSelectActive: false,
+    });
+  }
+};
+
 export const useUnboundedDataZoom = ({
   chart,
+  gestures,
   viewport,
   setViewport,
   viewportType,
 }: {
   chart: ECharts | null;
+  gestures?: boolean;
   viewport: Viewport | undefined;
   setViewport?: (viewport: Viewport, lastUpdatedBy?: string) => void;
   viewportType: UtilizedViewportType;
@@ -124,16 +169,29 @@ export const useUnboundedDataZoom = ({
   const zoomCache = useRef<DataZoomComponentOption | undefined>(undefined);
   useEffect(() => {
     if (chart && zoomCache.current) {
+      let dataZoomOption = zoomCache.current;
+      let toolboxOption = DEFAULT_TOOLBOX_GESTURES_ENABLED;
+
+      ({ dataZoomOption, toolboxOption } = updateGesturesOptions(
+        gestures,
+        dataZoomOption,
+        toolboxOption
+      ));
+
+      toolboxOption = merge(toolboxOption, {
+        feature: {
+          dataZoom: { title: { zoom: zoomTitle, back: backZoomTitle } },
+        },
+      });
+
+      // WARN: enablement needs to dispatch before chart option
+      dispatchGesturesEnablement(gestures, chart);
       chart.setOption({
-        dataZoom: zoomCache.current,
-        toolbox: merge({}, DEFAULT_TOOLBOX, {
-          feature: {
-            dataZoom: { title: { zoom: zoomTitle, back: backZoomTitle } },
-          },
-        }),
+        dataZoom: dataZoomOption,
+        toolbox: toolboxOption,
       });
     }
-  }, [chart, zoomTitle, backZoomTitle]);
+  }, [chart, zoomTitle, backZoomTitle, gestures]);
 
   /**
    * function for setting the dataZoom chart option on the echart instance
@@ -142,15 +200,30 @@ export const useUnboundedDataZoom = ({
     ({ startValue, endValue }: { startValue: number; endValue: number }) => {
       cancelAnimationFrame(frameRef.current);
       frameRef.current = requestAnimationFrame(() => {
-        const dataZoomOption = { ...DEFAULT_DATA_ZOOM, startValue, endValue };
+        let dataZoomOption: DataZoomComponentOption = {
+          ...DEFAULT_DATA_ZOOM,
+          startValue,
+          endValue,
+        };
+        let toolboxOption = DEFAULT_TOOLBOX_GESTURES_ENABLED;
+
+        ({ dataZoomOption, toolboxOption } = updateGesturesOptions(
+          gestures,
+          dataZoomOption,
+          toolboxOption
+        ));
+
         zoomCache.current = dataZoomOption;
+
+        // WARN: enablement needs to dispatch before chart option
+        dispatchGesturesEnablement(gestures, chart);
         chart?.setOption({
           dataZoom: dataZoomOption,
-          toolbox: DEFAULT_TOOLBOX,
+          toolbox: toolboxOption,
         });
       });
     },
-    [chart]
+    [chart, gestures]
   );
 
   /**

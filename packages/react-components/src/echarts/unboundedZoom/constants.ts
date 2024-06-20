@@ -1,4 +1,8 @@
-import { DataZoomComponentOption, XAXisComponentOption } from 'echarts';
+import {
+  DataZoomComponentOption,
+  ToolboxComponentOption,
+  XAXisComponentOption,
+} from 'echarts';
 
 export const ECHARTS_GESTURE = 'echarts-gesture';
 
@@ -8,6 +12,14 @@ export const DEFAULT_DATA_ZOOM: DataZoomComponentOption = {
   zoomOnMouseWheel: true,
   moveOnMouseMove: 'shift',
   moveOnMouseWheel: false,
+};
+
+export const DEFAULT_DATA_ZOOM_GESTURES_ENABLED: DataZoomComponentOption = {
+  disabled: false,
+};
+
+export const DEFAULT_DATA_ZOOM_GESTURES_DISABLED: DataZoomComponentOption = {
+  disabled: true,
 };
 
 // this is the chart live mode refresh rate, this should be inline with the animation props
@@ -32,7 +44,7 @@ export const DEFAULT_X_AXIS: XAXisComponentOption = {
   max: 4102513200000, // Jan 01 2100 19:00:00 UTC
 };
 
-export const DEFAULT_TOOLBOX = {
+export const DEFAULT_TOOLBOX_GESTURES_ENABLED: ToolboxComponentOption = {
   show: true,
   top: 0,
   right: 8,
@@ -43,4 +55,8 @@ export const DEFAULT_TOOLBOX = {
       yAxisIndex: 'none',
     },
   },
+};
+
+export const DEFAULT_TOOLBOX_GESTURES_DISABLED: ToolboxComponentOption = {
+  show: false,
 };
