@@ -2,8 +2,6 @@ import React, { useMemo } from 'react';
 import { useStableDashboardConfiguration } from '~/hooks/useStableDashboardConfiguration';
 import Dashboard, { DashboardProperties } from './index';
 
-const DEFAULT_DASHBOARD_VIEWPORT = { duration: '10m' };
-
 export const DashboardWrapper: React.FC<DashboardProperties> = ({
   onSave,
   clientConfiguration,
@@ -11,7 +9,7 @@ export const DashboardWrapper: React.FC<DashboardProperties> = ({
   edgeMode = 'disabled',
   initialViewMode,
   name,
-  currentViewport = DEFAULT_DASHBOARD_VIEWPORT,
+  currentViewport,
   onViewportChange,
   toolbar,
   onDashboardConfigurationChange,

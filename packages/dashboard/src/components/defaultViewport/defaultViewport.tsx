@@ -9,11 +9,14 @@ import { Viewport } from '@iot-app-kit/core';
 import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { messages } from './constants';
-import { useDefaultViewport } from './useDefaultViewport';
 
-export const DefaultViewport = () => {
-  const { defaultViewport, onUpdateDefaultViewport } = useDefaultViewport();
-
+export const DefaultViewport = ({
+  defaultViewport,
+  onViewportChange,
+}: {
+  defaultViewport: Viewport;
+  onViewportChange: (viewport: Viewport) => void;
+}) => {
   const { control, setValue, clearErrors } = useForm<{
     defaultViewport: Viewport | undefined;
   }>({
@@ -38,10 +41,8 @@ export const DefaultViewport = () => {
               expandToViewport={true}
               onChange={({ detail: { value } }) => {
                 if (!value) return;
+                onViewportChange(dateRangeToViewport(value));
                 field.onChange(value);
-                onUpdateDefaultViewport(
-                  JSON.stringify(dateRangeToViewport(value))
-                );
               }}
               value={viewportToDateRange(defaultViewport)}
               showClearButton={false}
