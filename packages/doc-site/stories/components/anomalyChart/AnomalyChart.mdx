@@ -33,12 +33,15 @@ The Anomaly chart is a visualization tool that provides a timeline view of anoma
 These properties are used to specify the data that the chart will display, at least one of these must be defined. You can use either query or data, but not both. Only one anomaly can be visualized at a time.
 
 - **query** (object) This property specifies the query that will retrieve the anomaly data to be visualized.
+  
   [Learn more about the anomaly widget's queries](/docs/components-anomalychart--query).
 
 - **data** (array) This property allows you to provide raw data that the component will visualize.
-  [Learn more about the anomaly widget's data](/docs/components-anomalychart--data)
+  
+  [Learn more about the anomaly widget's data](/docs/components-anomalychart--data).
 
 **viewport** (object, optional) Specifies the time interval that the chart will visualize. If not provided, the chart will utilize the viewport specified by its ViewportManager. If there is no ViewportManager and no viewport defined, the default viewport will be calculated based on the minimum and maximum dates in the data.
+  
   [Learn more about the viewport](/docs/core-viewport--docs).
 
 **mode** (string, optional) Sets the chart's light or dark mode theme. Can be one of the following strings:
