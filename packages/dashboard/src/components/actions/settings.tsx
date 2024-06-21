@@ -1,6 +1,12 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 
-import { Box, Modal, SpaceBetween } from '@cloudscape-design/components';
+import {
+  Button,
+  Box,
+  Modal,
+  SpaceBetween,
+} from '@cloudscape-design/components';
 
 import LabeledInput from '../util/labeledInput';
 import { useGridSettings } from './useGridSettings';
@@ -8,6 +14,8 @@ import { numberFromDetail } from '~/util/inputEvent';
 import DecimalPlaces from '../decimalPlaces';
 import { isNumeric } from '@iot-app-kit/core-util';
 import { DefaultViewport } from '../defaultViewport';
+import { Viewport } from '@iot-app-kit/core';
+import { useDefaultViewport } from '../defaultViewport/useDefaultViewport';
 
 export type DashboardSettingsProps = {
   onClose: () => void;
@@ -18,6 +26,7 @@ const DashboardSettings: React.FC<DashboardSettingsProps> = ({
   onClose,
   isVisible,
 }) => {
+  const { defaultViewport, onUpdateDefaultViewport } = useDefaultViewport();
   const {
     rows,
     columns,
@@ -29,11 +38,34 @@ const DashboardSettings: React.FC<DashboardSettingsProps> = ({
     onChangeSignificantDigits,
   } = useGridSettings();
 
+  const [changedSignificantDigits, setSignificantDigits] =
+    useState<number>(significantDigits);
+  const [changedCellSize, setCellSize] = useState<number>(cellSize);
+  const [changedNumberRows, setNumberRows] = useState<number>(rows);
+  const [changedNumberColumns, setNumberColumns] = useState<number>(columns);
+  const [changedViewport, setViewport] = useState<Viewport>(defaultViewport);
+
+  useEffect(() => {
+    setViewport(defaultViewport);
+  }, [JSON.stringify(defaultViewport), setViewport]);
+
   const onSignificantDigitsChange = (value: string) => {
     const newValue = (isNumeric(value) && parseInt(value)) || 0;
     if (newValue >= 0 && newValue <= 100) {
-      onChangeSignificantDigits(newValue);
+      setSignificantDigits(newValue);
     }
+  };
+
+  const onApplyChanges = () => {
+    changedSignificantDigits !== significantDigits &&
+      onChangeSignificantDigits(changedSignificantDigits);
+    changedCellSize !== cellSize && onChangeCellSize(changedCellSize);
+    changedNumberRows !== rows && onChangeNumberOfRows(changedNumberRows);
+    changedNumberColumns !== columns &&
+      onChangeNumberOfColumns(changedNumberColumns);
+    changedViewport !== defaultViewport &&
+      onUpdateDefaultViewport(JSON.stringify(changedViewport));
+    onClose();
   };
 
   return (
@@ -42,35 +74,48 @@ const DashboardSettings: React.FC<DashboardSettingsProps> = ({
       visible={isVisible}
       closeAriaLabel='Close modal'
       header='Dashboard Settings'
+      footer={
+        <Box float='right'>
+          <SpaceBetween direction='horizontal' size='xs'>
+            <Button onClick={onClose} variant='link'>
+              Cancel
+            </Button>
+            <Button onClick={onApplyChanges} variant='primary'>
+              Apply changes
+            </Button>
+          </SpaceBetween>
+        </Box>
+      }
     >
       <Box>
         <SpaceBetween direction='vertical' size='l'>
-          <DefaultViewport />
+          <DefaultViewport
+            defaultViewport={changedViewport}
+            onViewportChange={(viewport) => setViewport(viewport)}
+          />
           <DecimalPlaces
             showFormFieldLabel={true}
             onSignificantDigitsChange={onSignificantDigitsChange}
-            significantDigits={significantDigits}
+            significantDigits={changedSignificantDigits}
             shouldClearErrors={isVisible}
           />
           <LabeledInput
             label='Cell Size'
             type='number'
-            value={cellSize.toFixed()}
-            onChange={(event) => onChangeCellSize(numberFromDetail(event))}
+            value={changedCellSize.toFixed()}
+            onChange={(event) => setCellSize(numberFromDetail(event))}
           />
           <LabeledInput
             label='Number of Rows'
             type='number'
-            value={rows.toFixed()}
-            onChange={(event) => onChangeNumberOfRows(numberFromDetail(event))}
+            value={changedNumberRows.toFixed()}
+            onChange={(event) => setNumberRows(numberFromDetail(event))}
           />
           <LabeledInput
             label='Number of Columns'
             type='number'
-            value={columns.toFixed()}
-            onChange={(event) =>
-              onChangeNumberOfColumns(numberFromDetail(event))
-            }
+            value={changedNumberColumns.toFixed()}
+            onChange={(event) => setNumberColumns(numberFromDetail(event))}
           />
         </SpaceBetween>
       </Box>
