@@ -6,6 +6,7 @@ import {
   mockTimeSeriesDataQueryLoading,
 } from '@iot-app-kit/testing-util';
 import { mockSinWaveData } from '../../mockSinWaveData';
+import React from 'react';
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
 const meta: Meta<typeof KPI> = {
@@ -18,27 +19,25 @@ export default meta;
 type Story = StoryObj<typeof KPI>;
 
 export const Standard: Story = {
+  render: (props) => (
+    <div style={{ width: '200px', height: '150px' }}>
+      <KPI {...props} />
+    </div>
+  ),
   args: {
     query: mockSinWaveData('5s'),
-    settings: {
-      showUnit: true,
-      showName: true,
-      showTimestamp: true,
-      showAggregationAndResolution: true,
-      fontSize: 30,
-      secondaryFontSize: 12,
-      backgroundColor: '#ffffff',
-    }
   },
 };
 
 export const Error: Story = {
+  ...Standard,
   args: {
-    query: mockTimeSeriesDataQueryWithError('some error message'),
+    query: mockTimeSeriesDataQueryWithError('Error! Failed to authenticate user.'),
   },
 };
 
 export const Loading: Story = {
+  ...Standard,
   args: {
     query: mockTimeSeriesDataQueryLoading(),
   },

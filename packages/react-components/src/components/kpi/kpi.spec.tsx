@@ -32,7 +32,7 @@ it('renders', async () => {
     DATA_STREAM.unit
   );
   expect(screen.getByTestId('kpi-value').textContent).toContain(
-    `${DATA_STREAM.data[0].y} `
+    `${DATA_STREAM.data[0].y.toFixed(4)}`
   );
   expect(screen.getByTestId('kpi-timestamp').textContent).toContain(
     new Date(DATA_STREAM.data[0].x).toLocaleString()

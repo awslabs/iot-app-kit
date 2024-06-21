@@ -20,7 +20,7 @@ type Story = StoryObj<typeof Gauge>;
 
 export const Standard: Story = {
   render: (props) => (
-    <div style={{ width: '900px', height: '500px' }}>
+    <div style={{ width: '500px', height: '500px' }}>
       <Gauge {...props} />
     </div>
   ),
@@ -41,7 +41,7 @@ export const Standard: Story = {
 
 export const StandardWithThresholds: Story = {
   render: (props) => (
-    <div style={{ width: '900px', height: '500px' }}>
+    <div style={{ width: '500px', height: '500px' }}>
       <Gauge {...props} />
     </div>
   ),
@@ -82,7 +82,7 @@ export const StandardWithThresholds: Story = {
 
 export const BadDataQuality: Story = {
   render: (props) => (
-    <div style={{ width: '900px', height: '500px' }}>
+    <div style={{ width: '500px', height: '500px' }}>
       <Gauge {...props} />
     </div>
   ),
@@ -123,7 +123,7 @@ export const BadDataQuality: Story = {
 
 export const UncertainDataQuality: Story = {
   render: (props) => (
-    <div style={{ width: '900px', height: '500px' }}>
+    <div style={{ width: '500px', height: '500px' }}>
       <Gauge {...props} />
     </div>
   ),

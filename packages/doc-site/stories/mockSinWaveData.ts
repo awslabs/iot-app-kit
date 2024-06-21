@@ -7,7 +7,7 @@ import { Quality } from '@aws-sdk/client-iotsitewise';
 
 export const mockSinWaveData = (frequency?: string) =>
   mockTimeSeriesDataQueryLiveStream({
-    frequency: frequency || '0.25s',
+    frequency: frequency || '0.1s',
     dataType: DATA_TYPE.NUMBER,
     requests: [
       {
@@ -28,7 +28,7 @@ export const mockSinWaveDataWithQuality = ({
   quality?: Quality;
 }) =>
   mockTimeSeriesDataQueryLiveStream({
-    frequency: frequency || '0.25s',
+    frequency: frequency || '0.1s',
     dataType: DATA_TYPE.NUMBER,
     requests: [
       {
