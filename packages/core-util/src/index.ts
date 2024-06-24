@@ -11,3 +11,4 @@ export {
   getViewportDateRelativeToAbsolute,
 } from './sdks/viewportAdapters';
 export { rangeValidator } from './sdks/rangeValidator';
+export * from './sdks/IotSitewiseAssistant';
