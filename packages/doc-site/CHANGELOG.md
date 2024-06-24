@@ -1,5 +1,29 @@
 # Changelog
 
+## [10.8.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v10.7.0...doc-site-v10.8.0) (2024-06-24)
+
+
+### Features
+
+* **anomaly-chart:** added `gestures` enablement option ([4c2402c](https://github.com/awslabs/iot-app-kit/commit/4c2402c44a5c3538fdc60fe8210b626670073479))
+* **react-components:** add arrow datasource ([efb0d6d](https://github.com/awslabs/iot-app-kit/commit/efb0d6d01549011e57400c6b48033264a7e122c9))
+
+
+### Bug Fixes
+
+* **dashboard:** bring dashboard view component up to date ([cf75507](https://github.com/awslabs/iot-app-kit/commit/cf75507b76130f708dba67a61dc14e6ba3dac7ff))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^10.7.0 to ^10.8.0
+    * @iot-app-kit/react-components bumped from ^10.7.0 to ^10.8.0
+  * devDependencies
+    * @iot-app-kit/testing-util bumped from ^10.7.0 to ^10.8.0
+    * eslint-config-iot-app-kit bumped from ^10.7.0 to ^10.8.0
+
 ## [10.7.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v10.6.1...doc-site-v10.7.0) (2024-06-18)
 
 

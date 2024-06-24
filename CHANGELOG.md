@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.8.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.7.0...root-v10.8.0) (2024-06-24)
+
+
+### Features
+
+* **anomaly-chart:** added `gestures` enablement option ([4c2402c](https://github.com/awslabs/iot-app-kit/commit/4c2402c44a5c3538fdc60fe8210b626670073479))
+* **react-components:** add arrow datasource ([efb0d6d](https://github.com/awslabs/iot-app-kit/commit/efb0d6d01549011e57400c6b48033264a7e122c9))
+
+
+### Bug Fixes
+
+* **dashboard:** add apply and cancel buttons to settings modal ([81336cf](https://github.com/awslabs/iot-app-kit/commit/81336cf77806292663cafb929d828e6a95e164af))
+* **dashboard:** bring dashboard view component up to date ([cf75507](https://github.com/awslabs/iot-app-kit/commit/cf75507b76130f708dba67a61dc14e6ba3dac7ff))
+* **react-components:** improve gauge thresholds ([09b352f](https://github.com/awslabs/iot-app-kit/commit/09b352f9a255cf3fb04f8c0382a8013db0f1ae35))
+* **react-components:** thresholds properly add and remove series ([bb8e451](https://github.com/awslabs/iot-app-kit/commit/bb8e451fbb4ed57a204b9936cf2e1c8853931c60))
+
 ## [10.7.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.6.1...root-v10.7.0) (2024-06-18)
 
 
