@@ -19,8 +19,8 @@ const assistantContext = createStore<AssistantContextStore>((set) => ({
     set((state) => ({ context: `${state.context}${context}` })),
 }));
 
-export default assistantContext;
-export const setContext = (context: string) =>
+export const getAssistantContext = () => assistantContext;
+export const setAssistantContext = (context: string) =>
   assistantContext.getState().setContext(context);
-export const appendContext = (context: string) =>
+export const appendAssistantContext = (context: string) =>
   assistantContext.getState().appendContext(context);

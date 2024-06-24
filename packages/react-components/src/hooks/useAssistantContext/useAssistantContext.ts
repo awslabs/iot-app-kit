@@ -1,11 +1,12 @@
 
+import { getAssistantContext, setAssistantContext, appendAssistantContext } from '@iot-app-kit/core-util';
 
-import { assistantContext, setContext, appendContext } from '@iot-app-kit/chatbot-core';
 
 export const useAssistantContext = () => {
+  const assistantContext = getAssistantContext();
   return {
     assistantContext,
-    setContext,
-    appendContext,
+    setContext: setAssistantContext,
+    appendContext: appendAssistantContext,
   }
 }

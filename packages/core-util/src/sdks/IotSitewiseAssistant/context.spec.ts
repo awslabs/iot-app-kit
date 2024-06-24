@@ -1,7 +1,12 @@
-import assistantContext, { setContext, appendContext } from './context';
+import {
+  getAssistantContext,
+  setAssistantContext,
+  appendAssistantContext,
+} from './context';
 
 describe('Assistant Context', () => {
   it('should provide a global context initiated as default', () => {
+    const assistantContext = getAssistantContext();
     expect(assistantContext).toBeDefined();
     expect(assistantContext).not.toBeNull();
     expect(assistantContext.getState().context).toBe('');
@@ -9,15 +14,17 @@ describe('Assistant Context', () => {
 
   it('setContext should set a new assistant global context', () => {
     const context = 'new context passed';
-    setContext(context);
+    const assistantContext = getAssistantContext();
+    setAssistantContext(context);
     expect(assistantContext.getState().context).toBe(context);
   });
 
   it('appendContext should append to the end a new context to the global context', () => {
+    const assistantContext = getAssistantContext();
     const initialContext = 'initial context';
     const contextToAppend = 'appended context';
-    setContext(initialContext);
-    appendContext(contextToAppend);
+    setAssistantContext(initialContext);
+    appendAssistantContext(contextToAppend);
     expect(assistantContext.getState().context).toBe(
       `${initialContext}${contextToAppend}`
     );
