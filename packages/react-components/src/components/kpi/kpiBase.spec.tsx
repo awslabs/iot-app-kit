@@ -133,7 +133,7 @@ describe('property value', () => {
         settings={{ showName: false }}
       />
     );
-    expect(screen.queryByText(Y_VALUE)).not.toBeNull();
+    expect(screen.queryByText('123445.0000')).not.toBeNull();
   });
 });
 

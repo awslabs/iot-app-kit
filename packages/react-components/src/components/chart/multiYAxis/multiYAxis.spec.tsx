@@ -60,8 +60,8 @@ describe('MultiYAxisLegend', () => {
       screen.getByText('Y-Max').click();
     });
     act(() => {
-      expect(screen.getByText('0')).not.toBeNull();
-      expect(screen.getByText('1')).not.toBeNull();
+      expect(screen.getByText('0.0000')).not.toBeNull();
+      expect(screen.getByText('1.0000')).not.toBeNull();
     });
   });
 
@@ -74,7 +74,7 @@ describe('MultiYAxisLegend', () => {
       screen.getByText('Y-Max').click();
     });
     act(() => {
-      fireEvent.pointerEnter(screen.getByText('0'));
+      fireEvent.pointerEnter(screen.getByText('0.0000'));
     });
     const {
       result: highlightedDataStreams,
@@ -88,7 +88,7 @@ describe('MultiYAxisLegend', () => {
     ).toBeTrue();
 
     act(() => {
-      fireEvent.pointerLeave(screen.getByText('0'));
+      fireEvent.pointerLeave(screen.getByText('0.0000'));
     });
     rerenderHighlightedDataStreams();
     expect(highlightedDataStreams.current).toEqual([]);
