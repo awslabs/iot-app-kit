@@ -12,4 +12,12 @@ export const useAssistant = (
       // Defines an object that will be injected into the chatbot state
       initialState?: Record<string, any>;
   }
-) => {...}
+) => {
+  
+
+  return {
+    invokeAssistant,
+    endConversation,
+    generateSummary
+  }
+}
