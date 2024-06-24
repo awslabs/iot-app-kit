@@ -1,5 +1,29 @@
 # Changelog
 
+## [10.8.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.7.0...dashboard-v10.8.0) (2024-06-24)
+
+
+### Bug Fixes
+
+* **dashboard:** add apply and cancel buttons to settings modal ([81336cf](https://github.com/awslabs/iot-app-kit/commit/81336cf77806292663cafb929d828e6a95e164af))
+* **dashboard:** bring dashboard view component up to date ([cf75507](https://github.com/awslabs/iot-app-kit/commit/cf75507b76130f708dba67a61dc14e6ba3dac7ff))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.7.0 to 10.8.0
+    * @iot-app-kit/core bumped from 10.7.0 to 10.8.0
+    * @iot-app-kit/core-util bumped from 10.7.0 to 10.8.0
+    * @iot-app-kit/react-components bumped from 10.7.0 to 10.8.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.7.0 to 10.8.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.7.0 to 10.8.0
+    * @iot-app-kit/testing-util bumped from 10.7.0 to 10.8.0
+    * @iot-app-kit/ts-config bumped from 10.7.0 to 10.8.0
+    * eslint-config-iot-app-kit bumped from 10.7.0 to 10.8.0
+
 ## [10.7.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.6.1...dashboard-v10.7.0) (2024-06-18)
 
 

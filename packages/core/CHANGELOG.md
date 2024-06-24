@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.8.0](https://github.com/awslabs/iot-app-kit/compare/core-v10.7.0...core-v10.8.0) (2024-06-24)
+
+
+### Miscellaneous Chores
+
+* **core:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.7.0 to 10.8.0
+    * @iot-app-kit/ts-config bumped from 10.7.0 to 10.8.0
+    * eslint-config-iot-app-kit bumped from 10.7.0 to 10.8.0
+
 ## [10.7.0](https://github.com/awslabs/iot-app-kit/compare/core-v10.6.1...core-v10.7.0) (2024-06-18)
 
 

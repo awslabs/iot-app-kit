@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [10.8.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.7.0...react-components-v10.8.0) (2024-06-24)
+
+
+### Features
+
+* **anomaly-chart:** added `gestures` enablement option ([4c2402c](https://github.com/awslabs/iot-app-kit/commit/4c2402c44a5c3538fdc60fe8210b626670073479))
+* **react-components:** add arrow datasource ([efb0d6d](https://github.com/awslabs/iot-app-kit/commit/efb0d6d01549011e57400c6b48033264a7e122c9))
+
+
+### Bug Fixes
+
+* **react-components:** improve gauge thresholds ([09b352f](https://github.com/awslabs/iot-app-kit/commit/09b352f9a255cf3fb04f8c0382a8013db0f1ae35))
+* **react-components:** thresholds properly add and remove series ([bb8e451](https://github.com/awslabs/iot-app-kit/commit/bb8e451fbb4ed57a204b9936cf2e1c8853931c60))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.7.0 to 10.8.0
+    * @iot-app-kit/core bumped from 10.7.0 to 10.8.0
+    * @iot-app-kit/core-util bumped from 10.7.0 to 10.8.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.7.0 to 10.8.0
+  * devDependencies
+    * @iot-app-kit/core bumped from 10.7.0 to 10.8.0
+    * @iot-app-kit/jest-config bumped from 10.7.0 to 10.8.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.7.0 to 10.8.0
+    * @iot-app-kit/testing-util bumped from 10.7.0 to 10.8.0
+    * @iot-app-kit/ts-config bumped from 10.7.0 to 10.8.0
+    * eslint-config-iot-app-kit bumped from 10.7.0 to 10.8.0
+
 ## [10.7.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.6.1...react-components-v10.7.0) (2024-06-18)
 
 
