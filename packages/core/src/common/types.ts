@@ -128,3 +128,12 @@ export type ThresholdSettings = {
 export type XAnnotation = Annotation<Date>;
 
 export type YAnnotation = Annotation<number | string | boolean> | Threshold;
+
+/** First-class function used to send requests to AWS. */
+export type RequestFunction<Request, Response> = (
+  request: Request,
+  options?: {
+    abortSignal?: AbortSignal;
+    requestTimeout?: number;
+  }
+) => PromiseLike<Response>;

@@ -1,13 +1,8 @@
-import type { InvokeAssistantRequest, InvokeAssistantResponse } from './types';
-
-interface StreamingInvokeAssistantResponse {
-  StatusCode: number;
-  StreamResponse: AsyncIterable<InvokeAssistantResponse>;
-}
+import type { InvokeAssistantRequest, StreamingInvokeAssistantResponse } from './types';
 
 // TODO: Temporary implementation for InvokeAssistant operation
 export const FakeInvokeAssistant = async (
-  request: InvokeAssistantRequest
+  _request: InvokeAssistantRequest
 ): Promise<StreamingInvokeAssistantResponse> => {
   return new Promise((resolve) => {
     const response1 = {

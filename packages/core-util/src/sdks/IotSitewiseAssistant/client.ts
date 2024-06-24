@@ -7,10 +7,10 @@ import type {
   AssistantClientSummarizationProperties,
 } from './types';
 
-export class IoTSitewiseAssistantClient<T> {
+export class IoTSitewiseAssistantClient {
   private requestFns: AssistantClientRequestFns;
   private defaultContext: string;
-  private onResponse: AssistantClientInvocationResponseHandler<T>;
+  private onResponse: AssistantClientInvocationResponseHandler;
   private onComplete: AssistantClientInvocationCompleteHandler;
 
   constructor({
@@ -18,7 +18,7 @@ export class IoTSitewiseAssistantClient<T> {
     defaultContext,
     onResponse,
     onComplete,
-  }: AssistantClientInstanceParams<T>) {
+  }: AssistantClientInstanceParams) {
     this.requestFns = requestFns;
     this.defaultContext = defaultContext;
     this.onResponse = onResponse;
@@ -39,7 +39,7 @@ export class IoTSitewiseAssistantClient<T> {
     invokeAssistant({
       requestFns: this.requestFns,
       payload: {
-        context,
+        context: assistantContext,
         conversationId,
         message: {
           chatMessage: [{ text: utterance }],
@@ -50,7 +50,7 @@ export class IoTSitewiseAssistantClient<T> {
     });
   }
 
-  setRequestFns(newRequestFns: AssistantClientRequestFns) {
+  setRequestFns(newRequestFns: AssistantClientRequestFns): void {
     this.requestFns = newRequestFns;
   }
 
@@ -102,7 +102,7 @@ export class IoTSitewiseAssistantClient<T> {
   }
 }
 
-async function invokeAssistant<T>({
+async function invokeAssistant({
   requestFns,
   payload,
   onComplete,
@@ -111,7 +111,7 @@ async function invokeAssistant<T>({
   requestFns: AssistantClientRequestFns;
   payload: AssistantClientInvocationDetail;
   onComplete?: AssistantClientInvocationCompleteHandler;
-  onResponse?: AssistantClientInvocationResponseHandler<T>;
+  onResponse?: AssistantClientInvocationResponseHandler;
 }) {
   const response = await requestFns.invokeAssistant(payload);
 

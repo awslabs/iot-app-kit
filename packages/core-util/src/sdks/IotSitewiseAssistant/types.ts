@@ -3,17 +3,17 @@ import type { RequestFunction } from '@iot-app-kit/core';
 export type UniqueId = string;
 export type InvokeAssistantRequestFunction = RequestFunction<
   InvokeAssistantRequest,
-  InvokeAssistantResponse
+  StreamingInvokeAssistantResponse
 >;
 
 export type AssistantClientRequestFns = {
   /**
    * Specify an implementation for `invokeAssistant`.
    */
-  invokeAssistant?: InvokeAssistantRequestFunction;
+  invokeAssistant: InvokeAssistantRequestFunction;
 };
 
-export type AssistantClientInstanceParams<T> = {
+export type AssistantClientInstanceParams = {
   requestFns: AssistantClientRequestFns;
 
   defaultContext: string;
@@ -21,7 +21,7 @@ export type AssistantClientInstanceParams<T> = {
   /**
    * onResponse is called for each chunk returned from the streaming api response.
    */
-  onResponse: AssistantClientInvocationResponseHandler<T>;
+  onResponse: AssistantClientInvocationResponseHandler;
 
   /**
    * onComplete is called when all chunk have returned from the streaming api response.
@@ -29,12 +29,12 @@ export type AssistantClientInstanceParams<T> = {
   onComplete: AssistantClientInvocationCompleteHandler;
 };
 
-export type AssistantClientInstance<T> = {
+export type AssistantClientInstance = {
   invoke: (
     utterance: string,
     options: { context?: string; conversationId?: UniqueId }
   ) => string;
-  setRequestFns(requestFns: AssistantClientRequestFns);
+  setRequestFns(requestFns: AssistantClientRequestFns):void;
 };
 
 export type AssistantClientInvocationCompleteHandler = () => void;
@@ -45,7 +45,7 @@ export type AssistantClientInvocationResponse = {
   statusCode?: number;
 };
 
-export type AssistantClientInvocationResponseHandler<T> = (
+export type AssistantClientInvocationResponseHandler = (
   response: AssistantClientInvocationResponse,
   invocationDetail: AssistantClientInvocationDetail
 ) => void;
@@ -223,4 +223,9 @@ export interface InvokeAssistantResponse {
   resourceNotFoundException?: {
     message: string;
   };
+}
+
+export interface StreamingInvokeAssistantResponse {
+  StatusCode: number;
+  StreamResponse: AsyncIterable<InvokeAssistantResponse>;
 }

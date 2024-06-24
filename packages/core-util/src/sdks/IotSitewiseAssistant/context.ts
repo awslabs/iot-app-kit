@@ -14,7 +14,7 @@ export type AssistantContextStore = AssistantContextState &
 
 const assistantContext = createStore<AssistantContextStore>((set) => ({
   context: '',
-  setContext: (context: string) => set((state) => ({ context })),
+  setContext: (context: string) => set(() => ({ context })),
   appendContext: (context: string) =>
     set((state) => ({ context: `${state.context}${context}` })),
 }));
