@@ -14,9 +14,9 @@ To utilize the dashboard package, install it in your react application as follow
 npm install --save @iot-app-kit/dashboard
 ```
 
-### Dashboard Properties
+## Dashboard Properties
 
-**clientConfiguration** (object): Configuration information for the AWS SDK Clients required to utilize AWS IoT SiteWise data within the dashboard. Contains the following properties:
+**clientConfiguration** (object): This gives the configuration information for the AWS SDK Clients required to utilize AWS IoT SiteWise data within the dashboard. This contains the following properties:
 
 - **iotSiteWiseClient** (IoTSiteWiseClient, optional): The AWS IoT SiteWise Client. Required if `awsCredentials` and `awsRegion` are not specified. [Learn more about IoTSiteWiseClient in the AWS SDK documentation.](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iotsitewise/) 
 
@@ -26,38 +26,38 @@ npm install --save @iot-app-kit/dashboard
 
 - **awsRegion** (object, optional): Region or region providers to authenticate to the required SDK services. Required if either the `iotEventsClient` or `iotSiteWiseClient` are not provided. [can be found in the AWS SDK documentation.](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/index.html)
 
-**onSave** (function, optional): The function called when the dashboard is saved. Expected to return promise which resolves when the saving is complete. A rejected promise
-will represent a failure to save. The function should be of the following type:
-- `(dashboardConfiguartion: DashboardConfiguration) => void`
+**onSave** (function, optional): The function called when the dashboard is saved. Expected to return promise which resolves when the saving is complete. A rejected promise represents a failure to save. The function must be of the following type:
+- `(dashboardConfiguartion: DashboardConfiguration) => void`.
 
-**currentViewport** (object, optional): If provided, this viewport will represent the viewport all charts should render. To be used alongside `onViewportChange` when users want to manage their own dashbaord viewports. 
+**currentViewport** (object, optional): If provided, this viewport represents the viewport all charts should render. To be used alongside `onViewportChange` when users manage their own dashbaord viewports. 
 
-**onViewportChange** (function, optional): Callback which will be called any time the viewport changes. This includes when a user gestures on a widget (zooms in, zooms out, and scrolls). The function should be of the following type:
-- `(viewport: Viewport) => void`
+**onViewportChange** (function, optional): Callback that is called when the viewport changes. This includes when a user gestures on a widget (zooms in, zooms out, and scrolls). The function must be of the following type:
+- `(viewport: Viewport) => void`.
 
-**edgeMode** ('enabled' | 'disabled', optional): replaces/hides certain APIs and UI elements in order to support the dashboard in [AWS Edge](https://aws.amazon.com/edge/)
+**edgeMode** ('enabled' | 'disabled', optional): replaces/hides certain APIs and UI elements in order to support the dashboard in [AWS Edge](https://aws.amazon.com/edge/). 
 
-**initialViewMode** ('preview' | 'edit', optional): represents the initial viewmode in which the dashboard will load in.
+**initialViewMode** ('preview' | 'edit', optional): represents the initial viewmode which the dashboard loads.
 
-**name** (string, optional): Specifies the dashboard name which will be visible in the default toolbar.
+**name** (string, optional): Specifies the dashboard name visible in the default toolbar.
 
-**toolbar** (function, optional): Render function which replaces the defaul dashboard toolbar with a user-provided component. The render function should be of the following type:
-- `({dashboardConfiguartion: DashboardConfiguration, viewport?: Viewport, viewmode: 'preview' | 'edit'}) => ReactElement`
+**toolbar** (function, optional): This renders a function that replaces the defaul dashboard toolbar with a user-provided component. The render function is of the following type:
+- `({dashboardConfiguartion: DashboardConfiguration, viewport?: Viewport, viewmode: 'preview' | 'edit'}) => ReactElement`.
 
-**onDashboardConfigurationChange** (function, optional): Callback which will be called any time the dashboard configuration is updated. This will be called when a widget is added/deleted, a widget is updated, or when a widget is moved. The function should be of the following type:
-- `(dashboardConfiguartion: DashboardConfiguration) => void`
+**onDashboardConfigurationChange** (function, optional): Callback called when the dashboard configuration is updated. This is called when a widget is added, deleted, updated, or moved. 
+The function must of the following type:
+- `(dashboardConfiguartion: DashboardConfiguration) => void`.
 
-**dashboardConfiguration** (object): Specifies the widgets contained within the dashboard, the configuration of those widgets, which data is displayed within the widgets, the default viewport of the dashboard
-as well as display configurations for the dashboard. Contains the following properties:
+**dashboardConfiguration** (object): This specifies the widgets contained within the dashboard, the configuration of those widgets, the data is displayed within the widgets, the default viewport of the dashboard
+and the display configurations for the dashboard. Contains the following properties:
 
 - **defaultViewport** (object, optional): Specifies the time interval that the dashboard will initially visualize. If not provided, the dashboard will utilize the viewport specified by its ViewportManager. If there is no ViewportManager and no viewport defined, the default viewport will be set to `last 5 minutes`. [Learn more about the viewport](/docs/core-viewport--docs).
 
 - **viewport** (object, optional): (⛔️ Deprecated) Specifies the time interval that the dashboard will visualize. If not provided, the dashboard will utilize the viewport specified by its ViewportManager. If there is no ViewportManager and no viewport defined, the default viewport will be calculated based on the minimum and maximum dates in the data. [Learn more about the viewport](/docs/core-viewport--docs).
 
 - **querySettings** (object, optional): Settings specific to the query. Includes the following:
-  - **refreshRate** (1000 | 5000 | 10000 | 60000 | 300000, optional) Specifies how often data will be fetched in milliseconds
+  - **refreshRate** (1000 | 5000 | 10000 | 60000 | 300000, optional) Specifies how often data will be fetched in milliseconds.
 
-- **displaySettings** (object): Defines global dashboard settings such as the grid and decimal places:
+- **displaySettings** (object): Defines global dashboard settings such as the grid and decimal places. Includes the following:
   - **numRows** (number) The number of rows that make up the grid. Each row will have a width as specified by `cellSize`.
 
   - **numColumns** (number): The number of columns that make up the grid. Each column will have a width as specified by `cellSize`.
