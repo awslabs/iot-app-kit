@@ -75,6 +75,28 @@ describe('AssistantClient', () => {
     expect(mockInvokeAssistant).toBeCalled();
   });
 
+  it('can set RequestHandlers aka AWS SDK clients', async () => {
+    const mockOnResponse = jest.fn();
+    const mockOnComplete = jest.fn();
+    const client = new IoTSitewiseAssistantClient({
+      requestFns: {
+        invokeAssistant: FakeInvokeAssistant,
+      },
+      assistantName: 'myAssistant',
+      defaultContext: '',
+      onResponse: () => {},
+      onComplete: () => {},
+    });
+
+    client.setRequestHandlers(mockOnResponse, mockOnComplete);
+    client.invoke(conversationId, 'customer message');
+
+    await flushPromises();
+
+    expect(mockOnResponse).toBeCalled();
+    expect(mockOnComplete).toBeCalled();
+  });
+
   it('call invoke and return all responses', async () => {
     const onResponse = jest.fn();
     const client = new IoTSitewiseAssistantClient({

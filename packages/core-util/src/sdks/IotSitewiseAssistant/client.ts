@@ -11,8 +11,8 @@ export class IoTSitewiseAssistantClient {
   private requestFns: AssistantClientRequestFns;
   private assistantName: string;
   private defaultContext?: string;
-  private onResponse: AssistantClientInvocationResponseHandler;
-  private onComplete: AssistantClientInvocationCompleteHandler;
+  public onResponse?: AssistantClientInvocationResponseHandler;
+  public onComplete?: AssistantClientInvocationCompleteHandler;
 
   constructor({
     requestFns,
@@ -26,6 +26,22 @@ export class IoTSitewiseAssistantClient {
     this.defaultContext = defaultContext;
     this.onResponse = onResponse;
     this.onComplete = onComplete;
+  }
+
+  setAssistantName(assistantName: string): void {
+    this.assistantName = assistantName;
+  }
+
+  setRequestFns(newRequestFns: AssistantClientRequestFns): void {
+    this.requestFns = newRequestFns;
+  }
+
+  setRequestHandlers(
+    newOnResponse: AssistantClientInvocationResponseHandler,
+    newOnComplete: AssistantClientInvocationCompleteHandler
+  ): void {
+    this.onResponse = newOnResponse;
+    this.onComplete = newOnComplete;
   }
 
   /**
@@ -52,14 +68,6 @@ export class IoTSitewiseAssistantClient {
       onComplete: this.onComplete,
       onResponse: this.onResponse,
     });
-  }
-
-  setAssistantName(assistantName: string): void {
-    this.assistantName = assistantName;
-  }
-
-  setRequestFns(newRequestFns: AssistantClientRequestFns): void {
-    this.requestFns = newRequestFns;
   }
 
   /**
@@ -140,7 +148,14 @@ async function invokeAssistant({
     }
 
     if (onComplete && chunk.step.stepId === 'end') {
-      onComplete();
+      onComplete(
+        {
+          conversationId: payload.conversationId,
+          body: chunk,
+          statusCode: response.StatusCode,
+        },
+        payload
+      );
     }
   }
 }

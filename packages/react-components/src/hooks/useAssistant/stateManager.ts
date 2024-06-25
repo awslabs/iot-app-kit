@@ -1,7 +1,6 @@
 import type { BaseStateManager, IMessage } from './types';
 import { SenderType, MessageType } from './types';
-
-const generateUniqueID = () => 'ID';
+import { v4 as uuidv4 } from 'uuid';
 
 type GenericSetState<T> = (fn: (state: T) => T) => void;
 
@@ -14,7 +13,7 @@ export class StateManager<T> implements BaseStateManager {
 
   addPartialResponse = (content: string, response: unknown) => {
     const message = {
-      id: generateUniqueID(),
+      id: uuidv4(),
       loading: true,
       content,
       sender: SenderType.ASSISTANT,
@@ -27,7 +26,7 @@ export class StateManager<T> implements BaseStateManager {
 
   addCitations = (content: string, references: any[]) => {
     const message = {
-      id: generateUniqueID(),
+      id: uuidv4(),
       loading: true,
       content,
       sender: SenderType.ASSISTANT,
@@ -38,12 +37,12 @@ export class StateManager<T> implements BaseStateManager {
     this.addMessageToState(message);
   };
 
-  addText = (content: string) => {
+  addText = (content: string, sender: SenderType) => {
     const message = {
-      id: generateUniqueID(),
+      id: uuidv4(),
       loading: false,
       content,
-      sender: SenderType.ASSISTANT,
+      sender,
       type: MessageType.TEXT,
     }
 
@@ -56,6 +55,18 @@ export class StateManager<T> implements BaseStateManager {
       messages: [...state.messages, message],
     }));
   };
+
+  getState = (): { messages: IMessage[] } => {
+    return {
+      messages: [{
+        id: uuidv4(),
+        loading: true,
+        content: 'test',
+        sender: SenderType.ASSISTANT,
+        type: MessageType.TEXT,
+      }]
+    }
+  }
 }
 
 export default StateManager;

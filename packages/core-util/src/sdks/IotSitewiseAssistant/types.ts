@@ -21,12 +21,12 @@ export type AssistantClientInstanceParams = {
   /**
    * onResponse is called for each chunk returned from the streaming api response.
    */
-  onResponse: AssistantClientInvocationResponseHandler;
+  onResponse?: AssistantClientInvocationResponseHandler;
 
   /**
    * onComplete is called when all chunk have returned from the streaming api response.
    */
-  onComplete: AssistantClientInvocationCompleteHandler;
+  onComplete?: AssistantClientInvocationCompleteHandler;
 };
 
 export type AssistantClientInstance = {
@@ -37,7 +37,10 @@ export type AssistantClientInstance = {
   setRequestFns(requestFns: AssistantClientRequestFns):void;
 };
 
-export type AssistantClientInvocationCompleteHandler = () => void;
+export type AssistantClientInvocationCompleteHandler = (
+  response: AssistantClientInvocationResponse,
+  invocationDetail: AssistantClientInvocationDetail
+) => void;
 
 export type AssistantClientInvocationResponse = {
   conversationId: UniqueId;
@@ -51,6 +54,7 @@ export type AssistantClientInvocationResponseHandler = (
 ) => void;
 
 export type AssistantClientInvocationDetail = {
+  assistantName: string;
   context?: string;
   conversationId: UniqueId;
   message: {

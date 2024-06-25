@@ -1,30 +1,29 @@
 import StateManager from './stateManager';
-import type { IMessageParser } from './types';
-import type { AssistantClientInvocationResponse } from '@iot-app-kit/core-util';
+import { type IMessageParser, type BaseStateManager, SenderType } from './types';
+import type { InvokeAssistantResponse } from '@iot-app-kit/core-util';
 
 export class MessageParser implements IMessageParser {
-  private stateManager: StateManager<any>;
-  
-  constructor(stateManager: StateManager<any>) {
+  private stateManager: StateManager<any> = new StateManager(() => {});
+
+  setStateManager(stateManager: BaseStateManager & StateManager<any>) {
     this.stateManager = stateManager;
   }
 
-  parse(response: AssistantClientInvocationResponse) {
+  parse(response: InvokeAssistantResponse) {
     
-    if (response.body.step?.stepId) {
-
-      this.stateManager.addPartialResponse(response.body.step.rationale.text, response.body.step);
+    if (response.step?.stepId) {
+      this.stateManager.addPartialResponse(response.step.rationale.text, response.step);
     }
 
-    if (response.body.response.citations) {
-      response.body.response.citations.forEach((citation) => {
+    if (response.response.citations) {
+      response.response.citations.forEach((citation: Record<string, any>) => {
         this.stateManager.addCitations('', citation.references);
       });
     }
 
-    if (response.body.response?.message?.content) {
-      response.body.response?.message?.content.forEach((content) => {
-        this.stateManager.addText(content.text);
+    if (response.response?.message?.content) {
+      response.response?.message?.content.forEach((content: Record<string, any>) => {
+        this.stateManager.addText(content.text, SenderType.ASSISTANT);
       })
     }
 
