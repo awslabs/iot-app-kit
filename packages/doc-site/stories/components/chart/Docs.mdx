@@ -6,7 +6,7 @@ import * as ChartStories from './Chart.stories';
 
 # Chart
 
-The chart component provides a way to visualize and navigate time series data from one or more [data sources](/docs/core-datasources--docs).
+The chart component is a way to visualize and navigate time series data from one or more [data sources](/docs/core-datasources--docs).
 
 Chart supports a rich set of features including trend cursors, thresholds, high performance live-streaming and smooth syncing across other IoT App Kit components.
 
@@ -49,130 +49,50 @@ const Page = () => (
 );
 ```
 
-## Properties
+## Chart Properties
 
-The Chart component contains the following properties.
+The chart component contains the following properties.
 
 
-### `queries`
+**queries** (array, required): The queries which specify the time series data to visualize. 
+This is the only required property.[Learn more about time series data queries](/docs/core-time-series-data--docs).
 
-The queries which specify the time series data to visualize. This is the only required property
+**defaultVisualizationType**(type, optional): This property specifies the visualization type for the chart.
+The type must be one of `'line' | 'bar' | 'scatter' | 'step-start' | 'step-middle' | 'step-end'`. Default is `line`.
 
-[Learn more about time series data queries](/docs/core-time-series-data--docs).
+**size** (object, optional): Specifies the height and width of the chart component. 
+This includes the legend section when the legend section is selected. Example `{ width: Number, height: Number }`.
+Default value is `{ width: 500, height: 500 }`.
 
-Type: Array
+**styleSettings** (object, optional): This groups all the styling options available for the chart by `refId`. 
+[Learn more about reference IDs here](/docs/core-styles--docs).
 
+  Properties:
 
-### `defaultVisualizationType`
+  * `visualizationType` (optional): This is similar to the defaultVisualizationType field. 
+  The type must be one of `'line' | 'bar' | 'scatter' | 'step-start' | 'step-middle' | 'step-end'`. Default value is `line`.
 
-(Optional) specifies the visualization type for the chart.
+  * `color` ():
 
-Default value: `'line'`
+  * `symbol` (optional): This is the symbol style that marks the data points. The type must be one of 
+  `'emptyCircle' | 'circle' | 'rect' | 'roundRect' | 'triangle' | 'diamond' | 'pin' | 'arrow' | 'none'`. Default value is `'circle'`.
 
-Type: one of `'line' | 'bar' | 'scatter' | 'step-start' | 'step-middle' | 'step-end'`
+  * `symbolColor` (string, optional): This specifies the symbol color. The value is a color name or a hex value. Default is `'none'`. 
 
+  * `symbolSize` (number, optional): This specifies the symbol size. Default is `''`.
 
-### `size`
+  * `lineStyle` (optional): This specifies the line style if `visualizationType` is not `scatter`. The type must be of
+   one of `'solid' | 'dotted' | 'dashed'`. Default value is `'solid'`.
 
-(Optional) Specifies the height and width of the chart component. this height and width is including the legend section when turned on.
+  * `lineThickness` (number, optional): This specifies the thickness of the line drawn between the data points. Default value is `''`.
 
-Default value: `{ width: 500, height: 500 }`
+  * `yAxis` (object, optional): This specifies y value and has the following properties.
 
-Type: Object `{ width: Number, height: Number }`
+    Properties:
 
-
-### `styleSettings`
-
-(Optional) This is an object which groups all the styling options available for the chart by `refId`. [Learn more about reference IDs here](/docs/core-styles--docs).
-
-Type: Object
-
-__Properties__:
-
-- `visualizationType`
-
-  (Optional) this is the same the defaultVisualization field
-
-  Default value: `'line'`
-
-  Type: one of `'line' | 'bar' | 'scatter' | 'step-start' | 'step-middle' | 'step-end'`
-
-- `color`
-
-- `symbol`
-
-  (Optional) this is the symbol style which marks the data points
-
-  Default value: `'circle'`
-
-  Type: one of `'emptyCircle' | 'circle' | 'rect' | 'roundRect' | 'triangle' | 'diamond' | 'pin' | 'arrow' | 'none'`
-
-- `symbolColor`
-
-  (Optional) this specifies the data point symbol color. can be the color name or a hex value
-
-  Default value: `'none'`
-
-  Type: String
-
-- `symbolSize`
-
-  (Optional) this specifies the data point marker symbol size.
-
-  Default value: `''`
-
-  Type: Number
-
-- `lineStyle`
-
-  (Optional) this specifies the line style when the visualization is not `scatter`
-
-  Default value: `'solid'`
-
-  Type: one of `'solid' | 'dotted' | 'dashed'`
-
-- `lineThickness`
-
-  (Optional) this specifies the thickness of the line draw between the data points.
-
-  Default value: `''`
-
-  Type: Number
-
-- `yAxis`
-
-  (Optional) this specifies the following properties
-
-  Type: Object
-
-  __Properties__:
-
-  - `yAxisLabel`
-
-    (Optional) this specifies any label to be shown for the yAxis
-
-    Default value: `undefined`
-
-    Type: String
-
-
-  - `yMin`
-
-    (Optional) specifies the minimum value for the yAxis, the data below this will be hidden
-
-    Default value: `undefined`
-
-    Type: Number
-
-  - `yMax`
-
-    (Optional) specifies the maximum value for the yAxis, the data above this will be hidden
-
-    Default value: `undefined`
-
-    Type: Number
-
-    (Optional)
+      * `yAxisLabel` (string, optional): This specifies the label shown for the yAxis. Default value is `undefined`.
+      * `yMin` (number, optional): This specifies the minimum value for the yAxis. The data below this value is hidden. Default value is `undefined`.
+      * `yMax` (number, optional): This specifies the maximum value for the yAxis, the data above this value is hidden. Default value is `undefined`.
 
 - `significantDigits`
 
