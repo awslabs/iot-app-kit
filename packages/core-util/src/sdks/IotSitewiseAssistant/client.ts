@@ -9,17 +9,20 @@ import type {
 
 export class IoTSitewiseAssistantClient {
   private requestFns: AssistantClientRequestFns;
-  private defaultContext: string;
+  private assistantName: string;
+  private defaultContext?: string;
   private onResponse: AssistantClientInvocationResponseHandler;
   private onComplete: AssistantClientInvocationCompleteHandler;
 
   constructor({
     requestFns,
+    assistantName,
     defaultContext,
     onResponse,
     onComplete,
   }: AssistantClientInstanceParams) {
     this.requestFns = requestFns;
+    this.assistantName = assistantName;
     this.defaultContext = defaultContext;
     this.onResponse = onResponse;
     this.onComplete = onComplete;
@@ -39,6 +42,7 @@ export class IoTSitewiseAssistantClient {
     invokeAssistant({
       requestFns: this.requestFns,
       payload: {
+        assistantName: this.assistantName,
         context: assistantContext,
         conversationId,
         message: {
@@ -48,6 +52,10 @@ export class IoTSitewiseAssistantClient {
       onComplete: this.onComplete,
       onResponse: this.onResponse,
     });
+  }
+
+  setAssistantName(assistantName: string): void {
+    this.assistantName = assistantName;
   }
 
   setRequestFns(newRequestFns: AssistantClientRequestFns): void {
@@ -62,6 +70,7 @@ export class IoTSitewiseAssistantClient {
     invokeAssistant({
       requestFns: this.requestFns,
       payload: {
+        assistantName: this.assistantName,
         context: this.defaultContext,
         conversationId,
         endConversation: true,

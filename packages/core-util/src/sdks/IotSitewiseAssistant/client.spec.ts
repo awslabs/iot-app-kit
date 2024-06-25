@@ -14,12 +14,42 @@ describe('AssistantClient', () => {
       requestFns: {
         invokeAssistant: FakeInvokeAssistant,
       },
+      assistantName: 'myAssistant',
       defaultContext: '',
       onResponse: () => {},
       onComplete: () => {},
     });
 
     expect(client).toBeDefined();
+  });
+
+  it('can set a new assistant name', () => {
+    const mockInvokeAssistant = jest
+      .fn()
+      .mockResolvedValue({ StreamResponse: [] });
+    const client = new IoTSitewiseAssistantClient({
+      requestFns: {
+        invokeAssistant: mockInvokeAssistant,
+      },
+      assistantName: 'myAssistant',
+      defaultContext: '',
+      onResponse: () => {},
+      onComplete: () => {},
+    });
+
+    client.setAssistantName('newAssistantName');
+    client.invoke(conversationId, 'customer message');
+
+    expect(mockInvokeAssistant).toBeCalledWith(
+      expect.objectContaining({
+        assistantName: 'newAssistantName',
+        context: expect.any(String),
+        conversationId,
+        message: {
+          chatMessage: [{ text: expect.any(String) }],
+        },
+      })
+    );
   });
 
   it('can set RequestFunctions aka AWS SDK clients', () => {
@@ -30,6 +60,7 @@ describe('AssistantClient', () => {
       requestFns: {
         invokeAssistant: FakeInvokeAssistant,
       },
+      assistantName: 'myAssistant',
       defaultContext: '',
       onResponse: () => {},
       onComplete: () => {},
@@ -50,6 +81,7 @@ describe('AssistantClient', () => {
       requestFns: {
         invokeAssistant: FakeInvokeAssistant,
       },
+      assistantName: 'myAssistant',
       defaultContext: '',
       onResponse,
       onComplete: () => {},
@@ -70,6 +102,7 @@ describe('AssistantClient', () => {
       requestFns: {
         invokeAssistant: FakeInvokeAssistant,
       },
+      assistantName: 'myAssistant',
       defaultContext: '',
       onResponse: () => {},
       onComplete,
@@ -92,6 +125,7 @@ describe('AssistantClient', () => {
       requestFns: {
         invokeAssistant: mockInvokeAssistant,
       },
+      assistantName: 'myAssistant',
       defaultContext: '',
       onResponse: () => {},
       onComplete: () => {},
@@ -101,6 +135,7 @@ describe('AssistantClient', () => {
 
     expect(mockInvokeAssistant).toBeCalledWith(
       expect.objectContaining({
+        assistantName: 'myAssistant',
         context: expect.any(String),
         conversationId,
         endConversation: true,
@@ -119,6 +154,7 @@ describe('AssistantClient', () => {
       requestFns: {
         invokeAssistant: mockInvokeAssistant,
       },
+      assistantName: 'myAssistant',
       defaultContext: '',
       onResponse: () => {},
       onComplete: () => {},
@@ -135,6 +171,7 @@ describe('AssistantClient', () => {
 
     expect(mockInvokeAssistant).toBeCalledWith(
       expect.objectContaining({
+        assistantName: 'myAssistant',
         context: summaryInstructions,
         conversationId,
         message: {

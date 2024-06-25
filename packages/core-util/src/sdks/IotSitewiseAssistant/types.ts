@@ -15,8 +15,8 @@ export type AssistantClientRequestFns = {
 
 export type AssistantClientInstanceParams = {
   requestFns: AssistantClientRequestFns;
-
-  defaultContext: string;
+  assistantName :string;
+  defaultContext?: string;
 
   /**
    * onResponse is called for each chunk returned from the streaming api response.
