@@ -4,7 +4,7 @@ export const registerCloudscapeThemes = () => {
   registerTheme('cloudscapeLightTheme', {
     color: [
       '#688ae8',
-      '#e07f9d',
+      '#c33d69',
       '#2ea597',
       '#8456ce',
       '#e07941',
@@ -157,7 +157,7 @@ export const registerCloudscapeThemes = () => {
       smooth: false,
       color: [
         '#688ae8',
-        '#e07f9d',
+        '#c33d69',
         '#2ea597',
         '#8456ce',
         '#e07941',
