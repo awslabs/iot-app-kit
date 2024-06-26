@@ -68,7 +68,7 @@
   position: relative;
 }
 
-.chart-timestamp-container {
+.iot-app-kit-chart-timestamp-container {
   display: flex;
   position: absolute;
   overflow: hidden;
