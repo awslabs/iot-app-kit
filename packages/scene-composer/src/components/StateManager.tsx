@@ -330,21 +330,20 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   // Subscribe to store update
   useEffect(() => {
     if (onSceneUpdated) {
-      return accessStore(sceneComposerId).subscribe((state, old: Pick<RootState, 'document' | 'sceneLoaded'>) => {
-        // Do not call onSceneUpdated when
-        //  - scene is not loaded
-        //  - scene is just loaded
-        //  - document is not changed
-        // Transient document update will also trigger onSceneUpdated, the app side will debounce the actual saving to S3 call.
-        if (!state.sceneLoaded || !old.sceneLoaded || state.document === old.document) {
-          return;
-        }
-        const rootId = state.document.properties?.sceneRootEntityId ?? null;
-        if (rootId) {
-          setSceneRootEntityId(rootId);
-        }
-        onSceneUpdated(sceneDocumentSnapshotCreator.create({ document: state.document }));
-      });
+      return accessStore(sceneComposerId).subscribe(
+        (state, old: Pick<RootState, 'document' | 'sceneLoaded'>) => {
+          // Do not call onSceneUpdated when
+          //  - scene is not loaded
+          //  - scene is just loaded
+          //  - document is not changed
+          // Transient document update will also trigger onSceneUpdated, the app side will debounce the actual saving to S3 call.
+          if (!state.sceneLoaded || !old.sceneLoaded || state.document === old.document) {
+            return;
+          }
+          onSceneUpdated(sceneDocumentSnapshotCreator.create({ document: state.document }));
+        },
+        (state) => ({ document: state.document, sceneLoaded: state.sceneLoaded }),
+      );
     }
   }, [onSceneUpdated]);
 
