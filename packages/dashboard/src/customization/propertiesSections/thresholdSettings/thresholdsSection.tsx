@@ -224,6 +224,13 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
    * which instructs the user to select a single widget to configure.
    */
   const renderThresholds = () => {
+    let comparisonOperator = 'EQ' as ComparisonOperator;
+
+    // Gauge threshold do not contain EQ
+    if (widgetType === 'gauge') {
+      comparisonOperator = 'GT';
+    }
+
     if (thresholdsEnabled || styledThresholdsEnabled) {
       const thresholdsValue = thresholds
         ? maybeWithDefault([], thresholds) ?? []
@@ -238,7 +245,7 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
           value: '',
           id: nanoid(),
           color: DEFAULT_THRESHOLD_COLOR,
-          comparisonOperator: `EQ`,
+          comparisonOperator: comparisonOperator,
         };
         if (thresholdsEnabled) {
           updateThresholds([...thresholdsValue, newThreshold]);
