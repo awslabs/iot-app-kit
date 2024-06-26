@@ -11,11 +11,12 @@ import { Maybe, maybeWithDefault } from '~/util/maybe';
 
 const thresholdsWithContainsOperator: readonly string[] = [
   'kpi',
-  'gauge',
   'status',
   'status-timeline',
   'table',
 ];
+// Only gauge has no equals operator, so list thresholds without instead of thresholds with
+const thresholdsWithoutEqualsOperator: readonly string[] = ['gauge'];
 const thresholdsWithAnnotations: readonly string[] = [
   'line-chart',
   'scatter-chart',
@@ -35,6 +36,7 @@ const isSupportedWidget = (w: DashboardWidget): w is ThresholdsWidget => {
   const allSupportedThresholds = [
     ...thresholdsWithAnnotations,
     ...thresholdsWithContainsOperator,
+    ...thresholdsWithoutEqualsOperator,
     ...thresholdsWithStyle,
   ];
   return allSupportedThresholds.some((t) => t === w.type);
@@ -53,6 +55,7 @@ const RenderThresholdsSettings = ({
 
   let doesSupportAnnotations;
   let doesSupportContainsOp;
+  let doesSupportEqualsOp;
   let doesSupportStyledThreshold;
 
   // Support setting thresholds for multiple widgets at once if they fall in the same type category
@@ -63,6 +66,9 @@ const RenderThresholdsSettings = ({
     doesSupportContainsOp = types.every((v) =>
       thresholdsWithContainsOperator.includes(v)
     );
+    doesSupportEqualsOp = !types.every((v) =>
+      thresholdsWithoutEqualsOperator.includes(v)
+    );
     doesSupportStyledThreshold = types.every((v) =>
       thresholdsWithStyle.includes(v)
     );
@@ -71,6 +77,9 @@ const RenderThresholdsSettings = ({
       (t) => t === widgetType
     );
     doesSupportContainsOp = thresholdsWithContainsOperator.some(
+      (t) => t === widgetType
+    );
+    doesSupportEqualsOp = !thresholdsWithoutEqualsOperator.some(
       (t) => t === widgetType
     );
     doesSupportStyledThreshold = thresholdsWithStyle.some(
@@ -94,7 +103,7 @@ const RenderThresholdsSettings = ({
   );
 
   let props = {};
-  if (doesSupportContainsOp) {
+  if (doesSupportContainsOp || !doesSupportEqualsOp) {
     props = {
       thresholds: thresholds,
       updateThresholds: updateThresholds,
@@ -119,6 +128,7 @@ const RenderThresholdsSettings = ({
       widgetType={widgetType}
       comparisonOperators={getComparisonOperators({
         supportsContains: doesSupportContainsOp,
+        supportsEquals: doesSupportEqualsOp,
       })}
       {...props}
     />
