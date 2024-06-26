@@ -112,7 +112,7 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
       className='widget-actions-container'
       aria-label='widget-actions-container'
       style={{
-        padding: `${spaceStaticXxxs} ${spaceStaticXs}`,
+        margin: `${spaceStaticXxxs} ${spaceStaticXs}`,
         height: `${spaceStaticXl}`,
         right: `${spaceStaticL}`,
         borderRadius: `${spaceStaticXs}`,
@@ -123,7 +123,6 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
     >
       {!isEdgeModeEnabled && widget.type !== 'text' && iotSiteWiseClient && (
         <CSVDownloadButton
-          variant='inline-icon'
           fileName={`${widget.properties.title ?? widget.type}`}
           client={iotSiteWiseClient}
           widgetType={widget.type}
@@ -133,10 +132,7 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
         />
       )}
       {!readOnly && (
-        <DeletableTileAction
-          variant='inline-icon'
-          handleDelete={handleDelete}
-        />
+        <DeletableTileAction variant='icon' handleDelete={handleDelete} />
       )}
       <ConfirmDeleteModal
         visible={visible}
