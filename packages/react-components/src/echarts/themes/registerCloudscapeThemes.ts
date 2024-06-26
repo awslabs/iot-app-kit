@@ -373,10 +373,12 @@ export const registerCloudscapeThemes = () => {
     },
     toolbox: {
       iconStyle: {
+        color: '#5f6b7a',
         borderColor: '#5f6b7a',
       },
       emphasis: {
         iconStyle: {
+          color: '#033160',
           borderColor: '#033160',
         },
       },
@@ -826,10 +828,12 @@ export const registerCloudscapeThemes = () => {
     },
     toolbox: {
       iconStyle: {
+        color: '#b6bec9',
         borderColor: '#b6bec9',
       },
       emphasis: {
         iconStyle: {
+          color: '#ffffff',
           borderColor: '#ffffff',
         },
       },

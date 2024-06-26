@@ -49,7 +49,7 @@ export const Timestamp = ({
   };
   return (
     <div
-      className='chart-timestamp-container'
+      className='iot-app-kit-chart-timestamp-container'
       style={timestampStyle}
       data-testid='chart-timestamp-container'
     >
