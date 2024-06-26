@@ -46,7 +46,7 @@ export const DEFAULT_X_AXIS: XAXisComponentOption = {
 
 export const DEFAULT_TOOLBOX_GESTURES_ENABLED: ToolboxComponentOption = {
   show: true,
-  top: 0,
+  top: 4,
   right: 8,
   feature: {
     dataZoom: {
