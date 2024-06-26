@@ -1,8 +1,7 @@
-import { create, StateCreator, StoreApi } from 'zustand';
-import { shallow } from 'zustand/shallow';
-import { immer } from 'zustand/middleware/immer';
+import create, { StateCreator, UseStore } from 'zustand';
+import shallow from 'zustand/shallow';
 
-import { log, undoMiddleware, UndoState } from './middlewares';
+import { log, immer, undoMiddleware, UndoState } from './middlewares';
 import { SceneComposerOperation } from './StoreOperations';
 import { createSceneDocumentSlice, ISceneDocumentSlice } from './slices/SceneDocumentSlice';
 import { createEditStateSlice, IEditorStateSlice } from './slices/EditorStateSlice';
@@ -63,33 +62,24 @@ export type RootState = ISharedState &
  * Core state management functions
  * TODO: make them into slices and better organized
  */
+const stateCreator: StateCreator<RootState> = (set, get, api) => ({
+  lastOperation: undefined,
+  ...createSceneDocumentSlice(set, get),
+  ...createEditStateSlice(set, get, api),
+  ...createDataStoreSlice(set, get, api),
+  noHistoryStates: {
+    ...createViewOptionStateSlice(set),
+  },
+  ...createNodeErrorStateSlice(set, get, api),
+});
 
-type StoreState<T> = {
-  (): T;
-  <U>(selector: (state: T) => U): U;
-  <U>(selector: (state: T) => U, equalityFn: (a: U, b: U) => boolean): U;
-} & StoreApi<T>;
-
-const createStateImpl: () => StoreState<RootState> = () =>
-  create<RootState>()(
-    undoMiddleware(
-      log(
-        immer((...args) => ({
-          ...createViewOptionStateSlice(...args),
-          ...createSceneDocumentSlice(...args),
-          ...createEditStateSlice(...args),
-          ...createDataStoreSlice(...args),
-          ...createNodeErrorStateSlice(...args),
-        })) as StateCreator<RootState>,
-      ),
-    ),
-  );
+const createStateImpl: () => UseStore<RootState> = () => create<RootState>(undoMiddleware(log(immer(stateCreator))));
 
 // TODO: currently undoMiddleware will record editor state changes, such as select/deselect object.
 // We may want to fine-tune the undo/redo experience.
-const stores = new Map<string, StoreState<RootState>>();
+const stores = new Map<string, UseStore<RootState>>();
 
-const accessStore = (id: string) => {
+const accessStore: (id: string) => UseStore<RootState> = (id: string) => {
   if (!stores.has(id)) {
     stores.set(id, createStateImpl());
   }

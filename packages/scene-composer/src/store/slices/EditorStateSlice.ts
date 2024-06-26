@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { GetState, SetState, StoreApi } from 'zustand';
 
 import { TransformControls } from '../../three/TransformControls';
 import {
@@ -9,10 +10,10 @@ import {
   AddingWidgetInfo,
   CameraSettings,
 } from '../../interfaces';
+import { RootState } from '../Store';
 import { CursorStyle, IDisplayMessage, IEditorConfig } from '../internalInterfaces';
 import { DEFAULT_CAMERA_OPTIONS, DEFAULT_CAMERA_POSITION } from '../../common/constants';
 import { CameraType } from '../../models/SceneModels';
-import { SliceCreator } from '../middlewares';
 
 // The MappingWrapper is used to bypass immer's snapshotting/copy-on-write mechanism
 // Immer will make plain objects immutable which makes it impossible to update without
@@ -153,7 +154,11 @@ function createDefaultEditorState(): Partial<IEditorStateSlice> {
   };
 }
 
-export const createEditStateSlice: SliceCreator<keyof IEditorStateSlice> = (set, get): IEditorStateSlice =>
+export const createEditStateSlice = (
+  set: SetState<RootState>,
+  get: GetState<RootState>,
+  _api: StoreApi<RootState>,
+): IEditorStateSlice =>
   ({
     ...createDefaultEditorState(),
 

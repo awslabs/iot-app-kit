@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import create from 'zustand';
 import { DefaultLoadingManager } from 'three';
 
 import { tmLoadingManagers } from '../../../common/loadingManagers';

@@ -1,4 +1,4 @@
-import { State, StateCreator, StoreMutatorIdentifier } from 'zustand';
+import { State, StateCreator } from 'zustand';
 import { produce, Draft } from 'immer';
 import createVanilla, { GetState, SetState, StoreApi } from 'zustand/vanilla';
 
@@ -29,20 +29,17 @@ export const log =
 /**
  * Make nested state update simple.
  */
-export type ImmerStateCreator<
-  T,
-  Mps extends [StoreMutatorIdentifier, unknown][] = [],
-  Mcs extends [StoreMutatorIdentifier, unknown][] = [],
-> = StateCreator<T, [...Mps, ['zustand/immer', never]], Mcs>;
-
-export type AppStateCreator = ImmerStateCreator<RootState>;
-
-// Defines the type of a function used to create a slice of the store. The
-// slice has access to all the store's actions and state, but only returns
-// the actions and state necessary for the slice.
-export type SliceCreator<TSlice extends keyof RootState> = (
-  ...params: Parameters<AppStateCreator>
-) => Pick<ReturnType<AppStateCreator>, TSlice>;
+export const immer =
+  <T extends State>(config: StateCreator<T>): StateCreator<T> =>
+  (set, get, api) =>
+    config(
+      (partial, replace) => {
+        const nextState = typeof partial === 'function' ? produce(partial as (state: Draft<T>) => T) : (partial as T);
+        set(nextState, replace);
+      },
+      get,
+      api,
+    );
 
 /**
  * Undo/Redo, inspired by zundo
@@ -135,7 +132,7 @@ export const undoMiddleware =
             redo,
             getUndoState: getState,
             undoStore,
-          } as TState);
+          });
         }
 
         set(args);
