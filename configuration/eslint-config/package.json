@@ -2,7 +2,7 @@
   "name": "eslint-config-iot-app-kit",
   "main": "index.js",
   "private": true,
-  "version": "10.8.0",
+  "version": "10.8.1",
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.62.0",
