@@ -7,5 +7,5 @@ export const convertGrid = ({
 }: Pick<ConfigurationOptions, 'axis' | 'showTimestamp'>) => ({
   ...ANOMALY_GRID,
   left: axis?.showY ?? true ? 45 : 15,
-  bottom: showTimestamp ? 80 : 50,
+  bottom: showTimestamp ? 90 : 60,
 });
