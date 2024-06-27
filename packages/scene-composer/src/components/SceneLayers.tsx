@@ -26,7 +26,7 @@ export const SceneLayers: React.FC = () => {
       return await fetchSceneNodes(sceneRootEntityId);
     },
     refetchInterval: (_, query) => {
-      return !query.state.error && isViewing ? autoUpdateInterval : 0;
+      return !query?.state?.error && isViewing ? autoUpdateInterval : 0;
     },
     refetchOnWindowFocus: false,
   });
