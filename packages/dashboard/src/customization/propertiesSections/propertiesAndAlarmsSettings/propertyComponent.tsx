@@ -61,7 +61,12 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
           </Box>
         </SpaceBetween>
       </div>
-      <Button onClick={onDeleteAssetQuery} variant='icon' iconName='close' />
+      <Button
+        ariaLabel='delete property'
+        onClick={onDeleteAssetQuery}
+        variant='icon'
+        iconName='close'
+      />
     </div>
   );
 
