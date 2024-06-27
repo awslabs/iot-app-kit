@@ -13,6 +13,8 @@ interface Fixtures {
   dashboardWithTextWidget: DashboardPage;
   dashboardWithKPIWidget: DashboardPage;
   dashboardWithTableWidget: DashboardPage;
+  dashboardWithGaugeWidget: DashboardPage;
+  dashboardWithGaugeWidgetWithProperty: DashboardPage;
   resourceExplorer: ResourceExplorer;
   configPanel: ConfigPanel;
 }
@@ -59,6 +61,29 @@ export const test = base.extend<Fixtures>({
     );
 
     return use(dashboardWithTableWidget);
+  },
+  dashboardWithGaugeWidget: async ({ page, browser }, use) => {
+    const dashboardWithGaugeWidget = await createNewDashboardWithWidget(
+      'gauge',
+      page,
+      browser
+    );
+
+    return use(dashboardWithGaugeWidget);
+  },
+  dashboardWithGaugeWidgetWithProperty: async (
+    { page, browser, resourceExplorer },
+    use
+  ) => {
+    const dashboardWithGaugeWidgetWithProperty =
+      await createNewDashboardWithWidget(
+        'gauge',
+        page,
+        browser,
+        resourceExplorer
+      );
+
+    return use(dashboardWithGaugeWidgetWithProperty);
   },
   configPanel: async ({ page }, use) => {
     const configPanel = new ConfigPanel({ page });
