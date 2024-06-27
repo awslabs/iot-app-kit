@@ -4,15 +4,11 @@ import { Meta } from '@storybook/blocks';
 
 # Scene Viewer
 
-The SceneViewer component allows you to render a specified [AWS IoT TwinMaker scene](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/scenes.html) for viewing experience.
+The SceneViewer component renders a specified [AWS IoT TwinMaker scene](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/scenes.html) for viewing experience.
+It renders assets including `.svg` and `.hdr` files. You must configure a proper [file-loader](https://v4.webpack.js.org/loaders/file-loader/) for your application.
+The sample code in the [examples/react-app](https://github.com/awslabs/iot-app-kit/tree/main/examples/react-app) directory has more details.
 
-## Setup
-
-The SceneViewer component renders assets including `.svg` and `.hdr` files. You will need to configure proper loader like [file-loader](https://v4.webpack.js.org/loaders/file-loader/) for your application.
-
-There is sample code in [examples/react-app](https://github.com/awslabs/iot-app-kit/tree/main/examples/react-app) that shows how to use this component in detail.
-
-### Basic React component example
+### Example
 
 ```tsx
 import { initialize } from '@iot-app-kit/source-iottwinmaker';
@@ -27,122 +23,76 @@ const sceneLoader = initialize({ ... }).s3SceneLoader('scene-id');
 
 ### Data bindings and rules
 
-When the widgets, like tag, motion indicator, overlay, etc, have configured with data binding (entityId, componentName, propertyName), the SceneViewer component will need to get the property values of the data bindings so that the widgets can change based on value changes.
+  * When the widgets tag, motion indicator, and overlay are configured with data bindings (entityId, componentName, propertyName), 
+the SceneViewer component must access the property values of the data bindings so that the widgets can change based on value changes.
+  * A `viewport` property is required, for the SceneViewer to know the expected time range for the property values. 
+  * The `queries` or `dataStreams` properies are also passed in, and they return the property values to be used by data bindings. 
+  If they are not provided, the SceneViewer component will automatically fetch property values for each data binding that exist in the rendered scene.
 
-A `viewport` property will be required in this case so the SceneViewer can know the expected time range for the property values.
+## Scene Viewer Properties
 
-`queries` or `dataStreams` props can also be passed in which return the property values to be used by data bindings. If they are not provided, the SceneViewer component will automatically fetch property values for each data bindings exist in the rendered scene.
+The SceneViewer component contains the following customizable properties:
 
-## Properties
+**sceneLoader** (object): This is the class to load scene metadata and content. 
+The `SceneLoader` object is defined in `@iot-app-kit/source-iottwinmaker`.
 
-The SceneViewer component contains the following properties that you can customize.
+**Note**: When a new instance of this object is passed in, the SceneView triggers a new loading of the whole scene. 
+Create this object only when needed.
 
-### `sceneLoader`
+**sceneComposerId** (string, optional): This specifies an unique id for an instance of the SceneViewer component. 
+An uuid is auto generated, if one is not provided.
 
-The class to load scene metadata and content.
+**dataStreams** (object, optional): Specifies the data used by the viewer to change the visuals of the scene objects. The `meta` field of 
+each stream is required to contain values for keys `entityId`, `componentName` and `propertyName`. 
+The scene objects with the matching meta values uses the corresponding stream. The object `DataStream[]` is defined in `@iot-app-kit/core`.
 
-**Note: When a new instance of this object is passed in, the SceneView will trigger a new loading of the whole scene. Therefore, do not recreate this object when not needed.**
+**Note**: This property needs to be used together with `viewport`.
 
-Type: `SceneLoader` defined in `@iot-app-kit/source-iottwinmaker`
+**queries** (object, optional): Specifies the data to be fetched. To learn more about queries, see [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md).
+The object `TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[]` is defined in `@iot-app-kit/core`.
 
-### `sceneComposerId`
+**Note**: This property needs to be used together with `viewport`.
 
-(Optinal) An unique id for one instance of the SceneViewer component. If not provided, an uuid will be auto generated.
+**viewport** (object, optional): Specifies the window to query the data. The object `Viewport` is defined in `@iot-app-kit/core`.
 
-Type: String
+**Note**: This property makes the data binding and rules work with property data. If `queires` or `dataStreams` are not provided, 
+the property dataw is fetched by the SceneViewer component.
 
-### `dataStreams`
+**dataBindingTemplate** (object, optional): Maps the data binding template names to the actual values used by the scene.
+The object is of type `Record<string, string>`.
 
-(Optional) The data used by the viewer to change the visuals of the scene objects.
+### Example
 
-The `meta` field of each stream is required to contain values for keys `entityId`, `componentName` and `propertyName`. The scene objects with the matching meta values will use the corresponding stream.
-
-Type: `DataStream[]` defined in `@iot-app-kit/core`
-
-Note: This property needs to be used together with `viewport`.
-
-### `queries`
-
-(Optional) Selects what data to be fetched. Learn more about queries, see [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md).
-
-Type: `TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[]` defined in `@iot-app-kit/core`
-
-Note: This property needs to be used together with `viewport`.
-
-### `viewport`
-
-(Optional) Specifies the window over which to query the data.
-
-Type: `Viewport` defined in `@iot-app-kit/core`
-
-Note: This property is needed to make the data binding and rules work with property data. If `queires` or `dataStreams` are not provided, the property data will be fetched by the SceneViewer component.
-
-### `dataBindingTemplate`
-
-(Optional) A map from data binding template names to the actual values to be used by the scene.
-
-Type: `Record<string, string>`
-
-Example:
-
-With a template named `sel_entity` defined in your scene and bind to a Tag widget, you can pass the following as `dataBindingTemplate`
+Define a template named `sel_entity` in your scene, and bind to a Tag widget. Pass the following as `dataBindingTemplate`.
 ```ts
 {
   'sel_entity': 'real-entity-1'
 }
 ```
-Then the Tag widget will use the data from `real-entity-1` to change its visual.
+The Tag widget uses the data from `real-entity-1` to change its visual.
 
-### `onSelectionChanged`
+**onSelectionChanged** (object, optional): This callback is triggered if the selected node in the scene is changed. The information about the selection node is passed out.
+If deselected, empty information is sent. The object `SelectionChangedEventCallback` is defined in `@iot-app-kit/scene-composer`. 
 
-(Optional) A callback that will be triggered when the selected node in the scene is changed. The information about the selection node will be passed out.
+**onWidgetClick** (object, optional): This callback is triggered when a widget in the scene is clicked. The information about the clicked widget is passed out. The object 
+`WidgetClickEventCallback` is defined in `@iot-app-kit/scene-composer`.
 
-Empty information will be sent when deselection happens.
+Only the Tag widget triggers this callback.
 
-Type: `SelectionChangedEventCallback` defined in `@iot-app-kit/scene-composer`
+**selectedDataBinding** (object, optional): Set the selected node on the Tag widget with matching `entityId` and `componentName`. Move the camera target on it.
+If the `selectedDataBinding` value is undefined, action is not taken. If a matching Tag widget is not present, the currently selected node is deselected. The object is of type
+ `Record<'entityId' | 'componentName', string>`.
 
-### `onWidgetClick`
+**activeCamera** (string, optional): This sets the camera view by camera name. If this is not present, or not set the default initial camera is used. 
+If `selectedDataBinding` is already selected, the `activeCamera` option is ignored in favor of focusing on the selected item.
 
-(Optional) A callback that will be triggered when a widget in the scene is clicked. The information about the clicked widget will be passed out.
+**config** (optional): This specifies the configurations of the component.
 
-Currently, only Tag widget will trigger this callback.
+**dracoDecoder** (object, optional): Specifies the configurations for a draco decoder. More information is found in the 
+ [AWS IoT Twinmaker User Guide]](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/scenes-before-starting.html).
 
-Type: `WidgetClickEventCallback` defined in `@iot-app-kit/scene-composer`
+**locale** (string, optional): Specifies the language for the texts displayed in the component. Default to `en-US`. The supported locales 
+are present in the `packages/scene-composer/translations` folder.
 
-### `selectedDataBinding`
 
-(Optional) Set the selected node to be the Tag widget with matching `entityId` and `componentName`,
-and move the camera target to it.
-
-When the selectedDataBinding value is undefined, no action will be taken.
-
-When there is no matching Tag widget found, the currently selected node will be deselected.
-
-Type: `Record<'entityId' | 'componentName', string>`
-
-### `activeCamera`
-
-(Optional) Sets the camera to view from by Camera name.
-
-When this is not found or not set the default initial camera is used. When `selectedDataBinding` is set this is ignored in favor of focusing on the selected item.
-
-Type: String
-
-### `config`
-
-(Optional) The configurations of the component
-
-- `dracoDecoder`
-
-(Optional) The configurations for a draco decoder. More information can be found [here](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/scenes-before-starting.html)
-
-Type: Object
-
-- `locale`
-
-(Optional) The language for the texts displayed in the component. Default to `en-US`.
-
-The supported locales can be found under `packages/scene-composer/translations` folder.
-
-Type: String
 
