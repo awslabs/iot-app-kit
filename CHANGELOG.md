@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.8.1](https://github.com/awslabs/iot-app-kit/compare/root-v10.8.0...root-v10.8.1) (2024-06-27)
+
+
+### Bug Fixes
+
+* **scene-composer:** reverting zustand upgrade due to Grafana issues related to zustand, react, r3f ([cfbca24](https://github.com/awslabs/iot-app-kit/commit/cfbca24d51de3fb113f79ab0dce2cc96264a8c82))
+* **scene:** fix possible undefined query state ([0511c34](https://github.com/awslabs/iot-app-kit/commit/0511c3429d4c6426851b0dfae91a03d4e3982800))
+
 ## [10.8.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.7.0...root-v10.8.0) (2024-06-24)
 
 

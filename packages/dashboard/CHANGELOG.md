@@ -1,5 +1,28 @@
 # Changelog
 
+## [10.8.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.8.0...dashboard-v10.8.1) (2024-06-27)
+
+
+### Miscellaneous Chores
+
+* **dashboard:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.8.0 to 10.8.1
+    * @iot-app-kit/core bumped from 10.8.0 to 10.8.1
+    * @iot-app-kit/core-util bumped from 10.8.0 to 10.8.1
+    * @iot-app-kit/react-components bumped from 10.8.0 to 10.8.1
+    * @iot-app-kit/source-iotsitewise bumped from 10.8.0 to 10.8.1
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.8.0 to 10.8.1
+    * @iot-app-kit/testing-util bumped from 10.8.0 to 10.8.1
+    * @iot-app-kit/ts-config bumped from 10.8.0 to 10.8.1
+    * eslint-config-iot-app-kit bumped from 10.8.0 to 10.8.1
+
 ## [10.8.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.7.0...dashboard-v10.8.0) (2024-06-24)
 
 
