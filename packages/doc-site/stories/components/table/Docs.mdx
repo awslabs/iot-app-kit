@@ -5,7 +5,7 @@ import { Meta } from '@storybook/blocks';
 # Table
 The table component provides a compact form for viewing one or more data streams from one or more time series data sources.
 
-## Examples
+**Example**
 
 ```jsx
 import { initialize, toId } from '@iot-app-kit/source-iotsitewise';
@@ -84,19 +84,22 @@ const { query } = initialize({ iotSiteWiseClient });
 />
 ```
 
-## Properties
+## Table Properties
 
-The table component contains the following customizable properties:
+The table component uses the table component from `@awsui/components-react`. 
+Refer to the [AWS-UI/table](https://github.com/aws/awsui-documentation/blob/main/components/table.md) for all available properties.  The properties with differences 
+are listed below. The table component's customizable properties are:
 
-Note: The table component uses the table component from `@awsui/components-react`. Please refer to [AWS-UI/table](https://github.com/aws/awsui-documentation/blob/main/components/table.md) for all available properties. Differences are listed below.
-### `items`
-Specifies the data displayed in rows. Each item contains the data for one row. The display of a row is handled by the cell property of each column definition in the columnDefinitions property.
+#### items (array): 
+Specifies the data displayed in rows. Each item contains the data for one row. 
+The display of a row is handled by the cell property of each column definition in the `columnDefinitions` property. The data is an array of [Item](#item) objects.
 
-Type: Array of [Item](#item) objects
+#### item (object):
+An item is an object that maps its own properties to dataStreams. The property name [$cellRef](#cellref) is used to refer to a datastream.
+Other properties of an item remain unchanged.
 
-#### `item`
-An item maps its own properties to dataStreams. A special property name [$cellRef](#cellref) can be used to refer to a datastream.
-Other properties of an item will remain unchanged.
+**Example**
+
 ```tsx
 // If we have defined items like below
 const items = [{
@@ -123,18 +126,16 @@ const items = [{
 }]
 ```
 
+#### $cellRef (object, optional):
+$cellRef is a keyword in `Item`. We use it to find the corresponding dataStream. In the above example,
+the item has two properties. Both use `$cellRef` to map properties to the data stream.
 
-#### (optional) `$cellRef`
-$cellRef is a special keyword in Item. We use it to find the according dataStream. For the above example,
-the item has two properties. Both of them are using `$cellRef` to map properties to data stream.
+  - `id` (string, optional): A string representing the id of a time series data stream. which you can get by utilizing the time series data source of choices `toId` helper, 
+  for example, with AWS IoT SiteWise, you can refer to an id with the following code:
 
-Type: Object
-- `id`
-A string representing the id of a time series data stream, which you can get by utilizing the time series data source of choices `toId` helper, for example, with AWS IoT SiteWise, you can refer to an id with the following code:
-- Type: String
-- `resolution`
-The resolution, in milliseconds, at which the data should be aggregated.
-- Type: Number
+  - `resolution` (number, optional): The resolution in milliseconds, at which the data is aggregated.
+
+**Example** 
 
 ```tsx
 import { toId } from '@iot-app-kit/source-sitewise';
@@ -150,67 +151,54 @@ const item = [
 ]
 ```
 
+#### columnDefinitions (object):
 
-### `columnDefinitions`
-
-Configures various column properties. The properties mirror [columnDefinitions](https://github.com/aws/awsui-documentation/blob/main/components/table.md#columnDefinitions)
+This attribiute configures the various column properties. The properties mirror the [columnDefinitions](https://github.com/aws/awsui-documentation/blob/main/components/table.md#columnDefinitions)
 with the following changes:
 
-- `key`: string - Determines how each column looks up data from an `Item`.
-- (Optional)`cell` (item) => React.ReactNode* - For overriding the default [cell](link-to-default-cell-function) function.
-- (Optional)`formatter` (data:Primitive) => Primitive - Determines the display of a cell's content for formatting the data.
-
-Type: Array of Object
+- `key`(string, required): Determines how a column looks up data from an `Item`.
+- `cell` (optional): (item) => React.ReactNode* - This overrides the default [cell](link-to-default-cell-function) function.
+- `formatter` (optional): data:Primitive => Primitive - Determines the display of a cell's content for formatting the data.
 
 
-### (optional)`sorting`
+#### sorting (object, optional):
 
-Specifies sorting configuration. If you want to use sorting with default settings, provide an empty object. This feature is only applicable for the table component.
+This attribute specifies the sorting configuration. To use sorting with default settings, you must provide an empty object. 
+This feature is only applicable for the Table component. It contains the following properties:
 
-- `defaultState` : Object - initial sorting state on the first render. This is an object with two properties:
-- `sortingColumn` [TableProps.ColumnDefinition]: currently sorted column.
-- `isDescending` [boolean, optional]: direction of sorting.
-
-Type: Object
-
-
-### (optional)`propertyFiltering`
-
-Specifies property filtering configuration.
-
-- `filteringProperties` : Array - Array of properties by which the data set is going to be filtered. Individual items have the following properties:
-- key [string]: The identifier of this property. Refer to a property name in type T of the data item to enable built-in filtering.
-- groupValuesLabel [string]: Localized string to display for the 'Values' group label for a specific property. For example: EC2 instance values.
-- propertyLabel [string]: A human-readable string for the property.
-- (Optional) operators: A list of all operators supported by this property. Equals operator should always be supported, even if you omit it in the list.
-- (Optional) group [string, optional]: Optional identifier of a custom group that this filtering option is assigned to. Use to create additional groups below the default one. Make sure to also define labels for the group in the customGroupsText property. Notice that only one level of options nesting is supported.
-- (Optional)`filteringFunction`: (item: TableItem, query: Query) => boolean; - Custom function to filter items. The default value is a function that takes values under the FilteringProperty['key'] in individual items, and matches them against current filteringText.
-- (Optional)`defaultQuery`: Query - Initial query on the first render.
-- (Optional)`empty` - React.ReactNode* - Content to display in the table/cards empty slot when there are no items initially provided.
-- (Optional)`noMatch` - React.ReactNode* - Content to display in the table/cards empty slot when filtering returns no matched items.
-
-Type: Object
+- `defaultState` (object): This is the initial sorting state on the first render. This is an object with two properties:
+  - `sortingColumn` (TableProps.ColumnDefinition): Specifies the currently sorted column.
+  - `isDescending` (boolean, optional): This defines the direction of the sort.
 
 
-### `viewport`
+#### propertyFiltering (object, optional):
 
-(Optional) Specifies the interval of time the widget visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
-If there is no ViewportManager, and no `viewport` defined, the default viewport will be `{ duration: '10d' }`.
+This attribute specifies the property filtering configuration.
 
-[Learn about the viewport](/docs/core-viewport--docs).
+- `filteringProperties` (array): An array of properties by which the data set is filtered. Individual items have the following properties:
+  -`key` (string): The identifier of this property. Refers to a property name in type T of the data item to enable built-in filtering.
+  - `groupValuesLabel` (string): Localized string that displays the 'Values' group label for a specific property. For example, EC2 instance values.
+  - `propertyLabel` (string): A human-readable string value for the property.
+  - `operators` (optional): A list of all operators supported by this property. Equals operator must be supported, even if omitted in the list.
+  - `group` (string, optional): Optional identifier of a custom group that the filtering option is assigned to. This is used to create additional groups 
+    below the default one. Labels for the group in the customGroupsText property must be defined. Only one level of nesting options is supported.
+  - `filteringFunction` (optional): (item: TableItem, query: Query) => boolean - This is a custom function to filter items. 
+    The default value is a function that takes values under the FilteringProperty['key'] in individual items, and matches them against current filteringText.
+  - `defaultQuery`(Query, optional): Initial query on the first render.
+  - `empty` (React.ReactNode*, optional): Content displayed in the table/cards empty slot when no items are initially provided.
+  - `noMatch` (React.ReactNode*, optional): Content displayed in the table/cards empty slot when filtering returns no matched items.
 
-Type: Object
+#### viewport (object, optional):
 
-### `thresholds`
+This attribute specifies the interval of time the widget visualizes. If this attribute is not provided, the wideget utilizes the `viewport` 
+specified by its [ViewportManager](/docs/components-viewportmanager--docs). If a `ViewportManager` and `viewport` are not defined, 
+the default viewport is `{ duration: '10d' }`. Learn about the [viewport](/docs/core-viewport--docs).
 
-(Optional) Thresholds define rules which effect how the data is visualized based on whether the data breaches the threshold.
+#### thresholds (object, optional):
 
-[Learn more about thresholds](/docs/core-thresholds--docs#thresholds).
+Thresholds define rules that effect how data is visualized based on whether the data breaches the threshold. Learn more 
+about [thresholds](/docs/core-thresholds--docs#thresholds).
 
-### `queries`
+#### queries (array, optional):
 
-The queries which specify the time series data to visualize.
-
-[Learn more about time series data queries](/docs/core-time-series-data--docs).
-
-Type: Array
+The queries that specify the time series data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).

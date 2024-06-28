@@ -31,7 +31,7 @@ the SceneViewer component must access the property values of the data bindings s
 
 ## Scene Viewer Properties
 
-The SceneViewer component contains the following customizable properties:
+The SceneViewer component's customizable properties are:
 
 **sceneLoader** (object): This is the class to load scene metadata and content. 
 The `SceneLoader` object is defined in `@iot-app-kit/source-iottwinmaker`.
@@ -46,12 +46,12 @@ An uuid is auto generated, if one is not provided.
 each stream is required to contain values for keys `entityId`, `componentName` and `propertyName`. 
 The scene objects with the matching meta values uses the corresponding stream. The object `DataStream[]` is defined in `@iot-app-kit/core`.
 
-**Note**: This property needs to be used together with `viewport`.
+**Note**: This property must be used together with `viewport`.
 
 **queries** (object, optional): Specifies the data to be fetched. To learn more about queries, see [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md).
 The object `TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[]` is defined in `@iot-app-kit/core`.
 
-**Note**: This property needs to be used together with `viewport`.
+**Note**: This property must be used together with `viewport`.
 
 **viewport** (object, optional): Specifies the window to query the data. The object `Viewport` is defined in `@iot-app-kit/core`.
 
@@ -77,7 +77,7 @@ If deselected, empty information is sent. The object `SelectionChangedEventCallb
 **onWidgetClick** (object, optional): This callback is triggered when a widget in the scene is clicked. The information about the clicked widget is passed out. The object 
 `WidgetClickEventCallback` is defined in `@iot-app-kit/scene-composer`.
 
-Only the Tag widget triggers this callback.
+The Tag widget triggers this callback.
 
 **selectedDataBinding** (object, optional): Set the selected node on the Tag widget with matching `entityId` and `componentName`. Move the camera target on it.
 If the `selectedDataBinding` value is undefined, action is not taken. If a matching Tag widget is not present, the currently selected node is deselected. The object is of type
