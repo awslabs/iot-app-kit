@@ -35,6 +35,8 @@ export type AnomalyChartOptions = AnomalyChartWithData & {
   axis?: {
     showY?: boolean;
     showX?: boolean;
+    xLabel?: string;
+    yLabel?: string;
   };
   showTimestamp?: boolean;
 };

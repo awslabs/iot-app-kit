@@ -255,7 +255,7 @@ export const registerCloudscapeThemes = () => {
       axisLine: {
         show: true,
         lineStyle: {
-          color: '#e0e2e7',
+          color: '#404d5c',
         },
       },
       axisTick: {
@@ -285,7 +285,7 @@ export const registerCloudscapeThemes = () => {
       axisLine: {
         show: true,
         lineStyle: {
-          color: '#e0e2e7',
+          color: '#404d5c',
         },
       },
       axisTick: {
@@ -315,7 +315,7 @@ export const registerCloudscapeThemes = () => {
       axisLine: {
         show: true,
         lineStyle: {
-          color: '#e0e2e7',
+          color: '#404d5c',
         },
       },
       axisTick: {
@@ -345,7 +345,7 @@ export const registerCloudscapeThemes = () => {
       axisLine: {
         show: true,
         lineStyle: {
-          color: '#e0e2e7',
+          color: '#404d5c',
         },
       },
       axisTick: {
@@ -710,7 +710,7 @@ export const registerCloudscapeThemes = () => {
       axisLine: {
         show: true,
         lineStyle: {
-          color: '#5f6b7a',
+          color: '#bfc4cb',
         },
       },
       axisTick: {
@@ -740,7 +740,7 @@ export const registerCloudscapeThemes = () => {
       axisLine: {
         show: true,
         lineStyle: {
-          color: '#5f6b7a',
+          color: '#bfc4cb',
         },
       },
       axisTick: {
@@ -770,7 +770,7 @@ export const registerCloudscapeThemes = () => {
       axisLine: {
         show: true,
         lineStyle: {
-          color: '#5f6b7a',
+          color: '#bfc4cb',
         },
       },
       axisTick: {
@@ -800,7 +800,7 @@ export const registerCloudscapeThemes = () => {
       axisLine: {
         show: true,
         lineStyle: {
-          color: '#5f6b7a',
+          color: '#bfc4cb',
         },
       },
       axisTick: {
