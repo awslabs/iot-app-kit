@@ -79,7 +79,7 @@ export const AnomalyChartHiddenAxisAndTimestamp: ComponentStory<
       <div style={{ height: '350px', width: '500px', padding: '20px' }}>
         <AnomalyChart
           data={[MOCK_DATA_SOURCE_SUCCESS]}
-          axis={{ showY: false }}
+          axis={{ showY: false, showX: false }}
           showTimestamp={false}
           viewport={{
             start: new Date(1714409978348),
