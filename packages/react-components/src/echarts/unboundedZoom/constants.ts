@@ -33,12 +33,26 @@ export const DEFAULT_X_AXIS: XAXisComponentOption = {
   axisLabel: {
     hideOverlap: true,
   },
+  axisTick: {
+    show: false,
+    length: 0,
+  },
+  minorTick: {
+    show: false,
+  },
   axisLine: {
     lineStyle: {
-      width: 2,
+      width: 1,
     },
   },
-  splitNumber: 6,
+  splitLine: {
+    show: false,
+  },
+  nameLocation: 'middle',
+  nameTextStyle: {
+    fontWeight: 'bold',
+    padding: [24, 0, 0, 0],
+  },
   // hardcoding the x axis so that all viewport logic is managed exclusively by useDataZoom hooks
   min: 0,
   max: 4102513200000, // Jan 01 2100 19:00:00 UTC

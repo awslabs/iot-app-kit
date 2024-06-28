@@ -31,6 +31,17 @@ export const ANOMALY_Y_AXIS = {
   axisTick: {
     show: false,
   },
+  axisLine: {
+    show: false,
+  },
+  minorTick: {
+    show: false,
+  },
+  nameTextStyle: {
+    verticalAlign: 'bottom',
+    fontWeight: 'bold',
+    padding: [0, 0, 0, 24],
+  },
 };
 
 export const ANOMALY_GRID = {
