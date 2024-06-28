@@ -2,18 +2,18 @@ import { Meta } from '@storybook/blocks';
 
 <Meta title="Components/VideoPlayer" />
 
-# Video Player
+# VideoPlayer
 
-The VideoPlayer component allows you to stream a video from the Kinesis Video Streams. It supports the following configuration:
+The VideoPlayer component allows streaming a video from the Kinesis Video Streams. It supports the following configuration:
 
-- Simple Mode: Stream the video from the Kinesis Video Streams using the provided stream name
-- AWS IoT TwinMaker Mode: Video player is provided with the `entityId` and `componentName` from an AWS IoT TwinMaker workspace. Video player determines the required information using provided inputs and streams the video. Details can be found at [AWS IoT TwinMaker video integration](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/video-integration.html).
+- Simple mode: Stream the video from the Kinesis Video Streams using the provided stream name.
+- AWS IoT TwinMaker mode: Video player is provided with the `entityId` and `componentName` from an AWS IoT TwinMaker workspace. 
+  Video player determines the required information using provided inputs and streams the video. Details are at 
+  [AWS IoT TwinMaker video integration](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/video-integration.html).
 
-## Setup
+## Basic React component usage
 
-There is sample code in [examples/react-app](https://github.com/awslabs/iot-app-kit/tree/main/examples/react-app) that shows how to use this component in detail.
-
-### Basic React component example
+Sample code in [examples/react-app](https://github.com/awslabs/iot-app-kit/tree/main/examples/react-app) shows how to use this component in detail.
 
 ```tsx
 import { initialize } from '@iot-app-kit/source-iottwinmaker';
@@ -38,25 +38,22 @@ const videoData = initialize({ ... }).videoData({
 />
 ```
 
-## Properties
+## VideoPlayer Properties
 
-The VideoPlayer component contains the following properties that you can customize.
+The VideoPlayer component has the following customizable properties:
 
-### `videoData`
+#### videoData (Videodata object):
 
-The class to fetch the video metadata and handle the video source related operations.
+The class to fetch the video metadata and handle the video source related operations. The object `VideoData` is defined in `@iot-app-kit/source-iottwinmaker`.
 
-**Note: When a new instance of this object is passed in, the VideoPlayer will trigger a new loading of the video stream. Therefore, do not recreate this object when not needed.**
+**Note**: Pass in a new instance of this object 
+for the VideoPlayer to trigger a new loading of the video stream. Do not recreate this object unless absolutely necessary.
 
-Type: `VideoData` defined in `@iot-app-kit/source-iottwinmaker`
+#### viewport (Viewport object):
 
-### `viewport`
+Specifies the time range for video playback. The object `Viewport` is defined in `@iot-app-kit/core`.
 
-Specifies the time range for video playback.
-
-Type: `Viewport` defined in `@iot-app-kit/core`
-
-Example:
+**Example**
 
 ```tsx
 // On-Demand mode with specific start and end times
@@ -69,16 +66,17 @@ const viewport = {{ duration: '0' }};
 ```
 
 ---
+# RequestVideoUpload
 
-# Video Upload Request
+Send a request with the RequestVideoUpload component to upload video from edge to the Kinesis Video Streams. This is used 
+for an Edge Video component in an AWS IoT TwinMaker workspace, that is available on the edge, but is not available for streaming. 
+The newly uploaded video is streamed by the `VideoPlayer` component from Kinesis Video Streams once it's available. 
+Learn more about [Edge Video](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/video-integration.html) integration.
 
-The RequestVideoUpload component allows you to send a request to upload video from edge to the Kinesis Video Streams. This is used in case of an Edge Video component from an AWS IoT TwinMaker workspace where the video can be available on the edge, but not available for streaming. The newly uploaded video can be streamed by the `VideoPlayer` component from Kinesis Video Streams once available. More details about the Edge Video component can be found [here](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/video-integration.html).
+### Basic React component usage
 
-## Setup
-
-There is sample code in [examples/react-app](https://github.com/awslabs/iot-app-kit/tree/main/examples/react-app) that shows how to use this component in detail.
-
-### Basic React component example
+Sample code in [examples/react-app](https://github.com/awslabs/iot-app-kit/tree/main/examples/react-app) demonstrates how to use this component in detail. 
+See example below.
 
 ```tsx
 import { initialize } from '@iot-app-kit/source-iottwinmaker';
@@ -94,13 +92,11 @@ const videoData = initialize({ ... }).videoData({
   videoData={videoData}
 />
 ```
+## RequestVideoUpload Properties
 
-## Properties
+The RequestVideoUplod component has the following customizable properties:
 
-The RequestVideoUpload component contains the following properties that you can customize.
+#### videoData (object):
 
-### `videoData`
+The class used to fetch the video metadata and handle the video source related operations. The object is of type `VideoData` defined in `@iot-app-kit/source-iottwinmaker`.
 
-The class to fetch the video metadata and handle the video source related operations.
-
-Type: `VideoData` defined in `@iot-app-kit/source-iottwinmaker`
