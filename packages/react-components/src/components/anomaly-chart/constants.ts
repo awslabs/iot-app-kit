@@ -49,12 +49,6 @@ export const ANOMALY_LEGEND = {
   selectedMode: false,
 };
 
-export const ANOMALY_LEGEND_LOADING_PADDING = [
-  5, // up
-  42, // right
-  10, // down
-  15, // left
-];
 export const ANOMALY_LEGEND_PADDING = [
   5, // up
   15, // right
@@ -91,5 +85,8 @@ export const ANOMALY_TOOLTIP = {
 
 export const DEFAULT_ANOMALY_WIDGET_SETTINGS = {
   animation: false,
+  aria: {
+    enabled: true,
+  },
   ...ANOMALY_X_AXIS,
 };
