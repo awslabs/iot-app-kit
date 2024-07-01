@@ -1,0 +1,6 @@
+.anomaly-chart-loading-icon {
+  position: absolute;
+  right: 64px;
+  top: 3px;
+  z-index: 1;
+}

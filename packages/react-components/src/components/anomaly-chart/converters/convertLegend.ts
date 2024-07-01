@@ -1,13 +1,6 @@
-import {
-  ANOMALY_LEGEND,
-  ANOMALY_LEGEND_LOADING_PADDING,
-  ANOMALY_LEGEND_PADDING,
-} from '../constants';
-import { ConfigurationOptions } from '../hooks/types';
+import { ANOMALY_LEGEND, ANOMALY_LEGEND_PADDING } from '../constants';
 
-export const convertLegend = ({
-  loading,
-}: Pick<ConfigurationOptions, 'loading'>) => ({
+export const convertLegend = () => ({
   ...ANOMALY_LEGEND,
-  padding: loading ? ANOMALY_LEGEND_LOADING_PADDING : ANOMALY_LEGEND_PADDING,
+  padding: ANOMALY_LEGEND_PADDING,
 });

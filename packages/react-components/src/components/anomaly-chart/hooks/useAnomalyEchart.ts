@@ -61,7 +61,7 @@ const reducer = (
     return {
       ...state,
       series,
-      legend: convertLegend({ loading }),
+      legend: convertLegend(),
       tooltip: convertTooltip({ decimalPlaces, tooltipSort }),
       yAxis: convertYAxis({ axis }),
       xAxis: convertXAxis({ axis }),
@@ -75,7 +75,6 @@ const reducer = (
 
 const initialState = ({
   description,
-  loading,
   decimalPlaces,
   tooltipSort,
   data,
@@ -84,7 +83,7 @@ const initialState = ({
 }: AnomalyEChartOptions): Omit<AnomalyChartOptionState, 'chartRef'> => ({
   dataset: convertDataset(data),
   series: convertSeries({ description }),
-  legend: convertLegend({ loading }),
+  legend: convertLegend(),
   tooltip: convertTooltip({ decimalPlaces, tooltipSort }),
   yAxis: convertYAxis({ axis }),
   xAxis: convertXAxis({ axis }),
