@@ -1,0 +1,40 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+
+<Meta title="Tests/How To Add Tests" />
+
+## How To: Add Tests
+
+Create a scene that demonstrates your use case in AWS Account `540844875673`.
+
+Create a new story in this folder, and set the scene appropriately.
+
+Example:
+
+```md
+export const defaultArgs = {
+  source: 'aws',
+  sceneId: 'MatterportIntegration',
+  workspaceId: 'CookieFactory',
+  ...
+}
+
+export const Template = (args) => {
+  return <SceneComposer {...defaultArgs} {...args} />
+}
+
+## Test Case
+
+### Steps
+
+### Verification
+
+<Canvas>
+  <Story name='Viewer'
+    height='500px'
+    parameters={{ controls: { include: ['matterportModelId', 'matterportApplicationKey', 'onSelectionChanged', 'onWidgetClick'], hideNoControlsWarning: true }}}
+    args={{ ...defaultArgs }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+```
+
