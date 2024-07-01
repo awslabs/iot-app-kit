@@ -4,7 +4,7 @@ import * as StatusTimelineStories from './StatusTimeline.stories';
 
 <Meta of={StatusTimelineStories} />
 
-# Status timeline
+# Status Timeline
 
 The status timeline component provides a way to visualize and navigate time series data from one or more [data sources](/docs/core-datasources--docs).
 
@@ -39,81 +39,47 @@ const Page = () => (
 );
 ```
 
-## Properties
+## Scene Composer Properties
 
 The status timeline component contains the following properties.
 
-### `viewport`
-
-(Optional) Specifies the interval of time the widget visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
+**viewport** (object, optional): This attribute specifies the interval of time the widget visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
 If there is no ViewportManager, and no `viewport` defined, the default viewport will be `{ duration: '10d' }`.
+Learn more about [viewport](/docs/core-viewport--docs).
 
-[Learn about the viewport](/docs/core-viewport--docs).
+**thresholds** (object, optional): Thresholds define rules that affect data visualization based on if the data breaches the threshold.
+Learn more about [thresholds](/docs/core-thresholds--docs#thresholds).
 
-Type: Object
+**thresholdSettings** (object, optional): This attribute customizes settings on threshold visualization within the widget. Default value is `{ colorBreachedData: true }`.
+Learn more about [thresholds settings](/docs/core-thresholds--docs#thresholdsettings).
 
-### `thresholds`
+**queries** (array): The queries that specify the time series data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
 
-(Optional) Thresholds define rules which effect how the data is visualized based on whether the data breaches the threshold.
+**gestures** (optional): Specifies if gestures (pan, zoom and restrict time-span) are enabled. Default value is `true`.
 
-[Learn more about thresholds](/docs/core-thresholds--docs#thresholds).
+**axis** (optional): Specifies the x and y-axis related settings. The default values are `{ showX: true, showY: true, yAxisLabel: undefined }`. This contains the 
+following properties:
 
-### `thresholdSettings`
+  * `showX` (boolean, optional): This setting determines if the x-axis is displayed.  The default value is true.
+  * `showY` (boolean, optional): This setting determines if the y-axis is displayed.  The default value is true.
+  * `yAxisLabel` (string, optional): The y-axis label content.  The default value is empty.
 
-(Optional) Customize settings on how thresholds are visualized within the widget. Defaults to `{ colorBreachedData: true }`
+### Example 
 
-[Learn more about thresholds settings](/docs/core-thresholds--docs#thresholdsettings).
-
-Type: Object
-
-### `queries`
-
-The queries which specify the time series data to visualize.
-
-[Learn more about time series data queries](/docs/core-time-series-data--docs).
-
-Type: Array
-
-### `gestures`
-
-(Optional) Specifies whether gestures (pan, zoom and restrict time-span) are enabled. Defaults to `true`.
-
-### `axis`
-
-(Optional) Specifies x and y-axis related settings. Defaults to `{ showX: true, showY: true, yAxisLabel: undefined }`.
-
-__Example usage__:
 ```jsx
 <StatusTimeline axis={{ showX: false, showY: true, yAxisLabel: 'mph' }} {...otherFields} />
 ```
 
-__Properties__:
+**styles** (optional): A map of `refId` to style settings for the component. Learn more about [reference IDs](/docs/core-styles--docs#reference-ids).
+The status timeline provides the following customizable style settings:
 
-- `showX`
+  * `name` (string, optional): This attribute specifies a name to replace the name of the data set given by its source.
+  * `unit` (string, optional): This attribute specifies the unit for the data like `"m/s"` and `"count".
+  * `color` (string, optional): This attribute specifies the color of the data stream visualized on the component. It must be a [css color string](https://www.w3schools.com/howto/default.asp).
+  * `detailedName` (string, optional): This attribute specifies the detailed name that is presented in the tooltip.
 
-  (Optional) Setting to determine whether we show the x-axis. Defaults to true.
+### Example
 
-  Type: Boolean
-
-- `showY`
-
-  (Optional) Setting to determine whether we show the y-axis and the horizontal grid lines. Defaults to true.
-
-  Type: Boolean
-
-- `yAxisLabel`
-
-  (Optional) The y-axis label content. Defaults to empty.
-
-  Type: String
-
-### `styles`
-
-(Optional) A map of `refId` to style settings for the component. [Learn more about reference IDs here](/docs/core-styles--docs#reference-ids).
-
-The status timeline provides the following style settings that you can customize.
-
-__Example usage__:
 ```jsx
 <StatusTimeline
   /** Specifying a query which provides a `refId` */
@@ -132,29 +98,4 @@ __Example usage__:
 
 ```
 
-__Properties__:
-
-* `name`
-
-    (Optional) Specify a name to replace the name of the data set given by its source.
-
-    Type: String
-
-* `unit`
-
-    (Optional) The unit given to the data (for example, `"m/s"` and `"count"`).
-
-    Type: String
-
-* `color`
-
-    (Optional) The color of the data stream visualized on the component. Must be a [css color string](https://www.w3schools.com/howto/default.asp).
-
-    Type: String
-
-* `detailedName`
-
-    (Optional) A detailed name that is presented in the tooltip.
-
-    Type: String
 

@@ -4,7 +4,9 @@ import * as GaugeStories from './Gauge.stories';
 
 # Gauge
 
-The Gauge component provides a compact representation when you need an overview of your asset properties. This overview gives you the most critical insights into the overall performance of your devices, equipment, or processes. With the Gauge, you can interact with IoT data from one or more data sources.
+The Gauge component provides a compact representation of an overview of your asset properties. 
+Visualize critical insights into the overall performance of your devices, equipment, or processes. 
+Interact with IoT data from one or more data sources with Gauge.
 
 <Canvas
   sourceState='none'
@@ -14,7 +16,10 @@ The Gauge component provides a compact representation when you need an overview 
 
 # Gauge with Thresholds
 
-To enhance visualization, you can also incorporate thresholds into your asset properties. This allows for better differentiation and highlighting of specific ranges or values. By defining thresholds, you can visually represent different levels or categories of data, making it easier to identify patterns or anomalies. This approach can provide clearer and more insightful visualizations for improved data analysis.
+Gauge with thresholds enhances visualization of your asset properties. This allows for better differentiation,
+and highlights specific ranges or values. A defined threshold visually represents different levels or 
+categories of data, making it easier to identify patterns or anomalies. 
+It provides clear and insightful visualizations for improved data analysis.
 
 <Canvas
   sourceState='none'
@@ -22,98 +27,7 @@ To enhance visualization, you can also incorporate thresholds into your asset pr
   of={GaugeStories.StandardWithThresholds}
 />
 
-## Properties
-
-The Gauge component contains the following properties that you can customize.
-
-### `viewport`
-
-(Optional) Specifies the interval of time the widget visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
-If there is no ViewportManager, and no `viewport` defined, the default viewport will be `{ duration: '10d' }`.
-
-[Learn about the viewport](/docs/core-viewport--docs).
-
-Type: Object
-
-### `thresholds`
-
-(Optional) Styled Thresholds define rules which effect how the data is visualized based on whether the data breaches the threshold as well as how the threshold is styled
-
-[Learn more about thresholds](/docs/core-thresholds--docs#thresholds).
-
-### `query`
-
-The query which specify the time series data to visualize.
-
-[Learn more about time series data queries](/docs/core-time-series-data--docs).
-
-Type: Object
-
-### `significantDigits`
-
-(Optional) this specifies the number of significant digits to be shown of the data
-
-Default value: `4`
-
-Type: Number
-
-### `settings`
-
-(Optional) Settings to customize the appearance of the widget.
-
-Type: Object
-
-The settings object contains the following properties:
-
-- `gaugeThickness`
-
-  (Optional) this specifies the thickness of the gauge
-
-  Type: Number
-
-- `showName`
-
-  (Optional) whether to display the name of the data being displayed. Defaults to true.
-
-  Type: Boolean
-
-- `showUnit`
-
-  (Optional) whether to display the unit if present. Defaults to true
-
-  Type: Boolean
-
-- `fontSize`
-
-  (Optional) font size in pixels for the value. Defaults to 40.
-
-  Type: Number
-
-- `labelFontSize`
-
-  (Optional) label font size in pixels for the label text. Defaults to 12.
-
-  Type: Number
-
-- `unitFontSize`
-
-  (Optional) unit font size in pixels for the unit value. Defaults to 16.
-
-  Type: Number
-
-- `yMin`
-
-  (Optional) yMin is the starting(Min) value of your gauge
-
-  Type: Number
-
-- `yMax`
-
-(Optional) yMax is the end(Max) value of your gauge
-
-    Type: Number
-
-**Example usage**:
+## Basic usage
 
 ```jsx
 <Gauge
@@ -158,20 +72,65 @@ The settings object contains the following properties:
 />
 ```
 
-# Examples
+## Gauge Properties
 
-## BAD Data Quality
+The Gauge component has the following customizable properties:
+
+#### viewport (object,optional):
+
+Specify the interval of time the widget visualizes. If not provided, the widget utilizes the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
+If a iewportManager, and a `viewport` is not defined, the default viewport is `{ duration: '10d' }`.
+Learn about the [viewport](/docs/core-viewport--docs).
+
+#### thresholds (object, optional):
+
+Define rules to display how the data is visualized based on if the data breaches the threshold and how the threshold is styled.
+Learn more about [thresholds](/docs/core-thresholds--docs#thresholds).
+
+#### query (object):
+
+The query that specifes the time series data to visualize.
+Learn more about [time series data queries](/docs/core-time-series-data--docs).
+
+#### significantDigits (number, optional):
+
+Specify the number of significant digits displayed. The default value is `4`.
+
+#### settings (object, optional):
+
+Settings to customize the appearance of the widget.
+
+The settings object contains the following properties:
+
+  - `gaugeThickness` (number, optional): Specifies the thickness of the gauge.
+  - `showName` (boolean, optional): Set to `true` to display the name of the data. Default value is `true`.
+  - `showUnit` (boolean, optional): Set to `true` to display the units of the data. Default value is `true`.
+  - `fontSize` (number, optional): The font size in pixels. Default value is 40.
+  - `labelFontSize` (number, optional): The label font size in pixels. Default is 12.
+  - `unitFontSize` (number, optional): The unit font size in pixels. Default is 16.
+  - `yMin` (number, optional): The starting (minimum) value of the gauge.
+  - `yMax` (number, optional): The ending (maximum) value of the gauge.
+
+
+
+### Examples
+
+#### Bad data quality
+An example of bad data quality.
 
 <Canvas sourceState='none' of={GaugeStories.BadDataQuality} />
 
-## UNCERTAIN Data Quality
+#### Uncertain data quality
+An example of uncertain data quality
 
 <Canvas sourceState='none' of={GaugeStories.UncertainDataQuality} />
 
-## Loading
+#### Loading
+An example when the data is loading.
 
 <Canvas sourceState='none' of={GaugeStories.Loading} />
 
-## Error
+#### Error
+An example of an error.
 
 <Canvas sourceState='none' of={GaugeStories.Error} />

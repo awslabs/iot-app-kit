@@ -4,128 +4,47 @@ import * as KpiStories from './Kpi.stories';
 
 # KPI
 
-The Key Performance Indicator (KPI) component provides a compact representation when you need an overview of your asset properties. This overview gives you the most critical insights into the overall performance of your devices, equipment, or processes. With the KPI, you can interact with IoT data from one or more data sources.
+The Key Performance Indicator (KPI) component provides a compact representation when you need an overview of your asset properties. 
+This overview provides critical insights into the overall performance of your devices, equipment, and processes. 
+The KPI component lets you can interact with IoT data from one or more data sources.
 
 <Canvas sourceState="none" story={{height : '70px' }} of={KpiStories.Standard} />
 
-## Properties
+## KPI Properties
 
-The KPI component contains the following properties that you can customize.
+The KPI component contains the following customizable properties.
 
-### `viewport`
-
-(Optional) Specifies the interval of time the widget visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
-If there is no ViewportManager, and no `viewport` defined, the default viewport will be `{ duration: '10d' }`.
-
+**viewport** (object, optional): This specifies the interval of time the widget visualizes. If not present, the widget utilizes the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
+If a ViewportManager, and a `viewport` is not defined, the default value is `{ duration: '10d' }`.
 [Learn about the viewport](/docs/core-viewport--docs).
 
-Type: Object
-
-### `thresholds`
-
-(Optional) Styled Thresholds define rules which effect how the data is visualized based on whether the data breaches the threshold as well as how the threshold is styled
-
+**thresholds** (optional): A styled threshold defines rules that effect how the data is visualized. It's based on if the data breaches the threshold as well as how the threshold is styled.
 [Learn more about thresholds](/docs/core-thresholds--docs#thresholds).
 
-### `query`
+**query** (object, optional): This query specifies the time series data to visualize. [Learn more about time series data queries](/docs/core-time-series-data--docs).
 
-The query which specify the time series data to visualize.
+**settings** (object, optional): This specifies the settings to customize the appearance of the widget. The settings object contains the following properties:
 
-[Learn more about time series data queries](/docs/core-time-series-data--docs).
+  * `showTimestamp` (boolean, optional): Displays the timestamp of the data being displayed. Defaults to true.
+  * `showAggregationAndResolution` (boolean, optional): Displays the ggregation and resolution of the data being displayed. Defaults to true.
+  * `showName` (boolean, optional): Displays the name of the data being displayed. Defaults to true.
+  * `showUnit` (boolean, optional): Displays the unit if present. Defaults to true.
+  * `fontSize` (number, optional): Displays the font size in pixels for the value. Defaults to 30.
+  * `secondaryFontSize` (number, optional): Displays the font size in pixels for the title. Defaults to 15.
 
-Type: Object
+  The following settings properties are deprecated:
+  * `color` (string, optional): Specifies the color to display. Defaults to `black`. It is overriden by thresholds and alarms. The value must be a `css` string.
+  * `showIcon`(boolean, optional): Display the icon if present. Defaults to true.
+  * `aggregationFontSize` (number, optional): Display the font size in pixels for aggregation and resolution.
 
-### `settings`
+**styles** (object, optional): This contains a map of `refId` to style settings for the component. [Learn more about reference IDs here](/docs/core-styles--docs).
+It has the following style settings that are customizable:
 
-(Optional) Settings to customize the appearance of the widget.
+  * `name` (string, optional): This specifies a name to replace the name of the data set given by its source.
+  * `unit` (string, optional): This specifies the units for the data (for example, `"m/s"` and `"count"`).
+  * `detailedName` (string, optional): This specifies the detailed name presented in the tooltip.
 
-Type: Object
-
-The settings object contains the following properties:
-
-- `showTimestamp`
-
-  (Optional) whether to display the timestamp of the data being displayed. Defaults to true.
-
-  Type: Boolean
-
-- `showAggregationAndResolution`
-
-  (Optional) whether to display the aggregation and resolution of the data being displayed. Defaults to true.
-
-  Type: Boolean
-
-- `showName`
-
-  (Optional) whether to display the name of the data being displayed. Defaults to true.
-
-  Type: Boolean
-
-- `showUnit`
-
-  (Optional) whether to display the unit if present. Defaults to true
-
-  Type: Boolean
-
-- `fontSize`
-
-  (Optional) font size in pixels for the value. Defaults to 30.
-
-  Type: Number
-
-- `secondaryFontSize`
-
-  (Optional) font size in pixels for the title. Defaults to 15.
-
-  Type: Number
-
----
-
-- `color` (deprecated)
-
-  (Optional) color to display value. Defaults to black. Is overriden by thresholds and alarms. Must be a css string.
-
-  Type: String
-
-
-- `showIcon` (deprecated)
-
-  (Optional) whether to display the icon if present. Defaults to true
-
-  Type: Boolean
-
-- `aggregationFontSize` (deprecated)
-
-  (Optional) font size in pixels for the aggregation and resolution
-
-  Type: Number
-
-### `styles`
-
-(Optional) A map of `refId` to style settings for the component. [Learn more about reference IDs here](/docs/core-styles--docs).
-
-The KPI provides the following style settings that you can customize:
-
-* `name`
-
-    (Optional) Specify a name to replace the name of the data set given by its source.
-
-    Type: String
-
-* `unit`
-
-    (Optional) The unit given to the data (for example, `"m/s"` and `"count"`).
-
-    Type: String
-
-* `detailedName`
-
-    (Optional) A detailed name that is presented in the tooltip.
-
-    Type: String
-
-
-__Example usage__:
+### Examples
 
 ```jsx
 <KPI
@@ -143,29 +62,10 @@ __Example usage__:
 
 ```
 
-__Properties__:
-
-* `name`
-
-    (Optional) Specify a name to replace the name of the data set given by its source.
-
-    Type: String
-
-* `unit`
-
-    (Optional) The unit given to the data (for example, `"m/s"` and `"count"`).
-
-    Type: String
-
-* `detailedName`
-
-    (Optional) A detailed name that is presented in the tooltip.
-
-    Type: String
 
 <Meta of={KpiStories} />
 
-# Examples
+Below are some examples of the KPI visualizations.
 
 ## Empty
 <Canvas sourceState="none"   of={KpiStories.Empty} />
@@ -173,5 +73,5 @@ __Properties__:
 ## Loading
 <Canvas sourceState="none"  of={KpiStories.Loading} />
 
-# Error
+## Error
 <Canvas sourceState="none"   of={KpiStories.Error} />
