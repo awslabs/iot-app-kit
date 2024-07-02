@@ -282,3 +282,22 @@ export type TextWidget = DashboardWidget<TextProperties>;
 export type StatusTimelineWidget = DashboardWidget<StatusTimelineProperties>;
 export type RectangleWidget = DashboardWidget<RectangleProperties>;
 export type LineWidget = DashboardWidget<LineProperties>;
+
+export type SceneViewProperties = QueryProperties & {
+  title?: string;
+  primaryFont: SimpleFontSettings;
+  secondaryFont: SimpleFontSettings;
+  showAggregationAndResolution?: boolean;
+  showValue?: boolean;
+  showUnit?: boolean;
+  showIcon?: boolean;
+  showName?: boolean;
+  showTimestamp?: boolean;
+  showDataQuality?: boolean;
+  thresholds?: StyledThreshold[];
+  backgroundColor?: string;
+  significantDigits?: number;
+};
+export type SceneViewPropertiesKeys = keyof SceneViewProperties;
+
+export type SceneViewWidget = DashboardWidget<SceneViewProperties>;

@@ -21,9 +21,34 @@ module.exports = {
   core: {
     builder: '@storybook/builder-webpack5',
   },
-  typescript: { reactDocgen: false },
+  typescript: { reactDocgen: 'react-docgen', },
+  env: async (config) => {
+    try {
+      const credential = await fromIni({
+        profile: process.env.AWS_PROFILE || 'default',
+      })();
+
+      return {
+        ...config,
+        awsCredentials: JSON.stringify(credential),
+      };
+    } catch {
+      // Mostly for build hosts, and other environments where you don't want to load AWS config
+      return config;
+    }
+  },
   webpackFinal: async (config) => {
     config.resolve.plugins = [new TsconfigPathsPlugin()];
+    config.module.rules.push(
+
+      {
+        test: /\.hdr$/,
+        type: 'asset/resource',
+        generator: {
+          filename: '[path][name].[ext]',
+        },
+      },
+    ); // Return the altered config
     return config;
   }
 };

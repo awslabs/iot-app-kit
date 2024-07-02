@@ -105,6 +105,8 @@
     "@iot-app-kit/core-util": "10.8.1",
     "@iot-app-kit/react-components": "10.8.1",
     "@iot-app-kit/source-iotsitewise": "10.8.1",
+    "@iot-app-kit/scene-composer": "10.8.1",
+    "@iot-app-kit/source-iottwinmaker": "10.8.1",
     "@popperjs/core": "^2.11.8",
     "@tanstack/react-query": "^4.29.15",
     "aws-sdk-client-mock": "^3.0.0",

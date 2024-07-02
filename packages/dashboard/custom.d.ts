@@ -9,3 +9,5 @@ declare module '*.svg' {
   const src: string;
   export default src;
 }
+
+declare module 'echarts/lib/chart/line/poly';

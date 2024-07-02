@@ -127,12 +127,40 @@ export const MOCK_DASHBOARD_CONFIG = {
   },
   widgets: [
     {
+      id: 'nlR8v1cR8PEZgo2Xwu',
+      type: 'scene-view',
+      width: 33,
+      height: 20,
+      x: 0,
+      y: 0,
+      z: 0,
+      properties: {
+        resolution: '0',
+        queryConfig: {
+          source: 'iotsitewise',
+        },
+        primaryFont: {},
+        secondaryFont: {},
+        showName: true,
+        showTimestamp: true,
+        showUnit: true,
+        showAggregationAndResolution: true,
+        showDataQuality: true,
+        styleSettings: {
+          'fc7e3cd1-3d23-489f-b8f7-ff9ea0006e58': {
+            color: '#7d2105',
+          },
+        },
+      },
+    },
+    
+    {
       id: 'nlR8v1cR8PEZgo2Xwu__u',
       type: 'xy-plot',
       width: 33,
       height: 20,
       x: 0,
-      y: 0,
+      y: 31,
       z: 0,
       properties: {
         aggregationType: 'AVERAGE',
@@ -188,6 +216,7 @@ export const MOCK_DASHBOARD_CONFIG = {
         },
       },
     },
+    
     {
       id: '3m4RWZ3P2T3uF5ERro9Bf',
       type: 'kpi',
