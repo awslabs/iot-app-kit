@@ -51,7 +51,7 @@ export const DEFAULT_X_AXIS: XAXisComponentOption = {
   nameLocation: 'middle',
   nameTextStyle: {
     fontWeight: 'bold',
-    padding: [24, 0, 0, 0],
+    padding: [20, 0, 0, 0],
   },
   // hardcoding the x axis so that all viewport logic is managed exclusively by useDataZoom hooks
   min: 0,
@@ -61,6 +61,7 @@ export const DEFAULT_X_AXIS: XAXisComponentOption = {
 export const DEFAULT_TOOLBOX_GESTURES_ENABLED: ToolboxComponentOption = {
   show: true,
   top: 4,
+  itemGap: 12,
   right: 8,
   feature: {
     dataZoom: {

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import {
   colorBackgroundContainerContent,
   colorBorderControlDefault,
@@ -89,8 +91,14 @@ export const ANOMALY_TOOLTIP = {
   // These only work because the tooltip is rendered as html
   borderColor: colorBorderControlDefault,
   backgroundColor: colorBackgroundContainerContent,
-  position: (point: [number, number]) => {
-    return [point[0] + 20, '0%'];
+  position: (
+    point: [number, number],
+    _params: any,
+    _dom: any,
+    _rect: any,
+    size: { viewSize: [number, number]; contentSize: [number, number] }
+  ) => {
+    return [point[0] + 20, size.viewSize[1] / 2 - 40 - size.contentSize[1] / 2];
   },
 };
 
