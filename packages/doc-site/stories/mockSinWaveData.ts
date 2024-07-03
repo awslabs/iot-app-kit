@@ -23,9 +23,11 @@ export const mockSinWaveData = (frequency?: string) =>
 export const mockSinWaveDataWithQuality = ({
   frequency,
   quality,
+  positiveOnly = false,
 }: {
   frequency?: string;
   quality?: Quality;
+  positiveOnly?: boolean;
 }) =>
   mockTimeSeriesDataQueryLiveStream({
     frequency: frequency || '0.25s',
@@ -35,7 +37,7 @@ export const mockSinWaveDataWithQuality = ({
         name: 'Windmill',
         createDataPoint: (date: Date) => ({
           x: date.getTime(),
-          y: 100 * Math.sin(date.getTime() / 1000),
+          y: positiveOnly ? Math.abs(100 * Math.sin(date.getTime() / 1000)) : 100 * Math.sin(date.getTime() / 1000),
           quality,
         }),
       },

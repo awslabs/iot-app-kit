@@ -25,7 +25,7 @@ export const Standard: Story = {
     </div>
   ),
   args: {
-    query: mockSinWaveDataWithQuality({ frequency: '5s' }),
+    query: mockSinWaveDataWithQuality({ frequency: '5s', positiveOnly: true }),
     settings: {
       gaugeThickness: 30,
       showUnit: true,
@@ -46,7 +46,7 @@ export const StandardWithThresholds: Story = {
     </div>
   ),
   args: {
-    query: mockSinWaveDataWithQuality({ frequency: '5s' }),
+    query: mockSinWaveDataWithQuality({ frequency: '5s', positiveOnly: true }),
     thresholds: [
       {
         value: 30,
@@ -87,7 +87,7 @@ export const BadDataQuality: Story = {
     </div>
   ),
   args: {
-    query: mockSinWaveDataWithQuality({ frequency: '5s', quality: 'BAD' }),
+    query: mockSinWaveDataWithQuality({ frequency: '5s', quality: 'BAD', positiveOnly: true }),
     thresholds: [
       {
         value: 30,
@@ -131,6 +131,7 @@ export const UncertainDataQuality: Story = {
     query: mockSinWaveDataWithQuality({
       frequency: '5s',
       quality: 'UNCERTAIN',
+      positiveOnly: true
     }),
     settings: {
       gaugeThickness: 30,
