@@ -4,12 +4,13 @@ import { ChatbotHeader } from "./ChatbotHeader";
 import { ChatbotInputBox } from "./ChatbotInputBox";
 import { ChatbotConversationContainer } from "./conversation/ChatbotConversationContainer";
 import "./chatbot.css";
+import { IMessage } from "../../hooks/useAssistant/types";
 
 export interface ChatbotProps {
-
+  messages: IMessage[];
 }
 
-export const Chatbot = (_props: ChatbotProps) => {
+export const Chatbot = ({ messages }: ChatbotProps) => {
   return (
       <div className="iot-app-kit assistant-chatbot">
         <Container
@@ -17,7 +18,10 @@ export const Chatbot = (_props: ChatbotProps) => {
           header={<ChatbotHeader headerText="Sitewise Assistant"/>}
           disableHeaderPaddings
         >
-          <ChatbotConversationContainer height={400} />
+          <ChatbotConversationContainer 
+            height={400} 
+            messages={messages}
+          />
         </Container>
       </div>
   );
