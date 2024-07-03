@@ -28,7 +28,6 @@ export const ChatbotAssistantMessage = ({ text, citations }: ChatbotAssistantMes
               headingTagOverride="h4"
               headerText="Sources"
               headerAriaLabel="Sources"
-              defaultExpanded
             >
               {citations.map((citation) => <Link>{citation}</Link>)}
             </ExpandableSection>

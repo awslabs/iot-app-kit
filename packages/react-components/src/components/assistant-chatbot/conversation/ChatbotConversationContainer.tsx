@@ -14,7 +14,8 @@ export interface ChatbotConversationContainerProps {
 export const ChatbotConversationContainer = ({ height, messages }: ChatbotConversationContainerProps) => {
   return (
     <div className="conversation-container" style={{height}}>
-      <SpaceBetween size="m">
+      <br/>
+      <SpaceBetween size="s">
         {messages.map(message => {
           if (message.type === MessageType.TEXT) {
             if (message.sender = SenderType.USER) {

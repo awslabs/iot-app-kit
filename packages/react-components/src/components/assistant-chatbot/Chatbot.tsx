@@ -17,6 +17,7 @@ export const Chatbot = ({ messages }: ChatbotProps) => {
           footer={<ChatbotInputBox/> }
           header={<ChatbotHeader headerText="Sitewise Assistant"/>}
           disableHeaderPaddings
+          disableContentPaddings
         >
           <ChatbotConversationContainer 
             height={400} 

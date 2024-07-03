@@ -7,6 +7,7 @@
 .iot-app-kit.assistant-chatbot .conversation-container {
   overflow: auto;
   overflow-x: hidden;
+  padding-left: 1.2rem;
   padding-right: 0.5rem;
 }
 
