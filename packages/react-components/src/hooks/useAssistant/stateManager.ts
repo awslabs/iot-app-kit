@@ -2,15 +2,23 @@ import type { BaseStateManager, IMessage } from './types';
 import { SenderType, MessageType } from './types';
 import { v4 as uuidv4 } from 'uuid';
 
-type GenericSetState<T> = (fn: (state: T) => T) => void;
+type GenericSetState = (state: any) => void;
+type GenericGetState = () => any;
 
-export class StateManager<T> implements BaseStateManager {
-  private setState: GenericSetState<T>;
+export class StateManager implements BaseStateManager {
+  private setStateFn: GenericSetState;
+  private getStateFn: GenericGetState;
 
-  constructor(setStateFunc: GenericSetState<T>) {
-    this.setState = setStateFunc;
+  constructor(setStateFunc: GenericSetState, getStateFunc: GenericGetState) {
+    this.setStateFn = setStateFunc;
+    this.getStateFn = getStateFunc;
   }
 
+  setStateFns(setStateFunc: GenericSetState, getStateFunc: GenericGetState) {
+    this.setStateFn = setStateFunc;
+    this.getStateFn = getStateFunc;
+  }
+  
   addPartialResponse = (content: string, response: unknown) => {
     const message = {
       id: uuidv4(),
@@ -50,23 +58,10 @@ export class StateManager<T> implements BaseStateManager {
   };
 
   addMessageToState = (message: IMessage) => {
-    this.setState((state: any) => ({
-      ...state,
-      messages: [...state.messages, message],
-    }));
+    this.setStateFn({ messages: [ message ] });
   };
 
-  getState = (): { messages: IMessage[] } => {
-    return {
-      messages: [{
-        id: uuidv4(),
-        loading: true,
-        content: 'test',
-        sender: SenderType.ASSISTANT,
-        type: MessageType.TEXT,
-      }]
-    }
-  }
+  getState = () => this.getStateFn();
 }
 
 export default StateManager;

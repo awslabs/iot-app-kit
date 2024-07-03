@@ -1,0 +1,77 @@
+@import url('@cloudscape-design/global-styles/index.css');
+
+.iot-app-kit.assistant-chatbot {
+  min-width: 50vw;
+}
+
+.iot-app-kit.assistant-chatbot .conversation-container {
+  overflow: auto;
+  overflow-x: hidden;
+  padding-right: 0.5rem;
+}
+
+.iot-app-kit.assistant-chatbot .customer-message-icon {
+  background: var(--awsui-color-grey-600);
+  width: 24px;
+  height: 24px;
+  margin-top: 0.3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iot-app-kit.assistant-chatbot .customer-message {
+  padding: 0.5rem;
+}
+
+
+.iot-app-kit.assistant-chatbot .assistant-icon {
+  margin-top: 0.3rem;
+}
+
+.iot-app-kit.assistant-chatbot .assistant-message {
+  background: var(--awsui-color-grey-150);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.iot-app-kit.assistant-chatbot .processing-message-icon {
+  background-image: url('./assets/purpleCircleIcon.svg');
+  background-size: 24px 24px;
+  width: 24px;
+  height: 24px;
+  margin-top: 0.3rem;
+  display: flex;
+  flex-direction: row;
+  row-gap: 5;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+
+/* --- Processing animation --- */
+@keyframes jump {
+  0%, 40%, 100% {
+    transform: initial;
+  }
+  20% {
+    transform: translateY(-4px);
+  }
+}
+
+.iot-app-kit.assistant-chatbot .processing-message-icon > div {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: white;
+    animation: jump 1s linear infinite;
+}
+
+.iot-app-kit.assistant-chatbot .processing-message-icon > div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.iot-app-kit.assistant-chatbot .processing-message-icon > div:nth-child(3) {
+  animation-delay: 0.4s;
+}

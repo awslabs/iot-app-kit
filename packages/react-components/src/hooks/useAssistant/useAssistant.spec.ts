@@ -1,9 +1,9 @@
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { useAssistant } from './useAssistant';
-import { FakeInvokeAssistant } from './__mocks__/mockedResponse';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import type { MessageParser } from './messageParser';
 import StateManager from './stateManager';
+import { FakeInvokeAssistant } from '../../__mocks__/assistantMockedResponse';
 
 describe('useAssistant', () => {
   const conversationId = 'myAssistantConversation';
@@ -66,7 +66,7 @@ describe('useAssistant', () => {
     const { result } = renderHook(() =>
       useAssistant({
         assistantClient: client,
-        stateManager: new StateManager(mockedSetState),
+        stateManager: new StateManager(mockedSetState, jest.fn()),
       })
     );
 

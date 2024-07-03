@@ -3,9 +3,9 @@ import { type IMessageParser, type BaseStateManager, SenderType } from './types'
 import type { InvokeAssistantResponse } from '@iot-app-kit/core-util';
 
 export class MessageParser implements IMessageParser {
-  private stateManager: StateManager<any> = new StateManager(() => {});
+  private stateManager: StateManager = new StateManager(() => {}, () => {});
 
-  setStateManager(stateManager: BaseStateManager & StateManager<any>) {
+  setStateManager(stateManager: BaseStateManager & StateManager) {
     this.stateManager = stateManager;
   }
 

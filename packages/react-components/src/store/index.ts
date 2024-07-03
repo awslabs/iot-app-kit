@@ -8,8 +8,9 @@ import {
   TrendCursorGroupingMap,
   TrendCursorsState,
 } from '../echarts/extensions/trendCursors/store';
+import { AssistantState, createAssistantSlice } from './assistantSlice';
 
-export type StateData = TrendCursorsState & ConfigState & ChartStoreState;
+export type StateData = TrendCursorsState & ConfigState & ChartStoreState & AssistantState;
 const useDataStore = create<StateData>()(
   devtools(
     persist(
@@ -17,6 +18,7 @@ const useDataStore = create<StateData>()(
         ...createTrendCursorsSlice(...args),
         ...createConfigSlice(...args),
         ...createChartStoresSlice(...args),
+        ...createAssistantSlice(...args),
       }),
       {
         name: 'global-store',
