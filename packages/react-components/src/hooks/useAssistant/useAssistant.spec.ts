@@ -18,9 +18,11 @@ describe('useAssistant', () => {
   beforeEach(() => jest.clearAllMocks());
 
   it('should provide a default implementation for ', async () => {
-    const { result } = renderHook(() => useAssistant({
-      assistantClient: client
-    }));
+    const { result } = renderHook(() =>
+      useAssistant({
+        assistantClient: client,
+      })
+    );
 
     act(() => {
       result.current.invokeAssistant(conversationId, 'customer message');
@@ -46,7 +48,7 @@ describe('useAssistant', () => {
         assistantClient: newClient,
         messageParser: {
           stateManager: null,
-          setStateManager: () => { },
+          setStateManager: () => {},
           parse: mockedParser,
         } as unknown as MessageParser,
       })
@@ -80,7 +82,9 @@ describe('useAssistant', () => {
   });
 
   it('should invoke Assistant', async () => {
-    const mockedInvokeAssistant = jest.fn().mockImplementation(FakeInvokeAssistant);
+    const mockedInvokeAssistant = jest
+      .fn()
+      .mockImplementation(FakeInvokeAssistant);
     const newClient = new IoTSitewiseAssistantClient({
       requestFns: {
         invokeAssistant: mockedInvokeAssistant,
@@ -106,7 +110,9 @@ describe('useAssistant', () => {
   it('should generate Summary', async () => {
     const summaryUtterance = 'generate a summary';
     const summaryInstructions = 'some instructions';
-    const mockedInvokeAssistant = jest.fn().mockImplementation(FakeInvokeAssistant);
+    const mockedInvokeAssistant = jest
+      .fn()
+      .mockImplementation(FakeInvokeAssistant);
     const newClient = new IoTSitewiseAssistantClient({
       requestFns: {
         invokeAssistant: mockedInvokeAssistant,
@@ -125,7 +131,8 @@ describe('useAssistant', () => {
         conversationId,
         [],
         summaryUtterance,
-        summaryInstructions);
+        summaryInstructions
+      );
     });
 
     await waitFor(() => {
@@ -134,10 +141,8 @@ describe('useAssistant', () => {
         assistantName: 'myAssistant',
         context: summaryInstructions,
         message: {
-          chatMessage: [
-            { text: summaryUtterance }
-          ]
-        }
+          chatMessage: [{ text: summaryUtterance }],
+        },
       });
     });
   });

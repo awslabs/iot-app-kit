@@ -29,7 +29,7 @@ export const ChatbotAssistantMessage = ({
         className='assistant-icon'
       />
       <div className='assistant-message'>
-        <SpaceBetween size={'s'}>
+        <SpaceBetween size='s'>
           <Box fontSize='body-s'>{text}</Box>
           {citations.length > 0 ? (
             <ExpandableSection

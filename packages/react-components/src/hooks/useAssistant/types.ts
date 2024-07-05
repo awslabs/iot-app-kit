@@ -5,7 +5,7 @@ type UniqueID = string;
 export enum SenderType {
   USER = 'user',
   ASSISTANT = 'assistant',
-};
+}
 
 export enum MessageType {
   TEXT = 'text',
@@ -14,14 +14,14 @@ export enum MessageType {
   CITATION = 'citation',
   VIDEO = 'video',
   AUDIO = 'audio',
-};
+}
 
 export interface IMessage {
   sender: SenderType;
   /**
    * this may hold a stringified JSON object
-  */
-  content: string; 
+   */
+  content: string;
   /**
    * help to parse specific message types, like prompts and so on
    */
@@ -39,7 +39,7 @@ export interface IMessage {
 }
 
 export interface IMessageParser {
-  parse(response: InvokeAssistantResponse) : void;
+  parse(response: InvokeAssistantResponse): void;
   setStateManager(stateManager: BaseStateManager): void;
 }
 

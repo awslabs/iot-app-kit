@@ -3,8 +3,8 @@ import Container from '@cloudscape-design/components/container';
 import { ChatbotHeader } from './ChatbotHeader';
 import { ChatbotInputBox } from './ChatbotInputBox';
 import { ChatbotConversationContainer } from './conversation/ChatbotConversationContainer';
+import type { IMessage } from '../../hooks/useAssistant/types';
 import './chatbot.css';
-import { IMessage } from '../../hooks/useAssistant/types';
 
 export interface ChatbotProps {
   messages: IMessage[];

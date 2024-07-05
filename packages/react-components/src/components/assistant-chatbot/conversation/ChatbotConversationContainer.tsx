@@ -5,7 +5,7 @@ import { ChatbotAssistantMessage } from './ChatbotAssistantMessage';
 import { ChatbotProcessingMessage } from './ChatbotProcessingMessage';
 import { ChatbotPrompts } from './ChatbotPrompts';
 import {
-  IMessage,
+  type IMessage,
   MessageType,
   SenderType,
 } from '../../../hooks/useAssistant/types';

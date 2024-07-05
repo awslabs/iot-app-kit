@@ -6,9 +6,7 @@ import Textarea from '@cloudscape-design/components/textarea';
 import Button from '@cloudscape-design/components/button';
 import Box from '@cloudscape-design/components/box';
 
-export interface ChatbotInputBoxProps {}
-
-export const ChatbotInputBox = (_props: ChatbotInputBoxProps) => {
+export const ChatbotInputBox = () => {
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
   const [value, setValue] = useState<string>('');
 

@@ -15,7 +15,7 @@ export const ChatbotPrompts = ({ prompts }: ChatbotPromptsProps) => {
         { colspan: { default: 11, xxs: 11 } },
       ]}
     >
-      <div />
+      <div className='processing-prompts-reserved-space'>&nbsp;</div>
       <SpaceBetween size='s' direction='vertical'>
         {prompts.map((prompt) => (
           <Button>{prompt}</Button>

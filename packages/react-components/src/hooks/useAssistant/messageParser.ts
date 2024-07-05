@@ -1,18 +1,27 @@
 import StateManager from './stateManager';
-import { type IMessageParser, type BaseStateManager, SenderType } from './types';
+import {
+  type IMessageParser,
+  type BaseStateManager,
+  SenderType,
+} from './types';
 import type { InvokeAssistantResponse } from '@iot-app-kit/core-util';
 
 export class MessageParser implements IMessageParser {
-  private stateManager: StateManager = new StateManager(() => {}, () => {});
+  private stateManager: StateManager = new StateManager(
+    () => {},
+    () => {}
+  );
 
   setStateManager(stateManager: BaseStateManager & StateManager) {
     this.stateManager = stateManager;
   }
 
   parse(response: InvokeAssistantResponse) {
-    
     if (response.step?.stepId) {
-      this.stateManager.addPartialResponse(response.step.rationale.text, response.step);
+      this.stateManager.addPartialResponse(
+        response.step.rationale.text,
+        response.step
+      );
     }
 
     if (response.response.citations) {
@@ -22,10 +31,11 @@ export class MessageParser implements IMessageParser {
     }
 
     if (response.response?.message?.content) {
-      response.response?.message?.content.forEach((content: Record<string, any>) => {
-        this.stateManager.addText(content.text, SenderType.ASSISTANT);
-      })
+      response.response?.message?.content.forEach(
+        (content: Record<string, any>) => {
+          this.stateManager.addText(content.text, SenderType.ASSISTANT);
+        }
+      );
     }
-
   }
 }

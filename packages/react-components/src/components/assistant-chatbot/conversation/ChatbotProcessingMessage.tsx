@@ -19,7 +19,7 @@ export const ChatbotProcessingMessage = ({
       <div
         className='processing-message-icon'
         role='progressbar'
-        aria-label={`Assistant is typing...`}
+        aria-label='Assistant is typing...'
       >
         <div className='processing-message-dot' />
         <div className='processing-message-dot' />

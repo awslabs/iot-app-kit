@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 type GenericSetState = (state: any) => void;
 type GenericGetState = () => any;
 
-export class StateManager implements BaseStateManager {
+export default class StateManager implements BaseStateManager {
   private setStateFn: GenericSetState;
   private getStateFn: GenericGetState;
 
@@ -18,7 +18,7 @@ export class StateManager implements BaseStateManager {
     this.setStateFn = setStateFunc;
     this.getStateFn = getStateFunc;
   }
-  
+
   addPartialResponse = (content: string, response: unknown) => {
     const message = {
       id: uuidv4(),
@@ -27,7 +27,7 @@ export class StateManager implements BaseStateManager {
       sender: SenderType.ASSISTANT,
       type: MessageType.TEXT,
       payload: response,
-    }
+    };
 
     this.addMessageToState(message);
   };
@@ -40,7 +40,7 @@ export class StateManager implements BaseStateManager {
       sender: SenderType.ASSISTANT,
       type: MessageType.CITATION,
       payload: references,
-    }
+    };
 
     this.addMessageToState(message);
   };
@@ -52,16 +52,14 @@ export class StateManager implements BaseStateManager {
       content,
       sender,
       type: MessageType.TEXT,
-    }
+    };
 
     this.addMessageToState(message);
   };
 
   addMessageToState = (message: IMessage) => {
-    this.setStateFn({ messages: [ message ] });
+    this.setStateFn({ messages: [message] });
   };
 
   getState = () => this.getStateFn();
 }
-
-export default StateManager;

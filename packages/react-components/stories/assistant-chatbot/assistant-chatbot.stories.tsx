@@ -18,8 +18,10 @@ export default {
   },
 } as ComponentMeta<typeof AssistantChatbot>;
 
-export const DefaultAssistantChatbot: ComponentStory<typeof AssistantChatbot> = () => (
+export const DefaultAssistantChatbot: ComponentStory<
+  typeof AssistantChatbot
+> = () => (
   <div style={{ maxWidth: '500px' }}>
-    <AssistantChatbot messages={[]}/>
+    <AssistantChatbot messages={[]} />
   </div>
 );

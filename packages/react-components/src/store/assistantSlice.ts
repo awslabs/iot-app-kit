@@ -10,7 +10,10 @@ export interface AssistantState extends AssistantStateData {
   getAssistantState: () => AssistantStateData;
 }
 
-export const createAssistantSlice: StateCreator<AssistantState> = (set, get) => ({
+export const createAssistantSlice: StateCreator<AssistantState> = (
+  set,
+  get
+) => ({
   messages: [],
   setAssistantState: (newState) =>
     set((state) => ({

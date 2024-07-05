@@ -10,7 +10,10 @@ import {
 } from '../echarts/extensions/trendCursors/store';
 import { AssistantState, createAssistantSlice } from './assistantSlice';
 
-export type StateData = TrendCursorsState & ConfigState & ChartStoreState & AssistantState;
+export type StateData = TrendCursorsState &
+  ConfigState &
+  ChartStoreState &
+  AssistantState;
 const useDataStore = create<StateData>()(
   devtools(
     persist(
