@@ -22,6 +22,6 @@ export const DefaultAssistantChatbot: ComponentStory<
   typeof AssistantChatbot
 > = () => (
   <div style={{ maxWidth: '500px' }}>
-    <AssistantChatbot messages={[]} />
+    <AssistantChatbot height={400} messages={[]} />
   </div>
 );

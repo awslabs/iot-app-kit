@@ -7,10 +7,11 @@ import type { IMessage } from '../../hooks/useAssistant/types';
 import './chatbot.css';
 
 export interface ChatbotProps {
+  height: number;
   messages: IMessage[];
 }
 
-export const Chatbot = ({ messages }: ChatbotProps) => {
+export const Chatbot = ({ messages, height }: ChatbotProps) => {
   return (
     <div className='iot-app-kit assistant-chatbot'>
       <Container
@@ -19,7 +20,7 @@ export const Chatbot = ({ messages }: ChatbotProps) => {
         disableHeaderPaddings
         disableContentPaddings
       >
-        <ChatbotConversationContainer height={400} messages={messages} />
+        <ChatbotConversationContainer height={height} messages={messages} />
       </Container>
     </div>
   );

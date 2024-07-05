@@ -3,13 +3,13 @@ import { useAssistant } from './useAssistant';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import type { MessageParser } from './messageParser';
 import StateManager from './stateManager';
-import { FakeInvokeAssistant } from '../../__mocks__/assistantMockedResponse';
+import { MockInvokeAssistant } from '../../__mocks__/assistantMockedResponse';
 
 describe('useAssistant', () => {
   const conversationId = 'myAssistantConversation';
   const client = new IoTSitewiseAssistantClient({
     requestFns: {
-      invokeAssistant: FakeInvokeAssistant,
+      invokeAssistant: MockInvokeAssistant,
     },
     assistantName: 'myAssistant',
     defaultContext: '',
@@ -37,7 +37,7 @@ describe('useAssistant', () => {
     const mockedParser = jest.fn();
     const newClient = new IoTSitewiseAssistantClient({
       requestFns: {
-        invokeAssistant: FakeInvokeAssistant,
+        invokeAssistant: MockInvokeAssistant,
       },
       assistantName: 'myAssistant',
       defaultContext: '',
@@ -84,7 +84,7 @@ describe('useAssistant', () => {
   it('should invoke Assistant', async () => {
     const mockedInvokeAssistant = jest
       .fn()
-      .mockImplementation(FakeInvokeAssistant);
+      .mockImplementation(MockInvokeAssistant);
     const newClient = new IoTSitewiseAssistantClient({
       requestFns: {
         invokeAssistant: mockedInvokeAssistant,
@@ -112,7 +112,7 @@ describe('useAssistant', () => {
     const summaryInstructions = 'some instructions';
     const mockedInvokeAssistant = jest
       .fn()
-      .mockImplementation(FakeInvokeAssistant);
+      .mockImplementation(MockInvokeAssistant);
     const newClient = new IoTSitewiseAssistantClient({
       requestFns: {
         invokeAssistant: mockedInvokeAssistant,

@@ -1,7 +1,7 @@
 import type { InvokeAssistantRequest, StreamingInvokeAssistantResponse } from './types';
 
 // TODO: Temporary implementation for InvokeAssistant operation
-export const FakeInvokeAssistant = async (
+export const MockInvokeAssistant = async (
   _request: InvokeAssistantRequest
 ): Promise<StreamingInvokeAssistantResponse> => {
   return new Promise((resolve) => {

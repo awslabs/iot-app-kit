@@ -1,5 +1,5 @@
 import { IoTSitewiseAssistantClient } from './client';
-import { FakeInvokeAssistant } from './mockedResponse';
+import { MockInvokeAssistant } from './mockedResponse';
 
 function flushPromises() {
   return new Promise(jest.requireActual('timers').setImmediate);
@@ -12,7 +12,7 @@ describe('AssistantClient', () => {
   it('createAssistantClient return a new instance', () => {
     const client = new IoTSitewiseAssistantClient({
       requestFns: {
-        invokeAssistant: FakeInvokeAssistant,
+        invokeAssistant: MockInvokeAssistant,
       },
       assistantName: 'myAssistant',
       defaultContext: '',
@@ -58,7 +58,7 @@ describe('AssistantClient', () => {
       .mockResolvedValue({ StreamResponse: [] });
     const client = new IoTSitewiseAssistantClient({
       requestFns: {
-        invokeAssistant: FakeInvokeAssistant,
+        invokeAssistant: MockInvokeAssistant,
       },
       assistantName: 'myAssistant',
       defaultContext: '',
@@ -80,7 +80,7 @@ describe('AssistantClient', () => {
     const mockOnComplete = jest.fn();
     const client = new IoTSitewiseAssistantClient({
       requestFns: {
-        invokeAssistant: FakeInvokeAssistant,
+        invokeAssistant: MockInvokeAssistant,
       },
       assistantName: 'myAssistant',
       defaultContext: '',
@@ -101,7 +101,7 @@ describe('AssistantClient', () => {
     const onResponse = jest.fn();
     const client = new IoTSitewiseAssistantClient({
       requestFns: {
-        invokeAssistant: FakeInvokeAssistant,
+        invokeAssistant: MockInvokeAssistant,
       },
       assistantName: 'myAssistant',
       defaultContext: '',
@@ -122,7 +122,7 @@ describe('AssistantClient', () => {
     const onComplete = jest.fn();
     const client = new IoTSitewiseAssistantClient({
       requestFns: {
-        invokeAssistant: FakeInvokeAssistant,
+        invokeAssistant: MockInvokeAssistant,
       },
       assistantName: 'myAssistant',
       defaultContext: '',
