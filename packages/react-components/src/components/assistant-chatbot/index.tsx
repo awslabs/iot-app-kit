@@ -9,4 +9,4 @@ export const AssistantChatbot = (assistantChatProps: ChatbotProps) => {
       <Chatbot {...assistantChatProps} />
     </I18nProvider>
   );
-}
+};

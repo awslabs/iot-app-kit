@@ -62,11 +62,11 @@
 }
 
 .iot-app-kit.assistant-chatbot .processing-message-icon > div {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background-color: white;
-    animation: jump 1s linear infinite;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: white;
+  animation: jump 1s linear infinite;
 }
 
 .iot-app-kit.assistant-chatbot .processing-message-icon > div:nth-child(2) {
