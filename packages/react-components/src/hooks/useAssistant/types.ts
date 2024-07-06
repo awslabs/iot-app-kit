@@ -10,7 +10,7 @@ export enum SenderType {
 export enum MessageType {
   TEXT = 'text',
   IMAGE = 'image',
-  prompts = 'prompts',
+  PROMPTS = 'prompts',
   CITATION = 'citation',
   VIDEO = 'video',
   AUDIO = 'audio',

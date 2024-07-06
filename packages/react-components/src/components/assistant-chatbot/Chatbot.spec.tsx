@@ -28,6 +28,30 @@ describe('Chatbot', () => {
     expect(firstMessage).toHaveTextContent(content);
   });
 
+  it('should render assistant loading message',() => {
+    const content = 'Generating a response...';
+    const { container } = render(
+      <Chatbot 
+        height={400}
+        messages={[
+          {
+            content,
+            sender: SenderType.ASSISTANT,
+            type: MessageType.TEXT,
+            id: 'UniqueID',
+            loading: true
+          }
+        ]}
+      />
+    );
+    const [ processingIcon ] = container.querySelectorAll('.iot-app-kit.assistant-chatbot .processing-message-icon');
+    expect(processingIcon).not.toBeNull();
+
+    const [ firstMessage ] = container.querySelectorAll('.iot-app-kit.assistant-chatbot .assistant-message');
+    expect(firstMessage).not.toBeNull();
+    expect(firstMessage).toHaveTextContent(content);
+  });
+
   it('should render assistant message',() => {
     const content = 'AWS IoT SiteWise makes it easy to collect, store, organize and monitor indsutrial data.';
     const { container } = render(

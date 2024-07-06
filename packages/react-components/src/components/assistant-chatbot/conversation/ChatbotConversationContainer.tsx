@@ -3,7 +3,7 @@ import { InvokeAssistantResponse } from '@iot-app-kit/core-util';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { ChatbotCustomerMessage } from './ChatbotCustomerMessage';
 import { ChatbotAssistantMessage } from './ChatbotAssistantMessage';
-// import { ChatbotProcessingMessage } from './ChatbotProcessingMessage';
+import { ChatbotProcessingMessage } from './ChatbotProcessingMessage';
 // import { ChatbotPrompts } from './ChatbotPrompts';
 import {
   type IMessage,
@@ -27,6 +27,9 @@ export const ChatbotConversationContainer = ({
         {messages.map((message) => {
           if (message.type === MessageType.TEXT) {
             if (message.sender === SenderType.ASSISTANT) {
+              if (message.loading) {
+                return (<ChatbotProcessingMessage text={message.content} />);
+              }
               return (
                 <ChatbotAssistantMessage
                   text={message.content}
