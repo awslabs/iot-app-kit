@@ -4,12 +4,12 @@ import type {
   AssistantClientInvocationDetail,
   AssistantClientInvocationResponseHandler,
   AssistantClientRequestFns,
-  AssistantClientSummarizationProperties,
 } from './types';
 
 export class IoTSitewiseAssistantClient {
   private requestFns: AssistantClientRequestFns;
   private assistantName: string;
+  private hasTrace = true;
   private defaultContext?: string;
   public onResponse?: AssistantClientInvocationResponseHandler;
   public onComplete?: AssistantClientInvocationCompleteHandler;
@@ -36,6 +36,10 @@ export class IoTSitewiseAssistantClient {
     this.requestFns = newRequestFns;
   }
 
+  enableTrace(hasTrace: boolean): void {
+    this.hasTrace = hasTrace;
+  }
+
   setRequestHandlers(
     newOnResponse: AssistantClientInvocationResponseHandler,
     newOnComplete: AssistantClientInvocationCompleteHandler
@@ -59,32 +63,14 @@ export class IoTSitewiseAssistantClient {
       requestFns: this.requestFns,
       payload: {
         assistantName: this.assistantName,
-        context: assistantContext,
         conversationId,
-        message: {
-          chatMessage: [{ text: utterance }],
+        invocationInputs: {
+          messages: [{ text: utterance }],
+          metadata: {
+            context: assistantContext,
+          },
         },
-      },
-      onComplete: this.onComplete,
-      onResponse: this.onResponse,
-    });
-  }
-
-  /**
-   * Mark a conversationId as ended.
-   * @param conversationId
-   */
-  endConversation(conversationId: string) {
-    invokeAssistant({
-      requestFns: this.requestFns,
-      payload: {
-        assistantName: this.assistantName,
-        context: this.defaultContext,
-        conversationId,
-        endConversation: true,
-        message: {
-          chatMessage: [{ text: '' }],
-        },
+        enabledTrace: this.hasTrace,
       },
       onComplete: this.onComplete,
       onResponse: this.onResponse,
@@ -94,27 +80,22 @@ export class IoTSitewiseAssistantClient {
   /**
    * Invoke the generative AI assistant and request a summarization given sitewise properties and context
    * @param conversationId Unique indentifier for the conversation
-   * @param sitewiseProperties A list of assetId and propertyIds to give as context to the assistant to improve generated summary
+   * @param context A JSON object with all assetIds and propertyIds to give as context to the assistant to improve generated summary
    * @param summaryUtterance (optional) The message to send to the generative AI assistant around what kind or format of the generated summary
-   * @param summaryInstructions (optional) Additional context to help the assistant to generate the summary
    * @returns
    */
   generateSummary(
     conversationId: string,
-    sitewiseProperties: AssistantClientSummarizationProperties,
-    summaryUtterance?: string,
-    summaryInstructions?: string
+    context: string,
+    summaryUtterance?: string
   ) {
-    const defaultSummaryInstructions = `Given these Sitewise Asset and Properties as context: "${
-      JSON.stringify(sitewiseProperties) ?? ''
-    }"`;
-    const summaryContext = summaryInstructions ?? defaultSummaryInstructions;
+    const defaultSummaryUtterance = `Given these Sitewise Asset and Properties as context, 
+    please generate a summary of these sitewise properties provided."`;
 
     return this.invoke(
       conversationId,
-      summaryUtterance ??
-        `Please generate a summary of these sitewise properties provided.`,
-      summaryContext
+      summaryUtterance ?? defaultSummaryUtterance,
+      context
     );
   }
 }
@@ -136,7 +117,7 @@ async function invokeAssistant({
    * Given the nature of streaming API, The client receives a chunk of the whole streamed response.
    */
   for await (const chunk of response.StreamResponse) {
-    if (onResponse && chunk.step.stepId !== 'end') {
+    if (onResponse && chunk.trace?.traceId) {
       onResponse(
         {
           conversationId: payload.conversationId,
@@ -147,7 +128,7 @@ async function invokeAssistant({
       );
     }
 
-    if (onComplete && chunk.step.stepId === 'end') {
+    if (onComplete && !chunk.trace) {
       onComplete(
         {
           conversationId: payload.conversationId,

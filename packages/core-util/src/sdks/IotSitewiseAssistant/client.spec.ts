@@ -43,10 +43,11 @@ describe('AssistantClient', () => {
     expect(mockInvokeAssistant).toBeCalledWith(
       expect.objectContaining({
         assistantName: 'newAssistantName',
-        context: expect.any(String),
         conversationId,
-        message: {
-          chatMessage: [{ text: expect.any(String) }],
+        enabledTrace: true,
+        invocationInputs: {
+          messages: [{ text: expect.any(String) }],
+          metadata: { context: expect.any(String) },
         },
       })
     );
@@ -139,35 +140,6 @@ describe('AssistantClient', () => {
     expect(onComplete).toBeCalled();
   });
 
-  it('call endConversation and invoke assistant with endConversation flag as true', async () => {
-    const mockInvokeAssistant = jest
-      .fn()
-      .mockResolvedValue({ StreamResponse: [] });
-    const client = new IoTSitewiseAssistantClient({
-      requestFns: {
-        invokeAssistant: mockInvokeAssistant,
-      },
-      assistantName: 'myAssistant',
-      defaultContext: '',
-      onResponse: () => {},
-      onComplete: () => {},
-    });
-
-    client.endConversation(conversationId);
-
-    expect(mockInvokeAssistant).toBeCalledWith(
-      expect.objectContaining({
-        assistantName: 'myAssistant',
-        context: expect.any(String),
-        conversationId,
-        endConversation: true,
-        message: {
-          chatMessage: [{ text: expect.any(String) }],
-        },
-      })
-    );
-  });
-
   it('call generateSummary and invoke assistant with summary utterance and context', async () => {
     const mockInvokeAssistant = jest
       .fn()
@@ -183,21 +155,19 @@ describe('AssistantClient', () => {
     });
 
     const summaryUtterance = 'generate a summary';
-    const summaryInstructions = 'some instructions';
-    client.generateSummary(
-      conversationId,
-      [],
-      summaryUtterance,
-      summaryInstructions
-    );
+    const context = `[{"assetId": "assetId1", "properties": ["propertyId1"]}]`;
+    client.generateSummary(conversationId, context, summaryUtterance);
 
     expect(mockInvokeAssistant).toBeCalledWith(
       expect.objectContaining({
         assistantName: 'myAssistant',
-        context: summaryInstructions,
         conversationId,
-        message: {
-          chatMessage: [{ text: summaryUtterance }],
+        enabledTrace: true,
+        invocationInputs: {
+          messages: [{ text: summaryUtterance }],
+          metadata: {
+            context,
+          },
         },
       })
     );

@@ -15,7 +15,7 @@ export type AssistantClientRequestFns = {
 
 export type AssistantClientInstanceParams = {
   requestFns: AssistantClientRequestFns;
-  assistantName :string;
+  assistantName: string;
   defaultContext?: string;
 
   /**
@@ -34,7 +34,7 @@ export type AssistantClientInstance = {
     utterance: string,
     options: { context?: string; conversationId?: UniqueId }
   ) => string;
-  setRequestFns(requestFns: AssistantClientRequestFns):void;
+  setRequestFns(requestFns: AssistantClientRequestFns): void;
 };
 
 export type AssistantClientInvocationCompleteHandler = (
@@ -55,24 +55,16 @@ export type AssistantClientInvocationResponseHandler = (
 
 export type AssistantClientInvocationDetail = {
   assistantName: string;
-  context?: string;
   conversationId: UniqueId;
-  message: {
-    chatMessage?: ChatMessage[];
-    siteWisePropertyHistoriesSummarization?: EventSummaryRequest[];
-    alarmsSummarizationMessage?: EventSummaryRequest[];
+  invocationInputs: {
+    messages: MessageEntry[];
+    metadata?: MetadataEntries;
   };
-  endConversation?: boolean;
-  returnExecutionSteps?: boolean;
+  metadata?: {
+    context: string;
+  };
+  enabledTrace?: boolean;
 };
-
-export type AssistantClientSummarizationProperty = {
-  assetId: string;
-  propertyId: string;
-};
-
-export type AssistantClientSummarizationProperties =
-  AssistantClientSummarizationProperty[];
 
 /**
  * ### The below types will be removed when a new AWS SDK after the Sophon API are available
@@ -82,19 +74,14 @@ export type AssistantClientSummarizationProperties =
  * } from '@aws-sdk/client-iotsitewise';
  */
 
-export interface ChatMessage {
+export interface MessageEntry {
   text: string;
   image?: string; // image url or image base64 encoded binary data
   video?: string; // video url or image base64 encoded binary data
   audio?: string; // audio url or image base64 encoded binary data
 }
 
-export interface EventSummaryRequest {
-  assetId: string;
-  propertyId: string;
-  startTime: Date | undefined;
-  endTime: Date | undefined;
-}
+export type MetadataEntries = Record<string, string>;
 
 export interface InvokeAssistantRequest {
   /**
@@ -105,24 +92,15 @@ export interface InvokeAssistantRequest {
   conversationId: string;
 
   /**
-   * (Optional) Whether to end the current conversation.
-   * Default to false, meaning continue the
-   * current conversation. Each conversation
-   * is automatically ended after 24 hours
-   */
-  endConversation?: boolean;
-
-  /**
    * (Optional) Indicates whether API should
    * stream back intermediate execution steps
    * Default value is false
    */
-  returnExecutionSteps?: boolean;
+  enableTrace?: boolean;
 
-  message: {
-    chatMessage?: ChatMessage[];
-    siteWisePropertyHistoriesSummarization?: EventSummaryRequest[];
-    alarmsSummarizationMessage?: EventSummaryRequest[];
+  invocationInputs: {
+    messages: MessageEntry[];
+    metadata?: MetadataEntries;
   };
 }
 
@@ -130,44 +108,21 @@ export interface InvokeAssistantResponse {
   /**
    * The intermediate step of an assistant invocation
    */
-  step: {
+  trace?: {
     /**
      * An identifier of execution step
      * that are total ordered within a turn
      */
-    stepId: string;
-
-    rationale: {
-      /**
-       * contains the reasoning of the agent given the user input
-       */
-      text: string;
-    };
-
+    traceId: string;
     /**
-     * contains information that will be input to the action group or
-     * knowledge base that is to be invoked or queried.
-     * tool indicates native tool or knowledgebase.
+     * contains information about the intermediate step
      */
-    toolInvocation: {
-      toolName: string;
-      toolInputsJson: string;
-    };
-
-    /**
-     * The Observation object contains the result or output of an action group
-     * or knowledge base, or the response to the user
-     */
-    observation: {
-      toolOutputsJson: string;
-      response: string;
-    };
+    text: string;
   };
 
-  response: {
-    message: {
-      content: ChatMessage[];
-    };
+  finalResponse: {
+    message: MessageEntry[];
+    metadata?: MetadataEntries;
 
     /**
      * The citation that supports the content generated

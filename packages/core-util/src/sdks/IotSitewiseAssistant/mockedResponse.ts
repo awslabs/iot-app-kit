@@ -1,4 +1,7 @@
-import type { InvokeAssistantRequest, StreamingInvokeAssistantResponse } from './types';
+import type {
+  InvokeAssistantRequest,
+  StreamingInvokeAssistantResponse,
+} from './types';
 
 // TODO: Temporary implementation for InvokeAssistant operation
 export const MockInvokeAssistant = async (
@@ -6,77 +9,40 @@ export const MockInvokeAssistant = async (
 ): Promise<StreamingInvokeAssistantResponse> => {
   return new Promise((resolve) => {
     const response1 = {
-      step: {
-        stepId: 'step1',
-        rationale: {
-          text: 'contains the reasoning of the agent given the user input',
-        },
-        toolInvocation: {
-          toolName: 'toolName',
-          toolInputsJson: 'toolInputsJson',
-        },
-        observation: {
-          toolOutputsJson: 'toolOutputsJson',
-          response: 'response',
-        },
+      trace: {
+        traceId: 'step1',
+        text: 'contains information about the intermediate step',
       },
-      response: {
-        message: {
-          content: [
-            {
-              text: 'assistant response',
-            },
-          ],
-        },
+      finalResponse: {
+        message: [
+          {
+            text: 'assistant response',
+          },
+        ],
       },
     };
     const response2 = {
-      step: {
-        stepId: 'step2',
-        rationale: {
-          text: 'contains the reasoning of the agent given the user input',
-        },
-        toolInvocation: {
-          toolName: 'toolName',
-          toolInputsJson: 'toolInputsJson',
-        },
-        observation: {
-          toolOutputsJson: 'toolOutputsJson',
-          response: 'response',
-        },
+      trace: {
+        traceId: 'step2',
+        text: 'contains information about the intermediate step part 2',
       },
-      response: {
-        message: {
-          content: [
-            {
-              text: 'assistant response 2',
-            },
-          ],
-        },
+      finalResponse: {
+        message: [
+          {
+            text: 'assistant response 2',
+          },
+        ],
       },
     };
     const response3 = {
-      step: {
-        stepId: 'end',
-        rationale: {
-          text: 'contains the reasoning of the agent given the user input',
-        },
-        toolInvocation: {
-          toolName: 'toolName',
-          toolInputsJson: 'toolInputsJson',
-        },
-        observation: {
-          toolOutputsJson: 'toolOutputsJson',
-          response: 'response',
-        },
-      },
-      response: {
-        message: {
-          content: [
-            {
-              text: 'assistant response end',
-            },
-          ],
+      finalResponse: {
+        message: [
+          {
+            text: 'assistant response end',
+          },
+        ],
+        metadata: {
+          context: '{"assetId": "assetId1", "properties": ["propertyId1"]}',
         },
       },
     };
