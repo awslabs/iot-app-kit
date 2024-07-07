@@ -2,7 +2,7 @@ import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { useAssistant } from './useAssistant';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import type { MessageParser } from './messageParser';
-import StateManager from './stateManager';
+import { StateManager } from './stateManager';
 import { MockInvokeAssistant } from '../../__mocks__/assistantMockedResponse';
 
 describe('useAssistant', () => {
@@ -109,7 +109,7 @@ describe('useAssistant', () => {
 
   it('should generate Summary', async () => {
     const summaryUtterance = 'generate a summary';
-    const summaryInstructions = 'some instructions';
+    const context = '{"assetId": "assetId1"}';
     const mockedInvokeAssistant = jest
       .fn()
       .mockImplementation(MockInvokeAssistant);
@@ -129,9 +129,8 @@ describe('useAssistant', () => {
     await act(() => {
       result.current.generateSummary(
         conversationId,
-        [],
-        summaryUtterance,
-        summaryInstructions
+        context,
+        summaryUtterance
       );
     });
 
@@ -139,10 +138,13 @@ describe('useAssistant', () => {
       expect(mockedInvokeAssistant).toBeCalledWith({
         conversationId,
         assistantName: 'myAssistant',
-        context: summaryInstructions,
-        message: {
-          chatMessage: [{ text: summaryUtterance }],
-        },
+        enabledTrace: true,
+        invocationInputs: {
+          messages: [{ text: summaryUtterance }],
+          metadata: {
+            context,
+          }
+        }
       });
     });
   });

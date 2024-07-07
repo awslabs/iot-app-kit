@@ -1,4 +1,4 @@
-import StateManager from './stateManager';
+import { StateManager } from './stateManager';
 import {
   type IMessageParser,
   type BaseStateManager,
@@ -17,21 +17,20 @@ export class MessageParser implements IMessageParser {
   }
 
   parse(response: InvokeAssistantResponse) {
-    if (response.step?.stepId) {
+    if (response.trace?.traceId) {
       this.stateManager.addPartialResponse(
-        response.step.rationale.text,
-        response.step
+        response.trace.text
       );
     }
 
-    if (response.response.citations) {
-      response.response.citations.forEach((citation: Record<string, any>) => {
+    if (response.finalResponse?.citations) {
+      response.finalResponse.citations.forEach((citation: Record<string, any>) => {
         this.stateManager.addCitations('', citation.references);
       });
     }
 
-    if (response.response?.message?.content) {
-      response.response?.message?.content.forEach(
+    if (response.finalResponse?.message?.length) {
+      response.finalResponse?.message?.forEach(
         (content: Record<string, any>) => {
           this.stateManager.addText(content.text, SenderType.ASSISTANT);
         }

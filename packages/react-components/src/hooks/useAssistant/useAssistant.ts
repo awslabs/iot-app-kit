@@ -1,8 +1,5 @@
 import { useState } from 'react';
-import type {
-  AssistantClientInvocationResponse,
-  AssistantClientSummarizationProperties,
-} from '@iot-app-kit/core-util';
+import type { AssistantClientInvocationResponse } from '@iot-app-kit/core-util';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import type { IMessageParser, BaseStateManager, IMessage } from './types';
 import { SenderType } from './types';
@@ -79,18 +76,16 @@ export const useAssistant = ({
 
   const generateSummary = (
     conversationId: string,
-    sitewiseProperties: AssistantClientSummarizationProperties,
+    context: string,
     summaryUtterance?: string,
-    summaryInstructions?: string
   ) => {
     if (summaryUtterance) {
       currentStateManager.addText(summaryUtterance, SenderType.USER);
     }
     assistantClient.generateSummary(
       conversationId,
-      sitewiseProperties,
+      context,
       summaryUtterance,
-      summaryInstructions
     );
   };
 
@@ -98,6 +93,5 @@ export const useAssistant = ({
     messages,
     invokeAssistant,
     generateSummary,
-    endConversation: assistantClient.endConversation,
   };
 };

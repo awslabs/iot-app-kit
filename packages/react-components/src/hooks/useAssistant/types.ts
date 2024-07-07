@@ -35,7 +35,7 @@ export interface IMessage {
   /**
    * the raw payload data returned from InvokeAssistant in case a custom component needs it
    */
-  payload?: InvokeAssistantResponse;
+  payload?: any;
 }
 
 export interface IMessageParser {

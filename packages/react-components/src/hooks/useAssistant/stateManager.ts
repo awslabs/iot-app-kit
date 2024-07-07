@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 type GenericSetState = (state: any) => void;
 type GenericGetState = () => any;
 
-export default class StateManager implements BaseStateManager {
+export class StateManager implements BaseStateManager {
   private setStateFn: GenericSetState;
   private getStateFn: GenericGetState;
 
@@ -19,14 +19,13 @@ export default class StateManager implements BaseStateManager {
     this.getStateFn = getStateFunc;
   }
 
-  addPartialResponse = (content: string, response: unknown) => {
+  addPartialResponse = (content: string) => {
     const message = {
       id: uuidv4(),
       loading: true,
       content,
       sender: SenderType.ASSISTANT,
       type: MessageType.TEXT,
-      payload: response,
     };
 
     this.addMessageToState(message);
