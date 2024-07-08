@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.9.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.8.1...root-v10.9.0) (2024-07-08)
+
+
+### Features
+
+* add e2e gauge tests to dashboard tests ([188f9d2](https://github.com/awslabs/iot-app-kit/commit/188f9d2cf84d96e5a2bc77803bf8160174fba2b7))
+
+
+### Bug Fixes
+
+* **dashboard:** expand hitbox for widget action buttons ([64b77db](https://github.com/awslabs/iot-app-kit/commit/64b77db50fe224273db58ab38a67fe478e94ccc2))
+* disable equals and contains operators in gauge thresholds ([6fd0ab4](https://github.com/awslabs/iot-app-kit/commit/6fd0ab40f0553067a65f5b5a25b0a6b299d3d1ac))
+* make gauge values absolute values in gauge docs ([dbb4901](https://github.com/awslabs/iot-app-kit/commit/dbb490144d14e144636ab02c7e4d4fa7b79188df))
+* **react-components:** anomaly chart move loading state ([581a3c5](https://github.com/awslabs/iot-app-kit/commit/581a3c57734ba460ced0e32e232ed38583f232ba))
+* **react-components:** anomaly chart xaxis formatting ([740ee2a](https://github.com/awslabs/iot-app-kit/commit/740ee2a0ecbbe29c43a02fd04c0193935d79dd0e))
+* **react-components:** ensure anomaly chart colors are in order ([3fd8d87](https://github.com/awslabs/iot-app-kit/commit/3fd8d87c2dee6615a7e22962c0d8dbd0cfff97c0))
+* **react-components:** improve axis styling and add labels ([490058f](https://github.com/awslabs/iot-app-kit/commit/490058fbdb9ca102ca85abc2ff5770caafa52a71))
+* **react-components:** minor anomaly widget style changes ([19fc67a](https://github.com/awslabs/iot-app-kit/commit/19fc67a7768604d39c728ea4e1df8f318042d8b8))
+* **react-components:** zoom icons ([4da01df](https://github.com/awslabs/iot-app-kit/commit/4da01df378b1d3e2804c4802bd9250c7e180990f))
+
 ## [10.8.1](https://github.com/awslabs/iot-app-kit/compare/root-v10.8.0...root-v10.8.1) (2024-06-27)
 
 

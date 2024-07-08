@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [10.9.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.8.1...react-components-v10.9.0) (2024-07-08)
+
+
+### Bug Fixes
+
+* **react-components:** anomaly chart move loading state ([581a3c5](https://github.com/awslabs/iot-app-kit/commit/581a3c57734ba460ced0e32e232ed38583f232ba))
+* **react-components:** anomaly chart xaxis formatting ([740ee2a](https://github.com/awslabs/iot-app-kit/commit/740ee2a0ecbbe29c43a02fd04c0193935d79dd0e))
+* **react-components:** ensure anomaly chart colors are in order ([3fd8d87](https://github.com/awslabs/iot-app-kit/commit/3fd8d87c2dee6615a7e22962c0d8dbd0cfff97c0))
+* **react-components:** improve axis styling and add labels ([490058f](https://github.com/awslabs/iot-app-kit/commit/490058fbdb9ca102ca85abc2ff5770caafa52a71))
+* **react-components:** minor anomaly widget style changes ([19fc67a](https://github.com/awslabs/iot-app-kit/commit/19fc67a7768604d39c728ea4e1df8f318042d8b8))
+* **react-components:** zoom icons ([4da01df](https://github.com/awslabs/iot-app-kit/commit/4da01df378b1d3e2804c4802bd9250c7e180990f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.8.1 to 10.9.0
+    * @iot-app-kit/core bumped from 10.8.1 to 10.9.0
+    * @iot-app-kit/core-util bumped from 10.8.1 to 10.9.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.8.1 to 10.9.0
+  * devDependencies
+    * @iot-app-kit/core bumped from 10.8.1 to 10.9.0
+    * @iot-app-kit/jest-config bumped from 10.8.1 to 10.9.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.8.1 to 10.9.0
+    * @iot-app-kit/testing-util bumped from 10.8.1 to 10.9.0
+    * @iot-app-kit/ts-config bumped from 10.8.1 to 10.9.0
+    * eslint-config-iot-app-kit bumped from 10.8.1 to 10.9.0
+
 ## [10.8.1](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.8.0...react-components-v10.8.1) (2024-06-27)
 
 
