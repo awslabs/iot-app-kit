@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { AssistantClientInvocationResponse } from '@iot-app-kit/core-util';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import type { IMessageParser, BaseStateManager, IMessage } from './types';
@@ -13,6 +13,8 @@ export interface IUseAssistant {
   /** optional but a default implementation will be provided */
   messageParser?: IMessageParser & MessageParser;
   stateManager?: BaseStateManager & StateManager;
+
+  initialState?: Record<string, any>;
 }
 
 const internalMessageParser = new MessageParser();
@@ -25,6 +27,7 @@ export const useAssistant = ({
   assistantClient,
   messageParser,
   stateManager,
+  initialState,
 }: IUseAssistant) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const storeState = useDataStore.getState();
@@ -45,6 +48,13 @@ export const useAssistant = ({
     currentMessageParser = messageParser;
     currentMessageParser.setStateManager(currentStateManager);
   }
+
+  useEffect(() => {
+    if (initialState) {
+      currentStateManager.setState(initialState);
+    }
+    setMessages(currentStateManager.getState().messages);
+  }, [])
 
   const onResponse = (response: AssistantClientInvocationResponse) => {
     if (response.statusCode === 200) {
@@ -77,16 +87,12 @@ export const useAssistant = ({
   const generateSummary = (
     conversationId: string,
     context: string,
-    summaryUtterance?: string,
+    summaryUtterance?: string
   ) => {
     if (summaryUtterance) {
       currentStateManager.addText(summaryUtterance, SenderType.USER);
     }
-    assistantClient.generateSummary(
-      conversationId,
-      context,
-      summaryUtterance,
-    );
+    assistantClient.generateSummary(conversationId, context, summaryUtterance);
   };
 
   return {

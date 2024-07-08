@@ -9,13 +9,17 @@ import './chatbot.css';
 export interface ChatbotProps {
   height: number;
   messages: IMessage[];
+  onSubmit: (utterance: string) => void;
 }
 
-export const Chatbot = ({ messages, height }: ChatbotProps) => {
+export const Chatbot = ({ messages, height, onSubmit }: ChatbotProps) => {
+  const lastMessage = messages[messages.length];
   return (
     <div className='iot-app-kit assistant-chatbot'>
       <Container
-        footer={<ChatbotInputBox />}
+        footer={
+          <ChatbotInputBox onSubmit={onSubmit} lastMessage={lastMessage} />
+        }
         header={<ChatbotHeader headerText='Sitewise Assistant' />}
         disableHeaderPaddings
         disableContentPaddings

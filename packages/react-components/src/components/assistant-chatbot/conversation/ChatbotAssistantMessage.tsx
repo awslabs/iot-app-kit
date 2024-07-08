@@ -16,8 +16,8 @@ export const ChatbotAssistantMessage = ({
   text,
   payload,
 }: ChatbotAssistantMessageProps) => {
-  const { citations = [] } = payload?.response ?? {};
-  const flattenCitations = citations.flatMap((citation) => 
+  const { citations = [] } = payload?.finalResponse ?? {};
+  const flattenCitations = citations.flatMap((citation) =>
     citation.references.map((reference) => reference.content.text)
   );
 
@@ -36,7 +36,12 @@ export const ChatbotAssistantMessage = ({
       />
       <div className='assistant-message'>
         <SpaceBetween size='s'>
-          <Box fontSize='body-s' data-testid='assistant-chatbot-assistant-message'>{text}</Box>
+          <Box
+            fontSize='body-s'
+            data-testid='assistant-chatbot-assistant-message'
+          >
+            {text}
+          </Box>
           {citations.length > 0 ? (
             <ExpandableSection
               headingTagOverride='h4'
@@ -44,7 +49,12 @@ export const ChatbotAssistantMessage = ({
               headerAriaLabel='Sources'
             >
               {flattenCitations.map((citation, index) => (
-                <Link data-testid='assistant-chatbot-message-citation-link' key={index}>{citation}</Link>
+                <Link
+                  data-testid='assistant-chatbot-message-citation-link'
+                  key={index}
+                >
+                  {citation}
+                </Link>
               ))}
             </ExpandableSection>
           ) : null}

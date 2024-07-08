@@ -1,94 +1,69 @@
-import { InvokeAssistantRequest, StreamingInvokeAssistantResponse } from "@iot-app-kit/core-util";
+import { InvokeAssistantResponse, InvokeAssistantRequest, StreamingInvokeAssistantResponse } from "@iot-app-kit/core-util";
 
-export const mockedInvokeAssistantResponse1 = {
-  step: {
-    stepId: 'step1',
-    rationale: {
-      text: 'contains the reasoning of the agent given the user input',
-    },
-    toolInvocation: {
-      toolName: 'toolName',
-      toolInputsJson: 'toolInputsJson',
-    },
-    observation: {
-      toolOutputsJson: 'toolOutputsJson',
-      response: 'response',
-    },
+export const mockedInvokeAssistantResponse1:InvokeAssistantResponse = {
+  trace: {
+    traceId: 'step1',
+    text: 'Analysing IoT Sitewise data ...',
   },
-  response: {
-    message: {
-      content: [
-        {
-          text: 'assistant response',
-        },
-      ],
-    },
-    citations: [
+  finalResponse: {
+    message: [],
+  }
+};
+export const mockedInvokeAssistantResponse2:InvokeAssistantResponse = {
+  trace: {
+    traceId: 'step2',
+    text: 'Generating a response ...',
+  },
+  finalResponse: {
+    message: [],
+  }
+};
+
+export const mockedInvokeAssistantResponse3:InvokeAssistantResponse = {
+  finalResponse: {
+    message: [
       {
-        references: [
-          {
-            content: {
-              text: 'citation 1'
-            }
-          }
-        ]
-      }
-    ]
-  },
-};
-export const mockedInvokeAssistantResponse2 = {
-  step: {
-    stepId: 'step2',
-    rationale: {
-      text: 'contains the reasoning of the agent given the user input',
-    },
-    toolInvocation: {
-      toolName: 'toolName',
-      toolInputsJson: 'toolInputsJson',
-    },
-    observation: {
-      toolOutputsJson: 'toolOutputsJson',
-      response: 'response',
-    },
-  },
-  response: {
-    message: {
-      content: [
-        {
-          text: 'assistant response 2',
-        },
-      ],
-    },
-  },
-};
-
-export const mockedInvokeAssistantResponse3 = {
-  step: {
-    stepId: 'end',
-    rationale: {
-      text: 'contains the reasoning of the agent given the user input',
-    },
-    toolInvocation: {
-      toolName: 'toolName',
-      toolInputsJson: 'toolInputsJson',
-    },
-    observation: {
-      toolOutputsJson: 'toolOutputsJson',
-      response: 'response',
-    },
-  },
-  response: {
-    message: {
-      content: [
-        {
-          text: 'assistant response end',
-        },
-      ],
-    },
+        text: 'assistant response end',
+      },
+    ],
   },
 }; 
 
-// TODO: Temporary implementation for InvokeAssistant operation
+export const mockedInvokeAssistantResponse4:InvokeAssistantResponse = {
+  finalResponse: {
+    message: [
+      {
+        text: `Looks like you want to know more about the potential root cause of the rising motor temperature.
+        \n - Overloading: The motor is operating under a load higher than its rated capacity, causing it to overheat.
+        \n - Insufficient Cooling: The cooling system is malfunctioning or blocked, preventing adequate heat dissipation.
+        \n - Electrical Issues: Voltage spikes, phase imbalance, or poor insulation could lead to excessive heating.
+        \n - Mechanical Failures: Worn bearings, misalignment, or other mechanical issues can increase friction and heat.`,
+      },
+    ],
+    metadata: {
+      "insights": `{
+        "prompts": [
+          "What are the recommendations?"
+        ]
+      }
+      `
+    }
+  },
+};
+
+export const mockedInvokeAssistantResponse5:InvokeAssistantResponse = {
+  finalResponse: {
+    message: [
+      {
+        text: `Based on the data, the first step I would recommend is to inspect the motor itself for any visible signs of wear or damage. You'll want to check the motor casing, fans, and any accessible components to see if there are any obvious issues. If everything looks okay there, I'd suggest checking the cooling system next - verify that the coolant levels are appropriate and that the fans/pumps are functioning properly.`,
+      },
+    ]
+  },
+};
+
+
+
+
 export const MockInvokeAssistant = async (
   _request: InvokeAssistantRequest
 ): Promise<StreamingInvokeAssistantResponse> => {

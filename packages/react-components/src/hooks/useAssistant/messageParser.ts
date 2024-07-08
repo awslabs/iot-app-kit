@@ -18,15 +18,15 @@ export class MessageParser implements IMessageParser {
 
   parse(response: InvokeAssistantResponse) {
     if (response.trace?.traceId) {
-      this.stateManager.addPartialResponse(
-        response.trace.text
-      );
+      this.stateManager.addPartialResponse(response.trace.text);
     }
 
     if (response.finalResponse?.citations) {
-      response.finalResponse.citations.forEach((citation: Record<string, any>) => {
-        this.stateManager.addCitations('', citation.references);
-      });
+      response.finalResponse.citations.forEach(
+        (citation: Record<string, any>) => {
+          this.stateManager.addCitations('', citation.references);
+        }
+      );
     }
 
     if (response.finalResponse?.message?.length) {

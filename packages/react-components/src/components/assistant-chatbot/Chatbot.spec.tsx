@@ -5,11 +5,10 @@ import { Chatbot } from './Chatbot';
 import { InvokeAssistantResponse } from '@iot-app-kit/core-util';
 
 describe('Chatbot', () => {
-
-  it('should render customer message',() => {
+  it('should render customer message', () => {
     const content = 'What is the root cause of this alarm?';
     const { container } = render(
-      <Chatbot 
+      <Chatbot
         height={400}
         messages={[
           {
@@ -17,21 +16,24 @@ describe('Chatbot', () => {
             sender: SenderType.USER,
             type: MessageType.TEXT,
             id: 'UniqueID',
-            loading: false
-          }
+            loading: false,
+          },
         ]}
+        onSubmit={() => {}}
       />
     );
-    const [ firstMessage ] = container.querySelectorAll('.iot-app-kit.assistant-chatbot .customer-message');
-  
+    const [firstMessage] = container.querySelectorAll(
+      '.iot-app-kit.assistant-chatbot .customer-message'
+    );
+
     expect(firstMessage).not.toBeNull();
     expect(firstMessage).toHaveTextContent(content);
   });
 
-  it('should render assistant loading message',() => {
+  it('should render assistant loading message', () => {
     const content = 'Generating a response...';
     const { container } = render(
-      <Chatbot 
+      <Chatbot
         height={400}
         messages={[
           {
@@ -39,23 +41,29 @@ describe('Chatbot', () => {
             sender: SenderType.ASSISTANT,
             type: MessageType.TEXT,
             id: 'UniqueID',
-            loading: true
-          }
+            loading: true,
+          },
         ]}
+        onSubmit={() => {}}
       />
     );
-    const [ processingIcon ] = container.querySelectorAll('.iot-app-kit.assistant-chatbot .processing-message-icon');
+    const [processingIcon] = container.querySelectorAll(
+      '.iot-app-kit.assistant-chatbot .processing-message-icon'
+    );
     expect(processingIcon).not.toBeNull();
 
-    const [ firstMessage ] = container.querySelectorAll('.iot-app-kit.assistant-chatbot .assistant-message');
+    const [firstMessage] = container.querySelectorAll(
+      '.iot-app-kit.assistant-chatbot .assistant-message'
+    );
     expect(firstMessage).not.toBeNull();
     expect(firstMessage).toHaveTextContent(content);
   });
 
-  it('should render assistant message',() => {
-    const content = 'AWS IoT SiteWise makes it easy to collect, store, organize and monitor indsutrial data.';
+  it('should render assistant message', () => {
+    const content =
+      'AWS IoT SiteWise makes it easy to collect, store, organize and monitor indsutrial data.';
     const { container } = render(
-      <Chatbot 
+      <Chatbot
         height={400}
         messages={[
           {
@@ -63,22 +71,26 @@ describe('Chatbot', () => {
             sender: SenderType.ASSISTANT,
             type: MessageType.TEXT,
             id: 'UniqueID',
-            loading: false
-          }
+            loading: false,
+          },
         ]}
+        onSubmit={() => {}}
       />
     );
 
-    const [ firstMessage ] = container.querySelectorAll('[data-testid="assistant-chatbot-assistant-message"]');
+    const [firstMessage] = container.querySelectorAll(
+      '[data-testid="assistant-chatbot-assistant-message"]'
+    );
     expect(firstMessage).not.toBeNull();
     expect(firstMessage).toHaveTextContent(content);
   });
 
-  it('should render assistant message with citations',() => {
-    const content = 'AWS IoT SiteWise makes it easy to collect, store, organize and monitor indsutrial data.';
-    const citationText =  'SOP documents';
+  it('should render assistant message with citations', () => {
+    const content =
+      'AWS IoT SiteWise makes it easy to collect, store, organize and monitor indsutrial data.';
+    const citationText = 'SOP documents';
     const { container } = render(
-      <Chatbot 
+      <Chatbot
         height={400}
         messages={[
           {
@@ -88,34 +100,42 @@ describe('Chatbot', () => {
             id: 'UniqueID',
             loading: false,
             payload: {
-              response: {
-                citations: [{
-                  references: [{
-                    content: {
-                      text: citationText,
-                    },
-                    location: {
-                      s3Location: {
-                        uri: ''
+              finalResponse: {
+                citations: [
+                  {
+                    references: [
+                      {
+                        content: {
+                          text: citationText,
+                        },
+                        location: {
+                          s3Location: {
+                            uri: '',
+                          },
+                          type: '',
+                        },
                       },
-                      type: ''
-                    }
-                  }],
-                }],
+                    ],
+                  },
+                ],
               },
-            } as InvokeAssistantResponse
-          }
+            } as InvokeAssistantResponse,
+          },
         ]}
+        onSubmit={() => {}}
       />
     );
 
-    const [ firstMessage ] = container.querySelectorAll('[data-testid="assistant-chatbot-assistant-message"]');
+    const [firstMessage] = container.querySelectorAll(
+      '[data-testid="assistant-chatbot-assistant-message"]'
+    );
     expect(firstMessage).not.toBeNull();
     expect(firstMessage).toHaveTextContent(content);
 
-    const [ citation ] = container.querySelectorAll('[data-testid="assistant-chatbot-message-citation-link"]');
+    const [citation] = container.querySelectorAll(
+      '[data-testid="assistant-chatbot-message-citation-link"]'
+    );
     expect(citation).not.toBeNull();
     expect(citation).toHaveTextContent(citationText);
   });
-
 });

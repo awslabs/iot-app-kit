@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { InvokeAssistantResponse } from '@iot-app-kit/core-util';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { ChatbotCustomerMessage } from './ChatbotCustomerMessage';
 import { ChatbotAssistantMessage } from './ChatbotAssistantMessage';
@@ -28,7 +27,7 @@ export const ChatbotConversationContainer = ({
           if (message.type === MessageType.TEXT) {
             if (message.sender === SenderType.ASSISTANT) {
               if (message.loading) {
-                return (<ChatbotProcessingMessage text={message.content} />);
+                return <ChatbotProcessingMessage text={message.content} />;
               }
               return (
                 <ChatbotAssistantMessage
@@ -38,7 +37,12 @@ export const ChatbotConversationContainer = ({
                 />
               );
             } else {
-              return (<ChatbotCustomerMessage utterance={message.content} key={message.id} />);
+              return (
+                <ChatbotCustomerMessage
+                  utterance={message.content}
+                  key={message.id}
+                />
+              );
             }
           }
         })}

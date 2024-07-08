@@ -61,4 +61,6 @@ export class StateManager implements BaseStateManager {
   };
 
   getState = () => this.getStateFn();
+
+  setState = (state: any) => this.setStateFn(state);
 }

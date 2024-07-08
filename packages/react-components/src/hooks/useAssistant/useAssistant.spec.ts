@@ -127,11 +127,7 @@ describe('useAssistant', () => {
     );
 
     await act(() => {
-      result.current.generateSummary(
-        conversationId,
-        context,
-        summaryUtterance
-      );
+      result.current.generateSummary(conversationId, context, summaryUtterance);
     });
 
     await waitFor(() => {
@@ -143,8 +139,8 @@ describe('useAssistant', () => {
           messages: [{ text: summaryUtterance }],
           metadata: {
             context,
-          }
-        }
+          },
+        },
       });
     });
   });
