@@ -1,5 +1,23 @@
 # Changelog
 
+## [10.9.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v10.8.1...doc-site-v10.9.0) (2024-07-08)
+
+
+### Bug Fixes
+
+* make gauge values absolute values in gauge docs ([dbb4901](https://github.com/awslabs/iot-app-kit/commit/dbb490144d14e144636ab02c7e4d4fa7b79188df))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^10.8.1 to ^10.9.0
+    * @iot-app-kit/react-components bumped from ^10.8.1 to ^10.9.0
+  * devDependencies
+    * @iot-app-kit/testing-util bumped from ^10.8.1 to ^10.9.0
+    * eslint-config-iot-app-kit bumped from ^10.8.1 to ^10.9.0
+
 ## [10.8.1](https://github.com/awslabs/iot-app-kit/compare/doc-site-v10.8.0...doc-site-v10.8.1) (2024-06-27)
 
 

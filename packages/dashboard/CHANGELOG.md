@@ -1,5 +1,34 @@
 # Changelog
 
+## [10.9.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.8.1...dashboard-v10.9.0) (2024-07-08)
+
+
+### Features
+
+* add e2e gauge tests to dashboard tests ([188f9d2](https://github.com/awslabs/iot-app-kit/commit/188f9d2cf84d96e5a2bc77803bf8160174fba2b7))
+
+
+### Bug Fixes
+
+* **dashboard:** expand hitbox for widget action buttons ([64b77db](https://github.com/awslabs/iot-app-kit/commit/64b77db50fe224273db58ab38a67fe478e94ccc2))
+* disable equals and contains operators in gauge thresholds ([6fd0ab4](https://github.com/awslabs/iot-app-kit/commit/6fd0ab40f0553067a65f5b5a25b0a6b299d3d1ac))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.8.1 to 10.9.0
+    * @iot-app-kit/core bumped from 10.8.1 to 10.9.0
+    * @iot-app-kit/core-util bumped from 10.8.1 to 10.9.0
+    * @iot-app-kit/react-components bumped from 10.8.1 to 10.9.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.8.1 to 10.9.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.8.1 to 10.9.0
+    * @iot-app-kit/testing-util bumped from 10.8.1 to 10.9.0
+    * @iot-app-kit/ts-config bumped from 10.8.1 to 10.9.0
+    * eslint-config-iot-app-kit bumped from 10.8.1 to 10.9.0
+
 ## [10.8.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.8.0...dashboard-v10.8.1) (2024-06-27)
 
 
