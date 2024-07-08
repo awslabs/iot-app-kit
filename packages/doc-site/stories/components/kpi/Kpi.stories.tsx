@@ -5,7 +5,7 @@ import {
   mockTimeSeriesDataQueryWithError,
   mockTimeSeriesDataQueryLoading,
 } from '@iot-app-kit/testing-util';
-import { mockSinWaveData } from '../../mockSinWaveData';
+import { mockSinWaveData, mockSinWaveDataWithQuality } from '../../mockSinWaveData';
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
 const meta: Meta<typeof KPI> = {
@@ -47,5 +47,20 @@ export const Loading: Story = {
 export const Empty: Story = {
   args: {
     query: mockTimeSeriesDataQuery([]),
+  },
+};
+
+export const UncertainDataQuality: Story = {
+  args: {
+    query: mockSinWaveDataWithQuality({
+      frequency: '5s',
+      quality: 'UNCERTAIN',
+    }),
+  },
+};
+
+export const BadDataQuality: Story = {
+  args: {
+    query: mockSinWaveDataWithQuality({ frequency: '5s', quality: 'BAD' }),
   },
 };
