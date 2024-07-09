@@ -16,6 +16,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import isEqual from 'lodash.isequal';
 import {
   DEFAULT_CHART_OPTION,
+  DEFAULT_DATA_ZOOM,
   PERFORMANCE_MODE_THRESHOLD,
 } from '../eChartsConstants';
 import { useSeriesAndYAxis } from './seriesAndYAxis/convertSeriesAndYAxis';
@@ -100,7 +101,9 @@ type ChartConfigurationOptions = Pick<
   dataStreams: DataStream[];
 } & { visibleData: DataPoint[] } & {
   thresholds: Threshold<ThresholdValue>[];
-} & { chartWidth: number } & ChartDataQuality;
+} & { chartWidth: number } & ChartDataQuality & {
+    gestures: boolean;
+  };
 
 export type DataStreamMetaData = ReturnType<
   typeof useChartConfiguration
@@ -122,6 +125,7 @@ export const useChartConfiguration = (
     visibleData,
     id,
     axis,
+    gestures,
     backgroundColor,
     significantDigits,
     styleSettings,
@@ -230,6 +234,7 @@ export const useChartConfiguration = (
         tooltip,
         series,
         yAxis,
+        dataZoom: gestures ? DEFAULT_DATA_ZOOM : { disabled: true },
       },
       {
         ...updateSettings,
@@ -244,6 +249,7 @@ export const useChartConfiguration = (
     xAxis,
     tooltip,
     series,
+    gestures,
     yAxis,
     dataSteamIdentifiers,
   ]);
