@@ -144,7 +144,6 @@ export const DEFAULT_CHART_OPTION: EChartsOption = {
   title: {
     top: 10,
   },
-  dataZoom: DEFAULT_DATA_ZOOM,
   animation: false,
   toolbox: DEFAULT_TOOLBOX_CONFIG,
   xAxis: DEFAULT_X_AXIS,
