@@ -59,6 +59,7 @@ const BaseChart = ({
   queries,
   onChartOptionsChange,
   size = { width: 650, height: 400 },
+  gestures = true,
   ...options
 }: ChartOptions) => {
   const {
@@ -152,6 +153,7 @@ const BaseChart = ({
     thresholds,
     visibleData,
     chartWidth,
+    gestures,
     ...options,
   });
 
@@ -166,13 +168,17 @@ const BaseChart = ({
   const { chartEventsKeyMap, chartEventsHandlers } =
     useHandleChartEvents(chartRef);
 
-  const hotKeyMap = {
-    ...chartEventsKeyMap,
-  };
+  const hotKeyMap = gestures
+    ? {
+        ...chartEventsKeyMap,
+      }
+    : {};
 
-  const hotKeyHandlers = {
-    ...chartEventsHandlers,
-  };
+  const hotKeyHandlers = gestures
+    ? {
+        ...chartEventsHandlers,
+      }
+    : {};
 
   const handleMouseDown = (e: MouseEvent) => {
     const target = e.target;
