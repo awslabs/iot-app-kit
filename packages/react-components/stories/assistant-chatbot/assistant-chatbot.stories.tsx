@@ -56,7 +56,7 @@ export const DefaultAssistantChatbot: ComponentStory<
   };
 
   return (
-    <div style={{ maxWidth: '500px' }}>
+    <div style={{ width: '500px', padding: '1rem' }}>
       <AssistantChatbot
         height={400}
         messages={messages}

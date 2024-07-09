@@ -5,9 +5,10 @@ import Grid from '@cloudscape-design/components/grid';
 
 export interface ChatbotPromptsProps {
   prompts: Array<string>;
+  onClick: (utterance: string) => void;
 }
 
-export const ChatbotPrompts = ({ prompts }: ChatbotPromptsProps) => {
+export const ChatbotPrompts = ({ prompts, onClick }: ChatbotPromptsProps) => {
   return (
     <Grid
       gridDefinition={[
@@ -18,7 +19,7 @@ export const ChatbotPrompts = ({ prompts }: ChatbotPromptsProps) => {
       <div className='processing-prompts-reserved-space'>&nbsp;</div>
       <SpaceBetween size='s' direction='vertical'>
         {prompts.map((prompt) => (
-          <Button>{prompt}</Button>
+          <Button onClick={() => onClick(prompt)}>{prompt}</Button>
         ))}
       </SpaceBetween>
     </Grid>

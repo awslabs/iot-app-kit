@@ -21,8 +21,8 @@ const loadingMessage = 'loading...';
 const internalMessageParser = new MessageParser();
 const internalStateManager = new StateManager(
   () => {},
-  () => ({messages: [] }),
-  () => {},
+  () => ({ messages: [] }),
+  () => {}
 );
 
 export const useAssistant = ({
@@ -32,8 +32,11 @@ export const useAssistant = ({
   initialState,
 }: IUseAssistant) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
-  const [currentStateManager, setStateManager] = useState<StateManager>(internalStateManager);
-  const [currentMessageParser, setMessageParser] = useState<MessageParser>(internalMessageParser);
+  const [currentStateManager, setStateManager] =
+    useState<StateManager>(internalStateManager);
+  const [currentMessageParser, setMessageParser] = useState<MessageParser>(
+    internalMessageParser
+  );
   const storeState = useDataStore.getState();
 
   useEffect(() => {
@@ -65,14 +68,20 @@ export const useAssistant = ({
   }, []);
 
   const removeLoadingMessages = () => {
-    const indexLoadingMessage = currentStateManager
+    const indexesToDelete: number[] = [];
+    currentStateManager
       .getState()
-      .messages
-      .findIndex((message: IMessage) => message.loading);
-    if (indexLoadingMessage > -1) {
-      currentStateManager.removeMessage(indexLoadingMessage);
-    }
-  }
+      .messages.forEach((message: IMessage, index: number) => {
+        if (message.loading) {
+          indexesToDelete.push(index);
+        }
+      });
+
+    indexesToDelete
+      .slice()
+      .reverse()
+      .forEach((i: number) => currentStateManager.removeMessage(i));
+  };
 
   const onResponse = (response: AssistantClientInvocationResponse) => {
     if (response.statusCode === 200) {

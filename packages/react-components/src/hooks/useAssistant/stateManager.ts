@@ -14,7 +14,7 @@ export class StateManager implements BaseStateManager {
   constructor(
     setStateFunc: GenericSetState,
     getStateFunc: GenericGetState,
-    clearStateFn: GenericClearState,
+    clearStateFn: GenericClearState
   ) {
     this.setStateFn = setStateFunc;
     this.getStateFn = getStateFunc;
@@ -24,7 +24,7 @@ export class StateManager implements BaseStateManager {
   setStateFns(
     setStateFunc: GenericSetState,
     getStateFunc: GenericGetState,
-    clearStateFn: GenericClearState,
+    clearStateFn: GenericClearState
   ) {
     this.setStateFn = setStateFunc;
     this.getStateFn = getStateFunc;
@@ -68,6 +68,19 @@ export class StateManager implements BaseStateManager {
     this.addMessageToState(message);
   };
 
+  addPrompts = (payload: string[]) => {
+    const message = {
+      id: uuidv4(),
+      loading: false,
+      content: '',
+      sender: SenderType.ASSISTANT,
+      type: MessageType.PROMPTS,
+      payload,
+    };
+
+    this.addMessageToState(message);
+  };
+
   addMessageToState = (message: IMessage) => {
     this.setStateFn({ messages: [message] });
   };
@@ -77,7 +90,7 @@ export class StateManager implements BaseStateManager {
     messages.splice(index, 1);
     this.clearStateFn();
     this.setStateFn({ messages });
-  }
+  };
 
   getState = () => this.getStateFn();
 

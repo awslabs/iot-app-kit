@@ -37,5 +37,19 @@ export class MessageParser implements IMessageParser {
         }
       );
     }
+
+    // temporary implementation for insights
+    if (response.finalResponse?.metadata?.insights) {
+      try {
+        const json = JSON.parse(response.finalResponse?.metadata?.insights);
+
+        // suggested questions
+        if (json?.prompts && Array.isArray(json?.prompts)) {
+          this.stateManager.addPrompts(json?.prompts);
+        }
+      } finally {
+        /* do nothing */
+      }
+    }
   }
 }

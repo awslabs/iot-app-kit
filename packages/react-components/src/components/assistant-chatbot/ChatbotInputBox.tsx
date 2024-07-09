@@ -60,7 +60,12 @@ export const ChatbotInputBox = ({ onSubmit, lastMessage }: ChatbotInputBox) => {
           />
         </FormField>
         <Box float='right'>
-          <Button iconName='send' variant='icon' onClick={handleClick} disabled={!value} />
+          <Button
+            iconName='send'
+            variant='icon'
+            onClick={handleClick}
+            disabled={!value}
+          />
         </Box>
       </Grid>
     </div>

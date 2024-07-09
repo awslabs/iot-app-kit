@@ -14,12 +14,12 @@ export interface ChatbotProps {
 }
 
 export const Chatbot = ({ messages, height, onSubmit }: ChatbotProps) => {
-  const [ lastMessage, setLastMessage ] = useState<IMessage>();
+  const [lastMessage, setLastMessage] = useState<IMessage>();
   const lastMessageId = messages[messages.length - 1]?.id;
 
   useEffect(() => {
     setLastMessage(messages[messages.length - 1]);
-  }, [lastMessageId])
+  }, [lastMessageId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className='iot-app-kit assistant-chatbot'>
@@ -31,7 +31,11 @@ export const Chatbot = ({ messages, height, onSubmit }: ChatbotProps) => {
         disableHeaderPaddings
         disableContentPaddings
       >
-        <ChatbotConversationContainer height={height} messages={messages} />
+        <ChatbotConversationContainer
+          height={height}
+          messages={messages}
+          onSubmit={onSubmit}
+        />
       </Container>
     </div>
   );

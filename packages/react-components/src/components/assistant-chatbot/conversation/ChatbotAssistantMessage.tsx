@@ -21,7 +21,7 @@ export const ChatbotAssistantMessage = ({
     citation.references.map((reference) => reference.content.text)
   );
   const hasBreakingLines = text.match(/\r|\n/);
-  
+
   return (
     <Grid
       gridDefinition={[
@@ -41,7 +41,11 @@ export const ChatbotAssistantMessage = ({
             fontSize='body-s'
             data-testid='assistant-chatbot-assistant-message'
           >
-            { hasBreakingLines ? <pre style={{whiteSpace: 'pre-wrap'}}>{text}</pre> : text}
+            {hasBreakingLines ? (
+              <pre style={{ whiteSpace: 'pre-wrap' }}>{text}</pre>
+            ) : (
+              text
+            )}
           </Box>
           {citations.length > 0 ? (
             <ExpandableSection
