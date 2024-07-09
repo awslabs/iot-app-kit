@@ -3,7 +3,7 @@ import { MonitorWidgetType, MonitorMetric, MonitorAnnotations } from './types';
 export const defaultDisplaySettings = {
   numRows: 100,
   numColumns: 100,
-  cellSize: 10,
+  cellSize: 20,
   significantDigits: 4,
 };
 export const defaultResolution = '1m';
