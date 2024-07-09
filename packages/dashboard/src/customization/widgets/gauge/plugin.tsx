@@ -3,7 +3,10 @@ import GaugeWidgetComponent from './component';
 import GaugeIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';
 import type { GaugeWidget } from '../types';
-import { WIDGET_INITIAL_HEIGHT, WIDGET_INITIAL_WIDTH } from '../constants';
+import {
+  GAUGE_WIDGET_INITIAL_HEIGHT,
+  GAUGE_WIDGET_INITIAL_WIDTH,
+} from '../constants';
 
 export const gaugePlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
@@ -28,8 +31,8 @@ export const gaugePlugin: DashboardPlugin = {
         thresholds: [],
       }),
       initialSize: {
-        height: WIDGET_INITIAL_HEIGHT,
-        width: WIDGET_INITIAL_WIDTH,
+        height: GAUGE_WIDGET_INITIAL_HEIGHT,
+        width: GAUGE_WIDGET_INITIAL_WIDTH,
       },
     });
   },
