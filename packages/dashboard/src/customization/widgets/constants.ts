@@ -5,6 +5,9 @@ export const SVG_STROKE_DOTTED = '3,3';
 export const WIDGET_INITIAL_HEIGHT = 400;
 export const WIDGET_INITIAL_WIDTH = 650;
 
+export const GAUGE_WIDGET_INITIAL_HEIGHT = 400;
+export const GAUGE_WIDGET_INITIAL_WIDTH = 500;
+
 export const KPI_WIDGET_INITIAL_HEIGHT = 200;
 export const KPI_WIDGET_INITIAL_WIDTH = 350;
 
