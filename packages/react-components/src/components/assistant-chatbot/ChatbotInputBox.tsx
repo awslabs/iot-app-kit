@@ -5,7 +5,6 @@ import Grid from '@cloudscape-design/components/grid';
 import Textarea from '@cloudscape-design/components/textarea';
 import Button from '@cloudscape-design/components/button';
 import Box from '@cloudscape-design/components/box';
-import { FormField } from '@cloudscape-design/components';
 import { IMessage, SenderType } from '../../hooks/useAssistant/types';
 
 export interface ChatbotInputBox {
@@ -45,20 +44,18 @@ export const ChatbotInputBox = ({ onSubmit, lastMessage }: ChatbotInputBox) => {
     <div className='iot-app-kit-assistant-chatbot-input'>
       <Grid
         gridDefinition={[
-          { colspan: { default: 11, xxs: 11 } },
-          { colspan: { default: 1, xxs: 1 } },
+          { colspan: 11 },
+          { colspan: 1 },
         ]}
       >
-        <FormField>
-          <Textarea
-            ref={inputRef}
-            value={value ?? ''}
-            placeholder='Ask me anything about your IoT data'
-            onChange={(event) => setValue(event.detail.value)}
-            rows={1}
-            disabled={disabled}
-          />
-        </FormField>
+        <Textarea
+          ref={inputRef}
+          value={value ?? ''}
+          placeholder='Ask me anything about your IoT data'
+          onChange={(event) => setValue(event.detail.value)}
+          rows={1}
+          disabled={disabled}
+        />
         <Box float='right'>
           <Button
             iconName='send'

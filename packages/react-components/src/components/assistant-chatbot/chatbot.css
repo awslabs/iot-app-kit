@@ -1,7 +1,7 @@
 @import url('@cloudscape-design/global-styles/index.css');
 
 .iot-app-kit.assistant-chatbot {
-  min-width: 50vw;
+  min-width: 300px;
 }
 
 .iot-app-kit.assistant-chatbot .conversation-container {
