@@ -56,7 +56,7 @@ export const DefaultAssistantChatbot: ComponentStory<
   };
 
   return (
-    <div style={{ padding: '1rem' }}>
+    <div style={{ padding: '0.5rem' }}>
       <AssistantChatbot
         height={500}
         messages={messages}

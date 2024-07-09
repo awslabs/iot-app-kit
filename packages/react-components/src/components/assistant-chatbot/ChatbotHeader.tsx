@@ -19,6 +19,7 @@ export const ChatbotHeader = ({ headerText, onClose }: ChatbotHeaderProps) => {
             { colspan: { default: 10, xxs: 10 } },
             { colspan: { default: 1, xxs: 1 } },
           ]}
+          disableGutters
         >
           <img
             alt='Assistant Avatar'
@@ -30,7 +31,7 @@ export const ChatbotHeader = ({ headerText, onClose }: ChatbotHeaderProps) => {
           <Box
             fontSize='body-s'
             variant='awsui-gen-ai-label'
-            padding={{ top: 'xs', bottom: 's' }}
+            padding={{ top: 'xs', bottom: 's', left: 'xs' }}
           >
             {headerText}
           </Box>

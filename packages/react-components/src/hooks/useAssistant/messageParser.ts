@@ -22,18 +22,10 @@ export class MessageParser implements IMessageParser {
       this.stateManager.addPartialResponse(response.trace.text);
     }
 
-    if (response.finalResponse?.citations) {
-      response.finalResponse.citations.forEach(
-        (citation: Record<string, any>) => {
-          this.stateManager.addCitations('', citation.references);
-        }
-      );
-    }
-
     if (response.finalResponse?.message?.length) {
       response.finalResponse?.message?.forEach(
         (content: Record<string, any>) => {
-          this.stateManager.addText(content.text, SenderType.ASSISTANT);
+          this.stateManager.addText(content.text, SenderType.ASSISTANT, response);
         }
       );
     }

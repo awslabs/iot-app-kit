@@ -1,3 +1,4 @@
+import { InvokeAssistantResponse } from '@iot-app-kit/core-util';
 import type { BaseStateManager, IMessage } from './types';
 import { SenderType, MessageType } from './types';
 import { v4 as uuidv4 } from 'uuid';
@@ -43,26 +44,14 @@ export class StateManager implements BaseStateManager {
     this.addMessageToState(message);
   };
 
-  addCitations = (content: string, references: any[]) => {
-    const message = {
-      id: uuidv4(),
-      loading: true,
-      content,
-      sender: SenderType.ASSISTANT,
-      type: MessageType.CITATION,
-      payload: references,
-    };
-
-    this.addMessageToState(message);
-  };
-
-  addText = (content: string, sender: SenderType) => {
+  addText = (content: string, sender: SenderType, payload?: InvokeAssistantResponse) => {
     const message = {
       id: uuidv4(),
       loading: false,
       content,
       sender,
       type: MessageType.TEXT,
+      payload
     };
 
     this.addMessageToState(message);

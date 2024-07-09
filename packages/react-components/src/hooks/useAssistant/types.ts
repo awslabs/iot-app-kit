@@ -11,7 +11,6 @@ export enum MessageType {
   TEXT = 'text',
   IMAGE = 'image',
   PROMPTS = 'prompts',
-  CITATION = 'citation',
   VIDEO = 'video',
   AUDIO = 'audio',
 }

@@ -17,8 +17,8 @@ export const ChatbotAssistantMessage = ({
   payload,
 }: ChatbotAssistantMessageProps) => {
   const { citations = [] } = payload?.finalResponse ?? {};
-  const flattenCitations = citations.flatMap((citation) =>
-    citation.references.map((reference) => reference.content.text)
+  const references = citations.flatMap((citation) =>
+    citation.references.map((reference) => reference)
   );
   const hasBreakingLines = text.match(/\r|\n/);
 
@@ -53,12 +53,14 @@ export const ChatbotAssistantMessage = ({
               headerText='Sources'
               headerAriaLabel='Sources'
             >
-              {flattenCitations.map((citation, index) => (
+              {references.map((reference, index) => (
                 <Link
+                  href={reference.location?.s3Location?.uri ?? ''}
+                  target="_blank"
                   data-testid='assistant-chatbot-message-citation-link'
                   key={index}
                 >
-                  {citation}
+                  {reference.content?.text ?? '-'}
                 </Link>
               ))}
             </ExpandableSection>

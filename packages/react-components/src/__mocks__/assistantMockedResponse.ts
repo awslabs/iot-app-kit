@@ -43,11 +43,28 @@ export const mockedInvokeAssistantResponse4:InvokeAssistantResponse = {
     metadata: {
       "insights": `{
         "prompts": [
-          "What are the recommendations?"
+          "What are the recommendations?", "What is the prevention procedure?"
         ]
       }
       `
-    }
+    },
+    citations: [
+      {
+        references: [
+          {
+            content: {
+              text: 'SOP documents',
+            },
+            location: {
+              s3Location: {
+                uri: 'https://mybucket.s3.amazonaws.com/sop.doc',
+              },
+              type: 'link',
+            },
+          },
+        ],
+      },
+    ],
   },
 };
 
@@ -57,7 +74,24 @@ export const mockedInvokeAssistantResponse5:InvokeAssistantResponse = {
       {
         text: `Based on the data, the first step I would recommend is to inspect the motor itself for any visible signs of wear or damage. You'll want to check the motor casing, fans, and any accessible components to see if there are any obvious issues. If everything looks okay there, I'd suggest checking the cooling system next - verify that the coolant levels are appropriate and that the fans/pumps are functioning properly.`,
       },
-    ]
+    ],
+    citations: [
+      {
+        references: [
+          {
+            content: {
+              text: 'SOP documents',
+            },
+            location: {
+              s3Location: {
+                uri: 'https://mybucket.s3.amazonaws.com/sop.doc',
+              },
+              type: 'link',
+            },
+          },
+        ],
+      },
+    ],
   },
 };
 
