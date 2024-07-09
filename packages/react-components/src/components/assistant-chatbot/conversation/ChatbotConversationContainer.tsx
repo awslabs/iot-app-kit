@@ -24,7 +24,9 @@ export const ChatbotConversationContainer = ({
     // Only try to scroll when last message changes
     // Timeout is required to make sure component is rendered/visible
     setTimeout(() => {
-      el?.scroll({ top: el?.scrollHeight, behavior: 'smooth' });
+      if (el?.scroll) {
+        el?.scroll({ top: el?.scrollHeight, behavior: 'smooth' });
+      }
     }, 100);
     // Pass no deps because we only want to attempt to scroll on component mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,7 +46,7 @@ export const ChatbotConversationContainer = ({
                 />
               );
             }
-            return <ChatbotTextMessage message={message} />;
+            return <ChatbotTextMessage message={message} key={message.id} />;
           }
 
           if (message.type === MessageType.PROMPTS) {

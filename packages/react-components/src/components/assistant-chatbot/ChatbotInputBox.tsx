@@ -42,12 +42,7 @@ export const ChatbotInputBox = ({ onSubmit, lastMessage }: ChatbotInputBox) => {
 
   return (
     <div className='iot-app-kit-assistant-chatbot-input'>
-      <Grid
-        gridDefinition={[
-          { colspan: 11 },
-          { colspan: 1 },
-        ]}
-      >
+      <Grid gridDefinition={[{ colspan: 11 }, { colspan: 1 }]}>
         <Textarea
           ref={inputRef}
           value={value ?? ''}
@@ -62,6 +57,7 @@ export const ChatbotInputBox = ({ onSubmit, lastMessage }: ChatbotInputBox) => {
             variant='icon'
             onClick={handleClick}
             disabled={!value}
+            data-testid='assistant-chatbot-input-button'
           />
         </Box>
       </Grid>

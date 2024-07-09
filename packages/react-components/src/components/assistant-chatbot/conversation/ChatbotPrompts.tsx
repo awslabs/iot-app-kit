@@ -19,7 +19,13 @@ export const ChatbotPrompts = ({ prompts, onClick }: ChatbotPromptsProps) => {
       <div className='processing-prompts-reserved-space'>&nbsp;</div>
       <SpaceBetween size='s' direction='vertical'>
         {prompts.map((prompt) => (
-          <Button onClick={() => onClick(prompt)}>{prompt}</Button>
+          <Button
+            onClick={() => onClick(prompt)}
+            data-testid='assistant-chatbot-message-prompt-button'
+            key={prompt}
+          >
+            {prompt}
+          </Button>
         ))}
       </SpaceBetween>
     </Grid>

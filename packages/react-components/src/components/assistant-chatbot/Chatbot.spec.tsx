@@ -1,5 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { SenderType, MessageType } from '../../hooks/useAssistant/types';
 import { Chatbot } from './Chatbot';
 import { InvokeAssistantResponse } from '@iot-app-kit/core-util';
@@ -26,7 +27,7 @@ describe('Chatbot', () => {
       '.iot-app-kit.assistant-chatbot .customer-message'
     );
 
-    expect(firstMessage).not.toBeNull();
+    expect(firstMessage).toBeDefined();
     expect(firstMessage).toHaveTextContent(content);
   });
 
@@ -50,12 +51,12 @@ describe('Chatbot', () => {
     const [processingIcon] = container.querySelectorAll(
       '.iot-app-kit.assistant-chatbot .processing-message-icon'
     );
-    expect(processingIcon).not.toBeNull();
+    expect(processingIcon).toBeDefined();
 
     const [firstMessage] = container.querySelectorAll(
       '.iot-app-kit.assistant-chatbot .assistant-message'
     );
-    expect(firstMessage).not.toBeNull();
+    expect(firstMessage).toBeDefined();
     expect(firstMessage).toHaveTextContent(content);
   });
 
@@ -81,7 +82,7 @@ describe('Chatbot', () => {
     const [firstMessage] = container.querySelectorAll(
       '[data-testid="assistant-chatbot-assistant-message"]'
     );
-    expect(firstMessage).not.toBeNull();
+    expect(firstMessage).toBeDefined();
     expect(firstMessage).toHaveTextContent(content);
   });
 
@@ -129,13 +130,82 @@ describe('Chatbot', () => {
     const [firstMessage] = container.querySelectorAll(
       '[data-testid="assistant-chatbot-assistant-message"]'
     );
-    expect(firstMessage).not.toBeNull();
+    expect(firstMessage).toBeDefined();
     expect(firstMessage).toHaveTextContent(content);
 
     const [citation] = container.querySelectorAll(
       '[data-testid="assistant-chatbot-message-citation-link"]'
     );
-    expect(citation).not.toBeNull();
+    expect(citation).toBeDefined();
     expect(citation).toHaveTextContent(citationText);
+  });
+
+  it('should render prompts and be able to click on it', () => {
+    const mockOnCLick = jest.fn();
+    const content =
+      'AWS IoT SiteWise makes it easy to collect, store, organize and monitor indsutrial data.';
+    const promptText = 'What are the recommendations?';
+    const { container } = render(
+      <Chatbot
+        height={400}
+        messages={[
+          {
+            content,
+            sender: SenderType.ASSISTANT,
+            type: MessageType.PROMPTS,
+            id: 'UniqueID',
+            loading: false,
+            payload: [promptText],
+          },
+        ]}
+        onSubmit={mockOnCLick}
+      />
+    );
+    const [promptButton] = container.querySelectorAll(
+      '[data-testid="assistant-chatbot-message-prompt-button"]'
+    );
+    expect(promptButton).toBeDefined();
+    expect(promptButton).toHaveTextContent(promptText);
+
+    (promptButton as HTMLButtonElement).click();
+    expect(mockOnCLick).toBeCalled();
+  });
+
+  it('should call assistant API and send user message', async () => {
+    const user = userEvent.setup();
+    const mockOnCLick = jest.fn();
+    const message = 'What is the root cause of the alarm?';
+
+    const { container } = render(
+      <Chatbot
+        height={400}
+        messages={[
+          {
+            content: '',
+            sender: SenderType.ASSISTANT,
+            type: MessageType.TEXT,
+            id: 'UniqueID',
+            loading: false,
+          },
+        ]}
+        onSubmit={mockOnCLick}
+      />
+    );
+
+    const textarea = container.querySelector('textarea');
+    expect(textarea).toBeDefined();
+    await act(async () => {
+      return await user.type(textarea!, message);
+    });
+
+    const inputButton = container.querySelector(
+      '[data-testid="assistant-chatbot-input-button"]'
+    );
+    expect(inputButton).toBeDefined();
+
+    act(() => {
+      (inputButton as HTMLButtonElement).click();
+    });
+    expect(mockOnCLick).toBeCalledWith(message);
   });
 });
