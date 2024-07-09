@@ -15,10 +15,11 @@ export const MockInvokeAssistant = async (
 ): Promise<StreamingInvokeAssistantResponse> => {
   return new Promise((resolve) => {
     const asyncIterator = (async function* () {
-      sleep(2000);
+      await sleep(2000);
       yield mockedInvokeAssistantResponse1;
-      sleep(2000);
+      await sleep(2000);
       yield mockedInvokeAssistantResponse2;
+      await sleep(2000);
       if (_request.invocationInputs.messages[0].text.includes('root cause')) {
         yield mockedInvokeAssistantResponse4;
       } else {

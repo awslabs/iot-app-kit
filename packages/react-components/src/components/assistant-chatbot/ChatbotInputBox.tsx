@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-// import autosize from 'autosize';
+import autosize from 'autosize';
 import Grid from '@cloudscape-design/components/grid';
 import Textarea from '@cloudscape-design/components/textarea';
 import Button from '@cloudscape-design/components/button';
@@ -10,12 +10,12 @@ import { IMessage, SenderType } from '../../hooks/useAssistant/types';
 
 export interface ChatbotInputBox {
   onSubmit: (utterance: string) => void;
-  lastMessage: IMessage | null;
+  lastMessage?: IMessage;
 }
 
 export const ChatbotInputBox = ({ onSubmit, lastMessage }: ChatbotInputBox) => {
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(false);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export const ChatbotInputBox = ({ onSubmit, lastMessage }: ChatbotInputBox) => {
       '.iot-app-kit-assistant-chatbot-input textarea'
     );
     if (textarea) {
-      // autosize(textarea);
+      autosize(textarea);
     }
   }, []);
 

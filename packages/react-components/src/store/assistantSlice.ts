@@ -8,6 +8,7 @@ export interface AssistantStateData {
 export interface AssistantState extends AssistantStateData {
   setAssistantState: (state: AssistantStateData) => void;
   getAssistantState: () => AssistantStateData;
+  clearAssistantState: () => void;
 }
 
 export const createAssistantSlice: StateCreator<AssistantState> = (
@@ -15,6 +16,10 @@ export const createAssistantSlice: StateCreator<AssistantState> = (
   get
 ) => ({
   messages: [],
+  clearAssistantState: () =>
+    set(() => ({
+      messages: [],
+    })),
   setAssistantState: (newState) =>
     set((state) => ({
       ...state,

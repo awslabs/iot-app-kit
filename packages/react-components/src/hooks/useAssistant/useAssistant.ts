@@ -17,10 +17,12 @@ export interface IUseAssistant {
   initialState?: Record<string, any>;
 }
 
+const loadingMessage = 'loading...';
 const internalMessageParser = new MessageParser();
 const internalStateManager = new StateManager(
   () => {},
-  () => {}
+  () => ({messages: [] }),
+  () => {},
 );
 
 export const useAssistant = ({
@@ -30,34 +32,51 @@ export const useAssistant = ({
   initialState,
 }: IUseAssistant) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const [currentStateManager, setStateManager] = useState<StateManager>(internalStateManager);
+  const [currentMessageParser, setMessageParser] = useState<MessageParser>(internalMessageParser);
   const storeState = useDataStore.getState();
-  internalStateManager.setStateFns(
-    storeState.setAssistantState,
-    storeState.getAssistantState
-  );
-
-  let currentStateManager = internalStateManager;
-  let currentMessageParser = internalMessageParser;
-
-  if (stateManager) {
-    currentStateManager = stateManager;
-    currentMessageParser.setStateManager(stateManager);
-  }
-
-  if (messageParser) {
-    currentMessageParser = messageParser;
-    currentMessageParser.setStateManager(currentStateManager);
-  }
 
   useEffect(() => {
-    if (initialState) {
-      currentStateManager.setState(initialState);
+    let newStateManager = currentStateManager;
+    let newMessageParser = currentMessageParser;
+
+    if (stateManager) {
+      newStateManager = stateManager;
+    } else {
+      newStateManager.setStateFns(
+        storeState.setAssistantState,
+        storeState.getAssistantState,
+        storeState.clearAssistantState
+      );
     }
-    setMessages(currentStateManager.getState().messages);
-  }, [])
+
+    if (messageParser) {
+      newMessageParser = messageParser;
+    }
+    if (initialState) {
+      newStateManager.clearState();
+      newStateManager.setState(initialState);
+    }
+
+    newMessageParser.setStateManager(newStateManager);
+    setStateManager(newStateManager);
+    setMessageParser(newMessageParser);
+    setMessages(newStateManager.getState().messages);
+  }, []);
+
+  const removeLoadingMessages = () => {
+    const indexLoadingMessage = currentStateManager
+      .getState()
+      .messages
+      .findIndex((message: IMessage) => message.loading);
+    if (indexLoadingMessage > -1) {
+      currentStateManager.removeMessage(indexLoadingMessage);
+    }
+  }
 
   const onResponse = (response: AssistantClientInvocationResponse) => {
     if (response.statusCode === 200) {
+      removeLoadingMessages();
       currentMessageParser.parse(response.body);
       setMessages(currentStateManager.getState().messages);
     }
@@ -65,6 +84,7 @@ export const useAssistant = ({
 
   const onComplete = (response: AssistantClientInvocationResponse) => {
     if (response.statusCode === 200) {
+      removeLoadingMessages();
       currentMessageParser.parse(response.body);
       setMessages(currentStateManager.getState().messages);
     }
@@ -81,6 +101,8 @@ export const useAssistant = ({
     context?: string
   ) => {
     currentStateManager.addText(utterance, SenderType.USER);
+    currentStateManager.addPartialResponse(loadingMessage);
+    setMessages(currentStateManager.getState().messages);
     assistantClient.invoke(conversationId, utterance, context);
   };
 
@@ -91,6 +113,8 @@ export const useAssistant = ({
   ) => {
     if (summaryUtterance) {
       currentStateManager.addText(summaryUtterance, SenderType.USER);
+      currentStateManager.addPartialResponse(loadingMessage);
+      setMessages(currentStateManager.getState().messages);
     }
     assistantClient.generateSummary(conversationId, context, summaryUtterance);
   };

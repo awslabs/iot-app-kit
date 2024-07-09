@@ -68,7 +68,7 @@ describe('useAssistant', () => {
     const { result } = renderHook(() =>
       useAssistant({
         assistantClient: client,
-        stateManager: new StateManager(mockedSetState, jest.fn()),
+        stateManager: new StateManager(mockedSetState, jest.fn(), jest.fn()),
       })
     );
 
