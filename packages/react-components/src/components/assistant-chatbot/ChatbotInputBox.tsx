@@ -43,7 +43,7 @@ export const ChatbotInputBox = ({ onSubmit, lastMessage }: ChatbotInputBox) => {
     <div className='iot-app-kit-assistant-chatbot-input'>
       <Grid gridDefinition={[{ colspan: 11 }, { colspan: 1 }]}>
         <Textarea
-          value={value ?? ''}
+          value={value}
           placeholder='Ask me anything about your IoT data'
           onChange={(event) => setValue(event.detail.value)}
           rows={1}
