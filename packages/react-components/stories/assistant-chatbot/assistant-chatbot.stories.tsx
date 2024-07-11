@@ -28,10 +28,10 @@ export const DefaultAssistantChatbot: ComponentStory<
 > = () => {
   const conversationId = uuid();
   const client = new IoTSitewiseAssistantClient({
-    requestFns: {
+    iotSiteWiseClient: {
       invokeAssistant: MockInvokeAssistant,
     },
-    assistantName: 'myAssistant',
+    assistantId: 'myAssistantId',
     defaultContext: '',
   });
 

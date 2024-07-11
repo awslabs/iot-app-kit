@@ -17,9 +17,7 @@ export const ChatbotAssistantMessage = ({
   payload,
 }: ChatbotAssistantMessageProps) => {
   const { citations = [] } = payload?.finalResponse ?? {};
-  const references = citations.flatMap((citation) =>
-    citation.references.map((reference) => reference)
-  );
+  const references = citations.flatMap(({ references }) => references);
   const hasBreakingLines = text.match(/\r|\n/);
 
   return (

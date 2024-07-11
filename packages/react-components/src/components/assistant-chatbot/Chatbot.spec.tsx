@@ -1,14 +1,14 @@
 import React from 'react';
-import { act, render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { act, render, screen, fireEvent } from '@testing-library/react';
 import { SenderType, MessageType } from '../../hooks/useAssistant/types';
 import { Chatbot } from './Chatbot';
 import { InvokeAssistantResponse } from '@iot-app-kit/core-util';
+import userEvent from '@testing-library/user-event';
 
-describe('Chatbot', () => {
+describe(Chatbot, () => {
   it('should render customer message', () => {
     const content = 'What is the root cause of this alarm?';
-    const { container } = render(
+    render(
       <Chatbot
         height={400}
         messages={[
@@ -23,17 +23,12 @@ describe('Chatbot', () => {
         onSubmit={() => {}}
       />
     );
-    const [firstMessage] = container.querySelectorAll(
-      '.iot-app-kit.assistant-chatbot .customer-message'
-    );
-
-    expect(firstMessage).toBeDefined();
-    expect(firstMessage).toHaveTextContent(content);
+    expect(screen.getByText(content)).toBeInTheDocument();
   });
 
   it('should render assistant loading message', () => {
     const content = 'Generating a response...';
-    const { container } = render(
+    render(
       <Chatbot
         height={400}
         messages={[
@@ -48,22 +43,14 @@ describe('Chatbot', () => {
         onSubmit={() => {}}
       />
     );
-    const [processingIcon] = container.querySelectorAll(
-      '.iot-app-kit.assistant-chatbot .processing-message-icon'
-    );
-    expect(processingIcon).toBeDefined();
-
-    const [firstMessage] = container.querySelectorAll(
-      '.iot-app-kit.assistant-chatbot .assistant-message'
-    );
-    expect(firstMessage).toBeDefined();
-    expect(firstMessage).toHaveTextContent(content);
+    expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    expect(screen.getByText(content)).toBeInTheDocument();
   });
 
   it('should render assistant message', () => {
     const content =
       'AWS IoT SiteWise makes it easy to collect, store, organize and monitor indsutrial data.';
-    const { container } = render(
+    render(
       <Chatbot
         height={400}
         messages={[
@@ -78,19 +65,14 @@ describe('Chatbot', () => {
         onSubmit={() => {}}
       />
     );
-
-    const [firstMessage] = container.querySelectorAll(
-      '[data-testid="assistant-chatbot-assistant-message"]'
-    );
-    expect(firstMessage).toBeDefined();
-    expect(firstMessage).toHaveTextContent(content);
+    expect(screen.getByText(content)).toBeInTheDocument();
   });
 
   it('should render assistant message with citations', () => {
     const content =
       'AWS IoT SiteWise makes it easy to collect, store, organize and monitor indsutrial data.';
     const citationText = 'SOP documents';
-    const { container } = render(
+    render(
       <Chatbot
         height={400}
         messages={[
@@ -126,18 +108,8 @@ describe('Chatbot', () => {
         onSubmit={() => {}}
       />
     );
-
-    const [firstMessage] = container.querySelectorAll(
-      '[data-testid="assistant-chatbot-assistant-message"]'
-    );
-    expect(firstMessage).toBeDefined();
-    expect(firstMessage).toHaveTextContent(content);
-
-    const [citation] = container.querySelectorAll(
-      '[data-testid="assistant-chatbot-message-citation-link"]'
-    );
-    expect(citation).toBeDefined();
-    expect(citation).toHaveTextContent(citationText);
+    expect(screen.getByText(content)).toBeInTheDocument();
+    expect(screen.getByText(citationText)).toBeInTheDocument();
   });
 
   it('should render prompts and be able to click on it', () => {
@@ -145,7 +117,7 @@ describe('Chatbot', () => {
     const content =
       'AWS IoT SiteWise makes it easy to collect, store, organize and monitor indsutrial data.';
     const promptText = 'What are the recommendations?';
-    const { container } = render(
+    render(
       <Chatbot
         height={400}
         messages={[
@@ -161,13 +133,8 @@ describe('Chatbot', () => {
         onSubmit={mockOnCLick}
       />
     );
-    const [promptButton] = container.querySelectorAll(
-      '[data-testid="assistant-chatbot-message-prompt-button"]'
-    );
-    expect(promptButton).toBeDefined();
-    expect(promptButton).toHaveTextContent(promptText);
-
-    (promptButton as HTMLButtonElement).click();
+    expect(screen.getByText(promptText)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: promptText }))
     expect(mockOnCLick).toBeCalled();
   });
 
@@ -176,7 +143,7 @@ describe('Chatbot', () => {
     const mockOnCLick = jest.fn();
     const message = 'What is the root cause of the alarm?';
 
-    const { container } = render(
+    render(
       <Chatbot
         height={400}
         messages={[
@@ -192,19 +159,19 @@ describe('Chatbot', () => {
       />
     );
 
-    const textarea = container.querySelector('textarea');
-    expect(textarea).toBeDefined();
+
+    const textarea = screen.getByPlaceholderText('Ask me anything about your IoT data');
+    expect(textarea).toBeInTheDocument();
+
     await act(async () => {
       return await user.type(textarea!, message);
     });
 
-    const inputButton = container.querySelector(
-      '[data-testid="assistant-chatbot-input-button"]'
-    );
-    expect(inputButton).toBeDefined();
+    const inputButton = screen.getByTestId('assistant-chatbot-input-button');
+    expect(inputButton).toBeInTheDocument();
 
     act(() => {
-      (inputButton as HTMLButtonElement).click();
+      fireEvent.click(inputButton);
     });
     expect(mockOnCLick).toBeCalledWith(message);
   });

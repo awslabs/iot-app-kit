@@ -3,37 +3,37 @@ import type {
   AssistantClientInvocationCompleteHandler,
   AssistantClientInvocationDetail,
   AssistantClientInvocationResponseHandler,
-  AssistantClientRequestFns,
+  AssistantIotSiteWiseClient,
 } from './types';
 
 export class IoTSitewiseAssistantClient {
-  private requestFns: AssistantClientRequestFns;
-  private assistantName: string;
+  private iotSiteWiseClient: AssistantIotSiteWiseClient;
+  private assistantId: string;
   private hasTrace = true;
   private defaultContext?: string;
   public onResponse?: AssistantClientInvocationResponseHandler;
   public onComplete?: AssistantClientInvocationCompleteHandler;
 
   constructor({
-    requestFns,
-    assistantName,
+    iotSiteWiseClient,
+    assistantId,
     defaultContext,
     onResponse,
     onComplete,
   }: AssistantClientInstanceParams) {
-    this.requestFns = requestFns;
-    this.assistantName = assistantName;
+    this.iotSiteWiseClient = iotSiteWiseClient;
+    this.assistantId = assistantId;
     this.defaultContext = defaultContext;
     this.onResponse = onResponse;
     this.onComplete = onComplete;
   }
 
-  setAssistantName(assistantName: string): void {
-    this.assistantName = assistantName;
+  setAssistantId(assistantId: string): void {
+    this.assistantId = assistantId;
   }
 
-  setRequestFns(newRequestFns: AssistantClientRequestFns): void {
-    this.requestFns = newRequestFns;
+  setIotSiteWiseClient(newIotSiteWiseClient: AssistantIotSiteWiseClient): void {
+    this.iotSiteWiseClient = newIotSiteWiseClient;
   }
 
   enableTrace(hasTrace: boolean): void {
@@ -60,9 +60,9 @@ export class IoTSitewiseAssistantClient {
     }`.trim();
 
     invokeAssistant({
-      requestFns: this.requestFns,
+      iotSiteWiseClient: this.iotSiteWiseClient,
       payload: {
-        assistantName: this.assistantName,
+        assistantId: this.assistantId,
         conversationId,
         invocationInputs: {
           messages: [{ text: utterance }],
@@ -90,7 +90,7 @@ export class IoTSitewiseAssistantClient {
     summaryUtterance?: string
   ) {
     const defaultSummaryUtterance = `Given these Sitewise Asset and Properties as context, 
-    please generate a summary of these sitewise properties provided."`;
+    please generate a summary of these sitewise properties provided.`;
 
     return this.invoke(
       conversationId,
@@ -101,17 +101,17 @@ export class IoTSitewiseAssistantClient {
 }
 
 async function invokeAssistant({
-  requestFns,
+  iotSiteWiseClient,
   payload,
   onComplete,
   onResponse,
 }: {
-  requestFns: AssistantClientRequestFns;
+  iotSiteWiseClient: AssistantIotSiteWiseClient;
   payload: AssistantClientInvocationDetail;
   onComplete?: AssistantClientInvocationCompleteHandler;
   onResponse?: AssistantClientInvocationResponseHandler;
 }) {
-  const response = await requestFns.invokeAssistant(payload);
+  const response = await iotSiteWiseClient.invokeAssistant(payload);
 
   /**
    * Given the nature of streaming API, The client receives a chunk of the whole streamed response.

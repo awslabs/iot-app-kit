@@ -11,10 +11,10 @@ describe('AssistantClient', () => {
 
   it('createAssistantClient return a new instance', () => {
     const client = new IoTSitewiseAssistantClient({
-      requestFns: {
+      iotSiteWiseClient: {
         invokeAssistant: MockInvokeAssistant,
       },
-      assistantName: 'myAssistant',
+      assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
       onComplete: () => {},
@@ -28,21 +28,21 @@ describe('AssistantClient', () => {
       .fn()
       .mockResolvedValue({ StreamResponse: [] });
     const client = new IoTSitewiseAssistantClient({
-      requestFns: {
+      iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       },
-      assistantName: 'myAssistant',
+      assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
       onComplete: () => {},
     });
 
-    client.setAssistantName('newAssistantName');
+    client.setAssistantId('newAssistantId');
     client.invoke(conversationId, 'customer message');
 
     expect(mockInvokeAssistant).toBeCalledWith(
       expect.objectContaining({
-        assistantName: 'newAssistantName',
+        assistantId: 'newAssistantId',
         conversationId,
         enabledTrace: true,
         invocationInputs: {
@@ -58,16 +58,16 @@ describe('AssistantClient', () => {
       .fn()
       .mockResolvedValue({ StreamResponse: [] });
     const client = new IoTSitewiseAssistantClient({
-      requestFns: {
+      iotSiteWiseClient: {
         invokeAssistant: MockInvokeAssistant,
       },
-      assistantName: 'myAssistant',
+      assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
       onComplete: () => {},
     });
 
-    client.setRequestFns({
+    client.setIotSiteWiseClient({
       invokeAssistant: mockInvokeAssistant,
     });
 
@@ -80,10 +80,10 @@ describe('AssistantClient', () => {
     const mockOnResponse = jest.fn();
     const mockOnComplete = jest.fn();
     const client = new IoTSitewiseAssistantClient({
-      requestFns: {
+      iotSiteWiseClient: {
         invokeAssistant: MockInvokeAssistant,
       },
-      assistantName: 'myAssistant',
+      assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
       onComplete: () => {},
@@ -101,10 +101,10 @@ describe('AssistantClient', () => {
   it('call invoke and return all responses', async () => {
     const onResponse = jest.fn();
     const client = new IoTSitewiseAssistantClient({
-      requestFns: {
+      iotSiteWiseClient: {
         invokeAssistant: MockInvokeAssistant,
       },
-      assistantName: 'myAssistant',
+      assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse,
       onComplete: () => {},
@@ -122,10 +122,10 @@ describe('AssistantClient', () => {
   it('call invoke and listen all responses have completed', async () => {
     const onComplete = jest.fn();
     const client = new IoTSitewiseAssistantClient({
-      requestFns: {
+      iotSiteWiseClient: {
         invokeAssistant: MockInvokeAssistant,
       },
-      assistantName: 'myAssistant',
+      assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
       onComplete,
@@ -145,10 +145,10 @@ describe('AssistantClient', () => {
       .fn()
       .mockResolvedValue({ StreamResponse: [] });
     const client = new IoTSitewiseAssistantClient({
-      requestFns: {
+      iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       },
-      assistantName: 'myAssistant',
+      assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
       onComplete: () => {},
@@ -160,7 +160,7 @@ describe('AssistantClient', () => {
 
     expect(mockInvokeAssistant).toBeCalledWith(
       expect.objectContaining({
-        assistantName: 'myAssistant',
+        assistantId: 'myAssistantID',
         conversationId,
         enabledTrace: true,
         invocationInputs: {

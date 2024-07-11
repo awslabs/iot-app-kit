@@ -6,7 +6,8 @@ export type InvokeAssistantRequestFunction = RequestFunction<
   StreamingInvokeAssistantResponse
 >;
 
-export type AssistantClientRequestFns = {
+// TODO: to be removed when AWS SDK has invokeAssistant types
+export interface AssistantIotSiteWiseClient {
   /**
    * Specify an implementation for `invokeAssistant`.
    */
@@ -14,8 +15,8 @@ export type AssistantClientRequestFns = {
 };
 
 export type AssistantClientInstanceParams = {
-  requestFns: AssistantClientRequestFns;
-  assistantName: string;
+  iotSiteWiseClient: AssistantIotSiteWiseClient;
+  assistantId: string;
   defaultContext?: string;
 
   /**
@@ -34,7 +35,7 @@ export type AssistantClientInstance = {
     utterance: string,
     options: { context?: string; conversationId?: UniqueId }
   ) => string;
-  setRequestFns(requestFns: AssistantClientRequestFns): void;
+  setIotSiteWiseClient(iotSiteWiseClient: AssistantIotSiteWiseClient): void;
 };
 
 export type AssistantClientInvocationCompleteHandler = (
@@ -54,7 +55,7 @@ export type AssistantClientInvocationResponseHandler = (
 ) => void;
 
 export type AssistantClientInvocationDetail = {
-  assistantName: string;
+  assistantId: string;
   conversationId: UniqueId;
   invocationInputs: {
     messages: MessageEntry[];
