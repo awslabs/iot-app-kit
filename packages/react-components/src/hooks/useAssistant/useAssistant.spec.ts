@@ -14,7 +14,9 @@ describe('useAssistant', () => {
     assistantId: 'myAssistantId',
     defaultContext: '',
   });
-  const mockGetState = jest.fn().mockImplementation(() => () => ({ messages: [] }));
+  const mockGetState = jest
+    .fn()
+    .mockImplementation(() => () => ({ messages: [] }));
 
   beforeEach(() => jest.clearAllMocks());
 

@@ -44,14 +44,18 @@ export class StateManager implements BaseStateManager {
     this.addMessageToState(message);
   };
 
-  addText = (content: string, sender: SenderType, payload?: InvokeAssistantResponse) => {
+  addText = (
+    content: string,
+    sender: SenderType,
+    payload?: InvokeAssistantResponse
+  ) => {
     const message = {
       id: uuidv4(),
       loading: false,
       content,
       sender,
       type: MessageType.TEXT,
-      payload
+      payload,
     };
 
     this.addMessageToState(message);

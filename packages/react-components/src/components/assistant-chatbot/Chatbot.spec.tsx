@@ -93,7 +93,7 @@ describe(Chatbot, () => {
                         },
                         location: {
                           s3Location: {
-                            uri: '',
+                            uri: 'http://test.url.com',
                           },
                           type: '',
                         },
@@ -134,7 +134,7 @@ describe(Chatbot, () => {
       />
     );
     expect(screen.getByText(promptText)).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: promptText }))
+    fireEvent.click(screen.getByRole('button', { name: promptText }));
     expect(mockOnCLick).toBeCalled();
   });
 
@@ -159,8 +159,9 @@ describe(Chatbot, () => {
       />
     );
 
-
-    const textarea = screen.getByPlaceholderText('Ask me anything about your IoT data');
+    const textarea = screen.getByPlaceholderText(
+      'Ask me anything about your IoT data'
+    );
     expect(textarea).toBeInTheDocument();
 
     await act(async () => {

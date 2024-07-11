@@ -25,7 +25,11 @@ export class MessageParser implements IMessageParser {
     if (response.finalResponse?.message?.length) {
       response.finalResponse?.message?.forEach(
         (content: Record<string, any>) => {
-          this.stateManager.addText(content.text, SenderType.ASSISTANT, response);
+          this.stateManager.addText(
+            content.text,
+            SenderType.ASSISTANT,
+            response
+          );
         }
       );
     }

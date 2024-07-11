@@ -1,6 +1,5 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { v4 as uuid } from 'uuid';
 import { AssistantChatbot } from '../../src/components/assistant-chatbot';
 import { useAssistant } from '../../src/hooks/useAssistant/useAssistant';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
@@ -26,7 +25,7 @@ export default {
 export const DefaultAssistantChatbot: ComponentStory<
   typeof AssistantChatbot
 > = () => {
-  const conversationId = uuid();
+  const conversationId = crypto.randomUUID();
   const client = new IoTSitewiseAssistantClient({
     iotSiteWiseClient: {
       invokeAssistant: MockInvokeAssistant,
@@ -44,7 +43,7 @@ export const DefaultAssistantChatbot: ComponentStory<
             'Hello, I am Sophon, an AI powered assistant for your production sites.',
           sender: SenderType.ASSISTANT,
           type: MessageType.TEXT,
-          id: uuid(),
+          id: crypto.randomUUID(),
           loading: false,
         },
       ],

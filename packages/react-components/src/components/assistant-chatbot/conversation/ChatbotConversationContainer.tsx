@@ -1,5 +1,6 @@
 import * as React from 'react';
 import SpaceBetween from '@cloudscape-design/components/space-between';
+import Box from '@cloudscape-design/components/box';
 import { ChatbotTextMessage } from './ChatbotTextMessage';
 import { ChatbotProcessingMessage } from './ChatbotProcessingMessage';
 import { ChatbotPrompts } from './ChatbotPrompts';
@@ -17,7 +18,7 @@ export const ChatbotConversationContainer = ({
   onSubmit,
 }: ChatbotConversationContainerProps) => {
   const lastMessageId = messages[messages.length - 1]?.id;
-  const ref = React.createRef<HTMLDivElement>();
+  const ref = React.useRef<HTMLDivElement>(null);
 
   React.useLayoutEffect(() => {
     const el = ref.current;
@@ -30,40 +31,41 @@ export const ChatbotConversationContainer = ({
     }, 100);
     // Pass no deps because we only want to attempt to scroll on component mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lastMessageId]);
+  }, [lastMessageId, ref.current]);
 
   return (
     <div ref={ref} className='conversation-container' style={{ height }}>
-      <br />
-      <SpaceBetween size='s'>
-        {messages.map((message) => {
-          if (message.type === MessageType.TEXT) {
-            if (message.loading) {
+      <Box padding={{ top: 'm' }}>
+        <SpaceBetween size='s'>
+          {messages.map((message) => {
+            if (message.type === MessageType.TEXT) {
+              if (message.loading) {
+                return (
+                  <ChatbotProcessingMessage
+                    text={message.content}
+                    key={message.id}
+                  />
+                );
+              }
+              return <ChatbotTextMessage message={message} key={message.id} />;
+            }
+
+            if (message.type === MessageType.PROMPTS) {
+              const prompts =
+                message.payload && Array.isArray(message.payload)
+                  ? message.payload
+                  : [];
               return (
-                <ChatbotProcessingMessage
-                  text={message.content}
+                <ChatbotPrompts
+                  prompts={prompts}
                   key={message.id}
+                  onClick={onSubmit}
                 />
               );
             }
-            return <ChatbotTextMessage message={message} key={message.id} />;
-          }
-
-          if (message.type === MessageType.PROMPTS) {
-            const prompts =
-              message.payload && Array.isArray(message.payload)
-                ? message.payload
-                : [];
-            return (
-              <ChatbotPrompts
-                prompts={prompts}
-                key={message.id}
-                onClick={onSubmit}
-              />
-            );
-          }
-        })}
-      </SpaceBetween>
+          })}
+        </SpaceBetween>
+      </Box>
     </div>
   );
 };

@@ -13,7 +13,6 @@ export interface ChatbotInputBox {
 }
 
 export const ChatbotInputBox = ({ onSubmit, lastMessage }: ChatbotInputBox) => {
-  const inputRef = React.useRef<HTMLTextAreaElement>(null);
   const [value, setValue] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(false);
 
@@ -44,7 +43,6 @@ export const ChatbotInputBox = ({ onSubmit, lastMessage }: ChatbotInputBox) => {
     <div className='iot-app-kit-assistant-chatbot-input'>
       <Grid gridDefinition={[{ colspan: 11 }, { colspan: 1 }]}>
         <Textarea
-          ref={inputRef}
           value={value ?? ''}
           placeholder='Ask me anything about your IoT data'
           onChange={(event) => setValue(event.detail.value)}

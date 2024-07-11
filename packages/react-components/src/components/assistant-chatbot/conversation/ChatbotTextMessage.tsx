@@ -8,17 +8,17 @@ export interface ChatbotTextMessageProps {
 }
 
 export const ChatbotTextMessage = ({ message }: ChatbotTextMessageProps) => {
-  return (
-    <>
-      {message.sender === SenderType.ASSISTANT ? (
-        <ChatbotAssistantMessage
-          text={message.content}
-          payload={message.payload}
-          key={message.id}
-        />
-      ) : (
-        <ChatbotCustomerMessage utterance={message.content} key={message.id} />
-      )}
-    </>
-  );
+  if (message.sender === SenderType.ASSISTANT) {
+    return (
+      <ChatbotAssistantMessage
+        text={message.content}
+        payload={message.payload}
+        key={message.id}
+      />
+    );
+  } else {
+    return (
+      <ChatbotCustomerMessage utterance={message.content} key={message.id} />
+    );
+  }
 };
