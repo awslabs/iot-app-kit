@@ -12,7 +12,7 @@ exports[`ComponentTypeIcon it should render the Camera svg 1`] = `
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M15.12 10.2v-4l-3 2 3 2zM1 5h10v6H1z"
+        d="M15.12 10.2v-4l-3 2zM1 5h10v6H1z"
       />
     </svg>
   </div>
@@ -65,7 +65,7 @@ exports[`ComponentTypeIcon it should render the ModelRef svg 1`] = `
         strokeMiterlimit={10}
       >
         <path
-          d="M6.946 13.48.465 10.24V3.758L6.946.518l6.482 3.24v6.482l-6.482 3.24Z"
+          d="M6.946 13.48.465 10.24V3.758L6.946.518l6.482 3.24v6.482z"
         />
         <path
           d="M.465 3.76 6.946 7l6.482-3.24M6.945 7v6.482"
@@ -103,7 +103,7 @@ exports[`ComponentTypeIcon it should render the SubModelRef svg 1`] = `
         strokeMiterlimit={10}
       >
         <path
-          d="M6.946 13.48.465 10.24V3.758L6.946.518l6.482 3.24v6.482l-6.482 3.24Z"
+          d="M6.946 13.48.465 10.24V3.758L6.946.518l6.482 3.24v6.482z"
         />
         <path
           d="M.465 3.76 6.946 7l6.482-3.24M6.945 7v6.482"

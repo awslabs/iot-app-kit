@@ -1,4 +1,3 @@
-/** Auto-generated file. DO NOT UPDATE MANUALLY **/
 export { default as Arrow } from './Arrow';
 export { default as Camera } from './Camera';
 export { default as Checked } from './Checked';
