@@ -8,6 +8,7 @@ import {
   SECOND_IN_MS,
   toTimestamp,
   YEAR_IN_MS,
+  formatDate,
 } from './time';
 
 describe('convert from milliseconds', () => {
@@ -283,5 +284,31 @@ describe('toTimestamp', () => {
         offsetInNanos: 1000,
       })
     ).toBe(0);
+  });
+});
+
+describe('formatDate', () => {
+  it('correctly converts to a different timezone', () => {
+    const date = new Date(0).getTime();
+
+    const formattedDate = formatDate(date, { timeZone: 'America/Denver' });
+
+    // UTC-7
+    expect(formattedDate).toBe('1969-12-31, 05:00:00 p.m.');
+
+    const formattedDate2 = formatDate(date, { timeZone: 'Asia/Tokyo' });
+
+    // UTC+9
+    expect(formattedDate2).toBe('1970-01-01, 09:00:00 a.m.');
+  });
+
+  it('converts date to specified pattern', () => {
+    const date = new Date(0).getTime();
+
+    const formattedDate = formatDate(date, {
+      timeZone: 'America/Denver',
+      pattern: 'hh:mm a',
+    });
+    expect(formattedDate).toBe('05:00 PM');
   });
 });
