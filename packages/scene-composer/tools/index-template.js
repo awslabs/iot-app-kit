@@ -2,12 +2,11 @@
 const path = require('path');
 
 function defaultIndexTemplate(filePaths) {
-  const exportEntries = ['/** Auto-generated file. DO NOT UPDATE MANUALLY **/'].concat(
-    filePaths.map((filePath) => {
-      const basename = path.basename(filePath, path.extname(filePath));
-      return `export { default as ${basename} } from './${basename}'`;
-    }),
-  );
+  const exportEntries = filePaths.map((filePath) => {
+    const basename = path.basename(filePath.path, path.extname(filePath.path));
+    const exportName = /^\d/.test(basename) ? `Svg${basename}` : basename;
+    return `export { default as ${exportName} } from './${basename}'`;
+  });
   return exportEntries.join('\n');
 }
 

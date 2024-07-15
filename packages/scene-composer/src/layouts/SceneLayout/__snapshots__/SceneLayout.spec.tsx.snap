@@ -407,7 +407,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                                 fill="currentColor"
                               />
                               <path
-                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5 7.5 1.12 7.5 2.5c0 1-1.78 1.88-4.35 2.27"
                                 stroke="currentColor"
                               />
                               <path
@@ -487,7 +487,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                                       fill="currentColor"
                                     />
                                     <path
-                                      d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                      d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5 7.5 1.12 7.5 2.5c0 1-1.78 1.88-4.35 2.27"
                                       stroke="currentColor"
                                     />
                                     <path
@@ -1333,7 +1333,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                                 fill="currentColor"
                               />
                               <path
-                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5 7.5 1.12 7.5 2.5c0 1-1.78 1.88-4.35 2.27"
                                 stroke="currentColor"
                               />
                               <path
@@ -1413,7 +1413,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                                       fill="currentColor"
                                     />
                                     <path
-                                      d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                      d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5 7.5 1.12 7.5 2.5c0 1-1.78 1.88-4.35 2.27"
                                       stroke="currentColor"
                                     />
                                     <path
@@ -2271,7 +2271,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                                 fill="currentColor"
                               />
                               <path
-                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5 7.5 1.12 7.5 2.5c0 1-1.78 1.88-4.35 2.27"
                                 stroke="currentColor"
                               />
                               <path
@@ -2351,7 +2351,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                                       fill="currentColor"
                                     />
                                     <path
-                                      d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                      d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5 7.5 1.12 7.5 2.5c0 1-1.78 1.88-4.35 2.27"
                                       stroke="currentColor"
                                     />
                                     <path
@@ -2888,7 +2888,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                                 fill="currentColor"
                               />
                               <path
-                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5 7.5 1.12 7.5 2.5c0 1-1.78 1.88-4.35 2.27"
                                 stroke="currentColor"
                               />
                               <path
@@ -2968,7 +2968,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                                       fill="currentColor"
                                     />
                                     <path
-                                      d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                      d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5 7.5 1.12 7.5 2.5c0 1-1.78 1.88-4.35 2.27"
                                       stroke="currentColor"
                                     />
                                     <path
