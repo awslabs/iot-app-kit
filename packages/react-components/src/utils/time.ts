@@ -1,6 +1,7 @@
 import type { TimeInNanos } from '@aws-sdk/client-iotsitewise';
 import { NANO_SECOND_IN_MS } from '@iot-app-kit/core';
 import parse from 'parse-duration';
+import { utcToZonedTime, format } from 'date-fns-tz';
 
 export const SECOND_IN_MS = 1000;
 export const MINUTE_IN_MS = 60 * SECOND_IN_MS;
@@ -9,6 +10,7 @@ export const DAY_IN_MS = 24 * HOUR_IN_MS;
 // Not precisely accurate, only estimates. exact duration depends on start date. use with care.
 export const MONTH_IN_MS = 30 * DAY_IN_MS;
 export const YEAR_IN_MS = 12 * MONTH_IN_MS;
+export const DEFAULT_DATE_TIME = 'yyy-MM-dd, hh:mm:ss aaaa';
 
 // Global time format strings
 export const SHORT_TIME = 'hh:mm a';
@@ -166,3 +168,29 @@ export const toTimestamp = (time: TimeInNanos | undefined): number =>
         (time.offsetInNanos || 0) * NANO_SECOND_IN_MS
     )) ||
   0;
+
+// https://date-fns.org/v3.6.0/docs/Time-Zones#date-fns-tz
+// converts an epoch date to a formatted string in a specific timeZone
+export const formatDate = (
+  dateTime: number,
+  options?: { timeZone?: string; pattern?: string }
+) => {
+  const formatPattern = options?.pattern ?? DEFAULT_DATE_TIME;
+
+  const userTimeZone =
+    options?.timeZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  // Convert epoch time to a zoned date object
+  const zonedDate = utcToZonedTime(new Date(dateTime), userTimeZone);
+
+  // Take offset from zoned date to get a date with the days/hours modified based on offset for display
+  const dateWithOffset = new Date(
+    zonedDate.valueOf() + zonedDate.getTimezoneOffset() * 60 * 1000
+  );
+
+  const formattedString = format(dateWithOffset, formatPattern, {
+    timeZone: userTimeZone,
+  });
+
+  return formattedString;
+};
