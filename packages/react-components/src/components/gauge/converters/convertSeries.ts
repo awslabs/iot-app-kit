@@ -81,19 +81,6 @@ export const convertSeries = ({
         },
       },
     },
-    title: {
-      offsetCenter: [0, 15],
-      width: 300, // width of the title in px
-      overflow: 'truncate',
-      ellipsis: '...',
-      show: settings?.showName ?? false,
-      rich: {
-        name: {
-          fontSize: settings?.labelFontSize ?? 12,
-          color: '#000', // color of the title
-        },
-      },
-    },
   };
 
   const thresholdSeries = {

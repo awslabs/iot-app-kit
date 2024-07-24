@@ -25,7 +25,7 @@ export const gaugePlugin: DashboardPlugin = {
         showUnit: true,
         fontSize: 40,
         unitFontSize: 16,
-        labelFontSize: 12,
+        labelFontSize: 16,
         yMin: 0,
         yMax: 100,
         thresholds: [],
