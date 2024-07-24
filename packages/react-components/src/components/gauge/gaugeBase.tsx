@@ -5,7 +5,7 @@ import { GaugeBaseProperties } from './types';
 import { useGaugeConfiguration } from './hooks/useGaugeConfiguration';
 import { useResizableGauge } from './hooks/useResizableGauge';
 import { GaugeErrorText } from './gaugeErrorText';
-import { GaugeDataQualityText } from './gaugeDataQualityText';
+import { GaugeText } from './gaugeText';
 import './gauge.css';
 
 /**
@@ -77,7 +77,14 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
         }}
       />
       <GaugeErrorText error={error} />
-      {!isLoading && <GaugeDataQualityText error={error} quality={quality} />}
+      {!isLoading && (
+        <GaugeText
+          settings={settings}
+          name={name}
+          error={error}
+          quality={quality}
+        />
+      )}
     </div>
   );
 };
