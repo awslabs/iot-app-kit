@@ -7,16 +7,20 @@
   height: 100%;
 }
 
-.gauge-data-quality,
+.gauge-text-container,
 .gauge-info {
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
-  bottom: 20%;
+}
+
+.gauge-property-name {
+  padding-bottom: 8px;
 }
 
 .gauge-info-text {
   text-align: center;
   display: flex;
+  flex-direction: column;
   align-items: center;
 }

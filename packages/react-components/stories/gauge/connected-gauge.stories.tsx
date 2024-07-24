@@ -20,7 +20,7 @@ export default {
         showName: false,
         showUnit: true,
         fontSize: 40,
-        labelFontSize: 12,
+        labelFontSize: 16,
         unitFontSize: 16,
         yMin: 0,
         yMax: 100,
