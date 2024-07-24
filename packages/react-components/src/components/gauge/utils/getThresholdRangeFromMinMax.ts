@@ -20,14 +20,14 @@ export const getThresholdRangeFromMinMax = ({
     case 'GTE':
       // if the GT/GTE threshold is out of range (beyond the y-max), don't display it
       if (value >= max) return [1, 1];
-      return [value / range, undefined];
+      return [(value - min) / range, undefined];
     case 'LT':
     case 'LTE':
       // if the LT/LTE threshold is past the y-max, threshold should have a range 0%-100%
       if (value >= max) return [undefined, 1];
       // if the LT/LTE threshold is out of range (beyond the y-min), don't display it
       if (value <= min) return [0, 0];
-      return [undefined, value / range];
+      return [undefined, (value - min) / range];
     default:
       // any other comparisonOperator
       return [0, 0];
