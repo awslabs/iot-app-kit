@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   Box,
@@ -7,12 +7,17 @@ import {
   SpaceBetween,
 } from '@cloudscape-design/components';
 
-import { PropertyLens } from '~/customization/propertiesSection';
+import {
+  FilterPredicate,
+  PropertyLens,
+  useSelection,
+} from '~/customization/propertiesSection';
 import { GaugeProperties, GaugeWidget } from '~/customization/widgets/types';
 import { DashboardWidget } from '~/types';
 import { StyledExpandableSection } from '../components/styledComponents';
 import { maybeWithDefault } from '~/util/maybe';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
+import { Controller, useForm } from 'react-hook-form';
 
 const widgetWithCustomDisplaySettings: readonly string[] = ['gauge'];
 
@@ -26,29 +31,62 @@ const FontsSection = ({
   fieldLabel,
   value,
   onChange,
+  shouldClearErrors,
 }: {
   controlId: string;
   fieldLabel: string;
   value?: number;
   onChange: (value: number) => void;
+  shouldClearErrors: boolean | string;
 }) => {
+  const { control, setValue, clearErrors } = useForm<{
+    fontSize: string | undefined;
+  }>({
+    mode: 'onChange',
+  });
+
+  useEffect(() => {
+    //controller is using mode: 'onChange', it's not revalidating when different widget is selected
+    //when user selects different widget, manually set the fontSize and clear the error state
+    setValue('fontSize', value?.toFixed());
+    clearErrors();
+  }, [clearErrors, setValue, value, shouldClearErrors]);
+
   return (
-    <FormField label={fieldLabel}>
-      <Input
-        controlId={controlId}
-        value={`${value ?? ''}`}
-        type='number'
-        onChange={({ detail }) => onChange(Number(detail.value))}
-      />
-    </FormField>
+    <Controller
+      control={control}
+      name='fontSize'
+      rules={{
+        min: {
+          value: 1,
+          message: 'Font size must be greater than 0',
+        },
+      }}
+      render={({ field, fieldState }) => (
+        <FormField label={fieldLabel} errorText={fieldState.error?.message}>
+          <Input
+            controlId={controlId}
+            value={field.value || ''}
+            type='number'
+            onChange={({ detail: { value } }) => {
+              field.onChange(value);
+              onChange(Number(value));
+            }}
+          />
+        </FormField>
+      )}
+    />
   );
 };
 
 const RenderFontsSettingsSection = ({
   useProperty,
+  isVisible,
 }: {
   useProperty: PropertyLens<DashboardWidget<GaugeProperties>>;
+  isVisible: FilterPredicate<GaugeWidget>;
 }) => {
+  const compositeSelection = useSelection({ filter: isVisible });
   const [maybeFontSize, updateFontSize] = useProperty(
     (properties) => properties.fontSize,
     (properties, updatedFontSize) => ({
@@ -91,18 +129,21 @@ const RenderFontsSettingsSection = ({
             fieldLabel='Font size'
             value={fontSize}
             onChange={updateFontSize}
+            shouldClearErrors={!!compositeSelection}
           />
           <FontsSection
             controlId='unit-font-size'
             fieldLabel='Unit font size'
             value={unitFontSize}
             onChange={updateUnitFontSize}
+            shouldClearErrors={!!compositeSelection}
           />
           <FontsSection
             controlId='label-font-size'
             fieldLabel='Label font size'
             value={labelFontSize}
             onChange={updateLabelFontSize}
+            shouldClearErrors={!!compositeSelection}
           />
         </SpaceBetween>
       </Box>
@@ -114,7 +155,10 @@ export const FontsSettings: React.FC = () => (
   <PropertiesSection
     isVisible={isFontsSettingsWidget}
     render={({ useProperty }) => (
-      <RenderFontsSettingsSection useProperty={useProperty} />
+      <RenderFontsSettingsSection
+        useProperty={useProperty}
+        isVisible={isFontsSettingsWidget}
+      />
     )}
   />
 );
