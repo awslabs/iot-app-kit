@@ -1,7 +1,7 @@
-import { AssetPropertyValue, TimeOrdering } from '@aws-sdk/client-iotsitewise';
+import { TimeOrdering } from '@aws-sdk/client-iotsitewise';
 import {
-  AssetPropertyValueHistoryData,
   AssetPropertyValueHistoryRequest,
+  AssetPropertyValuesData,
   GetAssetPropertyValueHistoryRequestFunction,
 } from '../types';
 import { SendOptions } from '../../useTimeSeriesData/requestExecution/types';
@@ -11,12 +11,14 @@ import {
   OnRequestSuccessCallback,
 } from '../../useTimeSeriesData/requestExecution/requestExecutionStrategy';
 import takeRight from 'lodash.takeright';
+import { toDataPoint } from '../utils/toDataPoint';
+import { createNonNullableList } from '../../../utils/createNonNullableList';
 
 export class GetAssetPropertyValueHistory
   implements
     ExecuteRequestStrategy<
-      AssetPropertyValueHistoryRequest,
-      AssetPropertyValueHistoryData[number]
+    AssetPropertyValueHistoryRequest,
+    AssetPropertyValuesData[number]
     >
 {
   private maxResults = 20000;
@@ -52,14 +54,14 @@ export class GetAssetPropertyValueHistory
     }: SendOptions<AssetPropertyValueHistoryRequest>,
     onRequestSuccess: OnRequestSuccessCallback<
       AssetPropertyValueHistoryRequest,
-      AssetPropertyValueHistoryData[number]
+      AssetPropertyValuesData[number]
     >
-  ): Promise<AssetPropertyValue[]> {
+  ): Promise<AssetPropertyValuesData> {
     let dataPointNumberTarget = request.numberOfDataPointsToScanFor ?? Infinity;
 
     let nextToken = undefined;
 
-    const assetPropertyValues: AssetPropertyValue[] = [];
+    const assetPropertyValues: AssetPropertyValuesData = [];
 
     try {
       do {
@@ -80,15 +82,17 @@ export class GetAssetPropertyValueHistory
             }
           );
 
-        const dataPointsResponse = response.assetPropertyValueHistory ?? [];
-        const dataPoints = takeRight(dataPointsResponse, dataPointNumberTarget);
-        dataPointNumberTarget -= dataPointsResponse.length;
+        const assetPropertyValueHistory = response.assetPropertyValueHistory ?? [];
+        const reducedAssetPropertyValueHistory = takeRight(assetPropertyValueHistory, dataPointNumberTarget);
+        dataPointNumberTarget -= assetPropertyValueHistory.length;
 
-        onRequestSuccess(request, dataPoints);
+        const datapoints = createNonNullableList(reducedAssetPropertyValueHistory.map(toDataPoint));
+
+        onRequestSuccess(request, datapoints);
 
         nextToken = response.nextToken;
 
-        assetPropertyValues.push(...dataPoints);
+        assetPropertyValues.push(...datapoints);
       } while (nextToken && assetPropertyValues.length < dataPointNumberTarget);
 
       return assetPropertyValues;

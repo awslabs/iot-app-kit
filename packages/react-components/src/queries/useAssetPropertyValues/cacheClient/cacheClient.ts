@@ -1,23 +1,23 @@
 import isEqual from 'lodash.isequal';
+import omitBy from 'lodash.omitby';
+import { isUndefined } from 'lodash';
 import { Interval, TimeSeriesDataCacheClient } from '../../useTimeSeriesData';
 import {
   assetPropertyValuePointMilliseconds,
   filterAssetPropertyValues,
 } from '../cacheUtils/filterAssetPropertyValues';
 import {
-  AssetPropertyValueHistoryData,
-  AssetPropertyValueHistoryRequest,
+  AssetPropertyValuesData,
+  AssetPropertyValuesRequest,
 } from '../types';
-import omitBy from 'lodash.omitby';
-import { isUndefined } from 'lodash';
 
-export class AssetPropertyValueHistoryCacheClient extends TimeSeriesDataCacheClient<
-  AssetPropertyValueHistoryRequest,
-  AssetPropertyValueHistoryData[number]
+export class AssetPropertyValuesCacheClient extends TimeSeriesDataCacheClient<
+  AssetPropertyValuesRequest,
+  AssetPropertyValuesData[number]
 > {
   #sortTimeSeriesData(
-    data: AssetPropertyValueHistoryData
-  ): AssetPropertyValueHistoryData {
+    data: AssetPropertyValuesData
+  ): AssetPropertyValuesData {
     return data.sort(
       (a, b) =>
         assetPropertyValuePointMilliseconds(a) -
@@ -26,8 +26,8 @@ export class AssetPropertyValueHistoryCacheClient extends TimeSeriesDataCacheCli
   }
 
   matchesRequest(
-    requestA: AssetPropertyValueHistoryRequest,
-    requestB: AssetPropertyValueHistoryRequest
+    requestA: AssetPropertyValuesRequest,
+    requestB: AssetPropertyValuesRequest
   ): boolean {
     return isEqual(
       omitBy(requestA, isUndefined),
@@ -35,15 +35,15 @@ export class AssetPropertyValueHistoryCacheClient extends TimeSeriesDataCacheCli
     );
   }
   filterTimeSeriesData(
-    data: AssetPropertyValueHistoryData,
+    data: AssetPropertyValuesData,
     interval: Interval
-  ): AssetPropertyValueHistoryData {
+  ): AssetPropertyValuesData {
     return filterAssetPropertyValues(data, interval);
   }
   addTimeSeriesData(
-    oldData?: AssetPropertyValueHistoryData,
-    newData?: AssetPropertyValueHistoryData
-  ): AssetPropertyValueHistoryData {
+    oldData?: AssetPropertyValuesData,
+    newData?: AssetPropertyValuesData
+  ): AssetPropertyValuesData {
     return this.#sortTimeSeriesData([...(oldData ?? []), ...(newData ?? [])]);
   }
 }

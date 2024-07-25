@@ -12,7 +12,7 @@ import {
   RequestResolverStrategy,
   LIVE_DATA_INTERVALS,
 } from '../../useTimeSeriesData';
-import { AssetPropertyValueHistoryCacheClient } from '../cacheClient';
+import { AssetPropertyValuesCacheClient } from '../cacheClient';
 import { AssetPropertyValueHistoryRequest } from '../types';
 import { AssetPropertyValuesRequestResolver } from './assetPropertyValuesRequestResolver';
 
@@ -25,7 +25,7 @@ const UPDATE_RESOLVER_INTERVAL = 1000;
 
 type UseRequestResolverStrategyOptions = {
   viewport: Viewport;
-  cacheClient: AssetPropertyValueHistoryCacheClient;
+  cacheClient: AssetPropertyValuesCacheClient;
   liveDataIntervals?: Viewport[];
 };
 

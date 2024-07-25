@@ -4,34 +4,34 @@ import {
   RequestSettings,
   Viewport,
 } from '../../useTimeSeriesData';
-import { AssetPropertyValueHistoryRequest } from '../types';
+import { AssetPropertyValuesRequest } from '../types';
 import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
 
 const SITEWISE_PREVIEW_DATE = new Date(2018, 0, 1);
 
 export class AssetPropertyValuesRequestResolver
-  implements RequestResolverStrategy<AssetPropertyValueHistoryRequest>
+  implements RequestResolverStrategy<AssetPropertyValuesRequest>
 {
-  #viewportResolverStrategy: RequestResolverStrategy<AssetPropertyValueHistoryRequest>;
+  #viewportResolverStrategy: RequestResolverStrategy<AssetPropertyValuesRequest>;
   constructor(
-    viewportResolverStrategy: RequestResolverStrategy<AssetPropertyValueHistoryRequest>
+    viewportResolverStrategy: RequestResolverStrategy<AssetPropertyValuesRequest>
   ) {
     this.#viewportResolverStrategy = viewportResolverStrategy;
   }
 
   resolve(
     options: {
-      request: AssetPropertyValueHistoryRequest;
+      request: AssetPropertyValuesRequest;
       viewport: Viewport;
     },
     settings?: RequestSettings | undefined
-  ): { request: AssetPropertyValueHistoryRequest; viewport: Viewport }[] {
+  ): { request: AssetPropertyValuesRequest; viewport: Viewport }[] {
     const resolved = this.#viewportResolverStrategy.resolve(options, settings);
 
     const { request, viewport } = options;
 
     if (settings?.fetchMostRecentBeforeEnd) {
-      const mostRecentBeforeEndRequest: AssetPropertyValueHistoryRequest = {
+      const mostRecentBeforeEndRequest: AssetPropertyValuesRequest = {
         ...request,
         maxResults: 1,
         numberOfDataPointsToScanFor: 1,
@@ -48,7 +48,7 @@ export class AssetPropertyValuesRequestResolver
     }
 
     if (settings?.fetchMostRecentBeforeStart) {
-      const mostRecentBeforeStartRequest: AssetPropertyValueHistoryRequest = {
+      const mostRecentBeforeStartRequest: AssetPropertyValuesRequest = {
         ...request,
         maxResults: 1,
         numberOfDataPointsToScanFor: 1,
