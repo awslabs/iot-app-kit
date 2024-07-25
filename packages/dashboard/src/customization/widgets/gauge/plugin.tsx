@@ -21,6 +21,7 @@ export const gaugePlugin: DashboardPlugin = {
           source: 'iotsitewise',
           query: undefined,
         },
+        resolution: '0',
         showName: true,
         showUnit: true,
         fontSize: 40,

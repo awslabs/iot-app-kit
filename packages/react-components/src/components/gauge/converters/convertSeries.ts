@@ -8,6 +8,7 @@ import {
   DEFAULT_PROGRESS_SERIES,
   DEFAULT_THRESHOLD_SERIES,
 } from '../constants';
+import { calculatePadding } from '../utils/calculatePadding';
 
 export const convertSeries = ({
   unit,
@@ -35,6 +36,16 @@ export const convertSeries = ({
       settings?.showUnit && unit ? '{unit| ' + unit + '}' : ''
     }`;
   };
+
+  const unitPadding = [
+    0,
+    0,
+    calculatePadding({
+      fontSize: settings?.fontSize,
+      unitFontSize: settings?.unitFontSize,
+    }),
+    -10,
+  ];
 
   const emptySeries = {
     ...DEFAULT_EMPTY_SERIES,
@@ -76,8 +87,8 @@ export const convertSeries = ({
         },
         unit: {
           fontWeight: 'bolder', // font weight of the unit value
-          padding: [0, 0, -15, -5],
           fontSize: settings?.unitFontSize,
+          padding: unitPadding,
         },
       },
     },
@@ -112,9 +123,9 @@ export const convertSeries = ({
           fontSize: settings?.fontSize,
         },
         unit: {
+          padding: unitPadding,
           fontWeight: 'bolder', //font weight of the unit
           fontSize: settings?.unitFontSize,
-          padding: [0, 0, -15, -5],
         },
       },
     },
