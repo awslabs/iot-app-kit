@@ -8,7 +8,11 @@ export const isModeledPropertyInvalid = (
 
   const isNumericDataType = dataType === 'DOUBLE' || dataType === 'INTEGER';
 
-  if (widgetType === 'xy-plot' || widgetType === 'bar-chart') {
+  if (
+    widgetType === 'xy-plot' ||
+    widgetType === 'bar-chart' ||
+    widgetType === 'gauge'
+  ) {
     return !isNumericDataType;
   }
 

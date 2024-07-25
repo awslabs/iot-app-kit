@@ -21,6 +21,7 @@ import { convertViewportToHistoricalViewport } from '../util/dateTimeUtil';
 export const canOnlyDownloadLiveMode: readonly string[] = [
   'table',
   'kpi',
+  'gauge',
   'status',
   'text',
 ];
