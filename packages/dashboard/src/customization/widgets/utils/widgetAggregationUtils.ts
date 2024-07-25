@@ -13,6 +13,7 @@ export const WidgetDefaultAggregation: Record<
   kpi: undefined,
   status: undefined,
   table: undefined,
+  gauge: undefined,
 };
 
 export const WidgetDefaultResolution: Record<string, string | undefined> = {
@@ -24,6 +25,7 @@ export const WidgetDefaultResolution: Record<string, string | undefined> = {
   kpi: '0',
   status: '0',
   table: '0',
+  gauge: '0',
 };
 
 export const getCurrentAggregationResolution = (
