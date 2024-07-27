@@ -176,4 +176,22 @@ describe(Chatbot, () => {
     });
     expect(mockOnCLick).toBeCalledWith(message);
   });
+
+  it('should call onClose callback when chatbot is closed', () => {
+    const mockOnClose = jest.fn();
+    render(
+      <Chatbot
+        height={400}
+        messages={[]}
+        onSubmit={() => {}}
+        onClose={mockOnClose}
+      />
+    );
+    const closeButton = screen.getByTestId('assistant-chatbot-close-button');
+    expect(closeButton).toBeInTheDocument();
+    act(() => {
+      fireEvent.click(closeButton);
+    });
+    expect(mockOnClose).toBeCalled();
+  });
 });

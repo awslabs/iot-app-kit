@@ -23,7 +23,10 @@ type DefaultDashboardHeaderProps = DashboardHeaderProps & {
 
 const HeaderContainer = ({ children }: { children: ReactNode }) => {
   return (
-    <div style={{ height: '68px', maxHeight: '68px', boxSizing: 'border-box' }}>
+    <div
+      style={{ height: '68px', maxHeight: '68px', boxSizing: 'border-box' }}
+      data-testid='dashboard-header'
+    >
       {children}
     </div>
   );

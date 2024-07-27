@@ -12,7 +12,7 @@ export interface AssistantIotSiteWiseClient {
    * Specify an implementation for `invokeAssistant`.
    */
   invokeAssistant: InvokeAssistantRequestFunction;
-};
+}
 
 export type AssistantClientInstanceParams = {
   iotSiteWiseClient: AssistantIotSiteWiseClient;

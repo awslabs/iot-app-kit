@@ -1,6 +1,7 @@
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
-import { IoTSiteWise, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import IoTSiteWise from '../../../node_modules/@amzn/iot-sitewise-sdk/clients/iotsitewise';
 import {
   DashboardClientConfiguration,
   DashboardIotSiteWiseClients,
@@ -31,15 +32,17 @@ export const getClients = (
     credentials: dashboardClientConfiguration.awsCredentials,
     region: dashboardClientConfiguration.awsRegion,
   });
-  const iotSiteWise = new IoTSiteWise({
-    credentials: dashboardClientConfiguration.awsCredentials,
-    region: dashboardClientConfiguration.awsRegion,
+
+  const iotSiteWisePrivateClient = new IoTSiteWise({
+    credentials: dashboardClientConfiguration.awsCredentials as any,
+    region: dashboardClientConfiguration.awsRegion as string,
+    endpoint: 'https://data.sophon.beta.us-east-1.twinmaker.iot.aws.dev',
   });
 
   return {
     iotEventsClient,
     iotSiteWiseClient,
     iotTwinMakerClient,
-    iotSiteWise,
+    iotSiteWisePrivateClient,
   };
 };

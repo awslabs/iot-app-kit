@@ -73,3 +73,13 @@ export { type TableResourceDefinition } from './components/resource-explorers/ty
 export { type TimeSeriesResourceWithLatestValue } from './components/resource-explorers/types/resources';
 
 export { type ResourceFieldFilterOperator } from './components/resource-explorers/types/common';
+
+export { AssistantChatbot } from './components/assistant-chatbot';
+export { useAssistant } from './hooks/useAssistant/useAssistant';
+export { useAssistantContext } from './hooks/useAssistantContext/useAssistantContext';
+export { MessageType, SenderType } from './hooks/useAssistant/types';
+export type {
+  IMessage,
+  IMessageParser,
+  BaseStateManager,
+} from './hooks/useAssistant/types';

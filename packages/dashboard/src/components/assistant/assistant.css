@@ -1,0 +1,32 @@
+.iot-dashboard-assistant-chatbot-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.iot-dashboard-assistant-chatbot-button:hover {
+	-webkit-animation: pulse 1s;
+  animation: pulse 1s;
+}
+
+.iot-dashboard-assistant-chatbot-button button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.iot-dashboard-assistant-chatbot {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 35rem;
+  padding: 0.5rem;
+  z-index: 1;
+}
+
+.iot-dashboard-assistant-chatbot-hidden {
+  display: none;
+}

@@ -38,12 +38,12 @@
     "test:ci": "if test \"$NODE_ENV\" = \"production\"; then echo \"Yes!\"; fi"
   },
   "dependencies": {
-    "@cloudscape-design/collection-hooks": "1.0.36",
-    "@cloudscape-design/components": "3.0.518",
-    "@cloudscape-design/design-tokens": "3.0.34",
-    "@cloudscape-design/global-styles": "1.0.23",
-    "vite": "^4.5.3",
-    "zustand": "^4.5.2"
+    "@cloudscape-design/collection-hooks": "1.0.49",
+    "@cloudscape-design/component-toolkit": "^1.0.0-beta.62",
+    "@cloudscape-design/components": "3.0.693",
+    "@cloudscape-design/design-tokens": "3.0.42",
+    "@cloudscape-design/global-styles": "1.0.31",
+    "vite": "^4.5.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.7",

@@ -10,9 +10,15 @@ export interface ChatbotProps {
   height: number;
   messages: IMessage[];
   onSubmit: (utterance: string) => void;
+  onClose?: () => void;
 }
 
-export const Chatbot = ({ messages, height, onSubmit }: ChatbotProps) => {
+export const Chatbot = ({
+  messages,
+  height,
+  onSubmit,
+  onClose,
+}: ChatbotProps) => {
   const lastMessage = messages[messages.length - 1];
 
   return (
@@ -21,7 +27,9 @@ export const Chatbot = ({ messages, height, onSubmit }: ChatbotProps) => {
         footer={
           <ChatbotInputBox onSubmit={onSubmit} lastMessage={lastMessage} />
         }
-        header={<ChatbotHeader headerText='Sitewise Assistant' />}
+        header={
+          <ChatbotHeader headerText='Sitewise Assistant' onClose={onClose} />
+        }
         disableHeaderPaddings
         disableContentPaddings
       >

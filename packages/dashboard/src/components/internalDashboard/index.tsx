@@ -71,6 +71,7 @@ import { useDashboardViewport } from '~/hooks/useDashboardViewport';
 import { parseViewport } from '~/util/parseViewport';
 import Actions from '../actions';
 import { useSyncDashboardConfiguration } from '~/hooks/useSyncDashboardConfiguration';
+import { Chatbot } from '../assistant/chatbot';
 
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
@@ -129,6 +130,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     undefined
   );
   const [visible, setVisible] = useState<boolean>(false);
+  const [chatbotHeigth, setChatbotHeigth] = useState<number>(500);
 
   useDashboardViewport(
     currentViewport || parseViewport(dashboardConfiguration?.defaultViewport)
@@ -377,6 +379,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
       </div>
     </ContentLayout>
   );
+
   const ReadOnlyComponent = (
     <ContentLayout
       disableOverlap
@@ -395,6 +398,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             style={dashboardToolbarBottomBorder}
             className='dashboard-toolbar-read-only'
             aria-label='preview mode dashboard toolbar'
+            data-test-id='read-only-mode-dashboard-toolbar'
             //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
             tabIndex={0}
           >
@@ -405,13 +409,22 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
         )}
         <div
           className='display-area'
-          ref={(el) => setViewFrameElement(el || undefined)}
+          ref={(el) => {
+            const header = document.querySelector(
+              '[data-testid=dashboard-header]'
+            );
+            const displayAreaHeight = el?.clientHeight || 500;
+            const headerHeight = header?.clientHeight || 0;
+            setChatbotHeigth(displayAreaHeight - headerHeight - 50);
+            setViewFrameElement(el || undefined);
+          }}
           style={{ backgroundColor: colorBackgroundCellShaded }}
         >
           <ReadOnlyGrid {...grid}>
             <Widgets {...widgetsProps} />
           </ReadOnlyGrid>
           <WebglContext viewFrame={viewFrame} />
+          <Chatbot assistantId='assistantId' height={chatbotHeigth} />
         </div>
       </div>
     </ContentLayout>

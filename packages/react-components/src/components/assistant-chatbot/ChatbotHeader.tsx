@@ -35,9 +35,16 @@ export const ChatbotHeader = ({ headerText, onClose }: ChatbotHeaderProps) => {
           >
             {headerText}
           </Box>
-          <Box float='right'>
-            <Button iconName='close' variant='icon' onClick={onClose} />
-          </Box>
+          {onClose ? (
+            <Box float='right'>
+              <Button
+                iconName='close'
+                variant='icon'
+                onClick={onClose}
+                data-testid='assistant-chatbot-close-button'
+              />
+            </Box>
+          ) : null}
         </Grid>
       </Box>
       <hr style={{ margin: 0 }} />

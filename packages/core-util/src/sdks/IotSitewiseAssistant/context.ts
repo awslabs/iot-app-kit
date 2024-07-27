@@ -1,4 +1,4 @@
-import { createStore } from 'zustand/vanilla';
+import createStore, { SetState } from 'zustand/vanilla';
 
 export type AssistantContextState = {
   context: string;
@@ -12,12 +12,16 @@ export type AssistantContextActions = {
 export type AssistantContextStore = AssistantContextState &
   AssistantContextActions;
 
-const assistantContext = createStore<AssistantContextStore>((set) => ({
-  context: '',
-  setContext: (context: string) => set(() => ({ context })),
-  appendContext: (context: string) =>
-    set((state) => ({ context: `${state.context}${context}` })),
-}));
+const assistantContext = createStore<AssistantContextStore>(
+  (set: SetState<AssistantContextStore>) => ({
+    context: '',
+    setContext: (context: string) => set(() => ({ context })),
+    appendContext: (context: string) =>
+      set((state: AssistantContextStore) => ({
+        context: `${state.context}${context}`,
+      })),
+  })
+);
 
 export const getAssistantContext = () => assistantContext;
 export const setAssistantContext = (context: string) =>

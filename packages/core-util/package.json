@@ -28,6 +28,7 @@
   "dependencies": {
     "@iot-app-kit/core": "10.12.1",
     "lodash.difference": "4.5.0"
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@iot-app-kit/jest-config": "10.12.1",
