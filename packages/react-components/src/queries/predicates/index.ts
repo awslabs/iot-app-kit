@@ -1,4 +1,9 @@
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  RequestFunction,
+  RequestParameters,
+  RequestResponse,
+} from '../request-fn';
 
 export const isAssetId = (assetId?: string): assetId is string =>
   Boolean(assetId);
@@ -22,3 +27,13 @@ export const isEndDate = (endDate?: number): endDate is number =>
 export const hasClient = (
   client?: IoTSiteWiseClient
 ): client is IoTSiteWiseClient => Boolean(client);
+
+export const hasRequestFunction = <Requester>(
+  requestFunction?: RequestFunction<
+    RequestParameters<Requester>,
+    RequestResponse<Requester>
+  >
+): requestFunction is RequestFunction<
+  RequestParameters<Requester>,
+  RequestResponse<Requester>
+> => Boolean(requestFunction);

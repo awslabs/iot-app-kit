@@ -9,5 +9,5 @@ export const queryClient = new QueryClient({
       staleTime: STALE_TIME,
     },
   },
-  queryCache: new QueryCache({}),
+  queryCache: new QueryCache(),
 });
