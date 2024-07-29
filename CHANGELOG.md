@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.10.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.9.0...root-v10.10.0) (2024-07-29)
+
+
+### Features
+
+* add timezone converter util ([e5d59c4](https://github.com/awslabs/iot-app-kit/commit/e5d59c43803a03413e77556f6ca4179b18ecb3d7))
+
+
+### Bug Fixes
+
+* **dashboard:** adds resolution and aggregation to new proeprty in gauge widget ([5f5af30](https://github.com/awslabs/iot-app-kit/commit/5f5af3068defeb2a609e68ca0d29cc09f9960cfd))
+* **dashboard:** gauge bug fixes ([d93a42a](https://github.com/awslabs/iot-app-kit/commit/d93a42a1a62a1cfa31a6c342429a730663b8a591))
+* make gauge widget default size smaller ([937199a](https://github.com/awslabs/iot-app-kit/commit/937199adfdd536681700919ddcea7648860c7052))
+* move data quality widget on gauge to be closer to value ([d20b65f](https://github.com/awslabs/iot-app-kit/commit/d20b65f5704ffd5d56c4f402877be72d59adcadd))
+* **react-components:** gauge properly shows property name again ([ddb65c6](https://github.com/awslabs/iot-app-kit/commit/ddb65c6304c473e01e0c7ae3e868eba98923574c))
+* **react-components:** gauge thresholds with negative ranges ([2100221](https://github.com/awslabs/iot-app-kit/commit/21002216dc53230e95762ac3f46734ab90d8d1f6))
+* **react-components:** gestures prop works ([6141c32](https://github.com/awslabs/iot-app-kit/commit/6141c3234095c658240e528207cdcbe3ff6e2d62))
+* update data quality UX to match mocks ([ed62846](https://github.com/awslabs/iot-app-kit/commit/ed628461c0dd582ae2f03f06b81c8d25aab3832c))
+* update default cellsize in migration to 20 ([12db8f9](https://github.com/awslabs/iot-app-kit/commit/12db8f91940747b7159c2384057247f61995d1f2))
+
 ## [10.9.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.8.1...root-v10.9.0) (2024-07-08)
 
 

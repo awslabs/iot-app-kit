@@ -1,5 +1,24 @@
 # Changelog
 
+## [10.10.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v10.9.0...doc-site-v10.10.0) (2024-07-29)
+
+
+### Bug Fixes
+
+* **react-components:** gauge properly shows property name again ([ddb65c6](https://github.com/awslabs/iot-app-kit/commit/ddb65c6304c473e01e0c7ae3e868eba98923574c))
+* update data quality UX to match mocks ([ed62846](https://github.com/awslabs/iot-app-kit/commit/ed628461c0dd582ae2f03f06b81c8d25aab3832c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^10.9.0 to ^10.10.0
+    * @iot-app-kit/react-components bumped from ^10.9.0 to ^10.10.0
+  * devDependencies
+    * @iot-app-kit/testing-util bumped from ^10.9.0 to ^10.10.0
+    * eslint-config-iot-app-kit bumped from ^10.9.0 to ^10.10.0
+
 ## [10.9.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v10.8.1...doc-site-v10.9.0) (2024-07-08)
 
 
