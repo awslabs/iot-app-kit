@@ -293,7 +293,7 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
   onDeleteAssetQuery,
   colorable,
 }) => {
-  const { display, label } = getPropertyDisplay(
+  const { display, label, assetName } = getPropertyDisplay(
     property.propertyId,
     assetSummary
   );
@@ -331,7 +331,7 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
             style={{ marginBlock: spaceStaticXxs }}
             ref={labelRef}
           >
-            {name ?? label}
+            {name ?? label} ({assetName})
           </div>
         </Tooltip>
         <div style={{ float: 'right' }}>
@@ -357,7 +357,7 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
             <div style={{ padding: `0 ${spaceStaticXl}` }}>
               <DataStreamLabelComponent
                 name={name}
-                label={label}
+                propertyName={label}
                 updateName={(newName) => updateStyle({ name: newName })}
               />
               <LineStylePropertyConfig
