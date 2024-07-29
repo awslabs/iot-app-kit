@@ -6,20 +6,22 @@ import {
   Input,
   ExpandableSection,
 } from '@cloudscape-design/components';
+import { PropertySummary } from '~/hooks/useAssetDescriptionQueries';
 
 type DataStreamTextBoxProps = {
   name?: string;
-  label: string;
+
+  propertyName: NonNullable<PropertySummary['name']>;
   updateName: (newName: string) => void;
 };
 
 export const DataStreamLabelComponent = ({
-  label,
   updateName,
   name,
+  propertyName,
 }: DataStreamTextBoxProps) => {
-  const [value, setValue] = useState(name ?? label);
-  const [checked, setChecked] = useState(value === label);
+  const [value, setValue] = useState(name ?? propertyName);
+  const [checked, setChecked] = useState(value === propertyName);
 
   return (
     <ExpandableSection headerText='Label' disableContentPaddings={true}>
@@ -29,8 +31,8 @@ export const DataStreamLabelComponent = ({
             onChange={({ detail }) => {
               setChecked(detail.checked);
               if (detail.checked) {
-                setValue(label);
-                updateName(label);
+                setValue(propertyName);
+                updateName(propertyName);
               }
             }}
             checked={checked}
