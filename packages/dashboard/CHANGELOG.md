@@ -1,5 +1,32 @@
 # Changelog
 
+## [10.10.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.9.0...dashboard-v10.10.0) (2024-07-29)
+
+
+### Bug Fixes
+
+* **dashboard:** adds resolution and aggregation to new proeprty in gauge widget ([5f5af30](https://github.com/awslabs/iot-app-kit/commit/5f5af3068defeb2a609e68ca0d29cc09f9960cfd))
+* **dashboard:** gauge bug fixes ([d93a42a](https://github.com/awslabs/iot-app-kit/commit/d93a42a1a62a1cfa31a6c342429a730663b8a591))
+* make gauge widget default size smaller ([937199a](https://github.com/awslabs/iot-app-kit/commit/937199adfdd536681700919ddcea7648860c7052))
+* **react-components:** gauge properly shows property name again ([ddb65c6](https://github.com/awslabs/iot-app-kit/commit/ddb65c6304c473e01e0c7ae3e868eba98923574c))
+* update default cellsize in migration to 20 ([12db8f9](https://github.com/awslabs/iot-app-kit/commit/12db8f91940747b7159c2384057247f61995d1f2))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.9.0 to 10.10.0
+    * @iot-app-kit/core bumped from 10.9.0 to 10.10.0
+    * @iot-app-kit/core-util bumped from 10.9.0 to 10.10.0
+    * @iot-app-kit/react-components bumped from 10.9.0 to 10.10.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.9.0 to 10.10.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.9.0 to 10.10.0
+    * @iot-app-kit/testing-util bumped from 10.9.0 to 10.10.0
+    * @iot-app-kit/ts-config bumped from 10.9.0 to 10.10.0
+    * eslint-config-iot-app-kit bumped from 10.9.0 to 10.10.0
+
 ## [10.9.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.8.1...dashboard-v10.9.0) (2024-07-08)
 
 

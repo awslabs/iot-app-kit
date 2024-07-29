@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [10.10.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.9.0...react-components-v10.10.0) (2024-07-29)
+
+
+### Features
+
+* add timezone converter util ([e5d59c4](https://github.com/awslabs/iot-app-kit/commit/e5d59c43803a03413e77556f6ca4179b18ecb3d7))
+
+
+### Bug Fixes
+
+* **dashboard:** adds resolution and aggregation to new proeprty in gauge widget ([5f5af30](https://github.com/awslabs/iot-app-kit/commit/5f5af3068defeb2a609e68ca0d29cc09f9960cfd))
+* move data quality widget on gauge to be closer to value ([d20b65f](https://github.com/awslabs/iot-app-kit/commit/d20b65f5704ffd5d56c4f402877be72d59adcadd))
+* **react-components:** gauge properly shows property name again ([ddb65c6](https://github.com/awslabs/iot-app-kit/commit/ddb65c6304c473e01e0c7ae3e868eba98923574c))
+* **react-components:** gauge thresholds with negative ranges ([2100221](https://github.com/awslabs/iot-app-kit/commit/21002216dc53230e95762ac3f46734ab90d8d1f6))
+* **react-components:** gestures prop works ([6141c32](https://github.com/awslabs/iot-app-kit/commit/6141c3234095c658240e528207cdcbe3ff6e2d62))
+* update data quality UX to match mocks ([ed62846](https://github.com/awslabs/iot-app-kit/commit/ed628461c0dd582ae2f03f06b81c8d25aab3832c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.9.0 to 10.10.0
+    * @iot-app-kit/core bumped from 10.9.0 to 10.10.0
+    * @iot-app-kit/core-util bumped from 10.9.0 to 10.10.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.9.0 to 10.10.0
+  * devDependencies
+    * @iot-app-kit/core bumped from 10.9.0 to 10.10.0
+    * @iot-app-kit/jest-config bumped from 10.9.0 to 10.10.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.9.0 to 10.10.0
+    * @iot-app-kit/testing-util bumped from 10.9.0 to 10.10.0
+    * @iot-app-kit/ts-config bumped from 10.9.0 to 10.10.0
+    * eslint-config-iot-app-kit bumped from 10.9.0 to 10.10.0
+
 ## [10.9.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.8.1...react-components-v10.9.0) (2024-07-08)
 
 
