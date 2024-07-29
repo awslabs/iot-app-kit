@@ -36,7 +36,10 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
   onUpdatePropertyName,
   colorable,
 }) => {
-  const { display, label } = getPropertyDisplay(propertyId, assetSummary);
+  const { display, label, property, assetName } = getPropertyDisplay(
+    propertyId,
+    assetSummary
+  );
 
   const color = styleSettings[refId]?.color;
   const name = styleSettings[refId]?.name;
@@ -56,7 +59,9 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
                   updateColor={onUpdatePropertyColor}
                 />
               )}
-              <span>{name ?? label}</span>
+              <span>
+                {name ?? label} {assetName && `(${assetName})`}
+              </span>
             </SpaceBetween>
           </Box>
         </SpaceBetween>
@@ -77,8 +82,8 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
           <div style={{ padding: `0 ${spaceStaticXl}` }}>
             <DataStreamLabelComponent
               name={name}
-              label={label}
               updateName={onUpdatePropertyName}
+              propertyName={property?.name ?? ''}
             />
           </div>
         </ExpandableSection>
