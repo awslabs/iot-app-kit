@@ -1,13 +1,16 @@
+import IoTSiteWise, {
+  FinalResponse,
+  InvokeAssistantStep,
+} from '@amzn/iot-sitewise-sdk/clients/iotsitewise';
 import type {
   AssistantClientInstanceParams,
   AssistantClientInvocationCompleteHandler,
   AssistantClientInvocationDetail,
   AssistantClientInvocationResponseHandler,
-  AssistantIotSiteWiseClient,
 } from './types';
 
 export class IoTSitewiseAssistantClient {
-  private iotSiteWiseClient: AssistantIotSiteWiseClient;
+  private iotSiteWiseClient: IoTSiteWise;
   private assistantId: string;
   private hasTrace = true;
   private defaultContext?: string;
@@ -32,7 +35,7 @@ export class IoTSitewiseAssistantClient {
     this.assistantId = assistantId;
   }
 
-  setIotSiteWiseClient(newIotSiteWiseClient: AssistantIotSiteWiseClient): void {
+  setIotSiteWiseClient(newIotSiteWiseClient: IoTSiteWise): void {
     this.iotSiteWiseClient = newIotSiteWiseClient;
   }
 
@@ -55,9 +58,9 @@ export class IoTSitewiseAssistantClient {
    * @param context additional context for augmenting the default context
    */
   invoke(conversationId: string, utterance: string, context?: string) {
-    const assistantContext = `${this.defaultContext ?? ''} ${
-      context ?? ''
-    }`.trim();
+    const assistantContext = `given this context: "${
+      this.defaultContext?.trim() ?? ''
+    } ${context?.trim() ?? ''}"`;
 
     invokeAssistant({
       iotSiteWiseClient: this.iotSiteWiseClient,
@@ -65,10 +68,7 @@ export class IoTSitewiseAssistantClient {
         assistantId: this.assistantId,
         conversationId,
         invocationInputs: {
-          messages: [{ text: utterance }],
-          metadata: {
-            context: assistantContext,
-          },
+          message: `${assistantContext} ${utterance}`,
         },
         enabledTrace: this.hasTrace,
       },
@@ -106,34 +106,36 @@ async function invokeAssistant({
   onComplete,
   onResponse,
 }: {
-  iotSiteWiseClient: AssistantIotSiteWiseClient;
+  iotSiteWiseClient: IoTSiteWise;
   payload: AssistantClientInvocationDetail;
   onComplete?: AssistantClientInvocationCompleteHandler;
   onResponse?: AssistantClientInvocationResponseHandler;
 }) {
-  const response = await iotSiteWiseClient.invokeAssistant(payload);
+  const response = await iotSiteWiseClient.invokeAssistant(payload).promise();
 
   /**
    * Given the nature of streaming API, The client receives a chunk of the whole streamed response.
    */
-  for await (const chunk of response.StreamResponse) {
-    if (onResponse && chunk.trace?.traceId) {
+  for await (const chunk of response.body) {
+    const responseChunk = chunk as {
+      step?: InvokeAssistantStep;
+      finalResponse?: FinalResponse;
+    };
+    if (onResponse && responseChunk.step?.stepId) {
       onResponse(
         {
           conversationId: payload.conversationId,
-          body: chunk,
-          statusCode: response.StatusCode,
+          body: responseChunk,
         },
         payload
       );
     }
 
-    if (onComplete && !chunk.trace) {
+    if (onComplete && !responseChunk.step) {
       onComplete(
         {
           conversationId: payload.conversationId,
-          body: chunk,
-          statusCode: response.StatusCode,
+          body: responseChunk,
         },
         payload
       );

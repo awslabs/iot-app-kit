@@ -101,7 +101,6 @@
     "webpack": "^5.94.0"
   },
   "dependencies": {
-    "@amzn/iot-sitewise-sdk": "file:iot-sitewise-sdk.tar.gz",
     "@iot-app-kit/charts-core": "2.1.2",
     "@iot-app-kit/components": "10.12.1",
     "@iot-app-kit/core": "10.12.1",

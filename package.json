@@ -43,6 +43,7 @@
     "@cloudscape-design/components": "3.0.693",
     "@cloudscape-design/design-tokens": "3.0.42",
     "@cloudscape-design/global-styles": "1.0.31",
+    "@amzn/iot-sitewise-sdk": "file:./iot-sitewise-sdk.tar.gz",
     "vite": "^4.5.3"
   },
   "devDependencies": {
