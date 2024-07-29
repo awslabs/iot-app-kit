@@ -11,14 +11,14 @@ export const getPropertyDisplay = (
   property: PropertySummary | undefined;
   label: string;
   display: DisplayType;
+  assetName?: string;
 } => {
   const property = properties?.find((prop) => prop.propertyId === propertyId);
   if (property) {
     return {
       display: 'property',
-      label:
-        (property?.name && assetName && `${property?.name} (${assetName})`) ||
-        propertyId,
+      label: property?.name ? `${property?.name}` : propertyId,
+      assetName: assetName,
       property,
     };
   }
