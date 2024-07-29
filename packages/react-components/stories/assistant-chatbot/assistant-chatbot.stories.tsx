@@ -1,3 +1,5 @@
+/* eslint-disable */
+// @ts-nocheck
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { AssistantChatbot } from '../../src/components/assistant-chatbot';

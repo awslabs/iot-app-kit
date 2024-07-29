@@ -1,4 +1,4 @@
-import type { InvokeAssistantResponse } from '@iot-app-kit/core-util';
+import type { ResponseStreamChunk } from '@iot-app-kit/core-util';
 
 type UniqueID = string;
 
@@ -38,7 +38,7 @@ export interface IMessage {
 }
 
 export interface IMessageParser {
-  parse(response: InvokeAssistantResponse): void;
+  parse(response: ResponseStreamChunk): void;
   setStateManager(stateManager: BaseStateManager): void;
 }
 

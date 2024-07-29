@@ -1,4 +1,4 @@
-import { InvokeAssistantResponse } from '@iot-app-kit/core-util';
+import type { ResponseStreamChunk } from '@iot-app-kit/core-util';
 import type { BaseStateManager, IMessage } from './types';
 import { SenderType, MessageType } from './types';
 import { v4 as uuidv4 } from 'uuid';
@@ -47,7 +47,7 @@ export class StateManager implements BaseStateManager {
   addText = (
     content: string,
     sender: SenderType,
-    payload?: InvokeAssistantResponse
+    payload?: ResponseStreamChunk
   ) => {
     const message = {
       id: uuidv4(),

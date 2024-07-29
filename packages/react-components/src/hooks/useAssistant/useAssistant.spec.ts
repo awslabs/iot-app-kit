@@ -3,14 +3,33 @@ import { useAssistant } from './useAssistant';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import type { MessageParser } from './messageParser';
 import { StateManager } from './stateManager';
-import { MockInvokeAssistant } from '../../__mocks__/assistantMockedResponse';
+import IoTSiteWise from '@amzn/iot-sitewise-sdk/clients/iotsitewise';
+import type {
+  InvokeAssistantStep,
+  FinalResponse,
+} from '@amzn/iot-sitewise-sdk/clients/iotsitewise';
+
+const response1 = {
+  step: {
+    stepId: 'step1',
+    rationale: {
+      text: 'contains information about the intermediate step',
+    },
+  } as InvokeAssistantStep,
+  finalResponse: {
+    message: 'assistant response',
+  } as FinalResponse,
+};
 
 describe('useAssistant', () => {
   const conversationId = 'myAssistantConversation';
+  const mockInvokeAssistant = jest.fn().mockImplementation(() => ({
+    promise: jest.fn().mockResolvedValue({ body: [response1] }),
+  }));
   const client = new IoTSitewiseAssistantClient({
     iotSiteWiseClient: {
-      invokeAssistant: MockInvokeAssistant,
-    },
+      invokeAssistant: mockInvokeAssistant,
+    } as unknown as IoTSiteWise,
     assistantId: 'myAssistantId',
     defaultContext: '',
   });
@@ -40,8 +59,8 @@ describe('useAssistant', () => {
     const mockedParser = jest.fn();
     const newClient = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
-        invokeAssistant: MockInvokeAssistant,
-      },
+        invokeAssistant: mockInvokeAssistant,
+      } as unknown as IoTSiteWise,
       assistantId: 'myAssistantId',
       defaultContext: '',
       onResponse: () => mockedParser(),
@@ -85,13 +104,10 @@ describe('useAssistant', () => {
   });
 
   it('should invoke Assistant', async () => {
-    const mockedInvokeAssistant = jest
-      .fn()
-      .mockImplementation(MockInvokeAssistant);
     const newClient = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
-        invokeAssistant: mockedInvokeAssistant,
-      },
+        invokeAssistant: mockInvokeAssistant,
+      } as unknown as IoTSiteWise,
       assistantId: 'myAssistantId',
       defaultContext: '',
     });
@@ -106,26 +122,16 @@ describe('useAssistant', () => {
     });
 
     await waitFor(() => {
-      expect(mockedInvokeAssistant).toBeCalled();
+      expect(mockInvokeAssistant).toBeCalled();
     });
   });
 
   it('should generate Summary', async () => {
     const summaryUtterance = 'generate a summary';
     const context = '{"assetId": "assetId1"}';
-    const mockedInvokeAssistant = jest
-      .fn()
-      .mockImplementation(MockInvokeAssistant);
-    const newClient = new IoTSitewiseAssistantClient({
-      iotSiteWiseClient: {
-        invokeAssistant: mockedInvokeAssistant,
-      },
-      assistantId: 'myAssistantId',
-      defaultContext: '',
-    });
     const { result } = renderHook(() =>
       useAssistant({
-        assistantClient: newClient,
+        assistantClient: client,
       })
     );
 
@@ -134,15 +140,12 @@ describe('useAssistant', () => {
     });
 
     await waitFor(() => {
-      expect(mockedInvokeAssistant).toBeCalledWith({
+      expect(mockInvokeAssistant).toBeCalledWith({
         conversationId,
         assistantId: 'myAssistantId',
         enabledTrace: true,
         invocationInputs: {
-          messages: [{ text: summaryUtterance }],
-          metadata: {
-            context,
-          },
+          message: `given this context: " ${context}" ${summaryUtterance}`,
         },
       });
     });

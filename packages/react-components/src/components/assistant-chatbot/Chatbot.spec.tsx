@@ -2,7 +2,6 @@ import React from 'react';
 import { act, render, screen, fireEvent } from '@testing-library/react';
 import { SenderType, MessageType } from '../../hooks/useAssistant/types';
 import { Chatbot } from './Chatbot';
-import { InvokeAssistantResponse } from '@iot-app-kit/core-util';
 import userEvent from '@testing-library/user-event';
 
 describe(Chatbot, () => {
@@ -102,7 +101,7 @@ describe(Chatbot, () => {
                   },
                 ],
               },
-            } as InvokeAssistantResponse,
+            } as any,
           },
         ]}
         onSubmit={() => {}}

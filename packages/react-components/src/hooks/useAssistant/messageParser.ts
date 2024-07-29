@@ -4,7 +4,7 @@ import {
   type BaseStateManager,
   SenderType,
 } from './types';
-import type { InvokeAssistantResponse } from '@iot-app-kit/core-util';
+import type { ResponseStreamChunk } from '@iot-app-kit/core-util';
 
 export class MessageParser implements IMessageParser {
   private stateManager: StateManager = new StateManager(
@@ -17,35 +17,19 @@ export class MessageParser implements IMessageParser {
     this.stateManager = stateManager;
   }
 
-  parse(response: InvokeAssistantResponse) {
-    if (response.trace?.traceId) {
-      this.stateManager.addPartialResponse(response.trace.text);
-    }
-
-    if (response.finalResponse?.message?.length) {
-      response.finalResponse?.message?.forEach(
-        (content: Record<string, any>) => {
-          this.stateManager.addText(
-            content.text,
-            SenderType.ASSISTANT,
-            response
-          );
-        }
+  parse(response: ResponseStreamChunk) {
+    if (response.step?.stepId) {
+      this.stateManager.addPartialResponse(
+        response.step?.rationale?.text || ''
       );
     }
 
-    // temporary implementation for insights
-    if (response.finalResponse?.metadata?.insights) {
-      try {
-        const json = JSON.parse(response.finalResponse?.metadata?.insights);
-
-        // suggested questions
-        if (json?.prompts && Array.isArray(json?.prompts)) {
-          this.stateManager.addPrompts(json?.prompts);
-        }
-      } finally {
-        /* do nothing */
-      }
+    if (response.finalResponse?.text?.length) {
+      this.stateManager.addText(
+        response.finalResponse?.text,
+        SenderType.ASSISTANT,
+        response
+      );
     }
   }
 }

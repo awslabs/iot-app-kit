@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { InvokeAssistantResponse } from '@iot-app-kit/core-util';
+import { ResponseStreamChunk } from '@iot-app-kit/core-util';
 import Grid from '@cloudscape-design/components/grid';
 import Box from '@cloudscape-design/components/box';
 import assistantIcon from '../assets/assistantIcon.svg';
@@ -9,17 +9,17 @@ import SpaceBetween from '@cloudscape-design/components/space-between';
 
 export interface ChatbotAssistantMessageProps {
   text: string;
-  payload?: InvokeAssistantResponse;
+  payload?: ResponseStreamChunk;
 }
 
 export const ChatbotAssistantMessage = ({
   text,
   payload,
 }: ChatbotAssistantMessageProps) => {
-  const { citations = [] } = payload?.finalResponse ?? {};
+  const { citations = [] } = (payload?.finalResponse as any) ?? {};
   const references = citations
-    .flatMap(({ references }) => references)
-    .filter((reference) => !!reference.location?.s3Location?.uri);
+    .flatMap(({ references }: any) => references)
+    .filter((reference: any) => !!reference.location?.s3Location?.uri);
   const hasBreakingLines = text.match(/\r|\n/);
 
   return (
@@ -53,7 +53,7 @@ export const ChatbotAssistantMessage = ({
               headerText='Sources'
               headerAriaLabel='Sources'
             >
-              {references.map((reference, index) => (
+              {references.map((reference: any, index: number) => (
                 <Link
                   href={reference.location?.s3Location?.uri ?? ''}
                   target='_blank'

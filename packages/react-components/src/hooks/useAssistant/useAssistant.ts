@@ -84,19 +84,15 @@ export const useAssistant = ({
   };
 
   const onResponse = (response: AssistantClientInvocationResponse) => {
-    if (response.statusCode === 200) {
-      removeLoadingMessages();
-      currentMessageParser.parse(response.body);
-      setMessages(currentStateManager.getState().messages);
-    }
+    removeLoadingMessages();
+    currentMessageParser.parse(response.body);
+    setMessages(currentStateManager.getState().messages);
   };
 
   const onComplete = (response: AssistantClientInvocationResponse) => {
-    if (response.statusCode === 200) {
-      removeLoadingMessages();
-      currentMessageParser.parse(response.body);
-      setMessages(currentStateManager.getState().messages);
-    }
+    removeLoadingMessages();
+    currentMessageParser.parse(response.body);
+    setMessages(currentStateManager.getState().messages);
   };
 
   assistantClient.setRequestHandlers(
