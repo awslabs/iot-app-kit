@@ -15,10 +15,10 @@ const response1 = {
     rationale: {
       text: 'contains information about the intermediate step',
     },
-  } as InvokeAssistantStep,
+  } satisfies InvokeAssistantStep,
   finalResponse: {
-    message: 'assistant response',
-  } as FinalResponse,
+    text: 'assistant response',
+  } satisfies FinalResponse,
 };
 
 describe('useAssistant', () => {
@@ -29,7 +29,7 @@ describe('useAssistant', () => {
   const client = new IoTSitewiseAssistantClient({
     iotSiteWiseClient: {
       invokeAssistant: mockInvokeAssistant,
-    } as unknown as IoTSiteWise,
+    } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
     assistantId: 'myAssistantId',
     defaultContext: '',
   });
@@ -60,7 +60,7 @@ describe('useAssistant', () => {
     const newClient = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
-      } as unknown as IoTSiteWise,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
       assistantId: 'myAssistantId',
       defaultContext: '',
       onResponse: () => mockedParser(),
@@ -107,7 +107,7 @@ describe('useAssistant', () => {
     const newClient = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
-      } as unknown as IoTSiteWise,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
       assistantId: 'myAssistantId',
       defaultContext: '',
     });

@@ -130,7 +130,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     undefined
   );
   const [visible, setVisible] = useState<boolean>(false);
-  const [chatbotHeigth, setChatbotHeigth] = useState<number>(500);
+  const [chatbotHeight, setChatbotHeight] = useState<number>(500);
 
   useDashboardViewport(
     currentViewport || parseViewport(dashboardConfiguration?.defaultViewport)
@@ -415,7 +415,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             );
             const displayAreaHeight = el?.clientHeight || 500;
             const headerHeight = header?.clientHeight || 0;
-            setChatbotHeigth(displayAreaHeight - headerHeight - 50);
+            setChatbotHeight(displayAreaHeight - headerHeight - 50);
             setViewFrameElement(el || undefined);
           }}
           style={{ backgroundColor: colorBackgroundCellShaded }}
@@ -424,7 +424,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             <Widgets {...widgetsProps} />
           </ReadOnlyGrid>
           <WebglContext viewFrame={viewFrame} />
-          <Chatbot assistantId='assistantId' height={chatbotHeigth} />
+          <Chatbot assistantId='assistantId' height={chatbotHeight} />
         </div>
       </div>
     </ContentLayout>

@@ -17,24 +17,26 @@ const response1 = {
     rationale: {
       text: 'contains information about the intermediate step',
     },
-  } as InvokeAssistantStep,
+  } satisfies InvokeAssistantStep,
   finalResponse: {
-    message: 'assistant response',
-  } as FinalResponse,
+    text: 'assistant response',
+  } satisfies FinalResponse,
 };
 const response2 = {
   step: {
     stepId: 'step2',
-    text: 'contains information about the intermediate step part 2',
-  } as InvokeAssistantStep,
+    rationale: {
+      text: 'contains information about the intermediate step part 2',
+    },
+  } satisfies InvokeAssistantStep,
   finalResponse: {
-    message: 'assistant response 2',
-  } as FinalResponse,
+    text: 'assistant response 2',
+  } satisfies FinalResponse,
 };
 const response3 = {
   finalResponse: {
-    message: 'assistant response 2',
-  } as FinalResponse,
+    text: 'assistant response 2',
+  } satisfies FinalResponse,
 };
 
 describe('AssistantClient', () => {
@@ -48,7 +50,7 @@ describe('AssistantClient', () => {
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
-      } as unknown as IoTSiteWise,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
       assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
@@ -65,7 +67,7 @@ describe('AssistantClient', () => {
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
-      } as unknown as IoTSiteWise,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
       assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
@@ -90,7 +92,7 @@ describe('AssistantClient', () => {
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
-      } as unknown as IoTSiteWise,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
       assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
@@ -99,7 +101,7 @@ describe('AssistantClient', () => {
 
     client.setIotSiteWiseClient({
       invokeAssistant: mockInvokeAssistant,
-    } as unknown as IoTSiteWise);
+    } satisfies Pick<IoTSiteWise, 'invokeAssistant'>);
 
     client.invoke(conversationId, 'customer message');
 
@@ -115,7 +117,7 @@ describe('AssistantClient', () => {
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
-      } as unknown as IoTSiteWise,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
       assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
@@ -139,7 +141,7 @@ describe('AssistantClient', () => {
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
-      } as unknown as IoTSiteWise,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
       assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse,
@@ -163,7 +165,7 @@ describe('AssistantClient', () => {
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
-      } as unknown as IoTSiteWise,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
       assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
@@ -186,7 +188,7 @@ describe('AssistantClient', () => {
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
-      } as unknown as IoTSiteWise,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
       assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},

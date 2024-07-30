@@ -6,20 +6,38 @@ import assistantIcon from '../assets/assistantIcon.svg';
 import ExpandableSection from '@cloudscape-design/components/expandable-section';
 import Link from '@cloudscape-design/components/link';
 import SpaceBetween from '@cloudscape-design/components/space-between';
+import { FinalResponse } from '@amzn/iot-sitewise-sdk/clients/iotsitewise';
 
 export interface ChatbotAssistantMessageProps {
   text: string;
   payload?: ResponseStreamChunk;
 }
 
+interface Reference {
+  location?: {
+    s3Location?: {
+      uri: string;
+    };
+  };
+}
+
+interface Citation {
+  references: Array<Reference>;
+}
+
+type Citations = FinalResponse & {
+  citations?: Citation[];
+};
+
 export const ChatbotAssistantMessage = ({
   text,
   payload,
 }: ChatbotAssistantMessageProps) => {
-  const { citations = [] } = (payload?.finalResponse as any) ?? {};
+  const { finalResponse = {} } = payload ?? {};
+  const { citations = [] } = finalResponse as Citations;
   const references = citations
-    .flatMap(({ references }: any) => references)
-    .filter((reference: any) => !!reference.location?.s3Location?.uri);
+    .flatMap(({ references }: Citation) => references)
+    .filter((reference: Reference) => !!reference.location?.s3Location?.uri);
   const hasBreakingLines = text.match(/\r|\n/);
 
   return (

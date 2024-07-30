@@ -10,7 +10,8 @@ import type {
 } from './types';
 
 export class IoTSitewiseAssistantClient {
-  private iotSiteWiseClient: IoTSiteWise;
+  private iotSiteWiseClient: Pick<IoTSiteWise, 'invokeAssistant'>;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore: keeping as API will add assistantId to the request
   private assistantId: string;
   private defaultContext?: string;
@@ -35,7 +36,9 @@ export class IoTSitewiseAssistantClient {
     this.assistantId = assistantId;
   }
 
-  setIotSiteWiseClient(newIotSiteWiseClient: IoTSiteWise): void {
+  setIotSiteWiseClient(
+    newIotSiteWiseClient: Pick<IoTSiteWise, 'invokeAssistant'>
+  ): void {
     this.iotSiteWiseClient = newIotSiteWiseClient;
   }
 
@@ -98,7 +101,7 @@ async function invokeAssistant({
   onComplete,
   onResponse,
 }: {
-  iotSiteWiseClient: IoTSiteWise;
+  iotSiteWiseClient: Pick<IoTSiteWise, 'invokeAssistant'>;
   payload: AssistantClientInvocationDetail;
   onComplete?: AssistantClientInvocationCompleteHandler;
   onResponse?: AssistantClientInvocationResponseHandler;
