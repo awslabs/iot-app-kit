@@ -142,11 +142,7 @@ describe('useAssistant', () => {
     await waitFor(() => {
       expect(mockInvokeAssistant).toBeCalledWith({
         conversationId,
-        assistantId: 'myAssistantId',
-        enabledTrace: true,
-        invocationInputs: {
-          message: `given this context: " ${context}" ${summaryUtterance}`,
-        },
+        message: `given this context: " ${context}" ${summaryUtterance}`,
       });
     });
   });

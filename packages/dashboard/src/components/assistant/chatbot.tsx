@@ -7,7 +7,6 @@ import {
   MessageType,
   SenderType,
 } from '@iot-app-kit/react-components';
-import { InvokeAssistantRequest } from '@amzn/iot-sitewise-sdk/clients/iotsitewise';
 import { useClients } from '../dashboard/clientContext';
 import assistantIcon from './assistantIcon.svg';
 import 'animate.css';
@@ -21,15 +20,12 @@ export interface AssistantChatbotProps {
 export const Chatbot: FC<AssistantChatbotProps> = (
   props: AssistantChatbotProps
 ) => {
+  const [conversationId] = useState<string>(uuid());
   const [isOpen, setOpen] = useState<boolean | null>(null);
   const { iotSiteWisePrivateClient } = useClients();
 
-  const conversationId = uuid();
   const client = new IoTSitewiseAssistantClient({
-    iotSiteWiseClient: {
-      invokeAssistant: (request: InvokeAssistantRequest) =>
-        iotSiteWisePrivateClient?.invokeAssistant(request),
-    },
+    iotSiteWiseClient: iotSiteWisePrivateClient,
     assistantId: props.assistantId,
   });
 

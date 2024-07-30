@@ -11,8 +11,8 @@ import type {
 
 export class IoTSitewiseAssistantClient {
   private iotSiteWiseClient: IoTSiteWise;
+  // @ts-ignore: keeping as API will add assistantId to the request
   private assistantId: string;
-  private hasTrace = true;
   private defaultContext?: string;
   public onResponse?: AssistantClientInvocationResponseHandler;
   public onComplete?: AssistantClientInvocationCompleteHandler;
@@ -39,10 +39,6 @@ export class IoTSitewiseAssistantClient {
     this.iotSiteWiseClient = newIotSiteWiseClient;
   }
 
-  enableTrace(hasTrace: boolean): void {
-    this.hasTrace = hasTrace;
-  }
-
   setRequestHandlers(
     newOnResponse: AssistantClientInvocationResponseHandler,
     newOnComplete: AssistantClientInvocationCompleteHandler
@@ -65,12 +61,8 @@ export class IoTSitewiseAssistantClient {
     invokeAssistant({
       iotSiteWiseClient: this.iotSiteWiseClient,
       payload: {
-        assistantId: this.assistantId,
         conversationId,
-        invocationInputs: {
-          message: `${assistantContext} ${utterance}`,
-        },
-        enabledTrace: this.hasTrace,
+        message: `${assistantContext} ${utterance}`,
       },
       onComplete: this.onComplete,
       onResponse: this.onResponse,

@@ -49,13 +49,6 @@ export type AssistantClientInvocationResponseHandler = (
 ) => void;
 
 export type AssistantClientInvocationDetail = {
-  assistantId: string;
   conversationId: UniqueId;
-  invocationInputs: {
-    message: string;
-  };
-  metadata?: {
-    context: string;
-  };
-  enabledTrace?: boolean;
+  message: string;
 };

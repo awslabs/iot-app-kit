@@ -77,12 +77,8 @@ describe('AssistantClient', () => {
 
     expect(mockInvokeAssistant).toBeCalledWith(
       expect.objectContaining({
-        assistantId: 'newAssistantId',
         conversationId,
-        enabledTrace: true,
-        invocationInputs: {
-          message: expect.any(String),
-        },
+        message: expect.any(String),
       })
     );
   });
@@ -203,12 +199,8 @@ describe('AssistantClient', () => {
 
     expect(mockInvokeAssistant).toBeCalledWith(
       expect.objectContaining({
-        assistantId: 'myAssistantID',
         conversationId,
-        enabledTrace: true,
-        invocationInputs: {
-          message: `given this context: " ${context}" ${summaryUtterance}`,
-        },
+        message: `given this context: " ${context}" ${summaryUtterance}`,
       })
     );
   });

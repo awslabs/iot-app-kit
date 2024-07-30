@@ -15,7 +15,7 @@ import {
 } from '@iot-app-kit/source-iotsitewise';
 import { RefreshRate } from './components/refreshRate/types';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import IoTSiteWise from '../node_modules/@amzn/iot-sitewise-sdk/clients/iotsitewise';
+import IoTSiteWise from '@amzn/iot-sitewise-sdk/clients/iotsitewise';
 import { ReactElement } from 'react';
 
 export type DashboardClientCredentials = {

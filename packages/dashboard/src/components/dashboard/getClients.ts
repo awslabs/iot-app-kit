@@ -1,7 +1,7 @@
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import IoTSiteWise from '../../../node_modules/@amzn/iot-sitewise-sdk/clients/iotsitewise';
+import IoTSiteWise from '@amzn/iot-sitewise-sdk/clients/iotsitewise';
 import {
   DashboardClientConfiguration,
   DashboardIotSiteWiseClients,
