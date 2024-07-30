@@ -25,7 +25,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   const { iotSiteWisePrivateClient } = useClients();
 
   const client = new IoTSitewiseAssistantClient({
-    iotSiteWiseClient: iotSiteWisePrivateClient,
+    iotSiteWiseClient: iotSiteWisePrivateClient!,
     assistantId: props.assistantId,
   });
 
