@@ -331,7 +331,7 @@ export const StyledPropertyComponent: FC<StyledPropertyComponentProps> = ({
             style={{ marginBlock: spaceStaticXxs }}
             ref={labelRef}
           >
-            {name ?? label} ({assetName})
+            {name ?? label} {assetName && `(${assetName})`}
           </div>
         </Tooltip>
         <div style={{ float: 'right' }}>
