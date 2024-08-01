@@ -150,6 +150,9 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   const dashboardSignificantDigits = useSelector(
     (state: DashboardState) => state.significantDigits
   );
+  const dashboardTimeZone = useSelector(
+    (state: DashboardState) => state.timeZone
+  );
 
   const {
     title,
@@ -225,6 +228,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
         defaultVisualizationType={mapConnectionStyleToVisualizationType(
           line?.connectionStyle
         )}
+        timeZone={dashboardTimeZone}
       />
     </WidgetTile>
   );

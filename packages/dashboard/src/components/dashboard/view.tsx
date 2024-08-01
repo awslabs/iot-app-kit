@@ -35,6 +35,7 @@ export type DashboardViewProperties = {
   onViewportChange?: ViewportChange;
   currentViewport?: Viewport;
   toolbar?: DashboardToolbar;
+  timeZone?: string;
 };
 
 const DashboardView: React.FC<DashboardViewProperties> = ({
@@ -45,6 +46,7 @@ const DashboardView: React.FC<DashboardViewProperties> = ({
   onViewportChange,
   currentViewport,
   toolbar,
+  timeZone,
 }) => {
   // Adding Dnd provider because custom widgets may have a drag and drop context
   useDashboardPlugins();
@@ -71,6 +73,7 @@ const DashboardView: React.FC<DashboardViewProperties> = ({
                 ...toDashboardState(dashboardConfiguration),
                 readOnly: true,
                 isEdgeModeEnabled: isEdgeModeEnabled(edgeMode),
+                timeZone,
               })}
             >
               <DndProvider

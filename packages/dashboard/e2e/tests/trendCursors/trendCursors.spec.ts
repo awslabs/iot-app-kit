@@ -175,8 +175,16 @@ test('can drag a trend cursor', async ({ page }) => {
   expect(initialTrendCursorDateString).not.toEqual(
     updatedTrendCursorDateString
   );
-  const initialDate = new Date(initialTrendCursorDateString);
-  const updatedDate = new Date(updatedTrendCursorDateString);
+
+  const initialDateString = initialTrendCursorDateString.split('\n');
+  const updatedDateString = updatedTrendCursorDateString.split('\n');
+  const initialDate = new Date(
+    initialDateString[0] + ' ' + initialDateString[1].split(' ')[0]
+  );
+  const updatedDate = new Date(
+    updatedDateString[0] + ' ' + updatedDateString[1].split(' ')[0]
+  );
+
   expect(initialDate.getTime()).toBeGreaterThan(updatedDate.getTime());
 
   // trend cursor should have some value

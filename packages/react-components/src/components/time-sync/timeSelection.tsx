@@ -17,6 +17,7 @@ import {
   viewportToDateRange,
   rangeValidator,
 } from '@iot-app-kit/core-util';
+import { DateTime } from 'luxon';
 
 export type ViewportMessages = DateRangePickerProps.I18nStrings & {
   title: string;
@@ -68,9 +69,11 @@ const messages: ViewportMessages = {
 export const TimeSelection = ({
   isPaginationEnabled,
   hideTitle,
+  timeZone,
 }: {
   isPaginationEnabled?: boolean;
   hideTitle?: boolean;
+  timeZone?: string;
 }) => {
   const { viewport, setViewport } = useViewport();
 
@@ -186,6 +189,13 @@ export const TimeSelection = ({
             })}
             i18nStrings={i18nStrings}
             placeholder={placeholder}
+            getTimeOffset={() => {
+              const zone =
+                timeZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
+              const dt = DateTime.now().setZone(zone);
+              const offset = dt.offset;
+              return offset;
+            }}
           />
         </FormField>
 

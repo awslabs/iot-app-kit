@@ -16,6 +16,7 @@ import {
 } from '@cloudscape-design/design-tokens';
 import { DataQualityText } from '../data-quality/data-quality-text';
 import { DEFAULT_DECIMAL_PLACES } from '../../common/constants';
+import { formatDate } from '../../utils/time';
 
 export const KpiBase: React.FC<KPIBaseProperties> = ({
   propertyPoint,
@@ -28,6 +29,7 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
   settings = {},
   significantDigits = DEFAULT_DECIMAL_PLACES,
   propertyThreshold,
+  timeZone,
 }) => {
   const {
     showUnit,
@@ -143,7 +145,12 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
                   }}
                 />
                 <div className='timestamp' data-testid='kpi-timestamp'>
-                  {isLoading ? '-' : new Date(point.x).toLocaleString()}
+                  {isLoading
+                    ? '-'
+                    : formatDate(point.x, {
+                        timeZone,
+                        pattern: 'M/dd/yyyy, h:mm:ss aa',
+                      })}
                 </div>
               </>
             )}

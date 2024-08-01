@@ -43,6 +43,7 @@ export type DashboardProperties = {
   name?: string;
   onViewportChange?: ViewportChange;
   currentViewport?: Viewport;
+  timeZone?: string;
 };
 const showFPSMonitor = localStorage.getItem('DASHBOARD_SHOW_FPS');
 
@@ -57,9 +58,9 @@ const Dashboard: React.FC<DashboardProperties> = ({
   currentViewport,
   onViewportChange,
   onDashboardConfigurationChange,
+  timeZone,
 }) => {
   useDashboardPlugins();
-
   const debounceOnViewportChange = onViewportChange
     ? debounce(onViewportChange, 100)
     : undefined;
@@ -79,6 +80,7 @@ const Dashboard: React.FC<DashboardProperties> = ({
                 ...toDashboardState(dashboardConfiguration),
                 readOnly,
                 isEdgeModeEnabled: isEdgeModeEnabled(edgeMode),
+                timeZone: timeZone,
               })}
             >
               <DndProvider

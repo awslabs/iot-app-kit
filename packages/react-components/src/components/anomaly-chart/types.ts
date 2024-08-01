@@ -39,4 +39,5 @@ export type AnomalyChartOptions = AnomalyChartWithData & {
     yLabel?: string;
   };
   showTimestamp?: boolean;
+  timeZone?: string;
 };
