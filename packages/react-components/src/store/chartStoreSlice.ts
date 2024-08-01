@@ -8,10 +8,18 @@ export interface ChartStoreData {
 export interface ChartStoreState extends ChartStoreData {
   addChart: (id: string) => ReturnType<typeof createChartStore>;
   removeChart: (id: string) => void;
+  setTimeZone: (timeZone?: string) => void;
 }
 
 export const createChartStoresSlice: StateCreator<ChartStoreState> = (set) => ({
   chartStores: {},
+  setTimeZone: (timeZone) =>
+    set((state) => {
+      return {
+        ...state,
+        timeZone,
+      };
+    }),
   addChart: (id) => {
     const store = createChartStore({ chartId: id }); //repopulate chart store from local storage
     set((state) => ({

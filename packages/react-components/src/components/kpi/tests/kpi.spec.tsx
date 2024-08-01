@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { KPI } from '../kpi';
 import { COMPARISON_OPERATOR, Viewport } from '@iot-app-kit/core';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
+import { formatDate } from '../../../utils/time';
 
 export const VIEWPORT = { duration: '5m' };
 export const PREVIOUS_VALUE = 123.21239;
@@ -97,7 +98,9 @@ describe('default kpi widget', () => {
       screen.getByText(DATA_STREAM.data[1].y.toFixed(DECIMAL_PLACES))
     ).toBeVisible();
     expect(
-      screen.getByText(new Date(DATA_STREAM.data[1].x).toLocaleString())
+      screen.getByText(
+        formatDate(DATA_STREAM.data[1].x, { pattern: 'M/dd/yyyy, h:mm:ss aa' })
+      )
     ).toBeVisible();
   });
 
@@ -123,7 +126,9 @@ describe('default kpi with thresholds', () => {
     expect(screen.getByText(DATA_STREAM.name)).toBeVisible();
     expect(screen.getByText(`(${DATA_STREAM.unit})`)).toBeVisible();
     expect(
-      screen.getByText(new Date(DATA_STREAM.data[1].x).toLocaleString())
+      screen.getByText(
+        formatDate(DATA_STREAM.data[1].x, { pattern: 'M/dd/yyyy, h:mm:ss aa' })
+      )
     ).toBeVisible();
     expect(
       screen.getByText(DATA_STREAM.data[1].y.toFixed(DECIMAL_PLACES))
@@ -141,7 +146,9 @@ describe('default kpi with thresholds', () => {
     expect(screen.getByText(DATA_STREAM.name)).toBeVisible();
     expect(screen.getByText(`(${DATA_STREAM.unit})`)).toBeVisible();
     expect(
-      screen.getByText(new Date(DATA_STREAM.data[1].x).toLocaleString())
+      screen.getByText(
+        formatDate(DATA_STREAM.data[1].x, { pattern: 'M/dd/yyyy, h:mm:ss aa' })
+      )
     ).toBeVisible();
     expect(
       screen.getByText(DATA_STREAM.data[1].y.toFixed(DECIMAL_PLACES))
@@ -186,7 +193,9 @@ describe('kpi with custom settings', () => {
     expect(screen.queryByText(DATA_STREAM.name)).not.toBeInTheDocument();
     expect(screen.queryByText(`(${DATA_STREAM.unit})`)).not.toBeInTheDocument();
     expect(
-      screen.queryByText(new Date(DATA_STREAM.data[1].x).toLocaleString())
+      screen.queryByText(
+        formatDate(DATA_STREAM.data[1].x, { pattern: 'M/dd/yyyy, h:mm:ss aa' })
+      )
     ).not.toBeInTheDocument();
     expect(screen.queryByText(AGGREGATION_STRING)).not.toBeInTheDocument();
 
@@ -216,7 +225,9 @@ describe('kpi with custom settings', () => {
     expect(screen.queryByText(DATA_STREAM.name)).not.toBeInTheDocument();
     expect(screen.queryByText(`(${DATA_STREAM.unit})`)).not.toBeInTheDocument();
     expect(
-      screen.queryByText(new Date(DATA_STREAM.data[1].x).toLocaleString())
+      screen.queryByText(
+        formatDate(DATA_STREAM.data[1].x, { pattern: 'M/dd/yyyy, h:mm:ss aa' })
+      )
     ).not.toBeInTheDocument();
 
     // KPI value and aggregation should be visible
@@ -245,7 +256,9 @@ describe('kpi with custom settings', () => {
     // settings are set to hide all text except for KPI value
     expect(screen.queryByText(`(${DATA_STREAM.unit})`)).not.toBeInTheDocument();
     expect(
-      screen.queryByText(new Date(DATA_STREAM.data[1].x).toLocaleString())
+      screen.queryByText(
+        formatDate(DATA_STREAM.data[1].x, { pattern: 'M/dd/yyyy, h:mm:ss aa' })
+      )
     ).not.toBeInTheDocument();
     expect(screen.queryByText(AGGREGATION_STRING)).not.toBeInTheDocument();
 
@@ -282,7 +295,9 @@ describe('kpi with custom settings', () => {
       screen.getByText(DATA_STREAM.data[1].y.toFixed(DECIMAL_PLACES))
     ).toBeVisible();
     expect(
-      screen.getByText(new Date(DATA_STREAM.data[1].x).toLocaleString())
+      screen.getByText(
+        formatDate(DATA_STREAM.data[1].x, { pattern: 'M/dd/yyyy, h:mm:ss aa' })
+      )
     ).toBeVisible();
   });
 
@@ -305,7 +320,9 @@ describe('kpi with custom settings', () => {
     // settings are set to hide all text except for KPI value
     expect(screen.queryByText(DATA_STREAM.name)).not.toBeInTheDocument();
     expect(
-      screen.queryByText(new Date(DATA_STREAM.data[1].x).toLocaleString())
+      screen.queryByText(
+        formatDate(DATA_STREAM.data[1].x, { pattern: 'M/dd/yyyy, h:mm:ss aa' })
+      )
     ).not.toBeInTheDocument();
     expect(screen.queryByText(AGGREGATION_STRING)).not.toBeInTheDocument();
 
@@ -406,7 +423,9 @@ describe('kpi widget with custom viewports', () => {
 
     render(<KPI query={SUCCESS_QUERY} />);
     expect(
-      screen.getByText(new Date(DATA_STREAM.data[0].x).toLocaleString())
+      screen.getByText(
+        formatDate(DATA_STREAM.data[0].x, { pattern: 'M/dd/yyyy, h:mm:ss aa' })
+      )
     ).toBeVisible();
     expect(
       screen.getByText(DATA_STREAM.data[0].y.toFixed(DEFAULT_DECIMAL_PLACES))
@@ -418,7 +437,9 @@ describe('kpi widget with custom viewports', () => {
 
     render(<KPI query={SUCCESS_QUERY} />);
     expect(
-      screen.getByText(new Date(DATA_STREAM.data[1].x).toLocaleString())
+      screen.getByText(
+        formatDate(DATA_STREAM.data[1].x, { pattern: 'M/dd/yyyy, h:mm:ss aa' })
+      )
     ).toBeVisible();
     expect(
       screen.getByText(DATA_STREAM.data[1].y.toFixed(DEFAULT_DECIMAL_PLACES))
@@ -433,7 +454,9 @@ describe('kpi widget with custom viewports', () => {
 
     render(<KPI query={SUCCESS_QUERY} />);
     expect(
-      screen.getByText(new Date(DATA_STREAM.data[1].x).toLocaleString())
+      screen.getByText(
+        formatDate(DATA_STREAM.data[1].x, { pattern: 'M/dd/yyyy, h:mm:ss aa' })
+      )
     ).toBeVisible();
     expect(
       screen.getByText(DATA_STREAM.data[1].y.toFixed(DEFAULT_DECIMAL_PLACES))
@@ -456,7 +479,9 @@ describe('kpi widget with custom viewports', () => {
 
     render(<KPI query={SUCCESS_QUERY} />);
     expect(
-      screen.getByText(new Date(DATA_STREAM.data[1].x).toLocaleString())
+      screen.getByText(
+        formatDate(DATA_STREAM.data[1].x, { pattern: 'M/dd/yyyy, h:mm:ss aa' })
+      )
     ).toBeVisible();
     expect(
       screen.getByText(DATA_STREAM.data[1].y.toFixed(DEFAULT_DECIMAL_PLACES))
@@ -474,7 +499,9 @@ describe('kpi widget with custom viewports', () => {
       />
     );
     expect(
-      screen.getByText(new Date(DATA_STREAM.data[0].x).toLocaleString())
+      screen.getByText(
+        formatDate(DATA_STREAM.data[0].x, { pattern: 'M/dd/yyyy, h:mm:ss aa' })
+      )
     ).toBeVisible();
     expect(
       screen.getByText(DATA_STREAM.data[0].y.toFixed(DEFAULT_DECIMAL_PLACES))

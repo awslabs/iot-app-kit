@@ -34,26 +34,29 @@ const DefaultDashboardHeader = ({
   editable,
   readOnly,
   onSave,
-}: DefaultDashboardHeaderProps) => (
-  <HeaderContainer>
-    <Box padding='xs'>
-      <Box float='left'>
-        <Header variant='h1'>{name}</Header>
+}: DefaultDashboardHeaderProps) => {
+  const timeZone = useSelector((state: DashboardState) => state.timeZone);
+  return (
+    <HeaderContainer>
+      <Box padding='xs'>
+        <Box float='left'>
+          <Header variant='h1'>{name}</Header>
+        </Box>
+        <Box float='right'>
+          <SpaceBetween size='s' direction='horizontal' alignItems='end'>
+            <TimeSelection isPaginationEnabled timeZone={timeZone} />
+            <Actions
+              key='3'
+              readOnly={readOnly}
+              onSave={onSave}
+              editable={editable}
+            />
+          </SpaceBetween>
+        </Box>
       </Box>
-      <Box float='right'>
-        <SpaceBetween size='s' direction='horizontal' alignItems='end'>
-          <TimeSelection isPaginationEnabled />
-          <Actions
-            key='3'
-            readOnly={readOnly}
-            onSave={onSave}
-            editable={editable}
-          />
-        </SpaceBetween>
-      </Box>
-    </Box>
-  </HeaderContainer>
-);
+    </HeaderContainer>
+  );
+};
 
 const DashboardHeader = ({
   toolbar,

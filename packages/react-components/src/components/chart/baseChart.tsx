@@ -35,6 +35,7 @@ import { useModalVisibility } from '../../hooks/useModalVisibility/useModalVisib
 import { PreferencesModalToggle } from './preferences/toggle';
 import { useDataQuality } from './hooks/useDataQuality';
 import { Timestamp } from '../timestampBar';
+import useDataStore from '../../store';
 
 /**
  * Developer Notes:
@@ -60,8 +61,12 @@ const BaseChart = ({
   onChartOptionsChange,
   size = { width: 650, height: 400 },
   gestures = true,
+  timeZone,
   ...options
 }: ChartOptions) => {
+  // Set timezone for use in sub components
+  useDataStore.getState().setTimeZone(timeZone);
+
   const {
     visible: dataQualityPreferencesVisible,
     onHide: onHideDataQualityPreferences,
@@ -154,6 +159,7 @@ const BaseChart = ({
     visibleData,
     chartWidth,
     gestures,
+    timeZone,
     ...options,
   });
 

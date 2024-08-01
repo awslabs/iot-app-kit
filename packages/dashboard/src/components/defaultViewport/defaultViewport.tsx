@@ -9,7 +9,6 @@ import { Viewport } from '@iot-app-kit/core';
 import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { messages } from './constants';
-
 export const DefaultViewport = ({
   defaultViewport,
   onViewportChange,

@@ -21,6 +21,7 @@ export type DashboardState<
     defaultViewport?: string;
   };
   significantDigits: number;
+  timeZone?: string;
 };
 
 /**
