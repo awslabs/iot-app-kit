@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { KpiBase } from '../kpiBase';
 import type { DataPoint } from '@iot-app-kit/core';
+import { formatDate } from '../../../utils/time';
 
 describe('name', () => {
   it('renders name when showName is true', () => {
@@ -148,9 +149,12 @@ describe('timestamp', () => {
         settings={{ showTimestamp: true }}
       />
     );
-
     expect(
-      screen.queryByText(PROPERTY_POINT_DATE.toLocaleString())
+      screen.queryByText(
+        formatDate(PROPERTY_POINT_DATE.getTime(), {
+          pattern: 'M/dd/yyyy, h:mm:ss aa',
+        })
+      )
     ).not.toBeNull();
   });
 

@@ -1,23 +1,21 @@
 import merge from 'lodash.merge';
 import { ANOMALY_X_AXIS } from '../constants';
 import { ConfigurationOptions } from '../hooks/types';
+import {
+  getPatternForXAxisLabelForAnomalyChart,
+  formatDate,
+} from '../../../utils/time';
 
-export const convertXAxis = ({ axis }: Pick<ConfigurationOptions, 'axis'>) => {
+export const convertXAxis = ({ axis, timeZone }: ConfigurationOptions) => {
   const show = axis?.showX ?? true;
 
   return merge({}, ANOMALY_X_AXIS.xAxis, {
     axisLabel: {
       show: show,
       align: 'center',
-      formatter: {
-        year: `{yyyy}`,
-        month: `{MMM}`,
-        day: '{MMM} {d}',
-        hour: '{MMM} {d}\n{HH}:{mm}',
-        minute: '{MMM} {d}\n{HH}:{mm}',
-        second: '{MMM} {d}\n{HH}:{mm}:{ss}',
-        millisecond: '{MMM} {d}\n{hh}:{mm}:{ss} {SSS}',
-        none: `{yyyy}-{MM}={dd} {hh}:{mm}:{ss} {SSS}`,
+      formatter: (value: number) => {
+        const pattern = getPatternForXAxisLabelForAnomalyChart(value);
+        return formatDate(value, { pattern, timeZone });
       },
     },
     name: show ? axis?.xLabel || 'Time' : undefined,

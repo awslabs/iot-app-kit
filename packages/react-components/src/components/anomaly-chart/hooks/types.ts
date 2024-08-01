@@ -15,6 +15,7 @@ export type ConfigurationOptions = {
     yLabel?: string;
   };
   showTimestamp?: boolean;
+  timeZone?: string;
 };
 
 export type DataSetOptions = { data: AnomalyData | undefined };

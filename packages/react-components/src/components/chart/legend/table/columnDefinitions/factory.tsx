@@ -89,7 +89,7 @@ const createTrendCursorColumnDefinition = ({
   date,
 }: TrendCursor): LegendTableColumnDefinitions[number] => ({
   id: trendCursorId,
-  header: <TrendCursorColumnHeader color={color} date={new Date(date)} />,
+  header: <TrendCursorColumnHeader color={color} date={date} />,
   sortingComparator: (a, b) => {
     const aValue = a.trendCursorValues[trendCursorId] ?? 0;
     const bValue = b.trendCursorValues[trendCursorId] ?? 0;

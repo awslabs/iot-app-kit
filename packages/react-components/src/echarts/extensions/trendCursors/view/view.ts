@@ -18,6 +18,8 @@ import deleteButtonSvg from './deleteButton.svg';
 import { TrendCursor } from '../store';
 import { GenericSeries } from '../../../types';
 
+import { formatDate } from '../../../../utils/time';
+
 // Echarts doesn't expose this interface correctly
 // eslint-disable-next-line
 const { Group, Rect, Line, Text, Image, Circle } = echarts.graphic;
@@ -131,9 +133,9 @@ export class TrendCursorView extends echarts.ComponentView {
   }
 
   toDateTimeText(date: number) {
-    const localeDateString = new Date(date).toLocaleDateString();
-    const localeTimeString = new Date(date).toLocaleTimeString();
-    const dateTimeText = `{timestamp|${localeDateString} ${localeTimeString}}`;
+    const timeZone = useDataStore.getState().timeZone;
+    const dateTime = formatDate(date, { timeZone });
+    const dateTimeText = `{timestamp|${dateTime}}`;
     return dateTimeText;
   }
 

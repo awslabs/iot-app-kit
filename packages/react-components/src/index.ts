@@ -48,3 +48,5 @@ export type {
   TableItem,
   TableItemRef,
 } from './components/table';
+
+export { formatDate } from './utils/time';

@@ -9,7 +9,11 @@ export type DataStreamInformation = Pick<
   latestValue: Primitive | undefined;
 } & DataStreamMinMax;
 
-export type TrendCursor = { id: string; date: number; color?: string };
+export type TrendCursor = {
+  id: string;
+  date: number;
+  color?: string;
+};
 export type DataStreamMinMax = {
   maxValue: number | string | undefined;
   minValue: number | string | undefined;

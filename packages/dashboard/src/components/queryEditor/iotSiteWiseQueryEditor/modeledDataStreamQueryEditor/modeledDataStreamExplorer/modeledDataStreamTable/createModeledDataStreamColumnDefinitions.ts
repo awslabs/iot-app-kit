@@ -1,10 +1,11 @@
 import { isNumeric, round } from '@iot-app-kit/core-util';
 import { type TableProps } from '@cloudscape-design/components/table';
 import type { ModeledDataStream } from '../types';
-import { getFormattedDateTimeFromEpoch } from '~/components/util/dateTimeUtil';
+import { formatDate } from '@iot-app-kit/react-components';
 
 export function createModeledDataStreamColumnDefinitions(
-  significantDigits: number
+  significantDigits: number,
+  timeZone?: string
 ): TableProps<
   ModeledDataStream & {
     latestValue?: number | string | boolean;
@@ -33,12 +34,8 @@ export function createModeledDataStreamColumnDefinitions(
       id: 'latestValueTime',
       header: 'Latest value time',
       cell: ({ latestValueTime }) => {
-        if (latestValueTime && isNumeric(latestValueTime)) {
-          return getFormattedDateTimeFromEpoch(
-            Number(round(latestValueTime, significantDigits))
-          );
-        }
-        return getFormattedDateTimeFromEpoch(latestValueTime);
+        if (!latestValueTime) return '-';
+        return formatDate(latestValueTime * 1000, { timeZone });
       },
       sortingField: 'latestValueTime',
     },

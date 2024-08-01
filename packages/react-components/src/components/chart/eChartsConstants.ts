@@ -8,6 +8,10 @@ import type {
   EChartsOption,
 } from 'echarts';
 import { ChartAxisOptions, ChartLegend } from './types';
+import {
+  formatDate,
+  getPatternForXAxisLabelForLineChart,
+} from '../../utils/time';
 
 export const DEFAULT_TOOLBOX_CONFIG: ToolboxComponentOption = {
   show: true,
@@ -82,6 +86,20 @@ export const DEFAULT_X_AXIS: XAXisComponentOption = {
   max: 4102513200000, // Jan 01 2100 19:00:00 UTC
 };
 
+export const getDefaultXAxis = (timeZone?: string): XAXisComponentOption => {
+  const axisLabel = DEFAULT_X_AXIS.axisLabel;
+  return {
+    ...DEFAULT_X_AXIS,
+    axisLabel: {
+      ...axisLabel,
+      formatter: (value: number) => {
+        const pattern = getPatternForXAxisLabelForLineChart(value);
+        return formatDate(value, { pattern, timeZone });
+      },
+    },
+  };
+};
+
 export const DEFAULT_CHART_VISUALIZATION = 'line' as const;
 // this is the chart live mode refresh rate, this should be inline with the animation props
 // https://echarts.apache.org/en/option.html#animation
@@ -137,7 +155,7 @@ export const LEGEND_ASSET_NAME_COL_MAX_WIDTH = 200;
 
 export const PERFORMANCE_MODE_THRESHOLD = 4000;
 
-export const DEFAULT_CHART_OPTION: EChartsOption = {
+const DEFAULT_CHART_OPTION: EChartsOption = {
   aria: {
     enabled: true,
   },
@@ -150,6 +168,13 @@ export const DEFAULT_CHART_OPTION: EChartsOption = {
   yAxis: [DEFAULT_Y_AXIS],
   grid: DEFAULT_GRID,
   tooltip: DEFAULT_TOOLTIP,
+};
+
+export const getDefaultChartOption = (timeZone?: string): EChartsOption => {
+  return {
+    ...DEFAULT_CHART_OPTION,
+    xAxis: getDefaultXAxis(timeZone),
+  };
 };
 
 export const DEFAULT_CHART_SETTINGS = {
