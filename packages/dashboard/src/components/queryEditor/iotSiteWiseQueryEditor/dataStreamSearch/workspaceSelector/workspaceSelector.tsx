@@ -98,9 +98,9 @@ function createWorkspaceOptions(
 
 function getStatusType(status: TanstackStatusType): CloudscapeStatusType {
   const statusMap = {
-    loading: 'loading',
     error: 'error',
     success: 'finished',
+    pending: 'loading',
   } satisfies Record<TanstackStatusType, CloudscapeStatusType>;
 
   return statusMap[status];

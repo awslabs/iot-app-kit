@@ -32,6 +32,7 @@ export function useRootAssets({ client }: UseRootAssetsOptions) {
     queryKey: cacheKeyFactory.create(),
     queryFn: createUseListRootAssetsQueryFn(client),
     getNextPageParam: ({ nextToken }) => nextToken,
+    initialPageParam: '0',
   });
 
   const rootAssets: AssetSummary[] = rootAssetPages.flatMap(
@@ -56,7 +57,7 @@ function createUseListRootAssetsQueryFn(client: IoTSiteWiseClient) {
     pageParam: nextToken,
     signal,
   }: QueryFunctionContext<ReturnType<RootAssetCacheKeyFactory['create']>>) {
-    const request = new ListRootAssetsRequest({ nextToken, client, signal });
+    const request = new ListRootAssetsRequest({ nextToken: nextToken as string, client, signal });
     const response = await request.send();
 
     return response;

@@ -26,6 +26,7 @@ export function useUnmodeledDataStreams({
     queryKey: cacheKeyFactory.create(),
     queryFn: createQueryFn(client),
     getNextPageParam: ({ nextToken }) => nextToken,
+    initialPageParam: '0',
   });
 
   const unmodeledDataStreams = combinePages(unmodeledDataStreamPages);
@@ -50,7 +51,7 @@ function createQueryFn(client: IoTSiteWiseClient) {
   >) {
     const request = new ListUnmodeledDataStreamsRequest({
       aliasPrefix,
-      nextToken,
+      nextToken: nextToken as string,
       client,
       signal,
     });

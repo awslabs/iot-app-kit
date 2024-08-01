@@ -34,6 +34,7 @@ export function useAssetModelProperties({
     queryFn: createQueryFn(client),
     getNextPageParam: ({ nextToken }) => nextToken,
     staleTime: Infinity,
+    initialPageParam: '0',
   });
 
   const assetModelPropertySummaries = createNonNullableList(
@@ -74,7 +75,7 @@ export const createQueryFn = (client: IoTSiteWiseClient) => {
 
     const request = new GetAssetModelPropertiesRequest({
       assetModelId,
-      nextToken,
+      nextToken: nextToken as string,
       client,
       signal,
     });

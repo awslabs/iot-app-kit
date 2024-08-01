@@ -36,6 +36,7 @@ export function useSearch({
       queryKey: CACHE_KEYS.search({ workspaceId, searchQuery }),
       queryFn: createQueryFn(client),
       getNextPageParam: ({ nextToken }) => nextToken,
+      initialPageParam: '0',
     });
 
   const modeledDataStreams =
@@ -59,7 +60,7 @@ function createQueryFn(client: IoTTwinMakerClient) {
     const response = await search({
       workspaceId,
       searchQuery,
-      nextToken,
+      nextToken: nextToken as string,
       client,
       signal,
     });

@@ -37,6 +37,7 @@ export function useAssetModels({
     queryKey: cacheKeyFactory.create(),
     queryFn: createQueryFn(client),
     getNextPageParam: ({ nextToken }) => nextToken,
+    initialPageParam: '0',
   });
 
   if (fetchAll && hasNextPage) fetchNextPage();
@@ -74,7 +75,7 @@ export const createQueryFn = (client: IoTSiteWiseClient) => {
   }: QueryFunctionContext<
     ReturnType<AssetModelsCacheKeyFactory['create']>
   >) => {
-    const request = new GetAssetModelsRequest({ nextToken, client, signal });
+    const request = new GetAssetModelsRequest({ nextToken: nextToken as string, client, signal });
 
     const response = await request.send();
 
