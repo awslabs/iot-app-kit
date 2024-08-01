@@ -9,6 +9,8 @@ import {
   toTimestamp,
   YEAR_IN_MS,
   formatDate,
+  getPatternForXAxisLabelForAnomalyChart,
+  getPatternForXAxisLabelForLineChart,
 } from './time';
 
 describe('convert from milliseconds', () => {
@@ -294,12 +296,12 @@ describe('formatDate', () => {
     const formattedDate = formatDate(date, { timeZone: 'America/Denver' });
 
     // UTC-7
-    expect(formattedDate).toBe('1969-12-31, 05:00:00 p.m.');
+    expect(formattedDate).toBe('1969-12-31 05:00:00 p.m.');
 
     const formattedDate2 = formatDate(date, { timeZone: 'Asia/Tokyo' });
 
     // UTC+9
-    expect(formattedDate2).toBe('1970-01-01, 09:00:00 a.m.');
+    expect(formattedDate2).toBe('1970-01-01 09:00:00 a.m.');
   });
 
   it('converts date to specified pattern', () => {
@@ -310,5 +312,155 @@ describe('formatDate', () => {
       pattern: 'hh:mm a',
     });
     expect(formattedDate).toBe('05:00 PM');
+  });
+});
+
+describe('getPatternForXAxisLabelForAnomalyChart', () => {
+  it('gets year pattern', () => {
+    const date = new Date();
+    date.setMilliseconds(0);
+    date.setSeconds(0);
+    date.setMinutes(0);
+    date.setHours(0);
+    date.setDate(1);
+    date.setMonth(0);
+
+    const pattern = getPatternForXAxisLabelForAnomalyChart(date.getTime());
+    expect(pattern).toBe('yyyy');
+  });
+  it('gets month pattern', () => {
+    const date = new Date();
+    date.setMilliseconds(0);
+    date.setSeconds(0);
+    date.setMinutes(0);
+    date.setHours(0);
+    date.setDate(1);
+    date.setMonth(1);
+
+    const pattern = getPatternForXAxisLabelForAnomalyChart(date.getTime());
+    expect(pattern).toBe('MMM');
+  });
+  it('gets day pattern', () => {
+    const date = new Date();
+    date.setMilliseconds(0);
+    date.setSeconds(0);
+    date.setMinutes(0);
+    date.setHours(0);
+    date.setDate(2);
+    date.setMonth(1);
+
+    const pattern = getPatternForXAxisLabelForAnomalyChart(date.getTime());
+    expect(pattern).toBe('MMM d');
+  });
+  it('gets hour pattern', () => {
+    const date = new Date();
+    date.setMilliseconds(0);
+    date.setSeconds(0);
+    date.setMinutes(0);
+    date.setHours(1);
+    date.setDate(1);
+    date.setMonth(1);
+
+    const pattern = getPatternForXAxisLabelForAnomalyChart(date.getTime());
+    expect(pattern).toBe("MMM d'\n'HH:mm");
+  });
+  it('gets minute pattern', () => {
+    const date = new Date();
+    date.setMilliseconds(0);
+    date.setSeconds(0);
+    date.setMinutes(1);
+    date.setHours(1);
+    date.setDate(1);
+    date.setMonth(1);
+
+    const pattern = getPatternForXAxisLabelForAnomalyChart(date.getTime());
+    expect(pattern).toBe("MMM d'\n'HH:mm");
+  });
+  it('gets second pattern', () => {
+    const date = new Date();
+    date.setMilliseconds(0);
+    date.setSeconds(1);
+    date.setMinutes(1);
+    date.setHours(1);
+    date.setDate(1);
+    date.setMonth(1);
+
+    const pattern = getPatternForXAxisLabelForAnomalyChart(date.getTime());
+    expect(pattern).toBe("MMM d'\n'HH:mm:ss");
+  });
+});
+
+describe('getPatternForXAxisLabelForLineChart', () => {
+  it('gets year pattern', () => {
+    const date = new Date();
+    date.setMilliseconds(0);
+    date.setSeconds(0);
+    date.setMinutes(0);
+    date.setHours(0);
+    date.setDate(1);
+    date.setMonth(0);
+
+    const pattern = getPatternForXAxisLabelForLineChart(date.getTime());
+    expect(pattern).toBe('yyyy');
+  });
+  it('gets month pattern', () => {
+    const date = new Date();
+    date.setMilliseconds(0);
+    date.setSeconds(0);
+    date.setMinutes(0);
+    date.setHours(0);
+    date.setDate(1);
+    date.setMonth(1);
+
+    const pattern = getPatternForXAxisLabelForLineChart(date.getTime());
+    expect(pattern).toBe('MMM');
+  });
+  it('gets day pattern', () => {
+    const date = new Date();
+    date.setMilliseconds(0);
+    date.setSeconds(0);
+    date.setMinutes(0);
+    date.setHours(0);
+    date.setDate(2);
+    date.setMonth(1);
+
+    const pattern = getPatternForXAxisLabelForLineChart(date.getTime());
+    expect(pattern).toBe('d');
+  });
+  it('gets hour pattern', () => {
+    const date = new Date();
+    date.setMilliseconds(0);
+    date.setSeconds(0);
+    date.setMinutes(0);
+    date.setHours(1);
+    date.setDate(1);
+    date.setMonth(1);
+
+    const pattern = getPatternForXAxisLabelForLineChart(date.getTime());
+    expect(pattern).toBe('HH:mm');
+  });
+  it('gets minute pattern', () => {
+    const date = new Date();
+    date.setMilliseconds(0);
+    date.setSeconds(0);
+    date.setMinutes(1);
+    date.setHours(1);
+    date.setDate(1);
+    date.setMonth(1);
+
+    const pattern = getPatternForXAxisLabelForLineChart(date.getTime());
+    expect(pattern).toBe('HH:mm');
+  });
+  it('gets second pattern', () => {
+    const date = new Date();
+    date.setMilliseconds(0);
+    date.setSeconds(1);
+    date.setMinutes(1);
+    date.setHours(1);
+    date.setDate(1);
+    date.setMonth(1);
+
+    const pattern = getPatternForXAxisLabelForLineChart(date.getTime());
+    expect(pattern).toBe('HH:mm:ss');
   });
 });

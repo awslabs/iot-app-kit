@@ -16,10 +16,11 @@ import { useExplorerPreferences } from '../../useExplorerPreferences';
 import { SUPPORTED_PAGE_SIZES } from '../../constants';
 import { useLatestValues } from '../../useLatestValues';
 import { DashboardState } from '~/store/state';
-import { getFormattedDateTimeFromEpoch } from '~/components/util/dateTimeUtil';
 import { ResourceExplorerFooter } from '../../footer/footer';
 import { getPlugin } from '@iot-app-kit/core';
 import { disableAdd } from '~/components/queryEditor/iotSiteWiseQueryEditor/footer/disableAdd';
+
+import { formatDate } from '@iot-app-kit/react-components';
 
 export interface UnmodeledDataStreamTableProps {
   onClickAdd: (unmodeledDataStreams: UnmodeledDataStream[]) => void;
@@ -43,6 +44,7 @@ export function UnmodeledDataStreamTable({
   const selectedWidgets = useSelector(
     (state: DashboardState) => state.selectedWidgets
   );
+  const timeZone = useSelector((state: DashboardState) => state.timeZone);
   const [preferences, setPreferences] = useExplorerPreferences({
     defaultVisibleContent: ['propertyAlias', 'latestValue'],
     resourceName: 'unmodeled data stream',
@@ -162,12 +164,8 @@ export function UnmodeledDataStreamTable({
           id: 'latestValueTime',
           header: 'Latest value time',
           cell: ({ latestValueTime }) => {
-            if (latestValueTime && isNumeric(latestValueTime)) {
-              return getFormattedDateTimeFromEpoch(
-                Number(round(latestValueTime, significantDigits))
-              );
-            }
-            return getFormattedDateTimeFromEpoch(latestValueTime);
+            if (!latestValueTime) return '-';
+            return formatDate(latestValueTime * 1000, { timeZone });
           },
           sortingField: 'latestValueTime',
         },

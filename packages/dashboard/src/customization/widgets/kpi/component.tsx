@@ -19,6 +19,9 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const dashboardSignificantDigits = useSelector(
     (state: DashboardState) => state.significantDigits
   );
+  const dashboardTimeZone = useSelector(
+    (state: DashboardState) => state.timeZone
+  );
 
   const {
     styleSettings,
@@ -81,6 +84,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
         thresholds={thresholds}
         aggregationType={aggregateToString(aggregation)}
         significantDigits={significantDigits}
+        timeZone={dashboardTimeZone}
       />
     </WidgetTile>
   );

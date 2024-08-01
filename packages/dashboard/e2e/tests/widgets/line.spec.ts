@@ -289,6 +289,9 @@ test.describe('test Line Widget Styling changes', () => {
       await dashboardWithLineWidget.gridArea
         .locator('[data-gesture=widget]')
         .hover();
+
+      await page.waitForTimeout(1000);
+
       await page.mouse.down({ button: 'right' });
       await dashboardWithLineWidget.gridArea
         .locator('[data-gesture=widget]')
