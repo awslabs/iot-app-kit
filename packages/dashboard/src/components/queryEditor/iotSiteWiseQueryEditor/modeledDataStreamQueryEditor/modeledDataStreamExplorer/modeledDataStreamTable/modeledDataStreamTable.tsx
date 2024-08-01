@@ -60,6 +60,7 @@ export function ModeledDataStreamTable({
   const selectedWidgets = useSelector(
     (state: DashboardState) => state.selectedWidgets
   );
+  const timeZone = useSelector((state: DashboardState) => state.timeZone);
 
   const [preferences, setPreferences] = useExplorerPreferences({
     defaultVisibleContent: ['name', 'latestValue'],
@@ -192,7 +193,8 @@ export function ModeledDataStreamTable({
       {...collectionProps}
       items={items}
       columnDefinitions={createModeledDataStreamColumnDefinitions(
-        significantDigits
+        significantDigits,
+        timeZone
       )}
       trackBy={(item) => `${item.assetId}---${item.propertyId}`}
       variant='embedded'

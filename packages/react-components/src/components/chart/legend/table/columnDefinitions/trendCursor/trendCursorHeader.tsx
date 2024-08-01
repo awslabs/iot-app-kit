@@ -1,7 +1,9 @@
 import React from 'react';
+import { formatDate } from '../../../../../../utils/time';
+import useDataStore from '../../../../../../store';
 
 type TrendCursorColumnHeaderOptions = {
-  date: Date;
+  date: number;
   color?: string;
 };
 
@@ -12,9 +14,19 @@ export const TrendCursorColumnHeader = ({
   return (
     <div className='base-chart-legend-tc-header-container'>
       <div>
-        <span>{date.toLocaleDateString()}</span>
+        <span>
+          {formatDate(date, {
+            timeZone: useDataStore().timeZone,
+            pattern: 'yyyy-MM-dd',
+          })}
+        </span>
         <br />
-        <span>{date.toLocaleTimeString()}</span>
+        <span>
+          {formatDate(date, {
+            timeZone: useDataStore().timeZone,
+            pattern: 'hh:mm:ss aaaa',
+          })}
+        </span>
       </div>
       <div
         className='base-chart-legend-tc-header-color'

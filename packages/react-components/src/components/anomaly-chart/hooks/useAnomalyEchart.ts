@@ -28,6 +28,7 @@ type AnomalyChartOptionState = {
   grid: ReturnType<typeof convertGrid>;
   color: string[] | undefined;
   replaceMerge: string[];
+  timeZone?: string;
 };
 type UpdateAnomalyChartAction =
   | { type: 'updateData'; data?: AnomalyData }
@@ -64,7 +65,7 @@ const reducer = (
       legend: convertLegend(),
       tooltip: convertTooltip({ decimalPlaces, tooltipSort }),
       yAxis: convertYAxis({ axis }),
-      xAxis: convertXAxis({ axis }),
+      xAxis: convertXAxis({ axis, timeZone: state.timeZone }),
       grid: convertGrid({ axis, showTimestamp }),
       color: description?.color,
       replaceMerge: replaceSeries ? ['series'] : [],
@@ -80,29 +81,35 @@ const initialState = ({
   data,
   axis,
   showTimestamp,
-}: AnomalyEChartOptions): Omit<AnomalyChartOptionState, 'chartRef'> => ({
-  dataset: convertDataset(data),
-  series: convertSeries({ description }),
-  legend: convertLegend(),
-  tooltip: convertTooltip({ decimalPlaces, tooltipSort }),
-  yAxis: convertYAxis({ axis }),
-  xAxis: convertXAxis({ axis }),
-  grid: convertGrid({ axis, showTimestamp }),
-  color: description?.color,
-  replaceMerge: [],
-});
+  timeZone,
+}: AnomalyEChartOptions): Omit<AnomalyChartOptionState, 'chartRef'> => {
+  return {
+    dataset: convertDataset(data),
+    series: convertSeries({ description }),
+    legend: convertLegend(),
+    tooltip: convertTooltip({ decimalPlaces, tooltipSort }),
+    yAxis: convertYAxis({ axis }),
+    xAxis: convertXAxis({ axis, timeZone }),
+    grid: convertGrid({ axis, showTimestamp }),
+    color: description?.color,
+    replaceMerge: [],
+    timeZone,
+  };
+};
 
 export type AnomalyEChartOptions = {
   mode?: 'light' | 'dark';
   viewport?: Viewport;
   viewportType: UtilizedViewportType;
   setViewport?: (viewport: Viewport, lastUpdatedBy?: string) => void;
+  timeZone?: string;
 } & ConfigurationOptions &
   DataSetOptions;
 
 export const useAnomalyEchart = ({
   gestures = true,
   mode,
+  timeZone,
   ...options
 }: AnomalyEChartOptions) => {
   const {
@@ -114,7 +121,7 @@ export const useAnomalyEchart = ({
   } = options;
   const utilizedViewport = passedInViewport ?? options.description?.dataExtent;
 
-  const initialEchartsState = initialState({ ...options });
+  const initialEchartsState = initialState({ ...options, timeZone });
   const [{ replaceMerge, ...echartOption }, dispatch] = useReducer(
     reducer,
     initialEchartsState

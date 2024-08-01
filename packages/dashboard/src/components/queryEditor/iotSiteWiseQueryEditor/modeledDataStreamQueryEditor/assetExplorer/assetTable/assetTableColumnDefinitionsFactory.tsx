@@ -3,7 +3,7 @@ import { type TableProps } from '@cloudscape-design/components/table';
 import React from 'react';
 
 import type { AssetTableNameLinkProps } from './assetTableNameLink';
-import { getFormattedDateTime } from '~/components/util/dateTimeUtil';
+import { formatDate } from '@iot-app-kit/react-components';
 
 type AssetTableColumnDefinitions =
   TableProps<AssetSummary>['columnDefinitions'];
@@ -11,16 +11,20 @@ type AssetTableColumnDefinitions =
 export class AssetTableColumnDefinitionsFactory {
   readonly #NameLink: React.ElementType<AssetTableNameLinkProps>;
   readonly #onClickNameLink: AssetTableNameLinkProps['updateParentAssetId'];
+  readonly #timeZone?: string;
 
   constructor({
     NameLink,
     onClickNameLink,
+    timeZone,
   }: {
     NameLink: React.ElementType<AssetTableNameLinkProps>;
     onClickNameLink: AssetTableNameLinkProps['updateParentAssetId'];
+    timeZone?: string;
   }) {
     this.#NameLink = NameLink;
     this.#onClickNameLink = onClickNameLink;
+    this.#timeZone = timeZone;
   }
 
   public create(): AssetTableColumnDefinitions {
@@ -87,7 +91,9 @@ export class AssetTableColumnDefinitionsFactory {
       id: 'creationDate',
       header: 'Creation Date',
       cell: ({ creationDate }) =>
-        creationDate ? getFormattedDateTime(creationDate) : '-',
+        creationDate
+          ? formatDate(creationDate.getTime(), { timeZone: this.#timeZone })
+          : '-',
       sortingField: 'creationDate',
     };
   }
@@ -97,7 +103,9 @@ export class AssetTableColumnDefinitionsFactory {
       id: 'lastUpdateDate',
       header: 'Last Update Date',
       cell: ({ lastUpdateDate }) =>
-        lastUpdateDate ? getFormattedDateTime(lastUpdateDate) : '-',
+        lastUpdateDate
+          ? formatDate(lastUpdateDate.getTime(), { timeZone: this.#timeZone })
+          : '-',
       sortingField: 'lastUpdateDate',
     };
   }

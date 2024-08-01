@@ -29,7 +29,7 @@ describe('formatTrendCursorForCopy', () => {
     ]);
 
     // trend cursor information
-    expect(formatted).toInclude('1/19/2024 5:30:18 PM');
+    expect(formatted).toInclude('2024-01-19 5:30:18 p.m.');
 
     // datastream information
     expect(formatted).toInclude('datastream-name-1');

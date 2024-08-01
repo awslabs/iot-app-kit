@@ -16,6 +16,9 @@ import { useTransformedData } from './hooks/useTransformedData';
 import { AnomalyChartEmpty } from './anomalyChartEmpty';
 import { useUtilizedViewport } from '../../hooks/useViewport/useUtilizedViewport';
 import { DEFAULT_ANOMALY_DATA_SOURCE_VIEWPORT } from '../../queries/useSiteWiseAnomalyDataSource/constants';
+import useDataStore from '../../store';
+// import { isHistoricalViewport } from '@iot-app-kit/core';
+// import { getDateOffsetInSeconds } from '../../utils/time';
 
 /**
  * Setup the applicable data source transformers
@@ -30,6 +33,7 @@ export const AnomalyChart = (options: AnomalyChartOptions) => {
     gestures = true,
     showTimestamp = true,
     viewport,
+    timeZone,
     ...configuration
   } = options;
 
@@ -63,7 +67,11 @@ export const AnomalyChart = (options: AnomalyChartOptions) => {
     setViewport,
     viewport: anomalyViewport,
     viewportType,
+    timeZone,
   });
+
+  // Set timezone for use in sub components
+  useDataStore.getState().setTimeZone(timeZone);
 
   return (
     <div
