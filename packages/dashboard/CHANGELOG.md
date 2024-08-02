@@ -1,5 +1,28 @@
 # Changelog
 
+## [10.10.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.10.0...dashboard-v10.10.1) (2024-08-02)
+
+
+### Bug Fixes
+
+* check if href is a valid url before rendering ([ab24822](https://github.com/awslabs/iot-app-kit/commit/ab24822d1792b259529f617bef20b54150e54db2))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.10.0 to 10.10.1
+    * @iot-app-kit/core bumped from 10.10.0 to 10.10.1
+    * @iot-app-kit/core-util bumped from 10.10.0 to 10.10.1
+    * @iot-app-kit/react-components bumped from 10.10.0 to 10.10.1
+    * @iot-app-kit/source-iotsitewise bumped from 10.10.0 to 10.10.1
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.10.0 to 10.10.1
+    * @iot-app-kit/testing-util bumped from 10.10.0 to 10.10.1
+    * @iot-app-kit/ts-config bumped from 10.10.0 to 10.10.1
+    * eslint-config-iot-app-kit bumped from 10.10.0 to 10.10.1
+
 ## [10.10.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.9.0...dashboard-v10.10.0) (2024-07-29)
 
 
