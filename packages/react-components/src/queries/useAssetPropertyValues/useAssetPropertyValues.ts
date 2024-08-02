@@ -9,29 +9,34 @@ import {
   useTimeSeriesDataRequestManager,
   useTimeSeriesDataRequestStatus,
 } from '../useTimeSeriesData';
-import { RequestFunctions } from './requestExecution/types';
-import { AssetPropertyValueHistoryRequest } from './types';
-import { ASSET_PROPERTY_VALUE_HISTORY_CACHE_CLIENT } from './cacheClient';
+import { AssetPropertyValueHistoryRequest, AssetPropertyValuesRequestFunctions } from './types';
+import { ASSET_PROPERTY_VALUES_CACHE_CLIENT } from './cacheClient';
 
-import { GetAssetPropertyValueHistoryRequestExecution } from './requestExecution';
+import { GetAssetPropertyValuesRequestExecution } from './requestExecution';
 import { useTimeSeriesDataResponse } from '../useTimeSeriesData/useResponse';
-import { useRequestResolverStrategy } from './requestManager';
+import { useAutoRequestResolution, useRequestResolverStrategy } from './requestManager';
 
-type AssetPropertyValueHistoryOptions = {
+type AssetPropertyValuesOptions = {
   requests: AssetPropertyValueHistoryRequest[];
   viewport: Viewport;
-  requestFns: RequestFunctions;
+  requestFns: AssetPropertyValuesRequestFunctions;
   settings: RequestSettings;
 };
 
-export const useAssetPropertyValueHistory = ({
-  requests,
+export const useAssetPropertyValues = ({
+  requests: passedInRequests,
   viewport,
   requestFns,
   settings,
-}: AssetPropertyValueHistoryOptions) => {
+}: AssetPropertyValuesOptions) => {
+  const requests = useAutoRequestResolution({
+    requests: passedInRequests,
+    viewport,
+  });
+  console.log(requests);
+  
   const cacheClient = useMemo(
-    () => ASSET_PROPERTY_VALUE_HISTORY_CACHE_CLIENT,
+    () => ASSET_PROPERTY_VALUES_CACHE_CLIENT,
     []
   );
 
@@ -41,7 +46,7 @@ export const useAssetPropertyValueHistory = ({
 
   const requestExecuter = useMemo(
     () =>
-      new GetAssetPropertyValueHistoryRequestExecution({
+      new GetAssetPropertyValuesRequestExecution({
         cacheClient,
         ...requestFns,
       }),
