@@ -12,10 +12,13 @@ import {
   MonitorMetric,
   MonitorWidget,
   MonitorWidgetType,
+  SiteWiseWidgetType,
 } from './types';
 import { convertResolution } from './convert-monitor-to-app-defintion';
 
-export const getStaticProperties = (widgetType: MonitorWidgetType) => {
+export const getStaticProperties = (
+  widgetType: MonitorWidgetType | SiteWiseWidgetType
+) => {
   switch (widgetType) {
     case MonitorWidgetType.LineChart:
       return lineChartProperties;
@@ -34,7 +37,7 @@ export const getStaticProperties = (widgetType: MonitorWidgetType) => {
 
 export const getProperty = (
   metric: MonitorMetric,
-  widgetType: MonitorWidgetType,
+  widgetType: MonitorWidgetType | SiteWiseWidgetType,
   index: number
 ) => {
   let property: ApplicationProperty = {
@@ -69,7 +72,7 @@ export const getProperty = (
 };
 
 export const getStyleSettings = (
-  widgetType: MonitorWidgetType,
+  widgetType: MonitorWidgetType | SiteWiseWidgetType,
   refIds: string[]
 ) => {
   let styleSettings = {};

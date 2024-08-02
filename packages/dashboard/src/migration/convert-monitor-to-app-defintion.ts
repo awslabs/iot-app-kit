@@ -6,6 +6,7 @@ import {
 import {
   DashboardWidgetType,
   MonitorWidgetType,
+  SiteWiseWidgetType,
   MonitorMetric,
   SiteWiseMonitorDashboardDefinition,
   MonitorAnnotations,
@@ -32,18 +33,25 @@ import { removeCollisions } from './collision-logic';
 
 const convertType = (monitorChartType: string) => {
   switch (monitorChartType) {
+    case SiteWiseWidgetType.LINE_CHART:
     case MonitorWidgetType.LineChart:
       return DashboardWidgetType.XYPlot;
+    case SiteWiseWidgetType.BAR_CHART:
     case MonitorWidgetType.BarChart:
       return DashboardWidgetType.BarChart;
+    case SiteWiseWidgetType.SCATTER_CHART:
     case MonitorWidgetType.ScatterChart:
       return DashboardWidgetType.XYPlot;
+    case SiteWiseWidgetType.STATUS_TIMELINE:
     case MonitorWidgetType.StatusTimeline:
       return DashboardWidgetType.StatusTimeline;
+    case SiteWiseWidgetType.TABLE:
     case MonitorWidgetType.Table:
       return DashboardWidgetType.Table;
+    case SiteWiseWidgetType.KPI:
     case MonitorWidgetType.Kpi:
       return DashboardWidgetType.Kpi;
+    case SiteWiseWidgetType.STATUS_GRID:
     case MonitorWidgetType.StatusGrid:
       return DashboardWidgetType.Status;
     default:
@@ -70,7 +78,7 @@ const convertY = (y: number) => {
 };
 
 export const convertResolution = (
-  widgetType: MonitorWidgetType,
+  widgetType: MonitorWidgetType | SiteWiseWidgetType,
   resolution?: string
 ) => {
   if (
@@ -114,7 +122,7 @@ const convertThresholds = (monitorAnnotations?: MonitorAnnotations) => {
 
 const convertMetricsToQueryConfig = (
   monitorMetrics: MonitorMetric[],
-  widgetType: MonitorWidgetType
+  widgetType: MonitorWidgetType | SiteWiseWidgetType
 ) => {
   const assetMap: AssetMap = {};
   const refIds = [];
@@ -163,7 +171,7 @@ const convertMetricsToQueryConfig = (
 };
 
 const convertProperties = (
-  widgetType: MonitorWidgetType,
+  widgetType: MonitorWidgetType | SiteWiseWidgetType,
   monitorMetrics?: MonitorMetric[],
   monitorAnnotations?: MonitorAnnotations,
   monitorTitle?: string
@@ -266,7 +274,9 @@ export const convertWidget = (
   // One-to-many relationship for KPI and Status Timeline in Monitor-to-Application conversion
   if (
     widget.type === MonitorWidgetType.Kpi ||
-    widget.type === MonitorWidgetType.StatusGrid
+    widget.type === MonitorWidgetType.StatusGrid ||
+    widget.type === SiteWiseWidgetType.KPI ||
+    widget.type === SiteWiseWidgetType.STATUS_GRID
   ) {
     return convertKpiAndGridWidget(widget);
   } else {
