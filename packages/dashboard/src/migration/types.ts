@@ -21,6 +21,15 @@ export enum MonitorWidgetType {
   Table = 'sc-table',
 }
 
+export enum SiteWiseWidgetType {
+  LINE_CHART = 'monitor-line-chart',
+  BAR_CHART = 'monitor-bar-chart',
+  SCATTER_CHART = 'monitor-scatter-chart',
+  STATUS_TIMELINE = 'monitor-status-timeline',
+  KPI = 'monitor-kpi',
+  STATUS_GRID = 'monitor-status-grid',
+  TABLE = 'monitor-table',
+}
 export interface MonitorTrend {
   type: string;
   color: string;
@@ -57,7 +66,7 @@ export interface MonitorProperties {
 }
 
 export interface MonitorWidget {
-  type: MonitorWidgetType;
+  type: MonitorWidgetType | SiteWiseWidgetType;
   title: string;
   x: number;
   y: number;
