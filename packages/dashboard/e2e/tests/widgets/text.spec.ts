@@ -258,7 +258,7 @@ test.describe('Test Text Widget', () => {
         '[data-gesture=widget]'
       );
 
-      const url = '/test';
+      const url = 'https://www.validurl.com/test';
       await configPanel.collapsedButton.click();
       await widget.dblclick();
       await widget.getByRole('textbox').fill(TEXT_WIDGET_CONTENT);
