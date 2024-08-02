@@ -57,8 +57,8 @@ export class ListUnmodeledDataStreamsRequest {
 
   #formatDataStreams(rawDataStreams: TimeSeriesSummary[]) {
     const cookedDataStreams = rawDataStreams.map<UnmodeledDataStream>(
-      ({ alias: propertyAlias, dataType, dataTypeSpec }) => ({
-        propertyAlias,
+      ({ alias, dataType, dataTypeSpec }) => ({
+        alias,
         dataType,
         dataTypeSpec,
       })

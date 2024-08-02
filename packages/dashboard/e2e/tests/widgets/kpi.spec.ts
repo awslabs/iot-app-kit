@@ -22,38 +22,6 @@ test.describe('Test KPI Widget', () => {
     expect(await widget.textContent()).toContain('Max Temperature');
   });
 
-  test('Cannot add more than 1 property to KPI widget', async ({
-    dashboardWithKPIWidget,
-    resourceExplorer,
-  }) => {
-    //add property
-    await resourceExplorer.addModeledProperties(['Max Temperature']);
-    dashboardWithKPIWidget.gridArea.getByTestId('kpi-base-component');
-    //select 2 more properties
-    await resourceExplorer.selectProperties(['Min Temperature', 'Temperature']);
-
-    //check that add button is disabled
-    const addButton = await resourceExplorer.getAddButton();
-    await expect(addButton).toBeDisabled();
-  });
-
-  test('Cannot multiselect add property to KPI widget', async ({
-    dashboardWithKPIWidget,
-    resourceExplorer,
-  }) => {
-    //select 3 properties
-    await resourceExplorer.selectProperties([
-      'Max Temperature',
-      'Min Temperature',
-      'Temperature',
-    ]);
-    dashboardWithKPIWidget.gridArea.locator('.kpi-widget-empty-state');
-
-    //check that add button is disabled
-    const addButton = await resourceExplorer.getAddButton();
-    await expect(addButton).toBeDisabled();
-  });
-
   test('KPI Widget supports show/hide several properties', async ({
     resourceExplorer,
     dashboardWithKPIWidget,

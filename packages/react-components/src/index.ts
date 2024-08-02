@@ -48,3 +48,20 @@ export type {
   TableItem,
   TableItemRef,
 } from './components/table';
+
+export {
+  AssetModelExplorer,
+  AssetExplorer,
+  AssetPropertyExplorer,
+  TimeSeriesExplorer,
+  type AssetModelExplorerProps,
+  type AssetExplorerProps,
+  type AssetPropertyExplorerProps,
+  type TimeSeriesExplorerProps,
+} from './components/resource-explorers';
+
+export { type TableResourceDefinition } from './components/resource-explorers/types/table';
+
+export { type TimeSeriesResourceWithLatestValue } from './components/resource-explorers/types/resources';
+
+export { type ResourceFieldFilterOperator } from './components/resource-explorers/types/common';

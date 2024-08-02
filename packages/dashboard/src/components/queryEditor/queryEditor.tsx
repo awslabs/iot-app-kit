@@ -3,15 +3,17 @@ import React from 'react';
 import { IoTSiteWiseQueryEditor } from './iotSiteWiseQueryEditor';
 import { QueryEditorErrorBoundary } from './queryEditorErrorBoundary';
 import { useQuery } from './useQuery';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWise, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 
 export function QueryEditor({
   iotSiteWiseClient,
   iotTwinMakerClient,
+  iotSiteWise,
 }: {
   iotSiteWiseClient: IoTSiteWiseClient;
   iotTwinMakerClient: IoTTwinMakerClient;
+  iotSiteWise: IoTSiteWise;
 }) {
   const [_query, setQuery] = useQuery();
 
@@ -21,6 +23,7 @@ export function QueryEditor({
         onUpdateQuery={setQuery}
         iotSiteWiseClient={iotSiteWiseClient}
         iotTwinMakerClient={iotTwinMakerClient}
+        iotSiteWise={iotSiteWise}
       />
     </QueryEditorErrorBoundary>
   );

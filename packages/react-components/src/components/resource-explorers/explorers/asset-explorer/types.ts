@@ -1,3 +1,4 @@
+import { TableProps } from '@cloudscape-design/components';
 import type {
   IsResourceDisabled,
   OnSelectResource,
@@ -22,6 +23,8 @@ export interface AssetExplorerProps
   onSelectAsset?: OnSelectResource<AssetResource>;
   selectedAssets?: SelectedResources<AssetResource>;
   isAssetDisabled?: IsResourceDisabled<AssetResource>;
+  description?: string;
+  ariaLabels?: TableProps.AriaLabels<AssetResource>;
 }
 
 export type AssetResourcesRequestParameters =

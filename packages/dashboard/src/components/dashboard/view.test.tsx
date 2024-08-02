@@ -4,7 +4,10 @@ import {
   createMockSiteWiseSDK,
 } from '@iot-app-kit/testing-util';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  IoTSiteWise,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 
 import DashboardView from './view';
 import React from 'react';
@@ -27,6 +30,7 @@ it('renders', function () {
         iotTwinMakerClient: {
           send: jest.fn(),
         } as unknown as IoTTwinMakerClient,
+        iotSiteWise: new IoTSiteWise(),
       }}
     />
   );

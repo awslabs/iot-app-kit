@@ -101,7 +101,7 @@ export class QueryExtender {
   #createPropertyAliasQueries(unmodeledDataStreams: UnmodeledDataStream[]) {
     const propertyAliasQueries = unmodeledDataStreams.map(
       (unmodeledDataStream) => ({
-        propertyAlias: unmodeledDataStream.propertyAlias ?? '',
+        propertyAlias: unmodeledDataStream.alias ?? '',
       })
     );
 
