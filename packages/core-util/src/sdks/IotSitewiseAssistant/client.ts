@@ -1,7 +1,8 @@
-import IoTSiteWise, {
+import {
   FinalResponse,
   InvokeAssistantStep,
-} from '@amzn/iot-sitewise-sdk/clients/iotsitewise';
+  IoTSiteWise,
+} from '@amzn/iot-black-pearl-internal-v3';
 import type {
   AssistantClientInstanceParams,
   AssistantClientInvocationCompleteHandler,
@@ -106,12 +107,12 @@ async function invokeAssistant({
   onComplete?: AssistantClientInvocationCompleteHandler;
   onResponse?: AssistantClientInvocationResponseHandler;
 }) {
-  const response = await iotSiteWiseClient.invokeAssistant(payload).promise();
+  const response = await iotSiteWiseClient.invokeAssistant(payload);
 
   /**
    * Given the nature of streaming API, The client receives a chunk of the whole streamed response.
    */
-  for await (const chunk of response.body) {
+  for await (const chunk of response.body || []) {
     const responseChunk = chunk as {
       step?: InvokeAssistantStep;
       finalResponse?: FinalResponse;

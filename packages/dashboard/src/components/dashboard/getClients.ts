@@ -1,7 +1,7 @@
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import IoTSiteWise from '@amzn/iot-sitewise-sdk/clients/iotsitewise';
+import { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import {
   DashboardClientConfiguration,
   DashboardIotSiteWiseClients,
@@ -34,8 +34,8 @@ export const getClients = (
   });
 
   const iotSiteWisePrivateClient = new IoTSiteWise({
-    credentials: dashboardClientConfiguration.awsCredentials as any,
-    region: dashboardClientConfiguration.awsRegion as string,
+    credentials: dashboardClientConfiguration.awsCredentials,
+    region: dashboardClientConfiguration.awsRegion,
     endpoint: 'https://data.beta.us-east-1.iotsitewise.amazonaws.com',
   });
 

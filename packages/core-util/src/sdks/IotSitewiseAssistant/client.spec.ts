@@ -1,11 +1,11 @@
-import IoTSiteWise from '@amzn/iot-sitewise-sdk/clients/iotsitewise';
+import { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import type {
   FinalResponse,
   InvokeAssistantStep,
-} from '@amzn/iot-sitewise-sdk/clients/iotsitewise';
+} from '@amzn/iot-black-pearl-internal-v3';
 import { IoTSitewiseAssistantClient } from './client';
 
-jest.mock('@amzn/iot-sitewise-sdk/clients/iotsitewise');
+jest.mock('@amzn/iot-black-pearl-internal-v3');
 
 function flushPromises() {
   return new Promise(jest.requireActual('timers').setImmediate);
@@ -44,9 +44,7 @@ describe('AssistantClient', () => {
   beforeEach(() => jest.clearAllMocks());
 
   it('createAssistantClient return a new instance', () => {
-    const mockInvokeAssistant = jest.fn().mockImplementation(() => ({
-      promise: jest.fn().mockResolvedValue({ body: [] }),
-    }));
+    const mockInvokeAssistant = jest.fn().mockResolvedValue({ body: [] });
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
@@ -61,9 +59,7 @@ describe('AssistantClient', () => {
   });
 
   it('can set a new assistant name', () => {
-    const mockInvokeAssistant = jest.fn().mockImplementation(() => ({
-      promise: jest.fn().mockResolvedValue({ body: [] }),
-    }));
+    const mockInvokeAssistant = jest.fn().mockResolvedValue({ body: [] });
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
@@ -86,9 +82,7 @@ describe('AssistantClient', () => {
   });
 
   it('can set iotSiteWiseClient', () => {
-    const mockInvokeAssistant = jest.fn().mockImplementation(() => ({
-      promise: jest.fn().mockResolvedValue({ body: [] }),
-    }));
+    const mockInvokeAssistant = jest.fn().mockResolvedValue({ body: [] });
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
@@ -111,9 +105,9 @@ describe('AssistantClient', () => {
   it('can set RequestHandlers', async () => {
     const mockOnResponse = jest.fn();
     const mockOnComplete = jest.fn();
-    const mockInvokeAssistant = jest.fn().mockImplementation(() => ({
-      promise: jest.fn().mockResolvedValue({ body: [response2, response3] }),
-    }));
+    const mockInvokeAssistant = jest
+      .fn()
+      .mockResolvedValue({ body: [response2, response3] });
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
@@ -135,9 +129,9 @@ describe('AssistantClient', () => {
 
   it('call invoke and return all responses', async () => {
     const onResponse = jest.fn();
-    const mockInvokeAssistant = jest.fn().mockImplementation(() => ({
-      promise: jest.fn().mockResolvedValue({ body: [response1, response2] }),
-    }));
+    const mockInvokeAssistant = jest
+      .fn()
+      .mockResolvedValue({ body: [response1, response2] });
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
@@ -159,9 +153,9 @@ describe('AssistantClient', () => {
 
   it('call invoke and listen all responses have completed', async () => {
     const onComplete = jest.fn();
-    const mockInvokeAssistant = jest.fn().mockImplementation(() => ({
-      promise: jest.fn().mockResolvedValue({ body: [response3] }),
-    }));
+    const mockInvokeAssistant = jest
+      .fn()
+      .mockResolvedValue({ body: [response3] });
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
@@ -182,9 +176,9 @@ describe('AssistantClient', () => {
   });
 
   it('call generateSummary and invoke assistant with summary utterance and context', async () => {
-    const mockInvokeAssistant = jest.fn().mockImplementation(() => ({
-      promise: jest.fn().mockResolvedValue({ body: [response3] }),
-    }));
+    const mockInvokeAssistant = jest
+      .fn()
+      .mockResolvedValue({ body: [response3] });
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,

@@ -57,7 +57,11 @@ function createUseListRootAssetsQueryFn(client: IoTSiteWiseClient) {
     pageParam: nextToken,
     signal,
   }: QueryFunctionContext<ReturnType<RootAssetCacheKeyFactory['create']>>) {
-    const request = new ListRootAssetsRequest({ nextToken: nextToken as string, client, signal });
+    const request = new ListRootAssetsRequest({
+      nextToken: nextToken as string,
+      client,
+      signal,
+    });
     const response = await request.send();
 
     return response;

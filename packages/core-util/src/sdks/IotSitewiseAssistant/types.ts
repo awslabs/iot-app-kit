@@ -1,8 +1,8 @@
-import IoTSiteWise, {
+import {
   FinalResponse,
   InvokeAssistantStep,
-} from '@amzn/iot-sitewise-sdk/clients/iotsitewise';
-
+  IoTSiteWise,
+} from '@amzn/iot-black-pearl-internal-v3';
 export type UniqueId = string;
 
 export type AssistantClientInstanceParams = {

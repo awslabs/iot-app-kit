@@ -75,7 +75,11 @@ export const createQueryFn = (client: IoTSiteWiseClient) => {
   }: QueryFunctionContext<
     ReturnType<AssetModelsCacheKeyFactory['create']>
   >) => {
-    const request = new GetAssetModelsRequest({ nextToken: nextToken as string, client, signal });
+    const request = new GetAssetModelsRequest({
+      nextToken: nextToken as string,
+      client,
+      signal,
+    });
 
     const response = await request.send();
 

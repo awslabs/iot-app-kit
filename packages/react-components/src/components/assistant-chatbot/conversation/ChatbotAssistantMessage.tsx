@@ -6,7 +6,7 @@ import assistantIcon from '../assets/assistantIcon.svg';
 import ExpandableSection from '@cloudscape-design/components/expandable-section';
 import Link from '@cloudscape-design/components/link';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import { FinalResponse } from '@amzn/iot-sitewise-sdk/clients/iotsitewise';
+import { FinalResponse } from '@amzn/iot-black-pearl-internal-v3';
 
 export interface ChatbotAssistantMessageProps {
   text: string;

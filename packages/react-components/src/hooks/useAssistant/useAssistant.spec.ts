@@ -3,11 +3,11 @@ import { useAssistant } from './useAssistant';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import type { MessageParser } from './messageParser';
 import { StateManager } from './stateManager';
-import IoTSiteWise from '@amzn/iot-sitewise-sdk/clients/iotsitewise';
-import type {
-  InvokeAssistantStep,
+import {
   FinalResponse,
-} from '@amzn/iot-sitewise-sdk/clients/iotsitewise';
+  InvokeAssistantStep,
+  IoTSiteWise,
+} from '@amzn/iot-black-pearl-internal-v3';
 
 const response1 = {
   step: {
@@ -23,9 +23,9 @@ const response1 = {
 
 describe('useAssistant', () => {
   const conversationId = 'myAssistantConversation';
-  const mockInvokeAssistant = jest.fn().mockImplementation(() => ({
-    promise: jest.fn().mockResolvedValue({ body: [response1] }),
-  }));
+  const mockInvokeAssistant = jest
+    .fn()
+    .mockResolvedValue({ body: [response1] });
   const client = new IoTSitewiseAssistantClient({
     iotSiteWiseClient: {
       invokeAssistant: mockInvokeAssistant,
