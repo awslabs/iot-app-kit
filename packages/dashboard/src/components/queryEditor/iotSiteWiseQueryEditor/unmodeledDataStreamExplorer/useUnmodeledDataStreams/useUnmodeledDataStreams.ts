@@ -26,7 +26,7 @@ export function useUnmodeledDataStreams({
     queryKey: cacheKeyFactory.create(),
     queryFn: createQueryFn(client),
     getNextPageParam: ({ nextToken }) => nextToken,
-    initialPageParam: '0',
+    initialPageParam: undefined,
   });
 
   const unmodeledDataStreams = combinePages(unmodeledDataStreamPages);

@@ -36,7 +36,7 @@ export function useSearch({
       queryKey: CACHE_KEYS.search({ workspaceId, searchQuery }),
       queryFn: createQueryFn(client),
       getNextPageParam: ({ nextToken }) => nextToken,
-      initialPageParam: '0',
+      initialPageParam: undefined,
     });
 
   const modeledDataStreams =

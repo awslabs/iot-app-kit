@@ -35,7 +35,7 @@ export function useAssetsForAssetModel({
     queryKey: cacheKeyFactory.create(),
     queryFn: createQueryFn(iotSiteWiseClient),
     getNextPageParam: ({ nextToken }) => nextToken,
-    initialPageParam: '0',
+    initialPageParam: undefined,
   });
 
   if (fetchAll && hasNextPage) fetchNextPage();

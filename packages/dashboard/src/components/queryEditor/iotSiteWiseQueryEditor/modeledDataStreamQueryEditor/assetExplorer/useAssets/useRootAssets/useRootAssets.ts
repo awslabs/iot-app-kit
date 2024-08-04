@@ -32,7 +32,7 @@ export function useRootAssets({ client }: UseRootAssetsOptions) {
     queryKey: cacheKeyFactory.create(),
     queryFn: createUseListRootAssetsQueryFn(client),
     getNextPageParam: ({ nextToken }) => nextToken,
-    initialPageParam: '0',
+    initialPageParam: undefined,
   });
 
   const rootAssets: AssetSummary[] = rootAssetPages.flatMap(

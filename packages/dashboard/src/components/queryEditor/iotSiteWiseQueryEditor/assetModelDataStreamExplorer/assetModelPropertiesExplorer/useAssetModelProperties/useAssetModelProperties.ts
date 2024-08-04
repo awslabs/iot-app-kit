@@ -34,7 +34,7 @@ export function useAssetModelProperties({
     queryFn: createQueryFn(client),
     getNextPageParam: ({ nextToken }) => nextToken,
     staleTime: Infinity,
-    initialPageParam: '0',
+    initialPageParam: undefined,
   });
 
   const assetModelPropertySummaries = createNonNullableList(

@@ -37,7 +37,7 @@ export function useAssetModels({
     queryKey: cacheKeyFactory.create(),
     queryFn: createQueryFn(client),
     getNextPageParam: ({ nextToken }) => nextToken,
-    initialPageParam: '0',
+    initialPageParam: undefined,
   });
 
   if (fetchAll && hasNextPage) fetchNextPage();
