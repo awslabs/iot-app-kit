@@ -4,6 +4,7 @@ import type { WidgetSettings } from '../../common/dataTypes';
 export type KPIBaseProperties = WidgetSettings & {
   settings?: Partial<KPISettings>;
   propertyThreshold?: StyledThreshold;
+  timeZone?: string;
 };
 
 export type KPISettings = {

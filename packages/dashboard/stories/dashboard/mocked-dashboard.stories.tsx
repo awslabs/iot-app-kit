@@ -39,6 +39,7 @@ const emptyDashboardConfiguration: DashboardProperties = {
     querySettings,
   },
   onSave: () => Promise.resolve(),
+  timeZone: 'Asia/Hong_Kong',
 };
 
 registerPlugin('metricsRecorder', {

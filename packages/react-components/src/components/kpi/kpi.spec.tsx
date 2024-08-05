@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { KPI } from './kpi';
+import { formatDate } from '../../utils/time';
 
 const VIEWPORT = { duration: '5m' };
 
@@ -35,6 +36,6 @@ it('renders', async () => {
     `${DATA_STREAM.data[0].y} `
   );
   expect(screen.getByTestId('kpi-timestamp').textContent).toContain(
-    new Date(DATA_STREAM.data[0].x).toLocaleString()
+    formatDate(DATA_STREAM.data[0].x)
   );
 });

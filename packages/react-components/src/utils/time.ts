@@ -183,12 +183,7 @@ export const formatDate = (
   // Convert epoch time to a zoned date object
   const zonedDate = utcToZonedTime(new Date(dateTime), userTimeZone);
 
-  // Take offset from zoned date to get a date with the days/hours modified based on offset for display
-  const dateWithOffset = new Date(
-    zonedDate.valueOf() + zonedDate.getTimezoneOffset() * 60 * 1000
-  );
-
-  const formattedString = format(dateWithOffset, formatPattern, {
+  const formattedString = format(zonedDate, formatPattern, {
     timeZone: userTimeZone,
   });
 

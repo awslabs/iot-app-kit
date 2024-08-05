@@ -3,6 +3,7 @@ import { render, renderHook, screen } from '@testing-library/react';
 import { ChartLegendTable } from './table';
 import { DataStreamInformation, TrendCursor } from './types';
 import { useChartStore } from '../../store';
+import { formatDate } from '../../../../utils/time';
 
 const setupStore = () => {
   renderHook(() => useChartStore((state) => state.unHighlightDataStream));
@@ -90,10 +91,14 @@ describe('legend table', () => {
 
     expect(table).not.toBeNull();
     expect(
-      screen.getByText(new Date(trendCursors[0].date).toLocaleTimeString())
+      screen.getByText(
+        formatDate(trendCursors[0].date, { pattern: 'hh:mm:ss' })
+      )
     ).not.toBeNull();
     expect(
-      screen.getByText(new Date(trendCursors[1].date).toLocaleTimeString())
+      screen.getByText(
+        formatDate(trendCursors[0].date, { pattern: 'hh:mm:ss' })
+      )
     ).not.toBeNull();
 
     expect(screen.getByText('111')).not.toBeNull();

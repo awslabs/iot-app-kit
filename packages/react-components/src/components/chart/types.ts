@@ -117,6 +117,7 @@ export type ChartOptions = {
   ) => void;
   /** @deprecated */
   titleText?: string;
+  timeZone?: string;
 };
 
 export interface ViewportInMs {

@@ -5,11 +5,11 @@ import {
   colorTextBodyDefault,
 } from '@cloudscape-design/design-tokens';
 import { Spinner } from '@cloudscape-design/components';
-import { format } from 'date-fns';
 
 import './timestamp.css';
 import { convertViewportToMs } from '../../utils/convertViewportToMs';
 import { Viewport } from '@iot-app-kit/core';
+import { formatDate } from '../../utils/time';
 
 type TimestampProps = {
   viewport?: Viewport;
@@ -22,6 +22,7 @@ type TimestampProps = {
     border?: string | number;
     bottom?: string | number;
   };
+  timeZone?: string;
 };
 
 export const Timestamp = ({
@@ -29,16 +30,18 @@ export const Timestamp = ({
   isLoading,
   styleProps,
   viewport,
+  timeZone,
 }: TimestampProps) => {
   const { initial, end } = convertViewportToMs(viewport);
-  const timestampStart = format(
-    new Date(initial),
-    "MM/dd/yyyy, kk:mm:ss aa '(UTC'x')'"
-  );
-  const timestampEnd = format(
-    new Date(end),
-    "MM/dd/yyyy, kk:mm:ss aa '(UTC'x')'"
-  );
+
+  const timestampStart = formatDate(initial, {
+    timeZone,
+    pattern: "MM/dd/yyyy, kk:mm:ss aa '(UTC'x)'",
+  });
+  const timestampEnd = formatDate(end, {
+    timeZone,
+    pattern: "MM/dd/yyyy, kk:mm:ss aa '(UTC'x)'",
+  });
   const timestampStyle = {
     ...styleProps,
     backgroundColor: showLoadingIndicator ? '' : colorBorderDividerSecondary,

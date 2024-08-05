@@ -15,7 +15,7 @@ import { useTooltip } from './tooltip/convertTooltip';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import isEqual from 'lodash.isequal';
 import {
-  DEFAULT_CHART_OPTION,
+  getDefaultChartOption,
   DEFAULT_DATA_ZOOM,
   PERFORMANCE_MODE_THRESHOLD,
 } from '../eChartsConstants';
@@ -97,6 +97,7 @@ type ChartConfigurationOptions = Pick<
   | 'id'
   | 'styleSettings'
   | 'defaultVisualizationType'
+  | 'timeZone'
 > & { group: string } & { isLoading: boolean } & {
   dataStreams: DataStream[];
 } & { visibleData: DataPoint[] } & {
@@ -133,6 +134,7 @@ export const useChartConfiguration = (
     defaultVisualizationType,
     showBadDataIcons,
     showUncertainDataIcons,
+    timeZone,
   }: ChartConfigurationOptions
 ) => {
   /**
@@ -170,8 +172,8 @@ export const useChartConfiguration = (
     const chart = chartRef.current;
     if (!chart) return;
 
-    chart.setOption(DEFAULT_CHART_OPTION);
-  }, [chartRef]);
+    chart.setOption(getDefaultChartOption(timeZone));
+  }, [chartRef, timeZone]);
 
   const performanceMode = useMemo(
     () => visibleData.length > PERFORMANCE_MODE_THRESHOLD,

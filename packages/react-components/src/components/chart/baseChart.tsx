@@ -35,6 +35,7 @@ import { useModalVisibility } from '../../hooks/useModalVisibility/useModalVisib
 import { PreferencesModalToggle } from './preferences/toggle';
 import { useDataQuality } from './hooks/useDataQuality';
 import { Timestamp } from '../timestampBar';
+import useDataStore from '../../store';
 
 /**
  * Developer Notes:
@@ -90,6 +91,8 @@ const BaseChart = ({
     trendCursors,
     trendCursorValues,
   } = useTrendCursors({ group, chartRef, id: options.id });
+
+  useDataStore.getState().setTimeZone(options.timeZone);
 
   // convert TimeSeriesDataQuery to TimeSeriesData
   const {
@@ -311,6 +314,7 @@ const BaseChart = ({
           showLoadingIndicator={true}
           styleProps={timestampStyle}
           viewport={utilizedViewport}
+          timeZone={options.timeZone}
         />
       </div>
       {options.legend?.visible && (

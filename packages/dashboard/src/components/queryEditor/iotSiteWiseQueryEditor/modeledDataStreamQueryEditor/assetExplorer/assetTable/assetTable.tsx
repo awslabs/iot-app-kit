@@ -5,6 +5,8 @@ import {
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import Table from '@cloudscape-design/components/table';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { DashboardState } from '~/store/state';
 
 import { AssetTableEmptyState } from './assetTableEmptyState';
 import { AssetTableHeader } from './assetTableHeader';
@@ -67,6 +69,8 @@ export function AssetTable({
     sorting: {},
   });
 
+  const timeZone = useSelector((state: DashboardState) => state.timeZone);
+
   function handleClickAsset(parentAssetId?: string) {
     actions.setSelectedItems([]);
     onSelectAsset(undefined);
@@ -92,6 +96,7 @@ export function AssetTable({
   const columnDefinitionFactory = new AssetTableColumnDefinitionsFactory({
     NameLink: AssetTableNameLink,
     onClickNameLink: handleClickAsset,
+    timeZone,
   });
 
   if (isError) {

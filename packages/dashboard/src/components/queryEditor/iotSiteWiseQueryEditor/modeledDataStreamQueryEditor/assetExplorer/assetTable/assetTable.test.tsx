@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { sampleAssetSummary } from '@iot-app-kit/source-iotsitewise';
 import { AssetTableColumnDefinitionsFactory } from './assetTableColumnDefinitionsFactory';
 import { AssetTable } from './assetTable';
+import { configureDashboardStore } from '~/store';
+import { Provider } from 'react-redux';
 
 describe('AssetTableColumnDefinitionsFactory', () => {
   describe('create', () => {
@@ -48,20 +50,28 @@ describe('AssetTableColumnDefinitionsFactory', () => {
 describe('AssetTable component', () => {
   test('renders AssetTable component correctly when an error occurs', () => {
     render(
-      <QueryClientProvider client={new QueryClient()}>
-        <AssetTable
-          assets={[sampleAssetSummary]}
-          parentAssetId='parentAssetId'
-          onClickAsset={jest.fn()}
-          onClickNextPage={jest.fn()}
-          onSelectAsset={jest.fn()}
-          isLoading={false}
-          isError={true}
-          isWithoutHeader={false}
-          client={createMockSiteWiseSDK() as IoTSiteWiseClient}
-          hasNextPage={true}
-        />
-      </QueryClientProvider>
+      <Provider
+        store={configureDashboardStore({
+          dashboardConfiguration: {
+            widgets: [],
+          },
+        })}
+      >
+        <QueryClientProvider client={new QueryClient()}>
+          <AssetTable
+            assets={[sampleAssetSummary]}
+            parentAssetId='parentAssetId'
+            onClickAsset={jest.fn()}
+            onClickNextPage={jest.fn()}
+            onSelectAsset={jest.fn()}
+            isLoading={false}
+            isError={true}
+            isWithoutHeader={false}
+            client={createMockSiteWiseSDK() as IoTSiteWiseClient}
+            hasNextPage={true}
+          />
+        </QueryClientProvider>
+      </Provider>
     );
 
     const errorMessage = screen.getByText('an error has occurred.');
