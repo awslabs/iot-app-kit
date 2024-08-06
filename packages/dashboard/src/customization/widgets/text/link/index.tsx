@@ -2,7 +2,8 @@ import type { CSSProperties } from 'react';
 import React from 'react';
 import { defaultFontSettings } from '../styledText/defaultFontSettings';
 import type { TextWidget } from '../../types';
-import isValidUrl from 'is-url';
+import DOMPurify from 'dompurify';
+import { isURL } from 'validator';
 
 type TextLinkProps = TextWidget;
 
@@ -23,7 +24,9 @@ const TextLink: React.FC<TextLinkProps> = (widget) => {
     color: fontColor,
   };
 
-  const renderedHref = href && isValidUrl(href) ? href : undefined;
+  const sanitizedHref = href ? DOMPurify.sanitize(href) : undefined;
+  const isValidUrl = sanitizedHref ? isURL(sanitizedHref) : false;
+  const renderedHref = isValidUrl ? sanitizedHref : undefined;
 
   return (
     <a href={renderedHref} className={className} style={style}>
