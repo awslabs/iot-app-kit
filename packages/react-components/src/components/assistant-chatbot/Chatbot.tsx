@@ -35,7 +35,7 @@ export const Chatbot = ({
       ) as HTMLElement;
       const chatbotInputHeight = chatbotInput?.clientHeight || 0;
       const chatbotHeaderHeight = chatbotHeader?.clientHeight || 0;
-      const newHeight = height - chatbotHeaderHeight - chatbotInputHeight - 20;
+      const newHeight = height - chatbotHeaderHeight - chatbotInputHeight - 50;
       setAdjustedHeight(newHeight);
     }
   }, [visible, height]);
