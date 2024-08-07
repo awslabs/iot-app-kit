@@ -9,11 +9,13 @@ import { spaceScaledXs } from '@cloudscape-design/design-tokens';
 type StyledTextProps = TextWidget & {
   onPointerDown?: PointerEventHandler;
   onPointerUp?: PointerEventHandler;
+  readonly?: boolean;
 };
 
 const StyledText: React.FC<StyledTextProps> = ({
   onPointerDown,
   onPointerUp,
+  readonly,
   ...widget
 }) => {
   const { value } = widget.properties;
@@ -43,7 +45,12 @@ const StyledText: React.FC<StyledTextProps> = ({
   };
 
   return (
-    <p {...pointerListeners} className={className} style={style}>
+    <p
+      {...pointerListeners}
+      className={className}
+      style={style}
+      aria-readonly={readonly}
+    >
       {textContent}
     </p>
   );

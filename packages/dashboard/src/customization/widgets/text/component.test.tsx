@@ -1,10 +1,8 @@
 import React from 'react';
-
-import { render } from '@testing-library/react';
-import { useSelector, useDispatch } from 'react-redux';
+import { render, screen } from '@testing-library/react';
 import TextWidgetComponent from './component';
-import { useIsSelected } from '~/customization/hooks/useIsSelected';
-import { onChangeDashboardGridEnabledAction } from '~/store/actions';
+import * as ReactRedux from 'react-redux';
+import type { TextProperties } from '../types';
 
 jest.mock('~/store/actions', () => ({
   ...jest.requireActual('~/store/actions'),
@@ -13,88 +11,101 @@ jest.mock('~/store/actions', () => ({
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
-  useSelector: jest.fn(),
-  useDispatch: jest.fn(),
+  useDispatch: () => jest.fn(),
 }));
 
 jest.mock('~/customization/hooks/useIsSelected', () => ({
   useIsSelected: jest.fn(),
 }));
 
-jest.mock('./link', () => (props: unknown) => (
-  <div data-mocked='TextLink'>{JSON.stringify(props)}</div>
-));
-jest.mock('./styledText/textArea', () => (props: unknown) => (
-  <div data-mocked='StyledTextArea'>{JSON.stringify(props)}</div>
-));
-jest.mock('./styledText/editableText', () => (props: unknown) => (
-  <div data-mocked='EditableStyledText'>{JSON.stringify(props)}</div>
-));
-jest.mock('./styledText', () => (props: unknown) => (
-  <div data-mocked='StyledText'>{JSON.stringify(props)}</div>
-));
+function TextTextWidget(props: TextProperties) {
+  return (
+    <TextWidgetComponent
+      id='id'
+      type='text-widget'
+      x={0}
+      y={0}
+      z={0}
+      height={100}
+      width={100}
+      properties={props}
+    />
+  );
+}
+
+function TestReadonlyTextWidget(props: TextProperties) {
+  jest.spyOn(ReactRedux, 'useSelector').mockReturnValueOnce(true);
+
+  return <TextTextWidget {...props} />;
+}
+
+function TestEditableTextWidget(props: TextProperties) {
+  jest.spyOn(ReactRedux, 'useSelector').mockReturnValueOnce(false);
+
+  return <TextTextWidget {...props} />;
+}
 
 describe('Text Widget', () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
+  it('should render readonly text', () => {
+    const text = 'text';
+    render(<TestReadonlyTextWidget value={text} />);
+
+    const textWidget = screen.getByText(text);
+    expect(textWidget).toBeVisible();
+    expect(textWidget).toHaveAttribute('aria-readonly');
+    expect(screen.queryByRole('link', { name: text })).not.toBeInTheDocument();
   });
 
-  [
-    { readOnly: true, isSelected: true, isUrl: true },
-    { readOnly: true, isSelected: true, isUrl: false },
-    { readOnly: true, isSelected: false, isUrl: false },
-    { readOnly: false, isSelected: false, isUrl: false },
-    { readOnly: false, isSelected: false, isUrl: true },
-    { readOnly: false, isSelected: true, isUrl: true },
-    { readOnly: false, isSelected: true, isUrl: false },
-    { readOnly: true, isSelected: false, isUrl: true },
-  ].forEach((configuration) => {
-    it(`should render ${JSON.stringify(configuration)} correctly`, () => {
-      const { isSelected, readOnly, isUrl } = configuration;
-      (useIsSelected as jest.Mock).mockImplementation(() => isSelected);
-      (useSelector as jest.Mock).mockImplementation(() => readOnly);
-      (useDispatch as jest.Mock).mockReturnValue(jest.fn());
+  it('should render editable text', () => {
+    const text = 'text';
+    render(<TestEditableTextWidget value={text} />);
 
-      const { container } = render(
-        <TextWidgetComponent
-          id='some-id'
-          x={1}
-          y={2}
-          z={3}
-          height={100}
-          width={100}
-          type='text-widget'
-          properties={{ isUrl, value: 'abc' }}
-        />
-      );
-
-      expect(container).toMatchSnapshot();
-    });
+    const textWidget = screen.getByText(text);
+    expect(textWidget).toBeVisible();
+    expect(textWidget).not.toHaveAttribute('aria-readonly');
+    expect(screen.queryByRole('link', { name: text })).not.toBeInTheDocument();
   });
 
-  it('should exit edit mode when unmounted', () => {
-    (useDispatch as jest.Mock).mockImplementation(() => jest.fn((cb) => cb())); // short curcuit dispatch
+  it('should render editable link', () => {
+    const text = 'text';
+    const href = 'https://test.com';
+    render(<TestEditableTextWidget value={text} href={href} isUrl />);
 
-    (useIsSelected as jest.Mock).mockImplementation(() => false);
-    (useSelector as jest.Mock).mockImplementation(() => false);
-    (useDispatch as jest.Mock).mockReturnValue(jest.fn());
+    const textWidget = screen.getByText(text);
+    expect(textWidget).toHaveTextContent(text);
+    expect(textWidget).not.toHaveAttribute('aria-readonly');
+    expect(screen.queryByRole('link', { name: text })).not.toBeInTheDocument();
+  });
 
-    const { unmount } = render(
-      <TextWidgetComponent
-        id='some-id'
-        x={1}
-        y={2}
-        z={3}
-        height={100}
-        width={100}
-        type='text-widget'
-        properties={{ isUrl: false, value: 'abc' }}
-      />
-    );
-    unmount();
+  it('should santize and then render unsafe link that injects javascript', () => {
+    const text = 'text';
+    const href = 'javascript://%0Aalert(1)';
+    render(<TestReadonlyTextWidget value={text} href={href} isUrl />);
 
-    expect(onChangeDashboardGridEnabledAction).toBeCalledWith({
-      enabled: true,
-    });
+    const textWidget = screen.getByText(text);
+    expect(textWidget).toBeVisible();
+    expect(textWidget).not.toHaveAttribute('href');
+    expect(screen.queryByRole('link', { name: text })).not.toBeInTheDocument();
+  });
+
+  it('should santize and then render unsafe link that injects javascript via hex format', () => {
+    const text = 'text';
+    const href = '\x6A\x61\x76\x61\x73\x63\x72\x69\x70\x74\x3aalert(1)';
+    render(<TestReadonlyTextWidget value={text} href={href} isUrl />);
+
+    const textWidget = screen.getByText(text);
+    expect(textWidget).toBeVisible();
+    expect(textWidget).not.toHaveAttribute('href');
+    expect(screen.queryByRole('link', { name: text })).not.toBeInTheDocument();
+  });
+
+  it('should render a safe link', () => {
+    const text = 'text';
+    const href = 'https://test.com';
+    render(<TestReadonlyTextWidget value={text} href={href} isUrl />);
+
+    const textWidget = screen.getByRole('link', { name: text });
+    expect(textWidget).toBeVisible();
+    expect(textWidget).toHaveAttribute('href', href);
   });
 });

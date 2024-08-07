@@ -19,6 +19,7 @@ const TextWidgetComponent: React.FC<TextWidget> = (widget) => {
   const { isUrl, value } = widget.properties;
 
   const dispatch = useDispatch();
+
   const [isEditing, setIsEditing] = useState(false);
 
   const handleSetEdit = useCallback(
@@ -50,7 +51,7 @@ const TextWidgetComponent: React.FC<TextWidget> = (widget) => {
     if (isUrl) {
       return <TextLink {...widget} />;
     } else {
-      return <StyledText {...widget} />;
+      return <StyledText {...widget} readonly />;
     }
   } else {
     if (isUrl) {
