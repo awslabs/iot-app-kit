@@ -410,12 +410,13 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
         <div
           className='display-area'
           ref={(el) => {
-            const header = document.querySelector(
-              '[data-testid=dashboard-header]'
-            );
-            const displayAreaHeight = el?.clientHeight || 500;
-            const headerHeight = header?.clientHeight || 0;
-            setChatbotHeight(displayAreaHeight - headerHeight - 50);
+            const dashboardContainer = document
+              .querySelector('[data-test-id=read-only-mode-dashboard]')
+              ?.getBoundingClientRect();
+
+            const displayAreaHeight = window.innerHeight || 500;
+            const containerTop = dashboardContainer?.top || 0;
+            setChatbotHeight(displayAreaHeight - containerTop);
             setViewFrameElement(el || undefined);
           }}
           style={{ backgroundColor: colorBackgroundCellShaded }}

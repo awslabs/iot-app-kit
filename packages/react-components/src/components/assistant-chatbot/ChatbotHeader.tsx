@@ -11,7 +11,7 @@ export interface ChatbotHeaderProps {
 
 export const ChatbotHeader = ({ headerText, onClose }: ChatbotHeaderProps) => {
   return (
-    <>
+    <div className='iot-app-kit-assistant-chatbot-header'>
       <Box padding={{ top: 'xxs', left: 'm', right: 'm' }}>
         <Grid
           gridDefinition={[
@@ -48,6 +48,6 @@ export const ChatbotHeader = ({ headerText, onClose }: ChatbotHeaderProps) => {
         </Grid>
       </Box>
       <hr style={{ margin: 0 }} />
-    </>
+    </div>
   );
 };

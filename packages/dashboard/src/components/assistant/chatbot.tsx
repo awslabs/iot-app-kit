@@ -23,7 +23,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   const [conversationId] = useState<string>(uuid());
   const [isOpen, setOpen] = useState<boolean | null>(null);
   const { iotSiteWisePrivateClient } = useClients();
-  const [ right, setRight ] = useState(0);
+  const [right, setRight] = useState(0);
 
   const client = new IoTSitewiseAssistantClient({
     iotSiteWiseClient: iotSiteWisePrivateClient!,
@@ -48,11 +48,15 @@ export const Chatbot: FC<AssistantChatbotProps> = (
 
   useEffect(() => {
     const dashboardContainer = document.querySelector('.dashboard #container');
-    const assistantButton = document.querySelector('.iot-dashboard-assistant-chatbot-button');
-    const { left:leftPos = 0 } = dashboardContainer?.getBoundingClientRect() ?? {};
-    const rightPosition = leftPos > 0 ? leftPos  - (assistantButton?.clientWidth ?? 0) + 10 : 0;
+    const assistantButton = document.querySelector(
+      '.iot-dashboard-assistant-chatbot-button'
+    );
+    const { left: leftPos = 0 } =
+      dashboardContainer?.getBoundingClientRect() ?? {};
+    const rightPosition =
+      leftPos > 0 ? leftPos - (assistantButton?.clientWidth ?? 0) + 10 : 0;
     setRight(rightPosition);
-  }, [])
+  }, []);
 
   const handleSubmit = (utterance: string) => {
     invokeAssistant(conversationId, utterance);
@@ -67,7 +71,10 @@ export const Chatbot: FC<AssistantChatbotProps> = (
 
   return (
     <>
-      <div className='iot-dashboard-assistant-chatbot-button' style={{ right: `${right}px` }}>
+      <div
+        className='iot-dashboard-assistant-chatbot-button'
+        style={{ right: `${right}px` }}
+      >
         <button onClick={() => setOpen(true)}>
           <img alt='Assistant Icon' src={assistantIcon} width={30} />
         </button>
@@ -80,6 +87,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
           height={props.height}
           messages={messages}
           onSubmit={handleSubmit}
+          visible={!!isOpen}
           onClose={() => setOpen(false)}
         />
       </div>
