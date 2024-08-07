@@ -280,5 +280,37 @@ test.describe('Test Text Widget', () => {
       await page.getByText(TEXT_WIDGET_CONTENT).click();
       await page.waitForURL(`**${url}`);
     });
+
+    test('when link is enabled, it should sanitize href and not link if dangerous', async ({
+      dashboardWithTextWidget,
+      configPanel,
+      page,
+    }) => {
+      const widget = dashboardWithTextWidget.gridArea.locator(
+        '[data-gesture=widget]'
+      );
+
+      const url = "javascript://%0aalert('1.com')";
+      await configPanel.collapsedButton.click();
+      await widget.dblclick();
+      await widget.getByRole('textbox').fill(TEXT_WIDGET_CONTENT);
+      await configPanel.container
+        .getByTestId('text-widget-link-header')
+        .click();
+      await configPanel.container
+        .getByText('Create link', { exact: true })
+        .click();
+      await configPanel.container
+        .getByLabel('text widget link input')
+        .fill(url);
+
+      // go to preview
+      await page.getByRole('button', { name: 'preview' }).click();
+
+      // clicking on the link
+      await page.getByText(TEXT_WIDGET_CONTENT).click();
+
+      expect(page.getByText(TEXT_WIDGET_CONTENT)).not.toHaveAttribute('href');
+    });
   });
 });
