@@ -1,14 +1,18 @@
 import {
-  getAssistantContext,
-  setAssistantContext,
-  appendAssistantContext,
+  getAssistantStore,
+  getAllAssistantContext,
+  getContextByComponent,
+  setContextByComponent,
+  updateContextByComponent,
 } from '@iot-app-kit/core-util';
 
 export const useAssistantContext = () => {
-  const assistantContext = getAssistantContext();
+  const assistantContext = getAssistantStore();
   return {
     assistantContext,
-    setContext: setAssistantContext,
-    appendContext: appendAssistantContext,
+    getAllAssistantContext,
+    getContextByComponent,
+    setContextByComponent,
+    updateContextByComponent,
   };
 };

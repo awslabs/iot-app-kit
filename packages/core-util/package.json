@@ -28,14 +28,16 @@
   "dependencies": {
     "@iot-app-kit/core": "10.12.1",
     "lodash.difference": "4.5.0"
+    "pako": "^2.1.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@iot-app-kit/jest-config": "10.12.1",
     "@iot-app-kit/ts-config": "10.12.1",
     "@aws-sdk/types": "^3.310.0",
-    "@types/lodash.difference": "4.5.9",
     "@types/jest": "^29.4.0",
+    "@types/lodash.difference": "4.5.9",
+    "@types/pako": "^2.0.3",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "jest-extended": "^3.2.4"

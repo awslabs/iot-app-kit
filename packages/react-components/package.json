@@ -145,6 +145,7 @@
     "lodash.omitby": "^4.6.0",
     "lodash.takeright": "^4.1.1",
     "lodash.throttle": "^4.1.1",
+    "pako": "^2.1.0",
     "parse-duration": "^1.0.3",
     "react-cytoscapejs": "^2.0.0",
     "react-error-boundary": "^4.0.10",
