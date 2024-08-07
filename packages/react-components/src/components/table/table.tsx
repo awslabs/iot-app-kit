@@ -13,6 +13,7 @@ import { TableColumnDefinition, TableItem, TableItemHydrated } from './types';
 import { createTableItems } from './createTableItems';
 import { DEFAULT_TABLE_MESSAGES } from './messages';
 import { TableProps as TableBaseProps } from '@cloudscape-design/components';
+import { AssistantProperty } from '../../common/assistantProps';
 
 const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
 
@@ -41,6 +42,7 @@ export const Table = ({
   significantDigits?: number;
   paginationEnabled?: boolean;
   pageSize?: number;
+  assistant?: AssistantProperty;
 } & Pick<
   TableBaseProps,
   | 'resizableColumns'

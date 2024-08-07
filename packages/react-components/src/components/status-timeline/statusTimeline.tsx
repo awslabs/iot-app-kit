@@ -15,6 +15,7 @@ import type {
 } from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
+import { AssistantProperty } from '../../common/assistantProps';
 import {
   DEFAULT_LEGEND,
   DEFAULT_VIEWPORT,
@@ -43,6 +44,7 @@ export const StatusTimeline = ({
   aggregationType?: string;
   gestures?: boolean;
   significantDigits?: number;
+  assistant?: AssistantProperty;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,

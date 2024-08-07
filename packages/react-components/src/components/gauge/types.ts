@@ -8,6 +8,7 @@ import {
   Primitive,
 } from '@iot-app-kit/core';
 import type { WidgetSettings } from '../../common/dataTypes';
+import { AssistantProperty } from '../../common/assistantProps';
 
 export type GaugeProps = {
   size?: { width: number; height: number };
@@ -18,6 +19,7 @@ export type GaugeProps = {
   settings?: GaugeSettings;
   significantDigits?: number;
   theme?: string;
+  assistant?: AssistantProperty;
 };
 
 export type GaugeBaseProperties = WidgetSettings &

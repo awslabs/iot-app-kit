@@ -7,6 +7,7 @@ import {
   Viewport,
 } from '@iot-app-kit/core';
 import { OptionId } from 'echarts/types/src/util/types';
+import { AssistantProperty } from '../../common/assistantProps';
 
 export type YAxisOptions = {
   yLabel?: string;
@@ -112,6 +113,7 @@ export type ChartOptions = {
   theme?: string;
   id?: string;
   dataQuality?: ChartDataQuality;
+  assistant?: AssistantProperty;
   onChartOptionsChange?: (
     options: Pick<ChartOptions, 'legend' | 'dataQuality'>
   ) => void;

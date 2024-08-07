@@ -3,6 +3,7 @@ import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
+import { AssistantProperty } from '../../common/assistantProps';
 import type {
   StyleSettingsMap,
   Viewport,
@@ -29,6 +30,7 @@ export const KPI = ({
   settings?: Partial<KPISettings>;
   significantDigits?: number;
   timeZone?: string;
+  assistant?: AssistantProperty;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,

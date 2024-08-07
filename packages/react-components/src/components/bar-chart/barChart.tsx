@@ -19,6 +19,7 @@ import {
   ECHARTS_GESTURE,
 } from '../../common/constants';
 import { AxisSettings, ChartSize } from '../../common/chartTypes';
+import { AssistantProperty } from '../../common/assistantProps';
 
 const HOUR_IN_MS = 1000 * 60 * 60;
 const DAY_IN_MS = HOUR_IN_MS * 24;
@@ -36,6 +37,7 @@ export interface BarChartProps {
   aggregationType?: string;
   gestures?: boolean;
   significantDigits?: number;
+  assistant?: AssistantProperty;
 }
 
 export const BarChart = (props: BarChartProps) => {
