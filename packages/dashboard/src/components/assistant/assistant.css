@@ -1,7 +1,6 @@
 .iot-dashboard-assistant-chatbot-button {
-  position: absolute;
+  position: fixed;
   right: 0;
-  top: 0;
   z-index: 1;
   padding: 0.5rem;
   cursor: pointer;
@@ -19,9 +18,8 @@
 }
 
 .iot-dashboard-assistant-chatbot {
-  position: absolute;
+  position: fixed;
   right: 0;
-  top: 0;
   width: 35rem;
   padding: 0.5rem;
   z-index: 1;
