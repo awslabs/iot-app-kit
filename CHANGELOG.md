@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.10.2](https://github.com/awslabs/iot-app-kit/compare/root-v10.10.1...root-v10.10.2) (2024-08-08)
+
+
+### Bug Fixes
+
+* **dashboard:** sanitize href input in text widget ([f766a3b](https://github.com/awslabs/iot-app-kit/commit/f766a3bd3cb410d098f3e9606fe24e2f61c4ae0f))
+
 ## [10.10.1](https://github.com/awslabs/iot-app-kit/compare/root-v10.10.0...root-v10.10.1) (2024-08-02)
 
 
