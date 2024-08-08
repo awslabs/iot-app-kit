@@ -1,0 +1,806 @@
+{
+  "resources": [
+    {
+      "note": "widget palette title",
+      "value": "Widgets"
+    },
+    {
+      "note": "dashboard save button",
+      "value": "Save"
+    },
+    { 
+      "note": "dashboard preview mode switch button",
+      "value": "Preview"
+    },
+    { 
+      "note": "dashboard edit mode switch button",
+      "value": "Edit"
+    },
+    { 
+      "note": "dashboard settings modal title",
+      "value": "Dashboard Settings"
+    },
+    { 
+      "note": "dashboard settings modal default viewport",
+      "value": "Default Viewport"
+    },
+    { 
+      "note": "dashboard settings modal default decimal places",
+      "value": "Decimal Places"
+    },
+    { 
+      "note": "dashboard settings modal cell size",
+      "value": "Cell Size"
+    },
+    { 
+      "note": "dashboard settings modal number of rows",
+      "value": "Number of Rows"
+    },
+    { 
+      "note": "dashboard settings modal number of columns",
+      "value": "Number of Columns"
+    },
+    { 
+      "note": "dashboard settings modal cancel button",
+      "value": "Cancel"
+    },
+    { 
+      "note": "dashboard settings modal apply changes button",
+      "value": "Apply changes"
+    },
+    { 
+      "note": "dashboard resource explorer title",
+      "value": "Resource Explorer"
+    },
+    { 
+      "note": "dashboard resource explorer modeled tab title",
+      "value": "Modeled"
+    },
+    { 
+      "note": "dashboard resource explorer unmodeled tab title",
+      "value": "Unmodeled"
+    },
+    { 
+      "note": "dashboard resource explorer dynamic assets tab title",
+      "value": "Dynamic assets"
+    },
+    { 
+      "note": "dashboard resource explorer modeled browse button",
+      "value": "Browse"
+    },
+    { 
+      "note": "dashboard resource explorer modeled search button",
+      "value": "Search"
+    },
+    { 
+      "note": "dashboard resource explorer modeled browse title",
+      "value": "Browse assets"
+    },
+    { 
+      "note": "dashboard resource explorer modeled browse description",
+      "value": "Browse through your asset hierarchy and select an asset to view its associated data streams."
+    },
+    {
+      "note": "dashboard resource explorer modeled root asset",
+      "value": "Root"
+    },
+    { 
+      "note": "dashboard resource explorer modeled browse filter placeholder",
+      "value": "Filter assets by text, property, or value"
+    },
+    
+
+
+    { 
+      "note": "dashboard resource explorer table preferences page size title",
+      "value": "Select page size"
+    },
+    { 
+      "note": "dashboard resource explorer table preferences wrap lines option",
+      "value": "Wrap lines"
+    },
+    { 
+      "note": "dashboard resource explorer table preferences wrap lines description",
+      "value": "Select to see all the text and wrap the lines"
+    },
+    { 
+      "note": "dashboard resource explorer table preferences striped rows title",
+      "value": "Striped rows"
+    },
+    { 
+      "note": "dashboard resource explorer table preferences striped rows description",
+      "value": "Select to add alternating shaded rows"
+    },
+    { 
+      "note": "dashboard resource explorer table preferences select visible fields title",
+      "value": "Select visible content"
+    },
+    { 
+      "note": "dashboard resource explorer table preferences cancel button",
+      "value": "Cancel"
+    },
+    { 
+      "note": "dashboard resource explorer table preferences confir button",
+      "value": "Confirm"
+    },
+
+
+
+    
+    { 
+      "note": "dashboard resource explorer modeled asset preferences title",
+      "value": "Asset preferences"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset preferences stick column title",
+      "value": "Stick first column"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset preferences stick column description",
+      "value": "Keep the first column visible while horizontally scrolling the table contents"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset preferences stick column none option",
+      "value": "None"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset preferences stick column first column option",
+      "value": "First column"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset preferences visible fields title",
+      "value": "Asset fields"
+    },
+    { 
+      "note": "dashboard resource explorer modeled ARN asset field",
+      "value": "ARN"
+    },
+    { 
+      "note": "dashboard resource explorer modeled ID asset field",
+      "value": "ID"
+    },
+    { 
+      "note": "dashboard resource explorer modeled name asset field",
+      "value": "Name"
+    },
+    { 
+      "note": "dashboard resource explorer modeled description asset field",
+      "value": "Description"
+    },
+    { 
+      "note": "dashboard resource explorer modeled creation date asset field",
+      "value": "Creation Date"
+    },
+    { 
+      "note": "dashboard resource explorer modeled last update date asset field",
+      "value": "Last Update Date"
+    },
+    
+
+    { 
+      "note": "dashboard resource explorer modeled asset property table title",
+      "value": "Modeled data streams"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property table empty title",
+      "value": "No modeled data streams"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property table empty description",
+      "value": "Select an asset to see its data streams."
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property table description",
+      "value": "Select a modeled data stream to add a selected widget."
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property table filter title",
+      "value": "Filter by"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property table filter placeholder",
+      "value": "Filter modeled data streams by text, property, or value"
+    },
+    
+    
+ 
+    { 
+      "note": "dashboard resource explorer modeled asset property preferences title",
+      "value": "Asset property preferences"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property preferences visible fields title",
+      "value": "Asset property fields"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property id field",
+      "value": "ID"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property alias field",
+      "value": "Alias"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property name field",
+      "value": "Name"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property latest values field",
+      "value": "Latest values"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property latest value times field",
+      "value": "Latest value times"
+    },
+    { 
+      "note": "dashboard resource explorer modeled property asset name field",
+      "value": "Asset name"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property data type field",
+      "value": "Data type"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property data type spec field",
+      "value": "Data type spec"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property unit field",
+      "value": "Unit"
+    },
+    
+    
+    
+    { 
+      "note": "dashboard resource explorer modeled asset property search title",
+      "value": "Search modeled data streams"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property search description ",
+      "value": "Search for modeled data streams by name or by the associated asset."
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property search query title",
+      "value": "Search query"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property search query description",
+      "value": "Enter a query using character string or wildcard character % to search the data."
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property search query placeholder",
+      "value": "Enter a search query"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property search query chaarcter length",
+      "value": "Must be between 1 and 48 characters."
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property search workspace title",
+      "value": "Workspace"
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property search workspace description",
+      "value": "Select a workspace to search for modeled data streams within."
+    },
+    { 
+      "note": "dashboard resource explorer modeled asset property search search button",
+      "value": "Search"
+    },
+
+
+    { 
+      "note": "dashboard resource explorer unmodeled alias title",
+      "value": "Alias prefix"
+    },
+    { 
+      "note": "dashboard resource explorer unmodeled alias title optional",
+      "value": "optional"
+    },
+    { 
+      "note": "dashboard resource explorer unmodeled alias description",
+      "value": "Enter an alias prefix to filter the list of unmodeled data streams."
+    },
+    { 
+      "note": "dashboard resource explorer unmodeled alias input placeholder",
+      "value": "Enter an alias prefix"
+    },
+    { 
+      "note": "dashboard resource explorer unmodeled alias search button",
+      "value": "Search"
+    },
+    { 
+      "note": "dashboard resource explorer unmodeled table title",
+      "value": "Unmodeled data streams"
+    }, 
+    { 
+      "note": "dashboard resource explorer unmodeled preferences title",
+      "value": "Unmodeled data stream preferences"
+    },
+    { 
+      "note": "dashboard resource explorer unmodeled preferences visible fields title",
+      "value": "Unmodeled data stream fields"
+    },
+
+
+
+    { 
+      "note": "dashboard resource explorer dynamic assets description",
+      "value": "Dynamic asset visualizations allow you to build one visualization to represent any asset of a specified asset model."
+    },
+    { 
+      "note": "dashboard resource explorer dynamic assets description learn more",
+      "value": "Learn more"
+    },
+    { 
+      "note": "dashboard resource explorer dynamic assets model dropdown title",
+      "value": "Asset model"
+    },
+    { 
+      "note": "dashboard resource explorer dynamic assets model dropdown description",
+      "value": "Select an asset model to add the associated properties into your dynamic display."
+    },
+    { 
+      "note": "dashboard resource explorer dynamic assets model dropdown placeholder",
+      "value": "Select an asset model"
+    },
+    { 
+      "note": "dashboard resource explorer dynamic assets model dropdown search",
+      "value": "Find an asset model"
+    },
+    { 
+      "note": "dashboard resource explorer dynamic assets default dropdown title",
+      "value": "Default asset"
+    },
+    { 
+      "note": "dashboard resource explorer dynamic assets default dropdown description",
+      "value": "This asset will be the default view in both edit and preview mode."
+    },
+    { 
+      "note": "dashboard resource explorer dynamic assets default dropdown placeholder",
+      "value": "Select an asset"
+    },
+    { 
+      "note": "dashboard resource explorer dynamic assets default dropdown search",
+      "value": "Find an asset"
+    },
+    { 
+      "note": "dashboard resource explorer dynamic assets button",
+      "value": "Set asset model"
+    },
+    
+    
+
+    { 
+      "note": "dashboard configuration panel title",
+      "value": "Configuration"
+    },
+    { 
+      "note": "dashboard configuration panel style tab title",
+      "value": "Style"
+    },
+    { 
+      "note": "dashboard configuration panel properties tab title",
+      "value": "Properties"
+    },
+    { 
+      "note": "dashboard configuration panel thresholds tab title",
+      "value": "Thresholds"
+    },
+    
+    
+    { 
+      "note": "dashboard style configuration widget title section title",
+      "value": "Widget title"
+    },
+    { 
+      "note": "dashboard style configuration resolution and aggregation section title",
+      "value": "Resolution and Aggregation"
+    },
+    { 
+      "note": "dashboard style configuration resolution title",
+      "value": "Resolution"
+    },
+    { 
+      "note": "dashboard style configuration aggregation title",
+      "value": "Aggregation"
+    },
+    { 
+      "note": "dashboard style configuration resolution autoselect",
+      "value": "Autoselect"
+    },
+    { 
+      "note": "dashboard style configuration resolution 1 min",
+      "value": "1 minute"
+    },
+    { 
+      "note": "dashboard style configuration resolution 15 min",
+      "value": "15 minute"
+    },
+    { 
+      "note": "dashboard style configuration resolution 1 hour",
+      "value": "1 hour"
+    },
+    { 
+      "note": "dashboard style configuration raw resolution",
+      "value": "Raw"
+    },
+    { 
+      "note": "dashboard style configuration average aggregation",
+      "value": "Average"
+    },
+    { 
+      "note": "dashboard style configuration count aggregation",
+      "value": "Count"
+    },
+    { 
+      "note": "dashboard style configuration maximum aggregation",
+      "value": "Maximum"
+    },
+    { 
+      "note": "dashboard style configuration minimum aggregation",
+      "value": "Minimum"
+    },
+    { 
+      "note": "dashboard style configuration standard deviation aggregation",
+      "value": "Standard deviation"
+    },
+    { 
+      "note": "dashboard style configuration sum aggregation",
+      "value": "Sum"
+    },
+    { 
+      "note": "dashboard style configuration format data section title",
+      "value": "Format data"
+    },
+    { 
+      "note": "dashboard style configuration decimal places title",
+      "value": "Decimal places"
+    },
+    {
+      "note": "dashboard style configuration decimal places description",
+      "value": "Must be between 0 and 100."
+    },
+    {
+      "note": "dashboard style configuration decimal places warning",
+      "value": "Decimal places must be between 0 and 100."
+    },
+    { 
+      "note": "dashboard style configuration y-axis section title",
+      "value": "Y-axis"
+    },
+    { 
+      "note": "dashboard style configuration visibility toggle",
+      "value": "View on chart"
+    },
+    { 
+      "note": "dashboard style configuration y-axis label title",
+      "value": "Label"
+    },
+    { 
+      "note": "dashboard style configuration y-axis label placeholder",
+      "value": "Input y-axis label"
+    },
+    { 
+      "note": "dashboard style configuration y-axis range title",
+      "value": "Range"
+    },
+    { 
+      "note": "dashboard style configuration y-axis range description",
+      "value": "Leave empty to auto-calculate based on all the values"
+    },
+    { 
+      "note": "dashboard style configuration y-axis range minimum label",
+      "value": "Min"
+    },
+    { 
+      "note": "dashboard style configuration y-axis range maximum label",
+      "value": "Max"
+    },
+    { 
+      "note": "dashboard style configuration y-axis range placeholder",
+      "value": "Auto"
+    },
+    
+    
+    
+    { 
+      "note": "dashboard style configuration line widget section title",
+      "value": "Widget style"
+    },
+    { 
+      "note": "dashboard style configuration line type title",
+      "value": "Line type"
+    },
+    { 
+      "note": "dashboard style configuration line type none",
+      "value": "None"
+    },
+    { 
+      "note": "dashboard style configuration line type none description",
+      "value": "A scatter plot with no line between the points"
+    },
+    { 
+      "note": "dashboard style configuration line type linear",
+      "value": "Linear"
+    },
+    { 
+      "note": "dashboard style configuration line type linear description",
+      "value": "Points are joined as stright lines"
+    },
+    { 
+      "note": "dashboard style configuration line type step before",
+      "value": "Step before"
+    },
+    { 
+      "note": "dashboard style configuration line type step before description",
+      "value": "Step points rendered at the end of the steo"
+    },
+    { 
+      "note": "dashboard style configuration line type step middle",
+      "value": "Step middle"
+    },
+    { 
+      "note": "dashboard style configuration line type step middle description",
+      "value": "Step points rendered in the middle of the step"
+    },
+    { 
+      "note": "dashboard style configuration line type step after",
+      "value": "Step after"
+    },
+    { 
+      "note": "dashboard style configuration line type step after description",
+      "value": "Step points rendered at the beginning of the steo"
+    },
+    { 
+      "note": "dashboard style configuration line style title",
+      "value": "Line style"
+    },
+    { 
+      "note": "dashboard style configuration line style option solid",
+      "value": "Solid"
+    },
+    { 
+      "note": "dashboard style configuration line style option dashed",
+      "value": "Dashed"
+    },
+    { 
+      "note": "dashboard style configuration line style option dotted",
+      "value": "Dotted"
+    },
+    { 
+      "note": "dashboard style configuration line thickness title",
+      "value": "Line thickness"
+    },
+    { 
+      "note": "dashboard style configuration line thickness option normal",
+      "value": "Normal"
+    },
+    { 
+      "note": "dashboard style configuration line thickness option thin",
+      "value": "Thin"
+    },
+    { 
+      "note": "dashboard style configuration line thickness option thick",
+      "value": "Thick"
+    },
+    { 
+      "note": "dashboard style configuration data point shape title",
+      "value": "Data point shape"
+    },
+    { 
+      "note": "dashboard style configuration data point shape option filled circle",
+      "value": "Filled circle"
+    },
+    { 
+      "note": "dashboard style configuration data point shape option empty circle",
+      "value": "Empty circle"
+    },
+    { 
+      "note": "dashboard style configuration data point shape option rectangle",
+      "value": "Rectangle"
+    },
+    { 
+      "note": "dashboard style configuration data point shape option triangle",
+      "value": "Triangle"
+    },
+    { 
+      "note": "dashboard style configuration data point shape option diamond",
+      "value": "Diamond"
+    },
+    { 
+      "note": "dashboard style configuration data point shape option pin",
+      "value": "Pin"
+    },
+    { 
+      "note": "dashboard style configuration data point shape option arrow",
+      "value": "Arrow"
+    },
+    
+    { 
+      "note": "dashboard style configuration legend section title",
+      "value": "Legend"
+    },
+    { 
+      "note": "dashboard style configuration legend alignment title",
+      "value": "Alignment"
+    },
+    { 
+      "note": "dashboard style configuration legend alignment option right",
+      "value": "Right"
+    },
+    { 
+      "note": "dashboard style configuration legend alignment option left",
+      "value": "Left"
+    },
+    { 
+      "note": "dashboard style configuration legend alignment option bottom",
+      "value": "Bottom"
+    },
+    { 
+      "note": "dashboard style configuration legend display title",
+      "value": "Display"
+    },
+    { 
+      "note": "dashboard style configuration legend display option unit",
+      "value": "Unit"
+    },
+    { 
+      "note": "dashboard style configuration legend display option asset name",
+      "value": "Asset name"
+    },
+    { 
+      "note": "dashboard style configuration legend display option max value",
+      "value": "Maximum value"
+    },
+    { 
+      "note": "dashboard style configuration legend display option min value",
+      "value": "Minimum value"
+    },
+    { 
+      "note": "dashboard style configuration legend display option latest value",
+      "value": "Latest value"
+    },
+    { 
+      "note": "dashboard style configuration axis display options title",
+      "value": "Axis"
+    },
+    { 
+      "note": "dashboard style configuration axis display options show x-axis toggle",
+      "value": "View x-axis"
+    },
+    { 
+      "note": "dashboard style configuration axis display options show y-axis toggle",
+      "value": "View y-axis"
+    },
+    { 
+      "note": "dashboard style configuration axis display options y-axis label",
+      "value": "Y-axis label"
+    },
+
+
+    { 
+      "note": "dashboard style configuration widget display section title",
+      "value": "Display"
+    },
+    { 
+      "note": "dashboard style configuration widget display primary values",
+      "value": "Display primary values"
+    },
+    { 
+      "note": "dashboard style configuration widget display show name",
+      "value": "Show name"
+    },
+    { 
+      "note": "dashboard style configuration widget display show timestamp",
+      "value": "Show timestamp"
+    },
+    { 
+      "note": "dashboard style configuration widget display show unit",
+      "value": "Show unit"
+    },
+    { 
+      "note": "dashboard style configuration widget display show aggregation and resolution",
+      "value": "Show aggregation & resolution"
+    },
+    { 
+      "note": "dashboard style configuration widget display show data quality",
+      "value": "Show data quality"
+    },
+
+
+
+
+
+    { 
+      "note": "dashboard properties configuration label title",
+      "value": "Label"
+    },
+    { 
+      "note": "dashboard properties configuration label checkbox",
+      "value": "Use default datastream name"
+    },
+    { 
+      "note": "dashboard properties configuration style checkbox",
+      "value": "Use default style"
+    },
+    { 
+      "note": "dashboard properties configuration y-axis checkbox",
+      "value": "Use default y-axis"
+    },
+    { 
+      "note": "dashboard properties configuration y-axis controls toggle",
+      "value": "Show y-axis controls"
+    },
+
+
+    { 
+      "note": "dashboard thresholds configuration threshold section title",
+      "value": "Thresholds"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold toggle",
+      "value": "Hide all thresholds"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold add button",
+      "value": "Add a threshold"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold if",
+      "value": "If"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold operator",
+      "value": "Operator"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold contains operator",
+      "value": "Contains"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold value",
+      "value": "Value"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold value placeholder",
+      "value": "Threshold value"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold show as",
+      "value": "Show as"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold show as",
+      "value": "Show as"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold style section title",
+      "value": "Threshold style"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold style toggle color",
+      "value": "Apply threshold color across all data"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold style show as title",
+      "value": "Show thresholds"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold style option as line",
+      "value": "As line"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold style option as filled region",
+      "value": "As filled region"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold style option as line and filled region",
+      "value": "As line and filled regions"
+    },
+    { 
+      "note": "dashboard thresholds configuration threshold style option as filled widget",
+      "value": "As filled widget"
+    }
+  ]
+}
