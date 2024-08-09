@@ -310,7 +310,10 @@ test.describe('Test Text Widget', () => {
       // clicking on the link
       await page.getByText(TEXT_WIDGET_CONTENT).click();
 
-      expect(page.getByText(TEXT_WIDGET_CONTENT)).not.toHaveAttribute('href');
+      await expect(page.getByText(TEXT_WIDGET_CONTENT)).toBeVisible();
+      await expect(page.getByText(TEXT_WIDGET_CONTENT)).not.toHaveAttribute(
+        'href'
+      );
     });
   });
 });
