@@ -84,9 +84,9 @@ test.describe('Test KPI Widget', () => {
     await configPanel.showHideAggregationResolution.click();
 
     // verify that no values are visible other than the data point
-    expect(await nameAndUnit.textContent()).toBe(' ');
-    await expect(timestamp).not.toBeVisible();
-    await expect(aggregationAndResolution).not.toBeVisible();
+    await expect(nameAndUnit).toBeHidden();
+    await expect(timestamp).toBeHidden();
+    await expect(aggregationAndResolution).toBeHidden();
     await expect(value).toBeVisible();
   });
 

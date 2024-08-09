@@ -15,6 +15,7 @@ import {
   fontSizeBodyS,
 } from '@cloudscape-design/design-tokens';
 import { DataQualityText } from '../data-quality/data-quality-text';
+import { DEFAULT_DECIMAL_PLACES } from '../../common/constants';
 
 export const KpiBase: React.FC<KPIBaseProperties> = ({
   propertyPoint,
@@ -25,7 +26,7 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
   name,
   isLoading,
   settings = {},
-  significantDigits,
+  significantDigits = DEFAULT_DECIMAL_PLACES,
   propertyThreshold,
 }) => {
   const {
@@ -85,6 +86,17 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     );
   }
 
+  const nameAndUnit = (showName || showUnit) && (
+    <div
+      className='property-name'
+      data-testid='kpi-name-and-unit'
+      style={{ fontSize: `${secondaryFontSize}px`, color: fontColor }}
+    >
+      {showName && <span>{isLoading ? '-' : name} </span>}
+      {showUnit && <span>{!isLoading && unit && `(${unit})`}</span>}
+    </div>
+  );
+
   return (
     <div
       className='kpi-container'
@@ -93,14 +105,7 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     >
       <div className='kpi'>
         <div>
-          <div
-            className='property-name'
-            data-testid='kpi-name-and-unit'
-            style={{ fontSize: `${secondaryFontSize}px`, color: fontColor }}
-          >
-            {isLoading ? '-' : showName && name}{' '}
-            {showUnit && !isLoading && unit && `(${unit})`}
-          </div>
+          {nameAndUnit}
           <div
             className='value'
             data-testid='kpi-value'
