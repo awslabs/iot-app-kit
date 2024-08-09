@@ -39,6 +39,42 @@ export const MOCK_TIME_SERIES_DATA_QUERY = mockTimeSeriesDataQuery([
   },
 ]);
 
+export const MOCK_TIME_SERIES_DATA_QUERY_ERROR = mockTimeSeriesDataQuery([
+  {
+    dataStreams: [
+      {
+        ...DATA_STREAM,
+        data: [],
+        error: { msg: 'Error: Failed to load data, try again later.' },
+        unit: 'Minutes',
+        name: `stream-1`,
+        refId: `stream-1`,
+        id: '1',
+      },
+    ],
+    thresholds: [],
+    viewport: VIEWPORT,
+  },
+]);
+
+export const MOCK_TIME_SERIES_DATA_QUERY_LOADING = mockTimeSeriesDataQuery([
+  {
+    dataStreams: [
+      {
+        ...DATA_STREAM,
+        data: [],
+        isLoading: true,
+        unit: 'Minutes',
+        name: `stream-1`,
+        refId: `stream-1`,
+        id: '1',
+      },
+    ],
+    thresholds: [],
+    viewport: VIEWPORT,
+  },
+]);
+
 export const MOCK_TIME_SERIES_DATA_QUERY_BAD_QUALITY = mockTimeSeriesDataQuery([
   {
     dataStreams: [
