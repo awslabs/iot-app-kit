@@ -1,7 +1,12 @@
 import React from 'react';
 import { KPI } from '../../src';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from './kpi-thresholds';
+import {
+  MOCK_TIME_SERIES_DATA_QUERY,
+  MOCK_TIME_SERIES_DATA_QUERY_ERROR,
+  MOCK_TIME_SERIES_DATA_QUERY_LOADING,
+  VIEWPORT,
+} from './kpi-mock-data';
 
 export default {
   title: 'Widgets/KPI',
@@ -23,12 +28,44 @@ export default {
 
 export const DefaultKPI: ComponentStory<typeof KPI> = ({ settings }) => {
   return (
-    <div style={{ background: 'grey' }}>
+    <div
+      style={{
+        background: 'grey',
+        display: 'grid',
+        width: '600px',
+        gridTemplateColumns: '250px 250px',
+        gridRow: 'auto auto',
+        gridColumnGap: '20px',
+        gridRowGap: '20px',
+      }}
+      data-testid='default-kpi-story'
+    >
       <div style={{ height: '200px', width: '250px', padding: '20px' }}>
         <KPI
           viewport={VIEWPORT}
           query={MOCK_TIME_SERIES_DATA_QUERY}
           settings={settings}
+        />
+      </div>
+      <div style={{ height: '200px', width: '250px', padding: '20px' }}>
+        <KPI viewport={VIEWPORT} query={MOCK_TIME_SERIES_DATA_QUERY_LOADING} />
+      </div>
+      <div style={{ height: '200px', width: '250px', padding: '20px' }}>
+        <KPI viewport={VIEWPORT} query={MOCK_TIME_SERIES_DATA_QUERY_ERROR} />
+      </div>
+      <div style={{ height: '200px', width: '250px', padding: '20px' }}>
+        <KPI
+          viewport={VIEWPORT}
+          query={MOCK_TIME_SERIES_DATA_QUERY}
+          thresholds={[
+            {
+              value: 20,
+              id: 'abc',
+              color: '#be1c1f',
+              fill: '#be1c1f',
+              comparisonOperator: 'GT',
+            },
+          ]}
         />
       </div>
     </div>

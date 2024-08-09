@@ -93,3 +93,5 @@ export const DEFAULT_LEGEND: LegendConfig = {
 };
 
 export const ECHARTS_GESTURE = 'echarts-gesture';
+
+export const DEFAULT_DECIMAL_PLACES = 4;

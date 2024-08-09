@@ -1,7 +1,7 @@
 import React from 'react';
 import { KPI } from '../../src';
 import { ComponentMeta } from '@storybook/react';
-import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from './kpi-thresholds';
+import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from './kpi-mock-data';
 
 export default {
   title: 'Widgets/KPI',
@@ -18,7 +18,7 @@ export default {
 
 export const KPIHiddenSettings = () => {
   return (
-    <div style={{ background: 'grey' }}>
+    <div style={{ background: 'grey' }} data-testid='hidden-values-kpi-story'>
       <div style={{ height: '200px', width: '250px', padding: '20px' }}>
         <KPI
           viewport={VIEWPORT}

@@ -70,7 +70,7 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
       <div
         ref={ref}
         className='gauge-base'
-        data-testid='kpi-name-and-unit'
+        data-testid='gauge-name-and-unit'
         style={{
           width: size?.width,
           height: size?.height,

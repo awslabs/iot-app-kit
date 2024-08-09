@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { KpiBase } from './kpiBase';
+import { KpiBase } from '../kpiBase';
 import type { DataPoint } from '@iot-app-kit/core';
 
 describe('name', () => {
@@ -127,13 +127,14 @@ describe('data quality', () => {
 describe('property value', () => {
   it('renders property points y value', () => {
     const Y_VALUE = 123445;
+    const Y_VALUE_DECIMALS = Y_VALUE.toFixed(4);
     render(
       <KpiBase
         propertyPoint={{ x: new Date().getTime(), y: Y_VALUE }}
         settings={{ showName: false }}
       />
     );
-    expect(screen.queryByText(Y_VALUE)).not.toBeNull();
+    expect(screen.queryByText(Y_VALUE_DECIMALS)).not.toBeNull();
   });
 });
 

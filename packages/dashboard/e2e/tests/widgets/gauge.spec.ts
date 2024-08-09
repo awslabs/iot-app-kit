@@ -31,7 +31,7 @@ test.describe('validate gauge widget behavior', () => {
   }) => {
     // add property
     await resourceExplorer.addModeledProperties(['Max Temperature']);
-    dashboardWithGaugeWidget.gridArea.getByTestId('kpi-base-component');
+    dashboardWithGaugeWidget.gridArea.getByTestId('gauge-base-component');
     // select 2 more properties
     await resourceExplorer.selectProperties(['Min Temperature', 'Temperature']);
 

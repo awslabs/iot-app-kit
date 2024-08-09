@@ -1,4 +1,4 @@
-import { highContrastColor } from './highContrastColor';
+import { highContrastColor } from '../highContrastColor';
 
 it('returns white when given invalid color', () => {
   expect(highContrastColor('fake-color')).toBe('white');

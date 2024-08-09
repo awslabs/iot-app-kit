@@ -4,7 +4,7 @@ import { KPI } from '../../src/components/kpi/kpi';
 import {
   MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY,
   MOCK_TIME_SERIES_DATA_QUERY,
-} from './kpi-thresholds';
+} from './kpi-mock-data';
 
 export default {
   title: 'Widgets/KPI',
@@ -27,7 +27,7 @@ export const KPIThresholds: ComponentStory<typeof KPI> = () => {
         gridColumnGap: '20px',
         gridRowGap: '20px',
       }}
-      data-testid='mock-data-kpi-story'
+      data-testid='threshold-kpi-story'
     >
       {/* KPI with threshold line + active threshold */}
       <div style={{ height: '200px', width: '250px', padding: '20px' }}>
@@ -40,7 +40,6 @@ export const KPIThresholds: ComponentStory<typeof KPI> = () => {
               comparisonOperator: 'GT',
             },
           ]}
-          // settings={{backgroundColor: '#00ff00'}}
           viewport={{ duration: '5m' }}
           query={MOCK_TIME_SERIES_DATA_QUERY}
         />
@@ -56,7 +55,6 @@ export const KPIThresholds: ComponentStory<typeof KPI> = () => {
               comparisonOperator: 'GT',
             },
           ]}
-          // settings={{backgroundColor: '#00ff00'}}
           viewport={{ duration: '5m' }}
           query={MOCK_TIME_SERIES_DATA_QUERY}
         />
@@ -73,7 +71,6 @@ export const KPIThresholds: ComponentStory<typeof KPI> = () => {
               fill: '#be1c1f',
             },
           ]}
-          // settings={{backgroundColor: '#00ff00'}}
           viewport={{ duration: '5m' }}
           query={MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY}
         />
@@ -90,7 +87,6 @@ export const KPIThresholds: ComponentStory<typeof KPI> = () => {
               fill: '#be1c1f',
             },
           ]}
-          // settings={{backgroundColor: '#00ff00'}}
           viewport={{ duration: '5m' }}
           query={MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY}
         />
