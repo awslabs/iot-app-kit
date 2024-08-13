@@ -3,6 +3,7 @@ import {
   IoTSiteWiseClient,
   DescribeDashboardRequest,
   DescribeDashboardResponse,
+  IoTSiteWise,
 } from '@aws-sdk/client-iotsitewise';
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
@@ -25,6 +26,7 @@ export type DashboardIotSiteWiseClients = {
   iotSiteWiseClient: IoTSiteWiseClient;
   iotEventsClient: IoTEventsClient;
   iotTwinMakerClient: IoTTwinMakerClient;
+  iotSiteWise: IoTSiteWise;
 };
 
 export type DashboardIotSiteWiseQueries = {

@@ -114,7 +114,7 @@ describe(QueryExtender.name, () => {
       };
       const queryExtender = new QueryExtender(currentQuery);
       const unmodeledDataStreams = [
-        { propertyAlias: 'property-2' },
+        { alias: 'property-2' },
       ] as UnmodeledDataStream[];
 
       const extendedQuery =
@@ -140,8 +140,8 @@ describe(QueryExtender.name, () => {
       };
       const queryExtender = new QueryExtender(currentQuery);
       const unmodeledDataStreams = [
-        { propertyAlias: 'property-1' },
-        { propertyAlias: 'property-2' },
+        { alias: 'property-1' },
+        { alias: 'property-2' },
       ] as UnmodeledDataStream[];
 
       const extendedQuery =

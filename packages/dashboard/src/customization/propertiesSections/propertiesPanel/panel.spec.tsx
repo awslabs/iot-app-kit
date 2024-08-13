@@ -1,4 +1,7 @@
-import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  IoTSiteWise,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import React from 'react';
 import {
@@ -105,6 +108,7 @@ const renderTestComponentAsync = async (
     }) as unknown as IoTSiteWiseClient,
     iotEventsClient: createMockIoTEventsSDK(),
     iotTwinMakerClient: { send: jest.fn() } as unknown as IoTTwinMakerClient,
+    iotSiteWise: new IoTSiteWise(),
   };
 
   await act(async () => {

@@ -5,7 +5,7 @@ import {
   REACTOR_ASSET_MODEL,
   STORAGE_TANK_ASSET_MODEL,
 } from '../assetModels';
-import type { Asset, AssetModel } from '../types';
+import type { Asset } from '../types';
 
 const siteAssetFactory = new AssetFactory(SITE_ASSET_MODEL);
 const productionLineAssetFactory = new AssetFactory(
@@ -44,22 +44,11 @@ class AssetHierarchyClient {
     return asset;
   }
 
-  public findChildren(assetId: string, hierarchyId: string): Asset[] {
+  public findChildren(assetId: string): Asset[] {
     const node = this.#searchById(assetId, this.#assetHierarchy);
-    const hierarchy = node?.asset.assetHierarchies?.find(
-      ({ id }) => id === hierarchyId
-    );
-    // childAssetModelId is not on Assets - We keep it in the translation from AssetModel to Asset to enable this search.
-    const hierarchyAsAssetModelHierarchy = hierarchy as NonNullable<
-      AssetModel['assetModelHierarchies']
-    >[number];
-    const childAssetModelId = hierarchyAsAssetModelHierarchy.childAssetModelId;
     const children = node?.children?.map(({ asset }) => asset) ?? [];
-    const childrenOfHierachy = children.filter(
-      ({ assetModelId }) => assetModelId === childAssetModelId
-    );
 
-    return childrenOfHierachy;
+    return children;
   }
 
   public findParentAsset(assetId: string): Asset | undefined {

@@ -97,7 +97,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
 }) => {
   useSyncDashboardConfiguration({ onDashboardConfigurationChange });
 
-  const { iotSiteWiseClient, iotTwinMakerClient } = useClients();
+  const { iotSiteWiseClient, iotTwinMakerClient, iotSiteWise } = useClients();
 
   /**
    * disable user select styles on drag to prevent highlighting of text under the pointer
@@ -291,7 +291,11 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     backgroundColor: colorBackgroundLayoutMain,
   };
 
-  if (iotSiteWiseClient == null || iotTwinMakerClient == null) {
+  if (
+    iotSiteWiseClient == null ||
+    iotTwinMakerClient == null ||
+    iotSiteWise == null
+  ) {
     return null;
   }
 
@@ -349,6 +353,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             <QueryEditor
               iotSiteWiseClient={iotSiteWiseClient}
               iotTwinMakerClient={iotTwinMakerClient}
+              iotSiteWise={iotSiteWise}
             />
           }
           centerPane={

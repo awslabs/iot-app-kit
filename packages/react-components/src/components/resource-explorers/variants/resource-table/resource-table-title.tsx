@@ -6,6 +6,7 @@ export interface ResourceTableTitleProps {
   totalResourceCount: number;
   pluralResourceName: string;
   titleExtension?: React.ReactNode;
+  description?: string;
 }
 
 export function ResourceTableTitle({
@@ -13,6 +14,7 @@ export function ResourceTableTitle({
   totalResourceCount,
   pluralResourceName,
   titleExtension,
+  description,
 }: ResourceTableTitleProps) {
   return (
     <>
@@ -23,6 +25,7 @@ export function ResourceTableTitle({
             ? `(${selectedResourceCount}/${totalResourceCount})`
             : `(${totalResourceCount})`
         }
+        description={description}
       >
         {pluralResourceName}
       </CloudscapeHeader>
