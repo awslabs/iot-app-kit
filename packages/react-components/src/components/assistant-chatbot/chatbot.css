@@ -4,6 +4,10 @@
   min-width: 290px;
 }
 
+.iot-app-kit-assistant-chatbot-input textarea {
+  max-height: 150px;
+}
+
 .iot-app-kit.assistant-chatbot .conversation-container {
   overflow: auto;
   overflow-x: hidden;

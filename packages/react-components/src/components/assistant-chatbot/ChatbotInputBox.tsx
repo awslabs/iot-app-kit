@@ -6,13 +6,22 @@ import Textarea from '@cloudscape-design/components/textarea';
 import Button from '@cloudscape-design/components/button';
 import Box from '@cloudscape-design/components/box';
 import { IMessage, SenderType } from '../../hooks/useAssistant/types';
+import {
+  InputProps,
+  NonCancelableCustomEvent,
+} from '@cloudscape-design/components';
 
 export interface ChatbotInputBox {
   onSubmit: (utterance: string) => void;
+  onResize: () => void;
   lastMessage?: IMessage;
 }
 
-export const ChatbotInputBox = ({ onSubmit, lastMessage }: ChatbotInputBox) => {
+export const ChatbotInputBox = ({
+  lastMessage,
+  onSubmit,
+  onResize,
+}: ChatbotInputBox) => {
   const [value, setValue] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(false);
 
@@ -39,13 +48,33 @@ export const ChatbotInputBox = ({ onSubmit, lastMessage }: ChatbotInputBox) => {
     }
   };
 
+  const handleChange = (
+    event: NonCancelableCustomEvent<InputProps.ChangeDetail>
+  ) => {
+    const { value: newValue } = event.detail;
+    setValue(newValue);
+
+    if (newValue.match(/\n/g)) {
+      onResize();
+    }
+  };
+
+  const handleKeyDown = (
+    event: NonCancelableCustomEvent<InputProps.KeyDetail>
+  ) => {
+    if (event.detail.key === 'Enter' && !event.detail.shiftKey) {
+      handleClick();
+    }
+  };
+
   return (
     <div className='iot-app-kit-assistant-chatbot-input'>
       <Grid gridDefinition={[{ colspan: 11 }, { colspan: 1 }]}>
         <Textarea
           value={value}
           placeholder='Ask me anything about your IoT data'
-          onChange={(event) => setValue(event.detail.value)}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
           rows={1}
           disabled={disabled}
         />

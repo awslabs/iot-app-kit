@@ -193,4 +193,42 @@ describe(Chatbot, () => {
     });
     expect(mockOnClose).toBeCalled();
   });
+
+  it('should resize message container when customer types breakline', async () => {
+    const user = userEvent.setup();
+    render(
+      <Chatbot
+        height={500}
+        messages={[
+          {
+            content: '',
+            sender: SenderType.ASSISTANT,
+            type: MessageType.TEXT,
+            id: 'UniqueID',
+            loading: false,
+          },
+        ]}
+        onSubmit={jest.fn()}
+      />
+    );
+
+    const textarea = screen.getByPlaceholderText(
+      'Ask me anything about your IoT data'
+    );
+    expect(textarea).toBeInTheDocument();
+
+    await act(async () => {
+      return await user.type(textarea!, 'some text\n');
+    });
+
+    await act(async () => {
+      return await user.type(textarea!, 'some text\n');
+    });
+
+    const inputContainer = screen.getByTestId(
+      'assistant-chatbot-conversation-container'
+    );
+    expect(inputContainer).toBeInTheDocument();
+    expect(inputContainer.style.height).toBe('450px');
+  });
 });

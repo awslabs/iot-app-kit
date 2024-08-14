@@ -34,7 +34,12 @@ export const ChatbotConversationContainer = ({
   }, [lastMessageId, ref.current]);
 
   return (
-    <div ref={ref} className='conversation-container' style={{ height }}>
+    <div
+      ref={ref}
+      className='conversation-container'
+      data-testid='assistant-chatbot-conversation-container'
+      style={{ height }}
+    >
       <Box padding={{ top: 'm' }}>
         <SpaceBetween size='s'>
           {messages.map((message) => {
