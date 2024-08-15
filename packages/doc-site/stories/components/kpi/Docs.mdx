@@ -23,6 +23,8 @@ If a ViewportManager, and a `viewport` is not defined, the default value is `{ d
 
 **query** (object, optional): This query specifies the time series data to visualize. [Learn more about time series data queries](/docs/core-time-series-data--docs).
 
+**timeZone** (string, optional): Timezone must be specified as an [IANA timezone string](https://ftp.iana.org/tz/tzdb-2020f/zone1970.tab). If this property is provided, the chart will display all dates in the provided timezone, otherwise it will use the browsers local timezone.
+
 **settings** (object, optional): This specifies the settings to customize the appearance of the widget. The settings object contains the following properties:
 
   * `showTimestamp` (boolean, optional): Displays the timestamp of the data being displayed. Defaults to true.
