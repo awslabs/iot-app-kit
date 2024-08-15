@@ -43,6 +43,8 @@ npm install --save @iot-app-kit/dashboard
 **toolbar** (function, optional): This renders a function that replaces the defaul dashboard toolbar with a user-provided component. The render function is of the following type:
 - `({dashboardConfiguartion: DashboardConfiguration, viewport?: Viewport, viewmode: 'preview' | 'edit'}) => ReactElement`.
 
+**timeZone** (string, optional): Timezone must be specified as an [IANA timezone string](https://ftp.iana.org/tz/tzdb-2020f/zone1970.tab). If this property is provided, the dashboard will display all dates in the provided timezone, otherwise it will use the browsers local timezone. **Note:** Bar chart and Timeline charts are not currently supported.
+
 **onDashboardConfigurationChange** (function, optional): Callback called when the dashboard configuration is updated. This is called when a widget is added, deleted, updated, or moved. 
 The function must of the following type:
 - `(dashboardConfiguartion: DashboardConfiguration) => void`.
