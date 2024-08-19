@@ -23,6 +23,7 @@ export class AssetModelFactory {
       assetModelCreationDate,
       assetModelLastUpdateDate,
       assetModelStatus,
+      assetModelType,
     }: Partial<AssetModel> = {
       assetModelId: uuid(),
       assetModelName: 'Asset Model',
@@ -49,6 +50,7 @@ export class AssetModelFactory {
       assetModelCreationDate,
       assetModelLastUpdateDate,
       assetModelStatus,
+      assetModelType,
     };
 
     return defaults;

@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { AssetModelFactory } from './AssetModelFactory';
+import { AssetModelType } from '@aws-sdk/client-iotsitewise';
 
 const reactorAssetModelId = uuid();
 const reactorAssetModelTemperatureId = uuid();
@@ -125,6 +126,13 @@ export const STORAGE_TANK_ASSET_MODEL = assetModelFactory.create({
   ],
 });
 
+export const componentAssetModelName = 'Component Asset Model';
+export const COMPONENT_ASSET_MODEL = assetModelFactory.create({
+  assetModelId: uuid(),
+  assetModelName: componentAssetModelName,
+  assetModelType: AssetModelType.COMPONENT_MODEL,
+});
+
 const reactorAssetModelHeirarchyId = uuid();
 
 export const REACTOR_ASSET_MODEL_HIERARCHY = {
@@ -203,6 +211,7 @@ export const ASSET_MODELS = {
     PRODUCTION_LINE_ASSET_MODEL,
     REACTOR_ASSET_MODEL,
     STORAGE_TANK_ASSET_MODEL,
+    COMPONENT_ASSET_MODEL,
   ],
   getAll: function () {
     return this.models;
