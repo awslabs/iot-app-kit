@@ -1,4 +1,8 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  AssetModelSummary,
+  AssetModelType,
+  IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import { QueryFunctionContext, useInfiniteQuery } from '@tanstack/react-query';
 import { AssetModelsCacheKeyFactory } from './assetModelQueryKeyFactory';
 import { GetAssetModelsRequest } from './getAssetModelRequest';
@@ -7,10 +11,15 @@ import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
 export interface UseAssetModelsOptions {
   client: IoTSiteWiseClient;
   fetchAll?: boolean;
+  includeComposite?: boolean;
 }
 
 /** Use an AWS IoT SiteWise asset description. */
-export function useAssetModels({ client, fetchAll }: UseAssetModelsOptions) {
+export function useAssetModels({
+  client,
+  fetchAll,
+  includeComposite = true,
+}: UseAssetModelsOptions) {
   const cacheKeyFactory = new AssetModelsCacheKeyFactory();
 
   const {
@@ -32,9 +41,17 @@ export function useAssetModels({ client, fetchAll }: UseAssetModelsOptions) {
 
   if (fetchAll && hasNextPage) fetchNextPage();
 
-  const assetModelSummaries = createNonNullableList(
+  let assetModelSummaries = createNonNullableList(
     assetModelResponses.flatMap((res) => res.assetModelSummaries)
   );
+
+  if (!includeComposite) {
+    // Remove composite models
+    assetModelSummaries = assetModelSummaries.filter(
+      (modelSummary: AssetModelSummary) =>
+        modelSummary.assetModelType !== AssetModelType.COMPONENT_MODEL
+    );
+  }
 
   return {
     assetModelSummaries,
