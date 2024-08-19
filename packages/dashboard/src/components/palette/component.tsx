@@ -44,7 +44,7 @@ const PaletteComponent: React.FC<PaletteComponentProps> = ({
   // isDragging updates before the click event is captured and the handler executes
   // the pointer up event fires before the hook value updates.
   // this because it's what ReactDnD uses to indicate drag start / drag end
-  const handlePointerUp = () => {
+  const handleClick = () => {
     if (isDragging) return;
     onAddWidget(componentTag);
   };
@@ -64,8 +64,8 @@ const PaletteComponent: React.FC<PaletteComponentProps> = ({
         className='palette-button'
         ref={dragRef}
         draggable='true'
-        onPointerUp={handlePointerUp}
         onKeyDown={handleKeyDown}
+        onClick={handleClick}
       >
         <PaletteComponentIcon widgetName={name} Icon={IconComponent} />
       </button>
