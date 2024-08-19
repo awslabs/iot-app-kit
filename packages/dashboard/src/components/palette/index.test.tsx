@@ -48,7 +48,7 @@ describe('Component Palette', () => {
     const lineWidget = screen.getByLabelText(/add line widget/i);
 
     act(() => {
-      fireEvent.pointerUp(lineWidget);
+      fireEvent.click(lineWidget);
     });
 
     expect(onAddWidgetStub).toBeCalledWith('xy-plot');
