@@ -10,5 +10,6 @@ export function summarizeAssetModel(assetModel: AssetModel): AssetModelSummary {
     lastUpdateDate: assetModel.assetModelLastUpdateDate,
     name: assetModel.assetModelName,
     status: assetModel.assetModelStatus,
+    assetModelType: assetModel.assetModelType,
   };
 }

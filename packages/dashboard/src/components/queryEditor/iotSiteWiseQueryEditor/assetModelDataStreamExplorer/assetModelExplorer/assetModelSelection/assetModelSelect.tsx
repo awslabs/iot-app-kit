@@ -48,6 +48,7 @@ export const AssetModelSelect = ({
   selectedAssetModel,
   onSelectAssetModel,
 }: AssetModelSelectOptions) => {
+  // Filter composite models since they dont have properties to display
   const {
     assetModelSummaries,
     // status,
@@ -58,7 +59,7 @@ export const AssetModelSelect = ({
     hasNextPage = false,
     fetchNextPage,
     refetch,
-  } = useAssetModels({ client });
+  } = useAssetModels({ client, includeComposite: false });
 
   const selectedAssetModelOption = selectedAssetModel
     ? mapAssetModelToOption(selectedAssetModel)

@@ -8,6 +8,7 @@ import {
   WIDGET_EMPTY_STATE_TEXT,
 } from '../constants';
 import { resourceExplorerUtil } from '../utils/resourceExplorer';
+import { componentAssetModelName } from '../../../src/msw/iot-sitewise/resources/assetModels';
 
 test('can load resource explorer', async ({ page }) => {
   await page.goto(TEST_PAGE);
@@ -293,4 +294,26 @@ test(' changing widgets filters properties correctly (modeled)', async ({
 
   //find string property is not disabled
   await expect(validProperty2).not.toBeDisabled();
+});
+
+test('filters COMPONENT_MODEL from asset model results', async ({ page }) => {
+  await page.goto(TEST_PAGE);
+
+  const resourceExplorer = resourceExplorerUtil(page);
+
+  await resourceExplorer.open();
+
+  await expect(page.locator(MODELED_TAB)).toBeVisible();
+  await expect(page.locator(UNMODELED_TAB)).toBeVisible();
+  await expect(page.locator(ASSET_MODEL_TAB)).toBeVisible();
+
+  await resourceExplorer.tabTo('assetModel');
+
+  await page.getByLabel('Asset model', { exact: true }).click();
+  const searchBox = await page.getByPlaceholder('Find an asset model');
+  await searchBox.click();
+  await searchBox.fill(componentAssetModelName);
+
+  // check that composite model does not show up
+  await expect(page.getByText(componentAssetModelName)).not.toBeVisible();
 });
