@@ -5,13 +5,13 @@
     "./stories"
   ],
   "compilerOptions": {
+    "outDir": "./dist",
     "jsx": "react",
-    "baseUrl": ".",
     "paths": {
       "~/*": [
         "./src/*"
       ]
-    }
+    },
   },
-  "files": ["./global.d.ts", "custom.d.ts"]
+  "files": ["./global.d.ts", "custom.d.ts"],
 }
