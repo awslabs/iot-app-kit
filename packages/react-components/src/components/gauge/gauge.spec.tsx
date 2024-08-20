@@ -2,18 +2,18 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
-import { DataStream } from '@iot-app-kit/core';
-import { Table } from './table';
+import { Gauge } from './gauge';
 
 const VIEWPORT = { duration: '5m' };
 
-const DATA_STREAM: DataStream = {
-  id: 'abc-1',
-  data: [],
+const LATEST_VALUE = 123.2;
+const DATA_STREAM = {
+  id: 'mock-data-stream',
+  data: [{ x: new Date(2024, 0, 0).getTime(), y: LATEST_VALUE }],
   resolution: 0,
-  name: 'my-name',
+  name: 'mock-name',
+  unit: 'mph',
 };
-
 const query = mockTimeSeriesDataQuery([
   {
     dataStreams: [DATA_STREAM],
@@ -23,25 +23,15 @@ const query = mockTimeSeriesDataQuery([
 ]);
 
 it('renders', async () => {
-  expect(() => {
-    render(
-      <Table
-        columnDefinitions={[]}
-        items={[]}
-        queries={[query]}
-        viewport={VIEWPORT}
-      />
-    );
-  }).not.toThrowError();
+  const element = render(<Gauge query={query} viewport={VIEWPORT} />);
+  expect(element).not.toBeNull();
 });
 
 it('renders with assistant action panel', async () => {
   expect(() => {
     render(
-      <Table
-        columnDefinitions={[]}
-        items={[]}
-        queries={[query]}
+      <Gauge
+        query={query}
         viewport={VIEWPORT}
         assistant={{
           client: {} as IoTSitewiseAssistantClient,

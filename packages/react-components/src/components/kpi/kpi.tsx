@@ -12,6 +12,7 @@ import type {
 } from '@iot-app-kit/core';
 import type { KPISettings } from './types';
 import { KpiBase } from './kpiBase';
+import { ActionPanel } from '../assistant-action-panel/actionPanel';
 
 export const KPI = ({
   query,
@@ -21,6 +22,7 @@ export const KPI = ({
   settings,
   significantDigits,
   timeZone,
+  assistant,
 }: {
   query: TimeSeriesDataQuery;
   viewport?: Viewport;
@@ -64,7 +66,7 @@ export const KPI = ({
     alarmStream?.isLoading || propertyStream?.isLoading || false;
   const error = alarmStream?.error || propertyStream?.error;
 
-  return (
+  const component = (
     <KpiBase
       propertyPoint={propertyPoint}
       alarmPoint={alarmPoint}
@@ -80,4 +82,14 @@ export const KPI = ({
       timeZone={timeZone}
     />
   );
+
+  if (assistant) {
+    return (
+      <ActionPanel width='100%' height='100%'>
+        {component}
+      </ActionPanel>
+    );
+  } else {
+    return component;
+  }
 };

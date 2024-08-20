@@ -1,4 +1,5 @@
 import React from 'react';
+import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { DataStream } from '@iot-app-kit/core';
 import { render } from '@testing-library/react';
@@ -38,26 +39,6 @@ export const mockQuery = mockTimeSeriesDataQuery([
 ]);
 describe('Chart Component Testing', () => {
   it('Chart renders', () => {
-    const query = mockTimeSeriesDataQuery([
-      {
-        dataStreams: [DATA_STREAM],
-        viewport: VIEWPORT,
-        thresholds: [],
-      },
-    ]);
-
-    const element = render(
-      <Chart
-        queries={[query]}
-        onChartOptionsChange={jest.fn()}
-        viewport={VIEWPORT}
-        size={{ width: 500, height: 500 }}
-      />
-    );
-    expect(element).not.toBeNull();
-  });
-
-  it('Chart renders', () => {
     const element = render(
       <Chart
         queries={[mockQuery]}
@@ -67,6 +48,23 @@ describe('Chart Component Testing', () => {
       />
     );
     expect(element).not.toBeNull();
+  });
+
+  it('Chart renders with assistant action panel', () => {
+    expect(() => {
+      render(
+        <Chart
+          queries={[mockQuery]}
+          onChartOptionsChange={jest.fn()}
+          viewport={VIEWPORT}
+          size={{ width: 500, height: 500 }}
+          assistant={{
+            client: {} as IoTSitewiseAssistantClient,
+            conversationID: 'mockId',
+          }}
+        />
+      );
+    }).not.toThrowError();
   });
 });
 

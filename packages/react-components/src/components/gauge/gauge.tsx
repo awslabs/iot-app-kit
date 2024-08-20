@@ -1,13 +1,14 @@
 // eslint-disable-next-line import/default
 import React from 'react';
 
-import { GaugeBase } from './gaugeBase';
-import { GaugeProps } from './types';
+import { ActionPanel } from '../assistant-action-panel/actionPanel';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { DEFAULT_VIEWPORT, ECHARTS_GESTURE } from '../../common/constants';
 import { DataStream } from '@iot-app-kit/core';
+import { GaugeBase } from './gaugeBase';
+import type { GaugeProps } from './types';
 import {
   DEFAULT_GAUGE_PROGRESS_COLOR,
   DEFAULT_GAUGE_STYLES,
@@ -22,6 +23,7 @@ export const Gauge = ({
   settings,
   significantDigits,
   theme,
+  assistant,
 }: GaugeProps) => {
   const { dataStreams } = useTimeSeriesData({
     viewport: passedInViewport,
@@ -53,7 +55,7 @@ export const Gauge = ({
   const color =
     styles && refId ? styles[refId]?.color : DEFAULT_GAUGE_PROGRESS_COLOR;
 
-  return (
+  const component = (
     <GaugeBase
       size={size}
       propertyPoint={propertyPoint}
@@ -67,4 +69,14 @@ export const Gauge = ({
       theme={theme}
     />
   );
+
+  if (assistant) {
+    return (
+      <ActionPanel width='min-content' height='min-content'>
+        {component}
+      </ActionPanel>
+    );
+  } else {
+    return component;
+  }
 };
