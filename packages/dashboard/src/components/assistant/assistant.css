@@ -1,6 +1,7 @@
 .iot-dashboard-assistant-chatbot-button {
   position: fixed;
   right: 0;
+  top: 88px;
   z-index: 1;
   padding: 0.5rem;
   cursor: pointer;

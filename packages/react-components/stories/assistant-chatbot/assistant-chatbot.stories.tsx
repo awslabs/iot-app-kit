@@ -32,7 +32,6 @@ export const DefaultAssistantChatbot: ComponentStory<
     iotSiteWiseClient: {
       invokeAssistant: MockInvokeAssistant,
     },
-    assistantId: 'myAssistantId',
     defaultContext: '',
   });
 

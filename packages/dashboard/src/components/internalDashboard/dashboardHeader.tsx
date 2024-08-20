@@ -25,7 +25,7 @@ const HeaderContainer = ({ children }: { children: ReactNode }) => {
   return (
     <div
       style={{ height: '68px', maxHeight: '68px', boxSizing: 'border-box' }}
-      data-testid='dashboard-header'
+      data-testid='iot-app-kit-dashboard-header'
     >
       {children}
     </div>

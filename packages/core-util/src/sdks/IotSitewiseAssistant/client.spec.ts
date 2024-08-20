@@ -49,7 +49,6 @@ describe('AssistantClient', () => {
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
-      assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
       onComplete: () => {},
@@ -58,36 +57,12 @@ describe('AssistantClient', () => {
     expect(client).toBeDefined();
   });
 
-  it('can set a new assistant name', () => {
-    const mockInvokeAssistant = jest.fn().mockResolvedValue({ body: [] });
-    const client = new IoTSitewiseAssistantClient({
-      iotSiteWiseClient: {
-        invokeAssistant: mockInvokeAssistant,
-      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
-      assistantId: 'myAssistantID',
-      defaultContext: '',
-      onResponse: () => {},
-      onComplete: () => {},
-    });
-
-    client.setAssistantId('newAssistantId');
-    client.invoke(conversationId, 'customer message');
-
-    expect(mockInvokeAssistant).toBeCalledWith(
-      expect.objectContaining({
-        conversationId,
-        message: expect.any(String),
-      })
-    );
-  });
-
   it('can set iotSiteWiseClient', () => {
     const mockInvokeAssistant = jest.fn().mockResolvedValue({ body: [] });
     const client = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
-      assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
       onComplete: () => {},
@@ -112,7 +87,6 @@ describe('AssistantClient', () => {
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
-      assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
       onComplete: () => {},
@@ -136,7 +110,6 @@ describe('AssistantClient', () => {
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
-      assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse,
       onComplete: () => {},
@@ -160,7 +133,6 @@ describe('AssistantClient', () => {
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
-      assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
       onComplete,
@@ -183,7 +155,6 @@ describe('AssistantClient', () => {
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
-      assistantId: 'myAssistantID',
       defaultContext: '',
       onResponse: () => {},
       onComplete: () => {},

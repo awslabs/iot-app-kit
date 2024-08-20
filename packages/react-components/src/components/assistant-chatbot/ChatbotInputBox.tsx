@@ -31,6 +31,10 @@ export const ChatbotInputBox = ({
     );
     if (textarea) {
       autosize(textarea);
+      textarea.addEventListener('paste', onResize);
+      return () => {
+        textarea.removeEventListener('paste', onResize);
+      };
     }
   }, []);
 

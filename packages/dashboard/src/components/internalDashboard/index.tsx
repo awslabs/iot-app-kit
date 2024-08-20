@@ -72,6 +72,10 @@ import { parseViewport } from '~/util/parseViewport';
 import Actions from '../actions';
 import { useSyncDashboardConfiguration } from '~/hooks/useSyncDashboardConfiguration';
 import { Chatbot } from '../assistant/chatbot';
+import {
+  useChatbotPosition,
+  getScrollParent,
+} from '~/hooks/useChatbotPosition';
 
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
@@ -130,11 +134,18 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     undefined
   );
   const [visible, setVisible] = useState<boolean>(false);
-  const [chatbotHeight, setChatbotHeight] = useState<number>(500);
-
+  const [scrollableParent, setScrollableParent] = useState<Element | null>(
+    null
+  );
   useDashboardViewport(
     currentViewport || parseViewport(dashboardConfiguration?.defaultViewport)
   );
+  const { chatbotTop, chatbotHeight, calculateChatbotDimensions } =
+    useChatbotPosition(
+      scrollableParent,
+      '[data-testid=iot-app-kit-dashboard-header]',
+      '[data-test-id=read-only-mode-dashboard]'
+    );
 
   const dispatch = useDispatch();
 
@@ -410,13 +421,16 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
         <div
           className='display-area'
           ref={(el) => {
-            const dashboardContainer = document
-              .querySelector('[data-test-id=read-only-mode-dashboard]')
-              ?.getBoundingClientRect();
-
-            const displayAreaHeight = window.innerHeight || 500;
-            const containerTop = dashboardContainer?.top || 0;
-            setChatbotHeight(displayAreaHeight - containerTop);
+            const displayAreaElement = document.querySelector(
+              '[data-test-id=read-only-mode-dashboard]'
+            );
+            const scrollableParent = getScrollParent(displayAreaElement);
+            scrollableParent?.addEventListener(
+              'scroll',
+              calculateChatbotDimensions
+            );
+            setScrollableParent(scrollableParent);
+            calculateChatbotDimensions();
             setViewFrameElement(el || undefined);
           }}
           style={{ backgroundColor: colorBackgroundCellShaded }}
@@ -425,7 +439,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             <Widgets {...widgetsProps} />
           </ReadOnlyGrid>
           <WebglContext viewFrame={viewFrame} />
-          <Chatbot assistantId='assistantId' height={chatbotHeight} />
+          <Chatbot height={chatbotHeight} top={chatbotTop} />
         </div>
       </div>
     </ContentLayout>

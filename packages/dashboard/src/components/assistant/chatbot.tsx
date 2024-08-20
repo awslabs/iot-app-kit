@@ -11,10 +11,11 @@ import { useClients } from '../dashboard/clientContext';
 import assistantIcon from './assistantIcon.svg';
 import 'animate.css';
 import './assistant.css';
+import { CHATBOT_DEFAULT_RIGHT } from '~/hooks/useChatbotPosition';
 
 export interface AssistantChatbotProps {
-  assistantId: string;
   height: number;
+  top: number;
 }
 
 export const Chatbot: FC<AssistantChatbotProps> = (
@@ -23,11 +24,10 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   const [conversationId] = useState<string>(uuid());
   const [isOpen, setOpen] = useState<boolean | null>(null);
   const { iotSiteWisePrivateClient } = useClients();
-  const [right, setRight] = useState(0);
+  const [right, setRight] = useState(CHATBOT_DEFAULT_RIGHT);
 
   const client = new IoTSitewiseAssistantClient({
     iotSiteWiseClient: iotSiteWisePrivateClient!,
-    assistantId: props.assistantId,
   });
 
   const { messages, invokeAssistant } = useAssistant({
@@ -54,7 +54,9 @@ export const Chatbot: FC<AssistantChatbotProps> = (
     const { left: leftPos = 0 } =
       dashboardContainer?.getBoundingClientRect() ?? {};
     const rightPosition =
-      leftPos > 0 ? leftPos - (assistantButton?.clientWidth ?? 0) + 10 : 0;
+      leftPos > 0
+        ? leftPos - (assistantButton?.clientWidth ?? 0) + CHATBOT_DEFAULT_RIGHT
+        : CHATBOT_DEFAULT_RIGHT;
     setRight(rightPosition);
   }, []);
 
@@ -73,7 +75,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
     <>
       <div
         className='iot-dashboard-assistant-chatbot-button'
-        style={{ right: `${right}px` }}
+        style={{ right: `${right}px`, top: `${props.top}px` }}
       >
         <button onClick={() => setOpen(true)}>
           <img alt='Assistant Icon' src={assistantIcon} width={30} />
@@ -81,7 +83,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
       </div>
       <div
         className={`iot-dashboard-assistant-chatbot animate__animated ${chatbotAnimation}`}
-        style={{ right: `${right}px` }}
+        style={{ right: `${right}px`, top: `${props.top}px` }}
       >
         <AssistantChatbot
           height={props.height}

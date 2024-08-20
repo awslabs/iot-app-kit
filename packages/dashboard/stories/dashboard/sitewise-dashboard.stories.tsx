@@ -86,6 +86,24 @@ export const View: ComponentStory<typeof DashboardView> = () => (
   />
 );
 
+export const AssistantEnabled: ComponentStory<typeof DashboardView> = () => (
+  <DashboardView
+    clientConfiguration={CLIENT_CONFIGURATION}
+    dashboardConfiguration={getInitialDashboardConfig()}
+  />
+);
+
+export const AssistantWithDoubleScroll: ComponentStory<
+  typeof DashboardView
+> = () => (
+  <div style={{ height: '600px', overflow: 'scroll' }}>
+    <DashboardView
+      clientConfiguration={CLIENT_CONFIGURATION}
+      dashboardConfiguration={getInitialDashboardConfig()}
+    />
+  </div>
+);
+
 export default {
   title: 'Dashboard/SiteWise Connected',
   component: Dashboard,

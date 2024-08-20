@@ -44,7 +44,7 @@ export const Chatbot = ({
     if (height > MIN_HEIGHT) {
       adjustHeight();
     }
-  }, [visible, height]);
+  }, [visible, height]); 
 
   return (
     <div className='iot-app-kit assistant-chatbot'>

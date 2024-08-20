@@ -7,7 +7,6 @@ export type UniqueId = string;
 
 export type AssistantClientInstanceParams = {
   iotSiteWiseClient: Pick<IoTSiteWise, 'invokeAssistant'>;
-  assistantId: string;
   defaultContext?: string;
 
   /**

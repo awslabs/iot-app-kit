@@ -30,7 +30,6 @@ describe('useAssistant', () => {
     iotSiteWiseClient: {
       invokeAssistant: mockInvokeAssistant,
     } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
-    assistantId: 'myAssistantId',
     defaultContext: '',
   });
   const mockGetState = jest
@@ -61,7 +60,6 @@ describe('useAssistant', () => {
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
-      assistantId: 'myAssistantId',
       defaultContext: '',
       onResponse: () => mockedParser(),
     });
@@ -108,7 +106,6 @@ describe('useAssistant', () => {
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
-      assistantId: 'myAssistantId',
       defaultContext: '',
     });
     const { result } = renderHook(() =>
