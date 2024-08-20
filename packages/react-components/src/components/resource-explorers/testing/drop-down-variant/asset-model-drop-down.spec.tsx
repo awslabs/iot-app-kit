@@ -334,7 +334,7 @@ describe('asset model drop-down', () => {
   });
 
   // TODO: fix this flaky test ASAP
-  describe.skip('filtering', () => {
+  describe('filtering', () => {
     it('filters asset models', async () => {
       const assetModel1 = {
         name: 'Similar Name 1',
@@ -398,6 +398,6 @@ describe('asset model drop-down', () => {
       expect(dropDown.getOption(assetModel2.name)).toBeVisible();
       expect(dropDown.getOption(assetModel3.name)).toBeVisible();
       expect(screen.getByText('(2/3) asset models matched')).toBeVisible();
-    });
+    }, 40000);
   });
 });

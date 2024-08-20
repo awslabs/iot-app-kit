@@ -276,9 +276,10 @@ test.describe('Test Text Widget', () => {
       // go to preview
       await page.getByRole('button', { name: 'preview' }).click();
 
-      // clicking on the link
-      await page.getByText(TEXT_WIDGET_CONTENT).click();
-      await page.waitForURL(`**${url}`);
+      await expect(page.getByText(TEXT_WIDGET_CONTENT)).toHaveAttribute(
+        'href',
+        'https://www.validurl.com/test'
+      );
     });
 
     test('when link is enabled, it should sanitize href and not link if dangerous', async ({
