@@ -11,6 +11,9 @@ import { useClients } from '../dashboard/clientContext';
 import assistantIcon from './assistantIcon.svg';
 import 'animate.css';
 import './assistant.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { onToggleChatbotAction } from '~/store/actions';
+import { DashboardState } from '~/store/state';
 import { CHATBOT_DEFAULT_RIGHT } from '~/hooks/useChatbotPosition';
 
 export interface AssistantChatbotProps {
@@ -21,8 +24,9 @@ export interface AssistantChatbotProps {
 export const Chatbot: FC<AssistantChatbotProps> = (
   props: AssistantChatbotProps
 ) => {
+  const dispatch = useDispatch();
+  const assistant = useSelector((state: DashboardState) => state.assistant);
   const [conversationId] = useState<string>(uuid());
-  const [isOpen, setOpen] = useState<boolean | null>(null);
   const { iotSiteWisePrivateClient } = useClients();
   const [right, setRight] = useState(CHATBOT_DEFAULT_RIGHT);
 
@@ -65,11 +69,19 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   };
 
   const chatbotAnimation =
-    isOpen === null
+    assistant.isChatbotOpen === null
       ? 'iot-dashboard-assistant-chatbot-hidden'
-      : isOpen
+      : assistant.isChatbotOpen
       ? 'animate__fadeInRight'
       : 'animate__fadeOutRight animate__faeOut';
+
+  const toggleChatbot = (open: boolean) => {
+    dispatch(
+      onToggleChatbotAction({
+        open,
+      })
+    );
+  };
 
   return (
     <>
@@ -77,7 +89,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
         className='iot-dashboard-assistant-chatbot-button'
         style={{ right: `${right}px`, top: `${props.top}px` }}
       >
-        <button onClick={() => setOpen(true)}>
+        <button onClick={() => toggleChatbot(true)}>
           <img alt='Assistant Icon' src={assistantIcon} width={30} />
         </button>
       </div>
@@ -89,8 +101,8 @@ export const Chatbot: FC<AssistantChatbotProps> = (
           height={props.height}
           messages={messages}
           onSubmit={handleSubmit}
-          visible={!!isOpen}
-          onClose={() => setOpen(false)}
+          visible={!!assistant.isChatbotOpen}
+          onClose={() => toggleChatbot(false)}
         />
       </div>
     </>

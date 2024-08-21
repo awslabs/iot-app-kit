@@ -1,5 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { DashboardState } from '../../state';
+import { v4 as uuid } from 'uuid';
 
 export interface ToggleReadOnlyAction extends PayloadAction<null> {
   type: 'TOGGLE_READ_ONLY';
@@ -16,5 +17,9 @@ export const toggleReadOnly = (state: DashboardState): DashboardState => {
   return {
     ...state,
     readOnly: !isReadOnly,
+    assistant: {
+      conversationID: uuid(),
+      isChatbotOpen: null,
+    },
   };
 };

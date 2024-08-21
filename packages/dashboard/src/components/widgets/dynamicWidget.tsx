@@ -1,10 +1,10 @@
 import React, { createElement } from 'react';
 import { WidgetComponentMap } from '~/customization/widgetComponentMap';
 import type { FC } from 'react';
-
-import './dynamicWidget.css';
 import type { DashboardWidget } from '~/types';
 import type { WidgetsMessages } from '~/messages';
+import { useAssistant } from '~/hooks/useAssistant';
+import './dynamicWidget.css';
 
 const IconX: FC = () => (
   <svg
@@ -46,9 +46,16 @@ const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
   const componentTag = widget.type;
   const Component = WidgetComponentMap[componentTag];
   const componentIsRegistered = typeof Component !== 'undefined';
+  const { assistantProperties } = useAssistant();
 
   return componentIsRegistered ? (
-    createElement(Component, widget)
+    createElement(Component, {
+      ...widget,
+      properties: {
+        ...widget.properties,
+        ...assistantProperties,
+      },
+    })
   ) : (
     <div className='error-container'>
       <IconX />

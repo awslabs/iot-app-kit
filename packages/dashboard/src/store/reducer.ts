@@ -13,6 +13,7 @@ import {
   selectWidgets,
   sendWidgetsToBack,
   toggleReadOnly,
+  toggleChatbot,
   updateSignificantDigits,
   updateWidgets,
   updateRefreshRate,
@@ -87,6 +88,10 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'TOGGLE_READ_ONLY': {
       return toggleReadOnly(state);
+    }
+
+    case 'TOGGLE_CHATBOT': {
+      return toggleChatbot(state, action);
     }
 
     case 'UPDATE_SIGNIFICANT_DIGITS': {
