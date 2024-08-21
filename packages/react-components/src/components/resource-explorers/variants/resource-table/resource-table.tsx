@@ -43,6 +43,8 @@ export function ResourceTable<Resource>({
   isUserSettingsEnabled,
   isSearchEnabled,
   titleExtension,
+  description,
+  ariaLabels,
 }: ResourceTableProps<Resource>) {
   const {
     items,
@@ -116,6 +118,7 @@ export function ResourceTable<Resource>({
               totalResourceCount={collectionProps.totalItemsCount ?? 0}
               pluralResourceName={pluralResourceName}
               titleExtension={titleExtension}
+              description={description}
             />
           )
         }
@@ -173,11 +176,14 @@ export function ResourceTable<Resource>({
         }) => {
           onSelectResource(updatedSelectedResources);
         }}
-        selectedItems={selectedResources}
+        selectedItems={selectedResources.filter(
+          (resource) => !isResourceDisabled(resource)
+        )}
         loading={isLoading}
         loadingText={`Loading ${pluralResourceName.toLowerCase()}...`}
         selectionType={selectionMode}
         resizableColumns
+        ariaLabels={ariaLabels}
       />
     </>
   );

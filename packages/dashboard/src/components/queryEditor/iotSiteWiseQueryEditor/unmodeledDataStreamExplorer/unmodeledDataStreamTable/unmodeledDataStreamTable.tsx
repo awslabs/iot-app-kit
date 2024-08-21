@@ -146,7 +146,7 @@ export function UnmodeledDataStreamTable({
         {
           id: 'propertyAlias',
           header: 'Alias',
-          cell: ({ propertyAlias }) => propertyAlias,
+          cell: ({ alias }) => alias,
           sortingField: 'propertyAlias',
         },
         {

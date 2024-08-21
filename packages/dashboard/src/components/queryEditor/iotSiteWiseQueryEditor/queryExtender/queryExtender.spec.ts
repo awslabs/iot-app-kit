@@ -1,5 +1,5 @@
+import { TimeSeriesResource } from '@iot-app-kit/react-components/dist/es/components/resource-explorers/types/resources';
 import { ModeledDataStream } from '../modeledDataStreamQueryEditor/modeledDataStreamExplorer/types';
-import { UnmodeledDataStream } from '../unmodeledDataStreamExplorer/types';
 import { QueryExtender } from './queryExtender';
 
 describe(QueryExtender.name, () => {
@@ -114,8 +114,8 @@ describe(QueryExtender.name, () => {
       };
       const queryExtender = new QueryExtender(currentQuery);
       const unmodeledDataStreams = [
-        { propertyAlias: 'property-2' },
-      ] as UnmodeledDataStream[];
+        { alias: 'property-2' },
+      ] as TimeSeriesResource[];
 
       const extendedQuery =
         queryExtender.extendPropertyAliasQueries(unmodeledDataStreams);
@@ -140,9 +140,9 @@ describe(QueryExtender.name, () => {
       };
       const queryExtender = new QueryExtender(currentQuery);
       const unmodeledDataStreams = [
-        { propertyAlias: 'property-1' },
-        { propertyAlias: 'property-2' },
-      ] as UnmodeledDataStream[];
+        { alias: 'property-1' },
+        { alias: 'property-2' },
+      ] as TimeSeriesResource[];
 
       const extendedQuery =
         queryExtender.extendPropertyAliasQueries(unmodeledDataStreams);
