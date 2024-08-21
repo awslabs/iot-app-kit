@@ -1,7 +1,6 @@
 import { type DashboardWidget } from '~/types';
 import { useIsAddButtonDisabled } from './useIsAddButtonDisabled';
-import { DataStreamQuery } from '@iot-app-kit/core';
-import { AssetQuery } from '@iot-app-kit/source-iotsitewise';
+import * as hooks from '../useQuery';
 
 const createMockWidget = (widgetType: string): DashboardWidget => {
   return {
@@ -15,13 +14,6 @@ const createMockWidget = (widgetType: string): DashboardWidget => {
     properties: {},
   };
 };
-type Query =
-  | Partial<
-      DataStreamQuery & {
-        assets: AssetQuery[];
-      }
-    >
-  | undefined;
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -29,29 +21,28 @@ jest.mock('react-redux', () => ({
   useSelector: () => jest.fn(),
 }));
 
-const queryObject: {
-  query: Query;
-  setQuery: (query: Query) => void;
-} = { query: undefined, setQuery: jest.fn() };
-
 jest.mock('../useQuery', () => ({
-  useQuery: jest.fn(() => [queryObject.query, queryObject.setQuery]),
+  useQuery: jest.fn(() => [{}, jest.fn()]),
 }));
 
-it('Enabled with no widgets', () => {
-  expect(useIsAddButtonDisabled([])).toBe(false);
-});
+describe('Add button disbale state on widget and resource selection', () => {
+  it('Enabled with no widgets', () => {
+    expect(useIsAddButtonDisabled([])).toBe(false);
+  });
 
-it('Enabled with line widget', () => {
-  expect(useIsAddButtonDisabled([createMockWidget('xy-plot')])).toBe(false);
-});
+  it('Enabled with line widget', () => {
+    expect(useIsAddButtonDisabled([createMockWidget('xy-plot')])).toBe(false);
+  });
 
-it('Enabled with KPI with no query', () => {
-  expect(useIsAddButtonDisabled([createMockWidget('kpi')])).toBe(false);
-});
+  it('Enabled with KPI with no query', () => {
+    expect(useIsAddButtonDisabled([createMockWidget('kpi')])).toBe(false);
+  });
 
-it('Disabled with KPI with query', () => {
-  queryObject.query = { assets: [{ assetId: '1234', properties: [] }] };
-  useIsAddButtonDisabled([createMockWidget('kpi')]);
-  expect(useIsAddButtonDisabled([createMockWidget('kpi')])).toBe(true);
+  it('Disabled with KPI with query', () => {
+    const query = { assets: [{ assetId: '1234', properties: [] }] };
+    jest
+      .spyOn(hooks, 'useQuery')
+      .mockImplementationOnce(() => [query, jest.fn()]);
+    expect(useIsAddButtonDisabled([createMockWidget('kpi')])).toBe(true);
+  });
 });

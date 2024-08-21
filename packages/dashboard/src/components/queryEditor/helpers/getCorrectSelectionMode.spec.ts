@@ -18,14 +18,17 @@ describe('Get correct selection mode', () => {
   it('returns single if kpi', () => {
     expect(getCorrectSelectionMode([createMockWidget('kpi')])).toBe('single');
   });
+
   it('returns single if gauge', () => {
     expect(getCorrectSelectionMode([createMockWidget('gauge')])).toBe('single');
   });
+
   it('returns multi if line', () => {
     expect(getCorrectSelectionMode([createMockWidget('xy-plot')])).toBe(
       'multi'
     );
   });
+
   it('returns multi if bar', () => {
     expect(getCorrectSelectionMode([createMockWidget('bar-chart')])).toBe(
       'multi'

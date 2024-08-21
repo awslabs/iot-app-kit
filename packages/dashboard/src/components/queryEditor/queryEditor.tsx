@@ -3,8 +3,8 @@ import React from 'react';
 import { IoTSiteWiseQueryEditor } from './iotSiteWiseQueryEditor';
 import { QueryEditorErrorBoundary } from './queryEditorErrorBoundary';
 import { useQuery } from './useQuery';
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import { DashboardWidget } from '~/types';
+import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { type DashboardWidget } from '~/types';
 import { useIsAddButtonDisabled } from './helpers/useIsAddButtonDisabled';
 import { getCorrectSelectionMode } from './helpers/getCorrectSelectionMode';
 
