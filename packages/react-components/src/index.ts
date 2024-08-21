@@ -50,3 +50,25 @@ export type {
 } from './components/table';
 
 export { formatDate } from './utils/time';
+
+export {
+  AssetModelExplorer,
+  AssetExplorer,
+  AssetPropertyExplorer,
+  TimeSeriesExplorer,
+  type AssetModelExplorerProps,
+  type AssetExplorerProps,
+  type AssetPropertyExplorerProps,
+  type TimeSeriesExplorerProps,
+  type AssetPropertyResource,
+  type AssetResource,
+  type TimeSeriesResource,
+  type SelectionMode,
+  resourceExplorerQueryClient,
+} from './components/resource-explorers';
+
+export { type TableResourceDefinition } from './components/resource-explorers/types/table';
+
+export { type TimeSeriesResourceWithLatestValue } from './components/resource-explorers/types/resources';
+
+export { type ResourceFieldFilterOperator } from './components/resource-explorers/types/common';

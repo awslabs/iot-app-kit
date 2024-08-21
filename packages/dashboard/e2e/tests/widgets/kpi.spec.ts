@@ -42,16 +42,15 @@ test.describe('Test KPI Widget', () => {
     resourceExplorer,
   }) => {
     //select 3 properties
-    await resourceExplorer.selectProperties([
-      'Max Temperature',
+    await resourceExplorer.addModeledProperties([
       'Min Temperature',
-      'Temperature',
+      'Max Temperature',
     ]);
     dashboardWithKPIWidget.gridArea.locator('.kpi-widget-empty-state');
-
-    //check that add button is disabled
-    const addButton = await resourceExplorer.getAddButton();
-    await expect(addButton).toBeDisabled();
+    const widget =
+      dashboardWithKPIWidget.gridArea.getByTestId('kpi-base-component');
+    expect(await widget.textContent()).toContain('Max Temperature');
+    expect(await widget.textContent()).not.toContain('Min Temperature');
   });
 
   test('KPI Widget supports show/hide several properties', async ({

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWiseClient, IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { registerPlugin } from '@iot-app-kit/core';
@@ -27,6 +27,7 @@ const clientConfig = {
 const iotSiteWiseClient = new IoTSiteWiseClient(clientConfig);
 const iotEventsClient = new IoTEventsClient(clientConfig);
 const iotTwinMakerClient = new IoTTwinMakerClient(clientConfig);
+const iotSiteWise = new IoTSiteWise(clientConfig);
 
 const DEFAULT_DASHBOARD_CONFIG = {
   displaySettings: {
@@ -41,6 +42,7 @@ const CLIENT_CONFIGURATION: DashboardClientConfiguration = {
   iotSiteWiseClient,
   iotEventsClient,
   iotTwinMakerClient,
+  iotSiteWise,
 };
 
 registerPlugin('metricsRecorder', {

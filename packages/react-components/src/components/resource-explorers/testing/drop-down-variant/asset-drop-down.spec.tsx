@@ -143,6 +143,13 @@ describe('asset drop-down', () => {
 
       await waitFor(() => expect(listAssets).toHaveBeenCalledTimes(4));
     });
+
+    it('renders description of table', async () => {
+      const { getByText } = render(
+        <AssetExplorer description='This is a test asset explorer' />
+      );
+      expect(getByText('This is a test asset explorer')).toBeInTheDocument();
+    });
   });
 
   describe('selection', () => {

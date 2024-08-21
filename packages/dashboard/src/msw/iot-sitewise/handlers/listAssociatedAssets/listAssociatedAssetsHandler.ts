@@ -15,9 +15,6 @@ export function listAssociatedAssetsHandler() {
       const { assetId } = req.params as {
         assetId: ListAssociatedAssetsRequest['assetId'];
       };
-      const hierarchyId = req.url.searchParams.get(
-        'hierarchyId'
-      ) as ListAssociatedAssetsRequest['hierarchyId'];
       const traversalDirection =
         (req.url.searchParams.get(
           'traversalDirection'
@@ -31,17 +28,11 @@ export function listAssociatedAssetsHandler() {
         return res(ctx.status(400));
       }
 
-      if (traversalDirection === 'CHILD' && !hierarchyId) {
-        return res(ctx.status(400));
-      }
-
       let assetSummaries: ListAssociatedAssetsResponse['assetSummaries'] = [];
 
       if (traversalDirection === 'CHILD') {
-        const childAssets =
-          ASSET_HIERARCHY.findChildren(assetId, hierarchyId ?? '') ?? [];
+        const childAssets = ASSET_HIERARCHY.findChildren(assetId) ?? [];
         const childAssetSummaries = childAssets.map(summarizeAsset);
-
         assetSummaries = childAssetSummaries;
       } else if (traversalDirection === 'PARENT') {
         const parentAsset = ASSET_HIERARCHY.findParentAsset(assetId);

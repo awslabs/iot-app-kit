@@ -27,12 +27,12 @@ export class EntryIdFactory {
 
   #createEntryId(): string {
     // Remove dashes from any UUIDs
-    const { assetId, propertyId, propertyAlias } =
+    const { assetId, propertyId, alias } =
       this.#extractIdentifiersFromDataStream();
     const entryId = this.#formatIdentifiers({
       assetId,
       propertyId,
-      propertyAlias,
+      alias,
     });
 
     return entryId;
@@ -45,24 +45,22 @@ export class EntryIdFactory {
       'propertyId' in this.#dataStream
         ? this.#dataStream.propertyId
         : undefined;
-    const propertyAlias =
-      'propertyAlias' in this.#dataStream
-        ? this.#dataStream.propertyAlias
-        : undefined;
+    const alias =
+      'alias' in this.#dataStream ? this.#dataStream.alias : undefined;
 
-    return { assetId, propertyId, propertyAlias };
+    return { assetId, propertyId, alias };
   }
 
   #formatIdentifiers({
     assetId,
     propertyId,
-    propertyAlias,
+    alias,
   }: {
     assetId?: string;
     propertyId?: string;
-    propertyAlias?: string;
+    alias?: string;
   }) {
-    const trimmedAlias = this.#trimPropertyAlias(propertyAlias);
+    const trimmedAlias = this.#trimPropertyAlias(alias);
     const aliasWithoutSlashes =
       this.#removeSlashesFromPropertyAlias(trimmedAlias);
     const joinedIdentifiers = Object.values({
