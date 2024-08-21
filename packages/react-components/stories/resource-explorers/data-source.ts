@@ -5,5 +5,5 @@ export const client = new IoTSiteWise({
     accessKeyId: '',
     secretAccessKey: '',
   },
-  region: '',
+  region: 'us-west-2',
 });

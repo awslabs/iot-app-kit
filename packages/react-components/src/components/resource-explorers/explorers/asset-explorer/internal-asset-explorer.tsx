@@ -53,6 +53,8 @@ export function InternalAssetExplorer({
   } = {},
   dropDownResourceDefinition = DEFAULT_ASSET_DROP_DOWN_DEFINITION,
   dropDownSettings: { isFilterEnabled: isDropDownFilterEnabled = false } = {},
+  description = '',
+  ariaLabels,
 }: AssetExplorerProps) {
   const tableResourceDefinition =
     customTableResourceDefinition ??
@@ -146,6 +148,8 @@ export function InternalAssetExplorer({
               />
             )
           }
+          description={description}
+          ariaLabels={ariaLabels}
         />
       }
       dropDown={

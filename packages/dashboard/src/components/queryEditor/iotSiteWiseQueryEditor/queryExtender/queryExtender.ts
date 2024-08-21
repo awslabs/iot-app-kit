@@ -1,5 +1,7 @@
-import type { ModeledDataStream } from '../modeledDataStreamQueryEditor/modeledDataStreamExplorer/types';
-import type { UnmodeledDataStream } from '../unmodeledDataStreamExplorer/types';
+import {
+  AssetPropertyResource,
+  TimeSeriesResource,
+} from '@iot-app-kit/react-components';
 import type { IoTSiteWiseDataStreamQuery } from '~/types';
 
 type Query = IoTSiteWiseDataStreamQuery;
@@ -11,7 +13,9 @@ export class QueryExtender {
     this.#currentQuery = currentQuery;
   }
 
-  public extendAssetQueries(modeledDataStreams: ModeledDataStream[]): Query {
+  public extendAssetQueries(
+    modeledDataStreams: readonly AssetPropertyResource[]
+  ): Query {
     const currentAssetQueries = this.#currentQuery.assets ?? [];
     const newAssetQueries = this.#createAssetQueries(modeledDataStreams);
     const dedupedAssetQueries = this.#dedupeAssetQueries([
@@ -27,7 +31,7 @@ export class QueryExtender {
   }
 
   #createAssetQueries(
-    modeledDataStreams: ModeledDataStream[]
+    modeledDataStreams: readonly AssetPropertyResource[]
   ): NonNullable<Query['assets']> {
     const assetQueriesWithProperties = modeledDataStreams
       .filter(this.#isModeledDataStream)
@@ -42,8 +46,8 @@ export class QueryExtender {
   }
 
   #isModeledDataStream(
-    dataStream: ModeledDataStream | UnmodeledDataStream
-  ): dataStream is ModeledDataStream {
+    dataStream: AssetPropertyResource | TimeSeriesResource
+  ): dataStream is AssetPropertyResource {
     return (
       Object.hasOwn(dataStream, 'propertyId') &&
       Object.hasOwn(dataStream, 'assetId')
@@ -81,7 +85,7 @@ export class QueryExtender {
   }
 
   public extendPropertyAliasQueries(
-    unmodeledDataStreams: UnmodeledDataStream[]
+    unmodeledDataStreams: readonly TimeSeriesResource[]
   ): Query {
     const currentPropertyAliasQueries = this.#currentQuery.properties ?? [];
     const newPropertyAliasQueries =
@@ -98,10 +102,12 @@ export class QueryExtender {
     return extendedQuery;
   }
 
-  #createPropertyAliasQueries(unmodeledDataStreams: UnmodeledDataStream[]) {
+  #createPropertyAliasQueries(
+    unmodeledDataStreams: readonly TimeSeriesResource[]
+  ) {
     const propertyAliasQueries = unmodeledDataStreams.map(
       (unmodeledDataStream) => ({
-        propertyAlias: unmodeledDataStream.propertyAlias ?? '',
+        propertyAlias: unmodeledDataStream.alias ?? '',
       })
     );
 

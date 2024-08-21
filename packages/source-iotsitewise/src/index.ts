@@ -19,4 +19,5 @@ export type {
   AssetModelQuery,
   AssetPropertyQuery,
   PropertyAliasQuery,
+  AssetQuery,
 } from './time-series-data/types';
