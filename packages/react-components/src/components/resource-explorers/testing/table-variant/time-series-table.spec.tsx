@@ -130,8 +130,8 @@ describe('time series table', () => {
 
       expect(screen.getByText('ID')).toBeVisible();
       expect(screen.getByText('Data type')).toBeVisible();
+      expect(screen.getByText('Alias')).toBeVisible();
       expect(screen.queryByText('Data type spec')).not.toBeInTheDocument();
-      expect(screen.queryByText('Alias')).not.toBeInTheDocument();
       expect(screen.queryByText('Asset ID')).not.toBeInTheDocument();
       expect(screen.queryByText('Property ID')).not.toBeInTheDocument();
       expect(screen.queryByText('Latest value')).not.toBeInTheDocument();
@@ -148,9 +148,9 @@ describe('time series table', () => {
       expect(screen.getByText('ID')).toBeVisible();
       expect(screen.getByText('Data type')).toBeVisible();
       expect(screen.getByText('Latest value')).toBeVisible();
+      expect(screen.getByText('Alias')).toBeVisible();
       expect(screen.getByText('Latest value time')).toBeVisible();
       expect(screen.queryByText('Data type spec')).not.toBeInTheDocument();
-      expect(screen.queryByText('Alias')).not.toBeInTheDocument();
       expect(screen.queryByText('Asset ID')).not.toBeInTheDocument();
       expect(screen.queryByText('Property ID')).not.toBeInTheDocument();
     });
@@ -670,14 +670,14 @@ describe('time series table', () => {
       expect(table.getColumnDisplayCheckbox('Data type')).toBeVisible();
       expect(table.getColumnDisplayCheckbox('Data type')).toBeChecked();
       expect(table.getColumnDisplayCheckbox('Data type')).toBeEnabled();
+      expect(table.getColumnDisplayCheckbox('Alias')).toBeVisible();
+      expect(table.getColumnDisplayCheckbox('Alias')).toBeChecked();
+      expect(table.getColumnDisplayCheckbox('Alias')).toBeEnabled();
       expect(table.getColumnDisplayCheckbox('Data type spec')).toBeVisible();
       expect(
         table.getColumnDisplayCheckbox('Data type spec')
       ).not.toBeChecked();
       expect(table.getColumnDisplayCheckbox('Data type spec')).toBeEnabled();
-      expect(table.getColumnDisplayCheckbox('Alias')).toBeVisible();
-      expect(table.getColumnDisplayCheckbox('Alias')).not.toBeChecked();
-      expect(table.getColumnDisplayCheckbox('Alias')).toBeEnabled();
       expect(table.getColumnDisplayCheckbox('Asset ID')).toBeVisible();
       expect(table.getColumnDisplayCheckbox('Asset ID')).not.toBeChecked();
       expect(table.getColumnDisplayCheckbox('Asset ID')).toBeEnabled();

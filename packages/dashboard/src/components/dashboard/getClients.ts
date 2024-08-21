@@ -1,5 +1,5 @@
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWise, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import {
   DashboardClientConfiguration,
@@ -31,10 +31,15 @@ export const getClients = (
     credentials: dashboardClientConfiguration.awsCredentials,
     region: dashboardClientConfiguration.awsRegion,
   });
+  const iotSiteWise = new IoTSiteWise({
+    credentials: dashboardClientConfiguration.awsCredentials,
+    region: dashboardClientConfiguration.awsRegion,
+  });
 
   return {
     iotEventsClient,
     iotSiteWiseClient,
     iotTwinMakerClient,
+    iotSiteWise,
   };
 };

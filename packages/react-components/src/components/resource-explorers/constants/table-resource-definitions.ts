@@ -126,6 +126,13 @@ export const DEFAULT_ASSET_PROPERTY_TABLE_DEFINITION: TableResourceDefinition<As
 export const DEFAULT_TIME_SERIES_TABLE_DEFINITION: TableResourceDefinition<TimeSeriesResource> =
   [
     {
+      id: 'alias',
+      name: 'Alias',
+      pluralName: 'Aliases',
+      render: ({ alias }) => alias,
+      filterOperators: DEFAULT_STRING_FILTER_OPERATORS,
+    },
+    {
       id: 'timeSeriesId',
       name: 'ID',
       pluralName: 'IDs',
@@ -144,14 +151,6 @@ export const DEFAULT_TIME_SERIES_TABLE_DEFINITION: TableResourceDefinition<TimeS
       name: 'Data type spec',
       pluralName: 'Data type specs',
       render: ({ dataTypeSpec }) => dataTypeSpec,
-      defaultIsVisible: false,
-      filterOperators: DEFAULT_STRING_FILTER_OPERATORS,
-    },
-    {
-      id: 'alias',
-      name: 'Alias',
-      pluralName: 'Aliases',
-      render: ({ alias }) => alias,
       defaultIsVisible: false,
       filterOperators: DEFAULT_STRING_FILTER_OPERATORS,
     },

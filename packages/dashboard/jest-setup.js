@@ -20,9 +20,9 @@ afterAll(() => {
 
 /** Disable logging during tests to keep the test runner clean. Comment out lines as needed. */
 function disableLogging() {
-  console.error = () => {};
-  console.info = () => {};
-  console.log = () => {};
-  console.table = () => {};
-  console.warn = () => {};
+  // console.error = () => {};
+  // console.info = () => {};
+  // console.log = () => {};
+  // console.table = () => {};
+  // console.warn = () => {};
 }

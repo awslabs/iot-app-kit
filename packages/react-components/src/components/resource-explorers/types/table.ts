@@ -1,3 +1,4 @@
+import { TableProps } from '@cloudscape-design/components';
 import type {
   ResourceName,
   PluralResourceName,
@@ -88,6 +89,8 @@ export interface ResourceTableProps<Resource> {
   isFilterEnabled?: IsTableFilterEnabled;
   isUserSettingsEnabled?: IsTableUserSettingsEnabled;
   titleExtension?: React.ReactNode;
+  description?: string;
+  ariaLabels?: TableProps.AriaLabels<Resource>;
 }
 
 export type OnUpdateTableUserCustomization = (

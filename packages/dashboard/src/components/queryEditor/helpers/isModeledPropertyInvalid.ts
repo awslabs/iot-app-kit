@@ -1,7 +1,5 @@
-import type { PropertyDataType } from '@aws-sdk/client-iotsitewise';
-
 export const isModeledPropertyInvalid = (
-  dataType?: PropertyDataType,
+  dataType?: string,
   widgetType?: string
 ) => {
   if (!widgetType || !dataType) return false;
