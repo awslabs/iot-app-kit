@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box } from '@cloudscape-design/components';
+import Box from '@cloudscape-design/components/box';
 import { ResourceExplorerFooter } from '../footer/footer';
 import { QueryExtender } from '../queryExtender';
 import { useQuery } from '../../useQuery';
@@ -7,9 +7,9 @@ import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { DashboardWidget } from '~/types';
 import {
   TimeSeriesExplorer,
-  TimeSeriesExplorerProps,
-  TimeSeriesResource,
-  SelectionMode,
+  type TimeSeriesExplorerProps,
+  type TimeSeriesResource,
+  type SelectionMode,
 } from '@iot-app-kit/react-components';
 import { getPlugin } from '@iot-app-kit/core';
 

@@ -1,4 +1,4 @@
-import { TimeSeriesResource } from '@iot-app-kit/react-components/dist/es/components/resource-explorers/types/resources';
+import { type TimeSeriesResource } from '@iot-app-kit/react-components/dist/es/components/resource-explorers/types/resources';
 import { ModeledDataStream } from '../modeledDataStreamQueryEditor/modeledDataStreamExplorer/types';
 import { QueryExtender } from './queryExtender';
 

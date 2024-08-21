@@ -10,10 +10,6 @@ export function propertySelectionLabel(
   modeledDataStream: AssetPropertyResource,
   selectedWidgets: DashboardWidget[]
 ) {
-  const isPropertySelected = selectedItems?.find(
-    (item) => item.propertyId === modeledDataStream.propertyId
-  );
-
   if (
     isModeledPropertyInvalid(
       modeledDataStream.dataType,
@@ -21,7 +17,13 @@ export function propertySelectionLabel(
     )
   ) {
     return `${modeledDataStream.dataType} data not supported for the selected widget`;
-  } else if (!isPropertySelected) {
+  }
+
+  const isPropertySelected = selectedItems?.find(
+    (item) => item.propertyId === modeledDataStream.propertyId
+  );
+
+  if (!isPropertySelected) {
     return `Select modeled data stream ${modeledDataStream.name}`;
   } else {
     return `Deselect modeled data stream ${modeledDataStream.name}`;
