@@ -12,7 +12,7 @@ import type {
 } from '@iot-app-kit/core';
 import type { KPISettings } from './types';
 import { KpiBase } from './kpiBase';
-import { ActionPanel } from '../assistant-action-panel/actionPanel';
+import { ActionPanel, getActionPanelProps } from '../assistant-action-panel/actionPanel';
 
 export const KPI = ({
   query,
@@ -85,7 +85,13 @@ export const KPI = ({
 
   if (assistant) {
     return (
-      <ActionPanel width='100%' height='100%'>
+      <ActionPanel 
+        {...getActionPanelProps({
+          width: '100%',
+          height: '100%',
+          position: 'topRight'
+        }, assistant)}
+      >
         {component}
       </ActionPanel>
     );

@@ -1,7 +1,6 @@
 // eslint-disable-next-line import/default
 import React from 'react';
-
-import { ActionPanel } from '../assistant-action-panel/actionPanel';
+import { ActionPanel, getActionPanelProps } from '../assistant-action-panel/actionPanel';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
@@ -72,7 +71,12 @@ export const Gauge = ({
 
   if (assistant) {
     return (
-      <ActionPanel width='min-content' height='min-content'>
+      <ActionPanel 
+        {...getActionPanelProps({
+          width: 'min-content',
+          height: 'min-content'
+        }, assistant)}
+      >
         {component}
       </ActionPanel>
     );

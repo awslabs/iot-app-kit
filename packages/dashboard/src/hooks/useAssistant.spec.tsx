@@ -25,9 +25,16 @@ describe('useAssistant', () => {
       { wrapper: TestProvider }
     );
 
+    expect(result.current.assistantProperties.assistant).toBeDefined();
     expect(
       result.current.assistantProperties.assistant?.conversationID
-    ).toBeDefined();
+    ).toEqual(expect.any(String));
+    expect(
+      result.current.assistantProperties.assistant?.iconPosition
+    ).toBe('topLeft');
+    expect(
+      result.current.assistantProperties.assistant?.onAction
+    ).toEqual(expect.any(Function));
   });
 
   it('should NOT return assistant property when dashboard mode is NOT readonly', () => {

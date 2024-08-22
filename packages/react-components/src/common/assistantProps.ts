@@ -9,6 +9,7 @@ export interface AssistantProperty {
   client: IoTSitewiseAssistantClient;
   conversationID: string;
   enabled?: boolean;
+  iconPosition?: 'topLeft' | 'topRight';
   onAction?: (event: AssistantActionEventDetail) => void;
 }
 

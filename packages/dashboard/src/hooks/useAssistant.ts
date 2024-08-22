@@ -17,6 +17,7 @@ export const useAssistant = () => {
         assistant: {
           client: iotSiteWiseClient,
           conversationID: assistant.conversationID,
+          iconPosition: 'topLeft',
           onAction: (event: AssistantActionEventDetail) => {
             if (event.type === 'divedeep') {
               dispatch(

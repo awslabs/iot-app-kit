@@ -27,22 +27,14 @@ describe('ActionPanel', () => {
 
   it('renders when action panel is on the left', () => {
     expect(() => {
-      render(component({ position: 'left' }));
+      render(component({ position: 'topLeft' }));
     }).not.toThrowError();
   });
 
-  it('selects and unselects component on component click', async () => {
-    const user = userEvent.setup();
-    render(component());
-
-    await user.click(screen.getByTestId('childComponent'));
-    await user.click(screen.getByTestId('action-panel-menu-button'));
-    expect(
-      screen.getByTestId('action-panel-summarize-button')
-    ).toBeInTheDocument();
-
-    await user.click(screen.getByTestId('childComponent'));
-    expect(screen.queryByTestId('action-panel-summarize-button')).toBeNull();
+  it('renders when action panel is on the right', () => {
+    expect(() => {
+      render(component({ position: 'topRight' }));
+    }).not.toThrowError();
   });
 
   it('opens assistant action dropdown menu on button click', async () => {
@@ -52,10 +44,10 @@ describe('ActionPanel', () => {
     await user.click(screen.getByTestId('childComponent'));
     await user.click(screen.getByTestId('action-panel-menu-button'));
     expect(
-      screen.getByTestId('action-panel-summarize-button')
+      screen.getByRole('button', { name: /Summarize button/i })
     ).toBeInTheDocument();
     expect(
-      screen.getByTestId('action-panel-chatbot-button')
+      screen.getByRole('button', { name: /Chatbot button/i })
     ).toBeInTheDocument();
   });
 
@@ -65,21 +57,12 @@ describe('ActionPanel', () => {
 
     await user.click(screen.getByTestId('childComponent'));
     await user.click(screen.getByTestId('action-panel-menu-button'));
-    await user.click(screen.getByTestId('action-panel-summarize-button'));
+    await user.click(screen.getByRole('button', { name: /Summarize button/i }));
     expect(screen.queryByTestId('action-panel-summarize-button')).toBeNull();
 
     await user.click(screen.getByTestId('action-panel-menu-button'));
-    await user.click(screen.getByTestId('action-panel-chatbot-button'));
+    await user.click(screen.getByRole('button', { name: /Chatbot button/i }));
     expect(screen.queryByTestId('action-panel-chatbot-button')).toBeNull();
   });
 
-  it('select panel when customer type enter', async () => {
-    const user = userEvent.setup();
-    render(component());
-
-    user.type(screen.getByTestId('action-panel-children'), '{enter}');
-    expect(
-      screen.getByText('1 panel selected')
-    ).toBeInTheDocument();
-  });
 });

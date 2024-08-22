@@ -4,7 +4,7 @@ import { ChartStoreProvider } from './store';
 import BaseChart from './baseChart';
 import { useChartId } from './hooks/useChartId';
 import { DEFAULT_CHART_SETTINGS } from './eChartsConstants';
-import { ActionPanel } from '../assistant-action-panel/actionPanel';
+import { ActionPanel, getActionPanelProps } from '../assistant-action-panel/actionPanel';
 
 export const Chart: React.FC<ChartOptions> = (options) => {
   const chartId = useChartId(options.id);
@@ -17,7 +17,15 @@ export const Chart: React.FC<ChartOptions> = (options) => {
   );
 
   if (options.assistant) {
-    return <ActionPanel width='min-content'>{component}</ActionPanel>;
+    return (
+      <ActionPanel
+        {...getActionPanelProps({
+          width: 'min-content'
+        }, options.assistant)}
+      >
+        {component}
+      </ActionPanel>
+    );
   } else {
     return component;
   }

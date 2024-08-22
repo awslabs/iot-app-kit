@@ -7,17 +7,12 @@
   .context-menu {
     display: none;
     position: absolute;
-    color: var(--awsui-color-white);
-    background: var(--awsui-color-aws-squid-ink);
-    border-radius: 50px;
-    margin-top: -3.8rem;
-    padding: 1em;
     width: fit-content;
+    margin: 0.5rem;
     z-index: 1;
 
     .panelSelection {
       padding-right: 0.5em;
-      border-right: 1px solid var(--awsui-color-white);
 
       span {
         color: var(--awsui-color-blue-300);
@@ -36,13 +31,14 @@
   }
   
   .action-dropdown {
-    display: none;
+    display: block;
     position: absolute;
     border-radius: 5px;
     list-style-type: none;
     padding: 0;
-    margin-top: -0.3rem;
+    margin-top: 1.8rem;
     z-index: 801;
+    overflow: hidden;
   
     li button {
       padding: 0.5em;
@@ -62,7 +58,7 @@
       }
 
       .awsui-dark-mode &:hover {
-        background-color: var(--awsui-color-grey-900);
+        background-color: var(--awsui-color-blue-900);
       }
     }
   }
@@ -72,17 +68,9 @@
     border: 2px solid transparent;
   }
 
-  &:hover .child-component {
-    border-color: var(--awsui-color-amazon-orange);
-  }
-
   &.selected {
     .context-menu, .action-dropdown {
       display: block;
-    }
-
-    .child-component {
-      border-color: var(--awsui-color-amazon-orange);
     }
   }
 }
