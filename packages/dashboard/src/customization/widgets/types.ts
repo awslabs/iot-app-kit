@@ -17,6 +17,7 @@ import type {
   ThresholdWithId,
 } from '../settings';
 import type {
+  AssistantProperty,
   TableColumnDefinition,
   TableItem,
 } from '@iot-app-kit/react-components';
@@ -54,6 +55,7 @@ export type KPIProperties = QueryProperties & {
   thresholds?: StyledThreshold[];
   backgroundColor?: string;
   significantDigits?: number;
+  assistant?: AssistantProperty;
 };
 
 export type KPIPropertiesKeys = keyof KPIProperties;
@@ -184,6 +186,7 @@ export type LineScatterChartProperties = LineAndScatterStyles & {
   axis?: ChartAxisOptions;
   legend?: ChartLegend;
   queryConfig: StyledSiteWiseQueryConfig;
+  assistant?: AssistantProperty;
 };
 
 export type LineScatterChartPropertiesKeys = keyof LineScatterChartProperties;

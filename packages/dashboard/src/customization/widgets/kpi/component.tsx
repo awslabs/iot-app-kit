@@ -38,6 +38,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     backgroundColor,
     thresholds,
     significantDigits: widgetSignificantDigits,
+    assistant
   } = widget.properties;
 
   const queries = useQueries(queryConfig.query);
@@ -85,6 +86,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
         aggregationType={aggregateToString(aggregation)}
         significantDigits={significantDigits}
         timeZone={dashboardTimeZone}
+        assistant={assistant}
       />
     </WidgetTile>
   );

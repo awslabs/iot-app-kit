@@ -162,6 +162,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
     symbol,
     legend,
     significantDigits: widgetSignificantDigits,
+    assistant,
   } = widget.properties;
 
   const query = queryConfig.query;
@@ -227,6 +228,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
           line?.connectionStyle
         )}
         timeZone={dashboardTimeZone}
+        assistant={assistant}
       />
     </WidgetTile>
   );
