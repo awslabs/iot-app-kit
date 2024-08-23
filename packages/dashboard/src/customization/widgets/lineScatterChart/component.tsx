@@ -145,7 +145,6 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   const { viewport } = useViewport();
   const dispatch = useDispatch();
 
-  const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const chartSize = useChartSize(widget);
   const dashboardSignificantDigits = useSelector(
     (state: DashboardState) => state.significantDigits
@@ -216,7 +215,6 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
         id={widget.id}
         queries={queries}
         viewport={viewport}
-        gestures={readOnly}
         axis={convertedAxis}
         aggregationType={aggregateToString(aggregation)}
         styleSettings={styleSettings}
