@@ -14,7 +14,6 @@ import WidgetTile from '~/components/widgets/tile';
 
 const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
   const { viewport } = useViewport();
-  const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const dashboardSignificantDigits = useSelector(
     (state: DashboardState) => state.significantDigits
   );
@@ -50,7 +49,6 @@ const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
         key={key}
         queries={queries}
         viewport={viewport}
-        gestures={readOnly}
         aggregationType={aggregateToString(aggregation)}
         axis={axis}
         styles={styleSettings}
