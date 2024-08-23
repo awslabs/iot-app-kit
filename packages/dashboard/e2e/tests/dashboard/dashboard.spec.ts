@@ -2,7 +2,14 @@ import { test, expect } from '@playwright/test';
 import { dragAndDrop } from '../utils/dragAndDrop';
 import { GRID_SIZE, gridUtil } from '../utils/grid';
 import { getBoundingBox } from '../utils/locator';
-import { COMPONENT_SELECTOR, TEST_IFRAME, TEST_PAGE } from '../constants';
+import {
+  COMPONENT_SELECTOR,
+  MODELED_TAB,
+  TEST_IFRAME,
+  TEST_PAGE,
+  WIDGET_EMPTY_STATE_TEXT,
+} from '../constants';
+import { resourceExplorerUtil } from '../utils/resourceExplorer';
 
 test('dashboard', async ({ page }) => {
   await page.goto(TEST_PAGE);
@@ -144,4 +151,51 @@ test('pagination buttons', async ({ page }) => {
 
   expect(forwardBtn);
   expect(backBtn);
+});
+
+test('dashboard viewport gestures', async ({ page }) => {
+  await page.goto(TEST_PAGE);
+  const resourceExplorer = resourceExplorerUtil(page);
+
+  const grid = gridUtil(page);
+
+  const location1 = await grid.cellLocation(0, 0);
+
+  // drag widget into 0, 0 position
+  const widget = await grid.addWidget('line', () => location1);
+
+  // check that widget is in empty state
+  await expect(page.getByText(WIDGET_EMPTY_STATE_TEXT)).toBeVisible();
+  const initialWidgetBoundingBox = await getBoundingBox(widget);
+
+  // open resource explorer and tab to asset model tab
+  await resourceExplorer.open();
+  await expect(page.locator(MODELED_TAB)).toBeVisible();
+  await resourceExplorer.tabTo('modeled');
+
+  const { selectAsset, selectProperty } = resourceExplorer.modeledActions;
+  const { addToWidget } = resourceExplorer.generalActions;
+  await selectAsset('Africa site');
+
+  // select property on asset model and add to widget
+  await selectProperty('Production Rate');
+  await addToWidget();
+
+  await expect(grid.gridArea().getByText('Production Rate')).toBeVisible();
+
+  // check viewport is the default last 10 minutes before dragging
+  await expect(page.getByLabel('Time range')).toContainText('Last 10 minutes');
+
+  // gesture to change viewport
+  const { x, y, width, height } = initialWidgetBoundingBox;
+  await page.keyboard.down('Shift');
+  await page.mouse.move(x + width / 2, y + height / 2);
+  await page.mouse.down();
+  await page.mouse.move(x + width / 2 + 50, y + height / 2 + 50);
+  await page.mouse.up();
+
+  // after gesture, viewport should have an absolute viewport and not say "last 10 minutes"
+  await expect(page.getByLabel('Time range')).not.toContainText(
+    'Last 10 minutes'
+  );
 });
