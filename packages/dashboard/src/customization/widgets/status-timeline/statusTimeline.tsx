@@ -15,7 +15,6 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (
   widget
 ) => {
   const { viewport } = useViewport();
-  const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const dashboardSignificantDigits = useSelector(
     (state: DashboardState) => state.significantDigits
   );
@@ -53,7 +52,6 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (
       <StatusTimeline
         queries={queries}
         viewport={viewport}
-        gestures={readOnly}
         axis={axis}
         styles={styleSettings}
         thresholds={thresholds}
