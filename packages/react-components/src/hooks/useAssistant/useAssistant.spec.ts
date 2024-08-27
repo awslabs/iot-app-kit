@@ -8,6 +8,7 @@ import {
   InvokeAssistantStep,
   IoTSiteWise,
 } from '@amzn/iot-black-pearl-internal-v3';
+import useDataStore from '../../store';
 
 const response1 = {
   step: {
@@ -38,7 +39,8 @@ describe('useAssistant', () => {
 
   beforeEach(() => jest.clearAllMocks());
 
-  it('should provide a default implementation for ', async () => {
+
+  it('should provide a default implementation for messageParser and state manager', async () => {
     const { result } = renderHook(() =>
       useAssistant({
         assistantClient: client,
@@ -51,6 +53,44 @@ describe('useAssistant', () => {
 
     await waitFor(() => {
       expect(result.current.messages.length).toBe(2);
+    });
+  });
+
+  it('should clear assistant state when invokeAssistant is called', async () => {
+    const storeState = useDataStore.getState();
+    const spied = jest.spyOn(storeState, 'clearAssistantState');
+
+    const { result } = renderHook(() =>
+      useAssistant({
+        assistantClient: client,
+      })
+    );
+
+    act(() => {
+      result.current.invokeAssistant(conversationId, 'customer message');
+    });
+
+    await waitFor(() => {
+      expect(spied).toHaveBeenCalled();
+    });
+  });
+
+  it('should clear assistant state when generateSummary is called', async () => {
+    const storeState = useDataStore.getState();
+    const spied = jest.spyOn(storeState, 'clearAssistantState');
+
+    const { result } = renderHook(() =>
+      useAssistant({
+        assistantClient: client,
+      })
+    );
+
+    act(() => {
+      result.current.generateSummary(conversationId, 'customer message');
+    });
+
+    await waitFor(() => {
+      expect(spied).toHaveBeenCalled();
     });
   });
 

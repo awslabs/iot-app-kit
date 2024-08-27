@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import type { AssistantClientInvocationResponse } from '@iot-app-kit/core-util';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import type { IMessageParser, BaseStateManager, IMessage } from './types';
-import { SenderType } from './types';
 import { MessageParser } from './messageParser';
 import { StateManager } from './stateManager';
 import useDataStore from '../../store';
@@ -105,7 +104,8 @@ export const useAssistant = ({
     utterance: string,
     context?: string
   ) => {
-    currentStateManager.addText(utterance, SenderType.USER);
+    storeState.clearAssistantState();
+    currentStateManager.addText(utterance, 'user');
     currentStateManager.addPartialResponse(loadingMessage);
     setMessages(currentStateManager.getState().messages);
     assistantClient.invoke(conversationId, utterance, context);
@@ -116,8 +116,9 @@ export const useAssistant = ({
     context: string,
     summaryUtterance?: string
   ) => {
+    storeState.clearAssistantState();
     if (summaryUtterance) {
-      currentStateManager.addText(summaryUtterance, SenderType.USER);
+      currentStateManager.addText(summaryUtterance, 'user');
       currentStateManager.addPartialResponse(loadingMessage);
       setMessages(currentStateManager.getState().messages);
     }

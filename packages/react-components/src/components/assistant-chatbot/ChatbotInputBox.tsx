@@ -5,7 +5,7 @@ import Grid from '@cloudscape-design/components/grid';
 import Textarea from '@cloudscape-design/components/textarea';
 import Button from '@cloudscape-design/components/button';
 import Box from '@cloudscape-design/components/box';
-import { IMessage, SenderType } from '../../hooks/useAssistant/types';
+import { IMessage } from '../../hooks/useAssistant/types';
 import {
   InputProps,
   NonCancelableCustomEvent,
@@ -40,7 +40,7 @@ export const ChatbotInputBox = ({
 
   useEffect(() => {
     if (lastMessage) {
-      setDisabled(lastMessage.sender === SenderType.USER);
+      setDisabled(lastMessage.sender === 'user');
     }
   }, [lastMessage]);
 

@@ -5,7 +5,6 @@ import {
   AssistantChatbot,
   useAssistant,
   MessageType,
-  SenderType,
 } from '@iot-app-kit/react-components';
 import { useClients } from '../dashboard/clientContext';
 import assistantIcon from './assistantIcon.svg';
@@ -41,7 +40,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
         {
           content:
             'Hello, I am your dashboard assistant, please ask me anything about your dashboard.',
-          sender: SenderType.ASSISTANT,
+          sender: 'assistant',
           type: MessageType.TEXT,
           id: uuid(),
           loading: false,

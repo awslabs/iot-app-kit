@@ -2,9 +2,12 @@ import React from 'react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { DataStream } from '@iot-app-kit/core';
-import { render } from '@testing-library/react';
+import { render, renderHook } from '@testing-library/react';
 import { Chart } from '../index';
 import { ChartLegend } from '../types';
+import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import type { AssistantActionEventDetail } from '../../../common/assistantProps';
+import { useAssistantContext } from '../../../hooks/useAssistantContext/useAssistantContext';
 
 const VIEWPORT = { duration: '5m' };
 
@@ -37,6 +40,20 @@ export const mockQuery = mockTimeSeriesDataQuery([
     thresholds: [],
   },
 ]);
+
+const client = new IoTSitewiseAssistantClient({
+  iotSiteWiseClient: {
+    invokeAssistant: jest.fn(),
+  } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
+  defaultContext: '',
+});
+
+const assistant = {
+  onAction: (_event: AssistantActionEventDetail) => jest.fn(),
+  conversationID: 'conversationID',
+  client,
+};
+
 describe('Chart Component Testing', () => {
   it('Chart renders', () => {
     const element = render(
@@ -58,13 +75,28 @@ describe('Chart Component Testing', () => {
           onChartOptionsChange={jest.fn()}
           viewport={VIEWPORT}
           size={{ width: 500, height: 500 }}
-          assistant={{
-            client: {} as IoTSitewiseAssistantClient,
-            conversationID: 'mockId',
-          }}
+          assistant={assistant}
         />
       );
     }).not.toThrowError();
+  });
+
+  it('Chart pass context to the assistant', () => {
+    const { result } = renderHook(() => useAssistantContext());
+
+    render(
+      <Chart
+        queries={[mockQuery]}
+        onChartOptionsChange={jest.fn()}
+        viewport={VIEWPORT}
+        size={{ width: 500, height: 500 }}
+        assistant={assistant}
+        id={'componentId'}
+      />
+    );
+
+    const context = result.current.getContextByComponent('componentId');
+    expect(context).toBe('{"queries":[{}]}');
   });
 });
 

@@ -9,6 +9,6 @@ const generateId = (id?: string) =>
  * Hook that provides a memoized id for the chart.
  * Will use the given id if defined or generate a unique one
  */
-export const useChartId = (id?: string) => {
+export const useComponentId = (id?: string) => {
   return useMemo(() => generateId(id), [id]);
 };

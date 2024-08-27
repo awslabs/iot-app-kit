@@ -1,6 +1,6 @@
 import type { ResponseStreamChunk } from '@iot-app-kit/core-util';
 import type { BaseStateManager, IMessage } from './types';
-import { SenderType, MessageType } from './types';
+import { MessageType } from './types';
 import { v4 as uuidv4 } from 'uuid';
 
 type GenericSetState = (state: any) => void;
@@ -37,16 +37,16 @@ export class StateManager implements BaseStateManager {
       id: uuidv4(),
       loading: true,
       content,
-      sender: SenderType.ASSISTANT,
+      sender: 'assistant',
       type: MessageType.TEXT,
-    };
+    } satisfies IMessage;
 
     this.addMessageToState(message);
   };
 
   addText = (
     content: string,
-    sender: SenderType,
+    sender: 'user' | 'assistant',
     payload?: ResponseStreamChunk
   ) => {
     const message = {
@@ -66,10 +66,10 @@ export class StateManager implements BaseStateManager {
       id: uuidv4(),
       loading: false,
       content: '',
-      sender: SenderType.ASSISTANT,
+      sender: 'assistant',
       type: MessageType.PROMPTS,
       payload,
-    };
+    } satisfies IMessage;
 
     this.addMessageToState(message);
   };

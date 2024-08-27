@@ -11,6 +11,6 @@ export const AssistantActionPanel: Messages<AssistantActionPanelMessageKeys> = {
     'assistant-action-panel.numSelected': '{numPanels} panel selected',
     'assistant-action-panel.deepDive': 'Deep dive',
     'assistant-action-panel.summarize': 'Summarize',
-    'assistant-action-panel.chatbot': 'Chatbot',
+    'assistant-action-panel.chatbot': 'Dive deep',
   },
 };

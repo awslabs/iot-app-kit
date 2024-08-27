@@ -8,6 +8,8 @@ import {
 } from '../../src/components/gauge/constants';
 import { GaugeSettings } from '../../src/components/gauge/types';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import useDataStore from '../../src/store';
+import { MockInvokeAssistant } from '../assistant-chatbot/mockAPI';
 
 export default {
   title: 'Widgets/Assistant Action Panel',
@@ -61,6 +63,15 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
   significantDigits,
   ...settings
 }) => {
+  const client = new IoTSitewiseAssistantClient({
+    iotSiteWiseClient: {
+      invokeAssistant: MockInvokeAssistant,
+    },
+    defaultContext: '',
+  });
+
+  const storeState = useDataStore.getState();
+  storeState.clearAssistantState();
   return (
     <div style={{ padding: '80px 20px' }}>
       <Gauge
@@ -70,8 +81,8 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
         query={MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY}
         settings={settings as GaugeSettings}
         assistant={{
-          client: {} as IoTSitewiseAssistantClient,
-          conversationID: 'mockId',
+          client,
+          conversationID: crypto.randomUUID(),
         }}
       />
       <div
@@ -101,8 +112,8 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
           query={MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY}
           settings={settings as GaugeSettings}
           assistant={{
-            client: {} as IoTSitewiseAssistantClient,
-            conversationID: 'mockId',
+            client,
+            conversationID: crypto.randomUUID(),
           }}
         />
       </div>

@@ -1,9 +1,5 @@
 import { StateManager } from './stateManager';
-import {
-  type IMessageParser,
-  type BaseStateManager,
-  SenderType,
-} from './types';
+import type { IMessageParser, BaseStateManager } from './types';
 import type { ResponseStreamChunk } from '@iot-app-kit/core-util';
 
 export class MessageParser implements IMessageParser {
@@ -27,7 +23,7 @@ export class MessageParser implements IMessageParser {
     if (response.finalResponse?.text?.length) {
       this.stateManager.addText(
         response.finalResponse?.text,
-        SenderType.ASSISTANT,
+        'assistant',
         response
       );
     }

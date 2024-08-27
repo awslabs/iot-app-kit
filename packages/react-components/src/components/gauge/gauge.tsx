@@ -1,6 +1,5 @@
-// eslint-disable-next-line import/default
 import React from 'react';
-import { ActionPanel, getActionPanelProps } from '../assistant-action-panel/actionPanel';
+import { ActionPanel } from '../assistant-action-panel/actionPanel';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
@@ -12,6 +11,7 @@ import {
   DEFAULT_GAUGE_PROGRESS_COLOR,
   DEFAULT_GAUGE_STYLES,
 } from './constants';
+import { useComponentId } from '../../hooks/useComponentId/useComponentId';
 
 export const Gauge = ({
   size,
@@ -24,6 +24,7 @@ export const Gauge = ({
   theme,
   assistant,
 }: GaugeProps) => {
+  const componentId = useComponentId();
   const { dataStreams } = useTimeSeriesData({
     viewport: passedInViewport,
     queries: [query],
@@ -71,11 +72,11 @@ export const Gauge = ({
 
   if (assistant) {
     return (
-      <ActionPanel 
-        {...getActionPanelProps({
-          width: 'min-content',
-          height: 'min-content'
-        }, assistant)}
+      <ActionPanel
+        width='min-content'
+        height='min-content'
+        componentId={componentId}
+        assistant={assistant}
       >
         {component}
       </ActionPanel>

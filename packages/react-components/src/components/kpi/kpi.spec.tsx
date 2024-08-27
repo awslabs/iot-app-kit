@@ -3,6 +3,8 @@ import { render, screen } from '@testing-library/react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { KPI } from './kpi';
+import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import type { AssistantActionEventDetail } from '../../common/assistantProps';
 
 const VIEWPORT = { duration: '5m' };
 
@@ -21,6 +23,19 @@ const query = mockTimeSeriesDataQuery([
     thresholds: [],
   },
 ]);
+
+const client = new IoTSitewiseAssistantClient({
+  iotSiteWiseClient: {
+    invokeAssistant: jest.fn(),
+  } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
+  defaultContext: '',
+});
+
+const assistant = {
+  onAction: (_event: AssistantActionEventDetail) => jest.fn(),
+  conversationID: 'conversationID',
+  client,
+};
 
 it('renders', async () => {
   render(<KPI query={query} viewport={VIEWPORT} />);
@@ -41,15 +56,6 @@ it('renders', async () => {
 
 it('renders with assistant action panel', async () => {
   expect(() => {
-    render(
-      <KPI
-        query={query}
-        viewport={VIEWPORT}
-        assistant={{
-          client: {} as IoTSitewiseAssistantClient,
-          conversationID: 'mockId',
-        }}
-      />
-    );
+    render(<KPI query={query} viewport={VIEWPORT} assistant={assistant} />);
   }).not.toThrowError();
 });

@@ -2,9 +2,29 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { ActionPanel, ActionPanelProps } from './actionPanel';
 import userEvent from '@testing-library/user-event';
+import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import type { AssistantActionEventDetail } from '../../common/assistantProps';
+import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 
-const component = (props?: ActionPanelProps) => (
-  <ActionPanel {...props}>
+const client = new IoTSitewiseAssistantClient({
+  iotSiteWiseClient: {
+    invokeAssistant: jest.fn(),
+  } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
+  defaultContext: '',
+});
+
+const assistant = {
+  onAction: (_event: AssistantActionEventDetail) => jest.fn(),
+  conversationID: 'conversationID',
+  client,
+};
+
+const component = (props: Partial<ActionPanelProps>) => (
+  <ActionPanel
+    {...props}
+    componentId='componentId'
+    assistant={props.assistant || assistant}
+  >
     <div
       data-testid='childComponent'
       style={{ width: '400px', height: '300px' }}
@@ -15,54 +35,91 @@ const component = (props?: ActionPanelProps) => (
 describe('ActionPanel', () => {
   it('renders with component', () => {
     expect(() => {
-      render(component());
-    }).not.toThrowError();
-  });
-
-  it('renders with defined width and height', () => {
-    expect(() => {
-      render(component({ width: '500px', height: '500px' }));
+      render(component({}));
     }).not.toThrowError();
   });
 
   it('renders when action panel is on the left', () => {
     expect(() => {
-      render(component({ position: 'topLeft' }));
+      render(component({ iconPosition: 'topLeft' }));
     }).not.toThrowError();
   });
 
   it('renders when action panel is on the right', () => {
     expect(() => {
-      render(component({ position: 'topRight' }));
+      render(component({ iconPosition: 'topRight' }));
     }).not.toThrowError();
   });
 
   it('opens assistant action dropdown menu on button click', async () => {
     const user = userEvent.setup();
-    render(component());
+    render(component({}));
 
-    await user.click(screen.getByTestId('childComponent'));
     await user.click(screen.getByTestId('action-panel-menu-button'));
     expect(
-      screen.getByRole('button', { name: /Summarize button/i })
+      screen.getByRole('button', { name: /Summarize/i })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: /Chatbot button/i })
+      screen.getByRole('button', { name: /Dive deep/i })
     ).toBeInTheDocument();
   });
 
   it('closes action dropdown on action item click', async () => {
     const user = userEvent.setup();
-    render(component());
+    render(component({}));
 
-    await user.click(screen.getByTestId('childComponent'));
     await user.click(screen.getByTestId('action-panel-menu-button'));
-    await user.click(screen.getByRole('button', { name: /Summarize button/i }));
+    await user.click(screen.getByRole('button', { name: /Summarize/i }));
     expect(screen.queryByTestId('action-panel-summarize-button')).toBeNull();
 
     await user.click(screen.getByTestId('action-panel-menu-button'));
-    await user.click(screen.getByRole('button', { name: /Chatbot button/i }));
+    await user.click(screen.getByRole('button', { name: /Dive deep/i }));
     expect(screen.queryByTestId('action-panel-chatbot-button')).toBeNull();
   });
 
+  it('fires divedeep action when Dive deep action item is clicked', async () => {
+    const mockedDivedeepAction = jest.fn();
+    const user = userEvent.setup();
+    render(
+      component({
+        assistant: {
+          ...assistant,
+          onAction: (event: AssistantActionEventDetail) =>
+            mockedDivedeepAction(event),
+        },
+        componentId: 'componentId',
+      })
+    );
+
+    await user.click(screen.getByTestId('action-panel-menu-button'));
+    await user.click(screen.getByRole('button', { name: /Dive deep/i }));
+
+    expect(mockedDivedeepAction).toHaveBeenCalledWith({
+      type: 'divedeep',
+      sourceComponentId: 'componentId',
+    });
+  });
+
+  it('fires summarize action when Summarize action item is clicked', async () => {
+    const mockedSummarizeAction = jest.fn();
+    const user = userEvent.setup();
+    render(
+      component({
+        assistant: {
+          ...assistant,
+          onAction: (event: AssistantActionEventDetail) =>
+            mockedSummarizeAction(event),
+        },
+        componentId: 'componentId',
+      })
+    );
+
+    await user.click(screen.getByTestId('action-panel-menu-button'));
+    await user.click(screen.getByRole('button', { name: /Summarize/i }));
+
+    expect(mockedSummarizeAction).toHaveBeenCalledWith({
+      type: 'summarize',
+      sourceComponentId: 'componentId',
+    });
+  });
 });

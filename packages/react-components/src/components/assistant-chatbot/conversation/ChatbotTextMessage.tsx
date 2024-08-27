@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SenderType, type IMessage } from '../../../hooks/useAssistant/types';
+import type { IMessage } from '../../../hooks/useAssistant/types';
 import { ChatbotAssistantMessage } from './ChatbotAssistantMessage';
 import { ChatbotCustomerMessage } from './ChatbotCustomerMessage';
 
@@ -8,7 +8,7 @@ export interface ChatbotTextMessageProps {
 }
 
 export const ChatbotTextMessage = ({ message }: ChatbotTextMessageProps) => {
-  if (message.sender === SenderType.ASSISTANT) {
+  if (message.sender === 'assistant') {
     return (
       <ChatbotAssistantMessage
         text={message.content}

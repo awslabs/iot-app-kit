@@ -7,7 +7,7 @@ import { useAssistant } from '../../src/hooks/useAssistant/useAssistant';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { MockInvokeAssistant } from './mockAPI';
 import '@cloudscape-design/global-styles/index.css';
-import { MessageType, SenderType } from '../../src/hooks/useAssistant/types';
+import { MessageType } from '../../src/hooks/useAssistant/types';
 
 export default {
   title: 'Widgets/AssistantChatbot',
@@ -42,7 +42,7 @@ export const DefaultAssistantChatbot: ComponentStory<
         {
           content:
             'Hello, I am Sophon, an AI powered assistant for your production sites.',
-          sender: SenderType.ASSISTANT,
+          sender: 'assistant',
           type: MessageType.TEXT,
           id: crypto.randomUUID(),
           loading: false,

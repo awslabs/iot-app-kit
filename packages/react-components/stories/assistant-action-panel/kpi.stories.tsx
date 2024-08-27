@@ -3,6 +3,8 @@ import { KPI } from '../../src';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from '../kpi/kpi-thresholds';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import useDataStore from '../../src/store';
+import { MockInvokeAssistant } from '../assistant-chatbot/mockAPI';
 
 export default {
   title: 'Widgets/Assistant Action Panel',
@@ -23,6 +25,16 @@ export default {
 } as ComponentMeta<typeof KPI>;
 
 export const DefaultKPI: ComponentStory<typeof KPI> = ({ settings }) => {
+  const client = new IoTSitewiseAssistantClient({
+    iotSiteWiseClient: {
+      invokeAssistant: MockInvokeAssistant,
+    },
+    defaultContext: '',
+  });
+
+  const storeState = useDataStore.getState();
+  storeState.clearAssistantState();
+
   return (
     <>
       <div
@@ -67,8 +79,8 @@ export const DefaultKPI: ComponentStory<typeof KPI> = ({ settings }) => {
           query={MOCK_TIME_SERIES_DATA_QUERY}
           settings={settings}
           assistant={{
-            client: {} as IoTSitewiseAssistantClient,
-            conversationID: 'mockId',
+            client,
+            conversationID: crypto.randomUUID(),
           }}
         />
       </div>

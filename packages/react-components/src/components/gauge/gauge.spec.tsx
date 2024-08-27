@@ -3,6 +3,8 @@ import { render } from '@testing-library/react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { Gauge } from './gauge';
+import type { AssistantActionEventDetail } from '../../common/assistantProps';
+import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 
 const VIEWPORT = { duration: '5m' };
 
@@ -22,6 +24,19 @@ const query = mockTimeSeriesDataQuery([
   },
 ]);
 
+const client = new IoTSitewiseAssistantClient({
+  iotSiteWiseClient: {
+    invokeAssistant: jest.fn(),
+  } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
+  defaultContext: '',
+});
+
+const assistant = {
+  onAction: (_event: AssistantActionEventDetail) => jest.fn(),
+  conversationID: 'conversationID',
+  client,
+};
+
 it('renders', async () => {
   const element = render(<Gauge query={query} viewport={VIEWPORT} />);
   expect(element).not.toBeNull();
@@ -29,15 +44,6 @@ it('renders', async () => {
 
 it('renders with assistant action panel', async () => {
   expect(() => {
-    render(
-      <Gauge
-        query={query}
-        viewport={VIEWPORT}
-        assistant={{
-          client: {} as IoTSitewiseAssistantClient,
-          conversationID: 'mockId',
-        }}
-      />
-    );
+    render(<Gauge query={query} viewport={VIEWPORT} assistant={assistant} />);
   }).not.toThrowError();
 });

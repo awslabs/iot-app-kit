@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ChartOptions } from './types';
 import { ChartStoreProvider } from './store';
 import BaseChart from './baseChart';
-import { useChartId } from './hooks/useChartId';
+import { useComponentId } from '../../hooks/useComponentId/useComponentId';
 import { DEFAULT_CHART_SETTINGS } from './eChartsConstants';
-import { ActionPanel, getActionPanelProps } from '../assistant-action-panel/actionPanel';
+import { ActionPanel } from '../assistant-action-panel/actionPanel';
+import { useViewport } from '../../hooks/useViewport';
+import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 
 export const Chart: React.FC<ChartOptions> = (options) => {
-  const chartId = useChartId(options.id);
+  const chartId = useComponentId(options.id);
   const chartOptions = { ...DEFAULT_CHART_SETTINGS, ...options };
+  const { viewport } = useViewport();
+  const { setContextByComponent } = useAssistantContext();
 
   const component = (
     <ChartStoreProvider id={chartId}>
@@ -16,12 +20,20 @@ export const Chart: React.FC<ChartOptions> = (options) => {
     </ChartStoreProvider>
   );
 
-  if (options.assistant) {
+  useEffect(() => {
+    setContextByComponent(chartId, {
+      timerange: viewport,
+      queries: chartOptions.queries,
+    });
+  }, [viewport, chartOptions.queries]);
+
+  const [firstQuery] = chartOptions.queries;
+  if (options.assistant && firstQuery) {
     return (
       <ActionPanel
-        {...getActionPanelProps({
-          width: 'min-content'
-        }, options.assistant)}
+        width='min-content'
+        componentId={chartId}
+        assistant={options.assistant}
       >
         {component}
       </ActionPanel>

@@ -2,11 +2,6 @@ import type { ResponseStreamChunk } from '@iot-app-kit/core-util';
 
 type UniqueID = string;
 
-export enum SenderType {
-  USER = 'user',
-  ASSISTANT = 'assistant',
-}
-
 export enum MessageType {
   TEXT = 'text',
   IMAGE = 'image',
@@ -16,7 +11,7 @@ export enum MessageType {
 }
 
 export interface IMessage {
-  sender: SenderType;
+  sender: 'user' | 'assistant';
   /**
    * this may hold a stringified JSON object
    */

@@ -1,5 +1,5 @@
 import { createStore, StoreApi } from 'zustand/vanilla';
-import { deflate } from 'pako';
+import { deflate, inflate } from 'pako';
 
 type ComponentID = string;
 type ContextData = object;
@@ -46,13 +46,13 @@ export const getAllAssistantContext = () => {
   const compressed = deflate(
     JSON.stringify(assistantContext.getState().context)
   );
-  return btoa(String.fromCharCode(...compressed));
+  return String.fromCharCode(...inflate(compressed));
 };
 export const getContextByComponent = (componentID: ComponentID) => {
-  const compressed = deflate(
-    JSON.stringify(assistantContext.getState().context[componentID])
-  );
-  return btoa(String.fromCharCode(...compressed));
+  const componentContext =
+    assistantContext.getState().context[componentID] || {};
+  const compressed = deflate(JSON.stringify(componentContext));
+  return String.fromCharCode(...inflate(compressed));
 };
 export const setContextByComponent = (
   componentID: ComponentID,

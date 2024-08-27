@@ -3,7 +3,7 @@ import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
-import { AssistantProperty } from '../../common/assistantProps';
+import type { AssistantProperty } from '../../common/assistantProps';
 import type {
   StyleSettingsMap,
   Viewport,
@@ -12,7 +12,8 @@ import type {
 } from '@iot-app-kit/core';
 import type { KPISettings } from './types';
 import { KpiBase } from './kpiBase';
-import { ActionPanel, getActionPanelProps } from '../assistant-action-panel/actionPanel';
+import { ActionPanel } from '../assistant-action-panel/actionPanel';
+import { useComponentId } from '../../hooks/useComponentId/useComponentId';
 
 export const KPI = ({
   query,
@@ -43,6 +44,7 @@ export const KPI = ({
     styles,
   });
   const { viewport } = useViewport();
+  const componentId = useComponentId();
 
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
 
@@ -85,12 +87,12 @@ export const KPI = ({
 
   if (assistant) {
     return (
-      <ActionPanel 
-        {...getActionPanelProps({
-          width: '100%',
-          height: '100%',
-          position: 'topRight'
-        }, assistant)}
+      <ActionPanel
+        width='100%'
+        height='100%'
+        iconPosition='topRight'
+        componentId={componentId}
+        assistant={assistant}
       >
         {component}
       </ActionPanel>

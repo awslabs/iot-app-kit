@@ -1,43 +1,67 @@
 import React, { PropsWithChildren, useState } from 'react';
 import Icon from '@cloudscape-design/components/icon';
-import { colorBackgroundSegmentDefault, colorTextLabelGenAi } from '@cloudscape-design/design-tokens';
-import './actionPanel.css';
+import {
+  colorBackgroundSegmentDefault,
+  colorTextLabelGenAi,
+} from '@cloudscape-design/design-tokens';
 import { FormattedMessage, IntlProvider } from 'react-intl';
+import type { AssistantProperty } from '../../common/assistantProps';
 import { AssistantIcon } from './assistantIcon';
-import { AssistantProperty } from '../../common/assistantProps';
+import { useAssistant } from '../../hooks/useAssistant/useAssistant';
+import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
+import { SITUATION_SUMMARY_DEFAULT_UTTERANCE } from './constants';
+import { v4 as uuid } from 'uuid';
+import './actionPanel.css';
 
 export interface ActionPanelProps extends PropsWithChildren {
-  position?: 'topLeft' | 'topRight';
+  componentId: string;
+  assistant: AssistantProperty;
+  iconPosition?: 'topLeft' | 'topRight';
   width?: string | number;
   height?: string | number;
 }
 
-export const getActionPanelProps = (props: ActionPanelProps, assistant: AssistantProperty) => {
-  return {
-    position: assistant.iconPosition,
-    onAction: assistant.onAction,
-    ...props,
-  }
-}
-
 export const ActionPanel = ({
-  position = 'topLeft',
+  assistant,
+  componentId,
+  iconPosition = 'topLeft',
   width,
   height,
   children,
 }: ActionPanelProps) => {
   const [showActions, setShowActions] = useState<boolean>(false);
+  const { getContextByComponent } = useAssistantContext();
+
+  const { messages, generateSummary } = useAssistant({
+    assistantClient: assistant.client,
+  });
+
+  const handleSummary = () => {
+    generateSummary(
+      assistant.conversationID ?? uuid(),
+      getContextByComponent(componentId),
+      SITUATION_SUMMARY_DEFAULT_UTTERANCE
+    );
+
+    if (assistant.onAction) {
+      assistant.onAction({
+        type: 'summarize',
+        sourceComponentId: componentId,
+      });
+    }
+  };
 
   return (
     <IntlProvider locale='en' defaultLocale='en'>
       <div
-        className={`assistant-action-panel selected`}
+        className='assistant-action-panel selected'
         style={{ width, height }}
       >
+        {children}
         <div
           className='context-menu'
           style={{
-            alignSelf: position === 'topRight' ? 'flex-end' : 'flex-start',
+            alignSelf: iconPosition === 'topRight' ? 'flex-end' : 'flex-start',
             color: `2px solid ${colorBackgroundSegmentDefault}`,
           }}
         >
@@ -52,7 +76,8 @@ export const ActionPanel = ({
           <ul
             className='action-dropdown'
             style={{
-              alignSelf: position === 'topRight' ? 'flex-end' : 'flex-start',
+              alignSelf:
+                iconPosition === 'topRight' ? 'flex-end' : 'flex-start',
               border: `2px solid ${colorTextLabelGenAi}`,
               backgroundColor: colorBackgroundSegmentDefault,
             }}
@@ -65,9 +90,10 @@ export const ActionPanel = ({
               <button
                 data-testid='action-panel-summarize-button'
                 onClick={() => {
+                  handleSummary();
                   setShowActions(false);
                 }}
-                aria-label="Summarize button"
+                aria-label='Summarize'
               >
                 <FormattedMessage
                   id='assistant-action-panel.summarize'
@@ -80,26 +106,32 @@ export const ActionPanel = ({
               <button
                 data-testid='action-panel-chatbot-button'
                 onClick={() => {
+                  if (assistant.onAction) {
+                    assistant.onAction({
+                      type: 'divedeep',
+                      sourceComponentId: componentId,
+                    });
+                  }
                   setShowActions(false);
                 }}
-                aria-label="Chatbot button"
+                aria-label='Dive deep'
               >
                 <Icon name='contact' />{' '}
                 <FormattedMessage
                   id='assistant-action-panel.chatbot'
-                  defaultMessage='Chatbot'
+                  defaultMessage='Dive deep'
                   description='Assistant action menu item for opening the chatbot.'
                 />
               </button>
             </li>
           </ul>
         )}
-        <div
-          data-testid='action-panel-children'
-          className='child-component'
-          tabIndex={0}
-        >
-          {children}
+        <div data-testid='action-panel-result' className='action-panel-result'>
+          {messages
+            .filter((message) => message.sender === 'assistant')
+            .map((message) => (
+              <div key={message.id}>{message.content}</div>
+            ))}
         </div>
       </div>
     </IntlProvider>

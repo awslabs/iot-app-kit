@@ -1,11 +1,9 @@
 import React from 'react';
 import type {
   Threshold,
-  TimeQuery,
-  TimeSeriesData,
-  TimeSeriesDataRequest,
   StyleSettingsMap,
   Viewport,
+  TimeSeriesDataQuery,
 } from '@iot-app-kit/core';
 import type { StatusSettings } from './types';
 import { KPI } from '../kpi/kpi';
@@ -19,7 +17,7 @@ export const Status = ({
   settings,
   significantDigits,
 }: {
-  query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
+  query: TimeSeriesDataQuery;
   viewport?: Viewport;
   aggregationType?: string;
   thresholds?: Threshold[];

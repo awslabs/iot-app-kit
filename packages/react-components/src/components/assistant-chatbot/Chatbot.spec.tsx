@@ -1,6 +1,6 @@
 import React from 'react';
 import { act, render, screen, fireEvent } from '@testing-library/react';
-import { SenderType, MessageType } from '../../hooks/useAssistant/types';
+import { MessageType } from '../../hooks/useAssistant/types';
 import { Chatbot } from './Chatbot';
 import userEvent from '@testing-library/user-event';
 
@@ -13,7 +13,7 @@ describe(Chatbot, () => {
         messages={[
           {
             content,
-            sender: SenderType.USER,
+            sender: 'user',
             type: MessageType.TEXT,
             id: 'UniqueID',
             loading: false,
@@ -33,7 +33,7 @@ describe(Chatbot, () => {
         messages={[
           {
             content,
-            sender: SenderType.ASSISTANT,
+            sender: 'assistant',
             type: MessageType.TEXT,
             id: 'UniqueID',
             loading: true,
@@ -55,7 +55,7 @@ describe(Chatbot, () => {
         messages={[
           {
             content,
-            sender: SenderType.ASSISTANT,
+            sender: 'assistant',
             type: MessageType.TEXT,
             id: 'UniqueID',
             loading: false,
@@ -77,7 +77,7 @@ describe(Chatbot, () => {
         messages={[
           {
             content,
-            sender: SenderType.ASSISTANT,
+            sender: 'assistant',
             type: MessageType.TEXT,
             id: 'UniqueID',
             loading: false,
@@ -122,7 +122,7 @@ describe(Chatbot, () => {
         messages={[
           {
             content,
-            sender: SenderType.ASSISTANT,
+            sender: 'assistant',
             type: MessageType.PROMPTS,
             id: 'UniqueID',
             loading: false,
@@ -148,7 +148,7 @@ describe(Chatbot, () => {
         messages={[
           {
             content: '',
-            sender: SenderType.ASSISTANT,
+            sender: 'assistant',
             type: MessageType.TEXT,
             id: 'UniqueID',
             loading: false,
@@ -202,7 +202,7 @@ describe(Chatbot, () => {
         messages={[
           {
             content: '',
-            sender: SenderType.ASSISTANT,
+            sender: 'assistant',
             type: MessageType.TEXT,
             id: 'UniqueID',
             loading: false,

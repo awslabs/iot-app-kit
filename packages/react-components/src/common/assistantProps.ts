@@ -1,8 +1,8 @@
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 
-export interface AssistantActionEventDetail { 
-  type: AssistantActionType; 
-  sourceComponentId: string 
+export interface AssistantActionEventDetail {
+  type: AssistantActionType;
+  sourceComponentId: string;
 }
 
 export interface AssistantProperty {
@@ -13,4 +13,4 @@ export interface AssistantProperty {
   onAction?: (event: AssistantActionEventDetail) => void;
 }
 
-export type AssistantActionType = 'divedeep' | 'summary';
+export type AssistantActionType = 'divedeep' | 'summarize';

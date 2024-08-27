@@ -3,6 +3,8 @@ import { Chart } from '../../src';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from '../chart/mock-data';
 import { ComponentMeta } from '@storybook/react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import useDataStore from '../../src/store';
+import { MockInvokeAssistant } from '../assistant-chatbot/mockAPI';
 
 export default {
   title: 'Widgets/Assistant Action Panel',
@@ -29,6 +31,16 @@ export default {
 } as ComponentMeta<typeof Chart>;
 
 export const BaseChart = () => {
+  const client = new IoTSitewiseAssistantClient({
+    iotSiteWiseClient: {
+      invokeAssistant: MockInvokeAssistant,
+    },
+    defaultContext: '',
+  });
+
+  const storeState = useDataStore.getState();
+  storeState.clearAssistantState();
+
   return (
     <div style={{ padding: '80px 16px' }}>
       <Chart
@@ -37,8 +49,8 @@ export const BaseChart = () => {
         viewport={VIEWPORT}
         queries={[MOCK_TIME_SERIES_DATA_QUERY]}
         assistant={{
-          client: {} as IoTSitewiseAssistantClient,
-          conversationID: 'mockId',
+          client,
+          conversationID: crypto.randomUUID(),
         }}
       />
     </div>
