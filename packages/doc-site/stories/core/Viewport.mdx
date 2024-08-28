@@ -4,29 +4,34 @@ import { Meta } from '@storybook/blocks';
 
 # Viewport
 
-A viewport is an object which specifies an interval of time. Viewports can either specify an explicit range of time,
-or specify a duration which signifies that the viewport is always showing data from within the interval of time between now, and `duration` ago.
+A viewport is an object that specifies an interval of time. Viewports can either specify 
+an explicit range of time, or specify a `duration` which signifies the 
+viewport is showing data from the time interval between now and `duration` units ago.
 
-A viewport is a common concept across IoT App Kit, which can be managed through the [useViewport hook](http://localhost:6006/?path=/docs/react-hooks-useviewport--docs) and the [ViewportManager](http://localhost:6006/?path=/docs/components-viewportmanager--docs).
+A viewport is a common concept across IoT App Kit, and is managed through the [useViewport hook](http://localhost:6006/?path=/docs/react-hooks-useviewport--docs) and the [ViewportManager](http://localhost:6006/?path=/docs/components-viewportmanager--docs).
 
 ## Properties
 
 A viewport contains the following fields:
 
- - `start`
+ - **start (date, optional)**:
+    The start of the range from which to visualize data. If `duration` is not specified, 
+    you must specify a `start` date.
 
-(Optional) The start of the range from which to visualize data. If no `duration`, you must specify a `start` date.
+ - **end (date, optional)**:
+    The end of the range from which to visualize data. If `duration`is not specified, 
+    you must specify an `end` date.
 
-Type: Date
+ - **duration (string, optional)**:
+    The time interval in which to visualize data. If a `start` or `end` field is not specified,
+    you must specify a `duration` which must be one of the following:
 
- - `end`
+    - `m`: minutes
+    - `h`: hours
+    - `d`: days
+    - `w`: weeks
+    
+    For example, `2m` represents 2 minutes, 
+    `2h` represents 2 hours, `2d` represents 2 days, and `2w` represents 2 weeks. 
+    For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
 
-(Optional) The end of the range from which to visualize data. If no `duration`, you must specify an `end` date.
-
-Type: Date
-
- - `duration`
-
-(Optional) The time interval over which to visualize data. If no `start` or `end`, you must specify a `duration`. You can use `m`, `h`, `d`, and `w` when you specify a duration. For example, `2m` represents 2 minutes, `2h` represents 2 hours, `2d` represents 2 days, and `2w` represents 2 weeks. For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
-
-Type: String
