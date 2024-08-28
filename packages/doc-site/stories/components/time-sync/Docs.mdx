@@ -6,12 +6,12 @@ import { Meta } from '@storybook/blocks';
 This component of IoT App Kit enables the management of viewports between all IoT App Kit components. It helps synchronize viewports across components 
 in one or more groups, and provides the ability for components to send updates to their viewport group.
 
-See a live demo at (SynchroCharts demo)[https://synchrocharts.com/#/Features/Synchronization]. This example
+See a live demo at [SynchroCharts demo](https://synchrocharts.com/#/Features/Synchronization). This example
 demonstrates 3 line charts within the same viewport group - when you pan one chart, it communicates it's updated viewport to the entire group. This is the functionality that the `<TimeSync />` enables.
 
-## Basic usage
+### Example
 
-Use this component by wrapping the components to use in a viewport.  See the example below.
+Use this component by wrapping the components to use in a viewport. See the example below:
 
 ```jsx
 import { LineChart, TimeSync } from '@iot-app-kit/react-components
@@ -70,13 +70,13 @@ import { LineChart, TimeSync } from '@iot-app-kit/react-components
 
 ## TimeSync API Summary
 
-#### group (string, optional)
+#### group (string, optional):
 
 This attribute specifies the name of the viewport group that TimeSync propagates to it's contained components. If empty, the TimeSync component 
 assigns an unique string by default. All viewports across all TimeSync components in the same group, will stay in sync.
 Any updates to the viewport group, are shared to all consumers of the viewport group.
 
-#### initialViewport (object, optional)
+#### initialViewport (object, optional):
 
 This attribute specifies the initial value for the viewport group, if a viewport is not associated with the given viewport group. 
 If the viewport group has a viewport associated with it, the `initialViewport` is ignored.
