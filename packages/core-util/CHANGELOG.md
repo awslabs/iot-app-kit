@@ -1,5 +1,22 @@
 # Changelog
 
+## [10.11.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v10.10.2...core-util-v10.11.0) (2024-08-28)
+
+
+### Miscellaneous Chores
+
+* **core-util:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.10.2 to 10.11.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.10.2 to 10.11.0
+    * @iot-app-kit/ts-config bumped from 10.10.2 to 10.11.0
+
 ## [10.10.2](https://github.com/awslabs/iot-app-kit/compare/core-util-v10.10.1...core-util-v10.10.2) (2024-08-08)
 
 

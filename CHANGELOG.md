@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.11.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.10.2...root-v10.11.0) (2024-08-28)
+
+
+### Features
+
+* **dynamic scene:** reverse query structure for improved query speed ([c91995f](https://github.com/awslabs/iot-app-kit/commit/c91995f3c976b62c613708925693843bfbbada11))
+
 ## [10.10.2](https://github.com/awslabs/iot-app-kit/compare/root-v10.10.1...root-v10.10.2) (2024-08-08)
 
 
