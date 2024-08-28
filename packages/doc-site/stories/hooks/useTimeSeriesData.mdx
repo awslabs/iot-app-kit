@@ -4,16 +4,17 @@ import { Meta } from '@storybook/blocks';
 
 # useTimeSeriesData
 
-The `useTimeSeriesData` react hook is a function which allows you to easily utilize time series data within your react components from IoT App Kit datasources.
+The `useTimeSeriesData` react hook is a function that allows you to effectively utilize time series data 
+within your react components from IoT App Kit datasources.
 
-NOTE: This documentation assumes you are familiar with react and react-hooks. If you need to brush up, learn more at https://reactjs.org/docs/hooks-intro.html
+**Note**: This documentation assumes you are familiar with react and react-hooks. [Learn more](https://reactjs.org/docs/hooks-intro.html).
 
-## Basic example usage
+### Example
 
-The simplest use of the `useTimeSeriesData` is to provide a query for time series data, which will return you the time series data streams
+The simplest use of the `useTimeSeriesData` is to provide a query for time series data, which returns the time series data streams
 for the queried data.
 
-Learn more about viewport groups at the [Viewport Manager documentation](https://github.com/awslabs/iot-app-kit/tree/main/docs/ViewportManager.md).
+Learn more about viewport groups at [Viewport Manager](https://github.com/awslabs/iot-app-kit/tree/main/docs/ViewportManager.md).
 
 ```
     import { useTimeSeriesData } from '@iot-app-kit/react-components';
@@ -29,7 +30,7 @@ const CustomVisualization = () => {
 }
 ```
 
-which will be used as shown below:
+which is used as shown below:
 
 ```
 imoprt { ViewportManager } from '@iot-app-kit/react-components';
@@ -65,11 +66,11 @@ const { query } = initialize({ iotsitewiseClient });
 <ViewportManager />
 ```
 
-This above example gives you two visualizations which will share a viewport group (so if )
+This above example displays two visualizations which share a viewport group.
 
 
-Additionally, the hook can be used without a `<ViewportManager />` by explicitly passing in a viewport. This is useful for simple use cases where
-you don't need to be able to synchronize a group of IoT App Kit components to display the same visualization. This is achieved as shown below:
+Additionally, the hook is used without a `<ViewportManager />` by explicitly passing in a viewport. This is useful for use cases where
+you don't need to synchronize a group of IoT App Kit components to display the same visualization. See example below:
 ```
 //jsx
 const CustomVisualization = ({ query, viewport }) => {
@@ -78,7 +79,7 @@ const CustomVisualization = ({ query, viewport }) => {
 }
 ```
 
-And the utilization of this custom component will look as shown below:
+The utilization of this custom component is below:
 
 ```
 // jsx
@@ -95,11 +96,14 @@ And the utilization of this custom component will look as shown below:
 />
 ```
 
-This will give you a single visualization displaying the last 5 minutes of data real time the SiteWise data source.
+This gives you a single visualization displaying the last 5 minutes of data real time with the SiteWise data source.
 
-This same component can also be used without a viewport, as the `useTimeSeries` will still fallback to the viewport group if the `viewport` parameter passed into `useTimeSeriesData` is undefined. This is a best practice of IoT App Kit component, to support both viewport groups and explicitly passed in viewports, and `useTimeSeriesData` gives you this behavior without any additional effort.
+This same component can also be used without a viewport, as the `useTimeSeries` fallbacks to the viewport group if the `viewport` parameter 
+passed into `useTimeSeriesData` is undefined. 
+This feature of the IoT App Kit component, supports both viewport groups and explicitly passed in viewports, and `useTimeSeriesData` effectively.
 
-## Kitchen sink example (utilization with all features)
+
+### Example of Kitchen sink (utilization of all features)
 
 ```
 // jsx

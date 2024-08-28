@@ -5,45 +5,37 @@ import * as AnomalyChartStories from './AnomalyChart.stories';
 
 # Anomaly Chart Data Structure
 
-[Learn more about the Anomaly Chart](/docs/components-anomalychart--docs).
-
 The Anomaly provides a timeline view of anomaly predictions, visualizing the raw data in a specific format.
-
-The data structure for the Anomaly chart is an array with a single object, which contains the following properties:
-
----
-
-**state** (string): Represents the state of the data, which can be one of the following values:
-
-  * 'loading': Indicates that the data is currently being loaded.
-  * 'success': Indicates that the data was loaded successfully.
-  * 'failed': Indicates that the data loading failed.
-  * 'error': Indicates an error occurred during data loading.
+Learn more here about the [Anomaly Chart](/docs/components-anomalychart--docs).
+The data structure for this is an array with a single object, containing the following properties:
 
 ---
 
-**value** (object): An object containing the raw data and optional style overrides. It has the following properties:
+#### state (string): 
+Represents the state of the data, which AnomalyChartStories the following values:
 
-  - **data** (array): An array of objects, where each object represents a single Diagnostic event with a timestamp and Diagnostic object.
+  - `loading`: Indicates that the data is currently being loaded.
+  * `success`: Indicates that the data was loaded successfully.
+  * `failed`: Indicates that the data loading failed.
+  * `error`: Indicates an error occurred during data loading.
 
-      - **timestamp** (number): The time of the diagnostic point, in milliseconds.
+#### value (object): 
 
-      - **diagnostics** (array): An array of objects representing individual data points, where each object has the following properties:
-        
-        - **name** (string): The name of the diagnostic point.
+An object containing the raw data and optional style overrides. 
+It has the following properties:
 
-        - **value** (number): The value of the diagnostic point, which should be a number between 0 and 1.
+  - **data (array)**: An array of objects, where each object represents a single Diagnostic event with a timestamp and Diagnostic object.
+    - **timestamp (number)**: The time of the diagnostic point, in milliseconds.
+    - **diagnostics (array)**: An array of objects representing individual data points, where each object has the following properties:
+        - **name (string)**: The name of the diagnostic point.
+        - **value (number)**: The value of the diagnostic point, which should be a number between 0 and 1.
 
-  - **styles** (object, optional): An object that overrides global style settings. It can have the following properties:
-
-    - **decimalPlaces** (number, optional): Defines the number of decimal places to display for the diagnostic values.
-
-    - **color** (array, optional): An array representing the color palette used to render the diagnostics.
+  - **styles (object, optional)**: An object that overrides global style settings. It has the following properties:
+    - **decimalPlaces (number, optional)**: Defines the number of decimal places to display for the diagnostic values.
+    - **color (array, optional)**: An array representing the color palette to render the diagnostics.
 
 
-### Example 
-
-Here's an example of the Anomaly chart data structure:
+## Example 
 
 ```
 {
@@ -93,34 +85,43 @@ Here's an example of the Anomaly chart data structure:
 };
 ```
 
-In this example, the state is 'success', indicating that the data was loaded successfully. The value object contains two diagnostic events, each with a timestamp and an array of diagnostic objects. Each diagnostic object has a name and a value between 0 and 1. The styles object overrides the global color palette for rendering the diagnostics, specifying an array of colors (['pink', 'blue', 'green', 'red']).
-
----
-
-**value (object, required)** : An object containing the raw data and optional style overrides. It has the following properties:
-
-  - **data** (object, required): An object that represents the data in a columnar table by using fields, where each field represents a column in a table, the values in a field represent a the rows in the table, and a single value represents a cell in the table row for that field. The fields together represent a single Diagnostic event with a timestamp and Diagnostic values.
-
-    - **name** (string, optional): The name of the data frame.
-
-    - **fields** (array, required): An array of objects where each object describes one column in the table with the following properties:
-
-      - **name** (string, required): The name of the column, which should be either `time, prediction_reason, prediction, quality, anomaly_score, or <diagnostic name>`.
-
-      - **type** (string, required): The data type of the column, which should be either `time, number, or string`.
-
-      - **values** (array, required): An array of table values whose types are the same as the type property.
-
-    - **length** (number, required): The number of rows in the columnar table.
-
-  - **styles** (object, optional): An object that overrides global style settings. It can have the following properties:
-
-    - **decimalPlaces** (number, optional): Defines the number of decimal places to display for the diagnostic values.
-
-    - **color** (array, optional): An array representing the color palette used to render the diagnostics.
+In this example, the state is `success`, indicating a successful data load. 
+The value object contains two diagnostic events, each with a timestamp and an array of diagnostic objects. Each diagnostic object has a name and a value between `0` and `1`. 
+The styles object overrides the global color palette for rendering the diagnostics, 
+specifying an array of colors ([`pink`, `blue`, `green`, `red`]).
 
 
-### Example 
+#### value (object, required):
+
+An object containing the raw data and optional style overrides. It has the following properties:
+
+  - **data (object, required)**: An object that represents the data in a columnar table by using fields, 
+  where each field represents a column in a table, the values in a field represent a the rows in the table, 
+  and a single value represents a cell in the table row for that field. 
+  The fields together represent a single Diagnostic event with a timestamp and Diagnostic values.
+    - **name (string, optional)**: The name of the data frame.
+    - **fields (array, required)**: An array of objects where each object describes one column in the table with the 
+    following properties:
+      - **name (string, required)**: The name of the column, which must be one of the following:
+        - `time`
+        - `prediction_reason`
+        - `prediction`
+        - `quality`
+        - `anomaly_score`
+        - `<diagnostic name>`
+      - **type (string, required)**: The data type of the column, which must be one of the following:
+        - `time`
+        - `number`
+        - `string`
+      - **values (array, required)**: An array of table values whose types are the same as the type property.
+    - **length (number, required)**: The number of rows in the columnar table.
+
+  - **styles (object, optional)**: An object that overrides global style settings. It has the following properties:
+    - **decimalPlaces (number, optional)**: Defines the number of decimal places to display for the diagnostic values.
+    - **color (array, optional)**: An array representing the color palette to render the diagnostics.
+
+
+## Example 
 
 Here's an example of the Anomaly chart data structure:
 

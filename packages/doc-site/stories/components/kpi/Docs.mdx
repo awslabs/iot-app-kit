@@ -14,18 +14,28 @@ The KPI component lets you can interact with IoT data from one or more data sour
 
 The KPI component contains the following customizable properties.
 
-**viewport** (object, optional): This specifies the interval of time the widget visualizes. If not present, the widget utilizes the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
+#### viewport (object, optional): 
+
+This specifies the interval of time the widget visualizes. If not present, the widget utilizes the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
 If a ViewportManager, and a `viewport` is not defined, the default value is `{ duration: '10d' }`.
-[Learn about the viewport](/docs/core-viewport--docs).
+Learn about the [viewport](/docs/core-viewport--docs).
 
-**thresholds** (optional): A styled threshold defines rules that effect how the data is visualized. It's based on if the data breaches the threshold as well as how the threshold is styled.
-[Learn more about thresholds](/docs/core-thresholds--docs#thresholds).
+#### thresholds (optional): 
 
-**query** (object, optional): This query specifies the time series data to visualize. [Learn more about time series data queries](/docs/core-time-series-data--docs).
+A styled threshold defines rules that effect how the data is visualized. It's based on if the data breaches the threshold as well as how the threshold is styled.
+Learn more about [thresholds](/docs/core-thresholds--docs#thresholds).
 
-**timeZone** (string, optional): Timezone must be specified as an [IANA timezone string](https://ftp.iana.org/tz/tzdb-2020f/zone1970.tab). If this property is provided, the chart will display all dates in the provided timezone, otherwise it will use the browsers local timezone.
+**timeZone** (string, optional): 
 
-**settings** (object, optional): This specifies the settings to customize the appearance of the widget. The settings object contains the following properties:
+Timezone must be specified as an [IANA timezone string](https://ftp.iana.org/tz/tzdb-2020f/zone1970.tab). If this property is provided, the chart will display all dates in the provided timezone, otherwise it will use the browsers local timezone.
+
+#### query (object, optional): 
+
+This query specifies the time series data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
+
+#### settings (object, optional): 
+
+This specifies the settings to customize the appearance of the widget. The settings object contains the following properties:
 
   * `showTimestamp` (boolean, optional): Displays the timestamp of the data being displayed. Defaults to true.
   * `showAggregationAndResolution` (boolean, optional): Displays the ggregation and resolution of the data being displayed. Defaults to true.
@@ -39,7 +49,9 @@ If a ViewportManager, and a `viewport` is not defined, the default value is `{ d
   * `showIcon`(boolean, optional): Display the icon if present. Defaults to true.
   * `aggregationFontSize` (number, optional): Display the font size in pixels for aggregation and resolution.
 
-**styles** (object, optional): This contains a map of `refId` to style settings for the component. [Learn more about reference IDs here](/docs/core-styles--docs).
+#### styles (object, optional): 
+
+This contains a map of `refId` to style settings for the component. Learn more about [reference IDs](/docs/core-styles--docs).
 It has the following style settings that are customizable:
 
   * `name` (string, optional): This specifies a name to replace the name of the data set given by its source.

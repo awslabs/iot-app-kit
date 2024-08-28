@@ -6,7 +6,7 @@ import * as BarChartStories from './BarChart.stories';
 # Bar Chart
 
 The Bar Chart component is a powerful visualization tool that displays time-series data from one or more [data sources](http://localhost:6006/?path=/docs/core-datasources--docs). It supports a wide range of features, including alarms, thresholds, high-performance live-streaming, and smooth synchronization with other IoT App Kit components.
-The Bar Chart is rendered via WebGL and users **must** include the WebGL Context for chart to properly render.
+The Bar Chart is rendered with WebGL and users **must** include the WebGL Context for chart to properly render.
 
 ## Demo
 
@@ -28,40 +28,57 @@ The Bar Chart is rendered via WebGL and users **must** include the WebGL Context
 
 The bar chart component contains the following properties.
 
-**queries** (array): An array of queries that specify the time-series data to visualize. [Learn more about time series data queries](/docs/core-time-series-data--docs).
+#### queries (array): 
 
-**viewport** (object, optional): Specifies the interval of time the widget visualizes. If a value is not provided, it utilizes the `viewport` specified by its [ViewportManager](http://localhost:6006/?path=/docs/components-viewportmanager--docs). If there is no ViewportManager and no `viewport` defined, the default viewport will be `{ duration: '10d' }`.  [Learn more about viewports](/docs/core-viewport--docs).
+An array of queries that specify the time-series data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
 
-**thresholds** (object, optional): Thresholds define rules that affect how the data is visualized based on whether the data breaches the threshold. [Learn more about thresholds](/docs/core-thresholds--docs#thresholds).
+#### viewport (object, optional): 
 
-**thresholdSettings** (object, optional): Customize settings on how thresholds are visualized within the widget. Defaults to `{ colorBreachedData: true }`. [Learn more about thresholds settings](/docs/core-thresholds--docs#thresholdsettings).
+Specifies the interval of time the widget visualizes. If a value is not provided, it utilizes the `viewport` specified by its [ViewportManager](http://localhost:6006/?path=/docs/components-viewportmanager--docs). 
+If there is no ViewportManager and no `viewport` defined, the default viewport will be `{ duration: '10d' }`. 
+Learn more about [viewports](/docs/core-viewport--docs).
 
-**yMin** (number, optional): Minimum y value displayed on component. Defaults to automatically determining yMin based on data present within the `viewport`.
+#### thresholds (object, optional): 
 
-**yMax** (number, optional):  Maximum y value displayed on component. Defaults to automatically determining yMax based on data present within the `viewport`.
+Thresholds define rules that affect how the data is visualized based on whether the data breaches the threshold. Learn more about [thresholds](/docs/core-thresholds--docs#thresholds).
 
-**gestures** (boolean, optional): Specifies whether gestures (pan, zoom and restrict time-span) are enabled. Defaults to `true`.
+#### thresholdSettings (object, optional): 
 
-**axis** (object, optional): Specifies x and y-axis related settings. Defaults to `{ showX: true, showY: true, yAxisLabel: undefined }`. It has the following properties:
+Customize settings on how thresholds are visualized within the widget. The default is `{ colorBreachedData: true }`. Learn more about [thresholds settings](/docs/core-thresholds--docs#thresholdsettings).
 
+#### yMin (number, optional): 
 
-  * `showX` (boolean, optional): Determines whether to show the x-axis. Defaults to true.
+Minimum y value displayed on component. Defaults to automatically determining yMin based on data present within the `viewport`.
 
-  * `showY` (boolean, optional): Determines whether to show the y-axis and the horizontal grid lines. Defaults to true.
+#### yMax (number, optional):  
 
-  * `yAxisLabel` (string, optional): The y-axis label content. Defaults to empty.
+Maximum y value displayed on component. Defaults to automatically determining yMax based on data present within the `viewport`.
 
-**styles** (object, optional): The styles prop lets you customize the appearance of each data stream based on its `refId` or [reference ID](/docs/core-styles--docs). It has the following properties:
+#### gestures (boolean, optional): 
 
-  *  `name` (string, optional): Specify a name to replace the name of the data set given by its source.
+Specifies whether gestures (pan, zoom and restrict time-span) are enabled. Defaults to `true`.
 
-  *  `unit` (string, optional): The unit given to the data (for example, `m/s` and `count`).
+#### axis (object, optional): 
 
-  *  `color` (string, optional): A detailed name presented in the tooltip.
+Specifies x and y-axis related settings. The default value is `{ showX: true, showY: true, yAxisLabel: undefined }`. 
+It has the following properties:
+
+  - **showX (boolean, optional)**: Determines whether to show the x-axis. The default value is `true`.
+  - **showY (boolean, optional)**: Determines whether to show the y-axis and the horizontal grid lines. The default value is `true`.
+  - **yAxisLabel (string, optional)**: The y-axis label content. The defaul value is empty.
+
+#### styles (object, optional): 
+
+The styles prop is for customising the appearance of each data stream based on its `refId` or [reference ID](/docs/core-styles--docs). 
+It has the following properties:
+
+  - **name (string, optional)**: Specify a name to replace the name of the data set given by its source.
+  - **unit (string, optional)**: The unit given to the data. Examples are `m/s` and `count`.
+  - **color (string, optional)**: A detailed name presented in the tooltip.
   
 ---
 
-### Example Bar Chart Implementation
+## Example 
 
 ```jsx
 import { BarChart, WebglContext } from '@iot-app-kit/react-components';
