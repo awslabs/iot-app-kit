@@ -1,4 +1,4 @@
-import type { ResponseStreamChunk } from '@iot-app-kit/core-util';
+import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
 
 type UniqueID = string;
 
@@ -33,7 +33,7 @@ export interface IMessage {
 }
 
 export interface IMessageParser {
-  parse(response: ResponseStreamChunk): void;
+  parse(response: ResponseStream): void;
   setStateManager(stateManager: BaseStateManager): void;
 }
 

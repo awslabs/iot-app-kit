@@ -1,6 +1,6 @@
+import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
 import { StateManager } from './stateManager';
 import type { IMessageParser, BaseStateManager } from './types';
-import type { ResponseStreamChunk } from '@iot-app-kit/core-util';
 
 export class MessageParser implements IMessageParser {
   private stateManager: StateManager = new StateManager(
@@ -13,16 +13,14 @@ export class MessageParser implements IMessageParser {
     this.stateManager = stateManager;
   }
 
-  parse(response: ResponseStreamChunk) {
-    if (response.step?.stepId) {
-      this.stateManager.addPartialResponse(
-        response.step?.rationale?.text || ''
-      );
+  parse(response: ResponseStream) {
+    if (response.trace?.traceId) {
+      this.stateManager.addPartialResponse(response.trace?.text || '');
     }
 
-    if (response.finalResponse?.text?.length) {
+    if (response.output?.message?.length) {
       this.stateManager.addText(
-        response.finalResponse?.text,
+        response.output?.message,
         'assistant',
         response
       );

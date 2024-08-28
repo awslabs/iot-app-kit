@@ -1,8 +1,4 @@
-import { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
-import type {
-  FinalResponse,
-  InvokeAssistantStep,
-} from '@amzn/iot-black-pearl-internal-v3';
+import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import { IoTSitewiseAssistantClient } from './client';
 
 jest.mock('@amzn/iot-black-pearl-internal-v3');
@@ -12,31 +8,21 @@ function flushPromises() {
 }
 
 const response1 = {
-  step: {
-    stepId: 'step1',
-    rationale: {
-      text: 'contains information about the intermediate step',
-    },
-  } satisfies InvokeAssistantStep,
-  finalResponse: {
-    text: 'assistant response',
-  } satisfies FinalResponse,
+  trace: {
+    traceId: 'trace1',
+    text: 'contains information about the intermediate trace',
+  },
 };
 const response2 = {
-  step: {
-    stepId: 'step2',
-    rationale: {
-      text: 'contains information about the intermediate step part 2',
-    },
-  } satisfies InvokeAssistantStep,
-  finalResponse: {
-    text: 'assistant response 2',
-  } satisfies FinalResponse,
+  trace: {
+    traceId: 'trace2',
+    text: 'contains information about the intermediate trace part 2',
+  }
 };
 const response3 = {
-  finalResponse: {
-    text: 'assistant response 2',
-  } satisfies FinalResponse,
+  output: {
+    message: 'assistant response 2',
+  },
 };
 
 describe('AssistantClient', () => {

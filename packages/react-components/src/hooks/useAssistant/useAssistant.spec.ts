@@ -3,30 +3,26 @@ import { useAssistant } from './useAssistant';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import type { MessageParser } from './messageParser';
 import { StateManager } from './stateManager';
-import {
-  FinalResponse,
-  InvokeAssistantStep,
-  IoTSiteWise,
-} from '@amzn/iot-black-pearl-internal-v3';
+import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import useDataStore from '../../store';
 
 const response1 = {
-  step: {
-    stepId: 'step1',
-    rationale: {
-      text: 'contains information about the intermediate step',
-    },
-  } satisfies InvokeAssistantStep,
-  finalResponse: {
-    text: 'assistant response',
-  } satisfies FinalResponse,
+  trace: {
+    traceId: 'step1',
+    text: 'contains information about the intermediate step',
+  },
+};
+const response2 = {
+  output: {
+    message: 'assistant response',
+  },
 };
 
 describe('useAssistant', () => {
   const conversationId = 'myAssistantConversation';
   const mockInvokeAssistant = jest
     .fn()
-    .mockResolvedValue({ body: [response1] });
+    .mockResolvedValue({ body: [response1, response2] });
   const client = new IoTSitewiseAssistantClient({
     iotSiteWiseClient: {
       invokeAssistant: mockInvokeAssistant,
@@ -38,7 +34,6 @@ describe('useAssistant', () => {
     .mockImplementation(() => () => ({ messages: [] }));
 
   beforeEach(() => jest.clearAllMocks());
-
 
   it('should provide a default implementation for messageParser and state manager', async () => {
     const { result } = renderHook(() =>
@@ -159,7 +154,11 @@ describe('useAssistant', () => {
     });
 
     await waitFor(() => {
-      expect(mockInvokeAssistant).toBeCalled();
+      expect(mockInvokeAssistant).toBeCalledWith({
+        conversationId,
+        enableTrace: true,
+        message: `given this context: " " customer message`,
+      });
     });
   });
 
@@ -179,6 +178,7 @@ describe('useAssistant', () => {
     await waitFor(() => {
       expect(mockInvokeAssistant).toBeCalledWith({
         conversationId,
+        enableTrace: true,
         message: `given this context: " ${context}" ${summaryUtterance}`,
       });
     });

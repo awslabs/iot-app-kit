@@ -36,7 +36,7 @@ export const getClients = (
   const iotSiteWisePrivateClient = new IoTSiteWise({
     credentials: dashboardClientConfiguration.awsCredentials,
     region: dashboardClientConfiguration.awsRegion,
-    endpoint: 'https://data.beta.us-east-1.iotsitewise.amazonaws.com',
+    endpoint: 'https://data.gamma.us-east-1.iotsitewise.amazonaws.com',
   });
 
   return {

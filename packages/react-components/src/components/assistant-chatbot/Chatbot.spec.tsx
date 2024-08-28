@@ -3,6 +3,7 @@ import { act, render, screen, fireEvent } from '@testing-library/react';
 import { MessageType } from '../../hooks/useAssistant/types';
 import { Chatbot } from './Chatbot';
 import userEvent from '@testing-library/user-event';
+import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
 
 describe(Chatbot, () => {
   it('should render customer message', () => {
@@ -82,26 +83,25 @@ describe(Chatbot, () => {
             id: 'UniqueID',
             loading: false,
             payload: {
-              finalResponse: {
+              output: {
                 citations: [
                   {
-                    references: [
-                      {
-                        content: {
-                          text: citationText,
-                        },
-                        location: {
-                          s3Location: {
+                    content: {
+                      text: citationText,
+                    },
+                    reference: {
+                      dataset: {
+                        source: {
+                          location: {
                             uri: 'http://test.url.com',
                           },
-                          type: '',
                         },
                       },
-                    ],
+                    },
                   },
                 ],
               },
-            } as any,
+            } satisfies ResponseStream,
           },
         ]}
         onSubmit={() => {}}

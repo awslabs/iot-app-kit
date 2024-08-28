@@ -1,4 +1,4 @@
-import type { ResponseStreamChunk } from '@iot-app-kit/core-util';
+import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
 import type { BaseStateManager, IMessage } from './types';
 import { MessageType } from './types';
 import { v4 as uuidv4 } from 'uuid';
@@ -47,7 +47,7 @@ export class StateManager implements BaseStateManager {
   addText = (
     content: string,
     sender: 'user' | 'assistant',
-    payload?: ResponseStreamChunk
+    payload?: ResponseStream
   ) => {
     const message = {
       id: uuidv4(),

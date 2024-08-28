@@ -1,12 +1,10 @@
-import {
-  FinalResponse,
-  InvokeAssistantStep,
+import type {
+  InvokeAssistantRequest,
   IoTSiteWise,
 } from '@amzn/iot-black-pearl-internal-v3';
 import type {
   AssistantClientInstanceParams,
   AssistantClientInvocationCompleteHandler,
-  AssistantClientInvocationDetail,
   AssistantClientInvocationResponseHandler,
 } from './types';
 
@@ -57,6 +55,7 @@ export class IoTSitewiseAssistantClient {
       iotSiteWiseClient: this.iotSiteWiseClient,
       payload: {
         conversationId,
+        enableTrace: true,
         message: `${assistantContext} ${utterance}`,
       },
       onComplete: this.onComplete,
@@ -94,7 +93,7 @@ async function invokeAssistant({
   onResponse,
 }: {
   iotSiteWiseClient: Pick<IoTSiteWise, 'invokeAssistant'>;
-  payload: AssistantClientInvocationDetail;
+  payload: InvokeAssistantRequest;
   onComplete?: AssistantClientInvocationCompleteHandler;
   onResponse?: AssistantClientInvocationResponseHandler;
 }) {
@@ -104,25 +103,21 @@ async function invokeAssistant({
    * Given the nature of streaming API, The client receives a chunk of the whole streamed response.
    */
   for await (const chunk of response.body || []) {
-    const responseChunk = chunk as {
-      step?: InvokeAssistantStep;
-      finalResponse?: FinalResponse;
-    };
-    if (onResponse && responseChunk.step?.stepId) {
+    if (onResponse && chunk.trace?.traceId) {
       onResponse(
         {
           conversationId: payload.conversationId,
-          body: responseChunk,
+          body: chunk,
         },
         payload
       );
     }
 
-    if (onComplete && !responseChunk.step) {
+    if (onComplete && !chunk.trace) {
       onComplete(
         {
           conversationId: payload.conversationId,
-          body: responseChunk,
+          body: chunk,
         },
         payload
       );

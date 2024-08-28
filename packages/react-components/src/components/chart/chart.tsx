@@ -11,6 +11,7 @@ import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistan
 export const Chart: React.FC<ChartOptions> = (options) => {
   const chartId = useComponentId(options.id);
   const chartOptions = { ...DEFAULT_CHART_SETTINGS, ...options };
+  const { queries } = chartOptions;
   const { viewport } = useViewport();
   const { setContextByComponent } = useAssistantContext();
 
@@ -23,11 +24,11 @@ export const Chart: React.FC<ChartOptions> = (options) => {
   useEffect(() => {
     setContextByComponent(chartId, {
       timerange: viewport,
-      queries: chartOptions.queries,
+      queries: queries.map((query) => query.toQueryString()).join(''),
     });
-  }, [viewport, chartOptions.queries]);
+  }, [viewport, queries]);
 
-  const [firstQuery] = chartOptions.queries;
+  const [firstQuery] = queries;
   if (options.assistant && firstQuery) {
     return (
       <ActionPanel

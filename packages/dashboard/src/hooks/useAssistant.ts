@@ -5,21 +5,17 @@ import { onToggleChatbotAction } from '~/store/actions/toggleChatbot';
 import { useClients } from '~/components/dashboard/clientContext';
 import { useMemo } from 'react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
-import { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 
 export const useAssistant = () => {
   const dispatch = useDispatch();
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const assistant = useSelector((state: DashboardState) => state.assistant);
-  const { iotSiteWiseClient } = useClients();
+  const { iotSiteWisePrivateClient } = useClients();
 
   const assistantProperties = useMemo(() => {
     if (readOnly && assistant.conversationID) {
-      const sitewiseClient = new IoTSiteWise({
-        credentials: iotSiteWiseClient?.config.credentials
-      });
       const client = new IoTSitewiseAssistantClient({
-        iotSiteWiseClient: sitewiseClient
+        iotSiteWiseClient: iotSiteWisePrivateClient!,
       });
   
       return {
@@ -41,7 +37,7 @@ export const useAssistant = () => {
     } else {
       return {};
     }
-  }, [dispatch, assistant.conversationID, iotSiteWiseClient]);
+  }, [dispatch, assistant.conversationID, iotSiteWisePrivateClient]);
 
   return {
     assistantProperties,

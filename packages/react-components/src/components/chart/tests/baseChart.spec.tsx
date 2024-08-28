@@ -91,7 +91,7 @@ describe('Chart Component Testing', () => {
         viewport={VIEWPORT}
         size={{ width: 500, height: 500 }}
         assistant={assistant}
-        id={'componentId'}
+        id='componentId'
       />
     );
 

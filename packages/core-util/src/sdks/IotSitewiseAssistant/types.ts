@@ -1,7 +1,7 @@
-import {
-  FinalResponse,
-  InvokeAssistantStep,
+import type {
+  ResponseStream,
   IoTSiteWise,
+  InvokeAssistantRequest,
 } from '@amzn/iot-black-pearl-internal-v3';
 export type UniqueId = string;
 
@@ -20,10 +20,6 @@ export type AssistantClientInstanceParams = {
   onComplete?: AssistantClientInvocationCompleteHandler;
 };
 
-export type ResponseStreamChunk = {
-  step?: InvokeAssistantStep;
-  finalResponse?: FinalResponse;
-};
 export type AssistantClientInstance = {
   invoke: (
     utterance: string,
@@ -34,20 +30,15 @@ export type AssistantClientInstance = {
 
 export type AssistantClientInvocationCompleteHandler = (
   response: AssistantClientInvocationResponse,
-  invocationDetail: AssistantClientInvocationDetail
+  invocationDetail: InvokeAssistantRequest
 ) => void;
 
 export type AssistantClientInvocationResponse = {
-  conversationId: UniqueId;
-  body: ResponseStreamChunk;
+  conversationId: UniqueId | undefined;
+  body: ResponseStream;
 };
 
 export type AssistantClientInvocationResponseHandler = (
   response: AssistantClientInvocationResponse,
-  invocationDetail: AssistantClientInvocationDetail
+  invocationDetail: InvokeAssistantRequest
 ) => void;
-
-export type AssistantClientInvocationDetail = {
-  conversationId: UniqueId;
-  message: string;
-};
