@@ -4,6 +4,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.11.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v10.10.2...scene-composer-v10.11.0) (2024-08-28)
+
+
+### Features
+
+* **dynamic scene:** reverse query structure for improved query speed ([c91995f](https://github.com/awslabs/iot-app-kit/commit/c91995f3c976b62c613708925693843bfbbada11))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.10.2 to 10.11.0
+    * @iot-app-kit/react-components bumped from 10.10.2 to 10.11.0
+    * @iot-app-kit/related-table bumped from 10.10.2 to 10.11.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.10.2 to 10.11.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 10.10.2 to 10.11.0
+
 ## [10.10.2](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v10.10.1...scene-composer-v10.10.2) (2024-08-08)
 
 
