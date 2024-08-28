@@ -7,26 +7,36 @@ import * as AnomalyChartStories from './AnomalyChart.stories';
 
 The Anomaly Chart is a powerful visualization tool that allows you to display anomaly predictions. This user guide will walk you through the process of specifying queries for the Anomaly Chart to request and visualize anomaly data.
 
-[Learn more about the Anomaly Chart](/docs/components-anomalychart--docs).
+Learn more about the [Anomaly Chart](/docs/components-anomalychart--docs).
 
-[Learn more about anomaly data query](/docs/data-sources-aws-iot-sitewise--docs).
+Learn more about anomaly [data query](/docs/data-sources-aws-iot-sitewise--docs).
 
 ---
 
 The queries for the Anomaly Chart must have the following properties:
 
-**assetId** (string): The ID of the asset for which you want to fetch anomaly data.
+#### assetId (string): 
 
-**predictionDefinitionId** (string): The ID of the prediction definition associated with the anomaly data.
+The ID of the asset for which you want to fetch anomaly data.
 
-**startDate** (number, optional): The start date for the anomaly data in milliseconds since the Unix epoch. If not provided, the query will fetch data from the earliest available timestamp.
+#### predictionDefinitionId (string): 
 
-**endDate** (number, optional): The end date for the anomaly data in milliseconds since the Unix epoch. If not provided, the query will fetch data up to the latest available timestamp.
+The ID of the prediction definition associated with the anomaly data.
 
-**interval** (number, optional): The interval in milliseconds at which to fetch anomaly data. If not provided, the query will use the default interval.
+#### startDate (number, optional): 
+
+The start date for the anomaly data in milliseconds since the Unix epoch. If not provided, the query fetches data from the earliest available timestamp.
+
+#### endDate (number, optional): 
+
+The end date for the anomaly data in milliseconds since the Unix epoch. If not provided, the query fetches data up to the latest available timestamp.
+
+#### interval (number, optional): 
+
+The interval in milliseconds at which to fetch anomaly data. If not provided, the query uses the default interval.
 
 
-### Example usage
+## Example 
 
 ```
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';

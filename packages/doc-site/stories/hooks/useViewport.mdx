@@ -4,15 +4,15 @@ import { Meta } from '@storybook/blocks';
 
 # useViewport
 
-The `useViewport` react hook is a function which can be used within react components to utilize and update a shared time frame within a group of
+The `useViewport` react hook is a function used within react components to utilize and update a shared time frame within a group of
 IoT App Kit widgets.
 
-`useViewport` should be used within the context of a `<TimeSync />`. [Learn more about Time Sync](https://github.com/awslabs/iot-app-kit/blob/main/docs/TimeSync.md)
+`useViewport` must be used within the context of a `<TimeSync />`. Learn more about [Time Sync](https://github.com/awslabs/iot-app-kit/blob/main/docs/TimeSync.md).
 
-NOTE: This documentation assumes you are familiar with react and react-hooks. If you need to brush up, learn more at https://reactjs.org/docs/hooks-intro.html
+**Note**: This documentation assumes you are familiar with react and react-hooks. [Learn more](https://reactjs.org/docs/hooks-intro.html).
 
-#  Example usage
-Below is an example of a simple component which displays the current viewport, and provides a button to set the viewport
+###  Example 
+This example is of a component which displays the current viewport, and provides a button to set the viewport
 to the last 5 minutes:
 ```
 const BasicComponent = () => {
@@ -26,7 +26,7 @@ const BasicComponent = () => {
 }
 ```
 
-This component can then be used as follows in junction with the `<TimeSync />` component:
+This component is then used in junction with the `<TimeSync />` component:
 
 ```
 import { TimeSync } from '@iot-app-kit/react-components';
@@ -37,7 +37,8 @@ import { TimeSync } from '@iot-app-kit/react-components';
 </TimeSync>
 ```
 
-To demonstrate the synchronizing of viewports, we can utilize multiple of the newly created `<BasicComponent />`, which will all display the same viewport:
+The viewports can be synchronized. See example below where multiple newly created `<BasicComponent />`, 
+all display the same viewport:
 
 ```
 import { TimeSync } from '@iot-app-kit/react-components';
@@ -50,21 +51,24 @@ import { TimeSync } from '@iot-app-kit/react-components';
 </TimeSync>
 ```
 
-### API Summary
+### useViewport API Summary
 
-The `useViewport` takes no inputs, and returns an object containing the following fields:
+This hook takes no inputs, and returns an object containing the following fields:
 
-### `viewport`
+#### viewport (object):
 
-The current viewport for the viewport group subscribed to. Will be undefined if the hook is used outside of the context of a `<TimeSync />`.
-Will also be undefined if the associated viewport group has no associated viewport.
+The current viewport for the viewport group subscribed to. It's undefined 
+if the hook is used outside of the context of a `<TimeSync />` component.
+It's undefined if the associated viewport group has no associated viewport.
 
-Type: Object or undefined
+#### setViewport (viewport) => void
 
-### `setViewport: (viewport) => void`
+This is a function to which you pass a viewport to set the current viewport
+group to. When called, the viewport group updates all consumers of the viewport group
+with the new viewport.
 
-A function which you pass a viewport to set the current viewport group to. When called, the viewport group will update and all consumers of the viewport group will immediately receive the updated viewport provided.
+### group (string):
 
-### `group: string`
-
-An identifier representing the viewport shared amongst widget in the same TimeSync group. It is equal to the group passed into the parent TimeSync component (if provided) or will be a random UUID assigned by the TimeSync component.
+An identifier representing the viewport shared amongst widget in the same TimeSync group. 
+It is equal to the group passed into the parent TimeSync component (if provided), 
+or a random UUID assigned by the TimeSync component.

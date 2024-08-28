@@ -5,111 +5,69 @@ import { Meta } from '@storybook/blocks';
 # Thresholds
 Thresholds enable the ability to configure how data is visualized when the data breaches conditions specified by the threshold.
 
-A threshold contains the following properties
+A threshold contains the following properties:
 
-- `value`
+- **value (object)**:
+  The value the threshold compares data streams values against. The type must be one of the following:
+  - `String`
+  - `Boolean`
+  - `Number`
 
-  The value the threshold compares data streams values against.
+- **color (string)**:
+  The color to visualize data that breaches the threshold. Must be a css color string.
 
-  Type: String, Boolean or Number
+- **icon (string)**:
+  Display the icon in contexts (such as legends) when a data stream is breached by the threshold.
 
-- `color`
+- **showValue (boolean, optional)**:
+  Displays the value of the threshold when visualized on certain widgets, such as line-chart.
 
-  The color to visualize data that breaches the threshold. Must be a css color string
+- **label (string, optional)**:
+  The label associated with threshold.
 
-  Type: String
+- **description (string, optional)**:
+  The description of the threshold.
 
-- `icon`
+- **isEditable (boolean, optional)**:
+  Configures whether the threshold is editable within the visualization. This is only supported in line chart, scatter chart and bar chart. Defaults to false.
 
-  The icon to displaay in certain contexts (such as a legend) when a data stream is breached by the threshold.
+- **id (string, optional)**:
+  The identifier for threshold, used with `isEditable`. 
+  This allows the application utilizing the editable thresholds to know 
+  which threshold is being altered.
 
-  Type: String;
+- **comparisonOperator (string)**:
+  The operator to use for data comparison. The comparison operator must be one 
+  of the following values:
 
-- `showValue`:
+  - `LT`: Less than the threshold value. Only supports numerical data.
+  - `GT`: Greater than the threshold value. Only supports numerical data.
+  - `LTE`: Lesser than or equal to the threshold value. Only supports numerical data.
+  - `GTE`: Greater than or equal to the threshold value. Only supports numerical data.
+  - `EQ`: Equal to the threshold value.
+  - `CONTAINS`: Contains the threshold value. Only supports strings.
 
-  (Optional) Whether to display the value of the threshold when visualized on certain widgets, such as line-chart.
+- **severity (number, optional)**:
+  The severity of the threshold, used to determine the breached threshold to visualize.
 
-  Type: Boolean
+- **dataStreamIds (array, optional)**:
+  The data stream ids that the threshold evaluates against. It defaults to 
+  undefined, which indicates the threshold applies to all data streams.
 
-- `label`:
+## ThresholdSettings
+  The settings that configure threshold interpretation. It has the following properties:
 
-  (Optional) label associated with threshold
+- **colorBreachedData (boolean, optional)**:
+  This configures if a breached threshold results in the widget data 
+  to be colored according to the threshold. It defaults to `true`.
 
-  Type: String
+## StyledThreshold
+An extension of the threshold type that adds seetings for the threshold styling. It contains
+the following properties:
 
-- `description`:
+- **visible (boolean, optional)**:
+  This determines if a met threshold is visible.
 
-  (Optional) description of the threshold
-
-  Type: String
-
-- `isEditable`:
-
-  (Optional) Configures whether the threshold can be edited within the visualization. Only supported in line chart, scatter chart and bar chart. Defaults to false.
-
-  Type: Boolean
-
-- `id`:
-
-  (Optional) identifier for threshold, used in junction with `isEditable` to allow action the application utilizing the editable thresholds to know which threshold is being altered.
-
-  Type: String
-
-- `comparisonOperator`
-
-  The operator to use in which data is compared against.
-
-  Comparison operator must be one of the following values:
-
-  - 'LT': Less than the threshold value. Only supports numerical data
-  - 'GT': Greater than the threshold value. Only supports numerical data
-  - 'LTE': Lesser than or equal to the threshold value. Only supports numerical data
-  - 'GTE': Greater than or equal to the threshold value. Only supports numerical data
-  - 'EQ': Equal to the threshold value
-  - 'CONTAINS': Contains the threshold value. Only supports strings
-
-  Type: String
-
-- `severity`
-
-  (Optional) Severity of the threshold, utilized to determine which breached threshold to visualize.
-
-  Type: Number
-
-
-- `dataStreamIds`
-
-  (Optional) The data stream ids that the threshold evaluates against. Defaults to undefined, which means the threshold
-  applies to all data streams.
-
-  Type: Array
-
-
-# ThresholdSettings
-Settings that configure how thresholds are interpreted.
-
-Contains the following properties:
-
-- `colorBreachedData`
-
-  (Optional) configures whether a breached threshold results in the data on a widget to be colored according to the threshold. Defaults to true.
-
-  Type: Boolean
-
-
-# StyledThreshold
-An extension of the Threshold type which adds seetings for the threshold stylization
-
-Constains the following properties:
-
-- `visible`
-
-  (Optional) determines if a met threshold is visible
-
-  Type: Boolean
-
-- `fill`
-
-  (Optional) determines if a met threshold applies a filling color or just create a line representing the threshold
-
-  Type: string
+- **visible (string, optional)**:
+  This determines if a met threshold applies a filling color,
+   or creates a line representing the threshold

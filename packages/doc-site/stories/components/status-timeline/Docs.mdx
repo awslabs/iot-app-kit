@@ -41,23 +41,35 @@ const Page = () => (
 
 ## Scene Composer Properties
 
-The status timeline component contains the following properties.
+The Scene Composer component contains the following properties:
 
-**viewport** (object, optional): This attribute specifies the interval of time the widget visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
+#### viewport (object, optional): 
+
+This attribute specifies the interval of time the widget visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
 If there is no ViewportManager, and no `viewport` defined, the default viewport will be `{ duration: '10d' }`.
 Learn more about [viewport](/docs/core-viewport--docs).
 
-**thresholds** (object, optional): Thresholds define rules that affect data visualization based on if the data breaches the threshold.
+#### thresholds (object, optional): 
+
+Thresholds define rules that affect data visualization based on if the data breaches the threshold.
 Learn more about [thresholds](/docs/core-thresholds--docs#thresholds).
 
-**thresholdSettings** (object, optional): This attribute customizes settings on threshold visualization within the widget. Default value is `{ colorBreachedData: true }`.
+#### thresholdSettings (object, optional): 
+
+This attribute customizes settings on threshold visualization within the widget. Default value is `{ colorBreachedData: true }`.
 Learn more about [thresholds settings](/docs/core-thresholds--docs#thresholdsettings).
 
-**queries** (array): The queries that specify the time series data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
+#### queries (array): 
 
-**gestures** (optional): Specifies if gestures (pan, zoom and restrict time-span) are enabled. Default value is `true`.
+The queries that specify the time series data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
 
-**axis** (optional): Specifies the x and y-axis related settings. The default values are `{ showX: true, showY: true, yAxisLabel: undefined }`. This contains the 
+#### gestures (optional): 
+
+Specifies if gestures (pan, zoom and restrict time-span) are enabled. Default value is `true`.
+
+#### axis (optional): 
+
+Specifies the x and y-axis related settings. The default values are `{ showX: true, showY: true, yAxisLabel: undefined }`. This contains the 
 following properties:
 
   * `showX` (boolean, optional): This setting determines if the x-axis is displayed.  The default value is true.
@@ -70,7 +82,9 @@ following properties:
 <StatusTimeline axis={{ showX: false, showY: true, yAxisLabel: 'mph' }} {...otherFields} />
 ```
 
-**styles** (optional): A map of `refId` to style settings for the component. Learn more about [reference IDs](/docs/core-styles--docs#reference-ids).
+#### styles (optional): 
+
+A map of `refId` to style settings for the component. Learn more about [reference IDs](/docs/core-styles--docs#reference-ids).
 The status timeline provides the following customizable style settings:
 
   * `name` (string, optional): This attribute specifies a name to replace the name of the data set given by its source.
