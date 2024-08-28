@@ -186,122 +186,122 @@ export const fetchSceneNodes = async (sceneRootEntityId: string): Promise<IScene
     // Get node entities under the sceneRootEntityId
     `select entity, r, e
       from EntityGraph
-      match (entity)-[r]->(e)
+      match (e)<-[r]-(entity)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'`,
     // Get entityBindings for this layer of the scene tree
     `select entity, rb, binding
       from EntityGraph 
-      match (binding)<-[rb]-(entity)-[r]->(e)
+      match (e)<-[r]-(entity)-[rb]->(binding)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'
       and rb.relationshipName = '${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}'`,
 
     `select c, r1, entity
       from EntityGraph
-      match (c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'`,
     `select c, rb1, binding
       from EntityGraph 
-      match (binding)<-[rb1]-(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)-[rb1]->(binding)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'
       and rb1.relationshipName = '${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}'`,
 
     `select c2, r2, c
       from EntityGraph
-      match (c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'`,
     `select c2, rb2, binding
       from EntityGraph 
-      match (binding)<-[rb2]-(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)-[rb2]->(binding)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'
       and rb2.relationshipName = '${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}'`,
 
     `select c3, r3, c2
       from EntityGraph
-      match (c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)<-[r3]-(c3)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'`,
     `select c3, rb3, binding
       from EntityGraph 
-      match (binding)<-[rb3]-(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)<-[r3]-(c3)-[rb3]->(binding)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'
       and rb3.relationshipName = '${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}'`,
 
     `select c4, r4, c3
       from EntityGraph
-      match (c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)<-[r3]-(c3)<-[r4]-(c4)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'`,
     `select c4, rb4, binding
       from EntityGraph 
-      match (binding)<-[rb4]-(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)<-[r3]-(c3)<-[r4]-(c4)-[rb4]->(binding)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'
       and rb4.relationshipName = '${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}'`,
 
     `select c5, r5, c4
       from EntityGraph
-      match (c5)-[r5]->(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)<-[r3]-(c3)<-[r4]-(c4)<-[r5]-(c5)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'`,
     `select c5, rb5, binding
       from EntityGraph 
-      match (binding)<-[rb5]-(c5)-[r5]->(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)<-[r3]-(c3)<-[r4]-(c4)<-[r5]-(c5)-[rb5]->(binding)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'
       and rb5.relationshipName = '${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}'`,
 
     `select c6, r6, c5
       from EntityGraph
-      match (c6)-[r6]->(c5)-[r5]->(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)<-[r3]-(c3)<-[r4]-(c4)<-[r5]-(c5)<-[r6]-(c6)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'`,
     `select c6, rb6, binding
       from EntityGraph 
-      match (binding)<-[rb6]-(c6)-[r6]->(c5)-[r5]->(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)<-[r3]-(c3)<-[r4]-(c4)<-[r5]-(c5)<-[r6]-(c6)-[rb6]->(binding)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'
       and rb6.relationshipName = '${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}'`,
 
     `select c7, r7, c6
       from EntityGraph
-      match (c7)-[r7]->(c6)-[r6]->(c5)-[r5]->(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)<-[r3]-(c3)<-[r4]-(c4)<-[r5]-(c5)<-[r6]-(c6)<-[r7]-(c7)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'`,
     `select c7, rb7, binding
       from EntityGraph 
-      match (binding)<-[rb7]-(c7)-[r7]->(c6)-[r6]->(c5)-[r5]->(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)<-[r3]-(c3)<-[r4]-(c4)<-[r5]-(c5)<-[r6]-(c6)<-[r7]-(c7)-[rb7]->(binding)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'
       and rb7.relationshipName = '${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}'`,
 
     `select c8, r8, c7
       from EntityGraph
-      match (c8)-[r8]->(c7)-[r7]->(c6)-[r6]->(c5)-[r5]->(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)<-[r3]-(c3)<-[r4]-(c4)<-[r5]-(c5)<-[r6]-(c6)<-[r7]-(c7)<-[r8]-(c8)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'`,
     `select c8, rb8, binding
       from EntityGraph 
-      match (binding)<-[rb8]-(c8)-[r8]->(c7)-[r7]->(c6)-[r6]->(c5)-[r5]->(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)<-[r3]-(c3)<-[r4]-(c4)<-[r5]-(c5)<-[r6]-(c6)<-[r7]-(c7)<-[r8]-(c8)-[rb8]->(binding)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'
       and rb8.relationshipName = '${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}'`,
 
     `select c9, r9, c8
       from EntityGraph
-      match (c9)-[r9]->(c8)-[r8]->(c7)-[r7]->(c6)-[r6]->(c5)-[r5]->(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)<-[r3]-(c3)<-[r4]-(c4)<-[r5]-(c5)<-[r6]-(c6)<-[r7]-(c7)<-[r8]-(c8)<-[r9]-(c9)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'`,
     //this one may fail as it's depth 11 effectively
     `select c9, rb9, binding
       from EntityGraph 
-      match (binding)<-[rb9]-(c9)-[r9]->(c8)-[r8]->(c7)-[r7]->(c6)-[r6]->(c5)-[r5]->(c4)-[r4]->(c3)-[r3]->(c2)-[r2]->(c)-[r1]->(entity)-[r]->(e)
+      match (e)<-[r]-(entity)<-[r1]-(c)<-[r2]-(c2)<-[r3]-(c3)<-[r4]-(c4)<-[r5]-(c5)<-[r6]-(c6)<-[r7]-(c7)<-[r8]-(c8)<-[r9]-(c9)-[rb9]->(binding)
       where r.relationshipName = '${DEFAULT_PARENT_RELATIONSHIP_NAME}'
       and e.entityId = '${sceneRootEntityId}'
       and rb9.relationshipName = '${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}'`,
