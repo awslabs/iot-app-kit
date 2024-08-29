@@ -144,7 +144,7 @@
     "ts-jest": "^29.1.1",
     "ts-patch": "^2.1.0",
     "ts-transform-react-intl": "^0.4.1",
-    "webpack": "^5.88.2"
+    "webpack": "^5.94.0"
   },
   "dependencies": {
     "@aws-sdk/client-iottwinmaker": "3.589.0",
