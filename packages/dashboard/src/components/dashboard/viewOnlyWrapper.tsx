@@ -10,6 +10,7 @@ export const DashboardViewWrapper: React.FC<DashboardViewProperties> = ({
   currentViewport,
   onViewportChange,
   toolbar,
+  timeZone,
 }) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   const stableOnViewportChange = useMemo(() => onViewportChange, []);
@@ -39,6 +40,7 @@ export const DashboardViewWrapper: React.FC<DashboardViewProperties> = ({
       currentViewport={currentViewport}
       onViewportChange={stableOnViewportChange}
       toolbar={stableToolbar}
+      timeZone={timeZone}
     />
   );
 };
