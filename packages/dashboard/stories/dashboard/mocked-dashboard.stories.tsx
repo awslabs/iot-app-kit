@@ -73,3 +73,11 @@ export const ViewOnly: ComponentStory<typeof Dashboard> = () => (
     dashboardConfiguration={MOCK_DASHBOARD_CONFIG}
   />
 );
+
+export const ViewOnlyWithTimezone: ComponentStory<typeof Dashboard> = () => (
+  <DashboardView
+    {...emptyDashboardConfiguration}
+    dashboardConfiguration={MOCK_DASHBOARD_CONFIG}
+    timeZone='Asia/Tokyo'
+  />
+);
