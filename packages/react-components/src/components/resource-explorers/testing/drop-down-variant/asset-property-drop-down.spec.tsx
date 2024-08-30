@@ -13,7 +13,7 @@ import type { SelectionMode } from '../../types/common';
 import type {
   ListAssetModelProperties,
   ListAssetProperties,
-} from '../../types/request-fn';
+} from '@iot-app-kit/core';
 import type { AssetPropertyResource } from '../../types/resources';
 
 function SelectableAssetPropertyDropDown({

@@ -1,5 +1,5 @@
 import type { CommonResourceExplorerProps } from '../../types/resource-explorer';
-import type { ListAssetModels } from '../../types/request-fn';
+import type { ListAssetModels } from '@iot-app-kit/core';
 import type { AssetModelResource } from '../../types/resources';
 import type {
   IsResourceDisabled,

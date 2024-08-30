@@ -4,7 +4,7 @@ import { createDataStreamsWithLatestValue } from './create-data-streams-with-lat
 import { createRequestEntryBatches } from './create-request-entry-batches';
 import type { CreateEntryId, DataStreamResource } from './types';
 import { resourceExplorerQueryClient } from '../resource-explorer-query-client';
-import type { BatchGetAssetPropertyValue } from '../../types/request-fn';
+import type { BatchGetAssetPropertyValue } from '@iot-app-kit/core';
 import type { DataStreamResourceWithLatestValue } from '../../types/resources';
 import type { RequestIsLoading } from '../../types/common';
 import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';

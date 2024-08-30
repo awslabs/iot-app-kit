@@ -3,7 +3,7 @@ import type {
   UseListAPIBaseOptions,
   UseListAPIBaseResult,
 } from '../../../types/requests';
-import type { ListAssets } from '../../../types/request-fn';
+import type { ListAssets } from '@iot-app-kit/core';
 import type { AssetResource } from '../../../types/resources';
 import { transformListAssetsResponse } from '../../../helpers/response-transformers';
 

@@ -7,7 +7,7 @@ import { createListTimeSeriesPage } from '../helpers/responses';
 import { TimeSeriesExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests/resource-explorer-query-client';
 import type { SelectionMode } from '../../types/common';
-import type { ListTimeSeries } from '../../types/request-fn';
+import type { ListTimeSeries } from '@iot-app-kit/core';
 import type { TimeSeriesResource } from '../../types/resources';
 import type { TimeSeriesRequestParameters } from '../../explorers/time-series-explorer/types';
 

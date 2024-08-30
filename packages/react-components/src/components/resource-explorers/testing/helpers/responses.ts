@@ -11,7 +11,7 @@ import type {
   ListAssetProperties,
   ListAssets,
   ListTimeSeries,
-} from '../../types/request-fn';
+} from '@iot-app-kit/core';
 
 export const fakeAssetModelSummaries = [
   {
