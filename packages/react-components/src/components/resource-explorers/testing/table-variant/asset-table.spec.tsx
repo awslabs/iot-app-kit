@@ -6,7 +6,7 @@ import { resourceExplorerQueryClient } from '../../requests';
 import * as table from '../helpers/table';
 import { createListAssetsPage } from '../helpers/responses';
 import { SelectionMode } from '../../types/common';
-import { ExecuteQuery, ListAssets } from '../../types/request-fn';
+import { ExecuteQuery, ListAssets } from '@iot-app-kit/core';
 import { AssetResource } from '../../types/resources';
 
 function SelectableAssetTable({

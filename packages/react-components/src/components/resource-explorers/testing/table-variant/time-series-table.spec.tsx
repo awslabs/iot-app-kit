@@ -5,10 +5,7 @@ import { TimeSeriesExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests';
 import * as table from '../helpers/table';
 import { createListTimeSeriesPage } from '../helpers/responses';
-import {
-  BatchGetAssetPropertyValue,
-  ListTimeSeries,
-} from '../../types/request-fn';
+import { BatchGetAssetPropertyValue, ListTimeSeries } from '@iot-app-kit/core';
 import { TimeSeriesResource } from '../../types/resources';
 import { SelectionMode } from '../../types/common';
 import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';

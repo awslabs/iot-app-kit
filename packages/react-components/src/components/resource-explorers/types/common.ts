@@ -10,7 +10,6 @@ export type PluralResourceName = string;
 export type Resources<Resource> = readonly Resource[];
 
 export type RequestError = Error | null | undefined;
-export type RequestTimeout = number;
 
 export type ResourceFieldId = string;
 export type ResourceFieldName = string;

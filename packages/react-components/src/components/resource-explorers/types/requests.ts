@@ -5,7 +5,7 @@ import type {
   RequestError,
   RequestIsLoading,
 } from './common';
-import type { RequestFunction } from './request-fn';
+import type { RequestFunction } from '@iot-app-kit/core';
 
 /** Minimum required parameters for a list request. */
 export interface ListRequestBaseParams {

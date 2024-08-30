@@ -1,4 +1,4 @@
-import type { ListAssociatedAssets } from '../../../types/request-fn';
+import type { ListAssociatedAssets } from '@iot-app-kit/core';
 
 export const PARENT_TRAVERSAL_DIRECTION =
   'PARENT' satisfies Parameters<ListAssociatedAssets>[0]['traversalDirection'];

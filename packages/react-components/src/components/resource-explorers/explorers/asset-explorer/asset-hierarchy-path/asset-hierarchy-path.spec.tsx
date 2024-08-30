@@ -13,7 +13,7 @@ import {
   AssetHierarchyPath,
   type AssetHierarchyPathProps,
 } from './asset-hierarchy-path';
-import { ListAssociatedAssets } from '../../../types/request-fn';
+import { ListAssociatedAssets } from '@iot-app-kit/core';
 import {
   PARENT_TRAVERSAL_DIRECTION,
   SINGLE_PARENT_MAX_RESULTS,

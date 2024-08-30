@@ -4,7 +4,7 @@ import type {
   ListAssets,
   ListTimeSeries,
   RequestResponse,
-} from '../types/request-fn';
+} from '@iot-app-kit/core';
 import type {
   AssetModelResource,
   AssetResource,
