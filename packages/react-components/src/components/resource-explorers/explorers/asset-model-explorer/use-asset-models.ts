@@ -5,7 +5,7 @@ import type {
   UseListAPIBaseOptions,
   UseListAPIBaseResult,
 } from '../../types/requests';
-import type { ListAssetModels } from '../../types/request-fn';
+import type { ListAssetModels } from '@iot-app-kit/core';
 import type { AssetModelResource } from '../../types/resources';
 
 export interface UseAssetModelsOptions extends UseListAPIBaseOptions {

@@ -2,7 +2,7 @@ import type { CommonResourceExplorerProps } from '../../types/resource-explorer'
 import type {
   BatchGetAssetPropertyValue,
   ListTimeSeries,
-} from '../../types/request-fn';
+} from '@iot-app-kit/core';
 import type { TimeSeriesResource } from '../../types/resources';
 import type {
   IsResourceDisabled,

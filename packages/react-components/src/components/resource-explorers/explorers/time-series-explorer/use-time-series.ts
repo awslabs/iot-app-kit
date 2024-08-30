@@ -1,8 +1,5 @@
 import type { TimeSeriesRequestParameters } from './types';
-import {
-  BatchGetAssetPropertyValue,
-  ListTimeSeries,
-} from '../../types/request-fn';
+import { BatchGetAssetPropertyValue, ListTimeSeries } from '@iot-app-kit/core';
 import type {
   UseListAPIBaseOptions,
   UseListAPIBaseResult,

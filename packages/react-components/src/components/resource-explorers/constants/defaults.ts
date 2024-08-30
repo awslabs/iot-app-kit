@@ -1,3 +1,4 @@
+import type { RequestTimeout } from '@iot-app-kit/core';
 import type {
   IsResourceDisabled,
   IsTableFilterEnabled,
@@ -7,7 +8,6 @@ import type {
   IsVisible,
   OnSelectResource,
   PluralResourceName,
-  RequestTimeout,
   ResourceDropDownVariant,
   ResourceExplorerVariant,
   ResourceFieldFilterOperator,

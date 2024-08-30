@@ -4,7 +4,7 @@ import { useMultipleListRequests } from '../../../requests/use-multiple-list-req
 import type {
   ListAssetModelProperties,
   ListAssetProperties,
-} from '../../../types/request-fn';
+} from '@iot-app-kit/core';
 import type {
   UseListAPIBaseOptions,
   UseListAPIBaseResult,

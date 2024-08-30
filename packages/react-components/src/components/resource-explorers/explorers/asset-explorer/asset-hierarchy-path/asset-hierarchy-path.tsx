@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { ResourceRelationshipPath } from './resource-relationship-path';
 import { useAncestorAssets } from './use-ancestor-assets';
 import type { ParentAsset, ResourcePathItem } from './types';
-import type { ListAssociatedAssets } from '../../../types/request-fn';
+import type { ListAssociatedAssets } from '@iot-app-kit/core';
 import type { AssetResource } from '../../../types/resources';
 
 export interface AssetHierarchyPathProps {

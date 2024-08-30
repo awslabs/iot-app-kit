@@ -20,7 +20,7 @@ export { isHistoricalViewport, isDurationViewport } from './common/predicates';
 export { viewportEndDate, viewportStartDate } from './common/viewport';
 
 // Edge utilities
-export * from './edge/types';
+export { isEdgeModeEnabled, type EdgeMode } from './edge/types';
 
 // Exposed but for internal usage only. Liable to change.
 export { TimeSeriesDataModule } from './data-module/TimeSeriesDataModule';
@@ -44,3 +44,27 @@ export type {
   MetricsRecorder,
 } from './metricRecorder/metricsRecorder.interface';
 export { registerPlugin, getPlugin } from './plugins/pluginsRegistry';
+
+// Request functions
+export type {
+  PickRequestParameters,
+  RequestFunction,
+  RequestFunctions,
+  RequestParameters,
+  RequestResponse,
+  RequestTimeout,
+  GetAssetPropertyValue,
+  BatchGetAssetPropertyValue,
+  GetAssetPropertyValueHistory,
+  BatchGetAssetPropertyValueHistory,
+  ExecuteQuery,
+  ListAssetModels,
+  ListAssetModelProperties,
+  ListAssets,
+  ListAssociatedAssets,
+  ListTimeSeries,
+  ListAssetProperties,
+  DescribeAsset,
+  DescribeAssetModel,
+  DescribeAlarmModel,
+} from './requestFunctions/types';
