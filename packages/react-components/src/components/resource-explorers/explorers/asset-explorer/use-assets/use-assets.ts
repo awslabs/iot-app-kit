@@ -17,7 +17,7 @@ import type {
   ExecuteQuery,
   ListAssets,
   ListAssociatedAssets,
-} from '../../../types/request-fn';
+} from '@iot-app-kit/core';
 import type {
   UseListAPIBaseOptions,
   UseListAPIBaseResult,

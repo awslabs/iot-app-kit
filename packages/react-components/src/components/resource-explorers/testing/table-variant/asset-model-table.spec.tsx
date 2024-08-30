@@ -5,7 +5,7 @@ import { AssetModelExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests';
 import * as table from '../helpers/table';
 import { createListAssetModelsPage } from '../helpers/responses';
-import { ListAssetModels } from '../../types/request-fn';
+import { ListAssetModels } from '@iot-app-kit/core';
 import { AssetModelResource } from '../../types/resources';
 import { SelectionMode } from '../../types/common';
 

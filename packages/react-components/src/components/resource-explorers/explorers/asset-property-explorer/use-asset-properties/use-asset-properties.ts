@@ -15,7 +15,7 @@ import type {
   ExecuteQuery,
   ListAssetModelProperties,
   ListAssetProperties,
-} from '../../../types/request-fn';
+} from '@iot-app-kit/core';
 import type { AssetPropertyResource } from '../../../types/resources';
 
 export interface UseAssetPropertiesOptions extends UseListAPIBaseOptions {

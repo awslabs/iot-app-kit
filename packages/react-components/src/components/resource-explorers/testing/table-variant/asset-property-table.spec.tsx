@@ -14,7 +14,7 @@ import {
   ExecuteQuery,
   ListAssetModelProperties,
   ListAssetProperties,
-} from '../../types/request-fn';
+} from '@iot-app-kit/core';
 import { AssetPropertyResource } from '../../types/resources';
 import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';
 

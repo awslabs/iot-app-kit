@@ -7,7 +7,7 @@ import {
 import type { ParentAsset } from './types';
 import { transformListAssetsResponse } from '../../../helpers/response-transformers';
 import { resourceExplorerQueryClient } from '../../../requests';
-import type { ListAssociatedAssets } from '../../../types/request-fn';
+import type { ListAssociatedAssets } from '@iot-app-kit/core';
 import type { AssetResource } from '../../../types/resources';
 
 export interface UseAssetHierarchyPathOptions {

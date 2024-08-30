@@ -9,7 +9,7 @@ import type {
   ExecuteQuery,
   ListAssetModelProperties,
   ListAssetProperties,
-} from '../../types/request-fn';
+} from '@iot-app-kit/core';
 import type { CommonResourceExplorerProps } from '../../types/resource-explorer';
 import type { AssetPropertyResource } from '../../types/resources';
 

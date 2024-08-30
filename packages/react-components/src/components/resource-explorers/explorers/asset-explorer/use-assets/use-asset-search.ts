@@ -1,6 +1,6 @@
 import type { SearchedAssetsRequestParameters } from '../types';
 import { useMultipleListRequests } from '../../../requests';
-import type { ExecuteQuery } from '../../../types/request-fn';
+import type { ExecuteQuery } from '@iot-app-kit/core';
 import type {
   UseListAPIBaseOptions,
   UseListAPIBaseResult,

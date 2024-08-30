@@ -7,7 +7,7 @@ import { createListAssetsPage } from '../helpers/responses';
 import { AssetExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests/resource-explorer-query-client';
 import type { SelectionMode } from '../../types/common';
-import type { ListAssets } from '../../types/request-fn';
+import type { ListAssets } from '@iot-app-kit/core';
 import type { AssetResource } from '../../types/resources';
 
 function SelectableAssetDropDown({

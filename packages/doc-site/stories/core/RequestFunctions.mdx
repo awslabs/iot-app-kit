@@ -1,0 +1,111 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Core/Request functions" />
+
+# Request functions
+
+Request functions are used in component and hook interfaces to provide flexibility for accepting AWS SDK clients. 
+If you aren't able to generate the [JavaScript AWS SDK](https://aws.amazon.com/sdk-for-javascript/), or you want to
+use custom API behavior, you can pass in an object with specific API request functions used by a component or hook.
+
+```
+/** First-class function used to send requests to AWS. */
+export type RequestFunction<Request, Response> = (
+  request: Request,
+  options?: {
+    abortSignal?: AbortSignal;
+    requestTimeout?: RequestTimeout;
+  }
+) => PromiseLike<Response>;
+
+/** Example SiteWise.BatchGetAssetPropertyValue request function type. */
+
+import type {
+  BatchGetAssetPropertyValueRequest,
+  BatchGetAssetPropertyValueResponse,
+} from '@aws-sdk/client-iotsitewise';
+
+export type BatchGetAssetPropertyValue = RequestFunction<
+  BatchGetAssetPropertyValueRequest,
+  BatchGetAssetPropertyValueResponse
+>;
+```
+
+### Example: Asset Property Explorer
+
+If you want to use the `asset-property-explorer` component in your app, you have multiple options for supplying
+the SDK client for SiteWise.
+
+```
+export interface AssetPropertyExplorerProps
+  extends CommonResourceExplorerProps<AssetPropertyResource> {
+  requestFns?: {
+    batchGetAssetPropertyValue?: BatchGetAssetPropertyValue;
+    executeQuery?: ExecuteQuery;
+    listAssetProperties?: ListAssetProperties;
+    listAssetModelProperties?: ListAssetModelProperties;
+  };
+  ...
+}
+```
+
+#### Option 1: Supply `IoTSiteWiseClient`
+
+Import the `IoTSiteWiseClient` from the AWS SDK and pass it in to the `asset-property-explorer`.
+
+```
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { AssetPropertyExplorer } from '@iot-app-kit/react-components;
+
+const iotSiteWiseClient = new IoTSiteWiseClient();
+
+function CustomApp() {
+   return (
+    <AssetPropertyExplorer 
+      requestFns={iotSiteWiseClient} 
+      ...
+    />
+  );
+}
+```
+
+The `IoTSiteWiseClient` inherently supports all of the API functions that the `AssetPropertyExplorer` uses to fetch AWS resources.
+
+#### Option 2: Custom request functions
+
+Define a custom implementation of the SiteWise client with functions defined for each requestFn.
+
+```
+import { 
+  AssetPropertyExplorer, 
+  type AssetPropertyExplorerProps,
+} from '@iot-app-kit/react-components';
+
+const customIoTSiteWiseClient = {
+  batchGetAssetPropertyValue: async (request, options) => {
+    // implementation 
+  },
+  executeQuery: async (request) => {
+    // implementation
+  },
+  listAssetProperties: async (request, options) => {
+    // implementation
+  },
+  listAssetModelProperties: async (request, options) => {
+    // implementation
+  },
+} satisfies AssetPropertyExplorerProps['requestFns'];
+
+function CustomApp() {
+   return (
+    <AssetPropertyExplorer 
+      requestFns={customIoTSiteWiseClient} 
+      ...
+    />
+  );
+}
+```
+
+A custom client can be defined as a functional component, class, or individual functions.
+
+
