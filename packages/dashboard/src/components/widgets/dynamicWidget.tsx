@@ -37,7 +37,6 @@ export const getDragLayerProps = ({
   widgetsMessages,
 });
 
-
 const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
   widget,
   widgetsMessages,

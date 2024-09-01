@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ActionPanel } from '../assistant-action-panel/actionPanel';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
@@ -12,6 +12,7 @@ import {
   DEFAULT_GAUGE_STYLES,
 } from './constants';
 import { useComponentId } from '../../hooks/useComponentId/useComponentId';
+import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 
 export const Gauge = ({
   size,
@@ -32,6 +33,7 @@ export const Gauge = ({
     styles,
   });
   const { viewport, lastUpdatedBy } = useViewport();
+  const { setContextByComponent } = useAssistantContext();
 
   const utilizedViewport =
     (lastUpdatedBy === ECHARTS_GESTURE
@@ -54,6 +56,13 @@ export const Gauge = ({
   const refId = dataStreams[0]?.refId;
   const color =
     styles && refId ? styles[refId]?.color : DEFAULT_GAUGE_PROGRESS_COLOR;
+
+  useEffect(() => {
+    setContextByComponent(componentId, {
+      timerange: utilizedViewport,
+      queries: [query.toQueryString()],
+    });
+  }, [utilizedViewport, query]);
 
   const component = (
     <GaugeBase

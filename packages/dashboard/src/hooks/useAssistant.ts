@@ -17,7 +17,7 @@ export const useAssistant = () => {
       const client = new IoTSitewiseAssistantClient({
         iotSiteWiseClient: iotSiteWisePrivateClient!,
       });
-  
+
       return {
         assistant: {
           client,

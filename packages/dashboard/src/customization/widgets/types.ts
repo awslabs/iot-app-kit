@@ -254,6 +254,7 @@ export type GaugeProperties = QueryProperties & {
   yMax?: number;
   thresholds?: StyledThreshold[];
   significantDigits?: number;
+  assistant?: AssistantProperty;
 };
 
 type ChartPropertiesUnion =

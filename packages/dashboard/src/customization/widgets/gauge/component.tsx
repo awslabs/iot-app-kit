@@ -32,6 +32,7 @@ const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
     significantDigits: widgetSignificantDigits,
     yMin,
     yMax,
+    assistant,
   } = widget.properties;
 
   const queries = useQueries(queryConfig.query);
@@ -78,6 +79,7 @@ const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
         settings={settings}
         thresholds={thresholds}
         significantDigits={significantDigits}
+        assistant={assistant}
       />
     </WidgetTile>
   );

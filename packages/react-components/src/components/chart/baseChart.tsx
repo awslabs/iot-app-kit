@@ -36,6 +36,7 @@ import { PreferencesModalToggle } from './preferences/toggle';
 import { useDataQuality } from './hooks/useDataQuality';
 import { Timestamp } from '../timestampBar';
 import useDataStore from '../../store';
+import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 
 /**
  * Developer Notes:
@@ -80,6 +81,7 @@ const BaseChart = ({
     handleChangeBadDataIconsVisibility,
     handleChangeUncertainDataIconsVisibility,
   } = useDataQuality({ ...options.dataQuality, onChartOptionsChange });
+  const { setContextByComponent } = useAssistantContext();
 
   const isLegendVisible = options.legend?.visible;
   const isLegendPositionLeft = options.legend?.position === 'left';
@@ -167,6 +169,15 @@ const BaseChart = ({
 
   const delayLoading = useIsRefreshing(isRefreshing, REFRESHING_DELAY_MS);
   const isPropertiesRefreshing = !isLoading && delayLoading;
+
+  useEffect(() => {
+    if (options.id) {
+      setContextByComponent(options.id, {
+        timerange: utilizedViewport,
+        queries: queries.map((query) => query.toQueryString()),
+      });
+    }
+  }, [utilizedViewport, queries]);
 
   useChartDataset(chartRef, dataStreams);
 

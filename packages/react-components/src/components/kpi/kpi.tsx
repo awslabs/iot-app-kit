@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
@@ -14,6 +14,7 @@ import type { KPISettings } from './types';
 import { KpiBase } from './kpiBase';
 import { ActionPanel } from '../assistant-action-panel/actionPanel';
 import { useComponentId } from '../../hooks/useComponentId/useComponentId';
+import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 
 export const KPI = ({
   query,
@@ -45,6 +46,7 @@ export const KPI = ({
   });
   const { viewport } = useViewport();
   const componentId = useComponentId();
+  const { setContextByComponent } = useAssistantContext();
 
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
 
@@ -67,6 +69,13 @@ export const KPI = ({
   const isLoading =
     alarmStream?.isLoading || propertyStream?.isLoading || false;
   const error = alarmStream?.error || propertyStream?.error;
+
+  useEffect(() => {
+    setContextByComponent(componentId, {
+      timerange: utilizedViewport,
+      queries: [query.toQueryString()],
+    });
+  }, [utilizedViewport, query]);
 
   const component = (
     <KpiBase

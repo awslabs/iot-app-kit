@@ -96,7 +96,8 @@ describe('Chart Component Testing', () => {
     );
 
     const context = result.current.getContextByComponent('componentId');
-    expect(context).toBe('{"queries":[{}]}');
+    expect(context).toContain('timerange');
+    expect(context).toContain('queries');
   });
 });
 

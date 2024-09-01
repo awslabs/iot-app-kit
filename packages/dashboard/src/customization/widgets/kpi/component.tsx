@@ -38,7 +38,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     backgroundColor,
     thresholds,
     significantDigits: widgetSignificantDigits,
-    assistant
+    assistant,
   } = widget.properties;
 
   const queries = useQueries(queryConfig.query);
