@@ -4,6 +4,8 @@ import { Echarts, EchartsMessageKeys } from './echarts';
 import {
   AssistantActionPanel,
   AssistantActionPanelMessageKeys,
+  AssistantResultPanel,
+  AssistantResultPanelMessageKeys,
 } from './assistantActionPanel/messages';
 import { Messages } from './types';
 
@@ -26,11 +28,17 @@ import { Messages } from './types';
 export type MessageKeys =
   | AnomalyChartMessageKeys
   | EchartsMessageKeys
-  | AssistantActionPanelMessageKeys;
+  | AssistantActionPanelMessageKeys
+  | AssistantResultPanelMessageKeys;
 export type AllMessages = Messages<MessageKeys>;
 
 // List of all component messages to be merged by locale.
-const componentMessages = [AnomalyChart, Echarts, AssistantActionPanel];
+const componentMessages = [
+  AnomalyChart,
+  Echarts,
+  AssistantActionPanel,
+  AssistantResultPanel,
+];
 
 // All merged messages
 export const mergedMessages = componentMessages.reduce(

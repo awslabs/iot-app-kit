@@ -14,7 +14,7 @@ export class MessageParser implements IMessageParser {
   }
 
   parse(response: ResponseStream) {
-    if (response.trace?.traceId) {
+    if (response.trace?.text) {
       this.stateManager.addPartialResponse(response.trace?.text || '');
     }
 

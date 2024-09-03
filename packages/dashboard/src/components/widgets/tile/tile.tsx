@@ -1,6 +1,5 @@
 import React, { PropsWithChildren } from 'react';
 import {
-  colorBorderDividerDefault,
   borderRadiusBadge,
   colorBackgroundContainerContent,
   spaceScaledXs,
@@ -22,10 +21,9 @@ export type WidgetTileProps = PropsWithChildren<{
  * Allows a user to title a widget for bar and status-timeline
  */
 const WidgetTile: React.FC<WidgetTileProps> = ({ widget, title, children }) => {
-  const titleComponentWithBorder = (
+  const titleComponentWithoutBorder = title ? (
     <div
       style={{
-        borderBottom: `2px solid ${colorBorderDividerDefault}`,
         paddingBottom: spaceScaledXs,
       }}
     >
@@ -38,7 +36,7 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ widget, title, children }) => {
         <div className='widget-tile-header'>{title}</div>
       </Box>
     </div>
-  );
+  ) : null;
 
   // temporary solution for fixing title
   // once gestures are correctly handled, we can move
@@ -50,13 +48,14 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ widget, title, children }) => {
       aria-description='widget tile'
       className='widget-tile'
       style={{
-        border: `2px solid ${colorBorderDividerDefault}`,
         borderRadius: borderRadiusBadge,
         backgroundColor: colorBackgroundContainerContent,
       }}
     >
-      {widgetsWithTitle.includes(widget.type) && titleComponentWithBorder}
-      <div className='widget-tile-body'>{children}</div>
+      <div className='widget-tile-body'>
+        {widgetsWithTitle.includes(widget.type) && titleComponentWithoutBorder}
+        {children}
+      </div>
     </div>
   );
 };

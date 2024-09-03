@@ -98,12 +98,11 @@ async function invokeAssistant({
   onResponse?: AssistantClientInvocationResponseHandler;
 }) {
   const response = await iotSiteWiseClient.invokeAssistant(payload);
-
   /**
    * Given the nature of streaming API, The client receives a chunk of the whole streamed response.
    */
   for await (const chunk of response.body || []) {
-    if (onResponse && chunk.trace?.traceId) {
+    if (onResponse && chunk.trace?.text) {
       onResponse(
         {
           conversationId: payload.conversationId,

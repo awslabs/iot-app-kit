@@ -8,7 +8,7 @@ import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 
 const client = new IoTSitewiseAssistantClient({
   iotSiteWiseClient: {
-    invokeAssistant: jest.fn(),
+    invokeAssistant: jest.fn().mockResolvedValue([]),
   } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
   defaultContext: '',
 });

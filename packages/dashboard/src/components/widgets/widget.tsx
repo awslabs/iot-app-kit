@@ -50,7 +50,7 @@ const WidgetComponent: React.FC<WidgetProps> = ({
       {...idable(widget.id)}
       className={`widget ${readOnly ? 'widget-readonly' : 'widget-editable'}`}
       style={{
-        zIndex: z.toString(),
+        ...(!z ? {} : { zIndex: z.toString() }),
         top: `${cellSize * y}px`,
         left: `${cellSize * x}px`,
         width: `${cellSize * width}px`,

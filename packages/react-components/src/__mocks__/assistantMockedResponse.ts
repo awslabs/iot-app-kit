@@ -22,34 +22,25 @@ export const mockedInvokeAssistantResponse3:ResponseStream = {
 
 export const mockedInvokeAssistantResponse4: any = {
   output: {
-    text: `Looks like you want to know more about the potential root cause of the rising motor temperature.
+    message: `Looks like you want to know more about the potential root cause of the rising motor temperature.
         \n - Overloading: The motor is operating under a load higher than its rated capacity, causing it to overheat.
         \n - Insufficient Cooling: The cooling system is malfunctioning or blocked, preventing adequate heat dissipation.
         \n - Electrical Issues: Voltage spikes, phase imbalance, or poor insulation could lead to excessive heating.
         \n - Mechanical Failures: Worn bearings, misalignment, or other mechanical issues can increase friction and heat.`,
-    metadata: {
-      "insights": `{
-        "prompts": [
-          "What are the recommendations?", "What is the prevention procedure?"
-        ]
-      }
-      `
-    }, 
     citations: [
       {
-        references: [
-          {
-            content: {
-              text: 'SOP documents',
-            },
-            location: {
-              s3Location: {
+        content: {
+          text: 'SOP documents',
+        },
+        reference: {
+          dataset: {
+            source: {
+              location: {
                 uri: 'https://mybucket.s3.amazonaws.com/sop.doc',
               },
-              type: 'link',
             },
           },
-        ],
+        },
       },
     ],
   },
@@ -57,22 +48,32 @@ export const mockedInvokeAssistantResponse4: any = {
 
 export const mockedInvokeAssistantResponse5: any = {
   output: {
-    text: `Based on the data, the first trace I would recommend is to inspect the motor itself for any visible signs of wear or damage. You'll want to check the motor casing, fans, and any accessible components to see if there are any obvious issues. If everything looks okay there, I'd suggest checking the cooling system next - verify that the coolant levels are appropriate and that the fans/pumps are functioning properly.`,
+    message: `## Summary of Asset and Property Details
+
+**Asset Name:** Demo Turbine Asset 1
+**Property Name:** Wind Speed
+**Unit:** m/s
+
+**Property Value Insights:**
+
+The historical wind speed data from April 1, 2023, 00:01:00 UTC to 00:10:00 UTC shows some interesting trends. Over this 10-minute period, the average wind speed ranged from a low of 14.79 m/s at 00:01:00 to a high of 17.78 m/s at 00:08:00. The minimum wind speed during this time was 12.60 m/s, recorded at 00:01:00, while the maximum was 18.06 m/s, observed at 00:09:00. 
+
+The data indicates that wind speeds were relatively stable in the first 6 minutes, hovering around 14-15 m/s. However, a noticeable increase occurred starting at 00:07:00, with the average wind speed jumping to over 17 m/s and remaining elevated through 00:10:00. Comparing the latest 00:10:00 reading of 15.67 m/s to the historical values, it appears to be on the lower end of the range observed so far. This suggests that the wind speeds may have started to decline after the peak between 00:07:00 and 00:09:00.
+    `,
     citations: [
       {
-        references: [
-          {
-            content: {
-              text: 'SOP documents',
-            },
-            location: {
-              s3Location: {
+        content: {
+          text: 'SOP documents',
+        },
+        reference: {
+          dataset: {
+            source: {
+              location: {
                 uri: 'https://mybucket.s3.amazonaws.com/sop.doc',
               },
-              type: 'link',
             },
           },
-        ],
+        },
       },
     ],
   },

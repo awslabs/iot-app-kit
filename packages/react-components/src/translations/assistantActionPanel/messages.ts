@@ -9,8 +9,20 @@ export type AssistantActionPanelMessageKeys =
 export const AssistantActionPanel: Messages<AssistantActionPanelMessageKeys> = {
   en: {
     'assistant-action-panel.numSelected': '{numPanels} panel selected',
-    'assistant-action-panel.deepDive': 'Deep dive',
+    'assistant-action-panel.deepDive': 'Dive deep',
     'assistant-action-panel.summarize': 'Summarize',
     'assistant-action-panel.chatbot': 'Dive deep',
+  },
+};
+export type AssistantResultPanelMessageKeys =
+  | 'assistant-result-panel.header'
+  | 'assistant-result-panel.close'
+  | 'assistant-result-panel.copy';
+
+export const AssistantResultPanel: Messages<AssistantResultPanelMessageKeys> = {
+  en: {
+    'assistant-result-panel.header': 'Assistant summary result',
+    'assistant-result-panel.close': 'Close',
+    'assistant-result-panel.copy': 'Copy',
   },
 };

@@ -49,7 +49,7 @@ export const DefaultKPI: ComponentStory<typeof KPI> = ({ settings }) => {
           query={MOCK_TIME_SERIES_DATA_QUERY}
           settings={settings}
           assistant={{
-            client: {} as IoTSitewiseAssistantClient,
+            client,
             conversationID: 'mockId',
           }}
         />

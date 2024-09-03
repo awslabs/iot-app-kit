@@ -12,6 +12,7 @@ import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistan
 import { SITUATION_SUMMARY_DEFAULT_UTTERANCE } from './constants';
 import { v4 as uuid } from 'uuid';
 import './actionPanel.css';
+import { ResultPanel } from './assistant-result/resultPanel';
 
 export interface ActionPanelProps extends PropsWithChildren {
   componentId: string;
@@ -30,6 +31,7 @@ export const ActionPanel = ({
   children,
 }: ActionPanelProps) => {
   const [showActions, setShowActions] = useState<boolean>(false);
+  const [showResults, setShowResults] = useState<boolean>(false);
   const { getContextByComponent } = useAssistantContext();
 
   const { messages, generateSummary } = useAssistant({
@@ -51,10 +53,21 @@ export const ActionPanel = ({
     }
   };
 
+  const handleDiveDeep = () => {
+    if (assistant.onAction) {
+      assistant.onAction({
+        type: 'divedeep',
+        sourceComponentId: componentId,
+      });
+    }
+    setShowActions(false);
+  };
+
   return (
     <IntlProvider locale='en' defaultLocale='en'>
       <div
         className='assistant-action-panel selected'
+        id={`assistant-action-panel-${componentId}`}
         style={{ width, height }}
       >
         {children}
@@ -92,6 +105,7 @@ export const ActionPanel = ({
                 onClick={() => {
                   handleSummary();
                   setShowActions(false);
+                  setShowResults(true);
                 }}
                 aria-label='Summarize'
               >
@@ -105,15 +119,7 @@ export const ActionPanel = ({
             <li>
               <button
                 data-testid='action-panel-chatbot-button'
-                onClick={() => {
-                  if (assistant.onAction) {
-                    assistant.onAction({
-                      type: 'divedeep',
-                      sourceComponentId: componentId,
-                    });
-                  }
-                  setShowActions(false);
-                }}
+                onClick={handleDiveDeep}
                 aria-label='Dive deep'
               >
                 <Icon name='contact' />{' '}
@@ -126,13 +132,15 @@ export const ActionPanel = ({
             </li>
           </ul>
         )}
-        <div data-testid='action-panel-result' className='action-panel-result'>
-          {messages
-            .filter((message) => message.sender === 'assistant')
-            .map((message) => (
-              <div key={message.id}>{message.content}</div>
-            ))}
-        </div>
+        {showResults ? (
+          <ResultPanel
+            componentId={componentId}
+            actionPosition={iconPosition}
+            messages={messages}
+            onClose={() => setShowResults(false)}
+            onDivedeep={handleDiveDeep}
+          />
+        ) : null}
       </div>
     </IntlProvider>
   );

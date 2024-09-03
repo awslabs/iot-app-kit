@@ -17,7 +17,7 @@ const response2 = {
   trace: {
     traceId: 'trace2',
     text: 'contains information about the intermediate trace part 2',
-  }
+  },
 };
 const response3 = {
   output: {
