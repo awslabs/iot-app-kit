@@ -16,7 +16,7 @@ export const ResultHeader = ({ headerText, onClose }: ResultHeaderProps) => {
       className='action-panel-result-header'
       style={{ backgroundColor: colorTextHomeHeaderDefault }}
     >
-      <div className='action-panel-result-header_icon'>
+      <div className='action-panel-result-header-icon'>
         <AssistantIcon />
       </div>
       <Box
@@ -33,7 +33,7 @@ export const ResultHeader = ({ headerText, onClose }: ResultHeaderProps) => {
           />
         )}
       </Box>
-      <div className='action-panel-result-header_close'>
+      <div className='action-panel-result-header-close'>
         <Button
           iconName='close'
           variant='icon'

@@ -1,4 +1,4 @@
-@import url('@cloudscape-design/global-styles/index.css');
+@import url("@cloudscape-design/global-styles/index.css");
 
 .iot-app-kit.assistant-chatbot {
   min-width: 290px;
@@ -30,7 +30,6 @@
   padding: 0.5rem;
 }
 
-
 .iot-app-kit.assistant-chatbot .assistant-icon {
   margin-top: 0.3rem;
 }
@@ -42,7 +41,7 @@
 }
 
 .iot-app-kit.assistant-chatbot .processing-message-icon {
-  background-image: url('./assets/purpleCircleIcon.svg');
+  background-image: url("./assets/purpleCircleIcon.svg");
   background-size: 24px 24px;
   width: 24px;
   height: 24px;
@@ -54,12 +53,14 @@
   align-items: center;
 }
 
-
 /* --- Processing animation --- */
 @keyframes jump {
-  0%, 40%, 100% {
+  0%,
+  40%,
+  100% {
     transform: initial;
   }
+
   20% {
     transform: translateY(-4px);
   }

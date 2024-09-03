@@ -19,7 +19,7 @@ export const ResultFooter = ({ onCopy, onDivedeep }: ResultFooterProps) => {
         borderTop: `1px solid ${colorBorderDividerDefault}`,
       }}
     >
-      <div className='action-panel-result-footer_actions'>
+      <div className='action-panel-result-footer-actions'>
         <Button
           iconName='copy'
           variant='icon'
@@ -38,7 +38,7 @@ export const ResultFooter = ({ onCopy, onDivedeep }: ResultFooterProps) => {
           id: 'assistant-action-panel.deepDive',
           defaultMessage: 'Dive deep',
         })}
-        className='action-panel-result-footer_divedeep'
+        className='action-panel-result-footer-divedeep'
       >
         <AssistantIcon />
         <Box variant='span' fontSize='body-m' padding={{ left: 'xxs' }}>

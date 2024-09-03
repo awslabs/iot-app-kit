@@ -1,4 +1,4 @@
-@import url('@cloudscape-design/global-styles/index.css');
+@import url("@cloudscape-design/global-styles/index.css");
 
 .assistant-action-panel {
   position: absolute;
@@ -12,14 +12,14 @@
     margin: 0.5rem;
     z-index: 1;
 
-    .panelSelection {
+    .panel-selection {
       padding-right: 0.5em;
 
       span {
         color: var(--awsui-color-blue-300);
       }
     }
-  
+
     button {
       color: inherit;
       background: inherit;
@@ -30,7 +30,64 @@
       cursor: pointer;
     }
   }
-  
+
+  .action-panel-result {
+    position: absolute;
+    border-width: 1px;
+    border-style: solid;
+    box-shadow: 0 4px 4px 0 #00000040;
+    max-height: 500px;
+    max-width: 500px;
+    min-width: 300px;
+    z-index: 802;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .action-panel-result-header {
+    display: flex;
+    width: 100%;
+    padding-top: 0.1rem;
+    flex-shrink: 0;
+    height: 34px;
+  }
+
+  .action-panel-result-header-icon {
+    margin-left: 0.5rem;
+    align-self: center;
+  }
+
+  .action-panel-result-header-close {
+    align-self: center;
+    margin-left: auto;
+    margin-right: 0.2rem;
+  }
+
+  .action-panel-result-content {
+    padding: 0.5rem 1rem;
+    overflow-y: auto;
+  }
+
+  .action-panel-result-footer {
+    display: flex;
+    align-items: center;
+    margin: 0 1rem;
+    flex-shrink: 0;
+    height: 34px;
+  }
+
+  .action-panel-result-footer-divedeep {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: auto;
+    padding: 0;
+  }
+
+  .action-panel-result-footer-divedeep svg {
+    vertical-align: middle;
+  }
+
   .action-dropdown {
     display: block;
     position: absolute;
@@ -40,7 +97,7 @@
     margin-top: 1.8rem;
     z-index: 801;
     overflow: hidden;
-  
+
     li button {
       padding: 0.5em;
       background: inherit;
@@ -64,60 +121,9 @@
     }
   }
 
-  .action-panel-result {
-    position: absolute;
-    border-width: 1px;
-    border-style: solid;
-    box-shadow: 0px 4px 4px 0px #00000040;
-    max-width: 500px;
-    min-width: 300px;
-    z-index: 802;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .action-panel-result-header {
-    display: flex;
-    width: 100%;
-    padding-top: 0.1rem;
-    flex-shrink: 0;
-    height: 34px;
-  }
-  .action-panel-result-header_icon {
-    margin-left: 0.5rem;
-    align-self: center;
-  }
-  .action-panel-result-header_close {
-    align-self: center;
-    margin-left: auto;
-    margin-right: 0.2rem;
-  }
-  .action-panel-result-content {
-    padding: 0.5rem 1rem;
-    overflow-y: auto;
-  }
-
-  .action-panel-result-footer {
-    display: flex;
-    align-items: center;
-    margin: 0 1rem;
-    flex-shrink: 0;
-    height: 34px;
-  }
-
-  .action-panel-result-footer_divedeep {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-left: auto;
-    padding: 0;
-  }
-  .action-panel-result-footer_divedeep svg {
-    vertical-align: middle;
-  }
-
   &.selected {
-    .context-menu, .action-dropdown {
+    .context-menu,
+    .action-dropdown {
       display: block;
     }
   }

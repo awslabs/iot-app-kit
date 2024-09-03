@@ -23,18 +23,19 @@ export const calculatePanelPosition = (
 
   switch (position) {
     case 'right': {
+      const width = rightSpace >= MAX_WIDTH ? MAX_WIDTH : 'auto';
       return {
         left: `${
           actionPosition === 'topRight'
             ? actionPanelDimensions?.width
             : actionPanelDimensions?.right ?? 0
         }px`,
-        width: 'auto',
+        width: width,
         height: 'auto',
       };
     }
     case 'left': {
-      let leftPos = (actionPanelDimensions?.left || 0) - MAX_WIDTH;
+      const leftPos = (actionPanelDimensions?.left || 0) - MAX_WIDTH;
       let width = MAX_WIDTH;
       if (leftPos < 0) {
         width = MIN_WIDTH;

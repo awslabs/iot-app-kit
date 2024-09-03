@@ -8,7 +8,6 @@
 }
 
 .iot-dashboard-assistant-chatbot-button:hover {
-	-webkit-animation: pulse 1s;
   animation: pulse 1s;
 }
 

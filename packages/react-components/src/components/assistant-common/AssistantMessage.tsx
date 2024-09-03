@@ -22,6 +22,9 @@ export const AssistantMessage = ({ text, payload }: AssistantMessageProps) => {
     ({ reference }) => !!reference?.dataset?.source?.location?.uri
   );
 
+  // for markdown format, avoid to render H1 for better UX
+  const sanitizedText = text.startsWith('# ') ? `#${text}` : text;
+
   return (
     <div className='assistant-message'>
       <SpaceBetween size='s'>
@@ -29,7 +32,7 @@ export const AssistantMessage = ({ text, payload }: AssistantMessageProps) => {
           fontSize='body-m'
           data-testid='assistant-chatbot-assistant-message'
         >
-          <Markdown remarkPlugins={[remarkGfm]}>{text}</Markdown>
+          <Markdown remarkPlugins={[remarkGfm]}>{sanitizedText}</Markdown>
         </Box>
         {filteredCitations.length > 0 ? (
           <ExpandableSection
