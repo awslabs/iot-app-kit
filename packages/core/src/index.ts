@@ -67,4 +67,4 @@ export type {
   DescribeAsset,
   DescribeAssetModel,
   DescribeAlarmModel,
-} from './requestFunctions/types';
+} from './requestFunctions';
