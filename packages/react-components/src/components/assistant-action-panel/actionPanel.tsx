@@ -120,12 +120,12 @@ export const ActionPanel = ({
               <button
                 data-testid='action-panel-chatbot-button'
                 onClick={handleDiveDeep}
-                aria-label='Dive deep'
+                aria-label='Chat'
               >
                 <Icon name='contact' />{' '}
                 <FormattedMessage
                   id='assistant-action-panel.chatbot'
-                  defaultMessage='Dive deep'
+                  defaultMessage='Chat'
                   description='Assistant action menu item for opening the chatbot.'
                 />
               </button>

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Grid from '@cloudscape-design/components/grid';
 import assistantIcon from '../assets/assistantIcon.svg';
 import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
 import { AssistantMessage } from '../../assistant-common/AssistantMessage';
@@ -14,12 +13,7 @@ export const ChatbotAssistantMessage = ({
   payload,
 }: ChatbotAssistantMessageProps) => {
   return (
-    <Grid
-      gridDefinition={[
-        { colspan: { default: 1, xxs: 1 } },
-        { colspan: { default: 11, xxs: 11 } },
-      ]}
-    >
+    <div className='message-row'>
       <img
         alt='Assistant Avatar'
         src={assistantIcon}
@@ -27,6 +21,6 @@ export const ChatbotAssistantMessage = ({
         className='assistant-icon'
       />
       <AssistantMessage text={text} payload={payload} />
-    </Grid>
+    </div>
   );
 };

@@ -104,7 +104,6 @@ export const useAssistant = ({
     utterance: string,
     context?: string
   ) => {
-    storeState.clearAssistantState();
     currentStateManager.addText(utterance, 'user');
     currentStateManager.addPartialResponse(loadingMessage);
     setMessages(currentStateManager.getState().messages);

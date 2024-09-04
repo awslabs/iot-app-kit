@@ -36,7 +36,7 @@ export const ResultFooter = ({ onCopy, onDivedeep }: ResultFooterProps) => {
         data-testid='action-panel-result-divedeep'
         aria-label={intl.formatMessage({
           id: 'assistant-action-panel.deepDive',
-          defaultMessage: 'Dive deep',
+          defaultMessage: 'Chat',
         })}
         className='action-panel-result-footer-divedeep'
       >
@@ -44,8 +44,8 @@ export const ResultFooter = ({ onCopy, onDivedeep }: ResultFooterProps) => {
         <Box variant='span' fontSize='body-m' padding={{ left: 'xxs' }}>
           <FormattedMessage
             id='assistant-action-panel.deepDive'
-            description='Dive deep button to open assistant action menu'
-            defaultMessage='Dive deep'
+            description='Chat button to open assistant action menu'
+            defaultMessage='Chat'
           />
         </Box>
       </button>

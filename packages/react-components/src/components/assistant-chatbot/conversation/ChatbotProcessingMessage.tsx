@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Grid from '@cloudscape-design/components/grid';
 import Box from '@cloudscape-design/components/box';
 
 export interface ChatbotProcessingMessageProps {
@@ -10,12 +9,7 @@ export const ChatbotProcessingMessage = ({
   text,
 }: ChatbotProcessingMessageProps) => {
   return (
-    <Grid
-      gridDefinition={[
-        { colspan: { default: 1, xxs: 1 } },
-        { colspan: { default: 11, xxs: 11 } },
-      ]}
-    >
+    <div className='message-row'>
       <div
         className='processing-message-icon'
         role='progressbar'
@@ -25,9 +19,11 @@ export const ChatbotProcessingMessage = ({
         <div className='processing-message-dot' />
         <div className='processing-message-dot' />
       </div>
-      <Box fontSize='body-s'>
-        <div className='assistant-message'>{text}</div>
-      </Box>
-    </Grid>
+      <span className='assistant-message'>
+        <Box fontSize='body-s' padding='xxs'>
+          {text}
+        </Box>
+      </span>
+    </div>
   );
 };

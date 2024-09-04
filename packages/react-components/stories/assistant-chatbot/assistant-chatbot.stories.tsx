@@ -24,16 +24,17 @@ export default {
   },
 } as ComponentMeta<typeof AssistantChatbot>;
 
-export const DefaultAssistantChatbot: ComponentStory<
+const conversationId = crypto.randomUUID();
+const client = new IoTSitewiseAssistantClient({
+  iotSiteWiseClient: {
+    invokeAssistant: MockInvokeAssistant,
+  },
+  defaultContext: '',
+});
+
+export const ConnectedAssistantChatbot: ComponentStory<
   typeof AssistantChatbot
 > = () => {
-  const conversationId = crypto.randomUUID();
-  const client = new IoTSitewiseAssistantClient({
-    iotSiteWiseClient: {
-      invokeAssistant: MockInvokeAssistant,
-    },
-    defaultContext: '',
-  });
 
   const { messages, invokeAssistant } = useAssistant({
     assistantClient: client,
@@ -41,7 +42,15 @@ export const DefaultAssistantChatbot: ComponentStory<
       messages: [
         {
           content:
-            'Hello, I am Sophon, an AI powered assistant for your production sites.',
+            'Who are you ?',
+          sender: 'user',
+          type: MessageType.TEXT,
+          id: crypto.randomUUID(),
+          loading: false,
+        },
+        {
+          content:
+            'Hello, I am an AI powered assistant for your production floor, please ask me anything.',
           sender: 'assistant',
           type: MessageType.TEXT,
           id: crypto.randomUUID(),
@@ -61,6 +70,47 @@ export const DefaultAssistantChatbot: ComponentStory<
         height={500}
         messages={messages}
         onSubmit={handleSubmit}
+        onClose={() => {}}
+      />
+    </div>
+  );
+};
+
+export const ProcessingAssistant: ComponentStory<
+  typeof AssistantChatbot
+> = () => {
+
+  const { messages } = useAssistant({
+    assistantClient: client,
+    initialState: {
+      messages: [
+        {
+          content:
+            'Processing assistant response, please wait..',
+          sender: 'assistant',
+          type: MessageType.TEXT,
+          id: crypto.randomUUID(),
+          loading: true,
+        },
+        {
+          content:
+            'Processing assistant response, please wait...processing assistant response, please wait...processing assistant response, please wait...',
+          sender: 'assistant',
+          type: MessageType.TEXT,
+          id: crypto.randomUUID(),
+          loading: true,
+        },
+      ],
+    },
+  });
+  
+  return (
+    <div style={{ padding: '0.5rem' }}>
+      <AssistantChatbot
+        height={500}
+        messages={messages}
+        onSubmit={() => {}}
+        onClose={() => {}}
       />
     </div>
   );

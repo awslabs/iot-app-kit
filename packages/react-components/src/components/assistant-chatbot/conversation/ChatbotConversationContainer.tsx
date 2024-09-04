@@ -41,7 +41,7 @@ export const ChatbotConversationContainer = ({
       style={{ height }}
     >
       <Box padding={{ top: 'm' }}>
-        <SpaceBetween size='s'>
+        <SpaceBetween size='s' direction='vertical'>
           {messages.map((message) => {
             if (message.type === MessageType.TEXT) {
               if (message.loading) {
