@@ -8,6 +8,7 @@ export type {
   SiteWiseDataSourceInitInputs,
   SiteWiseQuery,
   AnomalyDataQuery,
+  AlarmDataQuery,
 } from './initialize';
 export type { SiteWiseAssetTreeNode } from './asset-modules/sitewise-asset-tree/types';
 export type { HierarchyGroup } from './asset-modules';
@@ -20,4 +21,5 @@ export type {
   AssetPropertyQuery,
   PropertyAliasQuery,
   AssetQuery,
+  AlarmQuery,
 } from './time-series-data/types';
