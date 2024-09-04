@@ -399,7 +399,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             tabIndex={0}
           >
             <Box float='left' padding='s'>
-              <AssetModelSelection client={iotSiteWiseClient} />
+              <AssetModelSelection client={iotSiteWise} />
             </Box>
           </div>
         )}

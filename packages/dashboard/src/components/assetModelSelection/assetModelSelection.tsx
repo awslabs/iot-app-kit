@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import {
   colorBorderDividerDefault,
   colorTextBodyDefault,
@@ -14,11 +14,12 @@ import { useModelBasedQuery } from '../queryEditor/iotSiteWiseQueryEditor/assetM
 import './assetModelSelection.css';
 
 type AssetModelSelectionOptions = {
-  client: IoTSiteWiseClient;
+  client: IoTSiteWise;
 };
 
 export const AssetModelSelection = ({ client }: AssetModelSelectionOptions) => {
-  const { assetModelId, assetIds, hasModelBasedQuery } = useModelBasedQuery();
+  const { assetModelId, assetIds, hasModelBasedQuery, updateSelectedAsset } =
+    useModelBasedQuery();
   const selectedAssetId = assetIds?.at(0);
   const assetModelSelectionControlId = 'asset-model-select-dropdown';
 
@@ -48,6 +49,7 @@ export const AssetModelSelection = ({ client }: AssetModelSelectionOptions) => {
           selectedAssetId={selectedAssetId}
           client={client}
           controlId={assetModelSelectionControlId}
+          updateSelectedAsset={updateSelectedAsset}
           hideTitle
         />
       </div>

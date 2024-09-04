@@ -29,7 +29,7 @@ import { useAssetModels } from './use-asset-models';
 
 export function InternalAssetModelExplorer({
   requestFns,
-  parameters = [{}],
+  parameters = [{ assetModelTypes: ['ASSET_MODEL'] }],
   shouldPersistUserCustomization = DEFAULT_SHOULD_PERSIST_USER_CUSTOMIZATION,
   defaultPageSize = DEFAULT_DEFAULT_PAGE_SIZE,
   variant = DEFAULT_RESOURCE_EXPLORER_VARIANT,
