@@ -5,7 +5,7 @@ import {
   GetAssetPropertyAggregatesRequestFunction,
 } from '../types';
 import { SendOptions } from '../../useTimeSeriesData/requestExecution/types';
-import { RequestResponse } from '../../request-fn';
+import { RequestResponse } from '@iot-app-kit/core';
 import {
   ExecuteRequestStrategy,
   OnRequestSuccessCallback,
