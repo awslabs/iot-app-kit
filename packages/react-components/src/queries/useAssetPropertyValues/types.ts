@@ -12,7 +12,7 @@ import {
   RequestFunction,
   RequestParameters,
   RequestResponse,
-} from '../request-fn';
+} from '@iot-app-kit/core';
 import { DataPoint } from '@iot-app-kit/core';
 
 export type CommonRequestParameters = {
