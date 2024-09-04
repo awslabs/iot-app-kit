@@ -1,6 +1,9 @@
 import { TimeSeriesData, Viewport } from '@iot-app-kit/core';
 import { initialize, SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+import {
+  createMockIoTEventsSDK,
+  createMockSiteWiseSDK,
+} from '@iot-app-kit/testing-util';
 import noop from 'lodash/noop';
 import { getEnvCredentials } from './getEnvCredentials';
 import { generateMockTimeSeriesData } from './mocks';
@@ -80,6 +83,11 @@ export const mockQuery = (
     anomalyData: (query) => ({
       query,
       iotSiteWiseClient: createMockSiteWiseSDK(),
+    }),
+    alarmData: (query) => ({
+      query,
+      iotSiteWiseClient: createMockSiteWiseSDK(),
+      iotEventsClient: createMockIoTEventsSDK(),
     }),
     assetTree: {
       fromRoot: () => ({

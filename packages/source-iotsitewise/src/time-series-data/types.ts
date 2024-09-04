@@ -21,6 +21,8 @@ export type AssetId = string;
 
 export type AssetModelId = string;
 
+export type AssetCompositeModelId = string;
+
 export type RequestSettings = {
   refreshRate?: number;
 };
@@ -61,6 +63,14 @@ export type AssetModelQuery = {
   properties: AssetModelPropertyQuery[];
 };
 
+export type AlarmComponentQuery = {
+  /**
+   * Asset composite model id for alarm.
+   * Will be used to get the state / source / type
+   */
+  assetCompositeModelId: AssetCompositeModelId;
+};
+
 // Styled anomaly query
 export type AnomalyQuery = {
   assetId: string;
@@ -69,6 +79,11 @@ export type AnomalyQuery = {
   decimalPlaces?: number;
   // color theme override for series data
   color?: string[];
+};
+
+export type AlarmQuery = {
+  assetId: AssetId;
+  alarmComponents: AlarmComponentQuery[];
 };
 
 export type SiteWiseAssetQuery = DataStreamQuery & {
@@ -86,10 +101,21 @@ export type SiteWiseAssetModelQuery = DataStreamQuery & {
   requestSettings?: RequestSettings;
 };
 
+/**
+ * configure queries for alarms explicitly
+ * by assetId + alarm compositeModelId
+ */
+export type SiteWiseAlarmQuery = {
+  alarms: AlarmQuery[];
+  requestSettings?: RequestSettings;
+};
+
 export type SiteWiseDataStreamQuery = Partial<SiteWiseAssetQuery> &
   Partial<SiteWisePropertyAliasQuery>;
 
 export type SiteWiseAnomalyDataStreamQuery = Partial<AnomalyQuery>;
+
+export type SiteWiseAlarmDataStreamQuery = Partial<SiteWiseAlarmQuery>;
 
 export type SiteWiseDataSourceSettings = {
   batchDuration?: number;
