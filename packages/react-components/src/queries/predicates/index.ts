@@ -3,7 +3,7 @@ import {
   RequestFunction,
   RequestParameters,
   RequestResponse,
-} from '../request-fn';
+} from '@iot-app-kit/core';
 
 export const isAssetId = (assetId?: string): assetId is string =>
   Boolean(assetId);

@@ -12,8 +12,8 @@ import {
   RequestFunction,
   RequestParameters,
   RequestResponse,
-} from '../request-fn';
-import { DataPoint } from '@iot-app-kit/core';
+  DataPoint,
+} from '@iot-app-kit/core';
 
 export type CommonRequestParameters = {
   numberOfDataPointsToScanFor?: number;
