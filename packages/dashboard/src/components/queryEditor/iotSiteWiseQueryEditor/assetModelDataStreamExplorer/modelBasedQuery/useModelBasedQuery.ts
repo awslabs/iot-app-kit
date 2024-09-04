@@ -8,7 +8,7 @@ import {
 } from './findModelBasedQueryWidgets';
 import { useCallback, useMemo } from 'react';
 import { onUpdateWidgetsAction } from '~/store/actions';
-import { AssetSummary } from '@aws-sdk/client-iotsitewise';
+import { AssetResource } from '@iot-app-kit/react-components';
 
 export const useModelBasedQuery = () => {
   const dispatch = useDispatch();
@@ -62,10 +62,10 @@ export const useModelBasedQuery = () => {
   };
 
   const updateSelectedAsset = useCallback(
-    (updatedSelectedAsset?: AssetSummary) => {
-      if (!updatedSelectedAsset || updatedSelectedAsset.id === undefined)
+    (updatedSelectedAsset?: AssetResource) => {
+      if (!updatedSelectedAsset || updatedSelectedAsset.assetId === undefined)
         return;
-      const id = updatedSelectedAsset.id;
+      const id = updatedSelectedAsset.assetId;
       const updatedSelectedAssets = modelBasedWidgets.map(
         ({ properties, ...rest }) => ({
           ...rest,

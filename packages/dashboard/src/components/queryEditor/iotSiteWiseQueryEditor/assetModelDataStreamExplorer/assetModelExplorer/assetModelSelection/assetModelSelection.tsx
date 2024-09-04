@@ -7,7 +7,7 @@ import Link from '@cloudscape-design/components/link';
 import { AssetModelSelect } from './assetModelSelect';
 import { HorizontalDivider } from '~/components/divider/horizontalDivider';
 import { AssetModelSave } from './assetModelSave';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import {
   SelectedAssetModel,
   UpdateSelectedAssetModel,
@@ -21,11 +21,11 @@ import {
 import { AssetForAssetModelSelectForm } from '../../assetsForAssetModelSelect/assetForAssetModelSelectForm';
 
 type AssetModelSelectionOptions = {
-  selectedAssetModel?: SelectedAssetModel;
+  selectedAssetModel: SelectedAssetModel;
   onSelectAssetModel: UpdateSelectedAssetModel;
-  selectedAsset?: SelectedAsset;
+  selectedAsset: SelectedAsset;
   setSelectedAsset: UpdateSelectedAsset;
-  client: IoTSiteWiseClient;
+  client: IoTSiteWise;
 };
 
 export const AssetModelSelection = ({
@@ -37,6 +37,7 @@ export const AssetModelSelection = ({
 }: AssetModelSelectionOptions) => {
   const [currentSelectedAssetModel, selectCurrentAssetModel] =
     useSelectedAssetModel(selectedAssetModel);
+
   const [currentSelectedAsset, selectCurrentAsset] =
     useSelectedAsset(selectedAsset);
 
@@ -63,9 +64,9 @@ export const AssetModelSelection = ({
         client={client}
       />
       <AssetForAssetModelSelectForm
-        assetModelId={currentSelectedAssetModel?.id}
         selectedAsset={currentSelectedAsset}
         onSelectAsset={selectCurrentAsset}
+        selectedAssetModel={currentSelectedAssetModel}
         client={client}
       />
       <HorizontalDivider />

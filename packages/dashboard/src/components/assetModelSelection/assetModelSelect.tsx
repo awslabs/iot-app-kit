@@ -1,27 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import FormField from '@cloudscape-design/components/form-field';
 
 import { AssetForAssetModelSelect } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/assetsForAssetModelSelect/assetForAssetModelSelect';
+import {
+  createInitialAssetModelResource,
+  useSelectedAssetModel,
+} from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/useSelectedAssetModel';
+import {
+  createInitialAssetResource,
+  useSelectedAsset,
+} from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/useSelectedAsset';
+import { AssetResource } from '@iot-app-kit/react-components';
 import { useAssetsForAssetModel } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/assetsForAssetModelSelect/useAssetsForAssetModel/useAssetsForAssetModel';
-import { useModelBasedQuery } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/modelBasedQuery/useModelBasedQuery';
 
 type AssetModelSelectOptions = {
-  client: IoTSiteWiseClient;
+  client: IoTSiteWise;
   assetModelId: string;
   selectedAssetId?: string;
   hideTitle?: boolean;
   controlId?: string;
+  updateSelectedAsset: (asset: AssetResource | undefined) => void;
 };
 export const AssetModelSelect = ({
   client,
-  assetModelId,
-  selectedAssetId,
   hideTitle = false,
-  controlId,
+  selectedAssetId,
+  assetModelId,
+  updateSelectedAsset,
 }: AssetModelSelectOptions) => {
-  const { updateSelectedAsset } = useModelBasedQuery();
+  const [selectedAssetModel, _selectAssetModel] = useSelectedAssetModel(
+    createInitialAssetModelResource(assetModelId)
+  );
 
   const { assetSummaries } = useAssetsForAssetModel({
     assetModelId,
@@ -29,16 +40,32 @@ export const AssetModelSelect = ({
     fetchAll: true,
   });
 
-  const selectedAsset = assetSummaries.find(({ id }) => id === selectedAssetId);
+  const currentSelectedAsset = assetSummaries.find(
+    ({ id }) => id === selectedAssetId
+  );
+
+  const [selectedAsset, selectAsset] = useSelectedAsset(
+    currentSelectedAsset
+      ? [
+          {
+            ...currentSelectedAsset,
+            assetId: currentSelectedAsset?.id,
+          } as AssetResource,
+        ]
+      : createInitialAssetResource(selectedAssetId)
+  );
+
+  useEffect(() => {
+    updateSelectedAsset(selectedAsset[0]);
+  }, [selectedAsset, updateSelectedAsset]);
 
   return (
     <FormField label={`${!hideTitle ? 'Asset' : ''}`}>
       <AssetForAssetModelSelect
-        assetModelId={assetModelId}
+        selectedAssetModel={selectedAssetModel}
         selectedAsset={selectedAsset}
-        onSelectAsset={updateSelectedAsset}
+        onSelectAsset={selectAsset}
         client={client}
-        controlId={controlId}
       />
     </FormField>
   );
