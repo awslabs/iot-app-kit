@@ -49,6 +49,7 @@ export const ActionPanel = ({
       assistant.onAction({
         type: 'summarize',
         sourceComponentId: componentId,
+        messages,
       });
     }
   };
@@ -58,9 +59,11 @@ export const ActionPanel = ({
       assistant.onAction({
         type: 'divedeep',
         sourceComponentId: componentId,
+        messages,
       });
     }
     setShowActions(false);
+    setShowResults(false);
   };
 
   return (

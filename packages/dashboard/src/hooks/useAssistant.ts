@@ -28,6 +28,8 @@ export const useAssistant = () => {
               dispatch(
                 onToggleChatbotAction({
                   open: true,
+                  componentId: event.sourceComponentId,
+                  messages: event.messages ?? [],
                 })
               );
             }

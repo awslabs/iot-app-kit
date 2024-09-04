@@ -126,6 +126,7 @@ export const useAssistant = ({
 
   return {
     messages,
+    setMessages,
     invokeAssistant,
     generateSummary,
   };

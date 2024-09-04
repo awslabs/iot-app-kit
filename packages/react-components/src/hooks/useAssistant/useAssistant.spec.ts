@@ -5,6 +5,7 @@ import type { MessageParser } from './messageParser';
 import { StateManager } from './stateManager';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import useDataStore from '../../store';
+import { MessageType } from './types';
 
 const response1 = {
   trace: {
@@ -133,6 +134,39 @@ describe('useAssistant', () => {
 
     await waitFor(() => {
       expect(mockedSetState).toBeCalled();
+    });
+  });
+
+  it('should be able to setMessages to the assistant state', async () => {
+    const newClient = new IoTSitewiseAssistantClient({
+      iotSiteWiseClient: {
+        invokeAssistant: mockInvokeAssistant,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
+      defaultContext: '',
+    });
+    const { result } = renderHook(() =>
+      useAssistant({
+        assistantClient: newClient,
+      })
+    );
+
+    const expectedContent =
+      'Hello, I am your dashboard assistant, please ask me anything about your dashboard.';
+    await act(() => {
+      result.current.setMessages([
+        {
+          content: expectedContent,
+          sender: 'assistant',
+          type: MessageType.TEXT,
+          id: 'messageId',
+          loading: false,
+        },
+      ]);
+    });
+
+    await waitFor(() => {
+      const [first] = result.current.messages;
+      expect(first.content).toBe(expectedContent);
     });
   });
 

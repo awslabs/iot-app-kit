@@ -97,6 +97,7 @@ describe('ActionPanel', () => {
     expect(mockedDivedeepAction).toHaveBeenCalledWith({
       type: 'divedeep',
       sourceComponentId: 'componentId',
+      messages: [],
     });
   });
 
@@ -120,6 +121,7 @@ describe('ActionPanel', () => {
     expect(mockedSummarizeAction).toHaveBeenCalledWith({
       type: 'summarize',
       sourceComponentId: 'componentId',
+      messages: [],
     });
   });
 });

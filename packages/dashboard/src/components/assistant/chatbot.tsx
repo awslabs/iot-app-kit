@@ -25,7 +25,6 @@ export const Chatbot: FC<AssistantChatbotProps> = (
 ) => {
   const dispatch = useDispatch();
   const assistant = useSelector((state: DashboardState) => state.assistant);
-  const [conversationId] = useState<string>(uuid());
   const { iotSiteWisePrivateClient } = useClients();
   const [right, setRight] = useState(CHATBOT_DEFAULT_RIGHT);
 
@@ -33,7 +32,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
     iotSiteWiseClient: iotSiteWisePrivateClient!,
   });
 
-  const { messages, invokeAssistant } = useAssistant({
+  const { messages, invokeAssistant, setMessages } = useAssistant({
     assistantClient: client,
     initialState: {
       messages: [
@@ -50,6 +49,12 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   });
 
   useEffect(() => {
+    if (assistant.messages) {
+      setMessages(assistant.messages);
+    }
+  }, [assistant.messages]);
+
+  useEffect(() => {
     const dashboardContainer = document.querySelector('.dashboard #container');
     const assistantButton = document.querySelector(
       '.iot-dashboard-assistant-chatbot-button'
@@ -64,7 +69,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   }, []);
 
   const handleSubmit = (utterance: string) => {
-    invokeAssistant(conversationId, utterance);
+    invokeAssistant(assistant.conversationID, utterance);
   };
 
   const chatbotAnimation =
@@ -78,6 +83,8 @@ export const Chatbot: FC<AssistantChatbotProps> = (
     dispatch(
       onToggleChatbotAction({
         open,
+        componentId: '',
+        messages: assistant.messages,
       })
     );
   };
