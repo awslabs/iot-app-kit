@@ -46,7 +46,7 @@ test('can load configure a widget with an asset model', async ({ page }) => {
   const { selectAssetModel, selectAsset, saveAssetModel, selectProperty } =
     resourceExplorer.assetModelActions;
   // configure asset model and default asset and select
-  await selectAssetModel('Site');
+  await selectAssetModel('Production Site Asset Model');
   await selectAsset('Africa site');
   await saveAssetModel();
 
@@ -83,11 +83,16 @@ test('properties are disabled and enabled according to their data type', async (
   await expect(page.locator(ASSET_MODEL_TAB)).toBeVisible();
   await resourceExplorer.tabTo('assetModel');
 
-  const { selectAssetModel, selectAsset, saveAssetModel, findProperty } =
-    resourceExplorer.assetModelActions;
+  const {
+    selectAssetModel,
+    selectAsset,
+    saveAssetModel,
+    findProperty,
+    findDisabledProperty,
+  } = resourceExplorer.assetModelActions;
 
   // configure asset model and default asset and select
-  await selectAssetModel('Site');
+  await selectAssetModel('Production Site Asset Model');
   await selectAsset('Africa site');
   await saveAssetModel();
 
@@ -96,7 +101,7 @@ test('properties are disabled and enabled according to their data type', async (
   await expect(validProperty).not.toBeDisabled();
 
   // check that string property is disabled
-  const invalidProperty = findProperty('Coordinates');
+  const invalidProperty = findDisabledProperty('STRING');
   await expect(invalidProperty).toBeDisabled();
 });
 
@@ -310,7 +315,7 @@ test('filters COMPONENT_MODEL from asset model results', async ({ page }) => {
   await resourceExplorer.tabTo('assetModel');
 
   await page.getByLabel('Asset model', { exact: true }).click();
-  const searchBox = await page.getByPlaceholder('Find an asset model');
+  const searchBox = await page.getByPlaceholder('Filter asset models');
   await searchBox.click();
   await searchBox.fill(componentAssetModelName);
 

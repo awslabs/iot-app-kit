@@ -12,7 +12,7 @@ export interface AssetModelExplorerProps
   /**
    * Specify a list of request parameters for requesting asset models.
    *
-   * @defaultValue `[{ }]` - All asset models will be requested.
+   * @defaultValue `[{ assetModelTypes: ['ASSET_MODEL'] }]` - All asset models of type ASSET_MODEL will be requested.
    */
   parameters?: readonly AssetModelParameters[];
   requestFns?: {

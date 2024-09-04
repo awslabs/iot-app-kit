@@ -16,6 +16,7 @@ export {
   type AssetPropertyResource,
   type AssetResource,
   type TimeSeriesResource,
+  type AssetModelResource,
 } from './types/resources';
 export { type SelectionMode } from './types/common';
 // TODO: Export additional necessary types for customers to use

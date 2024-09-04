@@ -1,13 +1,20 @@
 import { useState } from 'react';
-import { AssetModelPropertySummary } from '@aws-sdk/client-iotsitewise';
 import { isEqual } from 'lodash';
 import { useCustomCompareEffect } from 'react-use';
+import {
+  AssetPropertyExplorerProps,
+  AssetPropertyResource,
+} from '@iot-app-kit/react-components';
 
 export const useSelectedAssetModelProperties = (
-  initialAssetModelProperties: AssetModelPropertySummary[] = []
+  initialAssetModelProperties: NonNullable<
+    AssetPropertyExplorerProps['selectedAssetProperties']
+  > = []
 ) => {
   const [selectedAssetModelProperties, setSelectedAssetModelProperties] =
-    useState<AssetModelPropertySummary[]>(initialAssetModelProperties);
+    useState<
+      NonNullable<AssetPropertyExplorerProps['selectedAssetProperties']>
+    >([]);
 
   useCustomCompareEffect(
     () => {
@@ -31,4 +38,5 @@ export type UpdateSelectedAssetModelProperties = ReturnType<
 >[1];
 
 export const createInitialAssetModelProperties = (properties?: string[]) =>
-  properties?.map((id) => ({ id } as AssetModelPropertySummary)) ?? [];
+  properties?.map((propertyId) => ({ propertyId } as AssetPropertyResource)) ??
+  [];
