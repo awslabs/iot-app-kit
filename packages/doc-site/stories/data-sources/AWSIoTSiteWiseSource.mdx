@@ -31,6 +31,8 @@ const { query } = initialize({ iotSiteWiseClient });
 
 #### Query construction example
 
+***Time Series Data***
+
 ```
 query.timeSeriesData({
   assets: [{
@@ -41,6 +43,25 @@ query.timeSeriesData({
 ```
 
 This query for time series data, is used by the IoT App Kit components that support time series data.
+
+***Alarm Data***
+
+```
+query.alarmData({
+  alarms: [
+    {
+      assetId: 'asset-1',
+      alarmComponents: [
+        {
+          assetCompositeModelId: 'alarm-1' 
+        },
+      ]
+    }
+  ]
+})
+```
+
+This query for alarm data, should be provided to any of the IoT App Kit components that support alarm data.
 
 ---
 
@@ -157,6 +178,52 @@ const { query } = initialize({ iotSiteWiseClient });
     })
   ]}
 />
+```
+
+### AlarmData API
+
+A method that is used to construct the query to process AWS IoT SiteWise alarm data. This query must be passed to different IoT App Kit components, Chart, KPI, Dial, etc. The first parameter is the query, and the second parameter is the alarm data settings. It controls what data to request from AWS IoT SiteWise and AWS IoT Events.
+
+#### Parameters
+
+**alarms (array optional)**:
+
+One or more AWS IoT SiteWise alarms that contain alarms data.
+To learn more about AWS IoT SiteWise alarms, see [Define alarms on asset models](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/define-alarms.html) in the *AWS IoT SiteWise User Guide*.
+
+Each asset contains the following fields:
+
+  - **assetId (string)**: The ID of the asset in which the specified property is created.
+  - **alarmComponents (array)**: One or more alarm composite models.
+   Alarm composite models are the structures within each asset that contain industrial alarm data properties. To learn more about alarm components, see [Monitor data with alarms](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-alarms.html) in the *AWS IoT SiteWise User Guide*.
+   Each property contains the following fields:
+
+      - **assetCompositeModelId (string)**: The ID of the SiteWise asset composite model.
+
+  - **requestSettings (object, optional)**: Specifies how often an user requests alarm data in live mode in milliseconds during a refresh.
+    Contains the following properties:
+    - **refreshRate (number, optional)**: The default value of the refreshRate field is 5000 milliseconds. 
+    The minimum value is 1000 milliseconds. Passing in a number below 1000 milliseconds into refreshRate will default to 1000 milliseconds.
+
+This query will request data every 5 seconds in live mode. 
+
+#### Example
+```
+query.alarmData({
+  alarms: [
+    {
+      assetId: 'asset-1',
+      alarmComponents: [
+        {
+          assetCompositeModelId: 'alarm-1' 
+        },
+      ]
+    }
+  ],
+  requestSettings: {
+    refreshRate: 5000
+  }
+});
 ```
 
 ## TimeSeriesDataSettings Properties
