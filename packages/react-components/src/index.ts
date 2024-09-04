@@ -63,6 +63,7 @@ export {
   type AssetPropertyResource,
   type AssetResource,
   type TimeSeriesResource,
+  type AssetModelResource,
   type SelectionMode,
   resourceExplorerQueryClient,
 } from './components/resource-explorers';

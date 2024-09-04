@@ -2,7 +2,7 @@ import React from 'react';
 
 import { AssetModelSelection } from './assetModelSelection/assetModelSelection';
 import { AssetModelSelected } from './assetModelSelection/assetModelSelected';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import {
   SelectedAssetModel,
   UpdateSelectedAssetModel,
@@ -10,12 +10,12 @@ import {
 import { SelectedAsset, UpdateSelectedAsset } from '../useSelectedAsset';
 
 type AssetModelExplorerOptions = {
-  selectedAssetModel?: SelectedAssetModel;
+  selectedAssetModel: SelectedAssetModel;
   setSelectedAssetModel: UpdateSelectedAssetModel;
-  selectedAsset?: SelectedAsset;
+  selectedAsset: SelectedAsset;
   setSelectedAsset: UpdateSelectedAsset;
   onResetSelectedAssetModel: () => void;
-  client: IoTSiteWiseClient;
+  client: IoTSiteWise;
 };
 
 export const AssetModelExplorer = ({
@@ -26,7 +26,7 @@ export const AssetModelExplorer = ({
   onResetSelectedAssetModel,
   client,
 }: AssetModelExplorerOptions) => {
-  return selectedAssetModel ? (
+  return selectedAssetModel.length > 0 ? (
     <AssetModelSelected
       client={client}
       selectedAssetModel={selectedAssetModel}

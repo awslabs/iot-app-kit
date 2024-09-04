@@ -1,55 +1,54 @@
 import React from 'react';
 
+import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import {
-  AssetModelPropertySummary,
-  IoTSiteWiseClient,
-} from '@aws-sdk/client-iotsitewise';
-import { useAssetModelProperties } from './useAssetModelProperties/useAssetModelProperties';
-import { SelectedAssetModel } from '../useSelectedAssetModel';
-import { AssetModelPropertiesTable } from './assetModelPropertiesTable/assetModelPropertiesTable';
-import { SelectedAssetModelProperties } from '../useSelectedAssetModelProperties';
+  SelectedAssetModelProperties,
+  UpdateSelectedAssetModelProperties,
+} from '../useSelectedAssetModelProperties';
+import { AssetPropertyExplorer } from '@iot-app-kit/react-components';
+import { SelectedAsset } from '../useSelectedAsset';
+import { isModeledPropertyInvalid } from '~/components/queryEditor/helpers/isModeledPropertyInvalid';
+import { propertySelectionLabel } from '~/components/queryEditor/helpers/propertySelectionLabel';
+import { DashboardWidget } from '~/types';
 
 export interface AssetExplorerProps {
-  selectedAssetModel: SelectedAssetModel;
   selectedAssetModelProperties: SelectedAssetModelProperties;
-  onSelect: (assetModelProperties: AssetModelPropertySummary[]) => void;
-  isWithoutHeader?: boolean;
-  onSave?: () => void;
-  saveDisabled?: boolean;
-  client: IoTSiteWiseClient;
+  client: IoTSiteWise;
+  selectedAsset: SelectedAsset;
+  selectAssetModelProperties: UpdateSelectedAssetModelProperties;
+  selectedWidgets: DashboardWidget[];
 }
 
 export const AssetModelPropertiesExplorer = ({
   client,
-  selectedAssetModel,
+  selectedAsset,
   selectedAssetModelProperties,
-  onSelect,
-  onSave,
-  saveDisabled,
+  selectAssetModelProperties,
+  selectedWidgets,
 }: AssetExplorerProps) => {
-  const assetModelId = selectedAssetModel?.id ?? '';
-  const {
-    assetModelPropertySummaries,
-    hasNextPage = false,
-    isFetching,
-    isLoading,
-    isError,
-    fetchNextPage,
-    refetch,
-  } = useAssetModelProperties({ client, assetModelId });
-
   return (
-    <AssetModelPropertiesTable
-      onClickNextPage={fetchNextPage}
-      onSelectAssetModelProperties={onSelect}
-      assetModelProperties={assetModelPropertySummaries}
-      selectedAssetModelProperties={selectedAssetModelProperties}
-      isLoading={isLoading || isFetching}
-      isError={isError}
-      retry={refetch}
-      hasNextPage={hasNextPage}
-      onSave={onSave}
-      saveDisabled={saveDisabled}
+    <AssetPropertyExplorer
+      requestFns={client}
+      parameters={selectedAsset}
+      selectionMode='multi'
+      onSelectAssetProperty={selectAssetModelProperties}
+      selectedAssetProperties={selectedAssetModelProperties}
+      tableSettings={{
+        isFilterEnabled: true,
+        isUserSettingsEnabled: true,
+      }}
+      isAssetPropertyDisabled={(item) =>
+        isModeledPropertyInvalid(item.dataType, selectedWidgets.at(0)?.type)
+      }
+      ariaLabels={{
+        resizerRoleDescription: 'Resize button',
+        itemSelectionLabel: ({ selectedItems }, modeledDataStream) =>
+          propertySelectionLabel(
+            [...selectedItems],
+            modeledDataStream,
+            selectedWidgets
+          ),
+      }}
     />
   );
 };

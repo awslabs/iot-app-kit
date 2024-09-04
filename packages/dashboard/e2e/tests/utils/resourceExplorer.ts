@@ -42,10 +42,10 @@ export const resourceExplorerUtil = (page: Page) => {
      */
     selectAssetModel: async (label: string) => {
       await frame.getByLabel('Asset model', { exact: true }).click();
-      const searchBox = await frame.getByPlaceholder('Find an asset model');
+      const searchBox = await frame.getByPlaceholder('Filter asset models');
       await searchBox.click();
       await searchBox.fill(label);
-      await frame.getByText(label).click();
+      await frame.getByText(label, { exact: true }).click();
     },
     /**
      * select a default asset from the dropdown
@@ -71,7 +71,7 @@ export const resourceExplorerUtil = (page: Page) => {
      *
      */
     findProperty: (label: string) => {
-      return frame.getByLabel(`Select asset model property ${label}`);
+      return frame.getByLabel(`Select modeled data stream ${label}`);
     },
     /**
      * select an asset model property from the table
@@ -79,7 +79,13 @@ export const resourceExplorerUtil = (page: Page) => {
      * @returns void
      */
     selectProperty: async (label: string) => {
-      await frame.getByLabel(`Select asset model property ${label}`).click();
+      await frame.getByLabel(`Select modeled data stream ${label}`).click();
+    },
+
+    findDisabledProperty: (label: string) => {
+      return frame.getByLabel(
+        `${label} data not supported for the selected widget`
+      );
     },
   };
 

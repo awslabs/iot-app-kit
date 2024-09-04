@@ -38,7 +38,7 @@ const setupTest = async (page: Page) => {
     resourceExplorer.assetModelActions;
   const { addToWidget } = resourceExplorer.generalActions;
   // configure asset model and default asset and select
-  await selectAssetModel('Site');
+  await selectAssetModel('Production Site Asset Model');
   await selectAsset('Africa site');
   await saveAssetModel();
 

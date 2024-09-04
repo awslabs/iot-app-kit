@@ -26,8 +26,8 @@ jest.mock('../useQuery', () => ({
 }));
 
 describe('Add button disbale state on widget and resource selection', () => {
-  it('Enabled with no widgets', () => {
-    expect(useIsAddButtonDisabled([])).toBe(false);
+  it('Disabled with no widgets', () => {
+    expect(useIsAddButtonDisabled([])).toBe(true);
   });
 
   it('Enabled with line widget', () => {

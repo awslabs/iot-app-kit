@@ -1,10 +1,16 @@
-import { AssetSummary } from '@aws-sdk/client-iotsitewise';
+import {
+  AssetExplorerProps,
+  AssetResource,
+} from '@iot-app-kit/react-components';
 import { useState } from 'react';
 
-export const useSelectedAsset = (initialSelectedAsset?: AssetSummary) => {
-  const [selectedAsset, setSelectedAsset] = useState<AssetSummary | undefined>(
-    initialSelectedAsset
-  );
+export const useSelectedAsset = (
+  initialSelectedAsset: NonNullable<AssetExplorerProps['selectedAssets']>
+) => {
+  const [selectedAsset, setSelectedAsset] =
+    useState<NonNullable<AssetExplorerProps['selectedAssets']>>(
+      initialSelectedAsset
+    );
 
   return [selectedAsset, setSelectedAsset] as const;
 };
@@ -12,5 +18,5 @@ export const useSelectedAsset = (initialSelectedAsset?: AssetSummary) => {
 export type SelectedAsset = ReturnType<typeof useSelectedAsset>[0];
 export type UpdateSelectedAsset = ReturnType<typeof useSelectedAsset>[1];
 
-export const createInitialAsset = (assetId?: string) =>
-  assetId ? ({ id: assetId } as AssetSummary) : undefined;
+export const createInitialAssetResource = (assetId?: string) =>
+  assetId ? [{ assetId } as AssetResource] : [];

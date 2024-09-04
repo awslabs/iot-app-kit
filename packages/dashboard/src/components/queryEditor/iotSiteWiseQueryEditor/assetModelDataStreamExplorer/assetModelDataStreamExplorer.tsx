@@ -1,18 +1,12 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-
-import {
-  type AssetModelPropertySummary,
-  type IoTSiteWiseClient,
-} from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 
 import Box from '@cloudscape-design/components/box';
 
 import { AssetModelExplorer } from './assetModelExplorer/assetModelExplorer';
 import { AssetModelPropertiesExplorer } from './assetModelPropertiesExplorer/assetModelPropertiesExplorer';
-import { AssetModelPropertiesExplorerEdge } from './assetModelPropertiesExplorer/assetModelPropertiesExplorerEdge';
 import {
-  createInitialAssetModelSummary,
+  createInitialAssetModelResource,
   useSelectedAssetModel,
 } from './useSelectedAssetModel';
 import { HorizontalDivider } from '~/components/divider/horizontalDivider';
@@ -20,43 +14,72 @@ import {
   createInitialAssetModelProperties,
   useSelectedAssetModelProperties,
 } from './useSelectedAssetModelProperties';
-import { createInitialAsset, useSelectedAsset } from './useSelectedAsset';
-import { createAssetModelQuery } from './createAssetModelQuery';
-import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
-import { getAssetModelQueryInformation } from './getAssetModelQueryInformation';
+import {
+  createInitialAssetResource,
+  useSelectedAsset,
+} from './useSelectedAsset';
 import { useModelBasedQuery } from './modelBasedQuery/useModelBasedQuery';
+import { getAssetModelQueryInformation } from './getAssetModelQueryInformation';
 import { useModelBasedQuerySelection } from './modelBasedQuery/useModelBasedQuerySelection';
+import { createAssetModelQuery } from './createAssetModelQuery';
 import { getPlugin } from '@iot-app-kit/core';
-import type { DashboardState } from '~/store/state';
+import { ResourceExplorerFooter } from '../footer/footer';
+import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
+import { DashboardWidget } from '~/types';
+import { AssetResource } from '@iot-app-kit/react-components';
+import { useAssetsForAssetModel } from './assetsForAssetModelSelect/useAssetsForAssetModel/useAssetsForAssetModel';
 
 export interface AssetModelDataStreamExplorerProps {
-  client: IoTSiteWiseClient;
+  client: IoTSiteWise;
+  selectedWidgets: DashboardWidget[];
+  addButtonDisabled: boolean;
+  correctSelectionMode: 'single' | 'multi';
 }
 
 export const AssetModelDataStreamExplorer = ({
   client,
+  selectedWidgets,
+  addButtonDisabled,
+  correctSelectionMode,
 }: AssetModelDataStreamExplorerProps) => {
   const metricsRecorder = getPlugin('metricsRecorder');
-  const isEdgeModeEnabled = useSelector(
-    (state: DashboardState) => state.isEdgeModeEnabled
-  );
   const {
     assetModelId,
     assetIds,
     clearModelBasedWidgets,
     updateSelectedAsset,
   } = useModelBasedQuery();
-  const { assetModels, updateAssetModels, modelBasedWidgetsSelected } =
-    useModelBasedQuerySelection();
+
+  const { assetSummaries } = useAssetsForAssetModel({
+    assetModelId,
+    client,
+    fetchAll: true,
+  });
+
+  const currentSelectedAsset = assetSummaries.find(
+    ({ id }) => id === assetIds?.at(0)
+  );
+
+  const { assetModels, updateAssetModels } = useModelBasedQuerySelection();
 
   const { propertyIds } = getAssetModelQueryInformation(assetModels);
 
   const [selectedAssetModel, selectAssetModel] = useSelectedAssetModel(
-    createInitialAssetModelSummary(assetModelId)
+    createInitialAssetModelResource(assetModelId)
   );
+
   const [selectedAsset, selectAsset] = useSelectedAsset(
-    createInitialAsset(assetIds?.at(0))
+    currentSelectedAsset
+      ? [
+          {
+            ...currentSelectedAsset,
+            assetId: currentSelectedAsset?.id,
+          } as AssetResource,
+        ]
+      : createInitialAssetResource(assetIds?.at(0))
+    // createInitialAssetResource(assetIds?.at(0))
   );
+
   const [selectedAssetModelProperties, selectAssetModelProperties] =
     useSelectedAssetModelProperties(
       createInitialAssetModelProperties(propertyIds)
@@ -67,24 +90,27 @@ export const AssetModelDataStreamExplorer = ({
    * when the selected asset changes
    */
   useEffect(() => {
-    updateSelectedAsset(selectedAsset);
+    updateSelectedAsset(selectedAsset[0]);
   }, [updateSelectedAsset, selectedAsset]);
 
   const onReset = () => {
-    selectAssetModel(undefined);
-    selectAsset(undefined);
+    selectAssetModel([]);
+    selectAsset([]);
     selectAssetModelProperties([]);
     clearModelBasedWidgets();
   };
 
   const onSave = () => {
-    if (selectedAssetModel?.id && selectedAssetModelProperties.length > 0) {
+    if (
+      selectedAssetModel[0].assetModelId &&
+      selectedAssetModelProperties.length > 0
+    ) {
       updateAssetModels(
         createAssetModelQuery({
-          assetModelId: selectedAssetModel.id,
-          assetId: selectedAsset?.id,
+          assetModelId: selectedAssetModel[0].assetModelId,
+          assetId: selectedAsset?.at(0)?.assetId,
           assetModelPropertyIds: createNonNullableList(
-            selectedAssetModelProperties.map(({ id }) => id)
+            selectedAssetModelProperties.map(({ propertyId }) => propertyId)
           ),
         })
       );
@@ -96,13 +122,12 @@ export const AssetModelDataStreamExplorer = ({
   };
 
   const assetModelPropertiesExplorerProps = {
-    selectedAssetModelProperties,
-    selectedAssetModel,
     client,
-    onSave,
-    saveDisabled: !modelBasedWidgetsSelected,
-    onSelect: (assetModelProperties: AssetModelPropertySummary[]) =>
-      selectAssetModelProperties(assetModelProperties),
+    selectedAsset,
+    selectAssetModelProperties,
+    selectedAssetModelProperties,
+    correctSelectionMode,
+    selectedWidgets,
   };
 
   return (
@@ -115,20 +140,24 @@ export const AssetModelDataStreamExplorer = ({
         selectedAsset={selectedAsset}
         setSelectedAsset={selectAsset}
       />
-      {selectedAssetModel && (
+      {selectedAssetModel.length > 0 && (
         <>
           <Box padding={{ bottom: 's', top: 'm' }}>
             <HorizontalDivider />
           </Box>
-          {isEdgeModeEnabled ? (
-            <AssetModelPropertiesExplorerEdge
-              {...assetModelPropertiesExplorerProps}
-            />
-          ) : (
-            <AssetModelPropertiesExplorer
-              {...assetModelPropertiesExplorerProps}
-            />
-          )}
+
+          <AssetModelPropertiesExplorer
+            {...assetModelPropertiesExplorerProps}
+          />
+
+          <ResourceExplorerFooter
+            addDisabled={addButtonDisabled}
+            onReset={() => selectAssetModelProperties([])}
+            onAdd={() => {
+              onSave();
+              selectAssetModelProperties([]); //clear table after adding it to widget
+            }}
+          />
         </>
       )}
     </Box>
