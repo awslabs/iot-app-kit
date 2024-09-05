@@ -37,6 +37,9 @@ export const TopBar: FC = () => {
           id: cameraNode.ref,
           text: cameraNode!.name,
         };
+      })
+      .sort((cameraDataA, cameraDataB) => {
+        return cameraDataA.text.localeCompare(cameraDataB.text);
       });
   }, [nodeMap]);
 

@@ -1,0 +1,144 @@
+{
+  "specVersion": "1.0",
+  "version": "1",
+  "unit": "meters",
+  "properties": {
+      "environmentPreset": "neutral"
+  },
+  "nodes": [{
+      "name": "ANIMATED_MIXER",
+      "transform": {
+          "position": [-2.08798817364264, -4.579208190458662e-16, -2.0622920300201555],
+          "rotation": [0, 0, 0],
+          "scale": [1, 1, 1]
+      },
+      "transformConstraint": {},
+      "children": [3],
+      "components": [{
+          "type": "ModelRef",
+          "uri": "ANIMATED_MIXER.gltf",
+          "modelType": "GLTF"
+      }],
+      "properties": {}
+  }, {
+      "name": "CameraFront",
+      "transform": {
+          "position": [8.540731561462348, 1.6391426394124655, -1.9170067893942144],
+          "rotation": [-1.4686806026636394, 1.3971387644244284, 1.4671323300017416],
+          "scale": [1, 1, 1]
+      },
+      "transformConstraint": {},
+      "components": [{
+          "type": "Camera",
+          "cameraIndex": 0
+      }],
+      "properties": {}
+  }, {
+      "name": "1CameraSide",
+      "transform": {
+          "position": [-2.583351775964588, 1.1436027503608108, 6.249808266662855],
+          "rotation": [-0.11511313286808508, -0.1413550271797004, -0.016288260418625487],
+          "scale": [1, 1, 1]
+      },
+      "transformConstraint": {},
+      "children": [4],
+      "components": [{
+          "type": "Camera",
+          "cameraIndex": 1
+      }],
+      "properties": {}
+  }, {
+      "name": "CameraTop",
+      "transform": {
+          "position": [0.7219058327732908, 8.81897240642175, -0.1641731259679995],
+          "rotation": [-1.5660782487251887, -0.00032658851493003557, -0.06910991523873034],
+          "scale": [1.0000000000000004, 1.0000000000000007, 1.0000000000000004]
+      },
+      "transformConstraint": {},
+      "components": [{
+          "type": "Camera",
+          "cameraIndex": 2
+      }],
+      "properties": {}
+  }, {
+      "name": "ACameraBack",
+      "transform": {
+          "position": [-7.092975315868124, 1.669134238759146, -7.503462611727299],
+          "rotation": [-0.8398905649368996, -1.394292935033559, -0.9464426480529055],
+          "scale": [1, 1.0000000000000002, 1.0000000000000002]
+      },
+      "transformConstraint": {},
+      "components": [{
+          "type": "Camera",
+          "cameraIndex": 3
+      }],
+      "properties": {}
+  }],
+  "rootNodeIndexes": [0, 1, 2],
+  "cameras": [{
+      "fov": 53.13,
+      "near": 0.1,
+      "far": 1000,
+      "zoom": 1,
+      "cameraType": "Perspective"
+  }, {
+      "fov": 53.13,
+      "near": 0.1,
+      "far": 1000,
+      "zoom": 1,
+      "cameraType": "Perspective"
+  }, {
+      "fov": 53.13,
+      "near": 0.1,
+      "far": 1000,
+      "zoom": 1,
+      "cameraType": "Perspective"
+  }, {
+      "cameraType": "Perspective",
+      "fov": 53.13,
+      "far": 1000,
+      "near": 0.1,
+      "zoom": 1
+  }],
+  "rules": {
+      "sampleAlarmIconRule": {
+          "statements": [{
+              "expression": "alarm_status == 'ACTIVE'",
+              "target": "iottwinmaker.common.icon:Error"
+          }, {
+              "expression": "alarm_status == 'ACKNOWLEDGED'",
+              "target": "iottwinmaker.common.icon:Warning"
+          }, {
+              "expression": "alarm_status == 'SNOOZE_DISABLED'",
+              "target": "iottwinmaker.common.icon:Warning"
+          }, {
+              "expression": "alarm_status == 'NORMAL'",
+              "target": "iottwinmaker.common.icon:Info"
+          }]
+      },
+      "sampleTimeSeriesIconRule": {
+          "statements": [{
+              "expression": "temperature >= 40",
+              "target": "iottwinmaker.common.icon:Error"
+          }, {
+              "expression": "temperature >= 20",
+              "target": "iottwinmaker.common.icon:Warning"
+          }, {
+              "expression": "temperature < 20",
+              "target": "iottwinmaker.common.icon:Info"
+          }]
+      },
+      "sampleTimeSeriesColorRule": {
+          "statements": [{
+              "expression": "temperature >= 40",
+              "target": "iottwinmaker.common.color:#FF0000"
+          }, {
+              "expression": "temperature >= 20",
+              "target": "iottwinmaker.common.color:#FFFF00"
+          }, {
+              "expression": "temperature < 20",
+              "target": "iottwinmaker.common.color:#00FF00"
+          }]
+      }
+  }
+}
