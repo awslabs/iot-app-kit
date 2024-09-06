@@ -17,34 +17,36 @@ export interface ChatbotProps {
 
 const MIN_HEIGHT = 400;
 
+const adjustHeight = (height: number) => {
+  const chatbotInput = document.querySelector(
+    '.iot-app-kit-assistant-chatbot-input'
+  ) as HTMLElement;
+  const chatbotHeader = document.querySelector(
+    '.iot-app-kit-assistant-chatbot-header'
+  ) as HTMLElement;
+  const chatbotInputHeight = chatbotInput?.clientHeight || 0;
+  const chatbotHeaderHeight = chatbotHeader?.clientHeight || 0;
+  const newHeight = height - chatbotHeaderHeight - chatbotInputHeight - 50;
+  return newHeight > height ? height : newHeight;
+};
+
 export const Chatbot = ({
   messages,
   visible,
-  height,
+  height = MIN_HEIGHT,
   onSubmit,
   onClose,
 }: ChatbotProps) => {
-  const [adjustedHeight, setAdjustedHeight] = useState<number>(height || 400);
+  const [updateHeight, setUpdateHeight] = useState<boolean>(false);
+  const [adjustedHeight, setAdjustedHeight] = useState<number>(height);
   const lastMessage = messages[messages.length - 1];
-
-  const adjustHeight = () => {
-    const chatbotInput = document.querySelector(
-      '.iot-app-kit-assistant-chatbot-input'
-    ) as HTMLElement;
-    const chatbotHeader = document.querySelector(
-      '.iot-app-kit-assistant-chatbot-header'
-    ) as HTMLElement;
-    const chatbotInputHeight = chatbotInput?.clientHeight || 0;
-    const chatbotHeaderHeight = chatbotHeader?.clientHeight || 0;
-    const newHeight = height - chatbotHeaderHeight - chatbotInputHeight - 50;
-    setAdjustedHeight(newHeight);
-  };
 
   useEffect(() => {
     if (height > MIN_HEIGHT) {
-      adjustHeight();
+      setAdjustedHeight(adjustHeight(height));
+      setUpdateHeight(false);
     }
-  }, [visible, height]);
+  }, [visible, height, updateHeight]);
 
   return (
     <div className='iot-app-kit assistant-chatbot'>
@@ -52,7 +54,7 @@ export const Chatbot = ({
         footer={
           <ChatbotInputBox
             onSubmit={onSubmit}
-            onResize={adjustHeight}
+            onResize={() => setUpdateHeight(true)}
             lastMessage={lastMessage}
           />
         }

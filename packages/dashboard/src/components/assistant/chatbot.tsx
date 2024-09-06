@@ -13,6 +13,7 @@ import './assistant.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { onToggleChatbotAction } from '~/store/actions';
 import { DashboardState } from '~/store/state';
+import { useAssistantContext } from '@iot-app-kit/react-components';
 
 export interface AssistantChatbotProps {
   height: number;
@@ -25,6 +26,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   const dispatch = useDispatch();
   const assistant = useSelector((state: DashboardState) => state.assistant);
   const { iotSiteWisePrivateClient } = useClients();
+  const { getContextByComponent } = useAssistantContext();
 
   const client = new IoTSitewiseAssistantClient({
     iotSiteWiseClient: iotSiteWisePrivateClient!,
@@ -47,13 +49,16 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   });
 
   useEffect(() => {
-    if (assistant.messages) {
+    if (assistant.messages && assistant.messages.length > 0) {
       setMessages(assistant.messages);
     }
-  }, [assistant.messages]);
+  }, [assistant.messages, assistant.componentId]);
 
   const handleSubmit = (utterance: string) => {
-    invokeAssistant(assistant.conversationID, utterance);
+    let componentContext = assistant.componentId 
+      ? getContextByComponent(assistant.componentId)
+      : '';
+    invokeAssistant(assistant.conversationID, utterance, componentContext);
   };
 
   const chatbotAnimation =
