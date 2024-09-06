@@ -58,7 +58,6 @@ export function InternalAssetPropertyExplorer({
   dropDownResourceDefinition = DEFAULT_ASSET_PROPERTY_DROP_DOWN_DEFINITION,
   dropDownSettings: { isFilterEnabled: isDropDownFilterEnabled = false } = {},
   ariaLabels,
-  description = '',
 }: AssetPropertyExplorerProps) {
   const [userCustomization, setUserCutomization] = useUserCustomization({
     resourceName,
@@ -117,7 +116,6 @@ export function InternalAssetPropertyExplorer({
           isFilterEnabled={isTableFilterEnabled}
           isUserSettingsEnabled={isUserSettingsEnabled}
           ariaLabels={ariaLabels}
-          description={description}
         />
       }
       dropDown={

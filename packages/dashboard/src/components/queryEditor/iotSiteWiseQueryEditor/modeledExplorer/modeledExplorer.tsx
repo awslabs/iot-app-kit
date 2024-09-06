@@ -107,7 +107,6 @@ export const ModeledExplorer = ({
                 selectedWidgets
               ),
           }}
-          description='Select a modeled datastream to add to a selected widget'
         />
       )}
       <ResourceExplorerFooter
