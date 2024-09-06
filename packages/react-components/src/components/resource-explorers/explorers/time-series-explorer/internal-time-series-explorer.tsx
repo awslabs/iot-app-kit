@@ -55,7 +55,6 @@ export function InternalTimeSeriesExplorer({
   } = {},
   dropDownResourceDefinition = DEFAULT_TIME_SERIES_DROP_DOWN_DEFINITION,
   dropDownSettings: { isFilterEnabled: isDropDownFilterEnabled = false } = {},
-  description = ''
 }: TimeSeriesExplorerProps) {
   const [userCustomization, setUserCutomization] = useUserCustomization({
     resourceName,
@@ -97,7 +96,6 @@ export function InternalTimeSeriesExplorer({
           isTitleEnabled={isTitleEnabled}
           isFilterEnabled={isTableFilterEnabled}
           isUserSettingsEnabled={isUserSettingsEnabled}
-          description={description}
         />
       }
       dropDown={
