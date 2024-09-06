@@ -58,7 +58,6 @@ export const UnmodeledExplorer = ({
           isFilterEnabled: true,
           isUserSettingsEnabled: true,
         }}
-        description="Select a modeled datastream to add to a selected widget"
       />
       <ResourceExplorerFooter
         addDisabled={addButtonDisabled}
