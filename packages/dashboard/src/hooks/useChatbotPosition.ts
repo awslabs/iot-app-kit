@@ -32,7 +32,8 @@ export const useChatbotPosition = (
     const displayAreaDimensions = displayAreaElement?.getBoundingClientRect();
 
     // calculate chatbot top position
-    const initialTopPosition = CHATBOT_DEFAULT_TOP + (displayAreaDimensions?.top ?? 0);
+    const initialTopPosition =
+      CHATBOT_DEFAULT_TOP + (displayAreaDimensions?.top ?? 0);
     const scrollTop = scrollableParent?.scrollTop ?? 0;
     const newTopPos = initialTopPosition - scrollTop;
     setChatbotTop(newTopPos > 0 ? newTopPos : 0);

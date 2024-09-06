@@ -5,6 +5,7 @@ import {
   AssistantChatbot,
   useAssistant,
   MessageType,
+  useAssistantContext,
 } from '@iot-app-kit/react-components';
 import { useClients } from '../dashboard/clientContext';
 import assistantIcon from './assistantIcon.svg';
@@ -13,7 +14,6 @@ import './assistant.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { onToggleChatbotAction } from '~/store/actions';
 import { DashboardState } from '~/store/state';
-import { useAssistantContext } from '@iot-app-kit/react-components';
 
 export interface AssistantChatbotProps {
   height: number;
@@ -55,7 +55,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   }, [assistant.messages, assistant.componentId]);
 
   const handleSubmit = (utterance: string) => {
-    let componentContext = assistant.componentId 
+    const componentContext = assistant.componentId
       ? getContextByComponent(assistant.componentId)
       : '';
     invokeAssistant(assistant.conversationID, utterance, componentContext);
