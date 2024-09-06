@@ -89,11 +89,14 @@ export const View: ComponentStory<typeof DashboardView> = () => (
 export const AssistantWithDoubleScroll: ComponentStory<
   typeof DashboardView
 > = () => (
-  <div style={{ height: '600px', overflow: 'scroll' }}>
-    <DashboardView
-      clientConfiguration={CLIENT_CONFIGURATION}
-      dashboardConfiguration={getInitialDashboardConfig()}
-    />
+  <div>
+    <h2>My Dashboard</h2>
+    <div style={{ height: '600px', overflow: 'scroll' }}>
+      <DashboardView
+        clientConfiguration={CLIENT_CONFIGURATION}
+        dashboardConfiguration={getInitialDashboardConfig()}
+      />
+    </div>
   </div>
 );
 

@@ -27,6 +27,8 @@ it('can open the chatbot', () => {
       type: 'TOGGLE_CHATBOT',
       payload: {
         open: true,
+        componentId: 'componentId',
+        messages: [],
       },
     }).assistant.isChatbotOpen
   ).toEqual(true);
@@ -37,7 +39,9 @@ it('can close the chatbot', () => {
     toggleChatbot(setupDashboardState([]), {
       type: 'TOGGLE_CHATBOT',
       payload: {
-        open: false,
+        open: true,
+        componentId: 'componentId',
+        messages: [],
       },
     }).assistant.isChatbotOpen
   ).toEqual(false);
@@ -48,6 +52,8 @@ it('action TOGGLE_CHATBOT changes state correctly', () => {
   store.dispatch(
     onToggleChatbotAction({
       open: true,
+      componentId: 'componentId',
+      messages: [],
     })
   );
 

@@ -143,7 +143,6 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   const { chatbotTop, chatbotHeight, calculateChatbotDimensions } =
     useChatbotPosition(
       scrollableParent,
-      '[data-testid=iot-app-kit-dashboard-header]',
       '[data-test-id=read-only-mode-dashboard]'
     );
 
