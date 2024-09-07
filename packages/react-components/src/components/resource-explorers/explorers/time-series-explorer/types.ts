@@ -20,6 +20,7 @@ export interface TimeSeriesExplorerProps
   onSelectTimeSeries?: OnSelectResource<TimeSeriesResource>;
   selectedTimeSeries?: SelectedResources<TimeSeriesResource>;
   isTimeSeriesDisabled?: IsResourceDisabled<TimeSeriesResource>;
+  description?: string;
 }
 
 export interface TimeSeriesRequestParameters {
