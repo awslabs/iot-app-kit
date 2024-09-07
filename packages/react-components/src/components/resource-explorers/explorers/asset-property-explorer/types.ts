@@ -26,6 +26,7 @@ export interface AssetPropertyExplorerProps
   selectedAssetProperties?: SelectedResources<AssetPropertyResource>;
   isAssetPropertyDisabled?: IsResourceDisabled<AssetPropertyResource>;
   ariaLabels?: TableProps.AriaLabels<AssetPropertyResource>;
+  description?: string;
 }
 
 export type AssetPropertyResourcesRequestParameters =
