@@ -18,6 +18,10 @@ export const isAssetModelCompositeModelId = (
 export const isPropertyId = (propertyId?: string): propertyId is string =>
   Boolean(propertyId);
 
+export const isPropertyAlias = (
+  propertyAlias?: string
+): propertyAlias is string => Boolean(propertyAlias);
+
 export const isStartDate = (startDate?: number): startDate is number =>
   Boolean(startDate);
 
