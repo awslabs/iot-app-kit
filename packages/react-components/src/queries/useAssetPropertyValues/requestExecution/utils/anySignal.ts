@@ -42,8 +42,17 @@ export function anySignal(
     }
   }
 
+  function throwIfAborted(): void {
+    for (const signal of signals) {
+      if (signal?.aborted === true) {
+        throw signal.reason;
+      }
+    }
+  }
+
   const signal = controller.signal as ClearableSignal;
   signal.clear = clear;
+  signal.throwIfAborted = signal.throwIfAborted ?? throwIfAborted;
 
   return signal;
 }
