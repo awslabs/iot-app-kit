@@ -4,11 +4,13 @@ import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
 import type { AssistantProperty } from '../../common/assistantProps';
-import type {
-  StyleSettingsMap,
-  Viewport,
-  TimeSeriesDataQuery,
-  StyledThreshold,
+import {
+  type StyleSettingsMap,
+  type Viewport,
+  type TimeSeriesDataQuery,
+  type StyledThreshold,
+  viewportEndDate,
+  viewportStartDate,
 } from '@iot-app-kit/core';
 import type { KPISettings } from './types';
 import { KpiBase } from './kpiBase';
@@ -46,7 +48,8 @@ export const KPI = ({
   });
   const { viewport } = useViewport();
   const componentId = useComponentId();
-  const { setContextByComponent } = useAssistantContext();
+  const { setContextByComponent, getSupportedTimeRange, getQueriesForContext } =
+    useAssistantContext();
 
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
 
@@ -71,9 +74,13 @@ export const KPI = ({
   const error = alarmStream?.error || propertyStream?.error;
 
   useEffect(() => {
+    const timerange = getSupportedTimeRange(
+      viewportStartDate(utilizedViewport),
+      viewportEndDate(utilizedViewport)
+    );
     setContextByComponent(componentId, {
-      timerange: utilizedViewport,
-      queries: [query.toQueryString()],
+      timerange,
+      queries: getQueriesForContext([query]),
     });
   }, [utilizedViewport, query]);
 

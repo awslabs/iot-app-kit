@@ -1,4 +1,4 @@
-import { inflate } from 'pako';
+import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { useAssistantContext } from './useAssistantContext';
 
 const component1 = 'mockComponent';
@@ -58,20 +58,8 @@ describe('useAssistantContext', () => {
     setContextByComponent(component1, context1);
     setContextByComponent(component2, context2);
 
-    const binaryString1 = atob(getContextByComponent(component1));
-    const binaryData1 = new Uint8Array(
-      [...binaryString1].map((x) => x.charCodeAt(0))
-    );
-    const expectedContext1 = inflate(binaryData1, { to: 'string' });
-
-    const binaryString2 = atob(getContextByComponent(component2));
-    const binaryData2 = new Uint8Array(
-      [...binaryString2].map((x) => x.charCodeAt(0))
-    );
-    const expectedContext2 = inflate(binaryData2, { to: 'string' });
-
-    expect(expectedContext1).toBe(JSON.stringify(context1));
-    expect(expectedContext2).toBe(JSON.stringify(context2));
+    expect(getContextByComponent(component1)).toBe(JSON.stringify(context1));
+    expect(getContextByComponent(component2)).toBe(JSON.stringify(context2));
   });
 
   it('getAllAssistantContext should get all assistant contexts', () => {
@@ -80,16 +68,40 @@ describe('useAssistantContext', () => {
     setContextByComponent(component1, context1);
     setContextByComponent(component2, context2);
 
-    const binaryString = atob(getAllAssistantContext());
-    const binaryData = new Uint8Array(
-      [...binaryString].map((x) => x.charCodeAt(0))
-    );
-    const expectedContext = inflate(binaryData, { to: 'string' });
-
-    expect(expectedContext).toBe(
+    expect(getAllAssistantContext()).toBe(
       JSON.stringify({
         mockComponent: context1,
         testComponent: context2,
+      })
+    );
+  });
+
+  it('getSupportedTimeRange should return start and end dates in ISO 8601 format', () => {
+    const { getSupportedTimeRange } = useAssistantContext();
+    const startDate = new Date('August 01, 2024 05:35:32');
+    const endDate = new Date('September 06, 2024 23:12:34');
+
+    const timerange = getSupportedTimeRange(startDate, endDate);
+    expect(timerange.start).toBe('2024-08-01T05:35:32.000Z');
+    expect(timerange.end).toBe('2024-09-06T23:12:34.000Z');
+  });
+
+  it('getQueriesForContext should return parse and return query in a correct format to be added to te assistant context', () => {
+    const { getQueriesForContext } = useAssistantContext();
+    const anyQuery = {
+      dataStreams: [],
+      viewport: { duration: '5m' },
+      thresholds: [],
+    };
+    const query = mockTimeSeriesDataQuery([anyQuery]);
+
+    const [first] = getQueriesForContext([query]);
+    expect(first).toEqual(
+      expect.objectContaining({
+        query: [
+          { dataStreams: [], thresholds: [], viewport: { duration: '5m' } },
+        ],
+        source: 'mock',
       })
     );
   });

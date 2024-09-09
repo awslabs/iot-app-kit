@@ -37,6 +37,7 @@ import { useDataQuality } from './hooks/useDataQuality';
 import { Timestamp } from '../timestampBar';
 import useDataStore from '../../store';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
+import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
 
 /**
  * Developer Notes:
@@ -81,7 +82,8 @@ const BaseChart = ({
     handleChangeBadDataIconsVisibility,
     handleChangeUncertainDataIconsVisibility,
   } = useDataQuality({ ...options.dataQuality, onChartOptionsChange });
-  const { setContextByComponent } = useAssistantContext();
+  const { setContextByComponent, getSupportedTimeRange, getQueriesForContext } =
+    useAssistantContext();
 
   const isLegendVisible = options.legend?.visible;
   const isLegendPositionLeft = options.legend?.position === 'left';
@@ -172,9 +174,13 @@ const BaseChart = ({
 
   useEffect(() => {
     if (options.id) {
+      const timerange = getSupportedTimeRange(
+        viewportStartDate(utilizedViewport),
+        viewportEndDate(utilizedViewport)
+      );
       setContextByComponent(options.id, {
-        timerange: utilizedViewport,
-        queries: queries.map((query) => query.toQueryString()),
+        timerange,
+        queries: getQueriesForContext(queries),
       });
     }
   }, [utilizedViewport, queries]);

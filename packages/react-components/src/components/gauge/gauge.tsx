@@ -4,7 +4,11 @@ import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { DEFAULT_VIEWPORT, ECHARTS_GESTURE } from '../../common/constants';
-import { DataStream } from '@iot-app-kit/core';
+import {
+  DataStream,
+  viewportEndDate,
+  viewportStartDate,
+} from '@iot-app-kit/core';
 import { GaugeBase } from './gaugeBase';
 import type { GaugeProps } from './types';
 import {
@@ -33,7 +37,8 @@ export const Gauge = ({
     styles,
   });
   const { viewport, lastUpdatedBy } = useViewport();
-  const { setContextByComponent } = useAssistantContext();
+  const { setContextByComponent, getSupportedTimeRange, getQueriesForContext } =
+    useAssistantContext();
 
   const utilizedViewport =
     (lastUpdatedBy === ECHARTS_GESTURE
@@ -58,9 +63,13 @@ export const Gauge = ({
     styles && refId ? styles[refId]?.color : DEFAULT_GAUGE_PROGRESS_COLOR;
 
   useEffect(() => {
+    const timerange = getSupportedTimeRange(
+      viewportStartDate(utilizedViewport),
+      viewportEndDate(utilizedViewport)
+    );
     setContextByComponent(componentId, {
-      timerange: utilizedViewport,
-      queries: [query.toQueryString()],
+      timerange,
+      queries: getQueriesForContext([query]),
     });
   }, [utilizedViewport, query]);
 
