@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import type { FC } from 'react';
 import { getSiteWiseClient } from '@iot-app-kit/core-util';
@@ -15,6 +15,7 @@ import { sub } from 'date-fns';
 import { useSiteWiseAnomalyDataSource } from '../../src/queries/useSiteWiseAnomalyDataSource';
 import { TimeSelection, TimeSync, useViewport } from '../../src';
 import { isDurationViewport } from '../../src/utils/isDurationViewport';
+import { useLatestAssetPropertyValues } from '../../src/queries/useLatestAssetPropertyValues/useLatestAssetPropertyValues';
 
 const ASSET_MODEL_ID = '4c8e3da0-d3ec-4818-86b3-44a1e6b98531';
 const ASSET_MODEL_COMPOSITE_MODEL_ID = 'a85b0fb2-b259-441c-aacc-d7d7495214f5';
@@ -58,6 +59,105 @@ export default {
     ),
   ],
 } as ComponentMeta<typeof RenderQueries>;
+
+export const LatestAssetPropertyValues: ComponentStory<FC> = () => {
+  /**
+   * Demo component to illustrate that batching works
+   * across multiple hook usage no matter when
+   * the hooks actually mount.
+   */
+  const [e2, setE2] = useState(false);
+  const [e3, setE3] = useState(false);
+  const [e4, setE4] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setE2(true);
+    }, 6000);
+
+    setTimeout(() => {
+      setE3(true);
+    }, 7500);
+
+    setTimeout(() => {
+      setE4(true);
+    }, 9000);
+  });
+
+  const responses1 = useLatestAssetPropertyValues({
+    iotSiteWiseClient: client,
+    requests: [
+      {
+        assetId: '8ca28842-687c-45ac-ac74-6db7cf61a80a',
+        propertyId: 'b306e0cd-548d-4857-8c6d-9ec773420c6c',
+      },
+      {
+        assetId: '8ca28842-687c-45ac-ac74-6db7cf61a80a',
+        propertyId: 'b565acbd-bf96-4ce7-b5d3-d6822758619b',
+      },
+    ],
+  });
+
+  const responses2 = useLatestAssetPropertyValues({
+    enabled: e2,
+    iotSiteWiseClient: client,
+    requests: [
+      {
+        assetId: '8ca28842-687c-45ac-ac74-6db7cf61a80a',
+        propertyId: '585838b3-d755-4dd5-89ed-2abfd0d0feca',
+      },
+      {
+        assetId: '8ca28842-687c-45ac-ac74-6db7cf61a80a',
+        propertyId: 'f7117764-6c45-447b-9caf-0876bb211e2f',
+      },
+    ],
+  });
+
+  const responses3 = useLatestAssetPropertyValues({
+    enabled: e3,
+    iotSiteWiseClient: client,
+    requests: [
+      {
+        assetId: 'b97d68e1-dd8f-40e7-9ba5-cebe7168e27e',
+        propertyId: 'b306e0cd-548d-4857-8c6d-9ec773420c6c',
+      },
+      {
+        assetId: 'b97d68e1-dd8f-40e7-9ba5-cebe7168e27e',
+        propertyId: 'b565acbd-bf96-4ce7-b5d3-d6822758619b',
+      },
+    ],
+  });
+
+  const responses4 = useLatestAssetPropertyValues({
+    enabled: e4,
+    refreshRate: 6000,
+    iotSiteWiseClient: client,
+    requests: [
+      {
+        assetId: 'b97d68e1-dd8f-40e7-9ba5-cebe7168e27e',
+        propertyId: '585838b3-d755-4dd5-89ed-2abfd0d0feca',
+      },
+      {
+        assetId: 'b97d68e1-dd8f-40e7-9ba5-cebe7168e27e',
+        propertyId: 'f7117764-6c45-447b-9caf-0876bb211e2f',
+      },
+    ],
+  });
+
+  console.log(
+    [...responses1, ...responses2, ...responses3, ...responses4].map(
+      (r) => r.data
+    )
+  );
+
+  return (
+    <RenderQueries
+      json={[...responses1, ...responses2, ...responses3, ...responses4].map(
+        (r) => r.data
+      )}
+    />
+  );
+};
 
 export const DescribeAssetModelCompositeModel: ComponentStory<FC> = () => {
   const { data } = useDescribeAssetModelCompositeModel({
