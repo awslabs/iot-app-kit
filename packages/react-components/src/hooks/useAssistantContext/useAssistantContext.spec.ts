@@ -82,8 +82,8 @@ describe('useAssistantContext', () => {
     const endDate = new Date('September 06, 2024 23:12:34');
 
     const timerange = getSupportedTimeRange(startDate, endDate);
-    expect(timerange.start).toBe('2024-08-01T05:35:32.000Z');
-    expect(timerange.end).toBe('2024-09-06T23:12:34.000Z');
+    expect(timerange.start).toBe('2024-08-01T05:35:32Z');
+    expect(timerange.end).toBe('2024-09-06T23:12:34Z');
   });
 
   it('getQueriesForContext should return parse and return query in a correct format to be added to te assistant context', () => {

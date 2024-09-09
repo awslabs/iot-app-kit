@@ -16,9 +16,14 @@ export const useAssistantContext = () => {
     setContextByComponent,
     updateContextByComponent,
     getSupportedTimeRange: (start: Date, end: Date) => {
+      let startISO = start.toISOString();
+      startISO = `${startISO.substring(0, startISO.indexOf('.'))}Z`;
+
+      let endISO = end.toISOString();
+      endISO = `${endISO.substring(0, endISO.indexOf('.'))}Z`;
       return {
-        start: start.toISOString(),
-        end: end.toISOString(),
+        start: startISO,
+        end: endISO,
       };
     },
     getQueriesForContext: (queries: TimeSeriesDataQuery[]) => {
