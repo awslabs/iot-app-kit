@@ -17,6 +17,7 @@ import {
 } from '@iot-app-kit/core';
 import { AssetPropertyResource } from '../../types/resources';
 import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';
+import { formatDate } from '../../../../utils/time';
 
 function SelectableAssetPropertyTable({
   selectionMode,
@@ -687,26 +688,26 @@ describe('asset property table', () => {
       ).toBeVisible();
       expect(
         screen.getByText(
-          new Date(
+          formatDate(
             assetProperty1SuccessEntry.assetPropertyValue.timestamp
               .timeInSeconds * 1000
-          ).toLocaleString()
+          )
         )
       ).toBeVisible();
       expect(
         screen.getByText(
-          new Date(
+          formatDate(
             assetProperty2SuccessEntry.assetPropertyValue.timestamp
               .timeInSeconds * 1000
-          ).toLocaleString()
+          )
         )
       ).toBeVisible();
       expect(
         screen.getByText(
-          new Date(
+          formatDate(
             assetProperty3SuccessEntry.assetPropertyValue.timestamp
               .timeInSeconds * 1000
-          ).toLocaleString()
+          )
         )
       ).toBeVisible();
     });
