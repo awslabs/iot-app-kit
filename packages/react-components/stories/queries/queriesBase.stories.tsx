@@ -16,6 +16,7 @@ import { useSiteWiseAnomalyDataSource } from '../../src/queries/useSiteWiseAnoma
 import { TimeSelection, TimeSync, useViewport } from '../../src';
 import { isDurationViewport } from '../../src/utils/isDurationViewport';
 import { useLatestAssetPropertyValues } from '../../src/queries/useLatestAssetPropertyValues/useLatestAssetPropertyValues';
+import { useHistoricalAssetPropertyValues } from '../../src/queries/useHistoricalAssetPropertyValues/useHistoricalAssetPropertyValues';
 
 const ASSET_MODEL_ID = '4c8e3da0-d3ec-4818-86b3-44a1e6b98531';
 const ASSET_MODEL_COMPOSITE_MODEL_ID = 'a85b0fb2-b259-441c-aacc-d7d7495214f5';
@@ -59,6 +60,58 @@ export default {
     ),
   ],
 } as ComponentMeta<typeof RenderQueries>;
+
+export const HistoricalAssetPropertyValues: ComponentStory<FC> = () => {
+  /**
+   * Demo component to illustrate that batching works
+   * across multiple hook usage no matter when
+   * the hooks actually mount.
+   */
+  const [e2, setE2] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setE2(true);
+    }, 6000);
+  });
+
+  const responses1 = useHistoricalAssetPropertyValues({
+    iotSiteWiseClient: client,
+    viewport: { duration: '10m' },
+    requests: [
+      {
+        assetId: '8ca28842-687c-45ac-ac74-6db7cf61a80a',
+        propertyId: 'b306e0cd-548d-4857-8c6d-9ec773420c6c',
+      },
+      {
+        assetId: '8ca28842-687c-45ac-ac74-6db7cf61a80a',
+        propertyId: 'b565acbd-bf96-4ce7-b5d3-d6822758619b',
+      },
+    ],
+  });
+
+  const responses2 = useHistoricalAssetPropertyValues({
+    enabled: e2,
+    iotSiteWiseClient: client,
+    viewport: { duration: '10m' },
+    requests: [
+      {
+        assetId: '8ca28842-687c-45ac-ac74-6db7cf61a80a',
+        propertyId: '585838b3-d755-4dd5-89ed-2abfd0d0feca',
+      },
+      {
+        assetId: '8ca28842-687c-45ac-ac74-6db7cf61a80a',
+        propertyId: 'f7117764-6c45-447b-9caf-0876bb211e2f',
+      },
+    ],
+  });
+
+  console.log([...responses1, ...responses2].map((r) => r.data));
+
+  return (
+    <RenderQueries json={[...responses1, ...responses2].map((r) => r.data)} />
+  );
+};
 
 export const LatestAssetPropertyValues: ComponentStory<FC> = () => {
   /**

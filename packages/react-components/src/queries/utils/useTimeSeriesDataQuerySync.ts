@@ -2,18 +2,17 @@ import { useEffect } from 'react';
 import { StateCreator, create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-export interface LatestAssetPropertyValueSync {
+export interface TimeSeriesDataSync {
   enabled: Record<number, boolean>;
 }
 
-export interface LatestAssetPropertyValueSyncState
-  extends LatestAssetPropertyValueSync {
+export interface TimeSeriesDataSyncState extends TimeSeriesDataSync {
   enable: (refreshRate: number) => void;
   disable: (refreshRate: number) => void;
 }
 
-export const createLatestAssetPropertyValueSyncSlice: StateCreator<
-  LatestAssetPropertyValueSyncState
+export const createTimeSeriesDataSyncSlice: StateCreator<
+  TimeSeriesDataSyncState
 > = (set) => ({
   enabled: {},
   enable: (refreshRate: number) =>
@@ -34,16 +33,15 @@ export const createLatestAssetPropertyValueSyncSlice: StateCreator<
     })),
 });
 
-export const useLatestAssetPropertyValueSyncStore =
-  create<LatestAssetPropertyValueSyncState>()(
-    devtools((...args) => ({
-      ...createLatestAssetPropertyValueSyncSlice(...args),
-    }))
-  );
+export const useTimeSeriesDataSyncStore = create<TimeSeriesDataSyncState>()(
+  devtools((...args) => ({
+    ...createTimeSeriesDataSyncSlice(...args),
+  }))
+);
 
 /**
  * Hook that will toggle a single enabled flag for
- * multiple usages of useLatestAssetPropertyValue
+ * multiple usages of time series data hooks
  * with the same refresh rate.
  *
  * This enabled flag is passed to useQueries
@@ -51,7 +49,7 @@ export const useLatestAssetPropertyValueSyncStore =
  * that the refetch intervals are synced and
  * batching can be fully utilized across multiple hooks.
  */
-export const useSyncLatestAssetPropertyValueQueries = ({
+export const useSyncTimeSeriesDataQueries = ({
   enabled,
   refreshRate,
 }: {
@@ -62,7 +60,7 @@ export const useSyncLatestAssetPropertyValueQueries = ({
     enabled: enabledFlags,
     enable,
     disable,
-  } = useLatestAssetPropertyValueSyncStore();
+  } = useTimeSeriesDataSyncStore();
 
   useEffect(() => {
     if (!enabled) return;
