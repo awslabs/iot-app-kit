@@ -26,10 +26,12 @@ import {
 import { AssetPropertyResource } from '../../types/resources';
 import {
   DEFAULT_ASSET_PROPERTY_TABLE_DEFINITION,
-  DEFAULT_ASSET_PROPERTY_WITH_LATEST_VALUES_TABLE_DEFINITION,
+  createDefaultLatestValuesTableDefinition,
 } from '../../constants/table-resource-definitions';
 import { DEFAULT_ASSET_PROPERTY_DROP_DOWN_DEFINITION } from '../../constants/drop-down-resource-definitions';
 import { useUserCustomization } from '../../helpers/use-user-customization';
+import { TableResourceDefinition } from '../../types/table';
+import { formatDate } from '../../../../utils/time';
 
 export function InternalAssetPropertyExplorer({
   requestFns,
@@ -43,12 +45,8 @@ export function InternalAssetPropertyExplorer({
   selectedAssetProperties = DEFAULT_SELECTED_RESOURCES,
   onSelectAssetProperty = DEFAULT_ON_SELECT_RESOURCE,
   selectionMode = DEFAULT_SELECTION_MODE,
-  tableResourceDefinition = requestFns?.batchGetAssetPropertyValue !== undefined
-    ? DEFAULT_ASSET_PROPERTY_WITH_LATEST_VALUES_TABLE_DEFINITION
-    : DEFAULT_ASSET_PROPERTY_TABLE_DEFINITION,
-  defaultTableUserSettings = createDefaultTableUserSettings(
-    tableResourceDefinition
-  ),
+  tableResourceDefinition: customTableResourceDefinition,
+  defaultTableUserSettings: customDefaultTableUserSettings,
   tableSettings: {
     isTitleEnabled = DEFAULT_IS_TABLE_ENABLED,
     isSearchEnabled = DEFAULT_IS_TABLE_SEARCH_ENABLED,
@@ -59,7 +57,26 @@ export function InternalAssetPropertyExplorer({
   dropDownSettings: { isFilterEnabled: isDropDownFilterEnabled = false } = {},
   ariaLabels,
   description = '',
+  timeZone,
 }: AssetPropertyExplorerProps) {
+  const tableResourceDefinition =
+    customTableResourceDefinition ??
+    requestFns?.batchGetAssetPropertyValue !== undefined
+      ? ([
+          ...DEFAULT_ASSET_PROPERTY_TABLE_DEFINITION,
+          ...createDefaultLatestValuesTableDefinition((latestValueResource) => {
+            return latestValueResource.latestValueTimestamp
+              ? formatDate(latestValueResource.latestValueTimestamp * 1000, {
+                  timeZone,
+                })
+              : '-';
+          }),
+        ] as TableResourceDefinition<AssetPropertyResource>)
+      : DEFAULT_ASSET_PROPERTY_TABLE_DEFINITION;
+
+  const defaultTableUserSettings =
+    customDefaultTableUserSettings ??
+    createDefaultTableUserSettings(tableResourceDefinition);
   const [userCustomization, setUserCutomization] = useUserCustomization({
     resourceName,
     defaultPageSize,

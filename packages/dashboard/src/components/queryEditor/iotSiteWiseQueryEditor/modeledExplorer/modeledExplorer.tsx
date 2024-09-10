@@ -24,6 +24,7 @@ type ModeledExplorerProps = {
   correctSelectionMode: SelectionMode;
   addButtonDisabled: boolean;
   selectedWidgets: DashboardWidget[];
+  timeZone?: string;
 };
 
 export const ModeledExplorer = ({
@@ -32,6 +33,7 @@ export const ModeledExplorer = ({
   correctSelectionMode,
   addButtonDisabled,
   selectedWidgets,
+  timeZone,
 }: ModeledExplorerProps) => {
   const [selectedAssets, setSelectedAssets] = useState<
     NonNullable<AssetExplorerProps['selectedAssets']>
@@ -108,6 +110,7 @@ export const ModeledExplorer = ({
               ),
           }}
           description='Select a modeled datastream to add to a selected widget'
+          timeZone={timeZone}
         />
       )}
       <ResourceExplorerFooter
