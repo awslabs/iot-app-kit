@@ -17,11 +17,13 @@ import { TimeSelection, TimeSync, useViewport } from '../../src';
 import { isDurationViewport } from '../../src/utils/isDurationViewport';
 import { useLatestAssetPropertyValues } from '../../src/queries/useLatestAssetPropertyValues/useLatestAssetPropertyValues';
 import { useHistoricalAssetPropertyValues } from '../../src/queries/useHistoricalAssetPropertyValues/useHistoricalAssetPropertyValues';
+import { useAlarms } from '../../src/hooks/useAlarms';
 
 const ASSET_MODEL_ID = '4c8e3da0-d3ec-4818-86b3-44a1e6b98531';
 const ASSET_MODEL_COMPOSITE_MODEL_ID = 'a85b0fb2-b259-441c-aacc-d7d7495214f5';
 
-const ASSET_ID = '4a89a6b3-4a85-4ece-a598-a1ca4661d466';
+const ASSET_ID = 'b1267cc2-feec-489a-a738-52b06f8777db';
+const ASSET_COMPOSITE_MODEL_ID = 'a0bdbad9-a7ea-49c4-a2f4-c9e3bb3afb18';
 const PROPERTY_ID = '3a985085-ea71-4ae6-9395-b65990f58a05';
 
 const PREDICTION_DEFINITION_ID = 'a85b0fb2-b259-441c-aacc-d7d7495214f5';
@@ -60,6 +62,21 @@ export default {
     ),
   ],
 } as ComponentMeta<typeof RenderQueries>;
+
+export const UseAlarms: ComponentStory<FC> = () => {
+  const alarmDataList = useAlarms({
+    iotSiteWiseClient: client,
+    requests: [
+      {
+        assetId: ASSET_ID,
+        assetCompositeModelId: ASSET_COMPOSITE_MODEL_ID,
+      },
+    ],
+  });
+  console.log(alarmDataList);
+
+  return <RenderQueries json={alarmDataList} />;
+};
 
 export const HistoricalAssetPropertyValues: ComponentStory<FC> = () => {
   /**
