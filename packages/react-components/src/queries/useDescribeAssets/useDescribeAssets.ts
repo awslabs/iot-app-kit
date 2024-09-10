@@ -1,47 +1,56 @@
-import { IoTSiteWise, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { useMemo } from 'react';
+import {
+  DescribeAssetRequest,
+  IoTSiteWise,
+  IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
+import { DescribeAsset } from '@iot-app-kit/core';
 import { QueryFunctionContext, useQueries } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 import { DescribeAssetCacheKeyFactory } from '../useDescribeAsset/describeAssetQueryKeyFactory';
 import { queryClient } from '../queryClient';
 import { hasRequestFunction, isAssetId } from '../predicates';
 import { useIoTSiteWiseClient } from '../../hooks/requestFunctions/useIoTSiteWiseClient';
-import { DescribeAsset } from '@iot-app-kit/core';
-import { useMemo } from 'react';
+import { QueryOptionsGlobal } from '../useLatestAssetPropertyValues';
 
-export interface UseDescribeAssetsOptions {
+export type UseDescribeAssetsOptions = {
   iotSiteWiseClient?: IoTSiteWiseClient | IoTSiteWise;
-  assetIds?: (string | undefined)[];
-}
+  describeAssetRequests?: (DescribeAssetRequest | undefined)[];
+} & QueryOptionsGlobal;
 
 /**
  * useDescribeAssets is a hook to call IoT SiteWise DescribeAsset on a list of assetIds
  * AssetIds may not be defined in the list, which will disable its query
  *
- * @param client is an AWS SDK IoT SiteWise client
- * @param assetIds is a list of assetIds where IoT SiteWise DescribeAsset API is called on each
+ * @param iotSiteWiseClient is an AWS SDK IoT SiteWise client
+ * @param describeAssetRequests is a list of DescribeAsset requests
  * @returns list of tanstack query results with a DescribeAssetResponse
  */
 export function useDescribeAssets({
   iotSiteWiseClient,
-  assetIds = [],
+  describeAssetRequests = [],
+  retry,
 }: UseDescribeAssetsOptions) {
   const { describeAsset } = useIoTSiteWiseClient({ iotSiteWiseClient });
 
   // Memoize the queries to ensure they don't rerun if the same assetIds are used on a rerender
   const queries = useMemo(
     () =>
-      assetIds.map((assetId, index) => {
-        const cacheKeyFactory = new DescribeAssetCacheKeyFactory({ assetId });
+      describeAssetRequests.map((describeAssetRequest) => {
+        const cacheKeyFactory = new DescribeAssetCacheKeyFactory({
+          ...describeAssetRequest,
+        });
         return {
           enabled: isEnabled({
-            assetId: assetIds[index],
+            assetId: describeAssetRequest?.assetId,
             describeAsset,
           }),
           queryKey: cacheKeyFactory.create(),
           queryFn: createQueryFn(describeAsset),
+          retry,
         };
       }),
-    [assetIds, describeAsset]
+    [describeAssetRequests, describeAsset, retry]
   );
 
   return useQueries({ queries }, queryClient);
@@ -74,6 +83,18 @@ const createQueryFn = (describeAsset?: DescribeAsset) => {
       'Expected assetId to be defined as required by the enabled flag.'
     );
 
-    return await describeAsset({ assetId }, { abortSignal: signal });
+    try {
+      return await describeAsset({ assetId }, { abortSignal: signal });
+    } catch (error) {
+      handleError({ assetId }, error);
+    }
   };
+};
+
+const handleError = (request: DescribeAssetRequest, error: unknown): never => {
+  console.error(`Failed to describe asset. Error: ${error}`);
+  console.info('Request input:');
+  console.table(request);
+
+  throw error;
 };

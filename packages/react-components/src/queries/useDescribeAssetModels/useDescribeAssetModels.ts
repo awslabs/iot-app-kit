@@ -1,49 +1,56 @@
-import { IoTSiteWise, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { useMemo } from 'react';
+import {
+  DescribeAssetModelRequest,
+  IoTSiteWise,
+  IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
+import { DescribeAssetModel } from '@iot-app-kit/core';
 import { QueryFunctionContext, useQueries } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 import { queryClient } from '../queryClient';
 import { DescribeAssetModelCacheKeyFactory } from './describeAssetModelQueryKeyFactory';
 import { hasRequestFunction, isAssetModelId } from '../predicates';
 import { useIoTSiteWiseClient } from '../../hooks/requestFunctions/useIoTSiteWiseClient';
-import { DescribeAssetModel } from '@iot-app-kit/core';
-import { useMemo } from 'react';
+import { QueryOptionsGlobal } from '../useLatestAssetPropertyValues';
 
-export interface UseDescribeAssetModelsOptions {
+export type UseDescribeAssetModelsOptions = {
   iotSiteWiseClient?: IoTSiteWiseClient | IoTSiteWise;
-  assetModelIds?: (string | undefined)[];
-}
+  describeAssetModelRequests?: (DescribeAssetModelRequest | undefined)[];
+} & QueryOptionsGlobal;
 
 /**
  * useDescribeAssetModels is a hook to call IoT SiteWise DescribeAssetModel on a list of assetModelIds
  * AssetModelIds may not be defined in the list, which will disable its query
  *
- * @param client is an AWS SDK IoT SiteWise client
- * @param assetModelIds is a list of assetModelIds where IoT SiteWise DescribeAssetModel API is called on each
+ * @param iotSiteWiseClient is an AWS SDK IoT SiteWise client
+ * @param describeAssetModelRequests is a list of DescribeAssetModel requests
  * @returns list of tanstack query results with a DescribeAssetModelResponse
  */
 export function useDescribeAssetModels({
   iotSiteWiseClient,
-  assetModelIds = [],
+  describeAssetModelRequests = [],
+  retry,
 }: UseDescribeAssetModelsOptions) {
   const { describeAssetModel } = useIoTSiteWiseClient({ iotSiteWiseClient });
 
   // Memoize the queries to ensure they don't rerun if the same assetModelIds are used on a rerender
   const queries = useMemo(
     () =>
-      assetModelIds.map((assetModelId, index) => {
+      describeAssetModelRequests.map((describeAssetModelRequest) => {
         const cacheKeyFactory = new DescribeAssetModelCacheKeyFactory({
-          assetModelId,
+          ...describeAssetModelRequest,
         });
         return {
           enabled: isEnabled({
-            assetModelId: assetModelIds[index],
+            assetModelId: describeAssetModelRequest?.assetModelId,
             describeAssetModel,
           }),
           queryKey: cacheKeyFactory.create(),
           queryFn: createQueryFn(describeAssetModel),
+          retry,
         };
       }),
-    [assetModelIds, describeAssetModel]
+    [describeAssetModelRequests, describeAssetModel, retry]
   );
 
   return useQueries({ queries }, queryClient);
@@ -78,6 +85,24 @@ const createQueryFn = (describeAssetModel?: DescribeAssetModel) => {
       'Expected assetModelId to be defined as required by the enabled flag.'
     );
 
-    return await describeAssetModel({ assetModelId }, { abortSignal: signal });
+    try {
+      return await describeAssetModel(
+        { assetModelId },
+        { abortSignal: signal }
+      );
+    } catch (error) {
+      handleError({ assetModelId }, error);
+    }
   };
+};
+
+const handleError = (
+  request: DescribeAssetModelRequest,
+  error: unknown
+): never => {
+  console.error(`Failed to describe asset model. Error: ${error}`);
+  console.info('Request input:');
+  console.table(request);
+
+  throw error;
 };
