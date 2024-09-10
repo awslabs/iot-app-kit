@@ -17,7 +17,6 @@ import {
   UseLatestAssetPropertyValuesOptions,
 } from './types';
 import { LatestAssetPropertyValueKeyFactory } from './latestAssetPropertyValueKeyFactory';
-import { useSyncLatestAssetPropertyValueQueries } from './sync';
 import {
   GetLatestAssetPropertyValueRequest,
   LatestAssetPropertyValueBatcher,
@@ -26,6 +25,7 @@ import {
   BatchGetAssetPropertyValue,
   GetAssetPropertyValue,
 } from '@iot-app-kit/core';
+import { useSyncTimeSeriesDataQueries } from '../utils/useTimeSeriesDataQuerySync';
 
 const DEFAULT_REFRESH_RATE = 5000;
 
@@ -62,9 +62,10 @@ const clientIsValid = ({
  */
 export const useLatestAssetPropertyValues = ({
   iotSiteWiseClient,
-  enabled = true,
   requests = [],
   refreshRate = DEFAULT_REFRESH_RATE,
+  enabled = true,
+  retry,
 }: UseLatestAssetPropertyValuesOptions) => {
   /**
    * A single enabled flag for all useLatestAssetPropertyValues
@@ -73,7 +74,7 @@ export const useLatestAssetPropertyValues = ({
    * happen in the same task and the resulting refetchInterval
    * executes within the batch timeout window.
    */
-  const syncFlag = useSyncLatestAssetPropertyValueQueries({
+  const syncFlag = useSyncTimeSeriesDataQueries({
     enabled,
     refreshRate,
   });
@@ -92,15 +93,13 @@ export const useLatestAssetPropertyValues = ({
             batchGetAssetPropertyValue,
           }) &&
           requestIsValid(request),
-        queryKey: new LatestAssetPropertyValueKeyFactory({
-          ...request,
-          refreshRate,
-        }).create(),
+        queryKey: new LatestAssetPropertyValueKeyFactory(request).create(),
         queryFn: createLatestAssetPropertyValueQueryFn({
           getAssetPropertyValue,
           batchGetAssetPropertyValue,
         }),
         refetchInterval: refreshRate,
+        retry,
       };
     });
   }, [
@@ -110,6 +109,7 @@ export const useLatestAssetPropertyValues = ({
     syncFlag,
     requests,
     refreshRate,
+    retry,
   ]);
 
   return useQueries(
