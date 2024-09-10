@@ -27,6 +27,7 @@ export interface AssetPropertyExplorerProps
   isAssetPropertyDisabled?: IsResourceDisabled<AssetPropertyResource>;
   ariaLabels?: TableProps.AriaLabels<AssetPropertyResource>;
   description?: string;
+  timeZone?: string;
 }
 
 export type AssetPropertyResourcesRequestParameters =
