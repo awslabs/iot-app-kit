@@ -1,28 +1,25 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { useDescribeAssets } from './useDescribeAssets';
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { queryClient } from '../queryClient';
-
-const MOCK_ASSET_ID = 'assetId';
-const MOCK_ASSET_ID_2 = 'assetId2';
-
-const describeAssetMock = jest.fn();
-const iotSiteWiseClientMock = {
-  describeAsset: describeAssetMock,
-} as unknown as IoTSiteWise;
+import {
+  MOCK_ASSET_ID,
+  MOCK_ASSET_ID_2,
+  describeAssetMock,
+  iotSiteWiseClientMock,
+} from '../../testing/alarms';
 
 describe('useDescribeAssets', () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    describeAssetMock.mockResolvedValue({});
     queryClient.clear();
   });
 
   it('should call DescribeAsset in successful queries when calling useDescribeAssets', async () => {
+    describeAssetMock.mockResolvedValue({});
     const { result: queriesResult } = renderHook(() =>
       useDescribeAssets({
         iotSiteWiseClient: iotSiteWiseClientMock,
-        assetIds: [MOCK_ASSET_ID],
+        describeAssetRequests: [{ assetId: MOCK_ASSET_ID }],
       })
     );
 
@@ -32,10 +29,11 @@ describe('useDescribeAssets', () => {
   });
 
   it('should not call DescribeAsset when no assetIds passed into useDescribeAssets', async () => {
+    describeAssetMock.mockResolvedValue({});
     const { result: queriesResult } = renderHook(() =>
       useDescribeAssets({
         iotSiteWiseClient: iotSiteWiseClientMock,
-        assetIds: [],
+        describeAssetRequests: [],
       })
     );
 
@@ -45,17 +43,39 @@ describe('useDescribeAssets', () => {
   });
 
   it('should disable query when undefined assetId passed into useDescribeAssets', async () => {
+    describeAssetMock.mockResolvedValue({});
     const { result: queriesResult } = renderHook(() =>
       useDescribeAssets({
         iotSiteWiseClient: iotSiteWiseClientMock,
-        assetIds: [MOCK_ASSET_ID, undefined, MOCK_ASSET_ID_2],
+        describeAssetRequests: [
+          { assetId: MOCK_ASSET_ID },
+          undefined,
+          { assetId: MOCK_ASSET_ID_2 },
+        ],
       })
     );
 
     await waitFor(() => expect(queriesResult.current[0].isSuccess).toBe(true));
-    await waitFor(() => expect(queriesResult.current[1].isPending).toBe(true));
+    await waitFor(() => {
+      expect(queriesResult.current[1].fetchStatus).toBe('idle');
+      expect(queriesResult.current[1].isPending).toBe(true);
+      expect(queriesResult.current[1].isLoading).toBe(false);
+    });
     await waitFor(() => expect(queriesResult.current[2].isSuccess).toBe(true));
 
     expect(describeAssetMock).toBeCalledTimes(2);
+  });
+
+  it('should handle DescribeAsset failure', async () => {
+    describeAssetMock.mockRejectedValue(new Error('DescribeAsset failed'));
+    const { result: queriesResult } = renderHook(() =>
+      useDescribeAssets({
+        iotSiteWiseClient: iotSiteWiseClientMock,
+        describeAssetRequests: [{ assetId: MOCK_ASSET_ID }],
+        retry: false,
+      })
+    );
+
+    await waitFor(() => expect(queriesResult.current[0].isError).toBe(true));
   });
 });
