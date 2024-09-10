@@ -10,18 +10,15 @@ export class LatestAssetPropertyValueKeyFactory {
   #assetId?: string;
   #propertyId?: string;
   #propertyAlias?: string;
-  #refreshRate?: number;
 
   constructor({
     assetId,
     propertyId,
     propertyAlias,
-    refreshRate,
   }: LatestAssetPropertyValueKeyFactoryOptions) {
     this.#assetId = assetId;
     this.#propertyId = propertyId;
     this.#propertyAlias = propertyAlias;
-    this.#refreshRate = refreshRate;
   }
 
   create() {
@@ -31,7 +28,6 @@ export class LatestAssetPropertyValueKeyFactory {
         assetId: this.#assetId,
         propertyId: this.#propertyId,
         propertyAlias: this.#propertyAlias,
-        refreshRate: this.#refreshRate,
       },
     ] as const;
 

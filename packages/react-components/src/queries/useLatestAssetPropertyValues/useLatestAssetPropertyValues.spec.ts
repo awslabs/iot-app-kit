@@ -195,4 +195,22 @@ describe('useLatestAssetPropertyValues', () => {
 
     expect(batchGetAssetPropertyValue).not.toBeCalled();
   });
+
+  it('handles sdk errors', async () => {
+    batchGetAssetPropertyValue.mockImplementation(() => {
+      throw new Error('This should fail.');
+    });
+
+    const { result: queriesResult } = renderHook(() =>
+      useLatestAssetPropertyValues({
+        iotSiteWiseClient: iotSiteWiseClientMock,
+        requests: [
+          { assetId: MOCK_ASSET_ID_1, propertyId: MOCK_PROPERTY_ID_1 },
+        ],
+        retry: false,
+      })
+    );
+
+    await waitFor(() => expect(queriesResult.current[0].isError).toBe(true));
+  });
 });
