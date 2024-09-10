@@ -172,6 +172,27 @@ export const DEFAULT_TIME_SERIES_TABLE_DEFINITION: TableResourceDefinition<TimeS
     },
   ];
 
+export function createDefaultLatestValuesTableDefinition(
+  renderLatestValueTime: RenderTableResourceField<
+    DataStreamResourceWithLatestValue<unknown>
+  >
+): TableResourceDefinition<DataStreamResourceWithLatestValue<unknown>> {
+  return [
+    {
+      id: 'latestValue',
+      name: 'Latest value',
+      pluralName: 'Latest values',
+      render: ({ latestValue }) => latestValue,
+    },
+    {
+      id: 'latestValueTime',
+      name: 'Latest value time',
+      pluralName: 'Latest value times',
+      render: renderLatestValueTime,
+    },
+  ];
+}
+
 const LATEST_VALUES_TABLE_DEFINITION: TableResourceDefinition<
   DataStreamResourceWithLatestValue<unknown>
 > = [
