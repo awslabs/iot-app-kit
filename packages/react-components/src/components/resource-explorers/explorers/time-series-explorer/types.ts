@@ -21,6 +21,8 @@ export interface TimeSeriesExplorerProps
   selectedTimeSeries?: SelectedResources<TimeSeriesResource>;
   isTimeSeriesDisabled?: IsResourceDisabled<TimeSeriesResource>;
   description?: string;
+  timeZone?: string;
+  significantDigits?: number;
 }
 
 export interface TimeSeriesRequestParameters {
