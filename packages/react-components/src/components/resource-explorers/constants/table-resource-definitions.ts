@@ -1,5 +1,6 @@
 import { DEFAULT_STRING_FILTER_OPERATORS } from './defaults';
 import type {
+  AlarmResource,
   AssetModelResource,
   AssetPropertyResource,
   AssetPropertyResourceWithLatestValue,
@@ -118,6 +119,61 @@ export const DEFAULT_ASSET_PROPERTY_TABLE_DEFINITION: TableResourceDefinition<As
       name: 'Alias',
       pluralName: 'Aliases',
       render: ({ alias }) => alias,
+      defaultIsVisible: false,
+      filterOperators: DEFAULT_STRING_FILTER_OPERATORS,
+    },
+  ];
+
+export const ALARM_TABLE_ASSET_ID_DEFINITION: TableResourceDefinition<AlarmResource> =
+  [
+    {
+      id: 'asset',
+      name: 'Asset ID',
+      pluralName: 'Asset IDs',
+      render: ({ assetId }) => assetId,
+      defaultIsVisible: false,
+      filterOperators: DEFAULT_STRING_FILTER_OPERATORS,
+    },
+  ];
+
+export const DEFAULT_ALARM_TABLE_DEFINITION: TableResourceDefinition<AlarmResource> =
+  [
+    {
+      id: 'name',
+      name: 'Name',
+      pluralName: 'Names',
+      render: ({ name }) => name,
+      filterOperators: DEFAULT_STRING_FILTER_OPERATORS,
+    },
+    {
+      id: 'id',
+      name: 'ID',
+      pluralName: 'IDs',
+      render: ({ assetCompositeModelId }) => assetCompositeModelId,
+      defaultIsVisible: false,
+      filterOperators: DEFAULT_STRING_FILTER_OPERATORS,
+    },
+    {
+      id: 'input-property-name',
+      name: 'Input Property Name',
+      pluralName: 'Input Property Names',
+      render: ({ inputPropertyName }) => inputPropertyName,
+      defaultIsVisible: false,
+      filterOperators: DEFAULT_STRING_FILTER_OPERATORS,
+    },
+    {
+      id: 'input-property-id',
+      name: 'Input Property ID',
+      pluralName: 'Input Property IDs',
+      render: ({ inputPropertyId }) => inputPropertyId,
+      defaultIsVisible: false,
+      filterOperators: DEFAULT_STRING_FILTER_OPERATORS,
+    },
+    {
+      id: 'asset-model',
+      name: 'Asset Model ID',
+      pluralName: 'Asset Model IDs',
+      render: ({ assetModelId }) => assetModelId,
       defaultIsVisible: false,
       filterOperators: DEFAULT_STRING_FILTER_OPERATORS,
     },

@@ -9,7 +9,7 @@ import type {
 } from '@aws-sdk/client-iotsitewise';
 
 /** converts the TimeInNanos to milliseconds */
-const toTimestamp = (time: TimeInNanos | undefined): number =>
+export const toTimestamp = (time: TimeInNanos | undefined): number =>
   (time &&
     Math.floor(
       (time.timeInSeconds || 0) * SECOND_IN_MS +
