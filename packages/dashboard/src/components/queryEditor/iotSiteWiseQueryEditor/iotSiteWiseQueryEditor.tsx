@@ -11,7 +11,7 @@ import { UnmodeledExplorer } from './timeSeriesExplorer/timeSeriesExplorer';
 
 export interface IoTSiteWiseQueryEditorProps {
   onUpdateQuery: ReturnType<typeof useQuery>[1];
-  iotSiteWise: IoTSiteWise;
+  iotSiteWiseClient: IoTSiteWise;
   selectedWidgets: DashboardWidget[];
   addButtonDisabled: boolean;
   correctSelectionMode: 'single' | 'multi';
@@ -19,7 +19,7 @@ export interface IoTSiteWiseQueryEditorProps {
 
 export function IoTSiteWiseQueryEditor({
   onUpdateQuery,
-  iotSiteWise,
+  iotSiteWiseClient,
   selectedWidgets,
   addButtonDisabled,
   correctSelectionMode,
@@ -38,7 +38,7 @@ export function IoTSiteWiseQueryEditor({
     content: (
       <ModeledExplorer
         onUpdateQuery={onUpdateQuery}
-        iotSiteWise={iotSiteWise}
+        iotSiteWiseClient={iotSiteWiseClient}
         correctSelectionMode={correctSelectionMode}
         addButtonDisabled={addButtonDisabled}
         selectedWidgets={selectedWidgets}
@@ -54,7 +54,7 @@ export function IoTSiteWiseQueryEditor({
     content: (
       <UnmodeledExplorer
         onUpdateQuery={onUpdateQuery}
-        iotSiteWise={iotSiteWise}
+        iotSiteWiseClient={iotSiteWiseClient}
         correctSelectionMode={correctSelectionMode}
         addButtonDisabled={addButtonDisabled}
         selectedWidgets={selectedWidgets}
@@ -70,7 +70,7 @@ export function IoTSiteWiseQueryEditor({
     id: 'explore-asset-model-tab',
     content: (
       <AssetModelDataStreamExplorer
-        client={iotSiteWise}
+        iotSiteWiseClient={iotSiteWiseClient}
         correctSelectionMode={correctSelectionMode}
         addButtonDisabled={addButtonDisabled}
         selectedWidgets={selectedWidgets}

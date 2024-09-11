@@ -35,7 +35,7 @@ import { useUserCustomization } from '../../helpers/use-user-customization';
 import { TableResourceDefinition } from '../../types/table';
 
 export function InternalAssetPropertyExplorer({
-  requestFns,
+  iotSiteWiseClient,
   parameters = [],
   shouldPersistUserCustomization = DEFAULT_SHOULD_PERSIST_USER_CUSTOMIZATION,
   defaultPageSize = DEFAULT_DEFAULT_PAGE_SIZE,
@@ -63,7 +63,7 @@ export function InternalAssetPropertyExplorer({
 }: AssetPropertyExplorerProps) {
   const tableResourceDefinition =
     customTableResourceDefinition ??
-    requestFns?.batchGetAssetPropertyValue !== undefined
+    iotSiteWiseClient?.batchGetAssetPropertyValue !== undefined
       ? ([
           ...DEFAULT_ASSET_PROPERTY_TABLE_DEFINITION,
           ...createDefaultLatestValuesTableDefinition(
@@ -99,11 +99,12 @@ export function InternalAssetPropertyExplorer({
         ? [{ searchStatement: userSearchStatement }]
         : parameters,
       batchGetAssetPropertyValue:
-        requestFns?.batchGetAssetPropertyValue?.bind(requestFns),
-      executeQuery: requestFns?.executeQuery?.bind(requestFns),
-      listAssetProperties: requestFns?.listAssetProperties?.bind(requestFns),
+        iotSiteWiseClient?.batchGetAssetPropertyValue?.bind(iotSiteWiseClient),
+      executeQuery: iotSiteWiseClient?.executeQuery?.bind(iotSiteWiseClient),
+      listAssetProperties:
+        iotSiteWiseClient?.listAssetProperties?.bind(iotSiteWiseClient),
       listAssetModelProperties:
-        requestFns?.listAssetModelProperties?.bind(requestFns),
+        iotSiteWiseClient?.listAssetModelProperties?.bind(iotSiteWiseClient),
       pageSize: userCustomization.pageSize,
     });
 

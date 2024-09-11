@@ -19,14 +19,14 @@ type MultiAssetRequest = {
 };
 
 export type UseAssetModelOptions = {
-  client: IoTSiteWiseClient;
+  iotSiteWiseClient: IoTSiteWiseClient;
 } & (SingleAssetRequest | MultiAssetRequest);
 
 /** Use the list of child assets for an asset with a given asset ID. */
 export function useAssetModel({
   assetModelId,
   assetModelIds,
-  client,
+  iotSiteWiseClient,
 }: UseAssetModelOptions) {
   const isEdgeModeEnabled = useSelector(
     (state: DashboardState) => state.isEdgeModeEnabled
@@ -43,8 +43,8 @@ export function useAssetModel({
         enabled: isEnabled(id),
         queryKey: cacheKeyFactory.create(id),
         queryFn: isEdgeModeEnabled
-          ? createQueryFn(client)
-          : createModelPropertyQueryFn(client),
+          ? createQueryFn(iotSiteWiseClient)
+          : createModelPropertyQueryFn(iotSiteWiseClient),
       })),
     }) ?? [];
 

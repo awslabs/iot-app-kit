@@ -11,11 +11,11 @@ import { AssetModelExplorer } from '@iot-app-kit/react-components';
 type AssetModelSelectOptions = {
   selectedAssetModel?: SelectedAssetModel;
   onSelectAssetModel: UpdateSelectedAssetModel;
-  client: IoTSiteWise;
+  iotSiteWiseClient: IoTSiteWise;
 };
 
 export const AssetModelSelect = ({
-  client,
+  iotSiteWiseClient,
   selectedAssetModel,
   onSelectAssetModel,
 }: AssetModelSelectOptions) => {
@@ -25,7 +25,7 @@ export const AssetModelSelect = ({
       description='Select an asset model to add the associated properties into your dynamic display.'
     >
       <AssetModelExplorer
-        requestFns={client}
+        iotSiteWiseClient={iotSiteWiseClient}
         onSelectAssetModel={onSelectAssetModel}
         selectedAssetModels={selectedAssetModel}
         selectionMode='single'

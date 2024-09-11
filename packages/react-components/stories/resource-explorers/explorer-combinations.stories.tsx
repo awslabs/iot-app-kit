@@ -29,13 +29,16 @@ export function AssetExplorerPlusAssetPropertyExplorer() {
   return (
     <>
       <AssetExplorer
-        requestFns={client}
+        iotSiteWiseClient={client}
         onSelectAsset={setSelectedAssets}
         selectedAssets={selectedAssets}
         selectionMode='multi'
       />
 
-      <AssetPropertyExplorer requestFns={client} parameters={selectedAssets} />
+      <AssetPropertyExplorer
+        iotSiteWiseClient={client}
+        parameters={selectedAssets}
+      />
     </>
   );
 }
@@ -48,7 +51,7 @@ export function AssetExplorerPlusTimeSeriesExplorer() {
   return (
     <>
       <AssetExplorer
-        requestFns={client}
+        iotSiteWiseClient={client}
         onSelectAsset={setSelectedAssets}
         selectedAssets={selectedAssets}
         selectionMode='multi'
@@ -60,7 +63,7 @@ export function AssetExplorerPlusTimeSeriesExplorer() {
       />
 
       <TimeSeriesExplorer
-        requestFns={client}
+        iotSiteWiseClient={client}
         parameters={selectedAssets}
         tableSettings={{ isFilterEnabled: true, isUserSettingsEnabled: true }}
       />
@@ -76,7 +79,7 @@ export function AssetExplorerPlusAssetExplorer() {
   return (
     <>
       <AssetExplorer
-        requestFns={client}
+        iotSiteWiseClient={client}
         onSelectAsset={setSelectedAssets}
         selectedAssets={selectedAssets}
         selectionMode='multi'
@@ -88,7 +91,7 @@ export function AssetExplorerPlusAssetExplorer() {
       />
 
       <AssetExplorer
-        requestFns={client}
+        iotSiteWiseClient={client}
         parameters={selectedAssets}
         tableSettings={{ isFilterEnabled: true, isUserSettingsEnabled: true }}
       />
@@ -104,7 +107,7 @@ export function AssetModelExplorerPlusAssetExplorer() {
   return (
     <>
       <AssetModelExplorer
-        requestFns={client}
+        iotSiteWiseClient={client}
         onSelectAssetModel={setSelectedAssetModels}
         selectedAssetModels={selectedAssetModels}
         selectionMode='multi'
@@ -115,7 +118,7 @@ export function AssetModelExplorerPlusAssetExplorer() {
       />
 
       <AssetExplorer
-        requestFns={client}
+        iotSiteWiseClient={client}
         parameters={selectedAssetModels}
         tableSettings={{ isFilterEnabled: true, isUserSettingsEnabled: true }}
       />
@@ -134,7 +137,7 @@ export function AssetModelExplorerPlusAssetExplorerPlusAssetPropertyExplorer() {
   return (
     <>
       <AssetModelExplorer
-        requestFns={client}
+        iotSiteWiseClient={client}
         onSelectAssetModel={setSelectedAssetModels}
         selectedAssetModels={selectedAssetModels}
         selectionMode='multi'
@@ -145,7 +148,7 @@ export function AssetModelExplorerPlusAssetExplorerPlusAssetPropertyExplorer() {
       />
 
       <AssetExplorer
-        requestFns={client}
+        iotSiteWiseClient={client}
         parameters={selectedAssetModels}
         onSelectAsset={setSelectedAssets}
         selectedAssets={selectedAssets}
@@ -157,7 +160,7 @@ export function AssetModelExplorerPlusAssetExplorerPlusAssetPropertyExplorer() {
       />
 
       <AssetPropertyExplorer
-        requestFns={client}
+        iotSiteWiseClient={client}
         parameters={selectedAssets}
         tableSettings={{
           isFilterEnabled: true,
@@ -179,7 +182,7 @@ export function AssetModelExplorerPlusAssetExplorerPlusTimeSeriesExplorer() {
   return (
     <>
       <AssetModelExplorer
-        requestFns={client}
+        iotSiteWiseClient={client}
         onSelectAssetModel={setSelectedAssetModels}
         selectedAssetModels={selectedAssetModels}
         selectionMode='multi'
@@ -190,7 +193,7 @@ export function AssetModelExplorerPlusAssetExplorerPlusTimeSeriesExplorer() {
       />
 
       <AssetExplorer
-        requestFns={client}
+        iotSiteWiseClient={client}
         parameters={selectedAssetModels}
         onSelectAsset={setSelectedAssets}
         selectedAssets={selectedAssets}
@@ -202,7 +205,7 @@ export function AssetModelExplorerPlusAssetExplorerPlusTimeSeriesExplorer() {
       />
 
       <TimeSeriesExplorer
-        requestFns={client}
+        iotSiteWiseClient={client}
         parameters={selectedAssets}
         tableSettings={{
           isFilterEnabled: true,

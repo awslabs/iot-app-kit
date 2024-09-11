@@ -13,7 +13,7 @@ import type {
 export interface TimeSeriesExplorerProps
   extends CommonResourceExplorerProps<TimeSeriesResource> {
   parameters?: readonly TimeSeriesRequestParameters[];
-  requestFns?: {
+  iotSiteWiseClient?: {
     batchGetAssetPropertyValue?: BatchGetAssetPropertyValue;
     listTimeSeries?: ListTimeSeries;
   };

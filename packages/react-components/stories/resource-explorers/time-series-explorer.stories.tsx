@@ -82,7 +82,7 @@ export const AllTimeSeriesWithLatestValues: TimeSeriesExplorerStory = (
 ) => {
   const props = storyArgsToProps(controls, context);
 
-  return <TimeSeriesExplorer {...props} requestFns={client} />;
+  return <TimeSeriesExplorer {...props} iotSiteWiseClient={client} />;
 };
 
 export const AllTimeSeriesWithoutLatestValues: TimeSeriesExplorerStory = (
@@ -94,7 +94,7 @@ export const AllTimeSeriesWithoutLatestValues: TimeSeriesExplorerStory = (
   return (
     <TimeSeriesExplorer
       {...props}
-      requestFns={{ listTimeSeries: client.listTimeSeries.bind(client) }}
+      iotSiteWiseClient={{ listTimeSeries: client.listTimeSeries.bind(client) }}
     />
   );
 };
@@ -108,7 +108,7 @@ export const AllAssociatedTimeSeries: TimeSeriesExplorerStory = (
   return (
     <TimeSeriesExplorer
       {...props}
-      requestFns={client}
+      iotSiteWiseClient={client}
       parameters={[{ timeSeriesType: 'ASSOCIATED' }]}
     />
   );
@@ -123,7 +123,7 @@ export const AllDisassociatedTimeSeries: TimeSeriesExplorerStory = (
   return (
     <TimeSeriesExplorer
       {...props}
-      requestFns={client}
+      iotSiteWiseClient={client}
       parameters={[{ timeSeriesType: 'DISASSOCIATED' }]}
     />
   );

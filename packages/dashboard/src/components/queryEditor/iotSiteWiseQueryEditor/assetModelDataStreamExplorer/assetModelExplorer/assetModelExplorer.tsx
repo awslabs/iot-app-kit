@@ -15,7 +15,7 @@ type AssetModelExplorerOptions = {
   selectedAsset: SelectedAsset;
   setSelectedAsset: UpdateSelectedAsset;
   onResetSelectedAssetModel: () => void;
-  client: IoTSiteWise;
+  iotSiteWiseClient: IoTSiteWise;
 };
 
 export const AssetModelExplorer = ({
@@ -24,11 +24,11 @@ export const AssetModelExplorer = ({
   selectedAsset,
   setSelectedAsset,
   onResetSelectedAssetModel,
-  client,
+  iotSiteWiseClient,
 }: AssetModelExplorerOptions) => {
   return selectedAssetModel.length > 0 ? (
     <AssetModelSelected
-      client={client}
+      iotSiteWiseClient={iotSiteWiseClient}
       selectedAssetModel={selectedAssetModel}
       selectedAsset={selectedAsset}
       setSelectedAsset={setSelectedAsset}
@@ -36,7 +36,7 @@ export const AssetModelExplorer = ({
     />
   ) : (
     <AssetModelSelection
-      client={client}
+      iotSiteWiseClient={iotSiteWiseClient}
       onSelectAssetModel={setSelectedAssetModel}
       selectedAssetModel={selectedAssetModel}
       selectedAsset={selectedAsset}

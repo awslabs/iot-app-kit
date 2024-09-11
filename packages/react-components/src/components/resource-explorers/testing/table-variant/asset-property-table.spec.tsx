@@ -34,7 +34,7 @@ function SelectableAssetPropertyTable({
 
   return (
     <AssetPropertyExplorer
-      requestFns={{ listAssetProperties, listAssetModelProperties }}
+      iotSiteWiseClient={{ listAssetProperties, listAssetModelProperties }}
       parameters={[{ assetId: 'asset-id', assetModelId: 'asset-model-id' }]}
       selectionMode={selectionMode}
       selectedAssetProperties={selectedAssetProperties}
@@ -156,7 +156,7 @@ describe('asset property table', () => {
       });
       render(
         <AssetPropertyExplorer
-          requestFns={{ listAssetProperties, listAssetModelProperties }}
+          iotSiteWiseClient={{ listAssetProperties, listAssetModelProperties }}
           parameters={[{ assetId: 'asset-id', assetModelId: 'asset-model-id' }]}
         />
       );
@@ -191,7 +191,7 @@ describe('asset property table', () => {
     it('renders expected columns when displaying latest values', () => {
       render(
         <AssetPropertyExplorer
-          requestFns={{ batchGetAssetPropertyValue: jest.fn() }}
+          iotSiteWiseClient={{ batchGetAssetPropertyValue: jest.fn() }}
         />
       );
 
@@ -216,7 +216,7 @@ describe('asset property table', () => {
         .mockResolvedValue(createListAssetModelPropertiesPage(3));
       render(
         <AssetPropertyExplorer
-          requestFns={{ listAssetProperties, listAssetModelProperties }}
+          iotSiteWiseClient={{ listAssetProperties, listAssetModelProperties }}
           parameters={[{ assetId: 'asset-id', assetModelId: 'asset-model-id' }]}
         />
       );
@@ -245,7 +245,7 @@ describe('asset property table', () => {
       render(
         <AssetPropertyExplorer
           defaultPageSize={10}
-          requestFns={{ listAssetProperties, listAssetModelProperties }}
+          iotSiteWiseClient={{ listAssetProperties, listAssetModelProperties }}
           parameters={[{ assetId: 'asset-id', assetModelId: 'asset-model-id' }]}
         />
       );
@@ -300,7 +300,7 @@ describe('asset property table', () => {
       render(
         <AssetPropertyExplorer
           defaultPageSize={10}
-          requestFns={{ listAssetProperties, listAssetModelProperties }}
+          iotSiteWiseClient={{ listAssetProperties, listAssetModelProperties }}
           parameters={[
             { assetId: 'asset-id-1', assetModelId: 'asset-model-id-1' },
             { assetId: 'asset-id-2', assetModelId: 'asset-model-id-1' },
@@ -367,7 +367,7 @@ describe('asset property table', () => {
         >);
       render(
         <AssetPropertyExplorer
-          requestFns={{ executeQuery }}
+          iotSiteWiseClient={{ executeQuery }}
           tableSettings={{ isSearchEnabled: true }}
         />
       );
@@ -420,7 +420,7 @@ describe('asset property table', () => {
       } satisfies Awaited<ReturnType<ExecuteQuery>>);
       render(
         <AssetPropertyExplorer
-          requestFns={{ executeQuery }}
+          iotSiteWiseClient={{ executeQuery }}
           tableSettings={{ isSearchEnabled: true }}
         />
       );
@@ -514,7 +514,7 @@ describe('asset property table', () => {
       } satisfies Awaited<ReturnType<ExecuteQuery>>);
       render(
         <AssetPropertyExplorer
-          requestFns={{ executeQuery }}
+          iotSiteWiseClient={{ executeQuery }}
           parameters={[{ searchStatement: 'Asset Property' }]}
           tableSettings={{ isSearchEnabled: true }}
         />
@@ -582,7 +582,7 @@ describe('asset property table', () => {
         >);
       render(
         <AssetPropertyExplorer
-          requestFns={{ executeQuery }}
+          iotSiteWiseClient={{ executeQuery }}
           tableSettings={{ isSearchEnabled: true }}
         />
       );
@@ -656,7 +656,7 @@ describe('asset property table', () => {
       } satisfies Awaited<ReturnType<BatchGetAssetPropertyValue>>);
       render(
         <AssetPropertyExplorer
-          requestFns={{
+          iotSiteWiseClient={{
             batchGetAssetPropertyValue,
             listAssetProperties,
             listAssetModelProperties,
@@ -727,7 +727,7 @@ describe('asset property table', () => {
       } satisfies Awaited<ReturnType<BatchGetAssetPropertyValue>>);
       render(
         <AssetPropertyExplorer
-          requestFns={{
+          iotSiteWiseClient={{
             batchGetAssetPropertyValue,
             listAssetProperties,
             listAssetModelProperties,
@@ -916,7 +916,7 @@ describe('asset property table', () => {
       render(
         <AssetPropertyExplorer
           tableSettings={{ isFilterEnabled: true }}
-          requestFns={{ listAssetProperties, listAssetModelProperties }}
+          iotSiteWiseClient={{ listAssetProperties, listAssetModelProperties }}
           parameters={[{ assetId: 'asset-id', assetModelId: 'asset-model-id' }]}
         />
       );
@@ -963,7 +963,7 @@ describe('asset property table', () => {
       render(
         <AssetPropertyExplorer
           tableSettings={{ isFilterEnabled: true }}
-          requestFns={{ listAssetProperties, listAssetModelProperties }}
+          iotSiteWiseClient={{ listAssetProperties, listAssetModelProperties }}
           parameters={[{ assetId: 'asset-id', assetModelId: 'asset-model-id' }]}
         />
       );
@@ -1056,7 +1056,7 @@ describe('asset property table', () => {
       render(
         <AssetPropertyExplorer
           tableSettings={{ isUserSettingsEnabled: true }}
-          requestFns={{ batchGetAssetPropertyValue: jest.fn() }}
+          iotSiteWiseClient={{ batchGetAssetPropertyValue: jest.fn() }}
         />
       );
 

@@ -78,7 +78,7 @@ function storyArgsToProps(
 export const HierarchyNavigation: AssetExplorerStory = (controls, context) => {
   const props = storyArgsToProps(controls, context);
 
-  return <AssetExplorer {...props} requestFns={client} />;
+  return <AssetExplorer {...props} iotSiteWiseClient={client} />;
 };
 
 export const SearchOnly: AssetExplorerStory = (controls, context) => {
@@ -87,7 +87,7 @@ export const SearchOnly: AssetExplorerStory = (controls, context) => {
   return (
     <AssetExplorer
       {...props}
-      requestFns={{ executeQuery: client.executeQuery.bind(client) }}
+      iotSiteWiseClient={{ executeQuery: client.executeQuery.bind(client) }}
     />
   );
 };

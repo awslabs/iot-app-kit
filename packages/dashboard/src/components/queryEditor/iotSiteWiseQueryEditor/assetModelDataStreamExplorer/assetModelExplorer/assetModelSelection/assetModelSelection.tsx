@@ -25,7 +25,7 @@ type AssetModelSelectionOptions = {
   onSelectAssetModel: UpdateSelectedAssetModel;
   selectedAsset: SelectedAsset;
   setSelectedAsset: UpdateSelectedAsset;
-  client: IoTSiteWise;
+  iotSiteWiseClient: IoTSiteWise;
 };
 
 export const AssetModelSelection = ({
@@ -33,7 +33,7 @@ export const AssetModelSelection = ({
   onSelectAssetModel,
   selectedAsset,
   setSelectedAsset,
-  client,
+  iotSiteWiseClient,
 }: AssetModelSelectionOptions) => {
   const [currentSelectedAssetModel, selectCurrentAssetModel] =
     useSelectedAssetModel(selectedAssetModel);
@@ -61,13 +61,13 @@ export const AssetModelSelection = ({
       <AssetModelSelect
         selectedAssetModel={currentSelectedAssetModel}
         onSelectAssetModel={selectCurrentAssetModel}
-        client={client}
+        iotSiteWiseClient={iotSiteWiseClient}
       />
       <AssetForAssetModelSelectForm
         selectedAsset={currentSelectedAsset}
         onSelectAsset={selectCurrentAsset}
         selectedAssetModel={currentSelectedAssetModel}
-        client={client}
+        iotSiteWiseClient={iotSiteWiseClient}
       />
       <HorizontalDivider />
       <AssetModelSave disabled={!currentSelectedAssetModel} onSave={onSave} />

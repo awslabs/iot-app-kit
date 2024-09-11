@@ -24,7 +24,7 @@ type AssetModelSelectedOptions = {
   selectedAsset: SelectedAsset;
   setSelectedAsset: UpdateSelectedAsset;
   onResetSelectedAssetModel?: () => void;
-  client: IoTSiteWise;
+  iotSiteWiseClient: IoTSiteWise;
 };
 
 export const AssetModelSelected = ({
@@ -32,13 +32,13 @@ export const AssetModelSelected = ({
   selectedAssetModel,
   setSelectedAsset,
   onResetSelectedAssetModel,
-  client,
+  iotSiteWiseClient,
 }: AssetModelSelectedOptions) => {
   const { visible, onHide, onShow } = useModalVisibility();
 
   const { assetModel } = useAssetModel({
     assetModelId: selectedAssetModel?.at(0)?.assetModelId,
-    client,
+    iotSiteWiseClient,
   });
 
   return (
@@ -66,7 +66,7 @@ export const AssetModelSelected = ({
           selectedAssetModel={selectedAssetModel}
           selectedAsset={selectedAsset}
           onSelectAsset={setSelectedAsset}
-          client={client}
+          iotSiteWiseClient={iotSiteWiseClient}
         />
       </Box>
       <ResetAssetModelModal

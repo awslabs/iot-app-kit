@@ -14,10 +14,12 @@ import { useModelBasedQuery } from '../queryEditor/iotSiteWiseQueryEditor/assetM
 import './assetModelSelection.css';
 
 type AssetModelSelectionOptions = {
-  client: IoTSiteWise;
+  iotSiteWiseClient: IoTSiteWise;
 };
 
-export const AssetModelSelection = ({ client }: AssetModelSelectionOptions) => {
+export const AssetModelSelection = ({
+  iotSiteWiseClient,
+}: AssetModelSelectionOptions) => {
   const { assetModelId, assetIds, hasModelBasedQuery, updateSelectedAsset } =
     useModelBasedQuery();
   const selectedAssetId = assetIds?.at(0);
@@ -47,7 +49,7 @@ export const AssetModelSelection = ({ client }: AssetModelSelectionOptions) => {
         <AssetModelSelect
           assetModelId={assetModelId}
           selectedAssetId={selectedAssetId}
-          client={client}
+          iotSiteWiseClient={iotSiteWiseClient}
           controlId={assetModelSelectionControlId}
           updateSelectedAsset={updateSelectedAsset}
           hideTitle
