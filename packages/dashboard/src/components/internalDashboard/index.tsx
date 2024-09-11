@@ -351,7 +351,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
         <ResizablePanes
           leftPane={
             <QueryEditor
-              iotSiteWise={iotSiteWise}
+              iotSiteWiseClient={iotSiteWise}
               selectedWidgets={selectedWidgets}
             />
           }
@@ -399,7 +399,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             tabIndex={0}
           >
             <Box float='left' padding='s'>
-              <AssetModelSelection client={iotSiteWise} />
+              <AssetModelSelection iotSiteWiseClient={iotSiteWise} />
             </Box>
           </div>
         )}

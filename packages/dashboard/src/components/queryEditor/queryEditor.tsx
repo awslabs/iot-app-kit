@@ -9,10 +9,10 @@ import { useIsAddButtonDisabled } from './helpers/useIsAddButtonDisabled';
 import { getCorrectSelectionMode } from './helpers/getCorrectSelectionMode';
 
 export function QueryEditor({
-  iotSiteWise,
+  iotSiteWiseClient,
   selectedWidgets,
 }: {
-  iotSiteWise: IoTSiteWise;
+  iotSiteWiseClient: IoTSiteWise;
   selectedWidgets: DashboardWidget[];
 }) {
   const [_query, setQuery] = useQuery();
@@ -23,7 +23,7 @@ export function QueryEditor({
     <QueryEditorErrorBoundary>
       <IoTSiteWiseQueryEditor
         onUpdateQuery={setQuery}
-        iotSiteWise={iotSiteWise}
+        iotSiteWiseClient={iotSiteWiseClient}
         selectedWidgets={selectedWidgets}
         addButtonDisabled={addButtonDisabled}
         correctSelectionMode={correctSelectionMode}

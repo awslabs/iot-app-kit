@@ -15,7 +15,7 @@ export interface AssetModelExplorerProps
    * @defaultValue `[{ assetModelTypes: ['ASSET_MODEL'] }]` - All asset models of type ASSET_MODEL will be requested.
    */
   parameters?: readonly AssetModelParameters[];
-  requestFns?: {
+  iotSiteWiseClient?: {
     listAssetModels?: ListAssetModels;
   };
   onSelectAssetModel?: OnSelectResource<AssetModelResource>;

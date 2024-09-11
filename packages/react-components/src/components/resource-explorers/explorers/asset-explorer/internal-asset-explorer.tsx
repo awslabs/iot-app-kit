@@ -32,7 +32,7 @@ import { useUserCustomization } from '../../helpers/use-user-customization';
 import { AssetHierarchyPath } from './asset-hierarchy-path';
 
 export function InternalAssetExplorer({
-  requestFns,
+  iotSiteWiseClient,
   parameters,
   shouldPersistUserCustomization = DEFAULT_SHOULD_PERSIST_USER_CUSTOMIZATION,
   defaultPageSize = DEFAULT_DEFAULT_PAGE_SIZE,
@@ -105,9 +105,10 @@ export function InternalAssetExplorer({
       : isSearched(userSearchStatement)
       ? [{ searchStatement: userSearchStatement }]
       : parameters,
-    listAssets: requestFns?.listAssets?.bind(requestFns),
-    listAssociatedAssets: requestFns?.listAssociatedAssets?.bind(requestFns),
-    executeQuery: requestFns?.executeQuery?.bind(requestFns),
+    listAssets: iotSiteWiseClient?.listAssets?.bind(iotSiteWiseClient),
+    listAssociatedAssets:
+      iotSiteWiseClient?.listAssociatedAssets?.bind(iotSiteWiseClient),
+    executeQuery: iotSiteWiseClient?.executeQuery?.bind(iotSiteWiseClient),
     pageSize: userCustomization.pageSize,
   });
 
@@ -137,12 +138,12 @@ export function InternalAssetExplorer({
           isFilterEnabled={isTableFilterEnabled}
           isUserSettingsEnabled={isUserSettingsEnabled}
           titleExtension={
-            requestFns?.listAssociatedAssets &&
+            iotSiteWiseClient?.listAssociatedAssets &&
             parameters === undefined && (
               <AssetHierarchyPath
                 parentAsset={parentAsset}
-                listAssociatedAssets={requestFns?.listAssociatedAssets?.bind(
-                  requestFns
+                listAssociatedAssets={iotSiteWiseClient?.listAssociatedAssets?.bind(
+                  iotSiteWiseClient
                 )}
                 onClickPathAsset={onClickAssetName}
               />

@@ -160,7 +160,7 @@ describe('Query editor tests', () => {
       <Provider store={configureDashboardStore()}>
         <IoTSiteWiseQueryEditor
           onUpdateQuery={() => {}}
-          iotSiteWise={
+          iotSiteWiseClient={
             {
               ...new IoTSiteWise({
                 credentials: {
@@ -208,7 +208,7 @@ describe('Query editor tests', () => {
       <Provider store={configureDashboardStore()}>
         <IoTSiteWiseQueryEditor
           onUpdateQuery={onUpdateQuery}
-          iotSiteWise={
+          iotSiteWiseClient={
             {
               ...new IoTSiteWise({
                 credentials: {
@@ -267,7 +267,7 @@ describe('Query editor tests', () => {
       <Provider store={configureDashboardStore()}>
         <IoTSiteWiseQueryEditor
           onUpdateQuery={onUpdateQuery}
-          iotSiteWise={
+          iotSiteWiseClient={
             {
               ...new IoTSiteWise({
                 credentials: {
@@ -330,7 +330,7 @@ describe('Query editor tests', () => {
       <Provider store={configureDashboardStore()}>
         <IoTSiteWiseQueryEditor
           onUpdateQuery={onUpdateQuery}
-          iotSiteWise={
+          iotSiteWiseClient={
             {
               ...new IoTSiteWise({
                 credentials: {

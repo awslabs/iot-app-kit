@@ -19,7 +19,7 @@ import {
 /** Props common to all resource explorers. */
 export type CommonResourceExplorerProps<Resource = unknown> = {
   /** TODO */
-  requestFns?: unknown;
+  iotSiteWiseClient?: unknown;
 
   /**
    * Specify the resource explorer variant to render.

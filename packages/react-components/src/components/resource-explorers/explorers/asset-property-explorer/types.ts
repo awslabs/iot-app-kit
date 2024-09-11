@@ -16,7 +16,7 @@ import type { AssetPropertyResource } from '../../types/resources';
 export interface AssetPropertyExplorerProps
   extends CommonResourceExplorerProps<AssetPropertyResource> {
   parameters?: AssetPropertyResourcesRequestParameters;
-  requestFns?: {
+  iotSiteWiseClient?: {
     batchGetAssetPropertyValue?: BatchGetAssetPropertyValue;
     executeQuery?: ExecuteQuery;
     listAssetProperties?: ListAssetProperties;
