@@ -28,6 +28,9 @@ export function IoTSiteWiseQueryEditor({
     (state: DashboardState) => state.isEdgeModeEnabled
   );
   const timeZone = useSelector((state: DashboardState) => state.timeZone);
+  const significantDigits = useSelector(
+    (state: DashboardState) => state.significantDigits
+  );
 
   const modeledTab = {
     label: 'Modeled',
@@ -40,6 +43,7 @@ export function IoTSiteWiseQueryEditor({
         addButtonDisabled={addButtonDisabled}
         selectedWidgets={selectedWidgets}
         timeZone={timeZone}
+        significantDigits={significantDigits}
       />
     ),
   };
@@ -54,6 +58,8 @@ export function IoTSiteWiseQueryEditor({
         correctSelectionMode={correctSelectionMode}
         addButtonDisabled={addButtonDisabled}
         selectedWidgets={selectedWidgets}
+        timeZone={timeZone}
+        significantDigits={significantDigits}
       />
     ),
     disabled: isEdgeModeEnabled,

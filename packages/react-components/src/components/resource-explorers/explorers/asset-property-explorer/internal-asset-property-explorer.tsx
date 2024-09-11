@@ -32,6 +32,7 @@ import { DEFAULT_ASSET_PROPERTY_DROP_DOWN_DEFINITION } from '../../constants/dro
 import { useUserCustomization } from '../../helpers/use-user-customization';
 import { TableResourceDefinition } from '../../types/table';
 import { formatDate } from '../../../../utils/time';
+import { isNumeric, round } from '@iot-app-kit/core-util';
 
 export function InternalAssetPropertyExplorer({
   requestFns,
@@ -58,19 +59,34 @@ export function InternalAssetPropertyExplorer({
   ariaLabels,
   description = '',
   timeZone,
+  significantDigits,
 }: AssetPropertyExplorerProps) {
   const tableResourceDefinition =
     customTableResourceDefinition ??
     requestFns?.batchGetAssetPropertyValue !== undefined
       ? ([
           ...DEFAULT_ASSET_PROPERTY_TABLE_DEFINITION,
-          ...createDefaultLatestValuesTableDefinition((latestValueResource) => {
-            return latestValueResource.latestValueTimestamp
-              ? formatDate(latestValueResource.latestValueTimestamp * 1000, {
-                  timeZone,
-                })
-              : '-';
-          }),
+          ...createDefaultLatestValuesTableDefinition(
+            (latestValueResource) => {
+              return latestValueResource.latestValueTimestamp
+                ? formatDate(latestValueResource.latestValueTimestamp * 1000, {
+                    timeZone,
+                  })
+                : '-';
+            },
+            (latestValueResource) => {
+              if (
+                latestValueResource.latestValue &&
+                isNumeric(latestValueResource.latestValue)
+              ) {
+                return round(
+                  latestValueResource.latestValue,
+                  significantDigits
+                );
+              }
+              return latestValueResource.latestValue;
+            }
+          ),
         ] as TableResourceDefinition<AssetPropertyResource>)
       : DEFAULT_ASSET_PROPERTY_TABLE_DEFINITION;
 

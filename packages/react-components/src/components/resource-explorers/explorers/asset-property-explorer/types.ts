@@ -28,6 +28,7 @@ export interface AssetPropertyExplorerProps
   ariaLabels?: TableProps.AriaLabels<AssetPropertyResource>;
   description?: string;
   timeZone?: string;
+  significantDigits?: number;
 }
 
 export type AssetPropertyResourcesRequestParameters =
