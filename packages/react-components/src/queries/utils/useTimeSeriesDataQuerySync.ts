@@ -71,5 +71,5 @@ export const useSyncTimeSeriesDataQueries = ({
     }, 0);
   }, [enabled, refreshRate, enable, disable]);
 
-  return enabledFlags[refreshRate];
+  return !!enabledFlags[refreshRate];
 };
