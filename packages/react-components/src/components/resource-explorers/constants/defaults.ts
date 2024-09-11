@@ -21,6 +21,9 @@ import type {
   ResourceTableUserSettings,
   TableResourceField,
 } from '../types/table';
+import { DataStreamResourceWithLatestValue } from '../types/resources';
+import { formatDate } from '../../../utils/time';
+import { isNumeric, round } from '@iot-app-kit/core-util';
 
 const NO_OP = () => {};
 
@@ -80,6 +83,28 @@ export function createDefaultTableUserSettings<Resource>(
     contentDensity: 'comfortable',
   };
 }
+
+export const latestValueTimeCellRenderer = (timeZone?: string) => {
+  return (latestValueResource: DataStreamResourceWithLatestValue<unknown>) => {
+    return latestValueResource.latestValueTimestamp
+      ? formatDate(latestValueResource.latestValueTimestamp * 1000, {
+          timeZone,
+        })
+      : '-';
+  };
+};
+
+export const latestValueCellRenderer = (significantDigits?: number) => {
+  return (latestValueResource: DataStreamResourceWithLatestValue<unknown>) => {
+    if (
+      latestValueResource.latestValue &&
+      isNumeric(latestValueResource.latestValue)
+    ) {
+      return round(latestValueResource.latestValue, significantDigits);
+    }
+    return latestValueResource.latestValue;
+  };
+};
 
 export const DEFAULT_STRING_FILTER_OPERATORS = [
   '=',
