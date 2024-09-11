@@ -205,7 +205,11 @@ describe('useHistoricalAssetPropertyValues', () => {
       })
     );
 
-    await waitFor(() => expect(queriesResult.current[0].isPending).toBe(true));
+    await waitFor(() => {
+      expect(queriesResult.current[0].fetchStatus).toBe('idle');
+      expect(queriesResult.current[0].status).toBe('pending');
+      expect(queriesResult.current[0].isLoading).toBe(false);
+    });
 
     expect(batchGetAssetPropertyValueHistory).not.toBeCalled();
   });
@@ -224,7 +228,11 @@ describe('useHistoricalAssetPropertyValues', () => {
       })
     );
 
-    await waitFor(() => expect(queriesResult.current[0].isPending).toBe(true));
+    await waitFor(() => {
+      expect(queriesResult.current[0].fetchStatus).toBe('idle');
+      expect(queriesResult.current[0].status).toBe('pending');
+      expect(queriesResult.current[0].isLoading).toBe(false);
+    });
 
     expect(batchGetAssetPropertyValueHistory).not.toBeCalled();
   });
@@ -244,7 +252,11 @@ describe('useHistoricalAssetPropertyValues', () => {
       })
     );
 
-    await waitFor(() => expect(queriesResult.current[0].isPending).toBe(true));
+    await waitFor(() => {
+      expect(queriesResult.current[0].fetchStatus).toBe('idle');
+      expect(queriesResult.current[0].status).toBe('pending');
+      expect(queriesResult.current[0].isLoading).toBe(false);
+    });
 
     expect(batchGetAssetPropertyValueHistory).not.toBeCalled();
   });
