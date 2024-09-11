@@ -19,6 +19,8 @@ type UnmodeledExplorerProps = {
   correctSelectionMode: SelectionMode;
   addButtonDisabled: boolean;
   selectedWidgets: DashboardWidget[];
+  timeZone?: string;
+  significantDigits?: number;
 };
 
 export const UnmodeledExplorer = ({
@@ -26,6 +28,8 @@ export const UnmodeledExplorer = ({
   iotSiteWise,
   correctSelectionMode,
   addButtonDisabled,
+  timeZone,
+  significantDigits,
 }: UnmodeledExplorerProps) => {
   const [selectedTimeSeries, setSelectedTimeSeries] = useState<
     NonNullable<TimeSeriesExplorerProps['selectedTimeSeries']>
@@ -59,6 +63,8 @@ export const UnmodeledExplorer = ({
           isUserSettingsEnabled: true,
         }}
         description='Select a unmodeled datastream to add to a selected widget'
+        timeZone={timeZone}
+        significantDigits={significantDigits}
       />
       <ResourceExplorerFooter
         addDisabled={addButtonDisabled}
