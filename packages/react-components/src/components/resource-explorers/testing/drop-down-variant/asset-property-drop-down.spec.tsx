@@ -32,7 +32,7 @@ function SelectableAssetPropertyDropDown({
   return (
     <AssetPropertyExplorer
       variant='drop-down'
-      requestFns={{ listAssetProperties, listAssetModelProperties }}
+      iotSiteWiseClient={{ listAssetProperties, listAssetModelProperties }}
       parameters={[{ assetId: 'asset-id', assetModelId: 'asset-model-id' }]}
       selectionMode={selectionMode}
       selectedAssetProperties={selectedAssetProperties}
@@ -89,7 +89,7 @@ describe('asset property drop-down', () => {
       render(
         <AssetPropertyExplorer
           variant='drop-down'
-          requestFns={{
+          iotSiteWiseClient={{
             listAssetProperties,
             listAssetModelProperties,
           }}
@@ -134,7 +134,7 @@ describe('asset property drop-down', () => {
       render(
         <AssetPropertyExplorer
           variant='drop-down'
-          requestFns={{ listAssetProperties, listAssetModelProperties }}
+          iotSiteWiseClient={{ listAssetProperties, listAssetModelProperties }}
           parameters={[{ assetId: 'asset-id', assetModelId: 'asset-model-id' }]}
         />
       );
@@ -162,7 +162,7 @@ describe('asset property drop-down', () => {
       render(
         <AssetPropertyExplorer
           variant='drop-down'
-          requestFns={{ listAssetProperties, listAssetModelProperties }}
+          iotSiteWiseClient={{ listAssetProperties, listAssetModelProperties }}
           parameters={[{ assetId: 'asset-id', assetModelId: 'asset-model-id' }]}
         />
       );
@@ -192,7 +192,7 @@ describe('asset property drop-down', () => {
       render(
         <AssetPropertyExplorer
           variant='drop-down'
-          requestFns={{ listAssetProperties, listAssetModelProperties }}
+          iotSiteWiseClient={{ listAssetProperties, listAssetModelProperties }}
           parameters={[
             { assetId: 'asset-id-1', assetModelId: 'asset-model-id-1' },
             { assetId: 'asset-id-2', assetModelId: 'asset-model-id-1' },
@@ -483,7 +483,7 @@ describe('asset property drop-down', () => {
       render(
         <AssetPropertyExplorer
           variant='drop-down'
-          requestFns={{ listAssetProperties, listAssetModelProperties }}
+          iotSiteWiseClient={{ listAssetProperties, listAssetModelProperties }}
           parameters={[{ assetId: 'asset-id', assetModelId: 'asset-model-id' }]}
           dropDownSettings={{
             isFilterEnabled: true,

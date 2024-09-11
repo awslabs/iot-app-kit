@@ -24,7 +24,7 @@ function SelectableTimeSeriesTable({
 
   return (
     <TimeSeriesExplorer
-      requestFns={{ listTimeSeries }}
+      iotSiteWiseClient={{ listTimeSeries }}
       parameters={[{ assetId: 'asset-id' }]}
       selectionMode={selectionMode}
       selectedTimeSeries={selectedTimeSeries}
@@ -107,7 +107,7 @@ describe('time series table', () => {
       });
       render(
         <TimeSeriesExplorer
-          requestFns={{ listTimeSeries }}
+          iotSiteWiseClient={{ listTimeSeries }}
           parameters={[{ assetId: 'asset-id' }]}
         />
       );
@@ -139,7 +139,7 @@ describe('time series table', () => {
     it('renders expected columns when displaying latest values', () => {
       render(
         <TimeSeriesExplorer
-          requestFns={{ batchGetAssetPropertyValue: jest.fn() }}
+          iotSiteWiseClient={{ batchGetAssetPropertyValue: jest.fn() }}
         />
       );
 
@@ -161,7 +161,7 @@ describe('time series table', () => {
         .mockResolvedValue(createListTimeSeriesPage(3));
       render(
         <TimeSeriesExplorer
-          requestFns={{ listTimeSeries }}
+          iotSiteWiseClient={{ listTimeSeries }}
           parameters={[{ assetId: 'asset-id' }]}
         />
       );
@@ -184,7 +184,7 @@ describe('time series table', () => {
       render(
         <TimeSeriesExplorer
           defaultPageSize={10}
-          requestFns={{ listTimeSeries }}
+          iotSiteWiseClient={{ listTimeSeries }}
           parameters={[{ assetId: 'asset-id' }]}
         />
       );
@@ -228,7 +228,7 @@ describe('time series table', () => {
       render(
         <TimeSeriesExplorer
           defaultPageSize={10}
-          requestFns={{ listTimeSeries }}
+          iotSiteWiseClient={{ listTimeSeries }}
           parameters={[{ assetId: 'asset-id-1' }, { assetId: 'asset-id-2' }]}
         />
       );
@@ -331,7 +331,7 @@ describe('time series table', () => {
       } satisfies Awaited<ReturnType<BatchGetAssetPropertyValue>>);
       render(
         <TimeSeriesExplorer
-          requestFns={{
+          iotSiteWiseClient={{
             batchGetAssetPropertyValue,
             listTimeSeries,
           }}
@@ -398,7 +398,7 @@ describe('time series table', () => {
       } satisfies Awaited<ReturnType<BatchGetAssetPropertyValue>>);
       render(
         <TimeSeriesExplorer
-          requestFns={{
+          iotSiteWiseClient={{
             batchGetAssetPropertyValue,
             listTimeSeries,
           }}
@@ -566,7 +566,7 @@ describe('time series table', () => {
       render(
         <TimeSeriesExplorer
           tableSettings={{ isFilterEnabled: true }}
-          requestFns={{ listTimeSeries }}
+          iotSiteWiseClient={{ listTimeSeries }}
           parameters={[{ assetId: 'asset-id' }]}
         />
       );
@@ -605,7 +605,7 @@ describe('time series table', () => {
       render(
         <TimeSeriesExplorer
           tableSettings={{ isFilterEnabled: true }}
-          requestFns={{ listTimeSeries }}
+          iotSiteWiseClient={{ listTimeSeries }}
           parameters={[{ assetId: 'asset-id' }]}
         />
       );
@@ -694,7 +694,7 @@ describe('time series table', () => {
       render(
         <TimeSeriesExplorer
           tableSettings={{ isUserSettingsEnabled: true }}
-          requestFns={{ batchGetAssetPropertyValue: jest.fn() }}
+          iotSiteWiseClient={{ batchGetAssetPropertyValue: jest.fn() }}
         />
       );
 

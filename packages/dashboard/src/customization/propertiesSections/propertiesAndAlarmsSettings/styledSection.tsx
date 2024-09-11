@@ -51,7 +51,10 @@ export const StyledPropertiesAlarmsSection: FC<
   const assetModelIds = (styledAssetQuery?.assetModels ?? []).map(
     ({ assetModelId }) => assetModelId
   );
-  const { assetModels } = useAssetModel({ assetModelIds, client });
+  const { assetModels } = useAssetModel({
+    assetModelIds,
+    iotSiteWiseClient: client,
+  });
 
   const getComponents = () => {
     if (mustEditAsSingle) return <SelectOneWidget />;

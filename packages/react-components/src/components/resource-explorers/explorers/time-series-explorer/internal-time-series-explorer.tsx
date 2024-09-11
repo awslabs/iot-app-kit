@@ -34,7 +34,7 @@ import { DEFAULT_TIME_SERIES_DROP_DOWN_DEFINITION } from '../../constants/drop-d
 import { TableResourceDefinition } from '../../types/table';
 
 export function InternalTimeSeriesExplorer({
-  requestFns,
+  iotSiteWiseClient,
   parameters = [{}],
   resourceName = DEFAULT_TIME_SERIES_RESOURCE_NAME,
   pluralResourceName = DEFAULT_PLURAL_TIME_SERIES_RESOURCE_NAME,
@@ -60,7 +60,7 @@ export function InternalTimeSeriesExplorer({
 }: TimeSeriesExplorerProps) {
   const tableResourceDefinition =
     customTableResourceDefinition ??
-    requestFns?.batchGetAssetPropertyValue !== undefined
+    iotSiteWiseClient?.batchGetAssetPropertyValue !== undefined
       ? ([
           ...DEFAULT_TIME_SERIES_TABLE_DEFINITION,
           ...createDefaultLatestValuesTableDefinition(
@@ -86,8 +86,9 @@ export function InternalTimeSeriesExplorer({
       pageSize: userCustomization.pageSize,
       parameters,
       batchGetAssetPropertyValue:
-        requestFns?.batchGetAssetPropertyValue?.bind(requestFns),
-      listTimeSeries: requestFns?.listTimeSeries?.bind(requestFns),
+        iotSiteWiseClient?.batchGetAssetPropertyValue?.bind(iotSiteWiseClient),
+      listTimeSeries:
+        iotSiteWiseClient?.listTimeSeries?.bind(iotSiteWiseClient),
     }
   );
 

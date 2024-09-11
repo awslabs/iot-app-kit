@@ -20,7 +20,7 @@ import { propertySelectionLabel } from '../../helpers/propertySelectionLabel';
 
 type ModeledExplorerProps = {
   onUpdateQuery: ReturnType<typeof useQuery>[1];
-  iotSiteWise: IoTSiteWise;
+  iotSiteWiseClient: IoTSiteWise;
   correctSelectionMode: SelectionMode;
   addButtonDisabled: boolean;
   selectedWidgets: DashboardWidget[];
@@ -30,7 +30,7 @@ type ModeledExplorerProps = {
 
 export const ModeledExplorer = ({
   onUpdateQuery,
-  iotSiteWise,
+  iotSiteWiseClient,
   correctSelectionMode,
   addButtonDisabled,
   selectedWidgets,
@@ -70,7 +70,7 @@ export const ModeledExplorer = ({
   return (
     <Box padding={{ horizontal: 's' }}>
       <AssetExplorer
-        requestFns={iotSiteWise}
+        iotSiteWiseClient={iotSiteWiseClient}
         onSelectAsset={handleSelectAssets}
         selectedAssets={selectedAssets}
         selectionMode='single'
@@ -90,7 +90,7 @@ export const ModeledExplorer = ({
       />
       {selectedAssets.length > 0 && (
         <AssetPropertyExplorer
-          requestFns={iotSiteWise}
+          iotSiteWiseClient={iotSiteWiseClient}
           parameters={selectedAssets}
           selectionMode={correctSelectionMode}
           onSelectAssetProperty={setSelectedAssetProperties}

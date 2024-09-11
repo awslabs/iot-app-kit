@@ -84,7 +84,7 @@ export const AssetAndComponentModels: AssetModelExplorerStory = (
 ) => {
   const props = storyArgsToProps(controls, context);
 
-  return <AssetModelExplorer {...props} requestFns={client} />;
+  return <AssetModelExplorer {...props} iotSiteWiseClient={client} />;
 };
 
 export const OnlyAssetModels: AssetModelExplorerStory = (controls, context) => {
@@ -93,7 +93,7 @@ export const OnlyAssetModels: AssetModelExplorerStory = (controls, context) => {
   return (
     <AssetModelExplorer
       {...props}
-      requestFns={client}
+      iotSiteWiseClient={client}
       parameters={[{ assetModelTypes: ['ASSET_MODEL'] }]}
     />
   );
@@ -108,7 +108,7 @@ export const OnlyComponentModels: AssetModelExplorerStory = (
   return (
     <AssetModelExplorer
       {...props}
-      requestFns={client}
+      iotSiteWiseClient={client}
       parameters={[{ assetModelTypes: ['COMPONENT_MODEL'] }]}
     />
   );

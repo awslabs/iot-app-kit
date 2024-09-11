@@ -22,7 +22,7 @@ function SelectableAssetModelTable({
 
   return (
     <AssetModelExplorer
-      requestFns={{ listAssetModels }}
+      iotSiteWiseClient={{ listAssetModels }}
       selectionMode={selectionMode}
       selectedAssetModels={selectedAssetModels}
       onSelectAssetModel={setSelectedAssetModels}
@@ -93,7 +93,7 @@ describe('asset model table', () => {
       const listAssetModels = jest
         .fn()
         .mockResolvedValue(listAssetModelsResponse);
-      render(<AssetModelExplorer requestFns={{ listAssetModels }} />);
+      render(<AssetModelExplorer iotSiteWiseClient={{ listAssetModels }} />);
 
       await table.waitForLoadingToFinish();
 
@@ -120,7 +120,7 @@ describe('asset model table', () => {
       const listAssetModels = jest
         .fn()
         .mockResolvedValue(createListAssetModelsPage(3));
-      render(<AssetModelExplorer requestFns={{ listAssetModels }} />);
+      render(<AssetModelExplorer iotSiteWiseClient={{ listAssetModels }} />);
 
       await table.waitForLoadingToFinish();
 
@@ -140,7 +140,7 @@ describe('asset model table', () => {
       render(
         <AssetModelExplorer
           defaultPageSize={10}
-          requestFns={{ listAssetModels }}
+          iotSiteWiseClient={{ listAssetModels }}
         />
       );
 
@@ -184,7 +184,7 @@ describe('asset model table', () => {
       render(
         <AssetModelExplorer
           defaultPageSize={10}
-          requestFns={{ listAssetModels }}
+          iotSiteWiseClient={{ listAssetModels }}
           parameters={[
             { assetModelTypes: ['ASSET_MODEL'] },
             { assetModelTypes: ['COMPONENT_MODEL'] },
@@ -384,7 +384,7 @@ describe('asset model table', () => {
       render(
         <AssetModelExplorer
           tableSettings={{ isFilterEnabled: true }}
-          requestFns={{ listAssetModels }}
+          iotSiteWiseClient={{ listAssetModels }}
         />
       );
 
@@ -417,7 +417,7 @@ describe('asset model table', () => {
       render(
         <AssetModelExplorer
           tableSettings={{ isFilterEnabled: true }}
-          requestFns={{ listAssetModels }}
+          iotSiteWiseClient={{ listAssetModels }}
         />
       );
 

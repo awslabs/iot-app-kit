@@ -6,14 +6,14 @@ import invariant from 'tiny-invariant';
 import { GetAssetsForAssetModelRequest } from './getAssetsForAssetModelRequest';
 
 export interface UseAssetModelsOptions {
-  client: IoTSiteWiseClient;
+  iotSiteWiseClient: IoTSiteWiseClient;
   assetModelId?: string;
   fetchAll?: boolean;
 }
 
 /** Use an AWS IoT SiteWise asset description. */
 export function useAssetsForAssetModel({
-  client,
+  iotSiteWiseClient,
   assetModelId,
   fetchAll,
 }: UseAssetModelsOptions) {
@@ -33,7 +33,7 @@ export function useAssetsForAssetModel({
   } = useInfiniteQuery({
     enabled: isEnabled(assetModelId),
     queryKey: cacheKeyFactory.create(),
-    queryFn: createQueryFn(client),
+    queryFn: createQueryFn(iotSiteWiseClient),
     getNextPageParam: ({ nextToken }) => nextToken,
   });
 

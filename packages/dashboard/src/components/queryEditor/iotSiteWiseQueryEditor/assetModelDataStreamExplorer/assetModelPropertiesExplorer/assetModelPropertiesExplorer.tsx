@@ -13,14 +13,14 @@ import { DashboardWidget } from '~/types';
 
 export interface AssetExplorerProps {
   selectedAssetModelProperties: SelectedAssetModelProperties;
-  client: IoTSiteWise;
+  iotSiteWiseClient: IoTSiteWise;
   selectedAsset: SelectedAsset;
   selectAssetModelProperties: UpdateSelectedAssetModelProperties;
   selectedWidgets: DashboardWidget[];
 }
 
 export const AssetModelPropertiesExplorer = ({
-  client,
+  iotSiteWiseClient,
   selectedAsset,
   selectedAssetModelProperties,
   selectAssetModelProperties,
@@ -28,7 +28,7 @@ export const AssetModelPropertiesExplorer = ({
 }: AssetExplorerProps) => {
   return (
     <AssetPropertyExplorer
-      requestFns={client}
+      iotSiteWiseClient={iotSiteWiseClient}
       parameters={selectedAsset}
       selectionMode='multi'
       onSelectAssetProperty={selectAssetModelProperties}
