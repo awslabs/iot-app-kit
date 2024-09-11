@@ -15,7 +15,7 @@ import type { AssetResource } from '../../types/resources';
 export interface AssetExplorerProps
   extends CommonResourceExplorerProps<AssetResource> {
   parameters?: AssetResourcesRequestParameters;
-  requestFns?: {
+  iotSiteWiseClient?: {
     listAssets?: ListAssets;
     listAssociatedAssets?: ListAssociatedAssets;
     executeQuery?: ExecuteQuery;

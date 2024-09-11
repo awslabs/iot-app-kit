@@ -27,7 +27,7 @@ function SelectableTimeSeriesDropDown({
   return (
     <TimeSeriesExplorer
       variant='drop-down'
-      requestFns={{ listTimeSeries }}
+      iotSiteWiseClient={{ listTimeSeries }}
       selectionMode={selectionMode}
       selectedTimeSeries={selectedTimeSeries}
       onSelectTimeSeries={setSelectedTimeSeries}
@@ -79,7 +79,7 @@ describe('time series drop-down', () => {
       render(
         <TimeSeriesExplorer
           variant='drop-down'
-          requestFns={{ listTimeSeries }}
+          iotSiteWiseClient={{ listTimeSeries }}
           parameters={[{ assetId: 'asset-id' }]}
         />
       );
@@ -118,7 +118,7 @@ describe('time series drop-down', () => {
       render(
         <TimeSeriesExplorer
           variant='drop-down'
-          requestFns={{ listTimeSeries }}
+          iotSiteWiseClient={{ listTimeSeries }}
           parameters={[{ assetId: 'asset-id' }]}
         />
       );
@@ -139,7 +139,7 @@ describe('time series drop-down', () => {
       render(
         <TimeSeriesExplorer
           variant='drop-down'
-          requestFns={{ listTimeSeries }}
+          iotSiteWiseClient={{ listTimeSeries }}
           parameters={[{ assetId: 'asset-id' }]}
         />
       );
@@ -165,7 +165,7 @@ describe('time series drop-down', () => {
       render(
         <TimeSeriesExplorer
           variant='drop-down'
-          requestFns={{ listTimeSeries }}
+          iotSiteWiseClient={{ listTimeSeries }}
           parameters={[{ assetId: 'asset-id-1' }, { assetId: 'asset-id-2' }]}
         />
       );
@@ -389,7 +389,7 @@ describe('time series drop-down', () => {
       render(
         <TimeSeriesExplorer
           variant='drop-down'
-          requestFns={{ listTimeSeries }}
+          iotSiteWiseClient={{ listTimeSeries }}
           parameters={[{ assetId: 'asset-id' }]}
           dropDownSettings={{
             isFilterEnabled: true,

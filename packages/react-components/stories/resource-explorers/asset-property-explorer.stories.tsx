@@ -85,7 +85,11 @@ export const WithLatestValues: AssetPropertyExplorerStory = (
   const props = storyArgsToProps(controls, context);
 
   return (
-    <AssetPropertyExplorer {...props} requestFns={client} parameters={[]} />
+    <AssetPropertyExplorer
+      {...props}
+      iotSiteWiseClient={client}
+      parameters={[]}
+    />
   );
 };
 
@@ -99,7 +103,7 @@ export const WithoutLatestValues: AssetPropertyExplorerStory = (
   return (
     <AssetPropertyExplorer
       {...props}
-      requestFns={{
+      iotSiteWiseClient={{
         executeQuery: client.executeQuery.bind(client),
         listAssetProperties: client.listAssetProperties.bind(client),
         listAssetModelProperties: client.listAssetModelProperties.bind(client),

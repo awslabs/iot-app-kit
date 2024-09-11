@@ -28,7 +28,7 @@ import { DEFAULT_ASSET_MODEL_DROP_DOWN_DEFINITION } from '../../constants/drop-d
 import { useAssetModels } from './use-asset-models';
 
 export function InternalAssetModelExplorer({
-  requestFns,
+  iotSiteWiseClient,
   parameters = [{ assetModelTypes: ['ASSET_MODEL'] }],
   shouldPersistUserCustomization = DEFAULT_SHOULD_PERSIST_USER_CUSTOMIZATION,
   defaultPageSize = DEFAULT_DEFAULT_PAGE_SIZE,
@@ -62,7 +62,8 @@ export function InternalAssetModelExplorer({
     useAssetModels({
       parameters: parameters,
       pageSize: userCustomization.pageSize,
-      listAssetModels: requestFns?.listAssetModels?.bind(requestFns),
+      listAssetModels:
+        iotSiteWiseClient?.listAssetModels?.bind(iotSiteWiseClient),
     });
 
   return (

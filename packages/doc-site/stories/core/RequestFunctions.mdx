@@ -39,7 +39,7 @@ the SDK client for SiteWise.
 ```
 export interface AssetPropertyExplorerProps
   extends CommonResourceExplorerProps<AssetPropertyResource> {
-  requestFns?: {
+  iotSiteWiseClient?: {
     batchGetAssetPropertyValue?: BatchGetAssetPropertyValue;
     executeQuery?: ExecuteQuery;
     listAssetProperties?: ListAssetProperties;
@@ -62,7 +62,7 @@ const iotSiteWiseClient = new IoTSiteWiseClient();
 function CustomApp() {
    return (
     <AssetPropertyExplorer 
-      requestFns={iotSiteWiseClient} 
+      iotSiteWiseClient={iotSiteWiseClient} 
       ...
     />
   );
@@ -94,12 +94,12 @@ const customIoTSiteWiseClient = {
   listAssetModelProperties: async (request, options) => {
     // implementation
   },
-} satisfies AssetPropertyExplorerProps['requestFns'];
+} satisfies AssetPropertyExplorerProps['iotSiteWiseClient'];
 
 function CustomApp() {
    return (
     <AssetPropertyExplorer 
-      requestFns={customIoTSiteWiseClient} 
+      iotSiteWiseClient={customIoTSiteWiseClient} 
       ...
     />
   );

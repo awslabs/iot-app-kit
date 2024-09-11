@@ -16,7 +16,7 @@ import { AssetResource } from '@iot-app-kit/react-components';
 import { useAssetsForAssetModel } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/assetsForAssetModelSelect/useAssetsForAssetModel/useAssetsForAssetModel';
 
 type AssetModelSelectOptions = {
-  client: IoTSiteWise;
+  iotSiteWiseClient: IoTSiteWise;
   assetModelId: string;
   selectedAssetId?: string;
   hideTitle?: boolean;
@@ -24,7 +24,7 @@ type AssetModelSelectOptions = {
   updateSelectedAsset: (asset: AssetResource | undefined) => void;
 };
 export const AssetModelSelect = ({
-  client,
+  iotSiteWiseClient,
   hideTitle = false,
   selectedAssetId,
   assetModelId,
@@ -36,7 +36,7 @@ export const AssetModelSelect = ({
 
   const { assetSummaries } = useAssetsForAssetModel({
     assetModelId,
-    client,
+    iotSiteWiseClient,
     fetchAll: true,
   });
 
@@ -65,7 +65,7 @@ export const AssetModelSelect = ({
         selectedAssetModel={selectedAssetModel}
         selectedAsset={selectedAsset}
         onSelectAsset={selectAsset}
-        client={client}
+        iotSiteWiseClient={iotSiteWiseClient}
       />
     </FormField>
   );

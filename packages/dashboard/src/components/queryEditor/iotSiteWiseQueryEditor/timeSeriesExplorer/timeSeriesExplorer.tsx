@@ -15,7 +15,7 @@ import { getPlugin } from '@iot-app-kit/core';
 
 type UnmodeledExplorerProps = {
   onUpdateQuery: ReturnType<typeof useQuery>[1];
-  iotSiteWise: IoTSiteWise;
+  iotSiteWiseClient: IoTSiteWise;
   correctSelectionMode: SelectionMode;
   addButtonDisabled: boolean;
   selectedWidgets: DashboardWidget[];
@@ -25,7 +25,7 @@ type UnmodeledExplorerProps = {
 
 export const UnmodeledExplorer = ({
   onUpdateQuery,
-  iotSiteWise,
+  iotSiteWiseClient,
   correctSelectionMode,
   addButtonDisabled,
   timeZone,
@@ -54,7 +54,7 @@ export const UnmodeledExplorer = ({
     <Box padding={{ horizontal: 's' }}>
       <TimeSeriesExplorer
         selectionMode={correctSelectionMode}
-        requestFns={iotSiteWise}
+        iotSiteWiseClient={iotSiteWiseClient}
         onSelectTimeSeries={setSelectedTimeSeries}
         selectedTimeSeries={selectedTimeSeries}
         parameters={[{ timeSeriesType: 'DISASSOCIATED' }]}

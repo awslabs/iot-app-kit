@@ -22,7 +22,7 @@ function SelectableAssetDropDown({
   return (
     <AssetExplorer
       variant='drop-down'
-      requestFns={{ listAssets }}
+      iotSiteWiseClient={{ listAssets }}
       selectionMode={selectionMode}
       selectedAssets={selectedAssets}
       onSelectAsset={setSelectedAssets}
@@ -62,7 +62,9 @@ describe('asset drop-down', () => {
         assetSummaries: [asset1, asset2, asset3],
       } = listAssetsResponse;
       const listAssets = jest.fn().mockResolvedValue(listAssetsResponse);
-      render(<AssetExplorer variant='drop-down' requestFns={{ listAssets }} />);
+      render(
+        <AssetExplorer variant='drop-down' iotSiteWiseClient={{ listAssets }} />
+      );
 
       expect(dropDown.queryOption(asset1.name)).not.toBeInTheDocument();
       expect(dropDown.queryOption(asset2.name)).not.toBeInTheDocument();
@@ -90,7 +92,9 @@ describe('asset drop-down', () => {
   describe('request handling', () => {
     it('requests a single page of assets correctly', async () => {
       const listAssets = jest.fn().mockResolvedValue(createListAssetsPage(3));
-      render(<AssetExplorer variant='drop-down' requestFns={{ listAssets }} />);
+      render(
+        <AssetExplorer variant='drop-down' iotSiteWiseClient={{ listAssets }} />
+      );
 
       // Page is requested without opening the drop-down
       expect(listAssets).toHaveBeenCalledOnce();
@@ -105,7 +109,9 @@ describe('asset drop-down', () => {
         .mockResolvedValueOnce(createListAssetsPage(1, 0, 'next-token-1'))
         .mockResolvedValueOnce(createListAssetsPage(1, 10, 'next-token-2'))
         .mockResolvedValueOnce(createListAssetsPage(1, 20));
-      render(<AssetExplorer variant='drop-down' requestFns={{ listAssets }} />);
+      render(
+        <AssetExplorer variant='drop-down' iotSiteWiseClient={{ listAssets }} />
+      );
 
       // First page is requested without opening the drop-down
       expect(listAssets).toHaveBeenCalledOnce();
@@ -128,7 +134,7 @@ describe('asset drop-down', () => {
       render(
         <AssetExplorer
           variant='drop-down'
-          requestFns={{ listAssets }}
+          iotSiteWiseClient={{ listAssets }}
           parameters={[
             { assetModelId: 'asset-model-id-1' },
             { assetModelId: 'asset-model-id-2' },
@@ -320,7 +326,7 @@ describe('asset drop-down', () => {
       render(
         <AssetExplorer
           variant='drop-down'
-          requestFns={{ listAssets }}
+          iotSiteWiseClient={{ listAssets }}
           dropDownSettings={{
             isFilterEnabled: true,
           }}

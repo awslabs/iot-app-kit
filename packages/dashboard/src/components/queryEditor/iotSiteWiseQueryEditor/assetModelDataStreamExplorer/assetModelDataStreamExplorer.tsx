@@ -30,14 +30,14 @@ import { AssetResource } from '@iot-app-kit/react-components';
 import { useAssetsForAssetModel } from './assetsForAssetModelSelect/useAssetsForAssetModel/useAssetsForAssetModel';
 
 export interface AssetModelDataStreamExplorerProps {
-  client: IoTSiteWise;
+  iotSiteWiseClient: IoTSiteWise;
   selectedWidgets: DashboardWidget[];
   addButtonDisabled: boolean;
   correctSelectionMode: 'single' | 'multi';
 }
 
 export const AssetModelDataStreamExplorer = ({
-  client,
+  iotSiteWiseClient,
   selectedWidgets,
   addButtonDisabled,
   correctSelectionMode,
@@ -52,7 +52,7 @@ export const AssetModelDataStreamExplorer = ({
 
   const { assetSummaries } = useAssetsForAssetModel({
     assetModelId,
-    client,
+    iotSiteWiseClient,
     fetchAll: true,
   });
 
@@ -122,7 +122,7 @@ export const AssetModelDataStreamExplorer = ({
   };
 
   const assetModelPropertiesExplorerProps = {
-    client,
+    iotSiteWiseClient,
     selectedAsset,
     selectAssetModelProperties,
     selectedAssetModelProperties,
@@ -134,7 +134,7 @@ export const AssetModelDataStreamExplorer = ({
     <Box padding={{ horizontal: 's' }}>
       <AssetModelExplorer
         onResetSelectedAssetModel={onReset}
-        client={client}
+        iotSiteWiseClient={iotSiteWiseClient}
         selectedAssetModel={selectedAssetModel}
         setSelectedAssetModel={selectAssetModel}
         selectedAsset={selectedAsset}

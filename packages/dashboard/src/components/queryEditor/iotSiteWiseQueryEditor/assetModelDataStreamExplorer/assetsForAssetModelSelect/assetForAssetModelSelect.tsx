@@ -15,18 +15,18 @@ export type AssetForAssetModelSelectOptions = {
   selectedAsset: SelectedAsset;
   selectedAssetModel: SelectedAssetModel;
   onSelectAsset: UpdateSelectedAsset;
-  client: IoTSiteWise;
+  iotSiteWiseClient: IoTSiteWise;
 };
 
 export const AssetForAssetModelSelect = ({
-  client,
+  iotSiteWiseClient,
   selectedAsset,
   selectedAssetModel,
   onSelectAsset,
 }: AssetForAssetModelSelectOptions) => {
   return (
     <AssetExplorer
-      requestFns={client}
+      iotSiteWiseClient={iotSiteWiseClient}
       parameters={selectedAssetModel}
       variant='drop-down'
       onSelectAsset={onSelectAsset}

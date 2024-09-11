@@ -20,7 +20,7 @@ function SelectableAssetTable({
 
   return (
     <AssetExplorer
-      requestFns={{ listAssets }}
+      iotSiteWiseClient={{ listAssets }}
       selectionMode={selectionMode}
       selectedAssets={selectedAssets}
       onSelectAsset={setSelectedAssets}
@@ -98,7 +98,7 @@ describe('asset table', () => {
       const listAssets = jest.fn().mockResolvedValue({
         assetSummaries: [asset1WithHierarchy, asset2, asset3],
       });
-      render(<AssetExplorer requestFns={{ listAssets }} />);
+      render(<AssetExplorer iotSiteWiseClient={{ listAssets }} />);
 
       await table.waitForLoadingToFinish();
 
@@ -133,7 +133,7 @@ describe('asset table', () => {
   describe('requests', () => {
     it('requests a single page of assets correctly', async () => {
       const listAssets = jest.fn().mockResolvedValue(createListAssetsPage(3));
-      render(<AssetExplorer requestFns={{ listAssets }} />);
+      render(<AssetExplorer iotSiteWiseClient={{ listAssets }} />);
 
       await table.waitForLoadingToFinish();
 
@@ -151,7 +151,10 @@ describe('asset table', () => {
         .mockResolvedValueOnce(createListAssetsPage(10, 0, 'next-token'))
         .mockResolvedValueOnce(createListAssetsPage(10, 10));
       render(
-        <AssetExplorer defaultPageSize={10} requestFns={{ listAssets }} />
+        <AssetExplorer
+          defaultPageSize={10}
+          iotSiteWiseClient={{ listAssets }}
+        />
       );
 
       await table.waitForLoadingToFinish();
@@ -193,7 +196,7 @@ describe('asset table', () => {
       render(
         <AssetExplorer
           defaultPageSize={10}
-          requestFns={{ listAssociatedAssets }}
+          iotSiteWiseClient={{ listAssociatedAssets }}
           parameters={[{ assetId: 'asset-id-1' }, { assetId: 'asset-id-2' }]}
         />
       );
@@ -251,7 +254,7 @@ describe('asset table', () => {
         >);
       render(
         <AssetExplorer
-          requestFns={{ executeQuery }}
+          iotSiteWiseClient={{ executeQuery }}
           tableSettings={{ isSearchEnabled: true }}
         />
       );
@@ -300,7 +303,7 @@ describe('asset table', () => {
       } satisfies Awaited<ReturnType<ExecuteQuery>>);
       render(
         <AssetExplorer
-          requestFns={{ executeQuery }}
+          iotSiteWiseClient={{ executeQuery }}
           tableSettings={{ isSearchEnabled: true }}
         />
       );
@@ -369,7 +372,7 @@ describe('asset table', () => {
       } satisfies Awaited<ReturnType<ExecuteQuery>>);
       render(
         <AssetExplorer
-          requestFns={{ executeQuery }}
+          iotSiteWiseClient={{ executeQuery }}
           parameters={[{ searchStatement: 'Asset' }]}
           tableSettings={{ isSearchEnabled: true }}
         />
@@ -415,7 +418,7 @@ describe('asset table', () => {
         >);
       render(
         <AssetExplorer
-          requestFns={{ executeQuery }}
+          iotSiteWiseClient={{ executeQuery }}
           tableSettings={{ isSearchEnabled: true }}
         />
       );
@@ -563,7 +566,7 @@ describe('asset table', () => {
       render(
         <AssetExplorer
           tableSettings={{ isFilterEnabled: true }}
-          requestFns={{ listAssets }}
+          iotSiteWiseClient={{ listAssets }}
         />
       );
 
@@ -599,7 +602,7 @@ describe('asset table', () => {
       render(
         <AssetExplorer
           tableSettings={{ isFilterEnabled: true }}
-          requestFns={{ listAssets }}
+          iotSiteWiseClient={{ listAssets }}
         />
       );
 

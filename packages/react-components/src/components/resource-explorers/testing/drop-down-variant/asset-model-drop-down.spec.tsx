@@ -24,7 +24,7 @@ function SelectableAssetModelDropDown({
   return (
     <AssetModelExplorer
       variant='drop-down'
-      requestFns={{ listAssetModels }}
+      iotSiteWiseClient={{ listAssetModels }}
       selectionMode={selectionMode}
       selectedAssetModels={selectedAssetModels}
       onSelectAssetModel={setSelectedAssetModels}
@@ -69,7 +69,7 @@ describe('asset model drop-down', () => {
       render(
         <AssetModelExplorer
           variant='drop-down'
-          requestFns={{ listAssetModels }}
+          iotSiteWiseClient={{ listAssetModels }}
         />
       );
 
@@ -104,7 +104,7 @@ describe('asset model drop-down', () => {
       render(
         <AssetModelExplorer
           variant='drop-down'
-          requestFns={{ listAssetModels }}
+          iotSiteWiseClient={{ listAssetModels }}
         />
       );
 
@@ -124,7 +124,7 @@ describe('asset model drop-down', () => {
       render(
         <AssetModelExplorer
           variant='drop-down'
-          requestFns={{ listAssetModels }}
+          iotSiteWiseClient={{ listAssetModels }}
         />
       );
 
@@ -150,7 +150,7 @@ describe('asset model drop-down', () => {
       render(
         <AssetModelExplorer
           variant='drop-down'
-          requestFns={{ listAssetModels }}
+          iotSiteWiseClient={{ listAssetModels }}
           parameters={[
             { assetModelTypes: ['ASSET_MODEL'] },
             { assetModelTypes: ['COMPONENT_MODEL'] },
@@ -355,7 +355,7 @@ describe('asset model drop-down', () => {
       render(
         <AssetModelExplorer
           variant='drop-down'
-          requestFns={{ listAssetModels }}
+          iotSiteWiseClient={{ listAssetModels }}
           dropDownSettings={{
             isFilterEnabled: true,
           }}
