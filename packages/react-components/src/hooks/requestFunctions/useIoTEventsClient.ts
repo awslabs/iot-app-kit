@@ -26,7 +26,7 @@ export function useIoTEventsClient({
       } as IoTEvents;
     }
 
-    return iotEventsClient;
+    return iotEventsClient ?? {};
   }, [iotEventsClient]);
 
   return iotEvents as IoTEvents;
