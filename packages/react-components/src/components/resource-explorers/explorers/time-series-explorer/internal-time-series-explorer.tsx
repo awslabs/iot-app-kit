@@ -26,9 +26,12 @@ import {
 import type { TimeSeriesResource } from '../../types/resources';
 import {
   DEFAULT_TIME_SERIES_TABLE_DEFINITION,
-  DEFAULT_TIME_SERIES_WITH_LATEST_VALUES_TABLE_DEFINITION,
+  createDefaultLatestValuesTableDefinition,
 } from '../../constants/table-resource-definitions';
 import { DEFAULT_TIME_SERIES_DROP_DOWN_DEFINITION } from '../../constants/drop-down-resource-definitions';
+import { TableResourceDefinition } from '../../types/table';
+import { formatDate } from '../../../../utils/time';
+import { isNumeric, round } from '@iot-app-kit/core-util';
 
 export function InternalTimeSeriesExplorer({
   requestFns,
@@ -42,12 +45,8 @@ export function InternalTimeSeriesExplorer({
   defaultPageSize = DEFAULT_DEFAULT_PAGE_SIZE,
   variant = DEFAULT_RESOURCE_EXPLORER_VARIANT,
   shouldPersistUserCustomization = DEFAULT_SHOULD_PERSIST_USER_CUSTOMIZATION,
-  tableResourceDefinition = requestFns?.batchGetAssetPropertyValue !== undefined
-    ? DEFAULT_TIME_SERIES_WITH_LATEST_VALUES_TABLE_DEFINITION
-    : DEFAULT_TIME_SERIES_TABLE_DEFINITION,
-  defaultTableUserSettings = createDefaultTableUserSettings(
-    tableResourceDefinition
-  ),
+  tableResourceDefinition: customTableResourceDefinition,
+  defaultTableUserSettings: customDefaultTableUserSettings,
   tableSettings: {
     isTitleEnabled = DEFAULT_IS_TABLE_ENABLED,
     isFilterEnabled: isTableFilterEnabled = DEFAULT_IS_TABLE_FILTER_ENABLED,
@@ -56,7 +55,42 @@ export function InternalTimeSeriesExplorer({
   dropDownResourceDefinition = DEFAULT_TIME_SERIES_DROP_DOWN_DEFINITION,
   dropDownSettings: { isFilterEnabled: isDropDownFilterEnabled = false } = {},
   description = '',
+  timeZone,
+  significantDigits,
 }: TimeSeriesExplorerProps) {
+  const tableResourceDefinition =
+    customTableResourceDefinition ??
+    requestFns?.batchGetAssetPropertyValue !== undefined
+      ? ([
+          ...DEFAULT_TIME_SERIES_TABLE_DEFINITION,
+          ...createDefaultLatestValuesTableDefinition(
+            (latestValueResource) => {
+              return latestValueResource.latestValueTimestamp
+                ? formatDate(latestValueResource.latestValueTimestamp * 1000, {
+                    timeZone,
+                  })
+                : '-';
+            },
+            (latestValueResource) => {
+              if (
+                latestValueResource.latestValue &&
+                isNumeric(latestValueResource.latestValue)
+              ) {
+                return round(
+                  latestValueResource.latestValue,
+                  significantDigits
+                );
+              }
+              return latestValueResource.latestValue;
+            }
+          ),
+        ] as TableResourceDefinition<TimeSeriesResource>)
+      : DEFAULT_TIME_SERIES_TABLE_DEFINITION;
+
+  const defaultTableUserSettings =
+    customDefaultTableUserSettings ??
+    createDefaultTableUserSettings(tableResourceDefinition);
+
   const [userCustomization, setUserCutomization] = useUserCustomization({
     resourceName,
     defaultPageSize,

@@ -9,6 +9,7 @@ import { BatchGetAssetPropertyValue, ListTimeSeries } from '@iot-app-kit/core';
 import { TimeSeriesResource } from '../../types/resources';
 import { SelectionMode } from '../../types/common';
 import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';
+import { formatDate } from '../../../../utils/time';
 
 function SelectableTimeSeriesTable({
   selectionMode,
@@ -361,26 +362,26 @@ describe('time series table', () => {
       ).toBeVisible();
       expect(
         screen.getByText(
-          new Date(
+          formatDate(
             timeSeries1SuccessEntry.assetPropertyValue.timestamp.timeInSeconds *
               1000
-          ).toLocaleString()
+          )
         )
       ).toBeVisible();
       expect(
         screen.getByText(
-          new Date(
+          formatDate(
             timeSeries2SuccessEntry.assetPropertyValue.timestamp.timeInSeconds *
               1000
-          ).toLocaleString()
+          )
         )
       ).toBeVisible();
       expect(
         screen.getByText(
-          new Date(
+          formatDate(
             timeSeries3SuccessEntry.assetPropertyValue.timestamp.timeInSeconds *
               1000
-          ).toLocaleString()
+          )
         )
       ).toBeVisible();
     });
