@@ -22,6 +22,8 @@ import {
   DEFAULT_SELECTION_MODE,
   DEFAULT_SHOULD_PERSIST_USER_CUSTOMIZATION,
   createDefaultTableUserSettings,
+  latestValueCellRenderer,
+  latestValueTimeCellRenderer,
 } from '../../constants/defaults';
 import { AssetPropertyResource } from '../../types/resources';
 import {
@@ -31,8 +33,6 @@ import {
 import { DEFAULT_ASSET_PROPERTY_DROP_DOWN_DEFINITION } from '../../constants/drop-down-resource-definitions';
 import { useUserCustomization } from '../../helpers/use-user-customization';
 import { TableResourceDefinition } from '../../types/table';
-import { formatDate } from '../../../../utils/time';
-import { isNumeric, round } from '@iot-app-kit/core-util';
 
 export function InternalAssetPropertyExplorer({
   requestFns,
@@ -67,25 +67,8 @@ export function InternalAssetPropertyExplorer({
       ? ([
           ...DEFAULT_ASSET_PROPERTY_TABLE_DEFINITION,
           ...createDefaultLatestValuesTableDefinition(
-            (latestValueResource) => {
-              return latestValueResource.latestValueTimestamp
-                ? formatDate(latestValueResource.latestValueTimestamp * 1000, {
-                    timeZone,
-                  })
-                : '-';
-            },
-            (latestValueResource) => {
-              if (
-                latestValueResource.latestValue &&
-                isNumeric(latestValueResource.latestValue)
-              ) {
-                return round(
-                  latestValueResource.latestValue,
-                  significantDigits
-                );
-              }
-              return latestValueResource.latestValue;
-            }
+            latestValueTimeCellRenderer(timeZone),
+            latestValueCellRenderer(significantDigits)
           ),
         ] as TableResourceDefinition<AssetPropertyResource>)
       : DEFAULT_ASSET_PROPERTY_TABLE_DEFINITION;

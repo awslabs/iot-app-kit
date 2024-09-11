@@ -22,6 +22,8 @@ import {
   DEFAULT_SELECTION_MODE,
   DEFAULT_SHOULD_PERSIST_USER_CUSTOMIZATION,
   DEFAULT_TIME_SERIES_RESOURCE_NAME,
+  latestValueCellRenderer,
+  latestValueTimeCellRenderer,
 } from '../../constants/defaults';
 import type { TimeSeriesResource } from '../../types/resources';
 import {
@@ -30,8 +32,6 @@ import {
 } from '../../constants/table-resource-definitions';
 import { DEFAULT_TIME_SERIES_DROP_DOWN_DEFINITION } from '../../constants/drop-down-resource-definitions';
 import { TableResourceDefinition } from '../../types/table';
-import { formatDate } from '../../../../utils/time';
-import { isNumeric, round } from '@iot-app-kit/core-util';
 
 export function InternalTimeSeriesExplorer({
   requestFns,
@@ -64,25 +64,8 @@ export function InternalTimeSeriesExplorer({
       ? ([
           ...DEFAULT_TIME_SERIES_TABLE_DEFINITION,
           ...createDefaultLatestValuesTableDefinition(
-            (latestValueResource) => {
-              return latestValueResource.latestValueTimestamp
-                ? formatDate(latestValueResource.latestValueTimestamp * 1000, {
-                    timeZone,
-                  })
-                : '-';
-            },
-            (latestValueResource) => {
-              if (
-                latestValueResource.latestValue &&
-                isNumeric(latestValueResource.latestValue)
-              ) {
-                return round(
-                  latestValueResource.latestValue,
-                  significantDigits
-                );
-              }
-              return latestValueResource.latestValue;
-            }
+            latestValueTimeCellRenderer(timeZone),
+            latestValueCellRenderer(significantDigits)
           ),
         ] as TableResourceDefinition<TimeSeriesResource>)
       : DEFAULT_TIME_SERIES_TABLE_DEFINITION;
