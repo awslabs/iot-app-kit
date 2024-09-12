@@ -34,6 +34,8 @@ export interface AssetModelDataStreamExplorerProps {
   selectedWidgets: DashboardWidget[];
   addButtonDisabled: boolean;
   correctSelectionMode: 'single' | 'multi';
+  timeZone?: string;
+  significantDigits?: number;
 }
 
 export const AssetModelDataStreamExplorer = ({
@@ -41,6 +43,8 @@ export const AssetModelDataStreamExplorer = ({
   selectedWidgets,
   addButtonDisabled,
   correctSelectionMode,
+  timeZone,
+  significantDigits,
 }: AssetModelDataStreamExplorerProps) => {
   const metricsRecorder = getPlugin('metricsRecorder');
   const {
@@ -128,6 +132,8 @@ export const AssetModelDataStreamExplorer = ({
     selectedAssetModelProperties,
     correctSelectionMode,
     selectedWidgets,
+    timeZone,
+    significantDigits,
   };
 
   return (
