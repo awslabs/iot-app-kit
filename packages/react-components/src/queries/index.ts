@@ -7,3 +7,4 @@ export * from './useTimeSeriesData';
 export * from './useDescribeAssets';
 export * from './useDescribeAssetModels';
 export * from './useLatestAssetPropertyValues';
+export * from './useDescribeAlarmModels';

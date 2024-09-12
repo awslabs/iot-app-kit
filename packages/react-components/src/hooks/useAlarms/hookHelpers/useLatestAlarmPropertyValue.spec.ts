@@ -11,10 +11,10 @@ import {
   iotSiteWiseClientMock,
   mockAlarmDataDescribeAsset,
   mockAlarmDataDescribeAsset2,
-  mockDefaultAlarmSource,
-  mockDefaultAlarmState,
-  mockDefaultAlarmType,
-  mockStringAssetPropertyValue,
+  mockSourceAssetPropertyValue,
+  mockStateAssetPropertyValue,
+  mockStateAssetPropertyValue2,
+  mockTypeAssetPropertyValue,
 } from '../../../testing/alarms';
 import { AlarmData } from '../types';
 import { useLatestAlarmPropertyValue } from './useLatestAlarmPropertyValue';
@@ -31,15 +31,6 @@ const mockBatchGetAssetPropertyValue = ({
   skippedEntries: [],
 });
 
-const expectedStateAssetProperty = mockStringAssetPropertyValue(
-  mockDefaultAlarmState
-);
-const expectedTypeAssetProperty =
-  mockStringAssetPropertyValue(mockDefaultAlarmType);
-const expectedSourceAssetProperty = mockStringAssetPropertyValue(
-  mockDefaultAlarmSource
-);
-
 describe('useLatestAlarmPropertyValue', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -53,7 +44,7 @@ describe('useLatestAlarmPropertyValue', () => {
           successEntries: [
             {
               entryId: request.entries![0].entryId,
-              assetPropertyValue: expectedStateAssetProperty,
+              assetPropertyValue: mockStateAssetPropertyValue,
             },
           ],
         });
@@ -64,7 +55,7 @@ describe('useLatestAlarmPropertyValue', () => {
       ...mockAlarmDataDescribeAsset,
       state: {
         ...mockAlarmDataDescribeAsset.state!,
-        data: [expectedStateAssetProperty],
+        data: [mockStateAssetPropertyValue],
       },
     };
 
@@ -91,7 +82,7 @@ describe('useLatestAlarmPropertyValue', () => {
           successEntries: [
             {
               entryId: request.entries![0].entryId,
-              assetPropertyValue: expectedTypeAssetProperty,
+              assetPropertyValue: mockTypeAssetPropertyValue,
             },
           ],
         });
@@ -102,7 +93,7 @@ describe('useLatestAlarmPropertyValue', () => {
       ...mockAlarmDataDescribeAsset,
       type: {
         ...mockAlarmDataDescribeAsset.type!,
-        data: [expectedTypeAssetProperty],
+        data: [mockTypeAssetPropertyValue],
       },
     };
 
@@ -129,7 +120,7 @@ describe('useLatestAlarmPropertyValue', () => {
           successEntries: [
             {
               entryId: request.entries![0].entryId,
-              assetPropertyValue: expectedSourceAssetProperty,
+              assetPropertyValue: mockSourceAssetPropertyValue,
             },
           ],
         });
@@ -140,7 +131,7 @@ describe('useLatestAlarmPropertyValue', () => {
       ...mockAlarmDataDescribeAsset,
       source: {
         ...mockAlarmDataDescribeAsset.source!,
-        data: [expectedSourceAssetProperty],
+        data: [mockSourceAssetPropertyValue],
       },
     };
 
@@ -202,19 +193,17 @@ describe('useLatestAlarmPropertyValue', () => {
   });
 
   it('should return AlarmData with latest state property value for multiple alarms', async () => {
-    const expectedStateAssetProperty2 = mockStringAssetPropertyValue('ACTIVE');
-
     batchGetAssetPropertyValueMock.mockImplementation(
       (request: BatchGetAssetPropertyValueRequest) => {
         return mockBatchGetAssetPropertyValue({
           successEntries: [
             {
               entryId: request.entries![0].entryId,
-              assetPropertyValue: expectedStateAssetProperty,
+              assetPropertyValue: mockStateAssetPropertyValue,
             },
             {
               entryId: request.entries![1].entryId,
-              assetPropertyValue: expectedStateAssetProperty2,
+              assetPropertyValue: mockStateAssetPropertyValue2,
             },
           ],
         });
@@ -225,7 +214,7 @@ describe('useLatestAlarmPropertyValue', () => {
       ...mockAlarmDataDescribeAsset,
       state: {
         ...mockAlarmDataDescribeAsset.state!,
-        data: [expectedStateAssetProperty],
+        data: [mockStateAssetPropertyValue],
       },
     };
 
@@ -233,7 +222,7 @@ describe('useLatestAlarmPropertyValue', () => {
       ...mockAlarmDataDescribeAsset2,
       state: {
         ...mockAlarmDataDescribeAsset2.state!,
-        data: [expectedStateAssetProperty2],
+        data: [mockStateAssetPropertyValue2],
       },
     };
 
@@ -256,6 +245,4 @@ describe('useLatestAlarmPropertyValue', () => {
 
     expect(batchGetAssetPropertyValueMock).toBeCalledTimes(1);
   });
-
-  it('should overwrite the status of AlarmData when queries fail', async () => {});
 });
