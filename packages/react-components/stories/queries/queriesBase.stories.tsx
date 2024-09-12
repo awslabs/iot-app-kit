@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import type { FC } from 'react';
-import { getSiteWiseClient } from '@iot-app-kit/core-util';
+import { getIotEventsClient, getSiteWiseClient } from '@iot-app-kit/core-util';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import {
   queryClient,
@@ -38,6 +38,11 @@ const client = getSiteWiseClient({
   awsRegion: getRegion(),
 });
 
+const iotEventsClient = getIotEventsClient({
+  awsCredentials: getEnvCredentials(),
+  awsRegion: getRegion(),
+});
+
 const RenderQueries = ({ json }: { json: unknown }) => {
   return (
     <div>
@@ -66,6 +71,7 @@ export default {
 export const UseAlarms: ComponentStory<FC> = () => {
   const alarmDataList = useAlarms({
     iotSiteWiseClient: client,
+    iotEventsClient,
     requests: [
       {
         assetId: ASSET_ID,

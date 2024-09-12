@@ -11,7 +11,7 @@ import { DescribeAssetCacheKeyFactory } from '../useDescribeAsset/describeAssetQ
 import { queryClient } from '../queryClient';
 import { hasRequestFunction, isAssetId } from '../predicates';
 import { useIoTSiteWiseClient } from '../../hooks/requestFunctions/useIoTSiteWiseClient';
-import { QueryOptionsGlobal } from '../useLatestAssetPropertyValues';
+import { QueryOptionsGlobal } from '../common/types';
 
 export type UseDescribeAssetsOptions = {
   iotSiteWiseClient?: IoTSiteWiseClient | IoTSiteWise;
