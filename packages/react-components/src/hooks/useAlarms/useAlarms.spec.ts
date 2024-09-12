@@ -6,12 +6,20 @@ import {
   MOCK_COMPOSITE_MODEL_ID,
   iotSiteWiseClientMock,
   mockAlarmDataDescribeAsset,
+  mockAlarmDataGetAssetPropertyValue,
+  mockStateAssetPropertyValue,
 } from '../../testing/alarms';
-import * as hooks from './hookHelpers';
+import * as alarmAssetHook from './hookHelpers/useAlarmAssets';
+import * as alarmCompositeProp from './hookHelpers/useLatestAlarmPropertyValue';
 
-jest.mock('./hookHelpers');
+jest.mock('./hookHelpers/useAlarmAssets');
+jest.mock('./hookHelpers/useLatestAlarmPropertyValue');
 
-const useAlarmAssetsMock = jest.spyOn(hooks, 'useAlarmAssets');
+const useAlarmAssetsMock = jest.spyOn(alarmAssetHook, 'useAlarmAssets');
+const useLatestAlarmPropertyValueMock = jest.spyOn(
+  alarmCompositeProp,
+  'useLatestAlarmPropertyValue'
+);
 
 describe('useAlarms', () => {
   beforeEach(() => {
@@ -20,6 +28,9 @@ describe('useAlarms', () => {
 
   it('should not transform AlarmData when no transform function supplied', async () => {
     useAlarmAssetsMock.mockReturnValue([mockAlarmDataDescribeAsset]);
+    useLatestAlarmPropertyValueMock.mockReturnValue([
+      mockAlarmDataGetAssetPropertyValue,
+    ]);
 
     const { result: alarmResults } = renderHook(() =>
       useAlarms({
@@ -34,20 +45,27 @@ describe('useAlarms', () => {
     );
 
     await waitFor(() =>
-      expect(alarmResults.current).toMatchObject([mockAlarmDataDescribeAsset])
+      expect(alarmResults.current).toMatchObject([
+        mockAlarmDataGetAssetPropertyValue,
+      ])
     );
 
     expect(useAlarmAssetsMock).toBeCalled();
+    expect(useLatestAlarmPropertyValueMock).toBeCalledTimes(3);
   });
 
   it('should transform AlarmData according to supplied transform function', async () => {
     useAlarmAssetsMock.mockReturnValue([mockAlarmDataDescribeAsset]);
+    useLatestAlarmPropertyValueMock.mockReturnValue([
+      mockAlarmDataGetAssetPropertyValue,
+    ]);
 
     const transform = (alarmData: AlarmData): AlarmProperty | undefined =>
       alarmData.state;
 
     const expectedStateProperty: AlarmProperty = {
       property: mockAlarmDataDescribeAsset.state!.property,
+      data: [mockStateAssetPropertyValue],
     };
 
     const { result: alarmResults } = renderHook(() =>
@@ -68,5 +86,6 @@ describe('useAlarms', () => {
     );
 
     expect(useAlarmAssetsMock).toBeCalled();
+    expect(useLatestAlarmPropertyValueMock).toBeCalledTimes(3);
   });
 });

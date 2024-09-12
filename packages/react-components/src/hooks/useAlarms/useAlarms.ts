@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { SetRequired } from 'type-fest';
 import {
   AlarmData,
@@ -5,6 +6,7 @@ import {
   UseAlarmOptionsWithoutTransform,
 } from './types';
 import { useAlarmAssets } from './hookHelpers';
+import { useLatestAlarmPropertyValue } from './hookHelpers/useLatestAlarmPropertyValue';
 
 /**
  * Identify function that returns the input AlarmData.
@@ -43,9 +45,31 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     requests,
   });
 
-  return transform
-    ? assetAlarmData?.map(transform)
-    : assetAlarmData?.map(alarmDataIdentity);
+  const statePropertyAlarmData = useLatestAlarmPropertyValue({
+    iotSiteWiseClient,
+    alarmDataList: assetAlarmData,
+    alarmPropertyFieldName: 'state',
+  });
+
+  const typePropertyAlarmData = useLatestAlarmPropertyValue({
+    iotSiteWiseClient,
+    alarmDataList: statePropertyAlarmData,
+    alarmPropertyFieldName: 'type',
+  });
+
+  const sourcePropertyAlarmData = useLatestAlarmPropertyValue({
+    iotSiteWiseClient,
+    alarmDataList: typePropertyAlarmData,
+    alarmPropertyFieldName: 'source',
+  });
+
+  return useMemo(
+    () =>
+      transform
+        ? sourcePropertyAlarmData?.map(transform)
+        : sourcePropertyAlarmData?.map(alarmDataIdentity),
+    [transform, sourcePropertyAlarmData]
+  );
 }
 
 export { useAlarms };

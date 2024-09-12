@@ -19,7 +19,7 @@ describe('useDescribeAssets', () => {
     const { result: queriesResult } = renderHook(() =>
       useDescribeAssets({
         iotSiteWiseClient: iotSiteWiseClientMock,
-        describeAssetRequests: [{ assetId: MOCK_ASSET_ID }],
+        requests: [{ assetId: MOCK_ASSET_ID }],
       })
     );
 
@@ -33,7 +33,7 @@ describe('useDescribeAssets', () => {
     const { result: queriesResult } = renderHook(() =>
       useDescribeAssets({
         iotSiteWiseClient: iotSiteWiseClientMock,
-        describeAssetRequests: [],
+        requests: [],
       })
     );
 
@@ -47,7 +47,7 @@ describe('useDescribeAssets', () => {
     const { result: queriesResult } = renderHook(() =>
       useDescribeAssets({
         iotSiteWiseClient: iotSiteWiseClientMock,
-        describeAssetRequests: [
+        requests: [
           { assetId: MOCK_ASSET_ID },
           undefined,
           { assetId: MOCK_ASSET_ID_2 },
@@ -71,7 +71,7 @@ describe('useDescribeAssets', () => {
     const { result: queriesResult } = renderHook(() =>
       useDescribeAssets({
         iotSiteWiseClient: iotSiteWiseClientMock,
-        describeAssetRequests: [{ assetId: MOCK_ASSET_ID }],
+        requests: [{ assetId: MOCK_ASSET_ID }],
         retry: false,
       })
     );
