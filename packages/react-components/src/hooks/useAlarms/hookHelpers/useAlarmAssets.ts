@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { AlarmData, AlarmRequest } from '../types';
 import { useDescribeAssetModels, useDescribeAssets } from '../../../queries';
@@ -26,45 +27,54 @@ export function useAlarmAssets({
   requests = [],
 }: UseAlarmAssetsOptions): AlarmData[] {
   // Fetch an asset model for request with an assetModelId
-  const assetModelRequests = requests.filter(isAssetModelRequest) ?? [];
+  const assetModelRequests = requests.filter(isAssetModelRequest);
   const assetModelQueries = useDescribeAssetModels({
     iotSiteWiseClient,
-    describeAssetModelRequests: assetModelRequests,
+    requests: assetModelRequests,
   });
-  const assetModelResponses = assetModelQueries.map((query) => query.data);
 
   // Fetch an asset for each request with an assetId
-  const assetRequests = requests.filter(isAssetRequest) ?? [];
+  const assetRequests = requests.filter(isAssetRequest);
   const assetQueries = useDescribeAssets({
     iotSiteWiseClient,
-    describeAssetRequests: assetRequests,
+    requests: assetRequests,
   });
-  const assetResponses = assetQueries.map((query) => query.data);
 
   // Build AlarmData for all alarms from assetModels
-  const assetModelAlarms = assetModelRequests
-    ?.map((request, index) => {
-      const status = getStatusForQuery(assetModelQueries[index]);
-      return buildFromAssetModelResponse({
-        request,
-        status,
-        assetModelResponse: assetModelResponses[index],
-      });
-    })
-    .flat();
+  const assetModelAlarms = useMemo(
+    () =>
+      assetModelRequests
+        .map((request, index) => {
+          const status = getStatusForQuery(assetModelQueries[index]);
+          return buildFromAssetModelResponse({
+            request,
+            status,
+            assetModelResponse: assetModelQueries[index].data,
+          });
+        })
+        .flat(),
+    [assetModelRequests, assetModelQueries]
+  );
 
   // Build AlarmData for all alarms from assets
-  const assetAlarms = assetRequests
-    ?.map((request, index) => {
-      const status = getStatusForQuery(assetQueries[index]);
-      return buildFromAssetResponse({
-        request,
-        status,
-        assetResponse: assetResponses[index],
-      });
-    })
-    .flat();
+  const assetAlarms = useMemo(
+    () =>
+      assetRequests
+        .map((request, index) => {
+          const status = getStatusForQuery(assetQueries[index]);
+          return buildFromAssetResponse({
+            request,
+            status,
+            assetResponse: assetQueries[index].data,
+          });
+        })
+        .flat(),
+    [assetRequests, assetQueries]
+  );
 
   // We will not maintain the order of alarms based on the requests
-  return [...assetModelAlarms, ...assetAlarms];
+  return useMemo(
+    () => [...assetModelAlarms, ...assetAlarms],
+    [assetModelAlarms, assetAlarms]
+  );
 }

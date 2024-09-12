@@ -14,12 +14,15 @@ import {
   mockSourceAssetModelProperty,
   mockSourceAssetProperty,
   mockSourceAssetProperty2,
+  mockSourceAssetPropertyValue,
   mockStateAssetModelProperty,
   mockStateAssetProperty,
   mockStateAssetProperty2,
+  mockStateAssetPropertyValue,
   mockTypeAssetModelProperty,
   mockTypeAssetProperty,
   mockTypeAssetProperty2,
+  mockTypeAssetPropertyValue,
 } from './mockProperties';
 
 export const mockAlarmDataDescribeAsset: AlarmData = {
@@ -108,5 +111,21 @@ export const mockAlarmDataDescribeAssetModel: AlarmData = {
     isError: false,
     isRefetching: false,
     isSuccess: true,
+  },
+};
+
+export const mockAlarmDataGetAssetPropertyValue: AlarmData = {
+  ...mockAlarmDataDescribeAsset,
+  state: {
+    property: mockStateAssetProperty,
+    data: [mockStateAssetPropertyValue],
+  },
+  type: {
+    property: mockTypeAssetProperty,
+    data: [mockTypeAssetPropertyValue],
+  },
+  source: {
+    property: mockSourceAssetProperty,
+    data: [mockSourceAssetPropertyValue],
   },
 };
