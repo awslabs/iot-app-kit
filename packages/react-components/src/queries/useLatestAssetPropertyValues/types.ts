@@ -5,7 +5,7 @@ import {
   RequestResponse,
 } from '@iot-app-kit/core';
 import { UseIoTSiteWiseClientOptions } from '../../hooks/requestFunctions/useIoTSiteWiseClient';
-import { UseQueryOptions } from '@tanstack/react-query';
+import { QueryOptionsGlobal } from '../common/types';
 
 export type QueryFnClient = {
   getAssetPropertyValue?: GetAssetPropertyValue;
@@ -16,8 +16,6 @@ export type LatestAssetPropertyValueRequest =
   RequestParameters<GetAssetPropertyValue>;
 export type LatestAssetPropertyValueResponse =
   RequestResponse<GetAssetPropertyValue>;
-
-export type QueryOptionsGlobal = Pick<UseQueryOptions, 'retry'>;
 
 export type UseLatestAssetPropertyValuesOptions =
   UseIoTSiteWiseClientOptions & {

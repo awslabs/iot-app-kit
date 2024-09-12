@@ -5,6 +5,9 @@ import {
   RequestResponse,
 } from '@iot-app-kit/core';
 
+export const isAlarmModelId = (alarmModelId?: string): alarmModelId is string =>
+  Boolean(alarmModelId);
+
 export const isAssetId = (assetId?: string): assetId is string =>
   Boolean(assetId);
 

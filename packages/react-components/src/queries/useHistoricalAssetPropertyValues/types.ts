@@ -6,7 +6,7 @@ import {
   Viewport,
 } from '@iot-app-kit/core';
 import { UseIoTSiteWiseClientOptions } from '../../hooks/requestFunctions/useIoTSiteWiseClient';
-import { UseQueryOptions } from '@tanstack/react-query';
+import { QueryOptionsGlobal } from '../common/types';
 
 export type QueryFnClient = {
   getAssetPropertyValueHistory?: GetAssetPropertyValueHistory;
@@ -20,8 +20,6 @@ export type HistoricalAssetPropertyValueRequest = Omit<
 
 export type HistoricalAssetPropertyValueResponse =
   RequestResponse<GetAssetPropertyValueHistory>;
-
-export type QueryOptionsGlobal = Pick<UseQueryOptions, 'retry'>;
 
 export type UseHistoricalAssetPropertyValuesOptions =
   UseIoTSiteWiseClientOptions & {

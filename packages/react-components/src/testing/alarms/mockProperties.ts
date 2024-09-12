@@ -8,7 +8,11 @@ import {
   ALARM_STATE_PROPERTY_NAME,
   ALARM_TYPE_PROPERTY_NAME,
 } from '../../hooks/useAlarms/constants';
-import { MOCK_ALARM_INPUT_PROPERTY_ID } from './mockIds';
+import {
+  MOCK_ALARM_INPUT_PROPERTY_ID,
+  MOCK_ALARM_INPUT_PROPERTY_ID_2,
+} from './mockIds';
+import { mockAlarmModelArn, mockAlarmModelArn2 } from './mockAlarmModel';
 
 export const mockStateAssetProperty: AssetProperty = {
   id: 'stateId',
@@ -47,6 +51,7 @@ export const mockSourceAssetProperty2: AssetProperty = {
 };
 
 export const mockDefaultAlarmState = 'NORMAL';
+export const mockDefaultAlarmState2 = 'ACTIVE';
 export const mockStateAssetModelProperty: AssetModelProperty = {
   ...mockStateAssetProperty,
   type: {
@@ -66,12 +71,11 @@ export const mockTypeAssetModelProperty: AssetModelProperty = {
   },
 };
 
-export const mockDefaultAlarmSource = 'alarmModelArn';
 export const mockSourceAssetModelProperty: AssetModelProperty = {
   ...mockSourceAssetProperty,
   type: {
     attribute: {
-      defaultValue: mockDefaultAlarmSource,
+      defaultValue: mockAlarmModelArn,
     },
   },
 };
@@ -79,6 +83,12 @@ export const mockSourceAssetModelProperty: AssetModelProperty = {
 export const mockInputProperty: AssetProperty = {
   id: MOCK_ALARM_INPUT_PROPERTY_ID,
   name: 'inputPropertyName',
+  dataType: 'STRING',
+};
+
+export const mockInputProperty2: AssetProperty = {
+  id: MOCK_ALARM_INPUT_PROPERTY_ID_2,
+  name: 'inputPropertyName2',
   dataType: 'STRING',
 };
 
@@ -100,4 +110,9 @@ export const mockStateAssetPropertyValue: AssetPropertyValue =
 export const mockTypeAssetPropertyValue: AssetPropertyValue =
   mockStringAssetPropertyValue(mockDefaultAlarmType);
 export const mockSourceAssetPropertyValue: AssetPropertyValue =
-  mockStringAssetPropertyValue(mockDefaultAlarmSource);
+  mockStringAssetPropertyValue(mockAlarmModelArn);
+
+export const mockStateAssetPropertyValue2: AssetPropertyValue =
+  mockStringAssetPropertyValue(mockDefaultAlarmState2);
+export const mockSourceAssetPropertyValue2: AssetPropertyValue =
+  mockStringAssetPropertyValue(mockAlarmModelArn2);

@@ -1,5 +1,10 @@
 import { AlarmData } from '../../hooks/useAlarms';
 import {
+  mockAlarmModel,
+  mockAlarmModel2,
+  mockAlarmModelArn,
+} from './mockAlarmModel';
+import {
   MOCK_ASSET_ID,
   MOCK_ASSET_MODEL_ID,
   MOCK_COMPOSITE_MODEL_ID,
@@ -8,17 +13,18 @@ import {
   MOCK_COMPOSITE_MODEL_NAME_2,
 } from './mockIds';
 import {
-  mockDefaultAlarmSource,
   mockDefaultAlarmState,
   mockDefaultAlarmType,
   mockSourceAssetModelProperty,
   mockSourceAssetProperty,
   mockSourceAssetProperty2,
   mockSourceAssetPropertyValue,
+  mockSourceAssetPropertyValue2,
   mockStateAssetModelProperty,
   mockStateAssetProperty,
   mockStateAssetProperty2,
   mockStateAssetPropertyValue,
+  mockStateAssetPropertyValue2,
   mockTypeAssetModelProperty,
   mockTypeAssetProperty,
   mockTypeAssetProperty2,
@@ -100,7 +106,7 @@ export const mockAlarmDataDescribeAssetModel: AlarmData = {
     data: [
       {
         value: {
-          stringValue: mockDefaultAlarmSource,
+          stringValue: mockAlarmModelArn,
         },
         timestamp: undefined,
       },
@@ -128,4 +134,29 @@ export const mockAlarmDataGetAssetPropertyValue: AlarmData = {
     property: mockSourceAssetProperty,
     data: [mockSourceAssetPropertyValue],
   },
+};
+
+export const mockAlarmDataGetAssetPropertyValue2: AlarmData = {
+  ...mockAlarmDataDescribeAsset2,
+  state: {
+    property: mockStateAssetProperty2,
+    data: [mockStateAssetPropertyValue2],
+  },
+  type: {
+    property: mockTypeAssetProperty2,
+    data: [mockTypeAssetPropertyValue],
+  },
+  source: {
+    property: mockSourceAssetProperty2,
+    data: [mockSourceAssetPropertyValue2],
+  },
+};
+
+export const mockAlarmDataDescribeAlarmModel: AlarmData = {
+  ...mockAlarmDataGetAssetPropertyValue,
+  models: [mockAlarmModel],
+};
+export const mockAlarmDataDescribeAlarmModel2: AlarmData = {
+  ...mockAlarmDataGetAssetPropertyValue2,
+  models: [mockAlarmModel2],
 };
