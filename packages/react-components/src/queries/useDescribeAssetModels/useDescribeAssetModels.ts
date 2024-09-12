@@ -15,7 +15,7 @@ import { QueryOptionsGlobal } from '../useLatestAssetPropertyValues';
 
 export type UseDescribeAssetModelsOptions = {
   iotSiteWiseClient?: IoTSiteWiseClient | IoTSiteWise;
-  describeAssetModelRequests?: (DescribeAssetModelRequest | undefined)[];
+  requests?: (DescribeAssetModelRequest | undefined)[];
 } & QueryOptionsGlobal;
 
 /**
@@ -23,12 +23,12 @@ export type UseDescribeAssetModelsOptions = {
  * AssetModelIds may not be defined in the list, which will disable its query
  *
  * @param iotSiteWiseClient is an AWS SDK IoT SiteWise client
- * @param describeAssetModelRequests is a list of DescribeAssetModel requests
+ * @param requests is a list of DescribeAssetModel requests
  * @returns list of tanstack query results with a DescribeAssetModelResponse
  */
 export function useDescribeAssetModels({
   iotSiteWiseClient,
-  describeAssetModelRequests = [],
+  requests = [],
   retry,
 }: UseDescribeAssetModelsOptions) {
   const { describeAssetModel } = useIoTSiteWiseClient({ iotSiteWiseClient });
@@ -36,7 +36,7 @@ export function useDescribeAssetModels({
   // Memoize the queries to ensure they don't rerun if the same assetModelIds are used on a rerender
   const queries = useMemo(
     () =>
-      describeAssetModelRequests.map((describeAssetModelRequest) => {
+      requests.map((describeAssetModelRequest) => {
         const cacheKeyFactory = new DescribeAssetModelCacheKeyFactory({
           ...describeAssetModelRequest,
         });
@@ -50,7 +50,7 @@ export function useDescribeAssetModels({
           retry,
         };
       }),
-    [describeAssetModelRequests, describeAssetModel, retry]
+    [requests, describeAssetModel, retry]
   );
 
   return useQueries({ queries }, queryClient);
