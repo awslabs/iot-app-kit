@@ -20,6 +20,7 @@ import {
 } from '../../common/constants';
 import { AxisSettings, ChartSize } from '../../common/chartTypes';
 import { AssistantProperty } from '../../common/assistantProps';
+import { Title, getAdjustedChartHeight } from '../../common/title';
 
 const HOUR_IN_MS = 1000 * 60 * 60;
 const DAY_IN_MS = HOUR_IN_MS * 24;
@@ -38,6 +39,7 @@ export interface BarChartProps {
   gestures?: boolean;
   significantDigits?: number;
   assistant?: AssistantProperty;
+  titleText?: string;
 }
 
 export const BarChart = (props: BarChartProps) => {
@@ -51,6 +53,7 @@ export const BarChart = (props: BarChartProps) => {
     thresholdSettings,
     aggregationType,
     styles,
+    chartSize,
     ...rest
   } = props;
 
@@ -80,26 +83,39 @@ export const BarChart = (props: BarChartProps) => {
       ? viewport
       : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
 
+  const getAdjustedChartSize = () => {
+    if (!chartSize) return undefined;
+
+    return {
+      ...chartSize,
+      height: getAdjustedChartHeight(!!rest.titleText, chartSize.height),
+    };
+  };
+
   return (
-    <BarChartBase
-      widgetId=''
-      dataStreams={dataStreams as DataStreamViz[]}
-      axis={{
-        showX: axis?.showX ?? true,
-        showY: axis?.showY ?? true,
-        labels: { yAxis: { content: axis?.yAxisLabel || '' } },
-      }}
-      viewport={{ ...utilizedViewport, group, lastUpdatedBy, yMin, yMax }}
-      setViewport={setViewport}
-      annotations={{
-        y: allThresholds as YAnnotation[],
-        thresholdOptions: {
-          showColor: thresholdSettings?.colorBreachedData ?? true,
-        },
-      }}
-      aggregationType={aggregationType}
-      legend={DEFAULT_LEGEND}
-      {...rest}
-    />
+    <div style={{ height: 'inherit' }}>
+      <Title text={rest.titleText} style={{ paddingLeft: '1rem' }} />
+      <BarChartBase
+        widgetId=''
+        dataStreams={dataStreams as DataStreamViz[]}
+        axis={{
+          showX: axis?.showX ?? true,
+          showY: axis?.showY ?? true,
+          labels: { yAxis: { content: axis?.yAxisLabel || '' } },
+        }}
+        viewport={{ ...utilizedViewport, group, lastUpdatedBy, yMin, yMax }}
+        setViewport={setViewport}
+        annotations={{
+          y: allThresholds as YAnnotation[],
+          thresholdOptions: {
+            showColor: thresholdSettings?.colorBreachedData ?? true,
+          },
+        }}
+        aggregationType={aggregationType}
+        legend={DEFAULT_LEGEND}
+        size={getAdjustedChartSize()}
+        {...rest}
+      />
+    </div>
   );
 };

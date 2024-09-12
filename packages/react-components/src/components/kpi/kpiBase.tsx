@@ -3,7 +3,6 @@ import Alert from '@cloudscape-design/components/alert';
 import Spinner from '@cloudscape-design/components/spinner';
 import Box from '@cloudscape-design/components/box';
 import omitBy from 'lodash.omitby';
-
 import { DEFAULT_KPI_SETTINGS } from './constants';
 import { Value } from '../shared-components';
 import type { KPIBaseProperties, KPISettings } from './types';
@@ -17,6 +16,7 @@ import {
 import { DataQualityText } from '../data-quality/data-quality-text';
 import { DEFAULT_DECIMAL_PLACES } from '../../common/constants';
 import { formatDate } from '../../utils/time';
+import { Title } from '../../common/title';
 
 export const KpiBase: React.FC<KPIBaseProperties> = ({
   propertyPoint,
@@ -30,6 +30,7 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
   significantDigits = DEFAULT_DECIMAL_PLACES,
   propertyThreshold,
   timeZone,
+  titleText,
 }) => {
   const {
     showUnit,
@@ -66,6 +67,16 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     aggregationType
   );
 
+  const getTitle = () => {
+    if (titleText) {
+      return titleText;
+    } else {
+      const prefix = isLoading ? '-' : showName && name ? name : '';
+      const suffix = showUnit && !isLoading && unit ? `(${unit})` : '';
+      return `${prefix}${prefix ? ' ' : ''}${suffix}`;
+    }
+  };
+
   if (error) {
     return (
       <div
@@ -77,6 +88,11 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
           color: nonThresholdFontColor,
         }}
       >
+        <Title
+          data-testid='kpi-name-and-unit'
+          text={getTitle()}
+          style={{ fontSize: `${secondaryFontSize}px`, color: fontColor }}
+        />
         {error && (
           <Box margin={{ vertical: 's', horizontal: 's' }}>
             <Alert statusIconAriaLabel='Error' type='error'>
@@ -88,17 +104,6 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     );
   }
 
-  const nameAndUnit = (showName || showUnit) && (
-    <div
-      className='property-name'
-      data-testid='kpi-name-and-unit'
-      style={{ fontSize: `${secondaryFontSize}px`, color: fontColor }}
-    >
-      {showName && <span>{isLoading ? '-' : name} </span>}
-      {showUnit && <span>{!isLoading && unit && `(${unit})`}</span>}
-    </div>
-  );
-
   return (
     <div
       className='kpi-container'
@@ -107,7 +112,15 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     >
       <div className='kpi'>
         <div>
-          {nameAndUnit}
+          <Title
+            data-testid='kpi-name-and-unit'
+            text={getTitle()}
+            style={{
+              fontSize: `${secondaryFontSize}px`,
+              color: fontColor,
+              paddingLeft: '0.5rem',
+            }}
+          />
           <div
             className='value'
             data-testid='kpi-value'

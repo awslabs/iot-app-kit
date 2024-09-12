@@ -39,13 +39,17 @@ const Page = () => (
 );
 ```
 
-## Scene Composer Properties
+## Status Timeline Properties
 
 The Scene Composer component contains the following properties:
 
 #### viewport (object, optional): 
 
 This attribute specifies the interval of time the widget visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
+
+#### titleText (string, optional): 
+This specifies the title for the status timeline component. Default value is `undefined`.
+
 If there is no ViewportManager, and no `viewport` defined, the default viewport will be `{ duration: '10d' }`.
 Learn more about [viewport](/docs/core-viewport--docs).
 

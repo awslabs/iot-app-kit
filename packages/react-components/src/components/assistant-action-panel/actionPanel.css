@@ -1,7 +1,6 @@
 @import url("@cloudscape-design/global-styles/index.css");
 
 .assistant-action-panel {
-  position: absolute;
   display: flex;
   flex-direction: column;
 

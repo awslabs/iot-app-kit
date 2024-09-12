@@ -28,6 +28,7 @@ export const KPIHiddenSettings = () => {
             showTimestamp: false,
             showUnit: false,
             showAggregationAndResolution: false,
+            fontSize: 50,
           }}
         />
       </div>

@@ -45,6 +45,7 @@ export const DefaultKPI: ComponentStory<typeof KPI> = ({ settings }) => {
           viewport={VIEWPORT}
           query={MOCK_TIME_SERIES_DATA_QUERY}
           settings={settings}
+          titleText='KPI Title (Unit)'
         />
       </div>
       <div style={{ height: '200px', width: '250px', padding: '20px' }}>

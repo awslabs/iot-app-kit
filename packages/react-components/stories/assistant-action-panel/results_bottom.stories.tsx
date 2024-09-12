@@ -17,7 +17,7 @@ const customViewports = {
 };
 
 export default {
-  title: 'Widgets/Assistant Result Panel',
+  title: 'Widgets/Assistant Action Panel',
   component: Chart,
   argTypes: {
     showAllVisualizationTypes: {
@@ -43,7 +43,7 @@ export default {
   },
 } as ComponentMeta<typeof Chart>;
 
-export const OpenAtTheBottom = () => {
+export const ResultsOnTheBottom = () => {
   const client = new IoTSitewiseAssistantClient({
     iotSiteWiseClient: {
       invokeAssistant: MockInvokeAssistant,

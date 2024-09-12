@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, renderHook } from '@testing-library/react';
+import { screen, render, renderHook } from '@testing-library/react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { Gauge } from './gauge';
@@ -56,4 +56,10 @@ it('Gauge pass context to the assistant', () => {
   const context = result.current.getAllAssistantContext();
   expect(context).toContain('timerange');
   expect(context).toContain('queries');
+});
+
+it('Gauge should render title', () => {
+  render(<Gauge query={query} viewport={VIEWPORT} titleText='Gauge Title' />);
+
+  expect(screen.getByText('Gauge Title')).toBeInTheDocument();
 });

@@ -7,6 +7,7 @@ import { useResizableGauge } from './hooks/useResizableGauge';
 import { GaugeErrorText } from './gaugeErrorText';
 import { GaugeText } from './gaugeText';
 import './gauge.css';
+import { Title } from '../../common/title';
 
 /**
  * Renders a base gauge component.
@@ -31,6 +32,7 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
   isLoading,
   significantDigits,
   error,
+  titleText,
   ...options
 }) => {
   const gaugeValue = propertyPoint?.y;
@@ -66,7 +68,12 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
       data-testid={
         !error ? 'gauge-base-component' : 'gauge-base-component-error'
       }
+      style={{
+        width: size?.width,
+        height: size?.height,
+      }}
     >
+      <Title text={titleText} />
       <div
         ref={ref}
         className='gauge-base'
@@ -83,6 +90,7 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
           name={name}
           error={error}
           quality={quality}
+          titleText={titleText}
         />
       )}
     </div>

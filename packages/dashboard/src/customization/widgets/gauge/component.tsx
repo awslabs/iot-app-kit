@@ -44,7 +44,7 @@ const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
   if (shouldShowEmptyState) {
     return (
       <WidgetTile widget={widget}>
-        <GaugeWidgetEmptyStateComponent />
+        <GaugeWidgetEmptyStateComponent title={title} />
       </WidgetTile>
     );
   }
@@ -70,7 +70,7 @@ const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
   const size = { width: chartSize.width - 8, height: chartSize.height - 44 };
 
   return (
-    <WidgetTile widget={widget} title={title} key={key}>
+    <WidgetTile widget={widget} key={key}>
       <Gauge
         size={size}
         query={queries[0]}
@@ -80,16 +80,20 @@ const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
         thresholds={thresholds}
         significantDigits={significantDigits}
         assistant={assistant}
+        titleText={title}
       />
     </WidgetTile>
   );
 };
 
-const GaugeWidgetEmptyStateComponent: React.FC = () => {
+type GaugeWidgetEmptyStateComponentProps = { title?: string };
+const GaugeWidgetEmptyStateComponent: React.FC<
+  GaugeWidgetEmptyStateComponentProps
+> = ({ title = 'Gauge' }: GaugeWidgetEmptyStateComponentProps) => {
   return (
     <div className='gauge-widget-empty-state'>
       <Box variant='strong' color='text-status-inactive' margin='s'>
-        Gauge
+        {title}
       </Box>
 
       <div className='gauge-widget-empty-state-message-container'>

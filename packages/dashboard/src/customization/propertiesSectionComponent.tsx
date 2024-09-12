@@ -6,7 +6,7 @@ import {
 } from './propertiesSection';
 
 export type PropertiesSectionProps<W extends DashboardWidget> = {
-  isVisible: FilterPredicate<W>;
+  isVisible?: FilterPredicate<W> | undefined;
   render: RenderSection<W>;
 };
 

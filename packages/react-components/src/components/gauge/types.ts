@@ -13,6 +13,7 @@ export type GaugeProps = {
   query: TimeSeriesDataQuery;
   viewport?: Viewport;
   thresholds?: Threshold[];
+  titleText?: string;
   styles?: StyleSettingsMap;
   settings?: GaugeSettings;
   significantDigits?: number;

@@ -23,6 +23,7 @@ export const Gauge = ({
   query,
   viewport: passedInViewport,
   thresholds = [],
+  titleText,
   styles,
   settings,
   significantDigits,
@@ -79,6 +80,7 @@ export const Gauge = ({
       propertyPoint={propertyPoint}
       name={name}
       unit={unit}
+      titleText={titleText}
       isLoading={isLoading}
       error={error?.msg}
       settings={{ ...DEFAULT_GAUGE_STYLES, ...settings, color }}
@@ -93,6 +95,7 @@ export const Gauge = ({
       <ActionPanel
         width='min-content'
         height='min-content'
+        iconPosition={titleText ? 'topRight' : 'topLeft'}
         componentId={componentId}
         assistant={assistant}
       >

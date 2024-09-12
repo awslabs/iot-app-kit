@@ -10,6 +10,7 @@ import { GaugeSettings } from '../../src/components/gauge/types';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import useDataStore from '../../src/store';
 import { MockInvokeAssistant } from '../assistant-chatbot/mockAPI';
+import { getTimeSeriesDataQuery } from '../utils/query';
 
 export default {
   title: 'Widgets/Assistant Action Panel',
@@ -73,7 +74,7 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
   const storeState = useDataStore.getState();
   storeState.clearAssistantState();
   return (
-    <div style={{ padding: '80px 20px' }}>
+    <div>
       <Gauge
         viewport={{ duration: '5m' }}
         size={size}
@@ -84,6 +85,7 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
           client,
           conversationID: crypto.randomUUID(),
         }}
+        titleText='Avg Speed'
       />
       <div
         style={{
@@ -115,8 +117,33 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
             client,
             conversationID: crypto.randomUUID(),
           }}
+          titleText='Avg Speed'
         />
       </div>
+      <hr />
+      <Gauge
+        viewport={{ duration: '5m' }}
+        size={size}
+        significantDigits={significantDigits}
+        query={getTimeSeriesDataQuery()}
+        settings={
+          {
+            gaugeThickness: 30,
+            showName: true,
+            showUnit: true,
+            fontSize: 40,
+            labelFontSize: 16,
+            unitFontSize: 16,
+            yMin: 0,
+            yMax: 100,
+          } as GaugeSettings
+        }
+        assistant={{
+          client,
+          conversationID: crypto.randomUUID(),
+        }}
+        titleText='Connected Gauge'
+      />
     </div>
   );
 };

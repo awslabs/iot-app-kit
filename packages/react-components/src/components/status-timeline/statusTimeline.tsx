@@ -21,6 +21,7 @@ import {
   DEFAULT_VIEWPORT,
   ECHARTS_GESTURE,
 } from '../../common/constants';
+import { Title } from '../../common/title';
 
 // TODO: Remove this type assertion - iot-app-kit/charts has the wrong type for StatusTimeline
 const StatusTimelineBase: typeof LineChart =
@@ -45,6 +46,7 @@ export const StatusTimeline = ({
   gestures?: boolean;
   significantDigits?: number;
   assistant?: AssistantProperty;
+  titleText?: string;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
@@ -67,15 +69,18 @@ export const StatusTimeline = ({
       : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
 
   return (
-    <StatusTimelineBase
-      aggregationType={aggregationType}
-      widgetId=''
-      dataStreams={dataStreams as DataStreamViz[]}
-      viewport={{ ...utilizedViewport, group, lastUpdatedBy }}
-      annotations={{ y: allThresholds } as Annotations}
-      setViewport={setViewport}
-      legend={DEFAULT_LEGEND}
-      {...rest}
-    />
+    <div style={{ height: 'inherit' }}>
+      <Title text={rest.titleText} />
+      <StatusTimelineBase
+        aggregationType={aggregationType}
+        widgetId=''
+        dataStreams={dataStreams as DataStreamViz[]}
+        viewport={{ ...utilizedViewport, group, lastUpdatedBy }}
+        annotations={{ y: allThresholds } as Annotations}
+        setViewport={setViewport}
+        legend={DEFAULT_LEGEND}
+        {...rest}
+      />
+    </div>
   );
 };

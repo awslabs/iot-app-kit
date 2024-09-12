@@ -48,7 +48,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (
   }
 
   return (
-    <WidgetTile widget={widget} title={title} key={key}>
+    <WidgetTile widget={widget} key={key}>
       <StatusTimeline
         queries={queries}
         viewport={viewport}
@@ -57,6 +57,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (
         thresholds={thresholds}
         aggregationType={aggregateToString(aggregation)}
         significantDigits={significantDigits}
+        titleText={title}
       />
     </WidgetTile>
   );

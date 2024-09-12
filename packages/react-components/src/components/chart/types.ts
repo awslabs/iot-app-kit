@@ -117,7 +117,6 @@ export type ChartOptions = {
   onChartOptionsChange?: (
     options: Pick<ChartOptions, 'legend' | 'dataQuality'>
   ) => void;
-  /** @deprecated */
   titleText?: string;
   timeZone?: string;
 };

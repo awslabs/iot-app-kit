@@ -10,11 +10,13 @@ export const GaugeText = ({
   quality,
   name,
   settings,
+  titleText,
 }: {
   error?: string;
   quality?: Quality;
   name?: string;
   settings?: GaugeSettings;
+  titleText?: string;
 }) => {
   if (error || (!quality && !name)) {
     return null;
@@ -26,7 +28,10 @@ export const GaugeText = ({
   return (
     <div
       className='gauge-text-container'
-      style={{ bottom: hasVisibleName && hasVisibleQuality ? '12%' : '20%' }}
+      style={{
+        bottom:
+          (hasVisibleName && hasVisibleQuality) || titleText ? '8%' : '20%',
+      }}
     >
       <div
         className='gauge-info-text'

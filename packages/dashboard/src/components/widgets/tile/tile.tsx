@@ -20,7 +20,7 @@ export type WidgetTileProps = PropsWithChildren<{
  * Component to add functionality to the widget container
  * Allows a user to title a widget for bar and status-timeline
  */
-const WidgetTile: React.FC<WidgetTileProps> = ({ widget, title, children }) => {
+const WidgetTile: React.FC<WidgetTileProps> = ({ title, children }) => {
   const titleComponentWithoutBorder = title ? (
     <div
       style={{
@@ -29,19 +29,13 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ widget, title, children }) => {
     >
       <Box
         padding={{ horizontal: 's', top: 'xs' }}
-        color='text-body-secondary'
-        fontSize='heading-m'
+        fontSize='heading-s'
         fontWeight='bold'
       >
         <div className='widget-tile-header'>{title}</div>
       </Box>
     </div>
   ) : null;
-
-  // temporary solution for fixing title
-  // once gestures are correctly handled, we can move
-  // the title back into the react-components
-  const widgetsWithTitle = ['gauge', 'xy-plot', 'bar-chart', 'status-timeline'];
 
   return (
     <div
@@ -53,7 +47,7 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ widget, title, children }) => {
       }}
     >
       <div className='widget-tile-body'>
-        {widgetsWithTitle.includes(widget.type) && titleComponentWithoutBorder}
+        {titleComponentWithoutBorder}
         {children}
       </div>
     </div>

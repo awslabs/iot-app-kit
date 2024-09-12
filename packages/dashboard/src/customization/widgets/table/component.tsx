@@ -59,6 +59,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
     thresholds,
     significantDigits: widgetSignificantDigits,
     styleSettings,
+    title,
   } = widget.properties;
 
   const queries = useQueries(queryConfig.query);
@@ -113,6 +114,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
         }}
       >
         <Table
+          titleText={title}
           resizableColumns
           key={key}
           queries={queries}

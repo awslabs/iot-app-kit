@@ -17,7 +17,7 @@ export default {
       control: { type: 'object' },
       defaultValue: {
         gaugeThickness: 30,
-        showName: false,
+        showName: true,
         showUnit: true,
         fontSize: 40,
         labelFontSize: 16,
@@ -65,6 +65,7 @@ export const ConnectedGuage: ComponentStory<typeof Gauge> = ({ settings }) => {
         viewport={viewport}
         query={getTimeSeriesDataQuery()}
         settings={settings}
+        titleText='Average Speed'
       />
     </div>
   );

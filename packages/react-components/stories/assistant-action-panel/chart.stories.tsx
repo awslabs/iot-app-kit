@@ -48,6 +48,7 @@ export const BaseChart = () => {
         defaultVisualizationType='line'
         viewport={VIEWPORT}
         queries={[MOCK_TIME_SERIES_DATA_QUERY]}
+        titleText='Data streams'
         assistant={{
           client,
           conversationID: crypto.randomUUID(),

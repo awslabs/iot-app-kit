@@ -7,7 +7,7 @@ import useDataStore from '../../src/store';
 import { MockInvokeAssistant } from '../assistant-chatbot/mockAPI';
 
 export default {
-  title: 'Widgets/Assistant Result Panel',
+  title: 'Widgets/Assistant Action Panel',
   component: Chart,
   argTypes: {
     showAllVisualizationTypes: {
@@ -30,7 +30,7 @@ export default {
   },
 } as ComponentMeta<typeof Chart>;
 
-export const OpenAtTheRight = () => {
+export const ResultsOnTheRight = () => {
   const client = new IoTSitewiseAssistantClient({
     iotSiteWiseClient: {
       invokeAssistant: MockInvokeAssistant,
@@ -57,7 +57,7 @@ export const OpenAtTheRight = () => {
   );
 };
 
-export const OpenAtTheLeft = () => {
+export const ResultsOnTheLeft = () => {
   const client = new IoTSitewiseAssistantClient({
     iotSiteWiseClient: {
       invokeAssistant: MockInvokeAssistant,
@@ -69,7 +69,7 @@ export const OpenAtTheLeft = () => {
   storeState.clearAssistantState();
 
   return (
-    <div style={{ padding: '80px 16px', width: '800px' }}>
+    <div style={{ padding: '80px 16px', width: '1400px' }}>
       <div style={{ float: 'right' }}>
         <Chart
           id='line-chart'

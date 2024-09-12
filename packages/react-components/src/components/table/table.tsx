@@ -14,6 +14,7 @@ import { createTableItems } from './createTableItems';
 import { DEFAULT_TABLE_MESSAGES } from './messages';
 import { TableProps as TableBaseProps } from '@cloudscape-design/components';
 import { AssistantProperty } from '../../common/assistantProps';
+import { Title } from '../../common/title';
 
 const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
 
@@ -43,6 +44,7 @@ export const Table = ({
   paginationEnabled?: boolean;
   pageSize?: number;
   assistant?: AssistantProperty;
+  titleText?: string;
 } & Pick<
   TableBaseProps,
   | 'resizableColumns'
@@ -73,9 +75,21 @@ export const Table = ({
     DEFAULT_TABLE_MESSAGES
   );
 
+  const renderHeader = () => {
+    if (!props.titleText) return undefined;
+
+    return (
+      <Title
+        text={`${props.titleText} (${itemsWithData.length})`}
+        style={{ padding: 0 }}
+      />
+    );
+  };
+
   return (
     <TableBase
       {...props}
+      header={renderHeader()}
       items={itemsWithData}
       sorting={sorting}
       columnDefinitions={columnDefinitions}

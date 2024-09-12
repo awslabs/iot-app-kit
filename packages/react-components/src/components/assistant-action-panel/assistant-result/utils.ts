@@ -35,13 +35,14 @@ export const calculatePanelPosition = (
       };
     }
     case 'left': {
-      const leftPos = (actionPanelDimensions?.left || 0) - MAX_WIDTH;
+      let leftPos = (actionPanelDimensions?.left || 0) - MAX_WIDTH;
       let width = MAX_WIDTH;
       if (leftPos < 0) {
         width = MIN_WIDTH;
+        leftPos = (actionPanelDimensions?.left || 0) - MIN_WIDTH;
       }
       return {
-        left: `${width * -1}px`,
+        left: `${leftPos}px`,
         width: `${width}px`,
       };
     }

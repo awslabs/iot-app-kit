@@ -39,6 +39,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     thresholds,
     significantDigits: widgetSignificantDigits,
     assistant,
+    title,
   } = widget.properties;
 
   const queries = useQueries(queryConfig.query);
@@ -50,7 +51,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   if (shouldShowEmptyState) {
     return (
       <WidgetTile widget={widget}>
-        <KPIWidgetEmptyStateComponent />
+        <KPIWidgetEmptyStateComponent title={title} />
       </WidgetTile>
     );
   }
@@ -87,16 +88,20 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
         significantDigits={significantDigits}
         timeZone={dashboardTimeZone}
         assistant={assistant}
+        titleText={title}
       />
     </WidgetTile>
   );
 };
 
-const KPIWidgetEmptyStateComponent: React.FC = () => {
+type KPIWidgetEmptyStateComponentProps = { title?: string };
+const KPIWidgetEmptyStateComponent: React.FC<
+  KPIWidgetEmptyStateComponentProps
+> = ({ title = 'KPI' }: KPIWidgetEmptyStateComponentProps) => {
   return (
     <div className='kpi-widget-empty-state'>
       <Box variant='strong' color='text-status-inactive' margin='s'>
-        KPI
+        {title}
       </Box>
 
       <div className='kpi-widget-empty-state-message-container'>

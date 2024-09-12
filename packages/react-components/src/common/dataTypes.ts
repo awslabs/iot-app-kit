@@ -68,4 +68,5 @@ export type WidgetSettings = {
   significantDigits?: number;
   assetName?: string;
   propertyName?: string;
+  titleText?: string;
 };

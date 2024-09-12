@@ -2,7 +2,7 @@ import React from 'react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { DataStream } from '@iot-app-kit/core';
-import { render, renderHook } from '@testing-library/react';
+import { screen, render, renderHook } from '@testing-library/react';
 import { Chart } from '../index';
 import { ChartLegend } from '../types';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
@@ -79,6 +79,21 @@ describe('Chart Component Testing', () => {
         />
       );
     }).not.toThrowError();
+  });
+
+  it('Chart should render title', () => {
+    render(
+      <Chart
+        queries={[mockQuery]}
+        onChartOptionsChange={jest.fn()}
+        viewport={VIEWPORT}
+        size={{ width: 500, height: 500 }}
+        id='componentId'
+        titleText='Chart Title'
+      />
+    );
+
+    expect(screen.getByText('Chart Title')).toBeInTheDocument();
   });
 
   it('Chart pass context to the assistant', () => {

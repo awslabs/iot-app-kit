@@ -22,6 +22,7 @@ export const KPI = ({
   query,
   viewport: passedInViewport,
   thresholds = [],
+  titleText,
   styles,
   settings,
   significantDigits,
@@ -31,6 +32,7 @@ export const KPI = ({
   query: TimeSeriesDataQuery;
   viewport?: Viewport;
   thresholds?: StyledThreshold[];
+  titleText?: string;
   styles?: StyleSettingsMap;
   aggregationType?: string;
   settings?: Partial<KPISettings>;
@@ -98,6 +100,7 @@ export const KPI = ({
       error={error?.msg}
       significantDigits={significantDigits}
       timeZone={timeZone}
+      titleText={titleText}
     />
   );
 

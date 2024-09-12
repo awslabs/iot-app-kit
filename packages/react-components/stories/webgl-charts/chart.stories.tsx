@@ -5,6 +5,7 @@ import {
   MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY,
   VIEWPORT,
 } from '../chart/mock-data';
+import { MOCK_TIME_SERIES_DATA_QUERY as MOCK_TIME_SERIES_DATA_QUERY_ONE } from '../kpi/kpi-thresholds';
 // Should be part of the public API, i.e. exported from src
 import {
   LineChart,
@@ -86,12 +87,27 @@ export const ScatterChartExample: ComponentStory<typeof ScatterChart> = () => {
 
 export const BarChartExample: ComponentStory<typeof BarChart> = () => {
   return (
-    <div id='story-container' style={{ width: '500px', height: '300px' }}>
-      <BarChart
-        viewport={VIEWPORT}
-        queries={[MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY]}
-      />
-      <WebglContext />
+    <div
+      id='story-container'
+      style={{
+        width: '500px',
+        height: '320px',
+        backgroundColor: 'grey',
+        padding: '20px',
+      }}
+    >
+      <div
+        id='story-container'
+        style={{ width: '500px', height: '300px', backgroundColor: 'white' }}
+      >
+        <BarChart
+          viewport={VIEWPORT}
+          queries={[MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY]}
+          titleText='Bar Chart Title'
+          chartSize={{ height: 300, width: 500 }}
+        />
+        <WebglContext />
+      </div>
     </div>
   );
 };
@@ -104,6 +120,12 @@ export const StatusTimelineExample: ComponentStory<
       <StatusTimeline
         viewport={VIEWPORT}
         queries={[MOCK_TIME_SERIES_DATA_QUERY]}
+        titleText='Status Timeline Title'
+      />
+      <StatusTimeline
+        viewport={VIEWPORT}
+        queries={[MOCK_TIME_SERIES_DATA_QUERY_ONE]}
+        titleText='Status Timeline Title'
       />
       <WebglContext />
     </div>
