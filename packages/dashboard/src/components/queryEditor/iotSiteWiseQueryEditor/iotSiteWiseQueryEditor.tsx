@@ -74,6 +74,8 @@ export function IoTSiteWiseQueryEditor({
         correctSelectionMode={correctSelectionMode}
         addButtonDisabled={addButtonDisabled}
         selectedWidgets={selectedWidgets}
+        timeZone={timeZone}
+        significantDigits={significantDigits}
       />
     ),
   };

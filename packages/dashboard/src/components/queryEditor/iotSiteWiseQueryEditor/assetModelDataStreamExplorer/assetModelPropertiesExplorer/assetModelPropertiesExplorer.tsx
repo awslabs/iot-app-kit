@@ -17,6 +17,8 @@ export interface AssetExplorerProps {
   selectedAsset: SelectedAsset;
   selectAssetModelProperties: UpdateSelectedAssetModelProperties;
   selectedWidgets: DashboardWidget[];
+  timeZone?: string;
+  significantDigits?: number;
 }
 
 export const AssetModelPropertiesExplorer = ({
@@ -25,6 +27,8 @@ export const AssetModelPropertiesExplorer = ({
   selectedAssetModelProperties,
   selectAssetModelProperties,
   selectedWidgets,
+  timeZone,
+  significantDigits,
 }: AssetExplorerProps) => {
   return (
     <AssetPropertyExplorer
@@ -49,6 +53,8 @@ export const AssetModelPropertiesExplorer = ({
             selectedWidgets
           ),
       }}
+      timeZone={timeZone}
+      significantDigits={significantDigits}
     />
   );
 };
