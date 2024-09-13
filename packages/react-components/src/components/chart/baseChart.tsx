@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { MouseEvent } from 'react';
 import {
   colorBorderDividerSecondary,
@@ -64,8 +64,10 @@ const BaseChart = ({
   timeZone,
   ...options
 }: ChartOptions) => {
-  // Set timezone for use in sub components
-  useDataStore.getState().setTimeZone(timeZone);
+  useEffect(() => {
+    // Set timezone for use in sub components
+    useDataStore.getState().setTimeZone(timeZone);
+  }, [timeZone]);
 
   const {
     visible: dataQualityPreferencesVisible,

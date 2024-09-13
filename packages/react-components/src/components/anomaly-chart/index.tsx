@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AnomalyChartOptions } from './types';
 import {
   AnomalyObjectDataSourceTransformer,
@@ -68,8 +68,10 @@ export const AnomalyChart = (options: AnomalyChartOptions) => {
     timeZone,
   });
 
-  // Set timezone for use in sub components
-  useDataStore.getState().setTimeZone(timeZone);
+  useEffect(() => {
+    // Set timezone for use in sub components
+    useDataStore.getState().setTimeZone(timeZone);
+  }, [timeZone]);
 
   return (
     <div
