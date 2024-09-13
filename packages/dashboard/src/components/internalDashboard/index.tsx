@@ -314,6 +314,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   const EditComponent = (
     <ContentLayout
       disableOverlap
+      headerVariant='high-contrast'
       header={
         <DashboardHeader
           editable={editable}
@@ -393,6 +394,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   const ReadOnlyComponent = (
     <ContentLayout
       disableOverlap
+      headerVariant='high-contrast'
       header={
         <DashboardHeader
           editable={editable}
