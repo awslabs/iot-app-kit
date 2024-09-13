@@ -1,12 +1,12 @@
 import { Viewport } from '@iot-app-kit/core';
-import { HistoricalAssetPropertyValueRequest } from './types';
+import { FetchMode, HistoricalAssetPropertyValueRequest } from './types';
 import { Quality, TimeOrdering } from '@aws-sdk/client-iotsitewise';
 
 export const HISTORICAL_ASSET_PROPERTY_VALUE_RESOURCE_KEY =
   'historical asset property value';
 
 type HistoricalAssetPropertyValueKeyFactoryOptions =
-  HistoricalAssetPropertyValueRequest & { refreshRate?: number };
+  HistoricalAssetPropertyValueRequest;
 
 export class HistoricalAssetPropertyValueKeyFactory {
   #assetId?: string;
@@ -16,6 +16,8 @@ export class HistoricalAssetPropertyValueKeyFactory {
   #timeOrdering?: TimeOrdering;
 
   #viewport?: Viewport;
+  #maxNumberOfValues?: number;
+  #fetchMode?: FetchMode;
 
   constructor({
     assetId,
@@ -24,6 +26,8 @@ export class HistoricalAssetPropertyValueKeyFactory {
     qualities,
     timeOrdering,
     viewport,
+    maxNumberOfValues,
+    fetchMode,
   }: HistoricalAssetPropertyValueKeyFactoryOptions) {
     this.#assetId = assetId;
     this.#propertyId = propertyId;
@@ -32,6 +36,8 @@ export class HistoricalAssetPropertyValueKeyFactory {
     this.#timeOrdering = timeOrdering;
 
     this.#viewport = viewport;
+    this.#maxNumberOfValues = maxNumberOfValues;
+    this.#fetchMode = fetchMode;
   }
 
   create() {
@@ -44,6 +50,8 @@ export class HistoricalAssetPropertyValueKeyFactory {
         qualities: this.#qualities,
         timeOrdering: this.#timeOrdering,
         viewport: this.#viewport,
+        maxNumberOfValues: this.#maxNumberOfValues,
+        fetchMode: this.#fetchMode,
       },
     ] as const;
 
