@@ -66,6 +66,10 @@ const clientIsValid = ({
  * @param enabled will manually disable the hook
  * @param requests list of GetAssetPropertyValueHistoryRequest
  * @param refreshRate refresh rate for GetAssetPropertyValueHistoryRequest in ms
+ * @param maxNumberOfValues maximum number of asset property values to request
+ * within a given viewport
+ * - default: Infinity (which will request all values within the given viewport)
+ * @param viewportMode How to interpret the viewport when requestng data.
  * @returns a list of QueryResults with GetAssetPropertyValueHistoryResponse data.
  */
 export const useHistoricalAssetPropertyValues = ({
@@ -75,6 +79,8 @@ export const useHistoricalAssetPropertyValues = ({
   refreshRate: passedInRefreshRate,
   viewport,
   retry,
+  fetchMode = 'START_TO_END',
+  maxNumberOfValues = fetchMode === 'START_TO_END' ? Infinity : 1,
 }: UseHistoricalAssetPropertyValuesOptions) => {
   /**
    * Normalize refresh rate for instances of useHistoricalAssetPropertyValues
@@ -115,6 +121,8 @@ export const useHistoricalAssetPropertyValues = ({
         queryKey: new HistoricalAssetPropertyValueKeyFactory({
           ...request,
           viewport,
+          maxNumberOfValues,
+          fetchMode,
         }).create(),
         queryFn: createHistoricalAssetPropertyValueQueryFn({
           getAssetPropertyValueHistory,
@@ -133,6 +141,8 @@ export const useHistoricalAssetPropertyValues = ({
     viewport,
     refreshRate,
     retry,
+    maxNumberOfValues,
+    fetchMode,
   ]);
 
   return useQueries(
@@ -148,7 +158,16 @@ export const createHistoricalAssetPropertyValueQueryFn = (
 ) => {
   return async ({
     queryKey: [
-      { assetId, propertyId, propertyAlias, viewport, qualities, timeOrdering },
+      {
+        assetId,
+        propertyId,
+        propertyAlias,
+        viewport,
+        qualities,
+        timeOrdering,
+        maxNumberOfValues,
+        fetchMode,
+      },
     ],
     signal,
   }: QueryFunctionContext<
@@ -170,6 +189,7 @@ export const createHistoricalAssetPropertyValueQueryFn = (
     if (batchGetAssetPropertyValueHistory) {
       return await HistoricalAssetPropertyValueBatcher.getInstance({
         batchGetAssetPropertyValueHistory,
+        maxNumberOfValues,
       }).send(
         {
           assetId,
@@ -178,6 +198,7 @@ export const createHistoricalAssetPropertyValueQueryFn = (
           qualities,
           timeOrdering,
           viewport,
+          fetchMode,
         },
         {
           abortSignal: signal,
@@ -188,6 +209,7 @@ export const createHistoricalAssetPropertyValueQueryFn = (
     if (getAssetPropertyValueHistory) {
       return await new GetHistoricalAssetPropertyValueRequest({
         getAssetPropertyValueHistory,
+        maxNumberOfValues,
       }).send(
         {
           assetId,
@@ -196,6 +218,7 @@ export const createHistoricalAssetPropertyValueQueryFn = (
           qualities,
           timeOrdering,
           viewport,
+          fetchMode,
         },
         {
           abortSignal: signal,

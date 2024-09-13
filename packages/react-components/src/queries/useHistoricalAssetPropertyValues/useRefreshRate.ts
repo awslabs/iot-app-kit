@@ -19,6 +19,9 @@ import { useMemo } from 'react';
  * @param minimumRefreshRate smallest amount the refreshRate
  * can be when calculating based on the viewport
  * - default: 5000ms
+ * @param maximumRefreshRate largest amount the refreshRate
+ * can be when calculating based on the viewport
+ * - default: 24hr
  * @param viewportRatePercentage the percentage of the viewport
  * to use as the refreshRate
  * - default: .5
@@ -28,12 +31,14 @@ import { useMemo } from 'react';
 export const useRefreshRate = ({
   refreshRate,
   viewport,
-  minimumRefreshRate = 5000,
+  minimumRefreshRate = 1000,
+  maximumRefreshRate = 1000 * 60 * 60 * 24,
   viewportRatePercentage = 0.5,
 }: {
   refreshRate?: number;
   viewport?: Viewport;
   minimumRefreshRate?: number;
+  maximumRefreshRate?: number;
   viewportRatePercentage?: number;
 }) => {
   return useMemo(() => {
@@ -48,9 +53,18 @@ export const useRefreshRate = ({
       const viewportPercentageRate =
         (endDate.getTime() - startDate.getTime()) * viewportRatePercentage;
 
-      return Math.max(viewportPercentageRate, minimumRefreshRate);
+      return Math.max(
+        Math.min(viewportPercentageRate, maximumRefreshRate),
+        minimumRefreshRate
+      );
     }
 
     return Infinity;
-  }, [refreshRate, viewport, minimumRefreshRate, viewportRatePercentage]);
+  }, [
+    refreshRate,
+    viewport,
+    minimumRefreshRate,
+    maximumRefreshRate,
+    viewportRatePercentage,
+  ]);
 };
