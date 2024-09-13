@@ -2,6 +2,56 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [10.12.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.11.0...react-components-v10.12.0) (2024-09-13)
+
+
+### Features
+
+* adding timezone support to dashboard/widgets ([6435b90](https://github.com/awslabs/iot-app-kit/commit/6435b90d93246e319b939b7c316c6ffbea12ef8d))
+* **dashboard:** add new RE components to dynamic assets tab ([c588848](https://github.com/awslabs/iot-app-kit/commit/c5888485c3205c7ee572ec01d6f0b34d1789da23))
+* **dashboard:** use new RE components to update dashboard RE for modeled and unmodeled data ([d7db11e](https://github.com/awslabs/iot-app-kit/commit/d7db11ee7c16dd012b7ced86dc52cde9a483e24e))
+* **react-components:** add auto resolution and batching ([073029f](https://github.com/awslabs/iot-app-kit/commit/073029f4312c988bf099251284bf63d9515e01fd))
+* **react-components:** add hook for get asset property value history ([c708b4a](https://github.com/awslabs/iot-app-kit/commit/c708b4a6c2c3e9d6e843829692a2046c00ee6950))
+* **react-components:** add hook for latest asset property value ([ce9ec7c](https://github.com/awslabs/iot-app-kit/commit/ce9ec7c714e6c600da59af8f4bffaf210f0041c0))
+* **react-components:** add useLatestAlarmPropertyValue hook to fetch alarm prop vals in useAlarms ([18aa854](https://github.com/awslabs/iot-app-kit/commit/18aa8548bbc9aa9d4343a1d85b3cefdb798e1b25))
+* **react-components:** implement request functions and hooks to build clients ([2ca7e6c](https://github.com/awslabs/iot-app-kit/commit/2ca7e6caf771bd929b993d79f91f6e7d3ce21350))
+* **react-components:** initiali implementation for useTimeSeriesData ([50db88f](https://github.com/awslabs/iot-app-kit/commit/50db88f309e6470bfc510824f6deb564c949b794))
+* **react-components:** useAlarms hook ([7103db6](https://github.com/awslabs/iot-app-kit/commit/7103db640cd1531823a51fe3277691c869b581ed))
+* **react-components:** useDescribeAssets and useDescribeAssetModels queries implemented ([bfb07e1](https://github.com/awslabs/iot-app-kit/commit/bfb07e16b1fceabdd676ebdb833c4d85baaafb0d))
+* **sitewise-alarms:** add useAlarmModels hook to fetch iot events alarm models in useAlarms ([c4c4986](https://github.com/awslabs/iot-app-kit/commit/c4c4986fde3fd65d7ca7e8b1f7a364fcc079ca10))
+
+
+### Bug Fixes
+
+* **dashboard:** add descriptions to all RE tables ([f7b4f0c](https://github.com/awslabs/iot-app-kit/commit/f7b4f0c89d8b05be988acac54b8edf35ab3b7367))
+* **dashboard:** add descriptions to all tables in RE ([c7aff00](https://github.com/awslabs/iot-app-kit/commit/c7aff00ea0d6175186317f06ca7eec4c550de7a0))
+* **dashboard:** add timezone support for new RE ([2d4b5dd](https://github.com/awslabs/iot-app-kit/commit/2d4b5ddcbdefe4828168a7864bd679744e5a97eb))
+* **dashboard:** fast follow to clean up messy code for table cell render ([649f75d](https://github.com/awslabs/iot-app-kit/commit/649f75d91bd4865d94db633ecd3fb865098fc1ff))
+* **dashboard:** fix flaky test in dashboard ([6fe3285](https://github.com/awslabs/iot-app-kit/commit/6fe328510bfd4ed36a24935085aa41ac0c83dfa5))
+* **dashboard:** label matches kpi name ([f675d11](https://github.com/awslabs/iot-app-kit/commit/f675d11857c0b0a3869d03d9c1339c405a85d11e))
+* **dashboard:** re reflects significant digits + timezone support for unmodeled ([195be67](https://github.com/awslabs/iot-app-kit/commit/195be67fe0e5b7ef7b262491ff4fec574c62db8c))
+* **react-components:** ensure enabled flag is never undefined for queries ([eb95ef4](https://github.com/awslabs/iot-app-kit/commit/eb95ef4e8f186f5f969e366321f01d9ab1ea1ab8))
+* **react-components:** remove flaky test in new RE ([9e15637](https://github.com/awslabs/iot-app-kit/commit/9e15637ecced497aec52a7189fc1e0adcf1de361))
+* **react-components:** skip flaky test in new RE ([e7928d3](https://github.com/awslabs/iot-app-kit/commit/e7928d329edef47871ed9978d820994ad2d76dcc))
+* **timeZone:** wrap timezone setState in useEffect ([6cd74a1](https://github.com/awslabs/iot-app-kit/commit/6cd74a1019499b8d6586cac0d26d605cdcd9c928))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/core bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/core-util bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.11.0 to 10.12.0
+  * devDependencies
+    * @iot-app-kit/core bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/jest-config bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/testing-util bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/ts-config bumped from 10.11.0 to 10.12.0
+    * eslint-config-iot-app-kit bumped from 10.11.0 to 10.12.0
+
 ## [10.11.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.10.2...react-components-v10.11.0) (2024-08-28)
 
 

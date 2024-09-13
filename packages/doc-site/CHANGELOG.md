@@ -1,5 +1,29 @@
 # Changelog
 
+## [10.12.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v10.11.0...doc-site-v10.12.0) (2024-09-13)
+
+
+### Features
+
+* add alarm data source query ([32fe5c7](https://github.com/awslabs/iot-app-kit/commit/32fe5c706fba1c483b98d7baa1d1045eb6cf2ac3))
+* add timezone docs ([8995f92](https://github.com/awslabs/iot-app-kit/commit/8995f92959132da6feaace768206070a8c8aae6d))
+
+
+### Bug Fixes
+
+* update timezone docs based on feedback ([17be12d](https://github.com/awslabs/iot-app-kit/commit/17be12d6336a607866a27af31e742b74d712c571))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^10.11.0 to ^10.12.0
+    * @iot-app-kit/react-components bumped from ^10.11.0 to ^10.12.0
+  * devDependencies
+    * @iot-app-kit/testing-util bumped from ^10.11.0 to ^10.12.0
+    * eslint-config-iot-app-kit bumped from ^10.11.0 to ^10.12.0
+
 ## [10.11.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v10.10.2...doc-site-v10.11.0) (2024-08-28)
 
 

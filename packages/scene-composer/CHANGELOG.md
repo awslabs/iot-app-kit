@@ -4,6 +4,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.12.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v10.11.0...scene-composer-v10.12.0) (2024-09-13)
+
+
+### Features
+
+* **scene:** alphabetize camera drop down ([960f195](https://github.com/awslabs/iot-app-kit/commit/960f195e229736bda9e73c17ecda93fa047a56c6))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/react-components bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/related-table bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.11.0 to 10.12.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 10.11.0 to 10.12.0
+
 ## [10.11.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v10.10.2...scene-composer-v10.11.0) (2024-08-28)
 
 

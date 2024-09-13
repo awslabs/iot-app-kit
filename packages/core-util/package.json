@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "10.11.0",
+  "version": "10.12.0",
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
   "types": "./dist/es/index.d.ts",
@@ -26,12 +26,12 @@
     "test:typescript": "tsc --noEmit"
   },
   "dependencies": {
-    "@iot-app-kit/core": "10.11.0",
+    "@iot-app-kit/core": "10.12.0",
     "lodash.difference": "4.5.0"
   },
   "devDependencies": {
-    "@iot-app-kit/jest-config": "10.11.0",
-    "@iot-app-kit/ts-config": "10.11.0",
+    "@iot-app-kit/jest-config": "10.12.0",
+    "@iot-app-kit/ts-config": "10.12.0",
     "@aws-sdk/types": "^3.310.0",
     "@types/lodash.difference": "4.5.9",
     "@types/jest": "^29.4.0",

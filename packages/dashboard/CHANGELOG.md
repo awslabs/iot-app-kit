@@ -1,5 +1,50 @@
 # Changelog
 
+## [10.12.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.11.0...dashboard-v10.12.0) (2024-09-13)
+
+
+### Features
+
+* add alarm data source query ([32fe5c7](https://github.com/awslabs/iot-app-kit/commit/32fe5c706fba1c483b98d7baa1d1045eb6cf2ac3))
+* adding timezone support to dashboard/widgets ([6435b90](https://github.com/awslabs/iot-app-kit/commit/6435b90d93246e319b939b7c316c6ffbea12ef8d))
+* **dashboard:** add new RE components to dynamic assets tab ([c588848](https://github.com/awslabs/iot-app-kit/commit/c5888485c3205c7ee572ec01d6f0b34d1789da23))
+* **dashboard:** use new RE components to update dashboard RE for modeled and unmodeled data ([d7db11e](https://github.com/awslabs/iot-app-kit/commit/d7db11ee7c16dd012b7ced86dc52cde9a483e24e))
+
+
+### Bug Fixes
+
+* add timeZone prop to DashboardViewWrapper ([21f9b15](https://github.com/awslabs/iot-app-kit/commit/21f9b15f2c603e17b139de8b0caba99288207ffb))
+* **dashboard-dynamic-asset:** asset name should be shown on refresh in dropdown ([d799487](https://github.com/awslabs/iot-app-kit/commit/d799487b5f72e274a89dce39c94438151c6170f2))
+* **dashboard-RE-improvements:** add timezone + sig digits to dynamic tab ([8a6b3ed](https://github.com/awslabs/iot-app-kit/commit/8a6b3ed0052eb37f6a8f0aea7739d6ea076466ac))
+* **dashboard:** add descriptions to all RE tables ([f7b4f0c](https://github.com/awslabs/iot-app-kit/commit/f7b4f0c89d8b05be988acac54b8edf35ab3b7367))
+* **dashboard:** add descriptions to all tables in RE ([c7aff00](https://github.com/awslabs/iot-app-kit/commit/c7aff00ea0d6175186317f06ca7eec4c550de7a0))
+* **dashboard:** add timezone support for new RE ([2d4b5dd](https://github.com/awslabs/iot-app-kit/commit/2d4b5ddcbdefe4828168a7864bd679744e5a97eb))
+* **dashboard:** assetName displays conditionally in config panel for linechart ([85496ab](https://github.com/awslabs/iot-app-kit/commit/85496abf0ac3bbb6890678f7c647beaa8cbfbb9d))
+* **dashboard:** fast follow improvements for new RE ([ea8c93c](https://github.com/awslabs/iot-app-kit/commit/ea8c93ce12aadafcd5c3e1c8794cedb07cc843f1))
+* **dashboard:** fix flaky test in dashboard ([6fe3285](https://github.com/awslabs/iot-app-kit/commit/6fe328510bfd4ed36a24935085aa41ac0c83dfa5))
+* **dashboard:** label matches kpi name ([f675d11](https://github.com/awslabs/iot-app-kit/commit/f675d11857c0b0a3869d03d9c1339c405a85d11e))
+* **dashboard:** migration for sitewise component + blackpearl widget types ([c91a0e9](https://github.com/awslabs/iot-app-kit/commit/c91a0e9cda943cad530c722dc6c8097b225a45da))
+* **dashboard:** re reflects significant digits + timezone support for unmodeled ([195be67](https://github.com/awslabs/iot-app-kit/commit/195be67fe0e5b7ef7b262491ff4fec574c62db8c))
+* **dashboard:** reenable gestures in edit mode ([16bd88f](https://github.com/awslabs/iot-app-kit/commit/16bd88fad43742488efdfaa433104446ad5b2b08))
+* filter component models from query editor ([8245b6d](https://github.com/awslabs/iot-app-kit/commit/8245b6d4e8c6f120af0c523c41ee3ccc9d4097fa))
+* prevent creating new chart when iconn is dragged over different chart type ([7feff77](https://github.com/awslabs/iot-app-kit/commit/7feff773d0a06f4029824b02a30371c1993b05bf))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/core bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/core-util bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/react-components bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.11.0 to 10.12.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/testing-util bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/ts-config bumped from 10.11.0 to 10.12.0
+    * eslint-config-iot-app-kit bumped from 10.11.0 to 10.12.0
+
 ## [10.11.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.10.2...dashboard-v10.11.0) (2024-08-28)
 
 
