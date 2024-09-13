@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.12.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v10.11.0...tools-iottwinmaker-v10.12.0) (2024-09-13)
+
+
+### Miscellaneous Chores
+
+* **tools-iottwinmaker:** Synchronize iot-app-kit versions
+
 ## [10.11.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v10.10.2...tools-iottwinmaker-v10.11.0) (2024-08-28)
 
 

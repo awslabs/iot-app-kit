@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.12.0](https://github.com/awslabs/iot-app-kit/compare/core-v10.11.0...core-v10.12.0) (2024-09-13)
+
+
+### Features
+
+* **react-components:** implement request functions and hooks to build clients ([2ca7e6c](https://github.com/awslabs/iot-app-kit/commit/2ca7e6caf771bd929b993d79f91f6e7d3ce21350))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.11.0 to 10.12.0
+    * @iot-app-kit/ts-config bumped from 10.11.0 to 10.12.0
+    * eslint-config-iot-app-kit bumped from 10.11.0 to 10.12.0
+
 ## [10.11.0](https://github.com/awslabs/iot-app-kit/compare/core-v10.10.2...core-v10.11.0) (2024-08-28)
 
 
