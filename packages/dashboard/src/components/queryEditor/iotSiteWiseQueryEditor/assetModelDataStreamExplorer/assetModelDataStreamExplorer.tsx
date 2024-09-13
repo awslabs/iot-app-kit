@@ -81,7 +81,6 @@ export const AssetModelDataStreamExplorer = ({
           } as AssetResource,
         ]
       : createInitialAssetResource(assetIds?.at(0))
-    // createInitialAssetResource(assetIds?.at(0))
   );
 
   const [selectedAssetModelProperties, selectAssetModelProperties] =
@@ -96,6 +95,16 @@ export const AssetModelDataStreamExplorer = ({
   useEffect(() => {
     updateSelectedAsset(selectedAsset[0]);
   }, [updateSelectedAsset, selectedAsset]);
+
+  useEffect(() => {
+    if (currentSelectedAsset)
+      selectAsset([
+        {
+          ...currentSelectedAsset,
+          assetId: currentSelectedAsset?.id,
+        } as AssetResource,
+      ]);
+  }, [currentSelectedAsset, selectAsset]);
 
   const onReset = () => {
     selectAssetModel([]);
