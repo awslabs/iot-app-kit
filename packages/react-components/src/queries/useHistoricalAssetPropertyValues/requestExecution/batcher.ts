@@ -3,8 +3,6 @@ import { nanoid } from 'nanoid';
 import {
   BatchGetAssetPropertyValueHistory,
   RequestResponse,
-  viewportEndDate,
-  viewportStartDate,
 } from '@iot-app-kit/core';
 import {
   HistoricalAssetPropertyValueRequest,
@@ -12,6 +10,10 @@ import {
 } from '../types';
 import { anySignal } from '../../useAssetPropertyValues/requestExecution/utils/anySignal';
 import { BatchGetAssetPropertyValueHistoryErrorEntry } from '@aws-sdk/client-iotsitewise';
+import { BatchResponseProcessor } from './batchResponseProcessor';
+import { mapViewport } from './mapViewport';
+import { mapTimeOrdering } from './mapTimeOrdering';
+import { DEFAULT_MAX_RESULTS } from './constants';
 
 type LoaderRequest = HistoricalAssetPropertyValueRequest & {
   abortSignal: AbortSignal;
@@ -24,14 +26,18 @@ const createEntryId = () => nanoid(64);
 
 export type HistoricalAssetPropertyValuesBatcherOptions = {
   batchGetAssetPropertyValueHistory: BatchGetAssetPropertyValueHistory;
+  maxNumberOfValues?: number;
   batchSchedulerTimeout?: number;
   batchSize?: number;
 };
 
 export class HistoricalAssetPropertyValueBatcher {
-  private static instance: HistoricalAssetPropertyValueBatcher;
+  private static instances: {
+    [maxNumberOfValues: number]: HistoricalAssetPropertyValueBatcher;
+  } = {};
 
-  private maxResults = 20000;
+  private maxResults: number;
+  private valuesTargetNumber: number;
 
   private batchSchedulerTimeout: number;
   private batchSize: number;
@@ -44,10 +50,16 @@ export class HistoricalAssetPropertyValueBatcher {
     batchGetAssetPropertyValueHistory,
     batchSchedulerTimeout = 100,
     batchSize = 16,
+    maxNumberOfValues = Infinity,
   }: HistoricalAssetPropertyValuesBatcherOptions) {
     this.batchGetAssetPropertyValueHistory = batchGetAssetPropertyValueHistory;
     this.batchSchedulerTimeout = batchSchedulerTimeout;
     this.batchSize = batchSize;
+    this.maxResults = Math.min(
+      maxNumberOfValues * batchSize,
+      DEFAULT_MAX_RESULTS
+    );
+    this.valuesTargetNumber = maxNumberOfValues;
 
     this.loader = new DataLoader(this.batchLoaderFn.bind(this), {
       batchScheduleFn: this.batchScheduleFn.bind(this),
@@ -72,21 +84,22 @@ export class HistoricalAssetPropertyValueBatcher {
   ): Promise<LoaderResponse[]> {
     let nextToken = undefined;
 
-    const entries = requests.map(({ viewport, ...request }) => ({
-      ...request,
-      startDate: viewport && viewportStartDate(viewport),
-      endDate: viewport && viewportEndDate(viewport),
-      entryId: createEntryId(),
-    }));
+    const entries = requests.map(
+      ({ viewport, fetchMode, timeOrdering, ...request }) => ({
+        ...request,
+        entryId: createEntryId(),
+        ...mapViewport({ viewport, fetchMode }),
+        timeOrdering: mapTimeOrdering({ timeOrdering, fetchMode }),
+      })
+    );
 
     const abortSignal = anySignal(
       requests.map(({ abortSignal: requestAbortSignal }) => requestAbortSignal)
     );
 
-    let successEntries: RequestResponse<BatchGetAssetPropertyValueHistory>['successEntries'] =
-      [];
-    let errorEntries: RequestResponse<BatchGetAssetPropertyValueHistory>['errorEntries'] =
-      [];
+    const responseProcessors = entries.map(
+      (entry) => new BatchResponseProcessor(entry, this.valuesTargetNumber)
+    );
 
     try {
       do {
@@ -104,25 +117,22 @@ export class HistoricalAssetPropertyValueBatcher {
             }
           );
 
-        successEntries = [
-          ...successEntries,
-          ...(response.successEntries ?? []),
-        ];
-        errorEntries = [...errorEntries, ...(response.errorEntries ?? [])];
-
         nextToken = response.nextToken;
-      } while (nextToken);
+
+        responseProcessors.forEach((processor) =>
+          processor.processResponse(response)
+        );
+      } while (
+        responseProcessors.some((processor) => !processor.isComplete) &&
+        nextToken
+      );
 
       // map this to match the response type of GetAssetPropertyValueHistoryResponse
       // mask the fact that we're batching
-      return entries.map(({ entryId }) => {
+      return responseProcessors.map((processor) => {
         return {
-          assetPropertyValueHistory: successEntries
-            ?.filter((successEntry) => successEntry.entryId === entryId)
-            .flatMap((entry) => entry.assetPropertyValueHistory ?? []),
-          error: errorEntries?.find(
-            (errorEntry) => errorEntry.entryId === entryId
-          ),
+          assetPropertyValueHistory: processor.response,
+          error: processor.error,
         };
       });
     } catch (error) {
@@ -137,11 +147,13 @@ export class HistoricalAssetPropertyValueBatcher {
   public static getInstance(
     options: HistoricalAssetPropertyValuesBatcherOptions
   ): HistoricalAssetPropertyValueBatcher {
-    if (!HistoricalAssetPropertyValueBatcher.instance) {
-      HistoricalAssetPropertyValueBatcher.instance =
+    const maxNumberOfValues = options.maxNumberOfValues ?? Infinity;
+
+    if (!HistoricalAssetPropertyValueBatcher.instances[maxNumberOfValues]) {
+      HistoricalAssetPropertyValueBatcher.instances[maxNumberOfValues] =
         new HistoricalAssetPropertyValueBatcher(options);
     }
-    return HistoricalAssetPropertyValueBatcher.instance;
+    return HistoricalAssetPropertyValueBatcher.instances[maxNumberOfValues];
   }
 
   public async send(
