@@ -22,11 +22,18 @@ function createEntries<DataStream extends DataStreamResource>(
   const entries = dataStreams.map((dataStream) => {
     const entryId = createEntryId(dataStream);
 
-    return {
+    const baseEntry = {
       dataStream,
       entryId,
+    };
+
+    if (dataStream.alias) {
+      return { ...baseEntry, propertyAlias: dataStream.alias };
+    }
+
+    return {
+      ...baseEntry,
       assetId: dataStream.assetId,
-      propertyAlias: dataStream.alias,
       propertyId: dataStream.propertyId,
     };
   });
