@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.12.1](https://github.com/awslabs/iot-app-kit/compare/root-v10.12.0...root-v10.12.1) (2024-09-14)
+
+
+### Bug Fixes
+
+* **resource-explorer:** only use alias to query if present ([ca35aee](https://github.com/awslabs/iot-app-kit/commit/ca35aee4cdd31c79302c282d5965911df6d0b6f5))
+
 ## [10.12.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.11.0...root-v10.12.0) (2024-09-13)
 
 
