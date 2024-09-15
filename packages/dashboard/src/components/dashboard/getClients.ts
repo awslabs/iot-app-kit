@@ -1,7 +1,7 @@
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWiseClient, IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import { IoTSiteWise as InternalIoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import {
   DashboardClientConfiguration,
   DashboardIotSiteWiseClients,
@@ -32,17 +32,22 @@ export const getClients = (
     credentials: dashboardClientConfiguration.awsCredentials,
     region: dashboardClientConfiguration.awsRegion,
   });
-
-  const iotSiteWisePrivateClient = new IoTSiteWise({
+  const iotSiteWise = new IoTSiteWise({
+    credentials: dashboardClientConfiguration.awsCredentials,
+    region: dashboardClientConfiguration.awsRegion,
+  });
+  const iotSiteWisePrivateClient = new InternalIoTSiteWise({
     credentials: dashboardClientConfiguration.awsCredentials,
     region: dashboardClientConfiguration.awsRegion,
     endpoint: 'https://data.gamma.us-east-1.iotsitewise.amazonaws.com',
   });
 
+
   return {
     iotEventsClient,
     iotSiteWiseClient,
     iotTwinMakerClient,
+    iotSiteWise,
     iotSiteWisePrivateClient,
   };
 };

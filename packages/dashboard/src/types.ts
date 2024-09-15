@@ -1,9 +1,9 @@
 import type { Viewport } from '@iot-app-kit/core';
 import {
   IoTSiteWiseClient,
+  IoTSiteWise,
   DescribeDashboardRequest,
   DescribeDashboardResponse,
-  IoTSiteWise,
 } from '@aws-sdk/client-iotsitewise';
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
@@ -15,7 +15,7 @@ import {
 } from '@iot-app-kit/source-iotsitewise';
 import { RefreshRate } from './components/refreshRate/types';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import { IoTSiteWise as InternalIoTSiteWise  } from '@amzn/iot-black-pearl-internal-v3';
 import { ReactElement } from 'react';
 
 export type DashboardClientCredentials = {
@@ -27,7 +27,8 @@ export type DashboardIotSiteWiseClients = {
   iotSiteWiseClient: IoTSiteWiseClient;
   iotEventsClient: IoTEventsClient;
   iotTwinMakerClient: IoTTwinMakerClient;
-  iotSiteWisePrivateClient?: IoTSiteWise;
+  iotSiteWise: IoTSiteWise;
+  iotSiteWisePrivateClient?: InternalIoTSiteWise;
 };
 
 export type DashboardIotSiteWiseQueries = {
