@@ -33,6 +33,8 @@ jobs:
             ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
       - name: Install
+        env:
+          NODE_OPTIONS: "--max_old_space_size=8192"
         run:
           npm ci --prefer-offline --no-audit --no-fund && npm run bootstrap
 
