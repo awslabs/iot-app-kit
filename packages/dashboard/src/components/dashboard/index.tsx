@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
@@ -65,24 +65,35 @@ const Dashboard: React.FC<DashboardProperties> = ({
     ? debounce(onViewportChange, 100)
     : undefined;
 
-  const readOnly = initialViewMode && initialViewMode === 'preview';
+  const readOnly = useMemo(() => {
+    return initialViewMode && initialViewMode === 'preview';
+  }, [initialViewMode]);
+
+  const initialStore = useMemo(() => {
+    return configureDashboardStore({
+      ...toDashboardState(dashboardConfiguration),
+      readOnly,
+      isEdgeModeEnabled: isEdgeModeEnabled(edgeMode),
+      timeZone: timeZone,
+    });
+  }, [dashboardConfiguration, edgeMode, readOnly, timeZone]);
+
+  const clients = useMemo(
+    () => getClients(clientConfiguration),
+    [clientConfiguration]
+  );
+  const queries = useMemo(
+    () => getQueries(clientConfiguration, edgeMode),
+    [clientConfiguration, edgeMode]
+  );
 
   return (
     <>
       {showFPSMonitor && <FpsView height={50} width={80} />}
-      <ClientContext.Provider value={getClients(clientConfiguration)}>
-        <QueryContext.Provider
-          value={getQueries(clientConfiguration, edgeMode)}
-        >
+      <ClientContext.Provider value={clients}>
+        <QueryContext.Provider value={queries}>
           <QueryClientProvider client={queryClient}>
-            <Provider
-              store={configureDashboardStore({
-                ...toDashboardState(dashboardConfiguration),
-                readOnly,
-                isEdgeModeEnabled: isEdgeModeEnabled(edgeMode),
-                timeZone: timeZone,
-              })}
-            >
+            <Provider store={initialStore}>
               <DndProvider
                 backend={TouchBackend}
                 options={{
