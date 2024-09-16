@@ -27,10 +27,18 @@ export const buildFromAssetResponse = ({
   status: AlarmDataStatus;
   assetResponse?: DescribeAssetResponse;
 }): AlarmData[] => {
-  const { assetId, assetCompositeModelId, inputPropertyId } = request;
+  const { assetId, assetCompositeModelId, inputPropertyId, assetModelId } =
+    request;
 
   if (!assetResponse || !assetId) {
-    return [];
+    return [
+      {
+        assetModelId,
+        assetId,
+        compositeModelId: assetCompositeModelId,
+        status,
+      },
+    ];
   }
 
   if (assetResponse && assetId && assetResponse?.assetId !== assetId) {
@@ -113,7 +121,12 @@ export const buildFromAssetModelResponse = ({
   const { assetModelId } = request;
 
   if (!assetModelResponse || !assetModelId) {
-    return [];
+    return [
+      {
+        assetModelId,
+        status,
+      },
+    ];
   }
 
   if (assetModelId && assetModelResponse?.assetModelId !== assetModelId) {

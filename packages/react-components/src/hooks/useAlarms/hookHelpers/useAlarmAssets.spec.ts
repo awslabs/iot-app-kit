@@ -87,6 +87,38 @@ describe('useAlarmAssets', () => {
     queryClient.clear();
   });
 
+  it('should have the correct status', async () => {
+    describeAssetMock.mockResolvedValue(
+      mockDescribeAssetResponse({ compositeModels: [mockAlarmCompositeModel] })
+    );
+
+    const alarmAssetRequest = {
+      assetId: MOCK_ASSET_ID,
+    };
+
+    const alarmCompositeModelRequest = {
+      assetId: MOCK_ASSET_ID,
+      assetCompositeModelId: MOCK_COMPOSITE_MODEL_ID,
+    };
+
+    const { result: alarmDataResults } = renderHook(() =>
+      useAlarmAssets({
+        iotSiteWiseClient: iotSiteWiseClientMock,
+        requests: [alarmAssetRequest, alarmCompositeModelRequest],
+      })
+    );
+
+    await waitFor(() => {
+      expect(alarmDataResults.current[0].status.isLoading).toBe(true);
+      expect(alarmDataResults.current[1].status.isLoading).toBe(true);
+    });
+
+    await waitFor(() => {
+      expect(alarmDataResults.current[0].status.isSuccess).toBe(true);
+      expect(alarmDataResults.current[1].status.isSuccess).toBe(true);
+    });
+  });
+
   it('should return AlarmData with content for one alarm in an alarm composite model request', async () => {
     describeAssetMock.mockResolvedValue(
       mockDescribeAssetResponse({ compositeModels: [mockAlarmCompositeModel] })
