@@ -1,11 +1,13 @@
 import type {
   InvokeAssistantRequest,
   IoTSiteWise,
+  ResponseStream,
 } from '@amzn/iot-black-pearl-internal-v3';
 import type {
   AssistantClientInstanceParams,
   AssistantClientInvocationCompleteHandler,
   AssistantClientInvocationResponseHandler,
+  AssistantClientInvocationErrorHandler,
 } from './types';
 
 export class IoTSitewiseAssistantClient {
@@ -13,17 +15,20 @@ export class IoTSitewiseAssistantClient {
   private defaultContext?: string;
   public onResponse?: AssistantClientInvocationResponseHandler;
   public onComplete?: AssistantClientInvocationCompleteHandler;
+  public onError?: AssistantClientInvocationErrorHandler;
 
   constructor({
     iotSiteWiseClient,
     defaultContext,
     onResponse,
     onComplete,
+    onError,
   }: AssistantClientInstanceParams) {
     this.iotSiteWiseClient = iotSiteWiseClient;
     this.defaultContext = defaultContext;
     this.onResponse = onResponse;
     this.onComplete = onComplete;
+    this.onError = onError;
   }
 
   setIotSiteWiseClient(
@@ -34,10 +39,12 @@ export class IoTSitewiseAssistantClient {
 
   setRequestHandlers(
     newOnResponse: AssistantClientInvocationResponseHandler,
-    newOnComplete: AssistantClientInvocationCompleteHandler
+    newOnComplete: AssistantClientInvocationCompleteHandler,
+    newOnError: AssistantClientInvocationErrorHandler
   ): void {
     this.onResponse = newOnResponse;
     this.onComplete = newOnComplete;
+    this.onError = newOnError;
   }
 
   /**
@@ -60,6 +67,7 @@ export class IoTSitewiseAssistantClient {
       },
       onComplete: this.onComplete,
       onResponse: this.onResponse,
+      onError: this.onError,
     });
   }
 
@@ -91,35 +99,59 @@ async function invokeAssistant({
   payload,
   onComplete,
   onResponse,
+  onError,
 }: {
   iotSiteWiseClient: Pick<IoTSiteWise, 'invokeAssistant'>;
   payload: InvokeAssistantRequest;
   onComplete?: AssistantClientInvocationCompleteHandler;
   onResponse?: AssistantClientInvocationResponseHandler;
+  onError?: AssistantClientInvocationErrorHandler;
 }) {
-  const response = await iotSiteWiseClient.invokeAssistant(payload);
-  /**
-   * Given the nature of streaming API, The client receives a chunk of the whole streamed response.
-   */
-  for await (const chunk of response.body || []) {
-    if (onResponse && chunk.trace?.text) {
-      onResponse(
-        {
-          conversationId: payload.conversationId,
-          body: chunk,
-        },
-        payload
-      );
-    }
+  try {
+    const response = await iotSiteWiseClient.invokeAssistant(payload);
+    /**
+     * Given the nature of streaming API, The client receives a chunk of the whole streamed response.
+     */
+    for await (const chunk of response.body || []) {
+      const exception = getExceptionFromResponse(chunk);
+      if (onError && exception) {
+        onError(exception, payload);
+      }
 
-    if (onComplete && !chunk.trace) {
-      onComplete(
-        {
-          conversationId: payload.conversationId,
-          body: chunk,
-        },
-        payload
-      );
+      if (onResponse && chunk.trace?.text) {
+        onResponse(
+          {
+            conversationId: payload.conversationId,
+            body: chunk,
+          },
+          payload
+        );
+      }
+
+      if (onComplete && chunk.output) {
+        onComplete(
+          {
+            conversationId: payload.conversationId,
+            body: chunk,
+          },
+          payload
+        );
+      }
+    }
+  } catch (error: any) {
+    if (onError) {
+      onError(error, payload);
     }
   }
 }
+
+const getExceptionFromResponse = (response: ResponseStream) => {
+  return (
+    response.accessDeniedException ||
+    response.internalFailureException ||
+    response.limitExceededException ||
+    response.resourceNotFoundException ||
+    response.throttlingException ||
+    undefined
+  );
+};

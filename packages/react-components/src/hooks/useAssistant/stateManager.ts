@@ -1,4 +1,7 @@
-import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
+import type {
+  InvokeAssistantRequest,
+  ResponseStream,
+} from '@amzn/iot-black-pearl-internal-v3';
 import type { BaseStateManager, IMessage } from './types';
 import { MessageType } from './types';
 import { v4 as uuidv4 } from 'uuid';
@@ -71,6 +74,18 @@ export class StateManager implements BaseStateManager {
       payload,
     } satisfies IMessage;
 
+    this.addMessageToState(message);
+  };
+
+  addError = (content: string, payload?: InvokeAssistantRequest) => {
+    const message = {
+      id: uuidv4(),
+      loading: false,
+      content,
+      sender: 'assistant',
+      type: MessageType.ERROR,
+      payload,
+    } satisfies IMessage;
     this.addMessageToState(message);
   };
 

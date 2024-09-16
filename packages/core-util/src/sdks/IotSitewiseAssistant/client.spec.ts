@@ -25,6 +25,41 @@ const response3 = {
   },
 };
 
+const responseAccessDeniedException = {
+  accessDeniedException: {
+    name: 'accessDeniedException',
+    message: 'message accessDeniedException',
+  },
+};
+
+const responseInternalFailureException = {
+  internalFailureException: {
+    name: 'internalFailureException',
+    message: 'message internalFailureException',
+  },
+};
+
+const responseLimitExceededException = {
+  limitExceededException: {
+    name: 'limitExceededException',
+    message: 'message limitExceededException',
+  },
+};
+
+const responseResourceNotFoundException = {
+  resourceNotFoundException: {
+    name: 'resourceNotFoundException',
+    message: 'message resourceNotFoundException',
+  },
+};
+
+const responseThrottlingException = {
+  throttlingException: {
+    name: 'throttlingException',
+    message: 'message throttlingException',
+  },
+};
+
 describe('AssistantClient', () => {
   const conversationId = 'myAssistantConversation';
   beforeEach(() => jest.clearAllMocks());
@@ -66,6 +101,7 @@ describe('AssistantClient', () => {
   it('can set RequestHandlers', async () => {
     const mockOnResponse = jest.fn();
     const mockOnComplete = jest.fn();
+    const mockOnError = jest.fn();
     const mockInvokeAssistant = jest
       .fn()
       .mockResolvedValue({ body: [response2, response3] });
@@ -78,7 +114,7 @@ describe('AssistantClient', () => {
       onComplete: () => {},
     });
 
-    client.setRequestHandlers(mockOnResponse, mockOnComplete);
+    client.setRequestHandlers(mockOnResponse, mockOnComplete, mockOnError);
     client.invoke(conversationId, 'customer message');
 
     await flushPromises();
@@ -133,7 +169,7 @@ describe('AssistantClient', () => {
     expect(onComplete).toBeCalled();
   });
 
-  it('call generateSummary and invoke assistant with summary utterance and context', async () => {
+  it('call generateSummary and invoke assistant with summary utterance and context', () => {
     const mockInvokeAssistant = jest
       .fn()
       .mockResolvedValue({ body: [response3] });
@@ -155,6 +191,163 @@ describe('AssistantClient', () => {
         conversationId,
         message: `given this context: " ${context}" ${summaryUtterance}`,
       })
+    );
+  });
+
+  it('handle error when invoke assistant call fails', async () => {
+    const onError = jest.fn();
+    const mockInvokeAssistant = jest
+      .fn()
+      .mockRejectedValue(new Error('assistant 5xx error'));
+    const client = new IoTSitewiseAssistantClient({
+      iotSiteWiseClient: {
+        invokeAssistant: mockInvokeAssistant,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
+      defaultContext: '',
+      onError,
+    });
+
+    client.invoke(conversationId, 'customer message', 'additional context');
+
+    await flushPromises(); // move to next tick and return yield
+
+    expect(onError).toBeCalledWith(
+      expect.objectContaining({
+        message: 'assistant 5xx error',
+      }),
+      expect.anything()
+    );
+  });
+
+  it('handle invoke assistant with accessDeniedException as response', async () => {
+    const onError = jest.fn();
+    const mockInvokeAssistant = jest
+      .fn()
+      .mockResolvedValue({ body: [responseAccessDeniedException] });
+    const client = new IoTSitewiseAssistantClient({
+      iotSiteWiseClient: {
+        invokeAssistant: mockInvokeAssistant,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
+      defaultContext: '',
+      onError,
+    });
+
+    client.invoke(conversationId, 'customer message', 'additional context');
+
+    await flushPromises(); // move to next tick and return yield
+
+    expect(onError).toBeCalledWith(
+      expect.objectContaining({
+        name: responseAccessDeniedException.accessDeniedException.name,
+        message: responseAccessDeniedException.accessDeniedException.message,
+      }),
+      expect.anything()
+    );
+  });
+
+  it('handle invoke assistant with internalFailureException as response', async () => {
+    const onError = jest.fn();
+    const mockInvokeAssistant = jest
+      .fn()
+      .mockResolvedValue({ body: [responseInternalFailureException] });
+    const client = new IoTSitewiseAssistantClient({
+      iotSiteWiseClient: {
+        invokeAssistant: mockInvokeAssistant,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
+      defaultContext: '',
+      onError,
+    });
+
+    client.invoke(conversationId, 'customer message', 'additional context');
+
+    await flushPromises(); // move to next tick and return yield
+
+    expect(onError).toBeCalledWith(
+      expect.objectContaining({
+        name: responseInternalFailureException.internalFailureException.name,
+        message:
+          responseInternalFailureException.internalFailureException.message,
+      }),
+      expect.anything()
+    );
+  });
+
+  it('handle invoke assistant with limitExceededException as response', async () => {
+    const onError = jest.fn();
+    const mockInvokeAssistant = jest
+      .fn()
+      .mockResolvedValue({ body: [responseLimitExceededException] });
+    const client = new IoTSitewiseAssistantClient({
+      iotSiteWiseClient: {
+        invokeAssistant: mockInvokeAssistant,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
+      defaultContext: '',
+      onError,
+    });
+
+    client.invoke(conversationId, 'customer message', 'additional context');
+
+    await flushPromises(); // move to next tick and return yield
+
+    expect(onError).toBeCalledWith(
+      expect.objectContaining({
+        name: responseLimitExceededException.limitExceededException.name,
+        message: responseLimitExceededException.limitExceededException.message,
+      }),
+      expect.anything()
+    );
+  });
+
+  it('handle invoke assistant with resourceNotFoundException as response', async () => {
+    const onError = jest.fn();
+    const mockInvokeAssistant = jest
+      .fn()
+      .mockResolvedValue({ body: [responseResourceNotFoundException] });
+    const client = new IoTSitewiseAssistantClient({
+      iotSiteWiseClient: {
+        invokeAssistant: mockInvokeAssistant,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
+      defaultContext: '',
+      onError,
+    });
+
+    client.invoke(conversationId, 'customer message', 'additional context');
+
+    await flushPromises(); // move to next tick and return yield
+
+    expect(onError).toBeCalledWith(
+      expect.objectContaining({
+        name: responseResourceNotFoundException.resourceNotFoundException.name,
+        message:
+          responseResourceNotFoundException.resourceNotFoundException.message,
+      }),
+      expect.anything()
+    );
+  });
+
+  it('handle invoke assistant with throttlingException as response', async () => {
+    const onError = jest.fn();
+    const mockInvokeAssistant = jest
+      .fn()
+      .mockResolvedValue({ body: [responseThrottlingException] });
+    const client = new IoTSitewiseAssistantClient({
+      iotSiteWiseClient: {
+        invokeAssistant: mockInvokeAssistant,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
+      defaultContext: '',
+      onError,
+    });
+
+    client.invoke(conversationId, 'customer message', 'additional context');
+
+    await flushPromises(); // move to next tick and return yield
+
+    expect(onError).toBeCalledWith(
+      expect.objectContaining({
+        name: responseThrottlingException.throttlingException.name,
+        message: responseThrottlingException.throttlingException.message,
+      }),
+      expect.anything()
     );
   });
 });

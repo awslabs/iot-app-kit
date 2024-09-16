@@ -19,6 +19,13 @@ const response2 = {
   },
 };
 
+const responseAccessDeniedException = {
+  accessDeniedException: {
+    name: 'accessDeniedException',
+    message: 'message accessDeniedException',
+  },
+};
+
 describe('useAssistant', () => {
   const conversationId = 'myAssistantConversation';
   const mockInvokeAssistant = jest
@@ -215,6 +222,42 @@ describe('useAssistant', () => {
         enableTrace: true,
         message: `given this context: " ${context}" ${summaryUtterance}`,
       });
+    });
+  });
+
+  it('handle invoke assistant with internalFailureException as response', async () => {
+    const mockInvokeAssistant = jest
+      .fn()
+      .mockResolvedValue({ body: [responseAccessDeniedException] });
+
+    const client = new IoTSitewiseAssistantClient({
+      iotSiteWiseClient: {
+        invokeAssistant: mockInvokeAssistant,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
+      defaultContext: '',
+    });
+
+    const { result } = renderHook(() =>
+      useAssistant({
+        assistantClient: client,
+      })
+    );
+
+    act(() => {
+      result.current.invokeAssistant(conversationId, 'customer message');
+    });
+
+    await waitFor(() => {
+      expect(result.current.messages[2]).toEqual(
+        expect.objectContaining({
+          id: expect.anything(),
+          loading: false,
+          content: responseAccessDeniedException.accessDeniedException.message,
+          sender: 'assistant',
+          type: MessageType.ERROR,
+          payload: expect.anything(),
+        })
+      );
     });
   });
 });

@@ -111,6 +111,32 @@ describe(Chatbot, () => {
     expect(screen.getByText(citationText)).toBeInTheDocument();
   });
 
+  it('should render assistant error message', () => {
+    const content = 'Access Denied Exception';
+    render(
+      <Chatbot
+        height={400}
+        messages={[
+          {
+            content,
+            sender: 'assistant',
+            type: MessageType.ERROR,
+            id: 'UniqueID',
+            loading: false,
+            payload: {
+              accessDeniedException: {
+                name: 'accessDeniedException',
+                message: 'message accessDeniedException',
+              },
+            },
+          },
+        ]}
+        onSubmit={() => {}}
+      />
+    );
+    expect(screen.getByText(content)).toBeInTheDocument();
+  });
+
   it('should render prompts and be able to click on it', () => {
     const mockOnCLick = jest.fn();
     const content =

@@ -5,7 +5,7 @@ import {
   MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY,
   VIEWPORT,
 } from '../chart/mock-data';
-import { MOCK_TIME_SERIES_DATA_QUERY as MOCK_TIME_SERIES_DATA_QUERY_ONE } from '../kpi/kpi-thresholds';
+import { MOCK_TIME_SERIES_DATA_QUERY as MOCK_TIME_SERIES_DATA_QUERY_ONE } from '../kpi/kpi-mock-data';
 // Should be part of the public API, i.e. exported from src
 import {
   LineChart,

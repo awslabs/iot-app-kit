@@ -76,7 +76,7 @@ export const ConnectedAssistantChatbot: ComponentStory<
   );
 };
 
-export const ProcessingAssistant: ComponentStory<
+export const AssistantProcessingState: ComponentStory<
   typeof AssistantChatbot
 > = () => {
 
@@ -104,6 +104,51 @@ export const ProcessingAssistant: ComponentStory<
     },
   });
   
+  return (
+    <div style={{ padding: '0.5rem' }}>
+      <AssistantChatbot
+        height={500}
+        messages={messages}
+        onSubmit={() => {}}
+        onClose={() => {}}
+      />
+    </div>
+  );
+};
+
+export const AssistantErrorState: ComponentStory<
+  typeof AssistantChatbot
+> = () => {
+
+  const { messages } = useAssistant({
+    assistantClient: client,
+    initialState: {
+      messages: [
+        {
+          content:
+            'Processing assistant response, please wait..',
+          sender: 'assistant',
+          type: MessageType.TEXT,
+          id: crypto.randomUUID(),
+          loading: true,
+        },
+        {
+          content: 'You do not have the required permissions to use the Sitewise Assistant. Please contact your administrator to request access.',
+          sender: 'assistant',
+          type: MessageType.ERROR,
+          id: crypto.randomUUID(),
+          loading: false,
+          payload: {
+            accessDeniedException: {
+              name: 'accessDeniedException',
+              message: 'You do not have the required permissions to use the Sitewise Assistant. Please contact your administrator to request access.',
+            }
+          }
+        }
+      ],
+    },
+  });
+
   return (
     <div style={{ padding: '0.5rem' }}>
       <AssistantChatbot

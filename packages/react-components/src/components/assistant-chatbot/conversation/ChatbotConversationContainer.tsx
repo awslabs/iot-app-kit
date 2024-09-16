@@ -5,6 +5,7 @@ import { ChatbotTextMessage } from './ChatbotTextMessage';
 import { ChatbotProcessingMessage } from './ChatbotProcessingMessage';
 import { ChatbotPrompts } from './ChatbotPrompts';
 import { type IMessage, MessageType } from '../../../hooks/useAssistant/types';
+import { AssistantError } from '../../assistant-common/AssistantError';
 
 export interface ChatbotConversationContainerProps {
   height: number;
@@ -66,6 +67,12 @@ export const ChatbotConversationContainer = ({
                   key={message.id}
                   onClick={onSubmit}
                 />
+              );
+            }
+
+            if (message.type === MessageType.ERROR) {
+              return (
+                <AssistantError message={message.content} key={message.id} />
               );
             }
           })}

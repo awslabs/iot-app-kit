@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
-import type { AssistantClientInvocationResponse } from '@iot-app-kit/core-util';
+import type {
+  AssistantClientInvocationError,
+  AssistantClientInvocationResponse,
+} from '@iot-app-kit/core-util';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import type { IMessageParser, BaseStateManager, IMessage } from './types';
 import { MessageParser } from './messageParser';
 import { StateManager } from './stateManager';
 import useDataStore from '../../store';
+import type { InvokeAssistantRequest } from '@amzn/iot-black-pearl-internal-v3';
 
 export interface IUseAssistant {
   assistantClient: IoTSitewiseAssistantClient;
@@ -94,9 +98,18 @@ export const useAssistant = ({
     setMessages(currentStateManager.getState().messages);
   };
 
+  const onError = (
+    error: AssistantClientInvocationError,
+    payload: InvokeAssistantRequest
+  ) => {
+    currentStateManager.addError(error.message ?? '', payload);
+    setMessages(currentStateManager.getState().messages);
+  };
+
   assistantClient.setRequestHandlers(
     assistantClient.onResponse ? assistantClient.onResponse : onResponse,
-    assistantClient.onComplete ? assistantClient.onComplete : onComplete
+    assistantClient.onComplete ? assistantClient.onComplete : onComplete,
+    assistantClient.onError ? assistantClient.onError : onError
   );
 
   const invokeAssistant = (

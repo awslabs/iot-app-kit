@@ -18,6 +18,11 @@ export type AssistantClientInstanceParams = {
    * onComplete is called when all chunk have returned from the streaming api response.
    */
   onComplete?: AssistantClientInvocationCompleteHandler;
+
+  /**
+   * onError is called when the streaming api returns an error or an exception in the response.
+   */
+  onError?: AssistantClientInvocationErrorHandler;
 };
 
 export type AssistantClientInstance = {
@@ -40,5 +45,15 @@ export type AssistantClientInvocationResponse = {
 
 export type AssistantClientInvocationResponseHandler = (
   response: AssistantClientInvocationResponse,
+  invocationDetail: InvokeAssistantRequest
+) => void;
+
+export type AssistantClientInvocationError = {
+  name?: string;
+  message?: string;
+};
+
+export type AssistantClientInvocationErrorHandler = (
+  error: AssistantClientInvocationError,
   invocationDetail: InvokeAssistantRequest
 ) => void;

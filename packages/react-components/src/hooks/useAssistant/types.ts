@@ -6,8 +6,7 @@ export enum MessageType {
   TEXT = 'text',
   IMAGE = 'image',
   PROMPTS = 'prompts',
-  VIDEO = 'video',
-  AUDIO = 'audio',
+  ERROR = 'error',
 }
 
 export interface IMessage {
