@@ -179,10 +179,10 @@ it('creates new workspace when given workspace that does not exist and user prom
   expect(await handler(argv2)).toBe(0);
   expect(s3Mock.commandCalls(CreateBucketCommand).length).toBe(2);
   expect(s3Mock.commandCalls(PutBucketVersioningCommand).length).toBe(2);
-  expect(s3Mock.commandCalls(PutBucketPolicyCommand).length).toBe(2);
+  expect(s3Mock.commandCalls(PutBucketPolicyCommand).length).toBe(3);
   expect(s3Mock.commandCalls(PutPublicAccessBlockCommand).length).toBe(2);
   expect(s3Mock.commandCalls(PutBucketEncryptionCommand).length).toBe(2);
-  expect(s3Mock.commandCalls(PutBucketAclCommand).length).toBe(1);
+  expect(s3Mock.commandCalls(PutBucketAclCommand).length).toBe(0);
   expect(s3Mock.commandCalls(PutBucketCorsCommand).length).toBe(1);
   expect(twinmakerMock.commandCalls(GetWorkspaceCommand).length).toBe(4);
   expect(twinmakerMock.commandCalls(CreateWorkspaceCommand).length).toBe(1);
