@@ -50,8 +50,26 @@ export const mockSourceAssetProperty2: AssetProperty = {
   dataType: 'STRING',
 };
 
-export const mockDefaultAlarmState = 'NORMAL';
-export const mockDefaultAlarmState2 = 'ACTIVE';
+export const mockDefaultAlarmState = JSON.stringify({
+  stateName: 'NORMAL',
+  ruleEvaluation: {
+    simpleRule: {
+      inputProperty: 41,
+      operator: 'GREATER',
+      threshold: 30,
+    },
+  },
+});
+export const mockDefaultAlarmState2 = JSON.stringify({
+  stateName: 'ACTIVE',
+  ruleEvaluation: {
+    simpleRule: {
+      inputProperty: 41,
+      operator: 'GREATER',
+      threshold: 30,
+    },
+  },
+});
 export const mockStateAssetModelProperty: AssetModelProperty = {
   ...mockStateAssetProperty,
   type: {
@@ -93,13 +111,14 @@ export const mockInputProperty2: AssetProperty = {
 };
 
 export const mockStringAssetPropertyValue = (
-  value: string
+  value: string,
+  date?: Date
 ): AssetPropertyValue => ({
   value: {
     stringValue: value,
   },
   timestamp: {
-    timeInSeconds: 100,
+    timeInSeconds: date ? date.getTime() / 1000 : 100,
     offsetInNanos: 0,
   },
   quality: 'GOOD',
