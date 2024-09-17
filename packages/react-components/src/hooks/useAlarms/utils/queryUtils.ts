@@ -84,3 +84,7 @@ export const combineStatusForQueries = (
 
   return status;
 };
+
+export const isQueryDisabled = (query: UseQueryResult) => {
+  return query.status === 'pending' && query.fetchStatus === 'idle';
+};

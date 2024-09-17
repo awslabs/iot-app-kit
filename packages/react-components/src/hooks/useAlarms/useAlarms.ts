@@ -11,6 +11,7 @@ import {
   useLatestAlarmPropertyValue,
 } from './hookHelpers';
 import { filterAlarmsMatchingInputProperties } from './utils/alarmModelUtils';
+import { useAlarmState } from './hookHelpers/useAlarmState/useAlarmState';
 
 /**
  * Identify function that returns the input AlarmData.
@@ -42,8 +43,14 @@ function useAlarms<T>(
  * If transform is undefined, the output is AlarmData[], dicatated by the first signature above.
  */
 function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
-  const { iotSiteWiseClient, iotEventsClient, requests, transform } =
-    options ?? {};
+  const {
+    iotSiteWiseClient,
+    iotEventsClient,
+    requests,
+    viewport,
+    settings,
+    transform,
+  } = options ?? {};
   /**
    * Fetch alarm summaries based on the request
    * (e.g. all alarms for an asset or assetModel)
@@ -57,10 +64,11 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
    * Fetch latest asset property values for alarms with a state property.
    * Data should be available for all alarms fetched for an asset.
    */
-  const statePropertyAlarmData = useLatestAlarmPropertyValue({
+  const statePropertyAlarmData = useAlarmState({
     iotSiteWiseClient,
-    alarmDataList: assetAlarmData,
-    alarmPropertyFieldName: 'state',
+    alarms: assetAlarmData,
+    viewport,
+    ...settings,
   });
 
   /**
