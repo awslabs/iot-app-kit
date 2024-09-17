@@ -9,9 +9,9 @@ export type AssistantActionPanelMessageKeys =
 export const AssistantActionPanel: Messages<AssistantActionPanelMessageKeys> = {
   en: {
     'assistant-action-panel.numSelected': '{numPanels} panel selected',
-    'assistant-action-panel.deepDive': 'Chat',
+    'assistant-action-panel.deepDive': 'Chat with AI',
     'assistant-action-panel.summarize': 'Summarize',
-    'assistant-action-panel.chatbot': 'Chat',
+    'assistant-action-panel.chatbot': 'Chat with AI',
   },
 };
 export type AssistantResultPanelMessageKeys =

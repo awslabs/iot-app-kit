@@ -60,7 +60,7 @@ describe('ActionPanel', () => {
       screen.getByRole('button', { name: /Summarize/i })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: /Dive deep/i })
+      screen.getByRole('button', { name: /Chat with AI/i })
     ).toBeInTheDocument();
   });
 
@@ -73,11 +73,11 @@ describe('ActionPanel', () => {
     expect(screen.queryByTestId('action-panel-summarize-button')).toBeNull();
 
     await user.click(screen.getByTestId('action-panel-menu-button'));
-    await user.click(screen.getByRole('button', { name: /Dive deep/i }));
+    await user.click(screen.getByRole('button', { name: /Chat with AI/i }));
     expect(screen.queryByTestId('action-panel-chatbot-button')).toBeNull();
   });
 
-  it('fires divedeep action when Dive deep action item is clicked', async () => {
+  it('fires divedeep action when "Chat with AI" action item is clicked', async () => {
     const mockedDivedeepAction = jest.fn();
     const user = userEvent.setup();
     render(
@@ -92,7 +92,7 @@ describe('ActionPanel', () => {
     );
 
     await user.click(screen.getByTestId('action-panel-menu-button'));
-    await user.click(screen.getByRole('button', { name: /Dive deep/i }));
+    await user.click(screen.getByRole('button', { name: /Chat with AI/i }));
 
     expect(mockedDivedeepAction).toHaveBeenCalledWith({
       type: 'divedeep',

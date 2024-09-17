@@ -92,8 +92,9 @@ describe('default kpi widget', () => {
     const DECIMAL_PLACES = 4;
     render(<KPI query={SUCCESS_QUERY} />);
 
-    expect(screen.getByText(DATA_STREAM.name)).toBeVisible();
-    expect(screen.getByText(`(${DATA_STREAM.unit})`)).toBeVisible();
+    expect(
+      screen.getByText(`${DATA_STREAM.name} (${DATA_STREAM.unit})`)
+    ).toBeVisible();
     expect(
       screen.getByText(DATA_STREAM.data[1].y.toFixed(DECIMAL_PLACES))
     ).toBeVisible();
@@ -123,8 +124,9 @@ describe('default kpi with thresholds', () => {
     const DECIMAL_PLACES = 4;
     render(<KPI query={SUCCESS_QUERY} thresholds={[THRESHOLD]} />);
 
-    expect(screen.getByText(DATA_STREAM.name)).toBeVisible();
-    expect(screen.getByText(`(${DATA_STREAM.unit})`)).toBeVisible();
+    expect(
+      screen.getByText(`${DATA_STREAM.name} (${DATA_STREAM.unit})`)
+    ).toBeVisible();
     expect(
       screen.getByText(
         formatDate(DATA_STREAM.data[1].x, { pattern: 'M/dd/yyyy, h:mm:ss aa' })
@@ -143,8 +145,9 @@ describe('default kpi with thresholds', () => {
     const COLOR_RED = '#ff0000';
     const DECIMAL_PLACES = 4;
     render(<KPI query={SUCCESS_QUERY} thresholds={[FILLED_THRESHOLD]} />);
-    expect(screen.getByText(DATA_STREAM.name)).toBeVisible();
-    expect(screen.getByText(`(${DATA_STREAM.unit})`)).toBeVisible();
+    expect(
+      screen.getByText(`${DATA_STREAM.name} (${DATA_STREAM.unit})`)
+    ).toBeVisible();
     expect(
       screen.getByText(
         formatDate(DATA_STREAM.data[1].x, { pattern: 'M/dd/yyyy, h:mm:ss aa' })

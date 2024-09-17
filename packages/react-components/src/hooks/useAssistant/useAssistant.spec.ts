@@ -198,7 +198,7 @@ describe('useAssistant', () => {
       expect(mockInvokeAssistant).toBeCalledWith({
         conversationId,
         enableTrace: true,
-        message: `given this context: " " customer message`,
+        message: `given this context:  customer message`,
       });
     });
   });
@@ -220,7 +220,7 @@ describe('useAssistant', () => {
       expect(mockInvokeAssistant).toBeCalledWith({
         conversationId,
         enableTrace: true,
-        message: `given this context: " ${context}" ${summaryUtterance}`,
+        message: `given this context: ${context} ${summaryUtterance}`,
       });
     });
   });

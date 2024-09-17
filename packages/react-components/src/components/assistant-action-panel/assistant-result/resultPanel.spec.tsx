@@ -122,7 +122,7 @@ describe('ResultPanel', () => {
     expect(mockOnClose).toHaveBeenCalled();
   });
 
-  it('fires divedeep action when Dive deep action item is clicked', async () => {
+  it('fires divedeep action when "Chat with AI" action item is clicked', async () => {
     const mockedDivedeepAction = jest.fn();
     const user = userEvent.setup();
     render(
@@ -131,7 +131,7 @@ describe('ResultPanel', () => {
       })
     );
 
-    await user.click(screen.getByText(/Dive deep/i));
+    await user.click(screen.getByText(/Chat with AI/i));
     expect(mockedDivedeepAction).toHaveBeenCalled();
   });
 });

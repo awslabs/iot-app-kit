@@ -39,7 +39,7 @@ it('can close the chatbot', () => {
     toggleChatbot(setupDashboardState([]), {
       type: 'TOGGLE_CHATBOT',
       payload: {
-        open: true,
+        open: false,
         componentId: 'componentId',
         messages: [],
       },

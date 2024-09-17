@@ -9,7 +9,7 @@ import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistan
 
 const VIEWPORT = { duration: '5m' };
 
-const LATEST_VALUE = 123.2;
+const LATEST_VALUE = 123.21;
 const DATA_STREAM = {
   id: 'abc-1',
   data: [{ x: new Date(2000, 0, 0).getTime(), y: LATEST_VALUE }],
@@ -47,9 +47,7 @@ it('renders', async () => {
   expect(screen.getByTestId('kpi-name-and-unit').textContent).toContain(
     DATA_STREAM.unit
   );
-  expect(screen.getByTestId('kpi-value').textContent).toContain(
-    `${DATA_STREAM.data[0].y} `
-  );
+  expect(screen.getByTestId('kpi-value').textContent).toContain(`${DATA_STREAM.data[0].y}`);
   expect(screen.getByTestId('kpi-timestamp').textContent).toContain(
     new Date(DATA_STREAM.data[0].x).toLocaleString()
   );

@@ -42,7 +42,6 @@ export const getClients = (
     endpoint: 'https://data.gamma.us-east-1.iotsitewise.amazonaws.com',
   });
 
-
   return {
     iotEventsClient,
     iotSiteWiseClient,

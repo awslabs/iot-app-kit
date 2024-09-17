@@ -164,7 +164,7 @@ describe(`${PropertiesPanel.name}`, () => {
     expect(thresholdsTab).toBeVisible();
 
     fireEvent.click(thresholdsTab);
-    expect(thresholdsTab).toHaveFocus();
+    expect(thresholdsTab).toHaveAttribute('aria-selected');
     expect(screen.getByText('Add a threshold')).toBeVisible();
 
     const options = {

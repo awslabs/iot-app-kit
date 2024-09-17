@@ -6,11 +6,17 @@ import { DashboardWidget } from '~/types';
 import { TitleSection } from './titleSection';
 import { maybeWithDefault } from '~/util/maybe';
 import { PropertyLens } from '~/customization/propertiesSection';
+import type { CommonChartProperties } from '~/customization/widgets/types';
+
+const isWidgetTitle = (
+  w: DashboardWidget
+): w is DashboardWidget<CommonChartProperties> =>
+  'queryConfig' in w.properties && !(w.type === 'text');
 
 const RenderWidgetTitleSection = ({
   useProperty,
 }: {
-  useProperty: PropertyLens<DashboardWidget>;
+  useProperty: PropertyLens<DashboardWidget<CommonChartProperties>>;
 }) => {
   const [titleMaybe, updateTitle] = useProperty(
     (properties) => properties.title,
@@ -20,7 +26,7 @@ const RenderWidgetTitleSection = ({
     })
   );
 
-  const title = maybeWithDefault('', titleMaybe) as string;
+  const title = maybeWithDefault(undefined, titleMaybe);
 
   return (
     <SpaceBetween size='s' direction='vertical'>
@@ -31,6 +37,7 @@ const RenderWidgetTitleSection = ({
 
 export const WidgetTitle: React.FC = () => (
   <PropertiesSection
+    isVisible={isWidgetTitle}
     render={({ useProperty }) => (
       <RenderWidgetTitleSection useProperty={useProperty} />
     )}

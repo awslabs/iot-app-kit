@@ -12,7 +12,6 @@ import { WidgetTitle } from './index';
 import {
   MOCK_LINE_CHART_WIDGET,
   MOCK_TEXT_WIDGET,
-  MOCK_KPI_WIDGET,
   MOCK_RECTANGLE_WIDGET,
 } from '../../../../testing/mocks';
 
@@ -47,11 +46,7 @@ it('renders the widget title input', () => {
 });
 
 it('renders the without widget title input', () => {
-  const NO_TITLE_WIDGETS = [
-    MOCK_KPI_WIDGET,
-    MOCK_RECTANGLE_WIDGET,
-    MOCK_TEXT_WIDGET,
-  ];
+  const NO_TITLE_WIDGETS = [MOCK_RECTANGLE_WIDGET, MOCK_TEXT_WIDGET];
   NO_TITLE_WIDGETS.map((widget) => {
     const elem = render(<TestComponent {...widget} />).baseElement;
     expect(queryByLabelText(elem, 'Widget title')).toBeNull();

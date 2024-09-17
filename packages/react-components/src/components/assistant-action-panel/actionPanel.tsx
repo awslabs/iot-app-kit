@@ -6,13 +6,13 @@ import {
 } from '@cloudscape-design/design-tokens';
 import { FormattedMessage, IntlProvider } from 'react-intl';
 import type { AssistantProperty } from '../../common/assistantProps';
+import { ResultPanel } from './assistant-result/resultPanel';
 import { AssistantIcon } from './assistantIcon';
 import { useAssistant } from '../../hooks/useAssistant/useAssistant';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 import { SITUATION_SUMMARY_DEFAULT_UTTERANCE } from './constants';
 import { v4 as uuid } from 'uuid';
 import './actionPanel.css';
-import { ResultPanel } from './assistant-result/resultPanel';
 
 export interface ActionPanelProps extends PropsWithChildren {
   componentId: string;
@@ -123,12 +123,12 @@ export const ActionPanel = ({
               <button
                 data-testid='action-panel-chatbot-button'
                 onClick={handleDiveDeep}
-                aria-label='Chat'
+                aria-label='Chat with AI'
               >
                 <Icon name='contact' />{' '}
                 <FormattedMessage
                   id='assistant-action-panel.chatbot'
-                  defaultMessage='Chat'
+                  defaultMessage='Chat with AI'
                   description='Assistant action menu item for opening the chatbot.'
                 />
               </button>

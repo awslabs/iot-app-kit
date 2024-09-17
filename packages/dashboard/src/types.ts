@@ -15,7 +15,7 @@ import {
 } from '@iot-app-kit/source-iotsitewise';
 import { RefreshRate } from './components/refreshRate/types';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { IoTSiteWise as InternalIoTSiteWise  } from '@amzn/iot-black-pearl-internal-v3';
+import { IoTSiteWise as InternalIoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import { ReactElement } from 'react';
 
 export type DashboardClientCredentials = {
