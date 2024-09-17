@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.12.2](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v10.12.1...tools-iottwinmaker-v10.12.2) (2024-09-17)
+
+
+### Bug Fixes
+
+* **bucket policy:** switch from ACL to bucket policy for access logs ([2d17a0f](https://github.com/awslabs/iot-app-kit/commit/2d17a0fa53057ddd0a9e5b46ab2b0de6b9163ac2))
+
 ## [10.12.1](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v10.12.0...tools-iottwinmaker-v10.12.1) (2024-09-14)
 
 
