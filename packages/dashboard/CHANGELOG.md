@@ -1,5 +1,28 @@
 # Changelog
 
+## [10.12.2](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.12.1...dashboard-v10.12.2) (2024-09-17)
+
+
+### Bug Fixes
+
+* **dashboard:** remove promise client from public API and internally generate it ([b98f5c7](https://github.com/awslabs/iot-app-kit/commit/b98f5c7ad292cee108c744d2ceec0d5117dd90b0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.12.1 to 10.12.2
+    * @iot-app-kit/core bumped from 10.12.1 to 10.12.2
+    * @iot-app-kit/core-util bumped from 10.12.1 to 10.12.2
+    * @iot-app-kit/react-components bumped from 10.12.1 to 10.12.2
+    * @iot-app-kit/source-iotsitewise bumped from 10.12.1 to 10.12.2
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 10.12.1 to 10.12.2
+    * @iot-app-kit/testing-util bumped from 10.12.1 to 10.12.2
+    * @iot-app-kit/ts-config bumped from 10.12.1 to 10.12.2
+    * eslint-config-iot-app-kit bumped from 10.12.1 to 10.12.2
+
 ## [10.12.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v10.12.0...dashboard-v10.12.1) (2024-09-14)
 
 
