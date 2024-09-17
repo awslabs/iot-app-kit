@@ -189,7 +189,7 @@ describe('AssistantClient', () => {
     expect(mockInvokeAssistant).toBeCalledWith(
       expect.objectContaining({
         conversationId,
-        message: `given this context: " ${context}" ${summaryUtterance}`,
+        message: `given this context: ${context} ${summaryUtterance}`,
       })
     );
   });

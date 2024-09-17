@@ -54,9 +54,9 @@ export class IoTSitewiseAssistantClient {
    * @param context additional context for augmenting the default context
    */
   invoke(conversationId: string, utterance: string, context?: string) {
-    const assistantContext = `given this context: "${
+    const assistantContext = `given this context:${
       this.defaultContext?.trim() ?? ''
-    } ${context?.trim() ?? ''}"`;
+    } ${context?.trim() ?? ''}`;
 
     invokeAssistant({
       iotSiteWiseClient: this.iotSiteWiseClient,

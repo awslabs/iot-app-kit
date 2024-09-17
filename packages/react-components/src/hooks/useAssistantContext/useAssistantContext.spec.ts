@@ -1,11 +1,31 @@
-import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
+import type { TimeSeriesDataQuery } from '@iot-app-kit/core';
 import { useAssistantContext } from './useAssistantContext';
+import type { SiteWiseDataStreamQuery } from '@iot-app-kit/source-iotsitewise';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 
 const component1 = 'mockComponent';
 const component2 = 'testComponent';
 const context1 = { initial: 'initial context' };
 const context2 = { new: 'new context' };
 const context3 = { new: 'updated context' };
+
+export const mockTimeSeriesDataQuery = (
+  mockData: SiteWiseDataStreamQuery
+): TimeSeriesDataQuery => {
+  return {
+    toQueryString: () =>
+      JSON.stringify({
+        source: 'mock',
+        queryType: 'time-series-data',
+        query: mockData,
+      }),
+    build: () => ({
+      subscribe: () => {},
+      unsubscribe: () => {},
+      updateViewport: () => {},
+    }),
+  };
+};
 
 describe('useAssistantContext', () => {
   it('should provide a global context already initiated', () => {
@@ -76,33 +96,64 @@ describe('useAssistantContext', () => {
     );
   });
 
-  it('getSupportedTimeRange should return start and end dates in ISO 8601 format', () => {
-    const { getSupportedTimeRange } = useAssistantContext();
-    const startDate = new Date('August 01, 2024 05:35:32');
-    const endDate = new Date('September 06, 2024 23:12:34');
+  it('transformTimeseriesToAssistantContext should return start and end dates in ISO 8601 format', () => {
+    const { transformTimeseriesDataToAssistantContext } = useAssistantContext();
+    const start = new Date('August 01, 2024 05:35:32');
+    const end = new Date('September 06, 2024 23:12:34');
 
-    const timerange = getSupportedTimeRange(startDate, endDate);
-    expect(timerange.start).toBe('2024-08-01T05:35:32Z');
-    expect(timerange.end).toBe('2024-09-06T23:12:34Z');
+    const transformed = transformTimeseriesDataToAssistantContext({
+      start,
+      end,
+      queries: [],
+    });
+    expect(transformed.timerange.start).toBe('2024-08-01T05:35:32Z');
+    expect(transformed.timerange.end).toBe('2024-09-06T23:12:34Z');
   });
 
-  it('getQueriesForContext should return parse and return query in a correct format to be added to te assistant context', () => {
-    const { getQueriesForContext } = useAssistantContext();
-    const anyQuery = {
-      dataStreams: [],
-      viewport: { duration: '5m' },
-      thresholds: [],
+  it('transformTimeseriesToAssistantContext should return parse and return query in a correct format to be added to te assistant context', () => {
+    const { transformTimeseriesDataToAssistantContext } = useAssistantContext();
+    const start = new Date('August 01, 2024 05:35:32');
+    const end = new Date('September 06, 2024 23:12:34');
+    const timeSeriesData: SiteWiseDataStreamQuery = {
+      assets: [
+        {
+          assetId: 'assetId',
+          properties: [
+            {
+              aggregationType: AggregateType.MAXIMUM,
+              propertyId: 'propertyId1',
+            },
+            {
+              aggregationType: AggregateType.MAXIMUM,
+              propertyId: 'propertyId2',
+            },
+          ],
+        },
+      ],
+      properties: [
+        {
+          aggregationType: AggregateType.MAXIMUM,
+          propertyAlias: 'propertyAlias1',
+        },
+        {
+          aggregationType: AggregateType.MAXIMUM,
+          propertyAlias: 'propertyAlias2',
+        },
+      ],
     };
-    const query = mockTimeSeriesDataQuery([anyQuery]);
+    const query = mockTimeSeriesDataQuery(timeSeriesData);
 
-    const [first] = getQueriesForContext([query]);
-    expect(first).toEqual(
-      expect.objectContaining({
-        query: [
-          { dataStreams: [], thresholds: [], viewport: { duration: '5m' } },
-        ],
-        source: 'mock',
-      })
-    );
+    const transformed = transformTimeseriesDataToAssistantContext({
+      start,
+      end,
+      queries: [query],
+    });
+    const [first] = transformed.queries;
+    expect(first?.queryType).toEqual('time-series-data');
+    expect(first?.aggregationType).toEqual(AggregateType.MAXIMUM);
+    expect(first?.properties[0].propertyId).toEqual('propertyId1');
+    expect(first?.properties[1].propertyId).toEqual('propertyId2');
+    expect(first?.properties[2].propertyAlias).toEqual('propertyAlias1');
+    expect(first?.properties[3].propertyAlias).toEqual('propertyAlias2');
   });
 });

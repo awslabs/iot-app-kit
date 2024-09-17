@@ -38,7 +38,7 @@ export const Gauge = ({
     styles,
   });
   const { viewport, lastUpdatedBy } = useViewport();
-  const { setContextByComponent, getSupportedTimeRange, getQueriesForContext } =
+  const { setContextByComponent, transformTimeseriesDataToAssistantContext } =
     useAssistantContext();
 
   const utilizedViewport =
@@ -64,14 +64,14 @@ export const Gauge = ({
     styles && refId ? styles[refId]?.color : DEFAULT_GAUGE_PROGRESS_COLOR;
 
   useEffect(() => {
-    const timerange = getSupportedTimeRange(
-      viewportStartDate(utilizedViewport),
-      viewportEndDate(utilizedViewport)
+    setContextByComponent(
+      componentId,
+      transformTimeseriesDataToAssistantContext({
+        start: viewportStartDate(utilizedViewport),
+        end: viewportEndDate(utilizedViewport),
+        queries: [query],
+      })
     );
-    setContextByComponent(componentId, {
-      timerange,
-      queries: getQueriesForContext([query]),
-    });
   }, [utilizedViewport, query]);
 
   const component = (

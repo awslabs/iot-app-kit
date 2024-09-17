@@ -50,7 +50,7 @@ export const KPI = ({
   });
   const { viewport } = useViewport();
   const componentId = useComponentId();
-  const { setContextByComponent, getSupportedTimeRange, getQueriesForContext } =
+  const { setContextByComponent, transformTimeseriesDataToAssistantContext } =
     useAssistantContext();
 
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
@@ -76,14 +76,14 @@ export const KPI = ({
   const error = alarmStream?.error || propertyStream?.error;
 
   useEffect(() => {
-    const timerange = getSupportedTimeRange(
-      viewportStartDate(utilizedViewport),
-      viewportEndDate(utilizedViewport)
+    setContextByComponent(
+      componentId,
+      transformTimeseriesDataToAssistantContext({
+        start: viewportStartDate(utilizedViewport),
+        end: viewportEndDate(utilizedViewport),
+        queries: [query],
+      })
     );
-    setContextByComponent(componentId, {
-      timerange,
-      queries: getQueriesForContext([query]),
-    });
   }, [utilizedViewport, query]);
 
   const component = (

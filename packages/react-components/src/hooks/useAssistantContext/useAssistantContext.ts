@@ -6,6 +6,16 @@ import {
   setContextByComponent,
   updateContextByComponent,
 } from '@iot-app-kit/core-util';
+import {
+  convertToSupportedTimeRange,
+  transformQueriesForContext,
+} from './utils';
+
+export type TransformTimeseriesDataToAssistantContextParams = {
+  start: Date;
+  end: Date;
+  queries: TimeSeriesDataQuery[];
+};
 
 export const useAssistantContext = () => {
   const assistantContext = getAssistantStore();
@@ -15,25 +25,13 @@ export const useAssistantContext = () => {
     getContextByComponent,
     setContextByComponent,
     updateContextByComponent,
-    getSupportedTimeRange: (start: Date, end: Date) => {
-      let startISO = start.toISOString();
-      startISO = `${startISO.substring(0, startISO.indexOf('.'))}Z`;
-
-      let endISO = end.toISOString();
-      endISO = `${endISO.substring(0, endISO.indexOf('.'))}Z`;
-      return {
-        start: startISO,
-        end: endISO,
-      };
-    },
-    getQueriesForContext: (queries: TimeSeriesDataQuery[]) => {
-      return queries.map((query) => {
-        try {
-          return JSON.parse(query.toQueryString());
-        } catch (_error) {
-          return {};
-        }
-      });
-    },
+    transformTimeseriesDataToAssistantContext: ({
+      start,
+      end,
+      queries,
+    }: TransformTimeseriesDataToAssistantContextParams) => ({
+      timerange: convertToSupportedTimeRange(start, end),
+      queries: transformQueriesForContext(queries),
+    }),
   };
 };

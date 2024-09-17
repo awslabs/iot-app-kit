@@ -83,7 +83,7 @@ const BaseChart = ({
     handleChangeBadDataIconsVisibility,
     handleChangeUncertainDataIconsVisibility,
   } = useDataQuality({ ...options.dataQuality, onChartOptionsChange });
-  const { setContextByComponent, getSupportedTimeRange, getQueriesForContext } =
+  const { setContextByComponent, transformTimeseriesDataToAssistantContext } =
     useAssistantContext();
 
   const isLegendVisible = options.legend?.visible;
@@ -179,14 +179,14 @@ const BaseChart = ({
 
   useEffect(() => {
     if (options.id) {
-      const timerange = getSupportedTimeRange(
-        viewportStartDate(utilizedViewport),
-        viewportEndDate(utilizedViewport)
+      setContextByComponent(
+        options.id,
+        transformTimeseriesDataToAssistantContext({
+          start: viewportStartDate(utilizedViewport),
+          end: viewportEndDate(utilizedViewport),
+          queries,
+        })
       );
-      setContextByComponent(options.id, {
-        timerange,
-        queries: getQueriesForContext(queries),
-      });
     }
   }, [utilizedViewport, queries]);
 
