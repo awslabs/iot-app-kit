@@ -11,6 +11,7 @@ export const DashboardViewWrapper: React.FC<DashboardViewProperties> = ({
   onViewportChange,
   toolbar,
   timeZone,
+  assistantConfiguration,
 }) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   const stableOnViewportChange = useMemo(() => onViewportChange, []);
@@ -35,6 +36,7 @@ export const DashboardViewWrapper: React.FC<DashboardViewProperties> = ({
     <DashboardView
       clientConfiguration={clientConfiguration}
       dashboardConfiguration={stableDashboardConfiguration}
+      assistantConfiguration={assistantConfiguration}
       edgeMode={edgeMode}
       name={name}
       currentViewport={currentViewport}

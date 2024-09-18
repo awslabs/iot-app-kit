@@ -55,6 +55,12 @@ export type DashboardConfigurationChange = (
   dashboardConfiguration: DashboardConfiguration
 ) => void;
 
+export type AssistantStateTypes = 'DISABLED' | 'PASSIVE';
+
+export type AssistantConfiguration = {
+  state?: AssistantStateTypes;
+};
+
 export type DashboardWidget<
   Properties extends Record<string, unknown> = Record<string, unknown>
 > = {

@@ -54,7 +54,7 @@ describe('useAssistant', () => {
     const { result } = renderHook(
       () => {
         const dispatch = useDispatch();
-        if (!store.getState().assistant.isChatbotOpen) {
+        if (!store.getState().readOnly) {
           dispatch(onToggleReadOnly());
         }
         return useAssistant();

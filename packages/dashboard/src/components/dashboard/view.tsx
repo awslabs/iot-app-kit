@@ -2,8 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
-
-import { Viewport, type EdgeMode } from '@iot-app-kit/core';
+import type { EdgeMode, Viewport } from '@iot-app-kit/core';
 import { isEdgeModeEnabled } from '@iot-app-kit/core';
 import { QueryClientProvider } from '@tanstack/react-query';
 
@@ -12,8 +11,9 @@ import { useDashboardPlugins } from '~/customization/api';
 import type {
   DashboardClientConfiguration,
   DashboardConfiguration,
-  DashboardToolbar,
   ViewportChange,
+  DashboardToolbar,
+  AssistantConfiguration,
 } from '~/types';
 import { ClientContext } from './clientContext';
 import { queryClient } from '~/data/query-client';
@@ -21,15 +21,16 @@ import { QueryContext } from './queryContext';
 import { getClients } from './getClients';
 import { getQueries } from './getQueries';
 import InternalDashboard from '../internalDashboard';
+import { debounce } from 'lodash';
+import { TimeSync } from '@iot-app-kit/react-components';
 
 import '@cloudscape-design/global-styles/index.css';
 import '../../styles/variables.css';
-import { debounce } from 'lodash';
-import { TimeSync } from '@iot-app-kit/react-components';
 
 export type DashboardViewProperties = {
   clientConfiguration: DashboardClientConfiguration;
   dashboardConfiguration: DashboardConfiguration;
+  assistantConfiguration?: AssistantConfiguration;
   edgeMode?: EdgeMode;
   name?: string;
   onViewportChange?: ViewportChange;
@@ -47,6 +48,7 @@ const DashboardView: React.FC<DashboardViewProperties> = ({
   currentViewport,
   toolbar,
   timeZone,
+  assistantConfiguration,
 }) => {
   // Adding Dnd provider because custom widgets may have a drag and drop context
   useDashboardPlugins();
@@ -74,6 +76,9 @@ const DashboardView: React.FC<DashboardViewProperties> = ({
                 readOnly: true,
                 isEdgeModeEnabled: isEdgeModeEnabled(edgeMode),
                 timeZone,
+                assistant: {
+                  state: assistantConfiguration?.state ?? 'DISABLED',
+                },
               })}
             >
               <DndProvider

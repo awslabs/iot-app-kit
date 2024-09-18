@@ -13,7 +13,11 @@ export const useAssistant = () => {
   const { iotSiteWisePrivateClient } = useClients();
 
   const assistantProperties = useMemo(() => {
-    if (readOnly && assistant.conversationID) {
+    if (
+      readOnly &&
+      assistant.conversationID &&
+      assistant.state !== 'DISABLED'
+    ) {
       const client = new IoTSitewiseAssistantClient({
         iotSiteWiseClient: iotSiteWisePrivateClient!,
       });
@@ -39,7 +43,12 @@ export const useAssistant = () => {
     } else {
       return {};
     }
-  }, [dispatch, assistant.conversationID, iotSiteWisePrivateClient]);
+  }, [
+    dispatch,
+    assistant.conversationID,
+    iotSiteWisePrivateClient,
+    assistant.state,
+  ]);
 
   return {
     assistantProperties,

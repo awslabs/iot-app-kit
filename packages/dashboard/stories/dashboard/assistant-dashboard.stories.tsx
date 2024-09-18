@@ -75,6 +75,9 @@ export const Main: ComponentStory<typeof Dashboard> = () => {
       onSave={onSave}
       initialViewMode={initialViewMode}
       dashboardConfiguration={dashboardConfig}
+      assistantConfiguration={{
+        state: 'PASSIVE'
+      }}
     />
   );
 };
@@ -83,6 +86,9 @@ export const View: ComponentStory<typeof DashboardView> = () => (
   <DashboardView
     clientConfiguration={CLIENT_CONFIGURATION}
     dashboardConfiguration={getInitialDashboardConfig()}
+    assistantConfiguration={{
+      state: 'PASSIVE'
+    }}
   />
 );
 

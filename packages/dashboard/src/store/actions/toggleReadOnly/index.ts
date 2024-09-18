@@ -18,6 +18,7 @@ export const toggleReadOnly = (state: DashboardState): DashboardState => {
     ...state,
     readOnly: !isReadOnly,
     assistant: {
+      ...state.assistant,
       conversationID: uuid(),
       isChatbotOpen: null,
       messages: [],

@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
-import { Viewport, type EdgeMode } from '@iot-app-kit/core';
+import type { EdgeMode, Viewport } from '@iot-app-kit/core';
 import { isEdgeModeEnabled } from '@iot-app-kit/core';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -18,6 +18,7 @@ import type {
   DashboardSave,
   ViewportChange,
   DashboardToolbar,
+  AssistantConfiguration,
 } from '~/types';
 import { ClientContext } from './clientContext';
 import { QueryContext } from './queryContext';
@@ -37,6 +38,7 @@ export type DashboardProperties = {
   onSave?: DashboardSave;
   clientConfiguration: DashboardClientConfiguration;
   dashboardConfiguration: DashboardConfiguration;
+  assistantConfiguration?: AssistantConfiguration;
   edgeMode?: EdgeMode;
   toolbar?: DashboardToolbar;
   initialViewMode?: 'preview' | 'edit';
@@ -45,6 +47,7 @@ export type DashboardProperties = {
   currentViewport?: Viewport;
   timeZone?: string;
 };
+
 const showFPSMonitor = localStorage.getItem('DASHBOARD_SHOW_FPS');
 
 const Dashboard: React.FC<DashboardProperties> = ({
@@ -59,6 +62,7 @@ const Dashboard: React.FC<DashboardProperties> = ({
   onViewportChange,
   onDashboardConfigurationChange,
   timeZone,
+  assistantConfiguration,
 }) => {
   useDashboardPlugins();
   const debounceOnViewportChange = onViewportChange
@@ -81,6 +85,9 @@ const Dashboard: React.FC<DashboardProperties> = ({
                 readOnly,
                 isEdgeModeEnabled: isEdgeModeEnabled(edgeMode),
                 timeZone: timeZone,
+                assistant: {
+                  state: assistantConfiguration?.state ?? 'DISABLED',
+                },
               })}
             >
               <DndProvider

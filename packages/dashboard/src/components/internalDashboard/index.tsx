@@ -125,6 +125,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     (state: DashboardState) => state.copiedWidgets
   );
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
+  const assistant = useSelector((state: DashboardState) => state.assistant);
   const selectedWidgets = useSelectedWidgets();
   const { assetModelId, hasModelBasedQuery } = useModelBasedQuery();
 
@@ -440,7 +441,9 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             <Widgets {...widgetsProps} />
           </ReadOnlyGrid>
           <WebglContext viewFrame={viewFrame} />
-          <Chatbot height={chatbotHeight} top={chatbotTop} />
+          {assistant.state !== 'DISABLED' ? (
+            <Chatbot height={chatbotHeight} top={chatbotTop} />
+          ) : null}
         </div>
       </div>
     </ContentLayout>

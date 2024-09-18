@@ -24,12 +24,10 @@ export const toggleChatbot = (
   state: DashboardState,
   action: ToggleChatbotAction
 ): DashboardState => {
-  const assistant = state.assistant;
-
   return {
     ...state,
     assistant: {
-      ...assistant,
+      ...state.assistant,
       isChatbotOpen: action.payload.open,
       componentId: action.payload.componentId,
       messages: action.payload.messages,

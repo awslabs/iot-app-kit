@@ -8,7 +8,6 @@ import {
   useAssistantContext,
 } from '@iot-app-kit/react-components';
 import { useClients } from '../dashboard/clientContext';
-import assistantIcon from './assistantIcon.svg';
 import 'animate.css';
 import './assistant.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -79,27 +78,18 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   };
 
   return (
-    <>
-      <div
-        className='iot-dashboard-assistant-chatbot-button'
-        style={{ top: `${props.top}px` }}
-      >
-        <button onClick={() => toggleChatbot(true)}>
-          <img alt='Assistant Icon' src={assistantIcon} width={30} />
-        </button>
-      </div>
-      <div
-        className={`iot-dashboard-assistant-chatbot animate__animated ${chatbotAnimation}`}
-        style={{ top: `${props.top}px` }}
-      >
-        <AssistantChatbot
-          height={props.height}
-          messages={messages}
-          onSubmit={handleSubmit}
-          visible={!!assistant.isChatbotOpen}
-          onClose={() => toggleChatbot(false)}
-        />
-      </div>
-    </>
+    <div
+      className={`iot-dashboard-assistant-chatbot animate__animated ${chatbotAnimation}`}
+      style={{ top: `${props.top}px` }}
+      data-testid='dashboard-chatbot'
+    >
+      <AssistantChatbot
+        height={props.height}
+        messages={messages}
+        onSubmit={handleSubmit}
+        visible={!!assistant.isChatbotOpen}
+        onClose={() => toggleChatbot(false)}
+      />
+    </div>
   );
 };

@@ -1,4 +1,8 @@
-import type { DashboardTimeSeriesSettings, DashboardWidget } from '~/types';
+import type {
+  AssistantStateTypes,
+  DashboardTimeSeriesSettings,
+  DashboardWidget,
+} from '~/types';
 import { deepFreeze } from '~/util/deepFreeze';
 import { v4 as uuid } from 'uuid';
 import type { IMessage } from '@iot-app-kit/react-components';
@@ -25,6 +29,7 @@ export type DashboardState<
   significantDigits: number;
   timeZone?: string;
   assistant: {
+    state: AssistantStateTypes;
     conversationID: string;
     isChatbotOpen: boolean | null;
     messages: IMessage[];
@@ -61,6 +66,7 @@ export const initialState: DashboardState = deepFreeze({
   },
   significantDigits: 4,
   assistant: {
+    state: 'PASSIVE',
     conversationID: uuid(),
     isChatbotOpen: null,
     messages: [],
