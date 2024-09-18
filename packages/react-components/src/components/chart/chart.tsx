@@ -24,6 +24,7 @@ export const Chart: React.FC<ChartOptions> = (options) => {
         width='min-content'
         componentId={chartId}
         assistant={options.assistant}
+        iconPosition={chartOptions.titleText ? 'topRight' : 'topLeft'}
       >
         {component}
       </ActionPanel>
