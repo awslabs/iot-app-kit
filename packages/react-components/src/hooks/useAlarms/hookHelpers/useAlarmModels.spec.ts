@@ -9,7 +9,7 @@ import {
   mockAlarmModel,
   mockAlarmModel2,
 } from '../../../testing/alarms';
-import { AlarmData } from '../types';
+import type { AlarmDataInternal } from '../types';
 import { useAlarmModels } from './useAlarmModels';
 
 describe('useAlarmModels', () => {
@@ -21,10 +21,10 @@ describe('useAlarmModels', () => {
   it('should inject alarm model into AlarmData for one alarm', async () => {
     describeAlarmModelMock.mockResolvedValue(mockAlarmModel);
 
-    const expectedAlarmData: AlarmData = {
+    const expectedAlarmData = {
       ...mockAlarmDataGetAssetPropertyValue,
       models: [mockAlarmModel],
-    };
+    } satisfies AlarmDataInternal;
 
     const { result: alarmDataResults } = renderHook(() =>
       useAlarmModels({
@@ -42,10 +42,10 @@ describe('useAlarmModels', () => {
   });
 
   it('should not change AlarmData for external alarm without a source property', async () => {
-    const externalAlarmData: AlarmData = {
+    const externalAlarmData = {
       ...mockAlarmDataGetAssetPropertyValue,
       source: undefined,
-    };
+    } satisfies AlarmDataInternal;
 
     const { result: alarmDataResults } = renderHook(() =>
       useAlarmModels({
@@ -84,15 +84,15 @@ describe('useAlarmModels', () => {
     describeAlarmModelMock.mockResolvedValueOnce(mockAlarmModel);
     describeAlarmModelMock.mockResolvedValueOnce(mockAlarmModel2);
 
-    const expectedAlarmData1: AlarmData = {
+    const expectedAlarmData1 = {
       ...mockAlarmDataGetAssetPropertyValue,
       models: [mockAlarmModel],
-    };
+    } satisfies AlarmDataInternal;
 
-    const expectedAlarmData2: AlarmData = {
+    const expectedAlarmData2 = {
       ...mockAlarmDataGetAssetPropertyValue2,
       models: [mockAlarmModel2],
-    };
+    } satisfies AlarmDataInternal;
 
     const { result: alarmDataResults } = renderHook(() =>
       useAlarmModels({
@@ -111,5 +111,35 @@ describe('useAlarmModels', () => {
     });
 
     expect(describeAlarmModelMock).toBeCalledTimes(2);
+  });
+
+  it('should overwrite the status of AlarmData when queries fail', async () => {
+    describeAlarmModelMock.mockRejectedValue(
+      'Failure calling DescribeAlarmModel'
+    );
+    const expectedAlarmData = {
+      ...mockAlarmDataGetAssetPropertyValue,
+      status: {
+        isLoading: false,
+        isRefetching: false,
+        isSuccess: false,
+        isError: true,
+      },
+    } satisfies AlarmDataInternal;
+
+    const { result: alarmDataResults } = renderHook(() =>
+      useAlarmModels({
+        iotEventsClient: iotEventsClientMock,
+        alarmDataList: [mockAlarmDataGetAssetPropertyValue],
+        retry: false,
+      })
+    );
+
+    await waitFor(() => {
+      expect(alarmDataResults.current.length).toBe(1);
+      expect(alarmDataResults.current[0]).toMatchObject(expectedAlarmData);
+    });
+
+    expect(describeAlarmModelMock).toBeCalledTimes(1);
   });
 });

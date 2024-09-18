@@ -9,7 +9,7 @@ import {
   IoTEventsClient,
 } from '@aws-sdk/client-iot-events';
 
-import { Viewport } from '@iot-app-kit/core';
+import type { Viewport } from '@iot-app-kit/core';
 
 /**
  * Execution status of the alarms queries
@@ -110,6 +110,22 @@ export type AlarmData = {
    */
   status: AlarmDataStatus;
 };
+
+/**
+ * AlarmData with additional fields for internal processing
+ */
+export type AlarmDataInternal = {
+  /**
+   * The alarm request which spawned the alarm.
+   */
+  request?: AlarmRequest;
+
+  /**
+   * The list of asset or assetModel properties on the alarm's asset.
+   * Used to assign a property object to the inputProperty field.
+   */
+  properties?: (AssetProperty | AssetModelProperty)[];
+} & AlarmData;
 
 /**
  * Request data for a single alarm by its composite model id.

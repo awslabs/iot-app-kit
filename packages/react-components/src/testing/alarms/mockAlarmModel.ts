@@ -10,7 +10,7 @@ export const MOCK_ALARM_MODEL_NAME_2 = 'alarmModelName2';
 export const mockAlarmModelArn = `arn:aws:iotevents:us-east-1:123456789012:alarmModel/${MOCK_ALARM_MODEL_NAME}`;
 export const mockAlarmModelArn2 = `arn:aws:iotevents:us-east-1:123456789012:alarmModel/${MOCK_ALARM_MODEL_NAME_2}`;
 
-export const mockAlarmModel: DescribeAlarmModelResponse = {
+export const mockAlarmModel = {
   alarmModelArn: mockAlarmModelArn,
   alarmModelVersion: '1',
   creationTime: new Date(),
@@ -25,9 +25,9 @@ export const mockAlarmModel: DescribeAlarmModelResponse = {
       threshold: '30',
     },
   },
-};
+} satisfies DescribeAlarmModelResponse;
 
-export const mockAlarmModel2: DescribeAlarmModelResponse = {
+export const mockAlarmModel2 = {
   alarmModelArn: mockAlarmModelArn2,
   alarmModelVersion: '1',
   creationTime: new Date(),
@@ -42,4 +42,4 @@ export const mockAlarmModel2: DescribeAlarmModelResponse = {
       threshold: '30',
     },
   },
-};
+} satisfies DescribeAlarmModelResponse;

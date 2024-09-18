@@ -79,7 +79,6 @@ export const UseAlarms: ComponentStory<FC> = () => {
       },
     ],
   });
-  console.log(alarmDataList);
 
   return <RenderQueries json={alarmDataList} />;
 };

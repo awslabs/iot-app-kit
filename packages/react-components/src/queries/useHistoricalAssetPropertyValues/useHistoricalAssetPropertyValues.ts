@@ -13,7 +13,7 @@ import {
 
 import {
   HistoricalAssetPropertyValueRequest,
-  QueryFnClient,
+  HistoricalValueQueryFnClient,
   UseHistoricalAssetPropertyValuesOptions,
 } from './types';
 import { HistoricalAssetPropertyValueKeyFactory } from './historicalAssetPropertyValueKeyFactory';
@@ -44,7 +44,7 @@ const requestIsValid = ({
 const clientIsValid = ({
   getAssetPropertyValueHistory,
   batchGetAssetPropertyValueHistory,
-}: QueryFnClient = {}) =>
+}: HistoricalValueQueryFnClient = {}) =>
   hasRequestFunction<GetAssetPropertyValueHistory>(
     getAssetPropertyValueHistory
   ) ||
@@ -154,7 +154,7 @@ export const useHistoricalAssetPropertyValues = ({
 };
 
 export const createHistoricalAssetPropertyValueQueryFn = (
-  client?: QueryFnClient
+  client?: HistoricalValueQueryFnClient
 ) => {
   return async ({
     queryKey: [
