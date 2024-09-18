@@ -1,4 +1,4 @@
-import { AlarmData } from '../../hooks/useAlarms';
+import type { AlarmDataInternal } from '../../hooks/useAlarms';
 import {
   mockAlarmModel,
   mockAlarmModel2,
@@ -31,7 +31,7 @@ import {
   mockTypeAssetPropertyValue,
 } from './mockProperties';
 
-export const mockAlarmDataDescribeAsset: AlarmData = {
+export const mockAlarmDataDescribeAsset = {
   assetModelId: MOCK_ASSET_MODEL_ID,
   assetId: MOCK_ASSET_ID,
   compositeModelId: MOCK_COMPOSITE_MODEL_ID,
@@ -51,9 +51,9 @@ export const mockAlarmDataDescribeAsset: AlarmData = {
     isRefetching: false,
     isSuccess: true,
   },
-};
+} satisfies AlarmDataInternal;
 
-export const mockAlarmDataDescribeAsset2: AlarmData = {
+export const mockAlarmDataDescribeAsset2 = {
   assetModelId: MOCK_ASSET_MODEL_ID,
   assetId: MOCK_ASSET_ID,
   compositeModelId: MOCK_COMPOSITE_MODEL_ID_2,
@@ -73,9 +73,9 @@ export const mockAlarmDataDescribeAsset2: AlarmData = {
     isRefetching: false,
     isSuccess: true,
   },
-};
+} satisfies AlarmDataInternal;
 
-export const mockAlarmDataDescribeAssetModel: AlarmData = {
+export const mockAlarmDataDescribeAssetModel = {
   assetModelId: MOCK_ASSET_MODEL_ID,
   compositeModelId: MOCK_COMPOSITE_MODEL_ID,
   compositeModelName: MOCK_COMPOSITE_MODEL_NAME,
@@ -118,9 +118,9 @@ export const mockAlarmDataDescribeAssetModel: AlarmData = {
     isRefetching: false,
     isSuccess: true,
   },
-};
+} satisfies AlarmDataInternal;
 
-export const mockAlarmDataGetAssetPropertyValue: AlarmData = {
+export const mockAlarmDataGetAssetPropertyValue = {
   ...mockAlarmDataDescribeAsset,
   state: {
     property: mockStateAssetProperty,
@@ -134,9 +134,9 @@ export const mockAlarmDataGetAssetPropertyValue: AlarmData = {
     property: mockSourceAssetProperty,
     data: [mockSourceAssetPropertyValue],
   },
-};
+} satisfies AlarmDataInternal;
 
-export const mockAlarmDataGetAssetPropertyValue2: AlarmData = {
+export const mockAlarmDataGetAssetPropertyValue2 = {
   ...mockAlarmDataDescribeAsset2,
   state: {
     property: mockStateAssetProperty2,
@@ -150,13 +150,13 @@ export const mockAlarmDataGetAssetPropertyValue2: AlarmData = {
     property: mockSourceAssetProperty2,
     data: [mockSourceAssetPropertyValue2],
   },
-};
+} satisfies AlarmDataInternal;
 
-export const mockAlarmDataDescribeAlarmModel: AlarmData = {
+export const mockAlarmDataDescribeAlarmModel = {
   ...mockAlarmDataGetAssetPropertyValue,
   models: [mockAlarmModel],
-};
-export const mockAlarmDataDescribeAlarmModel2: AlarmData = {
+} satisfies AlarmDataInternal;
+export const mockAlarmDataDescribeAlarmModel2 = {
   ...mockAlarmDataGetAssetPropertyValue2,
   models: [mockAlarmModel2],
-};
+} satisfies AlarmDataInternal;

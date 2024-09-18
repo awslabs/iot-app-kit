@@ -1,14 +1,15 @@
 import { useMemo } from 'react';
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
-import { getAlarmModelNameFromAlarmSourceProperty } from '../utils/alarmModelUtils';
-import { AlarmData, AlarmProperty } from '../types';
+import { getAlarmModelNameFromAlarmSourceProperty } from '../utils/parseAlarmModels';
+import type { AlarmDataInternal, AlarmProperty } from '../types';
 import { useDescribeAlarmModels } from '../../../queries';
-import { getStatusForQuery } from '../utils/queryUtils';
+import { getStatusForQuery } from '../utils/queryStatus';
+import type { QueryOptionsGlobal } from '../../../queries/common/types';
 
-export interface UseAlarmModelsOptions {
+export type UseAlarmModelsOptions = {
   iotEventsClient?: IoTEventsClient;
-  alarmDataList?: AlarmData[];
-}
+  alarmDataList?: AlarmDataInternal[];
+} & QueryOptionsGlobal;
 
 /**
  * useAlarmModels is a hook used to describe the IoT Events alarm model
@@ -21,7 +22,8 @@ export interface UseAlarmModelsOptions {
 export function useAlarmModels({
   iotEventsClient,
   alarmDataList = [],
-}: UseAlarmModelsOptions): AlarmData[] {
+  retry,
+}: UseAlarmModelsOptions): AlarmDataInternal[] {
   // Filter AlarmData with a source property and data
   const alarmModelRequests = alarmDataList
     .filter(
@@ -39,6 +41,7 @@ export function useAlarmModels({
   const alarmModelQueries = useDescribeAlarmModels({
     iotEventsClient,
     requests: alarmModelRequests,
+    retry,
   });
 
   return useMemo(() => {

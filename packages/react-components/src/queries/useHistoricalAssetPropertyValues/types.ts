@@ -8,7 +8,7 @@ import {
 import { UseIoTSiteWiseClientOptions } from '../../hooks/requestFunctions/useIoTSiteWiseClient';
 import { QueryOptionsGlobal } from '../common/types';
 
-export type QueryFnClient = {
+export type HistoricalValueQueryFnClient = {
   getAssetPropertyValueHistory?: GetAssetPropertyValueHistory;
   batchGetAssetPropertyValueHistory?: BatchGetAssetPropertyValueHistory;
 };

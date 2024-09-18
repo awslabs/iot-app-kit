@@ -1,33 +1,36 @@
 import { useMemo } from 'react';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { AlarmData, AlarmProperty } from '../types';
+import type { AlarmDataInternal, AlarmProperty } from '../types';
 import { useLatestAssetPropertyValues } from '../../../queries';
-import { getStatusForQuery } from '../utils/queryUtils';
+import { getStatusForQuery } from '../utils/queryStatus';
 import { isAlarmProperty } from './predicates';
-import { constructAlarmAssetModelProperty } from '../utils/compositeModelUtils';
+import { constructAlarmProperty } from '../utils/constructAlarmProperty';
 
-export interface UseAlarmCompositePropertyOptions {
-  alarmPropertyFieldName: keyof AlarmData;
+export interface UseLatestAlarmPropertyValuesOptions {
+  alarmPropertyFieldName: keyof AlarmDataInternal;
   iotSiteWiseClient?: IoTSiteWiseClient;
-  alarmDataList?: AlarmData[];
+  alarmDataList?: AlarmDataInternal[];
+  enabled?: boolean;
 }
 
 /**
- * useLatestAlarmPropertyValue is a hook used to fetch the latest
+ * useLatestAlarmPropertyValues is a hook used to fetch the latest
  * asset property value for a SiteWise alarm composite property
  *
  * @param alarmPropertyFieldName is the name of an alarm property field
  * 'state' | 'type' | 'source'
  * @param iotSiteWiseClient is an AWS SDK IoT SiteWise client
  * @param alarmDataList is a list of AlarmData
+ * @param enabled will manually disable the hook
  * @returns a list of AlarmData with the latest property value injected
  * into the associated property field
  */
-export function useLatestAlarmPropertyValue({
+export function useLatestAlarmPropertyValues({
   alarmPropertyFieldName,
   iotSiteWiseClient,
   alarmDataList = [],
-}: UseAlarmCompositePropertyOptions): AlarmData[] {
+  enabled,
+}: UseLatestAlarmPropertyValuesOptions): AlarmDataInternal[] {
   // Filter AlarmData with an existing property for alarmPropertyFieldName
   const alarmPropertyRequests = alarmDataList
     .filter((alarmData) =>
@@ -43,6 +46,7 @@ export function useLatestAlarmPropertyValue({
   const alarmPropertyQueries = useLatestAssetPropertyValues({
     iotSiteWiseClient,
     requests: alarmPropertyRequests,
+    enabled,
   });
 
   return useMemo(() => {
@@ -71,7 +75,7 @@ export function useLatestAlarmPropertyValue({
             alarmPropertyQueries[filteredIndex],
             alarmData.status
           );
-          const newAlarmProperty = constructAlarmAssetModelProperty(
+          const newAlarmProperty = constructAlarmProperty(
             alarmProperty.property,
             alarmPropertyQueries[filteredIndex].data?.propertyValue
           );

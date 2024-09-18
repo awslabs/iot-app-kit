@@ -1,5 +1,5 @@
 import { AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
-import {
+import type {
   AlarmAssetModelRequest,
   AlarmAssetRequest,
   AlarmCompositeModelRequest,

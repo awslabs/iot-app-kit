@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { SetRequired } from 'type-fest';
-import {
+import type { SetRequired } from 'type-fest';
+import type {
   AlarmData,
   UseAlarmsOptions,
   UseAlarmOptionsWithoutTransform,
@@ -8,10 +8,10 @@ import {
 import {
   useAlarmAssets,
   useAlarmModels,
-  useLatestAlarmPropertyValue,
+  useLatestAlarmPropertyValues,
 } from './hookHelpers';
-import { filterAlarmsMatchingInputProperties } from './utils/alarmModelUtils';
 import { useAlarmState } from './hookHelpers/useAlarmState/useAlarmState';
+import { filterAlarmInputProperties } from './utils/filterAlarmInputProperties';
 
 /**
  * Identify function that returns the input AlarmData.
@@ -75,7 +75,7 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
    * Fetch latest asset property values for alarms with a type property.
    * Data should be available for all alarms fetched for an asset.
    */
-  const typePropertyAlarmData = useLatestAlarmPropertyValue({
+  const typePropertyAlarmData = useLatestAlarmPropertyValues({
     iotSiteWiseClient,
     alarmDataList: statePropertyAlarmData,
     alarmPropertyFieldName: 'type',
@@ -86,7 +86,7 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
    * Data should be available for all alarms fetched for an asset, where
    * the alarm type is "IOT_EVENTS".
    */
-  const sourcePropertyAlarmData = useLatestAlarmPropertyValue({
+  const sourcePropertyAlarmData = useLatestAlarmPropertyValues({
     iotSiteWiseClient,
     alarmDataList: typePropertyAlarmData,
     alarmPropertyFieldName: 'source',
@@ -103,23 +103,33 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
   });
 
   /**
-   * If an inputProperty is in an AlarmRequest then all alarms for
-   * the property's asset is fetched. After the IoT Events alarm models
-   * are fetched for each alarm we can verify which alarm on the asset
-   * is actually associated with an inputProperty.
+   * For an input property request filter out alarms
+   * with alarm models that don't match the request inputPropertyId.
+   *
+   * For all other requests find the inputProperty from
+   * an alarm's alarm model.
    */
-  const filterAlarmInputProperties = useMemo(
-    () => filterAlarmsMatchingInputProperties(alarmModelAlarmData),
+  const inputPropertiesAlarmData = useMemo(
+    () => filterAlarmInputProperties(alarmModelAlarmData),
     [alarmModelAlarmData]
+  );
+
+  // Remove internal properties on AlarmDataInternal
+  const alarmData: AlarmData[] = inputPropertiesAlarmData.map(
+    ({
+      request: _unusedRequest,
+      properties: _unusedProperties,
+      ...alarmData
+    }) => ({
+      ...alarmData,
+    })
   );
 
   // Apply the transform callback if it exists, otherwise return the AlarmData
   return useMemo(
     () =>
-      transform
-        ? filterAlarmInputProperties?.map(transform)
-        : filterAlarmInputProperties?.map(alarmDataIdentity),
-    [transform, filterAlarmInputProperties]
+      transform ? alarmData?.map(transform) : alarmData?.map(alarmDataIdentity),
+    [transform, alarmData]
   );
 }
 
