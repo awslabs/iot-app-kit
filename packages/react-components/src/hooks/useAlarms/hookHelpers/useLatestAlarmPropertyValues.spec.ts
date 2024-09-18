@@ -16,8 +16,8 @@ import {
   mockStateAssetPropertyValue2,
   mockTypeAssetPropertyValue,
 } from '../../../testing/alarms';
-import { AlarmData } from '../types';
-import { useLatestAlarmPropertyValue } from './useLatestAlarmPropertyValue';
+import type { AlarmDataInternal } from '../types';
+import { useLatestAlarmPropertyValues } from './useLatestAlarmPropertyValues';
 
 const mockBatchGetAssetPropertyValue = ({
   errorEntries = [],
@@ -31,7 +31,7 @@ const mockBatchGetAssetPropertyValue = ({
   skippedEntries: [],
 });
 
-describe('useLatestAlarmPropertyValue', () => {
+describe('useLatestAlarmPropertyValues', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     queryClient.clear();
@@ -60,7 +60,7 @@ describe('useLatestAlarmPropertyValue', () => {
     };
 
     const { result: alarmDataResults } = renderHook(() =>
-      useLatestAlarmPropertyValue({
+      useLatestAlarmPropertyValues({
         iotSiteWiseClient: iotSiteWiseClientMock,
         alarmDataList: [mockAlarmDataDescribeAsset],
         alarmPropertyFieldName: 'state',
@@ -98,7 +98,7 @@ describe('useLatestAlarmPropertyValue', () => {
     };
 
     const { result: alarmDataResults } = renderHook(() =>
-      useLatestAlarmPropertyValue({
+      useLatestAlarmPropertyValues({
         iotSiteWiseClient: iotSiteWiseClientMock,
         alarmDataList: [mockAlarmDataDescribeAsset],
         alarmPropertyFieldName: 'type',
@@ -136,7 +136,7 @@ describe('useLatestAlarmPropertyValue', () => {
     };
 
     const { result: alarmDataResults } = renderHook(() =>
-      useLatestAlarmPropertyValue({
+      useLatestAlarmPropertyValues({
         iotSiteWiseClient: iotSiteWiseClientMock,
         alarmDataList: [mockAlarmDataDescribeAsset],
         alarmPropertyFieldName: 'source',
@@ -152,13 +152,13 @@ describe('useLatestAlarmPropertyValue', () => {
   });
 
   it('should return same AlarmData for external alarm without a source property', async () => {
-    const externalAlarmData: AlarmData = {
+    const externalAlarmData = {
       ...mockAlarmDataDescribeAsset,
       source: undefined,
-    };
+    } satisfies AlarmDataInternal;
 
     const { result: alarmDataResults } = renderHook(() =>
-      useLatestAlarmPropertyValue({
+      useLatestAlarmPropertyValues({
         iotSiteWiseClient: iotSiteWiseClientMock,
         alarmDataList: [externalAlarmData],
         alarmPropertyFieldName: 'source',
@@ -175,7 +175,7 @@ describe('useLatestAlarmPropertyValue', () => {
 
   it('should return same AlarmData when alarm field is not an AlarmProperty', async () => {
     const { result: alarmDataResults } = renderHook(() =>
-      useLatestAlarmPropertyValue({
+      useLatestAlarmPropertyValues({
         iotSiteWiseClient: iotSiteWiseClientMock,
         alarmDataList: [mockAlarmDataDescribeAsset],
         alarmPropertyFieldName: 'assetId',
@@ -227,7 +227,7 @@ describe('useLatestAlarmPropertyValue', () => {
     };
 
     const { result: alarmDataResults } = renderHook(() =>
-      useLatestAlarmPropertyValue({
+      useLatestAlarmPropertyValues({
         iotSiteWiseClient: iotSiteWiseClientMock,
         alarmDataList: [
           mockAlarmDataDescribeAsset,

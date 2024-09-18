@@ -18,7 +18,7 @@ import {
   MOCK_COMPOSITE_MODEL_NAME_2,
 } from './mockIds';
 
-export const mockAlarmCompositeModel: AssetCompositeModel = {
+export const mockAlarmCompositeModel = {
   name: MOCK_COMPOSITE_MODEL_NAME,
   type: ALARM_COMPOSITE_MODEL_TYPE,
   properties: [
@@ -27,9 +27,9 @@ export const mockAlarmCompositeModel: AssetCompositeModel = {
     mockSourceAssetProperty,
   ],
   id: MOCK_COMPOSITE_MODEL_ID,
-};
+} satisfies AssetCompositeModel;
 
-export const mockAlarmCompositeModel2: AssetCompositeModel = {
+export const mockAlarmCompositeModel2 = {
   name: MOCK_COMPOSITE_MODEL_NAME_2,
   type: ALARM_COMPOSITE_MODEL_TYPE,
   properties: [
@@ -38,9 +38,9 @@ export const mockAlarmCompositeModel2: AssetCompositeModel = {
     mockSourceAssetProperty,
   ],
   id: MOCK_COMPOSITE_MODEL_ID_2,
-};
+} satisfies AssetCompositeModel;
 
-export const mockAlarmModelCompositeModel: AssetModelCompositeModel = {
+export const mockAlarmModelCompositeModel = {
   name: MOCK_COMPOSITE_MODEL_NAME,
   type: ALARM_COMPOSITE_MODEL_TYPE,
   properties: [
@@ -49,9 +49,9 @@ export const mockAlarmModelCompositeModel: AssetModelCompositeModel = {
     mockSourceAssetModelProperty,
   ],
   id: MOCK_COMPOSITE_MODEL_ID,
-};
+} satisfies AssetModelCompositeModel;
 
-export const mockAlarmModelCompositeModel2: AssetModelCompositeModel = {
+export const mockAlarmModelCompositeModel2 = {
   name: MOCK_COMPOSITE_MODEL_NAME_2,
   type: ALARM_COMPOSITE_MODEL_TYPE,
   properties: [
@@ -60,4 +60,4 @@ export const mockAlarmModelCompositeModel2: AssetModelCompositeModel = {
     mockSourceAssetModelProperty,
   ],
   id: MOCK_COMPOSITE_MODEL_ID_2,
-};
+} satisfies AssetModelCompositeModel;

@@ -4,7 +4,7 @@ import { AlarmData } from '../../types';
 import {
   combineStatusForQueries,
   isQueryDisabled,
-} from '../../utils/queryUtils';
+} from '../../utils/queryStatus';
 
 export const updateAlarmStatusForAlarmStateQueries = (
   alarm: AlarmData,

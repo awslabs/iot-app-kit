@@ -13,7 +13,7 @@ import {
 
 import {
   LatestAssetPropertyValueRequest,
-  QueryFnClient,
+  LatestValueQueryFnClient,
   UseLatestAssetPropertyValuesOptions,
 } from './types';
 import { LatestAssetPropertyValueKeyFactory } from './latestAssetPropertyValueKeyFactory';
@@ -40,7 +40,7 @@ const requestIsValid = ({
 const clientIsValid = ({
   getAssetPropertyValue,
   batchGetAssetPropertyValue,
-}: QueryFnClient = {}) =>
+}: LatestValueQueryFnClient = {}) =>
   hasRequestFunction<GetAssetPropertyValue>(getAssetPropertyValue) ||
   hasRequestFunction<BatchGetAssetPropertyValue>(batchGetAssetPropertyValue);
 
@@ -121,7 +121,7 @@ export const useLatestAssetPropertyValues = ({
 };
 
 export const createLatestAssetPropertyValueQueryFn = (
-  client?: QueryFnClient
+  client?: LatestValueQueryFnClient
 ) => {
   return async ({
     queryKey: [{ assetId, propertyId, propertyAlias }],
