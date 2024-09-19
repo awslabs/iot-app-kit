@@ -6,9 +6,15 @@ import { kgDataSource } from './__mocks__/dataSource';
 import { KnowledgeGraph, ZOOM_INTERVAL } from '../KnowledgeGraphPanel';
 
 jest.mock(
-  '@awsui/components-react/container',
+  '@cloudscape-design/components/container',
   () => (props: HTMLAttributes<HTMLDivElement>) =>
     <div data-mocked='Container' {...props}></div>
+);
+
+jest.mock(
+  '@cloudscape-design/components/button',
+  () => (props: HTMLAttributes<HTMLDivElement>) =>
+    <div data-mocked='Button' {...props}></div>
 );
 jest.mock(
   'react-cytoscapejs',

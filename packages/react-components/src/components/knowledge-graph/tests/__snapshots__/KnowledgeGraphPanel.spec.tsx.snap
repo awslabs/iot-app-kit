@@ -12,22 +12,22 @@ exports[`KnowledgeGraph should render correctly 1`] = `
       class="search-bar"
     >
       <div
-        class="awsui_grid_14yj0_rldjy_93"
+        class="awsui_grid_14yj0_xuaq6_97"
       >
         <div
-          class="awsui_grid-column_14yj0_rldjy_135 awsui_colspan-9_14yj0_rldjy_224"
+          class="awsui_grid-column_14yj0_xuaq6_141 awsui_colspan-9_14yj0_xuaq6_232"
         >
           <div
-            class="awsui_restore-pointer-events_14yj0_rldjy_304"
+            class="awsui_restore-pointer-events_14yj0_xuaq6_312"
           >
             <div
-              class="awsui_root_2rhyz_62axa_93 awsui_input-container_2rhyz_62axa_242"
+              class="awsui_root_2rhyz_4n5z9_97 awsui_input-container_2rhyz_4n5z9_273"
             >
               <span
-                class="awsui_input-icon-left_2rhyz_62axa_247"
+                class="awsui_input-icon-left_2rhyz_4n5z9_278"
               >
                 <span
-                  class="awsui_icon_h11ix_s5sg5_98 awsui_size-normal-mapped-height_h11ix_s5sg5_151 awsui_size-normal_h11ix_s5sg5_147 awsui_variant-subtle_h11ix_s5sg5_228"
+                  class="awsui_icon_h11ix_ayzd6_101 awsui_size-normal-mapped-height_h11ix_ayzd6_157 awsui_size-normal_h11ix_ayzd6_153 awsui_variant-subtle_h11ix_ayzd6_238"
                 >
                   <svg
                     aria-hidden="true"
@@ -48,7 +48,7 @@ exports[`KnowledgeGraph should render correctly 1`] = `
               </span>
               <input
                 autocomplete="on"
-                class="awsui_input_2rhyz_62axa_97 awsui_input-type-search_2rhyz_62axa_219 awsui_input-has-icon-left_2rhyz_62axa_214"
+                class="awsui_input_2rhyz_4n5z9_101 awsui_input-type-search_2rhyz_4n5z9_250 awsui_input-has-icon-left_2rhyz_4n5z9_229"
                 type="search"
                 value=""
               />
@@ -56,23 +56,17 @@ exports[`KnowledgeGraph should render correctly 1`] = `
           </div>
         </div>
         <div
-          class="awsui_grid-column_14yj0_rldjy_135 awsui_colspan-3_14yj0_rldjy_164"
+          class="awsui_grid-column_14yj0_xuaq6_141 awsui_colspan-3_14yj0_xuaq6_172"
         >
           <div
-            class="awsui_restore-pointer-events_14yj0_rldjy_304"
+            class="awsui_restore-pointer-events_14yj0_xuaq6_312"
           >
-            <button
-              class="awsui_button_vjswe_qvh5k_101 awsui_variant-normal_vjswe_qvh5k_152"
-              data-analytics-funnel-value="button:r0:"
+            <div
+              data-mocked="Button"
               data-testid="search-button"
-              type="submit"
             >
-              <span
-                class="awsui_content_vjswe_qvh5k_97"
-              >
-                Search
-              </span>
-            </button>
+              Search
+            </div>
           </div>
         </div>
       </div>
@@ -95,112 +89,46 @@ exports[`KnowledgeGraph should render correctly 1`] = `
         <li
           class="iot-app-kit-graph-control-item"
         >
-          <button
-            class="iot-app-kit-graph-button awsui_button_vjswe_qvh5k_101 awsui_variant-icon_vjswe_qvh5k_192 awsui_button-no-text_vjswe_qvh5k_999"
-            data-analytics-funnel-value="button:r2:"
+          <div
+            class="iot-app-kit-graph-button"
+            data-mocked="Button"
             data-testid="fit-button"
-            type="submit"
-          >
-            <span
-              class="awsui_icon_vjswe_qvh5k_1025 awsui_icon-left_vjswe_qvh5k_1025 awsui_icon_h11ix_s5sg5_98 awsui_size-normal-mapped-height_h11ix_s5sg5_151 awsui_size-normal_h11ix_s5sg5_147 awsui_variant-normal_h11ix_s5sg5_219"
-            >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 16 16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14 11v3h-4M2 11v3h4M2 5V2h4M14 5V2h-4M10 6H6v4h4V6Z"
-                />
-              </svg>
-            </span>
-          </button>
+            iconname="zoom-to-fit"
+            variant="icon"
+          />
         </li>
         <li
           class="iot-app-kit-graph-control-item"
         >
-          <button
-            class="iot-app-kit-graph-button awsui_button_vjswe_qvh5k_101 awsui_variant-icon_vjswe_qvh5k_192 awsui_button-no-text_vjswe_qvh5k_999"
-            data-analytics-funnel-value="button:r4:"
+          <div
+            class="iot-app-kit-graph-button"
+            data-mocked="Button"
             data-testid="center-button"
-            type="submit"
-          >
-            <span
-              class="awsui_icon_vjswe_qvh5k_1025 awsui_icon-left_vjswe_qvh5k_1025 awsui_icon_h11ix_s5sg5_98 awsui_size-normal-mapped-height_h11ix_s5sg5_151 awsui_size-normal_h11ix_s5sg5_147 awsui_variant-normal_h11ix_s5sg5_219"
-            >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 16 16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M9 2h5v5M7 2H2v5M7 14H2V9M9 14h5V9M2 2l12 12M14 2 2 14"
-                />
-              </svg>
-            </span>
-          </button>
+            iconname="expand"
+            variant="icon"
+          />
         </li>
         <li
           class="iot-app-kit-graph-control-item"
         >
-          <button
-            class="iot-app-kit-graph-button awsui_button_vjswe_qvh5k_101 awsui_variant-icon_vjswe_qvh5k_192 awsui_button-no-text_vjswe_qvh5k_999"
-            data-analytics-funnel-value="button:r6:"
+          <div
+            class="iot-app-kit-graph-button"
+            data-mocked="Button"
             data-testid="zoom-in-button"
-            type="submit"
-          >
-            <span
-              class="awsui_icon_vjswe_qvh5k_1025 awsui_icon-left_vjswe_qvh5k_1025 awsui_icon_h11ix_s5sg5_98 awsui_size-normal-mapped-height_h11ix_s5sg5_151 awsui_size-normal_h11ix_s5sg5_147 awsui_variant-normal_h11ix_s5sg5_219"
-            >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 16 16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  cx="6.885"
-                  cy="6.885"
-                  r="5.385"
-                />
-                <path
-                  d="m14.5 14.5-3.846-3.846M7 4v6M10 7H4"
-                />
-              </svg>
-            </span>
-          </button>
+            iconname="zoom-in"
+            variant="icon"
+          />
         </li>
         <li
           class="iot-app-kit-graph-control-item"
         >
-          <button
-            class="iot-app-kit-graph-button awsui_button_vjswe_qvh5k_101 awsui_variant-icon_vjswe_qvh5k_192 awsui_button-no-text_vjswe_qvh5k_999"
-            data-analytics-funnel-value="button:r8:"
+          <div
+            class="iot-app-kit-graph-button"
+            data-mocked="Button"
             data-testid="zoom-out-button"
-            type="submit"
-          >
-            <span
-              class="awsui_icon_vjswe_qvh5k_1025 awsui_icon-left_vjswe_qvh5k_1025 awsui_icon_h11ix_s5sg5_98 awsui_size-normal-mapped-height_h11ix_s5sg5_151 awsui_size-normal_h11ix_s5sg5_147 awsui_variant-normal_h11ix_s5sg5_219"
-            >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 16 16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  cx="6.885"
-                  cy="6.885"
-                  r="5.385"
-                />
-                <path
-                  d="m14.5 14.5-3.846-3.846M10 7H4"
-                />
-              </svg>
-            </span>
-          </button>
+            iconname="zoom-out"
+            variant="icon"
+          />
         </li>
       </ul>
     </div>
@@ -208,41 +136,29 @@ exports[`KnowledgeGraph should render correctly 1`] = `
       class="action-buttons"
     >
       <div
-        class="awsui_root_18582_189oq_93 awsui_horizontal_18582_189oq_108 awsui_horizontal-s_18582_189oq_121"
+        class="awsui_root_18582_jftqg_97 awsui_horizontal_18582_jftqg_112 awsui_horizontal-s_18582_jftqg_125"
       >
         <div
-          class="awsui_child_18582_189oq_97"
+          class="awsui_child_18582_jftqg_101"
         >
-          <button
-            class="awsui_button_vjswe_qvh5k_101 awsui_variant-normal_vjswe_qvh5k_152 awsui_disabled_vjswe_qvh5k_228"
-            data-analytics-funnel-value="button:ra:"
+          <div
+            data-mocked="Button"
             data-testid="explore-button"
             disabled=""
-            type="submit"
           >
-            <span
-              class="awsui_content_vjswe_qvh5k_97"
-            >
-              Explore
-            </span>
-          </button>
+            Explore
+          </div>
         </div>
         <div
-          class="awsui_child_18582_189oq_97"
+          class="awsui_child_18582_jftqg_101"
         >
-          <button
-            class="awsui_button_vjswe_qvh5k_101 awsui_variant-normal_vjswe_qvh5k_152 awsui_disabled_vjswe_qvh5k_228"
-            data-analytics-funnel-value="button:rc:"
+          <div
+            data-mocked="Button"
             data-testid="clear-button"
             disabled=""
-            type="submit"
           >
-            <span
-              class="awsui_content_vjswe_qvh5k_97"
-            >
-              Clear
-            </span>
-          </button>
+            Clear
+          </div>
         </div>
       </div>
     </div>

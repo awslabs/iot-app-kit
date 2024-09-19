@@ -310,6 +310,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
           name={name}
         />
       }
+      headerVariant='high-contrast'
     >
       <div
         className='dashboard'
@@ -380,6 +381,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   const ReadOnlyComponent = (
     <ContentLayout
       disableOverlap
+      headerVariant='high-contrast'
       header={
         <DashboardHeader
           editable={editable}

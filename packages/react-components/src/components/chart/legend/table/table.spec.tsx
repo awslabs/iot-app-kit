@@ -91,14 +91,14 @@ describe('legend table', () => {
 
     expect(table).not.toBeNull();
     expect(
-      screen.getByText(
+      screen.getAllByText(
         formatDate(trendCursors[0].date, { pattern: 'hh:mm:ss aaaa' })
-      )
+      )[0]
     ).not.toBeNull();
     expect(
-      screen.getByText(
+      screen.getAllByText(
         formatDate(trendCursors[0].date, { pattern: 'hh:mm:ss aaaa' })
-      )
+      )[0]
     ).not.toBeNull();
 
     expect(screen.getByText('111')).not.toBeNull();
