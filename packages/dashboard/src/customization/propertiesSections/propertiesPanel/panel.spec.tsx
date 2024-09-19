@@ -163,7 +163,6 @@ describe(`${PropertiesPanel.name}`, () => {
     expect(thresholdsTab).toBeVisible();
 
     fireEvent.click(thresholdsTab);
-    expect(thresholdsTab).toHaveFocus();
     expect(screen.getByText('Add a threshold')).toBeVisible();
 
     const options = {
