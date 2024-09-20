@@ -2,7 +2,6 @@ import React from 'react';
 import {
   StyleSettingsMap,
   Threshold,
-  TimeSeriesDataQuery,
   Viewport,
   ThresholdSettings,
 } from '@iot-app-kit/core';
@@ -18,13 +17,18 @@ import {
   DEFAULT_VIEWPORT,
   ECHARTS_GESTURE,
 } from '../../common/constants';
-import { AxisSettings, ChartSize } from '../../common/chartTypes';
+import type {
+  AxisSettings,
+  ChartSize,
+  ComponentQuery,
+} from '../../common/chartTypes';
+import { getTimeSeriesQueries } from '../../utils/queries';
 
 const HOUR_IN_MS = 1000 * 60 * 60;
 const DAY_IN_MS = HOUR_IN_MS * 24;
 const FIFTEEN_MIN_IN_MS = 15 * 60 * 1000;
 export interface BarChartProps {
-  queries: TimeSeriesDataQuery[];
+  queries: ComponentQuery[];
   thresholdSettings?: ThresholdSettings;
   chartSize?: ChartSize;
   axis?: AxisSettings;
@@ -54,7 +58,7 @@ export const BarChart = (props: BarChartProps) => {
 
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
-    queries,
+    queries: getTimeSeriesQueries(queries),
     settings: {
       fetchFromStartToEnd: true,
       fetchMostRecentBeforeStart: true,

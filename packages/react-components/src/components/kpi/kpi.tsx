@@ -6,11 +6,12 @@ import { DEFAULT_VIEWPORT } from '../../common/constants';
 import type {
   StyleSettingsMap,
   Viewport,
-  TimeSeriesDataQuery,
   StyledThreshold,
 } from '@iot-app-kit/core';
 import type { KPISettings } from './types';
 import { KpiBase } from './kpiBase';
+import type { ComponentQuery } from '../../common/chartTypes';
+import { getTimeSeriesQueries } from '../../utils/queries';
 
 export const KPI = ({
   query,
@@ -21,7 +22,7 @@ export const KPI = ({
   significantDigits,
   timeZone,
 }: {
-  query: TimeSeriesDataQuery;
+  query: ComponentQuery;
   viewport?: Viewport;
   thresholds?: StyledThreshold[];
   styles?: StyleSettingsMap;
@@ -32,7 +33,7 @@ export const KPI = ({
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
-    queries: [query],
+    queries: getTimeSeriesQueries([query]),
     settings: {
       fetchMostRecentBeforeEnd: true,
     },

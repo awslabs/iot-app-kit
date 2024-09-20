@@ -1,17 +1,15 @@
 import {
   StyleSettingsMap,
   Threshold,
-  TimeQuery,
-  TimeSeriesData,
-  TimeSeriesDataRequest,
   Viewport,
   Primitive,
 } from '@iot-app-kit/core';
 import type { WidgetSettings } from '../../common/dataTypes';
+import type { ComponentQuery } from '../../common/chartTypes';
 
 export type GaugeProps = {
   size?: { width: number; height: number };
-  query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
+  query: ComponentQuery;
   viewport?: Viewport;
   thresholds?: Threshold[];
   styles?: StyleSettingsMap;

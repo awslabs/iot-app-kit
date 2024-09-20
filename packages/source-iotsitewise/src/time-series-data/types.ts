@@ -63,6 +63,12 @@ export type AssetModelQuery = {
   properties: AssetModelPropertyQuery[];
 };
 
+export type AlarmAssetModelQuery = {
+  assetModelId: AssetModelId;
+  assetIds?: AssetId[]; // can map multiple assets
+  alarmComponents: AlarmComponentQuery[];
+};
+
 export type AlarmComponentQuery = {
   /**
    * Asset composite model id for alarm.
@@ -98,6 +104,11 @@ export type SiteWisePropertyAliasQuery = DataStreamQuery & {
 
 export type SiteWiseAssetModelQuery = DataStreamQuery & {
   assetModels: AssetModelQuery[];
+  requestSettings?: RequestSettings;
+};
+
+export type SiteWiseAlarmAssetModelQuery = {
+  alarmModels: AlarmAssetModelQuery[];
   requestSettings?: RequestSettings;
 };
 

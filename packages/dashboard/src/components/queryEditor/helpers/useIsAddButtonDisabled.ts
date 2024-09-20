@@ -11,7 +11,9 @@ export const useIsAddButtonDisabled = (selectedWidgets: DashboardWidget[]) => {
     if (
       query?.assetModels?.length ||
       query?.assets?.length ||
-      query?.properties?.length
+      query?.properties?.length ||
+      query?.alarms?.length ||
+      query?.alarmModels?.length
     )
       return true;
   }

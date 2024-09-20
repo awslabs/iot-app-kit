@@ -14,10 +14,14 @@ export type { SiteWiseAssetTreeNode } from './asset-modules/sitewise-asset-tree/
 export type { HierarchyGroup } from './asset-modules';
 export type {
   SiteWiseDataStreamQuery,
+  SiteWiseAlarmDataStreamQuery,
   SiteWiseAssetQuery,
   SiteWisePropertyAliasQuery,
   SiteWiseAssetModelQuery,
+  SiteWiseAlarmQuery,
+  SiteWiseAlarmAssetModelQuery,
   AssetModelQuery,
+  AlarmAssetModelQuery,
   AssetPropertyQuery,
   PropertyAliasQuery,
   AssetQuery,

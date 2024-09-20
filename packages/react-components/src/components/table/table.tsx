@@ -2,17 +2,14 @@ import React from 'react';
 import { TableBase } from './tableBase';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
-import type {
-  StyleSettingsMap,
-  Threshold,
-  TimeSeriesDataQuery,
-  Viewport,
-} from '@iot-app-kit/core';
+import type { StyleSettingsMap, Threshold, Viewport } from '@iot-app-kit/core';
 import { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import { TableColumnDefinition, TableItem, TableItemHydrated } from './types';
 import { createTableItems } from './createTableItems';
 import { DEFAULT_TABLE_MESSAGES } from './messages';
 import { TableProps as TableBaseProps } from '@cloudscape-design/components';
+import type { ComponentQuery } from '../../common/chartTypes';
+import { getTimeSeriesQueries } from '../../utils/queries';
 
 const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
 
@@ -31,7 +28,7 @@ export const Table = ({
   ...props
 }: {
   columnDefinitions: TableColumnDefinition[];
-  queries: TimeSeriesDataQuery[];
+  queries: ComponentQuery[];
   items: TableItem[];
   thresholds?: Threshold[];
   sorting?: UseCollectionOptions<TableItemHydrated>['sorting'];
@@ -51,7 +48,7 @@ export const Table = ({
 >) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
-    queries,
+    queries: getTimeSeriesQueries(queries),
     // Currently set to only fetch raw data.
     // TODO: Support all resolutions and aggregation types
     settings: { fetchMostRecentBeforeEnd: true, resolution: '0' },
