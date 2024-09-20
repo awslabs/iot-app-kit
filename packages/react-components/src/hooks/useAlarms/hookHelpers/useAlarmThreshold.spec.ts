@@ -1,16 +1,4 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
-import { queryClient } from '../../../../queries';
-import { useAlarmState } from './useAlarmState';
-import {
-  batchGetAssetPropertyValueHistoryMock,
-  batchGetAssetPropertyValueMock,
-  iotSiteWiseClientMock,
-  mockAlarmDataDescribeAsset,
-  mockAlarmDataDescribeAsset2,
-  mockDefaultAlarmState,
-  mockDefaultAlarmState2,
-  mockStringAssetPropertyValue,
-} from '../../../../testing/alarms';
 import {
   BatchGetAssetPropertyValueHistoryRequest,
   BatchGetAssetPropertyValueRequest,
@@ -18,23 +6,36 @@ import {
 import {
   BatchGetAssetPropertyValue,
   BatchGetAssetPropertyValueHistory,
+  Viewport,
 } from '@iot-app-kit/core';
 import { sub } from 'date-fns';
-import { UseAlarmStateOptions } from './types';
 import { cloneDeep } from 'lodash';
+import { queryClient } from '../../../queries';
+import { useAlarmThreshold } from './useAlarmThreshold';
+import {
+  batchGetAssetPropertyValueHistoryMock,
+  batchGetAssetPropertyValueMock,
+  iotSiteWiseClientMock,
+  mockAlarmDataDescribeAlarmModel,
+  mockAlarmDataDescribeAlarmModel2,
+  mockAlarmModel,
+  mockDoubleAssetPropertyValue,
+} from '../../../testing/alarms';
+import type { AlarmData } from '../types';
 
 const TEST_REFRESH_RATE = 5000;
 const TEST_ADVANCE_TIMERS_PAST_REFRESH_RATE = 6000;
 
-describe('useAlarmState', () => {
+const MOCK_THRESHOLD = 30;
+const MOCK_THRESHOLD_2 = 15;
+
+describe('useAlarmThreshold', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     queryClient.clear();
   });
 
-  it('fetches the latest asset property when no viewport is provided.', async () => {
-    jest.useFakeTimers();
-
+  it('fetches the latest threshold asset property when no viewport is provided.', async () => {
     batchGetAssetPropertyValueMock.mockImplementation(
       (request: BatchGetAssetPropertyValueRequest) => {
         return {
@@ -43,15 +44,12 @@ describe('useAlarmState', () => {
           successEntries: [
             {
               entryId: request.entries![0].entryId,
-              assetPropertyValue: mockStringAssetPropertyValue(
-                mockDefaultAlarmState
-              ),
+              assetPropertyValue: mockDoubleAssetPropertyValue(MOCK_THRESHOLD),
             },
             {
               entryId: request.entries![1].entryId,
-              assetPropertyValue: mockStringAssetPropertyValue(
-                mockDefaultAlarmState2
-              ),
+              assetPropertyValue:
+                mockDoubleAssetPropertyValue(MOCK_THRESHOLD_2),
             },
           ],
         } satisfies Awaited<ReturnType<BatchGetAssetPropertyValue>>;
@@ -59,13 +57,14 @@ describe('useAlarmState', () => {
     );
 
     const { result } = renderHook(() =>
-      useAlarmState({
+      useAlarmThreshold({
+        enabled: true,
         iotSiteWiseClient: iotSiteWiseClientMock,
         alarms: [
-          cloneDeep(mockAlarmDataDescribeAsset),
-          cloneDeep(mockAlarmDataDescribeAsset2),
+          cloneDeep(mockAlarmDataDescribeAlarmModel),
+          cloneDeep(mockAlarmDataDescribeAlarmModel2),
         ],
-        refreshRate: TEST_REFRESH_RATE,
+        refreshRate: Infinity,
       })
     );
 
@@ -82,31 +81,24 @@ describe('useAlarmState', () => {
     expect(batchGetAssetPropertyValueHistoryMock).not.toHaveBeenCalled();
 
     expect(batchGetAssetPropertyValueMock).toHaveBeenCalledOnce();
-    expect(result.current[0].state?.data).toEqual([
-      mockStringAssetPropertyValue(mockDefaultAlarmState),
+    expect(result.current[0].thresholds).toEqual([
+      mockDoubleAssetPropertyValue(MOCK_THRESHOLD),
     ]);
-    expect(result.current[1].state?.data).toEqual([
-      mockStringAssetPropertyValue(mockDefaultAlarmState2),
+    expect(result.current[1].thresholds).toEqual([
+      mockDoubleAssetPropertyValue(MOCK_THRESHOLD_2),
     ]);
-
-    act(() => {
-      jest.advanceTimersByTime(TEST_ADVANCE_TIMERS_PAST_REFRESH_RATE);
-    });
-
-    expect(batchGetAssetPropertyValueMock).toHaveBeenCalledTimes(2);
-
-    jest.useRealTimers();
   });
 
-  it('fetches the latest asset property within a viewport.', async () => {
+  it('fetches the latest threshold asset property within a viewport.', async () => {
     jest.useFakeTimers();
 
-    const mockAssetProperty1 = mockStringAssetPropertyValue(
-      mockDefaultAlarmState,
+    const mockAssetProperty1 = mockDoubleAssetPropertyValue(
+      MOCK_THRESHOLD,
       new Date()
     );
-    const mockAssetProperty2 = mockStringAssetPropertyValue(
-      mockDefaultAlarmState2,
+
+    const mockAssetProperty2 = mockDoubleAssetPropertyValue(
+      MOCK_THRESHOLD_2,
       new Date()
     );
 
@@ -130,12 +122,13 @@ describe('useAlarmState', () => {
     );
 
     const { result } = renderHook(() =>
-      useAlarmState({
+      useAlarmThreshold({
+        enabled: true,
         iotSiteWiseClient: iotSiteWiseClientMock,
         viewport: { duration: '5m' },
         alarms: [
-          cloneDeep(mockAlarmDataDescribeAsset),
-          cloneDeep(mockAlarmDataDescribeAsset2),
+          cloneDeep(mockAlarmDataDescribeAlarmModel),
+          cloneDeep(mockAlarmDataDescribeAlarmModel2),
         ],
         fetchOnlyLatest: true,
         refreshRate: TEST_REFRESH_RATE,
@@ -155,8 +148,8 @@ describe('useAlarmState', () => {
     expect(batchGetAssetPropertyValueMock).not.toHaveBeenCalled();
 
     expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledOnce();
-    expect(result.current[0].state?.data).toEqual([mockAssetProperty1]);
-    expect(result.current[1].state?.data).toEqual([mockAssetProperty2]);
+    expect(result.current[0].thresholds).toEqual([mockAssetProperty1]);
+    expect(result.current[1].thresholds).toEqual([mockAssetProperty2]);
 
     act(() => {
       jest.advanceTimersByTime(TEST_ADVANCE_TIMERS_PAST_REFRESH_RATE);
@@ -167,7 +160,7 @@ describe('useAlarmState', () => {
     jest.useRealTimers();
   });
 
-  it('fetches the historical asset properties within an absolute viewport.', async () => {
+  it('fetches the historical threshold asset properties within an absolute viewport.', async () => {
     const anchorDate = new Date(1726689631845);
     const dates = [
       anchorDate,
@@ -179,10 +172,10 @@ describe('useAlarmState', () => {
     ];
 
     const mockAssetProperty1Data = dates.map((date) =>
-      mockStringAssetPropertyValue(mockDefaultAlarmState, date)
+      mockDoubleAssetPropertyValue(MOCK_THRESHOLD, date)
     );
     const mockAssetProperty2Data = dates.map((date) =>
-      mockStringAssetPropertyValue(mockDefaultAlarmState2, date)
+      mockDoubleAssetPropertyValue(MOCK_THRESHOLD_2, date)
     );
 
     batchGetAssetPropertyValueHistoryMock.mockImplementation(
@@ -205,16 +198,17 @@ describe('useAlarmState', () => {
     );
 
     const { result, rerender } = renderHook(
-      ({ viewport }: Pick<UseAlarmStateOptions, 'viewport'> = {}) =>
-        useAlarmState({
+      ({ viewport }: { viewport?: Viewport } = {}) =>
+        useAlarmThreshold({
+          enabled: true,
           iotSiteWiseClient: iotSiteWiseClientMock,
           viewport: viewport ?? {
             start: sub(anchorDate, { hours: 2 }),
             end: anchorDate,
           },
           alarms: [
-            cloneDeep(mockAlarmDataDescribeAsset),
-            cloneDeep(mockAlarmDataDescribeAsset2),
+            cloneDeep(mockAlarmDataDescribeAlarmModel),
+            cloneDeep(mockAlarmDataDescribeAlarmModel2),
           ],
           refreshRate: TEST_REFRESH_RATE,
         })
@@ -233,10 +227,10 @@ describe('useAlarmState', () => {
     expect(batchGetAssetPropertyValueMock).not.toHaveBeenCalled();
 
     expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledOnce();
-    expect(result.current[0].state?.data).toEqual(
+    expect(result.current[0].thresholds).toEqual(
       mockAssetProperty1Data.reverse()
     );
-    expect(result.current[1].state?.data).toEqual(
+    expect(result.current[1].thresholds).toEqual(
       mockAssetProperty2Data.reverse()
     );
 
@@ -256,15 +250,15 @@ describe('useAlarmState', () => {
 
     expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(2);
 
-    expect(result.current[0].state?.data).toEqual(
+    expect(result.current[0].thresholds).toEqual(
       mockAssetProperty1Data.slice(2)
     );
-    expect(result.current[1].state?.data).toEqual(
+    expect(result.current[1].thresholds).toEqual(
       mockAssetProperty2Data.slice(2)
     );
   });
 
-  it('fetches the historical asset properties within a live viewport.', async () => {
+  it('fetches the historical threshold asset properties within a live viewport.', async () => {
     jest.useFakeTimers();
 
     const anchorDate = new Date();
@@ -278,10 +272,10 @@ describe('useAlarmState', () => {
     ];
 
     const mockAssetProperty1Data = dates.map((date) =>
-      mockStringAssetPropertyValue(mockDefaultAlarmState, date)
+      mockDoubleAssetPropertyValue(MOCK_THRESHOLD, date)
     );
     const mockAssetProperty2Data = dates.map((date) =>
-      mockStringAssetPropertyValue(mockDefaultAlarmState2, date)
+      mockDoubleAssetPropertyValue(MOCK_THRESHOLD_2, date)
     );
 
     batchGetAssetPropertyValueHistoryMock.mockImplementation(
@@ -298,26 +292,19 @@ describe('useAlarmState', () => {
               entryId: request.entries![1].entryId,
               assetPropertyValueHistory: mockAssetProperty2Data,
             },
-            {
-              entryId: request.entries![2].entryId,
-              assetPropertyValueHistory: mockAssetProperty1Data.slice(5),
-            },
-            {
-              entryId: request.entries![3].entryId,
-              assetPropertyValueHistory: mockAssetProperty2Data.slice(5),
-            },
           ],
         } satisfies Awaited<ReturnType<BatchGetAssetPropertyValueHistory>>;
       }
     );
 
     const { result } = renderHook(() =>
-      useAlarmState({
+      useAlarmThreshold({
+        enabled: true,
         iotSiteWiseClient: iotSiteWiseClientMock,
         viewport: { duration: '2hr' },
         alarms: [
-          cloneDeep(mockAlarmDataDescribeAsset),
-          cloneDeep(mockAlarmDataDescribeAsset2),
+          cloneDeep(mockAlarmDataDescribeAlarmModel),
+          cloneDeep(mockAlarmDataDescribeAlarmModel2),
         ],
         refreshRate: TEST_REFRESH_RATE,
       })
@@ -336,10 +323,10 @@ describe('useAlarmState', () => {
     expect(batchGetAssetPropertyValueMock).not.toHaveBeenCalled();
 
     expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledOnce();
-    expect(result.current[0].state?.data).toEqual(
+    expect(result.current[0].thresholds).toEqual(
       mockAssetProperty1Data.reverse()
     );
-    expect(result.current[1].state?.data).toEqual(
+    expect(result.current[1].thresholds).toEqual(
       mockAssetProperty2Data.reverse()
     );
 
@@ -382,19 +369,18 @@ describe('useAlarmState', () => {
           successEntries: [
             {
               entryId: request.entries![0].entryId,
-              assetPropertyValue: mockStringAssetPropertyValue(
-                mockDefaultAlarmState
-              ),
+              assetPropertyValue: mockDoubleAssetPropertyValue(MOCK_THRESHOLD),
             },
           ],
         } satisfies Awaited<ReturnType<BatchGetAssetPropertyValue>>;
       }
     );
 
-    const alarm = cloneDeep(mockAlarmDataDescribeAsset);
+    const alarm = cloneDeep(mockAlarmDataDescribeAlarmModel);
 
     const { result } = renderHook(() =>
-      useAlarmState({
+      useAlarmThreshold({
+        enabled: true,
         iotSiteWiseClient: iotSiteWiseClientMock,
         alarms: [alarm],
         refreshRate: TEST_REFRESH_RATE,
@@ -410,11 +396,11 @@ describe('useAlarmState', () => {
     });
 
     expect(batchGetAssetPropertyValueMock).toHaveBeenCalledOnce();
-    expect(result.current[0].state?.data).toEqual([
-      mockStringAssetPropertyValue(mockDefaultAlarmState),
+    expect(result.current[0].thresholds).toEqual([
+      mockDoubleAssetPropertyValue(MOCK_THRESHOLD),
     ]);
 
-    const referenceToData = result.current[0].state?.data;
+    const referenceToData = result.current[0].thresholds;
 
     act(() => {
       jest.advanceTimersByTime(TEST_ADVANCE_TIMERS_PAST_REFRESH_RATE);
@@ -422,7 +408,7 @@ describe('useAlarmState', () => {
 
     expect(batchGetAssetPropertyValueMock).toHaveBeenCalledTimes(2);
 
-    expect(result.current[0].state?.data).toBe(referenceToData);
+    expect(result.current[0].thresholds).toBe(referenceToData);
 
     jest.useRealTimers();
   });
@@ -432,8 +418,8 @@ describe('useAlarmState', () => {
 
     const now = new Date();
 
-    const mockAssetProperty1 = mockStringAssetPropertyValue(
-      mockDefaultAlarmState,
+    const mockAssetProperty1 = mockDoubleAssetPropertyValue(
+      MOCK_THRESHOLD,
       sub(now, { minutes: 2 })
     );
 
@@ -452,11 +438,12 @@ describe('useAlarmState', () => {
       }
     );
 
-    const alarm = cloneDeep(mockAlarmDataDescribeAsset);
+    const alarm = cloneDeep(mockAlarmDataDescribeAlarmModel);
 
     const { result, rerender } = renderHook(
-      ({ viewport }: Pick<UseAlarmStateOptions, 'viewport'> = {}) =>
-        useAlarmState({
+      ({ viewport }: { viewport?: Viewport } = {}) =>
+        useAlarmThreshold({
+          enabled: true,
           iotSiteWiseClient: iotSiteWiseClientMock,
           viewport: viewport ?? { duration: '5m' },
           alarms: [alarm],
@@ -474,9 +461,9 @@ describe('useAlarmState', () => {
     });
 
     expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledOnce();
-    expect(result.current[0].state?.data).toEqual([mockAssetProperty1]);
+    expect(result.current[0].thresholds).toEqual([mockAssetProperty1]);
 
-    const referenceToData = result.current[0].state?.data;
+    const referenceToData = result.current[0].thresholds;
 
     act(() => {
       jest.advanceTimersByTime(TEST_ADVANCE_TIMERS_PAST_REFRESH_RATE);
@@ -484,7 +471,7 @@ describe('useAlarmState', () => {
 
     expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(2);
 
-    expect(result.current[0].state?.data).toBe(referenceToData);
+    expect(result.current[0].thresholds).toBe(referenceToData);
 
     rerender({
       viewport: {
@@ -503,8 +490,79 @@ describe('useAlarmState', () => {
 
     expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(3);
 
-    expect(result.current[0].state?.data).toBe(referenceToData);
+    expect(result.current[0].thresholds).toBe(referenceToData);
 
     jest.useRealTimers();
+  });
+
+  it('no queries run when hook disabled', async () => {
+    const { result } = renderHook(() =>
+      useAlarmThreshold({
+        enabled: false,
+        iotSiteWiseClient: iotSiteWiseClientMock,
+        alarms: [cloneDeep(mockAlarmDataDescribeAlarmModel)],
+        refreshRate: Infinity,
+      })
+    );
+
+    expect(result.current[0]).toMatchObject(mockAlarmDataDescribeAlarmModel);
+
+    expect(batchGetAssetPropertyValueHistoryMock).not.toHaveBeenCalled();
+    expect(batchGetAssetPropertyValueMock).not.toHaveBeenCalled();
+  });
+
+  it('fetches the static threshold value from alarm models', async () => {
+    const mockAlarmDataAlarmModelWithStaticThreshold = {
+      ...mockAlarmDataDescribeAlarmModel,
+      models: [
+        {
+          ...mockAlarmModel,
+          alarmRule: {
+            simpleRule: {
+              ...mockAlarmModel.alarmRule.simpleRule,
+              threshold: `${MOCK_THRESHOLD}`,
+            },
+          },
+        },
+      ],
+    } satisfies AlarmData;
+
+    const mockAlarmDataAlarmModelWithStaticThreshold2 = {
+      ...mockAlarmDataDescribeAlarmModel,
+      models: [
+        {
+          ...mockAlarmModel,
+          alarmRule: {
+            simpleRule: {
+              ...mockAlarmModel.alarmRule.simpleRule,
+              threshold: `${MOCK_THRESHOLD_2}`,
+            },
+          },
+        },
+      ],
+    } satisfies AlarmData;
+
+    const { result } = renderHook(() =>
+      useAlarmThreshold({
+        enabled: true,
+        iotSiteWiseClient: iotSiteWiseClientMock,
+        alarms: [
+          cloneDeep(mockAlarmDataAlarmModelWithStaticThreshold),
+          cloneDeep(mockAlarmDataAlarmModelWithStaticThreshold2),
+        ],
+      })
+    );
+
+    expect(
+      result.current[0].thresholds &&
+        result.current[0].thresholds[0].value?.doubleValue
+    ).toEqual(MOCK_THRESHOLD);
+    expect(
+      result.current[1].thresholds &&
+        result.current[1].thresholds[0].value?.doubleValue
+    ).toEqual(MOCK_THRESHOLD_2);
+
+    expect(batchGetAssetPropertyValueHistoryMock).not.toHaveBeenCalled();
+    expect(batchGetAssetPropertyValueMock).not.toHaveBeenCalled();
   });
 });
