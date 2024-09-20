@@ -1,5 +1,7 @@
+import { DescribeAlarmModelResponse } from '@aws-sdk/client-iot-events';
 import { SITE_WISE_BACKED_PROPERTY_PREFIX } from '../constants';
 import type { AlarmProperty } from '../types';
+import { AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
 
 /**
  * Extracts the alarm model name from its ARN.
@@ -61,5 +63,42 @@ export const extractAssetPropertyId = (
   ) {
     const splitInputProperty = propertyExpression.split('.');
     return removeBackticks(splitInputProperty[3]);
+  }
+};
+
+/**
+ * Extracts a threshold value that is defined on an IoT Events alarm model.
+ * The value is converted to a SiteWise asset property value for consistency
+ * with processing threshold values modeled by a SiteWise asset property.
+ *
+ * @param alarmModel is the IoT Events alarm model
+ * @returns an AssetPropertyValue with the static value if defined
+ */
+export const getStaticThresholdAsAssetPropertyValue = (
+  alarmModel?: DescribeAlarmModelResponse
+): AssetPropertyValue | undefined => {
+  if (alarmModel) {
+    const threshold = alarmModel.alarmRule?.simpleRule?.threshold;
+    if (threshold && !isBackedBySiteWiseAssetProperty(threshold)) {
+      // Define the timestamp on the value based on the alarm model lastUpdateTime
+      const timestamp = alarmModel.lastUpdateTime
+        ? {
+            timeInSeconds: Math.round(
+              alarmModel.lastUpdateTime.getTime() / 1000
+            ),
+          }
+        : undefined;
+      /**
+       * The threshold value field is a string on the alarm model
+       * but we model it as a double in SiteWise
+       */
+      const thresholdAssetPropertyValue: AssetPropertyValue = {
+        value: {
+          doubleValue: parseFloat(threshold),
+        },
+        timestamp,
+      };
+      return thresholdAssetPropertyValue;
+    }
   }
 };

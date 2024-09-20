@@ -8,9 +8,10 @@ import type {
 import {
   useAlarmAssets,
   useAlarmModels,
+  useAlarmState,
+  useAlarmThreshold,
   useLatestAlarmPropertyValues,
 } from './hookHelpers';
-import { useAlarmState } from './hookHelpers/useAlarmState/useAlarmState';
 import { filterAlarmInputProperties } from './utils/filterAlarmInputProperties';
 
 /**
@@ -61,23 +62,12 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
   });
 
   /**
-   * Fetch latest asset property values for alarms with a state property.
-   * Data should be available for all alarms fetched for an asset.
-   */
-  const statePropertyAlarmData = useAlarmState({
-    iotSiteWiseClient,
-    alarms: assetAlarmData,
-    viewport,
-    ...settings,
-  });
-
-  /**
    * Fetch latest asset property values for alarms with a type property.
    * Data should be available for all alarms fetched for an asset.
    */
   const typePropertyAlarmData = useLatestAlarmPropertyValues({
     iotSiteWiseClient,
-    alarmDataList: statePropertyAlarmData,
+    alarmDataList: assetAlarmData,
     alarmPropertyFieldName: 'type',
   });
 
@@ -125,11 +115,37 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     })
   );
 
+  /**
+   * Fetch latest asset property values for alarms with a state property.
+   * Data should be available for all alarms fetched for an asset.
+   */
+  const statePropertyAlarmData = useAlarmState({
+    iotSiteWiseClient,
+    alarms: alarmData,
+    viewport,
+    ...settings,
+  });
+
+  /**
+   * Fetch alarm threshold values from the alarm model or from a
+   * SiteWise asset property.
+   */
+  const thresholdAlarmData = useAlarmThreshold({
+    enabled: settings?.fetchThresholds,
+    iotSiteWiseClient,
+    alarms: statePropertyAlarmData,
+    viewport,
+    ...settings,
+    refreshRate: Infinity, // Only fetch thresholds once, require page refresh
+  });
+
   // Apply the transform callback if it exists, otherwise return the AlarmData
   return useMemo(
     () =>
-      transform ? alarmData?.map(transform) : alarmData?.map(alarmDataIdentity),
-    [transform, alarmData]
+      transform
+        ? thresholdAlarmData?.map(transform)
+        : thresholdAlarmData?.map(alarmDataIdentity),
+    [transform, thresholdAlarmData]
   );
 }
 

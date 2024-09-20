@@ -1,13 +1,15 @@
 import { useMemo } from 'react';
-import { UseAlarmStateOptions } from './types';
-import { isDurationViewport } from '@iot-app-kit/core';
+import { Viewport, isDurationViewport } from '@iot-app-kit/core';
 
 export type QueryMode = 'LATEST' | 'LATEST_IN_VIEWPORT' | 'HISTORICAL' | 'LIVE';
 
 export const useQueryMode = ({
   fetchOnlyLatest,
   viewport,
-}: Pick<UseAlarmStateOptions, 'fetchOnlyLatest' | 'viewport'>): QueryMode => {
+}: {
+  fetchOnlyLatest?: boolean;
+  viewport?: Viewport;
+}): QueryMode => {
   return useMemo(() => {
     /**
      * No viewport present, only fetch

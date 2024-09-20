@@ -2,6 +2,8 @@ import { DescribeAlarmModelResponse } from '@aws-sdk/client-iot-events';
 import {
   MOCK_ALARM_INPUT_PROPERTY_ID,
   MOCK_ALARM_INPUT_PROPERTY_ID_2,
+  MOCK_ALARM_THRESHOLD_PROPERTY_ID,
+  MOCK_ALARM_THRESHOLD_PROPERTY_ID_2,
 } from './mockIds';
 
 export const MOCK_ALARM_MODEL_NAME = 'alarmModelName';
@@ -22,7 +24,7 @@ export const mockAlarmModel = {
     simpleRule: {
       inputProperty: `$sitewise.assetModel.\`f6dca270-d4b9-4de0-9722-d57d3f260cb8\`.\`${MOCK_ALARM_INPUT_PROPERTY_ID}\`.propertyValue.value`,
       comparisonOperator: 'GREATER',
-      threshold: '30',
+      threshold: `$sitewise.assetModel.\`f6dca270-d4b9-4de0-9722-d57d3f260cb8\`.\`${MOCK_ALARM_THRESHOLD_PROPERTY_ID}\`.propertyValue.value`,
     },
   },
 } satisfies DescribeAlarmModelResponse;
@@ -39,7 +41,7 @@ export const mockAlarmModel2 = {
     simpleRule: {
       inputProperty: `$sitewise.assetModel.\`f6dca270-d4b9-4de0-9722-d57d3f260cb8\`.\`${MOCK_ALARM_INPUT_PROPERTY_ID_2}\`.propertyValue.value`,
       comparisonOperator: 'GREATER',
-      threshold: '30',
+      threshold: `$sitewise.assetModel.\`f6dca270-d4b9-4de0-9722-d57d3f260cb8\`.\`${MOCK_ALARM_THRESHOLD_PROPERTY_ID_2}\`.propertyValue.value`,
     },
   },
 } satisfies DescribeAlarmModelResponse;

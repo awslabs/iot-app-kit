@@ -1,8 +1,8 @@
 import { AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
-import { AlarmData } from '../../types';
-import { toTimestamp } from '../../../../utils/time';
+import type { AlarmData } from '../types';
+import { toTimestamp } from '../../../utils/time';
 import { bisector } from 'd3-array';
-import { Viewport, timeSeriesDataFilterer } from '../../../../queries';
+import { Viewport, timeSeriesDataFilterer } from '../../../queries';
 import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
 
 const assetPropertyValueTime = (assetPropertyValue: AssetPropertyValue) =>
@@ -74,6 +74,29 @@ export const updateAlarmStateData = (
 
   if (shouldUpdateAlarmStateData(currentData, filteredData)) {
     alarm.state.data = filteredData;
+  }
+
+  return alarm;
+};
+
+export const updateAlarmThresholdData = (
+  alarm: AlarmData,
+  { data, viewport }: { data: AssetPropertyValue[]; viewport?: Viewport }
+): AlarmData => {
+  /**
+   * If there is no models property the queries will
+   * be disabled and data will be empty
+   */
+  if (!alarm.models) return alarm;
+
+  const currentData = alarm.thresholds ?? [];
+  const updatedData = uniqueSortAssetPropertyValues([...currentData, ...data]);
+  const filteredData = viewport
+    ? filterAssetPropertyValues(updatedData, viewportAsInterval(viewport))
+    : updatedData;
+
+  if (shouldUpdateAlarmStateData(currentData, filteredData)) {
+    alarm.thresholds = filteredData;
   }
 
   return alarm;
