@@ -7,6 +7,8 @@ export const assignDefaultRefId = (
     assets = [],
     properties = [],
     assetModels = [],
+    alarms = [],
+    alarmModels = [],
   }: IoTSiteWiseDataStreamQuery,
   getId: () => string = uuid
 ) => ({
@@ -28,4 +30,6 @@ export const assignDefaultRefId = (
       refId: propertyQuery.refId || getId(),
     })),
   })),
+  alarms,
+  alarmModels,
 });

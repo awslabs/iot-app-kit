@@ -20,6 +20,7 @@ import {
   DEFAULT_VIEWPORT,
   ECHARTS_GESTURE,
 } from '../../common/constants';
+import type { ComponentQuery } from '../../common/chartTypes';
 
 // TODO: Remove this type assertion - iot-app-kit/charts has the wrong type for StatusTimeline
 const StatusTimelineBase: typeof LineChart =
@@ -35,7 +36,7 @@ export const StatusTimeline = ({
   styles,
   ...rest
 }: {
-  queries: TimeSeriesDataQuery[];
+  queries: ComponentQuery[];
   axis?: StatusTimelineAxisSettings;
   thresholds?: Threshold[];
   viewport?: Viewport;
@@ -46,7 +47,7 @@ export const StatusTimeline = ({
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
-    queries,
+    queries: queries.filter((q) => 'build' in q) as TimeSeriesDataQuery[],
     settings: {
       fetchFromStartToEnd: true,
       fetchMostRecentBeforeStart: true,

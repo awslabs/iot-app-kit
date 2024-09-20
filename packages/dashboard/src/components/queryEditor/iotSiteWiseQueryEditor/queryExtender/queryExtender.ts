@@ -1,4 +1,5 @@
 import {
+  type AlarmResource,
   type AssetPropertyResource,
   type TimeSeriesResource,
 } from '@iot-app-kit/react-components';
@@ -11,6 +12,69 @@ export class QueryExtender {
 
   constructor(currentQuery: Query = {}) {
     this.#currentQuery = currentQuery;
+  }
+
+  public extendAlarmQueries(alarmDataStreams: readonly AlarmResource[]): Query {
+    const currentAlarmQueries = this.#currentQuery.alarms ?? [];
+    const newAlarmQueries = this.#createAlarmQueries(alarmDataStreams);
+    const dedupedAlarmQueries = this.#dedupeAlarmQueries([
+      ...currentAlarmQueries,
+      ...newAlarmQueries,
+    ]);
+    const extendedQuery = {
+      ...this.#currentQuery,
+      alarms: dedupedAlarmQueries,
+    };
+
+    return extendedQuery;
+  }
+
+  #createAlarmQueries(
+    alarmDataStreams: readonly AlarmResource[]
+  ): NonNullable<Query['alarms']> {
+    const assetQueriesWithProperties = alarmDataStreams.map<
+      NonNullable<Query['alarms']>[number]
+    >(({ assetId, assetCompositeModelId }) => ({
+      assetId,
+      alarmComponents: [{ assetCompositeModelId }],
+    }));
+
+    return assetQueriesWithProperties;
+  }
+
+  #dedupeAlarmQueries(alarmQueries: NonNullable<Query['alarms']>) {
+    const dedupedAlarmQueries = alarmQueries.reduce<
+      NonNullable<Query['alarms']>
+    >((acc, currentQuery) => {
+      const existingQueryIndex = acc.findIndex(
+        (alarmQuery) => alarmQuery.assetId === currentQuery.assetId
+      );
+
+      if (existingQueryIndex !== -1) {
+        const existingAlarmsComponents = new Set(
+          acc[existingQueryIndex].alarmComponents.map(
+            (p) => p.assetCompositeModelId
+          )
+        );
+        const newAlarmComponents = currentQuery.alarmComponents.filter(
+          (p) => !existingAlarmsComponents.has(p.assetCompositeModelId)
+        );
+
+        acc[existingQueryIndex] = {
+          ...acc[existingQueryIndex],
+          alarmComponents: [
+            ...acc[existingQueryIndex].alarmComponents,
+            ...newAlarmComponents,
+          ],
+        };
+
+        return acc;
+      }
+
+      return [...acc, currentQuery];
+    }, []);
+
+    return dedupedAlarmQueries;
   }
 
   public extendAssetQueries(

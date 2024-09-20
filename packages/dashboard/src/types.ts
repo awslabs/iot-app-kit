@@ -7,10 +7,12 @@ import {
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
 import {
+  SiteWiseAlarmQuery,
   SiteWiseAssetModelQuery,
   SiteWiseAssetQuery,
   SiteWisePropertyAliasQuery,
   SiteWiseQuery,
+  SiteWiseAlarmAssetModelQuery,
 } from '@iot-app-kit/source-iotsitewise';
 import { RefreshRate } from './components/refreshRate/types';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
@@ -32,7 +34,11 @@ export type DashboardIotSiteWiseQueries = {
 };
 
 export type IoTSiteWiseDataStreamQuery = Partial<
-  SiteWiseAssetQuery & SiteWisePropertyAliasQuery & SiteWiseAssetModelQuery
+  SiteWiseAssetQuery &
+    SiteWisePropertyAliasQuery &
+    SiteWiseAssetModelQuery &
+    SiteWiseAlarmQuery &
+    SiteWiseAlarmAssetModelQuery
 >;
 
 export type DashboardClientConfiguration =
