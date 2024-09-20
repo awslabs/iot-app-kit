@@ -154,6 +154,20 @@ export const mockStringAssetPropertyValue = (
   quality: 'GOOD',
 });
 
+export const mockDoubleAssetPropertyValue = (
+  value: number,
+  date?: Date
+): AssetPropertyValue => ({
+  value: {
+    doubleValue: value,
+  },
+  timestamp: {
+    timeInSeconds: date ? date.getTime() / 1000 : 100,
+    offsetInNanos: 0,
+  },
+  quality: 'GOOD',
+});
+
 export const mockStateAssetPropertyValue = mockStringAssetPropertyValue(
   mockDefaultAlarmState
 ) satisfies AssetPropertyValue;

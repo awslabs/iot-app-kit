@@ -1,11 +1,21 @@
 import { useMemo } from 'react';
-import { UseAlarmStateOptions } from './types';
+import { UseIoTSiteWiseClientOptions } from '../../requestFunctions/useIoTSiteWiseClient';
+import { AlarmData, UseAlarmsHookSettings, UseAlarmsOptions } from '../types';
 import { useQueryMode } from './useQueryMode';
-import { updateAlarmStatusForAlarmStateQueries } from './updateStatus';
-import { updateAlarmStateData } from './updateAlarmStateValues';
-import { useLatestAssetPropertyValues } from '../../../../queries';
-import { useHistoricalAssetPropertyValues } from '../../../../queries/useHistoricalAssetPropertyValues/useHistoricalAssetPropertyValues';
-import { createNonNullableList } from '../../../../utils/createNonNullableList';
+import { updateAlarmStatusForQueries } from '../utils/queryStatus';
+import { updateAlarmStateData } from '../utils/updateAlarmValues';
+import { useLatestAssetPropertyValues } from '../../../queries';
+import { useHistoricalAssetPropertyValues } from '../../../queries/useHistoricalAssetPropertyValues/useHistoricalAssetPropertyValues';
+import { createNonNullableList } from '../../../utils/createNonNullableList';
+
+export type UseAlarmStateOptions = Pick<
+  UseIoTSiteWiseClientOptions,
+  'iotSiteWiseClient'
+> &
+  Pick<UseAlarmsHookSettings, 'fetchOnlyLatest' | 'refreshRate'> &
+  Pick<UseAlarmsOptions, 'viewport'> & {
+    alarms: AlarmData[];
+  };
 
 export const useAlarmState = ({
   alarms,
@@ -89,7 +99,7 @@ export const useAlarmState = ({
       const historicalQueryInViewport = historicalQueriesInViewport[index];
       const latestQueryInLiveViewport = latestQueriesInLiveViewport[index];
 
-      updateAlarmStatusForAlarmStateQueries(alarm, [
+      updateAlarmStatusForQueries(alarm, [
         latestValueQuery,
         mostRecentBeforeEndValueQuery,
         historicalQueryInViewport,
