@@ -22,6 +22,8 @@ export const styledQueryWidgetOnDrop = (
     assets: [],
     properties: [],
     assetModels: [],
+    alarms: [],
+    alarmModels: [],
     ...updatedQuery,
   };
 

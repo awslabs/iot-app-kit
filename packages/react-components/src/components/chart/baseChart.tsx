@@ -36,6 +36,7 @@ import { PreferencesModalToggle } from './preferences/toggle';
 import { useDataQuality } from './hooks/useDataQuality';
 import { Timestamp } from '../timestampBar';
 import useDataStore from '../../store';
+import { getTimeSeriesQueries } from '../../utils/queries';
 
 /**
  * Developer Notes:
@@ -106,7 +107,7 @@ const BaseChart = ({
     thresholds,
     utilizedViewport,
     visibleData,
-  } = useVisualizedDataStreams(queries, viewport);
+  } = useVisualizedDataStreams(getTimeSeriesQueries(queries), viewport);
 
   //handle dataZoom updates, which are dependent on user events and viewportInMS changes
   useDataZoom(chartRef, utilizedViewport);

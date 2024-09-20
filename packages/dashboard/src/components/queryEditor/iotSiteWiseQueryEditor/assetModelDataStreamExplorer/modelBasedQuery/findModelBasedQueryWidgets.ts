@@ -12,7 +12,9 @@ export const findModelBasedQueryWidgets = (
   dashboardConfiguration.widgets
     .filter(isQueryWidget)
     .filter(
-      (w) => (w.properties.queryConfig.query?.assetModels ?? []).length > 0
+      (w) =>
+        (w.properties.queryConfig.query?.assetModels ?? []).length > 0 ||
+        (w.properties.queryConfig.query?.alarmModels ?? []).length > 0
     );
 
 export const hasModelBasedQuery = (

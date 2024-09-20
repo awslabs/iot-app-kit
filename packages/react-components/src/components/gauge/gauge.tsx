@@ -12,6 +12,7 @@ import {
   DEFAULT_GAUGE_PROGRESS_COLOR,
   DEFAULT_GAUGE_STYLES,
 } from './constants';
+import { getTimeSeriesQueries } from '../../utils/queries';
 
 export const Gauge = ({
   size,
@@ -25,7 +26,7 @@ export const Gauge = ({
 }: GaugeProps) => {
   const { dataStreams } = useTimeSeriesData({
     viewport: passedInViewport,
-    queries: [query],
+    queries: getTimeSeriesQueries([query]),
     settings: { fetchMostRecentBeforeEnd: true },
     styles,
   });

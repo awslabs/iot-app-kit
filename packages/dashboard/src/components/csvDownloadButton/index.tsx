@@ -78,11 +78,18 @@ export const CSVDownloadButton = ({
 
     // since fetchTimeSeriesData is async it'll wait for future viewports to be in cache
     // to avoid this, if viewport is in the future we dont request time series data
-    const mappedQuery = assetModelQueryToSiteWiseAssetQuery(queryConfig.query);
+    const { assetModels = [], assets = [] } = queryConfig.query ?? {};
+    const combinedAssets = assetModelQueryToSiteWiseAssetQuery({
+      assetModels,
+      assets,
+    });
     const dataStreams = isViewportInFuture
       ? []
       : await fetchTimeSeriesData({
-          query: mappedQuery,
+          query: {
+            ...queryConfig.query,
+            assets: combinedAssets,
+          },
           viewport: calculatedViewport,
           // since bar chart doesnt do raw data we need to pass a custom resolution mapping to handle auto select resolution mode
           settings:

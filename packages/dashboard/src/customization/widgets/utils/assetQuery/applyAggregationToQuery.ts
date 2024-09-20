@@ -6,6 +6,8 @@ export const applyAggregationToQuery = (
     assets = [],
     properties = [],
     assetModels = [],
+    alarms = [],
+    alarmModels = [],
   }: IoTSiteWiseDataStreamQuery,
   aggregationType: AggregateType | undefined
 ) => ({
@@ -27,4 +29,6 @@ export const applyAggregationToQuery = (
       aggregationType,
     })),
   })),
+  alarms,
+  alarmModels,
 });

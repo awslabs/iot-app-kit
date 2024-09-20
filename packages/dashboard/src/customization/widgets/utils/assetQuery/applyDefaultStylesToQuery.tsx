@@ -5,6 +5,8 @@ export const applyDefaultStylesToQuery = ({
   assets = [],
   properties = [],
   assetModels = [],
+  alarms = [],
+  alarmModels = [],
 }: StyledAssetQuery) => {
   const assignDefaultColor = colorerFromStyledQuery({
     assets,
@@ -26,5 +28,7 @@ export const applyDefaultStylesToQuery = ({
         assignDefaultColor(propertyQuery)
       ),
     })),
+    alarms,
+    alarmModels,
   };
 };
