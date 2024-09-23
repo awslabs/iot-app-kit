@@ -42,6 +42,10 @@ function useAlarms<T>(
  * useAlarms implementation which branches based on the 2 scenarios above.
  * If transform is defined, the output is T[], dictated by the second signature above.
  * If transform is undefined, the output is AlarmData[], dicatated by the first signature above.
+ *
+ * Given a list of AlarmRequests, fetch all available data for the alarms.
+ *
+ * @experimental Do not use in production
  */
 function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
   const {
@@ -105,14 +109,18 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
   );
 
   // Remove internal properties on AlarmDataInternal
-  const alarmData: AlarmData[] = inputPropertiesAlarmData.map(
-    ({
-      request: _unusedRequest,
-      properties: _unusedProperties,
-      ...alarmData
-    }) => ({
-      ...alarmData,
-    })
+  const alarmData: AlarmData[] = useMemo(
+    () =>
+      inputPropertiesAlarmData.map(
+        ({
+          request: _unusedRequest,
+          properties: _unusedProperties,
+          ...alarmData
+        }) => ({
+          ...alarmData,
+        })
+      ),
+    [inputPropertiesAlarmData]
   );
 
   /**
