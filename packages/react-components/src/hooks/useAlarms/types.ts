@@ -19,7 +19,7 @@ export type AlarmDataStatus = {
   isRefetching: boolean; // will be true whenever subsequent api calls are being executed
   isSuccess: boolean;
   isError: boolean;
-  errors?: Error[];
+  error?: Error;
 };
 
 /**
