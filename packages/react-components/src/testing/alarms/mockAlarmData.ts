@@ -5,6 +5,10 @@ import {
   mockAlarmModelArn,
 } from './mockAlarmModel';
 import {
+  MOCK_ALARM_INPUT_PROPERTY_2_NAME,
+  MOCK_ALARM_INPUT_PROPERTY_ID,
+  MOCK_ALARM_INPUT_PROPERTY_ID_2,
+  MOCK_ALARM_INPUT_PROPERTY_NAME,
   MOCK_ASSET_ID,
   MOCK_ASSET_MODEL_ID,
   MOCK_COMPOSITE_MODEL_ID,
@@ -159,4 +163,29 @@ export const mockAlarmDataDescribeAlarmModel = {
 export const mockAlarmDataDescribeAlarmModel2 = {
   ...mockAlarmDataGetAssetPropertyValue2,
   models: [mockAlarmModel2],
+} satisfies AlarmDataInternal;
+
+export const mockAlarmDataWithInputProperty = {
+  ...mockAlarmDataDescribeAlarmModel,
+  inputProperty: [
+    {
+      property: {
+        id: MOCK_ALARM_INPUT_PROPERTY_ID,
+        name: MOCK_ALARM_INPUT_PROPERTY_NAME,
+        dataType: 'DOUBLE',
+      },
+    },
+  ],
+} satisfies AlarmDataInternal;
+export const mockAlarmDataWithInputProperty2 = {
+  ...mockAlarmDataDescribeAlarmModel2,
+  inputProperty: [
+    {
+      property: {
+        id: MOCK_ALARM_INPUT_PROPERTY_ID_2,
+        name: MOCK_ALARM_INPUT_PROPERTY_2_NAME,
+        dataType: 'DOUBLE',
+      },
+    },
+  ],
 } satisfies AlarmDataInternal;

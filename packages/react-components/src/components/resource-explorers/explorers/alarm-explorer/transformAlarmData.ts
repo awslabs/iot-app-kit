@@ -25,8 +25,8 @@ export const transformAlarmData = ({
       assetCompositeModelId: compositeModelId,
       assetId,
       assetModelId,
-      inputPropertyId: inputProperty?.at(0)?.id,
-      inputPropertyName: inputProperty?.at(0)?.name,
+      inputPropertyId: inputProperty?.at(0)?.property.id,
+      inputPropertyName: inputProperty?.at(0)?.property.name,
       latestValue: latestState?.value.state,
       // default latest value timestamp renderer uses seconds as unit
       latestValueTimestamp: (latestState?.timestamp ?? 0) / 1000,

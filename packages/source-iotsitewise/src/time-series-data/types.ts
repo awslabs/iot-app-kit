@@ -118,7 +118,10 @@ export type SiteWiseAlarmAssetModelQuery = {
  */
 export type SiteWiseAlarmQuery = {
   alarms: AlarmQuery[];
-  requestSettings?: RequestSettings;
+  requestSettings?: RequestSettings & {
+    aggregationType?: AggregateType;
+    resolution?: string;
+  };
 };
 
 export type SiteWiseDataStreamQuery = Partial<SiteWiseAssetQuery> &

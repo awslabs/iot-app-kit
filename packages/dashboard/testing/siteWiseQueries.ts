@@ -68,18 +68,19 @@ export const mockQuery = (
   }
 ): SiteWiseQuery => {
   const { updateViewport = noop, unsubscribe = noop } = overrides || {};
+  const timeSeriesDataFn: SiteWiseQuery['timeSeriesData'] = (_query) => ({
+    toQueryString: () => JSON.stringify(timeSeriesData),
+    build: () => ({
+      subscribe: ({ next }) => {
+        next(timeSeriesData);
+      },
+      unsubscribe,
+      updateViewport,
+    }),
+  });
   return {
     fetchTimeSeriesData: (_input) => new Promise(() => {}),
-    timeSeriesData: () => ({
-      toQueryString: () => JSON.stringify(timeSeriesData),
-      build: () => ({
-        subscribe: ({ next }) => {
-          next(timeSeriesData);
-        },
-        unsubscribe,
-        updateViewport,
-      }),
-    }),
+    timeSeriesData: timeSeriesDataFn,
     anomalyData: (query) => ({
       query,
       iotSiteWiseClient: createMockSiteWiseSDK(),
@@ -88,6 +89,7 @@ export const mockQuery = (
       query,
       iotSiteWiseClient: createMockSiteWiseSDK(),
       iotEventsClient: createMockIoTEventsSDK(),
+      timeSeriesData: timeSeriesDataFn,
     }),
     assetTree: {
       fromRoot: () => ({

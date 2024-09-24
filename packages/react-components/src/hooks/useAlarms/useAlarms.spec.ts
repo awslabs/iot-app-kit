@@ -143,7 +143,11 @@ describe.skip('useAlarms', () => {
 
     const expectedAlarmData: AlarmData = {
       ...mockAlarmDataDescribeAlarmModel,
-      inputProperty: [mockAssetProperty],
+      inputProperty: [
+        {
+          property: mockAssetProperty,
+        },
+      ],
     };
 
     const { result: alarmResults } = renderHook(() =>
@@ -189,12 +193,20 @@ describe.skip('useAlarms', () => {
 
     const expectedAlarmData1: AlarmData = {
       ...mockAlarmDataDescribeAlarmModel,
-      inputProperty: [mockAssetProperty1],
+      inputProperty: [
+        {
+          property: mockAssetProperty1,
+        },
+      ],
     };
 
     const expectedAlarmData2: AlarmData = {
       ...mockAlarmDataDescribeAlarmModel2,
-      inputProperty: [mockAssetProperty2],
+      inputProperty: [
+        {
+          property: mockAssetProperty2,
+        },
+      ],
     };
 
     useAlarmAssetsMock.mockReturnValue([mockAlarmDataDescribeAsset]);

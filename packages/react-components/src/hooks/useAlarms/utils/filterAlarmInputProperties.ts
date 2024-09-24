@@ -48,7 +48,7 @@ export const filterAlarmInputProperties = (
     }
     return {
       ...alarmData,
-      inputProperty: inputProperty ? [inputProperty] : undefined,
+      inputProperty: inputProperty ? [{ property: inputProperty }] : undefined,
     };
   });
 };
