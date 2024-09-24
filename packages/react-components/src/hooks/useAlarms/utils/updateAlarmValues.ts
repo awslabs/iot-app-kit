@@ -2,8 +2,9 @@ import { AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
 import type { AlarmData } from '../types';
 import { toTimestamp } from '../../../utils/time';
 import { bisector } from 'd3-array';
-import { Viewport, timeSeriesDataFilterer } from '../../../queries';
+import { timeSeriesDataFilterer, Viewport } from '../../../queries';
 import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
+import { alarmThresholdValueFilterer } from './alarmThresholdValueFilterer';
 
 const assetPropertyValueTime = (assetPropertyValue: AssetPropertyValue) =>
   toTimestamp(assetPropertyValue.timestamp);
@@ -16,6 +17,11 @@ const compareAssetPropertyValues = (
 };
 
 const assetPropertyValuesBisector = bisector(assetPropertyValueTime);
+
+const filterAssetPropertyValuesForThreshold = alarmThresholdValueFilterer(
+  assetPropertyValuesBisector,
+  assetPropertyValueTime
+);
 
 const filterAssetPropertyValues = timeSeriesDataFilterer(
   assetPropertyValuesBisector,
@@ -81,7 +87,15 @@ export const updateAlarmStateData = (
 
 export const updateAlarmThresholdData = (
   alarm: AlarmData,
-  { data, viewport }: { data: AssetPropertyValue[]; viewport?: Viewport }
+  {
+    data,
+    staticData,
+    viewport,
+  }: {
+    data: AssetPropertyValue[];
+    staticData: AssetPropertyValue[];
+    viewport?: Viewport;
+  }
 ): AlarmData => {
   /**
    * If there is no models property the queries will
@@ -90,9 +104,24 @@ export const updateAlarmThresholdData = (
   if (!alarm.models) return alarm;
 
   const currentData = alarm.thresholds ?? [];
+
+  /**
+   * If there is a static threshold then that should be used as the alarm threshold
+   **/
+  if (
+    staticData.length &&
+    shouldUpdateAlarmStateData(currentData, staticData)
+  ) {
+    alarm.thresholds = staticData;
+    return alarm;
+  }
+
   const updatedData = uniqueSortAssetPropertyValues([...currentData, ...data]);
   const filteredData = viewport
-    ? filterAssetPropertyValues(updatedData, viewportAsInterval(viewport))
+    ? filterAssetPropertyValuesForThreshold(
+        updatedData,
+        viewportAsInterval(viewport)
+      )
     : updatedData;
 
   if (shouldUpdateAlarmStateData(currentData, filteredData)) {

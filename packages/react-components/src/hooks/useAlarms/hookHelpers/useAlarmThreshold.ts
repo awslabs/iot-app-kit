@@ -1,5 +1,8 @@
 import { useMemo } from 'react';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  AssetPropertyValue,
+  IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import { Viewport } from '@iot-app-kit/core';
 import { AlarmData } from '../types';
 import {
@@ -82,7 +85,7 @@ export const useAlarmThreshold = ({
    * Useful if there is no threshold data within the viewport.
    */
   const mostRecentBeforeEndValueQueries = useHistoricalAssetPropertyValues({
-    enabled: enabled && queryMode === 'LATEST_IN_VIEWPORT',
+    enabled: enabled && queryMode !== 'LATEST',
     iotSiteWiseClient,
     requests,
     viewport,
@@ -123,12 +126,13 @@ export const useAlarmThreshold = ({
             ? getStaticThresholdAsAssetPropertyValue(alarm.models[0])
             : undefined;
 
-        let thresholdData = staticThresholdValue
+        const staticThresholdData = staticThresholdValue
           ? [staticThresholdValue]
-          : undefined;
+          : [];
+        let thresholdData: AssetPropertyValue[] = [];
 
         // If there is no static value then the query may have data for the threshold
-        if (!thresholdData) {
+        if (!staticThresholdData.length) {
           updateAlarmStatusForQueries(alarm, [
             latestValueQuery,
             mostRecentBeforeEndValueQuery,
@@ -144,7 +148,11 @@ export const useAlarmThreshold = ({
           ];
         }
 
-        updateAlarmThresholdData(alarm, { data: thresholdData, viewport });
+        updateAlarmThresholdData(alarm, {
+          data: thresholdData,
+          viewport,
+          staticData: staticThresholdData,
+        });
 
         return alarm;
       }) ?? []
