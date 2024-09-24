@@ -25,16 +25,12 @@ describe('useAssistant', () => {
       { wrapper: TestProvider }
     );
 
-    expect(result.current.assistantProperties.assistant).toBeDefined();
-    expect(
-      result.current.assistantProperties.assistant?.conversationID
-    ).toEqual(expect.any(String));
-    expect(result.current.assistantProperties.assistant?.iconPosition).toBe(
-      'topLeft'
-    );
-    expect(result.current.assistantProperties.assistant?.onAction).toEqual(
-      expect.any(Function)
-    );
+    const { assistant } = result.current.assistantProperties;
+    expect(assistant).toBeDefined();
+    expect(assistant?.enabled).toBeTruthy();
+    expect(assistant?.conversationID).toEqual(expect.any(String));
+    expect(assistant?.iconPosition).toBe('topLeft');
+    expect(assistant?.onAction).toEqual(expect.any(Function));
   });
 
   it('should NOT return assistant property when dashboard mode is NOT readonly', () => {

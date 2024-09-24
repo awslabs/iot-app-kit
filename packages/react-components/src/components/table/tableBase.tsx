@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Pagination,
   PropertyFilter,
@@ -7,8 +7,8 @@ import {
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import { getDefaultColumnDefinitions } from './tableHelpers';
 import type { FunctionComponent } from 'react';
-import type { TableProps } from './types';
-import { DEFAULT_PAGE_SIZE } from './constants';
+import type { TableItemHydrated, TableProps } from './types';
+import { ASSISTANT_SELECTION_LIMITATION, DEFAULT_PAGE_SIZE } from './constants';
 
 export const TableBase: FunctionComponent<TableProps> = (props) => {
   const {
@@ -22,6 +22,9 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
     pageSize,
     empty,
   } = props;
+  const [selectedItems, setSelectedItems] = useState<Array<TableItemHydrated>>(
+    []
+  );
   const { items, collectionProps, propertyFilterProps, paginationProps } =
     useCollection(userItems, {
       sorting,
@@ -55,6 +58,29 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
           />
         )
       }
+      selectionType={props.assistant ? 'multi' : undefined}
+      isItemDisabled={(item: TableItemHydrated) => {
+        if (selectedItems.length === ASSISTANT_SELECTION_LIMITATION) {
+          const found =
+            selectedItems.find((i) => i.id === item.id) !== undefined;
+          return !found;
+        }
+
+        return false;
+      }}
+      onSelectionChange={(event) => {
+        setSelectedItems(event.detail.selectedItems);
+        if (props.onTableSelection) {
+          const indexesSelected = event.detail.selectedItems.map(
+            (selectedItem) => {
+              return items.findIndex((i) => i.id === selectedItem.id);
+            }
+          );
+          props.onTableSelection(indexesSelected);
+        }
+      }}
+      selectedItems={selectedItems}
+      trackBy='id'
     />
   );
 };

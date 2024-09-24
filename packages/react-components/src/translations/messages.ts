@@ -8,6 +8,7 @@ import {
   AssistantResultPanelMessageKeys,
 } from './assistantActionPanel/messages';
 import { Messages } from './types';
+import { Table, TableMessageKeys } from './table/messages';
 
 /**
  * In order to add messages to the intl instance
@@ -29,7 +30,8 @@ export type MessageKeys =
   | AnomalyChartMessageKeys
   | EchartsMessageKeys
   | AssistantActionPanelMessageKeys
-  | AssistantResultPanelMessageKeys;
+  | AssistantResultPanelMessageKeys
+  | TableMessageKeys;
 export type AllMessages = Messages<MessageKeys>;
 
 // List of all component messages to be merged by locale.
@@ -38,6 +40,7 @@ const componentMessages = [
   Echarts,
   AssistantActionPanel,
   AssistantResultPanel,
+  Table,
 ];
 
 // All merged messages

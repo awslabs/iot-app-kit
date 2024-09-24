@@ -47,7 +47,9 @@ it('renders', async () => {
   expect(screen.getByTestId('kpi-name-and-unit').textContent).toContain(
     DATA_STREAM.unit
   );
-  expect(screen.getByTestId('kpi-value').textContent).toContain(`${DATA_STREAM.data[0].y}`);
+  expect(screen.getByTestId('kpi-value').textContent).toContain(
+    `${DATA_STREAM.data[0].y}`
+  );
   expect(screen.getByTestId('kpi-timestamp').textContent).toContain(
     new Date(DATA_STREAM.data[0].x).toLocaleString()
   );

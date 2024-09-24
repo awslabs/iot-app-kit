@@ -211,6 +211,7 @@ export type TableProperties = QueryProperties & {
   columnDefinitions?: TableColumnDefinition[];
   significantDigits?: number;
   pageSize?: number;
+  assistant?: AssistantProperty;
 };
 
 export type TablePropertiesKeys = keyof TableProperties;

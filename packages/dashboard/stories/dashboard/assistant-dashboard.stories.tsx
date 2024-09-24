@@ -76,7 +76,7 @@ export const Main: ComponentStory<typeof Dashboard> = () => {
       initialViewMode={initialViewMode}
       dashboardConfiguration={dashboardConfig}
       assistantConfiguration={{
-        state: 'PASSIVE'
+        state: 'PASSIVE',
       }}
     />
   );
@@ -87,7 +87,7 @@ export const View: ComponentStory<typeof DashboardView> = () => (
     clientConfiguration={CLIENT_CONFIGURATION}
     dashboardConfiguration={getInitialDashboardConfig()}
     assistantConfiguration={{
-      state: 'PASSIVE'
+      state: 'PASSIVE',
     }}
   />
 );

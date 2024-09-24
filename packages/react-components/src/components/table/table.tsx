@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TableBase } from './tableBase';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
@@ -12,9 +12,15 @@ import { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import { TableColumnDefinition, TableItem, TableItemHydrated } from './types';
 import { createTableItems } from './createTableItems';
 import { DEFAULT_TABLE_MESSAGES } from './messages';
-import { TableProps as TableBaseProps } from '@cloudscape-design/components';
-import { AssistantProperty } from '../../common/assistantProps';
-import { Title } from '../../common/title';
+import type { TableProps as TableBaseProps } from '@cloudscape-design/components';
+import type { AssistantProperty } from '../../common/assistantProps';
+import { useComponentId } from '../../hooks/useComponentId/useComponentId';
+import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
+import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
+import { TableHeader } from './tableHeader';
+import { TableAssistantResults } from './tableAssistantResults';
+import type { AssistantSupportedQuery } from '../../hooks/useAssistantContext/utils';
+import { IntlProvider } from 'react-intl';
 
 const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
 
@@ -53,6 +59,10 @@ export const Table = ({
   | 'empty'
   | 'preferences'
 >) => {
+  const componentId = useComponentId();
+  const [indexesSelected, setIndexesSelected] = useState<number[]>([]);
+  const [showSummarization, setShowSummarization] = useState<boolean>(false);
+
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries,
@@ -62,42 +72,80 @@ export const Table = ({
     styles,
   });
   const { viewport } = useViewport();
-  const allThresholds = [...queryThresholds, ...thresholds];
-
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
   const itemsWithData = createTableItems(
     {
       dataStreams,
       items,
       viewport: utilizedViewport,
-      thresholds: allThresholds,
+      thresholds: [...queryThresholds, ...thresholds],
     },
     DEFAULT_TABLE_MESSAGES
   );
 
-  const renderHeader = () => {
-    if (!props.titleText) return undefined;
+  const { setContextByComponent, transformTimeseriesDataToAssistantContext } =
+    useAssistantContext();
 
-    return (
-      <Title
-        text={`${props.titleText} (${itemsWithData.length})`}
-        style={{ padding: 0 }}
-      />
-    );
+  const handleSummarize = () => {
+    const transformedQueries = transformTimeseriesDataToAssistantContext({
+      start: viewportStartDate(utilizedViewport),
+      end: viewportEndDate(utilizedViewport),
+      queries,
+    });
+    const filteredQueries = transformedQueries.queries.map((query) => {
+      const { properties = [] } = query as AssistantSupportedQuery;
+      const filteredProperties = properties.filter((_prop, index) =>
+        indexesSelected.includes(index)
+      );
+      return {
+        ...query,
+        properties: filteredProperties,
+      };
+    });
+    setContextByComponent(componentId, filteredQueries);
+    setShowSummarization(true);
   };
 
-  return (
-    <TableBase
-      {...props}
-      header={renderHeader()}
-      items={itemsWithData}
-      sorting={sorting}
-      columnDefinitions={columnDefinitions}
-      propertyFiltering={propertyFiltering}
-      messageOverrides={DEFAULT_TABLE_MESSAGES}
-      precision={significantDigits}
-      paginationEnabled={paginationEnabled}
-      pageSize={pageSize}
-    />
+  const component = (
+    <IntlProvider locale='en' defaultLocale='en'>
+      <TableBase
+        {...props}
+        items={itemsWithData}
+        sorting={sorting}
+        columnDefinitions={columnDefinitions}
+        propertyFiltering={propertyFiltering}
+        messageOverrides={DEFAULT_TABLE_MESSAGES}
+        precision={significantDigits}
+        paginationEnabled={paginationEnabled}
+        pageSize={pageSize}
+        onTableSelection={(indexesSelected) =>
+          setIndexesSelected(indexesSelected)
+        }
+        header={
+          <TableHeader
+            titleText={props.titleText}
+            assistant={props.assistant}
+            selectedItems={indexesSelected.length}
+            totalItems={items.length}
+            onSummarize={handleSummarize}
+          />
+        }
+      />
+    </IntlProvider>
   );
+
+  if (props.assistant) {
+    return (
+      <TableAssistantResults
+        componentId={componentId}
+        assistant={props.assistant}
+        showSummarization={showSummarization}
+        onSummarizationEnd={() => setShowSummarization(false)}
+      >
+        {component}
+      </TableAssistantResults>
+    );
+  } else {
+    return component;
+  }
 };

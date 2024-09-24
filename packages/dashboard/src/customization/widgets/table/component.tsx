@@ -60,6 +60,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
     significantDigits: widgetSignificantDigits,
     styleSettings,
     title,
+    assistant,
   } = widget.properties;
 
   const queries = useQueries(queryConfig.query);
@@ -142,6 +143,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
             )
           }
           propertyFiltering={PROPERTY_FILTERING}
+          assistant={assistant}
         />
       </div>
     </WidgetTile>

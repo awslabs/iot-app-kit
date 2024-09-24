@@ -7,6 +7,7 @@ import type {
 } from '@iot-app-kit/core';
 import type { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import type { TableMessages } from './messages';
+import type { AssistantProperty } from '../../common/assistantProps';
 
 export type TableItemRef = {
   $cellRef: {
@@ -64,4 +65,6 @@ export interface TableProps
   precision?: number;
   pageSize?: number;
   paginationEnabled?: boolean;
+  assistant?: AssistantProperty;
+  onTableSelection?: (indexesSelected: number[]) => void;
 }

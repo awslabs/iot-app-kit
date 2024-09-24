@@ -26,30 +26,32 @@ export const useTableItems = (
   });
 
   const assetItems = assets.flatMap(({ assetId, properties }) =>
-    properties.map(({ propertyId, refId }) => {
-      const assetDescription = queries.find(
-        ({ data }) => data?.assetId === assetId
-      )?.data;
-      const { unit, name } = assetDescription?.assetProperties?.find(
-        ({ id }) => id === propertyId
-      ) ?? { unit: '' };
-      return {
-        //if refId is undefined, use property name
-        property:
-          styles[refId ?? ''].name ??
-          `${name} (${assetDescription?.assetName ?? ''})`,
-        unit,
-        value: {
-          $cellRef: {
-            id: toId({
-              assetId,
-              propertyId,
-            }),
-            resolution: 0,
+    properties
+      .map(({ propertyId, refId }) => {
+        const assetDescription = queries.find(
+          ({ data }) => data?.assetId === assetId
+        )?.data;
+        const { unit, name } = assetDescription?.assetProperties?.find(
+          ({ id }) => id === propertyId
+        ) ?? { unit: '' };
+        return {
+          //if refId is undefined, use property name
+          property:
+            styles[refId ?? ''].name ??
+            `${name} (${assetDescription?.assetName ?? ''})`,
+          unit,
+          value: {
+            $cellRef: {
+              id: toId({
+                assetId,
+                propertyId,
+              }),
+              resolution: 0,
+            },
           },
-        },
-      };
-    })
+        };
+      })
+      .filter((property) => !property.property.includes('undefined'))
   );
 
   const unmodeledItems =

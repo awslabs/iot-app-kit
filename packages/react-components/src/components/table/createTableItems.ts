@@ -90,12 +90,16 @@ export const createTableItems: (
       };
     });
 
-    return keyDataPairs.reduce(
-      (previous, { key, data }) => ({
-        ...previous,
-        [key]: data,
-      }),
-      {}
-    );
+    const [first] = keyDataPairs;
+    return {
+      id: first.data.value as Primitive,
+      ...keyDataPairs.reduce(
+        (previous, { key, data }) => ({
+          ...previous,
+          [key]: data,
+        }),
+        {}
+      ),
+    };
   });
 };

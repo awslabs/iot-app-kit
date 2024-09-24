@@ -25,6 +25,7 @@ export const useAssistant = () => {
       return {
         assistant: {
           client,
+          enabled: readOnly,
           conversationID: assistant.conversationID,
           iconPosition: 'topLeft',
           onAction: (event: AssistantActionEventDetail) => {
