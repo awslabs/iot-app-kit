@@ -1,6 +1,8 @@
-import type { TimeSeriesDataQuery } from '@iot-app-kit/core';
 import type { ComponentQuery } from '../common/chartTypes';
-import type { AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
+import type {
+  AlarmDataQuery,
+  TimeSeriesDataQuery,
+} from '@iot-app-kit/source-iotsitewise';
 
 export const getTimeSeriesQueries = (
   queries: ComponentQuery[]

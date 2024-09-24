@@ -56,7 +56,10 @@ export const getStatusForQuery = (
  * @returns one AlarmDataStatus
  */
 export const combineStatusForQueries = (
-  queries: UseQueryResult[],
+  queries: Pick<
+    UseQueryResult,
+    'isLoading' | 'isRefetching' | 'isSuccess' | 'isError' | 'error'
+  >[],
   oldStatus?: AlarmDataStatus
 ) => {
   const errors: Error[] = [];
