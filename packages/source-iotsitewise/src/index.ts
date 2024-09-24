@@ -10,6 +10,7 @@ export type {
   SiteWiseQuery,
   AnomalyDataQuery,
   AlarmDataQuery,
+  TimeSeriesDataQuery,
 } from './initialize';
 export type { SiteWiseAssetTreeNode } from './asset-modules/sitewise-asset-tree/types';
 export type { HierarchyGroup } from './asset-modules';

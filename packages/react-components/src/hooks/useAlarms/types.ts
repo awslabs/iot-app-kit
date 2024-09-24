@@ -1,4 +1,5 @@
 import {
+  AggregateType,
   AssetModelProperty,
   AssetProperty,
   AssetPropertyValue,
@@ -9,7 +10,8 @@ import {
   IoTEventsClient,
 } from '@aws-sdk/client-iot-events';
 
-import type { Viewport } from '@iot-app-kit/core';
+import type { DataStream, Viewport } from '@iot-app-kit/core';
+import { AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
 
 /**
  * Execution status of the alarms queries
@@ -53,7 +55,10 @@ export type AlarmData = {
    *
    * This is undefined if the SiteWise alarm type is "EXTERNAL".
    */
-  inputProperty?: (AssetProperty | AssetModelProperty)[];
+  inputProperty?: {
+    property: AssetProperty | AssetModelProperty;
+    dataStream?: DataStream;
+  }[];
 
   /**
    * The id for the SiteWise alarm composite model.
@@ -190,6 +195,11 @@ export type AlarmRequest =
  * Settings for the useAlarms hook
  */
 export interface UseAlarmsHookSettings {
+  /**
+   * Fetch all the input property time series data
+   */
+  fetchInputPropertyData?: boolean; // default false
+
   fetchThresholds?: boolean; // default false
   /**
    * Limit the GET apis to size one, fetching most recent before end of viewport.
@@ -201,6 +211,11 @@ export interface UseAlarmsHookSettings {
    * Related to the @iot-app-kit/core `QueryRequestSettings` type.
    */
   refreshRate?: number;
+}
+
+export interface UseAlarmsInputPropertyTimeSeriesDataSettings {
+  aggregationType?: AggregateType;
+  resolution?: string;
 }
 
 /**
@@ -218,6 +233,8 @@ export interface UseAlarmsOptions<T = AlarmData> {
 
   iotEventsClient?: IoTEventsClient;
 
+  timeSeriesData?: AlarmDataQuery['timeSeriesData'];
+
   requests?: AlarmRequest[];
 
   viewport?: Viewport;
@@ -227,6 +244,12 @@ export interface UseAlarmsOptions<T = AlarmData> {
    * so we don't overfetch and improve performance.
    */
   settings?: UseAlarmsHookSettings;
+
+  /**
+   * Allow consumers to specify settings for
+   * fetching input property time series data
+   */
+  inputPropertyTimeSeriesDataSettings?: UseAlarmsInputPropertyTimeSeriesDataSettings;
 
   /**
    * Used to transform part of the data from the Events alarm model.

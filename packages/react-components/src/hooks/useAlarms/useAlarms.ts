@@ -13,6 +13,7 @@ import {
   useLatestAlarmPropertyValues,
 } from './hookHelpers';
 import { filterAlarmInputProperties } from './utils/filterAlarmInputProperties';
+import { useInputPropertyTimeSeriesData } from './hookHelpers/useInputPropertyTimeSeriesData/useInputPropertyTimeSeriesData';
 
 /**
  * Identify function that returns the input AlarmData.
@@ -51,9 +52,11 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
   const {
     iotSiteWiseClient,
     iotEventsClient,
+    timeSeriesData,
     requests,
     viewport,
     settings,
+    inputPropertyTimeSeriesDataSettings,
     transform,
   } = options ?? {};
   /**
@@ -109,7 +112,7 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
   );
 
   // Remove internal properties on AlarmDataInternal
-  const alarmData: AlarmData[] = useMemo(
+  const alarmDataWithoutInternalProperties: AlarmData[] = useMemo(
     () =>
       inputPropertiesAlarmData.map(
         ({
@@ -122,6 +125,14 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
       ),
     [inputPropertiesAlarmData]
   );
+
+  const alarmData = useInputPropertyTimeSeriesData({
+    alarms: alarmDataWithoutInternalProperties,
+    timeSeriesData,
+    viewport,
+    ...settings,
+    ...inputPropertyTimeSeriesDataSettings,
+  });
 
   /**
    * Fetch latest asset property values for alarms with a state property.
