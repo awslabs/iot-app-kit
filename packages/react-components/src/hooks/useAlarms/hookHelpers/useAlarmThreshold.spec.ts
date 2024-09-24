@@ -226,7 +226,7 @@ describe('useAlarmThreshold', () => {
 
     expect(batchGetAssetPropertyValueMock).not.toHaveBeenCalled();
 
-    expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledOnce();
+    expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(2);
     expect(result.current[0].thresholds).toEqual(
       mockAssetProperty1Data.reverse()
     );
@@ -248,14 +248,10 @@ describe('useAlarmThreshold', () => {
       expect(result.current[1].status.isSuccess).toBe(true);
     });
 
-    expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(2);
+    expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(4);
 
-    expect(result.current[0].thresholds).toEqual(
-      mockAssetProperty1Data.slice(2)
-    );
-    expect(result.current[1].thresholds).toEqual(
-      mockAssetProperty2Data.slice(2)
-    );
+    expect(result.current[0].thresholds).toEqual(mockAssetProperty1Data);
+    expect(result.current[1].thresholds).toEqual(mockAssetProperty2Data);
   });
 
   it('fetches the historical threshold asset properties within a live viewport.', async () => {
@@ -322,7 +318,7 @@ describe('useAlarmThreshold', () => {
 
     expect(batchGetAssetPropertyValueMock).not.toHaveBeenCalled();
 
-    expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledOnce();
+    expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(2);
     expect(result.current[0].thresholds).toEqual(
       mockAssetProperty1Data.reverse()
     );
@@ -353,7 +349,7 @@ describe('useAlarmThreshold', () => {
       jest.advanceTimersByTime(TEST_ADVANCE_TIMERS_PAST_REFRESH_RATE);
     });
 
-    expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(2);
+    expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(4);
 
     jest.useRealTimers();
   });
