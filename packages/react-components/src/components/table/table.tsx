@@ -4,20 +4,58 @@ import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import type { StyleSettingsMap, Threshold, Viewport } from '@iot-app-kit/core';
 import { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
-import { TableColumnDefinition, TableItem, TableItemHydrated } from './types';
+import {
+  AlarmItem,
+  TableColumnDefinition,
+  TableItem,
+  TableItemHydrated,
+} from './types';
 import { createTableItems } from './createTableItems';
 import { DEFAULT_TABLE_MESSAGES } from './messages';
 import { TableProps as TableBaseProps } from '@cloudscape-design/components';
 import type { ComponentQuery } from '../../common/chartTypes';
 import { getTimeSeriesQueries } from '../../utils/queries';
+import { useAlarmsFromQueries } from '../../hooks/useAlarmsFromQueries/useAlarmsFromQueries';
+import { parseAlarmStateAssetProperty } from '../../hooks/useAlarms/transformers';
+import { mapAlarmRuleExpression } from '../../hooks/useAlarms/transformers/mapAlarmRuleExpression';
 
 const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
+
+/**
+ * Alarm table column definitions are going to be handled
+ * internally in the component. They will not be configurable
+ * from external users. They will be injected along side
+ * user defined column definitions if alarm queries
+ * are present within the table queries option.
+ */
+const ALARM_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
+  {
+    key: 'alarmName',
+    header: 'Alarm Name',
+    sortingField: 'alarmName',
+  },
+  {
+    key: 'alarmExpression',
+    header: 'Alarm Expression',
+    sortingField: 'alarmExpressions',
+  },
+  {
+    key: 'alarmState',
+    header: 'State',
+    sortingField: 'alarmState',
+  },
+  {
+    key: 'alarmSeverity',
+    header: 'Severity',
+    sortingField: 'alarmSeverity',
+  },
+];
 
 export const Table = ({
   queries,
   viewport: passedInViewport,
   thresholds = [],
-  columnDefinitions,
+  columnDefinitions: userDefinedColumnDefinitions,
   propertyFiltering,
   items,
   sorting,
@@ -46,6 +84,37 @@ export const Table = ({
   | 'empty'
   | 'preferences'
 >) => {
+  const alarms = useAlarmsFromQueries({
+    transform: (alarm): AlarmItem => {
+      const { state, compositeModelName, inputProperty, status } = alarm;
+      const firstInputProperty = inputProperty?.at(0);
+
+      return {
+        alarmName: compositeModelName,
+        property: firstInputProperty?.property.name,
+        value: firstInputProperty?.dataStream?.data.at(-1)?.y,
+        unit: firstInputProperty?.property.unit,
+        state: parseAlarmStateAssetProperty(state?.data?.at(-1))?.value.state,
+        alarmExpression: mapAlarmRuleExpression(alarm),
+        isLoading: status.isLoading,
+        severity: alarm.models?.at(-1)?.severity,
+        valueOf: () => undefined,
+      };
+    },
+    queries,
+    viewport: passedInViewport,
+    settings: {
+      fetchInputPropertyData: true,
+      fetchThresholds: true,
+      fetchOnlyLatest: true,
+    },
+  });
+
+  const columnDefinitions = [
+    ...(alarms.length > 0 ? ALARM_TABLE_COLUMN_DEFINITIONS : []),
+    ...userDefinedColumnDefinitions,
+  ];
+
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries: getTimeSeriesQueries(queries),
@@ -64,6 +133,7 @@ export const Table = ({
       items,
       viewport: utilizedViewport,
       thresholds: allThresholds,
+      alarms,
     },
     DEFAULT_TABLE_MESSAGES
   );

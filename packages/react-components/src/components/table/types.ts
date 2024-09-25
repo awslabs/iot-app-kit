@@ -7,6 +7,7 @@ import type {
 } from '@iot-app-kit/core';
 import type { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import type { TableMessages } from './messages';
+import { PascalCaseStateName } from '../../hooks/useAlarms/transformers';
 
 export type TableItemRef = {
   $cellRef: {
@@ -26,15 +27,34 @@ export type CellItemProps = {
   threshold?: Threshold;
 };
 
+export type AlarmItem = {
+  alarmName?: string;
+  property?: string;
+  value?: Primitive;
+  unit?: string;
+  alarmExpression?: string;
+  state?: PascalCaseStateName;
+  severity?: number;
+  isLoading?: boolean;
+  /**
+   * I don't know why these are
+   * required but I need to leave
+   * them because of the CellItem
+   * type
+   */
+  valueOf?: () => Primitive | undefined;
+  toString?: () => string;
+};
+
 export type CellItem = {
   value?: Primitive;
   error?: ErrorDetails;
   isLoading?: boolean;
   threshold?: Threshold;
-  valueOf: () => Primitive | undefined;
-  toString: () => string;
+  valueOf?: () => Primitive | undefined;
+  toString?: () => string;
   quality?: DataPoint['quality'];
-};
+} & AlarmItem;
 
 export type TableItemHydrated = { [k: string]: CellItem };
 
