@@ -67,13 +67,19 @@ export const updateAlarmStateData = (
    */
   if (!alarm.state) return alarm;
 
-  const currentData = alarm.state.data ?? [];
-  const updatedData = uniqueSortAssetPropertyValues([...currentData, ...data]);
+  const currentData = alarm.state.data;
+  const updatedData = uniqueSortAssetPropertyValues([
+    ...(currentData ?? []),
+    ...data,
+  ]);
   const filteredData = viewport
     ? filterAssetPropertyValues(updatedData, viewportAsInterval(viewport))
     : updatedData;
 
-  if (shouldUpdateAlarmStateData(currentData, filteredData)) {
+  if (
+    currentData == null ||
+    shouldUpdateAlarmStateData(currentData, filteredData)
+  ) {
     alarm.state.data = filteredData;
   }
 

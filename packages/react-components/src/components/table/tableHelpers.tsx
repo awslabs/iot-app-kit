@@ -17,6 +17,8 @@ import {
   spaceStaticS,
   spaceStaticXxs,
 } from '@cloudscape-design/design-tokens';
+import { AlarmStateText } from '../alarm-state/alarm-state-text';
+import { isAlarmState } from '../../hooks/useAlarms/transformers';
 
 const dataQuality = ({ quality }: { quality: DataPoint['quality'] }) => {
   const color =
@@ -100,6 +102,11 @@ export const getDefaultColumnDefinitions: (
           </div>
         );
       }
+
+      if (typeof value === 'string' && isAlarmState(value)) {
+        return <AlarmStateText state={value} />;
+      }
+
       return (
         <div
           className='iot-table-cell'
