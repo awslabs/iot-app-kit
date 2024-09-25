@@ -4,6 +4,7 @@ export * from './__mocks__';
 export { initialize } from './initialize';
 export { BranchReference } from './asset-modules/sitewise-asset-tree/types';
 export { toId, fromId } from './time-series-data/util/dataStreamId';
+export { IoTEventsToSynchroChartsComparisonOperator } from './alarms/iotevents';
 export type {
   SiteWiseDataSourceInitInputs,
   SiteWiseQuery,

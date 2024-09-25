@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useMemo } from 'react';
 import {
   StyleSettingsMap,
   Threshold,
@@ -17,12 +18,15 @@ import {
   DEFAULT_VIEWPORT,
   ECHARTS_GESTURE,
 } from '../../common/constants';
-import type {
+import { getAlarmQueries, getTimeSeriesQueries } from '../../utils/queries';
+import {
   AxisSettings,
   ChartSize,
   ComponentQuery,
 } from '../../common/chartTypes';
-import { getTimeSeriesQueries } from '../../utils/queries';
+import { useAlarms } from '../../hooks/useAlarms';
+import { convertAlarmQueryToAlarmRequest } from '../../queries/utils/convertAlarmQueryToAlarmRequest';
+import { transformAlarmsToThreshold } from '../../utils/transformAlarmsToThreshold';
 
 const HOUR_IN_MS = 1000 * 60 * 60;
 const DAY_IN_MS = HOUR_IN_MS * 24;
@@ -56,9 +60,38 @@ export const BarChart = (props: BarChartProps) => {
     ...rest
   } = props;
 
+  const { viewport, setViewport, group, lastUpdatedBy } = useViewport();
+
+  // if using echarts then echarts gesture overrides passed in viewport
+  // else explicitly passed in viewport overrides viewport group
+  const utilizedViewport =
+    (lastUpdatedBy === ECHARTS_GESTURE
+      ? viewport
+      : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
+
+  const alarmQueries = getAlarmQueries(queries);
+  const timeSeriesQueries = getTimeSeriesQueries(queries);
+
+  const mapAlarmQueriesToRequests = alarmQueries.flatMap((query) =>
+    convertAlarmQueryToAlarmRequest(query)
+  );
+
+  const transformedAlarms = useAlarms({
+    iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
+    iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
+    requests: mapAlarmQueriesToRequests,
+    viewport: utilizedViewport,
+    settings: {
+      fetchThresholds: true,
+      refreshRate: alarmQueries.at(0)?.query.requestSettings?.refreshRate,
+    },
+    transform: transformAlarmsToThreshold,
+  });
+  const filteredAlarms = transformedAlarms.filter((alarm) => !!alarm);
+
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
-    queries: getTimeSeriesQueries(queries),
+    queries: timeSeriesQueries,
     settings: {
       fetchFromStartToEnd: true,
       fetchMostRecentBeforeStart: true,
@@ -72,15 +105,15 @@ export const BarChart = (props: BarChartProps) => {
     },
     styles,
   });
-  const { viewport, setViewport, group, lastUpdatedBy } = useViewport();
-  const allThresholds = [...queryThresholds, ...thresholds];
 
-  // if using echarts then echarts gesture overrides passed in viewport
-  // else explicitly passed in viewport overrides viewport group
-  const utilizedViewport =
-    (lastUpdatedBy === ECHARTS_GESTURE
-      ? viewport
-      : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
+  const allThresholds = useMemo(
+    () => [...queryThresholds, ...thresholds, ...filteredAlarms],
+    [
+      JSON.stringify(queryThresholds),
+      JSON.stringify(thresholds),
+      JSON.stringify(filteredAlarms),
+    ]
+  );
 
   return (
     <BarChartBase
