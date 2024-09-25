@@ -5,6 +5,11 @@ import { toTimestamp } from '../../../utils/time';
 export type UpperCaseStateName = keyof typeof ALARM_STATUS;
 export type PascalCaseStateName = (typeof ALARM_STATUS)[UpperCaseStateName];
 
+export const isAlarmState = (state?: string): state is PascalCaseStateName => {
+  if (state == null) return false;
+  return Object.values(ALARM_STATUS).includes(state as PascalCaseStateName);
+};
+
 export const parseAlarmStateAssetProperty = (
   assetPropertyValue?: AssetPropertyValue
 ) => {
