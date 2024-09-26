@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import type { AssetSummary, IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 
 import Box from '@cloudscape-design/components/box';
 
@@ -19,7 +19,6 @@ import {
   useSelectedAsset,
 } from './useSelectedAsset';
 import { useModelBasedQuery } from './modelBasedQuery/useModelBasedQuery';
-import { getAssetModelQueryInformation } from './getAssetModelQueryInformation';
 import { useModelBasedQuerySelection } from './modelBasedQuery/useModelBasedQuerySelection';
 import { createAssetModelQuery } from './createAssetModelQuery';
 import { getPlugin } from '@iot-app-kit/core';
@@ -32,7 +31,6 @@ import {
   AssetResource,
   useGetConfigValue,
 } from '@iot-app-kit/react-components';
-import { useAssetsForAssetModel } from './assetsForAssetModelSelect/useAssetsForAssetModel/useAssetsForAssetModel';
 import { ExpandableSection } from '@cloudscape-design/components';
 import { ExpandableSectionHeading } from '../components/expandableSectionHeading';
 import { alarmSelectionLabel } from '../../helpers/alarmSelectionLabel';
@@ -45,6 +43,7 @@ export interface AssetModelDataStreamExplorerProps {
   correctSelectionMode: 'single' | 'multi';
   timeZone?: string;
   significantDigits?: number;
+  currentSelectedAsset?: AssetSummary;
 }
 
 export const AssetModelDataStreamExplorer = ({
@@ -54,6 +53,7 @@ export const AssetModelDataStreamExplorer = ({
   correctSelectionMode,
   timeZone,
   significantDigits,
+  currentSelectedAsset,
 }: AssetModelDataStreamExplorerProps) => {
   const metricsRecorder = getPlugin('metricsRecorder');
 
@@ -66,20 +66,8 @@ export const AssetModelDataStreamExplorer = ({
     updateSelectedAsset,
   } = useModelBasedQuery();
 
-  const { assetSummaries } = useAssetsForAssetModel({
-    assetModelId,
-    iotSiteWiseClient,
-    fetchAll: true,
-  });
-
-  const currentSelectedAsset = assetSummaries.find(
-    ({ id }) => id === assetIds?.at(0)
-  );
-
-  const { assetModels, updateAssetModels, uppdateAssetAlarmModels } =
+  const { updateAssetModels, uppdateAssetAlarmModels } =
     useModelBasedQuerySelection();
-
-  const { propertyIds } = getAssetModelQueryInformation(assetModels);
 
   const [selectedAssetModel, selectAssetModel] = useSelectedAssetModel(
     createInitialAssetModelResource(assetModelId)
@@ -97,9 +85,7 @@ export const AssetModelDataStreamExplorer = ({
   );
 
   const [selectedAssetModelProperties, selectAssetModelProperties] =
-    useSelectedAssetModelProperties(
-      createInitialAssetModelProperties(propertyIds)
-    );
+    useSelectedAssetModelProperties(createInitialAssetModelProperties([]));
 
   const [selectedAlarms, setSelectedAlarms] = useState<
     NonNullable<AlarmExplorerProps['selectedAlarms']>
@@ -111,17 +97,8 @@ export const AssetModelDataStreamExplorer = ({
    */
   useEffect(() => {
     updateSelectedAsset(selectedAsset[0]);
-  }, [updateSelectedAsset, selectedAsset]);
-
-  useEffect(() => {
-    if (currentSelectedAsset)
-      selectAsset([
-        {
-          ...currentSelectedAsset,
-          assetId: currentSelectedAsset?.id,
-        } as AssetResource,
-      ]);
-  }, [currentSelectedAsset, selectAsset]);
+    selectAssetModelProperties([]); // if selectedAsset changes, dont keep state from old selection in RE
+  }, [updateSelectedAsset, selectedAsset, selectAssetModelProperties]);
 
   const onReset = () => {
     selectAssetModel([]);

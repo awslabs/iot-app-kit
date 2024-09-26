@@ -8,12 +8,16 @@ export const getAssetModelQueryInformation = (
 
   const assetModelId = firstAssetModel?.assetModelId;
   const assetId = firstAssetModel?.assetIds?.at(0);
-  const propertyIds = firstAssetModel?.properties.map(
+
+  const propertyIds: string[] | undefined = firstAssetModel?.properties.map(
     ({ propertyId }) => propertyId
   );
+  // dedupe any new property ids
+  const uniquePropertyIds = [...new Set(propertyIds)];
+
   return {
     assetModelId,
     assetId,
-    propertyIds,
+    propertyIds: uniquePropertyIds,
   };
 };
