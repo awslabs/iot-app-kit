@@ -62,6 +62,7 @@ const responseThrottlingException = {
 
 describe('AssistantClient', () => {
   const conversationId = 'myAssistantConversation';
+  const componentId = 'componentId';
   beforeEach(() => jest.clearAllMocks());
 
   it('createAssistantClient return a new instance', () => {
@@ -93,7 +94,11 @@ describe('AssistantClient', () => {
       invokeAssistant: mockInvokeAssistant,
     } satisfies Pick<IoTSiteWise, 'invokeAssistant'>);
 
-    client.invoke(conversationId, 'customer message');
+    client.invoke({
+      componentId,
+      conversationId,
+      utterance: 'customer message',
+    });
 
     expect(mockInvokeAssistant).toBeCalled();
   });
@@ -115,7 +120,11 @@ describe('AssistantClient', () => {
     });
 
     client.setRequestHandlers(mockOnResponse, mockOnComplete, mockOnError);
-    client.invoke(conversationId, 'customer message');
+    client.invoke({
+      componentId,
+      conversationId,
+      utterance: 'customer message',
+    });
 
     await flushPromises();
 
@@ -138,7 +147,12 @@ describe('AssistantClient', () => {
     });
     expect(client).toBeDefined();
 
-    client.invoke(conversationId, 'customer message', 'additional context');
+    client.invoke({
+      componentId,
+      conversationId,
+      utterance: 'customer message',
+      context: 'additional context',
+    });
 
     // simulate streaming API latency and partial responses
     await flushPromises(); // move to next tick and return yield
@@ -161,7 +175,12 @@ describe('AssistantClient', () => {
     });
     expect(client).toBeDefined();
 
-    client.invoke(conversationId, 'customer message', 'additional context');
+    client.invoke({
+      componentId,
+      conversationId,
+      utterance: 'customer message',
+      context: 'additional context',
+    });
 
     // simulate streaming API latency and partial responses
     await flushPromises(); // move to next tick and return yield
@@ -184,7 +203,12 @@ describe('AssistantClient', () => {
 
     const summaryUtterance = 'generate a summary';
     const context = `[{"assetId": "assetId1", "properties": ["propertyId1"]}]`;
-    client.generateSummary(conversationId, context, summaryUtterance);
+    client.generateSummary({
+      componentId,
+      conversationId,
+      context,
+      utterance: summaryUtterance,
+    });
 
     expect(mockInvokeAssistant).toBeCalledWith(
       expect.objectContaining({
@@ -207,15 +231,20 @@ describe('AssistantClient', () => {
       onError,
     });
 
-    client.invoke(conversationId, 'customer message', 'additional context');
+    client.invoke({
+      componentId,
+      conversationId,
+      utterance: 'customer message',
+      context: 'additional context',
+    });
 
     await flushPromises(); // move to next tick and return yield
 
     expect(onError).toBeCalledWith(
+      expect.anything(),
       expect.objectContaining({
         message: 'assistant 5xx error',
-      }),
-      expect.anything()
+      })
     );
   });
 
@@ -232,16 +261,21 @@ describe('AssistantClient', () => {
       onError,
     });
 
-    client.invoke(conversationId, 'customer message', 'additional context');
+    client.invoke({
+      componentId,
+      conversationId,
+      utterance: 'customer message',
+      context: 'additional context',
+    });
 
     await flushPromises(); // move to next tick and return yield
 
     expect(onError).toBeCalledWith(
+      expect.anything(),
       expect.objectContaining({
         name: responseAccessDeniedException.accessDeniedException.name,
         message: responseAccessDeniedException.accessDeniedException.message,
-      }),
-      expect.anything()
+      })
     );
   });
 
@@ -258,17 +292,22 @@ describe('AssistantClient', () => {
       onError,
     });
 
-    client.invoke(conversationId, 'customer message', 'additional context');
+    client.invoke({
+      componentId,
+      conversationId,
+      utterance: 'customer message',
+      context: 'additional context',
+    });
 
     await flushPromises(); // move to next tick and return yield
 
     expect(onError).toBeCalledWith(
+      expect.anything(),
       expect.objectContaining({
         name: responseInternalFailureException.internalFailureException.name,
         message:
           responseInternalFailureException.internalFailureException.message,
-      }),
-      expect.anything()
+      })
     );
   });
 
@@ -285,16 +324,21 @@ describe('AssistantClient', () => {
       onError,
     });
 
-    client.invoke(conversationId, 'customer message', 'additional context');
+    client.invoke({
+      componentId,
+      conversationId,
+      utterance: 'customer message',
+      context: 'additional context',
+    });
 
     await flushPromises(); // move to next tick and return yield
 
     expect(onError).toBeCalledWith(
+      expect.anything(),
       expect.objectContaining({
         name: responseLimitExceededException.limitExceededException.name,
         message: responseLimitExceededException.limitExceededException.message,
-      }),
-      expect.anything()
+      })
     );
   });
 
@@ -311,17 +355,22 @@ describe('AssistantClient', () => {
       onError,
     });
 
-    client.invoke(conversationId, 'customer message', 'additional context');
+    client.invoke({
+      componentId,
+      conversationId,
+      utterance: 'customer message',
+      context: 'additional context',
+    });
 
     await flushPromises(); // move to next tick and return yield
 
     expect(onError).toBeCalledWith(
+      expect.anything(),
       expect.objectContaining({
         name: responseResourceNotFoundException.resourceNotFoundException.name,
         message:
           responseResourceNotFoundException.resourceNotFoundException.message,
-      }),
-      expect.anything()
+      })
     );
   });
 
@@ -338,16 +387,21 @@ describe('AssistantClient', () => {
       onError,
     });
 
-    client.invoke(conversationId, 'customer message', 'additional context');
+    client.invoke({
+      componentId,
+      conversationId,
+      utterance: 'customer message',
+      context: 'additional context',
+    });
 
     await flushPromises(); // move to next tick and return yield
 
     expect(onError).toBeCalledWith(
+      expect.anything(),
       expect.objectContaining({
         name: responseThrottlingException.throttlingException.name,
         message: responseThrottlingException.throttlingException.message,
-      }),
-      expect.anything()
+      })
     );
   });
 });

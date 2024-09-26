@@ -57,7 +57,12 @@ export const Chatbot: FC<AssistantChatbotProps> = (
     const componentContext = assistant.componentId
       ? getContextByComponent(assistant.componentId)
       : '';
-    invokeAssistant(assistant.conversationID, utterance, componentContext);
+    invokeAssistant({
+      componentId: 'chatbot',
+      conversationId: assistant.conversationId,
+      utterance,
+      context: componentContext,
+    });
   };
 
   const chatbotAnimation =

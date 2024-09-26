@@ -3,7 +3,6 @@ import type {
   IoTSiteWise,
   InvokeAssistantRequest,
 } from '@amzn/iot-black-pearl-internal-v3';
-export type UniqueId = string;
 
 export type AssistantClientInstanceParams = {
   iotSiteWiseClient: Pick<IoTSiteWise, 'invokeAssistant'>;
@@ -28,24 +27,28 @@ export type AssistantClientInstanceParams = {
 export type AssistantClientInstance = {
   invoke: (
     utterance: string,
-    options: { context?: string; conversationId?: UniqueId }
+    options: { context?: string; conversationId?: string }
   ) => string;
   setIotSiteWiseClient(iotSiteWiseClient: IoTSiteWise): void;
 };
 
+export interface AssistantInvocationRequest extends InvokeAssistantRequest {
+  componentId: string;
+}
+
 export type AssistantClientInvocationCompleteHandler = (
-  response: AssistantClientInvocationResponse,
-  invocationDetail: InvokeAssistantRequest
+  request: AssistantInvocationRequest,
+  response: AssistantClientInvocationResponse
 ) => void;
 
 export type AssistantClientInvocationResponse = {
-  conversationId: UniqueId | undefined;
+  conversationId: string | undefined;
   body: ResponseStream;
 };
 
 export type AssistantClientInvocationResponseHandler = (
-  response: AssistantClientInvocationResponse,
-  invocationDetail: InvokeAssistantRequest
+  request: AssistantInvocationRequest,
+  response: AssistantClientInvocationResponse
 ) => void;
 
 export type AssistantClientInvocationError = {
@@ -54,6 +57,13 @@ export type AssistantClientInvocationError = {
 };
 
 export type AssistantClientInvocationErrorHandler = (
-  error: AssistantClientInvocationError,
-  invocationDetail: InvokeAssistantRequest
+  request: AssistantInvocationRequest,
+  error: AssistantClientInvocationError
 ) => void;
+
+export type InvokeAssistantOptions = {
+  componentId: string;
+  conversationId: string;
+  utterance: string;
+  context?: string;
+};

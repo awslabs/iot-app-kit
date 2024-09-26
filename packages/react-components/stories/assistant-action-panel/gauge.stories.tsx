@@ -83,7 +83,8 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
         settings={settings as GaugeSettings}
         assistant={{
           client,
-          conversationID: crypto.randomUUID(),
+          conversationId: crypto.randomUUID(),
+          componentId: crypto.randomUUID(),
         }}
         titleText='Avg Speed'
       />
@@ -115,7 +116,8 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
           settings={settings as GaugeSettings}
           assistant={{
             client,
-            conversationID: crypto.randomUUID(),
+            conversationId: crypto.randomUUID(),
+            componentId: crypto.randomUUID(),
           }}
           titleText='Avg Speed'
         />
@@ -140,7 +142,8 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
         }
         assistant={{
           client,
-          conversationID: crypto.randomUUID(),
+          conversationId: crypto.randomUUID(),
+          componentId: crypto.randomUUID(),
         }}
         titleText='Connected Gauge'
       />

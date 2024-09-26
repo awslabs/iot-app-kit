@@ -50,7 +50,8 @@ export const ResultsOnTheRight = () => {
         queries={[MOCK_TIME_SERIES_DATA_QUERY]}
         assistant={{
           client,
-          conversationID: crypto.randomUUID(),
+          conversationId: crypto.randomUUID(),
+          componentId: crypto.randomUUID(),
         }}
       />
     </div>
@@ -78,7 +79,8 @@ export const ResultsOnTheLeft = () => {
           queries={[MOCK_TIME_SERIES_DATA_QUERY]}
           assistant={{
             client,
-            conversationID: crypto.randomUUID(),
+            conversationId: crypto.randomUUID(),
+            componentId: crypto.randomUUID(),
           }}
         />
       </div>

@@ -50,7 +50,8 @@ export const DefaultKPI: ComponentStory<typeof KPI> = ({ settings }) => {
           settings={settings}
           assistant={{
             client,
-            conversationID: 'mockId',
+            conversationId: 'mockId',
+            componentId: crypto.randomUUID(),
           }}
         />
       </div>
@@ -80,7 +81,8 @@ export const DefaultKPI: ComponentStory<typeof KPI> = ({ settings }) => {
           settings={settings}
           assistant={{
             client,
-            conversationID: crypto.randomUUID(),
+            conversationId: crypto.randomUUID(),
+            componentId: crypto.randomUUID(),
           }}
         />
       </div>

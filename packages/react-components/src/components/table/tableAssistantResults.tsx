@@ -9,7 +9,6 @@ import { SITUATION_SUMMARY_DEFAULT_UTTERANCE } from '../assistant-action-panel/c
 import '../assistant-action-panel/actionPanel.css';
 
 export interface TableAssistantResultsProps extends PropsWithChildren {
-  componentId: string;
   assistant: AssistantProperty;
   showSummarization: boolean;
   onSummarizationEnd: () => void;
@@ -17,7 +16,6 @@ export interface TableAssistantResultsProps extends PropsWithChildren {
 
 export const TableAssistantResults = ({
   assistant,
-  componentId,
   showSummarization,
   onSummarizationEnd,
   children,
@@ -30,16 +28,17 @@ export const TableAssistantResults = ({
   });
 
   const handleSummary = () => {
-    generateSummary(
-      assistant.conversationID ?? uuid(),
-      getContextByComponent(componentId),
-      SITUATION_SUMMARY_DEFAULT_UTTERANCE
-    );
+    generateSummary({
+      componentId: assistant.componentId,
+      conversationId: assistant.conversationId ?? uuid(),
+      context: getContextByComponent(assistant.componentId),
+      utterance: SITUATION_SUMMARY_DEFAULT_UTTERANCE,
+    });
 
     if (assistant.onAction) {
       assistant.onAction({
         type: 'summarize',
-        sourceComponentId: componentId,
+        sourceComponentId: assistant.componentId,
         messages,
       });
     }
@@ -57,7 +56,7 @@ export const TableAssistantResults = ({
     if (assistant.onAction) {
       assistant.onAction({
         type: 'divedeep',
-        sourceComponentId: componentId,
+        sourceComponentId: assistant.componentId,
         messages,
       });
     }
@@ -68,13 +67,13 @@ export const TableAssistantResults = ({
     <IntlProvider locale='en' defaultLocale='en'>
       <div
         className='assistant-action-panel selected'
-        id={`assistant-action-panel-${componentId}`}
+        id={`assistant-action-panel-${assistant.componentId}`}
         style={{ width: '100%', height: '100%' }}
       >
         {children}
         {showResults ? (
           <ResultPanel
-            componentId={componentId}
+            componentId={assistant.componentId}
             actionPosition='topRight'
             messages={messages}
             onClose={() => setShowResults(false)}

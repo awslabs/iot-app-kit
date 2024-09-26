@@ -17,8 +17,9 @@ const client = new IoTSitewiseAssistantClient({
 
 const assistant = {
   enabled: true,
+  componentId: 'componentId',
   onAction: (_event: AssistantActionEventDetail) => jest.fn(),
-  conversationID: 'conversationID',
+  conversationId: 'conversationId',
   client,
 };
 
@@ -32,7 +33,6 @@ describe('TableAssistantResults', () => {
       render(
         <TableAssistantResults
           assistant={assistant}
-          componentId='componentId'
           showSummarization={false}
           onSummarizationEnd={() => {}}
         />
@@ -44,7 +44,6 @@ describe('TableAssistantResults', () => {
     const { getByText } = render(
       <TableAssistantResults
         assistant={assistant}
-        componentId='componentId'
         showSummarization={false}
         onSummarizationEnd={() => {}}
       >
@@ -60,7 +59,6 @@ describe('TableAssistantResults', () => {
     render(
       <TableAssistantResults
         assistant={assistant}
-        componentId='componentId'
         showSummarization={true}
         onSummarizationEnd={mockedSummarizeAction}
       />

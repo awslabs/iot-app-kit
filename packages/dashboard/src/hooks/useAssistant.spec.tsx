@@ -11,6 +11,7 @@ const store = configureDashboardStore(initialState);
 const TestProvider: React.FC<{
   children: ReactNode;
 }> = ({ children }) => <Provider store={store}>{children}</Provider>;
+const widgetId = 'widgetId';
 
 describe('useAssistant', () => {
   beforeEach(() => jest.clearAllMocks());
@@ -20,15 +21,15 @@ describe('useAssistant', () => {
       () => {
         const dispatch = useDispatch();
         dispatch(onToggleReadOnly());
-        return useAssistant();
+        return useAssistant(widgetId);
       },
       { wrapper: TestProvider }
     );
 
-    const { assistant } = result.current.assistantProperties;
+    const { assistantConfiguration: assistant } = result.current;
     expect(assistant).toBeDefined();
     expect(assistant?.enabled).toBeTruthy();
-    expect(assistant?.conversationID).toEqual(expect.any(String));
+    expect(assistant?.conversationId).toEqual(expect.any(String));
     expect(assistant?.iconPosition).toBe('topLeft');
     expect(assistant?.onAction).toEqual(expect.any(Function));
   });
@@ -38,12 +39,12 @@ describe('useAssistant', () => {
       () => {
         const dispatch = useDispatch();
         dispatch(onToggleReadOnly());
-        return useAssistant();
+        return useAssistant(widgetId);
       },
       { wrapper: TestProvider }
     );
 
-    expect(result.current.assistantProperties.assistant).not.toBeDefined();
+    expect(result.current.assistantConfiguration).not.toBeDefined();
   });
 
   it('should open Chatbot when divedeep action is triggered', async () => {
@@ -53,7 +54,7 @@ describe('useAssistant', () => {
         if (!store.getState().readOnly) {
           dispatch(onToggleReadOnly());
         }
-        return useAssistant();
+        return useAssistant(widgetId);
       },
       { wrapper: TestProvider }
     );
@@ -70,11 +71,13 @@ describe('useAssistant', () => {
       } satisfies IMessage,
     ];
 
-    result.current.assistantProperties.assistant?.onAction({
-      type: 'divedeep',
-      sourceComponentId: 'sourceComponentId',
-      messages,
-    });
+    if (result.current.assistantConfiguration?.onAction) {
+      result.current.assistantConfiguration.onAction({
+        type: 'divedeep',
+        sourceComponentId: 'sourceComponentId',
+        messages,
+      });
+    }
 
     await waitFor(() => {
       const [first] = store.getState().assistant.messages;

@@ -36,6 +36,7 @@ describe('ResultPanel', () => {
             type: MessageType.TEXT,
             id: 'UniqueID1',
             loading: false,
+            originComponentId: 'componentId',
           },
           {
             sender: 'user',
@@ -43,6 +44,7 @@ describe('ResultPanel', () => {
             type: MessageType.TEXT,
             id: 'UniqueID2',
             loading: false,
+            originComponentId: 'componentId',
           },
         ],
       })
@@ -62,6 +64,7 @@ describe('ResultPanel', () => {
             type: MessageType.TEXT,
             id: 'UniqueID1',
             loading: true,
+            originComponentId: 'componentId',
           },
         ],
       })
@@ -80,6 +83,7 @@ describe('ResultPanel', () => {
             content: 'Loading assistant response',
             type: MessageType.TEXT,
             id: 'UniqueID1',
+            originComponentId: 'componentId',
             loading: false,
             payload: {
               output: {

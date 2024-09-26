@@ -15,7 +15,6 @@ import {
   DEFAULT_GAUGE_PROGRESS_COLOR,
   DEFAULT_GAUGE_STYLES,
 } from './constants';
-import { useComponentId } from '../../hooks/useComponentId/useComponentId';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 
 export const Gauge = ({
@@ -30,7 +29,6 @@ export const Gauge = ({
   theme,
   assistant,
 }: GaugeProps) => {
-  const componentId = useComponentId();
   const { dataStreams } = useTimeSeriesData({
     viewport: passedInViewport,
     queries: [query],
@@ -64,15 +62,17 @@ export const Gauge = ({
     styles && refId ? styles[refId]?.color : DEFAULT_GAUGE_PROGRESS_COLOR;
 
   useEffect(() => {
-    setContextByComponent(
-      componentId,
-      transformTimeseriesDataToAssistantContext({
-        start: viewportStartDate(utilizedViewport),
-        end: viewportEndDate(utilizedViewport),
-        queries: [query],
-      })
-    );
-  }, [utilizedViewport, query]);
+    if (assistant) {
+      setContextByComponent(
+        assistant.componentId,
+        transformTimeseriesDataToAssistantContext({
+          start: viewportStartDate(utilizedViewport),
+          end: viewportEndDate(utilizedViewport),
+          queries: [query],
+        })
+      );
+    }
+  }, [utilizedViewport, query, assistant]);
 
   const component = (
     <GaugeBase
@@ -96,7 +96,6 @@ export const Gauge = ({
         width='min-content'
         height='min-content'
         iconPosition={titleText ? 'topRight' : 'topLeft'}
-        componentId={componentId}
         assistant={assistant}
       >
         {component}

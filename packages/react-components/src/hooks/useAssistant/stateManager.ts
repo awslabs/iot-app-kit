@@ -1,10 +1,8 @@
-import type {
-  InvokeAssistantRequest,
-  ResponseStream,
-} from '@amzn/iot-black-pearl-internal-v3';
-import type { BaseStateManager, IMessage } from './types';
+import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
+import type { BaseStateManager, IMessage, UniqueID } from './types';
 import { MessageType } from './types';
 import { v4 as uuidv4 } from 'uuid';
+import { AssistantInvocationRequest } from '@iot-app-kit/core-util';
 
 type GenericSetState = (state: any) => void;
 type GenericGetState = () => any;
@@ -35,9 +33,10 @@ export class StateManager implements BaseStateManager {
     this.clearStateFn = clearStateFn;
   }
 
-  addPartialResponse = (content: string) => {
+  addPartialResponse = (originComponentId: UniqueID, content: string) => {
     const message = {
       id: uuidv4(),
+      originComponentId,
       loading: true,
       content,
       sender: 'assistant',
@@ -48,12 +47,14 @@ export class StateManager implements BaseStateManager {
   };
 
   addText = (
+    originComponentId: UniqueID,
     content: string,
     sender: 'user' | 'assistant',
     payload?: ResponseStream
   ) => {
     const message = {
       id: uuidv4(),
+      originComponentId,
       loading: false,
       content,
       sender,
@@ -64,9 +65,10 @@ export class StateManager implements BaseStateManager {
     this.addMessageToState(message);
   };
 
-  addPrompts = (payload: string[]) => {
+  addPrompts = (originComponentId: UniqueID, payload: string[]) => {
     const message = {
       id: uuidv4(),
+      originComponentId,
       loading: false,
       content: '',
       sender: 'assistant',
@@ -77,9 +79,10 @@ export class StateManager implements BaseStateManager {
     this.addMessageToState(message);
   };
 
-  addError = (content: string, payload?: InvokeAssistantRequest) => {
+  addError = (payload: AssistantInvocationRequest, content: string) => {
     const message = {
       id: uuidv4(),
+      originComponentId: payload.componentId,
       loading: false,
       content,
       sender: 'assistant',

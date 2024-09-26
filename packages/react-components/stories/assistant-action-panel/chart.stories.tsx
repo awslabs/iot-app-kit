@@ -51,7 +51,8 @@ export const BaseChart = () => {
         titleText='Data streams'
         assistant={{
           client,
-          conversationID: crypto.randomUUID(),
+          conversationId: crypto.randomUUID(),
+          componentId: crypto.randomUUID(),
         }}
       />
     </div>

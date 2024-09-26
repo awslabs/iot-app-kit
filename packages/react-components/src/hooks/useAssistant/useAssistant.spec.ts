@@ -28,6 +28,7 @@ const responseAccessDeniedException = {
 
 describe('useAssistant', () => {
   const conversationId = 'myAssistantConversation';
+  const componentId = 'componentId';
   const mockInvokeAssistant = jest
     .fn()
     .mockResolvedValue({ body: [response1, response2] });
@@ -51,7 +52,11 @@ describe('useAssistant', () => {
     );
 
     act(() => {
-      result.current.invokeAssistant(conversationId, 'customer message');
+      result.current.invokeAssistant({
+        componentId,
+        conversationId,
+        utterance: 'customer message',
+      });
     });
 
     await waitFor(() => {
@@ -70,7 +75,11 @@ describe('useAssistant', () => {
     );
 
     act(() => {
-      result.current.invokeAssistant(conversationId, 'customer message');
+      result.current.invokeAssistant({
+        componentId,
+        conversationId,
+        utterance: 'customer message',
+      });
     });
 
     await waitFor(() => {
@@ -89,7 +98,11 @@ describe('useAssistant', () => {
     );
 
     act(() => {
-      result.current.generateSummary(conversationId, 'customer message');
+      result.current.generateSummary({
+        componentId,
+        conversationId,
+        utterance: 'customer message',
+      });
     });
 
     await waitFor(() => {
@@ -118,7 +131,11 @@ describe('useAssistant', () => {
     );
 
     await act(() => {
-      result.current.invokeAssistant(conversationId, 'customer message');
+      result.current.invokeAssistant({
+        componentId,
+        conversationId,
+        utterance: 'customer message',
+      });
     });
 
     await waitFor(() => {
@@ -136,7 +153,11 @@ describe('useAssistant', () => {
     );
 
     await act(() => {
-      result.current.invokeAssistant(conversationId, 'customer message');
+      result.current.invokeAssistant({
+        componentId,
+        conversationId,
+        utterance: 'customer message',
+      });
     });
 
     await waitFor(() => {
@@ -191,7 +212,11 @@ describe('useAssistant', () => {
     );
 
     await act(() => {
-      result.current.invokeAssistant(conversationId, 'customer message');
+      result.current.invokeAssistant({
+        componentId,
+        conversationId,
+        utterance: 'customer message',
+      });
     });
 
     await waitFor(() => {
@@ -213,7 +238,12 @@ describe('useAssistant', () => {
     );
 
     await act(() => {
-      result.current.generateSummary(conversationId, context, summaryUtterance);
+      result.current.generateSummary({
+        componentId,
+        conversationId,
+        utterance: summaryUtterance,
+        context,
+      });
     });
 
     await waitFor(() => {
@@ -244,7 +274,11 @@ describe('useAssistant', () => {
     );
 
     act(() => {
-      result.current.invokeAssistant(conversationId, 'customer message');
+      result.current.invokeAssistant({
+        componentId,
+        conversationId,
+        utterance: 'customer message',
+      });
     });
 
     await waitFor(() => {

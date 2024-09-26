@@ -46,14 +46,14 @@ const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
   const componentTag = widget.type;
   const Component = WidgetComponentMap[componentTag];
   const componentIsRegistered = typeof Component !== 'undefined';
-  const { assistantProperties } = useAssistant();
+  const { assistantConfiguration } = useAssistant(widget.id);
 
   return componentIsRegistered ? (
     createElement(Component, {
       ...widget,
       properties: {
         ...widget.properties,
-        ...assistantProperties,
+        assistant: assistantConfiguration,
       },
     })
   ) : (

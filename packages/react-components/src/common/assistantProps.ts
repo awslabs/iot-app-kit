@@ -9,7 +9,8 @@ export interface AssistantActionEventDetail {
 
 export interface AssistantProperty {
   client: IoTSitewiseAssistantClient;
-  conversationID: string;
+  conversationId: string;
+  componentId: string;
   enabled?: boolean;
   iconPosition?: 'topLeft' | 'topRight';
   onAction?: (event: AssistantActionEventDetail) => void;

@@ -1,6 +1,7 @@
 import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
+import type { AssistantInvocationRequest } from '@iot-app-kit/core-util';
 
-type UniqueID = string;
+export type UniqueID = string;
 
 export enum MessageType {
   TEXT = 'text',
@@ -9,7 +10,7 @@ export enum MessageType {
   ERROR = 'error',
 }
 
-export interface IMessage {
+export type IMessage = {
   sender: 'user' | 'assistant';
   /**
    * this may hold a stringified JSON object
@@ -20,6 +21,7 @@ export interface IMessage {
    */
   type: MessageType;
   id: UniqueID;
+  originComponentId?: UniqueID;
   loading?: boolean;
   /**
    * holds name of complex components like charts, sceneviwere and so on
@@ -29,10 +31,10 @@ export interface IMessage {
    * the raw payload data returned from InvokeAssistant in case a custom component needs it
    */
   payload?: any;
-}
+};
 
 export interface IMessageParser {
-  parse(response: ResponseStream): void;
+  parse(request: AssistantInvocationRequest, response: ResponseStream): void;
   setStateManager(stateManager: BaseStateManager): void;
 }
 

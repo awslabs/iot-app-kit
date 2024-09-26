@@ -50,7 +50,8 @@ const client = new IoTSitewiseAssistantClient({
 
 const assistant = {
   onAction: (_event: AssistantActionEventDetail) => jest.fn(),
-  conversationID: 'conversationID',
+  conversationId: 'conversationId',
+  componentId: 'componentId',
   client,
 };
 

@@ -1,5 +1,4 @@
 import type {
-  InvokeAssistantRequest,
   IoTSiteWise,
   ResponseStream,
 } from '@amzn/iot-black-pearl-internal-v3';
@@ -8,6 +7,9 @@ import type {
   AssistantClientInvocationCompleteHandler,
   AssistantClientInvocationResponseHandler,
   AssistantClientInvocationErrorHandler,
+  InvokeAssistantOptions,
+  AssistantInvocationRequest,
+  AssistantClientInvocationError,
 } from './types';
 
 export class IoTSitewiseAssistantClient {
@@ -53,7 +55,12 @@ export class IoTSitewiseAssistantClient {
    * @param utterance The message to send to the generative AI assistant
    * @param context additional context for augmenting the default context
    */
-  invoke(conversationId: string, utterance: string, context?: string) {
+  invoke({
+    componentId,
+    conversationId,
+    utterance,
+    context,
+  }: InvokeAssistantOptions) {
     const assistantContext = `given this context:${
       this.defaultContext?.trim() ?? ''
     } ${context?.trim() ?? ''}`;
@@ -61,6 +68,7 @@ export class IoTSitewiseAssistantClient {
     invokeAssistant({
       iotSiteWiseClient: this.iotSiteWiseClient,
       payload: {
+        componentId,
         conversationId,
         enableTrace: true,
         message: `${assistantContext} ${utterance}`,
@@ -78,19 +86,21 @@ export class IoTSitewiseAssistantClient {
    * @param summaryUtterance (optional) The message to send to the generative AI assistant around what kind or format of the generated summary
    * @returns
    */
-  generateSummary(
-    conversationId: string,
-    context: string,
-    summaryUtterance?: string
-  ) {
+  generateSummary({
+    componentId,
+    conversationId,
+    context,
+    utterance,
+  }: InvokeAssistantOptions) {
     const defaultSummaryUtterance = `Given these Sitewise Asset and Properties as context, 
     please generate a summary of these sitewise properties provided.`;
 
-    return this.invoke(
+    return this.invoke({
+      componentId,
       conversationId,
-      summaryUtterance ?? defaultSummaryUtterance,
-      context
-    );
+      utterance: utterance ?? defaultSummaryUtterance,
+      context,
+    });
   }
 }
 
@@ -102,45 +112,46 @@ async function invokeAssistant({
   onError,
 }: {
   iotSiteWiseClient: Pick<IoTSiteWise, 'invokeAssistant'>;
-  payload: InvokeAssistantRequest;
+  payload: AssistantInvocationRequest;
   onComplete?: AssistantClientInvocationCompleteHandler;
   onResponse?: AssistantClientInvocationResponseHandler;
   onError?: AssistantClientInvocationErrorHandler;
 }) {
   try {
-    const response = await iotSiteWiseClient.invokeAssistant(payload);
+    const invokeAssistantParams = {
+      conversationId: payload.conversationId,
+      enableTrace: payload.enableTrace,
+      message: payload.message,
+    };
+    const response = await iotSiteWiseClient.invokeAssistant(
+      invokeAssistantParams
+    );
     /**
      * Given the nature of streaming API, The client receives a chunk of the whole streamed response.
      */
     for await (const chunk of response.body || []) {
       const exception = getExceptionFromResponse(chunk);
       if (onError && exception) {
-        onError(exception, payload);
+        onError(payload, exception);
       }
 
       if (onResponse && chunk.trace?.text) {
-        onResponse(
-          {
-            conversationId: payload.conversationId,
-            body: chunk,
-          },
-          payload
-        );
+        onResponse(payload, {
+          conversationId: payload.conversationId,
+          body: chunk,
+        });
       }
 
       if (onComplete && chunk.output) {
-        onComplete(
-          {
-            conversationId: payload.conversationId,
-            body: chunk,
-          },
-          payload
-        );
+        onComplete(payload, {
+          conversationId: payload.conversationId,
+          body: chunk,
+        });
       }
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (onError) {
-      onError(error, payload);
+      onError(payload, error as AssistantClientInvocationError);
     }
   }
 }

@@ -63,7 +63,8 @@ export const ResultsOnTheBottom = () => {
         queries={[MOCK_TIME_SERIES_DATA_QUERY]}
         assistant={{
           client,
-          conversationID: crypto.randomUUID(),
+          conversationId: crypto.randomUUID(),
+          componentId: crypto.randomUUID(),
         }}
       />
     </div>

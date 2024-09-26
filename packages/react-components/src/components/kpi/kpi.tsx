@@ -15,7 +15,6 @@ import {
 import type { KPISettings } from './types';
 import { KpiBase } from './kpiBase';
 import { ActionPanel } from '../assistant-action-panel/actionPanel';
-import { useComponentId } from '../../hooks/useComponentId/useComponentId';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 
 export const KPI = ({
@@ -49,7 +48,6 @@ export const KPI = ({
     styles,
   });
   const { viewport } = useViewport();
-  const componentId = useComponentId();
   const { setContextByComponent, transformTimeseriesDataToAssistantContext } =
     useAssistantContext();
 
@@ -76,15 +74,17 @@ export const KPI = ({
   const error = alarmStream?.error || propertyStream?.error;
 
   useEffect(() => {
-    setContextByComponent(
-      componentId,
-      transformTimeseriesDataToAssistantContext({
-        start: viewportStartDate(utilizedViewport),
-        end: viewportEndDate(utilizedViewport),
-        queries: [query],
-      })
-    );
-  }, [utilizedViewport, query]);
+    if (assistant) {
+      setContextByComponent(
+        assistant.componentId,
+        transformTimeseriesDataToAssistantContext({
+          start: viewportStartDate(utilizedViewport),
+          end: viewportEndDate(utilizedViewport),
+          queries: [query],
+        })
+      );
+    }
+  }, [utilizedViewport, query, assistant]);
 
   const component = (
     <KpiBase
@@ -110,7 +110,6 @@ export const KPI = ({
         width='100%'
         height='100%'
         iconPosition='topRight'
-        componentId={componentId}
         assistant={assistant}
       >
         {component}

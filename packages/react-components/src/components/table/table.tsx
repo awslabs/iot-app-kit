@@ -14,7 +14,6 @@ import { createTableItems } from './createTableItems';
 import { DEFAULT_TABLE_MESSAGES } from './messages';
 import type { TableProps as TableBaseProps } from '@cloudscape-design/components';
 import type { AssistantProperty } from '../../common/assistantProps';
-import { useComponentId } from '../../hooks/useComponentId/useComponentId';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
 import { TableHeader } from './tableHeader';
@@ -59,7 +58,6 @@ export const Table = ({
   | 'empty'
   | 'preferences'
 >) => {
-  const componentId = useComponentId();
   const [indexesSelected, setIndexesSelected] = useState<number[]>([]);
   const [showSummarization, setShowSummarization] = useState<boolean>(false);
 
@@ -102,8 +100,10 @@ export const Table = ({
         properties: filteredProperties,
       };
     });
-    setContextByComponent(componentId, filteredQueries);
-    setShowSummarization(true);
+    if (props.assistant) {
+      setContextByComponent(props.assistant.componentId, filteredQueries);
+      setShowSummarization(true);
+    }
   };
 
   const component = (
@@ -137,7 +137,6 @@ export const Table = ({
   if (props.assistant) {
     return (
       <TableAssistantResults
-        componentId={componentId}
         assistant={props.assistant}
         showSummarization={showSummarization}
         onSummarizationEnd={() => setShowSummarization(false)}

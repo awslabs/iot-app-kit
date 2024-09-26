@@ -28,7 +28,10 @@ export const ResultPanel = ({
 }: ResultPanelProps) => {
   const panel = useRef<HTMLDivElement>(null);
   const [panelPositon, setPanelPositon] = useState<CSSProperties>({});
-  const lastMessage = messages.at(-1);
+  const filteredMessages = messages.filter(
+    (message) => message.originComponentId === componentId
+  );
+  const lastMessage = filteredMessages.at(-1);
   const isLoading = lastMessage?.loading;
 
   useEffect(() => {
@@ -41,7 +44,12 @@ export const ResultPanel = ({
   }, [panel]);
 
   const handleCopy = () => {
-    copy(messages.map((message) => message.content).join(' '), {
+    const results = filteredMessages
+      .filter((message) => message.sender === 'assistant')
+      .map((message) => message.content)
+      .join(' ');
+
+    copy(results, {
       format: 'text/plain',
     });
   };
@@ -62,7 +70,7 @@ export const ResultPanel = ({
         className='action-panel-result-content'
         style={{ height: panelPositon.height }}
       >
-        {messages
+        {filteredMessages
           .filter((message) => message.sender === 'assistant')
           .map((message) => {
             if (message?.loading) {

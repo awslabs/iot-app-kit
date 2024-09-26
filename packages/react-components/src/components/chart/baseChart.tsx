@@ -188,7 +188,7 @@ const BaseChart = ({
         })
       );
     }
-  }, [utilizedViewport, queries]);
+  }, [utilizedViewport, queries, options.id]);
 
   useChartDataset(chartRef, dataStreams);
 

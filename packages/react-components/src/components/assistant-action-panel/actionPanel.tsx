@@ -15,7 +15,6 @@ import { v4 as uuid } from 'uuid';
 import './actionPanel.css';
 
 export interface ActionPanelProps extends PropsWithChildren {
-  componentId: string;
   assistant: AssistantProperty;
   iconPosition?: 'topLeft' | 'topRight';
   width?: string | number;
@@ -24,7 +23,6 @@ export interface ActionPanelProps extends PropsWithChildren {
 
 export const ActionPanel = ({
   assistant,
-  componentId,
   iconPosition = 'topLeft',
   width,
   height,
@@ -39,16 +37,17 @@ export const ActionPanel = ({
   });
 
   const handleSummary = () => {
-    generateSummary(
-      assistant.conversationID ?? uuid(),
-      getContextByComponent(componentId),
-      SITUATION_SUMMARY_DEFAULT_UTTERANCE
-    );
+    generateSummary({
+      componentId: assistant.componentId,
+      conversationId: assistant.conversationId ?? uuid(),
+      context: getContextByComponent(assistant.componentId),
+      utterance: SITUATION_SUMMARY_DEFAULT_UTTERANCE,
+    });
 
     if (assistant.onAction) {
       assistant.onAction({
         type: 'summarize',
-        sourceComponentId: componentId,
+        sourceComponentId: assistant.componentId,
         messages,
       });
     }
@@ -58,7 +57,7 @@ export const ActionPanel = ({
     if (assistant.onAction) {
       assistant.onAction({
         type: 'divedeep',
-        sourceComponentId: componentId,
+        sourceComponentId: assistant.componentId,
         messages,
       });
     }
@@ -70,7 +69,7 @@ export const ActionPanel = ({
     <IntlProvider locale='en' defaultLocale='en'>
       <div
         className='assistant-action-panel selected'
-        id={`assistant-action-panel-${componentId}`}
+        id={`assistant-action-panel-${assistant.componentId}`}
         style={{ width, height }}
       >
         {children}
@@ -137,7 +136,7 @@ export const ActionPanel = ({
         )}
         {showResults ? (
           <ResultPanel
-            componentId={componentId}
+            componentId={assistant.componentId}
             actionPosition={iconPosition}
             messages={messages}
             onClose={() => setShowResults(false)}

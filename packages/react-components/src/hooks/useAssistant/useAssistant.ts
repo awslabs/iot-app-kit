@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import type {
   AssistantClientInvocationError,
   AssistantClientInvocationResponse,
+  AssistantInvocationRequest,
+  InvokeAssistantOptions,
 } from '@iot-app-kit/core-util';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import type { IMessageParser, BaseStateManager, IMessage } from './types';
 import { MessageParser } from './messageParser';
 import { StateManager } from './stateManager';
 import useDataStore from '../../store';
-import type { InvokeAssistantRequest } from '@amzn/iot-black-pearl-internal-v3';
 
 export interface IUseAssistant {
   assistantClient: IoTSitewiseAssistantClient;
@@ -68,14 +69,15 @@ export const useAssistant = ({
     setStateManager(newStateManager);
     setMessageParser(newMessageParser);
     setMessages(newStateManager.getState().messages);
+    storeState.clearAssistantState();
   }, []);
 
-  const removeLoadingMessages = () => {
+  const removeLoadingMessages = (componentId: string) => {
     const indexesToDelete: number[] = [];
     currentStateManager
       .getState()
       .messages.forEach((message: IMessage, index: number) => {
-        if (message.loading) {
+        if (message.loading && message.originComponentId === componentId) {
           indexesToDelete.push(index);
         }
       });
@@ -86,23 +88,29 @@ export const useAssistant = ({
       .forEach((i: number) => currentStateManager.removeMessage(i));
   };
 
-  const onResponse = (response: AssistantClientInvocationResponse) => {
-    removeLoadingMessages();
-    currentMessageParser.parse(response.body);
+  const onResponse = (
+    request: AssistantInvocationRequest,
+    response: AssistantClientInvocationResponse
+  ) => {
+    removeLoadingMessages(request.componentId);
+    currentMessageParser.parse(request, response.body);
     setMessages(currentStateManager.getState().messages);
   };
 
-  const onComplete = (response: AssistantClientInvocationResponse) => {
-    removeLoadingMessages();
-    currentMessageParser.parse(response.body);
+  const onComplete = (
+    request: AssistantInvocationRequest,
+    response: AssistantClientInvocationResponse
+  ) => {
+    removeLoadingMessages(request.componentId);
+    currentMessageParser.parse(request, response.body);
     setMessages(currentStateManager.getState().messages);
   };
 
   const onError = (
-    error: AssistantClientInvocationError,
-    payload: InvokeAssistantRequest
+    request: AssistantInvocationRequest,
+    error: AssistantClientInvocationError
   ) => {
-    currentStateManager.addError(error.message ?? '', payload);
+    currentStateManager.addError(request, error.message ?? '');
     setMessages(currentStateManager.getState().messages);
   };
 
@@ -112,29 +120,35 @@ export const useAssistant = ({
     assistantClient.onError ? assistantClient.onError : onError
   );
 
-  const invokeAssistant = (
-    conversationId: string,
-    utterance: string,
-    context?: string
-  ) => {
-    currentStateManager.addText(utterance, 'user');
-    currentStateManager.addPartialResponse(loadingMessage);
+  const invokeAssistant = ({
+    componentId,
+    conversationId,
+    utterance,
+    context,
+  }: InvokeAssistantOptions) => {
+    currentStateManager.addText(componentId, utterance, 'user');
+    currentStateManager.addPartialResponse(componentId, loadingMessage);
     setMessages(currentStateManager.getState().messages);
-    assistantClient.invoke(conversationId, utterance, context);
+    assistantClient.invoke({ componentId, conversationId, utterance, context });
   };
 
-  const generateSummary = (
-    conversationId: string,
-    context: string,
-    summaryUtterance?: string
-  ) => {
-    storeState.clearAssistantState();
-    if (summaryUtterance) {
-      currentStateManager.addText(summaryUtterance, 'user');
-      currentStateManager.addPartialResponse(loadingMessage);
+  const generateSummary = ({
+    componentId,
+    conversationId,
+    utterance,
+    context = '',
+  }: InvokeAssistantOptions) => {
+    if (utterance) {
+      currentStateManager.addText(componentId, utterance, 'user');
+      currentStateManager.addPartialResponse(componentId, loadingMessage);
       setMessages(currentStateManager.getState().messages);
     }
-    assistantClient.generateSummary(conversationId, context, summaryUtterance);
+    assistantClient.generateSummary({
+      componentId,
+      conversationId,
+      context,
+      utterance,
+    });
   };
 
   return {

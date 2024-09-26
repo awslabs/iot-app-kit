@@ -15,16 +15,13 @@ const client = new IoTSitewiseAssistantClient({
 
 const assistant = {
   onAction: (_event: AssistantActionEventDetail) => jest.fn(),
-  conversationID: 'conversationID',
+  componentId: 'componentId',
+  conversationId: 'conversationId',
   client,
 };
 
 const component = (props: Partial<ActionPanelProps>) => (
-  <ActionPanel
-    {...props}
-    componentId='componentId'
-    assistant={props.assistant || assistant}
-  >
+  <ActionPanel {...props} assistant={props.assistant || assistant}>
     <div
       data-testid='childComponent'
       style={{ width: '400px', height: '300px' }}
@@ -87,7 +84,6 @@ describe('ActionPanel', () => {
           onAction: (event: AssistantActionEventDetail) =>
             mockedDivedeepAction(event),
         },
-        componentId: 'componentId',
       })
     );
 
@@ -111,7 +107,6 @@ describe('ActionPanel', () => {
           onAction: (event: AssistantActionEventDetail) =>
             mockedSummarizeAction(event),
         },
-        componentId: 'componentId',
       })
     );
 

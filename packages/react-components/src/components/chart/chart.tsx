@@ -19,10 +19,10 @@ export const Chart: React.FC<ChartOptions> = (options) => {
 
   const [firstQuery] = queries;
   if (options.assistant && firstQuery) {
+    options.assistant.componentId = chartId;
     return (
       <ActionPanel
         width='min-content'
-        componentId={chartId}
         assistant={options.assistant}
         iconPosition={chartOptions.titleText ? 'topRight' : 'topLeft'}
       >
