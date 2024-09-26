@@ -26,6 +26,7 @@ import {
 import { GLTFLoadingManager } from '../../../common/loadingManagers';
 
 import { useGLTF } from './GLTFLoader';
+import { useCompressedGLTF } from './CompressedGLTFLoader';
 
 function processObject(component: IModelRefComponentInternal, obj: THREE.Object3D, options: { maxAnisotropy: number }) {
   cloneMaterials(obj);
@@ -60,50 +61,52 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
     setCursorVisible(hiddenWhileImmersive || !!addingWidget);
   }, [hiddenWhileImmersive, addingWidget]);
 
-  const gltf = useGLTF(
-    component.uri,
-    uriModifier,
-    (loader) => {
-      loader.manager = GLTFLoadingManager;
+  // const gltf = useGLTF(
+  //   component.uri,
+  //   uriModifier,
+  //   (loader) => {
+  //     loader.manager = GLTFLoadingManager;
 
-      loader.manager.onStart = appendFunction(loader.manager.onStart, () => {
-        // Use setTimeout to avoid mutating the state during rendering process
-        setTimeout(() => {
-          accessStore(sceneComposerId).getState().setLoadingModelState(true);
-        }, 0);
-      });
-      loader.manager.onLoad = appendFunction(loader.manager.onLoad, () => {
-        // Use setTimeout to avoid mutating the state during rendering process
-        setTimeout(() => {
-          accessStore(sceneComposerId).getState().setLoadingModelState(false);
-        }, 0);
-      });
-      loader.manager.onError = appendFunction(loader.manager.onError, () => {
-        // Use setTimeout to avoid mutating the state during rendering process
-        setTimeout(() => {
-          accessStore(sceneComposerId).getState().setLoadingModelState(false);
-        }, 0);
-      });
-    },
-    (progressEvent) => {
-      let contentLength = NaN;
-      if (progressEvent.lengthComputable) {
-        contentLength = progressEvent.total;
-      }
-      // @ts-ignore - __onDownloadProgress is injected in the LoadingProgress component
-      const onDownloadingProgress = GLTFLoadingManager.__onDownloadProgress;
+  //     loader.manager.onStart = appendFunction(loader.manager.onStart, () => {
+  //       // Use setTimeout to avoid mutating the state during rendering process
+  //       setTimeout(() => {
+  //         accessStore(sceneComposerId).getState().setLoadingModelState(true);
+  //       }, 0);
+  //     });
+  //     loader.manager.onLoad = appendFunction(loader.manager.onLoad, () => {
+  //       // Use setTimeout to avoid mutating the state during rendering process
+  //       setTimeout(() => {
+  //         accessStore(sceneComposerId).getState().setLoadingModelState(false);
+  //       }, 0);
+  //     });
+  //     loader.manager.onError = appendFunction(loader.manager.onError, () => {
+  //       // Use setTimeout to avoid mutating the state during rendering process
+  //       setTimeout(() => {
+  //         accessStore(sceneComposerId).getState().setLoadingModelState(false);
+  //       }, 0);
+  //     });
+  //   },
+  //   (progressEvent) => {
+  //     let contentLength = NaN;
+  //     if (progressEvent.lengthComputable) {
+  //       contentLength = progressEvent.total;
+  //     }
+  //     // @ts-ignore - __onDownloadProgress is injected in the LoadingProgress component
+  //     const onDownloadingProgress = GLTFLoadingManager.__onDownloadProgress;
 
-      if (onDownloadingProgress) {
-        const target = progressEvent.target as XMLHttpRequest;
-        // target should never be falsy
-        if (target) {
-          onDownloadingProgress(target.responseURL, progressEvent.loaded, contentLength);
-        } else {
-          log?.error('Unexpected error. target is not a valid XMLHttpRequest');
-        }
-      }
-    },
-  ) as GLTF;
+  //     if (onDownloadingProgress) {
+  //       const target = progressEvent.target as XMLHttpRequest;
+  //       // target should never be falsy
+  //       if (target) {
+  //         onDownloadingProgress(target.responseURL, progressEvent.loaded, contentLength);
+  //       } else {
+  //         log?.error('Unexpected error. target is not a valid XMLHttpRequest');
+  //       }
+  //     }
+  //   },
+  // ) as GLTF;
+
+  const gltf = useCompressedGLTF(component.uri);
 
   const clonedModelScene = useMemo(() => {
     const result = SkeletonUtils.clone(gltf.scene);
