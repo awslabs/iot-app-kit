@@ -8,10 +8,12 @@ export const createAssetModelQuery = ({
   assetModelId: string;
   assetModelPropertyIds: string[];
   assetId?: string;
-}): SiteWiseAssetModelQuery['assetModels'] => [
-  {
-    assetModelId: assetModelId,
-    assetIds: assetId ? [assetId] : [],
-    properties: assetModelPropertyIds.map((propertyId) => ({ propertyId })),
-  },
-];
+}): SiteWiseAssetModelQuery['assetModels'] => {
+  return [
+    {
+      assetModelId: assetModelId,
+      assetIds: assetId ? [assetId] : [],
+      properties: assetModelPropertyIds.map((propertyId) => ({ propertyId })),
+    },
+  ];
+};

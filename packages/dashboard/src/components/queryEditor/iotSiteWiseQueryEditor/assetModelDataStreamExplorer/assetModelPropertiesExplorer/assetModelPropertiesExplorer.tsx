@@ -19,6 +19,7 @@ export interface AssetExplorerProps {
   selectedWidgets: DashboardWidget[];
   timeZone?: string;
   significantDigits?: number;
+  correctSelectionMode: 'single' | 'multi';
 }
 
 export const AssetModelPropertiesExplorer = ({
@@ -29,12 +30,13 @@ export const AssetModelPropertiesExplorer = ({
   selectedWidgets,
   timeZone,
   significantDigits,
+  correctSelectionMode,
 }: AssetExplorerProps) => {
   return (
     <AssetPropertyExplorer
       iotSiteWiseClient={iotSiteWiseClient}
       parameters={selectedAsset}
-      selectionMode='multi'
+      selectionMode={correctSelectionMode}
       onSelectAssetProperty={selectAssetModelProperties}
       selectedAssetProperties={selectedAssetModelProperties}
       tableSettings={{
