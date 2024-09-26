@@ -36,11 +36,10 @@
 
 .kpi .timestamp-border {
   height: 2px;
-  background-color: #e9ebed;
 }
 
 .kpi .timestamp {
-  padding: 6px;
+  padding: 8px;
   height: 18px;
 }
 
@@ -54,5 +53,5 @@
 }
 
 .aggregation {
-  padding: 6px;
+  padding: 8px;
 }
