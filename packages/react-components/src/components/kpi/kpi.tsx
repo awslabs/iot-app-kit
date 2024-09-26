@@ -11,7 +11,10 @@ import type {
 import type { KPISettings } from './types';
 import { KpiBase } from './kpiBase';
 import type { ComponentQuery } from '../../common/chartTypes';
-import { getTimeSeriesQueries } from '../../utils/queries';
+import { getAlarmQueries, getTimeSeriesQueries } from '../../utils/queries';
+import { convertAlarmQueryToAlarmRequest } from '../../queries/utils/convertAlarmQueryToAlarmRequest';
+import { useAlarms } from '../../hooks/useAlarms';
+import { buildTransformAlarmForSingleQueryWidgets } from '../../utils/buildTransformAlarmForSingleQueryWidgets';
 
 export const KPI = ({
   query,
@@ -31,23 +34,47 @@ export const KPI = ({
   significantDigits?: number;
   timeZone?: string;
 }) => {
+  const { viewport } = useViewport();
+  const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
+
+  const alarmQueries = getAlarmQueries([query]);
+  const timeSeriesQueries = getTimeSeriesQueries([query]);
+
+  const mapAlarmQueriesToRequests = alarmQueries.flatMap((query) =>
+    convertAlarmQueryToAlarmRequest(query)
+  );
+
+  const transformedAlarm = useAlarms({
+    iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
+    iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
+    requests: mapAlarmQueriesToRequests,
+    viewport: utilizedViewport,
+    settings: {
+      fetchThresholds: true,
+      refreshRate: alarmQueries.at(0)?.query.requestSettings?.refreshRate,
+    },
+    transform: buildTransformAlarmForSingleQueryWidgets({
+      iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
+      iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
+    }),
+  })
+    .filter((alarm) => !!alarm)
+    .at(0);
+
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
-    queries: getTimeSeriesQueries([query]),
+    queries: transformedAlarm
+      ? transformedAlarm.timeSeriesDataQueries
+      : timeSeriesQueries,
     settings: {
       fetchMostRecentBeforeEnd: true,
     },
     styles,
   });
-  const { viewport } = useViewport();
-
-  const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
 
   const {
     propertyPoint,
-    alarmPoint,
     propertyThreshold,
-    alarmStream,
     propertyStream,
     propertyResolution,
   } = widgetPropertiesFromInputs({
@@ -56,17 +83,16 @@ export const KPI = ({
     viewport: utilizedViewport,
   });
 
-  const name = propertyStream?.name || alarmStream?.name;
-  const unit = propertyStream?.unit || alarmStream?.unit;
+  const name = propertyStream?.name;
+  const unit = propertyStream?.unit;
   const backgroundColor = settings?.color || settings?.backgroundColor;
-  const isLoading =
-    alarmStream?.isLoading || propertyStream?.isLoading || false;
-  const error = alarmStream?.error || propertyStream?.error;
+  const isLoading = propertyStream?.isLoading || false;
+  const error = propertyStream?.error;
 
   return (
     <KpiBase
       propertyPoint={propertyPoint}
-      alarmPoint={alarmPoint}
+      alarmState={transformedAlarm?.state}
       settings={{ ...settings, backgroundColor }}
       propertyThreshold={propertyThreshold}
       aggregationType={dataStreams[0]?.aggregationType}
