@@ -1,10 +1,12 @@
 import { StyledThreshold } from '@iot-app-kit/core';
 import type { WidgetSettings } from '../../common/dataTypes';
+import { PascalCaseStateName } from '../../hooks/useAlarms/transformers';
 
 export type KPIBaseProperties = WidgetSettings & {
   settings?: Partial<KPISettings>;
   propertyThreshold?: StyledThreshold;
   timeZone?: string;
+  alarmState?: PascalCaseStateName;
 };
 
 export type KPISettings = {
