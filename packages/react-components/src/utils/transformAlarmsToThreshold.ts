@@ -30,7 +30,7 @@ const createThreshold = ({
 export const transformAlarmsToThreshold = (
   alarm: AlarmData
 ): Threshold | undefined => {
-  const { models, inputProperty, thresholds, status } = alarm;
+  const { models, inputProperty: inputProperties, thresholds, status } = alarm;
   const modelsFound = models && models.length !== 0;
   const thresholdsFound = thresholds && thresholds?.length !== 0;
 
@@ -43,15 +43,15 @@ export const transformAlarmsToThreshold = (
         threshold.value?.doubleValue ?? threshold.value?.integerValue;
       const comparisonOperator =
         model.alarmRule?.simpleRule?.comparisonOperator;
-      const property = inputProperty && inputProperty.at(0);
+      const inputProperty = inputProperties && inputProperties.at(0);
 
-      if (thresholdValue && comparisonOperator && property) {
+      if (thresholdValue && comparisonOperator && inputProperty) {
         const scComparisonOperator = IoTEventsToSynchroChartsComparisonOperator[
           comparisonOperator
         ] as COMPARISON_OPERATOR;
 
         return createThreshold({
-          labelText: `${property.name} ${COMPARATOR_MAP[scComparisonOperator]} ${thresholdValue}`,
+          labelText: `${inputProperty.property.name} ${COMPARATOR_MAP[scComparisonOperator]} ${thresholdValue}`,
           thresholdValue: thresholdValue,
           severity: model.severity,
           comparisonOperator: scComparisonOperator,

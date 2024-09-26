@@ -1,5 +1,5 @@
 import React from 'react';
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { AssetSummary, IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import Tabs from '@cloudscape-design/components/tabs';
 import { useSelector } from 'react-redux';
 import type { DashboardState } from '~/store/state';
@@ -15,6 +15,7 @@ export interface IoTSiteWiseQueryEditorProps {
   selectedWidgets: DashboardWidget[];
   addButtonDisabled: boolean;
   correctSelectionMode: 'single' | 'multi';
+  currentSelectedAsset?: AssetSummary;
 }
 
 export function IoTSiteWiseQueryEditor({
@@ -23,6 +24,7 @@ export function IoTSiteWiseQueryEditor({
   selectedWidgets,
   addButtonDisabled,
   correctSelectionMode,
+  currentSelectedAsset,
 }: IoTSiteWiseQueryEditorProps) {
   const isEdgeModeEnabled = useSelector(
     (state: DashboardState) => state.isEdgeModeEnabled
@@ -76,6 +78,7 @@ export function IoTSiteWiseQueryEditor({
         selectedWidgets={selectedWidgets}
         timeZone={timeZone}
         significantDigits={significantDigits}
+        currentSelectedAsset={currentSelectedAsset}
       />
     ),
   };
