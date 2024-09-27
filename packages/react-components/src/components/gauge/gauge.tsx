@@ -12,7 +12,10 @@ import {
   DEFAULT_GAUGE_PROGRESS_COLOR,
   DEFAULT_GAUGE_STYLES,
 } from './constants';
-import { getTimeSeriesQueries } from '../../utils/queries';
+import { getAlarmQueries, getTimeSeriesQueries } from '../../utils/queries';
+import { convertAlarmQueryToAlarmRequest } from '../../queries/utils/convertAlarmQueryToAlarmRequest';
+import { useAlarms } from '../../hooks/useAlarms';
+import { buildTransformAlarmForSingleQueryWidgets } from '../../utils/buildTransformAlarmForSingleQueryWidgets';
 
 export const Gauge = ({
   size,
@@ -24,18 +27,45 @@ export const Gauge = ({
   significantDigits,
   theme,
 }: GaugeProps) => {
-  const { dataStreams } = useTimeSeriesData({
-    viewport: passedInViewport,
-    queries: getTimeSeriesQueries([query]),
-    settings: { fetchMostRecentBeforeEnd: true },
-    styles,
-  });
   const { viewport, lastUpdatedBy } = useViewport();
-
   const utilizedViewport =
     (lastUpdatedBy === ECHARTS_GESTURE
       ? viewport
       : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
+
+  const alarmQueries = getAlarmQueries([query]);
+  const timeSeriesQueries = getTimeSeriesQueries([query]);
+
+  const mapAlarmQueriesToRequests = alarmQueries.flatMap((query) =>
+    convertAlarmQueryToAlarmRequest(query)
+  );
+
+  const transformedAlarm = useAlarms({
+    iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
+    iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
+    requests: mapAlarmQueriesToRequests,
+    viewport: utilizedViewport,
+    settings: {
+      fetchThresholds: true,
+      fetchOnlyLatest: true,
+      refreshRate: alarmQueries.at(0)?.query.requestSettings?.refreshRate,
+    },
+    transform: buildTransformAlarmForSingleQueryWidgets({
+      iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
+      iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
+    }),
+  })
+    .filter((alarm) => !!alarm)
+    .at(0);
+
+  const { dataStreams } = useTimeSeriesData({
+    viewport: passedInViewport,
+    queries: transformedAlarm
+      ? transformedAlarm.timeSeriesDataQueries
+      : timeSeriesQueries,
+    settings: { fetchMostRecentBeforeEnd: true },
+    styles,
+  });
 
   const { propertyPoint, alarmStream, propertyStream } =
     widgetPropertiesFromInputs({
@@ -54,8 +84,13 @@ export const Gauge = ({
   const color =
     styles && refId ? styles[refId]?.color : DEFAULT_GAUGE_PROGRESS_COLOR;
 
+  const allThresholds = transformedAlarm?.threshold
+    ? [...thresholds, transformedAlarm?.threshold]
+    : thresholds;
+
   return (
     <GaugeBase
+      alarmState={transformedAlarm?.state}
       size={size}
       propertyPoint={propertyPoint}
       name={name}
@@ -63,7 +98,7 @@ export const Gauge = ({
       isLoading={isLoading}
       error={error?.msg}
       settings={{ ...DEFAULT_GAUGE_STYLES, ...settings, color }}
-      thresholds={thresholds}
+      thresholds={allThresholds}
       significantDigits={significantDigits}
       theme={theme}
     />

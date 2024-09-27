@@ -6,6 +6,7 @@ import {
 } from '@iot-app-kit/core';
 import type { WidgetSettings } from '../../common/dataTypes';
 import type { ComponentQuery } from '../../common/chartTypes';
+import { PascalCaseStateName } from '../../hooks/useAlarms/transformers';
 
 export type GaugeProps = {
   size?: { width: number; height: number };
@@ -24,6 +25,7 @@ export type GaugeBaseProperties = WidgetSettings &
     'thresholds' | 'settings' | 'significantDigits' | 'theme' | 'size'
   > & {
     isLoading?: boolean;
+    alarmState?: PascalCaseStateName;
   };
 export type GaugeSettings = {
   gaugeThickness?: number;
