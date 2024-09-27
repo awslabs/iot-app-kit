@@ -1,21 +1,11 @@
-<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="14" cy="14" r="14" fill="url(#paint0_radial_7079_425)"/>
-  <circle cx="14" cy="14" r="14" fill="url(#paint1_radial_7079_425)"/>
-  <g clip-path="url(#clip0_7079_425)">
-    <path d="M14 7L15.9799 12.0201L21 14L15.9799 15.9799L14 21L12.0201 15.9799L7 14L12.0201 12.0201L14 7Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
-    <path d="M8.5 6L9.2955 7.7045L11 8.5L9.2955 9.2955L8.5 11L7.7045 9.2955L6 8.5L7.7045 7.7045L8.5 6Z" fill="white"/>
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#clip0_3945_24425)">
+    <path d="M8 1L9.9799 6.0201L15 8L9.9799 9.9799L8 15L6.0201 9.9799L1 8L6.0201 6.0201L8 1Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M2.5 0L3.2955 1.7045L5 2.5L3.2955 3.2955L2.5 5L1.7045 3.2955L0 2.5L1.7045 1.7045L2.5 0Z" fill="white"/>
   </g>
   <defs>
-    <radialGradient id="paint0_radial_7079_425" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(29.1667 -1.16667) rotate(135) scale(21.4489 27.4437)">
-      <stop stop-color="#D8B2FF"/>
-      <stop offset="1" stop-color="#7300E5"/>
-    </radialGradient>
-    <radialGradient id="paint1_radial_7079_425" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(-8.75 -8.16667) rotate(44.326) scale(35.0631 35.9018)">
-      <stop stop-color="#0096FA"/>
-      <stop offset="1" stop-color="#0096FA" stop-opacity="0"/>
-    </radialGradient>
-    <clipPath id="clip0_7079_425">
-      <rect width="16" height="16" fill="white" transform="translate(6 6)"/>
+    <clipPath id="clip0_3945_24425">
+      <rect width="16" height="16" fill="white"/>
     </clipPath>
   </defs>
 </svg>

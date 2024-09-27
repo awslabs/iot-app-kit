@@ -31,7 +31,7 @@ export type DashboardState<
   assistant: {
     state: AssistantStateTypes;
     conversationId: string;
-    isChatbotOpen: boolean | null;
+    isChatbotOpen: boolean;
     messages: IMessage[];
     componentId?: string;
   };
@@ -68,7 +68,7 @@ export const initialState: DashboardState = deepFreeze({
   assistant: {
     state: 'PASSIVE',
     conversationId: uuid(),
-    isChatbotOpen: null,
+    isChatbotOpen: false,  
     messages: [],
   },
 });

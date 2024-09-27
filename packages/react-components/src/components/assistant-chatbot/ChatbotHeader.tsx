@@ -1,46 +1,44 @@
 import * as React from 'react';
 import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
-import assistantIcon from './assets/assistantIcon.svg';
-import { colorBorderDividerDefault } from '@cloudscape-design/design-tokens';
+import { SpaceBetween } from '@cloudscape-design/components';
 
 export interface ChatbotHeaderProps {
   headerText: string;
+  showResetButton?: boolean;
+  showCloseButton?: boolean;
+  onReset?: () => void;
   onClose?: () => void;
 }
 
-export const ChatbotHeader = ({ headerText, onClose }: ChatbotHeaderProps) => {
+export const ChatbotHeader = (props: ChatbotHeaderProps) => {
   return (
-    <div
-      className='iot-app-kit-assistant-chatbot-header'
-      style={{
-        borderBottom: `1px solid ${colorBorderDividerDefault}`,
-      }}
-    >
-      <img
-        alt='Assistant Avatar'
-        src={assistantIcon}
-        width={24}
-        className='assistant-icon'
-        style={{ marginLeft: '0.2rem' }}
-      />
-      <Box
-        fontSize='body-m'
-        variant='awsui-gen-ai-label'
-        padding={{ left: 's' }}
-      >
-        {headerText}
+    <div className='iot-app-kit-assistant-chatbot-header'>
+      <Box fontSize='heading-s' fontWeight='bold'>
+        {props.headerText}
       </Box>
-      {onClose ? (
-        <div className='iot-app-kit-assistant-chatbot-header-close'>
-          <Button
-            iconName='close'
-            variant='icon'
-            onClick={onClose}
-            data-testid='assistant-chatbot-close-button'
-          />
-        </div>
-      ) : null}
+      <div className='iot-app-kit-assistant-chatbot-header-buttons'>
+        <SpaceBetween direction='horizontal' size='s'>
+          {props.showResetButton && props.onReset ? (
+            <Button
+              iconName='refresh'
+              variant='normal'
+              ariaLabel='Reset'
+              onClick={props.onReset}
+              data-testid='assistant-chatbot-reset-button'
+            />
+          ) : null}
+          {props.showCloseButton && props.onClose ? (
+            <Button
+              iconName='close'
+              variant='normal'
+              onClick={props.onClose}
+              ariaLabel='Close'
+              data-testid='assistant-chatbot-close-button'
+            />
+          ) : null}
+        </SpaceBetween>
+      </div>
     </div>
   );
 };

@@ -10,7 +10,7 @@ import '@cloudscape-design/global-styles/index.css';
 import { MessageType } from '../../src/hooks/useAssistant/types';
 
 export default {
-  title: 'Widgets/AssistantChatbot',
+  title: 'Widgets/Assistant Chatbot',
   component: AssistantChatbot,
   argTypes: {
     accessKeyId: { control: { type: 'string' } },
@@ -71,6 +71,13 @@ export const ConnectedAssistantChatbot: ComponentStory<
         messages={messages}
         onSubmit={handleSubmit}
         onClose={() => {}}
+        header={{
+          headerText: 'IoT Sitewise Assistant',
+          showCloseButton: true,
+          showResetButton: true,
+          onReset: () => {},
+          onClose: () => {},
+        }}
       />
     </div>
   );

@@ -16,7 +16,7 @@ describe('Chatbot', () => {
   it('renders correctly', () => {
     const { getByTestId } = render(
       <TestProvider>
-        <Chatbot height={0} top={0} />
+        <Chatbot height={0} />
       </TestProvider>
     );
 
@@ -26,7 +26,7 @@ describe('Chatbot', () => {
   it('should open chat correctly', async () => {
     const { getByText } = render(
       <TestProvider>
-        <Chatbot height={0} top={0} />
+        <Chatbot height={0} />
       </TestProvider>
     );
 
@@ -54,7 +54,7 @@ describe('Chatbot', () => {
     const user = userEvent.setup();
     const { getByTestId, getByText } = render(
       <TestProvider>
-        <Chatbot height={0} top={0} />
+        <Chatbot height={0} />
       </TestProvider>
     );
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, screen, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { MessageType } from '../../hooks/useAssistant/types';
 import { Chatbot } from './Chatbot';
 import userEvent from '@testing-library/user-event';
@@ -8,7 +8,7 @@ import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
 describe(Chatbot, () => {
   it('should render customer message', () => {
     const content = 'What is the root cause of this alarm?';
-    render(
+    const { getByText } = render(
       <Chatbot
         height={400}
         messages={[
@@ -23,12 +23,27 @@ describe(Chatbot, () => {
         onSubmit={() => {}}
       />
     );
-    expect(screen.getByText(content)).toBeInTheDocument();
+    expect(getByText(content)).toBeInTheDocument();
+  });
+
+  it('should render chatbot header', () => {
+    const headerText = 'Chatbot header';
+    const { getByText } = render(
+      <Chatbot
+        height={400}
+        header={{
+          headerText,
+        }}
+        messages={[]}
+        onSubmit={() => {}}
+      />
+    );
+    expect(getByText(headerText)).toBeInTheDocument();
   });
 
   it('should render assistant loading message', () => {
     const content = 'Generating a response...';
-    render(
+    const { getByText, getByRole } = render(
       <Chatbot
         height={400}
         messages={[
@@ -43,14 +58,14 @@ describe(Chatbot, () => {
         onSubmit={() => {}}
       />
     );
-    expect(screen.getByRole('progressbar')).toBeInTheDocument();
-    expect(screen.getByText(content)).toBeInTheDocument();
+    expect(getByRole('progressbar')).toBeInTheDocument();
+    expect(getByText(content)).toBeInTheDocument();
   });
 
   it('should render assistant message', () => {
     const content =
       'AWS IoT SiteWise makes it easy to collect, store, organize and monitor indsutrial data.';
-    render(
+    const { getByText } = render(
       <Chatbot
         height={400}
         messages={[
@@ -65,14 +80,14 @@ describe(Chatbot, () => {
         onSubmit={() => {}}
       />
     );
-    expect(screen.getByText(content)).toBeInTheDocument();
+    expect(getByText(content)).toBeInTheDocument();
   });
 
   it('should render assistant message with citations', () => {
     const content =
       'AWS IoT SiteWise makes it easy to collect, store, organize and monitor indsutrial data.';
     const citationText = 'SOP documents';
-    render(
+    const { getByText } = render(
       <Chatbot
         height={400}
         messages={[
@@ -107,13 +122,13 @@ describe(Chatbot, () => {
         onSubmit={() => {}}
       />
     );
-    expect(screen.getByText(content)).toBeInTheDocument();
-    expect(screen.getByText(citationText)).toBeInTheDocument();
+    expect(getByText(content)).toBeInTheDocument();
+    expect(getByText(citationText)).toBeInTheDocument();
   });
 
   it('should render assistant error message', () => {
     const content = 'Access Denied Exception';
-    render(
+    const { getByText } = render(
       <Chatbot
         height={400}
         messages={[
@@ -134,15 +149,16 @@ describe(Chatbot, () => {
         onSubmit={() => {}}
       />
     );
-    expect(screen.getByText(content)).toBeInTheDocument();
+    expect(getByText(content)).toBeInTheDocument();
   });
 
-  it('should render prompts and be able to click on it', () => {
+  it('should render prompts and be able to click on it', async () => {
+    const user = userEvent.setup();
     const mockOnCLick = jest.fn();
     const content =
       'AWS IoT SiteWise makes it easy to collect, store, organize and monitor indsutrial data.';
     const promptText = 'What are the recommendations?';
-    render(
+    const { getByText, getByRole } = render(
       <Chatbot
         height={400}
         messages={[
@@ -158,8 +174,8 @@ describe(Chatbot, () => {
         onSubmit={mockOnCLick}
       />
     );
-    expect(screen.getByText(promptText)).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: promptText }));
+    expect(getByText(promptText)).toBeInTheDocument();
+    await user.click(getByRole('button', { name: promptText }));
     expect(mockOnCLick).toBeCalled();
   });
 
@@ -168,7 +184,7 @@ describe(Chatbot, () => {
     const mockOnCLick = jest.fn();
     const message = 'What is the root cause of the alarm?';
 
-    render(
+    const { getByPlaceholderText, getByTestId } = render(
       <Chatbot
         height={400}
         messages={[
@@ -184,45 +200,66 @@ describe(Chatbot, () => {
       />
     );
 
-    const textarea = screen.getByPlaceholderText(
+    const textarea = getByPlaceholderText(
       'Ask me anything about your IoT data'
     );
     expect(textarea).toBeInTheDocument();
+    await user.type(textarea!, message);
 
-    await act(async () => {
-      return await user.type(textarea!, message);
-    });
-
-    const inputButton = screen.getByTestId('assistant-chatbot-input-button');
+    const inputButton = getByTestId('assistant-chatbot-input-button');
     expect(inputButton).toBeInTheDocument();
 
-    act(() => {
-      fireEvent.click(inputButton);
-    });
+    await user.click(inputButton);
     expect(mockOnCLick).toBeCalledWith(message);
   });
 
-  it('should call onClose callback when chatbot is closed', () => {
+  it('should call onClose callback when chatbot is closed', async () => {
+    const user = userEvent.setup();
     const mockOnClose = jest.fn();
-    render(
+    const { getByRole } = render(
       <Chatbot
         height={400}
         messages={[]}
         onSubmit={() => {}}
-        onClose={mockOnClose}
+        header={{
+          headerText: 'Header',
+          showCloseButton: true,
+          onClose: mockOnClose,
+        }}
       />
     );
-    const closeButton = screen.getByTestId('assistant-chatbot-close-button');
-    expect(closeButton).toBeInTheDocument();
-    act(() => {
-      fireEvent.click(closeButton);
-    });
+    expect(getByRole('button', { name: 'Close' })).toBeInTheDocument();
+
+    await user.click(getByRole('button', { name: 'Close' }));
+
     expect(mockOnClose).toBeCalled();
+  });
+
+  it('should call onReset callback when reset button is clicked', async () => {
+    const user = userEvent.setup();
+    const mockOnReset = jest.fn();
+    const { getByRole } = render(
+      <Chatbot
+        height={400}
+        messages={[]}
+        onSubmit={() => {}}
+        header={{
+          headerText: 'Header',
+          showResetButton: true,
+          onReset: mockOnReset,
+        }}
+      />
+    );
+    expect(getByRole('button', { name: 'Reset' })).toBeInTheDocument();
+
+    await user.click(getByRole('button', { name: 'Reset' }));
+
+    expect(mockOnReset).toBeCalled();
   });
 
   it('should resize message container when customer types breakline', async () => {
     const user = userEvent.setup();
-    render(
+    const { getByPlaceholderText, getByTestId } = render(
       <Chatbot
         height={500}
         messages={[
@@ -238,20 +275,15 @@ describe(Chatbot, () => {
       />
     );
 
-    const textarea = screen.getByPlaceholderText(
+    const textarea = getByPlaceholderText(
       'Ask me anything about your IoT data'
     );
     expect(textarea).toBeInTheDocument();
 
-    await act(async () => {
-      return await user.type(textarea!, 'some text\n');
-    });
+    await user.type(textarea!, 'some text\n');
+    await user.type(textarea!, 'some text\n');
 
-    await act(async () => {
-      return await user.type(textarea!, 'some text\n');
-    });
-
-    const inputContainer = screen.getByTestId(
+    const inputContainer = getByTestId(
       'assistant-chatbot-conversation-container'
     );
     expect(inputContainer).toBeInTheDocument();

@@ -6,6 +6,7 @@ import {
   useAssistant,
   MessageType,
   useAssistantContext,
+  type IMessage,
 } from '@iot-app-kit/react-components';
 import { useClients } from '../dashboard/clientContext';
 import 'animate.css';
@@ -16,8 +17,18 @@ import { DashboardState } from '~/store/state';
 
 export interface AssistantChatbotProps {
   height: number;
-  top: number;
 }
+
+const initialMessages: Array<IMessage> = [
+  {
+    content:
+      'Hello, I am your dashboard assistant, please ask me anything about your dashboard.',
+    sender: 'assistant',
+    type: MessageType.TEXT,
+    id: uuid(),
+    loading: false,
+  },
+];
 
 export const Chatbot: FC<AssistantChatbotProps> = (
   props: AssistantChatbotProps
@@ -34,16 +45,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   const { messages, invokeAssistant, setMessages } = useAssistant({
     assistantClient: client,
     initialState: {
-      messages: [
-        {
-          content:
-            'Hello, I am your dashboard assistant, please ask me anything about your dashboard.',
-          sender: 'assistant',
-          type: MessageType.TEXT,
-          id: uuid(),
-          loading: false,
-        },
-      ],
+      messages: initialMessages
     },
   });
 
@@ -65,13 +67,6 @@ export const Chatbot: FC<AssistantChatbotProps> = (
     });
   };
 
-  const chatbotAnimation =
-    assistant.isChatbotOpen === null
-      ? 'iot-dashboard-assistant-chatbot-hidden'
-      : assistant.isChatbotOpen
-      ? 'animate__fadeInRight'
-      : 'animate__fadeOutRight animate__faeOut';
-
   const toggleChatbot = (open: boolean) => {
     dispatch(
       onToggleChatbotAction({
@@ -83,18 +78,18 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   };
 
   return (
-    <div
-      className={`iot-dashboard-assistant-chatbot animate__animated ${chatbotAnimation}`}
-      style={{ top: `${props.top}px` }}
-      data-testid='dashboard-chatbot'
-    >
-      <AssistantChatbot
-        height={props.height}
-        messages={messages}
-        onSubmit={handleSubmit}
-        visible={!!assistant.isChatbotOpen}
-        onClose={() => toggleChatbot(false)}
-      />
-    </div>
+    <AssistantChatbot
+      height={props.height}
+      messages={messages}
+      onSubmit={handleSubmit}
+      visible={!!assistant.isChatbotOpen}
+      header={{
+        headerText: 'AI Assistant',
+        showResetButton: true,
+        showCloseButton: true,
+        onReset: () => setMessages(initialMessages),
+        onClose: () => toggleChatbot(false)
+      }}
+    />
   );
 };

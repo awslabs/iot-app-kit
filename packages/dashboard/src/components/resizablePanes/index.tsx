@@ -16,7 +16,9 @@ import {
 import './index.css';
 import { CollapsiblePanel } from '../internalDashboard/collapsiblePanel';
 import resourceExplorerPanelIcon from './assets/resourceExplorer.svg';
-import PropertiesPanelIcon from './assets/propertiesPane.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import type { DashboardState } from '~/store/state';
+import { onToggleChatbotAction } from '~/store/actions/toggleChatbot';
 
 const getSessionStorageNumber = (key: string, fallback: number) => {
   const stored = sessionStorage.getItem(key);
@@ -28,18 +30,26 @@ const getStoredLeftWidthPercent = () =>
   getSessionStorageNumber(LEFT_WIDTH_PERCENT_STORAGE_KEY, LEFT_WIDTH_PERCENT);
 
 type ResizablePanesProps = {
-  leftPane: ReactNode;
+  leftPane?: ReactNode;
   centerPane: ReactNode;
   rightPane: ReactNode;
+  rightPaneOptions: {
+    icon: string;
+    iconBackground?: string;
+    headerText: string;
+    hideHeader: boolean;
+  } 
 };
 
 export const ResizablePanes: FC<ResizablePanesProps> = ({
   leftPane,
   centerPane,
   rightPane,
+  ...props
 }) => {
   const panes = useRef(null);
-
+  const dispatch = useDispatch();       
+      
   // Used to prevent any scroll events leaking to the grid component on resize
   const [pointerEvents, setPointerEvents] = useState<'auto' | 'none'>('auto');
 
@@ -56,7 +66,8 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
 
   /** Current widths of the three panes, in px */
   const [isRightPaneCollapsed, setRightPaneCollapsed] = useState(true);
-  const [isLeftPaneCollapsed, setLeftPaneCollapsed] = useState(false);
+  const [isLeftPaneCollapsed, setLeftPaneCollapsed] = useState(leftPane === null);
+  const [isChatOpened, setChatOpened] = useState(false);
   // left panel open by default
   const [leftPaneWidth, setLeftPaneWidth] = useState(DEFAULT_SIDE_PANE_WIDTH);
   // right panel closed by default
@@ -227,7 +238,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
   };
 
   // expand and collapse right pane
-  const onRightCollapsedPaneClick = () => {
+  const handleRightPaneCollapse = () => {
     if (isRightPaneCollapsed) {
       setRightPaneWidth(DEFAULT_SIDE_PANE_WIDTH);
       setRightPaneCollapsed(false);
@@ -237,7 +248,29 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
       setRightPaneWidth(DEFAULT_COLLAPSED_SIDE_PANE_WIDTH);
       setRightPaneCollapsed(true);
     }
+  }
+
+  const onRightCollapsedPaneClick = () => {
+    handleRightPaneCollapse();
+    if (props.rightPaneOptions.headerText === 'AI Assistant') {
+      setChatOpened(!isChatOpened);
+      dispatch(
+        onToggleChatbotAction({
+          open: !isChatOpened,
+          componentId: '',
+          messages: assistant.messages,
+        })
+      );
+    }
   };
+
+  const assistant = useSelector((state: DashboardState) => state.assistant);
+  useEffect(() => {
+    if (isChatOpened !== assistant.isChatbotOpen) {
+      handleRightPaneCollapse();
+      setChatOpened(!isChatOpened);
+    }
+  }, [assistant.isChatbotOpen]);
 
   useEffect(() => {
     const handleWindowResize = () => {
@@ -337,9 +370,8 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
         panelWidth={rightPaneWidth}
         onCollapsedPanelClick={onRightCollapsedPaneClick}
         panelContent={rightPane}
-        icon={PropertiesPanelIcon}
-        side='right'
-        headerText='Configuration'
+        side={'right'}
+        {...props.rightPaneOptions}
       />
     </div>
   );

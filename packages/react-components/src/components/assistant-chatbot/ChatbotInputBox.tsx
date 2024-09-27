@@ -56,7 +56,7 @@ export const ChatbotInputBox = ({
     const { value: newValue } = event.detail;
     setValue(newValue);
 
-    if (newValue.match(/\n/g)) {
+    if (newValue.match(/\n/g) || newValue === '') {
       onResize();
     }
   };
@@ -66,6 +66,9 @@ export const ChatbotInputBox = ({
   ) => {
     if (event.detail.key === 'Enter' && !event.detail.shiftKey) {
       handleClick();
+    }
+    if (event.detail.key === 'Delete' || event.detail.key === 'Backspace') {
+      onResize();
     }
   };
 

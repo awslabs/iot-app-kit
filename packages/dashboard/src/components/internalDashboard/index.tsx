@@ -7,11 +7,13 @@ import {
   colorBackgroundCellShaded,
   colorBackgroundLayoutMain,
   colorBorderDividerDefault,
+  colorChartsPurple700,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
 import { ContentLayout } from '@cloudscape-design/components';
 import messages from '@cloudscape-design/components/i18n/messages/all.all';
 import { I18nProvider } from '@cloudscape-design/components/i18n';
+import PropertiesPanelIcon from '../resizablePanes/assets/propertiesPane.svg';
 
 import { selectedRect } from '~/util/select';
 
@@ -72,10 +74,8 @@ import { parseViewport } from '~/util/parseViewport';
 import Actions from '../actions';
 import { useSyncDashboardConfiguration } from '~/hooks/useSyncDashboardConfiguration';
 import { Chatbot } from '../assistant/chatbot';
-import {
-  useChatbotPosition,
-  getScrollParent,
-} from '~/hooks/useChatbotPosition';
+import { useChatbotPosition } from '~/hooks/useChatbotPosition';
+import AssistantIcon from '../assistant/assistantIcon.svg';
 
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
@@ -135,15 +135,11 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     undefined
   );
   const [visible, setVisible] = useState<boolean>(false);
-  const [scrollableParent, setScrollableParent] = useState<Element | null>(
-    null
-  );
   useDashboardViewport(
     currentViewport || parseViewport(dashboardConfiguration?.defaultViewport)
   );
-  const { chatbotTop, chatbotHeight, calculateChatbotDimensions } =
+  const { chatbotHeight, calculateChatbotDimensions } =
     useChatbotPosition(
-      scrollableParent,
       '[data-test-id=read-only-mode-dashboard]'
     );
 
@@ -387,6 +383,11 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             </div>
           }
           rightPane={propertiesPanel}
+          rightPaneOptions={{
+            icon: PropertiesPanelIcon,
+            headerText: 'Configuration',
+            hideHeader: true,
+          }}
         />
       </div>
     </ContentLayout>
@@ -420,31 +421,44 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             </Box>
           </div>
         )}
-        <div
-          className='display-area'
-          ref={(el) => {
-            const displayAreaElement = document.querySelector(
-              '[data-test-id=read-only-mode-dashboard]'
-            );
-            const scrollableParent = getScrollParent(displayAreaElement);
-            scrollableParent?.addEventListener(
-              'scroll',
-              calculateChatbotDimensions
-            );
-            setScrollableParent(scrollableParent);
-            calculateChatbotDimensions();
-            setViewFrameElement(el || undefined);
-          }}
-          style={{ backgroundColor: colorBackgroundCellShaded }}
-        >
-          <ReadOnlyGrid {...grid}>
-            <Widgets {...widgetsProps} />
-          </ReadOnlyGrid>
-          <WebglContext viewFrame={viewFrame} />
-          {assistant.state !== 'DISABLED' ? (
-            <Chatbot height={chatbotHeight} top={chatbotTop} />
-          ) : null}
-        </div>
+        {assistant.state === 'DISABLED' ? (
+          <div
+            className='display-area'
+            ref={(el) => setViewFrameElement(el || undefined)}
+            style={{ backgroundColor: colorBackgroundCellShaded }}
+          >
+            <ReadOnlyGrid {...grid}>
+              <Widgets {...widgetsProps} />
+            </ReadOnlyGrid>
+            <WebglContext viewFrame={viewFrame} />
+          </div>
+        ) : (
+          <ResizablePanes
+            leftPane={null}
+            centerPane={
+              <div
+                className='display-area'
+                ref={(el) => {
+                  calculateChatbotDimensions();
+                  setViewFrameElement(el || undefined);
+                }}
+                style={{ backgroundColor: colorBackgroundCellShaded }}
+              >
+                <ReadOnlyGrid {...grid}>
+                  <Widgets {...widgetsProps} />
+                </ReadOnlyGrid>
+                <WebglContext viewFrame={viewFrame} />
+              </div>
+            }
+            rightPane={<Chatbot height={chatbotHeight} />}
+            rightPaneOptions={{
+              icon: AssistantIcon,
+              iconBackground: colorChartsPurple700,
+              headerText: 'AI Assistant',
+              hideHeader: true,
+            }}
+          />
+        )}
       </div>
     </ContentLayout>
   );

@@ -7,7 +7,8 @@
   padding: 0.3rem 1rem;
 }
 
-.iot-app-kit-assistant-chatbot-header-close {
+.iot-app-kit-assistant-chatbot-header-buttons {
+  padding-top: 0.5rem;
   margin-left: auto;
 }
 

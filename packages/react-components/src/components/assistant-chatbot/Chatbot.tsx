@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Container from '@cloudscape-design/components/container';
-import { ChatbotHeader } from './ChatbotHeader';
+import { ChatbotHeader, type ChatbotHeaderProps } from './ChatbotHeader';
 import { ChatbotInputBox } from './ChatbotInputBox';
 import { ChatbotConversationContainer } from './conversation/ChatbotConversationContainer';
 import type { IMessage } from '../../hooks/useAssistant/types';
@@ -12,7 +12,7 @@ export interface ChatbotProps {
   visible?: boolean;
   messages: IMessage[];
   onSubmit: (utterance: string) => void;
-  onClose?: () => void;
+  header?: ChatbotHeaderProps;
 }
 
 const MIN_HEIGHT = 400;
@@ -27,7 +27,7 @@ const adjustHeight = (height: number) => {
   const chatbotInputHeight = chatbotInput?.clientHeight || 0;
   const chatbotHeaderHeight = chatbotHeader?.clientHeight || 0;
   const newHeight = height - chatbotHeaderHeight - chatbotInputHeight - 50;
-  return newHeight > height ? height : newHeight;
+  return newHeight;
 };
 
 export const Chatbot = ({
@@ -35,18 +35,16 @@ export const Chatbot = ({
   visible,
   height = MIN_HEIGHT,
   onSubmit,
-  onClose,
+  header,
 }: ChatbotProps) => {
-  const [updateHeight, setUpdateHeight] = useState<boolean>(false);
   const [adjustedHeight, setAdjustedHeight] = useState<number>(height);
   const lastMessage = messages[messages.length - 1];
 
   useEffect(() => {
     if (height > MIN_HEIGHT) {
       setAdjustedHeight(adjustHeight(height));
-      setUpdateHeight(false);
     }
-  }, [visible, height, updateHeight]);
+  }, [visible, height]);
 
   return (
     <div className='iot-app-kit assistant-chatbot'>
@@ -54,13 +52,11 @@ export const Chatbot = ({
         footer={
           <ChatbotInputBox
             onSubmit={onSubmit}
-            onResize={() => setUpdateHeight(true)}
+            onResize={() => setAdjustedHeight(adjustHeight(height))}
             lastMessage={lastMessage}
           />
         }
-        header={
-          <ChatbotHeader headerText='Sitewise Assistant' onClose={onClose} />
-        }
+        header={header ? <ChatbotHeader {...header} /> : null}
         disableHeaderPaddings
         disableContentPaddings
       >
