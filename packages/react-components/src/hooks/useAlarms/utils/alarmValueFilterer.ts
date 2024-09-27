@@ -1,7 +1,7 @@
 import { Bisector } from 'd3-array';
 import { Interval } from '../../../queries';
 
-export const alarmThresholdValueFilterer =
+export const alarmValueFilterer =
   <Point>(
     bisector: Bisector<Point, Date>,
     extractTime: (point: Point) => number

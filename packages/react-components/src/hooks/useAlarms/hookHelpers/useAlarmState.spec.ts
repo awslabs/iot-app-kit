@@ -231,7 +231,7 @@ describe('useAlarmState', () => {
 
     expect(batchGetAssetPropertyValueMock).not.toHaveBeenCalled();
 
-    expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledOnce();
+    expect(batchGetAssetPropertyValueHistoryMock).toBeCalledTimes(2);
     expect(result.current[0].state?.data).toEqual(
       mockAssetProperty1Data.reverse()
     );
@@ -253,14 +253,10 @@ describe('useAlarmState', () => {
       expect(result.current[1].status.isSuccess).toBe(true);
     });
 
-    expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(2);
+    expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(4);
 
-    expect(result.current[0].state?.data).toEqual(
-      mockAssetProperty1Data.slice(2)
-    );
-    expect(result.current[1].state?.data).toEqual(
-      mockAssetProperty2Data.slice(2)
-    );
+    expect(result.current[0].state?.data).toEqual(mockAssetProperty1Data);
+    expect(result.current[1].state?.data).toEqual(mockAssetProperty2Data);
   });
 
   it('fetches the historical asset properties within a live viewport.', async () => {
@@ -297,14 +293,6 @@ describe('useAlarmState', () => {
               entryId: request.entries![1].entryId,
               assetPropertyValueHistory: mockAssetProperty2Data,
             },
-            {
-              entryId: request.entries![2].entryId,
-              assetPropertyValueHistory: mockAssetProperty1Data.slice(5),
-            },
-            {
-              entryId: request.entries![3].entryId,
-              assetPropertyValueHistory: mockAssetProperty2Data.slice(5),
-            },
           ],
         } satisfies Awaited<ReturnType<BatchGetAssetPropertyValueHistory>>;
       }
@@ -334,7 +322,7 @@ describe('useAlarmState', () => {
 
     expect(batchGetAssetPropertyValueMock).not.toHaveBeenCalled();
 
-    expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledOnce();
+    expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(2);
     expect(result.current[0].state?.data).toEqual(
       mockAssetProperty1Data.reverse()
     );
@@ -365,7 +353,7 @@ describe('useAlarmState', () => {
       jest.advanceTimersByTime(TEST_ADVANCE_TIMERS_PAST_REFRESH_RATE);
     });
 
-    expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(2);
+    expect(batchGetAssetPropertyValueHistoryMock).toHaveBeenCalledTimes(4);
 
     jest.useRealTimers();
   });
