@@ -61,7 +61,7 @@ export const ConnectedAssistantChatbot: ComponentStory<
   });
 
   const handleSubmit = (utterance: string) => {
-    invokeAssistant(conversationId, utterance);
+    invokeAssistant({ componentId: '', conversationId, utterance });
   };
 
   return (
