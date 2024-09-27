@@ -2,7 +2,11 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { getTimeSeriesDataQuery, queryConfigured } from '../utils/query';
+import {
+  getSingleValueAlarmDataQuery,
+  getTimeSeriesDataQuery,
+  queryConfigured,
+} from '../utils/query';
 import { useViewport } from '../../src';
 import { Gauge } from '../../src/components/gauge/gauge';
 
@@ -39,6 +43,7 @@ export default {
 
 //TODO: Getting the data from token not working
 export const ConnectedGuage: ComponentStory<typeof Gauge> = ({ settings }) => {
+  const hasAlarmIds = process.env.ALARM_COMPOSITE_MODEL_ID_1 !== null;
   const { viewport } = useViewport();
   if (!queryConfigured()) {
     return (
@@ -60,10 +65,14 @@ export const ConnectedGuage: ComponentStory<typeof Gauge> = ({ settings }) => {
   }
 
   return (
-    <div style={{ height: '500px', width: '500px', padding: '20px' }}>
+    <div style={{ height: '500px', width: '600px', padding: '20px' }}>
       <Gauge
         viewport={viewport}
-        query={getTimeSeriesDataQuery()}
+        query={
+          hasAlarmIds
+            ? getSingleValueAlarmDataQuery()
+            : getTimeSeriesDataQuery()
+        }
         settings={settings}
       />
     </div>

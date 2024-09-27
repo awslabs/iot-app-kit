@@ -3,6 +3,7 @@ import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import type { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { AlarmData } from '../hooks/useAlarms';
 import { parseAlarmStateAssetProperty } from '../hooks/useAlarms/transformers';
+import { transformAlarmsToThreshold } from './transformAlarmsToThreshold';
 
 // Transforms an AlarmData object into an object containing a timeSeriesDataQuery and alarm state
 export const buildTransformAlarmForSingleQueryWidgets =
@@ -45,6 +46,7 @@ export const buildTransformAlarmForSingleQueryWidgets =
       return {
         state: parseAlarmStateAssetProperty(latestState)?.value.state,
         timeSeriesDataQueries: [timeSeriesDataQuery],
+        threshold: transformAlarmsToThreshold(alarm),
       };
     }
   };
