@@ -82,23 +82,17 @@ test.describe('validate gauge widget behavior', () => {
       '[data-gesture=widget]'
     );
 
-    const gaugeValue = widget
-      .locator('g')
-      .locator('text[fill="#7d2105"]')
-      .first();
-    const value = await gaugeValue.textContent();
-    expect(getDecimalPlaces(value)).toBe(4);
+    const gaugeText = await widget.textContent();
+    const gaugeValue = gaugeText?.match('\\d+\\.*\\d*')?.at(0);
+    expect(getDecimalPlaces(gaugeValue)).toBe(4);
 
     // change sig digits to 1 and validate rendered value is correct
     await configPanel.collapsedButton.click();
     await configPanel.decimalPlaceInput.fill('1');
 
-    const updatedGaugeValue = widget
-      .locator('g')
-      .locator('text[fill="#7d2105"]')
-      .first();
+    const updatedText = await widget.textContent();
+    const updatedValue = updatedText?.match('\\d+\\.*\\d*')?.at(0);
 
-    const updatedValue = await updatedGaugeValue.textContent();
     expect(getDecimalPlaces(updatedValue)).toBe(1);
   });
 

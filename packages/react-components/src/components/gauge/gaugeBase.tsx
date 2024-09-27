@@ -7,6 +7,7 @@ import { useResizableGauge } from './hooks/useResizableGauge';
 import { GaugeErrorText } from './gaugeErrorText';
 import { GaugeText } from './gaugeText';
 import './gauge.css';
+import { thresholdsToColor } from './utils/thresholdsToColor';
 
 /**
  * Renders a base gauge component.
@@ -31,6 +32,7 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
   isLoading,
   significantDigits,
   error,
+  alarmState,
   ...options
 }) => {
   const gaugeValue = propertyPoint?.y;
@@ -79,10 +81,19 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
       <GaugeErrorText error={error} />
       {!isLoading && (
         <GaugeText
+          valueColor={thresholdsToColor({
+            gaugeValue,
+            thresholds,
+            defaultColor: settings?.color,
+          })}
+          unit={unit}
           settings={settings}
           name={name}
           error={error}
           quality={quality}
+          value={gaugeValue}
+          alarmState={alarmState}
+          significantDigits={significantDigits}
         />
       )}
     </div>
