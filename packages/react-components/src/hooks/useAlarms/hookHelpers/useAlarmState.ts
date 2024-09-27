@@ -51,7 +51,7 @@ export const useAlarmState = ({
    * of points within the viewport.
    */
   const mostRecentBeforeEndValueQueries = useHistoricalAssetPropertyValues({
-    enabled: queryMode === 'LATEST_IN_VIEWPORT',
+    enabled: queryMode !== 'LATEST',
     iotSiteWiseClient,
     requests,
     viewport,

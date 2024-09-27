@@ -2,9 +2,9 @@ import { AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
 import type { AlarmData } from '../types';
 import { toTimestamp } from '../../../utils/time';
 import { bisector } from 'd3-array';
-import { timeSeriesDataFilterer, Viewport } from '../../../queries';
+import { Viewport } from '../../../queries';
 import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
-import { alarmThresholdValueFilterer } from './alarmThresholdValueFilterer';
+import { alarmValueFilterer } from './alarmValueFilterer';
 
 const assetPropertyValueTime = (assetPropertyValue: AssetPropertyValue) =>
   toTimestamp(assetPropertyValue.timestamp);
@@ -18,12 +18,7 @@ const compareAssetPropertyValues = (
 
 const assetPropertyValuesBisector = bisector(assetPropertyValueTime);
 
-const filterAssetPropertyValuesForThreshold = alarmThresholdValueFilterer(
-  assetPropertyValuesBisector,
-  assetPropertyValueTime
-);
-
-const filterAssetPropertyValues = timeSeriesDataFilterer(
+const filterAssetPropertyValues = alarmValueFilterer(
   assetPropertyValuesBisector,
   assetPropertyValueTime
 );
@@ -118,10 +113,7 @@ export const updateAlarmThresholdData = (
 
   const updatedData = uniqueSortAssetPropertyValues([...currentData, ...data]);
   const filteredData = viewport
-    ? filterAssetPropertyValuesForThreshold(
-        updatedData,
-        viewportAsInterval(viewport)
-      )
+    ? filterAssetPropertyValues(updatedData, viewportAsInterval(viewport))
     : updatedData;
 
   if (shouldUpdateAlarmStateData(currentData, filteredData)) {

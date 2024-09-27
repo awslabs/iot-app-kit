@@ -1,7 +1,7 @@
 import type { ComponentQuery } from '../common/chartTypes';
 import type {
-  AlarmDataQuery,
   TimeSeriesDataQuery,
+  AlarmDataQuery,
 } from '@iot-app-kit/source-iotsitewise';
 
 export const getTimeSeriesQueries = (
@@ -18,6 +18,6 @@ export const getAlarmQueries = (
 ): AlarmDataQuery[] => {
   return queries.filter(
     (query): query is AlarmDataQuery =>
-      (query as AlarmDataQuery).query !== undefined
+      (query as AlarmDataQuery).query?.alarms !== undefined
   );
 };
