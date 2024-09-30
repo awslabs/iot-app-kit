@@ -7,7 +7,10 @@ import {
 import { DashboardWrapper as Dashboard } from './wrapper';
 import React from 'react';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  IoTSiteWise,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import { RefreshRate } from '../refreshRate/types';
 
 const config = {
@@ -40,6 +43,7 @@ it('renders', function () {
         iotTwinMakerClient: {
           send: jest.fn(),
         } as unknown as IoTTwinMakerClient,
+        iotSiteWise: new IoTSiteWise(),
       }}
     />
   );
@@ -70,6 +74,7 @@ it('renders in readonly initially', function () {
         iotTwinMakerClient: {
           send: jest.fn(),
         } as unknown as IoTTwinMakerClient,
+        iotSiteWise: new IoTSiteWise(),
       }}
       initialViewMode='preview'
     />
@@ -108,6 +113,7 @@ it('renders in edit initially', function () {
         iotTwinMakerClient: {
           send: jest.fn(),
         } as unknown as IoTTwinMakerClient,
+        iotSiteWise: new IoTSiteWise(),
       }}
       initialViewMode='edit'
     />
@@ -150,6 +156,7 @@ it('passes the correct viewMode to onSave', function () {
         iotTwinMakerClient: {
           send: jest.fn(),
         } as unknown as IoTTwinMakerClient,
+        iotSiteWise: new IoTSiteWise(),
       }}
       initialViewMode='edit'
     />
@@ -188,6 +195,7 @@ it('renders dashboard name', function () {
         iotTwinMakerClient: {
           send: jest.fn(),
         } as unknown as IoTTwinMakerClient,
+        iotSiteWise: new IoTSiteWise(),
       }}
     />
   );
@@ -216,6 +224,7 @@ it('renders without dashboard name', function () {
         iotTwinMakerClient: {
           send: jest.fn(),
         } as unknown as IoTTwinMakerClient,
+        iotSiteWise: new IoTSiteWise(),
       }}
     />
   );

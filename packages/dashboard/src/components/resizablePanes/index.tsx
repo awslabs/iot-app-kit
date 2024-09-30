@@ -38,7 +38,7 @@ type ResizablePanesProps = {
     iconBackground?: string;
     headerText: string;
     hideHeader: boolean;
-  } 
+  };
 };
 
 export const ResizablePanes: FC<ResizablePanesProps> = ({
@@ -48,8 +48,8 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
   ...props
 }) => {
   const panes = useRef(null);
-  const dispatch = useDispatch();       
-      
+  const dispatch = useDispatch();
+
   // Used to prevent any scroll events leaking to the grid component on resize
   const [pointerEvents, setPointerEvents] = useState<'auto' | 'none'>('auto');
 
@@ -66,7 +66,9 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
 
   /** Current widths of the three panes, in px */
   const [isRightPaneCollapsed, setRightPaneCollapsed] = useState(true);
-  const [isLeftPaneCollapsed, setLeftPaneCollapsed] = useState(leftPane === null);
+  const [isLeftPaneCollapsed, setLeftPaneCollapsed] = useState(
+    leftPane === null
+  );
   const [isChatOpened, setChatOpened] = useState(false);
   // left panel open by default
   const [leftPaneWidth, setLeftPaneWidth] = useState(DEFAULT_SIDE_PANE_WIDTH);
@@ -248,7 +250,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
       setRightPaneWidth(DEFAULT_COLLAPSED_SIDE_PANE_WIDTH);
       setRightPaneCollapsed(true);
     }
-  }
+  };
 
   const onRightCollapsedPaneClick = () => {
     handleRightPaneCollapse();
@@ -370,7 +372,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
         panelWidth={rightPaneWidth}
         onCollapsedPanelClick={onRightCollapsedPaneClick}
         panelContent={rightPane}
-        side={'right'}
+        side='right'
         {...props.rightPaneOptions}
       />
     </div>

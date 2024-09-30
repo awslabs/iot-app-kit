@@ -3,11 +3,11 @@ import {
   Primitive,
   StyledThreshold,
   ThresholdSettings,
-  TimeSeriesDataQuery,
   Viewport,
 } from '@iot-app-kit/core';
 import { OptionId } from 'echarts/types/src/util/types';
 import { AssistantProperty } from '../../common/assistantProps';
+import type { ComponentQuery } from '../../common/chartTypes';
 
 export type YAxisOptions = {
   yLabel?: string;
@@ -96,7 +96,7 @@ export type ChartDataQuality = {
 };
 
 export type ChartOptions = {
-  queries: TimeSeriesDataQuery[];
+  queries: ComponentQuery[];
   defaultVisualizationType?: Visualization;
   size?: SizeConfig;
   styleSettings?: ChartStyleSettings;

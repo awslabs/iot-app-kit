@@ -47,36 +47,45 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
 
   const expandedPanel = (
     <div className='collapsible-panel'>
-      {props.hideHeader ? null :
-      (
+      {props.hideHeader ? null : (
         <div
           className='collapsible-panel-header-container'
           style={{ borderColor: colorBorderDividerDefault }}
         >
-            <Box>
-              <Box float={iconSide} padding={{ [iconSide]: 'xs', vertical: 'xs' }}>
-                <Button
-                  iconName={iconName}
-                  variant='icon'
-                  onClick={props.onCollapsedPanelClick}
-                  data-testid={`expanded-${props.side}-panel-button`}
-                  ariaLabel={`Collapse panel ${props.side}`}
-                />
-              </Box>
-              <Box float={iconSide} padding={{ [iconSide]: 'xs', vertical: 'xs' }}>
-                <Divider />
-              </Box>
-              <Box float={props.side}>
-                <Box variant='h4' padding='m'>
-                  {props.headerText}
-                </Box>
+          <Box>
+            <Box
+              float={iconSide}
+              padding={{ [iconSide]: 'xs', vertical: 'xs' }}
+            >
+              <Button
+                iconName={iconName}
+                variant='icon'
+                onClick={props.onCollapsedPanelClick}
+                data-testid={`expanded-${props.side}-panel-button`}
+                ariaLabel={`Collapse panel ${props.side}`}
+              />
+            </Box>
+            <Box
+              float={iconSide}
+              padding={{ [iconSide]: 'xs', vertical: 'xs' }}
+            >
+              <Divider />
+            </Box>
+            <Box float={props.side}>
+              <Box variant='h4' padding='m'>
+                {props.headerText}
               </Box>
             </Box>
+          </Box>
         </div>
       )}
       <div
         className='collapsible-panel-content'
-        style={props.hideHeader ? { overflowY: 'hidden', padding: spaceStaticXs } : { paddingBottom: spaceStaticL }}
+        style={
+          props.hideHeader
+            ? { overflowY: 'hidden', padding: spaceStaticXs }
+            : { paddingBottom: spaceStaticL }
+        }
       >
         {props.panelContent}
       </div>
@@ -91,7 +100,9 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
       <div
         style={{
-          backgroundColor: props.iconBackground ? props.iconBackground : colorBackgroundSegmentActive,
+          backgroundColor: props.iconBackground
+            ? props.iconBackground
+            : colorBackgroundSegmentActive,
           margin: spaceContainerHorizontal,
         }}
         className='side_panels_collapsed_style'
@@ -107,24 +118,27 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
   );
 
   const panel = props.isPanelCollapsed ? collapsedPanel : expandedPanel;
-  const styles = props.panelContent === null ? {
-    width: '0px'
-  } : {
-    minHeight: '100%',
-    width: props.isPanelCollapsed
-      ? `${DEFAULT_COLLAPSED_SIDE_PANE_WIDTH}px`
-      : `${props.panelWidth}px`,
-    ...(props.isPanelCollapsed && {
-      [`border${borderSide}`]: `${spaceStaticXxxs} solid ${colorBorderDividerDefault}`,
-    }),
-    backgroundColor: colorBackgroundLayoutMain,
-  };
+  const styles =
+    props.panelContent === null
+      ? {
+          width: '0px',
+        }
+      : {
+          minHeight: '100%',
+          width: props.isPanelCollapsed
+            ? `${DEFAULT_COLLAPSED_SIDE_PANE_WIDTH}px`
+            : `${props.panelWidth}px`,
+          ...(props.isPanelCollapsed && {
+            [`border${borderSide}`]: `${spaceStaticXxxs} solid ${colorBorderDividerDefault}`,
+          }),
+          backgroundColor: colorBackgroundLayoutMain,
+        };
   return (
     <div
       className={`collapsible-panel collapsible-panel-${props.side}`}
       style={styles}
     >
-      { props.panelContent === null ? null : panel }
+      {props.panelContent === null ? null : panel}
     </div>
   );
 }

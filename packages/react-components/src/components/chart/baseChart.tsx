@@ -39,6 +39,7 @@ import useDataStore from '../../store';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
 import { Title, getAdjustedChartHeight } from '../../common/title';
+import { getTimeSeriesQueries } from '../../utils/queries';
 
 /**
  * Developer Notes:
@@ -104,6 +105,7 @@ const BaseChart = ({
   } = useTrendCursors({ group, chartRef, id: options.id });
 
   // convert TimeSeriesDataQuery to TimeSeriesData
+  const timeSeriesQueries = getTimeSeriesQueries(queries);
   const {
     isLoading,
     isRefreshing,
@@ -111,7 +113,7 @@ const BaseChart = ({
     thresholds,
     utilizedViewport,
     visibleData,
-  } = useVisualizedDataStreams(queries, viewport);
+  } = useVisualizedDataStreams(timeSeriesQueries, viewport);
 
   //handle dataZoom updates, which are dependent on user events and viewportInMS changes
   useDataZoom(chartRef, utilizedViewport);
@@ -184,7 +186,7 @@ const BaseChart = ({
         transformTimeseriesDataToAssistantContext({
           start: viewportStartDate(utilizedViewport),
           end: viewportEndDate(utilizedViewport),
-          queries,
+          queries: timeSeriesQueries,
         })
       );
     }

@@ -4,16 +4,11 @@ import { DEFAULT_VIEWPORT, ECHARTS_GESTURE } from '../../common/constants';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { useViewport } from '../../hooks/useViewport';
-import type {
-  TimeQuery,
-  Threshold,
-  TimeSeriesData,
-  TimeSeriesDataRequest,
-  StyleSettingsMap,
-  Viewport,
-} from '@iot-app-kit/core';
+import type { Threshold, StyleSettingsMap, Viewport } from '@iot-app-kit/core';
 import type { DialSettings } from './types';
 import { DEFAULT_DIAL_SETTINGS } from './constants';
+import type { ComponentQuery } from '../../common/chartTypes';
+import { getTimeSeriesQueries } from '../../utils/queries';
 
 export const Dial = ({
   query,
@@ -22,7 +17,7 @@ export const Dial = ({
   styles,
   settings,
 }: {
-  query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
+  query: ComponentQuery;
   viewport?: Viewport;
   thresholds?: Threshold[];
   styles?: StyleSettingsMap;
@@ -30,7 +25,7 @@ export const Dial = ({
 }) => {
   const { dataStreams } = useTimeSeriesData({
     viewport: passedInViewport,
-    queries: [query],
+    queries: getTimeSeriesQueries([query]),
     // Currently set to only fetch raw data.
     // TODO: Support all resolutions and aggregation types
     settings: { fetchMostRecentBeforeEnd: true, resolution: '0' },

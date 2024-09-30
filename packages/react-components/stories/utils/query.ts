@@ -1,5 +1,6 @@
 import { getIotEventsClient, getSiteWiseClient } from '@iot-app-kit/core-util';
 import {
+  SiteWiseAlarmDataStreamQuery,
   SiteWiseDataStreamQuery,
   initialize,
 } from '@iot-app-kit/source-iotsitewise';
@@ -121,6 +122,35 @@ export const getSingleValueTimeSeriesDataQuery = (
         ],
       },
     ],
+  });
+};
+
+export const getSingleValueAlarmDataQuery = (
+  alarmStreamQuery?: SiteWiseAlarmDataStreamQuery
+) => {
+  if (alarmStreamQuery) {
+    return getIotSiteWiseQuery().alarmData(alarmStreamQuery);
+  }
+
+  const { assetId } = getAssetQuery();
+  const alarmId1 = process.env.ALARM_COMPOSITE_MODEL_ID_1;
+
+  if (!alarmId1) return getIotSiteWiseQuery().alarmData({});
+
+  return getIotSiteWiseQuery().alarmData({
+    alarms: [
+      {
+        assetId: assetId,
+        alarmComponents: [
+          {
+            assetCompositeModelId: alarmId1,
+          },
+        ],
+      },
+    ],
+    requestSettings: {
+      refreshRate: 5000,
+    },
   });
 };
 

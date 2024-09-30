@@ -39,6 +39,8 @@ export const DEFAULT_PLURAL_ASSET_PROPERTY_RESOURCE_NAME: PluralResourceName =
 export const DEFAULT_TIME_SERIES_RESOURCE_NAME: ResourceName = 'Time series';
 export const DEFAULT_PLURAL_TIME_SERIES_RESOURCE_NAME: PluralResourceName =
   'Time series';
+export const DEFAULT_ALARM_RESOURCE_NAME: ResourceName = 'Alarm';
+export const DEFAULT_PLURAL_ALARM_RESOURCE_NAME: PluralResourceName = 'Alarms';
 
 export const DEFAULT_IS_RESOURCE_DISABLED: IsResourceDisabled<unknown> = () =>
   false;

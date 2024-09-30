@@ -1,18 +1,19 @@
 import { useMemo } from 'react';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { AlarmData, AlarmRequest } from '../types';
+import type { AlarmDataInternal, AlarmRequest } from '../types';
 import { useDescribeAssetModels, useDescribeAssets } from '../../../queries';
 import {
-  buildFromAssetModelResponse,
-  buildFromAssetResponse,
-} from '../utils/alarmDataUtils';
-import { getStatusForQuery } from '../utils/queryUtils';
+  createFromAssetModelResponse,
+  createFromAssetResponse,
+} from '../utils/createAlarmData';
+import { getStatusForQuery } from '../utils/queryStatus';
 import { isAssetModelRequest, isAssetRequest } from './predicates';
+import type { QueryOptionsGlobal } from '../../../queries/common/types';
 
-export interface UseAlarmAssetsOptions {
+export type UseAlarmAssetsOptions = {
   iotSiteWiseClient?: IoTSiteWiseClient;
   requests?: AlarmRequest[];
-}
+} & QueryOptionsGlobal;
 
 /**
  * useAlarmAssets is a hook used to describe the asset or assetModel
@@ -25,12 +26,14 @@ export interface UseAlarmAssetsOptions {
 export function useAlarmAssets({
   iotSiteWiseClient,
   requests = [],
-}: UseAlarmAssetsOptions): AlarmData[] {
+  retry,
+}: UseAlarmAssetsOptions): AlarmDataInternal[] {
   // Fetch an asset model for request with an assetModelId
   const assetModelRequests = requests.filter(isAssetModelRequest);
   const assetModelQueries = useDescribeAssetModels({
     iotSiteWiseClient,
     requests: assetModelRequests,
+    retry,
   });
 
   // Fetch an asset for each request with an assetId
@@ -38,15 +41,16 @@ export function useAlarmAssets({
   const assetQueries = useDescribeAssets({
     iotSiteWiseClient,
     requests: assetRequests,
+    retry,
   });
 
-  // Build AlarmData for all alarms from assetModels
+  // Initialize AlarmData for all alarms from assetModels
   const assetModelAlarms = useMemo(
     () =>
       assetModelRequests
         .map((request, index) => {
           const status = getStatusForQuery(assetModelQueries[index]);
-          return buildFromAssetModelResponse({
+          return createFromAssetModelResponse({
             request,
             status,
             assetModelResponse: assetModelQueries[index].data,
@@ -56,13 +60,13 @@ export function useAlarmAssets({
     [assetModelRequests, assetModelQueries]
   );
 
-  // Build AlarmData for all alarms from assets
+  // Initialize AlarmData for all alarms from assets
   const assetAlarms = useMemo(
     () =>
       assetRequests
         .map((request, index) => {
           const status = getStatusForQuery(assetQueries[index]);
-          return buildFromAssetResponse({
+          return createFromAssetResponse({
             request,
             status,
             assetResponse: assetQueries[index].data,

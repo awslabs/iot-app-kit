@@ -52,6 +52,7 @@ export const useModelBasedQuery = () => {
             query: {
               ...properties.queryConfig.query,
               assetModels: [],
+              alarmModels: [],
             },
           },
         },
@@ -79,6 +80,12 @@ export const useModelBasedQuery = () => {
                   properties.queryConfig.query?.assetModels ?? []
                 ).map((assetModel) => ({
                   ...assetModel,
+                  assetIds: [id],
+                })),
+                alarmModels: (
+                  properties.queryConfig.query?.alarmModels ?? []
+                ).map((alarmModel) => ({
+                  ...alarmModel,
                   assetIds: [id],
                 })),
               },

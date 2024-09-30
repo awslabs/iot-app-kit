@@ -5,6 +5,8 @@ export const applyResolutionToQuery = (
     assets = [],
     properties = [],
     assetModels = [],
+    alarms = [],
+    alarmModels = [],
   }: IoTSiteWiseDataStreamQuery,
   resolution: string | undefined
 ) => ({
@@ -26,4 +28,6 @@ export const applyResolutionToQuery = (
       resolution,
     })),
   })),
+  alarms,
+  alarmModels,
 });

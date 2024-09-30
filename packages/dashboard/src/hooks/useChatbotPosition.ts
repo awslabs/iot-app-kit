@@ -3,9 +3,7 @@ import { useDebounceCallback } from 'usehooks-ts';
 
 export const CHATBOT_DEFAULT_HEIGHT = 500;
 
-export const useChatbotPosition = (
-  dashboardContainerSelector: string,
-) => {
+export const useChatbotPosition = (dashboardContainerSelector: string) => {
   const [chatbotHeight, setChatbotHeight] = useState<number>(
     CHATBOT_DEFAULT_HEIGHT
   );
@@ -14,7 +12,7 @@ export const useChatbotPosition = (
     const displayAreaElement = document.querySelector(
       dashboardContainerSelector
     );
-    
+
     const displayAreaDimensions = displayAreaElement?.getBoundingClientRect();
 
     // calculate chatbot height

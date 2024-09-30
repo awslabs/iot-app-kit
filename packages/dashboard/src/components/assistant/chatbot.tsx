@@ -45,7 +45,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   const { messages, invokeAssistant, setMessages } = useAssistant({
     assistantClient: client,
     initialState: {
-      messages: initialMessages
+      messages: initialMessages,
     },
   });
 
@@ -88,7 +88,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
         showResetButton: true,
         showCloseButton: true,
         onReset: () => setMessages(initialMessages),
-        onClose: () => toggleChatbot(false)
+        onClose: () => toggleChatbot(false),
       }}
     />
   );

@@ -8,11 +8,11 @@ import {
   DescribeAssetResponse,
 } from '@aws-sdk/client-iotsitewise';
 import { useAlarmAssets } from './useAlarmAssets';
-import {
+import type {
   AlarmAssetModelRequest,
   AlarmAssetRequest,
   AlarmCompositeModelRequest,
-  AlarmData,
+  AlarmDataInternal,
   AlarmInputPropertyRequest,
 } from '../types';
 import { queryClient } from '../../../queries';
@@ -32,13 +32,15 @@ import {
   mockAlarmDataDescribeAssetModel,
   mockAlarmModelCompositeModel,
   mockAlarmModelCompositeModel2,
+  mockAssetModelProperties,
+  mockAssetProperties,
   mockInputProperty,
 } from '../../../testing/alarms';
 
 const mockDescribeAssetResponse = ({
   assetId = MOCK_ASSET_ID,
   compositeModels = [],
-  assetProperties = [],
+  assetProperties = mockAssetProperties,
 }: {
   assetId?: string;
   compositeModels?: AssetCompositeModel[];
@@ -61,7 +63,7 @@ const mockDescribeAssetResponse = ({
 const mockDescribeAssetModelResponse = ({
   assetModelId = MOCK_ASSET_MODEL_ID,
   compositeModels = [],
-  assetModelProperties = [],
+  assetModelProperties = mockAssetModelProperties,
 }: {
   assetModelId?: string;
   compositeModels?: AssetModelCompositeModel[];
@@ -87,15 +89,53 @@ describe('useAlarmAssets', () => {
     queryClient.clear();
   });
 
+  it('should have the correct status', async () => {
+    describeAssetMock.mockResolvedValue(
+      mockDescribeAssetResponse({ compositeModels: [mockAlarmCompositeModel] })
+    );
+
+    const alarmAssetRequest = {
+      assetId: MOCK_ASSET_ID,
+    };
+
+    const alarmCompositeModelRequest = {
+      assetId: MOCK_ASSET_ID,
+      assetCompositeModelId: MOCK_COMPOSITE_MODEL_ID,
+    };
+
+    const { result: alarmDataResults } = renderHook(() =>
+      useAlarmAssets({
+        iotSiteWiseClient: iotSiteWiseClientMock,
+        requests: [alarmAssetRequest, alarmCompositeModelRequest],
+      })
+    );
+
+    await waitFor(() => {
+      expect(alarmDataResults.current[0].status.isLoading).toBe(true);
+      expect(alarmDataResults.current[1].status.isLoading).toBe(true);
+    });
+
+    await waitFor(() => {
+      expect(alarmDataResults.current[0].status.isSuccess).toBe(true);
+      expect(alarmDataResults.current[1].status.isSuccess).toBe(true);
+    });
+  });
+
   it('should return AlarmData with content for one alarm in an alarm composite model request', async () => {
     describeAssetMock.mockResolvedValue(
       mockDescribeAssetResponse({ compositeModels: [mockAlarmCompositeModel] })
     );
 
-    const alarmCompositeModelRequest: AlarmCompositeModelRequest = {
+    const alarmCompositeModelRequest = {
       assetId: MOCK_ASSET_ID,
       assetCompositeModelId: MOCK_COMPOSITE_MODEL_ID,
-    };
+    } satisfies AlarmCompositeModelRequest;
+
+    const mockAlarmDataInternal = {
+      ...mockAlarmDataDescribeAsset,
+      request: alarmCompositeModelRequest,
+      properties: mockAssetProperties,
+    } satisfies AlarmDataInternal;
 
     const { result: alarmDataResults } = renderHook(() =>
       useAlarmAssets({
@@ -106,9 +146,7 @@ describe('useAlarmAssets', () => {
 
     await waitFor(() => {
       expect(alarmDataResults.current.length).toBe(1);
-      expect(alarmDataResults.current[0]).toMatchObject(
-        mockAlarmDataDescribeAsset
-      );
+      expect(alarmDataResults.current[0]).toMatchObject(mockAlarmDataInternal);
     });
 
     expect(describeAssetMock).toBeCalled();
@@ -116,22 +154,24 @@ describe('useAlarmAssets', () => {
   });
 
   it('should return AlarmData with content for one alarm in an alarm input property request', async () => {
+    const mockProperties = [mockInputProperty];
     describeAssetMock.mockResolvedValue(
       mockDescribeAssetResponse({
         compositeModels: [mockAlarmCompositeModel],
-        assetProperties: [mockInputProperty],
+        assetProperties: mockProperties,
       })
     );
 
-    const alarmInputPropertyRequest: AlarmInputPropertyRequest = {
+    const alarmInputPropertyRequest = {
       assetId: MOCK_ASSET_ID,
       inputPropertyId: MOCK_ALARM_INPUT_PROPERTY_ID,
-    };
+    } satisfies AlarmInputPropertyRequest;
 
-    const expectedAlarmData: AlarmData = {
+    const expectedAlarmData = {
       ...mockAlarmDataDescribeAsset,
-      inputProperty: [mockInputProperty],
-    };
+      request: alarmInputPropertyRequest,
+      properties: mockProperties,
+    } satisfies AlarmDataInternal;
 
     const { result: alarmDataResults } = renderHook(() =>
       useAlarmAssets({
@@ -156,15 +196,27 @@ describe('useAlarmAssets', () => {
       })
     );
 
-    const mockAlarmDataDescribeAsset2: AlarmData = {
+    const mockAlarmDataDescribeAsset2 = {
       ...mockAlarmDataDescribeAsset,
       compositeModelId: MOCK_COMPOSITE_MODEL_ID_2,
       compositeModelName: MOCK_COMPOSITE_MODEL_NAME_2,
     };
 
-    const alarmAssetRequest: AlarmAssetRequest = {
+    const alarmAssetRequest = {
       assetId: MOCK_ASSET_ID,
-    };
+    } satisfies AlarmAssetRequest;
+
+    const mockAlarmDataInternal = {
+      ...mockAlarmDataDescribeAsset,
+      request: alarmAssetRequest,
+      properties: mockAssetProperties,
+    } satisfies AlarmDataInternal;
+
+    const mockAlarmDataInternal2 = {
+      ...mockAlarmDataDescribeAsset2,
+      request: alarmAssetRequest,
+      properties: mockAssetProperties,
+    } satisfies AlarmDataInternal;
 
     const { result: alarmDataResults } = renderHook(() =>
       useAlarmAssets({
@@ -175,12 +227,8 @@ describe('useAlarmAssets', () => {
 
     await waitFor(() => {
       expect(alarmDataResults.current.length).toBe(2);
-      expect(alarmDataResults.current[0]).toMatchObject(
-        mockAlarmDataDescribeAsset
-      );
-      expect(alarmDataResults.current[1]).toMatchObject(
-        mockAlarmDataDescribeAsset2
-      );
+      expect(alarmDataResults.current[0]).toMatchObject(mockAlarmDataInternal);
+      expect(alarmDataResults.current[1]).toMatchObject(mockAlarmDataInternal2);
     });
 
     expect(describeAssetMock).toBeCalled();
@@ -197,15 +245,27 @@ describe('useAlarmAssets', () => {
       })
     );
 
-    const alarmAssetModelRequest: AlarmAssetModelRequest = {
+    const alarmAssetModelRequest = {
       assetModelId: MOCK_ASSET_MODEL_ID,
-    };
+    } satisfies AlarmAssetModelRequest;
 
-    const mockAlarmDataDescribeAssetModel2: AlarmData = {
+    const mockAlarmDataDescribeAssetModel2 = {
       ...mockAlarmDataDescribeAssetModel,
       compositeModelId: MOCK_COMPOSITE_MODEL_ID_2,
       compositeModelName: MOCK_COMPOSITE_MODEL_NAME_2,
     };
+
+    const mockAlarmDataInternal = {
+      ...mockAlarmDataDescribeAssetModel,
+      request: alarmAssetModelRequest,
+      properties: mockAssetModelProperties,
+    } satisfies AlarmDataInternal;
+
+    const mockAlarmDataInternal2 = {
+      ...mockAlarmDataDescribeAssetModel2,
+      request: alarmAssetModelRequest,
+      properties: mockAssetModelProperties,
+    } satisfies AlarmDataInternal;
 
     const { result: alarmDataResults } = renderHook(() =>
       useAlarmAssets({
@@ -216,12 +276,8 @@ describe('useAlarmAssets', () => {
 
     await waitFor(() => {
       expect(alarmDataResults.current.length).toBe(2);
-      expect(alarmDataResults.current[0]).toMatchObject(
-        mockAlarmDataDescribeAssetModel
-      );
-      expect(alarmDataResults.current[1]).toMatchObject(
-        mockAlarmDataDescribeAssetModel2
-      );
+      expect(alarmDataResults.current[0]).toMatchObject(mockAlarmDataInternal);
+      expect(alarmDataResults.current[1]).toMatchObject(mockAlarmDataInternal2);
     });
 
     expect(describeAssetMock).not.toBeCalled();
@@ -231,9 +287,9 @@ describe('useAlarmAssets', () => {
   it('should return no AlarmData when there are no alarms on an asset', async () => {
     describeAssetMock.mockResolvedValue(mockDescribeAssetResponse({}));
 
-    const alarmAssetRequest: AlarmAssetRequest = {
+    const alarmAssetRequest = {
       assetId: MOCK_ASSET_ID,
-    };
+    } satisfies AlarmAssetRequest;
 
     const { result: alarmDataResults } = renderHook(() =>
       useAlarmAssets({
@@ -253,9 +309,9 @@ describe('useAlarmAssets', () => {
       mockDescribeAssetModelResponse({})
     );
 
-    const alarmAssetModelRequest: AlarmAssetModelRequest = {
+    const alarmAssetModelRequest = {
       assetModelId: MOCK_ASSET_MODEL_ID,
-    };
+    } satisfies AlarmAssetModelRequest;
 
     const { result: alarmDataResults } = renderHook(() =>
       useAlarmAssets({
@@ -277,21 +333,33 @@ describe('useAlarmAssets', () => {
       })
     );
 
-    const alarmCompositeModelRequest1: AlarmCompositeModelRequest = {
+    const alarmCompositeModelRequest1 = {
       assetId: MOCK_ASSET_ID,
       assetCompositeModelId: MOCK_COMPOSITE_MODEL_ID,
-    };
+    } satisfies AlarmCompositeModelRequest;
 
-    const alarmCompositeModelRequest2: AlarmCompositeModelRequest = {
+    const alarmCompositeModelRequest2 = {
       assetId: MOCK_ASSET_ID,
       assetCompositeModelId: MOCK_COMPOSITE_MODEL_ID_2,
-    };
+    } satisfies AlarmCompositeModelRequest;
 
-    const mockAlarmDataDescribeAsset2: AlarmData = {
+    const mockAlarmDataDescribeAsset2 = {
       ...mockAlarmDataDescribeAsset,
       compositeModelId: MOCK_COMPOSITE_MODEL_ID_2,
       compositeModelName: MOCK_COMPOSITE_MODEL_NAME_2,
     };
+
+    const mockAlarmDataInternal1 = {
+      ...mockAlarmDataDescribeAsset,
+      request: alarmCompositeModelRequest1,
+      properties: mockAssetProperties,
+    } satisfies AlarmDataInternal;
+
+    const mockAlarmDataInternal2 = {
+      ...mockAlarmDataDescribeAsset2,
+      request: alarmCompositeModelRequest2,
+      properties: mockAssetProperties,
+    } satisfies AlarmDataInternal;
 
     const { result: alarmDataResults } = renderHook(() =>
       useAlarmAssets({
@@ -302,15 +370,42 @@ describe('useAlarmAssets', () => {
 
     await waitFor(() => {
       expect(alarmDataResults.current.length).toBe(2);
-      expect(alarmDataResults.current[0]).toMatchObject(
-        mockAlarmDataDescribeAsset
-      );
-      expect(alarmDataResults.current[1]).toMatchObject(
-        mockAlarmDataDescribeAsset2
-      );
+      expect(alarmDataResults.current[0]).toMatchObject(mockAlarmDataInternal1);
+      expect(alarmDataResults.current[1]).toMatchObject(mockAlarmDataInternal2);
     });
 
     expect(describeAssetMock).toBeCalledTimes(1);
     expect(describeAssetModelMock).not.toBeCalled();
+  });
+
+  it('should return AlarmData with just request and status when query fails', async () => {
+    describeAssetMock.mockRejectedValue('Failure calling DescribeAsset');
+
+    const mockRequest = { assetId: MOCK_ASSET_ID };
+    const expectedAlarmData = {
+      assetId: MOCK_ASSET_ID,
+      status: {
+        isLoading: false,
+        isRefetching: false,
+        isSuccess: false,
+        isError: true,
+      },
+      request: mockRequest,
+    } satisfies AlarmDataInternal;
+
+    const { result: alarmDataResults } = renderHook(() =>
+      useAlarmAssets({
+        iotSiteWiseClient: iotSiteWiseClientMock,
+        requests: [mockRequest],
+        retry: false,
+      })
+    );
+
+    await waitFor(() => {
+      expect(alarmDataResults.current.length).toBe(1);
+      expect(alarmDataResults.current[0]).toMatchObject(expectedAlarmData);
+    });
+
+    expect(describeAssetMock).toBeCalledTimes(1);
   });
 });

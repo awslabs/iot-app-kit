@@ -16,6 +16,7 @@ import {
   DEFAULT_GAUGE_STYLES,
 } from './constants';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
+import { getTimeSeriesQueries } from '../../utils/queries';
 
 export const Gauge = ({
   size,
@@ -29,9 +30,10 @@ export const Gauge = ({
   theme,
   assistant,
 }: GaugeProps) => {
+  const timeSeriesQueries = getTimeSeriesQueries([query]);
   const { dataStreams } = useTimeSeriesData({
     viewport: passedInViewport,
-    queries: [query],
+    queries: timeSeriesQueries,
     settings: { fetchMostRecentBeforeEnd: true },
     styles,
   });
@@ -68,7 +70,7 @@ export const Gauge = ({
         transformTimeseriesDataToAssistantContext({
           start: viewportStartDate(utilizedViewport),
           end: viewportEndDate(utilizedViewport),
-          queries: [query],
+          queries: timeSeriesQueries,
         })
       );
     }

@@ -66,9 +66,16 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   const queries = useQueries(queryConfig.query);
   const key = createWidgetRenderKey(widget.id);
 
-  const mappedQuery = assetModelQueryToSiteWiseAssetQuery(queryConfig.query);
+  const { assets = [], assetModels = [] } = queryConfig.query ?? {};
+  const combinedAssets = assetModelQueryToSiteWiseAssetQuery({
+    assets,
+    assetModels,
+  });
   // if styleSettings is undefined, pass empty object so useTableItems does not pick name property
-  const items = useTableItems(mappedQuery, styleSettings ?? {});
+  const items = useTableItems(
+    { ...queryConfig.query, assets: combinedAssets },
+    styleSettings ?? {}
+  );
 
   const significantDigits =
     widgetSignificantDigits ?? dashboardSignificantDigits;

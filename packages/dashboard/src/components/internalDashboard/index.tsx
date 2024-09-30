@@ -138,10 +138,9 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   useDashboardViewport(
     currentViewport || parseViewport(dashboardConfiguration?.defaultViewport)
   );
-  const { chatbotHeight, calculateChatbotDimensions } =
-    useChatbotPosition(
-      '[data-test-id=read-only-mode-dashboard]'
-    );
+  const { chatbotHeight, calculateChatbotDimensions } = useChatbotPosition(
+    '[data-test-id=read-only-mode-dashboard]'
+  );
 
   const dispatch = useDispatch();
 

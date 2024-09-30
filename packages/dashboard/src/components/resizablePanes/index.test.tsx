@@ -13,6 +13,11 @@ it('renders panes', () => {
       leftPane={<p>{leftPaneContent}</p>}
       centerPane={<p>{centerPaneContent}</p>}
       rightPane={<p>{rightPaneContent}</p>}
+      rightPaneOptions={{
+        icon: '',
+        headerText: rightPaneContent,
+        hideHeader: false,
+      }}
     />
   );
 

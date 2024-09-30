@@ -56,7 +56,7 @@ export function useIoTSiteWiseClient({
       } as IoTSiteWise;
     }
 
-    return iotSiteWiseClient;
+    return iotSiteWiseClient ?? ({} as IoTSiteWise);
   }, [iotSiteWiseClient]);
 
   return iotSiteWise as IoTSiteWise;

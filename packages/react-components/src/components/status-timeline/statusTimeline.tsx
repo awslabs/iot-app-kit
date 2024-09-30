@@ -1,10 +1,6 @@
-import React from 'react';
-import {
-  StyleSettingsMap,
-  Threshold,
-  TimeSeriesDataQuery,
-  Viewport,
-} from '@iot-app-kit/core';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useMemo } from 'react';
+import { StyleSettingsMap, Threshold, Viewport } from '@iot-app-kit/core';
 import {
   StatusTimeline as StatusTimelineBaseWrongType,
   LineChart,
@@ -22,6 +18,11 @@ import {
   ECHARTS_GESTURE,
 } from '../../common/constants';
 import { Title } from '../../common/title';
+import type { ComponentQuery } from '../../common/chartTypes';
+import { useAlarms } from '../../hooks/useAlarms';
+import { getAlarmQueries, getTimeSeriesQueries } from '../../utils/queries';
+import { transformAlarmsToThreshold } from '../../utils/transformAlarmsToThreshold';
+import { convertAlarmQueryToAlarmRequest } from '../../queries/utils/convertAlarmQueryToAlarmRequest';
 
 // TODO: Remove this type assertion - iot-app-kit/charts has the wrong type for StatusTimeline
 const StatusTimelineBase: typeof LineChart =
@@ -37,7 +38,7 @@ export const StatusTimeline = ({
   styles,
   ...rest
 }: {
-  queries: TimeSeriesDataQuery[];
+  queries: ComponentQuery[];
   axis?: StatusTimelineAxisSettings;
   thresholds?: Threshold[];
   viewport?: Viewport;
@@ -48,9 +49,35 @@ export const StatusTimeline = ({
   assistant?: AssistantProperty;
   titleText?: string;
 }) => {
+  const { viewport, setViewport, group, lastUpdatedBy } = useViewport();
+  // if using echarts then echarts gesture overrides passed in viewport
+  // else explicitly passed in viewport overrides viewport group
+  const utilizedViewport =
+    (lastUpdatedBy === ECHARTS_GESTURE
+      ? viewport
+      : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
+
+  const alarmQueries = getAlarmQueries(queries);
+  const timeSeriesQueries = getTimeSeriesQueries(queries);
+
+  const transformedAlarms = useAlarms({
+    iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
+    iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
+    requests: alarmQueries.flatMap((query) =>
+      convertAlarmQueryToAlarmRequest(query)
+    ),
+    viewport: utilizedViewport,
+    settings: {
+      fetchThresholds: true,
+      refreshRate: alarmQueries.at(0)?.query.requestSettings?.refreshRate,
+    },
+    transform: transformAlarmsToThreshold,
+  });
+  const filteredAlarms = transformedAlarms.filter((alarm) => !!alarm);
+
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
-    queries,
+    queries: timeSeriesQueries,
     settings: {
       fetchFromStartToEnd: true,
       fetchMostRecentBeforeStart: true,
@@ -58,15 +85,15 @@ export const StatusTimeline = ({
     },
     styles,
   });
-  const { viewport, setViewport, group, lastUpdatedBy } = useViewport();
-  const allThresholds = [...queryThresholds, ...thresholds];
 
-  // if using echarts then echarts gesture overrides passed in viewport
-  // else explicitly passed in viewport overrides viewport group
-  const utilizedViewport =
-    (lastUpdatedBy === ECHARTS_GESTURE
-      ? viewport
-      : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
+  const allThresholds = useMemo(
+    () => [...queryThresholds, ...thresholds, ...filteredAlarms],
+    [
+      JSON.stringify(queryThresholds),
+      JSON.stringify(thresholds),
+      JSON.stringify(filteredAlarms),
+    ]
+  );
 
   return (
     <div style={{ height: 'inherit' }}>

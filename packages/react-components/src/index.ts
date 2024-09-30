@@ -52,14 +52,17 @@ export type {
 export { formatDate } from './utils/time';
 
 export {
+  AlarmExplorer,
   AssetModelExplorer,
   AssetExplorer,
   AssetPropertyExplorer,
   TimeSeriesExplorer,
+  type AlarmExplorerProps,
   type AssetModelExplorerProps,
   type AssetExplorerProps,
   type AssetPropertyExplorerProps,
   type TimeSeriesExplorerProps,
+  type AlarmResource,
   type AssetPropertyResource,
   type AssetResource,
   type TimeSeriesResource,

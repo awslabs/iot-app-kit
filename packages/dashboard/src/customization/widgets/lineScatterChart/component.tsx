@@ -166,10 +166,18 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   } = widget.properties;
 
   const query = queryConfig.query;
+
   const queries = useQueries(query);
 
-  const mappedQuery = assetModelQueryToSiteWiseAssetQuery(query);
-  const styleSettings = useAdaptedStyleSettings({ line, symbol }, mappedQuery);
+  const { assetModels = [], assets = [] } = query ?? {};
+  const combinedAssets = assetModelQueryToSiteWiseAssetQuery({
+    assetModels,
+    assets,
+  });
+  const styleSettings = useAdaptedStyleSettings(
+    { line, symbol },
+    { ...query, assets: combinedAssets }
+  );
 
   const aggregation = getAggregation(widget);
 

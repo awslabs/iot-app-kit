@@ -3,14 +3,14 @@ import {
   Threshold,
   Viewport,
   Primitive,
-  TimeSeriesDataQuery,
 } from '@iot-app-kit/core';
 import type { WidgetSettings } from '../../common/dataTypes';
 import { AssistantProperty } from '../../common/assistantProps';
+import type { ComponentQuery } from '../../common/chartTypes';
 
 export type GaugeProps = {
   size?: { width: number; height: number };
-  query: TimeSeriesDataQuery;
+  query: ComponentQuery;
   viewport?: Viewport;
   thresholds?: Threshold[];
   titleText?: string;

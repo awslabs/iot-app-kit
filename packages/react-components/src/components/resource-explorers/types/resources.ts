@@ -24,6 +24,24 @@ export interface AssetPropertyResource {
   unit?: string;
 }
 
+export interface AlarmResource {
+  name: string;
+  assetId: string;
+  assetModelId: string;
+  assetCompositeModelId: string;
+  inputPropertyId?: string;
+  inputPropertyName?: string;
+}
+
+export interface AlarmModelResource {
+  assetModelId: string;
+  assetCompositeModelId: string;
+  name: string;
+}
+
+export type AlarmResourceWithLatestValue =
+  DataStreamResourceWithLatestValue<AlarmResource>;
+
 export type AssetPropertyResourceWithLatestValue =
   DataStreamResourceWithLatestValue<AssetPropertyResource>;
 

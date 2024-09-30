@@ -10,6 +10,7 @@ import './kpi.css';
 import { highContrastColor } from './highContrastColor';
 import { getAggregationFrequency } from '../../utils/aggregationFrequency';
 import {
+  colorBorderDividerSecondary,
   colorTextHeadingDefault,
   fontSizeBodyS,
 } from '@cloudscape-design/design-tokens';
@@ -17,6 +18,7 @@ import { DataQualityText } from '../data-quality/data-quality-text';
 import { DEFAULT_DECIMAL_PLACES } from '../../common/constants';
 import { formatDate } from '../../utils/time';
 import { Title } from '../../common/title';
+import { AlarmStateText } from '../alarm-state/alarm-state-text';
 
 export const KpiBase: React.FC<KPIBaseProperties> = ({
   propertyPoint,
@@ -31,6 +33,7 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
   propertyThreshold,
   timeZone,
   titleText,
+  alarmState,
 }) => {
   const {
     showUnit,
@@ -60,6 +63,11 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
   const fontColor = showFilledThreshold
     ? highContrastColor(propertyThreshold.color)
     : nonThresholdFontColor;
+  const borderColor = showFilledThreshold
+    ? highContrastColor(propertyThreshold.color)
+    : settings.backgroundColor
+    ? nonThresholdFontColor
+    : colorBorderDividerSecondary;
 
   const point = propertyPoint;
   const aggregationResolutionString = getAggregationFrequency(
@@ -104,6 +112,30 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     );
   }
 
+  const alarmSection = (
+    <div
+      style={{
+        padding: '8px',
+        borderBottom: `1px solid ${borderColor}`,
+        color: fontColor,
+      }}
+    >
+      <AlarmStateText
+        state={alarmState}
+        inheritFontColor={!!showFilledThreshold || !!settings.backgroundColor}
+      />
+    </div>
+  );
+
+  const dataQualitySection = (
+    <div style={{ padding: '0 8px', color: fontColor }}>
+      <DataQualityText
+        quality={point?.quality}
+        inheritFontColor={!!showFilledThreshold || !!settings.backgroundColor}
+      />
+    </div>
+  );
+
   return (
     <div
       className='kpi-container'
@@ -112,6 +144,7 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     >
       <div className='kpi'>
         <div>
+          {alarmState && alarmSection}
           <Title
             data-testid='kpi-name-and-unit'
             text={getTitle()}
@@ -132,9 +165,7 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
               <Value value={point?.y} precision={significantDigits} />
             )}
           </div>
-          {!isLoading && showDataQuality && (
-            <DataQualityText quality={point?.quality} />
-          )}
+          {!isLoading && showDataQuality && dataQualitySection}
         </div>
         {point && (
           <div
@@ -154,7 +185,7 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
                 <div
                   className='timestamp-border'
                   style={{
-                    backgroundColor: fontColor,
+                    backgroundColor: borderColor,
                   }}
                 />
                 <div className='timestamp' data-testid='kpi-timestamp'>

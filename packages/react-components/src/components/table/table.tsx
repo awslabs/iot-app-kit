@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import { TableBase } from './tableBase';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
-import type {
-  StyleSettingsMap,
-  Threshold,
-  TimeSeriesDataQuery,
-  Viewport,
-} from '@iot-app-kit/core';
+import type { StyleSettingsMap, Threshold, Viewport } from '@iot-app-kit/core';
 import { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import { TableColumnDefinition, TableItem, TableItemHydrated } from './types';
 import { createTableItems } from './createTableItems';
@@ -20,6 +15,8 @@ import { TableHeader } from './tableHeader';
 import { TableAssistantResults } from './tableAssistantResults';
 import type { AssistantSupportedQuery } from '../../hooks/useAssistantContext/utils';
 import { IntlProvider } from 'react-intl';
+import type { ComponentQuery } from '../../common/chartTypes';
+import { getTimeSeriesQueries } from '../../utils/queries';
 
 const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
 
@@ -38,7 +35,7 @@ export const Table = ({
   ...props
 }: {
   columnDefinitions: TableColumnDefinition[];
-  queries: TimeSeriesDataQuery[];
+  queries: ComponentQuery[];
   items: TableItem[];
   thresholds?: Threshold[];
   sorting?: UseCollectionOptions<TableItemHydrated>['sorting'];
@@ -61,9 +58,10 @@ export const Table = ({
   const [indexesSelected, setIndexesSelected] = useState<number[]>([]);
   const [showSummarization, setShowSummarization] = useState<boolean>(false);
 
+  const timeSeriesQueries = getTimeSeriesQueries(queries);
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
-    queries,
+    queries: timeSeriesQueries,
     // Currently set to only fetch raw data.
     // TODO: Support all resolutions and aggregation types
     settings: { fetchMostRecentBeforeEnd: true, resolution: '0' },
@@ -88,7 +86,7 @@ export const Table = ({
     const transformedQueries = transformTimeseriesDataToAssistantContext({
       start: viewportStartDate(utilizedViewport),
       end: viewportEndDate(utilizedViewport),
-      queries,
+      queries: timeSeriesQueries,
     });
     const filteredQueries = transformedQueries.queries.map((query) => {
       const { properties = [] } = query as AssistantSupportedQuery;

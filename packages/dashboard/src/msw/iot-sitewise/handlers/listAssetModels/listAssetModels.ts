@@ -7,7 +7,12 @@ import { summarizeAssetModel } from '../../resources/assetModels/summarizeAssetM
 
 export function listAssetModelsHandler() {
   return rest.get(LIST_ASSET_MODELS_URL, (_req, res, ctx) => {
-    const assetModelSummaries = ASSET_MODELS.getAll().map(summarizeAssetModel);
+    let assetModelSummaries = ASSET_MODELS.getAll().map(summarizeAssetModel);
+    if (_req.url.search.includes('assetModelTypes=ASSET_MODEL')) {
+      assetModelSummaries = assetModelSummaries?.filter(
+        (summmary) => summmary.assetModelType !== 'COMPONENT_MODEL'
+      );
+    }
     const response: ListAssetModelsResponse = { assetModelSummaries };
 
     return res(ctx.delay(), ctx.status(200), ctx.json(response));

@@ -8,6 +8,8 @@ import type {
   SiteWiseAssetQuery,
   SiteWisePropertyAliasQuery,
   SiteWiseAssetModelQuery,
+  SiteWiseAlarmQuery,
+  SiteWiseAlarmAssetModelQuery,
 } from '@iot-app-kit/source-iotsitewise';
 import type { DashboardWidget } from '~/types';
 import type {
@@ -30,9 +32,11 @@ export type QueryConfig<S, T> = {
 
 export type SiteWiseQueryConfig = QueryConfig<
   'iotsitewise',
-  | (Partial<SiteWiseAssetQuery> &
+  | ((Partial<SiteWiseAssetQuery> &
       Partial<SiteWisePropertyAliasQuery> &
-      Partial<SiteWiseAssetModelQuery>)
+      Partial<SiteWiseAssetModelQuery>) &
+      Partial<SiteWiseAlarmQuery> &
+      Partial<SiteWiseAlarmAssetModelQuery>)
   | undefined
 >;
 
@@ -143,6 +147,15 @@ export type StyledAssetQuery = {
     assetModelId: SiteWiseAssetModelQuery['assetModels'][number]['assetModelId'];
     assetIds?: SiteWiseAssetModelQuery['assetModels'][number]['assetIds'];
     properties: StyledAssetPropertyQuery[];
+  }[];
+  alarms?: {
+    assetId: SiteWiseAlarmQuery['alarms'][number]['assetId'];
+    alarmComponents: SiteWiseAlarmQuery['alarms'][number]['alarmComponents'];
+  }[];
+  alarmModels?: {
+    assetModelId: SiteWiseAlarmAssetModelQuery['alarmModels'][number]['assetModelId'];
+    assetIds?: SiteWiseAlarmAssetModelQuery['alarmModels'][number]['assetIds'];
+    alarmComponents: SiteWiseAlarmQuery['alarms'][number]['alarmComponents'];
   }[];
 };
 
