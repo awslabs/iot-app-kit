@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/default
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useMemo } from 'react';
 
 import { GaugeBase } from './gaugeBase';
 import { GaugeProps } from './types';
@@ -84,9 +84,11 @@ export const Gauge = ({
   const color =
     styles && refId ? styles[refId]?.color : DEFAULT_GAUGE_PROGRESS_COLOR;
 
-  const allThresholds = transformedAlarm?.threshold
-    ? [...thresholds, transformedAlarm?.threshold]
-    : thresholds;
+  const allThresholds = useMemo(() => {
+    return transformedAlarm?.threshold
+      ? [...thresholds, transformedAlarm?.threshold]
+      : thresholds;
+  }, [JSON.stringify(thresholds), JSON.stringify(transformedAlarm?.threshold)]);
 
   return (
     <GaugeBase

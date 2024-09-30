@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useMemo } from 'react';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
@@ -51,6 +52,7 @@ export const KPI = ({
     viewport: utilizedViewport,
     settings: {
       fetchThresholds: true,
+      fetchOnlyLatest: true,
       refreshRate: alarmQueries.at(0)?.query.requestSettings?.refreshRate,
     },
     transform: buildTransformAlarmForSingleQueryWidgets({
@@ -72,6 +74,17 @@ export const KPI = ({
     styles,
   });
 
+  const allThresholds = useMemo(() => {
+    const allThresholds = [...queryThresholds, ...thresholds];
+    transformedAlarm?.threshold &&
+      allThresholds.push(transformedAlarm?.threshold);
+    return allThresholds;
+  }, [
+    JSON.stringify(queryThresholds),
+    JSON.stringify(thresholds),
+    JSON.stringify(transformedAlarm?.threshold),
+  ]);
+
   const {
     propertyPoint,
     propertyThreshold,
@@ -79,7 +92,7 @@ export const KPI = ({
     propertyResolution,
   } = widgetPropertiesFromInputs({
     dataStreams,
-    thresholds: [...queryThresholds, ...thresholds],
+    thresholds: allThresholds,
     viewport: utilizedViewport,
   });
 
