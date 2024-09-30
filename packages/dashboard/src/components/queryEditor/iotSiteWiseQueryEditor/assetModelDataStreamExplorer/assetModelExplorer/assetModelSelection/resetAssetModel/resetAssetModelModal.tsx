@@ -6,8 +6,6 @@ import Button from '@cloudscape-design/components/button';
 import Modal from '@cloudscape-design/components/modal';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 
-import CustomOrangeButton from '~/components/customOrangeButton';
-
 export const ResetAssetModelModal = ({
   visible,
   onHide,
@@ -27,7 +25,9 @@ export const ResetAssetModelModal = ({
             <Button onClick={onHide} variant='link'>
               Cancel
             </Button>
-            <CustomOrangeButton title='Reset' handleClick={onReset} />
+            <Button variant='primary' onClick={onReset}>
+              Reset
+            </Button>
           </SpaceBetween>
         </Box>
       }

@@ -1,21 +1,20 @@
+import { isEqual } from 'lodash';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isEqual } from 'lodash';
 
+import { Box, Button, SpaceBetween } from '@cloudscape-design/components';
 import { getPlugin } from '@iot-app-kit/core';
-import { Button, SpaceBetween, Box } from '@cloudscape-design/components';
 
-import { onSelectWidgetsAction, onToggleReadOnly } from '~/store/actions';
-import { DashboardSave } from '~/types';
-import DashboardSettings from './settings';
-import CustomOrangeButton from '../customOrangeButton';
-import { RefreshRateDropDown } from '../refreshRate/refreshRateDropdown';
 import {
   colorChartsLineGrid,
   spaceScaledXs,
   spaceScaledXxxl,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
+import { onSelectWidgetsAction, onToggleReadOnly } from '~/store/actions';
+import { DashboardSave } from '~/types';
+import { RefreshRateDropDown } from '../refreshRate/refreshRateDropdown';
+import DashboardSettings from './settings';
 
 import { convertToDashboardConfiguration } from '~/util/convertToDashbaoardConfiguration';
 
@@ -103,10 +102,9 @@ const Actions: React.FC<ActionsProps> = ({
             <Button onClick={handleOnSave}>Save</Button>
           )}
           {editable && defaultToolbar && (
-            <CustomOrangeButton
-              title={readOnly ? 'Edit' : 'Preview'}
-              handleClick={handleOnReadOnly}
-            />
+            <Button onClick={handleOnReadOnly} variant='primary'>
+              {readOnly ? 'Edit' : 'Preview'}
+            </Button>
           )}
           {editable && !readOnly && (
             <Button

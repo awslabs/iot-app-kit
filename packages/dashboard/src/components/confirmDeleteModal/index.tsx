@@ -7,8 +7,6 @@ import {
   SpaceBetween,
 } from '@cloudscape-design/components';
 
-import CustomOrangeButton from '../customOrangeButton';
-
 interface ConfirmDeleteModalProps {
   headerTitle: string;
   cancelTitle?: string;
@@ -44,10 +42,10 @@ const ConfirmDeleteModal = ({
                 {cancelTitle}
               </Button>
             )}
-            <CustomOrangeButton
-              title={submitTitle}
-              handleClick={handleSubmit}
-            />
+
+            <Button variant='primary' onClick={handleSubmit}>
+              {submitTitle}
+            </Button>
           </SpaceBetween>
         </Box>
       }
