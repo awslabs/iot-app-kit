@@ -21,11 +21,11 @@ type CollapsiblePanelProps = {
   panelWidth: number;
   onCollapsedPanelClick: () => void;
   panelContent: ReactNode;
-  icon: string;
+  icon: ReactNode;
   iconBackground?: string;
   side: 'right' | 'left';
   headerText: string;
-  hideHeader?: boolean;
+  hideHeaderWhenExpanded?: boolean;
 };
 
 export function CollapsiblePanel(props: CollapsiblePanelProps) {
@@ -47,7 +47,7 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
 
   const expandedPanel = (
     <div className='collapsible-panel'>
-      {props.hideHeader ? null : (
+      {props.hideHeaderWhenExpanded ? null : (
         <div
           className='collapsible-panel-header-container'
           style={{ borderColor: colorBorderDividerDefault }}
@@ -82,7 +82,7 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
       <div
         className='collapsible-panel-content'
         style={
-          props.hideHeader
+          props.hideHeaderWhenExpanded
             ? { overflowY: 'hidden', padding: spaceStaticXs }
             : { paddingBottom: spaceStaticL }
         }
@@ -107,12 +107,9 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
         }}
         className='side_panels_collapsed_style'
         onClick={props.onCollapsedPanelClick}
+        data-testid={`collapsed-${props.side}-panel-icon`}
       >
-        <img
-          src={props.icon}
-          alt={props.icon}
-          data-testid={`collapsed-${props.side}-panel-icon`}
-        />
+        {props.icon}
       </div>
     </Tooltip>
   );
@@ -133,6 +130,7 @@ export function CollapsiblePanel(props: CollapsiblePanelProps) {
           }),
           backgroundColor: colorBackgroundLayoutMain,
         };
+
   return (
     <div
       className={`collapsible-panel collapsible-panel-${props.side}`}

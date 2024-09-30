@@ -7,6 +7,7 @@ import {
   MessageType,
   useAssistantContext,
   type IMessage,
+  SITUATION_SUMMARY_DEFAULT_UTTERANCE,
 } from '@iot-app-kit/react-components';
 import { useClients } from '../dashboard/clientContext';
 import 'animate.css';
@@ -14,21 +15,12 @@ import './assistant.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { onToggleChatbotAction } from '~/store/actions';
 import { DashboardState } from '~/store/state';
+import { DashboardMessages } from '~/messages';
 
 export interface AssistantChatbotProps {
   height: number;
+  messageOverrides: DashboardMessages;
 }
-
-const initialMessages: Array<IMessage> = [
-  {
-    content:
-      'Hello, I am your dashboard assistant, please ask me anything about your dashboard.',
-    sender: 'assistant',
-    type: MessageType.TEXT,
-    id: uuid(),
-    loading: false,
-  },
-];
 
 export const Chatbot: FC<AssistantChatbotProps> = (
   props: AssistantChatbotProps
@@ -37,30 +29,64 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   const assistant = useSelector((state: DashboardState) => state.assistant);
   const { iotSiteWisePrivateClient } = useClients();
   const { getContextByComponent } = useAssistantContext();
+  const initialMessages: Array<IMessage> = [
+    {
+      content: props.messageOverrides.assistant.chatbot.initialMessage,
+      sender: 'assistant',
+      type: MessageType.TEXT,
+      id: uuid(),
+      loading: false,
+    },
+  ];
 
   const client = new IoTSitewiseAssistantClient({
     iotSiteWiseClient: iotSiteWisePrivateClient!,
   });
 
-  const { messages, invokeAssistant, setMessages } = useAssistant({
-    assistantClient: client,
-    initialState: {
-      messages: initialMessages,
-    },
-  });
+  const { messages, invokeAssistant, setMessages, generateSummary } =
+    useAssistant({
+      assistantClient: client,
+      initialState: {
+        messages: initialMessages,
+      },
+    });
 
   useEffect(() => {
     if (assistant.messages && assistant.messages.length > 0) {
       setMessages(assistant.messages);
     }
-  }, [assistant.messages, assistant.componentId]);
+
+    if (
+      assistant.callerComponentId === 'dashboard' &&
+      assistant.action === 'summary'
+    ) {
+      const contexts = assistant.selectedQueries
+        .map((item) => {
+          return getContextByComponent(item.widgetId);
+        })
+        .join('');
+
+      generateSummary({
+        componentId: 'dashboard',
+        conversationId: assistant.conversationId,
+        context: contexts,
+        utterance: SITUATION_SUMMARY_DEFAULT_UTTERANCE,
+      });
+      onToggleChatbotAction({
+        open: true,
+        callerComponentId: 'dashboard',
+        action: undefined,
+        messages: messages ?? [],
+      });
+    }
+  }, [assistant.messages, assistant.callerComponentId, assistant.action]);
 
   const handleSubmit = (utterance: string) => {
-    const componentContext = assistant.componentId
-      ? getContextByComponent(assistant.componentId)
+    const componentContext = assistant.callerComponentId
+      ? getContextByComponent(assistant.callerComponentId)
       : '';
     invokeAssistant({
-      componentId: 'chatbot',
+      componentId: assistant.callerComponentId ?? 'chatbot',
       conversationId: assistant.conversationId,
       utterance,
       context: componentContext,
@@ -71,7 +97,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
     dispatch(
       onToggleChatbotAction({
         open,
-        componentId: '',
+        callerComponentId: '',
         messages: assistant.messages,
       })
     );
@@ -84,7 +110,8 @@ export const Chatbot: FC<AssistantChatbotProps> = (
       onSubmit={handleSubmit}
       visible={!!assistant.isChatbotOpen}
       header={{
-        headerText: 'AI Assistant',
+        headerText:
+          props.messageOverrides.assistant.floatingMenu.buttonAIAssistant,
         showResetButton: true,
         showCloseButton: true,
         onReset: () => setMessages(initialMessages),

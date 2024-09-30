@@ -19,6 +19,12 @@ import type { UpdateSignificantDigitsAction } from './updateSignificantDigits';
 import { UpdateRefreshRateAction } from './changeRefreshRate';
 import { UpdateDefaultViewportAction } from './updateDefaultViewport';
 import { ToggleChatbotAction } from './toggleChatbot';
+import { ToggleAssistantModeAction } from './toggleAssistantMode';
+import {
+  AssistantSelectWidgetsAction,
+  AssistantDeselectWidgetsAction,
+  AssistantCleanWidgetsSelectionAction,
+} from './assistantWidgetsSelection';
 
 export * from './createWidget';
 export * from './deleteWidgets';
@@ -36,6 +42,8 @@ export * from './updateSignificantDigits';
 export * from './changeRefreshRate';
 export * from './updateDefaultViewport';
 export * from './toggleChatbot';
+export * from './toggleAssistantMode';
+export * from './assistantWidgetsSelection';
 
 export type DashboardAction =
   | CreateWidgetsAction
@@ -56,4 +64,8 @@ export type DashboardAction =
   | UpdateSignificantDigitsAction
   | UpdateRefreshRateAction
   | UpdateDefaultViewportAction
-  | ToggleChatbotAction;
+  | ToggleChatbotAction
+  | ToggleAssistantModeAction
+  | AssistantSelectWidgetsAction
+  | AssistantDeselectWidgetsAction
+  | AssistantCleanWidgetsSelectionAction;

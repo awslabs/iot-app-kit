@@ -70,7 +70,7 @@ const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
   const size = { width: chartSize.width - 8, height: chartSize.height - 44 };
 
   return (
-    <WidgetTile widget={widget} key={key}>
+    <WidgetTile widget={widget} key={key} assistant={assistant}>
       <Gauge
         size={size}
         query={queries[0]}

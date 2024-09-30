@@ -6,6 +6,7 @@ import type {
 import { deepFreeze } from '~/util/deepFreeze';
 import { v4 as uuid } from 'uuid';
 import type { IMessage } from '@iot-app-kit/react-components';
+import { SiteWiseQueryConfig } from '~/customization/widgets/types';
 
 export type DashboardState<
   Properties extends Record<string, unknown> = Record<string, unknown>
@@ -31,9 +32,17 @@ export type DashboardState<
   assistant: {
     state: AssistantStateTypes;
     conversationId: string;
-    isChatbotOpen: boolean;
     messages: IMessage[];
-    componentId?: string;
+
+    isChatbotOpen: boolean;
+    callerComponentId?: string;
+    action?: string;
+
+    mode: 'on' | 'off';
+    selectedQueries: {
+      widgetId: string;
+      queryConfig: SiteWiseQueryConfig;
+    }[];
   };
 };
 
@@ -70,5 +79,7 @@ export const initialState: DashboardState = deepFreeze({
     conversationId: uuid(),
     isChatbotOpen: false,
     messages: [],
+    mode: 'off',
+    selectedQueries: [],
   },
 });

@@ -34,9 +34,17 @@ describe('WidgetTile', () => {
 
   it('displays titlewhen widget type is "bar-chart"', () => {
     const { getByText } = render(
-      <WidgetTile widget={MOCK_BAR_WIDGET} title='Test Title'>
-        Test Children
-      </WidgetTile>
+      <Provider
+        store={configureDashboardStore({
+          dashboardConfiguration: {
+            widgets: [MOCK_LINE_CHART_WIDGET],
+          },
+        })}
+      >
+        <WidgetTile widget={MOCK_BAR_WIDGET} title='Test Title'>
+          Test Children
+        </WidgetTile>
+      </Provider>
     );
     const titleElement = getByText('Test Title');
     expect(titleElement).toBeInTheDocument();

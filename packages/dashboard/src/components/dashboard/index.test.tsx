@@ -22,6 +22,18 @@ const config = {
   region: 'test-region',
 };
 
+const clients = {
+  iotEventsClient: createMockIoTEventsSDK(),
+  iotSiteWiseClient: {
+    ...createMockSiteWiseSDK(),
+    config,
+  } as unknown as IoTSiteWiseClient,
+  iotTwinMakerClient: {
+    send: jest.fn(),
+  } as unknown as IoTTwinMakerClient,
+  iotSiteWise: new IoTSiteWise(),
+};
+
 it('renders', function () {
   const { queryByText, queryByTestId } = render(
     <Dashboard
@@ -34,17 +46,7 @@ it('renders', function () {
         widgets: [],
         viewport: { duration: '5m' },
       }}
-      clientConfiguration={{
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: {
-          ...createMockSiteWiseSDK(),
-          config,
-        } as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: {
-          send: jest.fn(),
-        } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
-      }}
+      clientConfiguration={clients}
     />
   );
 
@@ -65,17 +67,7 @@ it('renders in readonly initially', function () {
         widgets: [],
         viewport: { duration: '5m' },
       }}
-      clientConfiguration={{
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: {
-          ...createMockSiteWiseSDK(),
-          config,
-        } as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: {
-          send: jest.fn(),
-        } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
-      }}
+      clientConfiguration={clients}
       initialViewMode='preview'
     />
   );
@@ -104,17 +96,7 @@ it('renders in edit initially', function () {
         widgets: [],
         viewport: { duration: '5m' },
       }}
-      clientConfiguration={{
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: {
-          ...createMockSiteWiseSDK(),
-          config,
-        } as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: {
-          send: jest.fn(),
-        } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
-      }}
+      clientConfiguration={clients}
       initialViewMode='edit'
     />
   );
@@ -147,17 +129,7 @@ it('passes the correct viewMode to onSave', function () {
     <Dashboard
       onSave={onSave}
       dashboardConfiguration={savedConfig}
-      clientConfiguration={{
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: {
-          ...createMockSiteWiseSDK(),
-          config,
-        } as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: {
-          send: jest.fn(),
-        } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
-      }}
+      clientConfiguration={clients}
       initialViewMode='edit'
     />
   );
@@ -186,17 +158,7 @@ it('renders dashboard name', function () {
         viewport: { duration: '5m' },
       }}
       name='Test dashboard'
-      clientConfiguration={{
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: {
-          ...createMockSiteWiseSDK(),
-          config,
-        } as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: {
-          send: jest.fn(),
-        } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
-      }}
+      clientConfiguration={clients}
     />
   );
 
@@ -215,17 +177,7 @@ it('renders without dashboard name', function () {
         widgets: [],
         viewport: { duration: '5m' },
       }}
-      clientConfiguration={{
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: {
-          ...createMockSiteWiseSDK(),
-          config,
-        } as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: {
-          send: jest.fn(),
-        } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
-      }}
+      clientConfiguration={clients}
     />
   );
 
@@ -244,15 +196,7 @@ it('assistant disabled by default in the dashboard', function () {
         widgets: [],
         viewport: { duration: '5m' },
       }}
-      clientConfiguration={{
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient:
-          createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: {
-          send: jest.fn(),
-        } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
-      }}
+      clientConfiguration={clients}
       initialViewMode='preview'
     />
   );
@@ -260,8 +204,8 @@ it('assistant disabled by default in the dashboard', function () {
   expect(queryByTestId('dashboard-chatbot')).toBeNull();
 });
 
-it('assistant enabled in the dashboard when state is PASSIVE', function () {
-  const { queryByTestId } = render(
+it('assistant enabled in the dashboard when state is PASSIVE', () => {
+  const { getByRole } = render(
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
@@ -272,15 +216,7 @@ it('assistant enabled in the dashboard when state is PASSIVE', function () {
         widgets: [],
         viewport: { duration: '5m' },
       }}
-      clientConfiguration={{
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient:
-          createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: {
-          send: jest.fn(),
-        } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
-      }}
+      clientConfiguration={clients}
       initialViewMode='preview'
       assistantConfiguration={{
         state: 'PASSIVE',
@@ -288,11 +224,11 @@ it('assistant enabled in the dashboard when state is PASSIVE', function () {
     />
   );
 
-  expect(queryByTestId('dashboard-chatbot')).not.toBeNull();
+  expect(getByRole('button', { name: 'AI Assistant' })).toBeInTheDocument();
 });
 
-it('assistant disabled in the dashboard when state is DISABLED', function () {
-  const { queryByTestId } = render(
+it('assistant disabled in the dashboard when state is DISABLED', () => {
+  const { queryByRole } = render(
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
@@ -303,15 +239,7 @@ it('assistant disabled in the dashboard when state is DISABLED', function () {
         widgets: [],
         viewport: { duration: '5m' },
       }}
-      clientConfiguration={{
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient:
-          createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
-        iotTwinMakerClient: {
-          send: jest.fn(),
-        } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
-      }}
+      clientConfiguration={clients}
       initialViewMode='preview'
       assistantConfiguration={{
         state: 'DISABLED',
@@ -319,5 +247,5 @@ it('assistant disabled in the dashboard when state is DISABLED', function () {
     />
   );
 
-  expect(queryByTestId('dashboard-chatbot')).toBeNull();
+  expect(queryByRole('button', { name: 'AI Assistant' })).toBeNull();
 });

@@ -4,7 +4,8 @@ import type { Action } from 'redux';
 
 type ToggleChatbotActionPayload = {
   open: boolean;
-  componentId: string;
+  callerComponentId: string;
+  action?: 'summary';
   messages: IMessage[];
 };
 
@@ -29,7 +30,8 @@ export const toggleChatbot = (
     assistant: {
       ...state.assistant,
       isChatbotOpen: action.payload.open,
-      componentId: action.payload.componentId,
+      callerComponentId: action.payload.callerComponentId,
+      action: action.payload.action,
       messages: action.payload.messages,
     },
   };

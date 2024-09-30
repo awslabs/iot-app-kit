@@ -41,8 +41,8 @@
     "@amzn/iot-black-pearl-internal-v3": "file:./iot-black-pearl-internal-v3.tgz",
     "@cloudscape-design/collection-hooks": "1.0.49",
     "@cloudscape-design/components": "3.0.693",
-    "@cloudscape-design/design-tokens": "3.0.42",
-    "@cloudscape-design/global-styles": "1.0.31",
+    "@cloudscape-design/design-tokens": "3.0.44",
+    "@cloudscape-design/global-styles": "1.0.32",
     "@cloudscape-design/component-toolkit": "^1.0.0-beta.62",
     "vite": "^4.5.3"
   },

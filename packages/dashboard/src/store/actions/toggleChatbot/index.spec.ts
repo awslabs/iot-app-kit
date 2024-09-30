@@ -17,8 +17,8 @@ const setupDashboardState = (
   readOnly: false,
 });
 
-it('initial start of chatbot is null', () => {
-  expect(initialState.assistant.isChatbotOpen).toBeNull();
+it('initial state of chatbot is closed', () => {
+  expect(initialState.assistant.isChatbotOpen).toBeFalsy();
 });
 
 it('can open the chatbot', () => {
@@ -27,7 +27,7 @@ it('can open the chatbot', () => {
       type: 'TOGGLE_CHATBOT',
       payload: {
         open: true,
-        componentId: 'componentId',
+        callerComponentId: 'componentId',
         messages: [],
       },
     }).assistant.isChatbotOpen
@@ -40,11 +40,25 @@ it('can close the chatbot', () => {
       type: 'TOGGLE_CHATBOT',
       payload: {
         open: false,
-        componentId: 'componentId',
+        callerComponentId: 'componentId',
         messages: [],
       },
     }).assistant.isChatbotOpen
   ).toEqual(false);
+});
+
+it('can start summary action', () => {
+  expect(
+    toggleChatbot(setupDashboardState([]), {
+      type: 'TOGGLE_CHATBOT',
+      payload: {
+        open: false,
+        callerComponentId: 'dashboard',
+        action: 'summary',
+        messages: [],
+      },
+    }).assistant.action
+  ).toEqual('summary');
 });
 
 it('action TOGGLE_CHATBOT changes state correctly', () => {
@@ -52,10 +66,13 @@ it('action TOGGLE_CHATBOT changes state correctly', () => {
   store.dispatch(
     onToggleChatbotAction({
       open: true,
-      componentId: 'componentId',
+      callerComponentId: 'mockId',
+      action: 'summary',
       messages: [],
     })
   );
 
   expect(store.getState().assistant.isChatbotOpen).toBeTruthy();
+  expect(store.getState().assistant.callerComponentId).toBe('mockId');
+  expect(store.getState().assistant.action).toBe('summary');
 });

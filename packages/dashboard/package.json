@@ -36,6 +36,7 @@
     "watch-dependencies": "npm exec turbowatch ./turbowatch.ts"
   },
   "devDependencies": {
+    "@cloudscape-design/design-tokens": "3.0.42",
     "@faker-js/faker": "^8.2.0",
     "@iot-app-kit/jest-config": "10.12.2",
     "@iot-app-kit/testing-util": "10.12.2",

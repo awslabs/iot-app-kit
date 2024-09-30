@@ -38,7 +38,6 @@ describe('CollapsiblePanel', () => {
 
     // Assert collapsed panel content
     const iconButton = screen.getByTestId(`collapsed-${side}-panel-icon`);
-    expect(iconButton).toHaveAttribute('src', mockIcon);
 
     act(() => {
       iconButton.click();
@@ -79,5 +78,40 @@ describe('CollapsiblePanel', () => {
 
     // Assert panel collapsed
     expect(isPanelCollapsed).toBe(true);
+  });
+
+  it('should not show panel header when hideHeaderWhenExpanded is truthy', async () => {
+    const { queryByText } = render(
+      <CollapsiblePanel
+        isPanelCollapsed={false}
+        panelWidth={panelWidth}
+        onCollapsedPanelClick={jest.fn()}
+        panelContent={panelContent}
+        icon={mockIcon}
+        side='left'
+        headerText={headerText}
+        hideHeaderWhenExpanded={true}
+      />
+    );
+
+    // Assert expanded panel content
+    expect(queryByText(headerText)).toBeNull();
+  });
+
+  it('should not render panel if content is null', async () => {
+    const { queryByText } = render(
+      <CollapsiblePanel
+        isPanelCollapsed={false}
+        panelWidth={panelWidth}
+        onCollapsedPanelClick={jest.fn()}
+        panelContent={null}
+        icon={mockIcon}
+        side='left'
+        headerText={headerText}
+      />
+    );
+
+    // Assert expanded panel content
+    expect(queryByText(headerText)).toBeNull();
   });
 });

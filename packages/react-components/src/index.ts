@@ -91,3 +91,7 @@ export type {
   IMessageParser,
   BaseStateManager,
 } from './hooks/useAssistant/types';
+export {
+  SITUATION_SUMMARY_DEFAULT_UTTERANCE,
+  EVENT_SUMMARY_DEFAULT_UTTERANCE,
+} from './components/assistant-action-panel/constants';

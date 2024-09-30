@@ -77,7 +77,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
-    <WidgetTile widget={widget} key={key}>
+    <WidgetTile widget={widget} key={key} assistant={assistant}>
       <KPI
         query={queries[0]}
         viewport={viewport}

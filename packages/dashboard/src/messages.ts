@@ -143,6 +143,21 @@ export type SidePanelMessages = {
   };
 };
 
+export type AssistantMessages = {
+  floatingMenu: {
+    error: {
+      ariaLabel: string;
+      propertyLimitMessage: string;
+    };
+    buttonClearAll: string;
+    buttonGenerateSummary: string;
+    buttonAIAssistant: string;
+  };
+  chatbot: {
+    initialMessage: string;
+  };
+};
+
 export type DashboardMessages = {
   toolbar: ToolbarMessages;
   widgets: WidgetsMessages;
@@ -150,6 +165,7 @@ export type DashboardMessages = {
   viewport: ViewportMessages;
   resourceExplorer: ResourceExplorerMessages;
   sidePanel: SidePanelMessages;
+  assistant: AssistantMessages;
 };
 
 export const DefaultDashboardMessages: DashboardMessages = {
@@ -287,6 +303,22 @@ export const DefaultDashboardMessages: DashboardMessages = {
       title: 'Input',
       addOptionLabel: 'Add',
       optionPlaceholder: 'Add option',
+    },
+  },
+  assistant: {
+    floatingMenu: {
+      error: {
+        ariaLabel: 'error',
+        propertyLimitMessage:
+          'You can select up to 3 properties to summarize using generative AI for now. More options are coming soon.',
+      },
+      buttonClearAll: 'Clear all',
+      buttonGenerateSummary: 'Generate summary',
+      buttonAIAssistant: 'AI Assistant',
+    },
+    chatbot: {
+      initialMessage:
+        'Hello, I am your dashboard assistant, please ask me anything about your dashboard.',
     },
   },
 };

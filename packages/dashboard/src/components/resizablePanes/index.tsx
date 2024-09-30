@@ -15,7 +15,7 @@ import {
 
 import './index.css';
 import { CollapsiblePanel } from '../internalDashboard/collapsiblePanel';
-import resourceExplorerPanelIcon from './assets/resourceExplorer.svg';
+import { ResourceExplorerIcon } from './assets/ResourceExplorerIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import type { DashboardState } from '~/store/state';
 import { onToggleChatbotAction } from '~/store/actions/toggleChatbot';
@@ -34,10 +34,10 @@ type ResizablePanesProps = {
   centerPane: ReactNode;
   rightPane: ReactNode;
   rightPaneOptions: {
-    icon: string;
+    icon: ReactNode;
     iconBackground?: string;
     headerText: string;
-    hideHeader: boolean;
+    hideHeaderWhenExpanded?: boolean;
   };
 };
 
@@ -254,12 +254,12 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
 
   const onRightCollapsedPaneClick = () => {
     handleRightPaneCollapse();
-    if (props.rightPaneOptions.headerText === 'AI Assistant') {
+    if (props.rightPaneOptions?.headerText === 'AI Assistant') {
       setChatOpened(!isChatOpened);
       dispatch(
         onToggleChatbotAction({
           open: !isChatOpened,
-          componentId: '',
+          callerComponentId: '',
           messages: assistant.messages,
         })
       );
@@ -335,7 +335,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
         panelWidth={leftPaneWidth}
         onCollapsedPanelClick={onLeftCollapsedPaneClick}
         panelContent={leftPane}
-        icon={resourceExplorerPanelIcon}
+        icon={<ResourceExplorerIcon role='img' ariaLabel='Resource explorer' />}
         side='left'
         headerText='Resource explorer'
       />

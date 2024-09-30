@@ -13,7 +13,7 @@ import {
 import { ContentLayout } from '@cloudscape-design/components';
 import messages from '@cloudscape-design/components/i18n/messages/all.all';
 import { I18nProvider } from '@cloudscape-design/components/i18n';
-import PropertiesPanelIcon from '../resizablePanes/assets/propertiesPane.svg';
+import { PropertiesPaneIcon } from '../resizablePanes/assets/propertiesPaneIcon';
 
 import { selectedRect } from '~/util/select';
 
@@ -75,7 +75,8 @@ import Actions from '../actions';
 import { useSyncDashboardConfiguration } from '~/hooks/useSyncDashboardConfiguration';
 import { Chatbot } from '../assistant/chatbot';
 import { useChatbotPosition } from '~/hooks/useChatbotPosition';
-import AssistantIcon from '../assistant/assistantIcon.svg';
+import { AssistantIcon } from '../assistant/assistantIcon';
+import { AssistantFloatingMenu } from '../assistant/assistantFloatingMenu';
 
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
@@ -383,9 +384,8 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
           }
           rightPane={propertiesPanel}
           rightPaneOptions={{
-            icon: PropertiesPanelIcon,
+            icon: <PropertiesPaneIcon role='img' ariaLabel='Configuration' />,
             headerText: 'Configuration',
-            hideHeader: true,
           }}
         />
       </div>
@@ -420,51 +420,99 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             </Box>
           </div>
         )}
-        {assistant.state === 'DISABLED' ? (
-          <div
-            className='display-area'
-            ref={(el) => setViewFrameElement(el || undefined)}
-            style={{ backgroundColor: colorBackgroundCellShaded }}
-          >
-            <ReadOnlyGrid {...grid}>
-              <Widgets {...widgetsProps} />
-            </ReadOnlyGrid>
-            <WebglContext viewFrame={viewFrame} />
-          </div>
-        ) : (
-          <ResizablePanes
-            leftPane={null}
-            centerPane={
-              <div
-                className='display-area'
-                ref={(el) => {
-                  calculateChatbotDimensions();
-                  setViewFrameElement(el || undefined);
-                }}
-                style={{ backgroundColor: colorBackgroundCellShaded }}
-              >
-                <ReadOnlyGrid {...grid}>
-                  <Widgets {...widgetsProps} />
-                </ReadOnlyGrid>
-                <WebglContext viewFrame={viewFrame} />
-              </div>
-            }
-            rightPane={<Chatbot height={chatbotHeight} />}
-            rightPaneOptions={{
-              icon: AssistantIcon,
-              iconBackground: colorChartsPurple700,
-              headerText: 'AI Assistant',
-              hideHeader: true,
-            }}
-          />
-        )}
+        <div
+          className='display-area'
+          ref={(el) => setViewFrameElement(el || undefined)}
+          style={{ backgroundColor: colorBackgroundCellShaded }}
+        >
+          <ReadOnlyGrid {...grid}>
+            <Widgets {...widgetsProps} />
+          </ReadOnlyGrid>
+          <WebglContext viewFrame={viewFrame} />
+        </div>
       </div>
     </ContentLayout>
   );
 
+  const AssistantComponent = (
+    <ContentLayout
+      disableOverlap
+      headerVariant='high-contrast'
+      header={
+        <DashboardHeader
+          editable={editable}
+          toolbar={toolbar}
+          onSave={onSave}
+          name={name}
+        />
+      }
+    >
+      <div className='dashboard' data-test-id='read-only-mode-dashboard'>
+        {hasValidAssetModelData && (
+          <div
+            style={dashboardToolbarBottomBorder}
+            className='dashboard-toolbar-readonly-assistant'
+            aria-label='dashboard assistant mode with toolbar'
+            data-test-id='assistant-mode-dashboard-toolbar'
+            //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+            tabIndex={0}
+          >
+            <Box float='left' padding='s'>
+              <AssetModelSelection iotSiteWiseClient={iotSiteWise} />
+            </Box>
+          </div>
+        )}
+        <ResizablePanes
+          leftPane={null}
+          centerPane={
+            <div
+              className='display-area'
+              ref={(el) => {
+                calculateChatbotDimensions();
+                setViewFrameElement(el || undefined);
+              }}
+              style={{ backgroundColor: colorBackgroundCellShaded }}
+            >
+              <ReadOnlyGrid {...grid}>
+                <AssistantFloatingMenu
+                  messageOverrides={DefaultDashboardMessages}
+                />
+                <Widgets {...widgetsProps} />
+              </ReadOnlyGrid>
+              <WebglContext viewFrame={viewFrame} />
+            </div>
+          }
+          rightPane={
+            <Chatbot
+              height={chatbotHeight}
+              messageOverrides={DefaultDashboardMessages}
+            />
+          }
+          rightPaneOptions={{
+            icon: (
+              <AssistantIcon
+                role='img'
+                ariaLabel={
+                  DefaultDashboardMessages.assistant.floatingMenu
+                    .buttonAIAssistant
+                }
+              />
+            ),
+            iconBackground: colorChartsPurple700,
+            headerText:
+              DefaultDashboardMessages.assistant.floatingMenu.buttonAIAssistant,
+            hideHeaderWhenExpanded: true,
+          }}
+        />
+      </div>
+    </ContentLayout>
+  );
+
+  const readOnlyOrAssistant =
+    assistant.state === 'DISABLED' ? ReadOnlyComponent : AssistantComponent;
   return (
     <I18nProvider locale='en' messages={[messages]}>
-      {readOnly ? ReadOnlyComponent : EditComponent}
+      {readOnly ? readOnlyOrAssistant : EditComponent}
       <ConfirmDeleteModal
         visible={visible}
         headerTitle={`Delete selected widget${

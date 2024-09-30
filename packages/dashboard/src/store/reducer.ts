@@ -14,10 +14,14 @@ import {
   sendWidgetsToBack,
   toggleReadOnly,
   toggleChatbot,
+  toggleAssistantMode,
+  assistantSelectWidgets,
+  assistantDeselectWidgets,
   updateSignificantDigits,
   updateWidgets,
   updateRefreshRate,
   updateDefaultViewport,
+  assistantCleanWidgetsSelection,
 } from './actions';
 
 import { createWidgets } from './actions/createWidget';
@@ -92,6 +96,22 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'TOGGLE_CHATBOT': {
       return toggleChatbot(state, action);
+    }
+
+    case 'TOGGLE_ASSISTANT_MODE': {
+      return toggleAssistantMode(state, action);
+    }
+
+    case 'ASSISTANT_SELECT_WIDGETS': {
+      return assistantSelectWidgets(state, action);
+    }
+
+    case 'ASSISTANT_CLEAN_WIDGETS_SELECTION': {
+      return assistantCleanWidgetsSelection(state, action);
+    }
+
+    case 'ASSISTANT_DESELECT_WIDGETS': {
+      return assistantDeselectWidgets(state, action);
     }
 
     case 'UPDATE_SIGNIFICANT_DIGITS': {
