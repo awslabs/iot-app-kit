@@ -27,7 +27,6 @@ export type DashboardIotSiteWiseClients = {
   iotSiteWiseClient: IoTSiteWiseClient;
   iotEventsClient: IoTEventsClient;
   iotTwinMakerClient: IoTTwinMakerClient;
-  iotSiteWise: IoTSiteWise;
   iotSiteWisePrivateClient?: InternalIoTSiteWise;
 };
 

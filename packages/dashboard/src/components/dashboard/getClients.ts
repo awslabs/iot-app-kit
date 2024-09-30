@@ -4,9 +4,9 @@ import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { IoTSiteWise as InternalIoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import {
   DashboardClientConfiguration,
-  DashboardIotSiteWiseClients,
   DashboardClientCredentials,
 } from '~/types';
+import { DashboardClientContext } from './clientContext';
 
 export const isCredentials = (
   dashboardClientConfiguration: DashboardClientConfiguration
@@ -16,9 +16,17 @@ export const isCredentials = (
 
 export const getClients = (
   dashboardClientConfiguration: DashboardClientConfiguration
-): DashboardIotSiteWiseClients => {
-  if (!isCredentials(dashboardClientConfiguration))
-    return dashboardClientConfiguration;
+): DashboardClientContext => {
+  if (!isCredentials(dashboardClientConfiguration)) {
+    return {
+      ...dashboardClientConfiguration,
+      iotSiteWise: new IoTSiteWise({
+        credentials:
+          dashboardClientConfiguration.iotSiteWiseClient.config.credentials,
+        region: dashboardClientConfiguration.iotSiteWiseClient.config.region,
+      }),
+    };
+  }
 
   const iotEventsClient = new IoTEventsClient({
     credentials: dashboardClientConfiguration.awsCredentials,

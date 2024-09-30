@@ -4,13 +4,19 @@ import {
   createMockSiteWiseSDK,
 } from '@iot-app-kit/testing-util';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import {
-  IoTSiteWise,
-  type IoTSiteWiseClient,
-} from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 
 import DashboardView from './view';
 import React from 'react';
+
+const config = {
+  credentials: {
+    accessKeyId: '',
+    secretAccessKey: '',
+    sessionToken: '',
+  },
+  region: 'test-region',
+};
 
 it('renders', function () {
   const { queryByText, queryByTestId } = render(
@@ -25,12 +31,13 @@ it('renders', function () {
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient:
-          createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
+        iotSiteWiseClient: {
+          ...createMockSiteWiseSDK(),
+          config,
+        } as unknown as IoTSiteWiseClient,
         iotTwinMakerClient: {
           send: jest.fn(),
         } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
       }}
     />
   );

@@ -7,11 +7,17 @@ import {
 import { DashboardWrapper as Dashboard } from './wrapper';
 import React from 'react';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import {
-  IoTSiteWise,
-  type IoTSiteWiseClient,
-} from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { RefreshRate } from '../refreshRate/types';
+
+const config = {
+  credentials: {
+    accessKeyId: '',
+    secretAccessKey: '',
+    sessionToken: '',
+  },
+  region: 'test-region',
+};
 
 it('renders', function () {
   const { queryByText, queryByTestId } = render(
@@ -27,12 +33,13 @@ it('renders', function () {
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient:
-          createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
+        iotSiteWiseClient: {
+          ...createMockSiteWiseSDK(),
+          config,
+        } as unknown as IoTSiteWiseClient,
         iotTwinMakerClient: {
           send: jest.fn(),
         } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
       }}
     />
   );
@@ -56,12 +63,13 @@ it('renders in readonly initially', function () {
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient:
-          createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
+        iotSiteWiseClient: {
+          ...createMockSiteWiseSDK(),
+          config,
+        } as unknown as IoTSiteWiseClient,
         iotTwinMakerClient: {
           send: jest.fn(),
         } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
       }}
       initialViewMode='preview'
     />
@@ -93,12 +101,13 @@ it('renders in edit initially', function () {
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient:
-          createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
+        iotSiteWiseClient: {
+          ...createMockSiteWiseSDK(),
+          config,
+        } as unknown as IoTSiteWiseClient,
         iotTwinMakerClient: {
           send: jest.fn(),
         } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
       }}
       initialViewMode='edit'
     />
@@ -134,12 +143,13 @@ it('passes the correct viewMode to onSave', function () {
       dashboardConfiguration={savedConfig}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient:
-          createMockSiteWiseSDK() as unknown as IoTSiteWiseClient,
+        iotSiteWiseClient: {
+          ...createMockSiteWiseSDK(),
+          config,
+        } as unknown as IoTSiteWiseClient,
         iotTwinMakerClient: {
           send: jest.fn(),
         } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
       }}
       initialViewMode='edit'
     />
@@ -171,11 +181,13 @@ it('renders dashboard name', function () {
       name='Test dashboard'
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: createMockSiteWiseSDK() as IoTSiteWiseClient,
+        iotSiteWiseClient: {
+          ...createMockSiteWiseSDK(),
+          config,
+        } as unknown as IoTSiteWiseClient,
         iotTwinMakerClient: {
           send: jest.fn(),
         } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
       }}
     />
   );
@@ -197,11 +209,13 @@ it('renders without dashboard name', function () {
       }}
       clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: createMockSiteWiseSDK() as IoTSiteWiseClient,
+        iotSiteWiseClient: {
+          ...createMockSiteWiseSDK(),
+          config,
+        } as unknown as IoTSiteWiseClient,
         iotTwinMakerClient: {
           send: jest.fn(),
         } as unknown as IoTTwinMakerClient,
-        iotSiteWise: new IoTSiteWise(),
       }}
     />
   );

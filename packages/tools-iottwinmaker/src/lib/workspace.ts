@@ -223,8 +223,8 @@ const enableAccessLogging = async (
   targetBucketName: string
 ): Promise<boolean> => {
   try {
-    // Step 1 - Grant Log Delivery group permission to write log to the target bucket
-    await grantPermissionsToWriteLogs(targetBucketName);
+    // Step 1 - Grant Log Delivery group permission to write log to the target bucket via s3 policy
+    await grantPermissionsToWriteLogs(sourceBucketName, targetBucketName);
     // Step 2 - Enable logging on the source bucket
     await putBucketLogging(sourceBucketName, targetBucketName);
   } catch (error) {
@@ -233,16 +233,33 @@ const enableAccessLogging = async (
   return true;
 };
 
-// Grant Log Delivery group permission to write log to the target bucket
+// Grant Log Delivery group permission to write log to the target bucket via s3 policy
 const grantPermissionsToWriteLogs = async (
-  bucketName: string
+  sourceBucketName: string,
+  targetBucketName: string
 ): Promise<boolean> => {
+  const putBucketPolicy = {
+    Statement: [
+      {
+        Sid: 'S3ServerAccessLogsPolicy',
+        Effect: 'Allow',
+        Principal: { Service: 'logging.s3.amazonaws.com' },
+        Action: ['s3:PutObject'],
+        Resource: `arn:aws:s3:::${targetBucketName}/*`,
+        Condition: {
+          ArnLike: { 'aws:SourceArn': `arn:aws:s3:::${sourceBucketName}` },
+        },
+      },
+    ],
+  };
+
+  const bucketPolicyParams = {
+    Bucket: targetBucketName,
+    Policy: JSON.stringify(putBucketPolicy),
+  };
+
   try {
-    await aws().s3.putBucketAcl({
-      Bucket: bucketName,
-      GrantReadACP: 'URI=http://acs.amazonaws.com/groups/s3/LogDelivery',
-      GrantWrite: 'URI=http://acs.amazonaws.com/groups/s3/LogDelivery',
-    });
+    await aws().s3.putBucketPolicy(bucketPolicyParams);
   } catch (error) {
     return false;
   }

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.12.2](https://github.com/awslabs/iot-app-kit/compare/root-v10.12.1...root-v10.12.2) (2024-09-17)
+
+
+### Bug Fixes
+
+* **bucket policy:** switch from ACL to bucket policy for access logs ([2d17a0f](https://github.com/awslabs/iot-app-kit/commit/2d17a0fa53057ddd0a9e5b46ab2b0de6b9163ac2))
+* **dashboard:** remove promise client from public API and internally generate it ([b98f5c7](https://github.com/awslabs/iot-app-kit/commit/b98f5c7ad292cee108c744d2ceec0d5117dd90b0))
+
 ## [10.12.1](https://github.com/awslabs/iot-app-kit/compare/root-v10.12.0...root-v10.12.1) (2024-09-14)
 
 
