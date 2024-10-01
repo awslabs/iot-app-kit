@@ -4,7 +4,6 @@ import { useECharts, useLoadableEChart } from '../../hooks/useECharts';
 import { GaugeBaseProperties } from './types';
 import { useGaugeConfiguration } from './hooks/useGaugeConfiguration';
 import { useResizableGauge } from './hooks/useResizableGauge';
-import { GaugeErrorText } from './gaugeErrorText';
 import { GaugeText } from './gaugeText';
 import './gauge.css';
 import { thresholdsToColor } from './utils/thresholdsToColor';
@@ -48,8 +47,8 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
     chartRef,
     {
       isLoading,
-      thresholds,
-      gaugeValue,
+      thresholds: thresholds,
+      gaugeValue: gaugeValue,
       name,
       settings,
       unit,
@@ -78,7 +77,6 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
           height: size?.height,
         }}
       />
-      <GaugeErrorText error={error} />
       {!isLoading && (
         <GaugeText
           valueColor={thresholdsToColor({
@@ -87,9 +85,9 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
             defaultColor: settings?.color,
           })}
           unit={unit}
+          error={error}
           settings={settings}
           name={name}
-          error={error}
           quality={quality}
           value={gaugeValue}
           alarmState={alarmState}
