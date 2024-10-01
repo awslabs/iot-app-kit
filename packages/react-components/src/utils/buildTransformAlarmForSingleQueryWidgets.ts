@@ -20,14 +20,12 @@ export const buildTransformAlarmForSingleQueryWidgets =
     const propertyId = inputProperty?.at(0)?.property.id;
     const latestState = state?.data?.at(-1);
 
-    if (
-      status.isSuccess &&
+    const timeSeriesDataQuery =
+      iotSiteWiseClient &&
+      iotEventsClient &&
       assetId &&
       propertyId &&
-      iotSiteWiseClient &&
-      iotEventsClient
-    ) {
-      const timeSeriesDataQuery = initialize({
+      initialize({
         iotSiteWiseClient,
         iotEventsClient,
       }).query.timeSeriesData({
@@ -43,10 +41,10 @@ export const buildTransformAlarmForSingleQueryWidgets =
         ],
       });
 
-      return {
-        state: parseAlarmStateAssetProperty(latestState)?.value.state,
-        timeSeriesDataQueries: [timeSeriesDataQuery],
-        threshold: transformAlarmsToThreshold(alarm),
-      };
-    }
+    return {
+      status,
+      state: parseAlarmStateAssetProperty(latestState)?.value.state,
+      timeSeriesDataQueries: timeSeriesDataQuery ? [timeSeriesDataQuery] : [],
+      threshold: transformAlarmsToThreshold(alarm),
+    };
   };
