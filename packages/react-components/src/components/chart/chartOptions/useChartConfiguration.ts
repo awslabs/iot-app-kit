@@ -1,9 +1,4 @@
-import {
-  DataPoint,
-  DataStream,
-  Threshold,
-  ThresholdValue,
-} from '@iot-app-kit/core';
+import { DataPoint, Threshold, ThresholdValue } from '@iot-app-kit/core';
 import {
   ChartRef,
   useGroupableEChart,
@@ -22,8 +17,12 @@ import {
 import { useSeriesAndYAxis } from './seriesAndYAxis/convertSeriesAndYAxis';
 import { SeriesOption } from 'echarts';
 import { GenericSeries } from '../../../echarts/types';
+import { useNormalizedDataStreams } from '../hooks/useNormalizedDataStreams';
+import { ChartAlarms } from '../hooks/useChartAlarms';
 
-const toDataStreamIdentifiers = (dataStreams: DataStream[]) =>
+const toDataStreamIdentifiers = (
+  dataStreams: ReturnType<typeof useNormalizedDataStreams>
+) =>
   dataStreams.map(
     ({
       id,
@@ -35,6 +34,7 @@ const toDataStreamIdentifiers = (dataStreams: DataStream[]) =>
       unit,
       data,
       assetName,
+      latestAlarmStateValue,
     }) => ({
       id,
       name,
@@ -44,6 +44,7 @@ const toDataStreamIdentifiers = (dataStreams: DataStream[]) =>
       detailedName,
       unit,
       latestValue: data.at(-1)?.y,
+      latestAlarmStateValue,
       assetName,
     })
   );
@@ -64,6 +65,7 @@ const toDataStreamMetaData = (
       unit,
       assetName,
       latestValue,
+      latestAlarmStateValue,
     }) => {
       const foundSeries = series.find(
         ({ id: seriesId }) => seriesId === id
@@ -83,6 +85,7 @@ const toDataStreamMetaData = (
         unit,
         assetName,
         latestValue,
+        latestAlarmStateValue,
       };
     }
   );
@@ -99,11 +102,14 @@ type ChartConfigurationOptions = Pick<
   | 'defaultVisualizationType'
   | 'timeZone'
 > & { group: string } & { isLoading: boolean } & {
-  dataStreams: DataStream[];
+  dataStreams: ReturnType<typeof useNormalizedDataStreams>;
 } & { visibleData: DataPoint[] } & {
   thresholds: Threshold<ThresholdValue>[];
 } & { chartWidth: number } & ChartDataQuality & {
     gestures: boolean;
+  } & {
+    alarms: ChartAlarms;
+    showAlarmIcons?: boolean;
   };
 
 export type DataStreamMetaData = ReturnType<
@@ -123,6 +129,8 @@ export const useChartConfiguration = (
     group,
     isLoading,
     dataStreams,
+    alarms,
+    showAlarmIcons = true,
     visibleData,
     id,
     axis,
@@ -176,8 +184,10 @@ export const useChartConfiguration = (
   }, [chartRef, timeZone]);
 
   const performanceMode = useMemo(
-    () => visibleData.length > PERFORMANCE_MODE_THRESHOLD,
-    [visibleData.length]
+    () =>
+      visibleData.length > PERFORMANCE_MODE_THRESHOLD &&
+      (alarms.length === 0 || !showAlarmIcons),
+    [alarms, showAlarmIcons, visibleData.length]
   );
 
   const xAxis = useXAxis(axis);
@@ -191,6 +201,7 @@ export const useChartConfiguration = (
     performanceMode,
     showBadDataIcons,
     showUncertainDataIcons,
+    showAlarmIcons,
   });
 
   const tooltip = useTooltip({
@@ -222,6 +233,7 @@ export const useChartConfiguration = (
       ? undefined
       : { replaceMerge: ['series'] };
     previousDataStreamIdentifiers.current = dataSteamIdentifiers;
+    // prevAlarmsSeries.current = alarmSeries;
 
     setDataStreamMetaData(
       toDataStreamMetaData(dataSteamIdentifiers, series, styleSettings)
@@ -253,6 +265,7 @@ export const useChartConfiguration = (
     series,
     gestures,
     yAxis,
+    thresholds,
     dataSteamIdentifiers,
   ]);
 

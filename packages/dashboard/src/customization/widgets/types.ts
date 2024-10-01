@@ -177,7 +177,8 @@ type ChartLegendContent =
   | 'unit'
   | 'asset'
   | 'minValue'
-  | 'maxValue';
+  | 'maxValue'
+  | 'latestAlarmStateValue';
 export type ChartLegend = {
   visible?: boolean;
   position?: 'left' | 'bottom' | 'right';

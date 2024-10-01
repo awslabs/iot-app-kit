@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import type { SetRequired } from 'type-fest';
 import type {
   AlarmData,
@@ -157,6 +157,20 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     ...settings,
     refreshRate: Infinity, // Only fetch thresholds once, require page refresh
   });
+
+  useEffect(() => {
+    console.log('re-rendering!');
+  }, [
+    thresholdAlarmData,
+    statePropertyAlarmData,
+    alarmData,
+    alarmDataWithoutInternalProperties,
+    inputPropertiesAlarmData,
+    alarmModelAlarmData,
+    sourcePropertyAlarmData,
+    typePropertyAlarmData,
+    assetAlarmData,
+  ]);
 
   // Apply the transform callback if it exists, otherwise return the AlarmData
   return useMemo(

@@ -13,6 +13,10 @@ import {
   LEGEND_ASSET_NAME_COL_MAX_WIDTH,
   LEGEND_ASSET_NAME_COL_MIN_WIDTH,
 } from '../../../eChartsConstants';
+import {
+  LatestAlarmStateValueCell,
+  LatestAlarmStateValueColumnHeader,
+} from './latestAlarmStateValue';
 
 type LegendTableColumnDefinitions =
   TableProps<DataStreamInformation>['columnDefinitions'];
@@ -68,6 +72,22 @@ const createLatestValueColumnDefinition = (
   },
   isRowHeader: true,
 });
+
+const createLatestAlarmStateValueColumnDefinition =
+  (): LegendTableColumnDefinitions[1] => ({
+    id: 'Latest Alarm State Value',
+    sortingField: 'latestAlarmStateValue',
+    header: <LatestAlarmStateValueColumnHeader />,
+    cell: (item) => {
+      return (
+        <LatestAlarmStateValueCell
+          {...item}
+          latestAlarmStateValue={item.latestAlarmStateValue}
+        />
+      );
+    },
+    isRowHeader: true,
+  });
 
 const createMinimumColumnDefinition =
   (): LegendTableColumnDefinitions[number] => ({
@@ -127,6 +147,9 @@ export const createTableLegendColumnDefinitions = ({
     ...(visibleContent?.minValue ? [createMinimumColumnDefinition()] : []),
     ...(visibleContent?.latestValue
       ? [createLatestValueColumnDefinition(significantDigits)]
+      : []),
+    ...(visibleContent?.latestAlarmStateValue
+      ? [createLatestAlarmStateValueColumnDefinition()]
       : []),
     ...trendCursorColumnDefinitions,
   ];

@@ -7,6 +7,7 @@ export type DataStreamInformation = Pick<
 > & {
   trendCursorValues: TrendCursorValues;
   latestValue: Primitive | undefined;
+  latestAlarmStateValue?: string;
 } & DataStreamMinMax;
 
 export type TrendCursor = {

@@ -40,6 +40,7 @@ export const lineScatterChartPlugin: DashboardPlugin = {
             unit: true,
             asset: true,
             latestValue: true,
+            latestAlarmStateValue: true,
             maxValue: false,
             minValue: false,
           },
