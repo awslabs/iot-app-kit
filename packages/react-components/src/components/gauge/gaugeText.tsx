@@ -11,6 +11,7 @@ import { AlarmStateText } from '../alarm-state/alarm-state-text';
 import { PascalCaseStateName } from '../../hooks/useAlarms/transformers';
 import { getPreciseValue } from '../../utils/getPreciseValue';
 import { Primitive } from '@iot-app-kit/core';
+import { GaugeErrorText } from './gaugeErrorText';
 
 const getFormattedValue = ({
   value,
@@ -58,6 +59,7 @@ export const GaugeText = ({
   significantDigits,
   settings,
   titleText,
+  error,
 }: {
   value?: Primitive;
   error?: string;
@@ -89,6 +91,7 @@ export const GaugeText = ({
           fontSize: settings?.labelFontSize,
         }}
       >
+        <GaugeErrorText error={error} />
         {alarmState && <AlarmStateText state={alarmState} />}
         {getFormattedValue({
           value,

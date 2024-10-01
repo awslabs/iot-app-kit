@@ -4,7 +4,11 @@ import { AssistantWrapperPanel } from '../assistant-panels/assistantWrapperPanel
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
-import { DEFAULT_VIEWPORT, ECHARTS_GESTURE } from '../../common/constants';
+import {
+  CHART_ALARM_ERROR,
+  DEFAULT_VIEWPORT,
+  ECHARTS_GESTURE,
+} from '../../common/constants';
 import {
   DataStream,
   viewportEndDate,
@@ -86,8 +90,11 @@ export const Gauge = ({
   const streamToUse = [propertyStream, alarmStream].find(Boolean) as DataStream;
   const name = streamToUse?.name;
   const unit = streamToUse?.unit;
-  const isLoading = streamToUse?.isLoading || false;
-  const error = streamToUse?.error;
+  const isLoading =
+    streamToUse?.isLoading || transformedAlarm?.status.isLoading || false;
+  const error = transformedAlarm?.status.isError
+    ? CHART_ALARM_ERROR
+    : streamToUse?.error;
 
   const refId = dataStreams[0]?.refId;
   const color =

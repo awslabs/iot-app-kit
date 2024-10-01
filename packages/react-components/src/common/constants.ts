@@ -95,3 +95,5 @@ export const DEFAULT_LEGEND: LegendConfig = {
 export const ECHARTS_GESTURE = 'echarts-gesture';
 
 export const DEFAULT_DECIMAL_PLACES = 4;
+
+export const CHART_ALARM_ERROR = { msg: 'Error fetching alarm data' };

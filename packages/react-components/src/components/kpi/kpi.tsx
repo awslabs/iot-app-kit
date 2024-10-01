@@ -3,7 +3,7 @@ import React, { useEffect, useMemo } from 'react';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
-import { DEFAULT_VIEWPORT } from '../../common/constants';
+import { CHART_ALARM_ERROR, DEFAULT_VIEWPORT } from '../../common/constants';
 import type { AssistantProperty } from '../../common/assistantProps';
 import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
 import { AssistantWrapperPanel } from '../assistant-panels/assistantWrapperPanel';
@@ -109,8 +109,11 @@ export const KPI = ({
   const name = propertyStream?.name;
   const unit = propertyStream?.unit;
   const backgroundColor = settings?.color || settings?.backgroundColor;
-  const isLoading = propertyStream?.isLoading || false;
-  const error = propertyStream?.error;
+  const isLoading =
+    propertyStream?.isLoading || transformedAlarm?.status.isLoading || false;
+  const error = transformedAlarm?.status.isError
+    ? CHART_ALARM_ERROR
+    : propertyStream?.error;
 
   useEffect(() => {
     if (assistant) {
