@@ -1,23 +1,15 @@
 // eslint-disable-next-line import/default
 import React from 'react';
-import { Box, Icon } from '@cloudscape-design/components';
-import { spaceScaledXs } from '@cloudscape-design/design-tokens';
+import { Box, Icon, SpaceBetween } from '@cloudscape-design/components';
 
 export const GaugeErrorText = ({ error }: { error?: string }) => {
   if (!error) {
     return null;
   }
   return (
-    <div className='gauge-info'>
-      <div
-        className='gauge-info-text'
-        style={{
-          gap: spaceScaledXs,
-        }}
-      >
-        <Icon name='status-warning' variant='warning' />
-        <Box variant='span'>{error}</Box>
-      </div>
-    </div>
+    <SpaceBetween direction='horizontal' size='xs'>
+      <Icon name='status-negative' variant='error' />
+      <Box variant='span'>{error}</Box>
+    </SpaceBetween>
   );
 };

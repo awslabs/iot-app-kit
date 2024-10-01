@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
-import { DEFAULT_VIEWPORT } from '../../common/constants';
+import { CHART_ALARM_ERROR, DEFAULT_VIEWPORT } from '../../common/constants';
 import type {
   StyleSettingsMap,
   Viewport,
@@ -99,8 +99,11 @@ export const KPI = ({
   const name = propertyStream?.name;
   const unit = propertyStream?.unit;
   const backgroundColor = settings?.color || settings?.backgroundColor;
-  const isLoading = propertyStream?.isLoading || false;
-  const error = propertyStream?.error;
+  const isLoading =
+    propertyStream?.isLoading || transformedAlarm?.status.isLoading || false;
+  const error = transformedAlarm?.status.isError
+    ? CHART_ALARM_ERROR
+    : propertyStream?.error;
 
   return (
     <KpiBase
