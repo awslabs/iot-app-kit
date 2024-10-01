@@ -48,7 +48,6 @@ it('correctly parses query and yields asset models', async () => {
   });
 
   const x = await assetModels.next();
-  // console.log(x.value.assetModelProperties);
   expect(x).toEqual(
     expect.objectContaining({
       value: {
