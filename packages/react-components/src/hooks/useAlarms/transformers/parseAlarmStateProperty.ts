@@ -10,6 +10,25 @@ export const isAlarmState = (state?: string): state is PascalCaseStateName => {
   return Object.values(ALARM_STATUS).includes(state as PascalCaseStateName);
 };
 
+type SiteWiseRuleEvaluation = {
+  simpleRule?: {
+    inputProperty?: number;
+    operator?: string;
+    threshold?: number;
+  };
+};
+
+export const isRuleEvaluation = (
+  ruleEvaluation?: unknown
+): ruleEvaluation is SiteWiseRuleEvaluation => {
+  return (
+    ruleEvaluation != null &&
+    typeof ruleEvaluation === 'object' &&
+    (ruleEvaluation as SiteWiseRuleEvaluation).simpleRule != null &&
+    (ruleEvaluation as SiteWiseRuleEvaluation).simpleRule?.inputProperty != null
+  );
+};
+
 export const parseAlarmStateAssetProperty = (
   assetPropertyValue?: AssetPropertyValue
 ) => {
@@ -26,7 +45,7 @@ export const parseAlarmStateAssetProperty = (
   }
 
   try {
-    const { stateName } = JSON.parse(alarmStateJSON);
+    const { stateName, ruleEvaluation } = JSON.parse(alarmStateJSON);
 
     let normalizedStateName: PascalCaseStateName;
 
@@ -36,11 +55,17 @@ export const parseAlarmStateAssetProperty = (
       normalizedStateName = stateName;
     }
 
+    let normalizedRuleEvaluation = undefined;
+    if (isRuleEvaluation(ruleEvaluation)) {
+      normalizedRuleEvaluation = ruleEvaluation;
+    }
+
     return {
       quality,
       timestamp: toTimestamp(timestamp),
       value: {
         state: normalizedStateName,
+        ruleEvaluation: normalizedRuleEvaluation,
       },
     };
   } catch (err) {

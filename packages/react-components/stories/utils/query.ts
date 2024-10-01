@@ -68,7 +68,7 @@ export const getTimeSeriesDataQuery = (
     return getIotSiteWiseQuery().timeSeriesData(dataStreamQuery);
   }
 
-  const { assetId, propertyId1, propertyId2, propertyId3 } = getAssetQuery();
+  const { assetId, propertyId1, propertyId2 } = getAssetQuery();
 
   return getIotSiteWiseQuery().timeSeriesData({
     assets: [
@@ -89,7 +89,7 @@ export const getTimeSeriesDataQuery = (
           },
           {
             refId: '3',
-            propertyId: propertyId3,
+            propertyId: '3179e83f-6d3b-41fd-b131-5f21ff01a7b3',
             aggregationType: 'AVERAGE',
             resolution: '1m',
           },
