@@ -52,6 +52,7 @@ export const ResultsOnTheRight = () => {
           client,
           conversationId: crypto.randomUUID(),
           componentId: crypto.randomUUID(),
+          target: 'widget',
         }}
       />
     </div>
@@ -81,6 +82,7 @@ export const ResultsOnTheLeft = () => {
             client,
             conversationId: crypto.randomUUID(),
             componentId: crypto.randomUUID(),
+            target: 'widget',
           }}
         />
       </div>

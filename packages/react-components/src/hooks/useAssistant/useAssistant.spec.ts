@@ -56,6 +56,7 @@ describe('useAssistant', () => {
         componentId,
         conversationId,
         utterance: 'customer message',
+        target: 'widget',
       });
     });
 
@@ -79,6 +80,7 @@ describe('useAssistant', () => {
         componentId,
         conversationId,
         utterance: 'customer message',
+        target: 'dashboard',
       });
     });
 
@@ -102,6 +104,7 @@ describe('useAssistant', () => {
         componentId,
         conversationId,
         utterance: 'customer message',
+        target: 'dashboard',
       });
     });
 
@@ -135,6 +138,7 @@ describe('useAssistant', () => {
         componentId,
         conversationId,
         utterance: 'customer message',
+        target: 'widget',
       });
     });
 
@@ -157,6 +161,7 @@ describe('useAssistant', () => {
         componentId,
         conversationId,
         utterance: 'customer message',
+        target: 'widget',
       });
     });
 
@@ -216,6 +221,7 @@ describe('useAssistant', () => {
         componentId,
         conversationId,
         utterance: 'customer message',
+        target: 'widget',
       });
     });
 
@@ -243,6 +249,7 @@ describe('useAssistant', () => {
         conversationId,
         utterance: summaryUtterance,
         context,
+        target: 'widget',
       });
     });
 
@@ -278,6 +285,7 @@ describe('useAssistant', () => {
         componentId,
         conversationId,
         utterance: 'customer message',
+        target: 'widget',
       });
     });
 

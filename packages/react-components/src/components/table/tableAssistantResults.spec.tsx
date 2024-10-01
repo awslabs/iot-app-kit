@@ -3,7 +3,10 @@ import { render } from '@testing-library/react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { TableAssistantResults } from './tableAssistantResults';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
-import type { AssistantActionEventDetail } from '../../common/assistantProps';
+import type {
+  AssistantActionEventDetail,
+  AssistantProperty,
+} from '../../common/assistantProps';
 import { mockedInvokeAssistantResponse3 } from '../../__mocks__/assistantMockedResponse';
 
 const client = new IoTSitewiseAssistantClient({
@@ -20,8 +23,9 @@ const assistant = {
   componentId: 'componentId',
   onAction: (_event: AssistantActionEventDetail) => jest.fn(),
   conversationId: 'conversationId',
+  target: 'widget',
   client,
-};
+} satisfies AssistantProperty;
 
 describe('TableAssistantResults', () => {
   beforeEach(() => {

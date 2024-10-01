@@ -5,7 +5,7 @@ import type { Action } from 'redux';
 type ToggleChatbotActionPayload = {
   open: boolean;
   callerComponentId: string;
-  action?: 'summary';
+  action?: 'summarize';
   messages: IMessage[];
 };
 

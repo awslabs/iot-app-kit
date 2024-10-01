@@ -65,6 +65,7 @@ export const ResultsOnTheBottom = () => {
           client,
           conversationId: crypto.randomUUID(),
           componentId: crypto.randomUUID(),
+          target: 'widget',
         }}
       />
     </div>

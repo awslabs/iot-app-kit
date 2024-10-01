@@ -52,6 +52,7 @@ export const DefaultKPI: ComponentStory<typeof KPI> = ({ settings }) => {
             client,
             conversationId: 'mockId',
             componentId: crypto.randomUUID(),
+            target: 'widget',
           }}
         />
       </div>
@@ -83,6 +84,7 @@ export const DefaultKPI: ComponentStory<typeof KPI> = ({ settings }) => {
             client,
             conversationId: crypto.randomUUID(),
             componentId: crypto.randomUUID(),
+            target: 'widget',
           }}
         />
       </div>

@@ -4,7 +4,10 @@ import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { KPI } from './kpi';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
-import type { AssistantActionEventDetail } from '../../common/assistantProps';
+import type {
+  AssistantActionEventDetail,
+  AssistantProperty,
+} from '../../common/assistantProps';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 
 const VIEWPORT = { duration: '5m' };
@@ -36,8 +39,9 @@ const assistant = {
   onAction: (_event: AssistantActionEventDetail) => jest.fn(),
   componentId: 'componentId',
   conversationId: 'conversationId',
+  target: 'widget',
   client,
-};
+} satisfies AssistantProperty;
 
 it('renders', async () => {
   render(<KPI query={query} viewport={VIEWPORT} />);

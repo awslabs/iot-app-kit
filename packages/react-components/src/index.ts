@@ -94,4 +94,4 @@ export type {
 export {
   SITUATION_SUMMARY_DEFAULT_UTTERANCE,
   EVENT_SUMMARY_DEFAULT_UTTERANCE,
-} from './components/assistant-action-panel/constants';
+} from './components/assistant-panels/constants';

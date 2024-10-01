@@ -85,6 +85,7 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
           client,
           conversationId: crypto.randomUUID(),
           componentId: crypto.randomUUID(),
+          target: 'widget',
         }}
         titleText='Avg Speed'
       />
@@ -118,6 +119,7 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
             client,
             conversationId: crypto.randomUUID(),
             componentId: crypto.randomUUID(),
+            target: 'widget',
           }}
           titleText='Avg Speed'
         />
@@ -144,6 +146,7 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
           client,
           conversationId: crypto.randomUUID(),
           componentId: crypto.randomUUID(),
+          target: 'widget',
         }}
         titleText='Connected Gauge'
       />

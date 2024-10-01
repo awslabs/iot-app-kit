@@ -6,7 +6,10 @@ import { screen, render, renderHook } from '@testing-library/react';
 import { Chart } from '../index';
 import { ChartLegend } from '../types';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
-import type { AssistantActionEventDetail } from '../../../common/assistantProps';
+import type {
+  AssistantActionEventDetail,
+  AssistantProperty,
+} from '../../../common/assistantProps';
 import { useAssistantContext } from '../../../hooks/useAssistantContext/useAssistantContext';
 
 const VIEWPORT = { duration: '5m' };
@@ -52,8 +55,9 @@ const assistant = {
   onAction: (_event: AssistantActionEventDetail) => jest.fn(),
   conversationId: 'conversationId',
   componentId: 'componentId',
+  target: 'widget',
   client,
-};
+} satisfies AssistantProperty;
 
 describe('Chart Component Testing', () => {
   it('Chart renders', () => {

@@ -53,6 +53,7 @@ export const BaseChart = () => {
           client,
           conversationId: crypto.randomUUID(),
           componentId: crypto.randomUUID(),
+          target: 'widget',
         }}
       />
     </div>

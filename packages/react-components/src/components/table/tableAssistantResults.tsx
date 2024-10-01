@@ -4,9 +4,9 @@ import type { AssistantProperty } from '../../common/assistantProps';
 import { useAssistant } from '../../hooks/useAssistant/useAssistant';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 import { v4 as uuid } from 'uuid';
-import { ResultPanel } from '../assistant-action-panel/assistant-result/resultPanel';
-import { SITUATION_SUMMARY_DEFAULT_UTTERANCE } from '../assistant-action-panel/constants';
-import '../assistant-action-panel/actionPanel.css';
+import { ResultPanel } from '../assistant-panels/assistant-result/resultPanel';
+import { SITUATION_SUMMARY_DEFAULT_UTTERANCE } from '../assistant-panels/constants';
+import '../assistant-panels/assistantWrapperPanel.css';
 
 export interface TableAssistantResultsProps extends PropsWithChildren {
   assistant: AssistantProperty;
@@ -30,6 +30,7 @@ export const TableAssistantResults = ({
   const handleSummary = () => {
     generateSummary({
       componentId: assistant.componentId,
+      target: assistant.target,
       conversationId: assistant.conversationId ?? uuid(),
       context: getContextByComponent(assistant.componentId),
       utterance: SITUATION_SUMMARY_DEFAULT_UTTERANCE,
@@ -42,7 +43,10 @@ export const TableAssistantResults = ({
         messages,
       });
     }
-    setShowResults(true);
+
+    if (assistant.target === 'widget') {
+      setShowResults(true);
+    }
     onSummarizationEnd();
   };
 
@@ -66,15 +70,14 @@ export const TableAssistantResults = ({
   return (
     <IntlProvider locale='en' defaultLocale='en'>
       <div
-        className='assistant-action-panel selected'
-        id={`assistant-action-panel-${assistant.componentId}`}
+        className='assistant-panels selected'
+        id={`assistant-panels-${assistant.componentId}`}
         style={{ width: '100%', height: '100%' }}
       >
         {children}
         {showResults ? (
           <ResultPanel
             componentId={assistant.componentId}
-            actionPosition='topRight'
             messages={messages}
             onClose={() => setShowResults(false)}
             onDivedeep={handleDiveDeep}

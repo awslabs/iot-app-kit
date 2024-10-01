@@ -47,18 +47,18 @@ it('can close the chatbot', () => {
   ).toEqual(false);
 });
 
-it('can start summary action', () => {
+it('can start summarize action', () => {
   expect(
     toggleChatbot(setupDashboardState([]), {
       type: 'TOGGLE_CHATBOT',
       payload: {
         open: false,
         callerComponentId: 'dashboard',
-        action: 'summary',
+        action: 'summarize',
         messages: [],
       },
     }).assistant.action
-  ).toEqual('summary');
+  ).toEqual('summarize');
 });
 
 it('action TOGGLE_CHATBOT changes state correctly', () => {
@@ -67,12 +67,12 @@ it('action TOGGLE_CHATBOT changes state correctly', () => {
     onToggleChatbotAction({
       open: true,
       callerComponentId: 'mockId',
-      action: 'summary',
+      action: 'summarize',
       messages: [],
     })
   );
 
   expect(store.getState().assistant.isChatbotOpen).toBeTruthy();
   expect(store.getState().assistant.callerComponentId).toBe('mockId');
-  expect(store.getState().assistant.action).toBe('summary');
+  expect(store.getState().assistant.action).toBe('summarize');
 });

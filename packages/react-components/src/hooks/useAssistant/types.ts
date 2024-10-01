@@ -1,5 +1,9 @@
 import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
-import type { AssistantInvocationRequest } from '@iot-app-kit/core-util';
+import type {
+  AssistantInvocationRequest,
+  InvokeAssistantOptions,
+} from '@iot-app-kit/core-util';
+import type { AssistantActionTarget } from '../../common/assistantProps';
 
 export type UniqueID = string;
 
@@ -41,3 +45,7 @@ export interface IMessageParser {
 export interface BaseStateManager {
   addMessageToState: (message: IMessage) => void;
 }
+
+export type AssistantInvocationParams = InvokeAssistantOptions & {
+  target: AssistantActionTarget;
+};

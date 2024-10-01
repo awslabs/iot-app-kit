@@ -58,7 +58,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
 
     if (
       assistant.callerComponentId === 'dashboard' &&
-      assistant.action === 'summary'
+      assistant.action === 'summarize'
     ) {
       const contexts = assistant.selectedQueries
         .map((item) => {
@@ -68,6 +68,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
 
       generateSummary({
         componentId: 'dashboard',
+        target: 'dashboard',
         conversationId: assistant.conversationId,
         context: contexts,
         utterance: SITUATION_SUMMARY_DEFAULT_UTTERANCE,
@@ -76,10 +77,15 @@ export const Chatbot: FC<AssistantChatbotProps> = (
         open: true,
         callerComponentId: 'dashboard',
         action: undefined,
-        messages: messages ?? [],
+        messages: assistant.messages ?? [],
       });
     }
-  }, [assistant.messages, assistant.callerComponentId, assistant.action]);
+  }, [
+    assistant.conversationId,
+    assistant.messages,
+    assistant.callerComponentId,
+    assistant.action,
+  ]);
 
   const handleSubmit = (utterance: string) => {
     const componentContext = assistant.callerComponentId
@@ -90,6 +96,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
       conversationId: assistant.conversationId,
       utterance,
       context: componentContext,
+      target: 'dashboard',
     });
   };
 

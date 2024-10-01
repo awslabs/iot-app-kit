@@ -1,7 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
-import type { AssistantActionEventDetail } from '../../common/assistantProps';
+import type {
+  AssistantActionEventDetail,
+  AssistantProperty,
+} from '../../common/assistantProps';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import { Popover, type PopoverProps } from './popover';
 import userEvent from '@testing-library/user-event';
@@ -17,8 +20,9 @@ const assistant = {
   onAction: (_event: AssistantActionEventDetail) => jest.fn(),
   conversationId: 'conversationId',
   componentId: 'componentId',
+  target: 'widget',
   client,
-};
+} satisfies AssistantProperty;
 
 const component = (props: Partial<PopoverProps>) => (
   <Popover

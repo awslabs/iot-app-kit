@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ActionPanel } from '../assistant-action-panel/actionPanel';
+import { AssistantWrapperPanel } from '../assistant-panels/assistantWrapperPanel';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
@@ -94,14 +94,13 @@ export const Gauge = ({
 
   if (assistant) {
     return (
-      <ActionPanel
+      <AssistantWrapperPanel
         width='min-content'
         height='min-content'
-        iconPosition={titleText ? 'topRight' : 'topLeft'}
         assistant={assistant}
       >
         {component}
-      </ActionPanel>
+      </AssistantWrapperPanel>
     );
   } else {
     return component;

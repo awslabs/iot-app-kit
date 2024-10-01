@@ -13,7 +13,6 @@ import {
 
 export interface ResultPanelProps {
   componentId: string;
-  actionPosition: string;
   messages: Array<IMessage>;
   onClose: () => void;
   onDivedeep: () => void;
@@ -21,7 +20,6 @@ export interface ResultPanelProps {
 
 export const ResultPanel = ({
   componentId,
-  actionPosition,
   messages,
   onClose,
   onDivedeep,
@@ -39,7 +37,7 @@ export const ResultPanel = ({
       `#assistant-action-panel-${componentId}`
     );
     if (panel.current && actionPanel) {
-      setPanelPositon(calculatePanelPosition(actionPanel, actionPosition));
+      setPanelPositon(calculatePanelPosition(actionPanel));
     }
   }, [panel]);
 

@@ -1,17 +1,17 @@
 import { Messages } from '../types';
 
 export type AssistantActionPanelMessageKeys =
-  | 'assistant-action-panel.numSelected'
-  | 'assistant-action-panel.deepDive'
-  | 'assistant-action-panel.summarize'
-  | 'assistant-action-panel.chatbot';
+  | 'assistant-panels.numSelected'
+  | 'assistant-panels.deepDive'
+  | 'assistant-panels.summarize'
+  | 'assistant-panels.chatbot';
 
 export const AssistantActionPanel: Messages<AssistantActionPanelMessageKeys> = {
   en: {
-    'assistant-action-panel.numSelected': '{numPanels} panel selected',
-    'assistant-action-panel.deepDive': 'Chat with AI',
-    'assistant-action-panel.summarize': 'Summarize',
-    'assistant-action-panel.chatbot': 'Chat with AI',
+    'assistant-panels.numSelected': '{numPanels} panel selected',
+    'assistant-panels.deepDive': 'Chat with AI',
+    'assistant-panels.summarize': 'Summarize',
+    'assistant-panels.chatbot': 'Chat with AI',
   },
 };
 export type AssistantResultPanelMessageKeys =

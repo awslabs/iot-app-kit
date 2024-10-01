@@ -7,7 +7,10 @@ import type { DataStream } from '@iot-app-kit/core';
 import { Table } from './table';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
-import type { AssistantActionEventDetail } from '../../common/assistantProps';
+import type {
+  AssistantActionEventDetail,
+  AssistantProperty,
+} from '../../common/assistantProps';
 import cloudscapeWrapper from '@cloudscape-design/components/test-utils/dom';
 
 const VIEWPORT = { duration: '5m' };
@@ -39,8 +42,9 @@ const assistant = {
   componentId: 'componentId',
   onAction: (_event: AssistantActionEventDetail) => jest.fn(),
   conversationId: 'conversationId',
+  target: 'widget',
   client,
-};
+} as AssistantProperty;
 
 it('renders', async () => {
   expect(() => {

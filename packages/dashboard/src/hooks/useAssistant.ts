@@ -30,7 +30,7 @@ export const useAssistant = (widgetId: string) => {
       enabled: readOnly,
       conversationId: assistant.conversationId,
       componentId: widgetId,
-      iconPosition: 'topLeft',
+      target: 'dashboard',
       onAction: (event: AssistantActionEventDetail) => {
         if (event.type === 'divedeep') {
           dispatch(

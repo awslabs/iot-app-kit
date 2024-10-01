@@ -3,13 +3,22 @@ import type {
   AssistantClientInvocationError,
   AssistantClientInvocationResponse,
   AssistantInvocationRequest,
-  InvokeAssistantOptions,
 } from '@iot-app-kit/core-util';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
-import type { IMessageParser, BaseStateManager, IMessage } from './types';
+import type {
+  IMessageParser,
+  BaseStateManager,
+  IMessage,
+  AssistantInvocationParams,
+} from './types';
 import { MessageParser } from './messageParser';
 import { StateManager } from './stateManager';
 import useDataStore from '../../store';
+import type {
+  ComponentId,
+  AssistantActionTarget,
+  AssistantActionType,
+} from '../../common/assistantProps';
 
 export interface IUseAssistant {
   assistantClient: IoTSitewiseAssistantClient;
@@ -36,12 +45,29 @@ export const useAssistant = ({
   initialState,
 }: IUseAssistant) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const [actions, setActions] = useState<
+    Record<
+      ComponentId,
+      {
+        target: AssistantActionTarget;
+        action: AssistantActionType;
+      }
+    >
+  >({});
   const [currentStateManager, setStateManager] =
     useState<StateManager>(internalStateManager);
   const [currentMessageParser, setMessageParser] = useState<MessageParser>(
     internalMessageParser
   );
   const storeState = useDataStore.getState();
+
+  useDataStore.subscribe((state, prevState) => {
+    const currentActionStateCount = Object.keys(state.actions).length;
+    const prevActionStateCount = Object.keys(prevState.actions).length;
+    if (currentActionStateCount !== prevActionStateCount) {
+      setActions(state.actions);
+    }
+  });
 
   useEffect(() => {
     let newStateManager = currentStateManager;
@@ -104,6 +130,7 @@ export const useAssistant = ({
     removeLoadingMessages(request.componentId);
     currentMessageParser.parse(request, response.body);
     setMessages(currentStateManager.getState().messages);
+    currentStateManager.stopComponentAction(request.componentId);
   };
 
   const onError = (
@@ -125,7 +152,7 @@ export const useAssistant = ({
     conversationId,
     utterance,
     context,
-  }: InvokeAssistantOptions) => {
+  }: AssistantInvocationParams) => {
     currentStateManager.addText(componentId, utterance, 'user');
     currentStateManager.addPartialResponse(componentId, loadingMessage);
     setMessages(currentStateManager.getState().messages);
@@ -135,14 +162,20 @@ export const useAssistant = ({
   const generateSummary = ({
     componentId,
     conversationId,
+    target,
     utterance,
     context = '',
-  }: InvokeAssistantOptions) => {
+  }: AssistantInvocationParams) => {
     if (utterance) {
       currentStateManager.addText(componentId, utterance, 'user');
       currentStateManager.addPartialResponse(componentId, loadingMessage);
       setMessages(currentStateManager.getState().messages);
     }
+    currentStateManager.startComponentAction({
+      target,
+      componentId,
+      action: 'summarize',
+    });
     assistantClient.generateSummary({
       componentId,
       conversationId,
@@ -152,6 +185,7 @@ export const useAssistant = ({
   };
 
   return {
+    actions,
     messages,
     setMessages,
     invokeAssistant,

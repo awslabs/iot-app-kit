@@ -11,9 +11,11 @@ export interface AssistantProperty {
   client: IoTSitewiseAssistantClient;
   conversationId: string;
   componentId: string;
+  target: AssistantActionTarget;
   enabled?: boolean;
-  iconPosition?: 'topLeft' | 'topRight';
   onAction?: (event: AssistantActionEventDetail) => void;
 }
 
+export type AssistantActionTarget = 'dashboard' | 'widget';
 export type AssistantActionType = 'divedeep' | 'summarize';
+export type ComponentId = string;

@@ -5,10 +5,7 @@ const MAX_WIDTH = 500;
 /***
  * Calculate available space in the right, left and bottom to display the results.
  */
-export const calculatePanelPosition = (
-  actionPanel: Element,
-  actionPosition: string
-): CSSProperties => {
+export const calculatePanelPosition = (actionPanel: Element): CSSProperties => {
   const actionPanelDimensions = actionPanel.getBoundingClientRect();
 
   let position = 'bottom';
@@ -25,11 +22,7 @@ export const calculatePanelPosition = (
     case 'right': {
       const width = rightSpace >= MAX_WIDTH ? MAX_WIDTH : 'auto';
       return {
-        left: `${
-          actionPosition === 'topRight'
-            ? actionPanelDimensions?.width
-            : actionPanelDimensions?.right ?? 0
-        }px`,
+        left: `${actionPanelDimensions?.width}px`,
         width: width,
         height: 'auto',
       };

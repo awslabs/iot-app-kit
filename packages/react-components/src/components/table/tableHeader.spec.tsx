@@ -3,7 +3,10 @@ import { render, waitFor } from '@testing-library/react';
 import { TableHeader } from './tableHeader';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
-import type { AssistantActionEventDetail } from '../../common/assistantProps';
+import type {
+  AssistantActionEventDetail,
+  AssistantProperty,
+} from '../../common/assistantProps';
 import userEvent from '@testing-library/user-event';
 import { IntlProvider } from 'react-intl';
 
@@ -19,8 +22,9 @@ const assistant = {
   onAction: (_event: AssistantActionEventDetail) => jest.fn(),
   conversationId: 'conversationId',
   componentId: 'componentId',
+  target: 'widget',
   client,
-};
+} satisfies AssistantProperty;
 
 describe('title', () => {
   it('renders correctly', () => {

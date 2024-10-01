@@ -10,7 +10,6 @@ const component = (props: Partial<ResultPanelProps>) => (
   <IntlProvider locale='en' defaultLocale='en'>
     <ResultPanel
       componentId='componentId'
-      actionPosition='left'
       messages={[]}
       onClose={() => {}}
       onDivedeep={() => {}}

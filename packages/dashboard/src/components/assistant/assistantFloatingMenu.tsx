@@ -58,7 +58,7 @@ export const AssistantFloatingMenu = ({
       onToggleChatbotAction({
         open: true,
         callerComponentId: 'dashboard',
-        action: 'summary',
+        action: 'summarize',
         messages: [],
       })
     );

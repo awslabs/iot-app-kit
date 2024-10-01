@@ -5,7 +5,7 @@ import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInp
 import { DEFAULT_VIEWPORT } from '../../common/constants';
 import type { AssistantProperty } from '../../common/assistantProps';
 import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
-import { ActionPanel } from '../assistant-action-panel/actionPanel';
+import { AssistantWrapperPanel } from '../assistant-panels/assistantWrapperPanel';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 import type {
   StyleSettingsMap,
@@ -132,14 +132,9 @@ export const KPI = ({
 
   if (assistant) {
     return (
-      <ActionPanel
-        width='100%'
-        height='100%'
-        iconPosition='topRight'
-        assistant={assistant}
-      >
+      <AssistantWrapperPanel width='100%' height='100%' assistant={assistant}>
         {component}
-      </ActionPanel>
+      </AssistantWrapperPanel>
     );
   } else {
     return component;

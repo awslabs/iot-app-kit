@@ -272,6 +272,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
       handleRightPaneCollapse();
       setChatOpened(!isChatOpened);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assistant.isChatbotOpen]);
 
   useEffect(() => {

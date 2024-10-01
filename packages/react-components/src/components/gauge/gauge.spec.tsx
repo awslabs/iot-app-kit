@@ -3,7 +3,10 @@ import { screen, render, renderHook } from '@testing-library/react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { Gauge } from './gauge';
-import type { AssistantActionEventDetail } from '../../common/assistantProps';
+import type {
+  AssistantActionEventDetail,
+  AssistantProperty,
+} from '../../common/assistantProps';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
 
@@ -36,8 +39,9 @@ const assistant = {
   onAction: (_event: AssistantActionEventDetail) => jest.fn(),
   componentId: 'componentId',
   conversationId: 'conversationId',
+  target: 'widget',
   client,
-};
+} satisfies AssistantProperty;
 
 it('renders', async () => {
   const element = render(<Gauge query={query} viewport={VIEWPORT} />);

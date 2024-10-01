@@ -1,34 +1,8 @@
 @import url("@cloudscape-design/global-styles/index.css");
 
-.assistant-action-panel {
+.assistant-wrapper-panel {
   display: flex;
   flex-direction: column;
-
-  .context-menu {
-    display: none;
-    position: absolute;
-    width: fit-content;
-    margin: 0.5rem;
-    z-index: 801;
-
-    .panel-selection {
-      padding-right: 0.5em;
-
-      span {
-        color: var(--awsui-color-blue-300);
-      }
-    }
-
-    button {
-      color: inherit;
-      background: inherit;
-      border: none;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
-    }
-  }
 
   .action-panel-result {
     position: absolute;
@@ -85,45 +59,5 @@
 
   .action-panel-result-footer-divedeep svg {
     vertical-align: middle;
-  }
-
-  .action-dropdown {
-    display: block;
-    position: absolute;
-    border-radius: 5px;
-    list-style-type: none;
-    padding: 0;
-    margin-top: 1.8rem;
-    z-index: 801;
-    overflow: hidden;
-
-    li button {
-      padding: 0.5em;
-      background: inherit;
-      border: none;
-      width: 100%;
-      height: 100%;
-      text-align: left;
-      cursor: pointer;
-
-      svg {
-        color: var(--awsui-color-grey-500);
-      }
-
-      &:hover {
-        background-color: var(--awsui-color-grey-150);
-      }
-
-      .awsui-dark-mode &:hover {
-        background-color: var(--awsui-color-blue-900);
-      }
-    }
-  }
-
-  &.selected {
-    .context-menu,
-    .action-dropdown {
-      display: block;
-    }
   }
 }

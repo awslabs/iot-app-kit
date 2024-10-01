@@ -120,13 +120,15 @@ export const Table = ({
           setIndexesSelected(indexesSelected)
         }
         header={
-          <TableHeader
-            titleText={props.titleText}
-            assistant={props.assistant}
-            selectedItems={indexesSelected.length}
-            totalItems={items.length}
-            onSummarize={handleSummarize}
-          />
+          props.assistant?.target === 'widget' && (
+            <TableHeader
+              titleText={props.titleText}
+              assistant={props.assistant}
+              selectedItems={indexesSelected.length}
+              totalItems={items.length}
+              onSummarize={handleSummarize}
+            />
+          )
         }
       />
     </IntlProvider>

@@ -4,7 +4,7 @@ import { ChartStoreProvider } from './store';
 import BaseChart from './baseChart';
 import { useComponentId } from '../../hooks/useComponentId/useComponentId';
 import { DEFAULT_CHART_SETTINGS } from './eChartsConstants';
-import { ActionPanel } from '../assistant-action-panel/actionPanel';
+import { AssistantWrapperPanel } from '../assistant-panels/assistantWrapperPanel';
 
 export const Chart: React.FC<ChartOptions> = (options) => {
   const chartId = useComponentId(options.id);
@@ -21,13 +21,9 @@ export const Chart: React.FC<ChartOptions> = (options) => {
   if (options.assistant && firstQuery) {
     options.assistant.componentId = chartId;
     return (
-      <ActionPanel
-        width='min-content'
-        assistant={options.assistant}
-        iconPosition={chartOptions.titleText ? 'topRight' : 'topLeft'}
-      >
+      <AssistantWrapperPanel width='min-content' assistant={options.assistant}>
         {component}
-      </ActionPanel>
+      </AssistantWrapperPanel>
     );
   } else {
     return component;

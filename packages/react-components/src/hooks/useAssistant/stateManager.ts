@@ -3,6 +3,11 @@ import type { BaseStateManager, IMessage, UniqueID } from './types';
 import { MessageType } from './types';
 import { v4 as uuidv4 } from 'uuid';
 import { AssistantInvocationRequest } from '@iot-app-kit/core-util';
+import type {
+  AssistantActionTarget,
+  AssistantActionType,
+  ComponentId,
+} from '../../common/assistantProps';
 
 type GenericSetState = (state: any) => void;
 type GenericGetState = () => any;
@@ -101,6 +106,33 @@ export class StateManager implements BaseStateManager {
     messages.splice(index, 1);
     this.clearStateFn();
     this.setStateFn({ messages });
+  };
+
+  startComponentAction = ({
+    target,
+    componentId,
+    action,
+  }: {
+    target: AssistantActionTarget;
+    componentId: ComponentId;
+    action: AssistantActionType;
+  }) => {
+    this.setStateFn({
+      actions: {
+        [componentId]: {
+          target,
+          action,
+        },
+      },
+    });
+  };
+
+  stopComponentAction = (componentId: string) => {
+    const { actions } = this.getStateFn();
+    if (actions[componentId]) {
+      delete actions[componentId];
+    }
+    this.setStateFn({ actions });
   };
 
   getState = () => this.getStateFn();
