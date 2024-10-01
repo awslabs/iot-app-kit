@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useMemo } from 'react';
 import { AssistantWrapperPanel } from '../assistant-panels/assistantWrapperPanel';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
@@ -16,7 +17,10 @@ import {
   DEFAULT_GAUGE_STYLES,
 } from './constants';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
-import { getTimeSeriesQueries } from '../../utils/queries';
+import { getAlarmQueries, getTimeSeriesQueries } from '../../utils/queries';
+import { convertAlarmQueryToAlarmRequest } from '../../queries/utils/convertAlarmQueryToAlarmRequest';
+import { useAlarms } from '../../hooks/useAlarms';
+import { buildTransformAlarmForSingleQueryWidgets } from '../../utils/buildTransformAlarmForSingleQueryWidgets';
 
 export const Gauge = ({
   size,
@@ -30,13 +34,8 @@ export const Gauge = ({
   theme,
   assistant,
 }: GaugeProps) => {
+  const alarmQueries = getAlarmQueries([query]);
   const timeSeriesQueries = getTimeSeriesQueries([query]);
-  const { dataStreams } = useTimeSeriesData({
-    viewport: passedInViewport,
-    queries: timeSeriesQueries,
-    settings: { fetchMostRecentBeforeEnd: true },
-    styles,
-  });
   const { viewport, lastUpdatedBy } = useViewport();
   const { setContextByComponent, transformTimeseriesDataToAssistantContext } =
     useAssistantContext();
@@ -45,6 +44,37 @@ export const Gauge = ({
     (lastUpdatedBy === ECHARTS_GESTURE
       ? viewport
       : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
+
+  const mapAlarmQueriesToRequests = alarmQueries.flatMap((query) =>
+    convertAlarmQueryToAlarmRequest(query)
+  );
+
+  const transformedAlarm = useAlarms({
+    iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
+    iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
+    requests: mapAlarmQueriesToRequests,
+    viewport: utilizedViewport,
+    settings: {
+      fetchThresholds: true,
+      fetchOnlyLatest: true,
+      refreshRate: alarmQueries.at(0)?.query.requestSettings?.refreshRate,
+    },
+    transform: buildTransformAlarmForSingleQueryWidgets({
+      iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
+      iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
+    }),
+  })
+    .filter((alarm) => !!alarm)
+    .at(0);
+
+    const { dataStreams } = useTimeSeriesData({
+      viewport: passedInViewport,
+      queries: transformedAlarm
+        ? transformedAlarm.timeSeriesDataQueries
+        : timeSeriesQueries,
+      settings: { fetchMostRecentBeforeEnd: true },
+      styles,
+    });
 
   const { propertyPoint, alarmStream, propertyStream } =
     widgetPropertiesFromInputs({
@@ -76,8 +106,15 @@ export const Gauge = ({
     }
   }, [utilizedViewport, query, assistant]);
 
+  const allThresholds = useMemo(() => {
+    return transformedAlarm?.threshold
+      ? [...thresholds, transformedAlarm?.threshold]
+      : thresholds;
+  }, [JSON.stringify(thresholds), JSON.stringify(transformedAlarm?.threshold)]);
+
   const component = (
     <GaugeBase
+      alarmState={transformedAlarm?.state}
       size={size}
       propertyPoint={propertyPoint}
       name={name}
@@ -86,7 +123,7 @@ export const Gauge = ({
       isLoading={isLoading}
       error={error?.msg}
       settings={{ ...DEFAULT_GAUGE_STYLES, ...settings, color }}
-      thresholds={thresholds}
+      thresholds={allThresholds}
       significantDigits={significantDigits}
       theme={theme}
     />

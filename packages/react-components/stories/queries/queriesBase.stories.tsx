@@ -97,6 +97,7 @@ export const UseAlarms: ComponentStory<FC> = () => {
     ],
     settings: {
       fetchInputPropertyData: true,
+      // fetchOnlyLatest: true,
     },
   });
 

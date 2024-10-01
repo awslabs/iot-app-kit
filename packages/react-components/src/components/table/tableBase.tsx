@@ -35,6 +35,7 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
     userColumnDefinitions,
     precision
   );
+
   const pagination = {
     ...(paginationEnabled && {
       pagination: <Pagination {...paginationProps} />,
