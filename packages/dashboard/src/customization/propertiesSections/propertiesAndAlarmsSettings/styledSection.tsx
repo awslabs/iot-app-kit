@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import {
   AssetSummary,
-  useListAssetPropertiesMapQuery,
+  useAssetDescriptionMapQuery,
 } from '~/hooks/useAssetDescriptionQueries';
 import { isJust } from '~/util/maybe';
 import { SelectOneWidget } from '../shared/selectOneWidget';
@@ -13,6 +13,8 @@ import { defaultOnDeleteQuery } from './onDeleteProperty';
 import { StyledAssetQuery } from '~/customization/widgets/types';
 import { useAssetModel } from '~/hooks/useAssetModel/useAssetModel';
 import { handleDeleteAssetModelProperty } from './handleDeleteAssetModelProperty';
+import { handleRemoveAlarm } from './handleRemoveAlarm';
+import { PropertyComponent } from './propertyComponent';
 
 const NoComponents = () => <Box variant='p'>No properties or alarms found</Box>;
 
@@ -44,9 +46,8 @@ export const StyledPropertiesAlarmsSection: FC<
   const styledAssetQuery =
     (editablePropertiesAndAlarms && queryConfig.value.query) || undefined;
 
-  const describedAssetsMapQuery =
-    useListAssetPropertiesMapQuery(styledAssetQuery);
-  const describedAssetsMap = describedAssetsMapQuery.data ?? {};
+  const describedAssetsMap =
+    useAssetDescriptionMapQuery(styledAssetQuery).data ?? {};
 
   const assetModelIds = (styledAssetQuery?.assetModels ?? []).map(
     ({ assetModelId }) => assetModelId
@@ -236,7 +237,60 @@ export const StyledPropertiesAlarmsSection: FC<
         })
       ) ?? [];
 
-    const components = [...modeled, ...unmodeled, ...assetModeled];
+    const alarms =
+      styledAssetQuery?.alarms?.flatMap(({ assetId, alarmComponents }) =>
+        alarmComponents.map(({ assetCompositeModelId }) => {
+          const refId = assetCompositeModelId;
+
+          const describedAsset = describedAssetsMap[assetId];
+          const compositeAssetModel =
+            describedAsset?.assetCompositeModels?.find(
+              (model) => model.id === assetCompositeModelId
+            );
+
+          if (!compositeAssetModel) return null;
+
+          const onDelete = () => {
+            updateSiteWiseAssetQuery({
+              ...styledAssetQuery,
+              alarms: handleRemoveAlarm(
+                { alarms: styledAssetQuery.alarms ?? [] },
+                { assetId, assetCompositeModelId }
+              ),
+            });
+          };
+
+          return (
+            <PropertyComponent
+              key={`${assetId}-${assetCompositeModelId}`}
+              propertyId={assetCompositeModelId}
+              refId={refId}
+              assetSummary={{
+                assetId: assetId,
+                assetName: describedAsset.assetName,
+                properties: [
+                  {
+                    propertyId: assetCompositeModelId,
+                    name: compositeAssetModel.name,
+                    unit: undefined,
+                    dataType: undefined,
+                    alias: undefined,
+                  },
+                ],
+                alarms: [],
+              }}
+              styleSettings={{}}
+              onDeleteAssetQuery={onDelete}
+              onUpdatePropertyColor={() => {}}
+              onUpdatePropertyName={() => {}}
+              colorable={false}
+              nameable={false}
+            />
+          );
+        })
+      ) ?? [];
+
+    const components = [...modeled, ...unmodeled, ...assetModeled, ...alarms];
 
     return components.length ? components : <NoComponents />;
   };

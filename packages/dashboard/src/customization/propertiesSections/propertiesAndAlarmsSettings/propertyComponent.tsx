@@ -24,6 +24,7 @@ export type PropertyComponentProps = {
   onUpdatePropertyColor: (color: string) => void;
   onUpdatePropertyName: (name: string) => void;
   colorable: boolean;
+  nameable?: boolean;
 };
 
 export const PropertyComponent: FC<PropertyComponentProps> = ({
@@ -35,6 +36,7 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
   onUpdatePropertyColor,
   onUpdatePropertyName,
   colorable,
+  nameable = true,
 }) => {
   const { display, label, property, assetName } = getPropertyDisplay(
     propertyId,
@@ -74,6 +76,10 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
       />
     </div>
   );
+
+  if (!nameable) {
+    return header;
+  }
 
   return (
     <div>
