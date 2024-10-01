@@ -30,13 +30,15 @@ import {
   TIMESTAMP_WIDTH_FACTOR,
   TIMESTAMP_WIDTH_FACTOR_BOTTOM,
 } from './eChartsConstants';
-import { DataQualityPreferencesModal } from './preferences/dataQualityModal';
+import { ChartPreferencesModal } from './preferences/dataQualityModal';
 import { useModalVisibility } from '../../hooks/useModalVisibility/useModalVisibility';
 import { PreferencesModalToggle } from './preferences/toggle';
-import { useDataQuality } from './hooks/useDataQuality';
+import { useChartPreferences } from './hooks/useChartPreferences';
 import { Timestamp } from '../timestampBar';
 import useDataStore from '../../store';
 import { getTimeSeriesQueries } from '../../utils/queries';
+import { useChartAlarms } from './hooks/useChartAlarms';
+import { useNormalizedDataStreams } from './hooks/useNormalizedDataStreams';
 
 /**
  * Developer Notes:
@@ -78,9 +80,11 @@ const BaseChart = ({
   const {
     showBadDataIcons,
     showUncertainDataIcons,
+    showAlarmIcons,
     handleChangeBadDataIconsVisibility,
     handleChangeUncertainDataIconsVisibility,
-  } = useDataQuality({ ...options.dataQuality, onChartOptionsChange });
+    handleChangeAlarmIconsVisibility,
+  } = useChartPreferences({ ...options.dataQuality, onChartOptionsChange });
 
   const isLegendVisible = options.legend?.visible;
   const isLegendPositionLeft = options.legend?.position === 'left';
@@ -99,15 +103,25 @@ const BaseChart = ({
     trendCursorValues,
   } = useTrendCursors({ group, chartRef, id: options.id });
 
+  const alarms = useChartAlarms({
+    queries,
+    viewport,
+  });
+
   // convert TimeSeriesDataQuery to TimeSeriesData
   const {
     isLoading,
     isRefreshing,
-    dataStreams,
+    dataStreams: visualizedDataStreams,
     thresholds,
     utilizedViewport,
     visibleData,
   } = useVisualizedDataStreams(getTimeSeriesQueries(queries), viewport);
+
+  const dataStreams = useNormalizedDataStreams({
+    dataStreams: visualizedDataStreams,
+    alarms,
+  });
 
   //handle dataZoom updates, which are dependent on user events and viewportInMS changes
   useDataZoom(chartRef, utilizedViewport);
@@ -155,9 +169,11 @@ const BaseChart = ({
   const { dataStreamMetaData } = useChartConfiguration(chartRef, {
     showBadDataIcons,
     showUncertainDataIcons,
+    showAlarmIcons,
     group,
     isLoading,
     dataStreams,
+    alarms,
     thresholds,
     visibleData,
     chartWidth,
@@ -169,7 +185,7 @@ const BaseChart = ({
   const delayLoading = useIsRefreshing(isRefreshing, REFRESHING_DELAY_MS);
   const isPropertiesRefreshing = !isLoading && delayLoading;
 
-  useChartDataset(chartRef, dataStreams);
+  useChartDataset(chartRef, dataStreams, alarms);
 
   useChartStoreDataStreamsSync(dataStreamMetaData);
 
@@ -282,7 +298,7 @@ const BaseChart = ({
               }}
             />
             <PreferencesModalToggle onShow={onShowDataQualityPreferences} />
-            <DataQualityPreferencesModal
+            <ChartPreferencesModal
               onHide={onHideDataQualityPreferences}
               visible={dataQualityPreferencesVisible}
               showBadDataIcons={showBadDataIcons}
@@ -291,6 +307,8 @@ const BaseChart = ({
               onChangeShowUncertainDataIcons={
                 handleChangeUncertainDataIconsVisibility
               }
+              showAlarmIcons={showAlarmIcons}
+              onChangeShowAlarmIcons={handleChangeAlarmIconsVisibility}
             />
             {/*TODO: should not show when in dashboard */}
             <ChartContextMenu

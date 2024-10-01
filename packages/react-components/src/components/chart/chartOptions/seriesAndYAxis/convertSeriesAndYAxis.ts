@@ -16,6 +16,7 @@ import {
   Emphasis,
 } from '../../utils/getStyles';
 import {
+  createAlarmLabel,
   DEEMPHASIZE_OPACITY,
   EMPHASIZE_SCALE_CONSTANT,
 } from '../../eChartsConstants';
@@ -91,7 +92,12 @@ const convertSeries = (
     index,
     showBadDataIcons,
     showUncertainDataIcons,
-  }: { performanceMode?: boolean; index?: number } & ChartDataQuality
+    showAlarmIcons,
+  }: {
+    performanceMode?: boolean;
+    index?: number;
+    showAlarmIcons?: boolean;
+  } & ChartDataQuality
 ) => {
   let opacity = emphasis === 'de-emphasize' ? DEEMPHASIZE_OPACITY : 1;
   if (hidden) {
@@ -139,6 +145,8 @@ const convertSeries = (
     animation: false,
     appKitSignificantDigits: significantDigits,
     appKitColor: color,
+
+    label: createAlarmLabel(significantDigits, showAlarmIcons),
   } as GenericSeries;
 
   return addVisualizationSpecificOptions(visualizationType, genericSeries);
@@ -179,7 +187,12 @@ export const convertSeriesAndYAxis =
       index,
       showBadDataIcons,
       showUncertainDataIcons,
-    }: { performanceMode?: boolean; index: number } & ChartDataQuality = {
+      showAlarmIcons,
+    }: {
+      performanceMode?: boolean;
+      index: number;
+      showAlarmIcons?: boolean;
+    } & ChartDataQuality = {
       performanceMode: false,
       index: 0,
     }
@@ -190,6 +203,7 @@ export const convertSeriesAndYAxis =
       index,
       showBadDataIcons,
       showUncertainDataIcons,
+      showAlarmIcons,
     });
     const yAxis = convertYAxis(styles);
 
@@ -261,6 +275,7 @@ export const useSeriesAndYAxis = (
     performanceMode,
     showBadDataIcons,
     showUncertainDataIcons,
+    showAlarmIcons,
   }: Pick<
     ChartOptions,
     'defaultVisualizationType' | 'styleSettings' | 'significantDigits'
@@ -268,6 +283,7 @@ export const useSeriesAndYAxis = (
     thresholds: Threshold[];
     axis?: ChartAxisOptions;
     performanceMode?: boolean;
+    showAlarmIcons?: boolean;
   } & ChartDataQuality
 ) => {
   const { isDataStreamHidden } = useVisibleDataStreams();
@@ -309,6 +325,7 @@ export const useSeriesAndYAxis = (
           index,
           showBadDataIcons,
           showUncertainDataIcons,
+          showAlarmIcons,
         })(datastream);
       })
       .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis });
@@ -335,5 +352,6 @@ export const useSeriesAndYAxis = (
     isDataStreamHidden,
     showBadDataIcons,
     showUncertainDataIcons,
+    showAlarmIcons,
   ]);
 };

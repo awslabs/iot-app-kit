@@ -20,6 +20,7 @@ const mapDataStreamInformation = ({
     'id' | 'color' | 'name' | 'unit' | 'assetName'
   > & {
     latestValue: Primitive | undefined;
+    latestAlarmStateValue: string | undefined;
   })[];
   trendCursorValues: TrendCursorValues[];
   chartId: string;
@@ -27,33 +28,44 @@ const mapDataStreamInformation = ({
   dataStreamMaxes: MinMaxMap;
   dataStreamMins: MinMaxMap;
 }): DataStreamInformation[] =>
-  datastreams.map(({ id, name, color, unit, assetName, latestValue }) => {
-    const values = trendCursorValues.reduce<
-      DataStreamInformation['trendCursorValues']
-    >((valueMap, next) => {
-      const valueId = chartId + id;
-      const value = next[valueId];
-      if (!value) return valueMap;
-      valueMap[value.trendCursorId] = value.value;
-      return valueMap;
-    }, {});
-
-    const dataStreamName =
-      visibleContent?.unit && unit ? `${name} (${unit})` : name;
-    const maxValue = dataStreamMaxes[id] ?? '-';
-    const minValue = dataStreamMins[id] ?? '-';
-
-    return {
+  datastreams.map(
+    ({
       id,
-      name: dataStreamName,
+      name,
       color,
+      unit,
       assetName,
       latestValue,
-      trendCursorValues: values,
-      maxValue,
-      minValue,
-    };
-  });
+      latestAlarmStateValue,
+    }) => {
+      const values = trendCursorValues.reduce<
+        DataStreamInformation['trendCursorValues']
+      >((valueMap, next) => {
+        const valueId = chartId + id;
+        const value = next[valueId];
+        if (!value) return valueMap;
+        valueMap[value.trendCursorId] = value.value;
+        return valueMap;
+      }, {});
+
+      const dataStreamName =
+        visibleContent?.unit && unit ? `${name} (${unit})` : name;
+      const maxValue = dataStreamMaxes[id] ?? '-';
+      const minValue = dataStreamMins[id] ?? '-';
+
+      return {
+        id,
+        name: dataStreamName,
+        color,
+        assetName,
+        latestValue,
+        latestAlarmStateValue,
+        trendCursorValues: values,
+        maxValue,
+        minValue,
+      };
+    }
+  );
 
 type ChartLegendTableAdapterOptions = ChartLegend & {
   datastreams: (Pick<
@@ -61,6 +73,7 @@ type ChartLegendTableAdapterOptions = ChartLegend & {
     'id' | 'color' | 'name' | 'unit' | 'assetName'
   > & {
     latestValue: Primitive | undefined;
+    latestAlarmStateValue: string | undefined;
   })[];
   trendCursorValues: TrendCursorValues[];
   trendCursors: TrendCursor[];
