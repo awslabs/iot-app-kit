@@ -1,5 +1,6 @@
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import {
+  SiteWiseAlarmQuery,
   SiteWiseAssetQuery,
   SiteWisePropertyAliasQuery,
 } from '@iot-app-kit/source-iotsitewise';
@@ -9,12 +10,14 @@ import { listAssetPropertiesWithComposite } from '~/hooks/listAssetPropertiesWit
 export const ASSET_DESCRIPTION_QUERY_KEY = ['assetDescriptions'];
 export const createListAssetPropertiesMapCacheKey = (
   siteWiseQuery:
-    | Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>
+    | Partial<
+        SiteWiseAssetQuery & SiteWisePropertyAliasQuery & SiteWiseAlarmQuery
+      >
     | undefined
 ): string[] => {
   return [
     ...ASSET_DESCRIPTION_QUERY_KEY,
-    'assetDescriptionsMap',
+    'listAssetDescriptionsMap',
     ...(siteWiseQuery?.assets?.map(
       ({ assetId }: { assetId: string }) => assetId
     ) ?? []),

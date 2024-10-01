@@ -7,6 +7,7 @@ import {
   type DescribeAssetCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
 import type {
+  SiteWiseAlarmQuery,
   SiteWiseAssetQuery,
   SiteWisePropertyAliasQuery,
 } from '@iot-app-kit/source-iotsitewise';
@@ -39,6 +40,7 @@ export type AssetSummary = {
   assetName: DescribeAssetResponse['assetName'];
   properties: PropertySummary[];
   alarms: AlarmSummary[];
+  assetCompositeModels?: AssetCompositeModel[];
 };
 
 const describeAsset = (client: IoTSiteWiseClient, assetId: string) =>
@@ -46,13 +48,19 @@ const describeAsset = (client: IoTSiteWiseClient, assetId: string) =>
 
 const describeSiteWiseAssetQuery = async (
   client: IoTSiteWiseClient,
-  siteWiseQuery: Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>
-) =>
-  Promise.all(
-    siteWiseQuery.assets?.map(({ assetId }: { assetId: string }) =>
+  siteWiseQuery: Partial<
+    SiteWiseAssetQuery & SiteWisePropertyAliasQuery & SiteWiseAlarmQuery
+  >
+) => {
+  return Promise.all([
+    ...(siteWiseQuery.assets?.map(({ assetId }: { assetId: string }) =>
       describeAsset(client, assetId)
-    ) ?? []
-  );
+    ) ?? []),
+    ...(siteWiseQuery.alarms?.map(({ assetId }: { assetId: string }) =>
+      describeAsset(client, assetId)
+    ) ?? []),
+  ]);
+};
 
 const ASSET_DESCRIPTION_QUERY_KEY = ['assetDescriptions'];
 
@@ -93,6 +101,7 @@ export const mapAssetDescriptionToAssetSummary = (
 ): AssetSummary => ({
   assetId: description.assetId,
   assetName: description.assetName,
+  assetCompositeModels: description.assetCompositeModels ?? [],
   properties: description.assetProperties?.map(mapPropertySummary) ?? [],
   alarms:
     description.assetCompositeModels
@@ -103,7 +112,9 @@ export const mapAssetDescriptionToAssetSummary = (
 const createAssetDescriptionMapQuery = (
   iotSiteWiseClient: IoTSiteWiseClient | undefined,
   siteWiseQuery:
-    | Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>
+    | Partial<
+        SiteWiseAssetQuery & SiteWisePropertyAliasQuery & SiteWiseAlarmQuery
+      >
     | undefined
 ) => {
   const queryKey: string[] = [
@@ -112,6 +123,7 @@ const createAssetDescriptionMapQuery = (
     ...(siteWiseQuery?.assets?.map(
       ({ assetId }: { assetId: string }) => assetId
     ) ?? []),
+    ...(siteWiseQuery?.alarms?.map((a) => a.assetId) ?? []),
   ];
 
   const fetchSiteWiseAssetQueryDescription = async () => {
@@ -121,7 +133,7 @@ const createAssetDescriptionMapQuery = (
 
   const query = {
     queryKey,
-    queryFn: () => fetchSiteWiseAssetQueryDescription(),
+    queryFn: fetchSiteWiseAssetQueryDescription,
     select: (data: DescribeAssetCommandOutput[]) =>
       data?.reduce<Record<string, AssetSummary>>((acc, n) => {
         const { assetId } = n;
@@ -137,7 +149,9 @@ const createAssetDescriptionMapQuery = (
 
 export const useAssetDescriptionMapQuery = (
   siteWiseQuery:
-    | Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>
+    | Partial<
+        SiteWiseAssetQuery & SiteWisePropertyAliasQuery & SiteWiseAlarmQuery
+      >
     | undefined
 ) => {
   const { iotSiteWiseClient } = useClients();
