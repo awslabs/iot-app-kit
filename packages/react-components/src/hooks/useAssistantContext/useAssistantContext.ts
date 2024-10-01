@@ -3,6 +3,7 @@ import {
   getAssistantStore,
   getAllAssistantContext,
   getContextByComponent,
+  getRawContextByComponent,
   setContextByComponent,
   updateContextByComponent,
 } from '@iot-app-kit/core-util';
@@ -23,6 +24,7 @@ export const useAssistantContext = () => {
     assistantContext,
     getAllAssistantContext,
     getContextByComponent,
+    getRawContextByComponent,
     setContextByComponent,
     updateContextByComponent,
     transformTimeseriesDataToAssistantContext: ({

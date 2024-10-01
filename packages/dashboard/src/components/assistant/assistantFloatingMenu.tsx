@@ -82,7 +82,7 @@ export const AssistantFloatingMenu = ({
   const floatingMenuStyles: CSSProperties = {
     display: 'flex',
     position: 'fixed',
-    width: `calc(100vw - ${rightOffset + 25}px)`,
+    width: `calc(100vw - ${rightOffset + 40}px)`,
     padding: spaceStaticM,
     zIndex: 1000, // required to fix bug in legends table in the XYplot chart and widget actions
   };
