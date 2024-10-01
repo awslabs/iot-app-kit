@@ -1,24 +1,29 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { IntlProvider } from 'react-intl';
-import type { AssistantProperty } from '../../common/assistantProps';
+import type {
+  AssistantProperty,
+  AssistantWidgetTypes,
+} from '../../common/assistantProps';
 import { ResultPanel } from './assistant-result/resultPanel';
 import { useAssistant } from '../../hooks/useAssistant/useAssistant';
 import './assistantWrapperPanel.css';
 
 export interface AssistantWrapperPanelProps extends PropsWithChildren {
   assistant: AssistantProperty;
+  componentType: AssistantWidgetTypes;
   width?: string | number;
   height?: string | number;
 }
 
 export const AssistantWrapperPanel = ({
   assistant,
+  componentType,
   width,
   height,
   children,
 }: AssistantWrapperPanelProps) => {
   const [showResults, setShowResults] = useState<boolean>(false);
-  const { messages, actions } = useAssistant({
+  const { messages, actionsByComponent } = useAssistant({
     assistantClient: assistant.client,
   });
 
@@ -27,6 +32,7 @@ export const AssistantWrapperPanel = ({
       assistant.onAction({
         type: 'divedeep',
         sourceComponentId: assistant.componentId,
+        sourceComponentType: componentType,
         messages,
       });
     }
@@ -34,14 +40,14 @@ export const AssistantWrapperPanel = ({
   };
 
   useEffect(() => {
-    const componentAction = actions[assistant.componentId];
+    const componentAction = actionsByComponent[assistant.componentId];
     if (
       componentAction?.action === 'summarize' &&
       componentAction?.target === 'widget'
     ) {
       setShowResults(true);
     }
-  }, [actions]);
+  }, [actionsByComponent]);
 
   return (
     <IntlProvider locale='en' defaultLocale='en'>

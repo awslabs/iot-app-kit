@@ -67,14 +67,14 @@ export const Gauge = ({
     .filter((alarm) => !!alarm)
     .at(0);
 
-    const { dataStreams } = useTimeSeriesData({
-      viewport: passedInViewport,
-      queries: transformedAlarm
-        ? transformedAlarm.timeSeriesDataQueries
-        : timeSeriesQueries,
-      settings: { fetchMostRecentBeforeEnd: true },
-      styles,
-    });
+  const { dataStreams } = useTimeSeriesData({
+    viewport: passedInViewport,
+    queries: transformedAlarm
+      ? transformedAlarm.timeSeriesDataQueries
+      : timeSeriesQueries,
+    settings: { fetchMostRecentBeforeEnd: true },
+    styles,
+  });
 
   const { propertyPoint, alarmStream, propertyStream } =
     widgetPropertiesFromInputs({
@@ -135,6 +135,7 @@ export const Gauge = ({
         width='min-content'
         height='min-content'
         assistant={assistant}
+        componentType='gauge'
       >
         {component}
       </AssistantWrapperPanel>

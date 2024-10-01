@@ -48,6 +48,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
       assistantClient: client,
       initialState: {
         messages: initialMessages,
+        actions: {},
       },
     });
 
@@ -55,24 +56,24 @@ export const Chatbot: FC<AssistantChatbotProps> = (
     if (assistant.messages && assistant.messages.length > 0) {
       setMessages(assistant.messages);
     }
+  }, [assistant.messages]);
 
-    if (
-      assistant.callerComponentId === 'dashboard' &&
-      assistant.action === 'summarize'
-    ) {
-      const contexts = assistant.selectedQueries
-        .map((item) => {
-          return getContextByComponent(item.widgetId);
-        })
-        .join('');
+  useEffect(() => {
+    if (assistant.action === 'summarize') {
+      if (assistant.callerComponentId === 'dashboard') {
+        const contexts = assistant.selectedQueries
+          .map((item) => getContextByComponent(item.widgetId))
+          .join('');
 
-      generateSummary({
-        componentId: 'dashboard',
-        target: 'dashboard',
-        conversationId: assistant.conversationId,
-        context: contexts,
-        utterance: SITUATION_SUMMARY_DEFAULT_UTTERANCE,
-      });
+        generateSummary({
+          componentId: 'dashboard',
+          target: 'dashboard',
+          conversationId: assistant.conversationId,
+          context: contexts,
+          utterance: SITUATION_SUMMARY_DEFAULT_UTTERANCE,
+        });
+      }
+
       onToggleChatbotAction({
         open: true,
         callerComponentId: 'dashboard',

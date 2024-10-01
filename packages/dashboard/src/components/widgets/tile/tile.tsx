@@ -10,13 +10,11 @@ import { HorizontalDivider } from '~/components/divider/horizontalDivider';
 import { useDispatch, useSelector } from 'react-redux';
 import type { DashboardState } from '~/store/state';
 import type { AssistantProperty } from '@iot-app-kit/react-components';
-
-import './tile.css';
 import {
   onAssistantDeselectWidgetsAction,
   onAssistantSelectWidgetsAction,
 } from '~/store/actions';
-import { SiteWiseQueryConfig } from '~/customization/widgets/types';
+import './tile.css';
 
 export type WidgetTileProps = PropsWithChildren<{
   widget: DashboardWidget;
@@ -58,7 +56,8 @@ const WidgetTile: React.FC<WidgetTileProps> = ({
       dispatch(
         onAssistantSelectWidgetsAction({
           widgetId: widget.id,
-          queryConfig: widget.properties.queryConfig as SiteWiseQueryConfig,
+          widgetType: widget.type,
+          selectedProperties: 1,
         })
       );
     }

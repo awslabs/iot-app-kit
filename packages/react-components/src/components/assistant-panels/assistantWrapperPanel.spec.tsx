@@ -29,7 +29,11 @@ const assistant = {
 } satisfies AssistantProperty;
 
 const component = (props: Partial<AssistantWrapperPanelProps>) => (
-  <AssistantWrapperPanel {...props} assistant={props.assistant || assistant}>
+  <AssistantWrapperPanel
+    {...props}
+    assistant={props.assistant || assistant}
+    componentType='kpi'
+  >
     <div
       data-testid='childComponent'
       style={{ width: '400px', height: '300px' }}
@@ -56,9 +60,11 @@ describe('ActionPanel', () => {
       })
     );
 
-    const { result } = renderHook(() => useAssistant({
-      assistantClient: client,
-    }));
+    const { result } = renderHook(() =>
+      useAssistant({
+        assistantClient: client,
+      })
+    );
 
     act(() => {
       result.current.generateSummary({
@@ -69,7 +75,9 @@ describe('ActionPanel', () => {
       });
     });
 
-    expect(screen.getByRole('button', { name: /Chat with AI/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Chat with AI/i })
+    ).toBeInTheDocument();
   });
 
   it('fires divedeep action when "Chat with AI" action item is clicked', async () => {
@@ -85,9 +93,11 @@ describe('ActionPanel', () => {
       })
     );
 
-    const { result } = renderHook(() => useAssistant({
-      assistantClient: client,
-    }));
+    const { result } = renderHook(() =>
+      useAssistant({
+        assistantClient: client,
+      })
+    );
 
     act(() => {
       result.current.generateSummary({
@@ -98,7 +108,9 @@ describe('ActionPanel', () => {
       });
     });
 
-    expect(screen.getByRole('button', { name: /Chat with AI/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Chat with AI/i })
+    ).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: /Chat with AI/i }));
 
     expect(mockedDivedeepAction).toHaveBeenCalledWith({

@@ -145,7 +145,12 @@ export const KPI = ({
 
   if (assistant) {
     return (
-      <AssistantWrapperPanel width='100%' height='100%' assistant={assistant}>
+      <AssistantWrapperPanel
+        width='100%'
+        height='100%'
+        assistant={assistant}
+        componentType='kpi'
+      >
         {component}
       </AssistantWrapperPanel>
     );

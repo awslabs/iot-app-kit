@@ -40,6 +40,7 @@ export const TableAssistantResults = ({
       assistant.onAction({
         type: 'summarize',
         sourceComponentId: assistant.componentId,
+        sourceComponentType: 'table',
         messages,
       });
     }
@@ -61,6 +62,7 @@ export const TableAssistantResults = ({
       assistant.onAction({
         type: 'divedeep',
         sourceComponentId: assistant.componentId,
+        sourceComponentType: 'table',
         messages,
       });
     }

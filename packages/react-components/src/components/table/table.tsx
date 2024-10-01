@@ -22,6 +22,7 @@ import type { AssistantSupportedQuery } from '../../hooks/useAssistantContext/ut
 import { IntlProvider } from 'react-intl';
 import type { ComponentQuery } from '../../common/chartTypes';
 import { getTimeSeriesQueries } from '../../utils/queries';
+import { getSelectedQueriesAndProperties } from './utils';
 import { useAlarmsFromQueries } from '../../hooks/useAlarmsFromQueries/useAlarmsFromQueries';
 import { parseAlarmStateAssetProperty } from '../../hooks/useAlarms/transformers';
 import { mapAlarmRuleExpression } from '../../hooks/useAlarms/transformers/mapAlarmRuleExpression';
@@ -154,23 +155,26 @@ export const Table = ({
     useAssistantContext();
 
   const handleSummarize = () => {
-    const transformedQueries = transformTimeseriesDataToAssistantContext({
-      start: viewportStartDate(utilizedViewport),
-      end: viewportEndDate(utilizedViewport),
-      queries: timeSeriesQueries,
-    });
-    const filteredQueries = transformedQueries.queries.map((query) => {
-      const { properties = [] } = query as AssistantSupportedQuery;
-      const filteredProperties = properties.filter((_prop, index) =>
-        indexesSelected.includes(index)
-      );
-      return {
-        ...query,
-        properties: filteredProperties,
-      };
-    });
     if (props.assistant) {
-      setContextByComponent(props.assistant.componentId, filteredQueries);
+      const transformedQueries = transformTimeseriesDataToAssistantContext({
+        start: viewportStartDate(utilizedViewport),
+        end: viewportEndDate(utilizedViewport),
+        queries: timeSeriesQueries,
+      });
+      const filteredQueries = transformedQueries.queries.map((query) => {
+        const { properties = [] } = query as AssistantSupportedQuery;
+        const filteredProperties = properties.filter((_prop, index) =>
+          indexesSelected.includes(index)
+        );
+        return {
+          ...query,
+          properties: filteredProperties,
+        };
+      });
+      setContextByComponent(props.assistant.componentId, {
+        timerange: transformedQueries.timerange,
+        queries: filteredQueries,
+      });
       setShowSummarization(true);
     }
   };
@@ -187,9 +191,34 @@ export const Table = ({
         precision={significantDigits}
         paginationEnabled={paginationEnabled}
         pageSize={pageSize}
-        onTableSelection={(indexesSelected) =>
-          setIndexesSelected(indexesSelected)
-        }
+        onTableSelection={(indexesSelected) => {
+          setIndexesSelected(indexesSelected);
+          if (
+            props.assistant &&
+            props.assistant.onAction &&
+            props.assistant.target === 'dashboard'
+          ) {
+            const selectedQueries = getSelectedQueriesAndProperties(
+              timeSeriesQueries,
+              indexesSelected
+            );
+            setContextByComponent(
+              props.assistant.componentId,
+              transformTimeseriesDataToAssistantContext({
+                start: viewportStartDate(utilizedViewport),
+                end: viewportEndDate(utilizedViewport),
+                queries: selectedQueries,
+              })
+            );
+
+            props.assistant.onAction({
+              type: 'selection',
+              sourceComponentId: props.assistant.componentId,
+              sourceComponentType: 'table',
+              selectedProperties: selectedQueries.length,
+            });
+          }
+        }}
         header={
           props.assistant?.target === 'widget' && (
             <TableHeader

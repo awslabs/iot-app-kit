@@ -5,7 +5,11 @@ import { configureDashboardStore } from '~/store';
 import { initialState } from '~/store/state';
 import { onToggleReadOnly } from '~/store/actions';
 import { Provider, useDispatch } from 'react-redux';
-import { MessageType, type IMessage } from '@iot-app-kit/react-components';
+import {
+  type AssistantActionEventDetail,
+  MessageType,
+  type IMessage,
+} from '@iot-app-kit/react-components';
 
 const store = configureDashboardStore(initialState);
 const TestProvider: React.FC<{
@@ -75,8 +79,9 @@ describe('useAssistant', () => {
       result.current.assistantConfiguration.onAction({
         type: 'divedeep',
         sourceComponentId: 'sourceComponentId',
+        sourceComponentType: 'kpi',
         messages,
-      });
+      } satisfies AssistantActionEventDetail);
     }
 
     await waitFor(() => {

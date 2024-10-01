@@ -6,7 +6,7 @@ import type { AssistantInvocationRequest } from '@iot-app-kit/core-util';
 export class MessageParser implements IMessageParser {
   private stateManager: StateManager = new StateManager(
     () => {},
-    () => {},
+    () => ({ messages: [], actions: {} }),
     () => {}
   );
 

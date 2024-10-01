@@ -81,6 +81,8 @@ export type {
   AssistantProperty,
   AssistantActionEventDetail,
   AssistantActionType,
+  AssistantActionTarget,
+  AssistantWidgetTypes,
 } from './common/assistantProps';
 export { AssistantChatbot } from './components/assistant-chatbot';
 export { useAssistant } from './hooks/useAssistant/useAssistant';

@@ -4,6 +4,7 @@ import {
   getContextByComponent,
   setContextByComponent,
   updateContextByComponent,
+  getRawContextByComponent,
 } from './context';
 
 const component1 = 'mockComponent';
@@ -67,5 +68,11 @@ describe('Assistant Context', () => {
         testComponent: context2,
       })
     );
+  });
+
+  it('getRawContextByComponent should get context for a single component', () => {
+    getAssistantStore();
+    setContextByComponent(component1, context1);
+    expect(getRawContextByComponent(component1)).toEqual(context1);
   });
 });

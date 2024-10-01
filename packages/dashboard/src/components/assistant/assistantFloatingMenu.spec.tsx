@@ -93,7 +93,8 @@ describe('Chatbot', () => {
       store.dispatch(
         onAssistantSelectWidgetsAction({
           widgetId: MOCK_KPI_WIDGET.id,
-          queryConfig: MOCK_KPI_WIDGET.properties.queryConfig,
+          widgetType: MOCK_KPI_WIDGET.type,
+          selectedProperties: 1,
         })
       );
     });
@@ -102,7 +103,8 @@ describe('Chatbot', () => {
       store.dispatch(
         onAssistantSelectWidgetsAction({
           widgetId: MOCK_LINE_CHART_WIDGET.id,
-          queryConfig: MOCK_LINE_CHART_WIDGET.properties.queryConfig,
+          widgetType: MOCK_LINE_CHART_WIDGET.type,
+          selectedProperties: 2,
         })
       );
     });
@@ -111,7 +113,8 @@ describe('Chatbot', () => {
       store.dispatch(
         onAssistantSelectWidgetsAction({
           widgetId: MOCK_STATUS_TIMELINE_WIDGET.id,
-          queryConfig: MOCK_STATUS_TIMELINE_WIDGET.properties.queryConfig,
+          widgetType: MOCK_STATUS_TIMELINE_WIDGET.type,
+          selectedProperties: 1,
         })
       );
     });
@@ -120,7 +123,8 @@ describe('Chatbot', () => {
       store.dispatch(
         onAssistantSelectWidgetsAction({
           widgetId: MOCK_SCATTER_CHART_WIDGET.id,
-          queryConfig: MOCK_SCATTER_CHART_WIDGET.properties.queryConfig,
+          widgetType: MOCK_SCATTER_CHART_WIDGET.type,
+          selectedProperties: 2,
         })
       );
     });
@@ -162,7 +166,8 @@ it('should clear all selection if clear all button is clicked', async () => {
     store.dispatch(
       onAssistantSelectWidgetsAction({
         widgetId: MOCK_KPI_WIDGET.id,
-        queryConfig: MOCK_KPI_WIDGET.properties.queryConfig,
+        widgetType: MOCK_KPI_WIDGET.type,
+        selectedProperties: 1,
       })
     );
   });
@@ -188,7 +193,8 @@ it('should open the chatbot when generate summary is clicked', async () => {
     store.dispatch(
       onAssistantSelectWidgetsAction({
         widgetId: MOCK_KPI_WIDGET.id,
-        queryConfig: MOCK_KPI_WIDGET.properties.queryConfig,
+        widgetType: MOCK_KPI_WIDGET.type,
+        selectedProperties: 1,
       })
     );
   });

@@ -10,6 +10,7 @@ import type {
   BaseStateManager,
   IMessage,
   AssistantInvocationParams,
+  AssistantStartAction,
 } from './types';
 import { MessageParser } from './messageParser';
 import { StateManager } from './stateManager';
@@ -19,22 +20,23 @@ import type {
   AssistantActionTarget,
   AssistantActionType,
 } from '../../common/assistantProps';
+import type { AssistantStateData } from '../../store/assistantSlice';
 
 export interface IUseAssistant {
-  assistantClient: IoTSitewiseAssistantClient;
+  assistantClient?: IoTSitewiseAssistantClient;
 
   /** optional but a default implementation will be provided */
   messageParser?: IMessageParser & MessageParser;
   stateManager?: BaseStateManager & StateManager;
 
-  initialState?: Record<string, any>;
+  initialState?: AssistantStateData;
 }
 
 const loadingMessage = 'loading...';
 const internalMessageParser = new MessageParser();
 const internalStateManager = new StateManager(
   () => {},
-  () => ({ messages: [] }),
+  () => ({ messages: [], actions: {} }),
   () => {}
 );
 
@@ -66,6 +68,11 @@ export const useAssistant = ({
     const prevActionStateCount = Object.keys(prevState.actions).length;
     if (currentActionStateCount !== prevActionStateCount) {
       setActions(state.actions);
+    }
+    const currentMessages = Object.keys(state.messages).length;
+    const prevMessagesCount = Object.keys(prevState.messages).length;
+    if (currentMessages !== prevMessagesCount) {
+      setMessages(state.messages);
     }
   });
 
@@ -130,7 +137,7 @@ export const useAssistant = ({
     removeLoadingMessages(request.componentId);
     currentMessageParser.parse(request, response.body);
     setMessages(currentStateManager.getState().messages);
-    currentStateManager.stopComponentAction(request.componentId);
+    clearActions(request.componentId);
   };
 
   const onError = (
@@ -141,11 +148,13 @@ export const useAssistant = ({
     setMessages(currentStateManager.getState().messages);
   };
 
-  assistantClient.setRequestHandlers(
-    assistantClient.onResponse ? assistantClient.onResponse : onResponse,
-    assistantClient.onComplete ? assistantClient.onComplete : onComplete,
-    assistantClient.onError ? assistantClient.onError : onError
-  );
+  if (assistantClient) {
+    assistantClient.setRequestHandlers(
+      assistantClient.onResponse ? assistantClient.onResponse : onResponse,
+      assistantClient.onComplete ? assistantClient.onComplete : onComplete,
+      assistantClient.onError ? assistantClient.onError : onError
+    );
+  }
 
   const invokeAssistant = ({
     componentId,
@@ -153,6 +162,8 @@ export const useAssistant = ({
     utterance,
     context,
   }: AssistantInvocationParams) => {
+    if (!assistantClient) throw Error('assistantClient is not defined');
+
     currentStateManager.addText(componentId, utterance, 'user');
     currentStateManager.addPartialResponse(componentId, loadingMessage);
     setMessages(currentStateManager.getState().messages);
@@ -166,12 +177,14 @@ export const useAssistant = ({
     utterance,
     context = '',
   }: AssistantInvocationParams) => {
+    if (!assistantClient) throw Error('assistantClient is not defined');
+
     if (utterance) {
       currentStateManager.addText(componentId, utterance, 'user');
       currentStateManager.addPartialResponse(componentId, loadingMessage);
       setMessages(currentStateManager.getState().messages);
     }
-    currentStateManager.startComponentAction({
+    startAction({
       target,
       componentId,
       action: 'summarize',
@@ -184,11 +197,24 @@ export const useAssistant = ({
     });
   };
 
+  const startAction = (params: AssistantStartAction) => {
+    currentStateManager.startComponentAction(params);
+    setActions(currentStateManager.getState().actions);
+  };
+
+  const clearActions = (componentId: string) => {
+    currentStateManager.clearComponentActions(componentId);
+    setActions(currentStateManager.getState().actions);
+  };
+
   return {
     actions,
     messages,
     setMessages,
     invokeAssistant,
     generateSummary,
+    actionsByComponent: actions,
+    startAction,
+    clearActions,
   };
 };

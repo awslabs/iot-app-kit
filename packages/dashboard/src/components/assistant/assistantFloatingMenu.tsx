@@ -23,6 +23,7 @@ import {
 import type { DashboardState } from '~/store/state';
 import Alert from '@cloudscape-design/components/alert';
 import { DashboardMessages } from '~/messages';
+import { useAssistant } from '@iot-app-kit/react-components';
 
 const MAX_ITEMS_SELECTED = 3;
 const CHATBOT_OPENED_WIDTH = 500;
@@ -34,6 +35,7 @@ export const AssistantFloatingMenu = ({
   messageOverrides: DashboardMessages;
 }) => {
   const dispatch = useDispatch();
+  const { startAction } = useAssistant({});
   const assistantState = useSelector(
     (state: DashboardState) => state.assistant
   );
@@ -50,6 +52,15 @@ export const AssistantFloatingMenu = ({
   };
 
   const handleClearAll = () => {
+    assistantState.selectedQueries
+      .filter((item) => ['chart', 'table'].includes(item.widgetType))
+      .forEach((query) => {
+        startAction({
+          target: 'widget',
+          componentId: query.widgetId,
+          action: 'clear-selection',
+        });
+      });
     dispatch(onAssistantCleanWidgetsSelectionAction());
   };
 
@@ -89,10 +100,15 @@ export const AssistantFloatingMenu = ({
     fontSize: fontSizeBodyM,
   };
 
+  let totalSelected = 0;
+  assistantState.selectedQueries.forEach(
+    (q) => (totalSelected += q.selectedProperties)
+  );
+
   return (
     <div style={mainContainerStyles}>
       <div style={floatingMenuStyles}>
-        {assistantState.selectedQueries.length > MAX_ITEMS_SELECTED ? (
+        {totalSelected > MAX_ITEMS_SELECTED ? (
           <div style={{ width: 'fit-content' }}>
             <Alert
               statusIconAriaLabel={assistant.floatingMenu.error.ariaLabel}
@@ -112,8 +128,7 @@ export const AssistantFloatingMenu = ({
               {assistantState.mode === 'on' ? (
                 <div style={menuStyles}>
                   <span style={{ padding: `0 ${spaceStaticM}` }}>
-                    {assistantState.selectedQueries.length}/{MAX_ITEMS_SELECTED}{' '}
-                    items selected
+                    {totalSelected}/{MAX_ITEMS_SELECTED} items selected
                   </span>
                   <VerticalDivider
                     styles={{ width: '1px', height: spaceStaticS }}
@@ -121,7 +136,7 @@ export const AssistantFloatingMenu = ({
                   <AssistantFloatingMenuCenterButton
                     label={assistant.floatingMenu.buttonClearAll}
                     onClick={handleClearAll}
-                    disabled={assistantState.selectedQueries.length === 0}
+                    disabled={totalSelected === 0}
                   />
                   <VerticalDivider
                     styles={{ width: '2px', height: spaceStaticL }}
@@ -130,8 +145,7 @@ export const AssistantFloatingMenu = ({
                     label={assistant.floatingMenu.buttonGenerateSummary}
                     onClick={handleSummary}
                     disabled={
-                      assistantState.selectedQueries.length === 0 ||
-                      assistantState.selectedQueries.length > MAX_ITEMS_SELECTED
+                      totalSelected === 0 || totalSelected > MAX_ITEMS_SELECTED
                     }
                   />
                 </div>

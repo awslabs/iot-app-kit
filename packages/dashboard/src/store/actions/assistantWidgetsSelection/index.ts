@@ -1,11 +1,11 @@
-import uniqBy from 'lodash/uniqBy';
 import type { Action } from 'redux';
 import type { DashboardState } from '../../state';
-import { SiteWiseQueryConfig } from '~/customization/widgets/types';
+import { uniqBy } from 'lodash';
 
-type AssistantSelectWidgetsActionPayload = {
+export type AssistantSelectWidgetsActionPayload = {
   widgetId: string;
-  queryConfig: SiteWiseQueryConfig;
+  widgetType: string;
+  selectedProperties: number;
 };
 
 type AssistantDeselectWidgetsActionPayload = {

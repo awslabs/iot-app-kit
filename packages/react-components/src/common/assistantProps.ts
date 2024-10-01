@@ -4,7 +4,9 @@ import type { IMessage } from '../hooks/useAssistant/types';
 export interface AssistantActionEventDetail {
   type: AssistantActionType;
   sourceComponentId: string;
+  sourceComponentType: string;
   messages?: IMessage[];
+  selectedProperties?: number;
 }
 
 export interface AssistantProperty {
@@ -17,5 +19,10 @@ export interface AssistantProperty {
 }
 
 export type AssistantActionTarget = 'dashboard' | 'widget';
-export type AssistantActionType = 'divedeep' | 'summarize';
+export type AssistantActionType =
+  | 'divedeep'
+  | 'summarize'
+  | 'selection'
+  | 'clear-selection';
+export type AssistantWidgetTypes = 'kpi' | 'gauge' | 'table' | 'chart';
 export type ComponentId = string;

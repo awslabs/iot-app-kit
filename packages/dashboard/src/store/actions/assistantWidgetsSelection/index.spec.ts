@@ -27,13 +27,15 @@ it('selects a single widget', () => {
       dashboardState,
       onAssistantSelectWidgetsAction({
         widgetId: MOCK_KPI_WIDGET.id,
-        queryConfig: MOCK_KPI_WIDGET.properties.queryConfig,
+        widgetType: MOCK_KPI_WIDGET.type,
+        selectedProperties: 1,
       })
     ).assistant.selectedQueries
   ).toEqual([
     {
       widgetId: MOCK_KPI_WIDGET.id,
-      queryConfig: MOCK_KPI_WIDGET.properties.queryConfig,
+      widgetType: MOCK_KPI_WIDGET.type,
+      selectedProperties: 1,
     },
   ]);
 });
@@ -43,7 +45,8 @@ it('selects two widgets', () => {
     dashboardState,
     onAssistantSelectWidgetsAction({
       widgetId: MOCK_KPI_WIDGET.id,
-      queryConfig: MOCK_KPI_WIDGET.properties.queryConfig,
+      widgetType: MOCK_KPI_WIDGET.type,
+      selectedProperties: 1,
     })
   );
 
@@ -52,42 +55,20 @@ it('selects two widgets', () => {
       state,
       onAssistantSelectWidgetsAction({
         widgetId: MOCK_LINE_CHART_WIDGET.id,
-        queryConfig: MOCK_LINE_CHART_WIDGET.properties.queryConfig,
+        widgetType: MOCK_LINE_CHART_WIDGET.type,
+        selectedProperties: 2,
       })
     ).assistant.selectedQueries
   ).toEqual([
     {
       widgetId: MOCK_KPI_WIDGET.id,
-      queryConfig: MOCK_KPI_WIDGET.properties.queryConfig,
+      widgetType: MOCK_KPI_WIDGET.type,
+      selectedProperties: 1,
     },
     {
       widgetId: MOCK_LINE_CHART_WIDGET.id,
-      queryConfig: MOCK_LINE_CHART_WIDGET.properties.queryConfig,
-    },
-  ]);
-});
-
-it('selects the same widget to a selection', () => {
-  const state = assistantSelectWidgets(
-    dashboardState,
-    onAssistantSelectWidgetsAction({
-      widgetId: MOCK_KPI_WIDGET.id,
-      queryConfig: MOCK_KPI_WIDGET.properties.queryConfig,
-    })
-  );
-
-  expect(
-    assistantSelectWidgets(
-      state,
-      onAssistantSelectWidgetsAction({
-        widgetId: MOCK_KPI_WIDGET.id,
-        queryConfig: MOCK_KPI_WIDGET.properties.queryConfig,
-      })
-    ).assistant.selectedQueries
-  ).toEqual([
-    {
-      widgetId: MOCK_KPI_WIDGET.id,
-      queryConfig: MOCK_KPI_WIDGET.properties.queryConfig,
+      widgetType: MOCK_LINE_CHART_WIDGET.type,
+      selectedProperties: 2,
     },
   ]);
 });
@@ -97,7 +78,8 @@ it('deselect a single widget', () => {
     dashboardState,
     onAssistantSelectWidgetsAction({
       widgetId: MOCK_KPI_WIDGET.id,
-      queryConfig: MOCK_KPI_WIDGET.properties.queryConfig,
+      widgetType: MOCK_KPI_WIDGET.type,
+      selectedProperties: 1,
     })
   );
 
@@ -116,7 +98,8 @@ it('does nothing if widget deselect was not previously selected', () => {
     dashboardState,
     onAssistantSelectWidgetsAction({
       widgetId: MOCK_KPI_WIDGET.id,
-      queryConfig: MOCK_KPI_WIDGET.properties.queryConfig,
+      widgetType: MOCK_KPI_WIDGET.type,
+      selectedProperties: 1,
     })
   );
 
@@ -130,7 +113,8 @@ it('does nothing if widget deselect was not previously selected', () => {
   ).toEqual([
     {
       widgetId: MOCK_KPI_WIDGET.id,
-      queryConfig: MOCK_KPI_WIDGET.properties.queryConfig,
+      widgetType: MOCK_KPI_WIDGET.type,
+      selectedProperties: 1,
     },
   ]);
 });
@@ -140,7 +124,8 @@ it('clean all widgets selection', () => {
     dashboardState,
     onAssistantSelectWidgetsAction({
       widgetId: MOCK_KPI_WIDGET.id,
-      queryConfig: MOCK_KPI_WIDGET.properties.queryConfig,
+      widgetType: MOCK_KPI_WIDGET.type,
+      selectedProperties: 1,
     })
   );
 
@@ -148,7 +133,8 @@ it('clean all widgets selection', () => {
     dashboardState,
     onAssistantSelectWidgetsAction({
       widgetId: MOCK_LINE_CHART_WIDGET.id,
-      queryConfig: MOCK_LINE_CHART_WIDGET.properties.queryConfig,
+      widgetType: MOCK_LINE_CHART_WIDGET.type,
+      selectedProperties: 1,
     })
   );
 

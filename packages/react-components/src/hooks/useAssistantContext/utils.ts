@@ -17,10 +17,10 @@ export const convertToSupportedTimeRange = (start: Date, end: Date) => {
   };
 };
 
-type ParsedTimeSeriesDataQuery = {
+export type ParsedTimeSeriesDataQuery = {
   source: string;
   queryType: string;
-  query?: SiteWiseDataStreamQuery;
+  query: SiteWiseDataStreamQuery;
 };
 
 export type AssistantSupportedQuery = {
@@ -34,46 +34,53 @@ export type AssistantSupportedQuery = {
   }>;
 };
 
+export const serializeTimeSeriesQuery = (query: TimeSeriesDataQuery) => {
+  try {
+    return JSON.parse(
+      query.toQueryString()
+    ) satisfies ParsedTimeSeriesDataQuery;
+  } catch (error: unknown) {
+    return undefined;
+  }
+};
+
 export const transformQueriesForContext = (queries: TimeSeriesDataQuery[]) => {
   return queries.map((query) => {
-    try {
-      const queryObject: ParsedTimeSeriesDataQuery = JSON.parse(
-        query.toQueryString()
-      ) satisfies ParsedTimeSeriesDataQuery;
-      const parsedQuery: AssistantSupportedQuery = {
-        source: queryObject.source,
-        queryType: queryObject.queryType,
-        aggregationType: '',
-        properties: [],
-      };
+    const queryObject: ParsedTimeSeriesDataQuery =
+      serializeTimeSeriesQuery(query);
+    if (typeof queryObject === 'undefined') return queryObject;
 
-      const assets = (queryObject.query?.assets ?? []) satisfies AssetQuery[];
-      assets.forEach((asset: AssetQuery) => {
-        asset.properties.forEach((property) => {
-          if (!parsedQuery.aggregationType) {
-            parsedQuery.aggregationType = property.aggregationType ?? '';
-          }
-          parsedQuery.properties.push({
-            assetId: asset.assetId,
-            propertyId: property.propertyId,
-          });
-        });
-      });
+    const parsedQuery: AssistantSupportedQuery = {
+      source: queryObject.source,
+      queryType: queryObject.queryType,
+      aggregationType: '',
+      properties: [],
+    };
 
-      const propertiesAlias = (queryObject.query?.properties ??
-        []) satisfies PropertyAliasQuery[];
-      propertiesAlias.forEach((property: PropertyAliasQuery) => {
+    const assets = (queryObject.query?.assets ?? []) satisfies AssetQuery[];
+    assets.forEach((asset: AssetQuery) => {
+      asset.properties.forEach((property) => {
         if (!parsedQuery.aggregationType) {
           parsedQuery.aggregationType = property.aggregationType ?? '';
         }
         parsedQuery.properties.push({
-          propertyAlias: property.propertyAlias,
+          assetId: asset.assetId,
+          propertyId: property.propertyId,
         });
       });
+    });
 
-      return parsedQuery;
-    } catch (error: unknown) {
-      return undefined;
-    }
+    const propertiesAlias = (queryObject.query?.properties ??
+      []) satisfies PropertyAliasQuery[];
+    propertiesAlias.forEach((property: PropertyAliasQuery) => {
+      if (!parsedQuery.aggregationType) {
+        parsedQuery.aggregationType = property.aggregationType ?? '';
+      }
+      parsedQuery.properties.push({
+        propertyAlias: property.propertyAlias,
+      });
+    });
+
+    return parsedQuery;
   });
 };

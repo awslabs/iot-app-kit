@@ -1,22 +1,23 @@
 import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
-import type { BaseStateManager, IMessage, UniqueID } from './types';
+import type {
+  AssistantStartAction,
+  BaseStateManager,
+  IMessage,
+  UniqueID,
+} from './types';
 import { MessageType } from './types';
 import { v4 as uuidv4 } from 'uuid';
 import { AssistantInvocationRequest } from '@iot-app-kit/core-util';
-import type {
-  AssistantActionTarget,
-  AssistantActionType,
-  ComponentId,
-} from '../../common/assistantProps';
+import type { AssistantStateData } from '../../store/assistantSlice';
 
-type GenericSetState = (state: any) => void;
-type GenericGetState = () => any;
-type GenericClearState = () => any;
+type GenericSetState = (state: AssistantStateData) => void;
+type GenericGetState = () => AssistantStateData;
+type GenericClearState = () => void;
 
 export class StateManager implements BaseStateManager {
   private setStateFn: GenericSetState;
   private getStateFn: GenericGetState;
-  private clearStateFn: GenericGetState;
+  private clearStateFn: GenericClearState;
 
   constructor(
     setStateFunc: GenericSetState,
@@ -98,25 +99,21 @@ export class StateManager implements BaseStateManager {
   };
 
   addMessageToState = (message: IMessage) => {
-    this.setStateFn({ messages: [message] });
+    this.setStateFn({ messages: [message] } as AssistantStateData);
   };
 
   removeMessage = (index: number) => {
     const messages = [...this.getStateFn().messages];
     messages.splice(index, 1);
     this.clearStateFn();
-    this.setStateFn({ messages });
+    this.setStateFn({ messages } as AssistantStateData);
   };
 
   startComponentAction = ({
     target,
     componentId,
     action,
-  }: {
-    target: AssistantActionTarget;
-    componentId: ComponentId;
-    action: AssistantActionType;
-  }) => {
+  }: AssistantStartAction) => {
     this.setStateFn({
       actions: {
         [componentId]: {
@@ -124,20 +121,20 @@ export class StateManager implements BaseStateManager {
           action,
         },
       },
-    });
+    } as AssistantStateData);
   };
 
-  stopComponentAction = (componentId: string) => {
+  clearComponentActions = (componentId: string) => {
     const { actions } = this.getStateFn();
     if (actions[componentId]) {
       delete actions[componentId];
     }
-    this.setStateFn({ actions });
+    this.setStateFn({ actions } as AssistantStateData);
   };
 
   getState = () => this.getStateFn();
 
-  setState = (state: any) => this.setStateFn(state);
+  setState = (state: AssistantStateData) => this.setStateFn(state);
 
   clearState = () => this.clearStateFn();
 }

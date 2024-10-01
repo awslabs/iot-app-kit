@@ -3,7 +3,11 @@ import type {
   AssistantInvocationRequest,
   InvokeAssistantOptions,
 } from '@iot-app-kit/core-util';
-import type { AssistantActionTarget } from '../../common/assistantProps';
+import type {
+  AssistantActionTarget,
+  AssistantActionType,
+  ComponentId,
+} from '../../common/assistantProps';
 
 export type UniqueID = string;
 
@@ -34,7 +38,7 @@ export type IMessage = {
   /**
    * the raw payload data returned from InvokeAssistant in case a custom component needs it
    */
-  payload?: any;
+  payload?: unknown;
 };
 
 export interface IMessageParser {
@@ -48,4 +52,10 @@ export interface BaseStateManager {
 
 export type AssistantInvocationParams = InvokeAssistantOptions & {
   target: AssistantActionTarget;
+};
+
+export type AssistantStartAction = {
+  target: AssistantActionTarget;
+  componentId: ComponentId;
+  action: AssistantActionType;
 };

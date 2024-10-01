@@ -54,6 +54,9 @@ export const getContextByComponent = (componentID: ComponentID) => {
   const compressed = deflate(JSON.stringify(componentContext));
   return String.fromCharCode(...inflate(compressed));
 };
+export const getRawContextByComponent = (componentID: ComponentID) => {
+  return assistantContext.getState().context[componentID] || {};
+};
 export const setContextByComponent = (
   componentID: ComponentID,
   context: ContextData

@@ -21,7 +21,11 @@ export const Chart: React.FC<ChartOptions> = (options) => {
   if (options.assistant && firstQuery) {
     options.assistant.componentId = chartId;
     return (
-      <AssistantWrapperPanel width='min-content' assistant={options.assistant}>
+      <AssistantWrapperPanel
+        width='min-content'
+        assistant={options.assistant}
+        componentType='chart'
+      >
         {component}
       </AssistantWrapperPanel>
     );

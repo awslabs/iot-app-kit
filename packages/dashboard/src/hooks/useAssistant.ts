@@ -8,6 +8,10 @@ import { onToggleChatbotAction } from '~/store/actions/toggleChatbot';
 import { useClients } from '~/components/dashboard/clientContext';
 import { useMemo } from 'react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import {
+  onAssistantDeselectWidgetsAction,
+  onAssistantSelectWidgetsAction,
+} from '~/store/actions/assistantWidgetsSelection';
 
 export const useAssistant = (widgetId: string) => {
   const dispatch = useDispatch();
@@ -27,17 +31,42 @@ export const useAssistant = (widgetId: string) => {
   if (readOnly && assistant.conversationId && assistant.state !== 'DISABLED') {
     assistantConfiguration = {
       client: assistantClient,
-      enabled: readOnly,
+      enabled: readOnly && assistant.mode === 'on',
       conversationId: assistant.conversationId,
       componentId: widgetId,
       target: 'dashboard',
       onAction: (event: AssistantActionEventDetail) => {
-        if (event.type === 'divedeep') {
+        if (event.type === 'summarize') {
+          dispatch(
+            onToggleChatbotAction({
+              open: true,
+              callerComponentId: event.sourceComponentId,
+              action: 'summarize',
+              messages: event.messages ?? [],
+            })
+          );
+        } else if (event.type === 'divedeep') {
           dispatch(
             onToggleChatbotAction({
               open: true,
               callerComponentId: event.sourceComponentId,
               messages: event.messages ?? [],
+            })
+          );
+        } else if (event.type === 'selection') {
+          const { selectedProperties = 1 } = event;
+
+          dispatch(
+            onAssistantDeselectWidgetsAction({
+              widgetId: event.sourceComponentId,
+            })
+          );
+
+          dispatch(
+            onAssistantSelectWidgetsAction({
+              widgetId: event.sourceComponentId,
+              widgetType: event.sourceComponentType,
+              selectedProperties,
             })
           );
         }

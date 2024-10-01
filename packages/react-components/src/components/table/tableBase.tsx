@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Pagination,
   PropertyFilter,
@@ -9,6 +9,7 @@ import { getDefaultColumnDefinitions } from './tableHelpers';
 import type { FunctionComponent } from 'react';
 import type { TableItemHydrated, TableProps } from './types';
 import { ASSISTANT_SELECTION_LIMITATION, DEFAULT_PAGE_SIZE } from './constants';
+import { useAssistant } from '../../hooks/useAssistant/useAssistant';
 
 export const TableBase: FunctionComponent<TableProps> = (props) => {
   const {
@@ -42,6 +43,18 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
     }),
   };
 
+  const { actionsByComponent, clearActions } = useAssistant({});
+
+  useEffect(() => {
+    if (props.assistant?.componentId) {
+      const componentAction = actionsByComponent[props.assistant?.componentId];
+      if (componentAction?.action === 'clear-selection') {
+        setSelectedItems([]);
+        clearActions(props.assistant?.componentId);
+      }
+    }
+  }, [actionsByComponent, props.assistant]);
+
   return (
     <Table
       {...props}
@@ -59,7 +72,9 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
           />
         )
       }
-      selectionType={props.assistant ? 'multi' : undefined}
+      selectionType={
+        props.assistant && props.assistant.enabled ? 'multi' : undefined
+      }
       isItemDisabled={(item: TableItemHydrated) => {
         if (selectedItems.length === ASSISTANT_SELECTION_LIMITATION) {
           const found =
