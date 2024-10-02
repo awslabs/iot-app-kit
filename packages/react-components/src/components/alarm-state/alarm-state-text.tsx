@@ -11,14 +11,20 @@ import {
 
 import './alarm-state-text.css';
 import { PascalCaseStateName } from '../../hooks/useAlarms/transformers';
+import { AlarmDataStatus } from '../../hooks/useAlarms';
+import { Spinner } from '@cloudscape-design/components';
 
 type AlarmStateTextOptions = {
   state?: PascalCaseStateName;
+  status?: AlarmDataStatus;
+  isLoading?: boolean;
   inheritFontColor?: boolean;
 };
 
 export const AlarmStateText = ({
   state,
+  status,
+  isLoading,
   inheritFontColor,
 }: AlarmStateTextOptions) => {
   let icon = null;
@@ -29,6 +35,13 @@ export const AlarmStateText = ({
   };
 
   let borderBottom = '1px dashed ';
+
+  // checking if the gauge value is loading, so we dont show the alarm loading spinner
+  if (isLoading || !state) return null;
+
+  if (status?.isLoading) {
+    return <Spinner />;
+  }
 
   switch (state) {
     case 'Active':

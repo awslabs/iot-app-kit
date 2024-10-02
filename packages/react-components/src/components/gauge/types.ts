@@ -7,6 +7,7 @@ import {
 import type { WidgetSettings } from '../../common/dataTypes';
 import type { ComponentQuery } from '../../common/chartTypes';
 import { PascalCaseStateName } from '../../hooks/useAlarms/transformers';
+import { AlarmDataStatus } from '../../hooks/useAlarms';
 
 export type GaugeProps = {
   size?: { width: number; height: number };
@@ -26,6 +27,7 @@ export type GaugeBaseProperties = WidgetSettings &
   > & {
     isLoading?: boolean;
     alarmState?: PascalCaseStateName;
+    alarmStatus?: AlarmDataStatus;
   };
 export type GaugeSettings = {
   gaugeThickness?: number;

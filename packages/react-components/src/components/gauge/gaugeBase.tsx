@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/default
 import React from 'react';
-import { useECharts, useLoadableEChart } from '../../hooks/useECharts';
+import { useECharts } from '../../hooks/useECharts';
 import { GaugeBaseProperties } from './types';
 import { useGaugeConfiguration } from './hooks/useGaugeConfiguration';
 import { useResizableGauge } from './hooks/useResizableGauge';
@@ -32,6 +32,7 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
   significantDigits,
   error,
   alarmState,
+  alarmStatus,
   ...options
 }) => {
   const gaugeValue = propertyPoint?.y;
@@ -40,13 +41,9 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
   // Setup instance of echarts
   const { ref, chartRef } = useECharts(options?.theme);
 
-  // apply loading animation to echart instance
-  useLoadableEChart(chartRef, isLoading);
-
   useGaugeConfiguration(
     chartRef,
     {
-      isLoading,
       thresholds: thresholds,
       gaugeValue: gaugeValue,
       name,
@@ -77,23 +74,23 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
           height: size?.height,
         }}
       />
-      {!isLoading && (
-        <GaugeText
-          valueColor={thresholdsToColor({
-            gaugeValue,
-            thresholds,
-            defaultColor: settings?.color,
-          })}
-          unit={unit}
-          error={error}
-          settings={settings}
-          name={name}
-          quality={quality}
-          value={gaugeValue}
-          alarmState={alarmState}
-          significantDigits={significantDigits}
-        />
-      )}
+      <GaugeText
+        valueColor={thresholdsToColor({
+          gaugeValue,
+          thresholds,
+          defaultColor: settings?.color,
+        })}
+        isLoading={isLoading}
+        alarmStatus={alarmStatus}
+        unit={unit}
+        error={error}
+        settings={settings}
+        name={name}
+        quality={quality}
+        value={gaugeValue}
+        alarmState={alarmState}
+        significantDigits={significantDigits}
+      />
     </div>
   );
 };

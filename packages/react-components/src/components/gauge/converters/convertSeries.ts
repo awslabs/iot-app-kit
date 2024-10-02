@@ -30,7 +30,7 @@ export const convertSeries = ({
     : null;
 
   const getFormatterValue = (value: number) => {
-    if (!value) return '-';
+    if (!value) return undefined;
     return `{value|${getPreciseValue(value, significantDigits)}} ${
       settings?.showUnit && unit ? '{unit| ' + unit + '}' : ''
     }`;
