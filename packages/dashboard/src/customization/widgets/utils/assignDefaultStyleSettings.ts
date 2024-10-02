@@ -45,6 +45,9 @@ const assignDefaults = (
     })),
   })),
   alarms,
+  requestSettings: {
+    ...resAndAggr,
+  },
 });
 
 const assignDefaultColors = (

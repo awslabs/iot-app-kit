@@ -44,6 +44,9 @@ export const Gauge = ({
     convertAlarmQueryToAlarmRequest(query)
   );
 
+  const inputPropertyTimeSeriesDataSettings =
+    alarmQueries.at(0)?.query.requestSettings;
+
   const transformedAlarm = useAlarms({
     iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
     iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
@@ -57,6 +60,7 @@ export const Gauge = ({
     transform: buildTransformAlarmForSingleQueryWidgets({
       iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
       iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
+      ...inputPropertyTimeSeriesDataSettings,
     }),
   })
     .filter((alarm) => !!alarm)
