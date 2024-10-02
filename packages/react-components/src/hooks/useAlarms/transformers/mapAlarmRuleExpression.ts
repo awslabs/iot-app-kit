@@ -1,11 +1,32 @@
 import { ComparisonOperator } from '@aws-sdk/client-iot-events';
 import { AlarmData } from '../types';
+import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
 
 type RuleExpression<
   InputPropertyName extends string = string,
   Operator extends string = string,
   ThresholdValue extends number = number
 > = `${InputPropertyName} ${Operator} ${ThresholdValue}`;
+
+export const CORE_COMPARISON_OPERATOR = {
+  [ComparisonOperator.EQUAL]: COMPARISON_OPERATOR['EQ'],
+  [ComparisonOperator.LESS]: COMPARISON_OPERATOR['LT'],
+  [ComparisonOperator.LESS_OR_EQUAL]: COMPARISON_OPERATOR['LTE'],
+  [ComparisonOperator.GREATER]: COMPARISON_OPERATOR['GT'],
+  [ComparisonOperator.GREATER_OR_EQUAL]: COMPARISON_OPERATOR['GTE'],
+  [ComparisonOperator.NOT_EQUAL]: undefined,
+};
+
+export const getCoreComparisonOperator = (operator?: string) => {
+  if (!operator) return undefined;
+
+  const operatorSymbol =
+    CORE_COMPARISON_OPERATOR[operator as ComparisonOperator];
+
+  if (operatorSymbol == null) return undefined;
+
+  return operatorSymbol;
+};
 
 const COMPARISON_SYMBOL = {
   [ComparisonOperator.EQUAL]: '=',

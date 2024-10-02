@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react';
 import { ChartDataQuality, ChartOptions } from '../types';
 
-type DataQualityOptions = ChartDataQuality &
-  Pick<ChartOptions, 'onChartOptionsChange'>;
-export const useDataQuality = ({
+type ChartPreferencesOptions = ChartDataQuality &
+  Pick<ChartOptions, 'onChartOptionsChange'> & {
+    showAlarmIcons?: boolean;
+  };
+export const useChartPreferences = ({
   showBadDataIcons,
   showUncertainDataIcons,
+  showAlarmIcons = true,
   onChartOptionsChange,
-}: DataQualityOptions) => {
+}: ChartPreferencesOptions) => {
   const [badDataIconsVisible, setBadDataIconsVisibility] =
     useState(showBadDataIcons);
   const [uncertainDataIconsVisible, setUncertainDataIconsVisibility] = useState(
     showUncertainDataIcons
   );
+  const [alarmIconsVisible, setAlarmIconsVisibility] = useState(showAlarmIcons);
 
   useEffect(() => {
     setBadDataIconsVisibility(showBadDataIcons);
@@ -46,10 +50,16 @@ export const useDataQuality = ({
     });
   };
 
+  const handleChangeAlarmIconsVisibility = (showAlarmIcons: boolean) => {
+    setAlarmIconsVisibility(showAlarmIcons);
+  };
+
   return {
     showBadDataIcons: badDataIconsVisible,
     showUncertainDataIcons: uncertainDataIconsVisible,
+    showAlarmIcons: alarmIconsVisible,
     handleChangeBadDataIconsVisibility,
     handleChangeUncertainDataIconsVisibility,
+    handleChangeAlarmIconsVisibility,
   };
 };

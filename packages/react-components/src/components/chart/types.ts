@@ -26,7 +26,8 @@ type ChartLegendContent =
   | 'visibility'
   | 'maxValue'
   | 'minValue'
-  | 'latestValue';
+  | 'latestValue'
+  | 'latestAlarmStateValue';
 export type ChartLegend = {
   visible?: boolean;
   position?: 'left' | 'bottom' | 'right';

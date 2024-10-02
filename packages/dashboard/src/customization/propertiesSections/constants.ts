@@ -79,6 +79,7 @@ export const dropdownConsts = {
       { label: 'Maximum Value', value: 'maxValue' },
       { label: 'Minimum Value', value: 'minValue' },
       { label: 'Latest Value', value: 'latestValue' },
+      { label: 'Latest Alarm State Value', value: 'latestAlarmStateValue' },
     ],
   },
 };
