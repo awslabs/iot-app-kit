@@ -26,7 +26,7 @@
   cursor: pointer;
   border: none;
   background: none;
-  color: var(white);
+  color: white;
 }
 
 .iot-app-kit-assistant-menu-right-button:hover:enabled, .iot-app-kit-assistant-menu-center-button:hover:enabled {

@@ -47,7 +47,9 @@ export const getClients = (
   const iotSiteWisePrivateClient = new InternalIoTSiteWise({
     credentials: dashboardClientConfiguration.awsCredentials,
     region: dashboardClientConfiguration.awsRegion,
+    endpoint: `https://data.iotsitewise.${dashboardClientConfiguration.awsRegion}.amazonaws.com`,
   });
+
 
   return {
     iotEventsClient,
