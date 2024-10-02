@@ -4,7 +4,7 @@ import {
   spaceStaticM,
   spaceStaticXxl,
 } from '@cloudscape-design/design-tokens';
-import './assistantButtons.scss';
+import './assistantButtons.css';
 
 interface AssistantFloatingMenCenterButtonProps
   extends HTMLAttributes<HTMLButtonElement> {

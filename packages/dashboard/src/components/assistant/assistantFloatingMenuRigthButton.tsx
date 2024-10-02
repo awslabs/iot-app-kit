@@ -8,7 +8,7 @@ import {
 } from '@cloudscape-design/design-tokens';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { AssistantIcon } from './assistantIcon';
-import './assistantButtons.scss';
+import './assistantButtons.css';
 
 interface AssistantFloatingMenuRightButtonProps
   extends HTMLAttributes<HTMLButtonElement> {
