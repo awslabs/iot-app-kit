@@ -9,7 +9,7 @@ import {
   spaceStaticXxs,
 } from '@cloudscape-design/design-tokens';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import './assistantButtons.scss';
+import './assistantButtons.css';
 
 interface AssistantButtonProps extends HTMLAttributes<HTMLButtonElement> {
   label: string;
