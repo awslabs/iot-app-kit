@@ -84,6 +84,7 @@ export const useNormalizedDataStreams = ({
                 const pointAfter = dataCopy[i + 1];
 
                 if (pointBefore?.x === event.x) {
+                  i = i - 1;
                   deleteCount = 1;
                 }
                 if (pointAfter?.x === event.x) {
