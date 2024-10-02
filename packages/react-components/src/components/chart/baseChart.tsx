@@ -185,7 +185,7 @@ const BaseChart = ({
   const delayLoading = useIsRefreshing(isRefreshing, REFRESHING_DELAY_MS);
   const isPropertiesRefreshing = !isLoading && delayLoading;
 
-  useChartDataset(chartRef, dataStreams, alarms);
+  useChartDataset(chartRef, dataStreams);
 
   useChartStoreDataStreamsSync(dataStreamMetaData);
 
