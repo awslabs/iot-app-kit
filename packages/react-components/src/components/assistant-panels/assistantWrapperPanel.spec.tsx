@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, renderHook, screen } from '@testing-library/react';
+import { act, render, renderHook, screen, waitFor } from '@testing-library/react';
 import {
   AssistantWrapperPanel,
   AssistantWrapperPanelProps,
@@ -12,10 +12,11 @@ import type {
 } from '../../common/assistantProps';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import { useAssistant } from '../../hooks/useAssistant/useAssistant';
+import { mockedInvokeAssistantResponse5 } from '../../__mocks__/assistantMockedResponse';
 
 const client = new IoTSitewiseAssistantClient({
   iotSiteWiseClient: {
-    invokeAssistant: jest.fn().mockResolvedValue([]),
+    invokeAssistant: jest.fn().mockResolvedValue({ body: [mockedInvokeAssistantResponse5] }),
   } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
   defaultContext: '',
 });
@@ -76,7 +77,7 @@ describe('ActionPanel', () => {
     });
 
     expect(
-      screen.getByRole('button', { name: /Chat with AI/i })
+      screen.getByText('Assistant summary result')
     ).toBeInTheDocument();
   });
 
@@ -108,15 +109,19 @@ describe('ActionPanel', () => {
       });
     });
 
-    expect(
-      screen.getByRole('button', { name: /Chat with AI/i })
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: /Chat with AI/i })
+      ).toBeInTheDocument();
+    });
+
     await user.click(screen.getByRole('button', { name: /Chat with AI/i }));
 
     expect(mockedDivedeepAction).toHaveBeenCalledWith({
       type: 'divedeep',
       sourceComponentId: 'componentId',
-      messages: [],
+      sourceComponentType: 'kpi',
+      messages: expect.anything(),
     });
   });
 });
