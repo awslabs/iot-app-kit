@@ -4,8 +4,9 @@ import { useLoader as mockUseLoader } from '@react-three/fiber';
 
 import { GLTFLoader } from '../../../../three/GLTFLoader';
 import { useGLTF } from '../GLTFLoader';
-import { getGlobalSettings as mockGetGlobalSettings } from '../../../../common/GlobalSettings';
-
+import { getGlobalSettings, getGlobalSettings as mockGetGlobalSettings } from '../../../../common/GlobalSettings';
+import { BasisuDecoderConfig, DracoDecoderConfig } from '../../../../interfaces';
+import { THREE_PATH } from '../../../../common/constants';
 jest.mock('three', () => {
   const originalModule = jest.requireActual('three');
   return {
@@ -42,7 +43,7 @@ describe('GLTFLoader', () => {
 
   let extensionsCb;
   let mockLoader;
-
+  let gl;
   const createMockLoader = () => {
     return {
       setDRACOLoader: jest.fn(),
@@ -59,8 +60,6 @@ describe('GLTFLoader', () => {
     });
     (mockUseLoader as any).preload = mockPreloadFn;
     (mockUseLoader as any).clear = mockClearFn;
-
-    (mockGetGlobalSettings as unknown as jest.Mock).mockReturnValue({ dracoDecoder: { enable: false } });
   };
 
   describe('extensions', () => {
@@ -72,8 +71,19 @@ describe('GLTFLoader', () => {
       setDecoderPathSpy = jest.spyOn(DRACOLoader.prototype, 'setDecoderPath');
     });
 
-    it('should execute without draco decoder not enabled', async () => {
-      useGLTF('mock/path', uriModifier, extendLoader, onProgress);
+    it('should execute without draco decoder enabled', async () => {
+      const getGlobalSettingsMock = getGlobalSettings as jest.Mock;
+      const dracoDecoder: DracoDecoderConfig = {
+        enable: false,
+      };
+      const basisuDecoder: BasisuDecoderConfig = {
+        enable: false,
+      };
+      getGlobalSettingsMock.mockReturnValue({
+        basisuDecoder,
+        dracoDecoder,
+      });
+      useGLTF('mock/path', gl, uriModifier, extendLoader, onProgress);
       extensionsCb(mockLoader);
 
       expect(extendLoader).toBeCalledTimes(1);
@@ -82,16 +92,24 @@ describe('GLTFLoader', () => {
     });
 
     it('should execute without draco decoder enabled', async () => {
-      (mockGetGlobalSettings as unknown as jest.Mock).mockReturnValue({
-        dracoDecoder: { enable: true, path: 'abc/def' },
+      const getGlobalSettingsMock = getGlobalSettings as jest.Mock;
+      const dracoDecoder: DracoDecoderConfig = {
+        enable: true,
+        path: 'draco/path',
+      };
+      const basisuDecoder: BasisuDecoderConfig = {
+        enable: false,
+      };
+      getGlobalSettingsMock.mockReturnValue({
+        basisuDecoder,
+        dracoDecoder,
       });
 
-      useGLTF('mock/path', uriModifier, extendLoader, onProgress);
+      useGLTF(dracoDecoder.path as string, gl, uriModifier, extendLoader, onProgress);
       extensionsCb(mockLoader);
 
       expect(extendLoader).toBeCalledTimes(1);
-      expect(setDecoderPathSpy).toBeCalledTimes(1);
-      expect(setDecoderPathSpy).toBeCalledWith('abc/def');
+      expect(setDecoderPathSpy).toBeCalledWith('draco/path');
       expect(mockLoader.setDRACOLoader).toBeCalledTimes(1);
     });
   });
@@ -102,12 +120,24 @@ describe('GLTFLoader', () => {
     });
 
     it('should call useLoader', async () => {
+      const getGlobalSettingsMock = getGlobalSettings as jest.Mock;
+      const dracoDecoder: DracoDecoderConfig = {
+        enable: true,
+        path: 'draco/path',
+      };
+      const basisuDecoder: BasisuDecoderConfig = {
+        enable: false,
+      };
+      getGlobalSettingsMock.mockReturnValue({
+        basisuDecoder,
+        dracoDecoder,
+      });
       const setURLModifierSpy = jest.spyOn(DefaultLoadingManager, 'setURLModifier');
 
-      useGLTF('mock/path', uriModifier, extendLoader, onProgress);
+      useGLTF(dracoDecoder.path as string, gl, uriModifier, extendLoader, onProgress);
       extensionsCb(mockLoader);
 
-      expect(mockUseLoader).toBeCalledWith(GLTFLoader, 'mock/path', expect.anything(), onProgress);
+      expect(mockUseLoader).toBeCalledWith(GLTFLoader, 'draco/path', expect.anything(), onProgress);
       expect(extendLoader).toBeCalledTimes(1);
       expect(mockLoader.manager).toBeDefined();
       expect(setURLModifierSpy).toBeCalledWith(uriModifier);
@@ -121,12 +151,24 @@ describe('GLTFLoader', () => {
 
     it('should call useLoader.preload', async () => {
       let ext;
+      const getGlobalSettingsMock = getGlobalSettings as jest.Mock;
+      const dracoDecoder: DracoDecoderConfig = {
+        enable: true,
+        path: 'draco/path',
+      };
+      const basisuDecoder: BasisuDecoderConfig = {
+        enable: false,
+      };
+      getGlobalSettingsMock.mockReturnValue({
+        basisuDecoder,
+        dracoDecoder,
+      });
       mockPreloadFn.mockImplementation((_, __, e) => (ext = e));
 
-      useGLTF.preload('mock/path', uriModifier, extendLoader);
+      useGLTF.preload(dracoDecoder.path as string, gl, uriModifier, extendLoader);
       ext(mockLoader);
 
-      expect(mockPreloadFn).toBeCalledWith(GLTFLoader, 'mock/path', expect.anything());
+      expect(mockPreloadFn).toBeCalledWith(GLTFLoader, 'draco/path', expect.anything());
       expect(extendLoader).toBeCalledTimes(1);
       expect(mockLoader.manager).toBeDefined();
     });

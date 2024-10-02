@@ -4,12 +4,17 @@ import { DataStream, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
 import { IDataBindingTemplate, ISelectedDataBinding, IValueDataBindingProvider } from './dataBinding';
 import { SelectionChangedEventCallback, WidgetClickEventCallback } from './components';
 
+export interface BasisuDecoderConfig {
+  enable: boolean;
+  path?: string;
+}
 export interface DracoDecoderConfig {
   enable: boolean;
   path?: string;
 }
 
 export interface SceneViewerConfig {
+  basisuDecoder?: BasisuDecoderConfig;
   dracoDecoder?: DracoDecoderConfig;
   locale?: string;
   dataBindingQueryRefreshRate?: number; // in milliseconds

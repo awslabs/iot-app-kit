@@ -84,7 +84,7 @@ describe('StateManager', () => {
       setAutoQueryEnabled: setAutoQueryEnabledMock,
     },
   });
-  const sceneConfig: SceneComposerInternalConfig = { dracoDecoder: { enable: true } };
+  const sceneConfig: SceneComposerInternalConfig = { basisuDecoder: { enable: true }, dracoDecoder: { enable: true } };
   const mockSceneContent = 'This is test content';
   const mockGetSceneObjectFunction = jest.fn();
   const mockSceneLoader = {

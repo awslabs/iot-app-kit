@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { REVISION } from 'three';
 
 import { Component, LightType } from '../models/SceneModels';
 import {
@@ -128,7 +129,7 @@ export enum Layers {
 
 export const SCENE_BODY_CLASS = 'twinmaker_scene_container';
 
-export const DRACO_PATH = 'https://www.gstatic.com/draco/versioned/decoders/1.4.1/';
+export const THREE_PATH = `https://unpkg.com/three@0.${REVISION}.x`;
 
 export const DEFAULT_TAG_GLOBAL_SETTINGS: ITagSettings = {
   autoRescale: false,

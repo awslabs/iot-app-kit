@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GLTFLoader useGLTF should be called with correct path and uriModifier 1`] = `
+[
+  "mock/uri",
+  {
+    "capabilities": {
+      "getMaxAnisotropy": [MockFunction] {
+        "calls": [
+          [],
+        ],
+        "results": [
+          {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      },
+    },
+  },
+  [MockFunction],
+  [Function],
+  [Function],
+]
+`;
