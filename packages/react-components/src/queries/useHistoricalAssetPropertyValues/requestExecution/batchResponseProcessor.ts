@@ -30,6 +30,16 @@ export class BatchResponseProcessor {
   ) {
     if (this.isComplete) return;
 
+    const skippedForEntry = (response.skippedEntries ?? []).filter(
+      ({ entryId }) => entryId === this.entry.entryId
+    );
+
+    if (skippedForEntry.length > 0) {
+      // Ensure that isComplete is false
+      this.valuesTargetNumber = -1;
+      return;
+    }
+
     const sucessesForEntry = (response.successEntries ?? []).filter(
       ({ entryId }) => entryId === this.entry.entryId
     );
