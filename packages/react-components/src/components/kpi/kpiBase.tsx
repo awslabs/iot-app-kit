@@ -1,11 +1,7 @@
 import React from 'react';
-import Alert from '@cloudscape-design/components/alert';
-import Spinner from '@cloudscape-design/components/spinner';
-import Box from '@cloudscape-design/components/box';
 import omitBy from 'lodash.omitby';
 
 import { DEFAULT_KPI_SETTINGS } from './constants';
-import { Value } from '../shared-components';
 import type { KPIBaseProperties, KPISettings } from './types';
 import './kpi.css';
 import { highContrastColor } from './highContrastColor';
@@ -15,10 +11,16 @@ import {
   colorTextHeadingDefault,
   fontSizeBodyS,
 } from '@cloudscape-design/design-tokens';
-import { DataQualityText } from '../data-quality/data-quality-text';
 import { DEFAULT_DECIMAL_PLACES } from '../../common/constants';
-import { formatDate } from '../../utils/time';
-import { AlarmStateText } from '../alarm-state/alarm-state-text';
+import {
+  AggregationResolutionText,
+  AlarmHeader,
+  DataQuality,
+  ErrorText,
+  NameAndUnit,
+  TimestampText,
+  ValueText,
+} from './kpiTextFragments';
 
 export const KpiBase: React.FC<KPIBaseProperties> = ({
   propertyPoint,
@@ -33,6 +35,7 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
   propertyThreshold,
   timeZone,
   alarmState,
+  alarmStatus,
 }) => {
   const {
     showUnit,
@@ -76,60 +79,16 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
 
   if (error) {
     return (
-      <div
-        className='kpi'
-        data-testid='kpi-error-component'
-        style={{
-          fontSize: `${secondaryFontSize}px`,
-          backgroundColor: nonThresholdBackground,
-          color: nonThresholdFontColor,
+      <ErrorText
+        {...{
+          error,
+          secondaryFontSize,
+          nonThresholdBackground,
+          nonThresholdFontColor,
         }}
-      >
-        {error && (
-          <Box margin={{ vertical: 's', horizontal: 's' }}>
-            <Alert statusIconAriaLabel='Error' type='error'>
-              {error}
-            </Alert>
-          </Box>
-        )}
-      </div>
+      />
     );
   }
-
-  const nameAndUnit = (
-    <div
-      className='property-name'
-      data-testid='kpi-name-and-unit'
-      style={{ fontSize: `${secondaryFontSize}px`, color: fontColor }}
-    >
-      {showName && <span>{isLoading ? '-' : name} </span>}
-      {showUnit && <span>{!isLoading && unit && `(${unit})`}</span>}
-    </div>
-  );
-
-  const alarmSection = (
-    <div
-      style={{
-        padding: '8px',
-        borderBottom: `1px solid ${borderColor}`,
-        color: fontColor,
-      }}
-    >
-      <AlarmStateText
-        state={alarmState}
-        inheritFontColor={!!showFilledThreshold || !!settings.backgroundColor}
-      />
-    </div>
-  );
-
-  const dataQualitySection = (
-    <div style={{ padding: '0 8px', color: fontColor }}>
-      <DataQualityText
-        quality={point?.quality}
-        inheritFontColor={!!showFilledThreshold || !!settings.backgroundColor}
-      />
-    </div>
-  );
 
   return (
     <div
@@ -139,20 +98,40 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     >
       <div className='kpi'>
         <div>
-          {alarmState && alarmSection}
-          {(showName || showUnit) && nameAndUnit}
-          <div
-            className='value'
-            data-testid='kpi-value'
-            style={{ fontSize: `${fontSize}px`, color: fontColor }}
-          >
-            {isLoading ? (
-              <Spinner data-testid='loading' />
-            ) : (
-              <Value value={point?.y} precision={significantDigits} />
-            )}
-          </div>
-          {!isLoading && showDataQuality && dataQualitySection}
+          <AlarmHeader
+            {...{
+              fontColor,
+              borderColor,
+              alarmState,
+              alarmStatus,
+              showFilledThreshold,
+              backgroundColor: settings.backgroundColor,
+            }}
+          />
+          <NameAndUnit
+            {...{
+              showName,
+              name,
+              showUnit,
+              unit,
+              isLoading,
+              fontColor,
+              secondaryFontSize,
+            }}
+          />
+          <ValueText
+            {...{ isLoading, fontSize, fontColor, point, significantDigits }}
+          />
+          <DataQuality
+            {...{
+              fontColor,
+              showFilledThreshold,
+              point,
+              backgroundColor: settings.backgroundColor,
+              showDataQuality,
+              isLoading,
+            }}
+          />
         </div>
         {point && (
           <div
@@ -162,29 +141,16 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
               color: fontColor,
             }}
           >
-            {showAggregationAndResolution && aggregationResolutionString && (
-              <div className='aggregation' data-testid='kpi-aggregation'>
-                {isLoading ? '-' : aggregationResolutionString}
-              </div>
-            )}
-            {showTimestamp && (
-              <>
-                <div
-                  className='timestamp-border'
-                  style={{
-                    backgroundColor: borderColor,
-                  }}
-                />
-                <div className='timestamp' data-testid='kpi-timestamp'>
-                  {isLoading
-                    ? '-'
-                    : formatDate(point.x, {
-                        timeZone,
-                        pattern: 'M/dd/yyyy, h:mm:ss aa',
-                      })}
-                </div>
-              </>
-            )}
+            <AggregationResolutionText
+              {...{
+                showAggregationAndResolution,
+                aggregationResolutionString,
+                isLoading,
+              }}
+            />
+            <TimestampText
+              {...{ showTimestamp, point, borderColor, isLoading, timeZone }}
+            />
           </div>
         )}
       </div>
