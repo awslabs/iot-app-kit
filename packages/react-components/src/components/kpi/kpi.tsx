@@ -45,6 +45,9 @@ export const KPI = ({
     convertAlarmQueryToAlarmRequest(query)
   );
 
+  const inputPropertyTimeSeriesDataSettings =
+    alarmQueries.at(0)?.query.requestSettings;
+
   const transformedAlarm = useAlarms({
     iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
     iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
@@ -58,6 +61,7 @@ export const KPI = ({
     transform: buildTransformAlarmForSingleQueryWidgets({
       iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
       iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
+      ...inputPropertyTimeSeriesDataSettings,
     }),
   })
     .filter((alarm) => !!alarm)
