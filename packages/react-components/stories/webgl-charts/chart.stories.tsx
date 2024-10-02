@@ -88,7 +88,6 @@ export const ScatterChartExample: ComponentStory<typeof ScatterChart> = () => {
 export const BarChartExample: ComponentStory<typeof BarChart> = () => {
   return (
     <div
-      id='story-container'
       style={{
         width: '500px',
         height: '320px',

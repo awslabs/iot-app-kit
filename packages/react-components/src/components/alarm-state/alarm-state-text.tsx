@@ -10,16 +10,20 @@ import {
 } from '@cloudscape-design/design-tokens';
 
 import './alarm-state-text.css';
-import { PascalCaseStateName } from '../../hooks/useAlarms/transformers';
+import { AlarmPopover } from '../popover/alarm-popover/alarmPopover';
+import type { AlarmContent } from './types';
+import { AssistantProperty } from '../../common/assistantProps';
 
 type AlarmStateTextOptions = {
-  state?: PascalCaseStateName;
+  assistant?: AssistantProperty;
+  alarmContent?: AlarmContent;
   inheritFontColor?: boolean;
 };
 
 export const AlarmStateText = ({
-  state,
+  alarmContent,
   inheritFontColor,
+  assistant,
 }: AlarmStateTextOptions) => {
   let icon = null;
   let text = null;
@@ -28,9 +32,13 @@ export const AlarmStateText = ({
     textDecoration: 'none',
   };
 
+  if (assistant) {
+    styles.cursor = 'pointer';
+  }
+
   let borderBottom = '1px dashed ';
 
-  switch (state) {
+  switch (alarmContent?.state) {
     case 'Active':
       icon = (
         <Icon
@@ -141,7 +149,7 @@ export const AlarmStateText = ({
       break;
   }
 
-  return (
+  const alarmStateText = (
     <div
       data-testid='alarm-state-text'
       className='alarm-state alarm-state-text'
@@ -151,5 +159,13 @@ export const AlarmStateText = ({
         {text}
       </div>
     </div>
+  );
+
+  return assistant ? (
+    <AlarmPopover assistant={assistant} icon={icon} alarmContent={alarmContent}>
+      {alarmStateText}
+    </AlarmPopover>
+  ) : (
+    alarmStateText
   );
 };

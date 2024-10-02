@@ -8,10 +8,11 @@ import {
   colorTextHeadingDefault,
 } from '@cloudscape-design/design-tokens';
 import { AlarmStateText } from '../alarm-state/alarm-state-text';
-import { PascalCaseStateName } from '../../hooks/useAlarms/transformers';
 import { getPreciseValue } from '../../utils/getPreciseValue';
 import { Primitive } from '@iot-app-kit/core';
 import { GaugeErrorText } from './gaugeErrorText';
+import { AlarmContent } from '../alarm-state/types';
+import { AssistantProperty } from '../../common/assistantProps';
 
 const getFormattedValue = ({
   value,
@@ -54,12 +55,13 @@ export const GaugeText = ({
   name,
   value,
   unit,
-  alarmState,
+  alarmContent,
   valueColor,
   significantDigits,
   settings,
   titleText,
   error,
+  assistant,
 }: {
   value?: Primitive;
   error?: string;
@@ -67,11 +69,12 @@ export const GaugeText = ({
   name?: string;
   unit?: string;
   valueColor?: string;
-  alarmState?: PascalCaseStateName;
+  alarmContent?: AlarmContent;
   settings?: GaugeSettings;
   titleText?: string;
   significantDigits?: number;
   isLoading?: boolean;
+  assistant?: AssistantProperty;
 }) => {
   const hasVisibleName = settings?.showName && name;
   const hasVisibleQuality = quality && quality !== 'GOOD';
@@ -92,7 +95,9 @@ export const GaugeText = ({
         }}
       >
         <GaugeErrorText error={error} />
-        {alarmState && <AlarmStateText state={alarmState} />}
+        {alarmContent && (
+          <AlarmStateText alarmContent={alarmContent} assistant={assistant} />
+        )}
         {getFormattedValue({
           value,
           unit,

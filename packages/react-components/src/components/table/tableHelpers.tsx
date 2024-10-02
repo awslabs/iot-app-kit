@@ -104,7 +104,7 @@ export const getDefaultColumnDefinitions: (
       }
 
       if (typeof value === 'string' && isAlarmState(value)) {
-        return <AlarmStateText state={value} />;
+        return <AlarmStateText alarmContent={{ state: value }} />;
       }
 
       return (

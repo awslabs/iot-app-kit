@@ -131,7 +131,7 @@ export const KPI = ({
   const component = (
     <KpiBase
       propertyPoint={propertyPoint}
-      alarmState={transformedAlarm?.state}
+      alarmContent={transformedAlarm}
       settings={{ ...settings, backgroundColor }}
       propertyThreshold={propertyThreshold}
       aggregationType={dataStreams[0]?.aggregationType}
@@ -143,6 +143,7 @@ export const KPI = ({
       significantDigits={significantDigits}
       timeZone={timeZone}
       titleText={titleText}
+      assistant={assistant}
     />
   );
 

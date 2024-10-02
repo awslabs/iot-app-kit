@@ -33,7 +33,8 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
   propertyThreshold,
   timeZone,
   titleText,
-  alarmState,
+  alarmContent,
+  assistant,
 }) => {
   const {
     showUnit,
@@ -121,8 +122,9 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
       }}
     >
       <AlarmStateText
-        state={alarmState}
+        alarmContent={alarmContent}
         inheritFontColor={!!showFilledThreshold || !!settings.backgroundColor}
+        assistant={assistant}
       />
     </div>
   );
@@ -144,7 +146,7 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     >
       <div className='kpi'>
         <div>
-          {alarmState && alarmSection}
+          {alarmContent?.state && alarmSection}
           <Title
             data-testid='kpi-name-and-unit'
             text={getTitle()}

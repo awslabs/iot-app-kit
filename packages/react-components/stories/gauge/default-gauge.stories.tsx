@@ -70,14 +70,6 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
         settings={settings as GaugeSettings}
         titleText='Average Speed'
       />
-      <Gauge
-        viewport={{ duration: '5m' }}
-        size={size}
-        significantDigits={significantDigits}
-        query={MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY}
-        settings={settings as GaugeSettings}
-        titleText='Average Speed'
-      />
     </div>
   );
 };

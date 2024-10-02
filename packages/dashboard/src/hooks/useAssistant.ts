@@ -65,7 +65,7 @@ export const useAssistant = (widgetId: string) => {
           dispatch(
             onAssistantSelectWidgetsAction({
               widgetId: event.sourceComponentId,
-              widgetType: event.sourceComponentType,
+              widgetType: event.sourceComponentType ?? '',
               selectedProperties,
             })
           );

@@ -121,7 +121,7 @@ export const Gauge = ({
 
   const component = (
     <GaugeBase
-      alarmState={transformedAlarm?.state}
+      alarmContent={transformedAlarm}
       size={size}
       propertyPoint={propertyPoint}
       name={name}
@@ -133,6 +133,7 @@ export const Gauge = ({
       thresholds={allThresholds}
       significantDigits={significantDigits}
       theme={theme}
+      assistant={assistant}
     />
   );
 

@@ -1,34 +1,36 @@
 import React from 'react';
 import type { PropsWithChildren } from 'react';
 import Box from '@cloudscape-design/components/box';
-import Button from '@cloudscape-design/components/button';
 import CloudscapePopover from '@cloudscape-design/components/popover';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import type { AssistantProperty } from '../../common/assistantProps';
+import type { AssistantProperty } from '../../../common/assistantProps';
 import { VerticalSeparator } from './verticalSeparator';
+import { AssistantButton } from '../../assistant-button';
 
-export interface PopoverProps extends PropsWithChildren {
-  title: string;
-  content: React.ReactNode;
-  footerText: string;
+export interface AssistantPopoverProps extends PropsWithChildren {
   assistant: AssistantProperty;
+  title?: string;
+  content?: React.ReactNode;
+  footerText?: string;
+  handleSummarize?: () => void;
 }
 
-export const Popover = ({
+export const AssistantPopover = ({
   title,
   content,
   footerText,
   assistant,
+  handleSummarize,
   children,
-}: PopoverProps) => {
-  const handleSummarize = () => {};
-
+}: AssistantPopoverProps) => {
   return (
     <CloudscapePopover
       dismissButton={true}
       header={title}
       triggerType='custom'
       size='large'
+      fixedWidth={true}
+      renderWithPortal={true}
       content={
         <SpaceBetween direction='vertical' size='s'>
           {content}
@@ -38,13 +40,10 @@ export const Popover = ({
               {footerText}
             </Box>
             {assistant ? (
-              <Button
-                iconName='gen-ai'
+              <AssistantButton
+                label='Generate summary'
                 onClick={handleSummarize}
-                ariaLabel='Generate summary'
-              >
-                Generate summary
-              </Button>
+              />
             ) : null}
           </SpaceBetween>
         </SpaceBetween>

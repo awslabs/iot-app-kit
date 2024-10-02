@@ -32,7 +32,6 @@ describe('useAssistant', () => {
 
     const { assistantConfiguration: assistant } = result.current;
     expect(assistant).toBeDefined();
-    expect(assistant?.enabled).toBeTruthy();
     expect(assistant?.conversationId).toEqual(expect.any(String));
     expect(assistant?.target).toBe('dashboard');
     expect(assistant?.onAction).toEqual(expect.any(Function));

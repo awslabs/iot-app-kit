@@ -33,7 +33,8 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
   significantDigits,
   error,
   titleText,
-  alarmState,
+  alarmContent,
+  assistant,
   ...options
 }) => {
   const gaugeValue = propertyPoint?.y;
@@ -98,8 +99,9 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
           quality={quality}
           titleText={titleText}
           value={gaugeValue}
-          alarmState={alarmState}
+          alarmContent={alarmContent}
           significantDigits={significantDigits}
+          assistant={assistant}
         />
       )}
     </div>
