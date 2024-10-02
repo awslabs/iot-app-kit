@@ -18,18 +18,22 @@ export const styledQueryWidgetOnDrop = (
   updatedQuery: IoTSiteWiseDataStreamQuery,
   widget: QueryWidget
 ) => {
+  const { aggregation, resolution } = getCurrentAggregationResolution(widget);
+
   const mergedQuery = {
     assets: [],
     properties: [],
     assetModels: [],
     alarms: [],
     alarmModels: [],
+    requestSettings: {
+      aggregationType: aggregation,
+      resolution: resolution,
+    },
     ...updatedQuery,
   };
 
   const queryWithRefIds = assignDefaultRefId(mergedQuery);
-
-  const { aggregation, resolution } = getCurrentAggregationResolution(widget);
 
   const queryWithAggregation = applyAggregationToQuery(
     queryWithRefIds,

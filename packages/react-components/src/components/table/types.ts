@@ -29,6 +29,8 @@ export type CellItemProps = {
 };
 
 export type AlarmItem = {
+  id?: string;
+  assetId?: string;
   alarmName?: string;
   property?: string;
   value?: Primitive;
@@ -55,6 +57,7 @@ export type CellItem = {
   valueOf?: () => Primitive | undefined;
   toString?: () => string;
   quality?: DataPoint['quality'];
+  refId?: string;
 } & AlarmItem;
 
 export type TableItemHydrated = { [k: string]: CellItem };
@@ -74,6 +77,7 @@ export type CellProps = {
   isLoading: boolean;
   threshold: Threshold;
   quality?: DataPoint['quality'];
+  refId?: string;
 };
 
 export interface TableProps

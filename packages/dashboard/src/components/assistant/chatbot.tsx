@@ -8,6 +8,7 @@ import {
   useAssistantContext,
   type IMessage,
   SITUATION_SUMMARY_DEFAULT_UTTERANCE,
+  EVENT_SUMMARY_DEFAULT_UTTERANCE,
 } from '@iot-app-kit/react-components';
 import { useClients } from '../dashboard/clientContext';
 import 'animate.css';
@@ -65,12 +66,15 @@ export const Chatbot: FC<AssistantChatbotProps> = (
           .map((item) => getContextByComponent(item.widgetId))
           .join('');
 
+        const utterance = contexts.includes('alarmName')
+          ? EVENT_SUMMARY_DEFAULT_UTTERANCE
+          : SITUATION_SUMMARY_DEFAULT_UTTERANCE;
         generateSummary({
           componentId: 'dashboard',
           target: 'dashboard',
           conversationId: assistant.conversationId,
           context: contexts,
-          utterance: SITUATION_SUMMARY_DEFAULT_UTTERANCE,
+          utterance: utterance,
         });
       }
 

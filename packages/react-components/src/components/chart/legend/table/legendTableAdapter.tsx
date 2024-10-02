@@ -6,6 +6,8 @@ import { DataStreamInformation, TrendCursor } from './types';
 import { TrendCursorValues } from '../../../../echarts/extensions/trendCursors/store';
 import { useDataStreamMaxMin } from '../../hooks/useDataStreamMaxMin';
 import { MinMaxMap } from '../../store/dataStreamMinMaxStore';
+import type { TableProps } from '@cloudscape-design/components/table';
+import type { AssistantProperty } from '../../../../common/assistantProps';
 
 const mapDataStreamInformation = ({
   datastreams,
@@ -17,7 +19,7 @@ const mapDataStreamInformation = ({
 }: {
   datastreams: (Pick<
     DataStream,
-    'id' | 'color' | 'name' | 'unit' | 'assetName'
+    'id' | 'color' | 'name' | 'unit' | 'assetName' | 'refId'
   > & {
     latestValue: Primitive | undefined;
     latestAlarmStateValue: string | undefined;
@@ -37,6 +39,7 @@ const mapDataStreamInformation = ({
       assetName,
       latestValue,
       latestAlarmStateValue,
+      refId,
     }) => {
       const values = trendCursorValues.reduce<
         DataStreamInformation['trendCursorValues']
@@ -63,6 +66,7 @@ const mapDataStreamInformation = ({
         trendCursorValues: values,
         maxValue,
         minValue,
+        refId,
       };
     }
   );
@@ -70,7 +74,7 @@ const mapDataStreamInformation = ({
 type ChartLegendTableAdapterOptions = ChartLegend & {
   datastreams: (Pick<
     DataStream,
-    'id' | 'color' | 'name' | 'unit' | 'assetName'
+    'id' | 'color' | 'name' | 'unit' | 'assetName' | 'refId'
   > & {
     latestValue: Primitive | undefined;
     latestAlarmStateValue: string | undefined;
@@ -79,6 +83,10 @@ type ChartLegendTableAdapterOptions = ChartLegend & {
   trendCursors: TrendCursor[];
   chartId?: string;
   significantDigits: ChartOptions['significantDigits'];
+  assistant?: AssistantProperty;
+  selectedItems?: DataStreamInformation[];
+  setSelectedItems?: (selectedItems: DataStreamInformation[]) => void;
+  selectionType?: TableProps.SelectionType;
 };
 
 export const ChartLegendTableAdapter = ({

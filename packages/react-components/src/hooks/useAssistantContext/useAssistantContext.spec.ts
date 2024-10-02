@@ -2,6 +2,10 @@ import type { TimeSeriesDataQuery } from '@iot-app-kit/core';
 import { useAssistantContext } from './useAssistantContext';
 import type { SiteWiseDataStreamQuery } from '@iot-app-kit/source-iotsitewise';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import {
+  serializeTimeSeriesQuery,
+  type AssistantSupportedTimeSeriesQuery,
+} from './utils';
 
 const component1 = 'mockComponent';
 const component2 = 'testComponent';
@@ -146,9 +150,9 @@ describe('useAssistantContext', () => {
     const transformed = transformTimeseriesDataToAssistantContext({
       start,
       end,
-      queries: [query],
+      queries: [serializeTimeSeriesQuery(query)],
     });
-    const [first] = transformed.queries;
+    const [first] = transformed.queries as AssistantSupportedTimeSeriesQuery[];
     expect(first?.queryType).toEqual('time-series-data');
     expect(first?.aggregationType).toEqual(AggregateType.MAXIMUM);
     expect(first?.properties[0].propertyId).toEqual('propertyId1');

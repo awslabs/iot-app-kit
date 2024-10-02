@@ -53,7 +53,7 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
         clearActions(props.assistant?.componentId);
       }
     }
-  }, [actionsByComponent, props.assistant]);
+  }, [actionsByComponent, props.assistant, setSelectedItems, clearActions]);
 
   return (
     <Table

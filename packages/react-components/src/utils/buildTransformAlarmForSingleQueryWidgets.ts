@@ -1,6 +1,6 @@
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { TimeSeriesDataQuery } from '@iot-app-kit/core';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { AggregateType, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import type { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { AlarmData } from '../hooks/useAlarms';
 import { parseAlarmStateAssetProperty } from '../hooks/useAlarms/transformers';
@@ -12,9 +12,13 @@ export const buildTransformAlarmForSingleQueryWidgets =
   ({
     iotSiteWiseClient,
     iotEventsClient,
+    aggregationType,
+    resolution,
   }: {
     iotSiteWiseClient?: IoTSiteWiseClient;
     iotEventsClient?: IoTEventsClient;
+    aggregationType?: AggregateType;
+    resolution?: string;
   }) =>
   (alarm: AlarmData) => {
     const {
@@ -43,6 +47,8 @@ export const buildTransformAlarmForSingleQueryWidgets =
             properties: [
               {
                 propertyId,
+                aggregationType,
+                resolution,
               },
             ],
           },
@@ -56,7 +62,8 @@ export const buildTransformAlarmForSingleQueryWidgets =
       alarmExpression: mapAlarmRuleExpression(alarm),
       assetId,
       state: parseAlarmStateAssetProperty(latestState)?.value.state,
-      timeSeriesDataQueries: timeSeriesDataQuery !== undefined ? [timeSeriesDataQuery]: [],
+      timeSeriesDataQueries:
+        timeSeriesDataQuery !== undefined ? [timeSeriesDataQuery] : [],
       threshold: transformAlarmsToThreshold(alarm),
       severity,
     };

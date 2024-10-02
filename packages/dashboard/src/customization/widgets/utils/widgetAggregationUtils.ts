@@ -64,6 +64,14 @@ export const getAggregation = (
     return widget.properties.aggregationType;
   }
 
+  if (
+    widget.properties.queryConfig.query != null &&
+    widget.properties.queryConfig.query.requestSettings != null &&
+    'aggregationType' in widget.properties.queryConfig.query.requestSettings
+  ) {
+    return widget.properties.queryConfig.query.requestSettings.aggregationType;
+  }
+
   const firstProperty = getFirstProperty(widget.properties.queryConfig);
 
   return firstProperty?.aggregationType;

@@ -40,7 +40,7 @@ export const ResultPanel = ({
     if (panel.current && actionPanel) {
       setPanelPositon(calculatePanelPosition(actionPanel));
     }
-  }, [panel]);
+  }, [panel, componentId]);
 
   const handleCopy = () => {
     const results = filteredMessages

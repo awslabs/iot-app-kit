@@ -157,6 +157,7 @@ export type StyledAssetQuery = {
     assetIds?: SiteWiseAlarmAssetModelQuery['alarmModels'][number]['assetIds'];
     alarmComponents: SiteWiseAlarmQuery['alarms'][number]['alarmComponents'];
   }[];
+  requestSettings?: SiteWiseAlarmQuery['requestSettings'];
 };
 
 type YAxisRange = {

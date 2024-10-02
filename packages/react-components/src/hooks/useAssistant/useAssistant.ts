@@ -103,6 +103,7 @@ export const useAssistant = ({
     setMessageParser(newMessageParser);
     setMessages(newStateManager.getState().messages);
     storeState.clearAssistantState();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const removeLoadingMessages = (componentId: string) => {

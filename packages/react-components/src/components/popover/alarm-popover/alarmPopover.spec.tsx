@@ -2,7 +2,10 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
-import { AssistantActionEventDetail, AssistantProperty } from '../../../common/assistantProps';
+import {
+  AssistantActionEventDetail,
+  AssistantProperty,
+} from '../../../common/assistantProps';
 import { AlarmPopover, type AlarmPopoverProps } from './alarmPopover';
 import userEvent from '@testing-library/user-event';
 import * as useAssistant from '../../../hooks/useAssistant/useAssistant';
@@ -30,7 +33,9 @@ const client = new IoTSitewiseAssistantClient({
   defaultContext: '',
 });
 
-const mockOnAction = jest.fn().mockImplementation((_event: AssistantActionEventDetail) => jest.fn());
+const mockOnAction = jest
+  .fn()
+  .mockImplementation((_event: AssistantActionEventDetail) => jest.fn());
 const assistant = {
   onAction: mockOnAction,
   conversationId: 'conversationId',
@@ -81,18 +86,14 @@ describe('AlarmPopover', () => {
   it('renders Footer Text', async () => {
     const text = 'Footer Text';
     const user = userEvent.setup();
-    const { getByText, getByRole } = render(
-      component({ footerText: text })
-    );
+    const { getByText, getByRole } = render(component({ footerText: text }));
     await user.click(getByRole('button', { name: /Popover button/i }));
     expect(getByText(text)).toBeInTheDocument();
   });
 
   it('renders alarm content', async () => {
     const user = userEvent.setup();
-    const { getByText, getByRole } = render(
-      component({})
-    );
+    const { getByText, getByRole } = render(component({}));
     await user.click(getByRole('button', { name: /Popover button/i }));
     expect(getByText(mockAlarmName)).toBeInTheDocument();
   });

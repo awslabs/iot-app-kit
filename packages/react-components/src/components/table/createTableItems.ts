@@ -39,6 +39,13 @@ export const createTableItems: (
   const alarmItemsWithData = alarms.map((alarm) => {
     const isLoading = alarm.isLoading;
     return {
+      id: alarm.id as Primitive,
+      assetId: createCellItem(
+        {
+          value: alarm.assetId,
+        },
+        messageOverrides
+      ),
       alarmName: createCellItem(
         {
           value: alarm.alarmName,
@@ -105,7 +112,10 @@ export const createTableItems: (
           if (dataStream.resolution !== $cellRef.resolution) {
             return {
               key,
-              data: createCellItem({ error, isLoading }, messageOverrides),
+              data: createCellItem(
+                { error, isLoading, refId: dataStream?.refId },
+                messageOverrides
+              ),
             };
           }
 
@@ -123,7 +133,14 @@ export const createTableItems: (
             return {
               key,
               data: createCellItem(
-                { value, error, isLoading, threshold, quality },
+                {
+                  value,
+                  error,
+                  isLoading,
+                  threshold,
+                  quality,
+                  refId: dataStream?.refId,
+                },
                 messageOverrides
               ),
             };
@@ -142,7 +159,14 @@ export const createTableItems: (
           return {
             key,
             data: createCellItem(
-              { value, error, isLoading, threshold, quality },
+              {
+                value,
+                error,
+                isLoading,
+                threshold,
+                quality,
+                refId: dataStream?.refId,
+              },
               messageOverrides
             ),
           };

@@ -1,16 +1,21 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { DataStreamInformation, TrendCursor } from './types';
-import Table from '@cloudscape-design/components/table';
+import Table, { type TableProps } from '@cloudscape-design/components/table';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import { createTableLegendColumnDefinitions } from './columnDefinitions/factory';
 import { ChartLegend, ChartOptions } from '../../types';
-
+import type { AssistantProperty } from '../../../../common/assistantProps';
+import { useAssistant } from '../../../../hooks/useAssistant/useAssistant';
 import './table.css';
 
 type ChartLegendTableOptions = ChartLegend & {
   datastreams: DataStreamInformation[];
   trendCursors: TrendCursor[];
   significantDigits: ChartOptions['significantDigits'];
+  assistant?: AssistantProperty;
+  selectedItems?: DataStreamInformation[];
+  setSelectedItems?: (selectedItems: DataStreamInformation[]) => void;
+  selectionType?: TableProps.SelectionType;
 };
 
 export const ChartLegendTable = ({
@@ -21,6 +26,10 @@ export const ChartLegendTable = ({
   width,
   visibleContent,
   significantDigits,
+  assistant,
+  selectedItems,
+  setSelectedItems,
+  selectionType,
 }: ChartLegendTableOptions) => {
   const { items, collectionProps } = useCollection(datastreams, {
     sorting: {},
@@ -36,6 +45,17 @@ export const ChartLegendTable = ({
       }),
     [width, trendCursors, visibleContent, significantDigits]
   );
+
+  const { actionsByComponent, clearActions } = useAssistant({});
+  useEffect(() => {
+    if (assistant?.componentId && setSelectedItems) {
+      const componentAction = actionsByComponent[assistant?.componentId];
+      if (componentAction?.action === 'clear-selection') {
+        setSelectedItems([]);
+        clearActions(assistant?.componentId);
+      }
+    }
+  }, [actionsByComponent, assistant, setSelectedItems, clearActions]);
 
   if (!visible) return null;
 
@@ -56,6 +76,13 @@ export const ChartLegendTable = ({
         variant='embedded'
         preferences={<></>}
         contentDensity='compact'
+        onSelectionChange={(event) => {
+          if (setSelectedItems) {
+            setSelectedItems(event.detail.selectedItems);
+          }
+        }}
+        selectedItems={selectedItems}
+        selectionType={selectionType}
       />
     </div>
   );

@@ -47,7 +47,7 @@ export const AssistantWrapperPanel = ({
     ) {
       setShowResults(true);
     }
-  }, [actionsByComponent]);
+  }, [actionsByComponent, assistant.componentId]);
 
   return (
     <IntlProvider locale='en' defaultLocale='en'>

@@ -1,5 +1,11 @@
 import React from 'react';
-import { act, render, renderHook, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  render,
+  renderHook,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import {
   AssistantWrapperPanel,
   AssistantWrapperPanelProps,
@@ -16,7 +22,9 @@ import { mockedInvokeAssistantResponse5 } from '../../__mocks__/assistantMockedR
 
 const client = new IoTSitewiseAssistantClient({
   iotSiteWiseClient: {
-    invokeAssistant: jest.fn().mockResolvedValue({ body: [mockedInvokeAssistantResponse5] }),
+    invokeAssistant: jest
+      .fn()
+      .mockResolvedValue({ body: [mockedInvokeAssistantResponse5] }),
   } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
   defaultContext: '',
 });
@@ -76,9 +84,7 @@ describe('ActionPanel', () => {
       });
     });
 
-    expect(
-      screen.getByText('Assistant summary result')
-    ).toBeInTheDocument();
+    expect(screen.getByText('Assistant summary result')).toBeInTheDocument();
   });
 
   it('fires divedeep action when "Chat with AI" action item is clicked', async () => {

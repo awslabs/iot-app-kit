@@ -34,6 +34,7 @@ export const ChatbotInputBox = ({
         textarea.removeEventListener('paste', onResize);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

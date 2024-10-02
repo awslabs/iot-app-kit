@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import type { MouseEvent } from 'react';
 import {
   colorBorderDividerSecondary,
   spaceStaticL,
   spaceStaticM,
 } from '@cloudscape-design/design-tokens';
+import { TableProps } from '@cloudscape-design/components/table';
 
 import { useECharts, useResizeableEChart } from '../../hooks/useECharts';
 import { ChartOptions } from './types';
@@ -40,6 +41,8 @@ import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistan
 import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
 import { Title, getAdjustedChartHeight } from '../../common/title';
 import { getTimeSeriesQueries } from '../../utils/queries';
+import { DataStreamInformation } from './legend/table/types';
+import { getSelectedQueriesAndProperties } from '../../hooks/useAssistantContext/utils';
 import { useChartAlarms } from './hooks/useChartAlarms';
 import { useNormalizedDataStreams } from './hooks/useNormalizedDataStreams';
 
@@ -89,7 +92,11 @@ const BaseChart = ({
     handleChangeAlarmIconsVisibility,
   } = useChartPreferences({ ...options.dataQuality, onChartOptionsChange });
 
-  const { setContextByComponent, transformTimeseriesDataToAssistantContext } = useAssistantContext();
+  const { setContextByComponent, transformTimeseriesDataToAssistantContext } =
+    useAssistantContext();
+  const [selectedItems, setSelectedItems] = useState<DataStreamInformation[]>(
+    []
+  );
 
   const isLegendVisible = options.legend?.visible;
   const isLegendPositionLeft = options.legend?.position === 'left';
@@ -195,21 +202,7 @@ const BaseChart = ({
   const delayLoading = useIsRefreshing(isRefreshing, REFRESHING_DELAY_MS);
   const isPropertiesRefreshing = !isLoading && delayLoading;
 
-  useEffect(() => {
-    if (options.id) {
-      setContextByComponent(
-        options.id,
-        transformTimeseriesDataToAssistantContext({
-          start: viewportStartDate(utilizedViewport),
-          end: viewportEndDate(utilizedViewport),
-          queries: timeSeriesQueries,
-        })
-      );
-    }
-  }, [utilizedViewport, queries, options.id]);
-
   useChartDataset(chartRef, dataStreams, alarms);
-
   useChartStoreDataStreamsSync(dataStreamMetaData);
 
   // handle chart event updates
@@ -267,6 +260,45 @@ const BaseChart = ({
       borderRight: borderThin,
     };
   };
+
+  const handleSelection = (selectedItems: DataStreamInformation[]) => {
+    if (options.id && options.assistant) {
+      const selectedQueries = getSelectedQueriesAndProperties(
+        timeSeriesQueries,
+        selectedItems.map((item) => item.refId ?? '')
+      );
+      const context = transformTimeseriesDataToAssistantContext({
+        start: viewportStartDate(utilizedViewport),
+        end: viewportEndDate(utilizedViewport),
+        queries: selectedQueries,
+      });
+
+      setContextByComponent(options.assistant.componentId, context);
+
+      if (options.assistant.onAction) {
+        options.assistant.onAction({
+          type: 'selection',
+          sourceComponentId: options.assistant.componentId,
+          sourceComponentType: 'chart',
+          selectedProperties: selectedItems.length,
+        });
+      }
+    }
+    setSelectedItems(selectedItems);
+  };
+
+  const assistantSelection = useMemo(() => {
+    if (options.assistant && options.assistant?.enabled) {
+      return {
+        assistant: options.assistant,
+        setSelectedItems: handleSelection,
+        selectedItems,
+        selectionType: 'multi' as TableProps.SelectionType,
+      };
+    } else {
+      return {};
+    }
+  }, [options.assistant, selectedItems, handleSelection]);
 
   return (
     <div className='base-chart-wrapper'>
@@ -385,6 +417,7 @@ const BaseChart = ({
               trendCursorValues={trendCursorValues}
               width={rightLegendWidth.toString()}
               significantDigits={options.significantDigits}
+              {...assistantSelection}
             />
           </div>
         )}

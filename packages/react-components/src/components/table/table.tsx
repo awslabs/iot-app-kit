@@ -18,14 +18,16 @@ import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistan
 import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
 import { TableHeader } from './tableHeader';
 import { TableAssistantResults } from './tableAssistantResults';
-import type { AssistantSupportedQuery } from '../../hooks/useAssistantContext/utils';
 import { IntlProvider } from 'react-intl';
 import type { ComponentQuery } from '../../common/chartTypes';
 import { getTimeSeriesQueries } from '../../utils/queries';
-import { getSelectedQueriesAndProperties } from './utils';
 import { useAlarmsFromQueries } from '../../hooks/useAlarmsFromQueries/useAlarmsFromQueries';
 import { parseAlarmStateAssetProperty } from '../../hooks/useAlarms/transformers';
 import { mapAlarmRuleExpression } from '../../hooks/useAlarms/transformers/mapAlarmRuleExpression';
+import {
+  convertToSupportedTimeRange,
+  getSelectedQueriesAndProperties,
+} from '../../hooks/useAssistantContext/utils';
 
 const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
 
@@ -103,6 +105,8 @@ export const Table = ({
       const firstInputProperty = inputProperty?.at(0);
 
       return {
+        id: alarm.compositeModelId,
+        assetId: alarm.assetId,
         alarmName: compositeModelName,
         property: firstInputProperty?.property.name,
         value: firstInputProperty?.dataStream?.data.at(-1)?.y,
@@ -154,27 +158,50 @@ export const Table = ({
   const { setContextByComponent, transformTimeseriesDataToAssistantContext } =
     useAssistantContext();
 
-  const handleSummarize = () => {
-    if (props.assistant) {
-      const transformedQueries = transformTimeseriesDataToAssistantContext({
+  const buildAssistantContext = (selectedIndexes: number[]) => {
+    const contexts = [];
+    const selectedItemsWithData = itemsWithData.filter((_, index) =>
+      selectedIndexes.includes(index)
+    );
+
+    selectedItemsWithData
+      .filter((alarmItem) => !!alarmItem.alarmName)
+      .forEach((alarmItem) => {
+        contexts.push({
+          timerange: convertToSupportedTimeRange(
+            viewportStartDate(utilizedViewport),
+            viewportEndDate(utilizedViewport)
+          ),
+          assetId: alarmItem.assetId.value,
+          alarmName: alarmItem.alarmName.value,
+        });
+      });
+
+    const selectedIds = selectedItemsWithData
+      .filter((item) => !item.alarmName)
+      .map((item) => item.value.refId as string);
+
+    const selectedQueries = getSelectedQueriesAndProperties(
+      timeSeriesQueries,
+      selectedIds
+    );
+
+    contexts.push(
+      transformTimeseriesDataToAssistantContext({
         start: viewportStartDate(utilizedViewport),
         end: viewportEndDate(utilizedViewport),
-        queries: timeSeriesQueries,
-      });
-      const filteredQueries = transformedQueries.queries.map((query) => {
-        const { properties = [] } = query as AssistantSupportedQuery;
-        const filteredProperties = properties.filter((_prop, index) =>
-          indexesSelected.includes(index)
-        );
-        return {
-          ...query,
-          properties: filteredProperties,
-        };
-      });
-      setContextByComponent(props.assistant.componentId, {
-        timerange: transformedQueries.timerange,
-        queries: filteredQueries,
-      });
+        queries: selectedQueries,
+      })
+    );
+
+    if (props.assistant) {
+      setContextByComponent(props.assistant.componentId, contexts);
+    }
+  };
+
+  const handleSummarize = () => {
+    if (props.assistant) {
+      buildAssistantContext(indexesSelected);
       setShowSummarization(true);
     }
   };
@@ -198,24 +225,12 @@ export const Table = ({
             props.assistant.onAction &&
             props.assistant.target === 'dashboard'
           ) {
-            const selectedQueries = getSelectedQueriesAndProperties(
-              timeSeriesQueries,
-              indexesSelected
-            );
-            setContextByComponent(
-              props.assistant.componentId,
-              transformTimeseriesDataToAssistantContext({
-                start: viewportStartDate(utilizedViewport),
-                end: viewportEndDate(utilizedViewport),
-                queries: selectedQueries,
-              })
-            );
-
+            buildAssistantContext(indexesSelected);
             props.assistant.onAction({
               type: 'selection',
               sourceComponentId: props.assistant.componentId,
               sourceComponentType: 'table',
-              selectedProperties: selectedQueries.length,
+              selectedProperties: indexesSelected.length,
             });
           }
         }}

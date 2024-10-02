@@ -25,6 +25,10 @@ import { getAlarmQueries, getTimeSeriesQueries } from '../../utils/queries';
 import { convertAlarmQueryToAlarmRequest } from '../../queries/utils/convertAlarmQueryToAlarmRequest';
 import { useAlarms } from '../../hooks/useAlarms';
 import { buildTransformAlarmForSingleQueryWidgets } from '../../utils/buildTransformAlarmForSingleQueryWidgets';
+import {
+  convertToSupportedTimeRange,
+  serializeTimeSeriesQuery,
+} from '../../hooks/useAssistantContext/utils';
 
 export const Gauge = ({
   size,
@@ -53,6 +57,9 @@ export const Gauge = ({
     convertAlarmQueryToAlarmRequest(query)
   );
 
+  const inputPropertyTimeSeriesDataSettings =
+    alarmQueries.at(0)?.query.requestSettings;
+
   const transformedAlarm = useAlarms({
     iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
     iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
@@ -66,6 +73,7 @@ export const Gauge = ({
     transform: buildTransformAlarmForSingleQueryWidgets({
       iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
       iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
+      ...inputPropertyTimeSeriesDataSettings,
     }),
   })
     .filter((alarm) => !!alarm)
@@ -102,14 +110,25 @@ export const Gauge = ({
 
   useEffect(() => {
     if (assistant) {
-      setContextByComponent(
-        assistant.componentId,
-        transformTimeseriesDataToAssistantContext({
-          start: viewportStartDate(utilizedViewport),
-          end: viewportEndDate(utilizedViewport),
-          queries: timeSeriesQueries,
-        })
-      );
+      if (transformedAlarm) {
+        setContextByComponent(assistant.componentId, {
+          timerange: convertToSupportedTimeRange(
+            viewportStartDate(utilizedViewport),
+            viewportEndDate(utilizedViewport)
+          ),
+          assetId: transformedAlarm.assetId,
+          alarmName: transformedAlarm.alarmName,
+        });
+      } else if (timeSeriesQueries.length > 0) {
+        setContextByComponent(
+          assistant.componentId,
+          transformTimeseriesDataToAssistantContext({
+            start: viewportStartDate(utilizedViewport),
+            end: viewportEndDate(utilizedViewport),
+            queries: [serializeTimeSeriesQuery(timeSeriesQueries[0])],
+          })
+        );
+      }
     }
   }, [utilizedViewport, query, assistant]);
 

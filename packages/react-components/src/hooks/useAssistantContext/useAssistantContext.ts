@@ -1,4 +1,3 @@
-import type { TimeSeriesDataQuery } from '@iot-app-kit/core';
 import {
   getAssistantStore,
   getAllAssistantContext,
@@ -9,13 +8,14 @@ import {
 } from '@iot-app-kit/core-util';
 import {
   convertToSupportedTimeRange,
+  ParsedTimeSeriesDataQuery,
   transformQueriesForContext,
 } from './utils';
 
 export type TransformTimeseriesDataToAssistantContextParams = {
   start: Date;
   end: Date;
-  queries: TimeSeriesDataQuery[];
+  queries: Array<ParsedTimeSeriesDataQuery>;
 };
 
 export const useAssistantContext = () => {

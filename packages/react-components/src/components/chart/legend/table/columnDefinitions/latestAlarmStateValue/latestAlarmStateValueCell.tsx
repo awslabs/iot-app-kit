@@ -19,7 +19,7 @@ export const LatestAlarmStateValueCell = ({
   return (
     <div className={!isVisible ? 'hidden-legend' : ''}>
       {latestAlarmStateValue ? (
-        <AlarmStateText state={latestAlarmStateValue as PascalCaseStateName} />
+        <AlarmStateText alarmContent={{state: latestAlarmStateValue as PascalCaseStateName}} />
       ) : (
         '-'
       )}

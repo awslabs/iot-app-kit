@@ -34,7 +34,7 @@ export const TableHeader: FunctionComponent<TableHeaderProps> = ({
     if (triggerRef && triggerRef.current) {
       triggerRef.current.click();
     }
-  }, [triggerRef.current]);
+  }, []);
 
   const renderAssistantSelectionLimitation = () => {
     if (selectedItems < ASSISTANT_SELECTION_LIMITATION) {
