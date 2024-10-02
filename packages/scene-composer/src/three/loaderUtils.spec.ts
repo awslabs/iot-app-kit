@@ -1,29 +1,23 @@
-import { setDracoDecoder, setGetSceneObjectFunction } from '../common/GlobalSettings';
-import { DRACO_PATH } from '../common/constants';
+import { WebGLRenderer } from 'three';
 
 import { GLTFLoader } from './GLTFLoader';
 import { setupTwinMakerGLTFLoader } from './loaderUtils';
+import { setupBasisuSupport, setupDracoSupport, setupFileLoader } from './loaderUtilsHelpers';
 
-describe('setupTwinMakerGLTFLoader', () => {
-  it('should setup DRACO loader with custom path successfully', async () => {
-    setDracoDecoder({ enable: true, path: 'mock-path' });
-    const loader = new GLTFLoader();
-    setupTwinMakerGLTFLoader(loader);
-    expect(loader.dracoLoader.decoderPath).toBe('mock-path');
-  });
+jest.mock('./loaderUtilsHelpers');
 
-  it('should setup DRACO loader with default path successfully', async () => {
-    setDracoDecoder({ enable: true });
-    const loader = new GLTFLoader();
-    setupTwinMakerGLTFLoader(loader);
-    expect(loader.dracoLoader.decoderPath).toBe(DRACO_PATH);
-  });
+describe('loaderUtils', () => {
+  it('should setup DRACO', () => {
+    const loader = jest.fn() as unknown as GLTFLoader;
+    const renderer = jest.fn() as unknown as WebGLRenderer;
 
-  it('should setup DRACO loader and getSceneObjectFunction successfully', async () => {
-    const mockGetSceneObjectFunction = {} as any;
-    setGetSceneObjectFunction(mockGetSceneObjectFunction);
-    const loader = new GLTFLoader();
-    setupTwinMakerGLTFLoader(loader);
-    expect(loader.fileLoader.getSceneObjectFunction).toBe(mockGetSceneObjectFunction);
+    // ACT
+    const results = setupTwinMakerGLTFLoader(loader, renderer);
+
+    // Assert
+    expect(results).toBe(loader);
+    expect(setupDracoSupport).toBeCalled();
+    expect(setupFileLoader).toBeCalled();
+    expect(setupBasisuSupport).toBeCalled();
   });
 });

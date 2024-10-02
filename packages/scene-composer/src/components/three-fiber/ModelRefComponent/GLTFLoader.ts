@@ -1,16 +1,16 @@
-import { Loader, LoadingManager, DefaultLoadingManager } from 'three';
+import { Loader, LoadingManager, DefaultLoadingManager, WebGLRenderer } from 'three';
 import { useLoader } from '@react-three/fiber';
 
 import { GLTFLoader as TwinMakerGLTFLoader } from '../../../three/GLTFLoader';
 import { setupTwinMakerGLTFLoader } from '../../../three/loaderUtils';
 import { URIModifier } from '../../../interfaces/interfaces';
 
-function extensions(extendLoader?: (loader: TwinMakerGLTFLoader) => void) {
+function extensions(gl: WebGLRenderer, extendLoader?: (loader: TwinMakerGLTFLoader) => void) {
   return (loader: Loader) => {
     if (extendLoader) {
       extendLoader(loader as TwinMakerGLTFLoader);
     }
-    setupTwinMakerGLTFLoader(loader as TwinMakerGLTFLoader);
+    setupTwinMakerGLTFLoader(loader as TwinMakerGLTFLoader, gl);
   };
 }
 
@@ -19,6 +19,7 @@ function extensions(extendLoader?: (loader: TwinMakerGLTFLoader) => void) {
  */
 export function useGLTF<T extends string | string[]>(
   path: T,
+  gl: WebGLRenderer,
   uriModifier?: URIModifier,
   extendLoader?: (loader: TwinMakerGLTFLoader) => void,
   onProgress?: (event: ProgressEvent<EventTarget>) => void,
@@ -26,7 +27,7 @@ export function useGLTF<T extends string | string[]>(
   const gltf = useLoader(
     TwinMakerGLTFLoader as any,
     path,
-    extensions((loader) => {
+    extensions(gl, (loader) => {
       if (extendLoader) extendLoader(loader);
       if (!loader.manager) {
         loader.manager = DefaultLoadingManager;
@@ -41,13 +42,14 @@ export function useGLTF<T extends string | string[]>(
 
 useGLTF.preload = (
   path: string | string[],
+  gl: WebGLRenderer,
   uriModifier?: URIModifier,
   extendLoader?: (loader: TwinMakerGLTFLoader) => void,
 ) =>
   useLoader.preload(
     TwinMakerGLTFLoader as any,
     path,
-    extensions((loader) => {
+    extensions(gl, (loader) => {
       if (extendLoader) extendLoader(loader);
       if (!loader.manager) {
         loader.manager = new LoadingManager();

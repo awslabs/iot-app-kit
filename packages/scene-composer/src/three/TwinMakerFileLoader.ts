@@ -34,7 +34,7 @@ export class TwinMakerFileLoader extends THREE.FileLoader {
 
       this.manager?.itemStart(url);
       if (THREE.Cache.get(url) !== undefined) {
-        setTimeout(() => _onLoad(THREE.Cache.get(url)), 1);
+        _onLoad(THREE.Cache.get(url));
         return;
       }
 

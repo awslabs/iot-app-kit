@@ -46,7 +46,7 @@
     "convert-svg": "npx @svgr/cli --out-dir src/assets/auto-gen/icons/ --typescript --index-template tools/index-template.js -- src/assets/icons/",
     "release": "run-s compile copy-assets",
     "copy-assets": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" dist/",
-    "lint": "eslint . --max-warnings=714",
+    "lint": "eslint . --max-warnings=710",
     "fix": "eslint --fix .",
     "test": "jest --config jest.config.ts --coverage --silent",
     "test:reliability": "npm run test:ui:reliability",
@@ -196,10 +196,10 @@
   "jest": {
     "coverageThreshold": {
       "global": {
-        "lines": 76.97,
-        "statements": 76.38,
-        "functions": 75.51,
-        "branches": 61,
+        "lines": 82,
+        "statements": 81,
+        "functions": 79,
+        "branches": 70,
         "branchesTrue": 100
       }
     }

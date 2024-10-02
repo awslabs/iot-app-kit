@@ -109,9 +109,9 @@ describe('GLTFLoader', () => {
       (baseScene.children[0] as THREE.Mesh).geometry,
     );
   });
-
   describe('useGLTF', () => {
     let path;
+    let gl;
     let extensionsCb;
     let uriModifier;
     let onProgressCb;
@@ -119,8 +119,9 @@ describe('GLTFLoader', () => {
     beforeEach(() => {
       setup();
 
-      mockUseGLTF.mockImplementation((p, u, e, o) => {
+      mockUseGLTF.mockImplementation((p, g, u, e, o) => {
         path = p;
+        gl = g;
         extensionsCb = e;
         uriModifier = u;
         onProgressCb = o;
@@ -135,126 +136,69 @@ describe('GLTFLoader', () => {
         <GLTFModelComponent node={baseNode} component={baseComponent} hiddenWhileImmersive={false} />,
       );
 
-      expect(path).toEqual(baseComponent.uri);
-      expect(uriModifier).toBe(mockStoreUriModifier);
+      expect(mockUseGLTF.mock.calls[0]).toMatchSnapshot();
+    });
+    describe('scale', () => {
+      beforeEach(() => {
+        setup();
+      });
+
+      it('should use defalt scale when component does not specify it', async () => {
+        accessStore('default').setState(baseState);
+
+        const rendered = await ReactThreeTestRenderer.create(
+          <GLTFModelComponent node={baseNode} component={baseComponent} hiddenWhileImmersive={false} />,
+        );
+
+        expect(Object.values(rendered.scene.children[0]._fiber.scale)).toEqual([1, 1, 1]);
+      });
+
+      it('should use local scale set in component', async () => {
+        accessStore('default').setState(baseState);
+        const expected: any = [2, 3, 4];
+
+        const rendered = await ReactThreeTestRenderer.create(
+          <GLTFModelComponent
+            node={baseNode}
+            component={{ ...baseComponent, localScale: expected }}
+            hiddenWhileImmersive={false}
+          />,
+        );
+
+        expect(Object.values(rendered.scene.children[0]._fiber.scale)).toEqual(expected);
+      });
+
+      it('should return correct scale for centimeter', async () => {
+        accessStore('default').setState(baseState);
+        const scale = getScaleFactor('centimeters', 'meters');
+        const expected: any = [scale, scale, scale];
+
+        const rendered = await ReactThreeTestRenderer.create(
+          <GLTFModelComponent
+            node={baseNode}
+            component={{ ...baseComponent, unitOfMeasure: 'centimeters' }}
+            hiddenWhileImmersive={false}
+          />,
+        );
+
+        expect(Object.values(rendered.scene.children[0]._fiber.scale)).toEqual(expected);
+      });
     });
 
-    it('should set loading modal state correctly', async () => {
+    it('should clone and attach the scene', async () => {
       accessStore('default').setState(baseState);
-      const mockLoader = {
-        manager: {
-          onStart: () => null,
-          onLoad: () => null,
-          onError: () => null,
-        },
-      };
+      mockThreeStates.gl.capabilities.getMaxAnisotropy.mockReturnValue(1);
 
       await ReactThreeTestRenderer.create(
         <GLTFModelComponent node={baseNode} component={baseComponent} hiddenWhileImmersive={false} />,
       );
-      extensionsCb(mockLoader);
 
-      // onStart
-      mockLoader.manager.onStart();
-      jest.runAllTimers();
-      expect(mockSetLoadingModelState).toBeCalledTimes(1);
-      expect(mockSetLoadingModelState).toHaveBeenLastCalledWith(true);
-
-      // onLoad
-      mockLoader.manager.onLoad();
-      jest.runAllTimers();
-      expect(mockSetLoadingModelState).toBeCalledTimes(2);
-      expect(mockSetLoadingModelState).toHaveBeenLastCalledWith(false);
-
-      // onError
-      mockLoader.manager.onError();
-      jest.runAllTimers();
-      expect(mockSetLoadingModelState).toBeCalledTimes(3);
-      expect(mockSetLoadingModelState).toHaveBeenLastCalledWith(false);
+      expect(mockEnableShadow).toBeCalled();
+      expect(mockEnableShadow).toBeCalledWith(baseComponent, expect.any(THREE.Object3D), 1);
     });
 
-    it('should update downloading progress correctly', async () => {
-      accessStore('default').setState(baseState);
-      const mockProcessEvent = {
-        lengthComputable: true,
-        total: 123,
-        target: { responseURL: 'a/b/c' },
-        loaded: 11,
-      };
-      const onDownloadProgressSpy = jest
-        .spyOn(GLTFLoadingManager as any, '__onDownloadProgress')
-        .mockImplementation(() => null);
+    // TODO: Add tests to send onPointerDown and onPointerUp and verify closet is passed to setViewpointNodeRef Similarly to ViewCursorWidget
 
-      await ReactThreeTestRenderer.create(
-        <GLTFModelComponent node={baseNode} component={baseComponent} hiddenWhileImmersive={false} />,
-      );
-      onProgressCb(mockProcessEvent);
-
-      expect(onDownloadProgressSpy).toBeCalledTimes(1);
-      expect(onDownloadProgressSpy).toHaveBeenLastCalledWith('a/b/c', 11, 123);
-    });
+    // TODO: Add tests to send onPointerDown, onPointerMove and onPointerUp while adding and verify correct functions are executed
   });
-
-  describe('scale', () => {
-    beforeEach(() => {
-      setup();
-    });
-
-    it('should use defalt scale when component does not specify it', async () => {
-      accessStore('default').setState(baseState);
-
-      const rendered = await ReactThreeTestRenderer.create(
-        <GLTFModelComponent node={baseNode} component={baseComponent} hiddenWhileImmersive={false} />,
-      );
-
-      expect(Object.values(rendered.scene.children[0]._fiber.scale)).toEqual([1, 1, 1]);
-    });
-
-    it('should use local scale set in component', async () => {
-      accessStore('default').setState(baseState);
-      const expected: any = [2, 3, 4];
-
-      const rendered = await ReactThreeTestRenderer.create(
-        <GLTFModelComponent
-          node={baseNode}
-          component={{ ...baseComponent, localScale: expected }}
-          hiddenWhileImmersive={false}
-        />,
-      );
-
-      expect(Object.values(rendered.scene.children[0]._fiber.scale)).toEqual(expected);
-    });
-
-    it('should return correct scale for centimeter', async () => {
-      accessStore('default').setState(baseState);
-      const scale = getScaleFactor('centimeters', 'meters');
-      const expected: any = [scale, scale, scale];
-
-      const rendered = await ReactThreeTestRenderer.create(
-        <GLTFModelComponent
-          node={baseNode}
-          component={{ ...baseComponent, unitOfMeasure: 'centimeters' }}
-          hiddenWhileImmersive={false}
-        />,
-      );
-
-      expect(Object.values(rendered.scene.children[0]._fiber.scale)).toEqual(expected);
-    });
-  });
-
-  it('should clone and attach the scene', async () => {
-    accessStore('default').setState(baseState);
-    mockThreeStates.gl.capabilities.getMaxAnisotropy.mockReturnValue(1);
-
-    await ReactThreeTestRenderer.create(
-      <GLTFModelComponent node={baseNode} component={baseComponent} hiddenWhileImmersive={false} />,
-    );
-
-    expect(mockEnableShadow).toBeCalled();
-    expect(mockEnableShadow).toBeCalledWith(baseComponent, expect.any(THREE.Object3D), 1);
-  });
-
-  // TODO: Add tests to send onPointerDown and onPointerUp and verify closet is passed to setViewpointNodeRef Similarly to ViewCursorWidget
-
-  // TODO: Add tests to send onPointerDown, onPointerMove and onPointerUp while adding and verify correct functions are executed
 });

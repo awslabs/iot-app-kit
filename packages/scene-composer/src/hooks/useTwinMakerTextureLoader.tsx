@@ -31,22 +31,13 @@ const useTwinMakerTextureLoader: (options?: TwinMakerTextureLoaderOptions) => {
         const newTextureLoader = new TwinMakerTextureLoader(loadingManager);
         newTextureLoader.setGetSceneObjectFunction(globalSettings.getSceneObjectFunction);
         newTextureLoader.manager.onStart = appendFunction(newTextureLoader.manager.onStart, () => {
-          // Use setTimeout to avoid mutating the state during rendering process
-          setTimeout(() => {
-            accessStore(sceneComposerId).getState().setLoadingModelState(true);
-          }, 0);
+          accessStore(sceneComposerId).getState().setLoadingModelState(true);
         });
         newTextureLoader.manager.onLoad = appendFunction(newTextureLoader.manager.onLoad, () => {
-          // Use setTimeout to avoid mutating the state during rendering process
-          setTimeout(() => {
-            accessStore(sceneComposerId).getState().setLoadingModelState(false);
-          }, 0);
+          accessStore(sceneComposerId).getState().setLoadingModelState(false);
         });
         newTextureLoader.manager.onError = appendFunction(newTextureLoader.manager.onError, () => {
-          // Use setTimeout to avoid mutating the state during rendering process
-          setTimeout(() => {
-            accessStore(sceneComposerId).getState().setLoadingModelState(false);
-          }, 0);
+          accessStore(sceneComposerId).getState().setLoadingModelState(false);
         });
         setTextureLoader(newTextureLoader);
       } else {
