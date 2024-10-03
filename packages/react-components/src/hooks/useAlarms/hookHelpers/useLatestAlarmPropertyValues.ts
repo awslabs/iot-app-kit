@@ -47,6 +47,7 @@ export function useLatestAlarmPropertyValues({
     iotSiteWiseClient,
     requests: alarmPropertyRequests,
     enabled,
+    refreshRate: Infinity,
   });
 
   return useMemo(() => {
