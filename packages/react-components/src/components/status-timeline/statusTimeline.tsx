@@ -19,8 +19,11 @@ import {
 import type { ComponentQuery } from '../../common/chartTypes';
 import { useAlarms } from '../../hooks/useAlarms';
 import { getAlarmQueries, getTimeSeriesQueries } from '../../utils/queries';
-import { transformAlarmsToThreshold } from '../../utils/transformAlarmsToThreshold';
 import { convertAlarmQueryToAlarmRequest } from '../../queries/utils/convertAlarmQueryToAlarmRequest';
+import {
+  ALARM_STATE_THRESHOLDS,
+  transformAlarmStateToDataStream,
+} from './alarmTransforms';
 
 // TODO: Remove this type assertion - iot-app-kit/charts has the wrong type for StatusTimeline
 const StatusTimelineBase: typeof LineChart =
@@ -56,7 +59,7 @@ export const StatusTimeline = ({
   const alarmQueries = getAlarmQueries(queries);
   const timeSeriesQueries = getTimeSeriesQueries(queries);
 
-  const transformedAlarms = useAlarms({
+  const alarmStateDataStreams = useAlarms({
     iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
     iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
     requests: alarmQueries.flatMap((query) =>
@@ -67,9 +70,8 @@ export const StatusTimeline = ({
       fetchThresholds: true,
       refreshRate: alarmQueries.at(0)?.query.requestSettings?.refreshRate,
     },
-    transform: transformAlarmsToThreshold,
+    transform: transformAlarmStateToDataStream,
   });
-  const filteredAlarms = transformedAlarms.filter((alarm) => !!alarm);
 
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
@@ -82,20 +84,23 @@ export const StatusTimeline = ({
     styles,
   });
 
-  const allThresholds = useMemo(
-    () => [...queryThresholds, ...thresholds, ...filteredAlarms],
-    [
-      JSON.stringify(queryThresholds),
-      JSON.stringify(thresholds),
-      JSON.stringify(filteredAlarms),
-    ]
-  );
+  const allThresholds = useMemo(() => {
+    const all = [...queryThresholds, ...thresholds];
+    if (alarmStateDataStreams.length > 0) all.push(...ALARM_STATE_THRESHOLDS);
+    return all;
+  }, [
+    JSON.stringify(queryThresholds),
+    JSON.stringify(thresholds),
+    alarmStateDataStreams.length,
+  ]);
 
   return (
     <StatusTimelineBase
       aggregationType={aggregationType}
       widgetId=''
-      dataStreams={dataStreams as DataStreamViz[]}
+      dataStreams={
+        [...dataStreams, ...alarmStateDataStreams] as DataStreamViz[]
+      }
       viewport={{ ...utilizedViewport, group, lastUpdatedBy }}
       annotations={{ y: allThresholds } as Annotations}
       setViewport={setViewport}
