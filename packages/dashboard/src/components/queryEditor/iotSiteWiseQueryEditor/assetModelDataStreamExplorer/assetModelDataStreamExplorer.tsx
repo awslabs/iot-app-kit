@@ -29,7 +29,6 @@ import {
   AlarmExplorer,
   AlarmExplorerProps,
   AssetResource,
-  useGetConfigValue,
 } from '@iot-app-kit/react-components';
 import { ExpandableSection } from '@cloudscape-design/components';
 import { ExpandableSectionHeading } from '../components/expandableSectionHeading';
@@ -57,7 +56,7 @@ export const AssetModelDataStreamExplorer = ({
 }: AssetModelDataStreamExplorerProps) => {
   const metricsRecorder = getPlugin('metricsRecorder');
 
-  const alarmsFeatureOn = useGetConfigValue('useAlarms');
+  const alarmsFeatureOn = true; //useGetConfigValue('useAlarms');
 
   const {
     assetModelId,

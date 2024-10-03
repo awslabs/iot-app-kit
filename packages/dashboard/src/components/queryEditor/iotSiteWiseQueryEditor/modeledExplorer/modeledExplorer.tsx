@@ -10,7 +10,6 @@ import {
   AssetPropertyResource,
   AssetResource,
   SelectionMode,
-  useGetConfigValue,
 } from '@iot-app-kit/react-components';
 import React, { useState } from 'react';
 import { isModeledPropertyInvalid } from '../../helpers/isModeledPropertyInvalid';
@@ -55,7 +54,7 @@ export const ModeledExplorer = ({
     NonNullable<AlarmExplorerProps['selectedAlarms']>
   >([]);
 
-  const alarmsFeatureOn = useGetConfigValue('useAlarms');
+  const alarmsFeatureOn = true; //useGetConfigValue('useAlarms');
 
   const metricsRecorder = getPlugin('metricsRecorder');
 
