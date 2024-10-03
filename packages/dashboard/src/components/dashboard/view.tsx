@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
@@ -26,6 +26,7 @@ import { TimeSync } from '@iot-app-kit/react-components';
 
 import '@cloudscape-design/global-styles/index.css';
 import '../../styles/variables.css';
+import { useAWSRegion } from '~/hooks/useAWSRegion';
 
 export type DashboardViewProperties = {
   clientConfiguration: DashboardClientConfiguration;
@@ -57,6 +58,12 @@ const DashboardView: React.FC<DashboardViewProperties> = ({
     ? debounce(onViewportChange, 100)
     : undefined;
 
+  const { region } = useAWSRegion(clientConfiguration);
+  const clients = useMemo(
+    () => getClients(clientConfiguration, region),
+    [clientConfiguration, region]
+  );
+
   return (
     <TimeSync
       initialViewport={
@@ -65,9 +72,9 @@ const DashboardView: React.FC<DashboardViewProperties> = ({
       group='dashboard-timesync'
       onViewportChange={debounceOnViewportChange}
     >
-      <ClientContext.Provider value={getClients(clientConfiguration)}>
+      <ClientContext.Provider value={clients}>
         <QueryContext.Provider
-          value={getQueries(clientConfiguration, edgeMode)}
+          value={getQueries(clientConfiguration, region, edgeMode)}
         >
           <QueryClientProvider client={queryClient}>
             <Provider

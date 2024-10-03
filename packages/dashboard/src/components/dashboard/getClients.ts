@@ -2,20 +2,13 @@ import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { IoTSiteWiseClient, IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { IoTSiteWise as InternalIoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
-import {
-  DashboardClientConfiguration,
-  DashboardClientCredentials,
-} from '~/types';
+import { DashboardClientConfiguration } from '~/types';
 import { DashboardClientContext } from './clientContext';
-
-export const isCredentials = (
-  dashboardClientConfiguration: DashboardClientConfiguration
-): dashboardClientConfiguration is DashboardClientCredentials =>
-  'awsCredentials' in dashboardClientConfiguration &&
-  'awsRegion' in dashboardClientConfiguration;
+import { isCredentials } from '~/hooks/useAWSRegion';
 
 export const getClients = (
-  dashboardClientConfiguration: DashboardClientConfiguration
+  dashboardClientConfiguration: DashboardClientConfiguration,
+  region: string
 ): DashboardClientContext => {
   if (!isCredentials(dashboardClientConfiguration)) {
     return {
@@ -44,12 +37,12 @@ export const getClients = (
     credentials: dashboardClientConfiguration.awsCredentials,
     region: dashboardClientConfiguration.awsRegion,
   });
+
   const iotSiteWisePrivateClient = new InternalIoTSiteWise({
     credentials: dashboardClientConfiguration.awsCredentials,
     region: dashboardClientConfiguration.awsRegion,
-    endpoint: `https://data.iotsitewise.${dashboardClientConfiguration.awsRegion}.amazonaws.com`,
+    endpoint: `https://data.iotsitewise.${region}.amazonaws.com`,
   });
-
 
   return {
     iotEventsClient,

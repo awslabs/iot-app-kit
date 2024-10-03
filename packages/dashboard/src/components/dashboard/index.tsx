@@ -32,6 +32,7 @@ import { PropertiesPanel } from '~/customization/propertiesSections';
 import { FpsView } from 'react-fps';
 import { TimeSync } from '@iot-app-kit/react-components';
 import { debounce } from 'lodash';
+import { useAWSRegion } from '~/hooks/useAWSRegion';
 
 export type DashboardProperties = {
   onDashboardConfigurationChange?: DashboardConfigurationChange;
@@ -85,13 +86,14 @@ const Dashboard: React.FC<DashboardProperties> = ({
     });
   }, [dashboardConfiguration, edgeMode, readOnly, timeZone]);
 
+  const { region } = useAWSRegion(clientConfiguration);
   const clients = useMemo(
-    () => getClients(clientConfiguration),
-    [clientConfiguration]
+    () => getClients(clientConfiguration, region),
+    [clientConfiguration, region]
   );
   const queries = useMemo(
-    () => getQueries(clientConfiguration, edgeMode),
-    [clientConfiguration, edgeMode]
+    () => getQueries(clientConfiguration, region, edgeMode),
+    [clientConfiguration, edgeMode, region]
   );
 
   return (
