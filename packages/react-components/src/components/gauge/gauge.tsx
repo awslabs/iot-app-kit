@@ -98,8 +98,7 @@ export const Gauge = ({
   const streamToUse = [propertyStream, alarmStream].find(Boolean) as DataStream;
   const name = streamToUse?.name;
   const unit = streamToUse?.unit;
-  const isLoading =
-    streamToUse?.isLoading || transformedAlarm?.status.isLoading || false;
+  const isLoading = streamToUse?.isLoading || false;
   const error = transformedAlarm?.status.isError
     ? CHART_ALARM_ERROR
     : streamToUse?.error;
@@ -141,6 +140,7 @@ export const Gauge = ({
   const component = (
     <GaugeBase
       alarmContent={transformedAlarm}
+      alarmStatus={transformedAlarm?.status}
       size={size}
       propertyPoint={propertyPoint}
       name={name}

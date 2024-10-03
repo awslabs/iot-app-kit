@@ -113,7 +113,7 @@ describe('default kpi widget', () => {
   it('renders default widget in loading state', () => {
     render(<KPI query={LOADING_QUERY} />);
 
-    expect(screen.getByText('-')).toBeVisible();
+    expect(screen.getByTestId('kpi-loading-spinner')).toBeVisible();
   });
 });
 

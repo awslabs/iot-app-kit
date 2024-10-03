@@ -8,20 +8,25 @@ import {
   colorTextStatusInactive,
   spaceScaledXxs,
 } from '@cloudscape-design/design-tokens';
-
-import './alarm-state-text.css';
 import { AlarmPopover } from '../popover/alarm-popover/alarmPopover';
 import type { AlarmContent } from './types';
 import { AssistantProperty } from '../../common/assistantProps';
+import { AlarmDataStatus } from '../../hooks/useAlarms';
+import { Spinner } from '@cloudscape-design/components';
+import './alarm-state-text.css';
 
 type AlarmStateTextOptions = {
-  assistant?: AssistantProperty;
   alarmContent?: AlarmContent;
+  status?: AlarmDataStatus;
+  isLoading?: boolean;
+  assistant?: AssistantProperty;
   inheritFontColor?: boolean;
 };
 
 export const AlarmStateText = ({
   alarmContent,
+  status,
+  isLoading,
   inheritFontColor,
   assistant,
 }: AlarmStateTextOptions) => {
@@ -37,6 +42,13 @@ export const AlarmStateText = ({
   }
 
   let borderBottom = '1px dashed ';
+
+  // checking if the gauge value is loading, so we dont show the alarm loading spinner
+  if (isLoading || !alarmContent?.state) return null;
+
+  if (status?.isLoading) {
+    return <Spinner />;
+  }
 
   switch (alarmContent?.state) {
     case 'Active':

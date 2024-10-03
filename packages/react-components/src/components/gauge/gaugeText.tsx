@@ -13,6 +13,8 @@ import { Primitive } from '@iot-app-kit/core';
 import { GaugeErrorText } from './gaugeErrorText';
 import { AlarmContent } from '../alarm-state/types';
 import { AssistantProperty } from '../../common/assistantProps';
+import { AlarmDataStatus } from '../../hooks/useAlarms';
+import { Spinner } from '@cloudscape-design/components';
 
 const getFormattedValue = ({
   value,
@@ -22,6 +24,7 @@ const getFormattedValue = ({
   fontSize,
   unitFontSize,
   showUnit,
+  isLoading,
 }: {
   value?: Primitive;
   valueColor?: string;
@@ -30,8 +33,11 @@ const getFormattedValue = ({
   fontSize?: number;
   unitFontSize?: number;
   showUnit?: boolean;
+  isLoading?: boolean;
 }) => {
-  if (!value) return '-';
+  if (!value) return null;
+
+  if (isLoading) return <Spinner data-testid='loading' />;
 
   return (
     <div
@@ -56,12 +62,14 @@ export const GaugeText = ({
   value,
   unit,
   alarmContent,
+  alarmStatus,
   valueColor,
   significantDigits,
   settings,
   titleText,
   error,
   assistant,
+  isLoading,
 }: {
   value?: Primitive;
   error?: string;
@@ -70,6 +78,7 @@ export const GaugeText = ({
   unit?: string;
   valueColor?: string;
   alarmContent?: AlarmContent;
+  alarmStatus?: AlarmDataStatus;
   settings?: GaugeSettings;
   titleText?: string;
   significantDigits?: number;
@@ -95,20 +104,29 @@ export const GaugeText = ({
         }}
       >
         <GaugeErrorText error={error} />
-        {alarmContent && (
-          <AlarmStateText alarmContent={alarmContent} assistant={assistant} />
+        <AlarmStateText
+          status={alarmStatus}
+          alarmContent={alarmContent}
+          isLoading={isLoading}
+          assistant={assistant}
+        />
+        {!error &&
+          getFormattedValue({
+            value,
+            unit,
+            valueColor,
+            fontSize: settings?.fontSize,
+            unitFontSize: settings?.unitFontSize,
+            showUnit: settings?.showUnit,
+            significantDigits,
+            isLoading: isLoading,
+          })}
+        {!isLoading && hasVisibleName && (
+          <div className='gauge-property-name'>{name}</div>
         )}
-        {getFormattedValue({
-          value,
-          unit,
-          valueColor,
-          fontSize: settings?.fontSize,
-          unitFontSize: settings?.unitFontSize,
-          showUnit: settings?.showUnit,
-          significantDigits,
-        })}
-        {hasVisibleName && <div className='gauge-property-name'>{name}</div>}
-        {hasVisibleQuality && <DataQualityText quality={quality} />}
+        {!isLoading && hasVisibleQuality && (
+          <DataQualityText quality={quality} />
+        )}
       </div>
     </div>
   );

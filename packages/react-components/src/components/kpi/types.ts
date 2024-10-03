@@ -2,6 +2,7 @@ import { StyledThreshold } from '@iot-app-kit/core';
 import type { WidgetSettings } from '../../common/dataTypes';
 import { AlarmContent } from '../alarm-state/types';
 import { AssistantProperty } from '../../common/assistantProps';
+import { AlarmDataStatus } from '../../hooks/useAlarms';
 
 export type KPIBaseProperties = WidgetSettings & {
   settings?: Partial<KPISettings>;
@@ -9,6 +10,7 @@ export type KPIBaseProperties = WidgetSettings & {
   timeZone?: string;
   alarmContent?: AlarmContent;
   assistant?: AssistantProperty;
+  alarmStatus?: AlarmDataStatus;
 };
 
 export type KPISettings = {

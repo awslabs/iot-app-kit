@@ -8,6 +8,7 @@ import type { WidgetSettings } from '../../common/dataTypes';
 import { AssistantProperty } from '../../common/assistantProps';
 import type { ComponentQuery } from '../../common/chartTypes';
 import type { AlarmContent } from '../alarm-state/types';
+import { AlarmDataStatus } from '../../hooks/useAlarms';
 
 export type GaugeProps = {
   size?: { width: number; height: number };
@@ -30,6 +31,7 @@ export type GaugeBaseProperties = WidgetSettings &
     isLoading?: boolean;
     alarmContent?: AlarmContent;
     assistant?: AssistantProperty;
+    alarmStatus?: AlarmDataStatus;
   };
 export type GaugeSettings = {
   gaugeThickness?: number;

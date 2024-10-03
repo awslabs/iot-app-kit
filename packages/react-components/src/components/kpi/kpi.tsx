@@ -117,8 +117,7 @@ export const KPI = ({
   const name = propertyStream?.name;
   const unit = propertyStream?.unit;
   const backgroundColor = settings?.color || settings?.backgroundColor;
-  const isLoading =
-    propertyStream?.isLoading || transformedAlarm?.status.isLoading || false;
+  const isLoading = propertyStream?.isLoading || false;
   const error = transformedAlarm?.status.isError
     ? CHART_ALARM_ERROR
     : propertyStream?.error;

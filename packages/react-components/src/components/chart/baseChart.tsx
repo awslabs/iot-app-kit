@@ -203,6 +203,7 @@ const BaseChart = ({
   const isPropertiesRefreshing = !isLoading && delayLoading;
 
   useChartDataset(chartRef, dataStreams);
+
   useChartStoreDataStreamsSync(dataStreamMetaData);
 
   // handle chart event updates
@@ -325,8 +326,8 @@ const BaseChart = ({
                 data-gesture='resize'
               />
             }
-            onResizeStart={(e) => e.stopPropagation()}
-            onResizeStop={(e) => e.stopPropagation()}
+            onResizeStart={(e: React.SyntheticEvent) => e.stopPropagation()}
+            onResizeStop={(e: React.SyntheticEvent) => e.stopPropagation()}
             resizeHandles={[...setHandles(options.legend?.position || 'right')]}
           >
             <HotKeys

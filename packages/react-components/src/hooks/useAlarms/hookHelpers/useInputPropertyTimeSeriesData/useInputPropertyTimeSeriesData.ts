@@ -58,7 +58,7 @@ export const useInputPropertyTimeSeriesData = ({
   });
 
   return useMemo(() => {
-    return alarmsInternal.map((alarm) => {
+    return alarms.map((alarm) => {
       const datastreamsForAlarm = filterDataStreamsForAlarm(alarm, dataStreams);
 
       updateAlarmStatusForDatastreams(alarm, datastreamsForAlarm);
@@ -67,5 +67,5 @@ export const useInputPropertyTimeSeriesData = ({
 
       return alarm;
     });
-  }, [alarmsInternal, dataStreams]);
+  }, [alarms, dataStreams]);
 };
