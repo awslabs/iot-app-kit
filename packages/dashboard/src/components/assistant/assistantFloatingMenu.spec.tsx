@@ -25,7 +25,10 @@ const TestProvider: React.FC<{
 
 const Component = () => (
   <TestProvider>
-    <AssistantFloatingMenu messageOverrides={DefaultDashboardMessages} />
+    <AssistantFloatingMenu
+      width={500}
+      messageOverrides={DefaultDashboardMessages}
+    />
   </TestProvider>
 );
 

@@ -142,6 +142,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   const { chatbotHeight, calculateChatbotDimensions } = useChatbotPosition(
     '[data-test-id=read-only-mode-dashboard]'
   );
+  const [resizablePanesWidth, setResizablePanesWidth] = useState<number>(0);
 
   const dispatch = useDispatch();
 
@@ -463,6 +464,11 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
           </div>
         )}
         <ResizablePanes
+          onResize={(size) => {
+            if (size.width) {
+              setResizablePanesWidth(size.width);
+            }
+          }}
           leftPane={null}
           centerPane={
             <div
@@ -475,6 +481,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             >
               <ReadOnlyGrid {...grid}>
                 <AssistantFloatingMenu
+                  width={resizablePanesWidth}
                   messageOverrides={DefaultDashboardMessages}
                 />
                 <Widgets {...widgetsProps} />

@@ -19,6 +19,7 @@ import { ResourceExplorerIcon } from './assets/ResourceExplorerIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import type { DashboardState } from '~/store/state';
 import { onToggleChatbotAction } from '~/store/actions/toggleChatbot';
+import { useResizeObserver } from 'usehooks-ts';
 
 const getSessionStorageNumber = (key: string, fallback: number) => {
   const stored = sessionStorage.getItem(key);
@@ -28,6 +29,11 @@ const getSessionStorageNumber = (key: string, fallback: number) => {
 
 const getStoredLeftWidthPercent = () =>
   getSessionStorageNumber(LEFT_WIDTH_PERCENT_STORAGE_KEY, LEFT_WIDTH_PERCENT);
+
+export type Size = {
+  width?: number;
+  height?: number;
+};
 
 type ResizablePanesProps = {
   leftPane?: ReactNode;
@@ -39,6 +45,7 @@ type ResizablePanesProps = {
     headerText: string;
     hideHeaderWhenExpanded?: boolean;
   };
+  onResize?: (size: Size) => void;
 };
 
 export const ResizablePanes: FC<ResizablePanesProps> = ({
@@ -57,6 +64,12 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
   const [currentDragHandle, setCurrentDragHandle] = useState<'left' | null>(
     null
   );
+
+  /** Capture resize event */
+  useResizeObserver({
+    ref: panes,
+    onResize: props.onResize,
+  });
 
   /** Last seen mouse x position during a drag, in px from screen left side */
   const [lastSeenAtX, setLastSeenAtX] = useState<number | null>(null);

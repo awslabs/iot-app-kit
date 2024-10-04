@@ -10,7 +10,6 @@ import {
   spaceStaticXxl,
   spaceStaticS,
 } from '@cloudscape-design/design-tokens';
-import SpaceBetween from '@cloudscape-design/components/space-between';
 import { VerticalDivider } from '../divider/verticalDivider';
 import { AssistantFloatingMenuRightButton } from './assistantFloatingMenuRigthButton';
 import { AssistantFloatingMenuCenterButton } from './assistantFloatingMenuCenterButton';
@@ -30,8 +29,10 @@ const CHATBOT_OPENED_WIDTH = 500;
 const CHATBOT_CLOSED_WIDTH = 90;
 
 export const AssistantFloatingMenu = ({
+  width,
   messageOverrides,
 }: {
+  width: number;
   messageOverrides: DashboardMessages;
 }) => {
   const dispatch = useDispatch();
@@ -75,15 +76,23 @@ export const AssistantFloatingMenu = ({
     );
   };
 
+  let totalSelected = 0;
+  assistantState.selectedQueries.forEach(
+    (q) => (totalSelected += q.selectedProperties)
+  );
+  const showAlert = totalSelected > MAX_ITEMS_SELECTED;
+
   const mainContainerStyles: CSSProperties = {
-    minHeight: '60px',
+    minHeight: `${showAlert ? '100' : '60'}px`,
   };
 
   const floatingMenuStyles: CSSProperties = {
     display: 'flex',
     position: 'fixed',
-    width: `calc(100vw - ${rightOffset + 40}px)`,
-    padding: spaceStaticM,
+    width: `100%`,
+    maxWidth: `${width - (rightOffset + 40)}px`,
+    paddingTop: spaceStaticM,
+    paddingLeft: spaceStaticM,
     zIndex: 1000, // required to fix bug in legends table in the XYplot chart and widget actions
   };
 
@@ -100,15 +109,19 @@ export const AssistantFloatingMenu = ({
     fontSize: fontSizeBodyM,
   };
 
-  let totalSelected = 0;
-  assistantState.selectedQueries.forEach(
-    (q) => (totalSelected += q.selectedProperties)
-  );
+  const menuContainerStyles: CSSProperties = {
+    display: 'flex',
+    gap: `${spaceStaticS}`,
+    flexWrap: 'wrap',
+    alignItems: 'end',
+    marginLeft: 'auto',
+    justifyContent: 'end',
+  };
 
   return (
     <div style={mainContainerStyles}>
       <div style={floatingMenuStyles}>
-        {totalSelected > MAX_ITEMS_SELECTED ? (
+        {showAlert ? (
           <div style={{ width: 'fit-content' }}>
             <Alert
               statusIconAriaLabel={assistant.floatingMenu.error.ariaLabel}
@@ -118,44 +131,36 @@ export const AssistantFloatingMenu = ({
             </Alert>
           </div>
         ) : null}
-        <div
-          style={{
-            marginLeft: 'auto',
-          }}
-        >
-          <SpaceBetween direction='vertical' size='m' alignItems='end'>
-            <SpaceBetween direction='horizontal' size='m'>
-              {assistantState.mode === 'on' ? (
-                <div style={menuStyles}>
-                  <span style={{ padding: `0 ${spaceStaticM}` }}>
-                    {totalSelected}/{MAX_ITEMS_SELECTED} items selected
-                  </span>
-                  <VerticalDivider
-                    styles={{ width: '1px', height: spaceStaticS }}
-                  />
-                  <AssistantFloatingMenuCenterButton
-                    label={assistant.floatingMenu.buttonClearAll}
-                    onClick={handleClearAll}
-                    disabled={totalSelected === 0}
-                  />
-                  <VerticalDivider
-                    styles={{ width: '2px', height: spaceStaticL }}
-                  />
-                  <AssistantFloatingMenuRightButton
-                    label={assistant.floatingMenu.buttonGenerateSummary}
-                    onClick={handleSummary}
-                    disabled={
-                      totalSelected === 0 || totalSelected > MAX_ITEMS_SELECTED
-                    }
-                  />
-                </div>
-              ) : null}
-              <AssistantButton
-                label={assistant.floatingMenu.buttonAIAssistant}
-                onClick={handleToggleAssistantMode}
+        <div style={menuContainerStyles}>
+          {assistantState.mode === 'on' ? (
+            <div style={menuStyles}>
+              <span style={{ padding: `0 ${spaceStaticM}` }}>
+                {totalSelected}/{MAX_ITEMS_SELECTED} items selected
+              </span>
+              <VerticalDivider
+                styles={{ width: '1px', height: spaceStaticS }}
               />
-            </SpaceBetween>
-          </SpaceBetween>
+              <AssistantFloatingMenuCenterButton
+                label={assistant.floatingMenu.buttonClearAll}
+                onClick={handleClearAll}
+                disabled={totalSelected === 0}
+              />
+              <VerticalDivider
+                styles={{ width: '2px', height: spaceStaticL }}
+              />
+              <AssistantFloatingMenuRightButton
+                label={assistant.floatingMenu.buttonGenerateSummary}
+                onClick={handleSummary}
+                disabled={
+                  totalSelected === 0 || totalSelected > MAX_ITEMS_SELECTED
+                }
+              />
+            </div>
+          ) : null}
+          <AssistantButton
+            label={assistant.floatingMenu.buttonAIAssistant}
+            onClick={handleToggleAssistantMode}
+          />
         </div>
       </div>
     </div>
