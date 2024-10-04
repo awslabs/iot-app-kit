@@ -60,7 +60,8 @@ export const useQueries = ({
     (assets.length === 0 &&
       properties.length === 0 &&
       assetModels.length === 0 &&
-      alarms.length === 0)
+      alarms.length === 0 &&
+      alarmModels.length === 0)
   ) {
     return [];
   }
