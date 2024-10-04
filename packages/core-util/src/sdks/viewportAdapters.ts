@@ -2,6 +2,11 @@ import parse from 'parse-duration';
 import type { DateRangePickerProps } from '@cloudscape-design/components';
 import type { Viewport } from '@iot-app-kit/core';
 
+const DAY_MULTIPLIER = 24;
+const WEEK_MULTIPLIER = DAY_MULTIPLIER * 7;
+const MONTH_MULTIPLIER = DAY_MULTIPLIER * 30;
+const YEAR_MULTIPLIER = MONTH_MULTIPLIER * 12;
+
 const relativeOptionKey = (
   amount: number,
   unit: DateRangePickerProps.TimeUnit
@@ -38,17 +43,49 @@ const durationUnits = [
   'month',
   'year',
 ] as const;
+
 type DurationUnits = (typeof durationUnits)[number];
+const durationUnitToCharacter: {
+  [key in DurationUnits]: string;
+} = {
+  second: 's',
+  minute: 'm',
+  hour: 'h',
+  day: 'd',
+  week: 'w',
+  month: 'month',
+  year: 'y',
+};
 const parseDuration = (duration: string, unit: DurationUnits) => ({
   amount: parse(duration, unit),
   unit,
 });
 
+const convertDurationToViewport = (
+  value: DateRangePickerProps.RelativeValue
+) => {
+  const unitCharacter = durationUnitToCharacter[value.unit];
+
+  switch (value.unit) {
+    case 'second':
+    case 'minute':
+    case 'hour':
+      return { duration: `${value.amount}${unitCharacter}` };
+    case 'day':
+      return { duration: `${value.amount * DAY_MULTIPLIER}h` };
+    case 'week':
+      return { duration: `${value.amount * WEEK_MULTIPLIER}h` };
+    case 'month':
+      return { duration: `${value.amount * MONTH_MULTIPLIER}h` };
+    case 'year':
+      return { duration: `${value.amount * YEAR_MULTIPLIER}h` };
+  }
+};
+
 export const dateRangeToViewport = (
   value: DateRangePickerProps.Value
 ): Viewport => {
-  if (value.type === 'relative')
-    return { duration: `${value.amount} ${value.unit}` };
+  if (value.type === 'relative') return convertDurationToViewport(value);
   return {
     start: new Date(value.startDate),
     end: new Date(value.endDate),
@@ -100,6 +137,26 @@ export const viewportToDateRange = (
           ({ amount, unit } = parseDuration(duration, 'minute'));
         } else if (d.match(hours)) {
           ({ amount, unit } = parseDuration(duration, 'hour'));
+          if (amount) {
+            // if time amount in hours is perfectly divisble by any multipliers
+            // then we use the converted amount and the appropriate unit
+            if (!(amount % DAY_MULTIPLIER)) {
+              amount = amount / DAY_MULTIPLIER;
+              unit = 'day';
+            }
+            if (!(amount % WEEK_MULTIPLIER)) {
+              amount = amount / WEEK_MULTIPLIER;
+              unit = 'week';
+            }
+            if (!(amount % MONTH_MULTIPLIER)) {
+              amount = amount / MONTH_MULTIPLIER;
+              unit = 'month';
+            }
+            if (!(amount % YEAR_MULTIPLIER)) {
+              amount = amount / YEAR_MULTIPLIER;
+              unit = 'year';
+            }
+          }
         } else if (d.match(days)) {
           ({ amount, unit } = parseDuration(duration, 'day'));
         } else if (d.match(weeks)) {
