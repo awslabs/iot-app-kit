@@ -16,6 +16,7 @@ const assignDefaults = (
     properties = [],
     assetModels = [],
     alarms = [],
+    alarmModels = [],
   }: IoTSiteWiseDataStreamQuery,
   resAndAggr: { aggregation?: AggregateType; resolution?: string },
   getId: () => string = uuid
@@ -45,6 +46,7 @@ const assignDefaults = (
     })),
   })),
   alarms,
+  alarmModels,
   requestSettings: {
     ...resAndAggr,
   },

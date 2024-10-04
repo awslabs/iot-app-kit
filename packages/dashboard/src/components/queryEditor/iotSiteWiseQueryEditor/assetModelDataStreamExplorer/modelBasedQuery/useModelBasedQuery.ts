@@ -29,6 +29,10 @@ export const useModelBasedQuery = () => {
     () => (firstWidget?.properties.queryConfig.query?.assetModels ?? []).at(0),
     [firstWidget]
   );
+  const alarmAssetModel = useMemo(
+    () => (firstWidget?.properties.queryConfig.query?.alarmModels ?? []).at(0),
+    [firstWidget]
+  );
 
   const updateModelBasedWidgets = useCallback(
     (updatedWidgets: QueryConfigWidget[]) => {
@@ -100,8 +104,8 @@ export const useModelBasedQuery = () => {
   );
 
   return {
-    assetModelId: assetModel?.assetModelId,
-    assetIds: assetModel?.assetIds,
+    assetModelId: assetModel?.assetModelId ?? alarmAssetModel?.assetModelId,
+    assetIds: assetModel?.assetIds ?? alarmAssetModel?.assetIds,
     hasModelBasedQuery: hasModelBasedQueryWidgets,
     modelBasedWidgets,
     updateModelBasedWidgets,

@@ -11,8 +11,8 @@ import { filterDataStreamsForAlarm } from './filterDatastreamsForAlarm';
 
 import { useTimeSeriesData } from '../../../useTimeSeriesData';
 
-const alarmDataAsComparable = ({ inputProperty }: AlarmData) =>
-  inputProperty?.map(({ property }) => property.id);
+const alarmDataAsComparable = ({ inputProperty, assetId }: AlarmData) =>
+  inputProperty?.map(({ property }) => ({ assetId, propertyId: property.id }));
 
 export const useInputPropertyTimeSeriesData = ({
   alarms,

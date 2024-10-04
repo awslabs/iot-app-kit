@@ -82,7 +82,9 @@ export const useAlarmState = ({
    * we fetch the last 10s of alarm state every 5s.
    */
   const latestQueriesViewport =
-    refreshRate !== undefined ? { duration: refreshRate * 2 } : undefined;
+    refreshRate !== undefined && refreshRate !== Infinity
+      ? { duration: refreshRate * 2 }
+      : undefined;
   const latestQueriesInLiveViewport = useHistoricalAssetPropertyValues({
     enabled: queryMode === 'LIVE',
     iotSiteWiseClient,
