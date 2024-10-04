@@ -84,15 +84,17 @@ export const AssistantFloatingMenu = ({
 
   const mainContainerStyles: CSSProperties = {
     minHeight: `${showAlert ? '100' : '60'}px`,
+    width: 'fit-content',
   };
 
   const floatingMenuStyles: CSSProperties = {
     display: 'flex',
     position: 'fixed',
-    width: `100%`,
+    width: 'fit-content',
     maxWidth: `${width - (rightOffset + 40)}px`,
     paddingTop: spaceStaticM,
     paddingLeft: spaceStaticM,
+    right: `${(rightOffset + 40)}px`,
     zIndex: 1000, // required to fix bug in legends table in the XYplot chart and widget actions
   };
 
