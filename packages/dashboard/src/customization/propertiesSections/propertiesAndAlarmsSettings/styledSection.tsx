@@ -13,8 +13,12 @@ import { defaultOnDeleteQuery } from './onDeleteProperty';
 import { StyledAssetQuery } from '~/customization/widgets/types';
 import { useAssetModel } from '~/hooks/useAssetModel/useAssetModel';
 import { handleDeleteAssetModelProperty } from './handleDeleteAssetModelProperty';
-import { handleRemoveAlarm } from './handleRemoveAlarm';
+import {
+  handleRemoveAlarm,
+  handleRemoveAssetModelAlarms,
+} from './handleRemoveAlarm';
 import { PropertyComponent } from './propertyComponent';
+import { AssetModelPropertySummary } from '@aws-sdk/client-iotsitewise';
 
 const NoComponents = () => <Box variant='p'>No properties or alarms found</Box>;
 
@@ -49,9 +53,15 @@ export const StyledPropertiesAlarmsSection: FC<
   const describedAssetsMap =
     useAssetDescriptionMapQuery(styledAssetQuery).data ?? {};
 
-  const assetModelIds = (styledAssetQuery?.assetModels ?? []).map(
-    ({ assetModelId }) => assetModelId
-  );
+  const assetModelIds = [
+    ...(styledAssetQuery?.assetModels ?? []).map(
+      ({ assetModelId }) => assetModelId
+    ),
+    ...(styledAssetQuery?.alarmModels ?? []).map(
+      ({ assetModelId }) => assetModelId
+    ),
+  ];
+
   const { assetModels } = useAssetModel({
     assetModelIds,
     iotSiteWiseClient: client,
@@ -290,7 +300,70 @@ export const StyledPropertiesAlarmsSection: FC<
         })
       ) ?? [];
 
-    const components = [...modeled, ...unmodeled, ...assetModeled, ...alarms];
+    const assetModelAlarms =
+      styledAssetQuery?.alarmModels?.flatMap(
+        ({ assetModelId, alarmComponents }) => {
+          return alarmComponents.map(({ assetCompositeModelId }) => {
+            const assetModel = assetModels?.at(0);
+
+            if (!assetModel) return null;
+
+            const compositeAssetModel = assetModel.find(
+              (a) =>
+                (a as AssetModelPropertySummary).assetModelCompositeModelId ===
+                assetCompositeModelId
+            );
+            const name =
+              compositeAssetModel?.path?.find(
+                (p) => p.id === assetCompositeModelId
+              )?.name ?? '';
+
+            return (
+              <PropertyComponent
+                key={`${assetModelId}-${assetCompositeModelId}`}
+                propertyId={assetCompositeModelId}
+                refId={assetCompositeModelId}
+                assetSummary={{
+                  assetId: assetModelId,
+                  assetName: undefined,
+                  properties: [
+                    {
+                      propertyId: assetCompositeModelId,
+                      name: name,
+                      unit: undefined,
+                      dataType: undefined,
+                      alias: undefined,
+                    },
+                  ],
+                  alarms: [],
+                }}
+                styleSettings={{}}
+                onDeleteAssetQuery={() =>
+                  updateSiteWiseAssetQuery({
+                    ...styledAssetQuery,
+                    alarmModels: handleRemoveAssetModelAlarms(
+                      { alarmModels: styledAssetQuery.alarmModels ?? [] },
+                      { assetModelId, assetCompositeModelId }
+                    ),
+                  })
+                }
+                onUpdatePropertyColor={() => {}}
+                onUpdatePropertyName={() => {}}
+                colorable={false}
+                nameable={false}
+              />
+            );
+          });
+        }
+      ) ?? [];
+
+    const components = [
+      ...modeled,
+      ...unmodeled,
+      ...assetModeled,
+      ...alarms,
+      ...assetModelAlarms,
+    ];
 
     return components.length ? components : <NoComponents />;
   };
