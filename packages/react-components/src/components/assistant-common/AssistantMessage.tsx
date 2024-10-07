@@ -9,6 +9,7 @@ import type {
 } from '@amzn/iot-black-pearl-internal-v3';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { spaceStaticL } from '@cloudscape-design/design-tokens';
 
 export interface AssistantMessageProps {
   text: string;
@@ -40,16 +41,27 @@ export const AssistantMessage = ({ text, payload }: AssistantMessageProps) => {
             headerText='Sources'
             headerAriaLabel='Sources'
           >
-            {filteredCitations.map((citation: Citation, index: number) => (
-              <Link
-                href={citation.reference?.dataset?.source?.location?.uri ?? ''}
-                target='_blank'
-                data-testid='assistant-chatbot-message-citation-link'
-                key={index}
-              >
-                {citation.content?.text ?? '-'}
-              </Link>
-            ))}
+            <ul style={{ margin: 0, padding: `0 ${spaceStaticL}` }}>
+              {filteredCitations.map((citation: Citation, index: number) => {
+                const citationContent = citation.content?.text ?? '-';
+                return (
+                  <li>
+                    <Link
+                      href={
+                        citation.reference?.dataset?.source?.location?.uri ?? ''
+                      }
+                      target='_blank'
+                      data-testid='assistant-chatbot-message-citation-link'
+                      key={index}
+                      external
+                    >
+                      {citationContent.substring(0, 50)}
+                      {citationContent.length > 50 ? '...' : ''}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           </ExpandableSection>
         ) : null}
       </SpaceBetween>

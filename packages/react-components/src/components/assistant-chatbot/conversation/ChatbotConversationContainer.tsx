@@ -41,7 +41,7 @@ export const ChatbotConversationContainer = ({
       data-testid='assistant-chatbot-conversation-container'
       style={{ height }}
     >
-      <Box padding={{ top: 'm' }}>
+      <Box padding={{ vertical: 'm' }}>
         <SpaceBetween size='s' direction='vertical'>
           {messages.map((message) => {
             if (message.type === MessageType.TEXT) {

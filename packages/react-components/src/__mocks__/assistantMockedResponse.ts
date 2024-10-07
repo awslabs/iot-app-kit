@@ -63,7 +63,21 @@ The data indicates that wind speeds were relatively stable in the first 6 minute
     citations: [
       {
         content: {
-          text: 'SOP documents',
+          text: 'SOP document 1',
+        },
+        reference: {
+          dataset: {
+            source: {
+              location: {
+                uri: 'https://mybucket.s3.amazonaws.com/sop.doc',
+              },
+            },
+          },
+        },
+      },
+      {
+        content: {
+          text: 'Another long SOP content with more than fifty characters',
         },
         reference: {
           dataset: {

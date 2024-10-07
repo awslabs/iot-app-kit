@@ -37,7 +37,10 @@ export const ErrorText = ({
       <Title
         data-testid='kpi-name-and-unit'
         text={title}
-        style={{ fontSize: `${secondaryFontSize}px`, color: nonThresholdFontColor }}
+        style={{
+          fontSize: `${secondaryFontSize}px`,
+          color: nonThresholdFontColor,
+        }}
       />
       {error && (
         <Box margin={{ vertical: 's', horizontal: 's' }}>
