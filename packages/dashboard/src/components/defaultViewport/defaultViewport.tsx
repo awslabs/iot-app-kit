@@ -13,7 +13,7 @@ export const DefaultViewport = ({
   defaultViewport,
   onViewportChange,
 }: {
-  defaultViewport: Viewport;
+  defaultViewport?: Viewport;
   onViewportChange: (viewport: Viewport) => void;
 }) => {
   const { control, setValue, clearErrors } = useForm<{

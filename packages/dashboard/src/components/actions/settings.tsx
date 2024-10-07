@@ -43,7 +43,9 @@ const DashboardSettings: React.FC<DashboardSettingsProps> = ({
   const [changedCellSize, setCellSize] = useState<number>(cellSize);
   const [changedNumberRows, setNumberRows] = useState<number>(rows);
   const [changedNumberColumns, setNumberColumns] = useState<number>(columns);
-  const [changedViewport, setViewport] = useState<Viewport>(defaultViewport);
+  const [changedViewport, setViewport] = useState<Viewport | undefined>(
+    defaultViewport
+  );
 
   useEffect(() => {
     setViewport(defaultViewport);
