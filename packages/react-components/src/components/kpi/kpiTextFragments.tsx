@@ -10,50 +10,24 @@ import { Alert, Box } from '@cloudscape-design/components';
 import { AlarmContent } from '../alarm-state/types';
 import { Title } from '../../common/title';
 import { AssistantProperty } from '../../common/assistantProps';
+import { spaceStaticXs } from '@cloudscape-design/design-tokens';
 
-export const ErrorText = ({
-  secondaryFontSize,
-  nonThresholdBackground,
-  nonThresholdFontColor,
-  error,
-  title,
-}: {
-  secondaryFontSize: number;
-  nonThresholdBackground: string;
-  nonThresholdFontColor: string;
-  error?: string;
-  title?: string;
-}) => {
+export const ErrorText = ({ error }: { error?: string }) => {
+  if (!error) {
+    return null;
+  }
+
   return (
-    <div
-      className='kpi'
-      data-testid='kpi-error-component'
-      style={{
-        fontSize: `${secondaryFontSize}px`,
-        backgroundColor: nonThresholdBackground,
-        color: nonThresholdFontColor,
-      }}
-    >
-      <Title
-        data-testid='kpi-name-and-unit'
-        text={title}
-        style={{
-          fontSize: `${secondaryFontSize}px`,
-          color: nonThresholdFontColor,
-        }}
-      />
-      {error && (
-        <Box margin={{ vertical: 's', horizontal: 's' }}>
-          <Alert statusIconAriaLabel='Error' type='error'>
-            {error}
-          </Alert>
-        </Box>
-      )}
-    </div>
+    <Box margin={{ vertical: 's', horizontal: 's' }}>
+      <Alert statusIconAriaLabel='Error' type='error'>
+        {error}
+      </Alert>
+    </Box>
   );
 };
 
 export const NameAndUnit = ({
+  titleText,
   fontColor,
   secondaryFontSize,
   showName,
@@ -62,6 +36,7 @@ export const NameAndUnit = ({
   unit,
   isLoading,
 }: {
+  titleText?: string;
   fontColor: string;
   secondaryFontSize: number;
   showName?: boolean;
@@ -73,17 +48,26 @@ export const NameAndUnit = ({
   const shouldRenderName = showName && name;
   const shouldRenderUnit = showUnit && unit;
 
-  if ((!shouldRenderName && !shouldRenderUnit) || isLoading) return null;
+  const getTitle = () => {
+    if (titleText) {
+      return titleText;
+    } else {
+      const prefix = isLoading ? '-' : shouldRenderName ? name : '';
+      const suffix = !isLoading && shouldRenderUnit ? `(${unit})` : '';
+      return `${prefix}${prefix ? ' ' : ''}${suffix}`;
+    }
+  };
 
   return (
-    <div
-      className='property-name'
+    <Title
       data-testid='kpi-name-and-unit'
-      style={{ fontSize: `${secondaryFontSize}px`, color: fontColor }}
-    >
-      {shouldRenderName && <span>{name} </span>}
-      {shouldRenderUnit && <span>{`(${unit})`}</span>}
-    </div>
+      text={getTitle()}
+      style={{
+        fontSize: `${secondaryFontSize}px`,
+        color: fontColor,
+        paddingLeft: `${spaceStaticXs}`,
+      }}
+    />
   );
 };
 

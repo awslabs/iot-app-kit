@@ -32,7 +32,7 @@ const client = new IoTSitewiseAssistantClient({
   defaultContext: '',
 });
 
-export const AssistantChatbot: ComponentStory<
+export const AssistantChatbotDefault: ComponentStory<
   typeof AssistantChatbot
 > = () => {
 

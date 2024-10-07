@@ -11,7 +11,6 @@ import {
   fontSizeBodyS,
 } from '@cloudscape-design/design-tokens';
 import { DEFAULT_DECIMAL_PLACES } from '../../common/constants';
-import { Title } from '../../common/title';
 import {
   AggregationResolutionText,
   AlarmHeader,
@@ -79,27 +78,35 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     aggregationType
   );
 
-  const getTitle = () => {
-    if (titleText) {
-      return titleText;
-    } else {
-      const prefix = isLoading ? '-' : showName && name ? name : '';
-      const suffix = showUnit && !isLoading && unit ? `(${unit})` : '';
-      return `${prefix}${prefix ? ' ' : ''}${suffix}`;
-    }
-  };
-
   if (error) {
     return (
-      <ErrorText
-        {...{
-          error,
-          title: getTitle(),
-          secondaryFontSize,
-          nonThresholdBackground,
-          nonThresholdFontColor,
+      <div
+        className='kpi'
+        data-testid='kpi-error-component'
+        style={{
+          fontSize: `${secondaryFontSize}px`,
+          backgroundColor: nonThresholdBackground,
+          color: nonThresholdFontColor,
         }}
-      />
+      >
+        <NameAndUnit
+          {...{
+            titleText,
+            showName,
+            name,
+            showUnit,
+            unit,
+            isLoading,
+            fontColor,
+            secondaryFontSize,
+          }}
+        />
+        <ErrorText
+          {...{
+            error,
+          }}
+        />
+      </div>
     );
   }
 
@@ -111,15 +118,6 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     >
       <div className='kpi'>
         <div>
-          <Title
-            data-testid='kpi-name-and-unit'
-            text={getTitle()}
-            style={{
-              fontSize: `${secondaryFontSize}px`,
-              color: fontColor,
-              paddingLeft: '0.5rem',
-            }}
-          />
           <AlarmHeader
             {...{
               fontColor,
@@ -133,6 +131,7 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
           />
           <NameAndUnit
             {...{
+              titleText,
               showName,
               name,
               showUnit,
