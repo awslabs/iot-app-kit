@@ -11,7 +11,6 @@ import {
   useAlarmState,
   useAlarmThreshold,
 } from './hookHelpers';
-import { filterAlarmInputProperties } from './utils/filterAlarmInputProperties';
 import { useInputPropertyTimeSeriesData } from './hookHelpers/useInputPropertyTimeSeriesData/useInputPropertyTimeSeriesData';
 import { useAlarmsState } from './state';
 import { useAlarmSources } from './hookHelpers/useAlarmSources';
@@ -68,6 +67,7 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     onSummarizeAlarms,
     onUpdateAlarmSourceData,
     onUpdateAlarmTypeData,
+    onSummarizeAlarmModels,
   } = useAlarmsState();
   /**
    * Fetch alarm summaries based on the request
@@ -121,40 +121,18 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
    * Only supported for alarms with type "IOT_EVENTS"
    * and data available for the source asset property.
    */
-  const alarmModelAlarmData = useAlarmModels({
+  useAlarmModels({
     iotEventsClient,
-    alarmDataList: alarmDatas,
+    onSummarizeAlarmModels,
+    requests: state.alarms.flatMap((alarm) =>
+      alarm.alarmDatas.map((alarmData) => ({
+        source: alarmData.source,
+      }))
+    ),
   });
 
-  /**
-   * For an input property request filter out alarms
-   * with alarm models that don't match the request inputPropertyId.
-   *
-   * For all other requests find the inputProperty from
-   * an alarm's alarm model.
-   */
-  const inputPropertiesAlarmData = useMemo(
-    () => filterAlarmInputProperties(alarmModelAlarmData),
-    [alarmModelAlarmData]
-  );
-
-  // Remove internal properties on AlarmDataInternal
-  const alarmDataWithoutInternalProperties: AlarmData[] = useMemo(
-    () =>
-      inputPropertiesAlarmData.map(
-        ({
-          request: _unusedRequest,
-          properties: _unusedProperties,
-          ...alarmData
-        }) => ({
-          ...alarmData,
-        })
-      ),
-    [inputPropertiesAlarmData]
-  );
-
   const alarmData = useInputPropertyTimeSeriesData({
-    alarms: alarmDataWithoutInternalProperties,
+    alarms: alarmDatas,
     timeSeriesData,
     viewport,
     ...settings,

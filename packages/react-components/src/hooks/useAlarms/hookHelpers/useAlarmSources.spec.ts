@@ -35,7 +35,6 @@ describe('useAlarmSources', () => {
     jest.resetAllMocks();
     queryClient.clear();
   });
-
   it('correctly calls onUpdateAlarmSourceData', async () => {
     const onUpdateAlarmSourceData = jest.fn();
 

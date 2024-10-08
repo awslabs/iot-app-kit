@@ -1,4 +1,4 @@
-import { updateAlarmSourceData } from './actions';
+import { summarizeAlarmModels, updateAlarmSourceData } from './actions';
 import { summarizeAlarms } from './actions/summarizeAlarms';
 import { updateAlarmTypeData } from './actions/updateAlarmTypeData';
 import { AlarmAction, AlarmsState } from './types';
@@ -14,6 +14,8 @@ export const alarmsStateReducer = (
       return updateAlarmSourceData(state, action);
     case 'UPDATE_ALARM_TYPE_DATA':
       return updateAlarmTypeData(state, action);
+    case 'SUMMARIZE_ALARM_MODELS':
+      return summarizeAlarmModels(state, action);
     default:
       return state;
   }

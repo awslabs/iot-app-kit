@@ -4,7 +4,10 @@ import {
   mockAlarmDataDescribeAsset,
   mockAlarmDataWithInputProperty,
 } from '../../../testing/alarms';
-import { mapAlarmRuleExpression } from './mapAlarmRuleExpression';
+import {
+  getCoreComparisonOperator,
+  mapAlarmRuleExpression,
+} from './mapAlarmRuleExpression';
 
 describe('mapAlarmRuleExpression', () => {
   it('returns undefined if there are no input properties, thresholds, or models', () => {
@@ -33,5 +36,14 @@ describe('mapAlarmRuleExpression', () => {
         ],
       })
     ).toBe(`${MOCK_ALARM_INPUT_PROPERTY_NAME} > 1`);
+  });
+
+  it('can get the comparison operator', () => {
+    expect(getCoreComparisonOperator('EQUAL')).toBe('EQ');
+    expect(getCoreComparisonOperator('LESS')).toBe('LT');
+    expect(getCoreComparisonOperator('LESS_OR_EQUAL')).toBe('LTE');
+    expect(getCoreComparisonOperator('GREATER')).toBe('GT');
+    expect(getCoreComparisonOperator('GREATER_OR_EQUAL')).toBe('GTE');
+    expect(getCoreComparisonOperator('Doesnt exist')).toBeUndefined();
   });
 });

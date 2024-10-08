@@ -4,9 +4,29 @@ import {
   mockDoubleAssetPropertyValue,
   mockStringAssetPropertyValue,
 } from '../../../testing/alarms';
-import { parseAlarmStateAssetProperty } from './parseAlarmStateProperty';
+import {
+  isAlarmState,
+  parseAlarmStateAssetProperty,
+} from './parseAlarmStateProperty';
 
 const date = new Date(0);
+
+describe('isAlarmState', () => {
+  it('returns false if the state is undefined or empty or not a real alarm state', () => {
+    expect(isAlarmState('')).toBeFalse();
+    expect(isAlarmState()).toBeFalse();
+    expect(isAlarmState('Does not exist')).toBeFalse();
+    expect(isAlarmState('ACTIVE')).toBeFalse();
+  });
+  it('returns true if the state is a real alarm status', () => {
+    expect(isAlarmState('Active')).toBeTrue();
+    expect(isAlarmState('Normal')).toBeTrue();
+    expect(isAlarmState('Latched')).toBeTrue();
+    expect(isAlarmState('Disabled')).toBeTrue();
+    expect(isAlarmState('Acknowledged')).toBeTrue();
+    expect(isAlarmState('SnoozeDisabled')).toBeTrue();
+  });
+});
 
 describe('parseAlarmStateAssetProperty', () => {
   it('can parse an assetPropertyValue', () => {
@@ -27,6 +47,8 @@ describe('parseAlarmStateAssetProperty', () => {
     expect(
       parseAlarmStateAssetProperty(mockDoubleAssetPropertyValue(2, date))
     ).toBeUndefined();
+
+    expect(parseAlarmStateAssetProperty()).toBeUndefined();
   });
 
   it('can parse an uppercase state names', () => {
@@ -92,5 +114,11 @@ describe('parseAlarmStateAssetProperty', () => {
         ruleEvaluation: undefined,
       },
     });
+  });
+
+  it('throws an error if parsing fails', () => {
+    expect(() =>
+      parseAlarmStateAssetProperty(mockStringAssetPropertyValue('', date))
+    ).toThrowError();
   });
 });
