@@ -13,7 +13,7 @@ import {
   onAssistantSelectWidgetsAction,
 } from '~/store/actions/assistantWidgetsSelection';
 
-export const useAssistant = (widgetId: string) => {
+export const useAssistantConfiguration = (widgetId: string) => {
   const dispatch = useDispatch();
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const assistant = useSelector((state: DashboardState) => state.assistant);
@@ -42,7 +42,6 @@ export const useAssistant = (widgetId: string) => {
               open: true,
               callerComponentId: event.sourceComponentId,
               action: 'summarize',
-              messages: event.messages ?? [],
             })
           );
         } else if (event.type === 'divedeep') {
@@ -50,7 +49,6 @@ export const useAssistant = (widgetId: string) => {
             onToggleChatbotAction({
               open: true,
               callerComponentId: event.sourceComponentId,
-              messages: event.messages ?? [],
             })
           );
         } else if (event.type === 'selection') {

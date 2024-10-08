@@ -5,7 +5,6 @@ import type {
 } from '~/types';
 import { deepFreeze } from '~/util/deepFreeze';
 import { v4 as uuid } from 'uuid';
-import type { IMessage } from '@iot-app-kit/react-components';
 
 export type DashboardState<
   Properties extends Record<string, unknown> = Record<string, unknown>
@@ -31,7 +30,6 @@ export type DashboardState<
   assistant: {
     state: AssistantStateTypes;
     conversationId: string;
-    messages: IMessage[];
 
     isChatbotOpen: boolean;
     callerComponentId?: string;
@@ -78,7 +76,6 @@ export const initialState: DashboardState = deepFreeze({
     state: 'PASSIVE',
     conversationId: uuid(),
     isChatbotOpen: false,
-    messages: [],
     mode: 'off',
     selectedQueries: [],
   },

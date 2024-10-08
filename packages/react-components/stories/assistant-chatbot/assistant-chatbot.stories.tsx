@@ -1,6 +1,6 @@
 /* eslint-disable */
 // @ts-nocheck
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { AssistantChatbot } from '../../src/components/assistant-chatbot';
 import { useAssistant } from '../../src/hooks/useAssistant/useAssistant';
@@ -36,33 +36,38 @@ export const AssistantChatbotDefault: ComponentStory<
   typeof AssistantChatbot
 > = () => {
 
-  const { messages, invokeAssistant } = useAssistant({
+  const { messages, invokeAssistant, clearAll, setMessages } = useAssistant({
     assistantClient: client,
-    initialState: {
-      messages: [
-        {
-          content:
-            'Who are you ?',
-          sender: 'user',
-          type: MessageType.TEXT,
-          id: crypto.randomUUID(),
-          loading: false,
-        },
-        {
-          content:
-            'Hello, I am an AI powered assistant for your production floor, please ask me anything.',
-          sender: 'assistant',
-          type: MessageType.TEXT,
-          id: crypto.randomUUID(),
-          loading: false,
-        },
-      ],
-    },
   });
+
+  useEffect(() => {
+    clearAll();
+    setMessages([
+      {
+        content:
+          'Who are you ?',
+        sender: 'user',
+        type: MessageType.TEXT,
+        id: crypto.randomUUID(),
+        loading: false,
+      },
+      {
+        content:
+          'Hello, I am an AI powered assistant for your production floor, please ask me anything.',
+        sender: 'assistant',
+        type: MessageType.TEXT,
+        id: crypto.randomUUID(),
+        loading: false,
+      },
+    ]);
+
+  }, [])
 
   const handleSubmit = (utterance: string) => {
     invokeAssistant({ componentId: '', conversationId, utterance });
   };
+
+  console.log('RE-RENDER', messages);
 
   return (
     <div style={{ padding: '0.5rem' }}>
@@ -75,7 +80,7 @@ export const AssistantChatbotDefault: ComponentStory<
           headerText: 'IoT Sitewise Assistant',
           showCloseButton: true,
           showResetButton: true,
-          onReset: () => {},
+          onReset: () => clearAll(),
           onClose: () => {},
         }}
       />

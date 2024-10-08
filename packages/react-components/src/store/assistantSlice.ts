@@ -1,49 +1,13 @@
 import { StateCreator } from 'zustand/esm';
-import type { IMessage } from '../hooks/useAssistant/types';
-import type {
-  ComponentId,
-  AssistantActionTarget,
-  AssistantActionType,
-} from '../common/assistantProps';
+import type { AssistantAction, IMessage } from '../hooks/useAssistant/types';
+import type { ComponentId } from '../common/assistantProps';
 
-export interface AssistantStateData {
+export interface AssistantState {
   messages: Array<IMessage>;
-  actions: Record<
-    ComponentId,
-    {
-      target: AssistantActionTarget;
-      action: AssistantActionType;
-    }
-  >;
+  actions: Record<ComponentId, AssistantAction>;
 }
 
-export interface AssistantState extends AssistantStateData {
-  setAssistantState: (state: AssistantStateData) => void;
-  getAssistantState: () => AssistantStateData;
-  clearAssistantState: () => void;
-}
-
-export const createAssistantSlice: StateCreator<AssistantState> = (
-  set,
-  get
-) => ({
+export const createAssistantSlice: StateCreator<AssistantState> = () => ({
   messages: [],
   actions: {},
-  clearAssistantState: () =>
-    set((state) => ({
-      messages: [],
-      actions: {
-        ...state.actions,
-      },
-    })),
-  setAssistantState: (newState) =>
-    set((state) => ({
-      ...state,
-      messages: [...(state.messages ?? []), ...(newState.messages ?? [])],
-      actions: {
-        ...(state.actions ?? {}),
-        ...(newState.actions ?? {}),
-      },
-    })),
-  getAssistantState: () => get(),
 });

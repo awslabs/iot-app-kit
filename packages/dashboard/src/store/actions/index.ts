@@ -25,6 +25,7 @@ import {
   AssistantDeselectWidgetsAction,
   AssistantCleanWidgetsSelectionAction,
 } from './assistantWidgetsSelection';
+import { CleanAssistantAction } from './cleanAssistant';
 
 export * from './createWidget';
 export * from './deleteWidgets';
@@ -44,6 +45,7 @@ export * from './updateDefaultViewport';
 export * from './toggleChatbot';
 export * from './toggleAssistantMode';
 export * from './assistantWidgetsSelection';
+export * from './cleanAssistant';
 
 export type DashboardAction =
   | CreateWidgetsAction
@@ -68,4 +70,5 @@ export type DashboardAction =
   | ToggleAssistantModeAction
   | AssistantSelectWidgetsAction
   | AssistantDeselectWidgetsAction
-  | AssistantCleanWidgetsSelectionAction;
+  | AssistantCleanWidgetsSelectionAction
+  | CleanAssistantAction;

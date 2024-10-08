@@ -3,7 +3,7 @@ import { WidgetComponentMap } from '~/customization/widgetComponentMap';
 import type { FC } from 'react';
 import type { DashboardWidget } from '~/types';
 import type { WidgetsMessages } from '~/messages';
-import { useAssistant } from '~/hooks/useAssistant';
+import { useAssistantConfiguration } from '~/hooks/useAssistantConfiguration';
 import './dynamicWidget.css';
 
 const IconX: FC = () => (
@@ -46,7 +46,7 @@ const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
   const componentTag = widget.type;
   const Component = WidgetComponentMap[componentTag];
   const componentIsRegistered = typeof Component !== 'undefined';
-  const { assistantConfiguration } = useAssistant(widget.id);
+  const { assistantConfiguration } = useAssistantConfiguration(widget.id);
 
   return componentIsRegistered ? (
     createElement(Component, {

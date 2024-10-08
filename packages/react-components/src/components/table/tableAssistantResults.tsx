@@ -41,7 +41,6 @@ export const TableAssistantResults = ({
         type: 'summarize',
         sourceComponentId: assistant.componentId,
         sourceComponentType: 'table',
-        messages,
       });
     }
 
@@ -55,6 +54,7 @@ export const TableAssistantResults = ({
     if (showSummarization) {
       handleSummary();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showSummarization]);
 
   const handleDiveDeep = () => {
@@ -63,7 +63,6 @@ export const TableAssistantResults = ({
         type: 'divedeep',
         sourceComponentId: assistant.componentId,
         sourceComponentType: 'table',
-        messages,
       });
     }
     setShowResults(false);

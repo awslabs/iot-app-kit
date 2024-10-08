@@ -273,7 +273,6 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
         onToggleChatbotAction({
           open: !isChatOpened,
           callerComponentId: '',
-          messages: assistant.messages,
         })
       );
     }

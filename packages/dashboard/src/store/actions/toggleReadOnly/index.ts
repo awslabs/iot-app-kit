@@ -22,7 +22,6 @@ export const toggleReadOnly = (state: DashboardState): DashboardState => {
       conversationId: uuid(),
       isChatbotOpen: false,
       mode: 'off',
-      messages: [],
       selectedQueries: [],
     },
   };

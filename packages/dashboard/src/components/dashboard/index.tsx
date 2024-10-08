@@ -84,7 +84,13 @@ const Dashboard: React.FC<DashboardProperties> = ({
         state: assistantConfiguration?.state ?? 'DISABLED',
       },
     });
-  }, [dashboardConfiguration, edgeMode, readOnly, timeZone]);
+  }, [
+    dashboardConfiguration,
+    edgeMode,
+    readOnly,
+    timeZone,
+    assistantConfiguration?.state,
+  ]);
 
   const { region } = useAWSRegion(clientConfiguration);
   const clients = useMemo(

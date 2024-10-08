@@ -22,6 +22,7 @@ jest.spyOn(useAssistant, 'useAssistant').mockReturnValue({
   actionsByComponent: {},
   startAction: jest.fn(),
   clearActions: jest.fn(),
+  clearAll: jest.fn(),
   messages: [],
   generateSummary: mockGenerateSummary,
 });

@@ -89,9 +89,9 @@ export { useAssistant } from './hooks/useAssistant/useAssistant';
 export { useAssistantContext } from './hooks/useAssistantContext/useAssistantContext';
 export { MessageType } from './hooks/useAssistant/types';
 export type {
+  AssistantAction,
   IMessage,
   IMessageParser,
-  BaseStateManager,
 } from './hooks/useAssistant/types';
 export {
   SITUATION_SUMMARY_DEFAULT_UTTERANCE,

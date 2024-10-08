@@ -45,7 +45,7 @@ export const AssistantMessage = ({ text, payload }: AssistantMessageProps) => {
               {filteredCitations.map((citation: Citation, index: number) => {
                 const citationContent = citation.content?.text ?? '-';
                 return (
-                  <li>
+                  <li key={index}>
                     <Link
                       href={
                         citation.reference?.dataset?.source?.location?.uri ?? ''

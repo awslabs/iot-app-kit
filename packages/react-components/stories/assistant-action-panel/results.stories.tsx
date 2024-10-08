@@ -3,7 +3,6 @@ import { Chart } from '../../src';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from '../chart/mock-data';
 import { ComponentMeta } from '@storybook/react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
-import useDataStore from '../../src/store';
 import { MockInvokeAssistant } from '../assistant-chatbot/mockAPI';
 
 export default {
@@ -38,9 +37,6 @@ export const ResultsOnTheRight = () => {
     defaultContext: '',
   });
 
-  const storeState = useDataStore.getState();
-  storeState.clearAssistantState();
-
   return (
     <div style={{ padding: '80px 16px' }}>
       <Chart
@@ -66,9 +62,6 @@ export const ResultsOnTheLeft = () => {
     },
     defaultContext: '',
   });
-
-  const storeState = useDataStore.getState();
-  storeState.clearAssistantState();
 
   return (
     <div style={{ padding: '80px 16px', width: '1400px' }}>

@@ -22,6 +22,7 @@ import {
   updateRefreshRate,
   updateDefaultViewport,
   assistantCleanWidgetsSelection,
+  cleanAssistant,
 } from './actions';
 
 import { createWidgets } from './actions/createWidget';
@@ -100,6 +101,10 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'TOGGLE_ASSISTANT_MODE': {
       return toggleAssistantMode(state, action);
+    }
+
+    case 'CLEAN_ASSISTANT': {
+      return cleanAssistant(state);
     }
 
     case 'ASSISTANT_SELECT_WIDGETS': {

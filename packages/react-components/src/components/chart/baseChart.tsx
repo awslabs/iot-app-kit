@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import type { MouseEvent } from 'react';
 import {
   colorBorderDividerSecondary,
@@ -262,31 +262,42 @@ const BaseChart = ({
     };
   };
 
-  const handleSelection = (selectedItems: DataStreamInformation[]) => {
-    if (options.id && options.assistant) {
-      const selectedQueries = getSelectedQueriesAndProperties(
-        timeSeriesQueries,
-        selectedItems.map((item) => item.refId ?? '')
-      );
-      const context = transformTimeseriesDataToAssistantContext({
-        start: viewportStartDate(utilizedViewport),
-        end: viewportEndDate(utilizedViewport),
-        queries: selectedQueries,
-      });
-
-      setContextByComponent(options.assistant.componentId, context);
-
-      if (options.assistant.onAction) {
-        options.assistant.onAction({
-          type: 'selection',
-          sourceComponentId: options.assistant.componentId,
-          sourceComponentType: 'chart',
-          selectedProperties: selectedItems.length,
+  const handleSelection = useCallback(
+    (selectedItems: DataStreamInformation[]) => {
+      if (options.id && options.assistant) {
+        const selectedQueries = getSelectedQueriesAndProperties(
+          timeSeriesQueries,
+          selectedItems.map((item) => item.refId ?? '')
+        );
+        const context = transformTimeseriesDataToAssistantContext({
+          start: viewportStartDate(utilizedViewport),
+          end: viewportEndDate(utilizedViewport),
+          queries: selectedQueries,
         });
+
+        setContextByComponent(options.assistant.componentId, context);
+
+        if (options.assistant.onAction) {
+          options.assistant.onAction({
+            type: 'selection',
+            sourceComponentId: options.assistant.componentId,
+            sourceComponentType: 'chart',
+            selectedProperties: selectedItems.length,
+          });
+        }
       }
-    }
-    setSelectedItems(selectedItems);
-  };
+      setSelectedItems(selectedItems);
+    },
+    [
+      options.id,
+      options.assistant,
+      setSelectedItems,
+      setContextByComponent,
+      transformTimeseriesDataToAssistantContext,
+      timeSeriesQueries,
+      utilizedViewport,
+    ]
+  );
 
   const assistantSelection = useMemo(() => {
     if (options.assistant && options.assistant?.enabled) {

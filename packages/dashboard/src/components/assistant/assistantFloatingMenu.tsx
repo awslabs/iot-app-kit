@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useEffect } from 'react';
 import { AssistantButton } from './assistantButton';
 import {
   borderRadiusButton,
@@ -36,7 +36,7 @@ export const AssistantFloatingMenu = ({
   messageOverrides: DashboardMessages;
 }) => {
   const dispatch = useDispatch();
-  const { startAction } = useAssistant({});
+  const { startAction, clearAll } = useAssistant({});
   const assistantState = useSelector(
     (state: DashboardState) => state.assistant
   );
@@ -44,6 +44,12 @@ export const AssistantFloatingMenu = ({
   const rightOffset = assistantState.isChatbotOpen
     ? CHATBOT_OPENED_WIDTH
     : CHATBOT_CLOSED_WIDTH;
+
+  useEffect(() => {
+    clearAll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleToggleAssistantMode = () => {
     dispatch(
       onToggleAssistantModeAction({
@@ -71,7 +77,6 @@ export const AssistantFloatingMenu = ({
         open: true,
         callerComponentId: 'dashboard',
         action: 'summarize',
-        messages: [],
       })
     );
   };
@@ -94,7 +99,7 @@ export const AssistantFloatingMenu = ({
     maxWidth: `${width - (rightOffset + 40)}px`,
     paddingTop: spaceStaticM,
     paddingLeft: spaceStaticM,
-    right: `${(rightOffset + 40)}px`,
+    right: `${rightOffset + 40}px`,
     zIndex: 1000, // required to fix bug in legends table in the XYplot chart and widget actions
   };
 

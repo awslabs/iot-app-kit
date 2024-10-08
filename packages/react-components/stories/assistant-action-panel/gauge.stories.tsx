@@ -8,7 +8,6 @@ import {
 } from '../../src/components/gauge/constants';
 import { GaugeSettings } from '../../src/components/gauge/types';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
-import useDataStore from '../../src/store';
 import { MockInvokeAssistant } from '../assistant-chatbot/mockAPI';
 import { getTimeSeriesDataQuery } from '../utils/query';
 
@@ -71,8 +70,6 @@ export const DefaultGauge: ComponentStory<typeof Gauge> = ({
     defaultContext: '',
   });
 
-  const storeState = useDataStore.getState();
-  storeState.clearAssistantState();
   return (
     <div>
       <Gauge

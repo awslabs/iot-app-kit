@@ -39,7 +39,7 @@ export const ChatbotInputBox = ({
 
   useEffect(() => {
     if (lastMessage) {
-      setDisabled(lastMessage.sender === 'user');
+      setDisabled(lastMessage.sender === 'user' || !!lastMessage.loading);
     }
   }, [lastMessage]);
 

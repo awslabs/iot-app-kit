@@ -18,7 +18,7 @@ export const AlarmPopover = (props: AlarmPopoverProps) => {
   const { alarmContent, assistant } = props;
   const alarmName = alarmContent?.alarmName;
 
-  const { messages, generateSummary } = useAssistant({
+  const { generateSummary } = useAssistant({
     assistantClient: assistant.client,
   });
 
@@ -44,10 +44,9 @@ export const AlarmPopover = (props: AlarmPopoverProps) => {
       assistant.onAction({
         type: 'summarize',
         sourceComponentId: assistant.componentId,
-        messages,
       });
     }
-  }, [assistant, assistantContext, generateSummary, messages]);
+  }, [assistant, assistantContext, generateSummary]);
 
   const content = <AlarmContentContainer alarmContent={alarmContent} />;
 

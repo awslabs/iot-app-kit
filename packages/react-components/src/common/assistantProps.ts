@@ -1,11 +1,9 @@
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
-import type { IMessage } from '../hooks/useAssistant/types';
 
 export interface AssistantActionEventDetail {
   type: AssistantActionType;
   sourceComponentId: string;
   sourceComponentType?: string;
-  messages?: IMessage[];
   selectedProperties?: number;
 }
 

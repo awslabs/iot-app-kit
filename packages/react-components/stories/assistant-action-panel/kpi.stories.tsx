@@ -3,7 +3,6 @@ import { KPI } from '../../src';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from '../kpi/kpi-mock-data';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
-import useDataStore from '../../src/store';
 import { MockInvokeAssistant } from '../assistant-chatbot/mockAPI';
 
 export default {
@@ -31,9 +30,6 @@ export const DefaultKPI: ComponentStory<typeof KPI> = ({ settings }) => {
     },
     defaultContext: '',
   });
-
-  const storeState = useDataStore.getState();
-  storeState.clearAssistantState();
 
   return (
     <>

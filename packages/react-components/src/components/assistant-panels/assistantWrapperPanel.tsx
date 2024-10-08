@@ -33,7 +33,6 @@ export const AssistantWrapperPanel = ({
         type: 'divedeep',
         sourceComponentId: assistant.componentId,
         sourceComponentType: componentType,
-        messages,
       });
     }
     setShowResults(false);

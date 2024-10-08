@@ -28,7 +28,6 @@ it('can open the chatbot', () => {
       payload: {
         open: true,
         callerComponentId: 'componentId',
-        messages: [],
       },
     }).assistant.isChatbotOpen
   ).toEqual(true);
@@ -41,7 +40,6 @@ it('can close the chatbot', () => {
       payload: {
         open: false,
         callerComponentId: 'componentId',
-        messages: [],
       },
     }).assistant.isChatbotOpen
   ).toEqual(false);
@@ -55,7 +53,6 @@ it('can start summarize action', () => {
         open: false,
         callerComponentId: 'dashboard',
         action: 'summarize',
-        messages: [],
       },
     }).assistant.action
   ).toEqual('summarize');
@@ -68,7 +65,6 @@ it('action TOGGLE_CHATBOT changes state correctly', () => {
       open: true,
       callerComponentId: 'mockId',
       action: 'summarize',
-      messages: [],
     })
   );
 

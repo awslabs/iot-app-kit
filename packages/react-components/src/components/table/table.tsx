@@ -179,7 +179,7 @@ export const Table = ({
 
     const selectedIds = selectedItemsWithData
       .filter((item) => !item.alarmName)
-      .map((item) => item.value.refId as string);
+      .map((item) => item.value?.refId ?? '');
 
     const selectedQueries = getSelectedQueriesAndProperties(
       timeSeriesQueries,

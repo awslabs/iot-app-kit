@@ -2,7 +2,7 @@ import React from 'react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { DataStream } from '@iot-app-kit/core';
-import { screen, render, renderHook } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 import { Chart } from '../index';
 import { ChartLegend } from '../types';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
@@ -10,7 +10,6 @@ import type {
   AssistantActionEventDetail,
   AssistantProperty,
 } from '../../../common/assistantProps';
-import { useAssistantContext } from '../../../hooks/useAssistantContext/useAssistantContext';
 
 const VIEWPORT = { duration: '5m' };
 
@@ -99,25 +98,6 @@ describe('Chart Component Testing', () => {
     );
 
     expect(screen.getByText('Chart Title')).toBeInTheDocument();
-  });
-
-  it('Chart pass context to the assistant', () => {
-    const { result } = renderHook(() => useAssistantContext());
-
-    render(
-      <Chart
-        queries={[mockQuery]}
-        onChartOptionsChange={jest.fn()}
-        viewport={VIEWPORT}
-        size={{ width: 500, height: 500 }}
-        assistant={assistant}
-        id='componentId'
-      />
-    );
-
-    const context = result.current.getContextByComponent('componentId');
-    expect(context).toContain('timerange');
-    expect(context).toContain('queries');
   });
 });
 

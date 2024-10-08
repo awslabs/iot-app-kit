@@ -103,5 +103,6 @@ it('pass context to the assistant', async () => {
   await user.click(getByRole('button', { name: 'Generate Summary' }));
 
   const context = result.current.getAllAssistantContext();
-  expect(context).toContain('properties');
+  expect(context).toContain('timerange');
+  expect(context).toContain('queries');
 });

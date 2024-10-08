@@ -127,7 +127,6 @@ describe('ActionPanel', () => {
       type: 'divedeep',
       sourceComponentId: 'componentId',
       sourceComponentType: 'kpi',
-      messages: expect.anything(),
     });
   });
 });

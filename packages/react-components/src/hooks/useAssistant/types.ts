@@ -41,13 +41,16 @@ export type IMessage = {
   payload?: unknown;
 };
 
-export interface IMessageParser {
-  parse(request: AssistantInvocationRequest, response: ResponseStream): void;
-  setStateManager(stateManager: BaseStateManager): void;
-}
+export type AssistantAction = {
+  target: AssistantActionTarget;
+  action: AssistantActionType;
+};
 
-export interface BaseStateManager {
-  addMessageToState: (message: IMessage) => void;
+export interface IMessageParser {
+  parse(
+    request: AssistantInvocationRequest,
+    response: ResponseStream
+  ): IMessage[];
 }
 
 export type AssistantInvocationParams = InvokeAssistantOptions & {

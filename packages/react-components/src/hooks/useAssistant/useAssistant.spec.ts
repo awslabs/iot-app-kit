@@ -2,9 +2,7 @@ import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { useAssistant } from './useAssistant';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import type { MessageParser } from './messageParser';
-import { StateManager } from './stateManager';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
-import useDataStore from '../../store';
 import { MessageType } from './types';
 
 const response1 = {
@@ -38,13 +36,10 @@ describe('useAssistant', () => {
     } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
     defaultContext: '',
   });
-  const mockGetState = jest
-    .fn()
-    .mockImplementation(() => () => ({ messages: [] }));
 
   beforeEach(() => jest.clearAllMocks());
 
-  it('should provide a default implementation for messageParser and state manager', async () => {
+  it('should provide a default implementation for messageParser', async () => {
     const { result } = renderHook(() =>
       useAssistant({
         assistantClient: client,
@@ -65,71 +60,51 @@ describe('useAssistant', () => {
     });
   });
 
-  it('should clear assistant state when invokeAssistant is called', async () => {
-    const storeState = useDataStore.getState();
-    const spied = jest.spyOn(storeState, 'clearAssistantState');
+  it('should throw error if assistantClient is not defined when invokeAssistant is called', async () => {
+    const { result } = renderHook(() => useAssistant({}));
 
-    const { result } = renderHook(() =>
-      useAssistant({
-        assistantClient: client,
-      })
-    );
-
-    act(() => {
+    expect(() => {
       result.current.invokeAssistant({
         componentId,
         conversationId,
         utterance: 'customer message',
         target: 'dashboard',
       });
-    });
-
-    await waitFor(() => {
-      expect(spied).toHaveBeenCalled();
-    });
+    }).toThrowError('assistantClient is not defined');
   });
 
-  it('should clear assistant state when generateSummary is called', async () => {
-    const storeState = useDataStore.getState();
-    const spied = jest.spyOn(storeState, 'clearAssistantState');
+  it('should throw error if assistantClient is not defined when invokeAssistant is called', async () => {
+    const { result } = renderHook(() => useAssistant({}));
 
-    const { result } = renderHook(() =>
-      useAssistant({
-        assistantClient: client,
-      })
-    );
-
-    act(() => {
+    expect(() => {
       result.current.generateSummary({
         componentId,
         conversationId,
         utterance: 'customer message',
         target: 'dashboard',
       });
-    });
-
-    await waitFor(() => {
-      expect(spied).toHaveBeenCalled();
-    });
+    }).toThrowError('assistantClient is not defined');
   });
 
   it('should allow a custom messageParser ', async () => {
-    const mockedParser = jest.fn();
+    const getText = jest.fn();
+    const getPartialResponse = jest.fn();
+    const mockedParser = {
+      getText,
+      getPartialResponse,
+    };
     const newClient = new IoTSitewiseAssistantClient({
       iotSiteWiseClient: {
         invokeAssistant: mockInvokeAssistant,
       } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
       defaultContext: '',
-      onResponse: () => mockedParser(),
+      onResponse: jest.fn(),
+      onComplete: jest.fn(),
     });
     const { result } = renderHook(() =>
       useAssistant({
         assistantClient: newClient,
-        messageParser: {
-          stateManager: new StateManager(jest.fn(), mockGetState, jest.fn()),
-          setStateManager: () => {},
-          parse: mockedParser,
-        } as unknown as MessageParser,
+        messageParser: mockedParser as unknown as MessageParser,
       })
     );
 
@@ -143,30 +118,8 @@ describe('useAssistant', () => {
     });
 
     await waitFor(() => {
-      expect(mockedParser).toBeCalled();
-    });
-  });
-
-  it('should allow a custom state Manager', async () => {
-    const mockedSetState = jest.fn();
-    const { result } = renderHook(() =>
-      useAssistant({
-        assistantClient: client,
-        stateManager: new StateManager(mockedSetState, mockGetState, jest.fn()),
-      })
-    );
-
-    await act(() => {
-      result.current.invokeAssistant({
-        componentId,
-        conversationId,
-        utterance: 'customer message',
-        target: 'widget',
-      });
-    });
-
-    await waitFor(() => {
-      expect(mockedSetState).toBeCalled();
+      expect(getText).toBeCalled();
+      expect(getPartialResponse).toBeCalled();
     });
   });
 
@@ -300,6 +253,86 @@ describe('useAssistant', () => {
           payload: expect.anything(),
         })
       );
+    });
+  });
+
+  it('should clear component action when clearActions is called', async () => {
+    const newClient = new IoTSitewiseAssistantClient({
+      iotSiteWiseClient: {
+        invokeAssistant: mockInvokeAssistant,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
+      defaultContext: '',
+    });
+    const { result } = renderHook(() =>
+      useAssistant({
+        assistantClient: newClient,
+      })
+    );
+
+    await act(() => {
+      result.current.startAction({
+        componentId: 'componentId1',
+        target: 'dashboard',
+        action: 'summarize',
+      });
+      result.current.startAction({
+        componentId: 'componentId2',
+        target: 'dashboard',
+        action: 'summarize',
+      });
+    });
+
+    await act(() => {
+      result.current.clearActions('componentId1');
+    });
+
+    await waitFor(() => {
+      expect(result.current.actions).toEqual({
+        componentId2: {
+          target: 'dashboard',
+          action: 'summarize',
+        },
+      });
+    });
+  });
+
+  it('should clear state when clearAll is called', async () => {
+    const newClient = new IoTSitewiseAssistantClient({
+      iotSiteWiseClient: {
+        invokeAssistant: mockInvokeAssistant,
+      } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
+      defaultContext: '',
+    });
+    const { result } = renderHook(() =>
+      useAssistant({
+        assistantClient: newClient,
+      })
+    );
+
+    await act(() => {
+      result.current.setMessages([
+        {
+          content: 'Any content',
+          sender: 'assistant',
+          type: MessageType.TEXT,
+          id: 'messageId',
+          loading: false,
+        },
+      ]);
+      result.current.startAction({
+        componentId: 'componentId',
+        target: 'dashboard',
+        action: 'summarize',
+      });
+    });
+
+    await act(() => {
+      result.current.clearAll();
+    });
+
+    await waitFor(() => {
+      expect(result.current.messages.length).toEqual(0);
+      expect(result.current.actions).toEqual({});
     });
   });
 });

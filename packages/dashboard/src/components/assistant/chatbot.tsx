@@ -14,7 +14,7 @@ import { useClients } from '../dashboard/clientContext';
 import 'animate.css';
 import './assistant.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { onToggleChatbotAction } from '~/store/actions';
+import { onCleanAssistantAction, onToggleChatbotAction } from '~/store/actions';
 import { DashboardState } from '~/store/state';
 import { DashboardMessages } from '~/messages';
 
@@ -44,20 +44,16 @@ export const Chatbot: FC<AssistantChatbotProps> = (
     iotSiteWiseClient: iotSiteWisePrivateClient!,
   });
 
-  const { messages, invokeAssistant, setMessages, generateSummary } =
+  const { messages, setMessages, invokeAssistant, generateSummary, clearAll } =
     useAssistant({
       assistantClient: client,
-      initialState: {
-        messages: initialMessages,
-        actions: {},
-      },
     });
 
   useEffect(() => {
-    if (assistant.messages && assistant.messages.length > 0) {
-      setMessages(assistant.messages);
+    if (messages.length === 0) {
+      setMessages(initialMessages);
     }
-  }, [assistant.messages]);
+  }, [messages.length, initialMessages]);
 
   useEffect(() => {
     if (assistant.action === 'summarize') {
@@ -80,17 +76,12 @@ export const Chatbot: FC<AssistantChatbotProps> = (
 
       onToggleChatbotAction({
         open: true,
-        callerComponentId: 'dashboard',
+        callerComponentId: assistant.callerComponentId ?? 'dashboard',
         action: undefined,
-        messages: assistant.messages ?? [],
       });
     }
-  }, [
-    assistant.conversationId,
-    assistant.messages,
-    assistant.callerComponentId,
-    assistant.action,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [assistant.conversationId, assistant.callerComponentId, assistant.action]);
 
   const handleSubmit = (utterance: string) => {
     const componentContext = assistant.callerComponentId
@@ -110,7 +101,6 @@ export const Chatbot: FC<AssistantChatbotProps> = (
       onToggleChatbotAction({
         open,
         callerComponentId: '',
-        messages: assistant.messages,
       })
     );
   };
@@ -126,7 +116,11 @@ export const Chatbot: FC<AssistantChatbotProps> = (
           props.messageOverrides.assistant.floatingMenu.buttonAIAssistant,
         showResetButton: true,
         showCloseButton: true,
-        onReset: () => setMessages(initialMessages),
+        onReset: () => {
+          clearAll();
+          setMessages(initialMessages);
+          dispatch(onCleanAssistantAction());
+        },
         onClose: () => toggleChatbot(false),
       }}
     />
