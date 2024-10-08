@@ -71,7 +71,10 @@ describe('echarts tooltip', () => {
       ...mockDataStream2,
       quality: 'BAD' as DataPoint['quality'],
     };
-    const datastreams = [mockDataStreamUncertainQuality, mockDataStreamBadQuality];
+    const datastreams = [
+      mockDataStreamUncertainQuality,
+      mockDataStreamBadQuality,
+    ];
     const tooltip = render(
       <XYPlotTooltip
         datastreams={datastreams}
@@ -113,10 +116,10 @@ describe('echarts tooltip', () => {
     expect(screen.getByText('20.0000')).not.toBeNull();
 
     expect(screen.getByText(mockDataStreamAlarm1.alarmName)).not.toBeNull();
-    expect(screen.getByText(/Temperature \= 30/)).not.toBeNull();
+    expect(screen.getByText(/Temperature = 30/)).not.toBeNull();
     expect(screen.getByText(/12481/)).not.toBeNull();
     expect(screen.getByText(mockDataStreamAlarm2.alarmName)).not.toBeNull();
-    expect(screen.getByText(/Rotation \= 100/)).not.toBeNull();
+    expect(screen.getByText(/Rotation = 100/)).not.toBeNull();
     expect(screen.getByText(/28230/)).not.toBeNull();
   });
 
@@ -132,11 +135,15 @@ describe('echarts tooltip', () => {
     );
 
     expect(tooltip).not.toBeNull();
-    expect(tooltip.queryByText(mockDataStreamAlarm1.alarmName)).not.toBeInTheDocument();
-    expect(tooltip.queryByText(/Temperature \= 30/)).not.toBeInTheDocument();
+    expect(
+      tooltip.queryByText(mockDataStreamAlarm1.alarmName)
+    ).not.toBeInTheDocument();
+    expect(tooltip.queryByText(/Temperature = 30/)).not.toBeInTheDocument();
     expect(tooltip.queryByText(/12481/)).not.toBeInTheDocument();
-    expect(tooltip.queryByText(mockDataStreamAlarm2.alarmName)).not.toBeInTheDocument();
-    expect(tooltip.queryByText(/Rotation \= 100/)).not.toBeInTheDocument();
+    expect(
+      tooltip.queryByText(mockDataStreamAlarm2.alarmName)
+    ).not.toBeInTheDocument();
+    expect(tooltip.queryByText(/Rotation = 100/)).not.toBeInTheDocument();
     expect(tooltip.queryByText(/28230/)).not.toBeInTheDocument();
   });
 });

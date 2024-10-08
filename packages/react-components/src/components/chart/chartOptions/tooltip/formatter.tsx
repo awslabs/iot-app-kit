@@ -13,7 +13,8 @@ import { PascalCaseStateName } from '@iot-app-kit/source-iotsitewise/dist/es/ala
 type FormatterOptions = {
   significantDigits?: number;
   colorMap: { [key in string]: string };
-} & ChartDataQuality & ChartAlarms;
+} & ChartDataQuality &
+  ChartAlarms;
 export const formatter =
   ({
     significantDigits,

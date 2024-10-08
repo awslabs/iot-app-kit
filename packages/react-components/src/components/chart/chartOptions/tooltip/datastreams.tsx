@@ -18,7 +18,8 @@ export type IdentifiableDataStreamOptions = XYPlotTooltipDatastreamOptions & {
 };
 export type XYPlotTooltipDatastreamsOptions = {
   datastreams: IdentifiableDataStreamOptions[];
-} & ChartDataQuality & ChartAlarms;
+} & ChartDataQuality &
+  ChartAlarms;
 export const XYPlotTooltipDatastreams = ({
   datastreams,
   showBadDataIcons,

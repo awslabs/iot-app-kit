@@ -25,7 +25,8 @@ export const useTooltip = ({
 }: {
   significantDigits: ChartOptions['significantDigits'];
   series: SeriesOption[];
-} & ChartDataQuality & ChartAlarms) => {
+} & ChartDataQuality &
+  ChartAlarms) => {
   // We need to derive colors from series because the tooltip
   // params only include the itemStyling
   // This may be different than the series color because data quality

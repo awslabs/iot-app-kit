@@ -98,7 +98,7 @@ export type ChartDataQuality = {
 
 export type ChartAlarms = {
   showAlarmIcons?: boolean;
-}
+};
 
 export type ChartOptions = {
   queries: ComponentQuery[];

@@ -9,6 +9,7 @@ import {
   colorBorderDividerSecondary,
   colorTextHeadingDefault,
   fontSizeBodyS,
+  spaceStaticXs,
 } from '@cloudscape-design/design-tokens';
 import { DEFAULT_DECIMAL_PLACES } from '../../common/constants';
 import {
@@ -20,6 +21,7 @@ import {
   TimestampText,
   ValueText,
 } from './kpiTextFragments';
+import { Title } from '../../common/title';
 
 export const KpiBase: React.FC<KPIBaseProperties> = ({
   propertyPoint,
@@ -89,16 +91,12 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
           color: nonThresholdFontColor,
         }}
       >
-        <NameAndUnit
-          {...{
-            titleText,
-            showName,
-            name,
-            showUnit,
-            unit,
-            isLoading,
-            fontColor,
-            secondaryFontSize,
+        <Title
+          text={titleText}
+          style={{
+            fontSize: `${secondaryFontSize}px`,
+            color: fontColor,
+            paddingLeft: `${spaceStaticXs}`,
           }}
         />
         <ErrorText
@@ -118,6 +116,14 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     >
       <div className='kpi'>
         <div>
+          <Title
+            text={titleText}
+            style={{
+              fontSize: `${secondaryFontSize}px`,
+              color: fontColor,
+              paddingLeft: `${spaceStaticXs}`,
+            }}
+          />
           <AlarmHeader
             {...{
               fontColor,

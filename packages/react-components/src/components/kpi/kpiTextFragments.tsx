@@ -9,9 +9,7 @@ import { AlarmDataStatus } from '../../hooks/useAlarms';
 import type { DataPoint } from '@iot-app-kit/core';
 import { Alert, Box } from '@cloudscape-design/components';
 import { AlarmContent } from '../alarm-components/alarm-content/types';
-import { Title } from '../../common/title';
 import { AssistantProperty } from '../../common/assistantProps';
-import { spaceStaticXs } from '@cloudscape-design/design-tokens';
 
 export const ErrorText = ({ error }: { error?: string }) => {
   if (!error) {
@@ -28,7 +26,6 @@ export const ErrorText = ({ error }: { error?: string }) => {
 };
 
 export const NameAndUnit = ({
-  titleText,
   fontColor,
   secondaryFontSize,
   showName,
@@ -37,7 +34,6 @@ export const NameAndUnit = ({
   unit,
   isLoading,
 }: {
-  titleText?: string;
   fontColor: string;
   secondaryFontSize: number;
   showName?: boolean;
@@ -49,26 +45,17 @@ export const NameAndUnit = ({
   const shouldRenderName = showName && name;
   const shouldRenderUnit = showUnit && unit;
 
-  const getTitle = () => {
-    if (titleText) {
-      return titleText;
-    } else {
-      const prefix = isLoading ? '-' : shouldRenderName ? name : '';
-      const suffix = !isLoading && shouldRenderUnit ? `(${unit})` : '';
-      return `${prefix}${prefix ? ' ' : ''}${suffix}`;
-    }
-  };
+  if ((!shouldRenderName && !shouldRenderUnit) || isLoading) return null;
 
   return (
-    <Title
+    <div
+      className='property-name'
       data-testid='kpi-name-and-unit'
-      text={getTitle()}
-      style={{
-        fontSize: `${secondaryFontSize}px`,
-        color: fontColor,
-        paddingLeft: `${spaceStaticXs}`,
-      }}
-    />
+      style={{ fontSize: `${secondaryFontSize}px`, color: fontColor }}
+    >
+      {shouldRenderName && <span>{name} </span>}
+      {shouldRenderUnit && <span>{`(${unit})`}</span>}
+    </div>
   );
 };
 
