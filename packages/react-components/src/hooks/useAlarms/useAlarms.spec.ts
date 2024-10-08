@@ -10,24 +10,17 @@ import {
   mockAlarmDataDescribeAlarmModel,
   mockAlarmDataDescribeAlarmModel2,
   mockAlarmDataDescribeAsset,
-  mockAlarmDataGetAssetPropertyValue,
   mockAssetProperties,
   mockStateAssetPropertyValue,
 } from '../../testing/alarms';
 import * as alarmAssetHook from './hookHelpers/useAlarmAssets';
-import * as alarmCompositeProp from './hookHelpers/useLatestAlarmPropertyValues';
 import * as alarmModelHook from './hookHelpers/useAlarmModels';
 import { AssetProperty } from '@aws-sdk/client-iotsitewise';
 
 jest.mock('./hookHelpers/useAlarmAssets');
-jest.mock('./hookHelpers/useLatestAlarmPropertyValues');
 jest.mock('./hookHelpers/useAlarmModels');
 
 const useAlarmAssetsMock = jest.spyOn(alarmAssetHook, 'useAlarmAssets');
-const useLatestAlarmPropertyValuesMock = jest.spyOn(
-  alarmCompositeProp,
-  'useLatestAlarmPropertyValues'
-);
 const useAlarmModelsMock = jest.spyOn(alarmModelHook, 'useAlarmModels');
 
 const mockRequest = {
@@ -52,9 +45,9 @@ describe.skip('useAlarms', () => {
 
   it('should not transform AlarmData when no transform function supplied', async () => {
     // useAlarmAssetsMock.mockReturnValue([mockAlarmDataDescribeAsset]);
-    useLatestAlarmPropertyValuesMock.mockReturnValue([
-      mockAlarmDataGetAssetPropertyValue,
-    ]);
+    // useLatestAlarmPropertyValuesMock.mockReturnValue([
+    //   mockAlarmDataGetAssetPropertyValue,
+    // ]);
     useAlarmModelsMock.mockReturnValue([mockAlarmDataInternal]);
 
     const { result: alarmResults } = renderHook(() =>
@@ -71,15 +64,15 @@ describe.skip('useAlarms', () => {
     );
 
     expect(useAlarmAssetsMock).toBeCalledTimes(1);
-    expect(useLatestAlarmPropertyValuesMock).toBeCalledTimes(2);
+    // expect(useLatestAlarmPropertyValuesMock).toBeCalledTimes(2);
     expect(useAlarmModelsMock).toBeCalledTimes(1);
   });
 
   it('should transform AlarmData according to supplied transform function', async () => {
     // useAlarmAssetsMock.mockReturnValue([mockAlarmDataDescribeAsset]);
-    useLatestAlarmPropertyValuesMock.mockReturnValue([
-      mockAlarmDataGetAssetPropertyValue,
-    ]);
+    // useLatestAlarmPropertyValuesMock.mockReturnValue([
+    //   mockAlarmDataGetAssetPropertyValue,
+    // ]);
     useAlarmModelsMock.mockReturnValue([mockAlarmDataInternal]);
 
     const transform = (alarmData: AlarmData): AlarmProperty | undefined =>
@@ -103,7 +96,7 @@ describe.skip('useAlarms', () => {
     );
 
     expect(useAlarmAssetsMock).toBeCalledTimes(1);
-    expect(useLatestAlarmPropertyValuesMock).toBeCalledTimes(2);
+    // expect(useLatestAlarmPropertyValuesMock).toBeCalledTimes(2);
     expect(useAlarmModelsMock).toBeCalledTimes(1);
   });
 
@@ -132,9 +125,9 @@ describe.skip('useAlarms', () => {
     } satisfies AlarmDataInternal;
 
     // useAlarmAssetsMock.mockReturnValue([mockAlarmDataDescribeAsset]);
-    useLatestAlarmPropertyValuesMock.mockReturnValue([
-      mockAlarmDataGetAssetPropertyValue,
-    ]);
+    // useLatestAlarmPropertyValuesMock.mockReturnValue([
+    //   mockAlarmDataGetAssetPropertyValue,
+    // ]);
     // Case where multiple alarms from the same asset have different alarm models
     useAlarmModelsMock.mockReturnValue([
       mockAlarmDataInternalAlarmModel,
@@ -162,7 +155,7 @@ describe.skip('useAlarms', () => {
     );
 
     expect(useAlarmAssetsMock).toBeCalledTimes(1);
-    expect(useLatestAlarmPropertyValuesMock).toBeCalledTimes(2);
+    // expect(useLatestAlarmPropertyValuesMock).toBeCalledTimes(2);
     expect(useAlarmModelsMock).toBeCalledTimes(1);
   });
 
@@ -210,9 +203,9 @@ describe.skip('useAlarms', () => {
     };
 
     // useAlarmAssetsMock.mockReturnValue([mockAlarmDataDescribeAsset]);
-    useLatestAlarmPropertyValuesMock.mockReturnValue([
-      mockAlarmDataGetAssetPropertyValue,
-    ]);
+    // useLatestAlarmPropertyValuesMock.mockReturnValue([
+    //   mockAlarmDataGetAssetPropertyValue,
+    // ]);
     // Case where multiple alarms from the same asset have different alarm models
     useAlarmModelsMock.mockReturnValue([
       mockAlarmDataInternalAlarmModel,
@@ -234,7 +227,7 @@ describe.skip('useAlarms', () => {
     );
 
     expect(useAlarmAssetsMock).toBeCalledTimes(1);
-    expect(useLatestAlarmPropertyValuesMock).toBeCalledTimes(2);
+    // expect(useLatestAlarmPropertyValuesMock).toBeCalledTimes(2);
     expect(useAlarmModelsMock).toBeCalledTimes(1);
   });
 });

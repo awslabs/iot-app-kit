@@ -185,3 +185,6 @@ export const mockStateAssetPropertyValue2 = mockStringAssetPropertyValue(
 export const mockSourceAssetPropertyValue2 = mockStringAssetPropertyValue(
   mockAlarmModelArn2
 ) satisfies AssetPropertyValue;
+export const mockTypeAssetPropertyValue2 = mockStringAssetPropertyValue(
+  mockDefaultAlarmType
+) satisfies AssetPropertyValue;
