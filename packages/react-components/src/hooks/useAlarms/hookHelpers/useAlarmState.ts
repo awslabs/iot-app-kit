@@ -1,12 +1,12 @@
-import { useMemo } from 'react';
 import { UseIoTSiteWiseClientOptions } from '../../requestFunctions/useIoTSiteWiseClient';
 import { AlarmData, UseAlarmsHookSettings, UseAlarmsOptions } from '../types';
 import { useQueryMode } from './useQueryMode';
-import { updateAlarmStatusForQueries } from '../utils/queryStatus';
-import { updateAlarmStateData } from '../utils/updateAlarmValues';
+import { combineStatusForQueries, isQueryDisabled } from '../utils/queryStatus';
 import { useLatestAssetPropertyValues } from '../../../queries';
 import { useHistoricalAssetPropertyValues } from '../../../queries/useHistoricalAssetPropertyValues/useHistoricalAssetPropertyValues';
 import { createNonNullableList } from '../../../utils/createNonNullableList';
+import { OnUpdateAlarmStateDataAction, useRequestSelector } from '../state';
+import { useReactQueryEffect } from './useReactQueryEffect';
 
 export type UseAlarmStateOptions = Pick<
   UseIoTSiteWiseClientOptions,
@@ -14,24 +14,25 @@ export type UseAlarmStateOptions = Pick<
 > &
   Pick<UseAlarmsHookSettings, 'fetchOnlyLatest' | 'refreshRate'> &
   Pick<UseAlarmsOptions, 'viewport'> & {
-    alarms: AlarmData[];
+    requests: Pick<AlarmData, 'assetId' | 'state'>[];
+  } & {
+    onUpdateAlarmStateData: OnUpdateAlarmStateDataAction;
   };
 
 export const useAlarmState = ({
-  alarms,
+  requests: alarmStateRequests,
+  onUpdateAlarmStateData,
   iotSiteWiseClient,
   viewport,
   fetchOnlyLatest,
   refreshRate,
 }: UseAlarmStateOptions) => {
-  const requests = useMemo(() => {
-    return alarms.map(({ assetId, state }) => {
-      return {
-        assetId,
-        propertyId: state?.property.id,
-      };
-    });
-  }, [alarms]);
+  const requests = useRequestSelector(alarmStateRequests, (alarmRequests) =>
+    alarmRequests.map(({ assetId, state }) => ({
+      assetId,
+      propertyId: state?.property.id,
+    }))
+  );
 
   const queryMode = useQueryMode({ fetchOnlyLatest, viewport });
 
@@ -93,36 +94,41 @@ export const useAlarmState = ({
     refreshRate,
   });
 
-  return useMemo(() => {
-    return alarms.map((alarm, index) => {
-      const latestValueQuery = latestValueQueries[index];
-      const mostRecentBeforeEndValueQuery =
-        mostRecentBeforeEndValueQueries[index];
-      const historicalQueryInViewport = historicalQueriesInViewport[index];
-      const latestQueryInLiveViewport = latestQueriesInLiveViewport[index];
+  useReactQueryEffect(() => {
+    onUpdateAlarmStateData({
+      viewport,
+      assetPropertyValueSummaries: requests.map((request, index) => {
+        const latestValueQuery = latestValueQueries[index];
+        const mostRecentBeforeEndValueQuery =
+          mostRecentBeforeEndValueQueries[index];
+        const historicalQueryInViewport = historicalQueriesInViewport[index];
+        const latestQueryInLiveViewport = latestQueriesInLiveViewport[index];
 
-      updateAlarmStatusForQueries(alarm, [
-        latestValueQuery,
-        mostRecentBeforeEndValueQuery,
-        historicalQueryInViewport,
-        latestQueryInLiveViewport,
-      ]);
+        const dataFromQueries = [
+          ...createNonNullableList([latestValueQuery.data?.propertyValue]),
+          ...(mostRecentBeforeEndValueQuery.data?.assetPropertyValueHistory ??
+            []),
+          ...(historicalQueryInViewport.data?.assetPropertyValueHistory ?? []),
+          ...(latestQueryInLiveViewport.data?.assetPropertyValueHistory ?? []),
+        ];
 
-      const dataFromQueries = [
-        ...createNonNullableList([latestValueQuery.data?.propertyValue]),
-        ...(mostRecentBeforeEndValueQuery.data?.assetPropertyValueHistory ??
-          []),
-        ...(historicalQueryInViewport.data?.assetPropertyValueHistory ?? []),
-        ...(latestQueryInLiveViewport.data?.assetPropertyValueHistory ?? []),
-      ];
+        const statusFromQueries = [
+          latestValueQuery,
+          mostRecentBeforeEndValueQuery,
+          historicalQueryInViewport,
+          latestQueryInLiveViewport,
+        ].filter((query) => !isQueryDisabled(query));
 
-      updateAlarmStateData(alarm, { data: dataFromQueries, viewport });
+        const status = combineStatusForQueries(statusFromQueries);
 
-      return alarm;
+        return {
+          request,
+          data: dataFromQueries,
+          status,
+        };
+      }),
     });
   }, [
-    alarms,
-    viewport,
     latestQueriesInLiveViewport,
     latestValueQueries,
     historicalQueriesInViewport,
