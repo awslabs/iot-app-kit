@@ -51,7 +51,7 @@ describe.skip('useAlarms', () => {
   });
 
   it('should not transform AlarmData when no transform function supplied', async () => {
-    useAlarmAssetsMock.mockReturnValue([mockAlarmDataDescribeAsset]);
+    // useAlarmAssetsMock.mockReturnValue([mockAlarmDataDescribeAsset]);
     useLatestAlarmPropertyValuesMock.mockReturnValue([
       mockAlarmDataGetAssetPropertyValue,
     ]);
@@ -76,7 +76,7 @@ describe.skip('useAlarms', () => {
   });
 
   it('should transform AlarmData according to supplied transform function', async () => {
-    useAlarmAssetsMock.mockReturnValue([mockAlarmDataDescribeAsset]);
+    // useAlarmAssetsMock.mockReturnValue([mockAlarmDataDescribeAsset]);
     useLatestAlarmPropertyValuesMock.mockReturnValue([
       mockAlarmDataGetAssetPropertyValue,
     ]);
@@ -131,7 +131,7 @@ describe.skip('useAlarms', () => {
       properties: [mockAssetProperty],
     } satisfies AlarmDataInternal;
 
-    useAlarmAssetsMock.mockReturnValue([mockAlarmDataDescribeAsset]);
+    // useAlarmAssetsMock.mockReturnValue([mockAlarmDataDescribeAsset]);
     useLatestAlarmPropertyValuesMock.mockReturnValue([
       mockAlarmDataGetAssetPropertyValue,
     ]);
@@ -209,7 +209,7 @@ describe.skip('useAlarms', () => {
       ],
     };
 
-    useAlarmAssetsMock.mockReturnValue([mockAlarmDataDescribeAsset]);
+    // useAlarmAssetsMock.mockReturnValue([mockAlarmDataDescribeAsset]);
     useLatestAlarmPropertyValuesMock.mockReturnValue([
       mockAlarmDataGetAssetPropertyValue,
     ]);

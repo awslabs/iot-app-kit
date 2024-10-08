@@ -14,6 +14,7 @@ import {
 } from './hookHelpers';
 import { filterAlarmInputProperties } from './utils/filterAlarmInputProperties';
 import { useInputPropertyTimeSeriesData } from './hookHelpers/useInputPropertyTimeSeriesData/useInputPropertyTimeSeriesData';
+import { useAlarmsState } from './state';
 
 /**
  * Identify function that returns the input AlarmData.
@@ -59,13 +60,16 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     inputPropertyTimeSeriesDataSettings,
     transform,
   } = options ?? {};
+
+  const { alarmDatas, onSummarizeAlarms } = useAlarmsState();
   /**
    * Fetch alarm summaries based on the request
    * (e.g. all alarms for an asset or assetModel)
    */
-  const assetAlarmData = useAlarmAssets({
+  useAlarmAssets({
     iotSiteWiseClient,
     requests,
+    onSummarizeAlarms,
   });
 
   /**
@@ -74,7 +78,7 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
    */
   const typePropertyAlarmData = useLatestAlarmPropertyValues({
     iotSiteWiseClient,
-    alarmDataList: assetAlarmData,
+    alarmDataList: alarmDatas,
     alarmPropertyFieldName: 'type',
   });
 

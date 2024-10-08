@@ -78,15 +78,16 @@ export const mockSourceAssetProperty2 = {
   dataType: 'STRING',
 } satisfies AssetProperty;
 
+export const mockDefaultAlarmStateRuleEvaluation = {
+  simpleRule: {
+    inputProperty: 41,
+    operator: 'GREATER',
+    threshold: 30,
+  },
+};
 export const mockDefaultAlarmState = JSON.stringify({
   stateName: 'NORMAL',
-  ruleEvaluation: {
-    simpleRule: {
-      inputProperty: 41,
-      operator: 'GREATER',
-      threshold: 30,
-    },
-  },
+  ruleEvaluation: mockDefaultAlarmStateRuleEvaluation,
 });
 
 export const mockDefaultAlarmState2 = JSON.stringify({

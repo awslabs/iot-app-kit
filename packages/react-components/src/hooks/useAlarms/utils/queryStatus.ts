@@ -1,4 +1,5 @@
 import { UseQueryResult } from '@tanstack/react-query';
+import { SetOptional } from 'type-fest';
 import isEqual from 'lodash.isequal';
 import type { AlarmData, AlarmDataStatus } from '../types';
 
@@ -56,15 +57,18 @@ export const getStatusForQuery = (
  * @returns one AlarmDataStatus
  */
 export const combineStatusForQueries = (
-  queries: Pick<
-    UseQueryResult,
-    'isLoading' | 'isRefetching' | 'isSuccess' | 'isError' | 'error'
+  queries: SetOptional<
+    Pick<
+      UseQueryResult,
+      'isLoading' | 'isRefetching' | 'isSuccess' | 'isError' | 'error'
+    >,
+    'error'
   >[],
   oldStatus?: AlarmDataStatus
 ) => {
   const errors: Error[] = [];
   queries.forEach(({ error }) => {
-    if (error !== null) {
+    if (error != null) {
       errors.push(error);
     }
   });
