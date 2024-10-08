@@ -209,6 +209,7 @@ export const useChartConfiguration = (
     series,
     showBadDataIcons,
     showUncertainDataIcons,
+    showAlarmIcons,
   });
 
   /*

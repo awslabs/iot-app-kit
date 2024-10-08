@@ -7,7 +7,7 @@ import {
 import type { WidgetSettings } from '../../common/dataTypes';
 import { AssistantProperty } from '../../common/assistantProps';
 import type { ComponentQuery } from '../../common/chartTypes';
-import type { AlarmContent } from '../alarm-state/types';
+import type { AlarmContent } from '../alarm-components/alarm-content/types';
 import { AlarmDataStatus } from '../../hooks/useAlarms';
 
 export type GaugeProps = {

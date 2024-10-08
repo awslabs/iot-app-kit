@@ -17,7 +17,7 @@ export const XYPlotTooltipValue = ({
   significantDigits,
 }: XYPlotTooltipValueOptions) => {
   return (
-    <div style={{ alignSelf: 'end' }}>
+    <div style={{ alignSelf: 'start' }}>
       {formatValue(significantDigits)(value ?? '')}
     </div>
   );

@@ -3,11 +3,12 @@ import Spinner from '@cloudscape-design/components/spinner';
 import { Value } from '../shared-components';
 import { DataQualityText } from '../data-quality/data-quality-text';
 import { formatDate } from '../../utils/time';
-import { AlarmStateText } from '../alarm-state/alarm-state-text';
+import { AlarmStateTextWithAssistant } from '../alarm-components/alarm-state/alarmStateTextWithAssistant';
+import { AlarmStateText } from '../alarm-components/alarm-state/alarmStateText';
 import { AlarmDataStatus } from '../../hooks/useAlarms';
 import type { DataPoint } from '@iot-app-kit/core';
 import { Alert, Box } from '@cloudscape-design/components';
-import { AlarmContent } from '../alarm-state/types';
+import { AlarmContent } from '../alarm-components/alarm-content/types';
 import { Title } from '../../common/title';
 import { AssistantProperty } from '../../common/assistantProps';
 import { spaceStaticXs } from '@cloudscape-design/design-tokens';
@@ -88,7 +89,7 @@ export const AlarmHeader = ({
   backgroundColor?: string;
   assistant?: AssistantProperty;
 }) => {
-  if (!alarmContent?.state && !alarmStatus) return null;
+  if (!alarmContent?.alarmState && !alarmStatus) return null;
 
   return (
     <div
@@ -98,12 +99,20 @@ export const AlarmHeader = ({
         color: fontColor,
       }}
     >
-      <AlarmStateText
-        alarmContent={alarmContent}
-        status={alarmStatus}
-        inheritFontColor={!!showFilledThreshold || !!backgroundColor}
-        assistant={assistant}
-      />
+      {assistant ? (
+        <AlarmStateTextWithAssistant
+          status={alarmStatus}
+          alarmContent={alarmContent}
+          inheritFontColor={!!showFilledThreshold || !!backgroundColor}
+          assistant={assistant}
+        />
+      ) : (
+        <AlarmStateText
+          status={alarmStatus}
+          alarmState={alarmContent?.alarmState}
+          inheritFontColor={!!showFilledThreshold || !!backgroundColor}
+        />
+      )}
     </div>
   );
 };

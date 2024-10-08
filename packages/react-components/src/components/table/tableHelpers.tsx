@@ -17,7 +17,7 @@ import {
   spaceStaticS,
   spaceStaticXxs,
 } from '@cloudscape-design/design-tokens';
-import { AlarmStateText } from '../alarm-state/alarm-state-text';
+import { AlarmStateText } from '../alarm-components/alarm-state/alarmStateText';
 import { isAlarmState } from '../../hooks/useAlarms/transformers';
 
 const dataQuality = ({ quality }: { quality: DataPoint['quality'] }) => {
@@ -104,7 +104,7 @@ export const getDefaultColumnDefinitions: (
       }
 
       if (typeof value === 'string' && isAlarmState(value)) {
-        return <AlarmStateText alarmContent={{ state: value }} />;
+        return <AlarmStateText alarmState={value} />;
       }
 
       return (

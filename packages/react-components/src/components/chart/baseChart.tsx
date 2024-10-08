@@ -115,11 +115,6 @@ const BaseChart = ({
     trendCursorValues,
   } = useTrendCursors({ group, chartRef, id: options.id });
 
-  const alarms = useChartAlarms({
-    queries,
-    viewport,
-  });
-
   // convert TimeSeriesDataQuery to TimeSeriesData
   const timeSeriesQueries = getTimeSeriesQueries(queries);
   const {
@@ -130,6 +125,11 @@ const BaseChart = ({
     utilizedViewport,
     visibleData,
   } = useVisualizedDataStreams(timeSeriesQueries, viewport);
+
+  const alarms = useChartAlarms({
+    queries,
+    viewport: utilizedViewport,
+  });
 
   const dataStreams = useNormalizedDataStreams({
     dataStreams: visualizedDataStreams,

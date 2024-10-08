@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { DataStream } from '@iot-app-kit/core';
 import { useVisibleDataStreams } from '../../../../hooks/useVisibleDataStreams';
 import { DataStreamInformation } from '../../types';
-import { AlarmStateText } from '../../../../../alarm-state/alarm-state-text';
+import { AlarmStateText } from '../../../../../alarm-components/alarm-state/alarmStateText';
 import { PascalCaseStateName } from '../../../../../../hooks/useAlarms/transformers';
 
 export const LatestAlarmStateValueCell = ({
@@ -20,7 +20,7 @@ export const LatestAlarmStateValueCell = ({
     <div className={!isVisible ? 'hidden-legend' : ''}>
       {latestAlarmStateValue ? (
         <AlarmStateText
-          alarmContent={{ state: latestAlarmStateValue as PascalCaseStateName }}
+          alarmState={latestAlarmStateValue as PascalCaseStateName}
         />
       ) : (
         '-'

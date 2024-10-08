@@ -8,49 +8,44 @@ import {
   colorTextStatusInactive,
   spaceScaledXxs,
 } from '@cloudscape-design/design-tokens';
-import { AlarmPopover } from '../popover/alarm-popover/alarmPopover';
-import type { AlarmContent } from './types';
-import { AssistantProperty } from '../../common/assistantProps';
-import { AlarmDataStatus } from '../../hooks/useAlarms';
 import { Spinner } from '@cloudscape-design/components';
-import './alarm-state-text.css';
+import { AlarmDataStatus } from '../../../hooks/useAlarms';
+import { PascalCaseStateName } from '../../../hooks/useAlarms/transformers';
+import './alarmStateText.css';
 
-type AlarmStateTextOptions = {
-  alarmContent?: AlarmContent;
+export type AlarmStateTextOptions = {
+  alarmState?: PascalCaseStateName;
   status?: AlarmDataStatus;
   isLoading?: boolean;
-  assistant?: AssistantProperty;
   inheritFontColor?: boolean;
+  additionalStyles?: React.CSSProperties;
 };
 
 export const AlarmStateText = ({
-  alarmContent,
+  alarmState,
   status,
   isLoading,
   inheritFontColor,
-  assistant,
+  additionalStyles,
 }: AlarmStateTextOptions) => {
   let icon = null;
   let text = null;
   let styles: React.CSSProperties = {
+    ...additionalStyles,
     gap: spaceScaledXxs,
     textDecoration: 'none',
   };
 
-  if (assistant) {
-    styles.cursor = 'pointer';
-  }
-
   let borderBottom = '1px dashed ';
 
   // checking if the gauge value is loading, so we dont show the alarm loading spinner
-  if (isLoading || !alarmContent?.state) return null;
+  if (isLoading || !alarmState) return null;
 
   if (status?.isLoading) {
     return <Spinner />;
   }
 
-  switch (alarmContent?.state) {
+  switch (alarmState) {
     case 'Active':
       icon = (
         <Icon
@@ -173,11 +168,5 @@ export const AlarmStateText = ({
     </div>
   );
 
-  return assistant ? (
-    <AlarmPopover assistant={assistant} icon={icon} alarmContent={alarmContent}>
-      {alarmStateText}
-    </AlarmPopover>
-  ) : (
-    alarmStateText
-  );
+  return alarmStateText;
 };

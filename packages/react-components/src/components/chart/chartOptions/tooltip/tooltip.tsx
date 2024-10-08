@@ -4,16 +4,18 @@ import {
   XYPlotTooltipDatastreams,
   XYPlotTooltipDatastreamsOptions,
 } from './datastreams';
-import { ChartDataQuality } from '../../types';
+import { ChartAlarms, ChartDataQuality } from '../../types';
 
 export type XYPlotTooltipOptions = XYPlotTooltipTimeOptions &
   XYPlotTooltipDatastreamsOptions &
-  ChartDataQuality;
+  ChartDataQuality &
+  ChartAlarms;
 export const XYPlotTooltip = ({
   time,
   datastreams,
   showBadDataIcons,
   showUncertainDataIcons,
+  showAlarmIcons,
 }: XYPlotTooltipOptions) => {
   return (
     <div role='tooltip'>
@@ -21,6 +23,7 @@ export const XYPlotTooltip = ({
       <XYPlotTooltipDatastreams
         showBadDataIcons={showBadDataIcons}
         showUncertainDataIcons={showUncertainDataIcons}
+        showAlarmIcons={showAlarmIcons}
         datastreams={datastreams}
       />
     </div>

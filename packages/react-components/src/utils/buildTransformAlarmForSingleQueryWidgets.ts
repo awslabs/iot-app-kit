@@ -61,7 +61,7 @@ export const buildTransformAlarmForSingleQueryWidgets =
       alarmName: compositeModelName,
       alarmExpression: mapAlarmRuleExpression(alarm),
       assetId,
-      state: parseAlarmStateAssetProperty(latestState)?.value.state,
+      alarmState: parseAlarmStateAssetProperty(latestState)?.value.state,
       timeSeriesDataQueries:
         timeSeriesDataQuery !== undefined ? [timeSeriesDataQuery] : [],
       threshold: transformAlarmsToThreshold(alarm),

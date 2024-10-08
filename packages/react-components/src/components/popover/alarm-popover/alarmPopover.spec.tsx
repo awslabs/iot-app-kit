@@ -9,7 +9,7 @@ import {
 import { AlarmPopover, type AlarmPopoverProps } from './alarmPopover';
 import userEvent from '@testing-library/user-event';
 import * as useAssistant from '../../../hooks/useAssistant/useAssistant';
-import { AlarmContent } from '../../alarm-state/types';
+import { AlarmContent } from '../../alarm-components/alarm-content/types';
 import { PascalCaseStateName } from '@iot-app-kit/source-iotsitewise/dist/es/alarms/iotevents';
 
 jest.mock('../../../hooks/useAssistant/useAssistant');
@@ -52,7 +52,7 @@ const mockSeverity = 1;
 const mockAlarmContent = {
   alarmName: mockAlarmName,
   alarmExpression: mockAlarmExpression,
-  state: mockState,
+  alarmState: mockState,
   severity: mockSeverity,
 } satisfies AlarmContent;
 

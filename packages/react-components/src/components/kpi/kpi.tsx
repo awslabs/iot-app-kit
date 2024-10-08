@@ -150,6 +150,7 @@ export const KPI = ({
     <KpiBase
       propertyPoint={propertyPoint}
       alarmContent={transformedAlarm}
+      alarmStatus={transformedAlarm?.status}
       settings={{ ...settings, backgroundColor }}
       propertyThreshold={propertyThreshold}
       aggregationType={dataStreams[0]?.aggregationType}

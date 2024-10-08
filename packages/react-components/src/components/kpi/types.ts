@@ -1,6 +1,6 @@
 import { StyledThreshold } from '@iot-app-kit/core';
 import type { WidgetSettings } from '../../common/dataTypes';
-import { AlarmContent } from '../alarm-state/types';
+import { AlarmContent } from '../alarm-components/alarm-content/types';
 import { AssistantProperty } from '../../common/assistantProps';
 import { AlarmDataStatus } from '../../hooks/useAlarms';
 

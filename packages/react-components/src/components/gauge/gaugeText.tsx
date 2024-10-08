@@ -7,11 +7,12 @@ import {
   colorTextBodyDefault,
   colorTextHeadingDefault,
 } from '@cloudscape-design/design-tokens';
-import { AlarmStateText } from '../alarm-state/alarm-state-text';
+import { AlarmStateTextWithAssistant } from '../alarm-components/alarm-state/alarmStateTextWithAssistant';
+import { AlarmStateText } from '../alarm-components/alarm-state/alarmStateText';
 import { getPreciseValue } from '../../utils/getPreciseValue';
 import { Primitive } from '@iot-app-kit/core';
 import { GaugeErrorText } from './gaugeErrorText';
-import { AlarmContent } from '../alarm-state/types';
+import { AlarmContent } from '../alarm-components/alarm-content/types';
 import { AssistantProperty } from '../../common/assistantProps';
 import { AlarmDataStatus } from '../../hooks/useAlarms';
 import { Spinner } from '@cloudscape-design/components';
@@ -104,12 +105,20 @@ export const GaugeText = ({
         }}
       >
         <GaugeErrorText error={error} />
-        <AlarmStateText
-          status={alarmStatus}
-          alarmContent={alarmContent}
-          isLoading={isLoading}
-          assistant={assistant}
-        />
+        {assistant ? (
+          <AlarmStateTextWithAssistant
+            status={alarmStatus}
+            alarmContent={alarmContent}
+            isLoading={isLoading}
+            assistant={assistant}
+          />
+        ) : (
+          <AlarmStateText
+            status={alarmStatus}
+            alarmState={alarmContent?.alarmState}
+            isLoading={isLoading}
+          />
+        )}
         {!error &&
           getFormattedValue({
             value,

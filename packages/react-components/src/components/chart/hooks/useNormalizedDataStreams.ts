@@ -4,7 +4,7 @@ import { ChartAlarms } from './useChartAlarms';
 import { createNonNullableList } from '../../../utils/createNonNullableList';
 import { useMemo } from 'react';
 import { bisector } from 'd3-array';
-import { PascalCaseStateName } from '../../../hooks/useAlarms/transformers';
+import { AlarmContent } from '../../alarm-components/alarm-content/types';
 
 const interpolateY = (
   point1: DataPointWithAlarm,
@@ -29,9 +29,8 @@ const getY = (
 };
 
 type DataPointWithAlarm = DataPoint<number> & {
-  alarmState?: PascalCaseStateName;
   showAlarmYLabelValue?: boolean;
-};
+} & AlarmContent;
 const dataSetBisector = bisector(
   (dataPoint: DataPointWithAlarm) => dataPoint.x
 );
@@ -96,7 +95,7 @@ export const useNormalizedDataStreams = ({
                   ...event,
                   y: event.y ?? getY(pointBefore, pointAfter, event.x),
                   showAlarmYLabelValue: event.y != null,
-                };
+                } satisfies DataPointWithAlarm;
                 dataCopy.splice(i, deleteCount, eventCopy);
               });
           }

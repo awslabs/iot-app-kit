@@ -1,21 +1,21 @@
 import React, { useCallback, useMemo } from 'react';
 import { v4 as uuid } from 'uuid';
-import { Box, SpaceBetween } from '@cloudscape-design/components';
 import {
   AssistantPopover,
   AssistantPopoverProps,
 } from '../assistant-popover/assistantPopover';
-import { AlarmContent } from '../../alarm-state/types';
 import { useAssistant } from '../../../hooks/useAssistant/useAssistant';
 import { EVENT_SUMMARY_DEFAULT_UTTERANCE } from '../../assistant-panels/constants';
+import {
+  AlarmContentContainer,
+  AlarmContentContainerProps,
+} from '../../alarm-components/alarm-content/alarmContentContainer';
 
-export interface AlarmPopoverProps extends AssistantPopoverProps {
-  icon?: JSX.Element | null;
-  alarmContent?: AlarmContent;
-}
+export type AlarmPopoverProps = AssistantPopoverProps &
+  AlarmContentContainerProps;
 
 export const AlarmPopover = (props: AlarmPopoverProps) => {
-  const { icon, alarmContent, assistant } = props;
+  const { alarmContent, assistant } = props;
   const alarmName = alarmContent?.alarmName;
 
   const { messages, generateSummary } = useAssistant({
@@ -49,38 +49,7 @@ export const AlarmPopover = (props: AlarmPopoverProps) => {
     }
   }, [assistant, assistantContext, generateSummary, messages]);
 
-  const title = (
-    <div className='alarm-popup-title'>
-      <SpaceBetween direction='horizontal' size='xxs'>
-        {icon}
-        <Box fontWeight='bold'>{alarmContent?.alarmName}</Box>
-      </SpaceBetween>
-    </div>
-  );
-
-  const ruleExpression = (
-    <Box color='text-body-secondary' fontWeight='light'>
-      {alarmContent?.alarmExpression
-        ? `Rule expression: ${alarmContent?.alarmExpression}`
-        : ''}
-    </Box>
-  );
-
-  const severity = (
-    <Box color='text-body-secondary' fontWeight='light'>
-      {alarmContent?.severity ? `Severity: ${alarmContent?.severity}` : ''}
-    </Box>
-  );
-
-  const content = (
-    <div className='alarm-popup-content'>
-      <SpaceBetween direction='vertical' size='xs'>
-        {title}
-        {severity}
-        {ruleExpression}
-      </SpaceBetween>
-    </div>
-  );
+  const content = <AlarmContentContainer alarmContent={alarmContent} />;
 
   return (
     <AssistantPopover

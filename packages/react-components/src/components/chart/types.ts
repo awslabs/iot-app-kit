@@ -96,6 +96,10 @@ export type ChartDataQuality = {
   showUncertainDataIcons?: boolean;
 };
 
+export type ChartAlarms = {
+  showAlarmIcons?: boolean;
+}
+
 export type ChartOptions = {
   queries: ComponentQuery[];
   defaultVisualizationType?: Visualization;
