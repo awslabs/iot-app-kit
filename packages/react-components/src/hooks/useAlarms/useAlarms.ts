@@ -68,6 +68,7 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     onUpdateAlarmSourceData,
     onUpdateAlarmTypeData,
     onSummarizeAlarmModels,
+    onUpdateAlarmInputPropertyData,
   } = useAlarmsState();
   /**
    * Fetch alarm summaries based on the request
@@ -131,8 +132,14 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     ),
   });
 
-  const alarmData = useInputPropertyTimeSeriesData({
-    alarms: alarmDatas,
+  useInputPropertyTimeSeriesData({
+    requests: state.alarms.flatMap((alarm) =>
+      alarm.alarmDatas.map((alarmData) => ({
+        inputProperty: alarmData.inputProperty,
+        assetId: alarmData.assetId,
+      }))
+    ),
+    onUpdateAlarmInputPropertyData,
     timeSeriesData,
     viewport,
     ...settings,
@@ -145,7 +152,7 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
    */
   const statePropertyAlarmData = useAlarmState({
     iotSiteWiseClient,
-    alarms: alarmData,
+    alarms: alarmDatas,
     viewport,
     ...settings,
   });

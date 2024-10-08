@@ -5,6 +5,7 @@ import {
   UseAlarmsInputPropertyTimeSeriesDataSettings,
   UseAlarmsOptions,
 } from '../../types';
+import { OnUpdateAlarmInputDataAction } from '../../state';
 
 export type UseInputPropertyTimeSeriesDataOptions = {
   timeSeriesData?: AlarmDataQuery['timeSeriesData'];
@@ -13,5 +14,7 @@ export type UseInputPropertyTimeSeriesDataOptions = {
   'fetchInputPropertyData' | 'fetchOnlyLatest' | 'refreshRate'
 > &
   Pick<UseAlarmsOptions, 'viewport'> & {
-    alarms: AlarmData[];
-  } & UseAlarmsInputPropertyTimeSeriesDataSettings;
+    requests: Pick<AlarmData, 'assetId' | 'inputProperty'>[];
+  } & UseAlarmsInputPropertyTimeSeriesDataSettings & {
+    onUpdateAlarmInputPropertyData: OnUpdateAlarmInputDataAction;
+  };

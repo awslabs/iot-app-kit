@@ -11,6 +11,8 @@ import { UpdateAlarmSourceDataActionPayload } from './actions/updateAlarmSourceD
 import { UpdateAlarmTypeDataActionPayload } from './actions/updateAlarmTypeData/types';
 import { onUpdateAlarmTypeDataAction } from './actions/updateAlarmTypeData';
 import { SummarizeAlarmModelsActionPayload } from './actions/summarizeAlarmModels/types';
+import { onUpdateAlarmInputDataAction } from './actions/updateAlarmInputPropertyData';
+import { UpdateAlarmInputDataActionPayload } from './actions/updateAlarmInputPropertyData/types';
 
 export const useAlarmsState = () => {
   const [state, dispatch] = useReducer(alarmsStateReducer, { alarms: [] });
@@ -43,6 +45,13 @@ export const useAlarmsState = () => {
     [dispatch]
   );
 
+  const onUpdateAlarmInputPropertyData = useCallback(
+    (payload: UpdateAlarmInputDataActionPayload) => {
+      dispatch(onUpdateAlarmInputDataAction(payload));
+    },
+    [dispatch]
+  );
+
   const alarmDatas = useMemo(
     () => convertAlarmsStateToAlarmDatas(state),
     [state]
@@ -55,6 +64,7 @@ export const useAlarmsState = () => {
     onUpdateAlarmSourceData,
     onUpdateAlarmTypeData,
     onSummarizeAlarmModels,
+    onUpdateAlarmInputPropertyData,
   };
 };
 
@@ -71,3 +81,6 @@ export type OnUpdateAlarmTypeDataAction =
 
 export type OnSummarizeAlarmModelsAction =
   UseAlarmsStateReturnValues['onSummarizeAlarmModels'];
+
+export type OnUpdateAlarmInputDataAction =
+  UseAlarmsStateReturnValues['onUpdateAlarmInputPropertyData'];

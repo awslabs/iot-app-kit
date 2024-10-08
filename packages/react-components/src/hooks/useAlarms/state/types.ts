@@ -4,10 +4,8 @@ import { SummarizeAlarmAction } from './actions';
 import { SummarizeAlarmModelsAction } from './actions/summarizeAlarmModels/types';
 import { UpdateAlarmSourceDataAction } from './actions/updateAlarmSourceData/types';
 import { UpdateAlarmTypeDataAction } from './actions/updateAlarmTypeData/types';
+import { UpdateAlarmInputDataAction } from './actions/updateAlarmInputPropertyData/types';
 
-/**
- * TODO: will remove AlarmDataInternal after models is refactored
- */
 export type AlarmDataState = Omit<AlarmData, 'status'> & {
   /**
    * The list of asset or assetModel properties on the alarm's asset.
@@ -15,6 +13,7 @@ export type AlarmDataState = Omit<AlarmData, 'status'> & {
    */
   properties?: (AssetProperty | AssetModelProperty)[];
   getLatestAlarmSourceValueQueryStatus?: AlarmDataStatus;
+  getInputPropertyValueQueryStatus?: AlarmDataStatus;
   getLatestAlarmTypeValueQueryStatus?: AlarmDataStatus;
   describeAlarmModelsQueryStatus?: AlarmDataStatus;
 };
@@ -34,4 +33,5 @@ export type AlarmAction =
   | SummarizeAlarmAction
   | UpdateAlarmSourceDataAction
   | UpdateAlarmTypeDataAction
-  | SummarizeAlarmModelsAction;
+  | SummarizeAlarmModelsAction
+  | UpdateAlarmInputDataAction;
