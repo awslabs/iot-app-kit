@@ -1,46 +1,44 @@
 import { Canvas, Meta, Story } from '@storybook/addon-docs';
 
-import SceneComposer, { argTypes, args } from './components/scene-composer';
-import { testScenes } from '../tests/testData';
-import { COMPOSER_FEATURES } from '../src/interfaces/feature';
+import SceneComposer, { argTypes, args } from '../components/scene-composer';
 
 <Meta title="Tests/Matterport" component={SceneComposer} argTypes={argTypes} />
 
 export const defaultArgs = {
-  source: 'local',
-  scene: 'scene1',
-  assetType: 'GLB',
+  source: 'aws',
+  sceneId: 'MatterportIntegration',
+  workspaceId: 'CookieFactory',
   theme: 'dark',
   mode: 'Viewing',
   density: 'comfortable',
-  matterportModelId: 'cZowU1FxWEQ',
-  matterportApplicationKey: '',
-  features: [
-    COMPOSER_FEATURES.Matterport,
-  ]
 }
 
 export const Template = (args) => {
   return <SceneComposer {...defaultArgs} {...args} />
 }
 
-# Viewing
+## Matterport Integration
+
+For these tests, you should authenticate against our demo aws account `540844875673`
+
+# Viewer
 
 <Canvas>
   <Story name='Viewer'
     height='500px'
     parameters={{ controls: { include: ['matterportModelId', 'matterportApplicationKey', 'onSelectionChanged', 'onWidgetClick'], hideNoControlsWarning: true }}}
-    args={{ ...defaultArgs, scene: 'CookieFactoryWaterTank' }}>
+    args={{ ...defaultArgs }}>
     {Template.bind({})}
   </Story>
 </Canvas>
 
-# Editing
+# Editer
 <Canvas>
   <Story name='Editor'
     height='500px'
+    width='100vw'
     parameters={{ controls: { include: ['matterportModelId', 'matterportApplicationKey', 'onSelectionChanged', 'onWidgetClick'], hideNoControlsWarning: true }}}
-    args={{ ...defaultArgs, scene: 'CookieFactoryWaterTankMatterportTag', mode: 'Editing' }}>
+    args={{ ...defaultArgs, mode: 'Editing' }}>
     {Template.bind({})}
   </Story>
 </Canvas>
