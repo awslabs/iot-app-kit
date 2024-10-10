@@ -140,7 +140,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     currentViewport || parseViewport(dashboardConfiguration?.defaultViewport)
   );
   const { chatbotHeight, calculateChatbotDimensions } = useChatbotPosition(
-    '[data-test-id=read-only-mode-dashboard]'
+    '[data-testid=read-only-mode-dashboard]'
   );
   const [resizablePanesWidth, setResizablePanesWidth] = useState<number>(0);
 
@@ -324,7 +324,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     >
       <div
         className='dashboard'
-        data-test-id='edit-mode-dashboard'
+        data-testid='edit-mode-dashboard'
         style={userSelect}
       >
         <CustomDragLayer
@@ -406,13 +406,13 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
         />
       }
     >
-      <div className='dashboard' data-test-id='read-only-mode-dashboard'>
+      <div className='dashboard' data-testid='read-only-mode-dashboard'>
         {hasValidAssetModelData && (
           <div
             style={dashboardToolbarBottomBorder}
             className='dashboard-toolbar-read-only'
             aria-label='preview mode dashboard toolbar'
-            data-test-id='read-only-mode-dashboard-toolbar'
+            data-testid='read-only-mode-dashboard-toolbar'
             //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
             tabIndex={0}
           >
@@ -448,13 +448,13 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
         />
       }
     >
-      <div className='dashboard' data-test-id='read-only-mode-dashboard'>
+      <div className='dashboard' data-testid='read-only-mode-dashboard'>
         {hasValidAssetModelData && (
           <div
             style={dashboardToolbarBottomBorder}
             className='dashboard-toolbar-readonly-assistant'
             aria-label='dashboard assistant mode with toolbar'
-            data-test-id='assistant-mode-dashboard-toolbar'
+            data-testid='assistant-mode-dashboard-toolbar'
             //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
             tabIndex={0}
           >

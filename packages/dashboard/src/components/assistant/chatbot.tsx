@@ -41,6 +41,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
   ];
 
   const client = new IoTSitewiseAssistantClient({
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     iotSiteWiseClient: iotSiteWisePrivateClient!,
   });
 
@@ -53,6 +54,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
     if (messages.length === 0) {
       setMessages(initialMessages);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages.length, initialMessages]);
 
   useEffect(() => {

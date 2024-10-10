@@ -8,7 +8,7 @@ describe('DashboardHeader', () => {
   const ProviderWrapper = ({ children }: PropsWithChildren) => (
     <Provider store={configureDashboardStore()}>{children}</Provider>
   );
-  it('should render the dashboard title', () => {
+  it('should render the dashboard title', async () => {
     const props = {
       name: 'My Dashboard',
       editable: false,
@@ -25,14 +25,14 @@ describe('DashboardHeader', () => {
       },
       significantDigits: 2,
     };
-    const { getByText } = render(<DashboardHeader {...props} />, {
+    const { findByText } = render(<DashboardHeader {...props} />, {
       wrapper: ProviderWrapper,
     });
-    const titleElement = getByText('My Dashboard');
+    const titleElement = await findByText('My Dashboard');
     expect(titleElement).toBeInTheDocument();
   });
 
-  it('should render the TimeSelection component when editable is false', () => {
+  it('should render the TimeSelection component when editable is false', async () => {
     const props = {
       name: 'My Dashboard',
       editable: false,
@@ -49,10 +49,10 @@ describe('DashboardHeader', () => {
       },
       significantDigits: 2,
     };
-    const { getByTestId } = render(<DashboardHeader {...props} />, {
+    const { findByTestId } = render(<DashboardHeader {...props} />, {
       wrapper: ProviderWrapper,
     });
-    const timeSelectionElement = getByTestId('time-selection');
+    const timeSelectionElement = await findByTestId('time-selection');
     expect(timeSelectionElement).toBeInTheDocument();
   });
 });

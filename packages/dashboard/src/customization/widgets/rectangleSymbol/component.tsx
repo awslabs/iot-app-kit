@@ -37,7 +37,7 @@ const RectangleWidgetComponent: React.FC<RectangleWidget> = (widget) => {
           height='100%'
           stroke={borderColor}
           strokeWidth={borderThickness}
-          stroke-dasharray={strokeString}
+          strokeDasharray={strokeString}
           fill={fill}
         />
       </svg>

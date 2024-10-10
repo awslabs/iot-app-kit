@@ -34,8 +34,8 @@ const clients = {
   iotSiteWise: new IoTSiteWise(),
 };
 
-it('renders', function () {
-  const { queryByText, queryByTestId } = render(
+it('renders', async () => {
+  const { queryByText, findByTestId } = render(
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
@@ -50,13 +50,13 @@ it('renders', function () {
     />
   );
 
+  expect(await findByTestId(/dashboard-actions/i)).toBeInTheDocument();
+  expect(await findByTestId(/time-selection/i)).toBeInTheDocument();
   expect(queryByText(/component library/i)).not.toBeInTheDocument();
-  expect(queryByTestId(/dashboard-actions/i)).toBeInTheDocument();
-  expect(queryByTestId(/time-selection/i)).toBeInTheDocument();
 });
 
-it('renders in readonly initially', function () {
-  const { baseElement, queryByText, queryByTestId } = render(
+it('renders in readonly initially', async () => {
+  const { queryByTestId, queryByText, findByTestId } = render(
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
@@ -72,20 +72,15 @@ it('renders in readonly initially', function () {
     />
   );
 
-  expect(
-    baseElement.querySelector('[data-test-id="read-only-mode-dashboard"]')
-  ).toBeTruthy();
-  expect(
-    baseElement.querySelector('[data-test-id="edit-mode-dashboard"]')
-  ).not.toBeTruthy();
-
+  expect(await findByTestId(/read-only-mode-dashboard/i)).toBeInTheDocument();
+  expect(queryByTestId(/edit-mode-dashboard/i)).toBeNull();
+  expect(await findByTestId(/dashboard-actions/i)).toBeInTheDocument();
+  expect(await findByTestId(/time-selection/i)).toBeInTheDocument();
   expect(queryByText(/component library/i)).not.toBeInTheDocument();
-  expect(queryByTestId(/dashboard-actions/i)).toBeInTheDocument();
-  expect(queryByTestId(/time-selection/i)).toBeInTheDocument();
 });
 
-it('renders in edit initially', function () {
-  const { baseElement } = render(
+it('renders in edit initially', async () => {
+  const { findByTestId, queryByTestId } = render(
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
@@ -101,12 +96,8 @@ it('renders in edit initially', function () {
     />
   );
 
-  expect(
-    baseElement.querySelector('[data-test-id="read-only-mode-dashboard"]')
-  ).not.toBeTruthy();
-  expect(
-    baseElement.querySelector('[data-test-id="edit-mode-dashboard"]')
-  ).toBeTruthy();
+  expect(await findByTestId(/edit-mode-dashboard/i)).toBeInTheDocument();
+  expect(queryByTestId(/read-only-mode-dashboard/i)).toBeNull();
 });
 
 it('passes the correct viewMode to onSave', function () {
@@ -145,8 +136,8 @@ it('passes the correct viewMode to onSave', function () {
   expect(onSave).toBeCalledWith(savedConfig, 'preview');
 });
 
-it('renders dashboard name', function () {
-  const { queryByText } = render(
+it('renders dashboard name', async () => {
+  const { findByText } = render(
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
@@ -162,11 +153,11 @@ it('renders dashboard name', function () {
     />
   );
 
-  expect(queryByText(/Test dashboard/i)).toBeInTheDocument();
+  expect(await findByText(/Test dashboard/i)).toBeInTheDocument();
 });
 
-it('renders without dashboard name', function () {
-  const { queryByText } = render(
+it('renders without dashboard name', async () => {
+  const { queryByText, findByTestId } = render(
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
@@ -181,11 +172,13 @@ it('renders without dashboard name', function () {
     />
   );
 
+  expect(await findByTestId(/dashboard-actions/i)).toBeInTheDocument();
+  expect(await findByTestId(/time-selection/i)).toBeInTheDocument();
   expect(queryByText(/Test dashboard/i)).not.toBeInTheDocument();
 });
 
-it('assistant disabled by default in the dashboard', function () {
-  const { queryByTestId } = render(
+it('assistant disabled by default in the dashboard', async () => {
+  const { queryByTestId, findByTestId } = render(
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
@@ -201,11 +194,12 @@ it('assistant disabled by default in the dashboard', function () {
     />
   );
 
+  expect(await findByTestId(/time-selection/i)).toBeInTheDocument();
   expect(queryByTestId('dashboard-chatbot')).toBeNull();
 });
 
-it('assistant enabled in the dashboard when state is PASSIVE', () => {
-  const { getByRole } = render(
+it('assistant enabled in the dashboard when state is PASSIVE', async () => {
+  const { findByRole } = render(
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
@@ -224,11 +218,13 @@ it('assistant enabled in the dashboard when state is PASSIVE', () => {
     />
   );
 
-  expect(getByRole('button', { name: 'AI Assistant' })).toBeInTheDocument();
+  expect(
+    await findByRole('button', { name: 'AI Assistant' })
+  ).toBeInTheDocument();
 });
 
-it('assistant disabled in the dashboard when state is DISABLED', () => {
-  const { queryByRole } = render(
+it('assistant disabled in the dashboard when state is DISABLED', async () => {
+  const { queryByRole, findByTestId } = render(
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
@@ -247,5 +243,6 @@ it('assistant disabled in the dashboard when state is DISABLED', () => {
     />
   );
 
+  expect(await findByTestId(/time-selection/i)).toBeInTheDocument();
   expect(queryByRole('button', { name: 'AI Assistant' })).toBeNull();
 });

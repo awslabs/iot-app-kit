@@ -22,6 +22,7 @@ export const useAssistantConfiguration = (widgetId: string) => {
   const assistantClient = useMemo(
     () =>
       new IoTSitewiseAssistantClient({
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         iotSiteWiseClient: iotSiteWisePrivateClient!,
       }),
     [iotSiteWisePrivateClient]

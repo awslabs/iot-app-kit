@@ -33,8 +33,8 @@ const clients = {
   iotSiteWise: new IoTSiteWise(),
 };
 
-it('renders', function () {
-  const { queryByText, queryByTestId } = render(
+it('renders', async () => {
+  const { queryByText, queryByTestId, findByTestId } = render(
     <DashboardView
       dashboardConfiguration={{
         displaySettings: {
@@ -48,13 +48,13 @@ it('renders', function () {
     />
   );
 
+  expect(await findByTestId(/time-selection/i)).toBeInTheDocument();
   expect(queryByText(/component library/i)).not.toBeInTheDocument();
   expect(queryByTestId(/dashboard-visibility-button/i)).not.toBeInTheDocument();
-  expect(queryByTestId(/time-selection/i)).toBeInTheDocument();
 });
 
-it('assistant disabled by default in the dashboard view', function () {
-  const { queryByTestId } = render(
+it('assistant disabled by default in the dashboard view', async () => {
+  const { queryByTestId, findByTestId } = render(
     <DashboardView
       dashboardConfiguration={{
         displaySettings: {
@@ -68,11 +68,12 @@ it('assistant disabled by default in the dashboard view', function () {
     />
   );
 
+  expect(await findByTestId(/time-selection/i)).toBeInTheDocument();
   expect(queryByTestId('dashboard-chatbot')).toBeNull();
 });
 
-it('assistant enabled in the dashboard when state is PASSIVE', function () {
-  const { queryByRole } = render(
+it('assistant enabled in the dashboard when state is PASSIVE', async () => {
+  const { queryByRole, findByTestId } = render(
     <DashboardView
       dashboardConfiguration={{
         displaySettings: {
@@ -89,11 +90,12 @@ it('assistant enabled in the dashboard when state is PASSIVE', function () {
     />
   );
 
+  expect(await findByTestId(/time-selection/i)).toBeInTheDocument();
   expect(queryByRole('button', { name: 'AI Assistant' })).not.toBeNull();
 });
 
-it('assistant disabled in the dashboard when state is DISABLED', function () {
-  const { queryByRole } = render(
+it('assistant disabled in the dashboard when state is DISABLED', async () => {
+  const { queryByRole, findByTestId } = render(
     <DashboardView
       dashboardConfiguration={{
         displaySettings: {
@@ -110,5 +112,6 @@ it('assistant disabled in the dashboard when state is DISABLED', function () {
     />
   );
 
+  expect(await findByTestId(/time-selection/i)).toBeInTheDocument();
   expect(queryByRole('button', { name: 'AI Assistant' })).toBeNull();
 });

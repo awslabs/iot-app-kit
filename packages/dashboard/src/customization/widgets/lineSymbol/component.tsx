@@ -87,7 +87,7 @@ const LineWidgetComponent: React.FC<LineWidget> = (widget) => {
           y2={end.y}
           stroke={color}
           strokeWidth={thickness}
-          stroke-dasharray={strokeString}
+          strokeDasharray={strokeString}
         />
       </svg>
       {isSelected && (

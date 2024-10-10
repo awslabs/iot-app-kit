@@ -4,6 +4,7 @@ import React from 'react';
 import {
   RenderResult,
   act,
+  waitFor,
   cleanup,
   fireEvent,
   render,
@@ -84,8 +85,6 @@ const setupStore = ({ widgets, selectedWidgets }: SetupStoreOptions) =>
 const renderTestComponentAsync = async (
   options?: SetupStoreOptions
 ): Promise<RenderResult> => {
-  let element: RenderResult | undefined = undefined;
-
   const optionsWithDefault = {
     widgets: [MockWidget],
     selectedWidgets: [MockWidget],
@@ -108,8 +107,8 @@ const renderTestComponentAsync = async (
     iotSiteWise: new IoTSiteWise(),
   };
 
-  await act(async () => {
-    element = render(
+  const element = await waitFor(async () =>
+    render(
       <ClientContext.Provider value={clientContext}>
         <QueryClientProvider client={testQueryClient}>
           <Provider store={setupStore({ widgets, selectedWidgets })}>
@@ -117,8 +116,8 @@ const renderTestComponentAsync = async (
           </Provider>
         </QueryClientProvider>
       </ClientContext.Provider>
-    );
-  });
+    )
+  );
 
   if (element === undefined) throw new Error('Something went wrong!');
 

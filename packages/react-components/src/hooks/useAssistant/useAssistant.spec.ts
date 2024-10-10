@@ -108,7 +108,7 @@ describe('useAssistant', () => {
       })
     );
 
-    await act(() => {
+    act(() => {
       result.current.invokeAssistant({
         componentId,
         conversationId,
@@ -138,7 +138,7 @@ describe('useAssistant', () => {
 
     const expectedContent =
       'Hello, I am your dashboard assistant, please ask me anything about your dashboard.';
-    await act(() => {
+    act(() => {
       result.current.setMessages([
         {
           content: expectedContent,
@@ -169,7 +169,7 @@ describe('useAssistant', () => {
       })
     );
 
-    await act(() => {
+    act(() => {
       result.current.invokeAssistant({
         componentId,
         conversationId,
@@ -196,7 +196,7 @@ describe('useAssistant', () => {
       })
     );
 
-    await act(() => {
+    act(() => {
       result.current.generateSummary({
         componentId,
         conversationId,
@@ -269,7 +269,7 @@ describe('useAssistant', () => {
       })
     );
 
-    await act(() => {
+    act(() => {
       result.current.startAction({
         componentId: 'componentId1',
         target: 'dashboard',
@@ -282,7 +282,7 @@ describe('useAssistant', () => {
       });
     });
 
-    await act(() => {
+    act(() => {
       result.current.clearActions('componentId1');
     });
 
@@ -309,7 +309,7 @@ describe('useAssistant', () => {
       })
     );
 
-    await act(() => {
+    act(() => {
       result.current.setMessages([
         {
           content: 'Any content',
@@ -326,7 +326,7 @@ describe('useAssistant', () => {
       });
     });
 
-    await act(() => {
+    act(() => {
       result.current.clearAll();
     });
 

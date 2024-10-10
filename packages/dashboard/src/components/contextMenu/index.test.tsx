@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 
 import { act, render } from '@testing-library/react';
-import { screen } from '@testing-library/dom';
+import { screen, waitFor } from '@testing-library/dom';
 import UserEvent from '@testing-library/user-event';
 
 import type { ContextMenuProps } from './index';
@@ -11,24 +11,25 @@ import { DefaultDashboardMessages } from '~/messages';
 import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 import { configureDashboardStore } from '~/store';
 
-const renderContextMenu = (args: ContextMenuProps, open?: boolean) => {
+const renderContextMenu = async (args: ContextMenuProps, open?: boolean) => {
   const ret: { container: HTMLElement | null } = {
     container: null,
   };
 
-  act(() => {
-    const { container } = render(
-      <Provider store={configureDashboardStore()}>
-        <div
-          id={DASHBOARD_CONTAINER_ID}
-          style={{ height: '1000px', width: '1000px' }}
-        >
-          <ContextMenu {...args} />
-        </div>
-      </Provider>
-    );
-    ret.container = container;
-  });
+  const { container, findByText } = render(
+    <Provider store={configureDashboardStore()}>
+      <div
+        id={DASHBOARD_CONTAINER_ID}
+        style={{ height: '1000px', width: '1000px' }}
+      >
+        <ContextMenu {...args} />
+        <span>Context Menu</span>
+      </div>
+    </Provider>
+  );
+  ret.container = container;
+
+  await findByText('Context Menu');
 
   if (open) {
     act(() => {
@@ -39,6 +40,10 @@ const renderContextMenu = (args: ContextMenuProps, open?: boolean) => {
       });
       document.getElementById(DASHBOARD_CONTAINER_ID)?.dispatchEvent(ev);
     });
+
+    await waitFor(() =>
+      expect(container.querySelector('.iot-context-menu')).toBeTruthy()
+    );
   }
 
   return ret;
@@ -46,13 +51,11 @@ const renderContextMenu = (args: ContextMenuProps, open?: boolean) => {
 
 const clickOption = async (option: string) => {
   const user = UserEvent.setup();
-  await act(async () => {
-    await user.click(screen.getByText(option));
-  });
+  await user.click(screen.getByText(option));
 };
 
 describe('ContextMenu', () => {
-  it('can toggle', () => {
+  it('can toggle', async () => {
     const args: ContextMenuProps = {
       messageOverrides: DefaultDashboardMessages,
       hasCopiedWidgets: false,
@@ -64,11 +67,10 @@ describe('ContextMenu', () => {
       sendWidgetsToBack: () => {},
     };
 
-    const { container } = renderContextMenu(args);
+    const { container } = await renderContextMenu(args);
     if (!container) {
       throw new Error('Container not set');
     }
-
     expect(container.querySelector('.iot-context-menu')).toBeFalsy();
 
     act(() => {
@@ -80,7 +82,9 @@ describe('ContextMenu', () => {
       document.getElementById(DASHBOARD_CONTAINER_ID)?.dispatchEvent(ev);
     });
 
-    expect(container.querySelector('.iot-context-menu')).toBeTruthy();
+    await waitFor(() =>
+      expect(container.querySelector('.iot-context-menu')).toBeTruthy()
+    );
   });
 
   it('can copy', async () => {
@@ -97,7 +101,7 @@ describe('ContextMenu', () => {
       sendWidgetsToBack: () => {},
     };
 
-    const { container } = renderContextMenu(args, true);
+    const { container } = await renderContextMenu(args, true);
     if (!container) {
       throw new Error('Container not set');
     }
@@ -121,7 +125,7 @@ describe('ContextMenu', () => {
       sendWidgetsToBack: () => {},
     };
 
-    const { container } = renderContextMenu(args, true);
+    const { container } = await renderContextMenu(args, true);
     if (!container) {
       throw new Error('Container not set');
     }
@@ -145,7 +149,7 @@ describe('ContextMenu', () => {
       sendWidgetsToBack: () => {},
     };
 
-    const { container } = renderContextMenu(args, true);
+    const { container } = await renderContextMenu(args, true);
     if (!container) {
       throw new Error('Container not set');
     }
@@ -169,7 +173,7 @@ describe('ContextMenu', () => {
       sendWidgetsToBack: () => {},
     };
 
-    const { container } = renderContextMenu(args, true);
+    const { container } = await renderContextMenu(args, true);
     if (!container) {
       throw new Error('Container not set');
     }
@@ -193,7 +197,7 @@ describe('ContextMenu', () => {
       sendWidgetsToBack: () => {},
     };
 
-    const { container } = renderContextMenu(args, true);
+    const { container } = await renderContextMenu(args, true);
     if (!container) {
       throw new Error('Container not set');
     }
@@ -217,7 +221,7 @@ describe('ContextMenu', () => {
       sendWidgetsToBack: () => {},
     };
 
-    const { container } = renderContextMenu(args, true);
+    const { container } = await renderContextMenu(args, true);
     if (!container) {
       throw new Error('Container not set');
     }
@@ -241,7 +245,7 @@ describe('ContextMenu', () => {
       sendWidgetsToBack: () => {},
     };
 
-    const { container } = renderContextMenu(args, true);
+    const { container } = await renderContextMenu(args, true);
     if (!container) {
       throw new Error('Container not set');
     }
@@ -265,7 +269,7 @@ describe('ContextMenu', () => {
       sendWidgetsToBack: () => {},
     };
 
-    const { container } = renderContextMenu(args, true);
+    const { container } = await renderContextMenu(args, true);
     if (!container) {
       throw new Error('Container not set');
     }
@@ -289,7 +293,7 @@ describe('ContextMenu', () => {
       sendWidgetsToBack,
     };
 
-    const { container } = renderContextMenu(args, true);
+    const { container } = await renderContextMenu(args, true);
     if (!container) {
       throw new Error('Container not set');
     }
@@ -313,7 +317,7 @@ describe('ContextMenu', () => {
       sendWidgetsToBack,
     };
 
-    const { container } = renderContextMenu(args, true);
+    const { container } = await renderContextMenu(args, true);
     if (!container) {
       throw new Error('Container not set');
     }

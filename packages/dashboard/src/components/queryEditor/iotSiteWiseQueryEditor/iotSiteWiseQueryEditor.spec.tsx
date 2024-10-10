@@ -15,6 +15,8 @@ import {
 import { configureDashboardStore } from '~/store';
 import { Provider } from 'react-redux';
 
+jest.mock('@iot-app-kit/charts-core');
+
 export async function waitForLoadingToFinish() {
   await waitFor(() => {
     expect(screen.getByText(/Loading/)).toBeVisible();
