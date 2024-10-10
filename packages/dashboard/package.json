@@ -87,7 +87,7 @@
     "react-redux": "^8.1.0",
     "redux": "^4.2.1",
     "rimraf": "^5.0.1",
-    "rollup": "3.28.1",
+    "rollup": "3.29.5",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-tsconfig-paths": "^1.5.1",
