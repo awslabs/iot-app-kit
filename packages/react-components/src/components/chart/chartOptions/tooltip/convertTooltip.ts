@@ -43,6 +43,12 @@ export const useTooltip = ({
         showAlarmIcons,
       }),
     }),
-    [significantDigits, colorMap, showBadDataIcons, showUncertainDataIcons]
+    [
+      significantDigits,
+      colorMap,
+      showBadDataIcons,
+      showUncertainDataIcons,
+      showAlarmIcons,
+    ]
   );
 };
