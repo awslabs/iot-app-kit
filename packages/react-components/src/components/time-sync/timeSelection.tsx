@@ -7,7 +7,6 @@ import SpaceBetween from '@cloudscape-design/components/space-between';
 import type { DateRangePickerProps } from '@cloudscape-design/components/date-range-picker';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 
-// import { rangeValidator } from './rangeValidator';
 import { useViewport } from '../../hooks/useViewport';
 import { Tooltip } from '../tooltip/index';
 import {
