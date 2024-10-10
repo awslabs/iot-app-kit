@@ -62,7 +62,7 @@ export const mockTypeAssetProperty = {
 
 export const mockTypeAssetProperty2 = {
   id: 'typeId2',
-  name: ALARM_STATE_PROPERTY_NAME,
+  name: ALARM_TYPE_PROPERTY_NAME,
   dataType: 'STRING',
 } satisfies AssetProperty;
 
@@ -74,7 +74,7 @@ export const mockSourceAssetProperty = {
 
 export const mockSourceAssetProperty2 = {
   id: 'sourceId2',
-  name: ALARM_STATE_PROPERTY_NAME,
+  name: ALARM_SOURCE_PROPERTY_NAME,
   dataType: 'STRING',
 } satisfies AssetProperty;
 

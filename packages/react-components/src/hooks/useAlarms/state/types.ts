@@ -1,5 +1,6 @@
 import { AlarmDataInternal, AlarmDataStatus, AlarmRequest } from '../types';
 import { SummarizeAlarmAction } from './actions';
+import { UpdateAlarmSourceDataAction } from './actions/updateAlarmSourceData/types';
 
 /**
  * TODO: will remove AlarmDataInternal after models is refactored
@@ -21,4 +22,4 @@ export type AlarmsState = {
   alarms: AlarmRequestState<AlarmRequest>[];
 };
 
-export type AlarmAction = SummarizeAlarmAction;
+export type AlarmAction = SummarizeAlarmAction | UpdateAlarmSourceDataAction;

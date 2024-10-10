@@ -15,6 +15,7 @@ import {
 import { filterAlarmInputProperties } from './utils/filterAlarmInputProperties';
 import { useInputPropertyTimeSeriesData } from './hookHelpers/useInputPropertyTimeSeriesData/useInputPropertyTimeSeriesData';
 import { useAlarmsState } from './state';
+import { useAlarmSources } from './hookHelpers/useAlarmSources';
 
 /**
  * Identify function that returns the input AlarmData.
@@ -61,7 +62,8 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     transform,
   } = options ?? {};
 
-  const { alarmDatas, onSummarizeAlarms } = useAlarmsState();
+  const { state, alarmDatas, onSummarizeAlarms, onUpdateAlarmSourceData } =
+    useAlarmsState();
   /**
    * Fetch alarm summaries based on the request
    * (e.g. all alarms for an asset or assetModel)
@@ -87,10 +89,18 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
    * Data should be available for all alarms fetched for an asset, where
    * the alarm type is "IOT_EVENTS".
    */
-  const sourcePropertyAlarmData = useLatestAlarmPropertyValues({
+  useAlarmSources({
     iotSiteWiseClient,
-    alarmDataList: typePropertyAlarmData,
-    alarmPropertyFieldName: 'source',
+    /**
+     * alarm datas are populated by onSummarizeAlarms
+     */
+    requests: state.alarms.flatMap((alarm) =>
+      alarm.alarmDatas.map((alarmData) => ({
+        assetId: alarmData.assetId,
+        source: alarmData.source,
+      }))
+    ),
+    onUpdateAlarmSourceData,
   });
 
   /**
@@ -100,7 +110,7 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
    */
   const alarmModelAlarmData = useAlarmModels({
     iotEventsClient,
-    alarmDataList: sourcePropertyAlarmData,
+    alarmDataList: typePropertyAlarmData,
   });
 
   /**
