@@ -13,6 +13,7 @@ import { GetSceneCommandOutput } from '@aws-sdk/client-iottwinmaker';
 
 import {
   getMatterportSdk,
+  setBasisuDecoder,
   setDracoDecoder,
   setFeatureConfig,
   setGetSceneObjectFunction,
@@ -181,6 +182,12 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       setActiveCameraSettings(getCameraSettings(object3D, cameraComponent));
     }
   }, [selectedSceneNodeRef]);
+
+  useEffect(() => {
+    if (config.basisuDecoder) {
+      setBasisuDecoder(config.basisuDecoder);
+    }
+  }, [config.basisuDecoder]);
 
   useEffect(() => {
     if (config.dracoDecoder) {
