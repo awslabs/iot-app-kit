@@ -4,6 +4,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.13.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v10.12.2...scene-composer-v10.13.0) (2024-10-10)
+
+
+### Features
+
+* **draco:** setup support for draco compressed files ([cc0d4e4](https://github.com/awslabs/iot-app-kit/commit/cc0d4e4a74232c856100a6781354342a669f5fd0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.12.2 to 10.13.0
+    * @iot-app-kit/react-components bumped from 10.12.2 to 10.13.0
+    * @iot-app-kit/related-table bumped from 10.12.2 to 10.13.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.12.2 to 10.13.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 10.12.2 to 10.13.0
+
 ## [10.12.2](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v10.12.1...scene-composer-v10.12.2) (2024-09-17)
 
 
