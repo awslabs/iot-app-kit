@@ -26,5 +26,12 @@ export default defineConfig(() => {
     preview: {
       port: 4000,
     },
+    optimizeDeps: {
+      esbuildOptions: {
+        loader: {
+          '.hdr': 'dataurl',
+        },
+      },
+    }
   };
 });
