@@ -38,10 +38,16 @@ export const getClients = (
     region: dashboardClientConfiguration.awsRegion,
   });
 
+  // This is required to set endpoint for Pen Test
+  const assistantEndpointMetadata = document.querySelector(
+    'meta[name="assistantEndpoint"]'
+  ) as HTMLMetaElement;
   const iotSiteWisePrivateClient = new InternalIoTSiteWise({
     credentials: dashboardClientConfiguration.awsCredentials,
     region: dashboardClientConfiguration.awsRegion,
-    endpoint: `https://data.iotsitewise.${region}.amazonaws.com`,
+    endpoint:
+      assistantEndpointMetadata?.content ??
+      `https://data.iotsitewise.${region}.amazonaws.com`,
   });
 
   return {
