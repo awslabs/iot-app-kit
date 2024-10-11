@@ -1,12 +1,19 @@
-import { AlarmDataInternal, AlarmDataStatus, AlarmRequest } from '../types';
+import { AssetModelProperty, AssetProperty } from '@aws-sdk/client-iotsitewise';
+import { AlarmData, AlarmDataStatus, AlarmRequest } from '../types';
 import { SummarizeAlarmAction } from './actions';
+import { SummarizeAlarmModelsAction } from './actions/summarizeAlarmModels/types';
 import { UpdateAlarmSourceDataAction } from './actions/updateAlarmSourceData/types';
 import { UpdateAlarmTypeDataAction } from './actions/updateAlarmTypeData/types';
 
 /**
  * TODO: will remove AlarmDataInternal after models is refactored
  */
-export type AlarmDataState = Omit<AlarmDataInternal, 'request' | 'status'> & {
+export type AlarmDataState = Omit<AlarmData, 'status'> & {
+  /**
+   * The list of asset or assetModel properties on the alarm's asset.
+   * Used to assign a property object to the inputProperty field.
+   */
+  properties?: (AssetProperty | AssetModelProperty)[];
   getLatestAlarmSourceValueQueryStatus?: AlarmDataStatus;
   getLatestAlarmTypeValueQueryStatus?: AlarmDataStatus;
   describeAlarmModelsQueryStatus?: AlarmDataStatus;
@@ -26,4 +33,5 @@ export type AlarmsState = {
 export type AlarmAction =
   | SummarizeAlarmAction
   | UpdateAlarmSourceDataAction
-  | UpdateAlarmTypeDataAction;
+  | UpdateAlarmTypeDataAction
+  | SummarizeAlarmModelsAction;

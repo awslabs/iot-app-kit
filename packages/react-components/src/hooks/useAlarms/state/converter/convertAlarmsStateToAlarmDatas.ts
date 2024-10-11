@@ -4,27 +4,34 @@ import { AlarmData } from '../../types';
 import { AlarmsState } from '../types';
 import { convertAlarmRequestStateToAlarmData } from './convertAlarmRequestStateToAlarmData';
 import { convertAlarmRequestStateToInitialAlarmData } from './convertAlarmRequestStateToInitialAlarmData';
-// import { convertInputPropertyAlarmRequestStateToAlarmData } from './convertInputPropertyAlarmRequestStateToAlarmData';
-// import { isInputPropertyRequest } from './utils/isInputPropertyRequest';
-import { alarmDataAsComparable, isSummarizingAlarms } from './utils';
+import { isInputPropertyRequest } from './utils/isInputPropertyRequest';
+import {
+  alarmDataAsComparable,
+  isGettingLatestAlarmSourceValue,
+  isSummarizingAlarmModels,
+  isSummarizingAlarms,
+} from './utils';
 
 export const convertAlarmsStateToAlarmDatas = (
   state: AlarmsState
 ): AlarmData[] => {
   const alarmData = state.alarms.flatMap((alarm) => {
-    if (isSummarizingAlarms(alarm)) {
+    if (
+      isSummarizingAlarms(alarm) ||
+      /**
+       * an input property alarm request should be considered
+       * loading until the alarm model is fetched. This is
+       * because we cannot tell which alarms are
+       * associated to the requested input property
+       * until the model is described.
+       */
+      (isInputPropertyRequest(alarm) &&
+        (isSummarizingAlarms(alarm) ||
+          isGettingLatestAlarmSourceValue(alarm) ||
+          isSummarizingAlarmModels(alarm)))
+    ) {
       return convertAlarmRequestStateToInitialAlarmData(alarm);
     }
-
-    /**
-     * TODO:
-     * commenting these out until this case is explicilty
-     * handled in the other helper hooks and the filter
-     * is removed from useAlarms
-     */
-    // else if (isInputPropertyRequest(alarm)) {
-    //   return convertInputPropertyAlarmRequestStateToAlarmData(alarm);
-    // }
 
     return convertAlarmRequestStateToAlarmData(alarm);
   });

@@ -53,6 +53,38 @@ describe('convertAlarmsStateToAlarmDatas', () => {
         status: mockLoadingStatus,
       }),
     ]);
+
+    const inputModelState = convertAlarmsStateToAlarmDatas({
+      alarms: [
+        {
+          request: {
+            inputPropertyId: 'input-property-1',
+            assetId: 'asset-1',
+          },
+          describeAssetModelQueryStatus: mockSuccessStatus,
+          alarmDatas: [
+            {
+              describeAlarmModelsQueryStatus: mockLoadingStatus,
+              getLatestAlarmSourceValueQueryStatus: mockLoadingStatus,
+              getLatestAlarmTypeValueQueryStatus: mockLoadingStatus,
+            },
+            {
+              describeAlarmModelsQueryStatus: mockLoadingStatus,
+              getLatestAlarmSourceValueQueryStatus: mockLoadingStatus,
+              getLatestAlarmTypeValueQueryStatus: mockLoadingStatus,
+            },
+          ],
+        },
+      ],
+    });
+
+    expect(inputModelState).toBeArrayOfSize(1);
+    expect(inputModelState).toEqual([
+      expect.objectContaining({
+        assetId: 'asset-1',
+        status: mockLoadingStatus,
+      }),
+    ]);
   });
 
   it('correctly maps multiple requests to alarm datas', () => {
@@ -150,6 +182,8 @@ describe('convertAlarmsStateToAlarmDatas', () => {
           describeAssetModelQueryStatus: mockSuccessStatus,
           alarmDatas: [
             {
+              getLatestAlarmSourceValueQueryStatus: mockSuccessStatus,
+              describeAlarmModelsQueryStatus: mockSuccessStatus,
               assetId: 'asset-1',
               assetModelId: 'asset-model-1',
               compositeModelId: 'composite-model-1',

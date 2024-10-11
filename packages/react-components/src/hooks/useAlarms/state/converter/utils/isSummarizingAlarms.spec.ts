@@ -25,6 +25,15 @@ describe('isSummarizingAlarms', () => {
         alarmDatas: [],
       })
     ).toBeTrue();
+
+    expect(
+      isSummarizingAlarms({
+        request: {
+          assetId: 'asset-1',
+        },
+        alarmDatas: [],
+      })
+    ).toBeTrue();
   });
 
   it('is false if all alarm requests asset or asset model queries are successful', () => {

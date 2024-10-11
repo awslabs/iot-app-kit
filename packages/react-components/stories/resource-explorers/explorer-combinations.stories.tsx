@@ -5,7 +5,7 @@ import {
   StoryWithClearedResourceCache,
   StoryWithTanstackDevTools,
 } from './decorators';
-import { client } from './data-source';
+import { client, eventsClient } from './data-source';
 import {
   AssetModelExplorer,
   AssetExplorer,
@@ -235,6 +235,7 @@ export function AssetExplorerPlusAlarmExplorer() {
 
       <AlarmExplorer
         iotSiteWiseClient={client}
+        iotEventsClient={eventsClient}
         parameters={selectedAssets}
         tableSettings={{
           isUserSettingsEnabled: true,
@@ -260,6 +261,7 @@ export function AssetModelExplorerPlusAlarmExplorer() {
 
       <AlarmExplorer
         iotSiteWiseClient={client}
+        iotEventsClient={eventsClient}
         parameters={selectedAssetModels}
         tableSettings={{ isFilterEnabled: true, isUserSettingsEnabled: true }}
       />

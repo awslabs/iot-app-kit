@@ -32,7 +32,13 @@ const combineStatuses = ({
  * @returns an AlarmDataStatus for the query
  */
 export const getStatusForQuery = (
-  query: UseQueryResult,
+  query: SetOptional<
+    Pick<
+      UseQueryResult,
+      'isLoading' | 'isRefetching' | 'isSuccess' | 'isError' | 'error'
+    >,
+    'error'
+  >,
   oldStatus?: AlarmDataStatus
 ): AlarmDataStatus => {
   let status: AlarmDataStatus = {
@@ -66,13 +72,6 @@ export const combineStatusForQueries = (
   >[],
   oldStatus?: AlarmDataStatus
 ) => {
-  const errors: Error[] = [];
-  queries.forEach(({ error }) => {
-    if (error != null) {
-      errors.push(error);
-    }
-  });
-
   let status: AlarmDataStatus = {
     isLoading: queries.some(({ isLoading }) => isLoading),
     isRefetching: queries.some(({ isRefetching }) => isRefetching),
