@@ -188,3 +188,5 @@ export const mockSourceAssetPropertyValue2 = mockStringAssetPropertyValue(
 export const mockTypeAssetPropertyValue2 = mockStringAssetPropertyValue(
   mockDefaultAlarmType
 ) satisfies AssetPropertyValue;
+
+export const mockThresholdAssetProperty = mockDoubleAssetPropertyValue(30);

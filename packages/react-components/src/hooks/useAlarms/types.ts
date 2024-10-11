@@ -10,7 +10,7 @@ import {
   IoTEventsClient,
 } from '@aws-sdk/client-iot-events';
 
-import type { DataStream, Viewport } from '@iot-app-kit/core';
+import type { DataStream, ResolutionConfig, Viewport } from '@iot-app-kit/core';
 import { AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
 
 /**
@@ -216,6 +216,7 @@ export interface UseAlarmsHookSettings {
 export interface UseAlarmsInputPropertyTimeSeriesDataSettings {
   aggregationType?: AggregateType;
   resolution?: string;
+  resolutionConfig?: ResolutionConfig;
 }
 
 /**

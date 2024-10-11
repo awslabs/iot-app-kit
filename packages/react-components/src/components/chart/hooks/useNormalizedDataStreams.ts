@@ -74,8 +74,9 @@ export const useNormalizedDataStreams = ({
             );
           });
           if (associatedAlarm != null) {
-            (latestAlarmStateValue = associatedAlarm.events.at(-1)?.alarmState),
-              associatedAlarm.events.forEach((event) => {
+            (latestAlarmStateValue =
+              associatedAlarm.events?.at(-1)?.alarmState),
+              associatedAlarm.events?.forEach((event) => {
                 let deleteCount = 0;
                 let i = dataSetBisector.right(dataCopy, event.x);
 

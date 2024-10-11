@@ -24,11 +24,12 @@ import { createNonNullableList } from '../../utils/createNonNullableList';
 export const useAlarmsFromQueries = <T = AlarmData>({
   queries,
   settings,
+  inputPropertyTimeSeriesDataSettings,
   viewport,
   transform,
 }: { queries: ComponentQuery[] } & Pick<
   UseAlarmsOptions<T>,
-  'settings' | 'viewport'
+  'settings' | 'viewport' | 'inputPropertyTimeSeriesDataSettings'
 > &
   Required<Pick<UseAlarmsOptions<T>, 'transform'>>) => {
   const requests = useMemo(() => {
@@ -104,6 +105,7 @@ export const useAlarmsFromQueries = <T = AlarmData>({
       refreshRate: requestSettings.refreshRate,
     },
     inputPropertyTimeSeriesDataSettings: {
+      ...inputPropertyTimeSeriesDataSettings,
       aggregationType: requestSettings.aggregationType,
       resolution: requestSettings.resolution,
     },

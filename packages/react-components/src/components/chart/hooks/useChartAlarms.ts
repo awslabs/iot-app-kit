@@ -8,6 +8,8 @@ import isEqual from 'lodash.isequal';
 import { AlarmData } from '../../../hooks/useAlarms';
 import { AlarmContent } from '../../alarm-components/alarm-content/types';
 import { mapAlarmRuleExpression } from '../../../hooks/useAlarms/transformers/mapAlarmRuleExpression';
+import { toId } from '@iot-app-kit/source-iotsitewise';
+import { DataStream, Primitive } from '@iot-app-kit/core';
 
 type UseChartAlarmOptions = Pick<ChartOptions, 'queries' | 'viewport'>;
 
@@ -16,9 +18,30 @@ export type ChartAlarmEvent = {
   y?: number;
 } & AlarmContent;
 
+type ChartAlarm = {
+  assetId?: string;
+  propertyId?: string;
+  id?: string;
+  name?: string;
+  events?: ChartAlarmEvent[];
+  datastream?: DataStream<Primitive>;
+};
+
 export const useChartAlarms = ({ queries, viewport }: UseChartAlarmOptions) => {
-  const transform = useCallback((alarmData: AlarmData) => {
-    const alarmStateData = alarmData.state?.data ?? [];
+  const transform = useCallback((alarmData: AlarmData): ChartAlarm => {
+    const {
+      assetId,
+      compositeModelId,
+      compositeModelName,
+      state,
+      models,
+      inputProperty,
+    } = alarmData;
+    if (assetId == null || compositeModelId == null || state == null) {
+      return {};
+    }
+
+    const alarmStateData = state.data ?? [];
     const parsedAlarmStateData: ChartAlarmEvent[] = createNonNullableList(
       alarmStateData.map(parseAlarmStateAssetProperty)
     ).map(
@@ -26,20 +49,20 @@ export const useChartAlarms = ({ queries, viewport }: UseChartAlarmOptions) => {
         x: point.timestamp,
         y: point.value.ruleEvaluation?.simpleRule?.inputProperty,
         alarmState: point.value.state,
-        alarmName: alarmData.compositeModelName,
-        assetId: alarmData.assetId,
+        alarmName: compositeModelName,
+        assetId,
         alarmExpression: mapAlarmRuleExpression(alarmData),
-        severity: alarmData.models?.at(-1)?.severity,
+        severity: models?.at(-1)?.severity,
       })
     );
 
     return {
-      assetId: alarmData.assetId,
-      propertyId: alarmData.inputProperty?.at(0)?.property.id,
-      id: `${alarmData.assetId}---${alarmData.compositeModelId}`,
-      name: alarmData.compositeModelName,
+      assetId,
+      propertyId: inputProperty?.at(0)?.property.id,
+      id: toId({ assetId, propertyId: compositeModelId }),
+      name: compositeModelName,
       events: parsedAlarmStateData,
-      datastream: alarmData.inputProperty?.at(0)?.dataStream,
+      datastream: inputProperty?.at(0)?.dataStream,
     };
   }, []);
 

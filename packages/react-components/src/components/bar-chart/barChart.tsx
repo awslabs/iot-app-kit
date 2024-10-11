@@ -5,6 +5,7 @@ import {
   Threshold,
   Viewport,
   ThresholdSettings,
+  ResolutionConfig,
 } from '@iot-app-kit/core';
 import { BarChart as BarChartBase } from '@iot-app-kit/charts';
 import type {
@@ -18,17 +19,15 @@ import {
   DEFAULT_VIEWPORT,
   ECHARTS_GESTURE,
 } from '../../common/constants';
-import { getAlarmQueries, getTimeSeriesQueries } from '../../utils/queries';
+import { getTimeSeriesQueries } from '../../utils/queries';
 import {
   AxisSettings,
   ChartSize,
   ComponentQuery,
 } from '../../common/chartTypes';
-import { useAlarms } from '../../hooks/useAlarms';
-import { convertAlarmQueryToAlarmRequest } from '../../queries/utils/convertAlarmQueryToAlarmRequest';
-import { transformAlarmsToThreshold } from '../../utils/transformAlarmsToThreshold';
 import { AssistantProperty } from '../../common/assistantProps';
 import { Title, getAdjustedChartHeight } from '../../common/title';
+import { useBarChartAlarms, useNormalizedDataStreams } from './hooks';
 
 const HOUR_IN_MS = 1000 * 60 * 60;
 const DAY_IN_MS = HOUR_IN_MS * 24;
@@ -74,49 +73,51 @@ export const BarChart = (props: BarChartProps) => {
       ? viewport
       : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
 
-  const alarmQueries = getAlarmQueries(queries);
-  const timeSeriesQueries = getTimeSeriesQueries(queries);
+  /** Bar chart cannot visualize raw data, so customize the resolution breakpoints as the default resolution */
+  const resolutionConfig: ResolutionConfig = {
+    [0]: '1m',
+    [FIFTEEN_MIN_IN_MS]: '15m',
+    [HOUR_IN_MS]: '1h',
+    [DAY_IN_MS * 5]: '1d',
+  };
 
-  const mapAlarmQueriesToRequests = alarmQueries.flatMap((query) =>
-    convertAlarmQueryToAlarmRequest(query)
+  const alarms = useBarChartAlarms({
+    queries,
+    viewport: utilizedViewport,
+    resolutionConfig,
+  });
+  const alarmThresholds = useMemo(
+    () =>
+      alarms
+        .map((alarm) => alarm.thresholds)
+        .filter((threshold) => !!threshold),
+    [alarms]
   );
 
-  const transformedAlarms = useAlarms({
-    iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
-    iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
-    requests: mapAlarmQueriesToRequests,
-    viewport: utilizedViewport,
-    settings: {
-      fetchThresholds: true,
-      refreshRate: alarmQueries.at(0)?.query.requestSettings?.refreshRate,
-    },
-    transform: transformAlarmsToThreshold,
-  });
-  const filteredAlarms = transformedAlarms.filter((alarm) => !!alarm);
-
-  const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
-    viewport: passedInViewport,
-    queries: timeSeriesQueries,
-    settings: {
-      fetchFromStartToEnd: true,
-      fetchMostRecentBeforeStart: true,
-      /** Bar chart cannot visualize raw data, so customize the resolution breakpoints as the default resolution */
-      resolution: {
-        [0]: '1m',
-        [FIFTEEN_MIN_IN_MS]: '15m',
-        [HOUR_IN_MS]: '1h',
-        [DAY_IN_MS * 5]: '1d',
+  const timeSeriesQueries = getTimeSeriesQueries(queries);
+  const { dataStreams: timeSeriesDataStreams, thresholds: queryThresholds } =
+    useTimeSeriesData({
+      viewport: passedInViewport,
+      queries: timeSeriesQueries,
+      settings: {
+        fetchFromStartToEnd: true,
+        fetchMostRecentBeforeStart: true,
+        resolution: resolutionConfig,
       },
-    },
-    styles,
+      styles,
+    });
+
+  const dataStreams = useNormalizedDataStreams({
+    dataStreams: timeSeriesDataStreams,
+    alarms,
   });
 
   const allThresholds = useMemo(
-    () => [...queryThresholds, ...thresholds, ...filteredAlarms],
+    () => [...queryThresholds, ...thresholds, ...alarmThresholds],
     [
       JSON.stringify(queryThresholds),
       JSON.stringify(thresholds),
-      JSON.stringify(filteredAlarms),
+      JSON.stringify(alarmThresholds),
     ]
   );
 

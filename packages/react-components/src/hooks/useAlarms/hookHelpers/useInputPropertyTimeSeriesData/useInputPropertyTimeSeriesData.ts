@@ -16,6 +16,7 @@ export const useInputPropertyTimeSeriesData = ({
   timeSeriesData,
   aggregationType = 'AVERAGE',
   resolution = undefined,
+  resolutionConfig = undefined,
 }: UseInputPropertyTimeSeriesDataOptions) => {
   const query = useRequestSelector(requests, (inputPropertyRequests) =>
     alarmToSiteWiseDataStreamQuery(inputPropertyRequests, {
@@ -41,6 +42,7 @@ export const useInputPropertyTimeSeriesData = ({
       refreshRate,
       fetchFromStartToEnd: !fetchOnlyLatest,
       fetchMostRecentBeforeEnd: !!fetchOnlyLatest,
+      resolution: resolutionConfig,
     },
   });
 

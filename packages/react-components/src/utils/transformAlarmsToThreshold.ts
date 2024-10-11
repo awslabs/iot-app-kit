@@ -8,11 +8,13 @@ const createThreshold = ({
   severity,
   labelText,
   comparisonOperator,
+  dataStreamId,
 }: {
   thresholdValue: number;
   severity: number | undefined;
   labelText: string;
   comparisonOperator: COMPARISON_OPERATOR;
+  dataStreamId?: string;
 }): Threshold => {
   return {
     color: 'red',
@@ -24,6 +26,7 @@ const createThreshold = ({
       show: true,
     },
     comparisonOperator: comparisonOperator,
+    dataStreamIds: dataStreamId ? [dataStreamId] : undefined,
   };
 };
 
@@ -33,6 +36,7 @@ export const transformAlarmsToThreshold = (
   const { models, inputProperty: inputProperties, thresholds, status } = alarm;
   const modelsFound = models && models.length !== 0;
   const thresholdsFound = thresholds && thresholds?.length !== 0;
+  const dataStreamId = alarm.inputProperty?.at(0)?.dataStream?.id;
 
   if (status.isSuccess) {
     if (modelsFound && thresholdsFound) {
@@ -55,6 +59,7 @@ export const transformAlarmsToThreshold = (
           thresholdValue: thresholdValue,
           severity: model.severity,
           comparisonOperator: scComparisonOperator,
+          dataStreamId,
         });
       }
     }
