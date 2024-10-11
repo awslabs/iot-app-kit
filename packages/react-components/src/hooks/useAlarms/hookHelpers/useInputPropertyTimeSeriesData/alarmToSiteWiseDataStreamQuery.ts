@@ -11,7 +11,10 @@ type AssetQuery<AssetId = string, PropertyId = string> = Map<
   Properties<PropertyId>
 >;
 
-const assetQueryFromAlarm = ({ assetId, inputProperty = [] }: AlarmData) => {
+const assetQueryFromAlarm = ({
+  assetId,
+  inputProperty = [],
+}: Pick<AlarmData, 'assetId' | 'inputProperty'>) => {
   if (assetId == null) return [];
 
   const properties = createNonNullableList(
@@ -68,7 +71,7 @@ const toSiteWiseDataStreamQuery =
   };
 
 export const alarmToSiteWiseDataStreamQuery = (
-  alarms: AlarmData[],
+  alarms: Pick<AlarmData, 'assetId' | 'inputProperty'>[],
   {
     aggregationType,
     resolution,
