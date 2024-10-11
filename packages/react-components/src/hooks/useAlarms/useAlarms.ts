@@ -10,12 +10,12 @@ import {
   useAlarmModels,
   useAlarmState,
   useAlarmThreshold,
-  useLatestAlarmPropertyValues,
 } from './hookHelpers';
 import { filterAlarmInputProperties } from './utils/filterAlarmInputProperties';
 import { useInputPropertyTimeSeriesData } from './hookHelpers/useInputPropertyTimeSeriesData/useInputPropertyTimeSeriesData';
 import { useAlarmsState } from './state';
 import { useAlarmSources } from './hookHelpers/useAlarmSources';
+import { useAlarmTypes } from './hookHelpers/useAlarmTypes';
 
 /**
  * Identify function that returns the input AlarmData.
@@ -62,8 +62,13 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     transform,
   } = options ?? {};
 
-  const { state, alarmDatas, onSummarizeAlarms, onUpdateAlarmSourceData } =
-    useAlarmsState();
+  const {
+    state,
+    alarmDatas,
+    onSummarizeAlarms,
+    onUpdateAlarmSourceData,
+    onUpdateAlarmTypeData,
+  } = useAlarmsState();
   /**
    * Fetch alarm summaries based on the request
    * (e.g. all alarms for an asset or assetModel)
@@ -78,10 +83,18 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
    * Fetch latest asset property values for alarms with a type property.
    * Data should be available for all alarms fetched for an asset.
    */
-  const typePropertyAlarmData = useLatestAlarmPropertyValues({
+  useAlarmTypes({
     iotSiteWiseClient,
-    alarmDataList: alarmDatas,
-    alarmPropertyFieldName: 'type',
+    /**
+     * alarm datas are populated by onSummarizeAlarms
+     */
+    requests: state.alarms.flatMap((alarm) =>
+      alarm.alarmDatas.map((alarmData) => ({
+        assetId: alarmData.assetId,
+        type: alarmData.type,
+      }))
+    ),
+    onUpdateAlarmTypeData,
   });
 
   /**
@@ -110,7 +123,7 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
    */
   const alarmModelAlarmData = useAlarmModels({
     iotEventsClient,
-    alarmDataList: typePropertyAlarmData,
+    alarmDataList: alarmDatas,
   });
 
   /**

@@ -1,31 +1,31 @@
 import { AlarmDataState, AlarmsState } from '../../types';
 import {
-  UpdateAlarmSourceDataAction,
-  UpdateAlarmSourceDataActionPayload,
+  UpdateAlarmTypeDataAction,
+  UpdateAlarmTypeDataActionPayload,
 } from './types';
 
 const findAssetPropertyValueSummary = (
   alarmData: AlarmDataState,
-  summaries: UpdateAlarmSourceDataActionPayload['assetPropertyValueSummaries']
+  summaries: UpdateAlarmTypeDataActionPayload['assetPropertyValueSummaries']
 ) => {
   return summaries?.find(({ request }) => {
     return (
       request.assetId === alarmData.assetId &&
-      request.propertyId === alarmData.source?.property.id
+      request.propertyId === alarmData.type?.property.id
     );
   });
 };
 
-export const onUpdateAlarmSourceDataAction = (
-  payload: UpdateAlarmSourceDataActionPayload
-): UpdateAlarmSourceDataAction => ({
-  type: 'UPDATE_ALARM_SOURCE_DATA',
+export const onUpdateAlarmTypeDataAction = (
+  payload: UpdateAlarmTypeDataActionPayload
+): UpdateAlarmTypeDataAction => ({
+  type: 'UPDATE_ALARM_TYPE_DATA',
   ...payload,
 });
 
-export const updateAlarmSourceData = (
+export const updateAlarmTypeData = (
   state: AlarmsState,
-  { assetPropertyValueSummaries = [] }: UpdateAlarmSourceDataActionPayload
+  { assetPropertyValueSummaries = [] }: UpdateAlarmTypeDataActionPayload
 ): AlarmsState => {
   if (assetPropertyValueSummaries.length === 0) return state;
 
@@ -35,7 +35,7 @@ export const updateAlarmSourceData = (
       return {
         ...alarm,
         alarmDatas: alarm.alarmDatas.map((alarmData) => {
-          if (alarmData.source == null) return alarmData;
+          if (alarmData.type == null) return alarmData;
 
           const summary = findAssetPropertyValueSummary(
             alarmData,
@@ -46,18 +46,18 @@ export const updateAlarmSourceData = (
 
           const updatedAlarmData = {
             ...alarmData,
-            getLatestAlarmSourceValueQueryStatus: summary.status,
+            getLatestAlarmTypeValueQueryStatus: summary.status,
           };
 
-          const alarmSourceData = summary.data?.propertyValue;
+          const alarmTypeData = summary.data?.propertyValue;
 
-          if (alarmSourceData == null) return updatedAlarmData;
+          if (alarmTypeData == null) return updatedAlarmData;
 
           return {
             ...updatedAlarmData,
-            source: {
-              ...alarmData.source,
-              data: [alarmSourceData],
+            type: {
+              ...alarmData.type,
+              data: [alarmTypeData],
             },
           };
         }),
