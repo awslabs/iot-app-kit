@@ -12,7 +12,8 @@ import { GLTFLoader, GLTFLoader as TwinMakerGLTFLoader } from './GLTFLoader';
 export const setupDracoSupport = (loader: GLTFLoader, dracoLoader: DRACOLoader = new DRACOLoader()): void => {
   const { dracoDecoder } = getGlobalSettings();
   if (dracoDecoder.enable) {
-    const dracoDecoderPath = dracoDecoder.path ?? `${THREE_PATH}/examples/jsm/libs/draco/gltf/`;
+    const dracoDecoderPath =
+      dracoDecoder.path !== undefined ? dracoDecoder.path : `${THREE_PATH}/examples/jsm/libs/draco/gltf/`;
     // TODO: with CSP issues, Chrome/Edge and some other unknown browsers may fail to load WASM, so we enforce to
     // only JS DRACO decoder for now. Please fix once we found a better solution
     dracoLoader.setDecoderConfig({ type: 'js' }).setDecoderPath(dracoDecoderPath);
@@ -28,7 +29,8 @@ export const setupBasisuSupport = (
 ): void => {
   const { basisuDecoder } = getGlobalSettings();
   if (basisuDecoder.enable) {
-    const ktx2DecoderPath = basisuDecoder.path ?? `${THREE_PATH}/examples/jsm/libs/basis/`;
+    const ktx2DecoderPath =
+      basisuDecoder.path !== undefined ? basisuDecoder.path : `${THREE_PATH}/examples/jsm/libs/basis/`;
 
     ktx2Loader.setTranscoderPath(ktx2DecoderPath).detectSupport(renderer);
 
