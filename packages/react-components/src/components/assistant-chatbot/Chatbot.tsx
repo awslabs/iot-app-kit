@@ -6,6 +6,7 @@ import { ChatbotConversationContainer } from './conversation/ChatbotConversation
 import type { IMessage } from '../../hooks/useAssistant/types';
 import './chatbot.css';
 import { useEffect, useState } from 'react';
+import { IntlProvider } from 'react-intl';
 
 export interface ChatbotProps {
   height: number;
@@ -47,25 +48,27 @@ export const Chatbot = ({
   }, [visible, height]);
 
   return (
-    <div className='iot-app-kit assistant-chatbot'>
-      <Container
-        footer={
-          <ChatbotInputBox
+    <IntlProvider locale='en' defaultLocale='en'>
+      <div className='iot-app-kit assistant-chatbot'>
+        <Container
+          footer={
+            <ChatbotInputBox
+              onSubmit={onSubmit}
+              onResize={() => setAdjustedHeight(adjustHeight(height))}
+              lastMessage={lastMessage}
+            />
+          }
+          header={header ? <ChatbotHeader {...header} /> : null}
+          disableHeaderPaddings
+          disableContentPaddings
+        >
+          <ChatbotConversationContainer
+            height={adjustedHeight}
+            messages={messages}
             onSubmit={onSubmit}
-            onResize={() => setAdjustedHeight(adjustHeight(height))}
-            lastMessage={lastMessage}
           />
-        }
-        header={header ? <ChatbotHeader {...header} /> : null}
-        disableHeaderPaddings
-        disableContentPaddings
-      >
-        <ChatbotConversationContainer
-          height={adjustedHeight}
-          messages={messages}
-          onSubmit={onSubmit}
-        />
-      </Container>
-    </div>
+        </Container>
+      </div>
+    </IntlProvider>
   );
 };

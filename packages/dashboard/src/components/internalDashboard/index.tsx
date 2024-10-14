@@ -140,7 +140,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     currentViewport || parseViewport(dashboardConfiguration?.defaultViewport)
   );
   const { chatbotHeight, calculateChatbotDimensions } = useChatbotPosition(
-    '[data-testid=read-only-mode-dashboard]'
+    '.iot-resizable-panes'
   );
   const [resizablePanesWidth, setResizablePanesWidth] = useState<number>(0);
 

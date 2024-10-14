@@ -67,8 +67,6 @@ export const AssistantChatbotDefault: ComponentStory<
     invokeAssistant({ componentId: '', conversationId, utterance });
   };
 
-  console.log('RE-RENDER', messages);
-
   return (
     <div style={{ padding: '0.5rem' }}>
       <AssistantChatbot

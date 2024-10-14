@@ -1,13 +1,16 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import autosize from 'autosize';
 import Textarea from '@cloudscape-design/components/textarea';
 import Button from '@cloudscape-design/components/button';
+import Box from '@cloudscape-design/components/box';
 import { IMessage } from '../../hooks/useAssistant/types';
 import {
   InputProps,
   NonCancelableCustomEvent,
+  SpaceBetween,
 } from '@cloudscape-design/components';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export interface ChatbotInputBox {
   onSubmit: (utterance: string) => void;
@@ -22,13 +25,16 @@ export const ChatbotInputBox = ({
 }: ChatbotInputBox) => {
   const [value, setValue] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(false);
+  const intl = useIntl();
+  const textareaRef = useRef<HTMLTextAreaElement>();
 
   useEffect(() => {
     const textarea = document.querySelector(
       '.iot-app-kit-assistant-chatbot-input textarea'
-    );
+    ) as HTMLTextAreaElement;
     if (textarea) {
-      autosize(textarea);
+      textareaRef.current = textarea;
+      autosize(textareaRef.current);
       textarea.addEventListener('paste', onResize);
       return () => {
         textarea.removeEventListener('paste', onResize);
@@ -43,11 +49,23 @@ export const ChatbotInputBox = ({
     }
   }, [lastMessage]);
 
+  // as customer types and add multiple lines to textarea
+  // this allows to dynamizally increase or reduce textarea height
+  useEffect(() => {
+    if (textareaRef.current && (value.match(/\n/g) || value === '')) {
+      autosize(textareaRef.current);
+      onResize();
+    }
+  }, [value, onResize]);
+
   const handleClick = () => {
     if (value) {
       onSubmit(value);
-      setDisabled(true);
       setValue('');
+      if (textareaRef.current) {
+        // eslint-disable-next-line import/no-named-as-default-member
+        autosize.destroy(textareaRef.current);
+      }
     }
   };
 
@@ -62,7 +80,7 @@ export const ChatbotInputBox = ({
     }
   };
 
-  const handleKeyDown = (
+  const handleKeyUp = (
     event: NonCancelableCustomEvent<InputProps.KeyDetail>
   ) => {
     if (event.detail.key === 'Enter' && !event.detail.shiftKey) {
@@ -75,23 +93,40 @@ export const ChatbotInputBox = ({
 
   return (
     <div className='iot-app-kit-assistant-chatbot-input'>
-      <Textarea
-        value={value}
-        placeholder='Ask me anything about your IoT data'
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        rows={1}
-        disabled={disabled}
-      />
-      <div className='iot-app-kit-assistant-chatbot-input-button'>
-        <Button
-          iconName='send'
-          variant='icon'
-          onClick={handleClick}
-          disabled={!value}
-          data-testid='assistant-chatbot-input-button'
+      <div>
+        <Textarea
+          value={value}
+          placeholder={intl.formatMessage({
+            id: 'assistant-chatbot.inputPlaceholder',
+            defaultMessage: 'Ask me anything about your IoT data',
+          })}
+          onChange={handleChange}
+          onKeyUp={handleKeyUp}
+          rows={1}
+          disabled={disabled}
         />
+        <div className='iot-app-kit-assistant-chatbot-input-button'>
+          <Button
+            iconName='send'
+            variant='icon'
+            onClick={handleClick}
+            disabled={!value}
+            data-testid='assistant-chatbot-input-button'
+          />
+        </div>
       </div>
+      <SpaceBetween size='s' alignItems='center'>
+        <Box
+          fontSize='body-s'
+          padding={{ top: 's' }}
+          color='text-body-secondary'
+        >
+          <FormattedMessage
+            id='assistant-chatbot.disclaimer'
+            defaultMessage='Responses are AI-generated and for informational purposes only'
+          />
+        </Box>
+      </SpaceBetween>
     </div>
   );
 };

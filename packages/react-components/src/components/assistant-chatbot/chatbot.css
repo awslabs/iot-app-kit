@@ -14,8 +14,7 @@
 
 .iot-app-kit-assistant-chatbot-input {
   display: flex;
-  align-items: start;
-  flex-shrink: 0;
+  flex-direction: column;
 }
 
 .iot-app-kit-assistant-chatbot-input textarea {
@@ -28,7 +27,11 @@
 }
 
 .iot-app-kit-assistant-chatbot-input-button {
+  position: relative;
   margin-left: auto;
+  width: fit-content;
+  margin-top: -32px;
+  margin-right: 6px;
 }
 
 .iot-app-kit.assistant-chatbot {

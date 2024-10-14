@@ -94,6 +94,8 @@ export const AssistantFloatingMenu = ({
 
   const floatingMenuStyles: CSSProperties = {
     display: 'flex',
+    flexDirection: 'column',
+    gap: `${spaceStaticS}`,
     position: 'fixed',
     width: 'fit-content',
     maxWidth: `${width - (rightOffset + 40)}px`,
