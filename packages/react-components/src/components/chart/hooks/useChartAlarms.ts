@@ -18,7 +18,7 @@ export type ChartAlarmEvent = {
   y?: number;
 } & AlarmContent;
 
-type ChartAlarm = {
+export type ChartAlarm = {
   assetId?: string;
   propertyId?: string;
   id?: string;

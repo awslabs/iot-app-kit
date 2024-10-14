@@ -42,7 +42,10 @@ import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
 import { Title, getAdjustedChartHeight } from '../../common/title';
 import { getTimeSeriesQueries } from '../../utils/queries';
 import { DataStreamInformation } from './legend/table/types';
-import { getSelectedQueriesAndProperties } from '../../hooks/useAssistantContext/utils';
+import {
+  convertToSupportedTimeRange,
+  getSelectedQueriesAndProperties,
+} from '../../hooks/useAssistantContext/utils';
 import { useChartAlarms } from './hooks/useChartAlarms';
 import { useNormalizedDataStreams } from './hooks/useNormalizedDataStreams';
 
@@ -265,17 +268,34 @@ const BaseChart = ({
   const handleSelection = useCallback(
     (selectedItems: DataStreamInformation[]) => {
       if (options.id && options.assistant) {
+        const contexts = [];
+
+        selectedItems
+          .filter((alarmItem) => !!alarmItem.assetId && !!alarmItem.alarmName)
+          .forEach((alarmItem) => {
+            contexts.push({
+              timerange: convertToSupportedTimeRange(
+                viewportStartDate(utilizedViewport),
+                viewportEndDate(utilizedViewport)
+              ),
+              assetId: alarmItem.assetId,
+              alarmName: alarmItem.alarmName,
+            });
+          });
+
         const selectedQueries = getSelectedQueriesAndProperties(
           timeSeriesQueries,
           selectedItems.map((item) => item.refId ?? '')
         );
-        const context = transformTimeseriesDataToAssistantContext({
-          start: viewportStartDate(utilizedViewport),
-          end: viewportEndDate(utilizedViewport),
-          queries: selectedQueries,
-        });
+        contexts.push(
+          transformTimeseriesDataToAssistantContext({
+            start: viewportStartDate(utilizedViewport),
+            end: viewportEndDate(utilizedViewport),
+            queries: selectedQueries,
+          })
+        );
 
-        setContextByComponent(options.assistant.componentId, context);
+        setContextByComponent(options.assistant.componentId, contexts);
 
         if (options.assistant.onAction) {
           options.assistant.onAction({

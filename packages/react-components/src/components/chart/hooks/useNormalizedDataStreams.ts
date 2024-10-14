@@ -1,10 +1,11 @@
 import { DataPoint, DataStream } from '@iot-app-kit/core';
 import { fromId, toId } from '@iot-app-kit/source-iotsitewise';
-import { ChartAlarms } from './useChartAlarms';
+import { ChartAlarm, ChartAlarms } from './useChartAlarms';
 import { createNonNullableList } from '../../../utils/createNonNullableList';
 import { useMemo } from 'react';
 import { bisector } from 'd3-array';
 import { AlarmContent } from '../../alarm-components/alarm-content/types';
+import { AlarmAssistantContext } from '../../assistant-common/types';
 
 const interpolateY = (
   point1: DataPointWithAlarm,
@@ -42,7 +43,7 @@ type UseNormalizedDataStreamsOptions = {
 
 export type DataStreamWithLatestAlarmState = DataStream & {
   latestAlarmStateValue?: string;
-};
+} & AlarmAssistantContext;
 
 export const useNormalizedDataStreams = ({
   dataStreams,
@@ -66,8 +67,9 @@ export const useNormalizedDataStreams = ({
         const propertyInfo = fromId(id);
         const dataCopy = [...data] as DataPointWithAlarm[];
         let latestAlarmStateValue: string | undefined = undefined;
+        let associatedAlarm: ChartAlarm | undefined;
         if ('assetId' in propertyInfo) {
-          const associatedAlarm = alarms.find((a) => {
+          associatedAlarm = alarms.find((a) => {
             return (
               a.assetId === propertyInfo.assetId &&
               a.propertyId === propertyInfo.propertyId
@@ -105,6 +107,8 @@ export const useNormalizedDataStreams = ({
           id,
           data: dataCopy,
           latestAlarmStateValue,
+          assetId: associatedAlarm?.assetId,
+          alarmName: associatedAlarm?.name,
           ...rest,
         };
       }

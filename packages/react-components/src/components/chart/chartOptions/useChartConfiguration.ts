@@ -35,6 +35,8 @@ const toDataStreamIdentifiers = (
       data,
       assetName,
       latestAlarmStateValue,
+      assetId,
+      alarmName,
     }) => ({
       id,
       name,
@@ -45,6 +47,8 @@ const toDataStreamIdentifiers = (
       unit,
       latestValue: data.at(-1)?.y,
       latestAlarmStateValue,
+      assetId,
+      alarmName,
       assetName,
     })
   );
@@ -66,6 +70,8 @@ const toDataStreamMetaData = (
       assetName,
       latestValue,
       latestAlarmStateValue,
+      assetId,
+      alarmName,
     }) => {
       const foundSeries = series.find(
         ({ id: seriesId }) => seriesId === id
@@ -86,6 +92,8 @@ const toDataStreamMetaData = (
         assetName,
         latestValue,
         latestAlarmStateValue,
+        assetId,
+        alarmName,
       };
     }
   );

@@ -1,4 +1,5 @@
 import { DataStream, Primitive } from '@iot-app-kit/core';
+import { AlarmAssistantContext } from '../../../assistant-common/types';
 
 export type TrendCursorValues = { [id in string]?: number };
 export type DataStreamInformation = Pick<
@@ -8,7 +9,8 @@ export type DataStreamInformation = Pick<
   trendCursorValues: TrendCursorValues;
   latestValue: Primitive | undefined;
   latestAlarmStateValue?: string;
-} & DataStreamMinMax;
+} & DataStreamMinMax &
+  AlarmAssistantContext;
 
 export type TrendCursor = {
   id: string;

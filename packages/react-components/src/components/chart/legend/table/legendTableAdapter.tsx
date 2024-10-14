@@ -8,6 +8,15 @@ import { useDataStreamMaxMin } from '../../hooks/useDataStreamMaxMin';
 import { MinMaxMap } from '../../store/dataStreamMinMaxStore';
 import type { TableProps } from '@cloudscape-design/components/table';
 import type { AssistantProperty } from '../../../../common/assistantProps';
+import { AlarmAssistantContext } from '../../../assistant-common/types';
+
+type LegendTableDataStream = Pick<
+  DataStream,
+  'id' | 'color' | 'name' | 'unit' | 'assetName' | 'refId'
+> & {
+  latestValue: Primitive | undefined;
+  latestAlarmStateValue: string | undefined;
+} & AlarmAssistantContext;
 
 const mapDataStreamInformation = ({
   datastreams,
@@ -17,13 +26,7 @@ const mapDataStreamInformation = ({
   dataStreamMaxes,
   dataStreamMins,
 }: {
-  datastreams: (Pick<
-    DataStream,
-    'id' | 'color' | 'name' | 'unit' | 'assetName' | 'refId'
-  > & {
-    latestValue: Primitive | undefined;
-    latestAlarmStateValue: string | undefined;
-  })[];
+  datastreams: LegendTableDataStream[];
   trendCursorValues: TrendCursorValues[];
   chartId: string;
   visibleContent: ChartLegend['visibleContent'];
@@ -39,6 +42,8 @@ const mapDataStreamInformation = ({
       assetName,
       latestValue,
       latestAlarmStateValue,
+      assetId,
+      alarmName,
       refId,
     }) => {
       const values = trendCursorValues.reduce<
@@ -63,6 +68,8 @@ const mapDataStreamInformation = ({
         assetName,
         latestValue,
         latestAlarmStateValue,
+        assetId,
+        alarmName,
         trendCursorValues: values,
         maxValue,
         minValue,
@@ -72,13 +79,7 @@ const mapDataStreamInformation = ({
   );
 
 type ChartLegendTableAdapterOptions = ChartLegend & {
-  datastreams: (Pick<
-    DataStream,
-    'id' | 'color' | 'name' | 'unit' | 'assetName' | 'refId'
-  > & {
-    latestValue: Primitive | undefined;
-    latestAlarmStateValue: string | undefined;
-  })[];
+  datastreams: LegendTableDataStream[];
   trendCursorValues: TrendCursorValues[];
   trendCursors: TrendCursor[];
   chartId?: string;
