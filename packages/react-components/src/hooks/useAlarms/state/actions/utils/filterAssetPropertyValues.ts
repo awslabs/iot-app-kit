@@ -1,5 +1,6 @@
-import { Bisector } from 'd3-array';
-import { Interval } from '../../../queries';
+import { Bisector, bisector } from 'd3-array';
+import { Interval } from '../../../../../queries';
+import { assetPropertyValueTime } from './assetPropertyValueTime';
 
 export const alarmValueFilterer =
   <Point>(
@@ -25,3 +26,10 @@ export const alarmValueFilterer =
 
     return points.slice(startIndex, endIndex + 1);
   };
+
+const assetPropertyValuesBisector = bisector(assetPropertyValueTime);
+
+export const filterAssetPropertyValues = alarmValueFilterer(
+  assetPropertyValuesBisector,
+  assetPropertyValueTime
+);

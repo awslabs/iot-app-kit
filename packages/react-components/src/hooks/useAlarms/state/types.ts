@@ -5,6 +5,7 @@ import { SummarizeAlarmModelsAction } from './actions/summarizeAlarmModels/types
 import { UpdateAlarmSourceDataAction } from './actions/updateAlarmSourceData/types';
 import { UpdateAlarmTypeDataAction } from './actions/updateAlarmTypeData/types';
 import { UpdateAlarmInputDataAction } from './actions/updateAlarmInputPropertyData/types';
+import { UpdateAlarmStateDataAction } from './actions/updateAlarmStateData/types';
 
 export type AlarmDataState = Omit<AlarmData, 'status'> & {
   /**
@@ -15,6 +16,7 @@ export type AlarmDataState = Omit<AlarmData, 'status'> & {
   getLatestAlarmSourceValueQueryStatus?: AlarmDataStatus;
   getInputPropertyValueQueryStatus?: AlarmDataStatus;
   getLatestAlarmTypeValueQueryStatus?: AlarmDataStatus;
+  getAlarmStateValueQueryStatus?: AlarmDataStatus;
   describeAlarmModelsQueryStatus?: AlarmDataStatus;
 };
 
@@ -34,4 +36,5 @@ export type AlarmAction =
   | UpdateAlarmSourceDataAction
   | UpdateAlarmTypeDataAction
   | SummarizeAlarmModelsAction
-  | UpdateAlarmInputDataAction;
+  | UpdateAlarmInputDataAction
+  | UpdateAlarmStateDataAction;

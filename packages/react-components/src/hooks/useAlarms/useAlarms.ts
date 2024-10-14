@@ -69,6 +69,7 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     onUpdateAlarmTypeData,
     onSummarizeAlarmModels,
     onUpdateAlarmInputPropertyData,
+    onUpdateAlarmStateData,
   } = useAlarmsState();
   /**
    * Fetch alarm summaries based on the request
@@ -150,9 +151,15 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
    * Fetch latest asset property values for alarms with a state property.
    * Data should be available for all alarms fetched for an asset.
    */
-  const statePropertyAlarmData = useAlarmState({
+  useAlarmState({
+    requests: state.alarms.flatMap((alarm) =>
+      alarm.alarmDatas.map((alarmData) => ({
+        state: alarmData.state,
+        assetId: alarmData.assetId,
+      }))
+    ),
+    onUpdateAlarmStateData,
     iotSiteWiseClient,
-    alarms: alarmDatas,
     viewport,
     ...settings,
   });
@@ -164,7 +171,7 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
   const thresholdAlarmData = useAlarmThreshold({
     enabled: settings?.fetchThresholds,
     iotSiteWiseClient,
-    alarms: statePropertyAlarmData,
+    alarms: alarmDatas,
     viewport,
     ...settings,
     refreshRate: Infinity, // Only fetch thresholds once, require page refresh
