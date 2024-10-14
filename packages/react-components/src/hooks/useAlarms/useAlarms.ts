@@ -70,6 +70,7 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     onSummarizeAlarmModels,
     onUpdateAlarmInputPropertyData,
     onUpdateAlarmStateData,
+    onUpdateAlarmThresholdData,
   } = useAlarmsState();
   /**
    * Fetch alarm summaries based on the request
@@ -168,10 +169,22 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
    * Fetch alarm threshold values from the alarm model or from a
    * SiteWise asset property.
    */
-  const thresholdAlarmData = useAlarmThreshold({
-    enabled: settings?.fetchThresholds,
+  useAlarmThreshold({
     iotSiteWiseClient,
-    alarms: alarmDatas,
+    onUpdateAlarmThresholdData,
+    /**
+     * Only request thresholds for alarms
+     * that don't have static thresholds defined.
+     * Static thresholds set on summarize alarm models
+     */
+    requests: state.alarms.flatMap((alarm) =>
+      alarm.alarmDatas
+        .filter((alarm) => (alarm.thresholds ?? []).length === 0)
+        .map((alarmData) => ({
+          assetId: alarmData.assetId,
+          models: alarmData.models,
+        }))
+    ),
     viewport,
     ...settings,
     refreshRate: Infinity, // Only fetch thresholds once, require page refresh
@@ -181,9 +194,9 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
   return useMemo(
     () =>
       transform
-        ? thresholdAlarmData?.map(transform)
-        : thresholdAlarmData?.map(alarmDataIdentity),
-    [transform, thresholdAlarmData]
+        ? alarmDatas?.map(transform)
+        : alarmDatas?.map(alarmDataIdentity),
+    [transform, alarmDatas]
   );
 }
 

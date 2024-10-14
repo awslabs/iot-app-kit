@@ -15,6 +15,8 @@ import { onUpdateAlarmInputDataAction } from './actions/updateAlarmInputProperty
 import { UpdateAlarmInputDataActionPayload } from './actions/updateAlarmInputPropertyData/types';
 import { UpdateAlarmStateDataActionPayload } from './actions/updateAlarmStateData/types';
 import { onUpdateAlarmStateDataAction } from './actions/updateAlarmStateData/updateAlarmStateData';
+import { UpdateAlarmThresholdDataActionPayload } from './actions/updateAlarmThresholdData/types';
+import { onUpdateAlarmThresholdDataAction } from './actions/updateAlarmThresholdData';
 
 export const useAlarmsState = () => {
   const [state, dispatch] = useReducer(alarmsStateReducer, { alarms: [] });
@@ -61,6 +63,13 @@ export const useAlarmsState = () => {
     [dispatch]
   );
 
+  const onUpdateAlarmThresholdData = useCallback(
+    (payload: UpdateAlarmThresholdDataActionPayload) => {
+      dispatch(onUpdateAlarmThresholdDataAction(payload));
+    },
+    [dispatch]
+  );
+
   const alarmDatas = useMemo(
     () => convertAlarmsStateToAlarmDatas(state),
     [state]
@@ -75,6 +84,7 @@ export const useAlarmsState = () => {
     onSummarizeAlarmModels,
     onUpdateAlarmInputPropertyData,
     onUpdateAlarmStateData,
+    onUpdateAlarmThresholdData,
   };
 };
 
@@ -97,3 +107,6 @@ export type OnUpdateAlarmInputDataAction =
 
 export type OnUpdateAlarmStateDataAction =
   UseAlarmsStateReturnValues['onUpdateAlarmStateData'];
+
+export type OnUpdateAlarmThresholdDataAction =
+  UseAlarmsStateReturnValues['onUpdateAlarmThresholdData'];
