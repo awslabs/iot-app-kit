@@ -18,6 +18,7 @@ describe('dracoSupport', () => {
 
     getGlobalSettingsMock.mockReturnValue({
       dracoDecoder,
+      getSceneObjectFunction: jest.fn(),
     });
 
     const loader = {
@@ -41,6 +42,7 @@ describe('dracoSupport', () => {
 
       getGlobalSettingsMock.mockReturnValue({
         dracoDecoder,
+        getSceneObjectFunction: jest.fn(),
       });
 
       const loader = {
@@ -73,6 +75,7 @@ describe('setupBasisu', () => {
     };
     getGlobalSettingsMock.mockReturnValue({
       basisuDecoder,
+      getSceneObjectFunction: jest.fn(),
     });
 
     const loader = {
@@ -94,6 +97,7 @@ describe('setupBasisu', () => {
       };
       getGlobalSettingsMock.mockReturnValue({
         basisuDecoder,
+        getSceneObjectFunction: jest.fn(),
       });
       const loader = {
         setKTX2Loader: jest.fn(),
