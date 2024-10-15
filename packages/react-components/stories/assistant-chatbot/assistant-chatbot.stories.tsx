@@ -60,15 +60,14 @@ export const AssistantChatbotDefault: ComponentStory<
         loading: false,
       },
     ]);
-
-  }, [])
+  }, []);
 
   const handleSubmit = (utterance: string) => {
     invokeAssistant({ componentId: '', conversationId, utterance });
   };
 
   return (
-    <div style={{ padding: '0.5rem' }}>
+    <div style={{ padding: '0.5rem' }} data-testid='default-chatbot-story'>
       <AssistantChatbot
         height={500}
         messages={messages}
@@ -90,32 +89,27 @@ export const AssistantProcessingState: ComponentStory<
   typeof AssistantChatbot
 > = () => {
 
-  const { messages } = useAssistant({
-    assistantClient: client,
-    initialState: {
-      messages: [
-        {
-          content:
-            'Processing assistant response, please wait..',
-          sender: 'assistant',
-          type: MessageType.TEXT,
-          id: crypto.randomUUID(),
-          loading: true,
-        },
-        {
-          content:
-            'Processing assistant response, please wait...processing assistant response, please wait...processing assistant response, please wait...',
-          sender: 'assistant',
-          type: MessageType.TEXT,
-          id: crypto.randomUUID(),
-          loading: true,
-        },
-      ],
+  const messages = [
+    {
+      content:
+        'Processing assistant response, please wait..',
+      sender: 'assistant',
+      type: MessageType.TEXT,
+      id: crypto.randomUUID(),
+      loading: true,
     },
-  });
+    {
+      content:
+        'Processing assistant response, please wait...processing assistant response, please wait...processing assistant response, please wait...',
+      sender: 'assistant',
+      type: MessageType.TEXT,
+      id: crypto.randomUUID(),
+      loading: true,
+    },
+  ];
   
   return (
-    <div style={{ padding: '0.5rem' }}>
+    <div style={{ padding: '0.5rem' }} data-testid='processing-chatbot-story'>
       <AssistantChatbot
         height={500}
         messages={messages}
@@ -130,37 +124,32 @@ export const AssistantErrorState: ComponentStory<
   typeof AssistantChatbot
 > = () => {
 
-  const { messages } = useAssistant({
-    assistantClient: client,
-    initialState: {
-      messages: [
-        {
-          content:
-            'Processing assistant response, please wait..',
-          sender: 'assistant',
-          type: MessageType.TEXT,
-          id: crypto.randomUUID(),
-          loading: true,
-        },
-        {
-          content: 'You do not have the required permissions to use the Sitewise Assistant. Please contact your administrator to request access.',
-          sender: 'assistant',
-          type: MessageType.ERROR,
-          id: crypto.randomUUID(),
-          loading: false,
-          payload: {
-            accessDeniedException: {
-              name: 'accessDeniedException',
-              message: 'You do not have the required permissions to use the Sitewise Assistant. Please contact your administrator to request access.',
-            }
-          }
-        }
-      ],
+  const messages = [
+    {
+      content:
+        'Processing assistant response, please wait..',
+      sender: 'assistant',
+      type: MessageType.TEXT,
+      id: crypto.randomUUID(),
+      loading: true,
     },
-  });
+    {
+      content: 'You do not have the required permissions to use the Sitewise Assistant. Please contact your administrator to request access.',
+      sender: 'assistant',
+      type: MessageType.ERROR,
+      id: crypto.randomUUID(),
+      loading: false,
+      payload: {
+        accessDeniedException: {
+          name: 'accessDeniedException',
+          message: 'You do not have the required permissions to use the Sitewise Assistant. Please contact your administrator to request access.',
+        }
+      }
+    }
+  ];
 
   return (
-    <div style={{ padding: '0.5rem' }}>
+    <div style={{ padding: '0.5rem' }} data-testid='error-chatbot-story'>
       <AssistantChatbot
         height={500}
         messages={messages}
