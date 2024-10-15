@@ -62,6 +62,21 @@ export const useAlarmState = ({
   });
 
   /**
+   * Fetch only the most recent asset property value before the viewport
+   * start, useful for components that have data in the viewport but
+   * need to fill in data from before the start of the viewport.
+   */
+  const mostRecentBeforeStartValueQueries = useHistoricalAssetPropertyValues({
+    enabled: queryMode !== 'LATEST',
+    iotSiteWiseClient,
+    requests,
+    viewport,
+    fetchMode: 'MOST_RECENT_BEFORE_START',
+    maxNumberOfValues: 1,
+    refreshRate: Infinity,
+  });
+
+  /**
    * Fetch all asset property values within the viewport
    */
   const historicalQueriesInViewport = useHistoricalAssetPropertyValues({
@@ -101,12 +116,16 @@ export const useAlarmState = ({
         const latestValueQuery = latestValueQueries[index];
         const mostRecentBeforeEndValueQuery =
           mostRecentBeforeEndValueQueries[index];
+        const mostRecentBeforeStartValueQuery =
+          mostRecentBeforeStartValueQueries[index];
         const historicalQueryInViewport = historicalQueriesInViewport[index];
         const latestQueryInLiveViewport = latestQueriesInLiveViewport[index];
 
         const dataFromQueries = [
           ...createNonNullableList([latestValueQuery.data?.propertyValue]),
           ...(mostRecentBeforeEndValueQuery.data?.assetPropertyValueHistory ??
+            []),
+          ...(mostRecentBeforeStartValueQuery.data?.assetPropertyValueHistory ??
             []),
           ...(historicalQueryInViewport.data?.assetPropertyValueHistory ?? []),
           ...(latestQueryInLiveViewport.data?.assetPropertyValueHistory ?? []),
@@ -115,6 +134,7 @@ export const useAlarmState = ({
         const statusFromQueries = [
           latestValueQuery,
           mostRecentBeforeEndValueQuery,
+          mostRecentBeforeStartValueQuery,
           historicalQueryInViewport,
           latestQueryInLiveViewport,
         ].filter((query) => !isQueryDisabled(query));
@@ -133,5 +153,6 @@ export const useAlarmState = ({
     latestValueQueries,
     historicalQueriesInViewport,
     mostRecentBeforeEndValueQueries,
+    mostRecentBeforeStartValueQueries,
   ]);
 };

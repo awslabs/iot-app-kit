@@ -101,6 +101,10 @@ export const mockDefaultAlarmState2 = JSON.stringify({
   },
 });
 
+export const mockDefaultAlarmState3 = JSON.stringify({
+  stateName: 'LATCHED',
+});
+
 export const mockStateAssetModelProperty = {
   ...mockStateAssetProperty,
   type: {
