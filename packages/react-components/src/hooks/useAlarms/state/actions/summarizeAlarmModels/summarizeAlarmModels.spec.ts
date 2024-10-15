@@ -218,10 +218,10 @@ describe('summarizeAlarmModels', () => {
         {
           alarmDatas: [
             {
-              describeAssetModelQueryStatus: mockLoadingStatus,
+              describeAlarmModelsQueryStatus: mockLoadingStatus,
             },
             {
-              describeAssetModelQueryStatus: mockLoadingStatus,
+              describeAlarmModelsQueryStatus: mockLoadingStatus,
             },
           ],
         },

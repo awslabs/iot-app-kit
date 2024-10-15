@@ -9,7 +9,13 @@ import { AlarmData } from '../../../hooks/useAlarms';
 import { AlarmContent } from '../../alarm-components/alarm-content/types';
 import { mapAlarmRuleExpression } from '../../../hooks/useAlarms/transformers/mapAlarmRuleExpression';
 import { toId } from '@iot-app-kit/source-iotsitewise';
-import { DataStream, Primitive } from '@iot-app-kit/core';
+import {
+  DataStream,
+  Primitive,
+  Threshold,
+  ThresholdValue,
+} from '@iot-app-kit/core';
+import { transformAlarmsToThreshold } from '../../../utils/transformAlarmsToThreshold';
 
 type UseChartAlarmOptions = Pick<ChartOptions, 'queries' | 'viewport'>;
 
@@ -25,6 +31,7 @@ export type ChartAlarm = {
   name?: string;
   events?: ChartAlarmEvent[];
   datastream?: DataStream<Primitive>;
+  thresholds?: Threshold<ThresholdValue>;
 };
 
 export const useChartAlarms = ({ queries, viewport }: UseChartAlarmOptions) => {
@@ -63,6 +70,7 @@ export const useChartAlarms = ({ queries, viewport }: UseChartAlarmOptions) => {
       name: compositeModelName,
       events: parsedAlarmStateData,
       datastream: inputProperty?.at(0)?.dataStream,
+      thresholds: transformAlarmsToThreshold(alarmData),
     };
   }, []);
 
