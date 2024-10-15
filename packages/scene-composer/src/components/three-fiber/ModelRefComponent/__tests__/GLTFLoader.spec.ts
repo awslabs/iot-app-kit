@@ -94,8 +94,7 @@ describe('GLTFLoader', () => {
     it('should execute without draco decoder enabled', async () => {
       const getGlobalSettingsMock = getGlobalSettings as jest.Mock;
       const dracoDecoder: DracoDecoderConfig = {
-        enable: true,
-        path: 'draco/path',
+        enable: false,
       };
       const basisuDecoder: BasisuDecoderConfig = {
         enable: false,
@@ -109,8 +108,7 @@ describe('GLTFLoader', () => {
       extensionsCb(mockLoader);
 
       expect(extendLoader).toBeCalledTimes(1);
-      expect(setDecoderPathSpy).toBeCalledWith('draco/path');
-      expect(mockLoader.setDRACOLoader).toBeCalledTimes(1);
+      expect(mockLoader.setDRACOLoader).toBeCalledTimes(0);
     });
   });
 
