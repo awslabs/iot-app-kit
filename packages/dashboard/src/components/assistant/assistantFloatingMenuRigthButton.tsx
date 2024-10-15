@@ -1,7 +1,9 @@
 import React, { HTMLAttributes } from 'react';
 import {
   borderRadiusButton,
+  colorTextButtonNormalDisabled,
   fontSizeBodyM,
+  fontWeightHeadingM,
   spaceStaticM,
   spaceStaticXxl,
   spaceStaticXxs,
@@ -9,10 +11,13 @@ import {
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { AssistantIcon } from './assistantIcon';
 import './assistantButtons.css';
+import Popover from '@cloudscape-design/components/popover';
+import type { DashboardMessages } from '~/messages';
 
 interface AssistantFloatingMenuRightButtonProps
   extends HTMLAttributes<HTMLButtonElement> {
   label: string;
+  messageOverrides: DashboardMessages;
   disabled?: boolean;
 }
 
@@ -20,8 +25,9 @@ export const AssistantFloatingMenuRightButton = ({
   label,
   onClick,
   disabled,
+  messageOverrides,
 }: AssistantFloatingMenuRightButtonProps) => {
-  return (
+  const buttonComponent = (
     <button
       className='iot-app-kit-assistant-menu-right-button'
       style={{
@@ -29,10 +35,14 @@ export const AssistantFloatingMenuRightButton = ({
         borderTopRightRadius: borderRadiusButton,
         borderBottomRightRadius: borderRadiusButton,
         padding: `0 ${spaceStaticM}`,
+        ...(disabled
+          ? {
+              color: colorTextButtonNormalDisabled,
+            }
+          : {}),
       }}
       aria-label={label}
-      onClick={onClick}
-      disabled={disabled}
+      onClick={disabled ? () => {} : onClick}
     >
       <SpaceBetween direction='horizontal' size='xxs' alignItems='center'>
         <AssistantIcon
@@ -40,8 +50,28 @@ export const AssistantFloatingMenuRightButton = ({
           ariaLabel={label}
           style={{ marginTop: spaceStaticXxs }}
         />
-        <span style={{ fontSize: fontSizeBodyM }}>{label}</span>
+        <span
+          style={{ fontSize: fontSizeBodyM, fontWeight: fontWeightHeadingM }}
+        >
+          {label}
+        </span>
       </SpaceBetween>
     </button>
   );
+
+  if (disabled) {
+    return (
+      <Popover
+        content={
+          messageOverrides.assistant.floatingMenu.buttonGenerateSummaryPopover
+        }
+        triggerType='custom'
+        position='left'
+      >
+        {buttonComponent}
+      </Popover>
+    );
+  } else {
+    return buttonComponent;
+  }
 };

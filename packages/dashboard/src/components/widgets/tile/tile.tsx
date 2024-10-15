@@ -2,9 +2,10 @@ import React, { PropsWithChildren } from 'react';
 import {
   borderRadiusBadge,
   colorBackgroundContainerContent,
+  colorBackgroundControlChecked,
   spaceScaledXs,
 } from '@cloudscape-design/design-tokens';
-import { Box, Checkbox } from '@cloudscape-design/components';
+import { Box, Checkbox, SpaceBetween } from '@cloudscape-design/components';
 import { DashboardWidget } from '~/types';
 import { HorizontalDivider } from '~/components/divider/horizontalDivider';
 import { useDispatch, useSelector } from 'react-redux';
@@ -43,7 +44,7 @@ const WidgetTile: React.FC<WidgetTileProps> = ({
   const isSelected =
     typeof assistantState.selectedQueries.find(
       (item) => item.widgetId === widget.id
-    ) !== 'undefined';
+    ) !== 'undefined' && WidgetTypeSelectionEnabled.includes(widget.type);
 
   const handleWidgetSelection = () => {
     if (isSelected) {
@@ -91,20 +92,22 @@ const WidgetTile: React.FC<WidgetTileProps> = ({
       aria-description='widget tile'
       className='widget-tile'
       style={{
+        height: isSelected ? 'calc(100% + 10px)' : 'inherit',
         borderRadius: borderRadiusBadge,
         backgroundColor: colorBackgroundContainerContent,
+        border: isSelected ? `2px solid ${colorBackgroundControlChecked}` : '',
       }}
     >
       {isSelectionAvailable ? (
         <Box padding={{ top: 'xxs' }}>
-          <Box padding={{ left: 'xs', bottom: 'xxs' }}>
-            <Checkbox
-              onChange={() => handleWidgetSelection()}
-              checked={isSelected}
-            >
-              &nbsp;
-            </Checkbox>
-          </Box>
+          <SpaceBetween size='xxs' alignItems='end' direction='vertical'>
+            <Box padding={{ bottom: 'xxs', right: 'xxs' }}>
+              <Checkbox
+                onChange={() => handleWidgetSelection()}
+                checked={isSelected}
+              />
+            </Box>
+          </SpaceBetween>
           <HorizontalDivider styles={{ height: '1px' }} />
         </Box>
       ) : null}

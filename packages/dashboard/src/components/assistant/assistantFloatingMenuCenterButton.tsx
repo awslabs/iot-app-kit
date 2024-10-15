@@ -1,6 +1,7 @@
 import React, { HTMLAttributes } from 'react';
 import {
   fontSizeBodyM,
+  fontWeightHeadingM,
   spaceStaticM,
   spaceStaticXxl,
 } from '@cloudscape-design/design-tokens';
@@ -23,12 +24,15 @@ export const AssistantFloatingMenuCenterButton = ({
       style={{
         height: spaceStaticXxl,
         padding: `0 ${spaceStaticM}`,
+        fontSize: fontSizeBodyM,
       }}
       aria-label={label}
       onClick={onClick}
       disabled={disabled}
     >
-      <span style={{ fontSize: fontSizeBodyM }}>{label}</span>
+      <span style={{ fontSize: fontSizeBodyM, fontWeight: fontWeightHeadingM }}>
+        {label}
+      </span>
     </button>
   );
 };

@@ -3,12 +3,13 @@ import { AssistantButton } from './assistantButton';
 import {
   borderRadiusButton,
   colorChartsPurple1200,
-  colorBackgroundButtonNormalDefault,
   fontSizeBodyM,
-  spaceStaticL,
   spaceStaticM,
   spaceStaticXxl,
   spaceStaticS,
+  fontWeightHeadingM,
+  colorBorderDividerDefault,
+  colorBackgroundCellShaded,
 } from '@cloudscape-design/design-tokens';
 import { VerticalDivider } from '../divider/verticalDivider';
 import { AssistantFloatingMenuRightButton } from './assistantFloatingMenuRigthButton';
@@ -88,7 +89,7 @@ export const AssistantFloatingMenu = ({
   const showAlert = totalSelected > MAX_ITEMS_SELECTED;
 
   const mainContainerStyles: CSSProperties = {
-    minHeight: `${showAlert ? '100' : '60'}px`,
+    minHeight: `${showAlert ? '110' : '60'}px`,
     width: 'fit-content',
   };
 
@@ -111,11 +112,12 @@ export const AssistantFloatingMenu = ({
     height: spaceStaticXxl,
     padding: 0,
     borderRadius: borderRadiusButton,
-    border: `1px solid ${colorChartsPurple1200}`,
-    background: colorChartsPurple1200,
-    color: colorBackgroundButtonNormalDefault,
+    border: `2px solid ${colorChartsPurple1200}`,
+    backgroundColor: colorBackgroundCellShaded,
+    color: colorChartsPurple1200,
     width: 'fit-content',
     fontSize: fontSizeBodyM,
+    fontWeight: fontWeightHeadingM,
   };
 
   const menuContainerStyles: CSSProperties = {
@@ -155,9 +157,17 @@ export const AssistantFloatingMenu = ({
                 disabled={totalSelected === 0}
               />
               <VerticalDivider
-                styles={{ width: '2px', height: spaceStaticL }}
+                styles={{
+                  width: '2px',
+                  height: '100%',
+                  backgroundColor:
+                    totalSelected === 0 || totalSelected > MAX_ITEMS_SELECTED
+                      ? colorBorderDividerDefault
+                      : colorChartsPurple1200,
+                }}
               />
               <AssistantFloatingMenuRightButton
+                messageOverrides={messageOverrides}
                 label={assistant.floatingMenu.buttonGenerateSummary}
                 onClick={handleSummary}
                 disabled={

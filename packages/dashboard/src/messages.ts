@@ -151,6 +151,7 @@ export type AssistantMessages = {
     };
     buttonClearAll: string;
     buttonGenerateSummary: string;
+    buttonGenerateSummaryPopover: string;
     buttonAIAssistant: string;
   };
   chatbot: {
@@ -314,6 +315,8 @@ export const DefaultDashboardMessages: DashboardMessages = {
       },
       buttonClearAll: 'Clear all',
       buttonGenerateSummary: 'Generate summary',
+      buttonGenerateSummaryPopover:
+        'Select the widgets or properties below to include them to generate an AI summary.',
       buttonAIAssistant: 'AI Assistant',
     },
     chatbot: {

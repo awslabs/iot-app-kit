@@ -2,6 +2,8 @@ import React, { HTMLAttributes } from 'react';
 import { AssistantIcon } from './assistantIcon';
 import {
   borderRadiusButton,
+  colorBackgroundButtonNormalDefault,
+  colorChartsPurple1200,
   fontSizeBodyM,
   spaceStaticL,
   spaceStaticXs,
@@ -24,6 +26,7 @@ export const AssistantButton = ({ label, onClick }: AssistantButtonProps) => {
         padding: `0 ${spaceStaticL}`,
         gap: spaceStaticXs,
         borderRadius: borderRadiusButton,
+        background: colorChartsPurple1200,
         cursor: 'pointer',
       }}
       onClick={onClick}
@@ -32,9 +35,14 @@ export const AssistantButton = ({ label, onClick }: AssistantButtonProps) => {
         <AssistantIcon
           role='img'
           ariaLabel={label}
-          style={{ marginTop: spaceStaticXxs }}
+          style={{ marginTop: spaceStaticXxs, color: 'white' }}
         />
-        <span style={{ fontSize: fontSizeBodyM, fontWeight: 'bold' }}>
+        <span
+          style={{
+            fontSize: fontSizeBodyM,
+            color: colorBackgroundButtonNormalDefault,
+          }}
+        >
           {label}
         </span>
       </SpaceBetween>
