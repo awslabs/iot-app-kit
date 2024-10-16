@@ -4,6 +4,7 @@ import { ChartAlarm, ChartAlarms } from './useChartAlarms';
 import { createNonNullableList } from '../../../utils/createNonNullableList';
 import { useMemo } from 'react';
 import { bisector } from 'd3-array';
+import { uniqWith } from 'lodash';
 import { AlarmContent } from '../../alarm-components/alarm-content/types';
 import { AlarmAssistantContext } from '../../assistant-common/types';
 
@@ -62,7 +63,7 @@ export const useNormalizedDataStreams = ({
         .map(({ datastream }) => datastream)
     );
 
-    return [...dataStreams, ...alarmDataStreams].map(
+    const normalizedDatastreams = [...dataStreams, ...alarmDataStreams].map(
       ({ id, data, ...rest }) => {
         const propertyInfo = fromId(id);
         const dataCopy = [...data] as DataPointWithAlarm[];
@@ -113,5 +114,7 @@ export const useNormalizedDataStreams = ({
         };
       }
     );
+
+    return uniqWith(normalizedDatastreams, (a, b) => a.id === b.id);
   }, [dataStreams, alarms]);
 };

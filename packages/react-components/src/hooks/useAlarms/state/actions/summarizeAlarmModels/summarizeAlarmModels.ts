@@ -40,7 +40,7 @@ export const summarizeAlarmModels = (
 
           const updatedAlarm = {
             ...alarmData,
-            describeAssetModelQueryStatus: modelSummary.status,
+            describeAlarmModelsQueryStatus: modelSummary.status,
           };
 
           const model = modelSummary.data;

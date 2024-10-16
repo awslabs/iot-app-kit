@@ -9,6 +9,7 @@ import { useXAxis } from './axes/xAxis';
 import { useTooltip } from './tooltip/convertTooltip';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import isEqual from 'lodash.isequal';
+import { uniqWith } from 'lodash';
 import {
   getDefaultChartOption,
   DEFAULT_DATA_ZOOM,
@@ -19,6 +20,7 @@ import { SeriesOption } from 'echarts';
 import { GenericSeries } from '../../../echarts/types';
 import { useNormalizedDataStreams } from '../hooks/useNormalizedDataStreams';
 import { ChartAlarms } from '../hooks/useChartAlarms';
+import { createNonNullableList } from '../../../utils/createNonNullableList';
 
 const toDataStreamIdentifiers = (
   dataStreams: ReturnType<typeof useNormalizedDataStreams>
@@ -198,6 +200,12 @@ export const useChartConfiguration = (
     [alarms, showAlarmIcons, visibleData.length]
   );
 
+  const alarmThresholds = useMemo(
+    () =>
+      uniqWith(createNonNullableList(alarms.map((a) => a.thresholds)), isEqual),
+    [alarms]
+  );
+
   const xAxis = useXAxis(axis);
 
   const { series, yAxis } = useSeriesAndYAxis(dataSteamIdentifiers, {
@@ -206,6 +214,7 @@ export const useChartConfiguration = (
     significantDigits,
     axis,
     thresholds,
+    alarmThresholds,
     performanceMode,
     showBadDataIcons,
     showUncertainDataIcons,

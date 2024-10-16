@@ -272,6 +272,7 @@ export const useSeriesAndYAxis = (
     styleSettings,
     axis,
     thresholds,
+    alarmThresholds,
     performanceMode,
     showBadDataIcons,
     showUncertainDataIcons,
@@ -284,6 +285,7 @@ export const useSeriesAndYAxis = (
     axis?: ChartAxisOptions;
     performanceMode?: boolean;
     showAlarmIcons?: boolean;
+    alarmThresholds: Threshold[];
   } & ChartDataQuality
 ) => {
   const { isDataStreamHidden } = useVisibleDataStreams();
@@ -292,7 +294,8 @@ export const useSeriesAndYAxis = (
 
   return useMemo(() => {
     const defaultYAxis: YAXisComponentOption[] = [convertChartYAxis(axis)];
-    const convertedThresholds = convertThresholds(thresholds);
+    const allThresholds = [...(thresholds ?? []), ...alarmThresholds];
+    const convertedThresholds = convertThresholds(allThresholds);
 
     const shouldUseEmphasis = highlightedDataStreams.length > 0;
 
@@ -347,6 +350,7 @@ export const useSeriesAndYAxis = (
     styleSettings,
     performanceMode,
     thresholds,
+    alarmThresholds,
     highlightedDataStreams,
     isDataStreamHighlighted,
     isDataStreamHidden,
