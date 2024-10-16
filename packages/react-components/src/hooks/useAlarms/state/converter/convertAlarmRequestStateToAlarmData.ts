@@ -14,7 +14,10 @@ export const convertAlarmRequestStateToAlarmData = (
           alarmRequestState.describeAssetModelQueryStatus,
           alarmRequestState.describeAssetQueryStatus,
           alarm.getLatestAlarmSourceValueQueryStatus,
+          alarm.getInputPropertyValueQueryStatus,
           alarm.getLatestAlarmTypeValueQueryStatus,
+          alarm.getAlarmStateValueQueryStatus,
+          alarm.getAlarmThresholdValueQueryStatus,
           alarm.describeAlarmModelsQueryStatus,
         ])
       ),

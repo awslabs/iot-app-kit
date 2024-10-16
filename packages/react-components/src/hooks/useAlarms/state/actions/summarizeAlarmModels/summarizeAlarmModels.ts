@@ -2,6 +2,7 @@ import { isEqual, uniqWith } from 'lodash';
 import {
   extractAssetPropertyId,
   getAlarmModelNameFromAlarmSourceProperty,
+  getStaticThresholdAsAssetPropertyValue,
 } from '../../../utils/parseAlarmModels';
 import { isInputPropertyRequest } from '../../converter/utils';
 import { AlarmDataState, AlarmsState } from '../../types';
@@ -69,10 +70,15 @@ export const summarizeAlarmModels = (
             isEqual
           );
 
+          const staticThresholds = createNonNullableList(
+            models.map(getStaticThresholdAsAssetPropertyValue)
+          );
+
           return {
             ...updatedAlarm,
             models,
             inputProperty,
+            thresholds: staticThresholds,
           };
         }
       );

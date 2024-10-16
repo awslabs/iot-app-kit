@@ -2,6 +2,7 @@ import { summarizeAlarmModels, updateAlarmSourceData } from './actions';
 import { summarizeAlarms } from './actions/summarizeAlarms';
 import { updateAlarmInputPropertyData } from './actions/updateAlarmInputPropertyData';
 import { updateAlarmStateData } from './actions/updateAlarmStateData/updateAlarmStateData';
+import { updateAlarmThresholdData } from './actions/updateAlarmThresholdData';
 import { updateAlarmTypeData } from './actions/updateAlarmTypeData';
 import { AlarmAction, AlarmsState } from './types';
 
@@ -22,6 +23,8 @@ export const alarmsStateReducer = (
       return updateAlarmInputPropertyData(state, action);
     case 'UPDATE_ALARM_STATE_DATA':
       return updateAlarmStateData(state, action);
+    case 'UPDATE_ALARM_THRESHOLD_DATA':
+      return updateAlarmThresholdData(state, action);
     default:
       return state;
   }
