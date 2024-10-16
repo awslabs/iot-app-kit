@@ -72,18 +72,17 @@ export const Chatbot: FC<AssistantChatbotProps> = (
           target: 'dashboard',
           conversationId: assistant.conversationId,
           context: contexts,
-          utterance: utterance,
+          utterance,
         });
       }
-
-      onToggleChatbotAction({
-        open: true,
-        callerComponentId: assistant.callerComponentId ?? 'dashboard',
-        action: undefined,
-      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [assistant.conversationId, assistant.callerComponentId, assistant.action]);
+  }, [
+    assistant.conversationId,
+    assistant.callerComponentId,
+    assistant.action,
+    assistant.actionId,
+  ]);
 
   const handleSubmit = (utterance: string) => {
     const componentContext = assistant.callerComponentId
@@ -103,6 +102,7 @@ export const Chatbot: FC<AssistantChatbotProps> = (
       onToggleChatbotAction({
         open,
         callerComponentId: '',
+        action: 'divedeep',
       })
     );
   };

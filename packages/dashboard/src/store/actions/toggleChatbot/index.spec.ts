@@ -71,4 +71,5 @@ it('action TOGGLE_CHATBOT changes state correctly', () => {
   expect(store.getState().assistant.isChatbotOpen).toBeTruthy();
   expect(store.getState().assistant.callerComponentId).toBe('mockId');
   expect(store.getState().assistant.action).toBe('summarize');
+  expect(store.getState().assistant.actionId).toEqual(expect.any(String));
 });

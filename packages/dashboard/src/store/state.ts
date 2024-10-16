@@ -34,6 +34,7 @@ export type DashboardState<
     isChatbotOpen: boolean;
     callerComponentId?: string;
     action?: string;
+    actionId?: string;
 
     mode: 'on' | 'off';
     selectedQueries: {
