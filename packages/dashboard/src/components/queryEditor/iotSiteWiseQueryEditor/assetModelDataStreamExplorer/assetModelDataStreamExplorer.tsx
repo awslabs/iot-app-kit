@@ -65,8 +65,7 @@ export const AssetModelDataStreamExplorer = ({
     updateSelectedAsset,
   } = useModelBasedQuery();
 
-  const { updateAssetModels, uppdateAssetAlarmModels } =
-    useModelBasedQuerySelection();
+  const { updateModelQueries } = useModelBasedQuerySelection();
 
   const [selectedAssetModel, selectAssetModel] = useSelectedAssetModel(
     createInitialAssetModelResource(assetModelId)
@@ -109,32 +108,29 @@ export const AssetModelDataStreamExplorer = ({
 
   const onSave = () => {
     if (
-      selectedAssetModel[0].assetModelId &&
-      selectedAssetModelProperties.length > 0
+      (selectedAssetModel[0].assetModelId &&
+        selectedAssetModelProperties.length > 0) ||
+      selectedAlarms.length > 0
     ) {
-      updateAssetModels(
-        createAssetModelQuery({
+      updateModelQueries({
+        alarmModels: createAlarmModelQuery({
+          assetModelId: selectedAssetModel[0].assetModelId,
+          assetId: selectedAsset?.at(0)?.assetId,
+          alarms: selectedAlarms,
+        }),
+        assetModels: createAssetModelQuery({
           assetModelId: selectedAssetModel[0].assetModelId,
           assetId: selectedAsset?.at(0)?.assetId,
           assetModelPropertyIds: createNonNullableList(
             selectedAssetModelProperties.map(({ propertyId }) => propertyId)
           ),
-        })
-      );
+        }),
+      });
+
       metricsRecorder?.record({
         metricName: 'AssetModelDataStreamAdd',
         metricValue: 1,
       });
-    }
-
-    if (selectedAlarms.length > 0) {
-      uppdateAssetAlarmModels(
-        createAlarmModelQuery({
-          assetModelId: selectedAssetModel[0].assetModelId,
-          assetId: selectedAsset?.at(0)?.assetId,
-          alarms: selectedAlarms,
-        })
-      );
     }
   };
 

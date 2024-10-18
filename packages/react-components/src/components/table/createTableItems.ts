@@ -15,6 +15,7 @@ import type {
   TableItemHydrated,
 } from './types';
 import type { TableMessages } from './messages';
+import { getBreachedThreshold } from '../../utils/thresholdUtils';
 
 export const createTableItems: (
   config: {
@@ -84,6 +85,10 @@ export const createTableItems: (
       value: createCellItem(
         {
           value: alarm.value,
+          threshold:
+            alarm.value && alarm.threshold
+              ? getBreachedThreshold(alarm.value, [alarm.threshold])
+              : undefined,
           isLoading,
         },
         messageOverrides
