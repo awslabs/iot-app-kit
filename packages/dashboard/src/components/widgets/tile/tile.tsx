@@ -45,6 +45,7 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ widget, title, children }) => {
   // the title back into the react-components
   const widgetsWithTitle = ['gauge', 'xy-plot', 'bar-chart', 'status-timeline'];
 
+  // {children} is wrapped with <></> to remove wrapper node added by React -  https://react.dev/reference/react/Fragment
   return (
     <div
       aria-description='widget tile'
@@ -56,7 +57,9 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ widget, title, children }) => {
       }}
     >
       {widgetsWithTitle.includes(widget.type) && titleComponentWithBorder}
-      <div className='widget-tile-body'>{children}</div>
+      <div className='widget-tile-body'>
+        <>{children}</>
+      </div>
     </div>
   );
 };
