@@ -1,15 +1,13 @@
 import React from 'react';
 
-import { MOCK_KPI_WIDGET } from '../../../../testing/mocks';
 import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
-import { Provider } from 'react-redux';
-import { configureDashboardStore } from '~/store';
 import { render, screen } from '@testing-library/react';
-import { ThresholdComponent } from './thresholdComponent';
-import type { DashboardState } from '~/store/state';
-import type { ThresholdWithId } from '~/customization/settings';
-import { ThresholdSettingsConfiguration, ThresholdsWidget } from './index';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
+import type { ThresholdWithId } from '~/customization/settings';
+import { MOCK_KPI_WIDGET } from '../../../../testing/mocks';
+import { ThresholdSettingsConfiguration, ThresholdsWidget } from './index';
+import { ThresholdComponent } from './thresholdComponent';
 
 const MOCK_THRESHOLD_1: ThresholdWithId = {
   id: '1',

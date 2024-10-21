@@ -1,12 +1,12 @@
 import React from 'react';
-import TableWidgetComponent from './component';
-import TableIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';
-import type { TableWidget } from '../types';
+import type { TableWidget } from '~/customization/widgets/types';
 import {
   TABLE_WIDGET_INITIAL_HEIGHT,
   TABLE_WIDGET_INITIAL_WIDTH,
 } from '../constants';
+import TableWidgetComponent from './component';
+import TableIcon from './icon';
 
 export const tablePlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

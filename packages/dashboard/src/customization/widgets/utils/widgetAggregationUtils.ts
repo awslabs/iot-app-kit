@@ -1,5 +1,8 @@
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import { LineScatterChartWidget, QueryWidget } from '../types';
+import type {
+  LineScatterChartWidget,
+  QueryWidget,
+} from '~/customization/widgets/types';
 
 export const WidgetDefaultAggregation: Record<
   string,

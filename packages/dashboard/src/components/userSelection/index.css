@@ -1,7 +1,0 @@
-@import "../../styles/variables.css";
-
-.select-rect {
-  border: var(--selection-border-width) solid var(--selection-color);
-  position: absolute;
-  z-index: var(--stack-order-selection-box);
-}

@@ -1,10 +1,9 @@
 import { toId } from '@iot-app-kit/source-iotsitewise';
-import { useQueries } from '@tanstack/react-query';
-import { useClients } from '~/components/dashboard/clientContext';
-import { AssetCacheKeyFactory } from '~/components/queryEditor/iotSiteWiseQueryEditor/modeledDataStreamQueryEditor/assetExplorer/useAsset/assetCacheKeyFactory';
-import { createQueryFn } from '~/components/queryEditor/iotSiteWiseQueryEditor/modeledDataStreamQueryEditor/assetExplorer/useAsset/useAsset';
-import { SiteWiseQueryConfig } from '../types';
+import { useClients } from '~/dashboard/clientContext';
+// import { AssetCacheKeyFactory } from '~/components/queryEditor/iotSiteWiseQueryEditor/modeledDataStreamQueryEditor/assetExplorer/useAsset/assetCacheKeyFactory';
+// import { createQueryFn } from '~/components/queryEditor/iotSiteWiseQueryEditor/modeledDataStreamQueryEditor/assetExplorer/useAsset/useAsset';
 import { StyleSettingsMap } from '@iot-app-kit/core';
+import { SiteWiseQueryConfig } from '../types';
 
 export const useTableItems = (
   query: SiteWiseQueryConfig['query'],
@@ -14,7 +13,9 @@ export const useTableItems = (
 
   const assets = query?.assets ?? [];
   const assetIds = assets.map(({ assetId }) => assetId);
+  const queries = [];
 
+  /*
   const queries = useQueries({
     queries: iotSiteWiseClient
       ? assetIds.map((assetId) => ({
@@ -24,6 +25,7 @@ export const useTableItems = (
         }))
       : [],
   });
+  */
 
   const assetItems = assets.flatMap(({ assetId, properties }) =>
     properties.map(({ propertyId, refId }) => {

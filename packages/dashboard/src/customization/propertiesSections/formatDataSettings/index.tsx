@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { PropertiesSection } from '~/customization/propertiesSectionComponent';
-import { DashboardWidget } from '~/types';
-import { maybeWithDefault } from '~/util/maybe';
-import { DecimalPlacesSection } from './section';
-import { CommonChartProperties } from '~/customization/widgets/types';
-import { nonNegative } from '~/util/number';
 import { PropertyLens } from '~/customization/propertiesSection';
+import { PropertiesSection } from '~/customization/propertiesSectionComponent';
+import { CommonChartProperties } from '~/customization/widgets/types';
+import { maybeWithDefault } from '~/helpers/maybe';
+import { nonNegative } from '~/helpers/number';
+import { DashboardWidget } from '~/types';
+import { DecimalPlacesSection } from './section';
 
 const isSettingsWidget = (
   w: DashboardWidget

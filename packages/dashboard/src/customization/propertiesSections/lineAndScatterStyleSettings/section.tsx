@@ -1,4 +1,6 @@
+import { getPlugin } from '@iot-app-kit/core';
 import React from 'react';
+import { PropertyLens } from '~/customization/propertiesSection';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import {
   ChartLegend,
@@ -6,13 +8,11 @@ import {
   LineStyles,
   SymbolStyles,
 } from '~/customization/widgets/types';
+import { maybeWithDefault } from '~/helpers/maybe';
 import { DashboardWidget } from '~/types';
-import { LineStyleSection } from './lineStyleSection';
 import { YAxisSection } from '../yAxisSettings';
 import { LegendSection } from './legendSection';
-import { maybeWithDefault } from '~/util/maybe';
-import { PropertyLens } from '~/customization/propertiesSection';
-import { getPlugin } from '@iot-app-kit/core';
+import { LineStyleSection } from './lineStyleSection';
 
 const isLineAndScatterWidget = (
   w: DashboardWidget

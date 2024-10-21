@@ -1,6 +1,6 @@
-import { useListAssetPropertiesMapQuery } from './useAssetDescriptionQueries';
-import { isDefined } from '~/util/isDefined';
+import { isDefined } from '~/helpers/isDefined';
 import type { IoTSiteWiseDataStreamQuery } from '~/types';
+import { useListAssetPropertiesMapQuery } from './useAssetDescriptionQueries';
 
 // hook grabs all the data types of the assets in a SiteWiseAssetQuery
 export const useWidgetDataTypeSet = (

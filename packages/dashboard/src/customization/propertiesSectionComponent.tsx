@@ -1,7 +1,7 @@
-import { DashboardWidget } from '~/types';
+import type { DashboardWidget } from '~/types';
 import {
-  FilterPredicate,
-  RenderSection,
+  type FilterPredicate,
+  type RenderSection,
   useSelection,
 } from './propertiesSection';
 

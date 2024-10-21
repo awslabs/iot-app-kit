@@ -2,9 +2,9 @@ import type { CSSProperties, PointerEventHandler } from 'react';
 import React from 'react';
 import { defaultFontSettings } from './defaultFontSettings';
 
-import './index.css';
-import type { TextWidget } from '../../types';
 import { spaceScaledXs } from '@cloudscape-design/design-tokens';
+import type { TextWidget } from '~/customization/widgets/types';
+import './index.css';
 
 type StyledTextProps = TextWidget & {
   onPointerDown?: PointerEventHandler;

@@ -1,16 +1,14 @@
-import type { CSSProperties } from 'react';
-import React, { useEffect } from 'react';
-import { useWidgetActions } from '~/customization/hooks/useWidgetActions';
-import { useClickOutside } from '~/hooks/useClickOutside';
-import { useKeyPress } from '~/hooks/useKeyPress';
-import { defaultFontSettings } from './defaultFontSettings';
-
-import './textArea.css';
-import type { TextWidget } from '../../types';
 import {
   colorTextLinkDefault,
   spaceScaledXs,
 } from '@cloudscape-design/design-tokens';
+import React, { useEffect, type CSSProperties } from 'react';
+import type { TextWidget } from '~/customization/widgets/types';
+import { useClickOutside } from '~/hooks/useClickOutside';
+import { useKeyPress } from '~/hooks/useKeyPress';
+import { useUpdateWidget } from '~/store/dashboard/use-update-widget';
+import { defaultFontSettings } from './defaultFontSettings';
+import './textArea.css';
 
 type StyledTextAreaProps = TextWidget & {
   handleSetEdit: (isEditing: boolean) => void;
@@ -22,7 +20,7 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({
   isUrl,
   ...widget
 }) => {
-  const { update } = useWidgetActions();
+  const updateWidget = useUpdateWidget();
 
   const { value } = widget.properties;
 
@@ -52,7 +50,7 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({
         value: text,
       },
     };
-    update(updatedWidget);
+    updateWidget(updatedWidget);
   };
 
   const ref = useClickOutside<HTMLTextAreaElement>(() => handleSetEdit(false));
@@ -77,7 +75,7 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({
           href: value,
         },
       };
-      update(updatedWidget);
+      updateWidget(updatedWidget);
       handleSetEdit(false);
     },
     filter,
@@ -94,7 +92,7 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({
           },
         },
       };
-      update(updatedWidget);
+      updateWidget(updatedWidget);
     },
     filter,
   });
@@ -110,7 +108,7 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({
           },
         },
       };
-      update(updatedWidget);
+      updateWidget(updatedWidget);
     },
     filter,
   });
@@ -126,7 +124,7 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({
           },
         },
       };
-      update(updatedWidget);
+      updateWidget(updatedWidget);
     },
     filter,
   });
@@ -145,7 +143,7 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({
           },
         },
       };
-      update(updatedWidget);
+      updateWidget(updatedWidget);
     },
     filter,
   });
@@ -164,7 +162,7 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({
           },
         },
       };
-      update(updatedWidget);
+      updateWidget(updatedWidget);
     },
     filter,
   });

@@ -1,12 +1,12 @@
 import React from 'react';
 
+import { PropertyLens } from '~/customization/propertiesSection';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { TextWidget } from '~/customization/widgets/types';
+import { maybeWithDefault } from '~/helpers/maybe';
 import { DashboardWidget } from '~/types';
-import { maybeWithDefault } from '~/util/maybe';
-import TextSettings from './text';
 import LinkSettings from './link';
-import { PropertyLens } from '~/customization/propertiesSection';
+import TextSettings from './text';
 
 const isTextWidget = (w: DashboardWidget): w is TextWidget => w.type === 'text';
 

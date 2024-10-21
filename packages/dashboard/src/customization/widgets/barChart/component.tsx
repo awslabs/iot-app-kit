@@ -1,22 +1,17 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-
 import { BarChart, useViewport } from '@iot-app-kit/react-components';
-
-import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
-import type { DashboardState } from '~/store/state';
-import type { BarChartWidget } from '.././types';
-import { useQueries } from '~/components/dashboard/queryContext';
-import { getAggregation } from '../utils/widgetAggregationUtils';
+import React from 'react';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import type { BarChartWidget } from '~/customization/widgets/types';
+import { useQueries } from '~/dashboard/queryContext';
+import { useDashboardDecimalPlaces } from '~/features/dashboard-settings/use-dashboard-decimal-places';
+import { WidgetTile } from '~/features/widget-tile';
 import { useChartSize } from '~/hooks/useChartSize';
-import WidgetTile from '~/components/widgets/tile';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
+import { getAggregation } from '../utils/widgetAggregationUtils';
 
 const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
   const { viewport } = useViewport();
-  const dashboardSignificantDigits = useSelector(
-    (state: DashboardState) => state.significantDigits
-  );
+  const [dashboardSignificantDigits] = useDashboardDecimalPlaces();
   const chartSize = useChartSize(widget);
 
   const {

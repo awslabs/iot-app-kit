@@ -1,4 +1,4 @@
-import { PropertyFilterProperty } from '@cloudscape-design/collection-hooks';
+import { type PropertyFilterProperty } from '@cloudscape-design/collection-hooks';
 
 export const DEFAULT_PREFERENCES = {
   pageSize: 20,

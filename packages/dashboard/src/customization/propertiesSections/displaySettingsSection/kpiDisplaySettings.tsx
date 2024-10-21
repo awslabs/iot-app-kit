@@ -1,10 +1,10 @@
-import React from 'react';
 import { Box, Checkbox, FormField } from '@cloudscape-design/components';
-import { StyledExpandableSection } from '../components/styledComponents';
+import React from 'react';
 import { PropertyLens } from '~/customization/propertiesSection';
 import { KPIProperties, StatusProperties } from '~/customization/widgets/types';
+import { maybeWithDefault } from '~/helpers/maybe';
 import { DashboardWidget } from '~/types';
-import { maybeWithDefault } from '~/util/maybe';
+import { StyledExpandableSection } from '../components/styledComponents';
 
 export const RenderDisplaySettingsSection = ({
   useProperty,

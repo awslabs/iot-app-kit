@@ -1,34 +1,29 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  CollectionPreferences,
-  CollectionPreferencesProps,
-} from '@cloudscape-design/components';
-
+import CollectionPreferences, {
+  type CollectionPreferencesProps,
+} from '@cloudscape-design/components/collection-preferences';
 import {
   Table,
-  TableColumnDefinition,
+  type TableColumnDefinition,
   useViewport,
 } from '@iot-app-kit/react-components';
-
-import EmptyTableComponent from './emptyTableComponent';
-
-import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
-import type { DashboardState } from '~/store/state';
-import type { TableWidget } from '../types';
-import { useQueries } from '~/components/dashboard/queryContext';
+import React from 'react';
+import type { TableWidget } from '~/customization/widgets/types';
+import { useQueries } from '~/dashboard/queryContext';
+import { useMode } from '~/features/dashboard-mode';
+import { useDashboardDecimalPlaces } from '~/features/dashboard-settings/use-dashboard-decimal-places';
+import { WidgetTile } from '~/features/widget-tile';
 import { useChartSize } from '~/hooks/useChartSize';
-
+import { useUpdateWidget } from '~/store/dashboard/use-update-widget';
+import { TABLE_OVERFLOW_HEIGHT, TABLE_WIDGET_MAX_HEIGHT } from '../constants';
+import { assetModelQueryToSiteWiseAssetQuery } from '../utils/assetModelQueryToAssetQuery';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
+import { EmptyTableComponent } from './emptyTableComponent';
 import {
-  DEFAULT_PREFERENCES,
   collectionPreferencesProps,
+  DEFAULT_PREFERENCES,
   PROPERTY_FILTERING,
 } from './table-config';
-import { TABLE_OVERFLOW_HEIGHT, TABLE_WIDGET_MAX_HEIGHT } from '../constants';
-import { onUpdateWidgetsAction } from '~/store/actions';
 import { useTableItems } from './useTableItems';
-import WidgetTile from '~/components/widgets/tile/tile';
-import { assetModelQueryToSiteWiseAssetQuery } from '../utils/assetModelQueryToAssetQuery';
 
 export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
   {
@@ -50,9 +45,8 @@ export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
 
 const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   const { viewport } = useViewport();
-  const dashboardSignificantDigits = useSelector(
-    (state: DashboardState) => state.significantDigits
-  );
+  const updateWidget = useUpdateWidget();
+  const [dashboardSignificantDigits] = useDashboardDecimalPlaces();
 
   const {
     queryConfig,
@@ -78,8 +72,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   const significantDigits =
     widgetSignificantDigits ?? dashboardSignificantDigits;
   const chartSize = useChartSize(widget);
-  const readOnly = useSelector((state: DashboardState) => state.readOnly);
-  const dispatch = useDispatch();
+  const { mode } = useMode();
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
@@ -92,16 +85,10 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   };
 
   const setPreferences = (detail: CollectionPreferencesProps.Preferences) => {
-    dispatch(
-      onUpdateWidgetsAction({
-        widgets: [
-          {
-            ...widget,
-            properties: { ...widget.properties, pageSize: detail.pageSize },
-          },
-        ],
-      })
-    );
+    updateWidget({
+      ...widget,
+      properties: { ...widget.properties, pageSize: detail.pageSize },
+    });
   };
 
   return (
@@ -135,7 +122,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
           paginationEnabled
           empty={<EmptyTableComponent />}
           preferences={
-            !readOnly && (
+            mode === 'edit' && (
               <CollectionPreferences
                 {...collectionPreferencesProps}
                 preferences={{

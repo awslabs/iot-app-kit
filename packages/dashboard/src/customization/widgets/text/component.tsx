@@ -1,33 +1,32 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { onChangeDashboardGridEnabledAction } from '~/store/actions';
-
+import type { TextWidget } from '~/customization/widgets/types';
+import { useMode } from '~/features/dashboard-mode';
+import { useIsWidgetSelected } from '~/features/widget-selection/use-is-widget-selected';
+import { useCanvasControl } from '~/store/dashboard/use-canvas-control';
+import './component.css';
+import TextLink from './link';
 import StyledText from './styledText';
 import EditableStyledText from './styledText/editableText';
 import StyledTextArea from './styledText/textArea';
 
-import TextLink from './link';
-import { useIsSelected } from '~/customization/hooks/useIsSelected';
-
-import './component.css';
-import type { TextWidget } from '../types';
-import type { DashboardState } from '~/store/state';
-
 const TextWidgetComponent: React.FC<TextWidget> = (widget) => {
-  const readOnly = useSelector((state: DashboardState) => state.readOnly);
-  const isSelected = useIsSelected(widget);
+  const { mode } = useMode();
+  const isSelected = useIsWidgetSelected(widget);
   const { isUrl, value } = widget.properties;
-
-  const dispatch = useDispatch();
-
   const [isEditing, setIsEditing] = useState(false);
+  const { disableCanvas, enableCanvas } = useCanvasControl();
 
   const handleSetEdit = useCallback(
     (editing: boolean) => {
-      dispatch(onChangeDashboardGridEnabledAction({ enabled: !editing }));
+      if (editing) {
+        disableCanvas();
+      } else {
+        enableCanvas();
+      }
+
       setIsEditing(editing);
     },
-    [dispatch]
+    [disableCanvas, enableCanvas]
   );
 
   useEffect(() => {
@@ -45,9 +44,14 @@ const TextWidgetComponent: React.FC<TextWidget> = (widget) => {
     };
   }, [handleSetEdit]);
 
-  const props = { readOnly, isSelected, handleSetEdit, ...widget };
+  const props = {
+    readOnly: mode === 'view',
+    isSelected,
+    handleSetEdit,
+    ...widget,
+  };
 
-  if (readOnly) {
+  if (mode === 'view') {
     if (isUrl) {
       return <TextLink {...widget} />;
     } else {

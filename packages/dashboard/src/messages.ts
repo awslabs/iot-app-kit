@@ -1,4 +1,3 @@
-import { isMacLike } from './util/browser';
 import type { DateRangePickerProps } from '@cloudscape-design/components';
 
 export type ResourceExplorerMessages = {
@@ -289,13 +288,4 @@ export const DefaultDashboardMessages: DashboardMessages = {
       optionPlaceholder: 'Add option',
     },
   },
-};
-
-const mod = isMacLike ? '⌘' : 'Ctrl';
-export const keyboardShortcuts = {
-  mod,
-  copy: `${mod}C`,
-  paste: `${mod}V`,
-  bringToFront: ']',
-  sendToBack: '[',
 };

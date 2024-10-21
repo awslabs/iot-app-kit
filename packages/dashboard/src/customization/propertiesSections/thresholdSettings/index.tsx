@@ -1,13 +1,13 @@
-import React from 'react';
 import { StyledThreshold, ThresholdSettings } from '@iot-app-kit/core';
+import React from 'react';
 
-import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { PropertyLens } from '~/customization/propertiesSection';
+import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { ThresholdWithId } from '~/customization/settings';
+import { Maybe, maybeWithDefault } from '~/helpers/maybe';
 import { DashboardWidget } from '~/types';
-import ThresholdsSection from './thresholdsSection';
 import { getComparisonOperators } from './comparisonOperators';
-import { Maybe, maybeWithDefault } from '~/util/maybe';
+import ThresholdsSection from './thresholdsSection';
 
 const thresholdsWithContainsOperator: readonly string[] = [
   'kpi',

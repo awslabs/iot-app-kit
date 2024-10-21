@@ -1,12 +1,10 @@
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
+import { createNonNullableList } from '~/helpers/lists';
 import { AssetModelCacheKeyFactory } from './assetModelCacheKeyFactory';
-import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
-import { listAssetModelPropertiesRequest } from './listAssetModelPropertiesRequest';
 import { DescribeAssetModelRequest } from './describeAssetModelRequest';
-import { useSelector } from 'react-redux';
-import { DashboardState } from '~/store/state';
+import { listAssetModelPropertiesRequest } from './listAssetModelPropertiesRequest';
 
 type SingleAssetRequest = {
   assetModelId?: string;
@@ -28,9 +26,12 @@ export function useAssetModel({
   assetModelIds,
   iotSiteWiseClient,
 }: UseAssetModelOptions) {
+  const isEdgeModeEnabled = false;
+  /*
   const isEdgeModeEnabled = useSelector(
-    (state: DashboardState) => state.isEdgeModeEnabled
+    (state: DashboardState) => state.present.isEdgeModeEnabled
   );
+  */
   const cacheKeyFactory = new AssetModelCacheKeyFactory();
 
   const requestIds =

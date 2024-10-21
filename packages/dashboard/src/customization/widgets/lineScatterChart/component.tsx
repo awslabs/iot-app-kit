@@ -1,16 +1,20 @@
-import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
 import { Chart, useViewport } from '@iot-app-kit/react-components';
+import React, { useMemo } from 'react';
 // FIXME: Export ChartOptions from @iot-app-kit/react-components
 // FIXME: Export ChartStyleSettingsOptions from @iot-app-kit/react-components
 // eslint-disable-next-line no-restricted-imports
-import {
+import type {
   ChartOptions,
   ChartStyleSettingsOptions,
 } from '@iot-app-kit/react-components/src/components/chart/types';
-
-import type { DashboardState } from '~/store/state';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import { useQueries } from '~/dashboard/queryContext';
+import { useDashboardDecimalPlaces } from '~/features/dashboard-settings/use-dashboard-decimal-places';
+import { WidgetTile } from '~/features/widget-tile';
+import { useChartSize } from '~/hooks/useChartSize';
+import { useUpdateWidget } from '~/store/dashboard/use-update-widget';
+import type { IoTSiteWiseDataStreamQuery } from '~/types';
+import NoChartData from '../components/no-chart-data';
 import type {
   AssetPropertyStyles,
   ChartAxisOptions,
@@ -19,16 +23,9 @@ import type {
   LineStyles,
   SymbolStyles,
 } from '../types';
-import { useQueries } from '~/components/dashboard/queryContext';
-import { getAggregation } from '../utils/widgetAggregationUtils';
-import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
-import { useChartSize } from '~/hooks/useChartSize';
-import WidgetTile from '~/components/widgets/tile/tile';
-import NoChartData from '../components/no-chart-data';
-import { default as lineSvgDark } from './line-dark.svg';
-import { IoTSiteWiseDataStreamQuery } from '~/types';
 import { assetModelQueryToSiteWiseAssetQuery } from '../utils/assetModelQueryToAssetQuery';
-import { onUpdateWidgetsAction } from '~/store/actions';
+import { getAggregation } from '../utils/widgetAggregationUtils';
+import { default as lineSvgDark } from './line-dark.svg';
 
 const mapConnectionStyleToVisualizationType = (
   connectionStyle: LineStyles['connectionStyle']
@@ -143,15 +140,16 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   widget
 ) => {
   const { viewport } = useViewport();
-  const dispatch = useDispatch();
 
   const chartSize = useChartSize(widget);
-  const dashboardSignificantDigits = useSelector(
-    (state: DashboardState) => state.significantDigits
-  );
+  const updateWidget = useUpdateWidget();
+  const [dashboardSignificantDigits] = useDashboardDecimalPlaces();
+  const dashboardTimeZone = '';
+  /*
   const dashboardTimeZone = useSelector(
-    (state: DashboardState) => state.timeZone
+    (state: DashboardState) => state.present.timeZone
   );
+  */
 
   const {
     title,
@@ -190,19 +188,13 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
   const size = { width: chartSize.width - 8, height: chartSize.height - 44 };
 
   const onChartOptionsChange = (options: Pick<ChartOptions, 'legend'>) => {
-    dispatch(
-      onUpdateWidgetsAction({
-        widgets: [
-          {
-            ...widget,
-            properties: {
-              ...widget.properties,
-              legend: { ...legend, ...options.legend },
-            },
-          },
-        ],
-      })
-    );
+    updateWidget({
+      ...widget,
+      properties: {
+        ...widget.properties,
+        legend: { ...legend, ...options.legend },
+      },
+    });
   };
 
   const isEmptyWidget = queries.length === 0;

@@ -1,12 +1,12 @@
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import type { StyleSettingsMap } from '@iot-app-kit/core';
 import type {
+  SiteWiseQueryConfig,
   StyledAssetQuery,
   StyledSiteWiseQueryConfig,
-  SiteWiseQueryConfig,
 } from '~/customization/widgets/types';
-import { Maybe } from '~/util/maybe';
-import type { StyleSettingsMap } from '@iot-app-kit/core';
+import { Maybe } from '~/helpers/maybe';
 import type { IoTSiteWiseDataStreamQuery } from '~/types';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 
 export type OnDeleteAssetQuery = (params: {
   assetId: string;

@@ -1,17 +1,13 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
 import isEqual from 'lodash/isEqual';
-
-import {
-  onMoveWidgetsAction,
-  onResizeWidgetsAction,
-  onUpdateWidgetsAction,
-} from '~/store/actions';
-import { DashboardWidget, Rect } from '~/types';
-import { getSelectionBox } from '~/util/getSelectionBox';
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
-import { trimRectPosition } from '~/util/trimRectPosition';
-import { Just, Maybe, Nothing } from '~/util/maybe';
+import React from 'react';
+import { useSelectedWidgets } from '~/features/widget-selection/use-selected-widgets';
+import { getSelectionBox } from '~/helpers/getSelectionBox';
+import { Just, Maybe, Nothing } from '~/helpers/maybe';
+import { trimRectPosition } from '~/helpers/trimRectPosition';
+import { useMoveWidgets } from '~/store/dashboard/use-move-widgets';
+import { useResizeWidgets } from '~/store/dashboard/use-resize-widgets';
+import { useUpdateWidgets } from '~/store/dashboard/use-update-widgets';
+import type { DashboardWidget, Rect } from '~/types';
 
 /**
  * Predicate function type for dashboard widgets
@@ -102,8 +98,10 @@ export const isDashboardWidget = (
 export const useSelection = <W extends DashboardWidget>(
   { filter }: { filter?: FilterPredicate<W> } = { filter: undefined }
 ) => {
-  const dispatch = useDispatch();
   const selectedWidgets = useSelectedWidgets();
+  const updateWidgets = useUpdateWidgets();
+  const resizeWidgets = useResizeWidgets();
+  const moveWidgets = useMoveWidgets();
   const filteredSelection = selectedWidgets.filter(filter ?? isDashboardWidget);
 
   /**
@@ -131,13 +129,11 @@ export const useSelection = <W extends DashboardWidget>(
   ] => [
     { height, width },
     (vector) =>
-      dispatch(
-        onResizeWidgetsAction({
-          anchor: 'bottom-right',
-          widgets: selection,
-          vector,
-        })
-      ),
+      resizeWidgets({
+        anchor: 'bottom-right',
+        widgets: selection,
+        vector,
+      }),
   ];
   const usePosition = (): [
     Pick<Rect, 'x' | 'y'>,
@@ -145,13 +141,11 @@ export const useSelection = <W extends DashboardWidget>(
   ] => [
     { x, y },
     (vector) =>
-      dispatch(
-        onMoveWidgetsAction({
-          widgets: selection,
-          vector,
-          complete: true,
-        })
-      ),
+      moveWidgets({
+        widgets: selection,
+        vector,
+        complete: true,
+      }),
   ];
 
   const types = selection.map((w) => w.type);
@@ -176,7 +170,7 @@ export const useSelection = <W extends DashboardWidget>(
           ...widget,
           properties: updater(widget.properties, newValue),
         }));
-        dispatch(onUpdateWidgetsAction({ widgets: updatedWidgets }));
+        updateWidgets(updatedWidgets);
       },
     ];
   };

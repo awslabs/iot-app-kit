@@ -1,12 +1,12 @@
 import React from 'react';
 
 import SpaceBetween from '@cloudscape-design/components/space-between';
+import { PropertyLens } from '~/customization/propertiesSection';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { CommonChartProperties } from '~/customization/widgets/types';
+import { maybeWithDefault } from '~/helpers/maybe';
 import { DashboardWidget } from '~/types';
 import { TitleSection } from './titleSection';
-import { maybeWithDefault } from '~/util/maybe';
-import { PropertyLens } from '~/customization/propertiesSection';
 
 const isWidgetTitle = (
   w: DashboardWidget

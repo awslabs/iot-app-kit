@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { isHotkey } from 'is-hotkey';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type KeyPressCallback = (e: KeyboardEvent | ClipboardEvent) => void;
 type KeyPressOptions = {
-  callback?: KeyPressCallback;
+  callback?: KeyPressCallback | VoidFunction;
   filter?: (e: KeyboardEvent | ClipboardEvent) => boolean;
 };
 

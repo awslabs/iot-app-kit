@@ -1,9 +1,9 @@
+import DOMPurify from 'dompurify';
 import type { CSSProperties } from 'react';
 import React from 'react';
-import { defaultFontSettings } from '../styledText/defaultFontSettings';
-import type { TextWidget } from '../../types';
-import DOMPurify from 'dompurify';
 import { isURL } from 'validator';
+import type { TextWidget } from '~/customization/widgets/types';
+import { defaultFontSettings } from '../styledText/defaultFontSettings';
 
 type TextLinkProps = TextWidget;
 

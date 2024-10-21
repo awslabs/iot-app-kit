@@ -1,18 +1,18 @@
 import React from 'react';
 
+import { spaceScaledXs } from '@cloudscape-design/design-tokens';
+import { PropertyLens } from '~/customization/propertiesSection';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import {
   LineScatterChartWidget,
   QueryWidget,
   TableWidget,
 } from '~/customization/widgets/types';
+import { useClients } from '~/dashboard/clientContext';
+import { Maybe, maybeWithDefault } from '~/helpers/maybe';
 import { DashboardWidget } from '~/types';
 import { GeneralPropertiesAlarmsSection } from './section';
 import { StyledPropertiesAlarmsSection } from './styledSection';
-import { PropertyLens } from '~/customization/propertiesSection';
-import { useClients } from '~/components/dashboard/clientContext';
-import { spaceScaledXs } from '@cloudscape-design/design-tokens';
-import { Maybe, maybeWithDefault } from '~/util/maybe';
 
 // exclude table because it is handled specially
 const isQueryWidgetExcludesTable = (w: DashboardWidget): w is QueryWidget =>

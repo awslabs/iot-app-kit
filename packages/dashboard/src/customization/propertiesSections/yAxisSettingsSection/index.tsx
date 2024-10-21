@@ -3,9 +3,9 @@ import React from 'react';
 import { PropertyLens } from '~/customization/propertiesSection';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { GaugeProperties, GaugeWidget } from '~/customization/widgets/types';
+import { maybeWithDefault } from '~/helpers/maybe';
 import { DashboardWidget } from '~/types';
 import { YAxisSection } from '../yAxisSettings';
-import { maybeWithDefault } from '~/util/maybe';
 
 const widgetWithCustomFontsSettings: readonly string[] = ['gauge'];
 

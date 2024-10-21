@@ -1,17 +1,15 @@
-import React from 'react';
-
-import { Box, SpaceBetween } from '@cloudscape-design/components';
-
-import './section.css';
-
-import { isNumeric } from '@iot-app-kit/core/dist/es/common/number';
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
+import Box from '@cloudscape-design/components/box';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import { spaceScaledS } from '@cloudscape-design/design-tokens';
+import { isNumeric } from '@iot-app-kit/core/dist/es/common/number';
+import React from 'react';
+import { DecimalPlacesField } from '~/features/decimal-places';
+import { useSelectedWidgetIds } from '~/features/widget-selection/use-selected-widget-ids';
 import {
   FormLabel,
   StyledExpandableSection,
 } from '../components/styledComponents';
-import DecimalPlaces from '~/components/decimalPlaces';
+import './section.css';
 
 export const DecimalPlacesSection = ({
   significantDigits,
@@ -20,8 +18,8 @@ export const DecimalPlacesSection = ({
   significantDigits: number | undefined;
   updateSignificantDigits: (newValue: number | undefined) => void;
 }) => {
-  const selectedWidgets = useSelectedWidgets();
-  const selectedWidgetId = selectedWidgets[0]?.id;
+  const selectedWidgetIds = useSelectedWidgetIds();
+  const selectedWidgetId = selectedWidgetIds[0];
 
   const onSignificantDigitsChange = (value: string) => {
     const newValue = isNumeric(value) ? parseInt(value) || 0 : undefined;
@@ -45,9 +43,9 @@ export const DecimalPlacesSection = ({
           >
             <FormLabel htmlFor='decimal-places'> Decimal places</FormLabel>
             <div className='settings-property-label-control'>
-              <DecimalPlaces
-                onSignificantDigitsChange={onSignificantDigitsChange}
-                significantDigits={significantDigits}
+              <DecimalPlacesField
+                onChange={onSignificantDigitsChange}
+                decimalPlaces={significantDigits}
                 shouldClearErrors={selectedWidgetId}
               />
             </div>

@@ -1,9 +1,0 @@
-@import "../../styles/variables.css";
-
-.iot-context-menu-placement {
-  position: absolute;
-}
-
-.iot-context-list-container {
-  padding: 0;
-}

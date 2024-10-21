@@ -1,23 +1,19 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import pickBy from 'lodash/pickBy';
-import { Gauge, useViewport } from '@iot-app-kit/react-components';
-import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
-import type { DashboardState } from '~/store/state';
-import type { GaugeWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
-import { useQueries } from '~/components/dashboard/queryContext';
-import { isDefined } from '~/util/isDefined';
-
-import WidgetTile from '~/components/widgets/tile';
+import { Gauge, useViewport } from '@iot-app-kit/react-components';
+import pickBy from 'lodash/pickBy';
+import React from 'react';
+import type { GaugeWidget } from '~/customization/widgets/types';
+import { useQueries } from '~/dashboard/queryContext';
+import { useDashboardDecimalPlaces } from '~/features/dashboard-settings/use-dashboard-decimal-places';
+import { WidgetTile } from '~/features/widget-tile';
+import { isDefined } from '~/helpers/isDefined';
 import { useChartSize } from '~/hooks/useChartSize';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import './component.css';
 
 const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
   const { viewport } = useViewport();
-  const dashboardSignificantDigits = useSelector(
-    (state: DashboardState) => state.significantDigits
-  );
+  const [dashboardSignificantDigits] = useDashboardDecimalPlaces();
 
   const {
     title,

@@ -39,11 +39,13 @@
   },
   "dependencies": {
     "@cloudscape-design/collection-hooks": "1.0.49",
+    "@cloudscape-design/component-toolkit": "^1.0.0-beta.62",
     "@cloudscape-design/components": "3.0.693",
     "@cloudscape-design/design-tokens": "3.0.42",
     "@cloudscape-design/global-styles": "1.0.31",
-    "@cloudscape-design/component-toolkit": "^1.0.0-beta.62",
-    "vite": "^4.5.3"
+    "jotai": "^2.10.0",
+    "vite": "^4.5.3",
+    "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.7",

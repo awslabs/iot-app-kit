@@ -1,27 +1,26 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import pickBy from 'lodash/pickBy';
+import Box from '@cloudscape-design/components/box';
 import { KPI, useViewport } from '@iot-app-kit/react-components';
-import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
-import type { DashboardState } from '~/store/state';
-import type { KPIWidget } from '../types';
-import { Box } from '@cloudscape-design/components';
-import { useQueries } from '~/components/dashboard/queryContext';
-import { isDefined } from '~/util/isDefined';
-import { getAggregation } from '../utils/widgetAggregationUtils';
-
-import './component.css';
+import pickBy from 'lodash/pickBy';
+import React from 'react';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
-import WidgetTile from '~/components/widgets/tile';
+import { useQueries } from '~/dashboard/queryContext';
+import { useDashboardDecimalPlaces } from '~/features/dashboard-settings/use-dashboard-decimal-places';
+import { WidgetTile } from '~/features/widget-tile';
+import { isDefined } from '~/helpers/isDefined';
+import type { KPIWidget } from '../types';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
+import { getAggregation } from '../utils/widgetAggregationUtils';
+import './component.css';
 
 const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const { viewport } = useViewport();
-  const dashboardSignificantDigits = useSelector(
-    (state: DashboardState) => state.significantDigits
-  );
+  const [dashboardSignificantDigits] = useDashboardDecimalPlaces();
+  /*
   const dashboardTimeZone = useSelector(
-    (state: DashboardState) => state.timeZone
+    (state: DashboardState) => state.present.timeZone
   );
+  */
+  const dashboardTimeZone = '';
 
   const {
     styleSettings,

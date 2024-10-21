@@ -2,40 +2,40 @@ import React, { FC, useState } from 'react';
 
 import {
   ComparisonOperator,
-  ThresholdSettings,
   StyledThreshold,
+  ThresholdSettings,
   ThresholdStyleType,
 } from '@iot-app-kit/core';
 import { nanoid } from '@reduxjs/toolkit';
 
 import { Button, SpaceBetween, Toggle } from '@cloudscape-design/components';
 
-import { DEFAULT_THRESHOLD_COLOR } from './defaultValues';
-import type { ThresholdWithId } from '~/customization/settings';
-import { Maybe, maybeWithDefault } from '~/util/maybe';
-import { SelectOneWidget } from '../shared/selectOneWidget';
-import { useExpandable } from '../shared/useExpandable';
-import { ThresholdsList } from './thresholdsList';
-import { ComparisonOperators } from './comparisonOperators';
-import { AnnotationsSettings } from './annotations';
 import {
   CancelableEventHandler,
   ClickDetail,
 } from '@cloudscape-design/components/internal/events';
-import { ThresholdStyleSettings } from './thresholdStyle';
-import '../propertiesSectionsStyle.css';
 import { spaceScaledXs } from '@cloudscape-design/design-tokens';
-import {
-  convertThresholdStyleToOptionKPI,
-  convertOptionToThresholdStyleKPI,
-  styledOptionsKPI,
-} from './kpiThresholds';
+import type { ThresholdWithId } from '~/customization/settings';
+import { Maybe, maybeWithDefault } from '~/helpers/maybe';
+import { StyledExpandableSection } from '../components/styledComponents';
+import '../propertiesSectionsStyle.css';
+import { SelectOneWidget } from '../shared/selectOneWidget';
+import { useExpandable } from '../shared/useExpandable';
+import { AnnotationsSettings } from './annotations';
+import { ComparisonOperators } from './comparisonOperators';
 import {
   convertOptionToThresholdStyle,
   convertThresholdStyleToOption,
   styledOptions,
 } from './defaultThresholds';
-import { StyledExpandableSection } from '../components/styledComponents';
+import { DEFAULT_THRESHOLD_COLOR } from './defaultValues';
+import {
+  convertOptionToThresholdStyleKPI,
+  convertThresholdStyleToOptionKPI,
+  styledOptionsKPI,
+} from './kpiThresholds';
+import { ThresholdsList } from './thresholdsList';
+import { ThresholdStyleSettings } from './thresholdStyle';
 
 const ThresholdsExpandableSection: React.FC<
   React.PropsWithChildren<{ title: string }>

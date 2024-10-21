@@ -1,17 +1,16 @@
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import noop from 'lodash/noop';
 import isEqual from 'lodash/isEqual';
+import noop from 'lodash/noop';
+import { useEffect } from 'react';
+import { useStoreSelector } from '~/store/hooks';
 import { DashboardConfigurationChange } from '~/types';
-import { convertToDashboardConfiguration } from '~/util/convertToDashbaoardConfiguration';
 
 export const useSyncDashboardConfiguration = ({
   onDashboardConfigurationChange = noop,
 }: {
   onDashboardConfigurationChange?: DashboardConfigurationChange;
 }) => {
-  const mappedDashboardConfiguration = useSelector(
-    convertToDashboardConfiguration,
+  const mappedDashboardConfiguration = useStoreSelector(
+    (state) => state.dashboard.present.dashboardConfiguration,
     isEqual
   );
 

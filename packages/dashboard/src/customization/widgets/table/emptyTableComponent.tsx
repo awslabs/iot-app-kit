@@ -1,8 +1,8 @@
-import React from 'react';
-import { Box, SpaceBetween } from '@cloudscape-design/components';
-import type { FunctionComponent } from 'react';
+import Box from '@cloudscape-design/components/box';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+import React, { memo } from 'react';
 
-const EmptyTableComponent: FunctionComponent = () => {
+export const EmptyTableComponent = memo(function () {
   return (
     <Box
       data-testid='emptyStateTableDisplay'
@@ -15,6 +15,4 @@ const EmptyTableComponent: FunctionComponent = () => {
       </SpaceBetween>
     </Box>
   );
-};
-
-export default EmptyTableComponent;
+});

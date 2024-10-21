@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { DashboardPlugin } from '~/customization/api';
-import { StatusTimelineWidget } from '../types';
+import { type DashboardPlugin } from '~/customization/api';
+import type { StatusTimelineWidget } from '~/customization/widgets/types';
+import { WIDGET_INITIAL_HEIGHT, WIDGET_INITIAL_WIDTH } from '../constants';
 import StatusTimelineWidgetComponent from './statusTimeline';
 import StatusTimelineIcon from './statusTimelineIcon';
-import { WIDGET_INITIAL_HEIGHT, WIDGET_INITIAL_WIDTH } from '../constants';
 
 export const statusTimelineChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

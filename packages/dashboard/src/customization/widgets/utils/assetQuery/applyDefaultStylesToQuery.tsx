@@ -1,4 +1,4 @@
-import { StyledAssetQuery } from '../../types';
+import type { StyledAssetQuery } from '~/customization/widgets/types';
 import { colorerFromStyledQuery } from './defaultColors';
 
 export const applyDefaultStylesToQuery = ({

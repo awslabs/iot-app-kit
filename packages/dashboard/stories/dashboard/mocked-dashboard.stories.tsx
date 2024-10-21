@@ -1,13 +1,13 @@
-import React from 'react';
 import { registerPlugin } from '@iot-app-kit/core';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import React from 'react';
 
-import { Dashboard, DashboardProperties } from '../../src';
-import { DashboardClientConfiguration } from '../../src/types';
+import DashboardView from '~/dashboard/view';
+import { RefreshRate } from '~/features/refresh-rate/types';
 import { DEFAULT_REGION } from '~/msw/constants';
 import { useWorker } from '~/msw/useWorker';
-import { RefreshRate } from '~/components/refreshRate/types';
-import DashboardView from '~/components/dashboard/view';
+import { Dashboard, DashboardProperties } from '../../src';
+import { DashboardClientConfiguration } from '../../src/types';
 import { MOCK_DASHBOARD_CONFIG } from './mockData';
 
 /**
@@ -31,6 +31,7 @@ const defaultViewport = { duration: '10m' };
 const querySettings = { refreshRate: 5000 as RefreshRate };
 
 const emptyDashboardConfiguration: DashboardProperties = {
+  name: 'Dashboard Name',
   clientConfiguration,
   dashboardConfiguration: {
     displaySettings,
@@ -38,7 +39,7 @@ const emptyDashboardConfiguration: DashboardProperties = {
     widgets: [],
     querySettings,
   },
-  onSave: () => Promise.resolve(),
+  onSave: () => new Promise((resolve) => setTimeout(() => resolve(), 1000)),
   timeZone: 'Asia/Hong_Kong',
 };
 
@@ -63,8 +64,25 @@ export default {
   ],
 } as ComponentMeta<typeof Dashboard>;
 
+const style1 = {
+  height: '100vh',
+  width: '100vw',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+};
+
+const style = {
+  height: '1000px',
+  width: '1480px',
+};
+
 export const Empty: ComponentStory<typeof Dashboard> = () => (
-  <Dashboard {...emptyDashboardConfiguration} />
+  <div style={style1}>
+    <div style={style}>
+      <Dashboard {...emptyDashboardConfiguration} />
+    </div>
+  </div>
 );
 
 export const ViewOnly: ComponentStory<typeof Dashboard> = () => (

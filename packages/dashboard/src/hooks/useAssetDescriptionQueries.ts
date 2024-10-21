@@ -2,9 +2,9 @@ import {
   DescribeAssetCommand,
   type AssetCompositeModel,
   type AssetProperty,
+  type DescribeAssetCommandOutput,
   type DescribeAssetResponse,
   type IoTSiteWiseClient,
-  type DescribeAssetCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
 import type {
   SiteWiseAlarmQuery,
@@ -12,14 +12,12 @@ import type {
   SiteWisePropertyAliasQuery,
 } from '@iot-app-kit/source-iotsitewise';
 import { useQuery } from '@tanstack/react-query';
-import { useSelector } from 'react-redux';
-import { useClients } from '~/components/dashboard/clientContext';
+import { useClients } from '~/dashboard/clientContext';
 import {
   createFetchSiteWiseAssetQueryDescription,
   createListAssetPropertiesMapCacheKey,
 } from '~/data/listAssetPropertiesMap/query';
 import { selectListAssetPropertiesMap } from '~/data/listAssetPropertiesMap/selectData';
-import { DashboardState } from '~/store/state';
 
 export type PropertySummary = {
   propertyId: AssetProperty['id'];
@@ -190,9 +188,12 @@ export const useListAssetPropertiesMapQuery = (
     | Partial<SiteWiseAssetQuery & SiteWisePropertyAliasQuery>
     | undefined
 ) => {
+  const isEdgeModeEnabled = false;
+  /*
   const isEdgeModeEnabled = useSelector(
-    (state: DashboardState) => state.isEdgeModeEnabled
+    (state: DashboardState) => state.present.isEdgeModeEnabled
   );
+  */
 
   const { iotSiteWiseClient } = useClients();
 

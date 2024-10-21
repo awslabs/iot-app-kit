@@ -1,0 +1,9 @@
+.custom-drag-layer {
+  position: fixed;
+  pointer-events: none;
+  z-index: var(--stack-order-drag-layer);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

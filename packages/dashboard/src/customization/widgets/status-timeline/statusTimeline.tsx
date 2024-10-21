@@ -1,23 +1,20 @@
-import * as React from 'react';
 import { StatusTimeline, useViewport } from '@iot-app-kit/react-components';
-import { useSelector } from 'react-redux';
-import { DashboardState } from '~/store/state';
-import { StatusTimelineWidget } from '../types';
-import { useQueries } from '~/components/dashboard/queryContext';
-import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
+import * as React from 'react';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
-import { getAggregation } from '../utils/widgetAggregationUtils';
-import WidgetTile from '~/components/widgets/tile';
+import type { StatusTimelineWidget } from '~/customization/widgets/types';
+import { useQueries } from '~/dashboard/queryContext';
+import { useDashboardDecimalPlaces } from '~/features/dashboard-settings/use-dashboard-decimal-places';
+import { WidgetTile } from '~/features/widget-tile';
 import NoChartData from '../components/no-chart-data';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
+import { getAggregation } from '../utils/widgetAggregationUtils';
 import { default as timelineSvgDark } from './timeline-dark.svg';
 
 const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (
   widget
 ) => {
   const { viewport } = useViewport();
-  const dashboardSignificantDigits = useSelector(
-    (state: DashboardState) => state.significantDigits
-  );
+  const [dashboardSignificantDigits] = useDashboardDecimalPlaces();
 
   const {
     title,

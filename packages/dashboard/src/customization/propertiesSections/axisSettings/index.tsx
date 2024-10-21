@@ -1,14 +1,14 @@
 import React from 'react';
 
+import { PropertyLens } from '~/customization/propertiesSection';
 import {
   PropertiesSection,
   PropertiesSectionProps,
 } from '~/customization/propertiesSectionComponent';
 import { AxisSettings } from '~/customization/settings';
+import { maybeWithDefault } from '~/helpers/maybe';
 import { DashboardWidget } from '~/types';
-import { maybeWithDefault } from '~/util/maybe';
 import AxisSection from './section';
-import { PropertyLens } from '~/customization/propertiesSection';
 
 const axisWidgetTypes: readonly string[] = [
   'line-chart',

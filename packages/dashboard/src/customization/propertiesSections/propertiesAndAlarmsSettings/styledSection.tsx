@@ -1,20 +1,20 @@
+import { Box } from '@cloudscape-design/components';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 import React, { FC } from 'react';
+import { StyledAssetQuery } from '~/customization/widgets/types';
+import { isJust } from '~/helpers/maybe';
 import {
   AssetSummary,
   useAssetDescriptionMapQuery,
 } from '~/hooks/useAssetDescriptionQueries';
-import { isJust } from '~/util/maybe';
-import { SelectOneWidget } from '../shared/selectOneWidget';
-import SpaceBetween from '@cloudscape-design/components/space-between';
-import { StyledPropertyComponent } from './styledPropertyComponent';
-import { Box } from '@cloudscape-design/components';
-import { StyledPropertiesAlarmsSectionProps } from './sectionTypes';
-import { defaultOnDeleteQuery } from './onDeleteProperty';
-import { StyledAssetQuery } from '~/customization/widgets/types';
 import { useAssetModel } from '~/hooks/useAssetModel/useAssetModel';
+import { SelectOneWidget } from '../shared/selectOneWidget';
 import { handleDeleteAssetModelProperty } from './handleDeleteAssetModelProperty';
 import { handleRemoveAlarm } from './handleRemoveAlarm';
+import { defaultOnDeleteQuery } from './onDeleteProperty';
 import { PropertyComponent } from './propertyComponent';
+import { StyledPropertiesAlarmsSectionProps } from './sectionTypes';
+import { StyledPropertyComponent } from './styledPropertyComponent';
 
 const NoComponents = () => <Box variant='p'>No properties or alarms found</Box>;
 

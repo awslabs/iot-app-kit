@@ -7,17 +7,17 @@ import {
   SpaceBetween,
 } from '@cloudscape-design/components';
 
+import { Controller, useForm } from 'react-hook-form';
 import {
   FilterPredicate,
   PropertyLens,
   useSelection,
 } from '~/customization/propertiesSection';
+import { PropertiesSection } from '~/customization/propertiesSectionComponent';
 import { GaugeProperties, GaugeWidget } from '~/customization/widgets/types';
+import { maybeWithDefault } from '~/helpers/maybe';
 import { DashboardWidget } from '~/types';
 import { StyledExpandableSection } from '../components/styledComponents';
-import { maybeWithDefault } from '~/util/maybe';
-import { PropertiesSection } from '~/customization/propertiesSectionComponent';
-import { Controller, useForm } from 'react-hook-form';
 
 const widgetWithCustomDisplaySettings: readonly string[] = ['gauge'];
 

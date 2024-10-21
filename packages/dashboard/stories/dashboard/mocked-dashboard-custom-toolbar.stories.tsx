@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from 'react';
 import { Viewport, registerPlugin } from '@iot-app-kit/core';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import React, { useEffect, useState } from 'react';
 
-import { Dashboard } from '../../src/index';
-import {
-  DashboardClientConfiguration,
-  DashboardConfiguration,
-} from '../../src/types';
-import { DEFAULT_REGION } from '~/msw/constants';
-import { useWorker } from '~/msw/useWorker';
-import { RefreshRate } from '~/components/refreshRate/types';
 import {
   DateRangePicker,
   DateRangePickerProps,
   FormField,
 } from '@cloudscape-design/components';
-import { Controller, useForm } from 'react-hook-form';
 import {
   dateRangeToViewport,
   rangeValidator,
   viewportToDateRange,
 } from '@iot-app-kit/core-util';
-import DashboardView from '~/components/dashboard/view';
+import { Controller, useForm } from 'react-hook-form';
+import DashboardView from '~/dashboard/view';
+import { RefreshRate } from '~/features/refresh-rate/types';
+import { DEFAULT_REGION } from '~/msw/constants';
+import { useWorker } from '~/msw/useWorker';
+import { Dashboard } from '../../src/index';
+import {
+  DashboardClientConfiguration,
+  DashboardConfiguration,
+} from '../../src/types';
 import { MOCK_DASHBOARD_CONFIG } from './mockData';
 
 /**

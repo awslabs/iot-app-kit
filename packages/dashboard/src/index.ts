@@ -1,23 +1,23 @@
-import { DashboardWrapper as Dashboard } from './components/dashboard/wrapper';
-import { DashboardViewWrapper as DashboardView } from './components/dashboard/viewOnlyWrapper';
-import type { DashboardProperties } from './components/dashboard';
-import type { DashboardViewProperties } from './components/dashboard/view';
+import type { DashboardProperties } from './dashboard';
+import type { DashboardViewProperties } from './dashboard/view';
+import { DashboardViewWrapper as DashboardView } from './dashboard/viewOnlyWrapper';
+import { DashboardWrapper as Dashboard } from './dashboard/wrapper';
+import { migrateDashboard } from './migration/convert-monitor-to-app-defintion';
 import type {
+  DashboardClientConfiguration,
   DashboardConfiguration,
   DashboardDisplaySettings,
-  DashboardClientConfiguration,
   DashboardWidget,
-} from './types';
-import { migrateDashboard } from './migration/convert-monitor-to-app-defintion';
+} from './types/public';
 
 export {
   Dashboard,
+  DashboardClientConfiguration,
+  DashboardConfiguration,
+  DashboardDisplaySettings,
   DashboardProperties,
   DashboardView,
   DashboardViewProperties,
-  DashboardConfiguration,
-  DashboardDisplaySettings,
-  DashboardClientConfiguration,
   DashboardWidget,
   migrateDashboard,
 };

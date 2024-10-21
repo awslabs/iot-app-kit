@@ -1,11 +1,11 @@
-import type { StyleSettingsMap } from '@iot-app-kit/core';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type StyleSettingsMap } from '@iot-app-kit/core';
 import { v4 as uuid } from 'uuid';
-import type { QueryWidget } from '../types';
-import { isDefined } from '~/util/isDefined';
-import { IoTSiteWiseDataStreamQuery } from '~/types';
-import { getCurrentAggregationResolution } from './widgetAggregationUtils';
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import type { QueryWidget } from '~/customization/widgets/types';
+import { isDefined } from '~/helpers/isDefined';
+import type { IoTSiteWiseDataStreamQuery } from '~/types';
 import { colorerFromStyleSettings } from './assetQuery/defaultColors';
+import { getCurrentAggregationResolution } from './widgetAggregationUtils';
 
 type Query = NonNullable<QueryWidget['properties']['queryConfig']['query']>;
 

@@ -1,0 +1,8 @@
+.queryeditor-button-sticky {
+  border-top: var(--dashboard-border);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background-color: white;
+}
