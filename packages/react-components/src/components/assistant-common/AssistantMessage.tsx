@@ -10,19 +10,22 @@ import type {
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { spaceStaticL } from '@cloudscape-design/design-tokens';
+import CopyToClipboard from '@cloudscape-design/components/copy-to-clipboard';
+import type { IMessage } from '../../hooks/useAssistant/types';
+import { useIntl } from 'react-intl';
 
 export interface AssistantMessageProps {
-  text: string;
-  payload?: ResponseStream;
+  message: IMessage;
 }
 
-export const AssistantMessage = ({ text, payload }: AssistantMessageProps) => {
-  const { output = {} } = payload ?? {};
+export const AssistantMessage = ({ message }: AssistantMessageProps) => {
+  const intl = useIntl();
+  const { content: text, payload, generatedByAi } = message;
+  const { output = {} } = (payload ?? {}) as ResponseStream;
   const { citations = [] } = output;
   const filteredCitations = citations.filter(
     ({ reference }) => !!reference?.dataset?.source?.location?.uri
   );
-
   // for markdown format, avoid to render H1 for better UX
   const sanitizedText = text.startsWith('# ') ? `#${text}` : text;
 
@@ -34,6 +37,26 @@ export const AssistantMessage = ({ text, payload }: AssistantMessageProps) => {
           data-testid='assistant-chatbot-assistant-message'
         >
           <Markdown remarkPlugins={[remarkGfm]}>{sanitizedText}</Markdown>
+          {generatedByAi ? (
+            <Box float='right'>
+              <CopyToClipboard
+                copyButtonAriaLabel={intl.formatMessage({
+                  id: 'assistant-chatbot.message.copy',
+                  defaultMessage: 'Copy',
+                })}
+                copyErrorText={intl.formatMessage({
+                  id: 'assistant-chatbot.message.copyError',
+                  defaultMessage: 'Failed to copy',
+                })}
+                copySuccessText={intl.formatMessage({
+                  id: 'assistant-chatbot.message.copySuccess',
+                  defaultMessage: 'Content copied',
+                })}
+                textToCopy={text}
+                variant='icon'
+              />
+            </Box>
+          ) : null}
         </Box>
         {filteredCitations.length > 0 ? (
           <ExpandableSection

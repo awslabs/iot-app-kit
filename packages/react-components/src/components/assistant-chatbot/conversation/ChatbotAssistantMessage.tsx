@@ -1,16 +1,14 @@
 import * as React from 'react';
 import assistantIcon from '../assets/assistantIcon.svg';
-import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
 import { AssistantMessage } from '../../assistant-common/AssistantMessage';
+import type { IMessage } from '../../../hooks/useAssistant/types';
 
 export interface ChatbotAssistantMessageProps {
-  text: string;
-  payload?: ResponseStream;
+  message: IMessage;
 }
 
 export const ChatbotAssistantMessage = ({
-  text,
-  payload,
+  message,
 }: ChatbotAssistantMessageProps) => {
   return (
     <div className='message-row'>
@@ -20,7 +18,7 @@ export const ChatbotAssistantMessage = ({
         width={24}
         className='assistant-icon'
       />
-      <AssistantMessage text={text} payload={payload} />
+      <AssistantMessage message={message} />
     </div>
   );
 };

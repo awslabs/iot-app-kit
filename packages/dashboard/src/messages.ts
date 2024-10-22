@@ -145,6 +145,7 @@ export type SidePanelMessages = {
 
 export type AssistantMessages = {
   floatingMenu: {
+    propertySelection: string;
     error: {
       ariaLabel: string;
       propertyLimitMessage: string;
@@ -308,6 +309,8 @@ export const DefaultDashboardMessages: DashboardMessages = {
   },
   assistant: {
     floatingMenu: {
+      propertySelection:
+        'Select the checkboxes from the widgets below to include them in the AI generate summary action.',
       error: {
         ariaLabel: 'error',
         propertyLimitMessage:

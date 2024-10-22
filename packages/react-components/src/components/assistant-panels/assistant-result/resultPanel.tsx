@@ -10,7 +10,6 @@ import {
   colorBackgroundButtonNormalDisabled,
   colorChartsPurple500,
 } from '@cloudscape-design/design-tokens';
-import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
 
 export interface ResultPanelProps {
   componentId: string;
@@ -80,13 +79,7 @@ export const ResultPanel = ({
                 />
               );
             }
-            return (
-              <AssistantMessage
-                key={message.id}
-                text={message.content}
-                payload={message.payload as ResponseStream}
-              />
-            );
+            return <AssistantMessage key={message.id} message={message} />;
           })}
       </div>
       {!isLoading ? (

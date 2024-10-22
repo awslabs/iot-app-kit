@@ -142,7 +142,7 @@ export const useAssistant = ({
     if (utterance) {
       const userMessage = currentMessageParser.getText(
         componentId,
-        utterance,
+        utterance.replace(' and return the response in markdown format', ''),
         'user'
       );
       const partialMessage = currentMessageParser.getPartialResponse(

@@ -22,6 +22,7 @@ import {
 } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
 import Alert from '@cloudscape-design/components/alert';
+import Box from '@cloudscape-design/components/box';
 import { DashboardMessages } from '~/messages';
 import { useAssistant } from '@iot-app-kit/react-components';
 
@@ -89,19 +90,19 @@ export const AssistantFloatingMenu = ({
   const showAlert = totalSelected > MAX_ITEMS_SELECTED;
 
   const mainContainerStyles: CSSProperties = {
-    minHeight: `${showAlert ? '110' : '60'}px`,
+    minHeight: `${showAlert ? '140' : '80'}px`,
     width: 'fit-content',
   };
 
   const floatingMenuStyles: CSSProperties = {
+    backgroundColor: colorBackgroundCellShaded,
     display: 'flex',
     flexDirection: 'column',
     gap: `${spaceStaticS}`,
     position: 'fixed',
-    width: 'fit-content',
-    maxWidth: `${width - (rightOffset + 40)}px`,
+    width: `${width - (rightOffset + 40)}px`,
     paddingTop: spaceStaticM,
-    paddingLeft: spaceStaticM,
+    left: spaceStaticS,
     right: `${rightOffset + 40}px`,
     zIndex: 1000, // required to fix bug in legends table in the XYplot chart and widget actions
   };
@@ -133,53 +134,64 @@ export const AssistantFloatingMenu = ({
     <div style={mainContainerStyles}>
       <div style={floatingMenuStyles}>
         {showAlert ? (
-          <div style={{ width: 'fit-content' }}>
-            <Alert
-              statusIconAriaLabel={assistant.floatingMenu.error.ariaLabel}
-              type='error'
-            >
-              {assistant.floatingMenu.error.propertyLimitMessage}
-            </Alert>
-          </div>
+          <Alert
+            statusIconAriaLabel={assistant.floatingMenu.error.ariaLabel}
+            type='error'
+          >
+            {assistant.floatingMenu.error.propertyLimitMessage}
+          </Alert>
         ) : null}
-        <div style={menuContainerStyles}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           {assistantState.mode === 'on' ? (
-            <div style={menuStyles}>
-              <span style={{ padding: `0 ${spaceStaticM}` }}>
-                {totalSelected}/{MAX_ITEMS_SELECTED} items selected
-              </span>
-              <VerticalDivider
-                styles={{ width: '1px', height: spaceStaticS }}
-              />
-              <AssistantFloatingMenuCenterButton
-                label={assistant.floatingMenu.buttonClearAll}
-                onClick={handleClearAll}
-                disabled={totalSelected === 0}
-              />
-              <VerticalDivider
-                styles={{
-                  width: '2px',
-                  height: '100%',
-                  backgroundColor:
-                    totalSelected === 0 || totalSelected > MAX_ITEMS_SELECTED
-                      ? colorBorderDividerDefault
-                      : colorChartsPurple1200,
-                }}
-              />
-              <AssistantFloatingMenuRightButton
-                messageOverrides={messageOverrides}
-                label={assistant.floatingMenu.buttonGenerateSummary}
-                onClick={handleSummary}
-                disabled={
-                  totalSelected === 0 || totalSelected > MAX_ITEMS_SELECTED
-                }
-              />
-            </div>
+            <Box variant='span' fontSize='heading-xs'>
+              {assistant.floatingMenu.propertySelection}
+            </Box>
           ) : null}
-          <AssistantButton
-            label={assistant.floatingMenu.buttonAIAssistant}
-            onClick={handleToggleAssistantMode}
-          />
+          <div style={menuContainerStyles}>
+            {assistantState.mode === 'on' ? (
+              <div style={menuStyles}>
+                <span style={{ padding: `0 ${spaceStaticM}` }}>
+                  {totalSelected}/{MAX_ITEMS_SELECTED} items selected
+                </span>
+                <VerticalDivider
+                  styles={{ width: '1px', height: spaceStaticS }}
+                />
+                <AssistantFloatingMenuCenterButton
+                  label={assistant.floatingMenu.buttonClearAll}
+                  onClick={handleClearAll}
+                  disabled={totalSelected === 0}
+                />
+                <VerticalDivider
+                  styles={{
+                    width: '2px',
+                    height: '100%',
+                    backgroundColor:
+                      totalSelected === 0 || totalSelected > MAX_ITEMS_SELECTED
+                        ? colorBorderDividerDefault
+                        : colorChartsPurple1200,
+                  }}
+                />
+                <AssistantFloatingMenuRightButton
+                  messageOverrides={messageOverrides}
+                  label={assistant.floatingMenu.buttonGenerateSummary}
+                  onClick={handleSummary}
+                  disabled={
+                    totalSelected === 0 || totalSelected > MAX_ITEMS_SELECTED
+                  }
+                />
+              </div>
+            ) : null}
+            <AssistantButton
+              label={assistant.floatingMenu.buttonAIAssistant}
+              onClick={handleToggleAssistantMode}
+            />
+          </div>
         </div>
       </div>
     </div>

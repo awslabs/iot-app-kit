@@ -13,6 +13,7 @@ export class MessageParser implements IMessageParser {
       content,
       sender: 'assistant',
       type: MessageType.TEXT,
+      generatedByAi: true,
     } satisfies IMessage;
   };
 
@@ -30,6 +31,7 @@ export class MessageParser implements IMessageParser {
       sender,
       type: MessageType.TEXT,
       payload,
+      generatedByAi: sender === 'assistant',
     };
   };
 
@@ -42,6 +44,7 @@ export class MessageParser implements IMessageParser {
       sender: 'assistant',
       type: MessageType.ERROR,
       payload,
+      generatedByAi: true,
     } satisfies IMessage;
   };
 
@@ -54,6 +57,7 @@ export class MessageParser implements IMessageParser {
       sender: 'assistant',
       type: MessageType.PROMPTS,
       payload,
+      generatedByAi: true,
     } satisfies IMessage;
   };
 

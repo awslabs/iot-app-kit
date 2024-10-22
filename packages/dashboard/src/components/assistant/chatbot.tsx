@@ -45,10 +45,16 @@ export const Chatbot: FC<AssistantChatbotProps> = (
     iotSiteWiseClient: iotSiteWisePrivateClient!,
   });
 
-  const { messages, setMessages, invokeAssistant, generateSummary, clearAll } =
-    useAssistant({
-      assistantClient: client,
-    });
+  const {
+    messages,
+    setMessages,
+    invokeAssistant,
+    generateSummary,
+    clearAll,
+    startAction,
+  } = useAssistant({
+    assistantClient: client,
+  });
 
   useEffect(() => {
     if (messages.length === 0) {
@@ -121,6 +127,16 @@ export const Chatbot: FC<AssistantChatbotProps> = (
         onReset: () => {
           clearAll();
           setMessages(initialMessages);
+
+          assistant.selectedQueries
+            .filter((item) => ['chart', 'table'].includes(item.widgetType))
+            .forEach((query) => {
+              startAction({
+                target: 'widget',
+                componentId: query.widgetId,
+                action: 'clear-selection',
+              });
+            });
           dispatch(onCleanAssistantAction());
         },
         onClose: () => toggleChatbot(false),
