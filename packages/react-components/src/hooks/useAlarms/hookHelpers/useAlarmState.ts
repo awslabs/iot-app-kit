@@ -1,7 +1,7 @@
 import { UseIoTSiteWiseClientOptions } from '../../requestFunctions/useIoTSiteWiseClient';
 import { AlarmData, UseAlarmsHookSettings, UseAlarmsOptions } from '../types';
 import { useQueryMode } from './useQueryMode';
-import { combineStatusForQueries, isQueryDisabled } from '../utils/queryStatus';
+import { combineStatusForQueries } from '../utils/queryStatus';
 import { useLatestAssetPropertyValues } from '../../../queries';
 import { useHistoricalAssetPropertyValues } from '../../../queries/useHistoricalAssetPropertyValues/useHistoricalAssetPropertyValues';
 import { createNonNullableList } from '../../../utils/createNonNullableList';
@@ -39,9 +39,10 @@ export const useAlarmState = ({
   /**
    * Fetch only the latest value if there is no viewport present
    */
+  const latestValueQueriesEnabled = queryMode === 'LATEST';
   const latestValueQueries = useLatestAssetPropertyValues({
     iotSiteWiseClient,
-    enabled: queryMode === 'LATEST',
+    enabled: latestValueQueriesEnabled,
     requests,
     refreshRate,
   });
@@ -51,8 +52,9 @@ export const useAlarmState = ({
    * end, useful for components that only need to show a subset
    * of points within the viewport.
    */
+  const mostRecentBeforeEndValueQueriesEnabled = queryMode !== 'LATEST';
   const mostRecentBeforeEndValueQueries = useHistoricalAssetPropertyValues({
-    enabled: queryMode !== 'LATEST',
+    enabled: mostRecentBeforeEndValueQueriesEnabled,
     iotSiteWiseClient,
     requests,
     viewport,
@@ -66,8 +68,9 @@ export const useAlarmState = ({
    * start, useful for components that have data in the viewport but
    * need to fill in data from before the start of the viewport.
    */
+  const mostRecentBeforeStartValueQueriesEnabled = queryMode !== 'LATEST';
   const mostRecentBeforeStartValueQueries = useHistoricalAssetPropertyValues({
-    enabled: queryMode !== 'LATEST',
+    enabled: mostRecentBeforeStartValueQueriesEnabled,
     iotSiteWiseClient,
     requests,
     viewport,
@@ -79,8 +82,10 @@ export const useAlarmState = ({
   /**
    * Fetch all asset property values within the viewport
    */
+  const historicalQueriesInViewportEnabled =
+    queryMode === 'LIVE' || queryMode === 'HISTORICAL';
   const historicalQueriesInViewport = useHistoricalAssetPropertyValues({
-    enabled: queryMode === 'LIVE' || queryMode === 'HISTORICAL',
+    enabled: historicalQueriesInViewportEnabled,
     iotSiteWiseClient,
     requests,
     viewport,
@@ -97,12 +102,13 @@ export const useAlarmState = ({
    * This means that if we refresh the alarms every 5s,
    * we fetch the last 10s of alarm state every 5s.
    */
+  const latestQueriesInLiveViewportEnabled = queryMode === 'LIVE';
   const latestQueriesViewport =
     refreshRate !== undefined && refreshRate !== Infinity
       ? { duration: refreshRate * 2 }
       : undefined;
   const latestQueriesInLiveViewport = useHistoricalAssetPropertyValues({
-    enabled: queryMode === 'LIVE',
+    enabled: latestQueriesInLiveViewportEnabled,
     iotSiteWiseClient,
     requests,
     viewport: latestQueriesViewport,
@@ -121,25 +127,42 @@ export const useAlarmState = ({
         const historicalQueryInViewport = historicalQueriesInViewport[index];
         const latestQueryInLiveViewport = latestQueriesInLiveViewport[index];
 
+        /**
+         * derive status and data from only those queries
+         * who are enabled. It is possible that disabled
+         * queries return data if they were enabled in other
+         * useAlarms hooks for the same request.
+         * This could lead to a scenario where we return
+         * different data than requested and with a status that
+         * is not accurate.
+         */
+        const queries = [
+          latestValueQueriesEnabled ? latestValueQuery : undefined,
+          mostRecentBeforeEndValueQueriesEnabled
+            ? mostRecentBeforeEndValueQuery
+            : undefined,
+          mostRecentBeforeStartValueQueriesEnabled
+            ? mostRecentBeforeStartValueQuery
+            : undefined,
+          historicalQueriesInViewportEnabled
+            ? historicalQueryInViewport
+            : undefined,
+          latestQueriesInLiveViewportEnabled
+            ? latestQueryInLiveViewport
+            : undefined,
+        ] as const;
+
         const dataFromQueries = [
-          ...createNonNullableList([latestValueQuery.data?.propertyValue]),
-          ...(mostRecentBeforeEndValueQuery.data?.assetPropertyValueHistory ??
-            []),
-          ...(mostRecentBeforeStartValueQuery.data?.assetPropertyValueHistory ??
-            []),
-          ...(historicalQueryInViewport.data?.assetPropertyValueHistory ?? []),
-          ...(latestQueryInLiveViewport.data?.assetPropertyValueHistory ?? []),
+          ...createNonNullableList([queries[0]?.data?.propertyValue]),
+          ...(queries[1]?.data?.assetPropertyValueHistory ?? []),
+          ...(queries[2]?.data?.assetPropertyValueHistory ?? []),
+          ...(queries[3]?.data?.assetPropertyValueHistory ?? []),
+          ...(queries[4]?.data?.assetPropertyValueHistory ?? []),
         ];
 
-        const statusFromQueries = [
-          latestValueQuery,
-          mostRecentBeforeEndValueQuery,
-          mostRecentBeforeStartValueQuery,
-          historicalQueryInViewport,
-          latestQueryInLiveViewport,
-        ].filter((query) => !isQueryDisabled(query));
-
-        const status = combineStatusForQueries(statusFromQueries);
+        const status = combineStatusForQueries(
+          createNonNullableList([...queries])
+        );
 
         return {
           request,

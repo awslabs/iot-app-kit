@@ -1,7 +1,6 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { SetOptional } from 'type-fest';
-import isEqual from 'lodash.isequal';
-import type { AlarmData, AlarmDataStatus } from '../types';
+import type { AlarmDataStatus } from '../types';
 
 /**
  * Combine two query statuses.
@@ -84,26 +83,4 @@ export const combineStatusForQueries = (
   }
 
   return status;
-};
-
-export const isQueryDisabled = (query: UseQueryResult) => {
-  return query.status === 'pending' && query.fetchStatus === 'idle';
-};
-
-export const updateAlarmStatusForQueries = (
-  alarm: AlarmData,
-  queries: UseQueryResult[]
-): AlarmData => {
-  const currentStatus = alarm.status;
-
-  // remove irrelevant queries which are disabled
-  const statusFromQueries = queries.filter((query) => !isQueryDisabled(query));
-
-  const updatedStatus = combineStatusForQueries(statusFromQueries);
-
-  if (!isEqual(currentStatus, updatedStatus)) {
-    alarm.status = updatedStatus;
-  }
-
-  return alarm;
 };

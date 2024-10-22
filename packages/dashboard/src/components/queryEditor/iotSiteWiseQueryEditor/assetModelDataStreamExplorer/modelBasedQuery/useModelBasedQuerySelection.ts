@@ -84,9 +84,13 @@ export const useModelBasedQuerySelection = () => {
     ? maybeWithDefault(defaultQuery, propertiesMaybe) ?? defaultQuery
     : defaultQuery;
 
-  const uppdateAssetAlarmModels = (
-    updatedAlarmModels: AlarmAssetModelQuery[] | undefined
-  ) => {
+  const updateModelQueries = ({
+    alarmModels: updatedAlarmModels,
+    assetModels: updatedAssetModels,
+  }: {
+    alarmModels: AlarmAssetModelQuery[] | undefined;
+    assetModels: AssetModelQuery[] | undefined;
+  }) => {
     // Only allow updates for a single widget type at a time.
     // This is necessary because xy-plot query config has a different structure
     if (!selectionType || !isJust(selectionType)) return;
@@ -107,6 +111,11 @@ export const useModelBasedQuerySelection = () => {
               .query,
             updatedAlarmModels
           ),
+          assetModels: mergeAssetModelProperties(
+            compositeWidgetForAggregationInformation.properties.queryConfig
+              .query,
+            updatedAssetModels
+          ),
         },
         compositeWidgetForAggregationInformation
       );
@@ -118,6 +127,8 @@ export const useModelBasedQuerySelection = () => {
             ...properties.queryConfig.query,
             alarmModels: (styledQuery as unknown as IoTSiteWiseDataStreamQuery)
               .alarmModels,
+            assetModels: (styledQuery as unknown as IoTSiteWiseDataStreamQuery)
+              .assetModels,
           },
         },
       };
@@ -136,65 +147,6 @@ export const useModelBasedQuerySelection = () => {
                   .query,
                 updatedAlarmModels
               ),
-            },
-          },
-        },
-      }).properties;
-      updatedProperties = {
-        ...styledProperties,
-      };
-    }
-
-    setProperties(updatedProperties);
-  };
-
-  const updateAssetModels = (
-    updatedAssetModels: AssetModelQuery[] | undefined
-  ) => {
-    // Only allow updates for a single widget type at a time.
-    // This is necessary because xy-plot query config has a different structure
-    if (!selectionType || !isJust(selectionType)) return;
-
-    let updatedProperties = { ...properties };
-    const compositeWidgetForAggregationInformation = {
-      type: selectionType.value,
-      properties,
-    } as QueryConfigWidget;
-    // handle styled widget
-    if (selectionType.value === 'xy-plot') {
-      const styledQuery = styledQueryWidgetOnDrop(
-        {
-          ...compositeWidgetForAggregationInformation.properties.queryConfig
-            .query,
-          assetModels: mergeAssetModelProperties(
-            compositeWidgetForAggregationInformation.properties.queryConfig
-              .query,
-            updatedAssetModels
-          ),
-        },
-        compositeWidgetForAggregationInformation
-      );
-      updatedProperties = {
-        ...properties,
-        queryConfig: {
-          ...properties.queryConfig,
-          query: {
-            ...properties.queryConfig.query,
-            assetModels: (styledQuery as unknown as IoTSiteWiseDataStreamQuery)
-              .assetModels,
-          },
-        },
-      };
-    } else {
-      const styledProperties = assignDefaultStyles({
-        ...compositeWidgetForAggregationInformation,
-        properties: {
-          ...compositeWidgetForAggregationInformation.properties,
-          queryConfig: {
-            ...compositeWidgetForAggregationInformation.properties.queryConfig,
-            query: {
-              ...compositeWidgetForAggregationInformation.properties.queryConfig
-                .query,
               assetModels: mergeAssetModelProperties(
                 compositeWidgetForAggregationInformation.properties.queryConfig
                   .query,
@@ -215,8 +167,7 @@ export const useModelBasedQuerySelection = () => {
   const assetModels = properties.queryConfig.query?.assetModels ?? [];
 
   return {
-    uppdateAssetAlarmModels,
-    updateAssetModels,
+    updateModelQueries,
     assetModels,
     modelBasedWidgetsSelected: !!selection,
   };

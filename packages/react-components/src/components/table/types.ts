@@ -39,6 +39,7 @@ export type AlarmItem = {
   state?: PascalCaseStateName;
   severity?: number;
   isLoading?: boolean;
+  threshold?: Threshold;
   /**
    * I don't know why these are
    * required but I need to leave

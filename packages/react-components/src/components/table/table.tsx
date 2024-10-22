@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { TableBase } from './tableBase';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
@@ -28,6 +28,9 @@ import {
   convertToSupportedTimeRange,
   getSelectedQueriesAndProperties,
 } from '../../hooks/useAssistantContext/utils';
+import { AlarmData } from '../../hooks/useAlarms';
+import { transformAlarmsToThreshold } from '../../utils/transformAlarmsToThreshold';
+import { createNonNullableList } from '../../utils/createNonNullableList';
 
 const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
 
@@ -99,25 +102,27 @@ export const Table = ({
   const [indexesSelected, setIndexesSelected] = useState<number[]>([]);
   const [showSummarization, setShowSummarization] = useState<boolean>(false);
   const timeSeriesQueries = getTimeSeriesQueries(queries);
-  const alarms = useAlarmsFromQueries({
-    transform: (alarm): AlarmItem => {
-      const { state, compositeModelName, inputProperty, status } = alarm;
-      const firstInputProperty = inputProperty?.at(0);
+  const transform = useCallback((alarm: AlarmData): AlarmItem => {
+    const { state, compositeModelName, inputProperty, status } = alarm;
+    const firstInputProperty = inputProperty?.at(0);
 
-      return {
-        id: alarm.compositeModelId,
-        assetId: alarm.assetId,
-        alarmName: compositeModelName,
-        property: firstInputProperty?.property.name,
-        value: firstInputProperty?.dataStream?.data.at(-1)?.y,
-        unit: firstInputProperty?.property.unit,
-        state: parseAlarmStateAssetProperty(state?.data?.at(-1))?.value.state,
-        alarmExpression: mapAlarmRuleExpression(alarm),
-        isLoading: status.isLoading,
-        severity: alarm.models?.at(-1)?.severity,
-        valueOf: () => undefined,
-      };
-    },
+    return {
+      id: alarm.compositeModelId,
+      assetId: alarm.assetId,
+      alarmName: compositeModelName,
+      property: firstInputProperty?.property.name,
+      value: firstInputProperty?.dataStream?.data.at(-1)?.y,
+      unit: firstInputProperty?.property.unit,
+      state: parseAlarmStateAssetProperty(state?.data?.at(-1))?.value.state,
+      alarmExpression: mapAlarmRuleExpression(alarm),
+      isLoading: status.isLoading,
+      severity: alarm.models?.at(-1)?.severity,
+      threshold: transformAlarmsToThreshold(alarm),
+      valueOf: () => undefined,
+    };
+  }, []);
+  const alarms = useAlarmsFromQueries({
+    transform,
     queries,
     viewport: passedInViewport,
     settings: {
@@ -141,7 +146,14 @@ export const Table = ({
     styles,
   });
   const { viewport } = useViewport();
-  const allThresholds = [...queryThresholds, ...thresholds];
+  const allThresholds = useMemo(
+    () => [
+      ...queryThresholds,
+      ...thresholds,
+      ...createNonNullableList(alarms.map((a) => a.threshold)),
+    ],
+    [queryThresholds, thresholds, alarms]
+  );
 
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
   const itemsWithData = createTableItems(

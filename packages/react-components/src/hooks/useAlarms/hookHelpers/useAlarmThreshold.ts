@@ -7,7 +7,7 @@ import {
   useHistoricalAssetPropertyValues,
   useLatestAssetPropertyValues,
 } from '../../../queries';
-import { combineStatusForQueries, isQueryDisabled } from '../utils/queryStatus';
+import { combineStatusForQueries } from '../utils/queryStatus';
 import { createNonNullableList } from '../../../utils/createNonNullableList';
 import { OnUpdateAlarmThresholdDataAction, useRequestSelector } from '../state';
 import { useReactQueryEffect } from './useReactQueryEffect';
@@ -66,11 +66,17 @@ export const useAlarmThreshold = ({
 
   const queryMode = useQueryMode({ fetchOnlyLatest, viewport });
 
+  const latestValueQueriesEnabled = enabled && queryMode === 'LATEST';
+  const mostRecentBeforeEndValueQueriesEnabled =
+    enabled && queryMode !== 'LATEST';
+  const historicalQueriesInViewportEnabled =
+    enabled && (queryMode === 'LIVE' || queryMode === 'HISTORICAL');
+
   /**
    * Fetch only the latest value if there is no viewport present
    */
   const latestValueQueries = useLatestAssetPropertyValues({
-    enabled: enabled && queryMode === 'LATEST',
+    enabled: latestValueQueriesEnabled,
     iotSiteWiseClient,
     requests,
     refreshRate,
@@ -81,7 +87,7 @@ export const useAlarmThreshold = ({
    * Useful if there is no threshold data within the viewport.
    */
   const mostRecentBeforeEndValueQueries = useHistoricalAssetPropertyValues({
-    enabled: enabled && queryMode !== 'LATEST',
+    enabled: mostRecentBeforeEndValueQueriesEnabled,
     iotSiteWiseClient,
     requests,
     viewport,
@@ -94,7 +100,7 @@ export const useAlarmThreshold = ({
    * Fetch all asset property values within the viewport
    */
   const historicalQueriesInViewport = useHistoricalAssetPropertyValues({
-    enabled: enabled && (queryMode === 'LIVE' || queryMode === 'HISTORICAL'),
+    enabled: historicalQueriesInViewportEnabled,
     iotSiteWiseClient,
     requests,
     viewport,
@@ -112,22 +118,35 @@ export const useAlarmThreshold = ({
           mostRecentBeforeEndValueQueries[index];
         const historicalQueryInViewport = historicalQueriesInViewport[index];
 
-        const statusFromQueries = [
-          latestValueQuery,
-          mostRecentBeforeEndValueQuery,
-          historicalQueryInViewport,
-        ].filter((query) => !isQueryDisabled(query));
+        /**
+         * derive status and data from only those queries
+         * who are enabled. It is possible that disabled
+         * queries return data if they were enabled in other
+         * useAlarms hooks for the same request.
+         * This could lead to a scenario where we return
+         * different data than requested and with a status that
+         * is not accurate.
+         */
+        const queries = [
+          latestValueQueriesEnabled ? latestValueQuery : undefined,
+          mostRecentBeforeEndValueQueriesEnabled
+            ? mostRecentBeforeEndValueQuery
+            : undefined,
+          historicalQueriesInViewportEnabled
+            ? historicalQueryInViewport
+            : undefined,
+        ] as const;
 
-        const status = combineStatusForQueries(statusFromQueries);
+        const status = combineStatusForQueries(
+          createNonNullableList([...queries])
+        );
 
         return {
           request,
           data: [
-            ...createNonNullableList([latestValueQuery.data?.propertyValue]),
-            ...(mostRecentBeforeEndValueQuery.data?.assetPropertyValueHistory ??
-              []),
-            ...(historicalQueryInViewport.data?.assetPropertyValueHistory ??
-              []),
+            ...createNonNullableList([queries[0]?.data?.propertyValue]),
+            ...(queries[1]?.data?.assetPropertyValueHistory ?? []),
+            ...(queries[2]?.data?.assetPropertyValueHistory ?? []),
           ],
           status,
         };
