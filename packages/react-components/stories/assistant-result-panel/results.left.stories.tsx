@@ -48,7 +48,8 @@ export const ResultsOnTheLeft: ComponentStory<typeof KPI> = ({ settings }) => {
       target: 'widget',
       utterance: SITUATION_SUMMARY_DEFAULT_UTTERANCE,
     });
-  }, [generateSummary]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div style={{ padding: '80px 16px', width: '1400px' }}>

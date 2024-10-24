@@ -62,7 +62,8 @@ export const ResultsOnTheBottom: ComponentStory<typeof KPI> = ({
       target: 'widget',
       utterance: SITUATION_SUMMARY_DEFAULT_UTTERANCE,
     });
-  }, [generateSummary]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div style={{ padding: '16px' }}>
