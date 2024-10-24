@@ -32,6 +32,10 @@ const config = {
   docs: {
     autodocs: 'tag',
   },
+  managerHead: (head) => `
+      ${head}
+      <style>div[data-nodetype="story"] { display: none; }</style>
+  `,
   swc: () => ({
     jsc: {
       transform: {

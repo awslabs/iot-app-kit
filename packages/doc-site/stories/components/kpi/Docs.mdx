@@ -16,7 +16,7 @@ The KPI component lets you can interact with IoT data from one or more data sour
 The KPI component contains the following customizable properties.
 
 #### query
-##### (object, optional)
+##### (object, required)
 This query specifies the time series data or alarm data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
 
 Example for time series data.
@@ -57,7 +57,7 @@ If a ViewportManager, and a `viewport` is not defined, the default value is `{ d
 Learn about the [viewport](/docs/core-viewport--docs).
 
 #### thresholds
-##### (object, optional)
+##### (array of object, optional)
 A styled threshold defines rules that effect how the data is visualized. It's based on if the data breaches the threshold as well as how the threshold is styled.
 Learn more about [thresholds](/docs/core-thresholds--docs#thresholds).
 
