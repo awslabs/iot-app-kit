@@ -1,14 +1,12 @@
 // eslint-disable-next-line import/default
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { Gauge, KPI, useAssistant } from '@iot-app-kit/react-components';
+import { Gauge } from '@iot-app-kit/react-components';
 import {
   mockTimeSeriesDataQueryWithError,
   mockTimeSeriesDataQueryLoading,
 } from '@iot-app-kit/testing-util';
-import { mockSinWaveData, mockSinWaveDataWithQuality } from '../../mockSinWaveData';
-import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
-import { MockInvokeAssistant } from '../../mockAssistantAPI';
+import { mockSinWaveDataWithQuality } from '../../mockSinWaveData';
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
 const meta: Meta<typeof Gauge> = {
