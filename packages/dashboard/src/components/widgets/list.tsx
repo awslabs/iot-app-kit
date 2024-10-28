@@ -56,6 +56,7 @@ const Widgets: React.FC<WidgetsProps> = ({
           query={query}
           messageOverrides={messageOverrides}
           isSelected={isSelected(widget.id)}
+          numSelected={selectedWidgets.length}
           key={widget.id}
           cellSize={cellSize}
           widget={widget}

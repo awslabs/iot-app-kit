@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { StyleSettingsMap, Threshold, Viewport } from '@iot-app-kit/core';
 import {
   StatusTimeline as StatusTimelineBaseWrongType,
@@ -17,9 +17,10 @@ import {
   DEFAULT_VIEWPORT,
   ECHARTS_GESTURE,
 } from '../../common/constants';
-import { Title } from '../../common/title';
+import { getAdjustedChartHeight, Title } from '../../common/title';
 import type { ComponentQuery } from '../../common/chartTypes';
 import { useAlarms } from '../../hooks/useAlarms';
+import { useResizeObserver } from 'usehooks-ts';
 import { getAlarmQueries, getTimeSeriesQueries } from '../../utils/queries';
 import { convertAlarmQueryToAlarmRequest } from '../../queries/utils/convertAlarmQueryToAlarmRequest';
 import {
@@ -98,8 +99,11 @@ export const StatusTimeline = ({
     alarmStateDataStreams.length,
   ]);
 
+  const ref = useRef(null);
+  const { height } = useResizeObserver({ ref });
+
   return (
-    <div style={{ height: 'inherit' }}>
+    <div ref={ref} style={{ height: 'inherit' }}>
       <Title text={rest.titleText} />
       <StatusTimelineBase
         aggregationType={aggregationType}
@@ -111,6 +115,11 @@ export const StatusTimeline = ({
         annotations={{ y: allThresholds } as Annotations}
         setViewport={setViewport}
         legend={DEFAULT_LEGEND}
+        size={
+          height
+            ? { height: getAdjustedChartHeight(!!rest.titleText, height) }
+            : undefined
+        }
         {...rest}
       />
     </div>
