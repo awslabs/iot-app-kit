@@ -55,8 +55,8 @@ describe('Chatbot', () => {
     );
 
     const initialConversationID = store.getState().assistant.conversationId;
-    expect(getByRole('button', { name: 'Reset' })).toBeInTheDocument();
-    await user.click(getByRole('button', { name: 'Reset' }));
+    expect(getByRole('button', { name: 'New chat' })).toBeInTheDocument();
+    await user.click(getByRole('button', { name: 'New chat' }));
 
     expect(store.getState().assistant.conversationId).not.toEqual(
       initialConversationID

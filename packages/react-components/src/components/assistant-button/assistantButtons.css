@@ -9,22 +9,6 @@
   color: #431d84;
 }
 
-.iot-app-kit-assistant-menu-right-button,
-.iot-app-kit-assistant-menu-center-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-  color: white;
-}
-
-.iot-app-kit-assistant-menu-right-button:disabled,
-.iot-app-kit-assistant-menu-right-button[disabled],
-.iot-app-kit-assistant-menu-center-button:disabled,
-.iot-app-kit-assistant-menu-center-button[disabled] {
-  cursor: default;
-  color: #ebebf0;
-}
-
 .iot-app-kit-assistant-button:hover:enabled {
   background: #ebebf0;
   color: #59309d;
@@ -36,9 +20,4 @@
 
 .iot-app-kit-assistant-button:active span {
   color: #431d84;
-}
-
-.iot-app-kit-assistant-menu-right-button:hover:enabled,
-.iot-app-kit-assistant-menu-center-button:hover:enabled {
-  background: #59309d;
 }

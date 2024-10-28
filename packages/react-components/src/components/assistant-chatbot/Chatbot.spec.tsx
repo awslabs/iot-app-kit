@@ -250,9 +250,9 @@ describe(Chatbot, () => {
         }}
       />
     );
-    expect(getByRole('button', { name: 'Reset' })).toBeInTheDocument();
+    expect(getByRole('button', { name: 'New chat' })).toBeInTheDocument();
 
-    await user.click(getByRole('button', { name: 'Reset' }));
+    await user.click(getByRole('button', { name: 'New chat' }));
 
     expect(mockOnReset).toBeCalled();
   });

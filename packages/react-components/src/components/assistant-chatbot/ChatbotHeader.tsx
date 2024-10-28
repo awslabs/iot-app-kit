@@ -3,6 +3,7 @@ import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import { IconProps, SpaceBetween } from '@cloudscape-design/components';
 import { useIntl } from 'react-intl';
+import Badge from '@cloudscape-design/components/badge';
 
 export interface ChatbotHeaderProps {
   headerText: string;
@@ -18,27 +19,35 @@ export const ChatbotHeader = (props: ChatbotHeaderProps) => {
 
   return (
     <div className='iot-app-kit-assistant-chatbot-header'>
-      <Box fontSize='heading-s' fontWeight='bold'>
-        {props.headerText}
-      </Box>
+      <SpaceBetween direction='horizontal' size='xs'>
+        <Box fontSize='heading-s' fontWeight='bold'>
+          {props.headerText}
+        </Box>
+        <Badge>Preview</Badge>
+      </SpaceBetween>
       <div className='iot-app-kit-assistant-chatbot-header-buttons'>
-        <SpaceBetween direction='horizontal' size='s'>
+        <SpaceBetween direction='horizontal' size='xs'>
           {props.showResetButton && props.onReset ? (
             <Button
-              iconName='refresh'
-              variant='normal'
+              iconName='add-plus'
+              variant='link'
               onClick={props.onReset}
               ariaLabel={intl.formatMessage({
-                id: 'assistant-chatbot.reset',
-                defaultMessage: 'Reset',
+                id: 'assistant-chatbot.newChat',
+                defaultMessage: 'New chat',
               })}
               data-testid='assistant-chatbot-reset-button'
-            />
+            >
+              {intl.formatMessage({
+                id: 'assistant-chatbot.newChat',
+                defaultMessage: 'New chat',
+              })}
+            </Button>
           ) : null}
           {props.showCloseButton && props.onClose ? (
             <Button
               iconName={props.closeIconName ?? 'close'}
-              variant='normal'
+              variant='icon'
               onClick={props.onClose}
               ariaLabel={intl.formatMessage({
                 id: 'assistant-chatbot.close',

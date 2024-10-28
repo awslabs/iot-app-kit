@@ -8,9 +8,7 @@ import {
   spaceStaticXxl,
   spaceStaticXxs,
 } from '@cloudscape-design/design-tokens';
-import SpaceBetween from '@cloudscape-design/components/space-between';
 import { AssistantIcon } from './assistantIcon';
-import './assistantButtons.css';
 import Popover from '@cloudscape-design/components/popover';
 import type { DashboardMessages } from '~/messages';
 
@@ -44,7 +42,14 @@ export const AssistantFloatingMenuRightButton = ({
       aria-label={label}
       onClick={disabled ? () => {} : onClick}
     >
-      <SpaceBetween direction='horizontal' size='xxs' alignItems='center'>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: spaceStaticXxs,
+          flexWrap: 'nowrap',
+        }}
+      >
         <AssistantIcon
           role='img'
           ariaLabel={label}
@@ -55,7 +60,7 @@ export const AssistantFloatingMenuRightButton = ({
         >
           {label}
         </span>
-      </SpaceBetween>
+      </div>
     </button>
   );
 

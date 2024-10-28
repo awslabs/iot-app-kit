@@ -148,6 +148,7 @@ export type AssistantMessages = {
     propertySelection: string;
     error: {
       ariaLabel: string;
+      propertyLimitHeader: string;
       propertyLimitMessage: string;
     };
     buttonClearAll: string;
@@ -313,6 +314,7 @@ export const DefaultDashboardMessages: DashboardMessages = {
         'Select the checkboxes from the widgets below to include them in the AI generate summary action.',
       error: {
         ariaLabel: 'error',
+        propertyLimitHeader: 'Property limit reached',
         propertyLimitMessage:
           'You can select up to 3 properties to summarize using generative AI for now. More options are coming soon.',
       },

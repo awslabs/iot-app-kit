@@ -90,7 +90,8 @@ describe('Chatbot', () => {
   });
 
   it('should display error message when number of widgets selected bigger than max allowed', async () => {
-    const { getByText } = render(<Component />);
+    const user = userEvent.setup();
+    const { getByText, getByRole } = render(<Component />);
 
     act(() => {
       store.dispatch(
@@ -139,6 +140,12 @@ describe('Chatbot', () => {
         })
       );
     });
+
+    await user.click(
+      getByRole('button', {
+        name: '6/3 items selected',
+      })
+    );
 
     expect(
       getByText(

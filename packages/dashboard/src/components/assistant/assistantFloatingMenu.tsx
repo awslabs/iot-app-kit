@@ -10,6 +10,7 @@ import {
   fontWeightHeadingM,
   colorBorderDividerDefault,
   colorBackgroundCellShaded,
+  spaceStaticXs,
 } from '@cloudscape-design/design-tokens';
 import { VerticalDivider } from '../divider/verticalDivider';
 import { AssistantFloatingMenuRightButton } from './assistantFloatingMenuRigthButton';
@@ -21,10 +22,12 @@ import {
   onToggleChatbotAction,
 } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
-import Alert from '@cloudscape-design/components/alert';
-import Box from '@cloudscape-design/components/box';
 import { DashboardMessages } from '~/messages';
 import { useAssistant } from '@iot-app-kit/react-components';
+import Popover from '@cloudscape-design/components/popover';
+import StatusIndicator from '@cloudscape-design/components/status-indicator';
+import Box from '@cloudscape-design/components/box';
+import './assistantFloatingMenu.css';
 
 const MAX_ITEMS_SELECTED = 3;
 const CHATBOT_OPENED_WIDTH = 500;
@@ -89,63 +92,34 @@ export const AssistantFloatingMenu = ({
   );
   const showAlert = totalSelected > MAX_ITEMS_SELECTED;
 
-  const mainContainerStyles: CSSProperties = {
-    minHeight: `${showAlert ? '140' : '80'}px`,
-    width: 'fit-content',
-  };
-
   const floatingMenuStyles: CSSProperties = {
     backgroundColor: colorBackgroundCellShaded,
-    display: 'flex',
-    flexDirection: 'column',
     gap: `${spaceStaticS}`,
-    position: 'fixed',
     width: `${width - (rightOffset + 40)}px`,
     paddingTop: spaceStaticM,
-    left: spaceStaticS,
     right: `${rightOffset + 40}px`,
     zIndex: 1000, // required to fix bug in legends table in the XYplot chart and widget actions
   };
 
   const menuStyles: CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
     height: spaceStaticXxl,
-    padding: 0,
     borderRadius: borderRadiusButton,
     border: `2px solid ${colorChartsPurple1200}`,
     backgroundColor: colorBackgroundCellShaded,
     color: colorChartsPurple1200,
-    width: 'fit-content',
     fontSize: fontSizeBodyM,
     fontWeight: fontWeightHeadingM,
   };
 
-  const menuContainerStyles: CSSProperties = {
-    display: 'flex',
-    gap: `${spaceStaticS}`,
-    flexWrap: 'wrap',
-    alignItems: 'end',
-    marginLeft: 'auto',
-    justifyContent: 'end',
-  };
-
   return (
-    <div style={mainContainerStyles}>
-      <div style={floatingMenuStyles}>
-        {showAlert ? (
-          <Alert
-            statusIconAriaLabel={assistant.floatingMenu.error.ariaLabel}
-            type='error'
-          >
-            {assistant.floatingMenu.error.propertyLimitMessage}
-          </Alert>
-        ) : null}
+    <div className='iot-app-kit-assistant-menu-container'>
+      <div className='iot-app-kit-assistant-menu' style={floatingMenuStyles}>
         <div
           style={{
             display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            justifyContent:
+              assistantState.mode === 'on' ? 'space-between' : 'end',
+            marginLeft: spaceStaticXs,
           }}
         >
           {assistantState.mode === 'on' ? (
@@ -153,11 +127,39 @@ export const AssistantFloatingMenu = ({
               {assistant.floatingMenu.propertySelection}
             </Box>
           ) : null}
-          <div style={menuContainerStyles}>
+          <div
+            className='iot-app-kit-assistant-menu-buttons-container'
+            style={{ gap: `${spaceStaticS}`, marginLeft: spaceStaticXs }}
+          >
             {assistantState.mode === 'on' ? (
-              <div style={menuStyles}>
+              <div
+                className='iot-app-kit-assistant-menu-buttons'
+                style={menuStyles}
+              >
                 <span style={{ padding: `0 ${spaceStaticM}` }}>
-                  {totalSelected}/{MAX_ITEMS_SELECTED} items selected
+                  {showAlert ? (
+                    <Box color='text-status-error'>
+                      <Popover
+                        header={
+                          assistant.floatingMenu.error.propertyLimitHeader
+                        }
+                        content={
+                          assistant.floatingMenu.error.propertyLimitMessage
+                        }
+                        position='left'
+                      >
+                        <span className='iot-app-kit-assistant-menu-left-button'>
+                          <StatusIndicator type='error'>
+                            {totalSelected}/{MAX_ITEMS_SELECTED} items selected
+                          </StatusIndicator>
+                        </span>
+                      </Popover>
+                    </Box>
+                  ) : (
+                    <span className='iot-app-kit-assistant-menu-left-button'>
+                      {totalSelected}/{MAX_ITEMS_SELECTED} items selected
+                    </span>
+                  )}
                 </span>
                 <VerticalDivider
                   styles={{ width: '1px', height: spaceStaticS }}

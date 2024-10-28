@@ -7,7 +7,7 @@ import {
   colorBackgroundCellShaded,
   colorBackgroundLayoutMain,
   colorBorderDividerDefault,
-  colorChartsPurple1200,
+  colorForegroundControlReadOnly,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
 import { ContentLayout } from '@cloudscape-design/components';
@@ -505,7 +505,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
                 }
               />
             ),
-            iconBackground: colorChartsPurple1200,
+            iconBackground: colorForegroundControlReadOnly,
             headerText:
               DefaultDashboardMessages.assistant.floatingMenu.buttonAIAssistant,
             hideHeaderWhenExpanded: true,

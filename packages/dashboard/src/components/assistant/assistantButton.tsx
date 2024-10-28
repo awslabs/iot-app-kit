@@ -11,7 +11,6 @@ import {
   spaceStaticXxs,
 } from '@cloudscape-design/design-tokens';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import './assistantButtons.css';
 
 interface AssistantButtonProps extends HTMLAttributes<HTMLButtonElement> {
   label: string;
@@ -25,6 +24,7 @@ export const AssistantButton = ({ label, onClick }: AssistantButtonProps) => {
         height: spaceStaticXxl,
         padding: `0 ${spaceStaticL}`,
         gap: spaceStaticXs,
+        border: `2px solid ${colorChartsPurple1200}`,
         borderRadius: borderRadiusButton,
         background: colorChartsPurple1200,
         cursor: 'pointer',
