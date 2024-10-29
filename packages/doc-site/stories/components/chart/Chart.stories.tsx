@@ -30,6 +30,27 @@ export const Standard: Story = {
   },
 };
 
+export const StandardWithLegend: Story = {
+  render: (props) => (
+    <div style={{ height: '500px', width: '800px' }}>
+      <Chart {...{
+        ...props, 
+        legend: {
+          visible: true,
+          position: 'bottom',
+          visibleContent: { maxValue: true },
+          height: '100px',
+        }, 
+        size: { height: 500, width: 900 } 
+      }} />
+    </div>
+  ),
+  args: {
+    queries: [mockSinWaveData()],
+    viewport: { duration: '30s' },
+  },
+};
+
 export const Error: Story = {
   ...Standard,
   args: {

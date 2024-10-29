@@ -5,13 +5,13 @@ IoT App Kit is extensible, this means that most IoT App Kit components can work 
 **Example usage of a custom source**
 
 ```
-import { LineChart } from '@iot-app-kit/react-components';
+import { Chart } from '@iot-app-kit/react-components';
 import { initialize } from 'my-custom-source';
 
 const { query } = initialize({ // your custom initialize parameters })
 
 // jsx
-<LineChart
+<Chart
   queries={[query.timeSeriesData({ mqtt: 'some-topic' })]}
 />
 ```

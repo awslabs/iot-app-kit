@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story } from '@storybook/blocks';
+import { Canvas, Meta, Story, Source } from '@storybook/blocks';
 import * as AnomalyChartStories from './AnomalyChart.stories';
 
 <Meta of={AnomalyChartStories} />
@@ -38,7 +38,7 @@ The interval in milliseconds at which to fetch anomaly data. If not provided, th
 
 ## Example 
 
-```
+<Source dark="true" code={`
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { AnomalyChart } from '@iot-app-kit/react-components';
@@ -75,4 +75,4 @@ const MyExampleComponent = ({ assetId, predictionDefinitionId }: {
   return <AnomalyChart query={query} />;
 };
 
-```
+`} />

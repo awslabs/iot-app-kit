@@ -18,7 +18,7 @@ type Story = StoryObj<typeof StatusTimeline>;
 
 export const Standard: Story = {
   render: (props) => (
-    <div style={{ height: '400px' }}>
+    <div style={{ height: '300px', width: '400px' }}>
       <StatusTimeline {...props} />
       <WebglContext />
     </div>

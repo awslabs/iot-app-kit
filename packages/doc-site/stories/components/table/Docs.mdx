@@ -1,4 +1,5 @@
-import { Meta } from '@storybook/blocks';
+import { Meta, Canvas, Source, Markdown } from '@storybook/blocks';
+import * as TableStories from './Table.stories';
 
 <Meta title="Components/Table" />
 
@@ -7,11 +8,13 @@ The table component provides a compact form for viewing one or more data streams
 
 **Example**
 
-```jsx
+<Canvas story={{ height : '100px' }} of={TableStories.Standard} sourceState='none' />
+<Source of={TableStories.Standard} dark="true" code={`
 import { initialize, toId } from '@iot-app-kit/source-iotsitewise';
 import { Table } from '@iot-app-kit/react-components';
 const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
 const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
+import { toId } from '@iot-app-kit/source-iotsitewise';
 
 const { query } = initialize({ iotSiteWiseClient });
 
@@ -82,7 +85,7 @@ const { query } = initialize({ iotSiteWiseClient });
     })
   ]}
 />
-```
+`} />
 
 ## Table Properties
 
@@ -90,19 +93,21 @@ The table component uses the table component from `@awsui/components-react`.
 Refer to [AWS-UI/table](https://github.com/aws/awsui-documentation/blob/main/components/table.md) for all available properties.  The properties with differences 
 are listed below. The table component's customizable properties are:
 
-#### items (array): 
+#### items
+##### (array)
 
 Specifies the data displayed in rows. Each item contains the data for one row. 
 The display of a row is handled by the cell property of each column definition in the `columnDefinitions` property. The data is an array of [Item](#item) objects.
 
-#### item (object):
+#### item
+##### (object):
 
 An item is an object that maps its own properties to dataStreams. The property name [$cellRef](#cellref) is used to refer to a datastream.
 Other properties of an item remain unchanged.
 
-### Example
+**Example**
 
-```tsx
+<Source dark="true" code={`
 // If we have defined items like below
 const items = [{
   rpm: {
@@ -126,9 +131,10 @@ const items = [{
   wind_speed: 30,
   other: { static_value: 42 }
 }]
-```
+`} />
 
-#### $cellRef (object, optional):
+#### $cellRef
+##### (object, optional)
 $cellRef is a keyword in `Item`. It's used to find the corresponding dataStream. In the above example,
 the item has two properties. Both use `$cellRef` to map properties to the data stream.
 
@@ -140,7 +146,7 @@ the item has two properties. Both use `$cellRef` to map properties to the data s
 
 **Example** 
 
-```tsx
+<Source dark="true" code={`
 import { toId } from '@iot-app-kit/source-sitewise';
 const item = [
   {
@@ -152,9 +158,50 @@ const item = [
     },
   }
 ]
-```
+`} />
 
-#### columnDefinitions (object):
+#### viewport
+##### (object, optional)
+
+This attribute specifies the interval of time the widget visualizes. If this attribute is not provided, the wideget utilizes the `viewport` 
+specified by its [ViewportManager](/docs/components-viewportmanager--docs). If a `ViewportManager` and `viewport` are not defined, 
+the default viewport is `{ duration: '10d' }`. Learn more about [viewport](/docs/core-viewport--docs).
+
+#### query
+##### (object, required)
+This query specifies the time series data or alarm data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
+
+Example for time series data.
+<Source dark="true" code={`
+<Table
+  query={
+    query.timeSeriesData({
+      assets: [{
+        assetId: 'id',
+        properties: [{ propertyId: 'property', refId: 'my-property' }]
+      }]
+    })
+ }
+ styles={{ 'my-property': { name: 'My Cool Property' }}}
+/>
+`} />
+
+Example for alarm data.
+<Source dark="true" code={`
+<Table
+  query={
+    query.alarmData({
+      alarms: [{
+        assetId: 'id',
+        alarmComponents: [{ assetCompositeModelId: 'asset-composite-model-id' }]
+      }]
+    })
+ }
+/>
+`} />
+
+#### columnDefinitions
+##### (object, required)
 
 This attribiute configures the various column properties. The properties mirror the [columnDefinitions](https://github.com/aws/awsui-documentation/blob/main/components/table.md#columnDefinitions)
 with the following changes:
@@ -164,7 +211,8 @@ with the following changes:
 - **formatter (optional)**: data:Primitive => Primitive - Determines the display of a cell's content for formatting the data.
 
 
-#### sorting (object, optional):
+#### sorting
+##### (object, optional)
 
 This attribute specifies the sorting configuration. To use sorting with default settings, you must provide an empty object. 
 This feature is only applicable for the Table component. It contains the following properties:
@@ -174,37 +222,50 @@ This feature is only applicable for the Table component. It contains the followi
   - **isDescending (boolean, optional)**: This defines the direction of the sort.
 
 
-#### propertyFiltering (object, optional):
+#### propertyFiltering
+##### (object, optional)
 
 This attribute specifies the property filtering configuration.
 
   - **filteringProperties (array)**: An array of properties by which the data set is filtered. Individual items have the following properties:
-  - **key (string)**: The identifier of this property. Refers to a property name in type T of the data item to enable built-in filtering.
-  - **groupValuesLabel (string)**: Localized string that displays the 'Values' group label for a specific property. For example, EC2 instance values.
-  - **propertyLabel (string)**: A human-readable string value for the property.
-  - **operators (optional)**: A list of all operators supported by this property. Equals operator must be supported, even if omitted in the list.
-  - **group (string, optional)**: Optional identifier of a custom group that the filtering option is assigned to. This is used to create additional groups 
-    below the default one. Labels for the group in the customGroupsText property must be defined. Only one level of nesting options is supported.
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`key\` | string, required | - | The identifier of this property. Refers to a property name in type T of the data item to enable built-in filtering. |
+| \`groupValuesLabel\` | string, optional | - | Localized string that displays the 'Values' group label for a specific property. For example, EC2 instance values. |
+| \`propertyLabel\` | string, optional | - | A human-readable string value for the property. |
+| \`operators\` | string, optional | - | A list of all operators supported by this property. Equals operator must be supported, even if omitted in the list. |
+| \`group\` | string, optional | - | Optional identifier of a custom group that the filtering option is assigned to. This is used to create additional groups below the default one. Labels for the group in the customGroupsText property must be defined. Only one level of nesting options is supported. |
+`}
+</Markdown>
+
   - **filteringFunction (optional)**: (item: TableItem, query: Query) => boolean - This is a custom function to filter items. 
     The default value is a function that takes values under the FilteringProperty['key'] in individual items, and matches them against current filteringText.
   - **defaultQuery (Query, optional)**: Initial query on the first render.
   - **empty (React.ReactNode*, optional)**: Content displayed in the table/cards empty slot when no items are initially provided.
   - **noMatch (React.ReactNode*, optional)**: Content displayed in the table/cards empty slot when filtering returns no matched items.
 
-#### viewport (object, optional):
-
-This attribute specifies the interval of time the widget visualizes. If this attribute is not provided, the wideget utilizes the `viewport` 
-specified by its [ViewportManager](/docs/components-viewportmanager--docs). If a `ViewportManager` and `viewport` are not defined, 
-the default viewport is `{ duration: '10d' }`. Learn more about [viewport](/docs/core-viewport--docs).
-
-#### thresholds (object, optional):
+#### thresholds
+##### (object, optional)
 
 Thresholds define rules that effect how data is visualized based on whether the data breaches the threshold. Learn more 
 about [thresholds](/docs/core-thresholds--docs#thresholds).
 
-#### queries (array, optional):
-
-The queries that specify the time series data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
-
-#### titleText (string, optional):
+#### titleText
+##### (string, optional)
 This specifies the title for the table component. Default value is `undefined`.
+
+#### significantDigits
+##### (number, optional)
+Number of digits after the decimal point. Must be in the range 0 - 20. Example: for a property with value as `10.12345` and significantDigits as 4, the value display will ne `10.1235`.
+For more information, [Number.toFixed](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed)
+
+#### paginationEnabled
+##### (boolean, optional)
+If set to true, the pagination will enable for the table. Use it together with `pageSize`.
+
+#### pageSize
+##### (number, optional)
+The number of items it should display in a table page. Available only if you specify the `paginationEnabled` property as true.
+  

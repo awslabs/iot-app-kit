@@ -20,7 +20,7 @@ The KPI component contains the following customizable properties.
 This query specifies the time series data or alarm data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
 
 Example for time series data.
-```jsx
+<Source dark="true" code={`
 <KPI
   query={
     query.timeSeriesData({
@@ -32,11 +32,10 @@ Example for time series data.
  }
  styles={{ 'my-property': { name: 'My Cool Property' }}}
 />
-
-```
+`} />
 
 Example for alarm data.
-```jsx
+<Source dark="true" code={`
 <KPI
   query={
     query.alarmData({
@@ -47,8 +46,7 @@ Example for alarm data.
     })
  }
 />
-
-```
+`} />
 
 #### viewport
 ##### (object, optional)
@@ -134,7 +132,7 @@ This specifies settings to enable the IoT Sitewise AI assistant within the compo
 </Markdown>
 
 <Canvas sourceState="none" story={{ height : '550px' }} of={KpiStories.Assistant} />
-<Source code={`import React, { useEffect } from 'react';
+<Source dark="true" code={`import React, { useEffect } from 'react';
 import { KPI, useAssistant } from '@iot-app-kit/react-components';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 

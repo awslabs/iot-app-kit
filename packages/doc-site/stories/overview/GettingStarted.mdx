@@ -54,14 +54,14 @@ The follwing example code explains how to mount the components.
 
   ```tsx
   import { initialize } from '@iot-app-kit/source-iotsitewise';
-  import { LineChart, WebglContext } from '@iot-app-kit/react-components';
+  import { Chart, WebglContext } from '@iot-app-kit/react-components';
   const { IoTSiteWiseClient } = require("@aws-sdk/client-iotsitewise");
 
   const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
   const { query } = initialize({ iotSiteWiseClient });
 
   // React component example
-  <LineChart
+  <Chart
     queries={[
       query.timeSeriesData(
         {
