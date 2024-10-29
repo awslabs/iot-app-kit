@@ -4,7 +4,7 @@
  * These interfaces are used to interact with the SceneComposer instance at
  * runtime, thus the data structure is slightly different from the GLTF Toolkit.
  */
-
+import * as awsui from '@cloudscape-design/design-tokens';
 import { ReactElement } from 'react';
 
 import { ISceneNodeInternal } from '../store/Store';
@@ -163,7 +163,7 @@ export interface ISceneBackgroundSetting {
   color?: string;
   textureUri?: string;
 }
-export const DEFAULT_SCENE_BACKGROUND_COLOR = '#2a2e33';
+export const DEFAULT_SCENE_BACKGROUND_COLOR = awsui.colorBackgroundContainerContent;
 
 export interface IGroundPlaneSettings {
   color?: string;

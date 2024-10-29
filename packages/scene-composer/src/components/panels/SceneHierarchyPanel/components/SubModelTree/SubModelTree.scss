@@ -1,9 +1,11 @@
-$background: #414750;
-$border: #2a2e33;
-$active-bg: #12293b;
-$active-bg-gradient: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(18, 41, 59, 1) 38%, rgba(18, 41, 59, 1) 100%);
-$active-highlight: #00a1c9;
-$active-color: #ec7211;
+@use '@cloudscape-design/design-tokens/index.scss' as awsui;
+
+$background: awsui.$color-background-control-disabled;
+$border: 1px solid awsui.$color-border-control-default;
+$active-bg: awsui.$color-background-button-normal-active;
+$active-bg-gradient: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, $active-bg 38%, $active-bg 100%);
+$active-highlight: awsui.$color-background-button-normal-hover;
+$active-color: awsui.$color-text-body-secondary;
 
 @mixin selected {
   border-top: 1px solid $active-highlight;
@@ -18,16 +20,12 @@ $active-color: #ec7211;
         background-color: $background;
 
         .tm-tree-item-inner {
-          .tm-scene-node-label {
-            .tm-scene-node-label-inner {
-              border-bottom: 1px solid $border;
-              background-color: $background;
-            }
-          }
+          margin-bottom: -1px;
+          border-bottom: $border;
 
           .actions {
             background-color: $background; // fallback for gradient
-            background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(65, 71, 80, 1) 29%, rgba(65, 71, 80, 1) 100%);
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, $background 29%, $background 100%);
             display: flex;
             margin-top: -3px;
             margin-bottom: -1px;
@@ -37,11 +35,11 @@ $active-color: #ec7211;
 
           &:hover {
             margin-top: 0;
+            background: $active-bg;
 
             .tm-scene-node-label {
               .tm-scene-node-label-inner {
                 border: none;
-                @include selected;
                 margin-bottom: -1px;
                 margin-top: -2px;
               }
@@ -51,7 +49,6 @@ $active-color: #ec7211;
               color: $active-color;
             }
             .actions {
-              background-color: $active-bg;
               background: $active-bg-gradient;
             }
           }

@@ -1,17 +1,17 @@
-$background: #2a2e33;
-$background-gradient: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(42, 46, 51, 1) 38%, rgba(42, 46, 51, 1) 100%);
-$background-hover: #414750;
-$border: 1px solid $background;
-$text-color: #d5dbdb;
-$active-highlight: #00a1c9;
-$active-bg: #12293b;
-$active-bg-gradient: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(18, 41, 59, 1) 38%, rgba(18, 41, 59, 1) 100%);
+@use '@cloudscape-design/design-tokens/index.scss' as awsui;
+
+$background: awsui.$color-background-container-content;
+$background-gradient: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, awsui.$color-background-container-content 38%, awsui.$color-background-container-content 100%);
+$background-hover: awsui.$color-background-button-normal-hover;
+$border: 1px solid awsui.$color-border-control-default;
+$text-color: awsui.$color-text-body-default;
+$active-bg: awsui.$color-background-button-normal-hover;
+$active-bg-gradient: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, awsui.$color-background-button-normal-hover 38%, awsui.$color-background-button-normal-hover 100%);
 $indent: 1rem;
-$active-color: #ec7211;
 
 @mixin selected {
-  border-top: 1px solid $active-highlight;
-  border-bottom: 1px solid $active-highlight;
+  border-top: 1px solid awsui.$color-border-button-normal-hover;
+  margin-bottom: 1px;;
   background: $active-bg;
 }
 @mixin selected-action {
@@ -21,7 +21,7 @@ $active-color: #ec7211;
 }
 @mixin hover {
   @include selected;
-  color: $active-color;
+  color: awsui.$color-text-button-normal-hover;
 }
 
 #tm-main {
@@ -33,7 +33,6 @@ $active-color: #ec7211;
   }
 
   .tm-tree {
-    border-top: $border;
     list-style-position: outside;
     list-style-type: none;
     margin: 0;
@@ -48,7 +47,7 @@ $active-color: #ec7211;
     
     &.drop,
     .drop {
-      border-bottom: 3px solid #fff;
+      border-bottom: 3px solid awsui.$color-border-button-normal-active;
     }
 
     .tm-tree-item {
@@ -61,6 +60,7 @@ $active-color: #ec7211;
         padding-left: 2rem;
         align-items: center;
         display: flex;
+        border-top: $border;
 
         .tm-tree-item-expand-btn {
           min-width: unset;
@@ -81,26 +81,17 @@ $active-color: #ec7211;
           }
 
           .actions {
-            background-color: var(--color-background-container-content-o88wxm, #ffffff); // fallback for gradient
             background: $background-gradient;
             position: sticky;
             right: 0;
             padding-right: 12px;
-            color: $active-color;
+            color: awsui.$color-text-button-normal-hover;
           }
         }
 
         &:hover {
-          margin-top: -1px; // Cancells out movement from hover/selected border
-          margin-bottom: 0px; // Cancells out movement from hover/selected border
           @include hover;
-
-          .tm-scene-node-label-inner {
-            border: none;
-            @include selected;
-            margin-bottom: -1px;
-            margin-top: -2px;
-          }
+          @include selected;
 
           .actions {
             @include selected-action;
@@ -112,7 +103,7 @@ $active-color: #ec7211;
           .tm-visibility-toggle,
           .tm-tree-item-expand-btn {
             svg {
-              color: $active-color;
+              color: awsui.$color-text-button-normal-hover;
             }
           }
         }
