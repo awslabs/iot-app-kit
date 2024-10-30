@@ -58,6 +58,7 @@
     "test:watch": "jest --config jest.config.ts --watch",
     "playwright": "docker compose run playwright",
     "test:ui": "if test \"$NODE_ENV\" = \"production\"; then npm run _test:ui:ci ; else npm run _test:ui:local ; fi",
+    "test:ui:ci": "npx playwright test",
     "test:ui:reliability": "if test \"$NODE_ENV\" = \"production\"; then npm run _test:ui:reliability:ci ; else npm run _test:ui:reliability:local ; fi",
     "_test:ui:ci": "npx playwright test",
     "_test:ui:local": "npm run playwright -- npx playwright test",
