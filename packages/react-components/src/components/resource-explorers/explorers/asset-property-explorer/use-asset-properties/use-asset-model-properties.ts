@@ -39,6 +39,11 @@ export function useAssetModelProperties({
               await listAssetModelProperties({
                 assetModelId,
                 nextToken: currentNextToken,
+                /**
+                 * https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_ListAssetProperties.html#API_ListAssetProperties_RequestSyntax
+                 * Includes properties for components as well
+                 */
+                filter: 'ALL',
                 maxResults: 250,
               });
 
