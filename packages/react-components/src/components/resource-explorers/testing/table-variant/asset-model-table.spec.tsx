@@ -1,13 +1,13 @@
-import { render, screen } from '@testing-library/react';
+import { ListAssetModels } from '@iot-app-kit/core';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React, { useState } from 'react';
 import { AssetModelExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests';
-import * as table from '../helpers/table';
-import { createListAssetModelsPage } from '../helpers/responses';
-import { ListAssetModels } from '@iot-app-kit/core';
-import { AssetModelResource } from '../../types/resources';
 import { SelectionMode } from '../../types/common';
+import { AssetModelResource } from '../../types/resources';
+import { createListAssetModelsPage } from '../helpers/responses';
+import * as table from '../helpers/table';
 
 function SelectableAssetModelTable({
   selectionMode,
@@ -521,6 +521,34 @@ describe('asset model table', () => {
 
       expect(screen.getByText('Name')).toBeVisible();
       expect(screen.getByText('Description')).toBeVisible();
+    });
+  });
+
+  describe('errors', () => {
+    // hide errors in test output
+    const realConsoleError = console.error;
+    beforeAll(() => {
+      console.error = () => {};
+    });
+    afterAll(() => {
+      console.error = realConsoleError;
+    });
+
+    test('user experiences an error when listing asset models', async () => {
+      const errorMessage = 'Failed to request resources';
+      render(
+        <AssetModelExplorer
+          iotSiteWiseClient={{
+            listAssetModels: jest
+              .fn()
+              .mockRejectedValue(new Error(errorMessage)),
+          }}
+        />
+      );
+      await table.waitForLoadingToFinish();
+      const assetModelTable = screen.getByRole('table');
+
+      expect(within(assetModelTable).getByText(errorMessage)).toBeVisible();
     });
   });
 });

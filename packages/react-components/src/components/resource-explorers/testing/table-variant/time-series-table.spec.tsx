@@ -1,15 +1,15 @@
-import { render, screen } from '@testing-library/react';
+import { BatchGetAssetPropertyValue, ListTimeSeries } from '@iot-app-kit/core';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React, { useState } from 'react';
+import { formatDate } from '../../../../utils/time';
+import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';
 import { TimeSeriesExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests';
-import * as table from '../helpers/table';
-import { createListTimeSeriesPage } from '../helpers/responses';
-import { BatchGetAssetPropertyValue, ListTimeSeries } from '@iot-app-kit/core';
-import { TimeSeriesResource } from '../../types/resources';
 import { SelectionMode } from '../../types/common';
-import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';
-import { formatDate } from '../../../../utils/time';
+import { TimeSeriesResource } from '../../types/resources';
+import { createListTimeSeriesPage } from '../helpers/responses';
+import * as table from '../helpers/table';
 
 function SelectableTimeSeriesTable({
   selectionMode,
@@ -747,6 +747,34 @@ describe('time series table', () => {
 
       expect(screen.getByText('ID')).toBeVisible();
       expect(screen.getByText('Data type')).toBeVisible();
+    });
+  });
+
+  describe('errors', () => {
+    // hide errors in test output
+    const realConsoleError = console.error;
+    beforeAll(() => {
+      console.error = () => {};
+    });
+    afterAll(() => {
+      console.error = realConsoleError;
+    });
+
+    test('user experiences an error when listing time series', async () => {
+      const errorMessage = 'Failed to request resources';
+      render(
+        <TimeSeriesExplorer
+          iotSiteWiseClient={{
+            listTimeSeries: jest
+              .fn()
+              .mockRejectedValue(new Error(errorMessage)),
+          }}
+        />
+      );
+      await table.waitForLoadingToFinish();
+      const timeSeriesTable = screen.getByRole('table');
+
+      expect(within(timeSeriesTable).getByText(errorMessage)).toBeVisible();
     });
   });
 });
