@@ -85,7 +85,13 @@ export class HistoricalAssetPropertyValueBatcher {
     let nextToken = undefined;
 
     const entries = requests.map(
-      ({ viewport, fetchMode, timeOrdering, ...request }) => ({
+      ({
+        abortSignal: _abortSignal,
+        viewport,
+        fetchMode,
+        timeOrdering,
+        ...request
+      }) => ({
         ...request,
         entryId: createEntryId(),
         ...mapViewport({ viewport, fetchMode }),

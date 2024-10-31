@@ -65,10 +65,12 @@ export class LatestAssetPropertyValueBatcher {
   ): Promise<LoaderResponse[]> {
     let nextToken = undefined;
 
-    const entries = requests.map((request) => ({
-      ...request,
-      entryId: createEntryId(),
-    }));
+    const entries = requests.map(
+      ({ abortSignal: _abortSignal, ...request }) => ({
+        ...request,
+        entryId: createEntryId(),
+      })
+    );
 
     const abortSignal = anySignal(
       requests.map(({ abortSignal: requestAbortSignal }) => requestAbortSignal)
