@@ -6,6 +6,7 @@ www/
 loader/
 coverage/
 screenshot
+.turbo
 
 *~
 *.sw[mnpcod]

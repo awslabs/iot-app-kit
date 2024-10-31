@@ -42,17 +42,23 @@ module.exports = {
     },
   },
   rules: {
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+    ],
     '@typescript-eslint/no-empty-function': 0,
     'react/react-in-jsx-scope': 'off', // This should always be off as of React 17 and going forward, and we should use the new JSX Transform in Typescript 4.1+ (ref: https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#removing-unused-react-imports)
     'react/jsx-uses-react': 'error',
     'react/jsx-uses-vars': 'error',
-    'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
-    "no-restricted-imports": [
-      "error",
+    'react/jsx-curly-brace-presence': [
+      'error',
+      { props: 'never', children: 'never' },
+    ],
+    'no-restricted-imports': [
+      'error',
       {
-        "patterns": ["@iot-app-kit/**/src"]
-      }
+        patterns: ['@iot-app-kit/**/src'],
+      },
     ],
   },
   overrides: [

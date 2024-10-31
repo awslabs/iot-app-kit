@@ -1,5 +1,10 @@
 name: Validate
-on: [pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - sophon
+      - rc
 env:
   PW_TEST_HTML_REPORT_OPEN: 'never'
 jobs:
@@ -65,9 +70,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-          lfs: 'true'
 
       - name: Setup node
         uses: actions/setup-node@v4
@@ -85,14 +87,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node_modules-
 
-      - name: Turbo cache
-        uses: actions/cache@v4
-        with:
-          path: '**/.turbo'
-          key: ${{ runner.os }}-turbo-${{ matrix.package }}-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-turbo-${{ matrix.package }}-
-
       - name: Install
         if: steps.npm-cache.outputs.cache-hit != 'true'
         shell: bash
@@ -100,8 +94,16 @@ jobs:
           NODE_OPTIONS: '--max_old_space_size=8192'
         run: npm ci --workspaces --include-workspace-root
 
+      - name: Turbo cache
+        uses: actions/cache@v4
+        with:
+          path: '.turbo'
+          key: ${{ runner.os }}-turbo-unit-${{ matrix.package}}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-unit-${{ matrix.package}}-
+
       - name: Validate
-        run: npx turbo run build lint test --filter=${{ matrix.package }}
+        run: npx turbo run build lint test --filter=@iot-app-kit/${{ matrix.package }}
 
   playwright:
     needs: repo
@@ -112,9 +114,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-          lfs: 'true'
 
       - name: Setup node
         uses: actions/setup-node@v4
@@ -132,19 +131,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node_modules-
 
-      - name: Turbo cache
-        uses: actions/cache@v4
-        with:
-          path: '**/.turbo'
-          key: ${{ runner.os }}-turbo-${{ matrix.package }}-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-turbo-${{ matrix.package }}-
-
       - name: Install
         if: steps.npm-cache.outputs.cache-hit != 'true'
         env:
           NODE_OPTIONS: '--max_old_space_size=8192'
         run: npm ci --workspaces --include-workspace-root
+
+      - name: Turbo cache
+        uses: actions/cache@v4
+        with:
+          path: '.turbo'
+          key: ${{ runner.os }}-turbo-playwright-${{ matrix.package}}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-playwright-${{ matrix.package}}-
 
       - name: Get installed Playwright version
         id: playwright-version
@@ -169,7 +168,7 @@ jobs:
         run: npx playwright install-deps
 
       - name: Playwright
-        run: npx turbo run build test:ui:ci --filter=${{matrix.package}}
+        run: npx turbo run build test:ui:ci --filter=@iot-app-kit/${{matrix.package}}
 
       - name: Failure report
         uses: actions/upload-artifact@v4

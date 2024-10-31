@@ -19,6 +19,7 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "eslint-config-iot-app-kit": "*",
     "@iot-app-kit/ts-config": "*",
     "@testing-library/react": "^14.0.0",
     "@types/js-cookie": "^3.0.3",
