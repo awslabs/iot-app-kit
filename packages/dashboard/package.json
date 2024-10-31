@@ -33,6 +33,7 @@
     "lint": "eslint . --max-warnings=0",
     "fix": "eslint --fix .",
     "test:ui": "npx playwright test",
+    "test:ui:ci": "npx playwright test",
     "watch-dependencies": "npm exec turbowatch ./turbowatch.ts"
   },
   "devDependencies": {
