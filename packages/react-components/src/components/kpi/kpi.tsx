@@ -16,14 +16,13 @@ import type {
 import type { KPISettings } from './types';
 import { KpiBase } from './kpiBase';
 import type { ComponentQuery } from '../../common/chartTypes';
-import { getAlarmQueries, getTimeSeriesQueries } from '../../utils/queries';
-import { convertAlarmQueryToAlarmRequest } from '../../queries/utils/convertAlarmQueryToAlarmRequest';
-import { useAlarms } from '../../hooks/useAlarms';
-import { buildTransformAlarmForSingleQueryWidgets } from '../../utils/buildTransformAlarmForSingleQueryWidgets';
+import { getTimeSeriesQueries } from '../../utils/queries';
+import { useSingleQueryAlarm } from '../../hooks/useSingleQueryAlarm';
 import {
   convertToSupportedTimeRange,
   serializeTimeSeriesQuery,
 } from '../../hooks/useAssistantContext/utils';
+import { createNonNullableList } from '../../utils/createNonNullableList';
 
 export const KPI = ({
   query,
@@ -50,58 +49,38 @@ export const KPI = ({
   const { viewport } = useViewport();
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
 
-  const alarmQueries = getAlarmQueries([query]);
   const timeSeriesQueries = getTimeSeriesQueries([query]);
 
-  const mapAlarmQueriesToRequests = alarmQueries.flatMap((query) =>
-    convertAlarmQueryToAlarmRequest(query)
-  );
-
-  const inputPropertyTimeSeriesDataSettings =
-    alarmQueries.at(0)?.query.requestSettings;
-
-  const transformedAlarm = useAlarms({
-    iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
-    iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
-    requests: mapAlarmQueriesToRequests,
+  const transformedAlarm = useSingleQueryAlarm({
+    query,
     viewport: utilizedViewport,
-    settings: {
-      fetchThresholds: true,
-      fetchOnlyLatest: true,
-      refreshRate: alarmQueries.at(0)?.query.requestSettings?.refreshRate,
-    },
-    transform: buildTransformAlarmForSingleQueryWidgets({
-      iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
-      iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
-      ...inputPropertyTimeSeriesDataSettings,
-    }),
-  })
-    .filter((alarm) => !!alarm)
-    .at(0);
-
-  const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
-    viewport: passedInViewport,
-    queries: transformedAlarm
-      ? transformedAlarm.timeSeriesDataQueries
-      : timeSeriesQueries,
-    settings: {
-      fetchMostRecentBeforeEnd: true,
-    },
-    styles,
   });
+
+  const { dataStreams: timeSeriesDataStreams, thresholds: queryThresholds } =
+    useTimeSeriesData({
+      viewport: passedInViewport,
+      queries: timeSeriesQueries,
+      settings: {
+        fetchMostRecentBeforeEnd: true,
+      },
+      styles,
+    });
+
   const { setContextByComponent, transformTimeseriesDataToAssistantContext } =
     useAssistantContext();
 
-  const allThresholds = useMemo(() => {
-    const allThresholds = [...queryThresholds, ...thresholds];
-    transformedAlarm?.threshold &&
-      allThresholds.push(transformedAlarm?.threshold);
-    return allThresholds;
-  }, [
-    JSON.stringify(queryThresholds),
-    JSON.stringify(thresholds),
-    JSON.stringify(transformedAlarm?.threshold),
-  ]);
+  const allThresholds = useMemo(
+    () => [
+      ...queryThresholds,
+      ...thresholds,
+      ...createNonNullableList([transformedAlarm?.threshold]),
+    ],
+    [queryThresholds, thresholds, transformedAlarm]
+  );
+
+  const dataStreams = transformedAlarm?.datastream
+    ? [transformedAlarm?.datastream]
+    : timeSeriesDataStreams;
 
   const {
     propertyPoint,
@@ -118,20 +97,20 @@ export const KPI = ({
   const unit = propertyStream?.unit;
   const backgroundColor = settings?.color || settings?.backgroundColor;
   const isLoading = propertyStream?.isLoading || false;
-  const error = transformedAlarm?.status.isError
+  const error = transformedAlarm?.status?.isError
     ? CHART_ALARM_ERROR
     : propertyStream?.error;
 
   useEffect(() => {
     if (assistant) {
-      if (transformedAlarm) {
+      if (transformedAlarm && transformedAlarm.alarmContent) {
         setContextByComponent(assistant.componentId, {
           timerange: convertToSupportedTimeRange(
             viewportStartDate(utilizedViewport),
             viewportEndDate(utilizedViewport)
           ),
-          assetId: transformedAlarm.assetId,
-          alarmName: transformedAlarm.alarmName,
+          assetId: transformedAlarm.alarmContent.assetId,
+          alarmName: transformedAlarm.alarmContent.alarmName,
         });
       } else if (timeSeriesQueries.length > 0) {
         setContextByComponent(
@@ -149,7 +128,7 @@ export const KPI = ({
   const component = (
     <KpiBase
       propertyPoint={propertyPoint}
-      alarmContent={transformedAlarm}
+      alarmContent={transformedAlarm?.alarmContent}
       alarmStatus={transformedAlarm?.status}
       settings={{ ...settings, backgroundColor }}
       propertyThreshold={propertyThreshold}

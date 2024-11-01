@@ -21,14 +21,12 @@ import {
   DEFAULT_GAUGE_STYLES,
 } from './constants';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
-import { getAlarmQueries, getTimeSeriesQueries } from '../../utils/queries';
-import { convertAlarmQueryToAlarmRequest } from '../../queries/utils/convertAlarmQueryToAlarmRequest';
-import { useAlarms } from '../../hooks/useAlarms';
-import { buildTransformAlarmForSingleQueryWidgets } from '../../utils/buildTransformAlarmForSingleQueryWidgets';
+import { getTimeSeriesQueries } from '../../utils/queries';
 import {
   convertToSupportedTimeRange,
   serializeTimeSeriesQuery,
 } from '../../hooks/useAssistantContext/utils';
+import { useSingleQueryAlarm } from '../../hooks/useSingleQueryAlarm';
 
 export const Gauge = ({
   size,
@@ -42,7 +40,6 @@ export const Gauge = ({
   theme,
   assistant,
 }: GaugeProps) => {
-  const alarmQueries = getAlarmQueries([query]);
   const timeSeriesQueries = getTimeSeriesQueries([query]);
   const { viewport, lastUpdatedBy } = useViewport();
   const { setContextByComponent, transformTimeseriesDataToAssistantContext } =
@@ -53,40 +50,21 @@ export const Gauge = ({
       ? viewport
       : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
 
-  const mapAlarmQueriesToRequests = alarmQueries.flatMap((query) =>
-    convertAlarmQueryToAlarmRequest(query)
-  );
-
-  const inputPropertyTimeSeriesDataSettings =
-    alarmQueries.at(0)?.query.requestSettings;
-
-  const transformedAlarm = useAlarms({
-    iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
-    iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
-    requests: mapAlarmQueriesToRequests,
+  const transformedAlarm = useSingleQueryAlarm({
+    query,
     viewport: utilizedViewport,
-    settings: {
-      fetchThresholds: true,
-      fetchOnlyLatest: true,
-      refreshRate: alarmQueries.at(0)?.query.requestSettings?.refreshRate,
-    },
-    transform: buildTransformAlarmForSingleQueryWidgets({
-      iotSiteWiseClient: alarmQueries.at(0)?.iotSiteWiseClient,
-      iotEventsClient: alarmQueries.at(0)?.iotEventsClient,
-      ...inputPropertyTimeSeriesDataSettings,
-    }),
-  })
-    .filter((alarm) => !!alarm)
-    .at(0);
+  });
 
-  const { dataStreams } = useTimeSeriesData({
+  const { dataStreams: timeSeriesDataStreams } = useTimeSeriesData({
     viewport: passedInViewport,
-    queries: transformedAlarm
-      ? transformedAlarm.timeSeriesDataQueries
-      : timeSeriesQueries,
+    queries: timeSeriesQueries,
     settings: { fetchMostRecentBeforeEnd: true },
     styles,
   });
+
+  const dataStreams = transformedAlarm?.datastream
+    ? [transformedAlarm?.datastream]
+    : timeSeriesDataStreams;
 
   const { propertyPoint, alarmStream, propertyStream } =
     widgetPropertiesFromInputs({
@@ -99,7 +77,7 @@ export const Gauge = ({
   const name = streamToUse?.name;
   const unit = streamToUse?.unit;
   const isLoading = streamToUse?.isLoading || false;
-  const error = transformedAlarm?.status.isError
+  const error = transformedAlarm?.status?.isError
     ? CHART_ALARM_ERROR
     : streamToUse?.error;
 
@@ -109,14 +87,14 @@ export const Gauge = ({
 
   useEffect(() => {
     if (assistant) {
-      if (transformedAlarm) {
+      if (transformedAlarm && transformedAlarm.alarmContent) {
         setContextByComponent(assistant.componentId, {
           timerange: convertToSupportedTimeRange(
             viewportStartDate(utilizedViewport),
             viewportEndDate(utilizedViewport)
           ),
-          assetId: transformedAlarm.assetId,
-          alarmName: transformedAlarm.alarmName,
+          assetId: transformedAlarm.alarmContent.assetId,
+          alarmName: transformedAlarm.alarmContent.alarmName,
         });
       } else if (timeSeriesQueries.length > 0) {
         setContextByComponent(
@@ -139,7 +117,7 @@ export const Gauge = ({
 
   const component = (
     <GaugeBase
-      alarmContent={transformedAlarm}
+      alarmContent={transformedAlarm?.alarmContent}
       alarmStatus={transformedAlarm?.status}
       size={size}
       propertyPoint={propertyPoint}
