@@ -140,6 +140,15 @@ const sendRequest = ({
           nextToken,
         });
       }
+    })
+    .catch((e) => {
+      Object.entries(callbackCache).forEach(([entryId, { onError }]) => {
+        onError({
+          entryId,
+          errorCode: e.$metadata.httpStatusCode,
+          errorMessage: e.message,
+        });
+      });
     });
 };
 
