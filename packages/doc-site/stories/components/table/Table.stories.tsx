@@ -1,8 +1,8 @@
-import { Meta, StoryObj } from '@storybook/react';
-import { Table, useAssistant } from '@iot-app-kit/react-components';
-import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import React from 'react';
+import { Table } from '@iot-app-kit/react-components';
+import { mockAlarmData, mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { DATA_TYPE } from '@iot-app-kit/core';
+import { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Table> = {
   title: 'Components/Table',
@@ -13,7 +13,7 @@ export default meta;
 
 type Story = StoryObj<typeof Table>;
 
-const VIEWPORT = { duration: '5s' };
+const VIEWPORT = { duration: '30s' };
 
 const LATEST_VALUE = 123.2;
 const DATA_STREAM = {
@@ -63,5 +63,36 @@ export const Standard: Story = {
         thresholds: [],
       },
     ])],
+  },
+};
+
+export const Alarm: Story = {
+  render: (props) => (
+    <Table
+      viewport={VIEWPORT}
+      items={[]}
+      columnDefinitions={[
+        {
+          key: 'property',
+          header: 'Property',
+          sortingField: 'property',
+        },
+        {
+          key: 'value',
+          header: 'Latest value',
+          sortingField: 'value',
+        },
+        {
+          key: 'unit',
+          header: 'Unit',
+          sortingField: 'unit',
+        },
+      ]}
+    
+      queries={props.queries}
+    /> 
+  ),
+  args: {
+    queries: [mockAlarmData()],
   },
 };

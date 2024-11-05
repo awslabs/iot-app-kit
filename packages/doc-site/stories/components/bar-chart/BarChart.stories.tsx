@@ -1,11 +1,12 @@
 import { BarChart, WebglContext } from '@iot-app-kit/react-components';
-import { Meta, StoryObj } from '@storybook/react';
 import {
+  mockAlarmData,
+  mockSinWaveDataAggregated,
   mockTimeSeriesDataQuery,
   mockTimeSeriesDataQueryWithError,
   mockTimeSeriesDataQueryLoading,
 } from '@iot-app-kit/testing-util';
-import { mockSinWaveDataAggregated } from '../../mockSinWaveData';
+import { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof BarChart> = {
   title: 'Components/BarChart',
@@ -26,6 +27,14 @@ export const Standard: Story = {
   args: {
     queries: [mockSinWaveDataAggregated()],
     viewport: { duration: '30s' },
+  },
+};
+
+export const Alarm: Story = {
+  ...Standard,
+  args: {
+    ...Standard.args,
+    queries: [mockAlarmData()],
   },
 };
 

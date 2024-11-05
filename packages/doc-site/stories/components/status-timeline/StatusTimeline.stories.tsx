@@ -1,11 +1,12 @@
 import { StatusTimeline, WebglContext } from '@iot-app-kit/react-components';
-import { Meta, StoryObj } from '@storybook/react';
 import {
+  mockAlarmData,
   mockTimeSeriesDataQuery,
   mockTimeSeriesDataQueryWithError,
   mockTimeSeriesDataQueryLoading,
+  mockTimeSeriesStringLiveStream,
 } from '@iot-app-kit/testing-util';
-import { mockTimeSeriesStringLiveStream } from '../../mockSinWaveData';
+import { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof StatusTimeline> = {
   title: 'Components/StatusTimeline',
@@ -43,6 +44,13 @@ export const Standard: Story = {
       },
     ],
     viewport: { duration: '1m' },
+  },
+};
+
+export const Alarm: Story = {
+  ...Standard,
+  args: {
+    queries: [mockAlarmData()],
   },
 };
 

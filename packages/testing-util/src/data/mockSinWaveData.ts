@@ -1,13 +1,14 @@
+import { DATA_TYPE } from '@iot-app-kit/core';
+import { Quality } from '@aws-sdk/client-iotsitewise';
+import parse from 'parse-duration';
 import {
   mockTimeSeriesDataQueryLiveStream,
   mockTimeSeriesDataQueryLiveStreamAggregated,
-} from '@iot-app-kit/testing-util';
-import { DATA_TYPE } from '@iot-app-kit/core';
-import { Quality } from '@aws-sdk/client-iotsitewise';
+} from './mockTimeSeriesDataRealTime';
 
 export const mockSinWaveData = (frequency?: string) =>
   mockTimeSeriesDataQueryLiveStream({
-    frequency: frequency || '0.25s',
+    refreshRate: frequency ? parse(frequency) : 250,
     dataType: DATA_TYPE.NUMBER,
     requests: [
       {
@@ -30,14 +31,16 @@ export const mockSinWaveDataWithQuality = ({
   positiveOnly?: boolean;
 }) =>
   mockTimeSeriesDataQueryLiveStream({
-    frequency: frequency || '0.25s',
+    refreshRate: frequency ? parse(frequency) : 250,
     dataType: DATA_TYPE.NUMBER,
     requests: [
       {
         name: 'Windmill',
         createDataPoint: (date: Date) => ({
           x: date.getTime(),
-          y: positiveOnly ? Math.abs(100 * Math.sin(date.getTime() / 1000)) : 100 * Math.sin(date.getTime() / 1000),
+          y: positiveOnly
+            ? Math.abs(100 * Math.sin(date.getTime() / 1000))
+            : 100 * Math.sin(date.getTime() / 1000),
           quality,
         }),
       },
@@ -46,7 +49,7 @@ export const mockSinWaveDataWithQuality = ({
 
 export const mockSinWaveDataAggregated = () =>
   mockTimeSeriesDataQueryLiveStreamAggregated({
-    frequency: '5s',
+    refreshRate: 5000,
     resolution: 1000,
     dataType: DATA_TYPE.NUMBER,
     requests: [
@@ -59,6 +62,9 @@ export const mockSinWaveDataAggregated = () =>
       },
     ],
   });
+
+export const mockSinWaveDataValue = (date: Date) =>
+  100 * Math.sin((0.5 * date.getTime()) / 1000);
 
 const getSomeString = () => {
   const randomNum = Math.random();
@@ -73,7 +79,7 @@ const getSomeString = () => {
 
 export const mockTimeSeriesStringLiveStream = () =>
   mockTimeSeriesDataQueryLiveStream({
-    frequency: '2s',
+    refreshRate: 2000,
     dataType: DATA_TYPE.STRING,
     requests: [
       {

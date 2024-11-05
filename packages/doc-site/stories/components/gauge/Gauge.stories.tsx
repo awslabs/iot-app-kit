@@ -1,12 +1,13 @@
 // eslint-disable-next-line import/default
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { Gauge } from '@iot-app-kit/react-components';
 import {
+  mockAlarmData,
+  mockSinWaveDataWithQuality,
   mockTimeSeriesDataQueryWithError,
   mockTimeSeriesDataQueryLoading,
 } from '@iot-app-kit/testing-util';
-import { mockSinWaveDataWithQuality } from '../../mockSinWaveData';
+import { Meta, StoryObj } from '@storybook/react';
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
 const meta: Meta<typeof Gauge> = {
@@ -192,5 +193,26 @@ export const Error: Story = {
   ),
   args: {
     query: mockTimeSeriesDataQueryWithError('some error message'),
+  },
+};
+
+export const Alarm: Story = {
+  render: (props) => (
+    <div style={{ width: '400px', height: '300px', border: '1px solid lightgrey', margin: '0 auto' }}>
+      <Gauge {...props} />
+    </div>
+  ),
+  args: {
+    query: mockAlarmData(),
+    settings: {
+      gaugeThickness: 30,
+      showUnit: true,
+      showName: false,
+      fontSize: 40,
+      labelFontSize: 16,
+      unitFontSize: 16,
+      yMin: -100,
+      yMax: 100,
+    },
   },
 };

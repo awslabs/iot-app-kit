@@ -6,7 +6,6 @@ import {
   Viewport,
 } from '@iot-app-kit/core';
 import { v4 as uuid } from 'uuid';
-import parse from 'parse-duration';
 
 type MockRequest = {
   name: string;
@@ -22,12 +21,12 @@ const noop = () => {};
 export const mockTimeSeriesDataQueryLiveStream = ({
   requests,
   dataType,
-  frequency = '1s',
+  refreshRate = 1000, // milliseconds
   overrides,
 }: {
   requests: MockRequest[];
   dataType: DataType;
-  frequency?: string; // see https://www.npmjs.com/package/parse-duration for valid values, ex '1m', '1hr'
+  refreshRate?: number;
   overrides?: {
     updateViewport?: (viewport: Viewport) => void;
     unsubscribe?: () => void;
@@ -88,7 +87,7 @@ export const mockTimeSeriesDataQueryLiveStream = ({
           };
 
           // At the requested frequency, create new data point in every data stream according to the provided `createDataPoint` method
-          pushDataHandler = setInterval(() => addData(), parse(frequency));
+          pushDataHandler = setInterval(() => addData(), refreshRate);
         },
         unsubscribe: () => {
           unsubscribe();
@@ -108,25 +107,26 @@ export const mockTimeSeriesDataQueryLiveStreamAggregated = ({
   requests,
   resolution,
   dataType,
-  frequency = '1s',
+  refreshRate = 1000, // milliseconds
   overrides,
+  id = uuid(),
 }: {
   requests: MockRequest[];
   resolution: number;
   dataType: DataType;
-  frequency?: string; // see https://www.npmjs.com/package/parse-duration for valid values, ex '1m', '1hr'
+  refreshRate?: number;
   overrides?: {
     updateViewport?: (viewport: Viewport) => void;
     unsubscribe?: () => void;
   };
+  id?: string;
 }): TimeSeriesDataQuery => {
   const { updateViewport = noop, unsubscribe = noop } = overrides || {};
 
-  const id = uuid();
   let dataStreams: DataStream[] = requests.map(
     ({ createDataPoint: _, name, ...rest }, i) => {
       return {
-        id: name,
+        id,
         name,
         color: 'black',
         isLoading: true,
@@ -173,8 +173,8 @@ export const mockTimeSeriesDataQueryLiveStreamAggregated = ({
             ]);
           };
 
-          // At the requested frequency, create new data point in every data stream according to the provided `createDataPoint` method
-          pushDataHandler = setInterval(() => addData(), parse(frequency));
+          // At the requested refreshRate, create new data point in every data stream according to the provided `createDataPoint` method
+          pushDataHandler = setInterval(() => addData(), refreshRate);
         },
         unsubscribe: () => {
           unsubscribe();

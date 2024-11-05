@@ -268,4 +268,11 @@ If set to true, the pagination will enable for the table. Use it together with `
 #### pageSize
 ##### (number, optional)
 The number of items it should display in a table page. Available only if you specify the `paginationEnabled` property as true.
-  
+
+## Alarms
+
+<Canvas sourceState='hidden' of={TableStories.Alarm} />
+
+When you add an IoT SiteWise alarm to the Table the alarm's name, state, expression, and severity will be added as columns. The alarm's threshold will be added to the widget.
+
+An IoT SiteWise alarm is triggered based on a SiteWise input property. The associated input property data will automatically be displayed on the Table on the same row as the alarm.

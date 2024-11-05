@@ -10,7 +10,7 @@ The Bar Chart is rendered with WebGL and users **must** include the WebGL Contex
 
 ## Demo
 
-<Canvas  story={{height : '400px' }}  sourceState="hidden" of={BarChartStories.Standard} />
+<Canvas  story={{height : '400px' }}  sourceState="hidden" of={BarChartStories.Alarm} />
 
 **📈👆 Interact with the chart!**
 
@@ -59,6 +59,10 @@ Example for alarm data.
  }
 />
 `} />
+
+When you add an IoT SiteWise alarm to the Bar Chart the alarm's threshold will be displayed on the chart.
+
+An IoT SiteWise alarm is triggered based on a SiteWise input property. The associated input property data will automatically be added to the chart as well.
 
 #### viewport
 ##### (object, optional)

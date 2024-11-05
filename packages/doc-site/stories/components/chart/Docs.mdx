@@ -1,6 +1,7 @@
-import { Canvas, Meta, Story, Source, Markdown } from '@storybook/blocks';
+import { Canvas, Meta, Story, Source, Markdown, IconItem } from '@storybook/blocks';
 
 import * as ChartStories from './Chart.stories';
+import { Icon } from '@cloudscape-design/components';
 
 <Meta of={ChartStories} />
 
@@ -293,6 +294,54 @@ This specifies the color and position of the legend section. Default value is `u
 </Markdown>
 
 <Canvas sourceState="hidden"  story={{height : '450px' }}  of={ChartStories.StandardWithLegend} />
+
+## Alarms
+
+<Canvas sourceState="none"  story={{height : '450px' }}  of={ChartStories.Alarm} />
+
+When you add an IoT SiteWise alarm to the Chart the alarm's threshold will be displayed on the chart.
+
+An IoT SiteWise alarm is triggered based on a SiteWise input property. The associated input property data will automatically be added to the chart as well.
+
+Alarm state is displayed as a label above an input property's datapoint at the time of the state change. 
+
+**Hover** over the label to see more alarm info in the Chart tooltip.
+
+#### Alarm state icons
+
+<IconItem name="Normal">
+  <Icon name="status-positive" variant="success" />
+</IconItem>
+<IconItem name="Active">
+  <Icon name='notification' variant='error' />
+</IconItem>
+<IconItem name="Latched">
+  <Icon name='status-warning' variant='warning' />
+</IconItem>
+<IconItem name="Acknowledged">
+  <Icon name='status-in-progress' variant='subtle' />
+</IconItem>
+<IconItem name="SnoozeDisabled">
+  <Icon name='status-stopped' variant='subtle' />
+</IconItem>
+<IconItem name="Disabled">
+  <Icon name='status-pending' variant='subtle' />
+</IconItem>
+
+<Markdown>
+{`
+| Name         | Description        |
+| ------------ | -------------- |
+| Normal | The alarm is enabled but inactive. The industrial process or equipment operates as expected. |
+| Active | The alarm is active. The industrial process or equipment is outside its operating range and needs attention. |
+| Acknowledged | An operator acknowledged the state of the alarm. This state applies to only alarms where you enable the acknowledge flow. |
+| Latched | The alarm returned to normal but was active and no operator acknowledged it. The industrial process or equipment requires attention from an operator to reset the alarm to normal. This state applies to only alarms where you enable the acknowledge flow. |
+| SnoozeDisabled | The alarm is disabled because an operator snoozed the alarm. The operator defines the duration for which the alarm snoozes. After that duration, the alarm returns to normal state. |
+| Disabled | The alarm is disabled and won't detect. |
+`}
+</Markdown>
+
+---
 
 ## More Examples
 
