@@ -1,13 +1,12 @@
+import type { BatchGetAssetPropertyValue } from '@iot-app-kit/core';
 import { useQueries } from '@tanstack/react-query';
-
+import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';
+import type { RequestIsLoading } from '../../types/common';
+import type { DataStreamResourceWithLatestValue } from '../../types/resources';
+import { resourceExplorerQueryClient } from '../resource-explorer-query-client';
 import { createDataStreamsWithLatestValue } from './create-data-streams-with-latest-value';
 import { createRequestEntryBatches } from './create-request-entry-batches';
 import type { CreateEntryId, DataStreamResource } from './types';
-import { resourceExplorerQueryClient } from '../resource-explorer-query-client';
-import type { BatchGetAssetPropertyValue } from '@iot-app-kit/core';
-import type { DataStreamResourceWithLatestValue } from '../../types/resources';
-import type { RequestIsLoading } from '../../types/common';
-import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';
 
 export interface UseLatestValuesOptions<DataStream extends DataStreamResource> {
   batchGetAssetPropertyValue?: BatchGetAssetPropertyValue;
@@ -74,7 +73,7 @@ export function useLatestValues<DataStream extends DataStreamResource>({
   );
 
   const dataStreamsWithLatestValue = results.flatMap(({ data = [] }) => data);
-  const isLoading = results.some(({ isLoading }) => isLoading);
+  const isLoading = results.some(({ isFetching }) => isFetching);
 
   return {
     dataStreamsWithLatestValue,

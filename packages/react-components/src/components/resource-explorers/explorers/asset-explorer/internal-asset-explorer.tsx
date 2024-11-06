@@ -1,21 +1,12 @@
 import Link from '@cloudscape-design/components/link';
 import { useState } from 'react';
-
-import { useAssets } from './use-assets';
-import { useParentAsset } from './use-parent-asset';
-import type { AssetExplorerProps } from './types';
-import {
-  ResourceDropDown,
-  ResourceTable,
-  ResourceExplorerVariant,
-} from '../../variants';
 import {
   DEFAULT_ASSET_RESOURCE_NAME,
   DEFAULT_DEFAULT_PAGE_SIZE,
   DEFAULT_IS_RESOURCE_DISABLED,
+  DEFAULT_IS_TABLE_ENABLED,
   DEFAULT_IS_TABLE_FILTER_ENABLED,
   DEFAULT_IS_TABLE_SEARCH_ENABLED,
-  DEFAULT_IS_TABLE_ENABLED,
   DEFAULT_IS_TABLE_USER_SETTINGS_ENABLED,
   DEFAULT_ON_SELECT_RESOURCE,
   DEFAULT_PLURAL_ASSET_RESOURCE_NAME,
@@ -25,11 +16,19 @@ import {
   DEFAULT_SHOULD_PERSIST_USER_CUSTOMIZATION,
   createDefaultTableUserSettings,
 } from '../../constants/defaults';
-import type { AssetResource } from '../../types/resources';
-import { createDefaultAssetTableDefinition } from '../../constants/table-resource-definitions';
 import { DEFAULT_ASSET_DROP_DOWN_DEFINITION } from '../../constants/drop-down-resource-definitions';
+import { createDefaultAssetTableDefinition } from '../../constants/table-resource-definitions';
 import { useUserCustomization } from '../../helpers/use-user-customization';
+import type { AssetResource } from '../../types/resources';
+import {
+  ResourceDropDown,
+  ResourceExplorerVariant,
+  ResourceTable,
+} from '../../variants';
 import { AssetHierarchyPath } from './asset-hierarchy-path';
+import type { AssetExplorerProps } from './types';
+import { useAssets } from './use-assets';
+import { useParentAsset } from './use-parent-asset';
 
 export function InternalAssetExplorer({
   iotSiteWiseClient,
@@ -99,7 +98,7 @@ export function InternalAssetExplorer({
     return asset !== undefined;
   }
 
-  const { assets, isLoading, error, hasNextPage, nextPage } = useAssets({
+  const { assets, isLoadingFirstPage, isLoadingResources, error } = useAssets({
     parameters: isParentAsset(parentAsset)
       ? [parentAsset]
       : isSearched(userSearchStatement)
@@ -109,7 +108,7 @@ export function InternalAssetExplorer({
     listAssociatedAssets:
       iotSiteWiseClient?.listAssociatedAssets?.bind(iotSiteWiseClient),
     executeQuery: iotSiteWiseClient?.executeQuery?.bind(iotSiteWiseClient),
-    pageSize: userCustomization.pageSize,
+    pageSize: 250,
   });
 
   return (
@@ -123,13 +122,12 @@ export function InternalAssetExplorer({
           resources={assets}
           createResourceKey={createResourceKey}
           isResourceDisabled={isAssetDisabled}
-          isLoading={isLoading}
+          isLoadingFirstPage={isLoadingFirstPage}
+          isLoadingResources={isLoadingResources}
           error={error}
           selectionMode={selectionMode}
           selectedResources={selectedAssets}
           onSelectResource={onSelectAsset}
-          hasNextPage={hasNextPage}
-          onClickNextPage={nextPage}
           userCustomization={userCustomization}
           onUpdateUserCustomization={setUserCutomization}
           onClickSearch={onClickSearch}
@@ -160,13 +158,11 @@ export function InternalAssetExplorer({
           resourceDefinition={dropDownResourceDefinition}
           resources={assets}
           isResourceDisabled={isAssetDisabled}
-          isLoading={isLoading}
+          isLoadingResources={isLoadingResources}
           error={error}
           selectionMode={selectionMode}
           selectedResources={selectedAssets}
           onSelectResource={onSelectAsset}
-          hasNextPage={hasNextPage}
-          onScrollNextPage={nextPage}
           isFilterEnabled={isDropDownFilterEnabled}
         />
       }

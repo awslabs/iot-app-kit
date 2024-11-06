@@ -1,28 +1,25 @@
-import { type TableProps } from '@cloudscape-design/components';
+import type { TableProps as CloudscapeTableProps } from '@cloudscape-design/components';
 import type {
-  ResourceName,
-  PluralResourceName,
-  ResourceFieldFilterOperator,
   IsResourceDisabled,
-  SelectedResources,
-  HasNextPage,
-  RequestIsLoading,
-  SelectionMode,
   IsTableFilterEnabled,
-  IsTableUserSettingsEnabled,
-  NextPage,
-  OnSelectResource,
-  ResourceFieldName,
-  ResourceFieldId,
-  RenderTableResourceField,
   IsTableSearchEnabled,
+  IsTableUserSettingsEnabled,
   IsTitleEnabled,
-  OnClickSearch,
-  RequestError,
-  PluralResourceFieldName,
-  Resources,
-  PageSize,
   IsVisible,
+  OnClickSearch,
+  OnSelectResource,
+  PageSize,
+  PluralResourceFieldName,
+  PluralResourceName,
+  RenderTableResourceField,
+  RequestError,
+  ResourceFieldFilterOperator,
+  ResourceFieldId,
+  ResourceFieldName,
+  ResourceName,
+  Resources,
+  SelectedResources,
+  SelectionMode,
 } from './common';
 
 export type TableResourceDefinition<Resource> = TableResourceField<Resource>[];
@@ -69,15 +66,13 @@ export interface ResourceTableProps<Resource> {
   createResourceKey: (resource: Resource) => string;
   isResourceDisabled: IsResourceDisabled<Resource>;
 
-  isLoading?: RequestIsLoading;
+  isLoadingFirstPage?: boolean;
+  isLoadingResources?: boolean;
   error?: RequestError;
 
   selectionMode: SelectionMode;
   selectedResources: SelectedResources<Resource>;
   onSelectResource?: OnSelectResource<Resource>;
-
-  hasNextPage?: HasNextPage;
-  onClickNextPage: NextPage;
 
   userCustomization: UserCustomization;
   onUpdateUserCustomization: OnUpdateTableUserCustomization;
@@ -90,7 +85,7 @@ export interface ResourceTableProps<Resource> {
   isUserSettingsEnabled?: IsTableUserSettingsEnabled;
   titleExtension?: React.ReactNode;
   description?: string;
-  ariaLabels?: TableProps.AriaLabels<Resource>;
+  ariaLabels?: CloudscapeTableProps.AriaLabels<Resource>;
 }
 
 export type OnUpdateTableUserCustomization = (

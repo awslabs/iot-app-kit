@@ -1,8 +1,8 @@
-import {
-  type BatchGetAssetPropertyValue,
-  type ExecuteQuery,
-  type ListAssetModelProperties,
-  type ListAssetProperties,
+import type {
+  BatchGetAssetPropertyValue,
+  ExecuteQuery,
+  ListAssetModelProperties,
+  ListAssetProperties,
 } from '@iot-app-kit/core';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -11,8 +11,8 @@ import { formatDate } from '../../../../utils/time';
 import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';
 import { AssetPropertyExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests';
-import { type SelectionMode } from '../../types/common';
-import { type AssetPropertyResource } from '../../types/resources';
+import type { SelectionMode } from '../../types/common';
+import type { AssetPropertyResource } from '../../types/resources';
 import {
   createListAssetModelPropertiesPage,
   createListAssetPropertiesPage,
@@ -252,13 +252,13 @@ describe('asset property table', () => {
 
       await table.waitForLoadingToFinish();
 
-      expect(listAssetProperties).toHaveBeenCalledOnce();
+      expect(listAssetProperties).toHaveBeenCalledTimes(2);
       expect(listAssetModelProperties).toHaveBeenCalledOnce();
-      expect(screen.getByText('(10)')).toBeInTheDocument();
+      expect(screen.getByText('(20)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
       expect(listAssetProperties).toHaveBeenCalledTimes(2);
       expect(listAssetModelProperties).toHaveBeenCalledOnce();
@@ -310,21 +310,21 @@ describe('asset property table', () => {
 
       await table.waitForLoadingToFinish();
 
-      expect(listAssetProperties).toHaveBeenCalledOnce();
+      expect(listAssetProperties).toHaveBeenCalledTimes(4);
       expect(listAssetModelProperties).toHaveBeenCalledOnce();
-      expect(screen.getByText('(10)')).toBeInTheDocument();
+      expect(screen.getByText('(30)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
-      expect(listAssetProperties).toHaveBeenCalledTimes(3);
+      expect(listAssetProperties).toHaveBeenCalledTimes(4);
       expect(listAssetModelProperties).toHaveBeenCalledOnce();
-      expect(screen.getByText('(20)')).toBeInTheDocument();
+      expect(screen.getByText('(30)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).not.toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
       expect(listAssetProperties).toHaveBeenCalledTimes(4);
       expect(listAssetModelProperties).toHaveBeenCalledOnce();

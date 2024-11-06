@@ -1,17 +1,9 @@
-import { useTimeSeries } from './use-time-series';
-import type { TimeSeriesExplorerProps } from './types';
-import {
-  ResourceDropDown,
-  ResourceTable,
-  ResourceExplorerVariant,
-} from '../../variants';
-import { useUserCustomization } from '../../helpers/use-user-customization';
 import {
   createDefaultTableUserSettings,
   DEFAULT_DEFAULT_PAGE_SIZE,
   DEFAULT_IS_RESOURCE_DISABLED,
-  DEFAULT_IS_TABLE_FILTER_ENABLED,
   DEFAULT_IS_TABLE_ENABLED,
+  DEFAULT_IS_TABLE_FILTER_ENABLED,
   DEFAULT_IS_TABLE_USER_SETTINGS_ENABLED,
   DEFAULT_ON_SELECT_RESOURCE,
   DEFAULT_PLURAL_TIME_SERIES_RESOURCE_NAME,
@@ -23,13 +15,21 @@ import {
   latestValueCellRenderer,
   latestValueTimeCellRenderer,
 } from '../../constants/defaults';
-import type { TimeSeriesResource } from '../../types/resources';
-import {
-  DEFAULT_TIME_SERIES_TABLE_DEFINITION,
-  createDefaultLatestValuesTableDefinition,
-} from '../../constants/table-resource-definitions';
 import { DEFAULT_TIME_SERIES_DROP_DOWN_DEFINITION } from '../../constants/drop-down-resource-definitions';
-import { type TableResourceDefinition } from '../../types/table';
+import {
+  createDefaultLatestValuesTableDefinition,
+  DEFAULT_TIME_SERIES_TABLE_DEFINITION,
+} from '../../constants/table-resource-definitions';
+import { useUserCustomization } from '../../helpers/use-user-customization';
+import type { TimeSeriesResource } from '../../types/resources';
+import type { TableResourceDefinition } from '../../types/table';
+import {
+  ResourceDropDown,
+  ResourceExplorerVariant,
+  ResourceTable,
+} from '../../variants';
+import type { TimeSeriesExplorerProps } from './types';
+import { useTimeSeries } from './use-time-series';
 
 export function InternalTimeSeriesExplorer({
   iotSiteWiseClient,
@@ -79,16 +79,15 @@ export function InternalTimeSeriesExplorer({
     shouldPersistUserCustomization,
   });
 
-  const { timeSeries, isLoading, error, hasNextPage, nextPage } = useTimeSeries(
-    {
-      pageSize: userCustomization.pageSize,
+  const { timeSeries, isLoadingFirstPage, isLoadingResources, error } =
+    useTimeSeries({
+      pageSize: 250,
       parameters,
       batchGetAssetPropertyValue:
         iotSiteWiseClient?.batchGetAssetPropertyValue?.bind(iotSiteWiseClient),
       listTimeSeries:
         iotSiteWiseClient?.listTimeSeries?.bind(iotSiteWiseClient),
-    }
-  );
+    });
 
   return (
     <ResourceExplorerVariant
@@ -101,13 +100,12 @@ export function InternalTimeSeriesExplorer({
           resources={timeSeries}
           createResourceKey={createResourceKey}
           isResourceDisabled={isTimeSeriesDisabled}
-          isLoading={isLoading}
+          isLoadingFirstPage={isLoadingFirstPage}
+          isLoadingResources={isLoadingResources}
           error={error}
           selectionMode={selectionMode}
           selectedResources={selectedTimeSeries}
           onSelectResource={onSelectTimeSeries}
-          hasNextPage={hasNextPage}
-          onClickNextPage={nextPage}
           userCustomization={userCustomization}
           onUpdateUserCustomization={setUserCutomization}
           isTitleEnabled={isTitleEnabled}
@@ -123,13 +121,11 @@ export function InternalTimeSeriesExplorer({
           resourceDefinition={dropDownResourceDefinition}
           resources={timeSeries}
           isResourceDisabled={isTimeSeriesDisabled}
-          isLoading={isLoading}
+          isLoadingResources={isLoadingResources}
           error={error}
           selectionMode={selectionMode}
           selectedResources={selectedTimeSeries}
           onSelectResource={onSelectTimeSeries}
-          hasNextPage={hasNextPage}
-          onScrollNextPage={nextPage}
           isFilterEnabled={isDropDownFilterEnabled}
         />
       }

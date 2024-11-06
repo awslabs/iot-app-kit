@@ -1,11 +1,11 @@
-import { type ExecuteQuery, type ListAssets } from '@iot-app-kit/core';
+import type { ExecuteQuery, ListAssets } from '@iot-app-kit/core';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { AssetExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests';
-import { type SelectionMode } from '../../types/common';
-import { type AssetResource } from '../../types/resources';
+import type { SelectionMode } from '../../types/common';
+import type { AssetResource } from '../../types/resources';
 import { createListAssetsPage } from '../helpers/responses';
 import * as table from '../helpers/table';
 
@@ -159,12 +159,12 @@ describe('asset table', () => {
 
       await table.waitForLoadingToFinish();
 
-      expect(listAssets).toHaveBeenCalledOnce();
-      expect(screen.getByText('(10)')).toBeInTheDocument();
+      expect(listAssets).toHaveBeenCalledTimes(2);
+      expect(screen.getByText('(20)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
       expect(listAssets).toHaveBeenCalledTimes(2);
       expect(screen.getByText('(20)')).toBeInTheDocument();
@@ -186,7 +186,7 @@ describe('asset table', () => {
       expect(table.getNextPageButton()).toBeDisabled();
     });
 
-    it.skip('requests multiple lists of pages of assets correctly', async () => {
+    it('requests multiple lists of pages of assets correctly', async () => {
       const listAssociatedAssets = jest
         .fn()
         .mockResolvedValueOnce(createListAssetsPage(10, 0, 'next-token-1'))
@@ -203,19 +203,19 @@ describe('asset table', () => {
 
       await table.waitForLoadingToFinish();
 
-      expect(listAssociatedAssets).toHaveBeenCalledOnce();
-      expect(screen.getByText('(10)')).toBeInTheDocument();
+      expect(listAssociatedAssets).toHaveBeenCalledTimes(4);
+      expect(screen.getByText('(30)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
-      expect(listAssociatedAssets).toHaveBeenCalledTimes(3);
-      expect(screen.getByText('(20)')).toBeInTheDocument();
+      expect(listAssociatedAssets).toHaveBeenCalledTimes(4);
+      expect(screen.getByText('(30)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).not.toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
       expect(listAssociatedAssets).toHaveBeenCalledTimes(4);
       expect(screen.getByText('(30)')).toBeInTheDocument();

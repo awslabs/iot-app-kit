@@ -1,6 +1,6 @@
-import {
-  type BatchGetAssetPropertyValue,
-  type ListTimeSeries,
+import type {
+  BatchGetAssetPropertyValue,
+  ListTimeSeries,
 } from '@iot-app-kit/core';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -9,8 +9,8 @@ import { formatDate } from '../../../../utils/time';
 import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';
 import { TimeSeriesExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests';
-import { type SelectionMode } from '../../types/common';
-import { type TimeSeriesResource } from '../../types/resources';
+import type { SelectionMode } from '../../types/common';
+import type { TimeSeriesResource } from '../../types/resources';
 import { createListTimeSeriesPage } from '../helpers/responses';
 import * as table from '../helpers/table';
 
@@ -194,12 +194,12 @@ describe('time series table', () => {
 
       await table.waitForLoadingToFinish();
 
-      expect(listTimeSeries).toHaveBeenCalledOnce();
-      expect(screen.getByText('(10)')).toBeInTheDocument();
+      expect(listTimeSeries).toHaveBeenCalledTimes(2);
+      expect(screen.getByText('(20)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
       expect(listTimeSeries).toHaveBeenCalledTimes(2);
       expect(screen.getByText('(20)')).toBeInTheDocument();
@@ -238,19 +238,19 @@ describe('time series table', () => {
 
       await table.waitForLoadingToFinish();
 
-      expect(listTimeSeries).toHaveBeenCalledOnce();
-      expect(screen.getByText('(10)')).toBeInTheDocument();
+      expect(listTimeSeries).toHaveBeenCalledTimes(4);
+      expect(screen.getByText('(30)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
-      expect(listTimeSeries).toHaveBeenCalledTimes(3);
-      expect(screen.getByText('(20)')).toBeInTheDocument();
+      expect(listTimeSeries).toHaveBeenCalledTimes(4);
+      expect(screen.getByText('(30)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).not.toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
       expect(listTimeSeries).toHaveBeenCalledTimes(4);
       expect(screen.getByText('(30)')).toBeInTheDocument();

@@ -1,13 +1,7 @@
 import { useCollection as useCloudscapeCollection } from '@cloudscape-design/collection-hooks';
-
 import CloudscapeTable, {
   type TableProps as CloudScapeTableProps,
 } from '@cloudscape-design/components/table';
-
-import { ResourceTableFilter } from './resource-table-filter';
-import { ResourceTableHeader } from './resource-table-header';
-import { ResourceTableSearch } from './resource-table-search';
-
 import type {
   ResourceTableProps,
   TableResourceField,
@@ -15,8 +9,11 @@ import type {
 } from '../../types/table';
 import { ResourceTableEmpty } from './resource-table-empty';
 import { ResourceTableError } from './resource-table-error';
+import { ResourceTableFilter } from './resource-table-filter';
+import { ResourceTableHeader } from './resource-table-header';
 import { ResourceTableNoFilterMatch } from './resource-table-no-filter-match';
 import { ResourceTablePagination } from './resource-table-pagination';
+import { ResourceTableSearch } from './resource-table-search';
 import { ResourceTableTitle } from './resource-table-title';
 import { ResourceTableUserSettings } from './resource-table-user-settings';
 
@@ -27,16 +24,15 @@ export function ResourceTable<Resource>({
   resources,
   createResourceKey,
   isResourceDisabled,
+  isLoadingFirstPage,
+  isLoadingResources,
   error,
-  isLoading,
   onSelectResource = () => {},
   selectedResources,
   selectionMode,
   onClickSearch = () => {},
   userCustomization,
   onUpdateUserCustomization,
-  onClickNextPage,
-  hasNextPage,
   isTitleEnabled,
   isFilterEnabled,
   isUserSettingsEnabled,
@@ -115,6 +111,7 @@ export function ResourceTable<Resource>({
               pluralResourceName={pluralResourceName}
               titleExtension={titleExtension}
               description={description}
+              isLoadingResources={isLoadingResources}
             />
           )
         }
@@ -138,10 +135,12 @@ export function ResourceTable<Resource>({
           <ResourceTablePagination
             currentPage={currentPage}
             totalPageCount={totalPageCount}
-            hasNextPage={hasNextPage}
             onClickChangePage={onClickChangePage}
-            onClickNextPage={onClickNextPage}
-            isLoading={isLoading}
+            // only show page elipsis when page size has been crossed and there is still loading
+            isLoadingResources={
+              isLoadingResources &&
+              resources.length > userCustomization.pageSize
+            }
           />
         }
         userSettings={
@@ -175,7 +174,7 @@ export function ResourceTable<Resource>({
         selectedItems={selectedResources.filter(
           (resource) => !isResourceDisabled(resource)
         )}
-        loading={isLoading}
+        loading={isLoadingFirstPage}
         loadingText={`Loading ${pluralResourceName.toLowerCase()}...`}
         selectionType={selectionMode}
         resizableColumns
