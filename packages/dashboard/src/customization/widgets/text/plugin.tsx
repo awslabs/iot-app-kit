@@ -1,4 +1,3 @@
-import React from 'react';
 import TextWidgetComponent from './component';
 import TextIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';

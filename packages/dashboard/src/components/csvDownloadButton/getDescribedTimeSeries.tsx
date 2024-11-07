@@ -1,6 +1,6 @@
 import {
   DescribeTimeSeriesCommand,
-  IoTSiteWiseClient,
+  type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
 import invariant from 'tiny-invariant';
 

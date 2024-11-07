@@ -1,4 +1,3 @@
-import React from 'react';
 import Box from '@cloudscape-design/components/box';
 import Icon from '@cloudscape-design/components/icon';
 import {
@@ -9,8 +8,8 @@ import {
   spaceScaledXxs,
 } from '@cloudscape-design/design-tokens';
 import { Spinner } from '@cloudscape-design/components';
-import { AlarmDataStatus } from '../../../hooks/useAlarms';
-import { PascalCaseStateName } from '../../../hooks/useAlarms/transformers';
+import { type AlarmDataStatus } from '../../../hooks/useAlarms';
+import { type PascalCaseStateName } from '../../../hooks/useAlarms/transformers';
 import './alarmStateText.css';
 
 export type AlarmStateTextOptions = {

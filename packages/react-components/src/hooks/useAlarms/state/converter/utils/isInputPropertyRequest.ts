@@ -1,5 +1,8 @@
-import { AlarmInputPropertyRequest, AlarmRequest } from '../../../types';
-import { AlarmRequestState } from '../../types';
+import {
+  type AlarmInputPropertyRequest,
+  type AlarmRequest,
+} from '../../../types';
+import { type AlarmRequestState } from '../../types';
 
 export const isInputPropertyRequest = (
   alarmStateRequest: AlarmRequestState<AlarmRequest>

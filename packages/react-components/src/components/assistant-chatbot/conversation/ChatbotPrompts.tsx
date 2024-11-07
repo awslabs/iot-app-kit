@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '@cloudscape-design/components/button';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Grid from '@cloudscape-design/components/grid';

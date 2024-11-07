@@ -1,12 +1,12 @@
 import { cloneDeep, isEmpty } from 'lodash';
 
-import ILogger from '../../logger/ILogger';
+import type ILogger from '../../logger/ILogger';
 import { isDynamicNode, isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
 import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
 import { mergeDeep } from '../../utils/objectUtils';
-import { RecursivePartial } from '../../utils/typeUtils';
-import { RootState } from '../Store';
-import { ISceneDocumentInternal, ISceneNodeInternal } from '../internalInterfaces';
+import { type RecursivePartial } from '../../utils/typeUtils';
+import { type RootState } from '../Store';
+import { type ISceneDocumentInternal, type ISceneNodeInternal } from '../internalInterfaces';
 import { RESERVED_LAYER_ID } from '../../common/entityModelConstants';
 
 import { addNodeToComponentNodeMap, deleteNodeFromComponentNodeMap } from './componentMapHelpers';

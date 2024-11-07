@@ -1,11 +1,12 @@
-import React from 'react';
-
-import { PropertyLens } from '~/customization/propertiesSection';
+import { type PropertyLens } from '~/customization/propertiesSection';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
-import { GaugeProperties, GaugeWidget } from '~/customization/widgets/types';
-import { DashboardWidget } from '~/types';
-import { YAxisSection } from '../yAxisSettings';
+import {
+  type GaugeProperties,
+  type GaugeWidget,
+} from '~/customization/widgets/types';
+import { type DashboardWidget } from '~/types';
 import { maybeWithDefault } from '~/util/maybe';
+import { YAxisSection } from '../yAxisSettings';
 
 const widgetWithCustomFontsSettings: readonly string[] = ['gauge'];
 

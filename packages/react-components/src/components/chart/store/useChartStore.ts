@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { ChartStoreContext } from './context';
-import { StateData } from './store';
+import { type StateData } from './store';
 
 export const useChartStore = <T>(
   selector: (state: StateData) => T,

@@ -1,7 +1,7 @@
 import { getIotEventsClient, getSiteWiseClient } from '@iot-app-kit/core-util';
 import {
-  SiteWiseAlarmDataStreamQuery,
-  SiteWiseDataStreamQuery,
+  type SiteWiseAlarmDataStreamQuery,
+  type SiteWiseDataStreamQuery,
   initialize,
 } from '@iot-app-kit/source-iotsitewise';
 

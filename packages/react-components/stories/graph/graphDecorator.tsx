@@ -1,7 +1,6 @@
-import React from 'react';
 import {
   context,
-  KnowledgeGraphContext,
+  type KnowledgeGraphContext,
 } from '../../src/components/knowledge-graph/StateManager';
 import { IntlProvider } from 'react-intl';
 import { useParameter } from '@storybook/addons';

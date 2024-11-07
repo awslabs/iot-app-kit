@@ -1,7 +1,7 @@
 import {
-  AssetCompositeModel,
-  AssetProperty,
-  DescribeAssetResponse,
+  type AssetCompositeModel,
+  type AssetProperty,
+  type DescribeAssetResponse,
 } from '@aws-sdk/client-iotsitewise';
 import { MOCK_ASSET_ID, MOCK_ASSET_MODEL_ID } from './mockIds';
 import { mockAssetProperties } from './mockProperties';

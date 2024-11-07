@@ -1,12 +1,12 @@
 import {
-  FilteringOptions,
+  type FilteringOptions,
   useCollection,
-  UseCollectionOptions,
-  UseCollectionResult,
+  type UseCollectionOptions,
+  type UseCollectionResult,
 } from '@awsui/collection-hooks';
 import { useEffect, useState } from 'react';
-import { TableProps } from '@awsui/components-react/table';
-import { ITreeNode, TreeMap } from '../Model/TreeNode';
+import { type TableProps } from '@awsui/components-react/table';
+import { type ITreeNode, type TreeMap } from '../Model/TreeNode';
 import {
   buildTreeNodes,
   buildTreePrefix,

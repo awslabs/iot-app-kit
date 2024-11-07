@@ -1,10 +1,15 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  type IoTSiteWiseClient,
+  type GetAssetPropertyValueRequest,
+} from '@aws-sdk/client-iotsitewise';
 import {
   GetEntityCommand,
-  IoTTwinMakerClient,
+  type IoTTwinMakerClient,
+  type GetEntityCommandInput,
+  type GetPropertyValueHistoryRequest,
 } from '@aws-sdk/client-iottwinmaker';
-import { KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
-import { KinesisVideoArchivedMediaClient } from '@aws-sdk/client-kinesis-video-archived-media';
+import { type KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
+import { type KinesisVideoArchivedMediaClient } from '@aws-sdk/client-kinesis-video-archived-media';
 import { isEmpty } from 'lodash';
 import {
   ASCENDING,
@@ -31,11 +36,6 @@ import {
   createPropertyIndentifierKey,
   getSinglePropertyValueHistory,
 } from './utils/twinmakerUtils';
-import type { GetAssetPropertyValueRequest } from '@aws-sdk/client-iotsitewise';
-import type {
-  GetEntityCommandInput,
-  GetPropertyValueHistoryRequest,
-} from '@aws-sdk/client-iottwinmaker';
 import type { Endpoint } from '@aws-sdk/types';
 import type {
   GetLastValueBeforeTimestampRequest,

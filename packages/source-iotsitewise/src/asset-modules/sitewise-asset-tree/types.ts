@@ -1,10 +1,12 @@
-import { LoadingStateEnum } from '../sitewise/types';
+import {
+  type LoadingStateEnum,
+  type AssetSummaryQuery,
+} from '../sitewise/types';
 import type {
   AssetPropertyValue,
   AssetSummary,
   DescribeAssetModelResponse,
 } from '@aws-sdk/client-iotsitewise';
-import type { AssetSummaryQuery } from '../sitewise/types';
 import type { ErrorDetails, ProviderObserver } from '@iot-app-kit/core';
 
 export type SiteWiseAssetTreeNode = {

@@ -1,4 +1,4 @@
-import { Scene, WebGLRenderer } from 'three';
+import { type Scene, type WebGLRenderer } from 'three';
 import type { Page, Locator } from '@playwright/test';
 
 import R3FTestHarness from './r3fTestHarness';

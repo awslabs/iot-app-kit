@@ -1,5 +1,5 @@
-import { EntitySummary } from '@aws-sdk/client-iottwinmaker';
-import { IDataBindingTemplate } from '../types';
+import { type EntitySummary } from '@aws-sdk/client-iottwinmaker';
+import { type IDataBindingTemplate } from '../types';
 import {
   convertDataBindingTemplateId,
   convertEntitySummariesToDataFieldOptions,

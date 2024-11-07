@@ -1,4 +1,3 @@
-import React from 'react';
 import { create } from 'react-test-renderer';
 
 import { Divider } from '../../src/components/Divider';

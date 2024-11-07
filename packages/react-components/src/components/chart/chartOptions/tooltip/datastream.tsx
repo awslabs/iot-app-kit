@@ -1,12 +1,11 @@
-import React from 'react';
 import {
   XYPlotTooltipDatastreamLabel,
-  XYPlotTooltipDatastreamLabelOptions,
+  type XYPlotTooltipDatastreamLabelOptions,
 } from './datastreamLabel';
-import { XYPlotTooltipValue, XYPlotTooltipValueOptions } from './value';
-import { ChartAlarms, ChartDataQuality } from '../../types';
-import { XYPlotTooltipAlarmOptions } from './alarm';
-import { AlarmContent } from '../../../alarm-components/alarm-content/types';
+import { XYPlotTooltipValue, type XYPlotTooltipValueOptions } from './value';
+import { type ChartAlarms, type ChartDataQuality } from '../../types';
+import { type XYPlotTooltipAlarmOptions } from './alarm';
+import { type AlarmContent } from '../../../alarm-components/alarm-content/types';
 
 export type XYPlotTooltipDatastreamOptions =
   XYPlotTooltipDatastreamLabelOptions &

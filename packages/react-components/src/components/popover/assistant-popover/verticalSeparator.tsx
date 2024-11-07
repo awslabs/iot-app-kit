@@ -1,4 +1,3 @@
-import React from 'react';
 import { colorBorderDividerDefault } from '@cloudscape-design/design-tokens';
 
 export const VerticalSeparator = () => {

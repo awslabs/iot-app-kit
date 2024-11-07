@@ -1,14 +1,14 @@
-import { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
+import { type GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 import { cloneDeep, isEmpty, isEqual } from 'lodash';
 
 import {
-  IValueDataBinding,
-  IValueDataBindingStore,
-  IDataFieldOption,
-  IDataBindingConfig,
-  IValueDataBindingProviderState,
-  ITwinMakerDataBindingContext,
-  ITwinMakerEntityDataBindingContext,
+  type IValueDataBinding,
+  type IValueDataBindingStore,
+  type IDataFieldOption,
+  type IDataBindingConfig,
+  type IValueDataBindingProviderState,
+  type ITwinMakerDataBindingContext,
+  type ITwinMakerEntityDataBindingContext,
 } from './types';
 import {
   DataField,
@@ -16,13 +16,13 @@ import {
   DATA_BINDING_CONTEXT_KEYS,
   EMPTY_STORE_STATE,
 } from './constants';
-import { TwinMakerErrorCode } from '../common/error';
+import { type TwinMakerErrorCode } from '../common/error';
 import {
   createDataBindingTemplateOptions,
   decorateDataBindingTemplate,
 } from '../utils/dataBindingTemplateUtils';
-import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
-import { ErrorDetails } from '@iot-app-kit/core';
+import { type TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
+import { type ErrorDetails } from '@iot-app-kit/core';
 import {
   convertDataBindingTemplateId,
   convertEntitySummariesToDataFieldOptions,

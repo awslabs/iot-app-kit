@@ -1,4 +1,3 @@
-import React from 'react';
 import { AnomalyChart } from '@iot-app-kit/react-components';
 import { Meta, StoryObj } from '@storybook/react';
 import { MOCK_DATA, MOCK_DATA_ERROR, MOCK_DATA_LOADING } from './data';

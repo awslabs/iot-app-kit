@@ -1,5 +1,4 @@
 import { create } from 'react-test-renderer';
-import React from 'react';
 
 import { Camera, Light, Modelref, Tag } from '../../../../../assets/auto-gen/icons';
 

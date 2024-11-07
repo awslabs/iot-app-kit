@@ -1,9 +1,9 @@
 import Evidently, {
-  ClientConfiguration,
-  EvaluateFeatureRequest,
+  type ClientConfiguration,
+  type EvaluateFeatureRequest,
 } from 'aws-sdk/clients/evidently';
-import IFeature from '../models/feature';
-import IFeatureRepository from './IFeatureRepository';
+import type IFeature from '../models/feature';
+import type IFeatureRepository from './IFeatureRepository';
 import { Memoize } from 'typescript-memoize';
 
 export default class EvidentlyFeatureRepository implements IFeatureRepository {

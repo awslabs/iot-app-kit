@@ -1,13 +1,12 @@
-import React from 'react';
 import { Box, FormField, Grid, Input, Select, SpaceBetween } from '@cloudscape-design/components';
 import { isEmpty } from 'lodash';
 import { useIntl } from 'react-intl';
 
-import { IMotionIndicatorComponentInternal } from '../../../../store';
-import { Component, Vector3 } from '../../../../models/SceneModels';
+import { Component, type Vector3 } from '../../../../models/SceneModels';
+import { type IMotionIndicatorComponentInternal } from '../../../../store';
 
-import { updateComponentForColorTypeSelection } from './helpers';
 import ColorEditor from './ColorEditor';
+import { updateComponentForColorTypeSelection } from './helpers';
 import PreviewArrow from './PreviewArrow';
 
 interface IAppearanceEditorProps {

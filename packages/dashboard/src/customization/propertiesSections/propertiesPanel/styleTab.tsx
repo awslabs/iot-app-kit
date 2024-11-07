@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { AggregationsSettingsConfiguration } from '../aggregationSettings';
 import { AxisSettingsConfiguration } from '../axisSettings';
 import { FormatDataConfiguration } from '../formatDataSettings';

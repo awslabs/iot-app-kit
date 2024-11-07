@@ -6,7 +6,7 @@ import { DRACO_PATH } from '../common/constants';
 
 import { TwinMakerFileLoader } from './TwinMakerFileLoader';
 import { TwinMakerTextureLoader } from './TwinMakerTextureLoader';
-import { GLTFLoader as TwinMakerGLTFLoader } from './GLTFLoader';
+import { type GLTFLoader as TwinMakerGLTFLoader } from './GLTFLoader';
 
 export function setupTwinMakerGLTFLoader(loader: TwinMakerGLTFLoader): TwinMakerGLTFLoader {
   const globalSettings = getGlobalSettings();

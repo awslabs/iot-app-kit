@@ -1,5 +1,5 @@
-import React, { ReactNode, createContext, useContext, useState } from 'react';
-import { ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { type ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { type ReactNode, createContext, useContext, useState } from 'react';
 export interface KnowledgeGraphContext {
   selectedGraphNodeEntityId?: string | null;
   setSelectedGraphNodeEntityId: (entityId?: string | null) => void;

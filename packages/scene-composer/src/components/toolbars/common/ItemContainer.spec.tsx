@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
@@ -6,7 +5,7 @@ import { setFeatureConfig } from '../../../common/GlobalSettings';
 import { COMPOSER_FEATURES } from '../../../interfaces';
 
 import { ItemContainer } from './ItemContainer';
-import { ToolbarItemOptions } from './types';
+import { type ToolbarItemOptions } from './types';
 
 describe('ItemContainer', () => {
   const onClick = jest.fn();

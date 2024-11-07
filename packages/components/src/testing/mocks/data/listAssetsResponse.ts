@@ -1,5 +1,5 @@
-import { ListAssetsResponse } from '@aws-sdk/client-iotsitewise';
-import { NetworkAssetSummary, Modify } from '../../types';
+import { type ListAssetsResponse } from '@aws-sdk/client-iotsitewise';
+import { type NetworkAssetSummary, type Modify } from '../../types';
 
 type NetworkListAssetsResponse = Modify<
   ListAssetsResponse,

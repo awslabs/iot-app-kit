@@ -1,5 +1,5 @@
-import { OptionDefinition } from '@cloudscape-design/components/internal/components/option/interfaces';
-import { ThresholdStyleType } from '@iot-app-kit/core';
+import { type OptionDefinition } from '@cloudscape-design/components/internal/components/option/interfaces';
+import { type ThresholdStyleType } from '@iot-app-kit/core';
 
 enum ThresholdStyleOptions {
   asFilledWidget = 'As filled widget',

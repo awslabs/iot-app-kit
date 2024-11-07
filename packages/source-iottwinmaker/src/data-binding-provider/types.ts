@@ -1,8 +1,8 @@
 import {
-  DataBase,
-  DataRequest,
-  Query,
-  TimeSeriesData,
+  type DataBase,
+  type DataRequest,
+  type Query,
+  type TimeSeriesData,
 } from '@iot-app-kit/core';
 
 export interface ITwinMakerEntityDataBindingContext {

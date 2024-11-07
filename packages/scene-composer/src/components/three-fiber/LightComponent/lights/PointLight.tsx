@@ -1,7 +1,7 @@
-import React, { forwardRef } from 'react';
-import { Color, PointLight as PointLightType } from 'three';
+import { forwardRef } from 'react';
+import { Color, type PointLight as PointLightType } from 'three';
 
-import { Component } from '../../../../models/SceneModels';
+import { type Component } from '../../../../models/SceneModels';
 
 const PointLight = forwardRef<PointLightType, Component.IPointLightSettings>(
   ({ color, intensity, distance, decay, castShadow }, ref) => {

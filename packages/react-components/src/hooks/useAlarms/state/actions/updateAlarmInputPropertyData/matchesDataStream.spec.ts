@@ -4,7 +4,7 @@ import {
   MOCK_ALARM_INPUT_PROPERTY_ID,
   MOCK_ASSET_ID,
 } from '../../../../../testing/alarms';
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 
 const TEST_DATASTREAM_1 = {
   id: toId({

@@ -1,4 +1,4 @@
-import { Messages } from '../types';
+import { type Messages } from '../types';
 
 export type TableMessageKeys = 'table-header.propertySelectionLimit';
 

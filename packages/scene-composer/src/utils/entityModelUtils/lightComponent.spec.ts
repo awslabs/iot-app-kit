@@ -2,7 +2,7 @@ import { PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
 
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../common/constants';
 import { componentTypeToId } from '../../common/entityModelConstants';
-import { ILightComponent, KnownComponentType } from '../../interfaces';
+import { type ILightComponent, KnownComponentType } from '../../interfaces';
 import { LightType } from '../../models/SceneModels';
 
 import {

@@ -2,19 +2,22 @@ import type { DataPoint, TimeSeriesData } from '@iot-app-kit/core';
 import { DATA_TYPE } from '@iot-app-kit/core';
 import random from 'lodash/random';
 import {
-  BarChartWidget,
-  KPIWidget,
-  LineScatterChartWidget,
-  LineWidget,
-  RectangleWidget,
-  StatusWidget,
-  StyledAssetQuery,
-  TextWidget,
+  type BarChartWidget,
+  type KPIWidget,
+  type LineScatterChartWidget,
+  type LineWidget,
+  type RectangleWidget,
+  type StatusWidget,
+  type StyledAssetQuery,
+  type TextWidget,
 } from '~/customization/widgets/types';
 /**
  * Shared mocks for testing purposes
  */
-import { DashboardWidgetsConfiguration, DashboardWidget } from '../src/types';
+import {
+  type DashboardWidgetsConfiguration,
+  type DashboardWidget,
+} from '../src/types';
 
 import {
   DEMO_TURBINE_ASSET_1,

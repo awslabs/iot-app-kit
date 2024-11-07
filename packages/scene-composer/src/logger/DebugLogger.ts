@@ -1,6 +1,6 @@
 import debug from 'debug';
 
-import ILogger from './ILogger';
+import type ILogger from './ILogger';
 
 class DebugLogger implements ILogger {
   private log: debug.Debugger;

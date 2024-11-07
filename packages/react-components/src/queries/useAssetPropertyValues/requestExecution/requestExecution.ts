@@ -1,19 +1,19 @@
 import { TimeSeriesDataRequestExecution } from '../../useTimeSeriesData/requestExecution/requestExecution';
 import {
-  AssetPropertyAggregatesRequest,
-  AssetPropertyValueHistoryRequest,
-  AssetPropertyValuesData,
-  AssetPropertyValuesRequest,
-  AssetPropertyValuesRequestFunctions,
+  type AssetPropertyAggregatesRequest,
+  type AssetPropertyValueHistoryRequest,
+  type AssetPropertyValuesData,
+  type AssetPropertyValuesRequest,
+  type AssetPropertyValuesRequestFunctions,
 } from '../types';
 import { GetAssetPropertyValueHistory } from './getAssetPropertyValueHistory';
 import { GetAssetPropertyAggregates } from './getAssetPropertyAggregates';
-import { AssetPropertyValuesCacheClient } from '../cacheClient';
-import { SendOptions } from '../../useTimeSeriesData/requestExecution/types';
+import { type AssetPropertyValuesCacheClient } from '../cacheClient';
+import { type SendOptions } from '../../useTimeSeriesData/requestExecution/types';
 import {
-  ExecuteRequestStrategy,
+  type ExecuteRequestStrategy,
   NoopExecuteRequestStrategy,
-  OnRequestSuccessCallback,
+  type OnRequestSuccessCallback,
 } from '../../useTimeSeriesData/requestExecution/requestExecutionStrategy';
 import { AssetPropertyValueHistoryLoader } from './batchGetAssetPropertyValueHistory';
 import { AssetPropertyAggregatesLoader } from './batchGetAssetPropertyAggregates';

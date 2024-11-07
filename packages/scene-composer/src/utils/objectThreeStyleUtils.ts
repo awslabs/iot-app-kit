@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { MeshStyle } from '../interfaces';
+import { type MeshStyle } from '../interfaces';
 
 export const createMaterialFromStyle = (obj: THREE.Object3D, style: MeshStyle): THREE.Material | null => {
   if (obj instanceof THREE.Mesh) {

@@ -6,14 +6,14 @@ import { isDurationViewport, viewportEndDate } from '@iot-app-kit/core';
 import {
   AbsoluteDurationTimeSeriesDataRequestResolver,
   LiveDurationTimeSeriesDataRequestResolver,
-  Viewport,
+  type Viewport,
   getViewportType,
   IntervalTransformer,
-  RequestResolverStrategy,
+  type RequestResolverStrategy,
   LIVE_DATA_INTERVALS,
 } from '../../useTimeSeriesData';
-import { AssetPropertyValuesCacheClient } from '../cacheClient';
-import { AssetPropertyValueHistoryRequest } from '../types';
+import { type AssetPropertyValuesCacheClient } from '../cacheClient';
+import { type AssetPropertyValueHistoryRequest } from '../types';
 import { AssetPropertyValuesRequestResolver } from './assetPropertyValuesRequestResolver';
 
 /**

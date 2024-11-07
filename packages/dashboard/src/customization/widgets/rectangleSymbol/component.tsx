@@ -1,10 +1,9 @@
-import React from 'react';
-import { RectangleWidget } from '../types';
 import {
   SVG_STROKE_DASHED,
   SVG_STROKE_DOTTED,
   SVG_STROKE_SOLID,
 } from '../constants';
+import { type RectangleWidget } from '../types';
 
 const RectangleWidgetComponent: React.FC<RectangleWidget> = (widget) => {
   const fitFull = {

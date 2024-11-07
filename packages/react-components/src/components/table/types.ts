@@ -1,4 +1,4 @@
-import { TableProps as CloudscapeTableProps } from '@cloudscape-design/components';
+import { type TableProps as CloudscapeTableProps } from '@cloudscape-design/components';
 import type {
   DataPoint,
   ErrorDetails,
@@ -8,7 +8,7 @@ import type {
 import type { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import type { TableMessages } from './messages';
 import type { AssistantProperty } from '../../common/assistantProps';
-import { PascalCaseStateName } from '../../hooks/useAlarms/transformers';
+import { type PascalCaseStateName } from '../../hooks/useAlarms/transformers';
 
 export type TableItemRef = {
   $cellRef: {

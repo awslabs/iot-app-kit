@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FormField, Button, SpaceBetween, Autosuggest } from '@cloudscape-design/components';
+import { Autosuggest, Button, FormField, SpaceBetween } from '@cloudscape-design/components';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 
-import { IAnimationComponentInternal, useEditorState, ISceneNodeInternal } from '../../../store';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
+import { useEditorState, type IAnimationComponentInternal, type ISceneNodeInternal } from '../../../store';
 import { animationObjectKey } from '../../three-fiber/AnimationComponent/AnimationComponent';
 
 export type AnimationViewStateEditorProps = {

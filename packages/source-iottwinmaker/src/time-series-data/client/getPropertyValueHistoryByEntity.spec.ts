@@ -1,8 +1,11 @@
-import { EntityPropertyReference } from '@aws-sdk/client-iottwinmaker';
-import { RequestInformationAndRange, ErrorDetails } from '@iot-app-kit/core';
+import { type EntityPropertyReference } from '@aws-sdk/client-iottwinmaker';
+import {
+  type RequestInformationAndRange,
+  type ErrorDetails,
+} from '@iot-app-kit/core';
 import { createMockTwinMakerSDK } from '../../__mocks__/iottwinmakerSDK';
 
-import { TwinMakerDataStreamIdComponent } from '../types';
+import { type TwinMakerDataStreamIdComponent } from '../types';
 import { toDataStreamId } from '../utils/dataStreamId';
 import { getPropertyValueHistoryByEntity } from './getPropertyValueHistoryByEntity';
 

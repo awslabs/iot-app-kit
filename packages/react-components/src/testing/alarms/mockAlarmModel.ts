@@ -1,4 +1,4 @@
-import { DescribeAlarmModelResponse } from '@aws-sdk/client-iot-events';
+import { type DescribeAlarmModelResponse } from '@aws-sdk/client-iot-events';
 import {
   MOCK_ALARM_INPUT_PROPERTY_ID,
   MOCK_ALARM_INPUT_PROPERTY_ID_2,

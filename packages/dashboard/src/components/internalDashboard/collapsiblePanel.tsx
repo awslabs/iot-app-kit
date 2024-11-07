@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 import './index.css';
 import {
@@ -10,9 +10,9 @@ import {
   spaceStaticXs,
   spaceStaticXxxs,
 } from '@cloudscape-design/design-tokens';
-import Box, { BoxProps } from '@cloudscape-design/components/box';
+import Box, { type BoxProps } from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
-import { IconProps } from '@cloudscape-design/components/icon';
+import { type IconProps } from '@cloudscape-design/components/icon';
 import { DEFAULT_COLLAPSED_SIDE_PANE_WIDTH } from '../resizablePanes/constants';
 import { Tooltip } from '@iot-app-kit/react-components';
 

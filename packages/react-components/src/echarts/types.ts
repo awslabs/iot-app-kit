@@ -1,4 +1,4 @@
-import { SeriesOption } from 'echarts';
+import { type SeriesOption } from 'echarts';
 
 type SignificantDigitsMixin = { appKitSignificantDigits?: number };
 type ColorMixin = { appKitColor?: string };

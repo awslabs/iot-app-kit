@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
-import TreeItem, { TreeItemProps } from '../TreeItem';
+import TreeItem, { type TreeItemProps } from '../TreeItem';
 import SceneNodeLabel from '../../panels/SceneHierarchyPanel/components/SceneHierarchyTree/SceneNodeLabel';
 
 jest.mock('react-dnd', () => ({

@@ -1,18 +1,18 @@
-import React, { FC, Fragment } from 'react';
+import { type FC, Fragment } from 'react';
 
 import { KnownComponentType } from '../../../interfaces';
 import {
-  ISceneComponentInternal,
-  ISceneNodeInternal,
-  IModelRefComponentInternal,
-  IAnchorComponentInternal,
-  ICameraComponentInternal,
-  ILightComponentInternal,
-  IMotionIndicatorComponentInternal,
-  IColorOverlayComponentInternal,
-  ISubModelRefComponentInternal,
-  IDataOverlayComponentInternal,
-  IAnimationComponentInternal,
+  type ISceneComponentInternal,
+  type ISceneNodeInternal,
+  type IModelRefComponentInternal,
+  type IAnchorComponentInternal,
+  type ICameraComponentInternal,
+  type ILightComponentInternal,
+  type IMotionIndicatorComponentInternal,
+  type IColorOverlayComponentInternal,
+  type ISubModelRefComponentInternal,
+  type IDataOverlayComponentInternal,
+  type IAnimationComponentInternal,
 } from '../../../store';
 import { getComponentsGroupName } from '../../../utils/objectThreeUtils';
 import ModelRefComponent from '../ModelRefComponent';
@@ -25,7 +25,7 @@ import SubModelComponent from '../SubModelComponent';
 import DataOverlayComponent from '../DataOverlayComponent';
 import AnimationComponent from '../AnimationComponent/AnimationComponent';
 import PlaneGeometryComponent from '../ModelGeometryComponents/PlaneGeometryComponent';
-import { IPlaneGeometryComponentInternal } from '../../../store/internalInterfaces';
+import { type IPlaneGeometryComponentInternal } from '../../../store/internalInterfaces';
 
 interface ComponentViewProps {
   component: ISceneComponentInternal;

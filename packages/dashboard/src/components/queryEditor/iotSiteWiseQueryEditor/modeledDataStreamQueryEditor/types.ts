@@ -1,6 +1,6 @@
 import {
-  AssetPropertySummary,
-  AssetModelPropertySummary,
+  type AssetPropertySummary,
+  type AssetModelPropertySummary,
 } from '@aws-sdk/client-iotsitewise';
 
 type ExtendedAssetPropertySummaryProperty = {

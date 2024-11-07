@@ -1,4 +1,3 @@
-import React from 'react';
 import { colorTextLabelGenAi } from '@cloudscape-design/design-tokens';
 
 export const AssistantIcon = () => (

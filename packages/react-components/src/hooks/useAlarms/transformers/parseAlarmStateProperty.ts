@@ -1,4 +1,4 @@
-import { AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
+import { type AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
 import { ALARM_STATUS } from '../constants';
 import { toTimestamp } from '../../../utils/time';
 

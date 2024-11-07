@@ -1,6 +1,6 @@
 import {
   GetPropertyValueHistoryCommand,
-  IoTTwinMakerClient,
+  type IoTTwinMakerClient,
 } from '@aws-sdk/client-iottwinmaker';
 import { isEqual } from 'lodash';
 import { fromDataStreamId, toDataStreamId } from '../utils/dataStreamId';

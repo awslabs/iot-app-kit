@@ -1,5 +1,5 @@
 import { ComparisonOperator } from '@aws-sdk/client-iot-events';
-import { AlarmData } from '../types';
+import { type AlarmData } from '../types';
 import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
 
 type RuleExpression<

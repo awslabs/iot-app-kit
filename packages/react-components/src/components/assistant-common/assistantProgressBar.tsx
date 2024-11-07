@@ -1,4 +1,3 @@
-import React from 'react';
 import LoadingBar from '@cloudscape-design/chat-components/loading-bar';
 import Box from '@cloudscape-design/components/box';
 

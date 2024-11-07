@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { type FC } from 'react';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from './mock-data';
 import { TimeSelection, TimeSync, useViewport, Chart } from '../../src';
@@ -7,7 +7,10 @@ import {
   getTimeSeriesDataQuery,
   queryConfigured,
 } from '../utils/query';
-import { ChartOptions, Visualization } from '../../src/components/chart/types';
+import {
+  type ChartOptions,
+  type Visualization,
+} from '../../src/components/chart/types';
 
 const chartTypes: Visualization[] = [
   'line',

@@ -1,6 +1,6 @@
 import FeatureContext from '../context/feature-context';
 import { useContext, useState, useEffect } from 'react';
-import IFeature from '../models/feature';
+import type IFeature from '../models/feature';
 
 export default (feature: string): [IFeature, boolean] => {
   const { getFeature } = useContext(FeatureContext);

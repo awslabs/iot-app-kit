@@ -1,8 +1,8 @@
 import { cloneDeep } from 'lodash';
 
-import { ISceneDocumentInternal, ISceneNodeInternal, RootState } from '../..';
+import { type ISceneDocumentInternal, type ISceneNodeInternal, type RootState } from '../..';
 import DebugLogger from '../../../logger/DebugLogger';
-import { ITransformInternal } from '../../internalInterfaces';
+import { type ITransformInternal } from '../../internalInterfaces';
 import { appendSceneNode, removeNode, renderSceneNodes, updateSceneNode } from '../sceneDocumentHelpers';
 import { mergeDeep } from '../../../utils/objectUtils';
 import { RESERVED_LAYER_ID } from '../../../common/entityModelConstants';

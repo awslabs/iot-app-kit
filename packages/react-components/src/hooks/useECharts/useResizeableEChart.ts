@@ -1,16 +1,16 @@
 import {
   useEffect,
   useState,
-  SyntheticEvent,
+  type SyntheticEvent,
   useMemo,
-  MutableRefObject,
+  type MutableRefObject,
 } from 'react';
 import type { ECharts } from 'echarts';
 import {
   CHART_RESIZE_MAX_FACTOR,
   CHART_RESIZE_MIN_FACTOR,
 } from '../../components/chart/eChartsConstants';
-import { ResizeCallbackData } from 'react-resizable';
+import { type ResizeCallbackData } from 'react-resizable';
 import { useMeasure } from 'react-use';
 import {
   emToPx,
@@ -20,7 +20,7 @@ import {
   pxToRem,
   remToPx,
 } from '../utils/pxConversion';
-import { ChartOptions } from '../../components/chart/types';
+import { type ChartOptions } from '../../components/chart/types';
 import { parseValueAndUnit } from '../utils/parseValueAndUnit';
 
 export const calculateAdjustedWidth = (

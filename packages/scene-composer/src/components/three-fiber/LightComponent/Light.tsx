@@ -1,14 +1,14 @@
-import React, { ForwardedRef, forwardRef } from 'react';
+import { Fragment, type ForwardedRef, forwardRef } from 'react';
 import {
-  Light as LightType,
-  DirectionalLight as DirectionalLightType,
-  PointLight as PointLightType,
-  AmbientLight as AmbientLightType,
-  HemisphereLight as HemisphereLightType,
+  type Light as LightType,
+  type DirectionalLight as DirectionalLightType,
+  type PointLight as PointLightType,
+  type AmbientLight as AmbientLightType,
+  type HemisphereLight as HemisphereLightType,
 } from 'three';
 
-import { Component } from '../../../models/SceneModels';
-import { ILightComponentInternal } from '../../../store';
+import { type Component } from '../../../models/SceneModels';
+import { type ILightComponentInternal } from '../../../store';
 
 import { AmbientLight, DirectionalLight, HemisphereLight, PointLight } from './lights';
 
@@ -40,7 +40,7 @@ const Light = forwardRef<LightType, ILightComponentInternal>(({ lightSettings, l
         />
       );
     default:
-      return <React.Fragment></React.Fragment>;
+      return <Fragment></Fragment>;
   }
 });
 

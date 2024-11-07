@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Container from '@cloudscape-design/components/container';
 import { ChatbotHeader, type ChatbotHeaderProps } from './ChatbotHeader';
 import { ChatbotInputBox } from './ChatbotInputBox';

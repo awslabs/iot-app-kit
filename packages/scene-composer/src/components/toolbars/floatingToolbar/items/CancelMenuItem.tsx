@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { useIntl } from 'react-intl';
 
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';

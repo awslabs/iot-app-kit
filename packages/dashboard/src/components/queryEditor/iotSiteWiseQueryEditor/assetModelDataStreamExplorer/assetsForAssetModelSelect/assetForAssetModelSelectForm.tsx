@@ -1,9 +1,7 @@
-import React from 'react';
-
 import FormField from '@cloudscape-design/components/form-field';
 import {
   AssetForAssetModelSelect,
-  AssetForAssetModelSelectOptions,
+  type AssetForAssetModelSelectOptions,
 } from './assetForAssetModelSelect';
 
 export const AssetForAssetModelSelectForm = (

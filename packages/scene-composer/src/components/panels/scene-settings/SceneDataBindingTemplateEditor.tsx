@@ -1,20 +1,20 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { useIntl } from 'react-intl';
-import { cloneDeep } from 'lodash';
 import { FormField, Select } from '@cloudscape-design/components';
+import { cloneDeep } from 'lodash';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useIntl } from 'react-intl';
 
-import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE } from '../../../common/constants';
-import { accessStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import {
-  IDataBindingConfig,
-  IDataFieldOption,
-  IValueDataBinding,
-  IValueDataBindingProvider,
-  IValueDataBindingProviderState,
+  type IDataBindingConfig,
+  type IDataFieldOption,
+  type IValueDataBinding,
+  type IValueDataBindingProvider,
+  type IValueDataBindingProviderState,
   KnownSceneProperty,
 } from '../../../interfaces';
+import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
+import { accessStore } from '../../../store';
 import { dataBindingConfigSelector } from '../../../utils/dataBindingTemplateUtils';
 
 interface SceneDataBindingTemplateEditorProps {
@@ -111,7 +111,7 @@ export const SceneDataBindingTemplateEditor: React.FC<SceneDataBindingTemplateEd
   }, [dataBindingConfig, valueDataBindingProvider]);
 
   return (
-    <React.Fragment>
+    <>
       {builderState.definitions.map((definition, index) => {
         const { options, state } = definition;
         let selectedOption: IDataFieldOption | null = null;
@@ -137,6 +137,6 @@ export const SceneDataBindingTemplateEditor: React.FC<SceneDataBindingTemplateEd
           </FormField>
         );
       })}
-    </React.Fragment>
+    </>
   );
 };

@@ -1,14 +1,13 @@
-import * as React from 'react';
 import { StatusTimeline, useViewport } from '@iot-app-kit/react-components';
 import { useSelector } from 'react-redux';
-import { DashboardState } from '~/store/state';
-import { StatusTimelineWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
-import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
-import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
-import { getAggregation } from '../utils/widgetAggregationUtils';
 import WidgetTile from '~/components/widgets/tile';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import { type DashboardState } from '~/store/state';
 import NoChartData from '../components/no-chart-data';
+import { type StatusTimelineWidget } from '../types';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
+import { getAggregation } from '../utils/widgetAggregationUtils';
 import { default as timelineSvgDark } from './timeline-dark.svg';
 
 const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (

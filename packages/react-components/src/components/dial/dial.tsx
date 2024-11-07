@@ -1,4 +1,3 @@
-import React from 'react';
 import { DialBase } from './dialBase';
 import { DEFAULT_VIEWPORT, ECHARTS_GESTURE } from '../../common/constants';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';

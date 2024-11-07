@@ -1,5 +1,5 @@
-import * as THREE from 'three';
-import React, { useContext, useEffect, useState } from 'react';
+import type * as THREE from 'three';
+import { useContext, useEffect, useState } from 'react';
 import { useThree } from '@react-three/fiber';
 
 import useLogger from '../../logger/react-logger/hooks/useLogger';

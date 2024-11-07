@@ -1,14 +1,17 @@
-import React, { FC, createElement } from 'react';
+import { type FC, createElement } from 'react';
 import TextFilter from '@awsui/components-react/text-filter';
 import Pagination from '@awsui/components-react/pagination';
-import { NonCancelableCustomEvent, TableProps } from '@awsui/components-react';
-import { EmptyState, EmptyStateProps } from '../RelatedTable/EmptyState';
-import { RelatedTableProps } from '../RelatedTable/RelatedTable';
+import {
+  type NonCancelableCustomEvent,
+  type TableProps,
+} from '@awsui/components-react';
+import { EmptyState, type EmptyStateProps } from '../RelatedTable/EmptyState';
+import { type RelatedTableProps } from '../RelatedTable/RelatedTable';
 import {
   useTreeCollection,
-  UseTreeCollection,
+  type UseTreeCollection,
 } from '../Hooks/useTreeCollection';
-import { ITreeNode } from '../Model/TreeNode';
+import { type ITreeNode } from '../Model/TreeNode';
 
 export interface RelatedTableExtendedProps<T>
   extends Omit<RelatedTableProps<T>, 'empty'> {

@@ -1,5 +1,5 @@
-import { GetSceneCommandOutput } from '@aws-sdk/client-iottwinmaker';
-import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { type GetSceneCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import { SCENE_ROOT_ENTITY_COMPONENT_NAME } from '../../common/entityModelConstants';
 import { SceneCapabilities } from '../../common/sceneModelConstants';

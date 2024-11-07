@@ -1,26 +1,31 @@
-import React, { Fragment, useContext } from 'react';
 import { Box, FormField, Select, SpaceBetween } from '@cloudscape-design/components';
-import { useIntl, defineMessages } from 'react-intl';
+import { Fragment, useContext } from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
-import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
-import { presets } from '../three-fiber/Environment';
-import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { accessStore } from '../../store';
-import { COMPOSER_FEATURES, IValueDataBindingProvider, KnownComponentType, KnownSceneProperty } from '../../interfaces';
-import { pascalCase } from '../../utils/stringUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
-import { Component } from '../../models/SceneModels';
-import { Divider } from '../Divider';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import useDynamicScene from '../../hooks/useDynamicScene';
+import {
+  COMPOSER_FEATURES,
+  type IValueDataBindingProvider,
+  KnownComponentType,
+  KnownSceneProperty,
+} from '../../interfaces';
+import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
+import { Component } from '../../models/SceneModels';
+import { accessStore } from '../../store';
+import { pascalCase } from '../../utils/stringUtils';
+import { Divider } from '../Divider';
+import { presets } from '../three-fiber/Environment';
 
 import { ExpandableInfoSection } from './CommonPanelComponents';
 import { MatterportIntegration, SceneDataBindingTemplateEditor, SceneTagSettingsEditor } from './scene-settings';
 import { ComponentVisibilityToggle } from './scene-settings/ComponentVisibilityToggle';
-import { OverlayPanelVisibilityToggle } from './scene-settings/OverlayPanelVisibilityToggle';
 import { ConvertSceneSettings } from './scene-settings/ConvertSceneSettings';
 import { FogSettingsEditor } from './scene-settings/FogSettingsEditor';
-import { SceneBackgroundSettingsEditor } from './scene-settings/SceneBackgroundSettingsEditor';
 import { GroundPlaneSettingsEditor } from './scene-settings/GroundPlaneSettingsEditor';
+import { OverlayPanelVisibilityToggle } from './scene-settings/OverlayPanelVisibilityToggle';
+import { SceneBackgroundSettingsEditor } from './scene-settings/SceneBackgroundSettingsEditor';
 export interface SettingsPanelProps {
   valueDataBindingProvider?: IValueDataBindingProvider;
 }
@@ -177,11 +182,11 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
               />
             </FormField>
             {sceneAppearanceEnabled && (
-              <React.Fragment>
+              <>
                 <FogSettingsEditor />
                 <SceneBackgroundSettingsEditor />
                 <GroundPlaneSettingsEditor />
-              </React.Fragment>
+              </>
             )}
           </SpaceBetween>
         </ExpandableInfoSection>

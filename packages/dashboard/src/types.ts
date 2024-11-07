@@ -1,24 +1,24 @@
-import { IoTSiteWise as InternalIoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
-import { IoTEventsClient } from '@aws-sdk/client-iot-events';
+import { type IoTSiteWise as InternalIoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import { type IoTEventsClient } from '@aws-sdk/client-iot-events';
 import {
-  DescribeDashboardRequest,
-  DescribeDashboardResponse,
-  IoTSiteWise,
-  IoTSiteWiseClient,
+  type DescribeDashboardRequest,
+  type DescribeDashboardResponse,
+  type IoTSiteWise,
+  type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
-import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
 import type { Viewport } from '@iot-app-kit/core';
 import {
-  SiteWiseAlarmAssetModelQuery,
-  SiteWiseAlarmQuery,
-  SiteWiseAssetModelQuery,
-  SiteWiseAssetQuery,
-  SiteWisePropertyAliasQuery,
-  SiteWiseQuery,
+  type SiteWiseAlarmAssetModelQuery,
+  type SiteWiseAlarmQuery,
+  type SiteWiseAssetModelQuery,
+  type SiteWiseAssetQuery,
+  type SiteWisePropertyAliasQuery,
+  type SiteWiseQuery,
 } from '@iot-app-kit/source-iotsitewise';
-import { ReactElement } from 'react';
-import { RefreshRate } from './components/refreshRate/types';
+import { type ReactElement } from 'react';
+import { type RefreshRate } from './components/refreshRate/types';
 
 export type DashboardClientCredentials = {
   awsCredentials: AwsCredentialIdentity | Provider<AwsCredentialIdentity>;

@@ -1,11 +1,10 @@
-import React from 'react';
 import { spaceScaledXs } from '@cloudscape-design/design-tokens';
 
 import {
   XYPlotTooltipDatastream,
-  XYPlotTooltipDatastreamOptions,
+  type XYPlotTooltipDatastreamOptions,
 } from './datastream';
-import { ChartAlarms, ChartDataQuality } from '../../types';
+import { type ChartAlarms, type ChartDataQuality } from '../../types';
 
 const gridStyles = {
   display: 'grid',

@@ -1,4 +1,4 @@
-import { TableProps } from '@cloudscape-design/components';
+import { type TableProps } from '@cloudscape-design/components';
 import type {
   IsResourceDisabled,
   OnSelectResource,

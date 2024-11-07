@@ -1,4 +1,4 @@
-import { SceneLoader, initialize } from '@iot-app-kit/source-iottwinmaker';
+import { type SceneLoader, type initialize } from '@iot-app-kit/source-iottwinmaker';
 import { useCallback, useMemo } from 'react';
 
 import scenes from '../../scenes';

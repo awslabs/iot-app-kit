@@ -1,4 +1,3 @@
-import React from 'react';
 import './styles.css';
 import type { FC } from 'react';
 

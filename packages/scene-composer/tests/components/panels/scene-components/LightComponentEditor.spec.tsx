@@ -1,5 +1,4 @@
 /* eslint-disable import/first */
-import React from 'react';
 import { render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 import _ from 'lodash';
@@ -7,7 +6,7 @@ import _ from 'lodash';
 import { LightComponentEditor } from '../../../../src/components/panels/scene-components/LightComponentEditor';
 import { LightType } from '../../../../src/models/SceneModels';
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../src/common/constants';
-import { ILightComponentInternal, accessStore } from '../../../../src/store';
+import { type ILightComponentInternal, accessStore } from '../../../../src/store';
 
 import { mockNode, mockComponent } from './MockComponents';
 

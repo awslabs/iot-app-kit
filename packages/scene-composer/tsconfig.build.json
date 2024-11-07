@@ -2,12 +2,9 @@
   "compilerOptions": {
     "outDir": "./dist",
     "module": "ESNext",
-    "lib": [
-      "dom",
-      "ESNext"
-    ],
+    "lib": ["dom", "ESNext"],
     "moduleResolution": "node",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "sourceMap": true,
     "declaration": true,
     "declarationDir": "./dist",
@@ -36,14 +33,6 @@
       }
     ]
   },
-  "include": [
-    "src",
-    "src/Global.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/**.spec.**",
-    "tests"
-  ]
+  "include": ["src", "src/Global.d.ts"],
+  "exclude": ["node_modules", "dist", "**/**.spec.**", "tests"]
 }

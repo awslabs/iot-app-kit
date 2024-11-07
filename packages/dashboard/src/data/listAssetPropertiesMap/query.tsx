@@ -1,8 +1,8 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import {
-  SiteWiseAlarmQuery,
-  SiteWiseAssetQuery,
-  SiteWisePropertyAliasQuery,
+  type SiteWiseAlarmQuery,
+  type SiteWiseAssetQuery,
+  type SiteWisePropertyAliasQuery,
 } from '@iot-app-kit/source-iotsitewise';
 import { listAssetPropertiesWithComposite } from '~/hooks/listAssetPropertiesWithAssetDescription';
 

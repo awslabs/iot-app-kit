@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { isEqual } from 'lodash';
 import { useCustomCompareEffect } from 'react-use';
 import {
-  AssetPropertyExplorerProps,
-  AssetPropertyResource,
+  type AssetPropertyExplorerProps,
+  type AssetPropertyResource,
 } from '@iot-app-kit/react-components';
 
 export const useSelectedAssetModelProperties = (

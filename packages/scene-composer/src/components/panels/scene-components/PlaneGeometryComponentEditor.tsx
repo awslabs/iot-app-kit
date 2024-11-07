@@ -1,14 +1,14 @@
-import React, { useCallback, useContext, useState } from 'react';
 import { Button, FormField, Input, SpaceBetween } from '@cloudscape-design/components';
+import { useCallback, useContext, useState } from 'react';
 import { useIntl } from 'react-intl';
 
-import { IComponentEditorProps } from '../ComponentEditor';
 import { getGlobalSettings } from '../../../common/GlobalSettings';
-import { COMPOSER_FEATURES, KnownSceneProperty, TextureFileTypeList } from '../../../interfaces';
-import { IPlaneGeometryComponentInternal, ISceneComponentInternal, accessStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
+import { COMPOSER_FEATURES, KnownSceneProperty, TextureFileTypeList } from '../../../interfaces';
+import { type IPlaneGeometryComponentInternal, type ISceneComponentInternal, accessStore } from '../../../store';
 import { parseS3BucketFromArn } from '../../../utils/pathUtils';
+import { type IComponentEditorProps } from '../ComponentEditor';
+import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
 
 export type IPlaneGeometryComponentEditorProps = IComponentEditorProps;
 

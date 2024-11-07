@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react';
 import type {
   AssistantClientInvocationError,
   AssistantClientInvocationResponse,
   AssistantInvocationRequest,
+  IoTSitewiseAssistantClient,
 } from '@iot-app-kit/core-util';
-import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import { useEffect, useState } from 'react';
+import { type ComponentId } from '../../common/assistantProps';
+import useDataStore from '../../store';
+import { MessageParser } from './messageParser';
 import type {
-  IMessageParser,
-  IMessage,
+  AssistantAction,
   AssistantInvocationParams,
   AssistantStartAction,
-  AssistantAction,
+  IMessage,
+  IMessageParser,
 } from './types';
-import { MessageParser } from './messageParser';
-import useDataStore from '../../store';
-import { ComponentId } from '../../common/assistantProps';
 
 export interface IUseAssistant {
   assistantClient?: IoTSitewiseAssistantClient;

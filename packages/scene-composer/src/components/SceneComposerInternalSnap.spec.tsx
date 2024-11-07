@@ -1,8 +1,7 @@
-import * as React from 'react';
 import { create, act } from 'react-test-renderer';
 import str2ab from 'string-to-arraybuffer';
 import flushPromises from 'flush-promises';
-import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import * as SceneLayoutComponents from '../layouts/SceneLayout';
 import { invalidTestScenes, testScenes } from '../../tests/testData';

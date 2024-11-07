@@ -5,15 +5,14 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 
 import { resourceExplorerQueryClient } from '../../../requests/resource-explorer-query-client';
 
+import { type ListAssociatedAssets } from '@iot-app-kit/core';
 import {
   AssetHierarchyPath,
   type AssetHierarchyPathProps,
 } from './asset-hierarchy-path';
-import { ListAssociatedAssets } from '@iot-app-kit/core';
 import {
   PARENT_TRAVERSAL_DIRECTION,
   SINGLE_PARENT_MAX_RESULTS,

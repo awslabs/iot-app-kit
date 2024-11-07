@@ -1,5 +1,3 @@
-import React from 'react';
-
 import type { AssetModelExplorerProps } from './types';
 import {
   ResourceDropDown,

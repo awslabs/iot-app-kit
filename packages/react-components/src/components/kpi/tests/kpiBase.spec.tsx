@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { KpiBase } from '../kpiBase';
 import type { DataPoint } from '@iot-app-kit/core';

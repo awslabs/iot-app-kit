@@ -1,13 +1,12 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
-import { TableAssistantResults } from './tableAssistantResults';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import { render } from '@testing-library/react';
+import { mockedInvokeAssistantResponse3 } from '../../__mocks__/assistantMockedResponse';
 import type {
   AssistantActionEventDetail,
   AssistantProperty,
 } from '../../common/assistantProps';
-import { mockedInvokeAssistantResponse3 } from '../../__mocks__/assistantMockedResponse';
+import { TableAssistantResults } from './tableAssistantResults';
 
 const client = new IoTSitewiseAssistantClient({
   iotSiteWiseClient: {

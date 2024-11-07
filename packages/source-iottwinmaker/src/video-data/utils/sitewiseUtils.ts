@@ -2,7 +2,12 @@ import {
   BatchPutAssetPropertyValueCommand,
   GetAssetPropertyValueCommand,
   GetInterpolatedAssetPropertyValuesCommand,
-  IoTSiteWiseClient,
+  type IoTSiteWiseClient,
+  type BatchPutAssetPropertyErrorEntry,
+  type GetAssetPropertyValueRequest,
+  type GetInterpolatedAssetPropertyValuesRequest,
+  type InterpolatedAssetPropertyValue,
+  type PutAssetPropertyValueEntry,
 } from '@aws-sdk/client-iotsitewise';
 import {
   LIVE_STREAM_VALUE,
@@ -10,13 +15,6 @@ import {
   LOCF_INTERPOLATION,
   LIVE_VIDEO,
 } from '../constants';
-import type {
-  BatchPutAssetPropertyErrorEntry,
-  GetAssetPropertyValueRequest,
-  GetInterpolatedAssetPropertyValuesRequest,
-  InterpolatedAssetPropertyValue,
-  PutAssetPropertyValueEntry,
-} from '@aws-sdk/client-iotsitewise';
 import type { Primitive } from '../../common/types';
 import type {
   GetLastValueBeforeTimestampRequest,

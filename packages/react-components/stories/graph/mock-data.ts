@@ -1,5 +1,6 @@
-import { ExecuteQueryResponse } from '@aws-sdk/client-iottwinmaker';
-import cytoscape, { ElementDefinition } from 'cytoscape';
+import { type ExecuteQueryResponse } from '@aws-sdk/client-iottwinmaker';
+import { type ElementDefinition } from 'cytoscape';
+import type cytoscape from 'cytoscape';
 
 type Component = {
   componentName: string;

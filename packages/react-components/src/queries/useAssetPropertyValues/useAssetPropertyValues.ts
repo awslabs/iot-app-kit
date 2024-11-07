@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import {
-  RequestSettings,
-  Viewport,
+  type RequestSettings,
+  type Viewport,
   useLiveDataIntervals,
   useTimeSeriesBisectedData,
   useTimeSeriesDataCachedQueries,
@@ -10,8 +10,8 @@ import {
   useTimeSeriesDataRequestStatus,
 } from '../useTimeSeriesData';
 import {
-  AssetPropertyValueHistoryRequest,
-  AssetPropertyValuesRequestFunctions,
+  type AssetPropertyValueHistoryRequest,
+  type AssetPropertyValuesRequestFunctions,
 } from './types';
 import { ASSET_PROPERTY_VALUES_CACHE_CLIENT } from './cacheClient';
 

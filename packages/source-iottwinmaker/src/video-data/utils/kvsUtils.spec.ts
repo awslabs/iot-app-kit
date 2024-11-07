@@ -15,8 +15,8 @@ import {
 import { createMockKinesisVideoArchivedMediaSDK } from '../../__mocks__/kinesisVideoArchivedMediaSDK';
 import { createMockKinesisVideoSDK } from '../../__mocks__/kinesisVideoSDK';
 import {
-  GetLiveHLSStreamingSessionURLRequest,
-  GetOnDemandHLSStreamingSessionURLRequest,
+  type GetLiveHLSStreamingSessionURLRequest,
+  type GetOnDemandHLSStreamingSessionURLRequest,
 } from '../types';
 
 describe('KVSUtils for Video Player', () => {

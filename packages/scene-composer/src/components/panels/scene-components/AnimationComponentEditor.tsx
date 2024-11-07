@@ -1,7 +1,7 @@
-import React, { useCallback, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 
-import { accessStore, ISceneNodeInternal, IAnimationComponentInternal } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
+import { accessStore, type IAnimationComponentInternal, type ISceneNodeInternal } from '../../../store';
 
 import { AnimationViewStateEditor } from './AnimationViewStateEditor';
 

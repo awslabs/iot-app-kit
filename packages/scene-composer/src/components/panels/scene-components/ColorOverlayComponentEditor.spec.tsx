@@ -1,9 +1,8 @@
 /* eslint-disable import/first */
-import React from 'react';
 import { render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 
-import { IColorOverlayComponentInternal, accessStore } from '../../../store';
+import { type IColorOverlayComponentInternal, accessStore } from '../../../store';
 import {
   mockBinding,
   mockBuilderState,

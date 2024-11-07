@@ -1,8 +1,7 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 
 import { mockProvider } from '../../../../../tests/components/panels/scene-components/MockComponents';
-import { IDataOverlayComponentInternal } from '../../../../store';
+import { type IDataOverlayComponentInternal } from '../../../../store';
 
 import { DataBindingMapEditor } from './DataBindingMapEditor';
 

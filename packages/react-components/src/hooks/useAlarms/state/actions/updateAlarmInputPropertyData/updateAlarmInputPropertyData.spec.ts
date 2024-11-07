@@ -8,9 +8,9 @@ import {
   mockAlarmDataWithInputProperty2,
 } from '../../../../../testing/alarms';
 import { mockSuccessStatus } from '../../../../../testing/alarms/mockStatuses';
-import { AlarmsState } from '../../types';
+import { type AlarmsState } from '../../types';
 import { updateAlarmInputPropertyData } from './updateAlarmInputPropertyData';
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 
 const TEST_DATASTREAM_1 = {
   id: toId({

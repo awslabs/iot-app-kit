@@ -1,6 +1,6 @@
 import str2ab from 'string-to-arraybuffer';
 
-import { GetSceneObjectFunction } from '../interfaces';
+import { type GetSceneObjectFunction } from '../interfaces';
 
 import { createTwinMakerFetch } from './TwinMakerBrowserUtils';
 

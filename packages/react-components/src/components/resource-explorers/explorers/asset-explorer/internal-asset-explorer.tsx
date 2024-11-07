@@ -1,5 +1,5 @@
 import Link from '@cloudscape-design/components/link';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { useAssets } from './use-assets';
 import { useParentAsset } from './use-parent-asset';

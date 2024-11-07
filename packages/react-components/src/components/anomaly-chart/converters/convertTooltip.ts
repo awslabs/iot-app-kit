@@ -1,6 +1,6 @@
 import { ANOMALY_TOOLTIP } from '../constants';
-import { ConfigurationOptions } from '../hooks/types';
-import { AnomalyChartTooltipData, tooltipAsString } from '../tooltip';
+import { type ConfigurationOptions } from '../hooks/types';
+import { type AnomalyChartTooltipData, tooltipAsString } from '../tooltip';
 
 import {
   colorBorderControlDefault,

@@ -1,7 +1,7 @@
 import {
   DashboardWidgetType,
   MonitorWidgetType,
-  SiteWiseMonitorDashboardDefinition,
+  type SiteWiseMonitorDashboardDefinition,
 } from './types';
 import { migrateDashboard } from './convert-monitor-to-app-defintion';
 import {

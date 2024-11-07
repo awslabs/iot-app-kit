@@ -1,15 +1,15 @@
 import {
-  HasNextPage,
-  IsResourceDisabled,
-  NextPage,
-  OnSelectResource,
-  PluralResourceName,
-  RequestError,
-  RequestIsLoading,
-  ResourceName,
-  Resources,
-  SelectedResources,
-  SelectionMode,
+  type HasNextPage,
+  type IsResourceDisabled,
+  type NextPage,
+  type OnSelectResource,
+  type PluralResourceName,
+  type RequestError,
+  type RequestIsLoading,
+  type ResourceName,
+  type Resources,
+  type SelectedResources,
+  type SelectionMode,
 } from './common';
 
 export interface ResourceDropDownProps<Resource> {

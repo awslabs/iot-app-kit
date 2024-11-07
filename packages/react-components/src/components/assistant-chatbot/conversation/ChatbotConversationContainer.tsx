@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef, useLayoutEffect } from 'react';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Box from '@cloudscape-design/components/box';
 import { ChatbotTextMessage } from './ChatbotTextMessage';
@@ -19,9 +19,9 @@ export const ChatbotConversationContainer = ({
   onSubmit,
 }: ChatbotConversationContainerProps) => {
   const lastMessageId = messages[messages.length - 1]?.id;
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     const el = ref.current;
     // Only try to scroll when last message changes
     // Timeout is required to make sure component is rendered/visible

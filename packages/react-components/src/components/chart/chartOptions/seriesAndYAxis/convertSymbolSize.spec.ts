@@ -1,13 +1,13 @@
-import { DataPoint } from '@iot-app-kit/core';
+import { type DataPoint } from '@iot-app-kit/core';
 import {
   BAD_DATA_ICON_SIZE,
   UNCERTAIN_DATA_ICON_SIZE,
 } from '../../eChartsConstants';
 import {
-  ConvertSymbolSizeOptions,
+  type ConvertSymbolSizeOptions,
   convertSymbolSize,
 } from './convertSymbolSize';
-import { Emphasis } from '../../utils/getStyles';
+import { type Emphasis } from '../../utils/getStyles';
 
 const DEFAULT_ECHARTS_PARAMS = {
   componentType: '',

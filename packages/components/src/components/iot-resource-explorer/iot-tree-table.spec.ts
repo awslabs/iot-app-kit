@@ -5,8 +5,8 @@ jest.mock('react-dom/client', () => ({
 
 import { newSpecPage } from '@stencil/core/testing';
 import { IotTreeTable } from './iot-tree-table';
-import { Components } from '../../components.d';
-import { CustomHTMLElement } from '../../testing/types';
+import { type Components } from '../../components.d';
+import { type CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
 import { createRoot } from 'react-dom/client';
 

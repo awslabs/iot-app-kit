@@ -1,5 +1,4 @@
-import { EventManager, ReactThreeFiber, useFrame, useThree } from '@react-three/fiber';
-import * as React from 'react';
+import { type EventManager, type ReactThreeFiber, useFrame, useThree } from '@react-three/fiber';
 import { forwardRef, useEffect, useMemo } from 'react';
 import type { Camera, Event } from 'three';
 

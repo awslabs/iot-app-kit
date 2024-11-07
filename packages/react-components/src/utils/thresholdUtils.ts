@@ -1,6 +1,10 @@
 import { bisector } from 'd3-array';
 import { isNumeric } from '@iot-app-kit/core-util';
-import { COMPARISON_OPERATOR, Threshold, Primitive } from '@iot-app-kit/core';
+import {
+  COMPARISON_OPERATOR,
+  type Threshold,
+  type Primitive,
+} from '@iot-app-kit/core';
 
 import { isValid } from './predicates';
 

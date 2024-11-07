@@ -1,6 +1,6 @@
-import React, { ReactNode, useCallback, useContext } from 'react';
-import { useIntl } from 'react-intl';
 import { Alert, Box, Button, Header, SpaceBetween } from '@cloudscape-design/components';
+import { type ReactNode, useCallback, useContext } from 'react';
+import { useIntl } from 'react-intl';
 
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { accessStore } from '../../store';

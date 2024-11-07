@@ -1,4 +1,4 @@
-import { ISceneNodeInternal } from '../../store/internalInterfaces';
+import { type ISceneNodeInternal } from '../../store/internalInterfaces';
 
 import { cloneSceneNodes, createSceneRootEntity, fetchSceneNodes, saveSceneNodes } from './sceneUtils';
 

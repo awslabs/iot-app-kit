@@ -1,7 +1,7 @@
 import { type AssetModelPropertySummary } from '@aws-sdk/client-iotsitewise';
 import { useQueries } from '@tanstack/react-query';
 
-import { ListAssetModelProperties } from '@iot-app-kit/core';
+import { type ListAssetModelProperties } from '@iot-app-kit/core';
 import { resourceExplorerQueryClient } from '../../../requests/resource-explorer-query-client';
 
 export interface UseAssetModelPropertiesOptions {

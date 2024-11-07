@@ -1,10 +1,10 @@
 import {
   Header,
   StatusIndicator,
-  StatusIndicatorProps,
+  type StatusIndicatorProps,
 } from '@awsui/components-react';
-import React, { useEffect, useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { useEffect, useState } from 'react';
+import { type Meta, type Story } from '@storybook/react';
 import { RelatedTable, useTreeCollection } from '../src';
 
 export default {

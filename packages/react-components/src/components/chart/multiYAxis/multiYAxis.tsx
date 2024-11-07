@@ -1,8 +1,6 @@
-import React from 'react';
-
 import { spaceScaledXs } from '@cloudscape-design/design-tokens';
 
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 
 import { YAxisLegend } from './yAxisMenu';
 import { DEFAULT_MARGIN, MULTI_Y_AXIS_LEGEND_WIDTH } from '../eChartsConstants';

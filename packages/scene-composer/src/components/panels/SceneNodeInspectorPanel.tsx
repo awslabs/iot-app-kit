@@ -1,26 +1,26 @@
 import { Checkbox, FormField, TextContent } from '@cloudscape-design/components';
 import { debounce } from 'lodash';
-import React, { useCallback, useContext, useRef } from 'react';
+import { Fragment, useCallback, useContext, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import * as THREE from 'three';
 
+import { getLocalizedComponentType } from '../../common/componentTypeStings';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { TABBED_PANEL_CONTAINER_NAME } from '../../common/internalConstants';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
 import LogProvider from '../../logger/react-logger/log-provider';
-import { ISceneNodeInternal, useEditorState, useSceneDocument } from '../../store';
+import { type ISceneNodeInternal, useEditorState, useSceneDocument } from '../../store';
 import { useSnapObjectToFloor } from '../../three/transformUtils';
+import { isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
 import { toNumber } from '../../utils/stringUtils';
-import { RecursivePartial } from '../../utils/typeUtils';
-import { isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
-import { getLocalizedComponentType } from '../../common/componentTypeStings';
+import { type RecursivePartial } from '../../utils/typeUtils';
 
 import { AddComponentMenu } from './AddComponentMenu';
-import { ExpandableInfoSection, Matrix3XInputGrid, TextInput, Triplet } from './CommonPanelComponents';
+import { ExpandableInfoSection, Matrix3XInputGrid, TextInput, type Triplet } from './CommonPanelComponents';
 import { ComponentEditMenu } from './ComponentEditMenu';
 import { ComponentEditor } from './ComponentEditor';
 import DebugInfoPanel from './scene-components/debug/DebugPanel';
@@ -105,7 +105,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
 
   const componentViews = selectedSceneNode.components.map((component, index) => {
     return (
-      <React.Fragment key={component.type + '_' + index}>
+      <Fragment key={component.type + '_' + index}>
         <ExpandableInfoSection
           withoutSpaceBetween
           key={component.type + '_' + index}
@@ -116,7 +116,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
         >
           <ComponentEditor node={selectedSceneNode} component={component} />
         </ExpandableInfoSection>
-      </React.Fragment>
+      </Fragment>
     );
   });
 

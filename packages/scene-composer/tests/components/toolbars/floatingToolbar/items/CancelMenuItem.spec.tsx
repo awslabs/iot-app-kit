@@ -1,5 +1,4 @@
 /* eslint-disable import/first,import/order */
-import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import { accessStore } from '../../../../../src/store';

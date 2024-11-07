@@ -1,14 +1,14 @@
-import { TimeSeriesDataModule } from '@iot-app-kit/core';
-import { SiteWiseAssetSession } from '../asset-modules';
-import { SiteWiseAlarmModule } from '../alarms/iotevents';
+import {
+  type TimeSeriesDataModule,
+  type DataModuleSubscription,
+  type TimeSeriesData,
+  type SubscriptionUpdate,
+} from '@iot-app-kit/core';
+import { type SiteWiseAssetSession } from '../asset-modules';
+import { type SiteWiseAlarmModule } from '../alarms/iotevents';
 import { fetchAssetModelsFromQuery } from '../asset-modules/util/fetchAssetModelsFromQuery';
 import { fetchAlarmsFromQuery } from '../alarms/iotevents/util/fetchAlarmsFromQuery';
 import { CreateTimeSeriesDataStore } from './store';
-import type {
-  DataModuleSubscription,
-  TimeSeriesData,
-  SubscriptionUpdate,
-} from '@iot-app-kit/core';
 import type { SiteWiseDataStreamQuery } from './types';
 
 export const subscribeToTimeSeriesData =

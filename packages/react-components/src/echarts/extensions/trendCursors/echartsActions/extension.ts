@@ -1,9 +1,9 @@
 // Echarts core use type does not map correctly to the echarts extension type so exporting as any
 
 import copy from 'copy-to-clipboard';
-import { EChartsExtensionInstallRegisters } from 'echarts/types/src/extension';
+import { type EChartsExtensionInstallRegisters } from 'echarts/types/src/extension';
 import {
-  AddTrendCursorAction,
+  type AddTrendCursorAction,
   AddTrendCursorActionType,
 } from './addTrendCursors';
 import { getXAxisDataValue } from '../view/utils';
@@ -11,12 +11,12 @@ import useDataStore from '../../../../store';
 import { onAddTrendCursor, onDeleteTrendCursor } from '../store';
 import {
   RemoveNearestTrendCursorActionType,
-  RemoveTrendCursorAction,
+  type RemoveTrendCursorAction,
 } from './removeNearestTrendCursor';
 import { closestTrendCursor } from './closestTrendCursor';
 import { getTrendCursors } from './getTrendCursors';
 import {
-  CopyTrendCursorAction,
+  type CopyTrendCursorAction,
   CopyTrendCursorActionType,
 } from './copyNearestTrendCursor';
 import { formatTrendCursorForCopy } from './formatTrendCursorForCopy';

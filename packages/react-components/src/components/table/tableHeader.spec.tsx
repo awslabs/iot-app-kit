@@ -1,14 +1,13 @@
-import React from 'react';
-import { render, waitFor } from '@testing-library/react';
-import { TableHeader } from './tableHeader';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import { render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { IntlProvider } from 'react-intl';
 import type {
   AssistantActionEventDetail,
   AssistantProperty,
 } from '../../common/assistantProps';
-import userEvent from '@testing-library/user-event';
-import { IntlProvider } from 'react-intl';
+import { TableHeader } from './tableHeader';
 
 const client = new IoTSitewiseAssistantClient({
   iotSiteWiseClient: {

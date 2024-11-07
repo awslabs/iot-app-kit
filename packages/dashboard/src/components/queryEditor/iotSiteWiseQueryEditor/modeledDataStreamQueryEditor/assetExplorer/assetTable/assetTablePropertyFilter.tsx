@@ -1,7 +1,6 @@
 import PropertyFilter, {
   type PropertyFilterProps,
 } from '@cloudscape-design/components/property-filter';
-import React from 'react';
 
 export const ASSET_TABLE_FILTERING_PROPERTIES: PropertyFilterProps['filteringProperties'] =
   [

@@ -1,17 +1,17 @@
-import React, { useCallback, useContext, useMemo } from 'react';
-import { defineMessages, MessageDescriptor, useIntl } from 'react-intl';
-import { IconProps } from '@cloudscape-design/components';
+import { type IconProps } from '@cloudscape-design/components';
+import { useCallback, useContext, useMemo } from 'react';
+import { defineMessages, type MessageDescriptor, useIntl } from 'react-intl';
 
-import { ToolbarItemOptionRaw, ToolbarItemOptions } from '../toolbars/common/types';
-import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { IDataOverlayComponentInternal, accessStore } from '../../store';
-import { KnownComponentType } from '../../interfaces';
-import { ToolbarItem } from '../toolbars/common/ToolbarItem';
 import { getGlobalSettings } from '../../common/GlobalSettings';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
+import { KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
-import { ISceneComponentInternal } from '../../store/internalInterfaces';
-import { generateUUID } from '../../utils/mathUtils';
+import { accessStore, type IDataOverlayComponentInternal } from '../../store';
+import { type ISceneComponentInternal } from '../../store/internalInterfaces';
 import { isDynamicScene } from '../../utils/entityModelUtils/sceneUtils';
+import { generateUUID } from '../../utils/mathUtils';
+import { ToolbarItem } from '../toolbars/common/ToolbarItem';
+import { type ToolbarItemOptionRaw, type ToolbarItemOptions } from '../toolbars/common/types';
 
 interface ComponentEditMenuProps {
   nodeRef: string;

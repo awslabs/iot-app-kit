@@ -1,11 +1,10 @@
-import React from 'react';
 import { colorBackgroundContainerContent } from '@cloudscape-design/design-tokens';
+import type { Anchor } from '~/store/actions';
 import {
   anchorable,
   gestureable,
 } from '../internalDashboard/gestures/determineTargetGestures';
 import './selectionBoxAnchor.css';
-import type { Anchor } from '~/store/actions';
 
 const CORNERS: Anchor[] = [
   'top-left',

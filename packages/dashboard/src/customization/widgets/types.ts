@@ -23,7 +23,7 @@ import type {
   TableColumnDefinition,
   TableItem,
 } from '@iot-app-kit/react-components';
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 
 export type QueryConfig<S, T> = {
   source: S;

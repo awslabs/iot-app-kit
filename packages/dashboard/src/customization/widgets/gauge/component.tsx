@@ -1,16 +1,14 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import pickBy from 'lodash/pickBy';
-import { Gauge, useViewport } from '@iot-app-kit/react-components';
-import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
-import type { DashboardState } from '~/store/state';
-import type { GaugeWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
+import { Gauge, useViewport } from '@iot-app-kit/react-components';
+import pickBy from 'lodash/pickBy';
+import { useSelector } from 'react-redux';
 import { useQueries } from '~/components/dashboard/queryContext';
-import { isDefined } from '~/util/isDefined';
-
 import WidgetTile from '~/components/widgets/tile';
 import { useChartSize } from '~/hooks/useChartSize';
+import type { DashboardState } from '~/store/state';
+import { isDefined } from '~/util/isDefined';
+import type { GaugeWidget } from '../types';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import './component.css';
 
 const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {

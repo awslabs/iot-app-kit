@@ -1,10 +1,9 @@
-import React from 'react';
-import { XYPlotTooltipTime, XYPlotTooltipTimeOptions } from './time';
+import { XYPlotTooltipTime, type XYPlotTooltipTimeOptions } from './time';
 import {
   XYPlotTooltipDatastreams,
-  XYPlotTooltipDatastreamsOptions,
+  type XYPlotTooltipDatastreamsOptions,
 } from './datastreams';
-import { ChartAlarms, ChartDataQuality } from '../../types';
+import { type ChartAlarms, type ChartDataQuality } from '../../types';
 
 export type XYPlotTooltipOptions = XYPlotTooltipTimeOptions &
   XYPlotTooltipDatastreamsOptions &

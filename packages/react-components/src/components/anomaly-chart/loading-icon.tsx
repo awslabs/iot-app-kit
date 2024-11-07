@@ -3,7 +3,6 @@ import {
   colorTextBodyDefault,
   fontFamilyBase,
 } from '@cloudscape-design/design-tokens';
-import React from 'react';
 import './anomalyChartStyles.css';
 
 export const LoadingIcon = ({ loading }: { loading?: boolean }) => {

@@ -1,7 +1,6 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { KPI } from '../kpi';
-import { COMPARISON_OPERATOR, Viewport } from '@iot-app-kit/core';
+import { COMPARISON_OPERATOR, type Viewport } from '@iot-app-kit/core';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { formatDate } from '../../../utils/time';
 

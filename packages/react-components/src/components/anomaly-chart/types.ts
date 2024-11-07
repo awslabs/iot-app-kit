@@ -1,8 +1,11 @@
-import { Viewport } from '@iot-app-kit/core';
+import { type Viewport } from '@iot-app-kit/core';
 import type { FixedLengthArray } from 'type-fest';
-import { AnomalyDataQuery } from '@iot-app-kit/source-iotsitewise';
-import { AnomalyArrowDataSource, AnomalyObjectDataSource } from '../../data';
-import { AssistantProperty } from '../../common/assistantProps';
+import { type AnomalyDataQuery } from '@iot-app-kit/source-iotsitewise';
+import {
+  type AnomalyArrowDataSource,
+  type AnomalyObjectDataSource,
+} from '../../data';
+import { type AssistantProperty } from '../../common/assistantProps';
 
 export type TooltipSort = 'value' | 'alphabetical';
 export type ThemeMode = 'light' | 'dark';

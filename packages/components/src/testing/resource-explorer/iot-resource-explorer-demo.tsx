@@ -1,5 +1,8 @@
 import { Component, h } from '@stencil/core';
-import { initialize, SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
+import {
+  initialize,
+  type SiteWiseQuery,
+} from '@iot-app-kit/source-iotsitewise';
 import { getEnvCredentials } from '../testing-ground/getEnvCredentials';
 
 @Component({

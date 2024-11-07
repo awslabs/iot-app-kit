@@ -1,4 +1,4 @@
-import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import { setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
 import { defaultNode } from '../../../__mocks__/sceneNode';

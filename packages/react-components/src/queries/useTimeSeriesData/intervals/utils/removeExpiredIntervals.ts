@@ -1,4 +1,4 @@
-import { Interval } from '../../types';
+import { type Interval } from '../../types';
 
 export const removeExpiredIntervals = (intervals: Interval[], now: Date) => {
   return intervals.filter((oldInterval) =>

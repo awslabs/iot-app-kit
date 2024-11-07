@@ -1,11 +1,11 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import * as THREE from 'three';
 
 import { Component } from '../../../models/SceneModels';
 
-import { MotionIndicatorProps } from './types';
 import { useArrowTexture } from './helpers';
 import { MotionIndicatorMeshMaterial } from './MotionIndicatorMeshMaterial';
+import { type MotionIndicatorProps } from './types';
 
 export interface LinearPlaneMotionIndicatorProps extends MotionIndicatorProps {
   config: Component.ILinearPlaneMotionIndicatorConfig;

@@ -1,11 +1,11 @@
-import { LineSeriesOption } from 'echarts';
-import { Emphasis } from '../../utils/getStyles';
+import { type LineSeriesOption } from 'echarts';
+import { type Emphasis } from '../../utils/getStyles';
 import {
   BAD_DATA_ICON_SIZE,
   EMPHASIZE_SCALE_CONSTANT,
   UNCERTAIN_DATA_ICON_SIZE,
 } from '../../eChartsConstants';
-import { ChartDataQuality } from '../../types';
+import { type ChartDataQuality } from '../../types';
 
 export type ConvertSymbolSizeOptions = {
   emphasis: Emphasis;

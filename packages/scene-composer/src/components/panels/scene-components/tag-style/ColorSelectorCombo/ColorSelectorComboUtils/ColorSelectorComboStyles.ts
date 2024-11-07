@@ -1,5 +1,5 @@
 import { colorBackgroundHomeHeader, colorChartsStatusNeutral } from '@cloudscape-design/design-tokens';
-import { CSSProperties } from 'styled-components';
+import { type CSSProperties } from 'styled-components';
 
 export const tmColorPickerPopover: CSSProperties = {
   position: 'absolute',

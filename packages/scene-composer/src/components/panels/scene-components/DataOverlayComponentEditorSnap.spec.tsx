@@ -1,8 +1,7 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 
 import { mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
-import { IDataOverlayComponentInternal, ISceneNodeInternal, accessStore } from '../../../store';
+import { type IDataOverlayComponentInternal, type ISceneNodeInternal, accessStore } from '../../../store';
 import { Component } from '../../../models/SceneModels';
 import { KnownComponentType } from '../../../interfaces';
 

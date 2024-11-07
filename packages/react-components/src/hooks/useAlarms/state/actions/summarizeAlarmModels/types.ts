@@ -1,5 +1,5 @@
-import { DescribeAlarmModelResponse } from '@aws-sdk/client-iot-events';
-import { AlarmDataStatus } from '../../../types';
+import { type DescribeAlarmModelResponse } from '@aws-sdk/client-iot-events';
+import { type AlarmDataStatus } from '../../../types';
 
 export type AlarmModelSummary = {
   request: {

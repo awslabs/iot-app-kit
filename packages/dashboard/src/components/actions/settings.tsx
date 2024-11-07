@@ -1,21 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
-
 import {
-  Button,
   Box,
+  Button,
   Modal,
   SpaceBetween,
 } from '@cloudscape-design/components';
+import { useEffect, useState } from 'react';
 
-import LabeledInput from '../util/labeledInput';
-import { useGridSettings } from './useGridSettings';
+import { type Viewport } from '@iot-app-kit/core';
+import { isNumeric } from '@iot-app-kit/core-util';
 import { numberFromDetail } from '~/util/inputEvent';
 import DecimalPlaces from '../decimalPlaces';
-import { isNumeric } from '@iot-app-kit/core-util';
 import { DefaultViewport } from '../defaultViewport';
-import { Viewport } from '@iot-app-kit/core';
 import { useDefaultViewport } from '../defaultViewport/useDefaultViewport';
+import LabeledInput from '../util/labeledInput';
+import { useGridSettings } from './useGridSettings';
 
 export type DashboardSettingsProps = {
   onClose: () => void;

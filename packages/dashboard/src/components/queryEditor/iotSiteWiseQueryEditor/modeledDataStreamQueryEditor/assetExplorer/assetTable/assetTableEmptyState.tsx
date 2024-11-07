@@ -1,5 +1,4 @@
 import Box from '@cloudscape-design/components/box';
-import React from 'react';
 
 export function AssetTableEmptyState() {
   return (

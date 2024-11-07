@@ -1,13 +1,13 @@
 import { parseDuration } from '@iot-app-kit/core';
 import {
   IntervalTransformer,
-  Viewport,
+  type Viewport,
   getViewportType,
 } from '../../useTimeSeriesData';
 import {
-  AssetPropertyAggregatesRequest,
-  AssetPropertyValueHistoryRequest,
-  AssetPropertyValuesRequest,
+  type AssetPropertyAggregatesRequest,
+  type AssetPropertyValueHistoryRequest,
+  type AssetPropertyValuesRequest,
 } from '../types';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { useMemo } from 'react';

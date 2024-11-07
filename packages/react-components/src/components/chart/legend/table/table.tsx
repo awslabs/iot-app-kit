@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
-import { DataStreamInformation, TrendCursor } from './types';
+import { useEffect, useMemo } from 'react';
+import { type DataStreamInformation, type TrendCursor } from './types';
 import Table, { type TableProps } from '@cloudscape-design/components/table';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import { createTableLegendColumnDefinitions } from './columnDefinitions/factory';
-import { ChartLegend, ChartOptions } from '../../types';
+import { type ChartLegend, type ChartOptions } from '../../types';
 import type { AssistantProperty } from '../../../../common/assistantProps';
 import { useAssistant } from '../../../../hooks/useAssistant/useAssistant';
 import './table.css';

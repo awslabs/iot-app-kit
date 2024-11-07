@@ -1,7 +1,7 @@
-import React, { CSSProperties, useEffect, useRef } from 'react';
-import './component.css';
-import { XYCoord, useDrag } from 'react-dnd';
+import { type CSSProperties, useEffect, useRef } from 'react';
+import { type XYCoord, useDrag } from 'react-dnd';
 import { useGridSettings } from '~/components/actions/useGridSettings';
+import './component.css';
 
 /**
  * Compute the new position of the widget based on initial position, offset difference, and grid settings.

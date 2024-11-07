@@ -1,5 +1,5 @@
-import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
-import { IntlShape } from 'react-intl';
+import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { type IntlShape } from 'react-intl';
 
 import { SECRET_MANAGER_MATTERPORT_TAG } from '../common/constants';
 import { OPTIONS_PLACEHOLDER_VALUE } from '../common/internalConstants';

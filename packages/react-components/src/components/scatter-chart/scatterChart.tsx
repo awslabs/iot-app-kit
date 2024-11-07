@@ -1,22 +1,23 @@
-import React from 'react';
-import {
-  StyleSettingsMap,
-  Threshold,
-  ThresholdSettings,
-  TimeSeriesDataQuery,
-  Viewport,
-} from '@iot-app-kit/core';
 import { ScatterChart as ScatterChartBase } from '@iot-app-kit/charts';
-import type { DataStream as DataStreamViz } from '@iot-app-kit/charts-core';
-import { YAnnotation } from '@iot-app-kit/charts-core';
-import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
-import { useViewport } from '../../hooks/useViewport';
+import type {
+  DataStream as DataStreamViz,
+  YAnnotation,
+} from '@iot-app-kit/charts-core';
+import {
+  type StyleSettingsMap,
+  type Threshold,
+  type ThresholdSettings,
+  type TimeSeriesDataQuery,
+  type Viewport,
+} from '@iot-app-kit/core';
+import { type AxisSettings, type ChartSize } from '../../common/chartTypes';
 import {
   DEFAULT_LEGEND,
   DEFAULT_VIEWPORT,
   ECHARTS_GESTURE,
 } from '../../common/constants';
-import { AxisSettings, ChartSize } from '../../common/chartTypes';
+import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
+import { useViewport } from '../../hooks/useViewport';
 
 export interface ScatterChartProps {
   queries: TimeSeriesDataQuery[];

@@ -1,13 +1,16 @@
-import { BatchGetAssetPropertyValue, ListTimeSeries } from '@iot-app-kit/core';
+import {
+  type BatchGetAssetPropertyValue,
+  type ListTimeSeries,
+} from '@iot-app-kit/core';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { formatDate } from '../../../../utils/time';
 import { DEFAULT_LATEST_VALUE_REQUEST_INTERVAL } from '../../constants/defaults';
 import { TimeSeriesExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests';
-import { SelectionMode } from '../../types/common';
-import { TimeSeriesResource } from '../../types/resources';
+import { type SelectionMode } from '../../types/common';
+import { type TimeSeriesResource } from '../../types/resources';
 import { createListTimeSeriesPage } from '../helpers/responses';
 import * as table from '../helpers/table';
 

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { initialize } from '@iot-app-kit/source-iottwinmaker';
-import { CredentialProvider, Credentials } from '@aws-sdk/types';
+import { type CredentialProvider, type Credentials } from '@aws-sdk/types';
 
 const region = 'us-east-1';
 const rociEndpoint = 'https://iottwinmaker.us-east-1.amazonaws.com';

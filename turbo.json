@@ -15,7 +15,7 @@
       "outputLogs": "new-only"
     },
     "fix": {
-      "dependsOn": [],
+      "dependsOn": ["build"],
       "outputLogs": "new-only"
     },
     "test": {

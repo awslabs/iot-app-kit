@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect } from 'react';
+import { type CSSProperties, useEffect } from 'react';
 import { AssistantButton } from './assistantButton';
 import {
   borderRadiusButton,
@@ -22,7 +22,7 @@ import {
   onToggleChatbotAction,
 } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
-import { DashboardMessages } from '~/messages';
+import { type DashboardMessages } from '~/messages';
 import { useAssistant } from '@iot-app-kit/react-components';
 import Popover from '@cloudscape-design/components/popover';
 import StatusIndicator from '@cloudscape-design/components/status-indicator';

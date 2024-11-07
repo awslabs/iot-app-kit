@@ -1,4 +1,4 @@
-import { Browser, Locator, Page } from '@playwright/test';
+import { type Browser, type Locator, type Page } from '@playwright/test';
 import { TEST_PAGE } from '../constants';
 
 export const DEFAULT_WIDGET_POS_X = 600;

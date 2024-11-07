@@ -1,21 +1,21 @@
 import {
-  GetSceneCommandOutput,
-  ExecuteQueryCommandOutput,
-  CreateEntityCommandInput,
-  UpdateEntityCommandInput,
-  DeleteEntityCommandInput,
-  CreateEntityCommandOutput,
-  UpdateEntityCommandOutput,
-  DeleteEntityCommandOutput,
-  GetEntityCommandInput,
-  GetEntityCommandOutput,
-  UpdateSceneCommandInput,
+  type GetSceneCommandOutput,
+  type ExecuteQueryCommandOutput,
+  type CreateEntityCommandInput,
+  type UpdateEntityCommandInput,
+  type DeleteEntityCommandInput,
+  type CreateEntityCommandOutput,
+  type UpdateEntityCommandOutput,
+  type DeleteEntityCommandOutput,
+  type GetEntityCommandInput,
+  type GetEntityCommandOutput,
+  type UpdateSceneCommandInput,
 } from '@aws-sdk/client-iottwinmaker';
-import { SecretListEntry } from '@aws-sdk/client-secrets-manager';
+import { type SecretListEntry } from '@aws-sdk/client-secrets-manager';
 
 import type { VideoPlaybackMode } from './video-data/types';
 
-import { executeQueryParams } from './knowledgeGraph-module/types';
+import { type executeQueryParams } from './knowledgeGraph-module/types';
 
 export interface SceneLoader {
   getSceneUri: () => Promise<string | null>;

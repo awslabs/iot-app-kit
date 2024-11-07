@@ -8,7 +8,7 @@ import type {
   EChartsOption,
   LabelFormatterCallback,
 } from 'echarts';
-import { ChartAxisOptions, ChartLegend } from './types';
+import { type ChartAxisOptions, type ChartLegend } from './types';
 import {
   formatDate,
   getPatternForXAxisLabelForLineChart,

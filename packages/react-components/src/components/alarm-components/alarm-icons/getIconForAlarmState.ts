@@ -1,5 +1,5 @@
-import React from 'react';
-import { PascalCaseStateName } from '../../../hooks/useAlarms/transformers';
+import type * as React from 'react';
+import { type PascalCaseStateName } from '../../../hooks/useAlarms/transformers';
 import {
   alarmAcknowledgedIcon,
   alarmActiveIcon,

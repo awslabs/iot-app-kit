@@ -1,14 +1,13 @@
-import React from 'react';
-import { screen, render, renderHook } from '@testing-library/react';
+import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
-import { Gauge } from './gauge';
+import { render, renderHook, screen } from '@testing-library/react';
 import type {
   AssistantActionEventDetail,
   AssistantProperty,
 } from '../../common/assistantProps';
-import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
+import { Gauge } from './gauge';
 
 const VIEWPORT = { duration: '5m' };
 

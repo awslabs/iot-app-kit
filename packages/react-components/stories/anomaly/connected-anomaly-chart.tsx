@@ -1,8 +1,7 @@
 import { useViewport } from '../../src';
 import { getIotSiteWiseQuery } from '../utils/query';
-import React from 'react';
 import { AnomalyChart } from '../../src/components/anomaly-chart';
-import { AnomalyChartOptions } from '../../src/components/anomaly-chart/types';
+import { type AnomalyChartOptions } from '../../src/components/anomaly-chart/types';
 
 export const ConnectedAnomalyChart = ({
   assetId,

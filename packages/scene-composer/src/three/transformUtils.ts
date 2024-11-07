@@ -1,9 +1,9 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 import * as THREE from 'three';
 
-import { Vector3 } from '../interfaces';
+import { type Vector3 } from '../interfaces';
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
-import { ISceneNodeInternal, useEditorState } from '../store';
+import { type ISceneNodeInternal, useEditorState } from '../store';
 
 const COMPONENT_KEYNAME = 'COMPONENT';
 

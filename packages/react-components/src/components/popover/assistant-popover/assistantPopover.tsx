@@ -1,11 +1,10 @@
-import React from 'react';
-import type { PropsWithChildren } from 'react';
 import Box from '@cloudscape-design/components/box';
 import CloudscapePopover from '@cloudscape-design/components/popover';
 import SpaceBetween from '@cloudscape-design/components/space-between';
+import type { PropsWithChildren } from 'react';
 import type { AssistantProperty } from '../../../common/assistantProps';
-import { VerticalSeparator } from './verticalSeparator';
 import { AssistantButton } from '../../assistant-button';
+import { VerticalSeparator } from './verticalSeparator';
 
 export interface AssistantPopoverProps extends PropsWithChildren {
   assistant: AssistantProperty;

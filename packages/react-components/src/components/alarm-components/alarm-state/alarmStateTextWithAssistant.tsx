@@ -1,8 +1,7 @@
-import React from 'react';
 import { AlarmPopover } from '../../popover/alarm-popover/alarmPopover';
-import { AssistantProperty } from '../../../common/assistantProps';
-import { AlarmStateText, AlarmStateTextOptions } from './alarmStateText';
-import { AlarmContent } from '../alarm-content/types';
+import { type AssistantProperty } from '../../../common/assistantProps';
+import { AlarmStateText, type AlarmStateTextOptions } from './alarmStateText';
+import { type AlarmContent } from '../alarm-content/types';
 
 type AlarmStateTextWithAssistantOptions = AlarmStateTextOptions & {
   assistant: AssistantProperty;

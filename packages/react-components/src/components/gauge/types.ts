@@ -1,14 +1,14 @@
 import {
-  StyleSettingsMap,
-  Threshold,
-  Viewport,
-  Primitive,
+  type StyleSettingsMap,
+  type Threshold,
+  type Viewport,
+  type Primitive,
 } from '@iot-app-kit/core';
 import type { WidgetSettings } from '../../common/dataTypes';
-import { AssistantProperty } from '../../common/assistantProps';
+import { type AssistantProperty } from '../../common/assistantProps';
 import type { ComponentQuery } from '../../common/chartTypes';
 import type { AlarmContent } from '../alarm-components/alarm-content/types';
-import { AlarmDataStatus } from '../../hooks/useAlarms';
+import { type AlarmDataStatus } from '../../hooks/useAlarms';
 
 export type GaugeProps = {
   size?: { width: number; height: number };

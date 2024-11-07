@@ -1,10 +1,11 @@
-import React from 'react';
+import * as React from 'react';
+import { useRef } from 'react';
 import { create } from 'react-test-renderer';
 
-import { CameraPreview } from '../index';
-import { accessStore } from '../../../../store';
-import { KnownComponentType } from '../../../../interfaces';
 import { DEFAULT_CAMERA_POSITION, DEFAULT_CAMERA_SETTINGS } from '../../../../common/constants';
+import { KnownComponentType } from '../../../../interfaces';
+import { accessStore } from '../../../../store';
+import { CameraPreview } from '../index';
 
 jest.mock('@react-three/fiber', () => ({
   useFrame: jest.fn(),
@@ -37,7 +38,7 @@ describe('CameraPreview', () => {
     });
 
     const TestComponent: React.FC = () => {
-      const div = React.useRef(document.createElement('div'));
+      const div = useRef(document.createElement('div'));
 
       return <CameraPreview track={div} />;
     };

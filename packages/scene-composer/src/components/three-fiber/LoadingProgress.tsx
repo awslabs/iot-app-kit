@@ -1,10 +1,10 @@
 import { Box, Container, ProgressBar } from '@cloudscape-design/components';
 import { Html } from '@react-three/drei/web/Html';
-import React, { Fragment, useCallback } from 'react';
+import { Fragment, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 import * as awsui from '@cloudscape-design/design-tokens';
-import * as THREE from 'three';
+import type * as THREE from 'three';
 
 import { humanFileSize } from '../../utils/mathUtils';
 import { extractFileNameExtFromUrl } from '../../utils/pathUtils';

@@ -1,4 +1,4 @@
-import { TimeSeriesData } from '@iot-app-kit/core';
+import { type TimeSeriesData } from '@iot-app-kit/core';
 
 import {
   booleanStream1,
@@ -11,7 +11,7 @@ import {
   stringStream,
   viewport,
 } from '../../tests/data/mockDataStreams';
-import { IDataField, IDataInput } from '../interfaces';
+import { type IDataField, type IDataInput } from '../interfaces';
 
 import { convertDataStreamsToDataInput, combineTimeSeriesData } from './dataStreamUtils';
 

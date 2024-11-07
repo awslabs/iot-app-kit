@@ -1,17 +1,17 @@
-import React, { ReactNode } from 'react';
 import { render } from '@testing-library/react';
+import { type FC, type ReactNode } from 'react';
 
-import { ResizablePanes } from './index';
-import { PropertiesPaneIcon } from './assets/propertiesPaneIcon';
 import { Provider } from 'react-redux';
 import { configureDashboardStore } from '~/store';
 import { initialState } from '~/store/state';
+import { PropertiesPaneIcon } from './assets/propertiesPaneIcon';
+import { ResizablePanes } from './index';
 
 const leftPaneContent = `Warp core monitor`;
 const centerPaneContent = `Forward viewscreen`;
 const rightPaneContent = `Phaser controls`;
 
-const TestProvider: React.FC<{
+const TestProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => (
   <Provider store={configureDashboardStore(initialState)}>{children}</Provider>

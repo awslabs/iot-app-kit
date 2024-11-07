@@ -1,4 +1,9 @@
 import type {
+  DescribeAlarmModelCommandInput,
+  DescribeAlarmModelResponse,
+  IoTEvents,
+} from '@aws-sdk/client-iot-events';
+import type {
   AssetPropertyValue,
   DescribeAssetCommandInput,
   DescribeAssetResponse,
@@ -6,14 +11,9 @@ import type {
   GetAssetPropertyValueHistoryCommandInput,
   GetAssetPropertyValueHistoryResponse,
   GetAssetPropertyValueResponse,
+  IoTSiteWise,
   TimeInNanos,
 } from '@aws-sdk/client-iotsitewise';
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import type {
-  DescribeAlarmModelCommandInput,
-  DescribeAlarmModelResponse,
-} from '@aws-sdk/client-iot-events';
-import { IoTEvents } from '@aws-sdk/client-iot-events';
 import { DATA_TYPE } from '@iot-app-kit/core';
 import { v4 as uuid } from 'uuid';
 import { mockSinWaveDataValue } from './mockSinWaveData';

@@ -1,7 +1,6 @@
 import CollectionPreferences, {
   type CollectionPreferencesProps,
 } from '@cloudscape-design/components/collection-preferences';
-import React from 'react';
 
 import { SUPPORTED_PAGE_SIZES } from '../../../constants';
 

@@ -1,4 +1,4 @@
-import Evidently, { ClientConfiguration } from 'aws-sdk/clients/evidently';
+import Evidently, { type ClientConfiguration } from 'aws-sdk/clients/evidently';
 import EvidentlyFeatureRepository from '../EvidentlyFeatureRepository';
 
 jest.mock('aws-sdk/clients/evidently');

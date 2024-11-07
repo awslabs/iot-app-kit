@@ -1,16 +1,16 @@
-import React, { FC, createContext, useContext, useCallback, useState, useEffect, ReactNode } from 'react';
+import { type FC, createContext, useContext, useCallback, useState, useEffect, type ReactNode } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { isEmpty } from 'lodash';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { findComponentByType, getFinalNodeTransform } from '../../../utils/nodeUtils';
-import { ISceneNodeInternal, useNodeErrorState, useSceneDocument, accessStore } from '../../../store';
+import { type ISceneNodeInternal, useNodeErrorState, useSceneDocument, accessStore } from '../../../store';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { ITransform, KnownComponentType } from '../../../interfaces';
-import { RecursivePartial } from '../../../utils/typeUtils';
+import { type ITransform, KnownComponentType } from '../../../interfaces';
+import { type RecursivePartial } from '../../../utils/typeUtils';
 
-import ISceneHierarchyNode from './model/ISceneHierarchyNode';
+import type ISceneHierarchyNode from './model/ISceneHierarchyNode';
 
 type SelectionMode = 'single' | 'multi';
 

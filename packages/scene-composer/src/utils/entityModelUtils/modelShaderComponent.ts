@@ -1,9 +1,9 @@
-import { ComponentRequest, ComponentUpdateRequest, PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
-import { DocumentType } from '@aws-sdk/types';
+import { type ComponentRequest, type ComponentUpdateRequest, PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
+import { type DocumentType } from '@aws-sdk/types';
 
-import { IColorOverlayComponent, KnownComponentType } from '../../interfaces';
+import { type IColorOverlayComponent, KnownComponentType } from '../../interfaces';
 import { componentTypeToId } from '../../common/entityModelConstants';
-import { IColorOverlayComponentInternal } from '../../store';
+import { type IColorOverlayComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
 
 import { createDataBindingMap, parseDataBinding } from './dataBindingUtils';

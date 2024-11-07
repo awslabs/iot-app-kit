@@ -1,7 +1,7 @@
 import {
-  DataZoomComponentOption,
-  ToolboxComponentOption,
-  XAXisComponentOption,
+  type DataZoomComponentOption,
+  type ToolboxComponentOption,
+  type XAXisComponentOption,
 } from 'echarts';
 
 export const ECHARTS_GESTURE = 'echarts-gesture';

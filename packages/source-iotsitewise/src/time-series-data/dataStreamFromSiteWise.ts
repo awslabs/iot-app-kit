@@ -1,7 +1,7 @@
 import { toId } from './util/dataStreamId';
 import type { AssetId, AssetPropertyId, PropertyAlias } from './types';
 import type { DataStream, DataPoint } from '@iot-app-kit/core';
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 
 export const dataStreamFromSiteWise = ({
   dataPoints = [],

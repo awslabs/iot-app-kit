@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { useEffect, useMemo, useState } from 'react';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import type { FC } from 'react';
 import { getIotEventsClient, getSiteWiseClient } from '@iot-app-kit/core-util';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -10,7 +10,7 @@ import {
   useGetAssetPropertyValueHistory,
 } from '../../src/queries';
 import { getEnvCredentials, getRegion } from '../utils/query';
-import { Viewport } from '@iot-app-kit/core';
+import { type Viewport } from '@iot-app-kit/core';
 import { sub } from 'date-fns';
 import { useSiteWiseAnomalyDataSource } from '../../src/queries/useSiteWiseAnomalyDataSource';
 import { TimeSelection, TimeSync, useViewport } from '../../src';

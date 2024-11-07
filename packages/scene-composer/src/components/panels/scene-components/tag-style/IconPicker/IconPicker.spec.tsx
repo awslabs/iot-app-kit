@@ -1,6 +1,5 @@
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { type IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { fireEvent, render, screen } from '@testing-library/react';
-import React from 'react';
 
 import { IconPicker } from './IconPicker';
 

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import assistantIcon from '../assets/assistantIcon.svg';
 import { AssistantMessage } from '../../assistant-common/AssistantMessage';
 import type { IMessage } from '../../../hooks/useAssistant/types';

@@ -1,14 +1,14 @@
-import React, { useContext, useMemo } from 'react';
-import { useIntl, IntlShape } from 'react-intl';
+import { useContext, useMemo } from 'react';
+import { useIntl, type IntlShape } from 'react-intl';
 
 import { OrbitCameraSvg, PanCameraSvg } from '../../../../assets/svgs';
-import { CameraControlsType, COMPOSER_FEATURES } from '../../../../interfaces';
+import { type CameraControlsType, COMPOSER_FEATURES } from '../../../../interfaces';
 import { getGlobalSettings } from '../../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { accessStore } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { TOOLBAR_ITEM_CONTAINER_HEIGHT, ToolbarItemGroup } from '../../common/styledComponents';
-import { ToolbarItemOptions, ToolbarOrientation } from '../../common/types';
+import { type ToolbarItemOptions, ToolbarOrientation } from '../../common/types';
 import useMatterportViewer from '../../../../hooks/useMatterportViewer';
 import { FLOATING_TOOLBAR_VERTICAL_ORIENTATION_BUFFER } from '../FloatingToolbar';
 

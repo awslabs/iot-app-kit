@@ -1,7 +1,7 @@
 import { Header } from '@awsui/components-react';
-import React, { useState } from 'react';
-import { Meta, Story } from '@storybook/react';
-import { ITreeNode, RelatedTable, useTreeCollection } from '../src';
+import { useState } from 'react';
+import { type Meta, type Story } from '@storybook/react';
+import { type ITreeNode, RelatedTable, useTreeCollection } from '../src';
 
 export default {
   title: 'Features/RelatedTable/LazyLoad',

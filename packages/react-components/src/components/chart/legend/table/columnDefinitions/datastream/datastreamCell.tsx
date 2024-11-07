@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo } from 'react';
-import { DataStreamInformation } from '../../types';
+import { useCallback, useMemo } from 'react';
+import { type DataStreamInformation } from '../../types';
 import { VisibilityToggle } from './visibilityToggle';
 import { useVisibleDataStreams } from '../../../../hooks/useVisibleDataStreams';
 import { useHighlightedDataStreams } from '../../../../hooks/useHighlightedDataStreams';

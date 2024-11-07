@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const StatusEyeVisible = (
   <svg
     width='20'

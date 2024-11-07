@@ -21,7 +21,7 @@ import {
   mockWorkspaceId,
 } from '../__mocks__/MockVideoPlayerProps';
 import { PLAYBACKMODE_LIVE, PLAYBACKMODE_ON_DEMAND } from './constants';
-import { VideoDataInput } from './types';
+import { type VideoDataInput } from './types';
 import { createMockKinesisVideoSDK } from '../__mocks__/kinesisVideoSDK';
 import { createMockKinesisVideoArchivedMediaSDK } from '../__mocks__/kinesisVideoArchivedMediaSDK';
 import { createMockTwinMakerSDK } from '../__mocks__/iottwinmakerSDK';

@@ -16,16 +16,16 @@ import type { BringWidgetsToFrontAction } from './bringToFront';
 import type { SendWidgetsToBackAction } from './sendToBack';
 import type { UpdateWidgetsAction } from './updateWidget';
 import type { UpdateSignificantDigitsAction } from './updateSignificantDigits';
-import { UpdateRefreshRateAction } from './changeRefreshRate';
-import { UpdateDefaultViewportAction } from './updateDefaultViewport';
-import { ToggleChatbotAction } from './toggleChatbot';
-import { ToggleAssistantModeAction } from './toggleAssistantMode';
+import { type UpdateRefreshRateAction } from './changeRefreshRate';
+import { type UpdateDefaultViewportAction } from './updateDefaultViewport';
+import { type ToggleChatbotAction } from './toggleChatbot';
+import { type ToggleAssistantModeAction } from './toggleAssistantMode';
 import {
-  AssistantSelectWidgetsAction,
-  AssistantDeselectWidgetsAction,
-  AssistantCleanWidgetsSelectionAction,
+  type AssistantSelectWidgetsAction,
+  type AssistantDeselectWidgetsAction,
+  type AssistantCleanWidgetsSelectionAction,
 } from './assistantWidgetsSelection';
-import { CleanAssistantAction } from './cleanAssistant';
+import { type CleanAssistantAction } from './cleanAssistant';
 
 export * from './createWidget';
 export * from './deleteWidgets';

@@ -1,10 +1,10 @@
-import { Primitive } from '@iot-app-kit/core';
+import { type Primitive } from '@iot-app-kit/core';
 import { useMemo } from 'react';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
-import { IValueDataBinding } from '../interfaces';
+import { type IValueDataBinding } from '../interfaces';
 import { useDataStore, useSceneDocument } from '../store';
-import { RuleReturnResult, dataBindingValuesProvider, ruleEvaluator } from '../utils/dataBindingUtils';
+import { type RuleReturnResult, dataBindingValuesProvider, ruleEvaluator } from '../utils/dataBindingUtils';
 
 import useBindingData from './useBindingData';
 

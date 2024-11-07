@@ -1,5 +1,5 @@
-import { AlarmRequest } from '../../../types';
-import { AlarmRequestState } from '../../types';
+import { type AlarmRequest } from '../../../types';
+import { type AlarmRequestState } from '../../types';
 
 export const isSummarizingAlarmModels = ({
   alarmDatas,

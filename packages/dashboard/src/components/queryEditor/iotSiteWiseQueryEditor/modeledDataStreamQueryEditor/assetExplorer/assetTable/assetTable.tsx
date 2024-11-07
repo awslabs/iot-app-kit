@@ -4,9 +4,8 @@ import {
 } from '@aws-sdk/client-iotsitewise';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import Table from '@cloudscape-design/components/table';
-import React from 'react';
 import { useSelector } from 'react-redux';
-import { DashboardState } from '~/store/state';
+import { type DashboardState } from '~/store/state';
 
 import { AssetTableEmptyState } from './assetTableEmptyState';
 import { AssetTableHeader } from './assetTableHeader';

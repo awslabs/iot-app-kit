@@ -1,5 +1,5 @@
 import { ISceneNodeInternal } from "@iot-app-kit/scene-composer/dist/src/store";
-import React, { createContext, FC, ReactNode, useContext, useState } from "react";
+import { createContext, FC, ReactNode, useContext, useState } from "react";
 
 interface SceneNode {
   node: ISceneNodeInternal,

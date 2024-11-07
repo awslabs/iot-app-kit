@@ -1,7 +1,7 @@
 import { NEW_PROPERTY_NAME } from '../constants';
 import { expect, test } from '../test';
 import { getTrendCursorText } from './LineWidget';
-import { Locator } from '@playwright/test';
+import { type Locator } from '@playwright/test';
 
 const NEW_Y_LABEL = 'This is new Y-axis Label';
 const Y_MIN = '1';

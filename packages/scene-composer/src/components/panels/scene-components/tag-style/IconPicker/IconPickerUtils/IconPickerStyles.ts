@@ -1,5 +1,5 @@
 import { colorBackgroundHomeHeader } from '@cloudscape-design/design-tokens';
-import { CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 
 export const tmIconPickerPopover: CSSProperties = {
   position: 'absolute',

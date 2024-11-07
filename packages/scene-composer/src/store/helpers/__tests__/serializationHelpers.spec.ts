@@ -8,12 +8,12 @@ import {
   ERROR_MESSAGE_DICT,
   ErrorCode,
   ErrorLevel,
-  IModelRefComponent,
+  type IModelRefComponent,
   KnownComponentType,
 } from '../../..';
 import { generateUUID } from '../../../utils/mathUtils';
-import { Component, LightType, ModelType, Node } from '../../../models/SceneModels';
-import { ISceneComponentInternal, ISceneDocumentInternal, ISceneNodeInternal } from '../..';
+import { Component, LightType, type ModelType, type Node } from '../../../models/SceneModels';
+import { type ISceneComponentInternal, type ISceneDocumentInternal, type ISceneNodeInternal } from '../..';
 
 jest.mock('../../../utils/mathUtils', () => ({
   ...jest.requireActual('../../../utils/mathUtils'),

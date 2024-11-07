@@ -2,7 +2,7 @@ import {
   BAD_DATA_ICON_COLOR,
   UNCERTAIN_DATA_ICON_COLOR,
 } from '../../eChartsConstants';
-import { convertColor, ConvertColorOptions } from './convertColor';
+import { convertColor, type ConvertColorOptions } from './convertColor';
 
 const DEFAULT_ECHARTS_PARAMS = {
   componentType: '',

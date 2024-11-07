@@ -1,9 +1,9 @@
 import path from 'path';
 
-import { IntlFormatters } from '@formatjs/intl';
+import { type IntlFormatters } from '@formatjs/intl';
 
 import { AssetType, ModelFileTypeList } from '../interfaces';
-import { DisplayMessageCategory, IDisplayMessage } from '../store/internalInterfaces';
+import { DisplayMessageCategory, type IDisplayMessage } from '../store/internalInterfaces';
 
 import { extractFileNameExtFromUrl } from './pathUtils';
 

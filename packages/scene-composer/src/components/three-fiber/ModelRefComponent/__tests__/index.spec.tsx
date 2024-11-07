@@ -1,8 +1,7 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 
 import ModelRefComponent from '../index';
-import { IModelRefComponentInternal, ISceneNodeInternal } from '../../../../store';
+import { type IModelRefComponentInternal, type ISceneNodeInternal } from '../../../../store';
 import { KnownComponentType } from '../../../../interfaces';
 import { ModelType } from '../../../../models/SceneModels';
 

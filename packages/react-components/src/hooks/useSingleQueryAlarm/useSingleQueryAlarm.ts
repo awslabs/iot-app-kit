@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { useCustomCompareEffect } from 'react-use';
 import isEqual from 'lodash.isequal';
-import { AlarmData, AlarmDataStatus } from '../useAlarms';
+import { type AlarmData, type AlarmDataStatus } from '../useAlarms';
 import {
-  DataStream,
-  Primitive,
-  Threshold,
-  ThresholdValue,
-  Viewport,
+  type DataStream,
+  type Primitive,
+  type Threshold,
+  type ThresholdValue,
+  type Viewport,
 } from '@iot-app-kit/core';
 import { parseAlarmStateAssetProperty } from '../useAlarms/transformers';
 import { transformAlarmsToThreshold } from '../../utils/transformAlarmsToThreshold';
 import { mapAlarmRuleExpression } from '../useAlarms/transformers/mapAlarmRuleExpression';
-import { ComponentQuery } from '../../common/chartTypes';
+import { type ComponentQuery } from '../../common/chartTypes';
 import { useAlarmsFromQueries } from '../useAlarmsFromQueries';
-import { AlarmContent } from '../../components/alarm-components/alarm-content/types';
+import { type AlarmContent } from '../../components/alarm-components/alarm-content/types';
 
 type UseSingleQueryAlarmOptions = {
   query: ComponentQuery;

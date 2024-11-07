@@ -1,5 +1,4 @@
 /* eslint-disable import/first */
-import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 

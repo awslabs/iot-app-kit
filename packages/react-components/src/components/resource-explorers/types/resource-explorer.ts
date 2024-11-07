@@ -4,16 +4,16 @@ import type {
   TableResourceDefinition,
 } from './table';
 import {
-  PageSize,
-  PluralResourceName,
-  ResourceExplorerVariant,
-  ResourceName,
-  SelectionMode,
-  ShouldPersistUserCustomization,
+  type PageSize,
+  type PluralResourceName,
+  type ResourceExplorerVariant,
+  type ResourceName,
+  type SelectionMode,
+  type ShouldPersistUserCustomization,
 } from './common';
 import {
-  DropDownResourceDefinition,
-  ResourceDropDownSettings,
+  type DropDownResourceDefinition,
+  type ResourceDropDownSettings,
 } from './drop-down';
 
 /** Props common to all resource explorers. */

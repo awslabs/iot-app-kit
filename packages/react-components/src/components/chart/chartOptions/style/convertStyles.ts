@@ -1,8 +1,8 @@
-import { DataStream } from '@iot-app-kit/core';
-import { ChartOptions } from '../../types';
+import { type DataStream } from '@iot-app-kit/core';
+import { type ChartOptions } from '../../types';
 import {
-  ChartStyleSettingsWithDefaults,
-  Emphasis,
+  type ChartStyleSettingsWithDefaults,
+  type Emphasis,
   getDefaultStyles,
   getStyles,
 } from '../../utils/getStyles';

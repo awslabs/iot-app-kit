@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
-import { UseInputPropertyTimeSeriesDataOptions } from './types';
+import { type UseInputPropertyTimeSeriesDataOptions } from './types';
 
 import { useTimeSeriesData } from '../../../useTimeSeriesData';
 import { useRequestSelector } from '../../state';

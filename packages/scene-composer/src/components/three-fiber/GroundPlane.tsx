@@ -1,15 +1,15 @@
-import * as THREE from 'three';
-import React, { useRef, useEffect, useState } from 'react';
-import { ThreeEvent, useFrame } from '@react-three/fiber';
 import { Plane } from '@react-three/drei';
+import { type ThreeEvent, useFrame } from '@react-three/fiber';
+import { useEffect, useRef, useState } from 'react';
+import * as THREE from 'three';
 
-import { IGroundPlaneSettings, KnownSceneProperty } from '../../interfaces';
-import { useSceneComposerId } from '../../common/sceneComposerIdContext';
 import { MAX_CLICK_DISTANCE } from '../../common/constants';
+import { useSceneComposerId } from '../../common/sceneComposerIdContext';
 import useAddWidget from '../../hooks/useAddWidget';
 import useMatterportViewer from '../../hooks/useMatterportViewer';
 import useTwinMakerTextureLoader from '../../hooks/useTwinMakerTextureLoader';
-import { useEditorState, accessStore } from '../../store';
+import { type IGroundPlaneSettings, KnownSceneProperty } from '../../interfaces';
+import { accessStore, useEditorState } from '../../store';
 import { acceleratedRaycasting } from '../../utils/objectThreeUtils';
 
 const GroundPlane: React.FC = () => {

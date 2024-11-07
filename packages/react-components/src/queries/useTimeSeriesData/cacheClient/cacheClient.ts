@@ -1,12 +1,16 @@
-import { QueryClient, QueryFilters, QueryStatus } from '@tanstack/react-query';
+import {
+  type QueryClient,
+  type QueryFilters,
+  type QueryStatus,
+} from '@tanstack/react-query';
 import {
   IntervalTransformer,
   contains,
   getViewportType,
   overlaps,
 } from '../intervals';
-import { TimeSeriesDataCacheKeyManager } from './keyManager';
-import { Interval, Viewport } from '../types';
+import { type TimeSeriesDataCacheKeyManager } from './keyManager';
+import { type Interval, type Viewport } from '../types';
 import { removeExpiredIntervals } from '../intervals/utils/removeExpiredIntervals';
 
 type FilterSettings = {

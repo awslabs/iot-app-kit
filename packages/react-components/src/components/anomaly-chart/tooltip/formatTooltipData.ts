@@ -1,4 +1,4 @@
-import { TooltipSort } from '../types';
+import { type TooltipSort } from '../types';
 
 // This is what comes from echarts formatter
 export type AnomalyChartTooltipData = {

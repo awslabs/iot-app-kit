@@ -1,4 +1,4 @@
-import { EffectCallback } from 'react';
+import { type EffectCallback } from 'react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import isEqual from 'lodash.isequal';
 import { useCustomCompareEffect } from 'react-use';

@@ -1,5 +1,5 @@
-import { MutableRefObject, useEffect } from 'react';
-import { applyMode, Mode } from '@cloudscape-design/global-styles';
+import { type MutableRefObject, useEffect } from 'react';
+import { applyMode, type Mode } from '@cloudscape-design/global-styles';
 
 const useAwsLightDarkModes = (ref: MutableRefObject<HTMLDivElement | null>, mode: Mode): void => {
   useEffect(() => {

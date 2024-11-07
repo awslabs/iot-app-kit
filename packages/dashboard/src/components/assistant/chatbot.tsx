@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import { type FC, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import {
@@ -15,8 +15,8 @@ import 'animate.css';
 import './assistant.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { onCleanAssistantAction, onToggleChatbotAction } from '~/store/actions';
-import { DashboardState } from '~/store/state';
-import { DashboardMessages } from '~/messages';
+import { type DashboardState } from '~/store/state';
+import { type DashboardMessages } from '~/messages';
 
 export interface AssistantChatbotProps {
   height: number;

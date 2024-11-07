@@ -1,16 +1,16 @@
-import React, { CSSProperties } from 'react';
-import './component.css';
-import { LineWidget } from '~/customization/widgets/types';
+import { type CSSProperties } from 'react';
+import { type XYCoord } from 'react-dnd';
+import { useIsSelected } from '~/customization/hooks/useIsSelected';
+import { useWidgetActions } from '~/customization/hooks/useWidgetActions';
+import { type LineWidget } from '~/customization/widgets/types';
+import { type DashboardWidget } from '~/types';
 import {
   SVG_STROKE_DASHED,
   SVG_STROKE_DOTTED,
   SVG_STROKE_SOLID,
 } from '../constants';
+import './component.css';
 import { LineAnchor } from './lineAnchor/component';
-import { useIsSelected } from '~/customization/hooks/useIsSelected';
-import { useWidgetActions } from '~/customization/hooks/useWidgetActions';
-import { DashboardWidget } from '~/types';
-import { XYCoord } from 'react-dnd';
 
 const ANCHOR_HALF_SIDE_LENGTH_PX = 10;
 

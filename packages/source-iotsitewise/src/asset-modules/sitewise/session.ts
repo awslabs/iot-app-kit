@@ -1,6 +1,6 @@
-import { lastValueFrom, Observable, Subscription } from 'rxjs';
+import { lastValueFrom, Observable, type Subscription } from 'rxjs';
 import { HIERARCHY_ROOT_ID } from './types';
-import { RequestProcessor } from './requestProcessor';
+import { type RequestProcessor } from './requestProcessor';
 import type {
   AssetHierarchyQuery,
   AssetModelQuery,

@@ -1,14 +1,13 @@
-import React from 'react';
-import { DataStream, Primitive } from '@iot-app-kit/core';
-import { ChartLegend, ChartOptions } from '../../types';
+import { type DataStream, type Primitive } from '@iot-app-kit/core';
+import { type ChartLegend, type ChartOptions } from '../../types';
 import { ChartLegendTable } from './table';
-import { DataStreamInformation, TrendCursor } from './types';
-import { TrendCursorValues } from '../../../../echarts/extensions/trendCursors/store';
+import { type DataStreamInformation, type TrendCursor } from './types';
+import { type TrendCursorValues } from '../../../../echarts/extensions/trendCursors/store';
 import { useDataStreamMaxMin } from '../../hooks/useDataStreamMaxMin';
-import { MinMaxMap } from '../../store/dataStreamMinMaxStore';
+import { type MinMaxMap } from '../../store/dataStreamMinMaxStore';
 import type { TableProps } from '@cloudscape-design/components/table';
 import type { AssistantProperty } from '../../../../common/assistantProps';
-import { AlarmAssistantContext } from '../../../assistant-common/types';
+import { type AlarmAssistantContext } from '../../../assistant-common/types';
 
 type LegendTableDataStream = Pick<
   DataStream,

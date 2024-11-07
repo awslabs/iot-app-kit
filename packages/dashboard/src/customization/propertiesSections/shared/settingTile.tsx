@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormField, Grid } from '@cloudscape-design/components';
 import './styles.css';
 import type { FC, PropsWithChildren } from 'react';

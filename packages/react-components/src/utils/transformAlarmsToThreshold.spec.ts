@@ -9,7 +9,7 @@ import {
 } from '../testing/alarms';
 import { transformAlarmsToThreshold } from './transformAlarmsToThreshold';
 import { COMPARATOR_MAP } from '../common/constants';
-import { AlarmData } from '../hooks/useAlarms';
+import { type AlarmData } from '../hooks/useAlarms';
 import { DATA_STREAM } from '../testing/mockWidgetProperties';
 
 describe('transformAlarmsToThreshold', () => {

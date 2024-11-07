@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { accessStore } from '../../../../store';
-import { UndoStoreState } from '../../../../store/middlewares';
+import { type UndoStoreState } from '../../../../store/middlewares';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemGroup } from '../../common/styledComponents';
 import useDynamicScene from '../../../../hooks/useDynamicScene';

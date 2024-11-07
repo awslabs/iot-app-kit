@@ -1,4 +1,4 @@
-import { AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
+import { type AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
 import { createNonNullableList } from '../../../utils/createNonNullableList';
 import { parseAnomalyEvent } from './parseAnomalyEvent';
 

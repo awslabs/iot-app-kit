@@ -1,11 +1,10 @@
 import type { FC } from 'react';
-import React from 'react';
 import './legendSection.css';
 import StyleExpandableSection from '../shared/styleExpandableSection/styleExpandableSection';
 import { AlignmentDropdown } from '../components/alignmentDropdown';
 import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import { ChartLegend } from '~/customization/widgets/types';
+import { type ChartLegend } from '~/customization/widgets/types';
 import { LegendDisplaySection } from '../components/legendDisplaySection';
 
 type LegendSectionOptions = {

@@ -1,8 +1,8 @@
-import { BatchGetAssetPropertyValueHistoryEntry } from '@aws-sdk/client-iotsitewise';
+import { type BatchGetAssetPropertyValueHistoryEntry } from '@aws-sdk/client-iotsitewise';
 import {
-  BatchGetAssetPropertyValueHistory,
-  GetAssetPropertyValueHistory,
-  RequestResponse,
+  type BatchGetAssetPropertyValueHistory,
+  type GetAssetPropertyValueHistory,
+  type RequestResponse,
 } from '@iot-app-kit/core';
 import { take } from 'lodash';
 

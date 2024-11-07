@@ -1,13 +1,13 @@
-import { ReactNode } from 'react';
-import { FlashbarProps } from '@cloudscape-design/components';
+import { type ReactNode } from 'react';
+import { type FlashbarProps } from '@cloudscape-design/components';
 
-import ILogger from '../logger/ILogger';
+import type ILogger from '../logger/ILogger';
 
-import { FeatureConfig } from './feature';
-import { ISceneDocumentSnapshot } from './interfaces';
-import { IMetricRecorder } from './metricRecorder';
-import { SceneViewerConfig, SceneViewerPropsShared } from './sceneViewer';
-import { AssetType } from './assets';
+import { type FeatureConfig } from './feature';
+import { type ISceneDocumentSnapshot } from './interfaces';
+import { type IMetricRecorder } from './metricRecorder';
+import { type SceneViewerConfig, type SceneViewerPropsShared } from './sceneViewer';
+import { type AssetType } from './assets';
 
 /// TODO: Add documentation
 

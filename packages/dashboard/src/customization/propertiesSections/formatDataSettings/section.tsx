@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Box, SpaceBetween } from '@cloudscape-design/components';
 
 import './section.css';

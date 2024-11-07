@@ -1,27 +1,27 @@
 import {
   CreateEntityCommand,
-  CreateEntityCommandInput,
+  type CreateEntityCommandInput,
   DeleteEntityCommand,
-  DeleteEntityCommandInput,
+  type DeleteEntityCommandInput,
   GetEntityCommand,
-  GetEntityCommandInput,
+  type GetEntityCommandInput,
   GetSceneCommand,
-  GetSceneCommandOutput,
-  IoTTwinMakerClient,
+  type GetSceneCommandOutput,
+  type IoTTwinMakerClient,
   UpdateEntityCommand,
-  UpdateEntityCommandInput,
+  type UpdateEntityCommandInput,
   UpdateSceneCommand,
   CreateSceneCommand,
 } from '@aws-sdk/client-iottwinmaker';
 import {
   ListSecretsCommand,
-  SecretListEntry,
-  SecretsManagerClient,
+  type SecretListEntry,
+  type SecretsManagerClient,
 } from '@aws-sdk/client-secrets-manager';
 import {
-  SceneInfo,
-  TwinMakerKGQueryDataModule,
-  TwinMakerSceneMetadataModule,
+  type SceneInfo,
+  type TwinMakerKGQueryDataModule,
+  type TwinMakerSceneMetadataModule,
 } from '../types';
 
 export class SceneMetadataModule implements TwinMakerSceneMetadataModule {

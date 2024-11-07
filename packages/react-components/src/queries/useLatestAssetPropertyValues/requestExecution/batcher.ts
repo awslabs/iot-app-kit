@@ -1,12 +1,15 @@
 import DataLoader from 'dataloader';
 import { nanoid } from 'nanoid';
-import { BatchGetAssetPropertyValue, RequestResponse } from '@iot-app-kit/core';
 import {
-  LatestAssetPropertyValueRequest,
-  LatestAssetPropertyValueResponse,
+  type BatchGetAssetPropertyValue,
+  type RequestResponse,
+} from '@iot-app-kit/core';
+import {
+  type LatestAssetPropertyValueRequest,
+  type LatestAssetPropertyValueResponse,
 } from '../types';
 import { anySignal } from '../../useAssetPropertyValues/requestExecution/utils/anySignal';
-import { BatchGetAssetPropertyValueErrorEntry } from '@aws-sdk/client-iotsitewise';
+import { type BatchGetAssetPropertyValueErrorEntry } from '@aws-sdk/client-iotsitewise';
 
 type LoaderRequest = LatestAssetPropertyValueRequest & {
   abortSignal: AbortSignal;

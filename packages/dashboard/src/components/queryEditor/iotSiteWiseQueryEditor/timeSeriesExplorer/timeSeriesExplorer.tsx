@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Box from '@cloudscape-design/components/box';
 import { ResourceExplorerFooter } from '../footer/footer';
 import { QueryExtender } from '../queryExtender';
-import { useQuery } from '../../useQuery';
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import { DashboardWidget } from '~/types';
+import { type useQuery } from '../../useQuery';
+import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { type DashboardWidget } from '~/types';
 import {
   TimeSeriesExplorer,
   type TimeSeriesExplorerProps,

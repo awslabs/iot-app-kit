@@ -1,8 +1,11 @@
-import { AlarmData, AlarmDataStatus } from '../../../../hooks/useAlarms';
+import {
+  type AlarmData,
+  type AlarmDataStatus,
+} from '../../../../hooks/useAlarms';
 import { parseAlarmStateAssetProperty } from '../../../../hooks/useAlarms/transformers';
 import {
-  AlarmResource,
-  AlarmResourceWithLatestValue,
+  type AlarmResource,
+  type AlarmResourceWithLatestValue,
 } from '../../types/resources';
 
 export const transformAlarmData = ({

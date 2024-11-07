@@ -1,4 +1,4 @@
-import { AnomalyEventDiagnostic } from './types';
+import { type AnomalyEventDiagnostic } from './types';
 
 export const isDiagnostic = (
   diagnostic: object

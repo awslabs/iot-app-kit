@@ -1,5 +1,5 @@
 import { isWithinInterval } from 'date-fns';
-import { Interval } from '../../types';
+import { type Interval } from '../../types';
 import { collapse } from './collapse';
 
 /**

@@ -1,16 +1,22 @@
-import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
 import { Chart, useViewport } from '@iot-app-kit/react-components';
+import { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 // FIXME: Export ChartOptions from @iot-app-kit/react-components
 // FIXME: Export ChartStyleSettingsOptions from @iot-app-kit/react-components
 // eslint-disable-next-line no-restricted-imports
 import {
-  ChartOptions,
-  ChartStyleSettingsOptions,
+  type ChartOptions,
+  type ChartStyleSettingsOptions,
 } from '@iot-app-kit/react-components/src/components/chart/types';
 
+import { useQueries } from '~/components/dashboard/queryContext';
+import WidgetTile from '~/components/widgets/tile/tile';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import { useChartSize } from '~/hooks/useChartSize';
+import { onUpdateWidgetsAction } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
+import { type IoTSiteWiseDataStreamQuery } from '~/types';
+import NoChartData from '../components/no-chart-data';
 import type {
   AssetPropertyStyles,
   ChartAxisOptions,
@@ -19,16 +25,9 @@ import type {
   LineStyles,
   SymbolStyles,
 } from '../types';
-import { useQueries } from '~/components/dashboard/queryContext';
-import { getAggregation } from '../utils/widgetAggregationUtils';
-import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
-import { useChartSize } from '~/hooks/useChartSize';
-import WidgetTile from '~/components/widgets/tile/tile';
-import NoChartData from '../components/no-chart-data';
-import { default as lineSvgDark } from './line-dark.svg';
-import { IoTSiteWiseDataStreamQuery } from '~/types';
 import { assetModelQueryToSiteWiseAssetQuery } from '../utils/assetModelQueryToAssetQuery';
-import { onUpdateWidgetsAction } from '~/store/actions';
+import { getAggregation } from '../utils/widgetAggregationUtils';
+import { default as lineSvgDark } from './line-dark.svg';
 
 const mapConnectionStyleToVisualizationType = (
   connectionStyle: LineStyles['connectionStyle']

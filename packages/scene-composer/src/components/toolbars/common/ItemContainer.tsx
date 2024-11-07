@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash';
-import React, { ReactNode, useCallback, useState } from 'react';
+import { forwardRef, type ReactNode, useCallback, useState } from 'react';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 
@@ -11,7 +11,7 @@ import {
   ToolbarItemMenu,
   ToolbarItemText,
 } from './styledComponents';
-import { ToolbarItemOptions, ToolbarItemOrientation, ToolbarItemType } from './types';
+import { type ToolbarItemOptions, type ToolbarItemOrientation, type ToolbarItemType } from './types';
 
 interface ToolbarItemContainerProps {
   item: ToolbarItemOptions;
@@ -32,7 +32,7 @@ interface ToolbarItemContainerProps {
 
 // Solves forwardRef with props and eslint issue. Explictly setting the props type (twice) silences eslint
 // error "'XXX' is missing in props validation." See https://stackoverflow.com/a/66948051
-export const ItemContainer = React.forwardRef<HTMLDivElement, ToolbarItemContainerProps>(
+export const ItemContainer = forwardRef<HTMLDivElement, ToolbarItemContainerProps>(
   (
     {
       children,

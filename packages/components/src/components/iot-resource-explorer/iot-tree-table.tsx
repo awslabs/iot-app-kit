@@ -1,16 +1,16 @@
 import { Component, Host, h, Element, Prop, State } from '@stencil/core';
-import { createRoot, Root } from 'react-dom/client';
+import { createRoot, type Root } from 'react-dom/client';
 import {
-  EmptyStateProps,
+  type EmptyStateProps,
   RelatedTable,
-  RelatedTableExtendedProps,
+  type RelatedTableExtendedProps,
   withUseTreeCollection,
-  UseTreeCollection,
-  ITreeNode,
+  type UseTreeCollection,
+  type ITreeNode,
 } from '@iot-app-kit/related-table';
-import { TableProps } from '@awsui/components-react/table';
-import { NonCancelableCustomEvent } from '@awsui/components-react';
-import React, { createElement } from 'react';
+import { type TableProps } from '@awsui/components-react/table';
+import { type NonCancelableCustomEvent } from '@awsui/components-react';
+import { createElement } from 'react';
 
 const RelatedTableWithCollectionHooks = withUseTreeCollection(RelatedTable);
 

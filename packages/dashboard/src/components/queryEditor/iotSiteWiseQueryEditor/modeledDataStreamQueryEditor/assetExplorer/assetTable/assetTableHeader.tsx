@@ -1,5 +1,4 @@
 import Header from '@cloudscape-design/components/header';
-import React from 'react';
 
 interface AssetTableHeaderProps {
   totalItemCount: number;

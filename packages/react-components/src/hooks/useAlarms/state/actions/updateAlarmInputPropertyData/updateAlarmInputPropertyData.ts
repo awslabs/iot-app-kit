@@ -1,11 +1,11 @@
 import isEqual from 'lodash.isequal';
 import { combineStatusForQueries } from '../../../utils/queryStatus';
-import { AlarmsState } from '../../types';
+import { type AlarmsState } from '../../types';
 import { filterDataStreamsForAlarm } from './filterDataStreamsForAlarm';
 import { matchesDatastream } from './matchesDataStream';
 import {
-  UpdateAlarmInputDataAction,
-  UpdateAlarmInputDataActionPayload,
+  type UpdateAlarmInputDataAction,
+  type UpdateAlarmInputDataActionPayload,
 } from './types';
 
 export const onUpdateAlarmInputDataAction = (

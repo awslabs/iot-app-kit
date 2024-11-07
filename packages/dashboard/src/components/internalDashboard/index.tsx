@@ -1,8 +1,7 @@
-import React, { CSSProperties, ReactNode, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Viewport, getPlugin } from '@iot-app-kit/core';
-import { WebglContext } from '@iot-app-kit/react-components';
+import { ContentLayout } from '@cloudscape-design/components';
 import Box from '@cloudscape-design/components/box';
+import { I18nProvider } from '@cloudscape-design/components/i18n';
+import messages from '@cloudscape-design/components/i18n/messages/all.all';
 import {
   colorBackgroundCellShaded,
   colorBackgroundLayoutMain,
@@ -10,9 +9,10 @@ import {
   colorForegroundControlReadOnly,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
-import { ContentLayout } from '@cloudscape-design/components';
-import messages from '@cloudscape-design/components/i18n/messages/all.all';
-import { I18nProvider } from '@cloudscape-design/components/i18n';
+import { type Viewport, getPlugin } from '@iot-app-kit/core';
+import { WebglContext } from '@iot-app-kit/react-components';
+import { type CSSProperties, type ReactNode, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { PropertiesPaneIcon } from '../resizablePanes/assets/propertiesPaneIcon';
 
 import { selectedRect } from '~/util/select';
@@ -20,15 +20,15 @@ import { selectedRect } from '~/util/select';
 /**
  * Component imports
  */
-import { ResizablePanes } from '../resizablePanes';
 import ContextMenu from '../contextMenu';
-import { GestureableGrid, ReadOnlyGrid } from '../grid';
-import Widgets from '../widgets/list';
-import UserSelection from '../userSelection';
-import ComponentPalette from '../palette';
-import CustomDragLayer from '../dragLayer';
-import { QueryEditor } from '../queryEditor';
 import { useClients } from '../dashboard/clientContext';
+import CustomDragLayer from '../dragLayer';
+import { GestureableGrid, ReadOnlyGrid } from '../grid';
+import ComponentPalette from '../palette';
+import { QueryEditor } from '../queryEditor';
+import { ResizablePanes } from '../resizablePanes';
+import UserSelection from '../userSelection';
+import Widgets from '../widgets/list';
 import DashboardEmptyState from './dashboardEmptyState';
 
 /**
@@ -48,35 +48,35 @@ import { toGridPosition } from '~/util/position';
 import { useGestures } from './gestures';
 import { useKeyboardShortcuts } from './keyboardShortcuts';
 
+import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import { DefaultDashboardMessages } from '~/messages';
+import type { DashboardState } from '~/store/state';
 import type {
-  DashboardSave,
-  Position,
-  DashboardWidget,
-  DashboardToolbar,
   DashboardConfigurationChange,
+  DashboardSave,
+  DashboardToolbar,
+  DashboardWidget,
+  Position,
 } from '~/types';
+import { AssetModelSelection } from '../assetModelSelection/assetModelSelection';
+import ConfirmDeleteModal from '../confirmDeleteModal';
 import type { ContextMenuProps } from '../contextMenu';
 import type { DropEvent, GesturableGridProps } from '../grid';
-import type { WidgetsProps } from '../widgets/list';
-import type { UserSelectionProps } from '../userSelection';
-import type { DashboardState } from '~/store/state';
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
-import ConfirmDeleteModal from '../confirmDeleteModal';
-import { AssetModelSelection } from '../assetModelSelection/assetModelSelection';
 import { useModelBasedQuery } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/modelBasedQuery/useModelBasedQuery';
+import type { UserSelectionProps } from '../userSelection';
+import type { WidgetsProps } from '../widgets/list';
 import DashboardHeader from './dashboardHeader';
 
 import '@iot-app-kit/components/styles.css';
-import './index.css';
+import { useChatbotPosition } from '~/hooks/useChatbotPosition';
 import { useDashboardViewport } from '~/hooks/useDashboardViewport';
+import { useSyncDashboardConfiguration } from '~/hooks/useSyncDashboardConfiguration';
 import { parseViewport } from '~/util/parseViewport';
 import Actions from '../actions';
-import { useSyncDashboardConfiguration } from '~/hooks/useSyncDashboardConfiguration';
-import { Chatbot } from '../assistant/chatbot';
-import { useChatbotPosition } from '~/hooks/useChatbotPosition';
-import { AssistantIcon } from '../assistant/assistantIcon';
 import { AssistantFloatingMenu } from '../assistant/assistantFloatingMenu';
+import { AssistantIcon } from '../assistant/assistantIcon';
+import { Chatbot } from '../assistant/chatbot';
+import './index.css';
 
 type InternalDashboardProperties = {
   onSave?: DashboardSave;

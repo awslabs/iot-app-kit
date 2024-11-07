@@ -1,10 +1,18 @@
-import { DataPoint, Threshold, ThresholdValue } from '@iot-app-kit/core';
 import {
-  ChartRef,
+  type DataPoint,
+  type Threshold,
+  type ThresholdValue,
+} from '@iot-app-kit/core';
+import {
+  type ChartRef,
   useGroupableEChart,
   useLoadableEChart,
 } from '../../../hooks/useECharts';
-import { ChartDataQuality, ChartOptions, ChartStyleSettings } from '../types';
+import {
+  type ChartDataQuality,
+  type ChartOptions,
+  type ChartStyleSettings,
+} from '../types';
 import { useXAxis } from './axes/xAxis';
 import { useTooltip } from './tooltip/convertTooltip';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -16,10 +24,10 @@ import {
   PERFORMANCE_MODE_THRESHOLD,
 } from '../eChartsConstants';
 import { useSeriesAndYAxis } from './seriesAndYAxis/convertSeriesAndYAxis';
-import { SeriesOption } from 'echarts';
-import { GenericSeries } from '../../../echarts/types';
-import { useNormalizedDataStreams } from '../hooks/useNormalizedDataStreams';
-import { ChartAlarms } from '../hooks/useChartAlarms';
+import { type SeriesOption } from 'echarts';
+import { type GenericSeries } from '../../../echarts/types';
+import { type useNormalizedDataStreams } from '../hooks/useNormalizedDataStreams';
+import { type ChartAlarms } from '../hooks/useChartAlarms';
 import { createNonNullableList } from '../../../utils/createNonNullableList';
 
 const toDataStreamIdentifiers = (

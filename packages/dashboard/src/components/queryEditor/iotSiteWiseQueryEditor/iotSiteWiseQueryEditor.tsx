@@ -1,12 +1,14 @@
-import React from 'react';
-import { AssetSummary, IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import {
+  type AssetSummary,
+  type IoTSiteWise,
+} from '@aws-sdk/client-iotsitewise';
 import Tabs from '@cloudscape-design/components/tabs';
 import { useSelector } from 'react-redux';
 import type { DashboardState } from '~/store/state';
-import { useQuery } from '../useQuery';
+import { type useQuery } from '../useQuery';
 import { AssetModelDataStreamExplorer } from './assetModelDataStreamExplorer/assetModelDataStreamExplorer';
 import { ModeledExplorer } from './modeledExplorer/modeledExplorer';
-import { DashboardWidget } from '~/types';
+import { type DashboardWidget } from '~/types';
 import { UnmodeledExplorer } from './timeSeriesExplorer/timeSeriesExplorer';
 
 export interface IoTSiteWiseQueryEditorProps {

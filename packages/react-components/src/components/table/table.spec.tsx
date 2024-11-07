@@ -1,17 +1,16 @@
-import React from 'react';
-import userEvent from '@testing-library/user-event';
-import { act, render, renderHook } from '@testing-library/react';
+import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import cloudscapeWrapper from '@cloudscape-design/components/test-utils/dom';
+import type { DataStream } from '@iot-app-kit/core';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
-import type { DataStream } from '@iot-app-kit/core';
-import { Table } from './table';
-import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
-import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import { act, render, renderHook } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import type {
   AssistantActionEventDetail,
   AssistantProperty,
 } from '../../common/assistantProps';
-import cloudscapeWrapper from '@cloudscape-design/components/test-utils/dom';
+import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
+import { Table } from './table';
 
 const VIEWPORT = { duration: '5m' };
 

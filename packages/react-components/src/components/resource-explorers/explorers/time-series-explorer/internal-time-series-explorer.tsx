@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useTimeSeries } from './use-time-series';
 import type { TimeSeriesExplorerProps } from './types';
 import {
@@ -31,7 +29,7 @@ import {
   createDefaultLatestValuesTableDefinition,
 } from '../../constants/table-resource-definitions';
 import { DEFAULT_TIME_SERIES_DROP_DOWN_DEFINITION } from '../../constants/drop-down-resource-definitions';
-import { TableResourceDefinition } from '../../types/table';
+import { type TableResourceDefinition } from '../../types/table';
 
 export function InternalTimeSeriesExplorer({
   iotSiteWiseClient,

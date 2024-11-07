@@ -5,13 +5,12 @@ import {
 } from '@iot-app-kit/testing-util';
 
 import { DashboardWrapper as Dashboard } from './wrapper';
-import React from 'react';
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import {
   IoTSiteWise,
   type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
-import { RefreshRate } from '../refreshRate/types';
+import { type RefreshRate } from '../refreshRate/types';
 
 const config = {
   credentials: {

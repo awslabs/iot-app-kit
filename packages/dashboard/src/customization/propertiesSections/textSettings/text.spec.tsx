@@ -1,4 +1,3 @@
-import React from 'react';
 import { MOCK_TEXT_WIDGET } from '../../../../testing/mocks';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';

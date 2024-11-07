@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { ComponentQuery } from '../../common/chartTypes';
+import { type ComponentQuery } from '../../common/chartTypes';
 import { getAlarmQueries, getTimeSeriesQueries } from '../../utils/queries';
 import {
-  AlarmCompositeModelRequest,
-  AlarmData,
-  AlarmInputPropertyRequest,
-  UseAlarmsOptions,
+  type AlarmCompositeModelRequest,
+  type AlarmData,
+  type AlarmInputPropertyRequest,
+  type UseAlarmsOptions,
   useAlarms,
 } from '../useAlarms';
 import { createNonNullableList } from '../../utils/createNonNullableList';

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { STYLE_PREFIX } from './constants';
-import { RefObject, useCallback, useEffect, useState } from 'react';
+import { type RefObject, useCallback, useEffect, useState } from 'react';
 
 export const colors = {
   nodeBackground: `--${STYLE_PREFIX}-color-background-node`,

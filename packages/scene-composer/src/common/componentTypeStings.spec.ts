@@ -2,7 +2,7 @@ import { useIntl } from 'react-intl';
 
 import { KnownComponentType } from '../interfaces';
 import { Component } from '../models/SceneModels';
-import { IDataOverlayComponentInternal, ISceneComponentInternal } from '../store';
+import { type IDataOverlayComponentInternal, type ISceneComponentInternal } from '../store';
 
 import { getLocalizedComponentType } from './componentTypeStings';
 

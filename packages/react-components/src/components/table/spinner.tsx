@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const LoadingSpinner: React.FunctionComponent<
   { size?: number; dark?: boolean } | Record<string, never>
 > = (props) => {

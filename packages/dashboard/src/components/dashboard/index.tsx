@@ -1,38 +1,38 @@
-import React, { memo, useMemo } from 'react';
-import { Provider } from 'react-redux';
-import { DndProvider } from 'react-dnd';
-import { TouchBackend } from 'react-dnd-touch-backend';
 import type { EdgeMode, Viewport } from '@iot-app-kit/core';
 import { isEdgeModeEnabled } from '@iot-app-kit/core';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { memo, useMemo } from 'react';
+import { DndProvider } from 'react-dnd';
+import { TouchBackend } from 'react-dnd-touch-backend';
+import { Provider } from 'react-redux';
 import InternalDashboard from '../internalDashboard';
 
 import { configureDashboardStore, toDashboardState } from '~/store';
 
 import { useDashboardPlugins } from '~/customization/api';
 import type {
+  AssistantConfiguration,
   DashboardClientConfiguration,
   DashboardConfiguration,
   DashboardConfigurationChange,
   DashboardSave,
-  ViewportChange,
   DashboardToolbar,
-  AssistantConfiguration,
+  ViewportChange,
 } from '~/types';
 import { ClientContext } from './clientContext';
-import { QueryContext } from './queryContext';
 import { getClients } from './getClients';
 import { getQueries } from './getQueries';
+import { QueryContext } from './queryContext';
 
 import '@cloudscape-design/global-styles/index.css';
-import '../../styles/variables.css';
-import { queryClient } from '~/data/query-client';
-import { PropertiesPanel } from '~/customization/propertiesSections';
-import { FpsView } from 'react-fps';
 import { TimeSync } from '@iot-app-kit/react-components';
 import { debounce } from 'lodash';
+import { FpsView } from 'react-fps';
+import { PropertiesPanel } from '~/customization/propertiesSections';
+import { queryClient } from '~/data/query-client';
 import { useAWSRegion } from '~/hooks/useAWSRegion';
+import '../../styles/variables.css';
 
 export type DashboardProperties = {
   onDashboardConfigurationChange?: DashboardConfigurationChange;

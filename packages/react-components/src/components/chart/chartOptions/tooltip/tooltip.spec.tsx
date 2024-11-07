@@ -1,8 +1,7 @@
-import React from 'react';
+import { type DataPoint } from '@iot-app-kit/core';
 import { render, screen } from '@testing-library/react';
+import { type IdentifiableDataStreamOptions } from './datastreams';
 import { XYPlotTooltip } from './tooltip';
-import { DataPoint } from '@iot-app-kit/core';
-import { IdentifiableDataStreamOptions } from './datastreams';
 
 const time = 1710519237362;
 

@@ -1,7 +1,7 @@
-import { AlarmDataState, AlarmsState } from '../../types';
+import { type AlarmDataState, type AlarmsState } from '../../types';
 import {
-  UpdateAlarmSourceDataAction,
-  UpdateAlarmSourceDataActionPayload,
+  type UpdateAlarmSourceDataAction,
+  type UpdateAlarmSourceDataActionPayload,
 } from './types';
 
 const findAssetPropertyValueSummary = (

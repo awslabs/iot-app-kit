@@ -1,4 +1,3 @@
-import React from 'react';
 import { fontSizeHeadingL } from '@cloudscape-design/design-tokens';
 
 export const ExpandableSectionHeading = ({

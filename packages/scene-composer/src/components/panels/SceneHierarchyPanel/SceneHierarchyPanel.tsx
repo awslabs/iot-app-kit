@@ -1,4 +1,3 @@
-import React from 'react';
 import { defineMessages } from '@formatjs/intl';
 import { useIntl } from 'react-intl';
 

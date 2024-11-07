@@ -1,19 +1,19 @@
 import {
-  IoTSiteWiseClient,
+  type IoTSiteWiseClient,
   paginateListAssetProperties,
   paginateListAssetModelProperties,
-  IoTSiteWisePaginationConfiguration,
-  ListAssetPropertiesCommandInput,
-  ListAssetModelPropertiesCommandInput,
-  ListAssetPropertiesCommandOutput,
-  ListAssetModelPropertiesCommandOutput,
-  AssetPropertySummary,
-  AssetModelPropertySummary,
+  type IoTSiteWisePaginationConfiguration,
+  type ListAssetPropertiesCommandInput,
+  type ListAssetModelPropertiesCommandInput,
+  type ListAssetPropertiesCommandOutput,
+  type ListAssetModelPropertiesCommandOutput,
+  type AssetPropertySummary,
+  type AssetModelPropertySummary,
 } from '@aws-sdk/client-iotsitewise';
 import type { ModeledDataStream } from '../types';
 import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
 import { DEFAULT_STRING } from '~/components/queryEditor/contants';
-import { Paginator } from '@aws-sdk/types';
+import { type Paginator } from '@aws-sdk/types';
 import { type SelectedAsset } from '../../types';
 
 export class listModeledDataStreamsRequestWithCompositeModels {

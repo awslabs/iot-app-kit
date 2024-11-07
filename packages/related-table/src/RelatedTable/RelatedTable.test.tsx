@@ -1,8 +1,7 @@
 import { render } from '@testing-library/react';
-import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { RelatedTable } from './RelatedTable';
-import { TreeNode, ITreeNode } from '../Model/TreeNode';
+import { TreeNode, type ITreeNode } from '../Model/TreeNode';
 import { recursiveBuildTreePrefix } from '../utils';
 
 const parentNode = new TreeNode({ name: 'Parent', id: 'parent' });

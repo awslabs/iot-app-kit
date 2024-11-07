@@ -1,17 +1,17 @@
 import { useMemo } from 'react';
 import {
-  DescribeAlarmModelRequest,
-  IoTEvents,
-  IoTEventsClient,
+  type DescribeAlarmModelRequest,
+  type IoTEvents,
+  type IoTEventsClient,
 } from '@aws-sdk/client-iot-events';
-import { DescribeAlarmModel } from '@iot-app-kit/core';
-import { QueryFunctionContext, useQueries } from '@tanstack/react-query';
+import { type DescribeAlarmModel } from '@iot-app-kit/core';
+import { type QueryFunctionContext, useQueries } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 import { queryClient } from '../queryClient';
 import { DescribeAlarmModelCacheKeyFactory } from './describeAlarmModelQueryKeyFactory';
 import { hasRequestFunction, isAlarmModelId } from '../predicates';
 import { useIoTEventsClient } from '../../hooks/requestFunctions/useIoTEventsClient';
-import { QueryOptionsGlobal } from '../common/types';
+import { type QueryOptionsGlobal } from '../common/types';
 
 export type UseDescribeAlarmModelsOptions = {
   iotEventsClient?: IoTEventsClient | IoTEvents;

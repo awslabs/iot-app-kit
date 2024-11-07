@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
-import { DataStreamInformation } from '../../types';
+import { useMemo } from 'react';
+import { type DataStreamInformation } from '../../types';
 import { useVisibleDataStreams } from '../../../../hooks/useVisibleDataStreams';
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 
 type TrendCursorCellOptions = Omit<
   DataStreamInformation,

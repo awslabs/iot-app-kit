@@ -2,7 +2,7 @@
 /**
  * This file is copied from https://github.com/pmndrs/three-stdlib with some modifications.
  */
-import { Euler, Camera, EventDispatcher, Vector3 } from 'three';
+import { Euler, type Camera, EventDispatcher, Vector3 } from 'three';
 
 const _euler = /* @__PURE__ */ new Euler(0, 0, 0, 'YXZ');
 const _vector = /* @__PURE__ */ new Vector3();

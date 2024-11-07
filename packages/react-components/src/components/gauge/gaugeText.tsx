@@ -1,8 +1,7 @@
 // eslint-disable-next-line import/default
-import React from 'react';
-import { Quality } from '@aws-sdk/client-iotsitewise';
+import { type Quality } from '@aws-sdk/client-iotsitewise';
 import { DataQualityText } from '../data-quality/data-quality-text';
-import { GaugeSettings } from './types';
+import { type GaugeSettings } from './types';
 import {
   colorTextBodyDefault,
   colorTextHeadingDefault,
@@ -10,11 +9,11 @@ import {
 import { AlarmStateTextWithAssistant } from '../alarm-components/alarm-state/alarmStateTextWithAssistant';
 import { AlarmStateText } from '../alarm-components/alarm-state/alarmStateText';
 import { getPreciseValue } from '../../utils/getPreciseValue';
-import { Primitive } from '@iot-app-kit/core';
+import { type Primitive } from '@iot-app-kit/core';
 import { GaugeErrorText } from './gaugeErrorText';
-import { AlarmContent } from '../alarm-components/alarm-content/types';
-import { AssistantProperty } from '../../common/assistantProps';
-import { AlarmDataStatus } from '../../hooks/useAlarms';
+import { type AlarmContent } from '../alarm-components/alarm-content/types';
+import { type AssistantProperty } from '../../common/assistantProps';
+import { type AlarmDataStatus } from '../../hooks/useAlarms';
 import { Spinner } from '@cloudscape-design/components';
 
 const getFormattedValue = ({

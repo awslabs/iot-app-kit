@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Icon from '@cloudscape-design/components/icon';
 import Box from '@cloudscape-design/components/box';
 

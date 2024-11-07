@@ -1,15 +1,14 @@
-import React from 'react';
+import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import { type DataStream } from '@iot-app-kit/core';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
-import { DataStream } from '@iot-app-kit/core';
-import { screen, render } from '@testing-library/react';
-import { Chart } from '../index';
-import { ChartLegend } from '../types';
-import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import { render, screen } from '@testing-library/react';
 import type {
   AssistantActionEventDetail,
   AssistantProperty,
 } from '../../../common/assistantProps';
+import { Chart } from '../index';
+import { type ChartLegend } from '../types';
 
 const VIEWPORT = { duration: '5m' };
 

@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useStableDashboardConfiguration } from '~/hooks/useStableDashboardConfiguration';
-import Dashboard, { DashboardProperties } from './index';
+import Dashboard, { type DashboardProperties } from './index';
 
 export const DashboardWrapper: React.FC<DashboardProperties> = ({
   onSave,

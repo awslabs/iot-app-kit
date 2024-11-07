@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Primitive } from '@iot-app-kit/core';
 import { round } from '@iot-app-kit/core-util';
 

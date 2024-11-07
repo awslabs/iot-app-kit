@@ -1,5 +1,5 @@
-import { TrendCursorsData } from '../../state';
-import { TrendCursorValue } from '../../types';
+import { type TrendCursorsData } from '../../state';
+import { type TrendCursorValue } from '../../types';
 
 export type SetTrendCursorValuesAction = {
   type: 'SET_TREND_CURSOR_VALUES';

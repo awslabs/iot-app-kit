@@ -9,7 +9,7 @@ import {
   intersect,
   subtractIntervals,
 } from '../../../common/intervalStructure';
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 import { getExpiredCacheIntervals } from './expiredCacheIntervals';
 import { pointBisector } from '../../../common/dataFilters';
 import type {

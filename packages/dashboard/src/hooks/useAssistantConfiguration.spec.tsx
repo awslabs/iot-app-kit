@@ -1,12 +1,12 @@
-import React, { ReactNode } from 'react';
-import { useAssistantConfiguration } from './useAssistantConfiguration';
-import { renderHook, waitFor } from '@testing-library/react';
-import { configureDashboardStore } from '~/store';
-import { initialState } from '~/store/state';
-import { onToggleReadOnly } from '~/store/actions';
-import { Provider, useDispatch } from 'react-redux';
 import type { AssistantActionEventDetail } from '@iot-app-kit/react-components';
+import { renderHook, waitFor } from '@testing-library/react';
+import type { ReactNode } from 'react';
 import { act } from 'react-dom/test-utils';
+import { Provider, useDispatch } from 'react-redux';
+import { configureDashboardStore } from '~/store';
+import { onToggleReadOnly } from '~/store/actions';
+import { initialState } from '~/store/state';
+import { useAssistantConfiguration } from './useAssistantConfiguration';
 
 const store = configureDashboardStore(initialState);
 const TestProvider: React.FC<{

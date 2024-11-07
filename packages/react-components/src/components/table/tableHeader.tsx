@@ -1,14 +1,15 @@
-import React, { useEffect, useRef, type FunctionComponent } from 'react';
-import Header from '@cloudscape-design/components/header';
+import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
+import Header from '@cloudscape-design/components/header';
+import Popover from '@cloudscape-design/components/popover';
 import SpaceBetween from '@cloudscape-design/components/space-between';
+import StatusIndicator from '@cloudscape-design/components/status-indicator';
+import type { FunctionComponent } from 'react';
+import { useEffect, useRef } from 'react';
+import { FormattedMessage } from 'react-intl';
 import type { AssistantProperty } from '../../common/assistantProps';
 import { Title } from '../../common/title';
-import Box from '@cloudscape-design/components/box';
-import Popover from '@cloudscape-design/components/popover';
-import StatusIndicator from '@cloudscape-design/components/status-indicator';
 import { ASSISTANT_SELECTION_LIMITATION } from './constants';
-import { FormattedMessage } from 'react-intl';
 
 type TableHeaderProps = {
   selectedItems: number;

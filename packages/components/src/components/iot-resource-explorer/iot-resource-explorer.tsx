@@ -1,18 +1,26 @@
 import { Component, h, Prop, State, Watch } from '@stencil/core';
-import { ErrorDetails, TreeProvider, TreeQuery } from '@iot-app-kit/core';
+import {
+  type ErrorDetails,
+  type TreeProvider,
+  type TreeQuery,
+} from '@iot-app-kit/core';
 import {
   BranchReference,
-  SiteWiseAssetTreeNode,
+  type SiteWiseAssetTreeNode,
 } from '@iot-app-kit/source-iotsitewise';
-import { SiteWiseAssetResource, FilterTexts, ColumnDefinition } from './types';
 import {
-  EmptyStateProps,
-  ITreeNode,
-  UseTreeCollection,
+  type SiteWiseAssetResource,
+  type FilterTexts,
+  type ColumnDefinition,
+} from './types';
+import {
+  type EmptyStateProps,
+  type ITreeNode,
+  type UseTreeCollection,
 } from '@iot-app-kit/related-table';
 import { parseSitewiseAssetTree } from './utils';
-import { TableProps } from '@awsui/components-react/table';
-import { NonCancelableCustomEvent } from '@awsui/components-react';
+import { type TableProps } from '@awsui/components-react/table';
+import { type NonCancelableCustomEvent } from '@awsui/components-react';
 import { v4 as uuidv4 } from 'uuid';
 
 const DEFAULT_COLUMNS: ColumnDefinition<SiteWiseAssetResource>[] = [

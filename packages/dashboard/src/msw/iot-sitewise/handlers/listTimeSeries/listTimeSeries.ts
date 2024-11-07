@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import {
-  ListTimeSeriesType,
+  type ListTimeSeriesType,
   type ListTimeSeriesRequest,
   type ListTimeSeriesResponse,
 } from '@aws-sdk/client-iotsitewise';

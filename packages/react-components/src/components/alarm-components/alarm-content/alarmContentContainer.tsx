@@ -1,6 +1,5 @@
-import React from 'react';
 import { Box, SpaceBetween } from '@cloudscape-design/components';
-import { AlarmContent } from './types';
+import { type AlarmContent } from './types';
 import { AlarmStateTextCustomIcon } from '../alarm-state/alarmStateTextCustomIcon';
 
 export interface AlarmContentContainerProps {

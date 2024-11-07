@@ -1,4 +1,4 @@
-import { WorkspaceOption } from './workspaceSelector/types';
+import { type WorkspaceOption } from './workspaceSelector/types';
 
 export interface SearchFields {
   workspace: WorkspaceOption | null;

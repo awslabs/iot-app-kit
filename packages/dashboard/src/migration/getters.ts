@@ -8,11 +8,11 @@ import {
   timelineProperties,
 } from './constants';
 import {
-  ApplicationProperty,
-  MonitorMetric,
-  MonitorWidget,
+  type ApplicationProperty,
+  type MonitorMetric,
+  type MonitorWidget,
   MonitorWidgetType,
-  SiteWiseWidgetType,
+  type SiteWiseWidgetType,
 } from './types';
 import { convertResolution } from './convert-monitor-to-app-defintion';
 

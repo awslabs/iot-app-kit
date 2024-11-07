@@ -1,8 +1,13 @@
 import { useEffect } from 'react';
 import useDataStore from '../../../../store';
-import { Updater, TrendCursorGroupId, onConnect, onDisconnect } from '../store';
-import { ChartRef } from '../../../../hooks/useECharts';
-import { ElementEvent } from 'echarts';
+import {
+  type Updater,
+  type TrendCursorGroupId,
+  onConnect,
+  onDisconnect,
+} from '../store';
+import { type ChartRef } from '../../../../hooks/useECharts';
+import { type ElementEvent } from 'echarts';
 import { useThrottledTrendCursorValues } from './useThrottledTrendCursorValues';
 import { useTrendCursorActions } from './useTrendCursorActions';
 

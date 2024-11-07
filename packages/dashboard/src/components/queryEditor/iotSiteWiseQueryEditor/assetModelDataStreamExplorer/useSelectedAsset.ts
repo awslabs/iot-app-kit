@@ -1,6 +1,6 @@
 import {
-  AssetExplorerProps,
-  AssetResource,
+  type AssetExplorerProps,
+  type AssetResource,
 } from '@iot-app-kit/react-components';
 import { useState } from 'react';
 

@@ -1,11 +1,10 @@
-import React from 'react';
-import { FormField, Input, InputProps } from '@cloudscape-design/components';
-import { ColorRepresentation } from 'three';
-import tinycolor, { Color } from 'tinycolor2';
-import './ColorPicker.scss';
+import { FormField, Input, type InputProps } from '@cloudscape-design/components';
+import { type BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
+import { type NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import { HexColorPicker } from 'react-colorful';
-import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
+import { type ColorRepresentation } from 'three';
+import tinycolor, { type Color } from 'tinycolor2';
+import './ColorPicker.scss';
 
 export const DEFAULT_COLOR = new tinycolor().toHexString();
 

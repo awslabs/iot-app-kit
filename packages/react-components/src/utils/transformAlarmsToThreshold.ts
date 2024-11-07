@@ -1,7 +1,7 @@
-import { Threshold } from '@iot-app-kit/core';
-import { AlarmData } from '../hooks/useAlarms';
+import { type Threshold } from '@iot-app-kit/core';
+import { type AlarmData } from '../hooks/useAlarms';
 import { IoTEventsToSynchroChartsComparisonOperator } from '@iot-app-kit/source-iotsitewise';
-import { COMPARATOR_MAP, COMPARISON_OPERATOR } from '../common/constants';
+import { COMPARATOR_MAP, type COMPARISON_OPERATOR } from '../common/constants';
 
 const createThreshold = ({
   thresholdValue,

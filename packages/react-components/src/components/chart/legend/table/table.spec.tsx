@@ -1,7 +1,6 @@
-import React from 'react';
 import { render, renderHook, screen } from '@testing-library/react';
 import { ChartLegendTable } from './table';
-import { DataStreamInformation, TrendCursor } from './types';
+import { type DataStreamInformation, type TrendCursor } from './types';
 import { useChartStore } from '../../store';
 import { formatDate } from '../../../../utils/time';
 

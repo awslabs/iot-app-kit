@@ -1,6 +1,6 @@
-import { Data, DataSource } from '../../types';
-import { ArrowDataSource } from './dataSource';
-import { ArrowDataSourceValue, FieldType } from './input';
+import { type Data, type DataSource } from '../../types';
+import { type ArrowDataSource } from './dataSource';
+import { type ArrowDataSourceValue, FieldType } from './input';
 import { ArrowDataSourceTransformer } from './transformer';
 
 type TestArrowDataValue = {

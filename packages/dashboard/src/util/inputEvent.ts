@@ -1,5 +1,5 @@
-import { NonCancelableCustomEvent } from '@cloudscape-design/components';
-import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
+import { type NonCancelableCustomEvent } from '@cloudscape-design/components';
+import { type BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
 
 // Should never return NaN
 export const numberFromDetail = (

@@ -1,5 +1,5 @@
 import { Component, h, State } from '@stencil/core';
-import { AssetSummary } from '@aws-sdk/client-iotsitewise';
+import { type AssetSummary } from '@aws-sdk/client-iotsitewise';
 
 interface Asset extends Partial<AssetSummary> {
   parentId: string;

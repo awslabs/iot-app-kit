@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import ILogger from '../../ILogger';
+import type ILogger from '../../ILogger';
 
 export interface ILoggingContext {
   log: ILogger | null;

@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
 import { FormField, Select, SpaceBetween } from '@cloudscape-design/components';
+import { useContext } from 'react';
 import { useIntl } from 'react-intl';
 
-import { IValueDataBinding, IValueDataBindingProvider } from '../../../../interfaces';
-import { IMotionIndicatorComponentInternal, useSceneDocument } from '../../../../store';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
-import { Component } from '../../../../models/SceneModels';
+import { type IValueDataBinding, type IValueDataBindingProvider } from '../../../../interfaces';
+import { type Component } from '../../../../models/SceneModels';
+import { type IMotionIndicatorComponentInternal, useSceneDocument } from '../../../../store';
 import { ValueDataBindingBuilder } from '../common/ValueDataBindingBuilder';
 
 interface IDataBindingEditorProps {

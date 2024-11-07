@@ -1,6 +1,6 @@
 import {
-  DashboardClientConfiguration,
-  DashboardIotSiteWiseQueries,
+  type DashboardClientConfiguration,
+  type DashboardIotSiteWiseQueries,
 } from '~/types';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { getClients } from './getClients';

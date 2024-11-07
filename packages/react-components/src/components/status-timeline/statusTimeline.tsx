@@ -1,9 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo, useRef } from 'react';
-import { StyleSettingsMap, Threshold, Viewport } from '@iot-app-kit/core';
+import { useMemo, useRef } from 'react';
+import {
+  type StyleSettingsMap,
+  type Threshold,
+  type Viewport,
+} from '@iot-app-kit/core';
 import {
   StatusTimeline as StatusTimelineBaseWrongType,
-  LineChart,
+  type LineChart,
 } from '@iot-app-kit/charts';
 import type {
   DataStream as DataStreamViz,
@@ -11,7 +15,7 @@ import type {
 } from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
-import { AssistantProperty } from '../../common/assistantProps';
+import { type AssistantProperty } from '../../common/assistantProps';
 import {
   DEFAULT_LEGEND,
   DEFAULT_VIEWPORT,

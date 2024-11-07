@@ -1,15 +1,19 @@
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import FormField from '@cloudscape-design/components/form-field';
+import { type OptionDefinition } from '@cloudscape-design/components/internal/components/option/interfaces';
 import Select, { type SelectProps } from '@cloudscape-design/components/select';
-import { OptionDefinition } from '@cloudscape-design/components/internal/components/option/interfaces';
 import { type useQuery } from '@tanstack/react-query';
-import React, { useEffect } from 'react';
-import { Controller, type Control, UseFormSetValue } from 'react-hook-form';
+import { useEffect } from 'react';
+import {
+  Controller,
+  type UseFormSetValue,
+  type Control,
+} from 'react-hook-form';
 import { useLocalStorage } from 'react-use';
 
+import type { SearchFields } from '../types';
 import { useWorkspaces } from './useWorkspaces';
 import { WorkspaceOptionFactory } from './workspaceOptionFactory';
-import type { SearchFields } from '../types';
 
 type CloudscapeStatusType = NonNullable<SelectProps['statusType']>;
 type TanstackStatusType = ReturnType<typeof useQuery>['status'];

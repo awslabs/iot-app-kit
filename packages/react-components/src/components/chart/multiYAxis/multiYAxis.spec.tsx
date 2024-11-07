@@ -1,5 +1,4 @@
-import React from 'react';
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 import { fireEvent, render, renderHook, screen } from '@testing-library/react';
 import { MultiYAxisLegend } from './multiYAxis';
 import { act } from 'react-dom/test-utils';

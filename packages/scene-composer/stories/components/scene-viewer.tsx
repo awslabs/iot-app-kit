@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import { type FC } from 'react';
 
-import { SceneViewerPropsShared, COMPOSER_FEATURES } from '../../src';
+import { type SceneViewerPropsShared, type COMPOSER_FEATURES } from '../../src';
 
 import SceneComposerWrapper from './scene-composer';
 import { viewerArgTypes } from './argTypes';

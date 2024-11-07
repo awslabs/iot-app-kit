@@ -1,7 +1,6 @@
 import Pagination, {
   type PaginationProps,
 } from '@cloudscape-design/components/pagination';
-import React from 'react';
 
 type ModeledDataStreamTablePaginationProps = PaginationProps;
 

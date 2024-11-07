@@ -1,8 +1,8 @@
 import {
-  SiteWiseAssetTreeNode,
-  HierarchyGroup,
+  type SiteWiseAssetTreeNode,
+  type HierarchyGroup,
 } from '@iot-app-kit/source-iotsitewise';
-import { SiteWiseAssetResource } from './types';
+import { type SiteWiseAssetResource } from './types';
 
 const recursiveParseSitewiseAssetTree = (
   flattenTree: SiteWiseAssetResource[],

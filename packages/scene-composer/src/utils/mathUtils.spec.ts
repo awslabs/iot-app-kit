@@ -1,4 +1,4 @@
-import { Color } from '../models/SceneModels';
+import { type Color } from '../models/SceneModels';
 
 import {
   generateUUID,

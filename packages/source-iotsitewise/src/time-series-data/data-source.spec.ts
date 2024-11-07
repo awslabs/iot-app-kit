@@ -1,5 +1,8 @@
 import flushPromises from 'flush-promises';
-import { AggregateType, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  AggregateType,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import { createDataSource } from './data-source';
 import { TimeSeriesDataModule } from '@iot-app-kit/core';
 import {

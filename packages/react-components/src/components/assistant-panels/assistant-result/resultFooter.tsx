@@ -1,4 +1,3 @@
-import React from 'react';
 import Button from '@cloudscape-design/components/button';
 import Box from '@cloudscape-design/components/box';
 import { AssistantIcon } from '../assistantIcon';

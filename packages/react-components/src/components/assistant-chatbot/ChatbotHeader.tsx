@@ -1,7 +1,6 @@
-import * as React from 'react';
 import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
-import { IconProps, SpaceBetween } from '@cloudscape-design/components';
+import { type IconProps, SpaceBetween } from '@cloudscape-design/components';
 import { useIntl } from 'react-intl';
 import Badge from '@cloudscape-design/components/badge';
 

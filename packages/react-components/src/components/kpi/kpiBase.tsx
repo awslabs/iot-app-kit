@@ -1,17 +1,16 @@
-import React from 'react';
-import omitBy from 'lodash.omitby';
-import { DEFAULT_KPI_SETTINGS } from './constants';
-import type { KPIBaseProperties, KPISettings } from './types';
-import './kpi.css';
-import { highContrastColor } from './highContrastColor';
-import { getAggregationFrequency } from '../../utils/aggregationFrequency';
 import {
   colorBorderDividerSecondary,
   colorTextHeadingDefault,
   fontSizeBodyS,
   spaceStaticXs,
 } from '@cloudscape-design/design-tokens';
+import omitBy from 'lodash.omitby';
 import { DEFAULT_DECIMAL_PLACES } from '../../common/constants';
+import { Title } from '../../common/title';
+import { getAggregationFrequency } from '../../utils/aggregationFrequency';
+import { DEFAULT_KPI_SETTINGS } from './constants';
+import { highContrastColor } from './highContrastColor';
+import './kpi.css';
 import {
   AggregationResolutionText,
   AlarmHeader,
@@ -21,7 +20,7 @@ import {
   TimestampText,
   ValueText,
 } from './kpiTextFragments';
-import { Title } from '../../common/title';
+import type { KPIBaseProperties, KPISettings } from './types';
 
 export const KpiBase: React.FC<KPIBaseProperties> = ({
   propertyPoint,

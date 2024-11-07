@@ -1,53 +1,57 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import type { MouseEvent } from 'react';
+import { type TableProps } from '@cloudscape-design/components/table';
 import {
   colorBorderDividerSecondary,
   spaceStaticL,
   spaceStaticM,
 } from '@cloudscape-design/design-tokens';
-import { TableProps } from '@cloudscape-design/components/table';
-
-import { useECharts, useResizeableEChart } from '../../hooks/useECharts';
-import { ChartOptions } from './types';
-import { useVisualizedDataStreams } from './hooks/useVisualizedDataStreams';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type MouseEvent,
+} from 'react';
 import { HotKeys } from 'react-hotkeys';
-import { Resizable, ResizeHandle } from 'react-resizable';
-import Legend from './legend/table';
-import ChartContextMenu from './contextMenu/ChartContextMenu';
-import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
-import { useDataZoom } from './hooks/useDataZoom';
+import { Resizable, type ResizeHandle } from 'react-resizable';
+import { useECharts, useResizeableEChart } from '../../hooks/useECharts';
 import { useViewport } from '../../hooks/useViewport';
-import { useHandleChartEvents } from './events/useHandleChartEvents';
-import { useChartDataset } from './chartOptions/useChartDataset';
 import { useChartConfiguration } from './chartOptions/useChartConfiguration';
+import { useChartDataset } from './chartOptions/useChartDataset';
+import ChartContextMenu from './contextMenu/ChartContextMenu';
+import { useHandleChartEvents } from './events/useHandleChartEvents';
+import { useDataZoom } from './hooks/useDataZoom';
+import { useVisualizedDataStreams } from './hooks/useVisualizedDataStreams';
+import Legend from './legend/table';
+import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
+import { type ChartOptions } from './types';
 
-import './chart.css';
+import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
+import { Title, getAdjustedChartHeight } from '../../common/title';
 import { useTrendCursors } from '../../echarts/extensions/trendCursors';
-import { useChartStoreDataStreamsSync } from './hooks/useChartStoreDataStreamsSync';
-import useIsRefreshing from './hooks/useIsrefreshing';
+import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
+import {
+  convertToSupportedTimeRange,
+  getSelectedQueriesAndProperties,
+} from '../../hooks/useAssistantContext/utils';
+import { useModalVisibility } from '../../hooks/useModalVisibility/useModalVisibility';
+import useDataStore from '../../store';
+import { getTimeSeriesQueries } from '../../utils/queries';
+import { Timestamp } from '../timestampBar';
+import './chart.css';
 import {
   REFRESHING_DELAY_MS,
   TIMESTAMP_HEIGHT_FACTOR_BOTTOM,
   TIMESTAMP_WIDTH_FACTOR,
   TIMESTAMP_WIDTH_FACTOR_BOTTOM,
 } from './eChartsConstants';
-import { ChartPreferencesModal } from './preferences/dataQualityModal';
-import { useModalVisibility } from '../../hooks/useModalVisibility/useModalVisibility';
-import { PreferencesModalToggle } from './preferences/toggle';
-import { useChartPreferences } from './hooks/useChartPreferences';
-import { Timestamp } from '../timestampBar';
-import useDataStore from '../../store';
-import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
-import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
-import { Title, getAdjustedChartHeight } from '../../common/title';
-import { getTimeSeriesQueries } from '../../utils/queries';
-import { DataStreamInformation } from './legend/table/types';
-import {
-  convertToSupportedTimeRange,
-  getSelectedQueriesAndProperties,
-} from '../../hooks/useAssistantContext/utils';
 import { useChartAlarms } from './hooks/useChartAlarms';
+import { useChartPreferences } from './hooks/useChartPreferences';
+import { useChartStoreDataStreamsSync } from './hooks/useChartStoreDataStreamsSync';
+import useIsRefreshing from './hooks/useIsrefreshing';
 import { useNormalizedDataStreams } from './hooks/useNormalizedDataStreams';
+import { type DataStreamInformation } from './legend/table/types';
+import { ChartPreferencesModal } from './preferences/dataQualityModal';
+import { PreferencesModalToggle } from './preferences/toggle';
 
 /**
  * Developer Notes:

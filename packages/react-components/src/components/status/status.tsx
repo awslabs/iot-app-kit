@@ -1,4 +1,3 @@
-import React from 'react';
 import type { StatusSettings } from './types';
 import { KPI } from '../kpi/kpi';
 import type { Threshold, StyleSettingsMap, Viewport } from '@iot-app-kit/core';

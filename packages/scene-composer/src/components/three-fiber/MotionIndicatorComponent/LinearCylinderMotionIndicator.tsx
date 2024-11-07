@@ -1,12 +1,12 @@
 import { Cylinder } from '@react-three/drei/core/shapes';
-import React, { useEffect, useRef } from 'react';
-import { CylinderGeometry } from 'three';
+import { useEffect, useRef } from 'react';
+import { type CylinderGeometry } from 'three';
 
 import { Component } from '../../../models/SceneModels';
 
 import { useArrowTexture } from './helpers';
 import { MotionIndicatorMeshMaterial } from './MotionIndicatorMeshMaterial';
-import { MotionIndicatorProps } from './types';
+import { type MotionIndicatorProps } from './types';
 
 export interface LinearCylinderMotionIndicatorProps extends MotionIndicatorProps {
   config: Component.ILinearCylinderMotionIndicatorConfig;

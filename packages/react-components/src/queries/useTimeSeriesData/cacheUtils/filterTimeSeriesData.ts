@@ -1,5 +1,5 @@
-import { Bisector } from 'd3-array';
-import { Interval } from '../types';
+import { type Bisector } from 'd3-array';
+import { type Interval } from '../types';
 
 export const timeSeriesDataFilterer =
   <Point>(

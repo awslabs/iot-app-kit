@@ -1,5 +1,5 @@
 import {
-  PropertyDataType,
+  type PropertyDataType,
   type TimeSeriesSummary,
 } from '@aws-sdk/client-iotsitewise';
 import { v4 as uuid } from 'uuid';

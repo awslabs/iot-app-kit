@@ -1,7 +1,7 @@
-import React, { forwardRef } from 'react';
-import { Color, HemisphereLight as HemisphereLightType } from 'three';
+import { forwardRef } from 'react';
+import { Color, type HemisphereLight as HemisphereLightType } from 'three';
 
-import { Component } from '../../../../models/SceneModels';
+import { type Component } from '../../../../models/SceneModels';
 
 const HemisphereLight = forwardRef<HemisphereLightType, Component.IHemisphereLightSettings>(
   ({ color, groundColor, intensity }, ref) => {

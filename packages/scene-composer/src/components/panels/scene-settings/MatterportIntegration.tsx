@@ -1,20 +1,20 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { Box, Button, FormField, Input, Select, SpaceBetween } from '@cloudscape-design/components';
-import { useIntl } from 'react-intl';
 import { isEmpty } from 'lodash';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useIntl } from 'react-intl';
 
-import { accessStore, useViewOptionState } from '../../../store';
-import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { KnownSceneProperty } from '../../../interfaces';
 import { getGlobalSettings, subscribe, unsubscribe } from '../../../common/GlobalSettings';
 import { MATTERPORT_ERROR } from '../../../common/constants';
+import { OPTIONS_PLACEHOLDER_VALUE } from '../../../common/internalConstants';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
+import { SceneMetadataMapKeys } from '../../../common/sceneModelConstants';
+import { KnownSceneProperty } from '../../../interfaces';
+import { accessStore, useViewOptionState } from '../../../store';
+import { DisplayMessageCategory } from '../../../store/internalInterfaces';
 import {
   getMatterportConnectionList,
   getUpdatedSceneInfoForConnection,
 } from '../../../utils/matterportIntegrationUtils';
-import { OPTIONS_PLACEHOLDER_VALUE } from '../../../common/internalConstants';
-import { DisplayMessageCategory } from '../../../store/internalInterfaces';
-import { SceneMetadataMapKeys } from '../../../common/sceneModelConstants';
 
 import { MatterportTagSync } from './MatterportTagSync';
 
@@ -147,7 +147,7 @@ export const MatterportIntegration: React.FC = () => {
     isValidConnection;
 
   return (
-    <React.Fragment>
+    <>
       <SpaceBetween size='s'>
         <Box fontWeight='bold'>
           {intl.formatMessage({ description: 'Sub-Section Header', defaultMessage: 'Matterport Integration' })}
@@ -159,7 +159,7 @@ export const MatterportIntegration: React.FC = () => {
           })}
         </Box>
         {connectionOptions.length > 1 && (
-          <React.Fragment>
+          <>
             <FormField
               label={intl.formatMessage({ description: 'Form Field label', defaultMessage: 'Connection Name' })}
             >
@@ -186,7 +186,7 @@ export const MatterportIntegration: React.FC = () => {
                 })}
               />
             </FormField>
-          </React.Fragment>
+          </>
         )}
         {connectionOptions.length <= 1 && (
           <div style={{ textAlign: 'center' }}>
@@ -211,6 +211,6 @@ export const MatterportIntegration: React.FC = () => {
         )}
         {enableMatterportViewer && <MatterportTagSync />}
       </SpaceBetween>
-    </React.Fragment>
+    </>
   );
 };

@@ -1,4 +1,4 @@
-import { ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { type ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
 
 import type { ModeledDataStream } from '../modeledDataStreamQueryEditor/modeledDataStreamExplorer/types';
 

@@ -1,14 +1,17 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { ConfigState, createConfigSlice, Flags } from './config';
-import { ChartStoreState, createChartStoresSlice } from './chartStoreSlice';
+import { type ConfigState, createConfigSlice, type Flags } from './config';
+import {
+  type ChartStoreState,
+  createChartStoresSlice,
+} from './chartStoreSlice';
 import {
   createTrendCursorsSlice,
-  TrendCursorGrouping,
-  TrendCursorGroupingMap,
-  TrendCursorsState,
+  type TrendCursorGrouping,
+  type TrendCursorGroupingMap,
+  type TrendCursorsState,
 } from '../echarts/extensions/trendCursors/store';
-import { AssistantState, createAssistantSlice } from './assistantSlice';
+import { type AssistantState, createAssistantSlice } from './assistantSlice';
 
 export type StateData = TrendCursorsState &
   ConfigState &

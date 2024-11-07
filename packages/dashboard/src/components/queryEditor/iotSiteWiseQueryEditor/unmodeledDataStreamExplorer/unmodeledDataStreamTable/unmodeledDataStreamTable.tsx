@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { isNumeric, round } from '@iot-app-kit/core-util';
@@ -15,7 +14,7 @@ import type { UnmodeledDataStream } from '../types';
 import { useExplorerPreferences } from '../../useExplorerPreferences';
 import { SUPPORTED_PAGE_SIZES } from '../../constants';
 import { useLatestValues } from '../../useLatestValues';
-import { DashboardState } from '~/store/state';
+import { type DashboardState } from '~/store/state';
 import { ResourceExplorerFooter } from '../../footer/footer';
 import { getPlugin } from '@iot-app-kit/core';
 import { disableAdd } from '~/components/queryEditor/iotSiteWiseQueryEditor/footer/disableAdd';

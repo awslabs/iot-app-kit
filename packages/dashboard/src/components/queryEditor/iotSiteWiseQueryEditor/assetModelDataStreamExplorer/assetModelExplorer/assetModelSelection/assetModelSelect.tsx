@@ -1,10 +1,8 @@
-import React from 'react';
-
 import FormField from '@cloudscape-design/components/form-field';
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import {
-  SelectedAssetModel,
-  UpdateSelectedAssetModel,
+  type SelectedAssetModel,
+  type UpdateSelectedAssetModel,
 } from '../../useSelectedAssetModel';
 import { AssetModelExplorer } from '@iot-app-kit/react-components';
 

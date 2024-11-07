@@ -1,6 +1,6 @@
-import { Data, DataSource } from '../../types';
-import { ObjectDataSource } from './dataSource';
-import { ObjectDataSourceValue } from './input';
+import { type Data, type DataSource } from '../../types';
+import { type ObjectDataSource } from './dataSource';
+import { type ObjectDataSourceValue } from './input';
 import { ObjectDataSourceTransformer } from './transformer';
 
 type TestObjectDataValue = {

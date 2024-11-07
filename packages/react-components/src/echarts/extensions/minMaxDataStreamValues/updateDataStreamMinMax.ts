@@ -1,9 +1,9 @@
-import { EChartsExtensionInstallRegisters } from 'echarts/types/src/extension';
+import { type EChartsExtensionInstallRegisters } from 'echarts/types/src/extension';
 import { findMinMax } from './minMaxDataStreamSync';
 import useDataStore from '../../../store';
 import throttle from 'lodash.throttle';
-import Grid from 'echarts/types/src/coord/cartesian/Grid';
-import { LifecycleEvents } from 'echarts/types/src/core/lifecycle';
+import type Grid from 'echarts/types/src/coord/cartesian/Grid';
+import { type LifecycleEvents } from 'echarts/types/src/core/lifecycle';
 
 const THROTTLE_RATE = 1000;
 

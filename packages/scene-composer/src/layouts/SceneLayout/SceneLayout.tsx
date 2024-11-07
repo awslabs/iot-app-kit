@@ -1,9 +1,9 @@
-import React, { FC, Fragment, ReactNode, Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { type FC, Fragment, type ReactNode, Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import styled, { ThemeContext } from 'styled-components';
-import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
+import { Canvas, type ThreeEvent, useThree } from '@react-three/fiber';
 import { useContextBridge } from '@react-three/drei/core/useContextBridge';
-import { MatterportViewer, MpSdk } from '@matterport/r3f/dist';
+import { MatterportViewer, type MpSdk } from '@matterport/r3f/dist';
 import { isEmpty } from 'lodash';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -24,7 +24,7 @@ import { sceneComposerIdContext, useSceneComposerId } from '../../common/sceneCo
 import { useSceneDocument, accessStore } from '../../store';
 import LogProvider from '../../logger/react-logger/log-provider';
 import DefaultErrorFallback from '../../components/DefaultErrorFallback';
-import { ExternalLibraryConfig, KnownComponentType, MatterportConfig } from '../../interfaces';
+import { type ExternalLibraryConfig, KnownComponentType, type MatterportConfig } from '../../interfaces';
 import { CameraPreview } from '../../components/three-fiber/CameraPreview';
 import useMatterportViewer from '../../hooks/useMatterportViewer';
 import useSelectedNode from '../../hooks/useSelectedNode';

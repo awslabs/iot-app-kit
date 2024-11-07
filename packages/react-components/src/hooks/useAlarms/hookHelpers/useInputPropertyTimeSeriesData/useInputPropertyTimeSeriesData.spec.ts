@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 import { toId } from '@iot-app-kit/source-iotsitewise';
 
 import { useInputPropertyTimeSeriesData } from './useInputPropertyTimeSeriesData';
@@ -12,7 +12,7 @@ import {
   mockAlarmDataWithInputProperty,
   mockAlarmDataWithInputProperty2,
 } from '../../../../testing/alarms';
-import { UseInputPropertyTimeSeriesDataOptions } from './types';
+import { type UseInputPropertyTimeSeriesDataOptions } from './types';
 
 const TEST_REFRESH_RATE = 5000;
 

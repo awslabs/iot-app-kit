@@ -1,8 +1,7 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { DataStreamSearch } from './dataStreamSearch';
-import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 
 jest.mock('./workspaceSelector/useWorkspaces', () => ({
   useWorkspaces: jest.fn(() => ({

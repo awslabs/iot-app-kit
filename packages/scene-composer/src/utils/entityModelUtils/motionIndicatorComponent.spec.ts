@@ -1,7 +1,7 @@
 import { componentTypeToId } from '../../common/entityModelConstants';
-import { IMotionIndicatorComponent, KnownComponentType } from '../../interfaces';
+import { type IMotionIndicatorComponent, KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
-import { IMotionIndicatorComponentInternal } from '../../store';
+import { type IMotionIndicatorComponentInternal } from '../../store';
 
 import {
   EMPTY_COLOR_STRING,

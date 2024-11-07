@@ -1,18 +1,21 @@
 import Box from '@cloudscape-design/components/box';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { AssetExplorer } from './assetExplorer';
 import { ModeledDataStreamExplorer } from './modeledDataStreamExplorer';
-import { AssetSummary, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { ModeledDataStream } from './modeledDataStreamExplorer/types';
-import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import {
+  type AssetSummary,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
+import { type ModeledDataStream } from './modeledDataStreamExplorer/types';
+import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import {
   BROWSE_SEGMENT_ID,
   BrowseSearchToggle,
   useBrowseSearchToggle,
 } from './browseSearchToggle';
 import { useSearch } from '../dataStreamSearch/useSearch';
-import { SearchFields } from '../dataStreamSearch/types';
+import { type SearchFields } from '../dataStreamSearch/types';
 import { DataStreamSearch } from '../dataStreamSearch';
 
 export interface ModeledDataStreamQueryEditorProps {

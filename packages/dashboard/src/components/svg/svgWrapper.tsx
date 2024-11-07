@@ -1,4 +1,4 @@
-import React, { CSSProperties, PropsWithChildren } from 'react';
+import { type CSSProperties, type PropsWithChildren } from 'react';
 
 export type SVGWrapperAriaProps = {
   role: string;

@@ -1,4 +1,3 @@
-import React from 'react';
 import { viewportManager } from '@iot-app-kit/core';
 import { render, screen } from '@testing-library/react';
 import { TimeSync } from './index';

@@ -1,23 +1,25 @@
-import React, { useEffect } from 'react';
-
 import {
   Box,
   FormField,
   Input,
   SpaceBetween,
 } from '@cloudscape-design/components';
+import { useEffect } from 'react';
 
+import { Controller, useForm } from 'react-hook-form';
 import {
-  FilterPredicate,
-  PropertyLens,
+  type FilterPredicate,
+  type PropertyLens,
   useSelection,
 } from '~/customization/propertiesSection';
-import { GaugeProperties, GaugeWidget } from '~/customization/widgets/types';
-import { DashboardWidget } from '~/types';
-import { StyledExpandableSection } from '../components/styledComponents';
-import { maybeWithDefault } from '~/util/maybe';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
-import { Controller, useForm } from 'react-hook-form';
+import {
+  type GaugeProperties,
+  type GaugeWidget,
+} from '~/customization/widgets/types';
+import { type DashboardWidget } from '~/types';
+import { maybeWithDefault } from '~/util/maybe';
+import { StyledExpandableSection } from '../components/styledComponents';
 
 const widgetWithCustomDisplaySettings: readonly string[] = ['gauge'];
 

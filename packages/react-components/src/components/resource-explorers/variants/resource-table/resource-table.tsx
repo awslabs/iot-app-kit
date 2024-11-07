@@ -3,7 +3,6 @@ import { useCollection as useCloudscapeCollection } from '@cloudscape-design/col
 import CloudscapeTable, {
   type TableProps as CloudScapeTableProps,
 } from '@cloudscape-design/components/table';
-import React from 'react';
 
 import { ResourceTableFilter } from './resource-table-filter';
 import { ResourceTableHeader } from './resource-table-header';

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { AssistantWrapperPanel } from '../assistant-panels/assistantWrapperPanel';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
@@ -10,7 +10,7 @@ import {
   ECHARTS_GESTURE,
 } from '../../common/constants';
 import {
-  DataStream,
+  type DataStream,
   viewportEndDate,
   viewportStartDate,
 } from '@iot-app-kit/core';

@@ -1,9 +1,8 @@
-import React from 'react';
+import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
 import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MessageType } from '../../hooks/useAssistant/types';
 import { Chatbot } from './Chatbot';
-import userEvent from '@testing-library/user-event';
-import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
 
 describe(Chatbot, () => {
   it('should render customer message', () => {

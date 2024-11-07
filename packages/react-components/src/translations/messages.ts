@@ -1,14 +1,14 @@
 import merge from 'lodash.merge';
-import { AnomalyChart, AnomalyChartMessageKeys } from './anomalyWidget';
-import { Echarts, EchartsMessageKeys } from './echarts';
+import { AnomalyChart, type AnomalyChartMessageKeys } from './anomalyWidget';
+import { Echarts, type EchartsMessageKeys } from './echarts';
 import {
   AssistantActionPanel,
-  AssistantActionPanelMessageKeys,
+  type AssistantActionPanelMessageKeys,
   AssistantResultPanel,
-  AssistantResultPanelMessageKeys,
+  type AssistantResultPanelMessageKeys,
 } from './assistantActionPanel/messages';
-import { Messages } from './types';
-import { Table, TableMessageKeys } from './table/messages';
+import { type Messages } from './types';
+import { Table, type TableMessageKeys } from './table/messages';
 
 /**
  * In order to add messages to the intl instance

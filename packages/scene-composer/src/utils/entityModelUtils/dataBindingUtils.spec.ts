@@ -1,4 +1,4 @@
-import { ValueDataBinding } from '../../models/SceneModels';
+import { type ValueDataBinding } from '../../models/SceneModels';
 
 import { createDataBindingMap, parseDataBinding } from './dataBindingUtils';
 

@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { Object3D, Event } from 'three';
+import { type Object3D, type Event } from 'three';
 
 import { useEditorState, useSceneDocument } from '../../../../../../store';
 import useMaterialEffect from '../../../../../../hooks/useMaterialEffect';

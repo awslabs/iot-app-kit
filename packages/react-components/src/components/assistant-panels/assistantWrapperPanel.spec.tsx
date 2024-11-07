@@ -1,4 +1,5 @@
-import React from 'react';
+import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import {
   act,
   render,
@@ -6,19 +7,17 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import {
-  AssistantWrapperPanel,
-  AssistantWrapperPanelProps,
-} from './assistantWrapperPanel';
 import userEvent from '@testing-library/user-event';
-import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import { mockedInvokeAssistantResponse5 } from '../../__mocks__/assistantMockedResponse';
 import type {
   AssistantActionEventDetail,
   AssistantProperty,
 } from '../../common/assistantProps';
-import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import { useAssistant } from '../../hooks/useAssistant/useAssistant';
-import { mockedInvokeAssistantResponse5 } from '../../__mocks__/assistantMockedResponse';
+import {
+  AssistantWrapperPanel,
+  type AssistantWrapperPanelProps,
+} from './assistantWrapperPanel';
 
 const client = new IoTSitewiseAssistantClient({
   iotSiteWiseClient: {

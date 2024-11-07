@@ -1,5 +1,5 @@
-import { AlarmExplorerProps } from '@iot-app-kit/react-components';
-import { SiteWiseAlarmAssetModelQuery } from '@iot-app-kit/source-iotsitewise';
+import { type AlarmExplorerProps } from '@iot-app-kit/react-components';
+import { type SiteWiseAlarmAssetModelQuery } from '@iot-app-kit/source-iotsitewise';
 
 export const createAlarmModelQuery = ({
   assetModelId,

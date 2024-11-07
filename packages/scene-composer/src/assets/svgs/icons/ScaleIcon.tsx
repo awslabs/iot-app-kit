@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const ScaleIconSvg = (
   <span>
     <svg viewBox='0 0 16 16'>

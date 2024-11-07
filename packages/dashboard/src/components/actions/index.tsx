@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { Box, Button, SpaceBetween } from '@cloudscape-design/components';
 import { getPlugin } from '@iot-app-kit/core';
-import { Button, SpaceBetween, Box } from '@cloudscape-design/components';
 
-import { onSelectWidgetsAction, onToggleReadOnly } from '~/store/actions';
-import { DashboardSave } from '~/types';
-import DashboardSettings from './settings';
-import CustomOrangeButton from '../customOrangeButton';
-import { RefreshRateDropDown } from '../refreshRate/refreshRateDropdown';
 import {
   colorChartsLineGrid,
   spaceScaledXs,
   spaceScaledXxxl,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
+import { onSelectWidgetsAction, onToggleReadOnly } from '~/store/actions';
+import { type DashboardSave } from '~/types';
+import CustomOrangeButton from '../customOrangeButton';
+import { RefreshRateDropDown } from '../refreshRate/refreshRateDropdown';
+import DashboardSettings from './settings';
 
 import { convertToDashboardConfiguration } from '~/util/convertToDashbaoardConfiguration';
 

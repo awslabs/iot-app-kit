@@ -1,4 +1,4 @@
-import { DashboardPlugin } from '../api';
+import { type DashboardPlugin } from '../api';
 
 import { lineScatterChartPlugin } from './lineScatterChart/plugin';
 import { barChartPlugin } from './barChart/plugin';

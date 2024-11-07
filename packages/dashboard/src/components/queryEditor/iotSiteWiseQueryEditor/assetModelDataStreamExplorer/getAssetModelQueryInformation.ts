@@ -1,4 +1,4 @@
-import { SiteWiseAssetModelQuery } from '@iot-app-kit/source-iotsitewise';
+import { type SiteWiseAssetModelQuery } from '@iot-app-kit/source-iotsitewise';
 
 export const getAssetModelQueryInformation = (
   assetModels: SiteWiseAssetModelQuery['assetModels']

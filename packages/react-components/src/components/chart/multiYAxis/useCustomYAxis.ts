@@ -1,7 +1,7 @@
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 import { useChartStore } from '../store';
-import { YAxisLegendOption } from '../types';
-import { YAxisMap } from '../store/multiYAxis';
+import { type YAxisLegendOption } from '../types';
+import { type YAxisMap } from '../store/multiYAxis';
 
 type HandleMapOptionsProps = {
   map: YAxisMap;

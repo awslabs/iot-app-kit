@@ -1,4 +1,3 @@
-import React from 'react';
 import type { FC } from 'react';
 
 import FormField from '@cloudscape-design/components/form-field';

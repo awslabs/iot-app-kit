@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import type { MouseEvent, FC, ReactNode } from 'react';
 
 import { spaceStaticXs } from '@cloudscape-design/design-tokens';

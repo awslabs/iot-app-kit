@@ -1,11 +1,18 @@
-import { UseIoTSiteWiseClientOptions } from '../../requestFunctions/useIoTSiteWiseClient';
-import { AlarmData, UseAlarmsHookSettings, UseAlarmsOptions } from '../types';
+import { type UseIoTSiteWiseClientOptions } from '../../requestFunctions/useIoTSiteWiseClient';
+import {
+  type AlarmData,
+  type UseAlarmsHookSettings,
+  type UseAlarmsOptions,
+} from '../types';
 import { useQueryMode } from './useQueryMode';
 import { combineStatusForQueries } from '../utils/queryStatus';
 import { useLatestAssetPropertyValues } from '../../../queries';
 import { useHistoricalAssetPropertyValues } from '../../../queries/useHistoricalAssetPropertyValues/useHistoricalAssetPropertyValues';
 import { createNonNullableList } from '../../../utils/createNonNullableList';
-import { OnUpdateAlarmStateDataAction, useRequestSelector } from '../state';
+import {
+  type OnUpdateAlarmStateDataAction,
+  useRequestSelector,
+} from '../state';
 import { useReactQueryEffect } from './useReactQueryEffect';
 
 export type UseAlarmStateOptions = Pick<

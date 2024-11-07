@@ -1,5 +1,5 @@
-import IFeature from '../models/feature';
-import IFeatureRepository from './IFeatureRepository';
+import type IFeature from '../models/feature';
+import type IFeatureRepository from './IFeatureRepository';
 
 export type StaticFeatures = { [key: string]: IFeature };
 

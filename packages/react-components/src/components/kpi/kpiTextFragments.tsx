@@ -1,15 +1,14 @@
-import React from 'react';
 import Spinner from '@cloudscape-design/components/spinner';
 import { Value } from '../shared-components';
 import { DataQualityText } from '../data-quality/data-quality-text';
 import { formatDate } from '../../utils/time';
 import { AlarmStateTextWithAssistant } from '../alarm-components/alarm-state/alarmStateTextWithAssistant';
 import { AlarmStateText } from '../alarm-components/alarm-state/alarmStateText';
-import { AlarmDataStatus } from '../../hooks/useAlarms';
+import { type AlarmDataStatus } from '../../hooks/useAlarms';
 import type { DataPoint } from '@iot-app-kit/core';
 import { Alert, Box } from '@cloudscape-design/components';
-import { AlarmContent } from '../alarm-components/alarm-content/types';
-import { AssistantProperty } from '../../common/assistantProps';
+import { type AlarmContent } from '../alarm-components/alarm-content/types';
+import { type AssistantProperty } from '../../common/assistantProps';
 
 export const ErrorText = ({ error }: { error?: string }) => {
   if (!error) {

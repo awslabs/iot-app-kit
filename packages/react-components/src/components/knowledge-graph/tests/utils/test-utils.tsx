@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react';
-import { render, RenderOptions } from '@testing-library/react';
+import { render, type RenderOptions } from '@testing-library/react';
+import { type ReactElement } from 'react';
 import { IntlProvider } from 'react-intl';
-import { context, KnowledgeGraphContext } from '../../StateManager';
+import { context, type KnowledgeGraphContext } from '../../StateManager';
 
 const initialState = {
   selectedGraphNodeEntityId: null,

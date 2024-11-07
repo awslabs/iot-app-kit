@@ -10,7 +10,7 @@ import {
   mockLoadingStatus,
   mockSuccessStatus,
 } from '../../../../../testing/alarms/mockStatuses';
-import { AlarmsState } from '../../types';
+import { type AlarmsState } from '../../types';
 import { updateAlarmStateData } from './updateAlarmStateData';
 
 const date = new Date(1728674795974);

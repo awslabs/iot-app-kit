@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps, FC, LabelHTMLAttributes } from 'react';
+import { type DetailedHTMLProps, type FC, type LabelHTMLAttributes } from 'react';
 import { Button } from '@cloudscape-design/components';
 
 import VisibilityToggle from '../../../../VisibilityToggle';

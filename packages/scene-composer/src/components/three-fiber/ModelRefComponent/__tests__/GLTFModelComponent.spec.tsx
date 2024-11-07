@@ -1,6 +1,5 @@
 /* eslint-disable */
 import * as THREE from 'three';
-import React from 'react';
 import ReactThreeTestRenderer from '@react-three/test-renderer';
 jest.useFakeTimers();
 

@@ -1,8 +1,8 @@
 import { Vector3, Object3D, Euler, MathUtils } from 'three';
 
-import { AddingWidgetInfo, KnownComponentType } from '../../src';
+import { type AddingWidgetInfo, KnownComponentType } from '../../src';
 import { defaultNode } from '../../__mocks__/sceneNode';
-import { ISceneNodeInternal } from '../store';
+import { type ISceneNodeInternal } from '../store';
 
 import {
   createNodeWithPositionAndNormal,

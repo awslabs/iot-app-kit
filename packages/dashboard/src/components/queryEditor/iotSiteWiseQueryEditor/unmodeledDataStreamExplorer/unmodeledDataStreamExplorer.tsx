@@ -1,6 +1,5 @@
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import Box from '@cloudscape-design/components/box';
-import React from 'react';
 
 import { useUnmodeledDataStreams } from './useUnmodeledDataStreams/useUnmodeledDataStreams';
 

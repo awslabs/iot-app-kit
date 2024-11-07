@@ -13,9 +13,9 @@ import { ERROR_MESSAGE_DICT, ErrorCode, ErrorLevel, SceneComposerRuntimeError } 
 import {
   KnownComponentType,
   KnownSceneProperty,
-  IFogSettings,
-  IGroundPlaneSettings,
-  ISceneBackgroundSetting,
+  type IFogSettings,
+  type IGroundPlaneSettings,
+  type ISceneBackgroundSetting,
   DEFAULT_FOG_COLOR,
   DEFAULT_FOG_NEAR,
   DEFAULT_FOG_FAR,
@@ -23,29 +23,29 @@ import {
   DEFAULT_GROUND_PLANE_COLOR,
 } from '../../interfaces';
 import DebugLogger from '../../logger/DebugLogger';
-import { Component, DistanceUnit, ModelType, Node, Scene } from '../../models/SceneModels';
+import { Component, type DistanceUnit, ModelType, type Node, type Scene } from '../../models/SceneModels';
 import { isDynamicNode } from '../../utils/entityModelUtils/sceneUtils';
 import { colorToHexString, generateUUID } from '../../utils/mathUtils';
 import {
-  IAnchorComponentInternal,
-  IAnimationComponentInternal,
-  ICameraComponentInternal,
-  IColorOverlayComponentInternal,
-  IDataOverlayComponentInternal,
-  IDeserializationResult,
-  IEntityBindingComponentInternal,
-  ILightComponentInternal,
-  IModelRefComponentInternal,
-  IMotionIndicatorComponentInternal,
-  IRuleBasedMapInternal,
-  ISceneComponentInternal,
-  ISceneDocumentInternal,
-  ISceneNodeInternal,
-  ISerializationErrorDetails,
-  ISubModelRefComponentInternal,
+  type IAnchorComponentInternal,
+  type IAnimationComponentInternal,
+  type ICameraComponentInternal,
+  type IColorOverlayComponentInternal,
+  type IDataOverlayComponentInternal,
+  type IDeserializationResult,
+  type IEntityBindingComponentInternal,
+  type ILightComponentInternal,
+  type IModelRefComponentInternal,
+  type IMotionIndicatorComponentInternal,
+  type IRuleBasedMapInternal,
+  type ISceneComponentInternal,
+  type ISceneDocumentInternal,
+  type ISceneNodeInternal,
+  type ISerializationErrorDetails,
+  type ISubModelRefComponentInternal,
   SceneNodeRuntimeProperty,
   isISceneComponentInternal,
-  IPlaneGeometryComponentInternal,
+  type IPlaneGeometryComponentInternal,
 } from '../internalInterfaces';
 import { isValidHexCode } from '../../utils/colorUtils';
 

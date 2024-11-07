@@ -1,20 +1,20 @@
-import React, { PropsWithChildren } from 'react';
+import { Box, Checkbox, SpaceBetween } from '@cloudscape-design/components';
 import {
   borderRadiusBadge,
   colorBackgroundContainerContent,
   colorBackgroundControlChecked,
   spaceScaledXs,
 } from '@cloudscape-design/design-tokens';
-import { Box, Checkbox, SpaceBetween } from '@cloudscape-design/components';
-import { DashboardWidget } from '~/types';
-import { HorizontalDivider } from '~/components/divider/horizontalDivider';
-import { useDispatch, useSelector } from 'react-redux';
-import type { DashboardState } from '~/store/state';
 import type { AssistantProperty } from '@iot-app-kit/react-components';
+import { type PropsWithChildren } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { HorizontalDivider } from '~/components/divider/horizontalDivider';
 import {
   onAssistantDeselectWidgetsAction,
   onAssistantSelectWidgetsAction,
 } from '~/store/actions';
+import type { DashboardState } from '~/store/state';
+import { type DashboardWidget } from '~/types';
 import './tile.css';
 
 export type WidgetTileProps = PropsWithChildren<{

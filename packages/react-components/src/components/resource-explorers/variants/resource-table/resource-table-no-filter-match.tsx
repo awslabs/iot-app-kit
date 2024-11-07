@@ -1,6 +1,5 @@
 import CloudscapeBox from '@cloudscape-design/components/box';
 import CloudscapeButton from '@cloudscape-design/components/button';
-import React from 'react';
 
 import type { PluralResourceName } from '../../types/common';
 

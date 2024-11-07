@@ -8,7 +8,7 @@ import {
   type AssetPropertyValue,
   type AggregatedValue,
   type AggregateType,
-  Quality,
+  type Quality,
 } from '@aws-sdk/client-iotsitewise';
 import { faker } from '@faker-js/faker';
 import { rest } from 'msw';

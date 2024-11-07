@@ -1,5 +1,5 @@
 import { assetHierarchyQueryKey, HIERARCHY_ROOT_ID } from './sitewise/types';
-import { lastValueFrom, Observable, Subscription } from 'rxjs';
+import { lastValueFrom, Observable, type Subscription } from 'rxjs';
 import type {
   AssetHierarchyQuery,
   HierarchyAssetSummaryList,

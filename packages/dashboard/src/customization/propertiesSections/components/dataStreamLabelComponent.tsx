@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Checkbox,
   SpaceBetween,
@@ -6,7 +6,7 @@ import {
   Input,
   ExpandableSection,
 } from '@cloudscape-design/components';
-import { PropertySummary } from '~/hooks/useAssetDescriptionQueries';
+import { type PropertySummary } from '~/hooks/useAssetDescriptionQueries';
 
 type DataStreamTextBoxProps = {
   name?: string;

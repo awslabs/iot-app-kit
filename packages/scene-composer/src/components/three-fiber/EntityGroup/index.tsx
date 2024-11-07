@@ -1,15 +1,15 @@
-import { ThreeEvent } from '@react-three/fiber';
-import React, { useCallback, useContext, useRef } from 'react';
-import { Euler, Object3D } from 'three';
+import { type ThreeEvent } from '@react-three/fiber';
+import { useCallback, useContext, useRef } from 'react';
+import { Euler, type Object3D } from 'three';
 
 import { getGlobalSettings, getMatterportSdk } from '../../../common/GlobalSettings';
 import { sceneComposerIdContext, useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { COMPOSER_FEATURES, KnownComponentType } from '../../../interfaces';
 import LogProvider from '../../../logger/react-logger/log-provider';
 import {
-  ISceneNodeInternal,
+  type ISceneNodeInternal,
   isISceneNodeInternal,
-  ISubModelRefComponentInternal,
+  type ISubModelRefComponentInternal,
   useEditorState,
   useNodeErrorState,
   useSceneDocument,

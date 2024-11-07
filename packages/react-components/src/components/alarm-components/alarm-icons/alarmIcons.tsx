@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   ALARM_ACKNOWLEDGED_ICON,
   ALARM_ACKNOWLEDGED_ICON_COLOR,

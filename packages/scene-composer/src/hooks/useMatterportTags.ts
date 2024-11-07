@@ -5,14 +5,19 @@ import { isEmpty } from 'lodash';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import {
   DefaultAnchorStatus,
-  IAnchorComponent,
-  ISceneNode,
+  type IAnchorComponent,
+  type ISceneNode,
   KnownComponentType,
   SceneResourceType,
 } from '../interfaces';
-import { IAnchorComponentInternal, IDataOverlayComponentInternal, ISceneNodeInternal, accessStore } from '../store';
-import { MattertagItem, TagItem } from '../utils/matterportTagUtils';
-import { RecursivePartial } from '../utils/typeUtils';
+import {
+  type IAnchorComponentInternal,
+  type IDataOverlayComponentInternal,
+  type ISceneNodeInternal,
+  accessStore,
+} from '../store';
+import { type MattertagItem, type TagItem } from '../utils/matterportTagUtils';
+import { type RecursivePartial } from '../utils/typeUtils';
 import { Component } from '../models/SceneModels';
 import { generateUUID } from '../utils/mathUtils';
 import { convertToIotTwinMakerNamespace } from '../utils/sceneResourceUtils';

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { noop } from 'lodash';
 
 import type {
@@ -29,7 +29,7 @@ import {
   latestValueTimeCellRenderer,
   latestValueCellRenderer,
 } from '../../constants/defaults';
-import { AlarmResourceWithLatestValue } from '../../types/resources';
+import { type AlarmResourceWithLatestValue } from '../../types/resources';
 import {
   ALARM_TABLE_ASSET_ID_DEFINITION,
   DEFAULT_ALARM_TABLE_DEFINITION,
@@ -37,7 +37,7 @@ import {
 } from '../../constants/table-resource-definitions';
 import { DEFAULT_ALARM_DROP_DOWN_DEFINITION } from '../../constants/drop-down-resource-definitions';
 import { useUserCustomization } from '../../helpers/use-user-customization';
-import { TableResourceDefinition } from '../../types/table';
+import { type TableResourceDefinition } from '../../types/table';
 import { useAlarms } from '../../../../hooks/useAlarms';
 import { isAlarmResource, transformAlarmData } from './transformAlarmData';
 

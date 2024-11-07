@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import { type FC } from 'react';
 import {
-  AssetSummary,
+  type AssetSummary,
   useAssetDescriptionMapQuery,
 } from '~/hooks/useAssetDescriptionQueries';
 import { isJust } from '~/util/maybe';
@@ -8,9 +8,9 @@ import { SelectOneWidget } from '../shared/selectOneWidget';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { StyledPropertyComponent } from './styledPropertyComponent';
 import { Box } from '@cloudscape-design/components';
-import { StyledPropertiesAlarmsSectionProps } from './sectionTypes';
+import { type StyledPropertiesAlarmsSectionProps } from './sectionTypes';
 import { defaultOnDeleteQuery } from './onDeleteProperty';
-import { StyledAssetQuery } from '~/customization/widgets/types';
+import { type StyledAssetQuery } from '~/customization/widgets/types';
 import { useAssetModel } from '~/hooks/useAssetModel/useAssetModel';
 import { handleDeleteAssetModelProperty } from './handleDeleteAssetModelProperty';
 import {
@@ -18,7 +18,7 @@ import {
   handleRemoveAssetModelAlarms,
 } from './handleRemoveAlarm';
 import { PropertyComponent } from './propertyComponent';
-import { AssetModelPropertySummary } from '@aws-sdk/client-iotsitewise';
+import { type AssetModelPropertySummary } from '@aws-sdk/client-iotsitewise';
 
 const NoComponents = () => <Box variant='p'>No properties or alarms found</Box>;
 

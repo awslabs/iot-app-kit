@@ -1,4 +1,3 @@
-import React from 'react';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Checkbox from '@cloudscape-design/components/checkbox';
 import Modal from '@cloudscape-design/components/modal';

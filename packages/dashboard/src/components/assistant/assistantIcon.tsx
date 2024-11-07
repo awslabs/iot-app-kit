@@ -1,4 +1,3 @@
-import React from 'react';
 import { SVGWrapper, type SVGWrapperAriaProps } from '../svg/svgWrapper';
 
 export const AssistantIcon = (props: SVGWrapperAriaProps) => {

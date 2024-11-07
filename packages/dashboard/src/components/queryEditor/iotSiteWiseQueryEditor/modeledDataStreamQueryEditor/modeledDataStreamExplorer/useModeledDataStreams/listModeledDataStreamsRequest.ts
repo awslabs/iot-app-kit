@@ -1,6 +1,6 @@
 import {
   DescribeAssetCommand,
-  IoTSiteWiseClient,
+  type IoTSiteWiseClient,
   type DescribeAssetCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
 import type { ModeledDataStream } from '../types';

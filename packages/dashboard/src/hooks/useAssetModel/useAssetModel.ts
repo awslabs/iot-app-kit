@@ -1,4 +1,4 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 import { AssetModelCacheKeyFactory } from './assetModelCacheKeyFactory';
@@ -6,7 +6,7 @@ import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
 import { listAssetModelPropertiesRequest } from './listAssetModelPropertiesRequest';
 import { DescribeAssetModelRequest } from './describeAssetModelRequest';
 import { useSelector } from 'react-redux';
-import { DashboardState } from '~/store/state';
+import { type DashboardState } from '~/store/state';
 
 type SingleAssetRequest = {
   assetModelId?: string;

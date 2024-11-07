@@ -1,6 +1,6 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { Viewport } from '@iot-app-kit/core';
-import { AlarmData } from '../types';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type Viewport } from '@iot-app-kit/core';
+import { type AlarmData } from '../types';
 import { extractAssetPropertyId } from '../utils/parseAlarmModels';
 import { useQueryMode } from './useQueryMode';
 import {
@@ -9,7 +9,10 @@ import {
 } from '../../../queries';
 import { combineStatusForQueries } from '../utils/queryStatus';
 import { createNonNullableList } from '../../../utils/createNonNullableList';
-import { OnUpdateAlarmThresholdDataAction, useRequestSelector } from '../state';
+import {
+  type OnUpdateAlarmThresholdDataAction,
+  useRequestSelector,
+} from '../state';
 import { useReactQueryEffect } from './useReactQueryEffect';
 
 export interface UseAlarmThresholdOptions {

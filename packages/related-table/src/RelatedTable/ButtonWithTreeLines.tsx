@@ -1,12 +1,12 @@
 import Button from '@awsui/components-react/button';
-import React, { ReactNode, memo } from 'react';
+import { type ReactNode, memo } from 'react';
 import {
   EmptySpace,
   LeftPad,
   Wrapper,
   ButtonWrapper,
 } from './Common/StyledComponents';
-import { ExpandableTableNodeStatus, ITreeNode } from '../Model/TreeNode';
+import { ExpandableTableNodeStatus, type ITreeNode } from '../Model/TreeNode';
 import { createPrefixLines, Theme } from './Common/TreeLines';
 import { THEME } from '../config';
 

@@ -1,8 +1,7 @@
+import CloudscapeMultiSelect from '@cloudscape-design/components/multiselect';
 import CloudscapeSelect, {
   type SelectProps as CloudscapeSelectProps,
 } from '@cloudscape-design/components/select';
-import CloudscapeMultiSelect from '@cloudscape-design/components/multiselect';
-import React from 'react';
 
 import type { ResourceDropDownProps } from '../../types/drop-down';
 

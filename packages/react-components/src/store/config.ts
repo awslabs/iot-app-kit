@@ -1,4 +1,4 @@
-import { StateCreator } from 'zustand/esm';
+import { type StateCreator } from 'zustand/esm';
 
 export type Flags = 'useModelBasedQuery' | 'useAlarms';
 export interface ConfigState {

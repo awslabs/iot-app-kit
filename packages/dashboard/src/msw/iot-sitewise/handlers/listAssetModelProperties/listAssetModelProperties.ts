@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { LIST_ASSET_MODEL_PROPERTIES_URL } from './constants';
 import { ASSET_MODELS } from '../../resources/assetModels';
-import { ListAssetModelPropertiesResponse } from '@aws-sdk/client-iotsitewise';
+import { type ListAssetModelPropertiesResponse } from '@aws-sdk/client-iotsitewise';
 
 export function listAssetModelPropertiesHandler() {
   return rest.get(LIST_ASSET_MODEL_PROPERTIES_URL, (req, res, ctx) => {

@@ -1,4 +1,4 @@
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 import type { DataStream, DataStreamId } from '../types';
 
 export type DateInterval = { start: Date; end: Date };

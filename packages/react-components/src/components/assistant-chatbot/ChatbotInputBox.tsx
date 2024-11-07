@@ -1,13 +1,12 @@
-import * as React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import autosize from 'autosize';
 import Textarea from '@cloudscape-design/components/textarea';
 import Button from '@cloudscape-design/components/button';
 import Box from '@cloudscape-design/components/box';
-import { IMessage } from '../../hooks/useAssistant/types';
+import { type IMessage } from '../../hooks/useAssistant/types';
 import {
-  InputProps,
-  NonCancelableCustomEvent,
+  type InputProps,
+  type NonCancelableCustomEvent,
   SpaceBetween,
 } from '@cloudscape-design/components';
 import { FormattedMessage, useIntl } from 'react-intl';

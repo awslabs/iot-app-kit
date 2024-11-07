@@ -1,5 +1,5 @@
-import { Bisector, bisector } from 'd3-array';
-import { Interval } from '../../../../../queries';
+import { type Bisector, bisector } from 'd3-array';
+import { type Interval } from '../../../../../queries';
 import { assetPropertyValueTime } from './assetPropertyValueTime';
 
 export const alarmValueFilterer =

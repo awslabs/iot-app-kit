@@ -1,7 +1,6 @@
 import PropertyFilter, {
   type PropertyFilterProps,
 } from '@cloudscape-design/components/property-filter';
-import React from 'react';
 
 export const MODELED_DATA_STREAM_TABLE_FILTERING_PROPERTIES: PropertyFilterProps['filteringProperties'] =
   [

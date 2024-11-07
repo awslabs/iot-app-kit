@@ -1,10 +1,9 @@
-import React from 'react';
-import { ChartOptions } from './types';
-import { ChartStoreProvider } from './store';
-import BaseChart from './baseChart';
 import { useComponentId } from '../../hooks/useComponentId/useComponentId';
-import { DEFAULT_CHART_SETTINGS } from './eChartsConstants';
 import { AssistantWrapperPanel } from '../assistant-panels/assistantWrapperPanel';
+import BaseChart from './baseChart';
+import { DEFAULT_CHART_SETTINGS } from './eChartsConstants';
+import { ChartStoreProvider } from './store';
+import { type ChartOptions } from './types';
 
 export const Chart: React.FC<ChartOptions> = (options) => {
   const chartId = useComponentId(options.id);

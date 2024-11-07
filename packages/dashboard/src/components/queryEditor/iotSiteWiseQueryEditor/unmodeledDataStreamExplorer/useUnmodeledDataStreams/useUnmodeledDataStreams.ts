@@ -1,5 +1,8 @@
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { QueryFunctionContext, useInfiniteQuery } from '@tanstack/react-query';
+import {
+  type QueryFunctionContext,
+  useInfiniteQuery,
+} from '@tanstack/react-query';
 
 import { ListUnmodeledDataStreamsRequest } from './listUnmodeledDataStreamsRequest';
 import { UnmodeledDataStreamCacheKeyFactory } from './unmodeledDataStreamCacheKeyFactory';

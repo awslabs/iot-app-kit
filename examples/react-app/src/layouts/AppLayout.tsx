@@ -1,31 +1,40 @@
-import React, { createContext, FC, ReactNode, useCallback, useContext, useState } from 'react';
-
 import {
   BreadcrumbGroup,
+  Container,
+  ContentLayout,
   AppLayout as Layout,
   AppLayoutProps as LayoutProps,
-  ContentLayout,
-  Container,
   SpaceBetween,
 } from '@cloudscape-design/components';
+import {
+  createContext,
+  type FC,
+  type ReactNode,
+  useCallback,
+  useContext,
+  useState,
+} from 'react';
 
 import ViewportControls from '../components/ViewPort/Controls';
 
 interface IAppContext {
-  openTools: () => void
-  closeTools: () => void
-};
+  openTools: () => void;
+  closeTools: () => void;
+}
 
 const AppContext = createContext<IAppContext>({
-  openTools: () => { },
-  closeTools: () => { },
+  openTools: () => {},
+  closeTools: () => {},
 });
 
 export const useAppContext = () => {
   return useContext(AppContext);
 };
 
-export const AppLayout: FC<LayoutProps & { children: ReactNode }> = ({ children, ...props }) => {
+export const AppLayout: FC<LayoutProps & { children: ReactNode }> = ({
+  children,
+  ...props
+}) => {
   const [toolsOpen, setToolsOpen] = useState<boolean>(true);
 
   const openTools = useCallback(() => {
@@ -33,14 +42,16 @@ export const AppLayout: FC<LayoutProps & { children: ReactNode }> = ({ children,
   }, []);
 
   const closeTools = useCallback(() => {
-    setToolsOpen(false)
+    setToolsOpen(false);
   }, []);
 
   return (
-    <AppContext.Provider value={{
-      openTools,
-      closeTools
-    }}>
+    <AppContext.Provider
+      value={{
+        openTools,
+        closeTools,
+      }}
+    >
       <Layout
         maxContentWidth={Number.MAX_VALUE}
         navigationWidth={550} // temporary fix to maintain toggle while still working on things
@@ -61,16 +72,14 @@ export const AppLayout: FC<LayoutProps & { children: ReactNode }> = ({ children,
         }
         content={
           <ContentLayout>
-            <Container>
-              {children}
-            </Container>
+            <Container>{children}</Container>
           </ContentLayout>
         }
         breadcrumbs={
           <BreadcrumbGroup
             items={[]}
-            expandAriaLabel="Show path"
-            ariaLabel="Breadcrumbs"
+            expandAriaLabel='Show path'
+            ariaLabel='Breadcrumbs'
           />
         }
         toolsOpen={toolsOpen}
@@ -78,4 +87,4 @@ export const AppLayout: FC<LayoutProps & { children: ReactNode }> = ({ children,
       />
     </AppContext.Provider>
   );
-}
+};

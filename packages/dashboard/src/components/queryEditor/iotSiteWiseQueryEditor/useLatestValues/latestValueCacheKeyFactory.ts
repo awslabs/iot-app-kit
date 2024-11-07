@@ -1,4 +1,4 @@
-import { BatchGetAssetPropertyValueCommandInput } from '@aws-sdk/client-iotsitewise';
+import { type BatchGetAssetPropertyValueCommandInput } from '@aws-sdk/client-iotsitewise';
 
 type Entries = NonNullable<BatchGetAssetPropertyValueCommandInput['entries']>;
 

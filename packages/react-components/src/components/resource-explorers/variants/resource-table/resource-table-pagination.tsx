@@ -1,7 +1,6 @@
 import CloudscapePagination, {
   type PaginationProps as CloudscapePaginationProps,
 } from '@cloudscape-design/components/pagination';
-import React from 'react';
 
 import type {
   HasNextPage,

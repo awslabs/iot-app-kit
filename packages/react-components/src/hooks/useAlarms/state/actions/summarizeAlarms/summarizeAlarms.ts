@@ -1,7 +1,10 @@
-import { AlarmsState } from '../../types';
+import { type AlarmsState } from '../../types';
 import { createAlarmsByAsset } from './createAlarmsByAsset';
 import { createAlarmsByAssetModel } from './createAlarmsByAssetModel';
-import { SummarizeAlarmAction, SummarizeAlarmActionPayload } from './types';
+import {
+  type SummarizeAlarmAction,
+  type SummarizeAlarmActionPayload,
+} from './types';
 
 export const onSummarizeAlarmAction = (
   payload: SummarizeAlarmActionPayload

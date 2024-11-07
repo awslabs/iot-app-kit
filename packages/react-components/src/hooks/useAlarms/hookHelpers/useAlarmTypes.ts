@@ -1,8 +1,8 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { AlarmData } from '../types';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type AlarmData } from '../types';
 import { useLatestAssetPropertyValues } from '../../../queries';
 import { useReactQueryEffect } from './useReactQueryEffect';
-import { OnUpdateAlarmTypeDataAction, useRequestSelector } from '../state';
+import { type OnUpdateAlarmTypeDataAction, useRequestSelector } from '../state';
 import { getStatusForQuery } from '../utils/queryStatus';
 
 export type UseAlarmSourcesOptions = {

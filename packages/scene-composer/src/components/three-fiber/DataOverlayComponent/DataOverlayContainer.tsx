@@ -1,6 +1,6 @@
-import React, { ReactElement, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { type ReactElement, useCallback, useContext, useEffect, useRef, useState } from 'react';
 
-import { IDataOverlayComponentInternal, ISceneNodeInternal } from '../../../store/internalInterfaces';
+import { type IDataOverlayComponentInternal, type ISceneNodeInternal } from '../../../store/internalInterfaces';
 import { Component } from '../../../models/SceneModels';
 import { accessStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';

@@ -1,4 +1,4 @@
-import { createStore, StoreApi } from 'zustand/vanilla';
+import { createStore, type StoreApi } from 'zustand/vanilla';
 import { deflate, inflate } from 'pako';
 
 type ComponentID = string;

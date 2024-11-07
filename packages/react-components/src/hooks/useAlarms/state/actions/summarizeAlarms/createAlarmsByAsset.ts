@@ -4,12 +4,12 @@ import {
 } from '../../../utils/parseCompositeModels';
 import { constructAlarmProperty } from '../../../utils/constructAlarmProperty';
 import {
-  AlarmAssetRequest,
-  AlarmCompositeModelRequest,
-  AlarmInputPropertyRequest,
+  type AlarmAssetRequest,
+  type AlarmCompositeModelRequest,
+  type AlarmInputPropertyRequest,
 } from '../../../types';
-import { AlarmAssetSummary } from './types';
-import { AlarmRequestState, AlarmDataState } from '../../types';
+import { type AlarmAssetSummary } from './types';
+import { type AlarmRequestState, type AlarmDataState } from '../../types';
 
 export const createAlarmsByAsset = ({
   request,

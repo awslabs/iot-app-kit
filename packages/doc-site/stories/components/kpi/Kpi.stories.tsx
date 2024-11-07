@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { KPI, useAssistant } from '@iot-app-kit/react-components';
 import {
   mockSinWaveData,

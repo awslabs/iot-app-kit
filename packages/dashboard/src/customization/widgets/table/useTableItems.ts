@@ -3,8 +3,8 @@ import { useQueries } from '@tanstack/react-query';
 import { useClients } from '~/components/dashboard/clientContext';
 import { AssetCacheKeyFactory } from '~/components/queryEditor/iotSiteWiseQueryEditor/modeledDataStreamQueryEditor/assetExplorer/useAsset/assetCacheKeyFactory';
 import { createQueryFn } from '~/components/queryEditor/iotSiteWiseQueryEditor/modeledDataStreamQueryEditor/assetExplorer/useAsset/useAsset';
-import { SiteWiseQueryConfig } from '../types';
-import { StyleSettingsMap } from '@iot-app-kit/core';
+import { type SiteWiseQueryConfig } from '../types';
+import { type StyleSettingsMap } from '@iot-app-kit/core';
 
 export const useTableItems = (
   query: SiteWiseQueryConfig['query'],

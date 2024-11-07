@@ -1,6 +1,6 @@
 import { createMockTwinMakerSDK } from '../__mocks__/iottwinmakerSDK';
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
-import { EntityPropertyBindingProviderStore } from './EntityPropertyBindingProviderStore';
+import { type EntityPropertyBindingProviderStore } from './EntityPropertyBindingProviderStore';
 import { createEntityPropertyBindingProvider } from './createEntityPropertyBindingProvider';
 
 describe('createEntityPropertyBindingProvider', () => {

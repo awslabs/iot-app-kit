@@ -3,7 +3,7 @@ import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import invariant from 'tiny-invariant';
 
-import { DashboardState } from '~/store/state';
+import { type DashboardState } from '~/store/state';
 import { listModeledDataStreamsRequestWithCompositeModels } from './listModeledDataStreamsRequestWithCompositeModels';
 import { ListModeledDataStreamsRequest } from './listModeledDataStreamsRequest';
 import { ModeledDataStreamCacheKeyFactory } from './modeledDataStreamCacheKeyFactory';

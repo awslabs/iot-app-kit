@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react';
+import { type PropsWithChildren, useEffect, useState } from 'react';
 import { IntlProvider } from 'react-intl';
 import type { AssistantProperty } from '../../common/assistantProps';
 import { useAssistant } from '../../hooks/useAssistant/useAssistant';

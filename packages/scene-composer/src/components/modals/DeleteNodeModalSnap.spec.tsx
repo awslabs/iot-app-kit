@@ -1,6 +1,5 @@
-import React from 'react';
 import { act, render } from '@testing-library/react';
-import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import { accessStore } from '../../store';
 import { setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';

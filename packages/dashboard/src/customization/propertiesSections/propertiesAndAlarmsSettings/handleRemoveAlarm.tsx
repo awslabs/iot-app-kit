@@ -1,6 +1,6 @@
 import {
-  AlarmQuery,
-  SiteWiseAlarmAssetModelQuery,
+  type AlarmQuery,
+  type SiteWiseAlarmAssetModelQuery,
 } from '@iot-app-kit/source-iotsitewise';
 
 export const handleRemoveAlarm = (

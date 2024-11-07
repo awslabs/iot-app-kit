@@ -1,4 +1,3 @@
-import React from 'react';
 import { Icon, SpaceBetween } from '@cloudscape-design/components';
 import './styles.css';
 import type { FC, MouseEventHandler, PropsWithChildren } from 'react';

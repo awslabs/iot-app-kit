@@ -1,6 +1,6 @@
-import { IoTEventsClient } from '@aws-sdk/client-iot-events';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
+import { type IoTEventsClient } from '@aws-sdk/client-iot-events';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type AwsCredentialIdentity, type Provider } from '@aws-sdk/types';
 
 export type SiteWiseDataSourceInitalization = {
   iotSiteWiseClient?: IoTSiteWiseClient;

@@ -1,5 +1,5 @@
 import {
-  Viewport,
+  type Viewport,
   viewportEndDate,
   viewportStartDate,
 } from '@iot-app-kit/core';

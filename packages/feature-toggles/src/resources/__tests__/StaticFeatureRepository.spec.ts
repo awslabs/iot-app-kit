@@ -1,5 +1,5 @@
 import StaticFeatureRepository, {
-  StaticFeatures,
+  type StaticFeatures,
 } from '../StaticFeatureRepository';
 describe('StaticFeatureRepository', () => {
   it('should respond with value true for available feature', async () => {

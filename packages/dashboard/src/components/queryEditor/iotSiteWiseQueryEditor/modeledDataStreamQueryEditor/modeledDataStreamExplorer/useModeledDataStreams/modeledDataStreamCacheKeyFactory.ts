@@ -1,4 +1,4 @@
-import { SelectedAsset } from '../../types';
+import { type SelectedAsset } from '../../types';
 
 export class ModeledDataStreamCacheKeyFactory {
   public create(selectedAsset: SelectedAsset) {

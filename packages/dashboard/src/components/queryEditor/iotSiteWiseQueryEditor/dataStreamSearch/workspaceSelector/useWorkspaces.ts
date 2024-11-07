@@ -1,5 +1,5 @@
 import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { QueryFunctionContext, useQuery } from '@tanstack/react-query';
+import { type QueryFunctionContext, useQuery } from '@tanstack/react-query';
 
 import { ListWorkspacesRequest } from './listWorkspacesRequest';
 

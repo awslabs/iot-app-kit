@@ -1,8 +1,8 @@
-import React, { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
-import { Primitive } from '@iot-app-kit/core';
+import { type ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
+import { type Primitive } from '@iot-app-kit/core';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { ITwinMakerEntityDataBindingContext } from '../../../interfaces';
+import { type ITwinMakerEntityDataBindingContext } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
 import { accessStore } from '../../../store';
 import { dataBindingValuesProvider } from '../../../utils/dataBindingUtils';

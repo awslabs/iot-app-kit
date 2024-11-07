@@ -1,5 +1,4 @@
 import Box from '@awsui/components-react/box';
-import * as React from 'react';
 
 export interface EmptyStateProps {
   header?: string;

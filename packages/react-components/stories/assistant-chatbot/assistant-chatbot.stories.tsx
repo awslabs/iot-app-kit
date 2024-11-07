@@ -1,6 +1,6 @@
 /* eslint-disable */
 // @ts-nocheck
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { AssistantChatbot } from '../../src/components/assistant-chatbot';
 import { useAssistant } from '../../src/hooks/useAssistant/useAssistant';

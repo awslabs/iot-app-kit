@@ -1,4 +1,4 @@
-import { SiteWiseAssetSession } from './session';
+import { type SiteWiseAssetSession } from './session';
 import { SiteWiseAssetCache } from './cache';
 import { RequestProcessor } from './requestProcessor';
 import type {

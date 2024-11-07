@@ -1,5 +1,5 @@
 import SegmentedControl from '@cloudscape-design/components/segmented-control';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import type { DashboardState } from '~/store/state';
 

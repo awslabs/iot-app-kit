@@ -1,6 +1,6 @@
 import { bisector } from 'd3-array';
 import { timeSeriesDataFilterer } from '../../useTimeSeriesData';
-import { DataPoint } from '@iot-app-kit/charts-core';
+import { type DataPoint } from '@iot-app-kit/charts-core';
 
 export const assetPropertyValuePointMilliseconds = (point: DataPoint) => {
   return point.x;

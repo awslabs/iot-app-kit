@@ -1,6 +1,6 @@
 import type { Position, Rect } from '~/types';
 import type { Anchor } from '~/store/actions';
-import { DashboardState } from '~/store/state';
+import { type DashboardState } from '~/store/state';
 
 const MIN_WIDTH = 1;
 const MIN_HEIGHT = 1;

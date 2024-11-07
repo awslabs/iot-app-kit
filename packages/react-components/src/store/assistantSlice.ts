@@ -1,4 +1,4 @@
-import { StateCreator } from 'zustand/esm';
+import { type StateCreator } from 'zustand/esm';
 import type { AssistantAction, IMessage } from '../hooks/useAssistant/types';
 import type { ComponentId } from '../common/assistantProps';
 

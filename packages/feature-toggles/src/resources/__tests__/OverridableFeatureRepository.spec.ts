@@ -1,4 +1,4 @@
-import IFeatureRepository from '../IFeatureRepository';
+import type IFeatureRepository from '../IFeatureRepository';
 import OverridableFeatureRepository from '../OverridableFeatureRepository';
 import Cookies from 'js-cookie';
 

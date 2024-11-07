@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import { debounce } from 'lodash';
 import { SpaceBetween } from '@cloudscape-design/components';
+import { debounce } from 'lodash';
+import { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { ColorRepresentation } from 'three';
+import { type ColorRepresentation } from 'three';
 
 import {
   ColorPickerWrapper,
+  DEFAULT_COLOR,
   FlexibleDiv,
-  validateHex,
-  validateRgbValue,
+  getRgb,
+  HexInputField,
   hexString,
   isValidColor,
-  DEFAULT_COLOR,
-  updateColorWithRgb,
-  getRgb,
   ReactColorfulPicker,
-  HexInputField,
   RgbInputField,
+  updateColorWithRgb,
+  validateHex,
+  validateRgbValue,
 } from './ColorPickerHelpers';
 
 interface ColorPickerProps {

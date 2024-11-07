@@ -1,4 +1,4 @@
-import { ITreeNode } from '../Model/TreeNode';
+import { type ITreeNode } from '../Model/TreeNode';
 
 const recursiveFlatTree = <T>(
   tree: ITreeNode<T>[],

@@ -1,8 +1,8 @@
 /**
  * @jest-environment jsdom
  */
-import React, { useState, useContext, useEffect } from 'react';
-import { IFeature } from '../..';
+import { useState, useContext, useEffect } from 'react';
+import { type IFeature } from '../..';
 import featureContext from '../../context/feature-context';
 import { render, waitFor } from '@testing-library/react';
 import FeatureProvider from '../feature-provider';

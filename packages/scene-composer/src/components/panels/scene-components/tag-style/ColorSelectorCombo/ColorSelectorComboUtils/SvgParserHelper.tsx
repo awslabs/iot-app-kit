@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { colors } from '../../../../../../utils/styleUtils';
 
 export const replaceFillAttribute = (

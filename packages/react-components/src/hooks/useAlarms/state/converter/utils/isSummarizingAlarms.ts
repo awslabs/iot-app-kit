@@ -1,6 +1,6 @@
 import { createNonNullableList } from '../../../../../utils/createNonNullableList';
-import { AlarmRequest } from '../../../types';
-import { AlarmRequestState } from '../../types';
+import { type AlarmRequest } from '../../../types';
+import { type AlarmRequestState } from '../../types';
 
 export const isSummarizingAlarms = ({
   describeAssetQueryStatus,

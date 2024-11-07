@@ -4,17 +4,17 @@ import {
   Button,
   FormField,
   Input,
-  InputProps,
+  type InputProps,
   SpaceBetween,
   Textarea,
 } from '@cloudscape-design/components';
-import React, { useCallback, useContext, useRef, useState } from 'react';
+import { useCallback, useContext, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import LogProvider from '../../logger/react-logger/log-provider';
 import { useSceneDocument } from '../../store';
-import { IRuleBasedMapInternal, IRuleStatementInternal } from '../../store/internalInterfaces';
+import { type IRuleBasedMapInternal, type IRuleStatementInternal } from '../../store/internalInterfaces';
 import { validateRuleId } from '../../utils/inputValidationUtils';
 
 import { ExpandableInfoSection } from './CommonPanelComponents';

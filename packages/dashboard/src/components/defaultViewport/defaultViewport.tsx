@@ -5,8 +5,8 @@ import {
   dateRangeToViewport,
   rangeValidator,
 } from '@iot-app-kit/core-util';
-import { Viewport } from '@iot-app-kit/core';
-import React, { useEffect } from 'react';
+import { type Viewport } from '@iot-app-kit/core';
+import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { messages } from './constants';
 export const DefaultViewport = ({

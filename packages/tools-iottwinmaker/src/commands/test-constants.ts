@@ -1,14 +1,17 @@
 import {
-  GetComponentTypeCommandOutput,
-  GetEntityCommandOutput,
-  ListComponentTypesCommandOutput,
-  ListEntitiesCommandOutput,
-  ListScenesCommandOutput,
+  type GetComponentTypeCommandOutput,
+  type GetEntityCommandOutput,
+  type ListComponentTypesCommandOutput,
+  type ListEntitiesCommandOutput,
+  type ListScenesCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
 import { workspaceId } from './test-utils';
-import { Policy, Role } from '@aws-sdk/client-iam';
-import { ComponentTypeDefinition } from '../lib/component-type';
-import { modifiedComponentTypeDefinition, tmdt_config_file } from './init';
+import { type Policy, type Role } from '@aws-sdk/client-iam';
+import { type ComponentTypeDefinition } from '../lib/component-type';
+import {
+  type modifiedComponentTypeDefinition,
+  type tmdt_config_file,
+} from './init';
 
 export const emptyListComponentTypesResp: ListComponentTypesCommandOutput = {
   $metadata: {},

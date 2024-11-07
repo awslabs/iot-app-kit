@@ -1,13 +1,13 @@
 import {
   ExecuteQueryCommand,
-  ExecuteQueryCommandOutput,
-  ExecuteQueryCommandInput,
-  IoTTwinMakerClient,
-  ColumnDescription,
-  Row,
+  type ExecuteQueryCommandOutput,
+  type ExecuteQueryCommandInput,
+  type IoTTwinMakerClient,
+  type ColumnDescription,
+  type Row,
 } from '@aws-sdk/client-iottwinmaker';
-import { KGDataModuleInput, executeQueryParams } from './types';
-import { TwinMakerKGQueryDataModule } from '../types';
+import { type KGDataModuleInput, type executeQueryParams } from './types';
+import { type TwinMakerKGQueryDataModule } from '../types';
 
 export class KGDataModule implements TwinMakerKGQueryDataModule {
   private twinMakerClient: IoTTwinMakerClient;

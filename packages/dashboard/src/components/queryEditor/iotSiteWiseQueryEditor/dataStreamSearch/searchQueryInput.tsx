@@ -1,8 +1,7 @@
 import FormField from '@cloudscape-design/components/form-field';
 import Input from '@cloudscape-design/components/input';
-import React from 'react';
 import { Controller, type Control } from 'react-hook-form';
-import { SearchFields } from './types';
+import { type SearchFields } from './types';
 
 export interface SearchQueryInputProps {
   control: Control<SearchFields>;

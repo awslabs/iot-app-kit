@@ -1,6 +1,5 @@
-import React from 'react';
 import { KPI } from '../../src';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import {
   MOCK_TIME_SERIES_DATA_QUERY,
   MOCK_TIME_SERIES_DATA_QUERY_ERROR,

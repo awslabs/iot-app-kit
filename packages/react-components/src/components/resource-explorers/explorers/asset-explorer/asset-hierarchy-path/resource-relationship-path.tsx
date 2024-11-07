@@ -1,7 +1,6 @@
 import CloudscapeBreadcrumbGroup, {
   type BreadcrumbGroupProps as CloudscapeBreadcrumbGroupProps,
 } from '@cloudscape-design/components/breadcrumb-group';
-import React from 'react';
 
 import type { ResourcePathItem } from './types';
 

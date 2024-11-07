@@ -1,4 +1,4 @@
-import { IDataBindingConfig } from '../data-binding-provider/types';
+import { type IDataBindingConfig } from '../data-binding-provider/types';
 import {
   createDataBindingTemplateOptions,
   decorateDataBindingTemplate,

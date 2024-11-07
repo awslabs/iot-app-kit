@@ -4,10 +4,10 @@ import { useQueryPagination } from './use-two-dimensional-pagination';
 import { useCachedResources } from './use-cached-resources';
 import type { QueryKey } from './types';
 import {
-  ListRequestBaseParams,
-  ListRequestBaseResponse,
-  UseListAPIBaseResult,
-  UseMultipleListRequestsOptions,
+  type ListRequestBaseParams,
+  type ListRequestBaseResponse,
+  type UseListAPIBaseResult,
+  type UseMultipleListRequestsOptions,
 } from '../../types/requests';
 import { resourceExplorerQueryClient } from '../resource-explorer-query-client';
 import { DEFAULT_REQUEST_TIMEOUT } from '../../constants/defaults';

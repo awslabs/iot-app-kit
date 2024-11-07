@@ -13,13 +13,13 @@ import {
   mockStringAssetPropertyValue,
 } from '../../../testing/alarms';
 import {
-  BatchGetAssetPropertyValueHistoryRequest,
-  BatchGetAssetPropertyValueRequest,
+  type BatchGetAssetPropertyValueHistoryRequest,
+  type BatchGetAssetPropertyValueRequest,
 } from '@aws-sdk/client-iotsitewise';
 import {
-  BatchGetAssetPropertyValue,
-  BatchGetAssetPropertyValueHistory,
-  Viewport,
+  type BatchGetAssetPropertyValue,
+  type BatchGetAssetPropertyValueHistory,
+  type Viewport,
 } from '@iot-app-kit/core';
 import {
   mockLoadingStatus,

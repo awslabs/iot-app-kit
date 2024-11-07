@@ -1,11 +1,11 @@
-import { State, StateCreator } from 'zustand';
-import { produce, Draft } from 'immer';
-import createVanilla, { GetState, SetState, StoreApi } from 'zustand/vanilla';
+import { type State, type StateCreator } from 'zustand';
+import { produce, type Draft } from 'immer';
+import createVanilla, { type GetState, type SetState, type StoreApi } from 'zustand/vanilla';
 
 import DebugLogger from '../logger/DebugLogger';
 
 import { SceneComposerOperationTypeMap } from './StoreOperations';
-import { RootState } from './Store';
+import { type RootState } from './Store';
 
 const LOG = new DebugLogger('stateStore');
 

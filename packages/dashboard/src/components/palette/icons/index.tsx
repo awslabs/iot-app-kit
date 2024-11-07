@@ -1,16 +1,17 @@
-import React, { useState, type DragEventHandler, useEffect } from 'react';
 import Box from '@cloudscape-design/components/box';
 import {
-  colorBorderButtonNormalDisabled,
-  colorBackgroundSegmentHover,
   borderRadiusPopover,
+  colorBackgroundSegmentHover,
+  colorBorderButtonNormalDisabled,
+  colorTextBodyDefault,
   fontSizeHeadingS,
   spaceStaticM,
   spaceStaticS,
-  colorTextBodyDefault,
 } from '@cloudscape-design/design-tokens';
-import './index.css';
+import type { DragEventHandler, FC } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import './index.css';
 
 type PaletteComponentIconProps = {
   Icon: React.FC;
@@ -57,7 +58,7 @@ const Tooltip = styled.div<{ hover: boolean }>`
     z-index: 1;
   }
 `;
-const PaletteComponentIcon: React.FC<PaletteComponentIconProps> = ({
+const PaletteComponentIcon: FC<PaletteComponentIconProps> = ({
   Icon,
   widgetName,
 }) => {

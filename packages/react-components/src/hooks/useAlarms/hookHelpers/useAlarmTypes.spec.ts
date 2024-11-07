@@ -1,8 +1,8 @@
 import {
-  BatchGetAssetPropertyValueErrorEntry,
-  BatchGetAssetPropertyValueRequest,
-  BatchGetAssetPropertyValueResponse,
-  BatchGetAssetPropertyValueSuccessEntry,
+  type BatchGetAssetPropertyValueErrorEntry,
+  type BatchGetAssetPropertyValueRequest,
+  type BatchGetAssetPropertyValueResponse,
+  type BatchGetAssetPropertyValueSuccessEntry,
 } from '@aws-sdk/client-iotsitewise';
 import { queryClient } from '../../../queries';
 import {

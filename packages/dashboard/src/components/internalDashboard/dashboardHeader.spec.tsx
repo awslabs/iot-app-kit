@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import { type PropsWithChildren } from 'react';
 import { render } from '@testing-library/react';
 import DashboardHeader from './dashboardHeader';
 import { configureDashboardStore } from '~/store';

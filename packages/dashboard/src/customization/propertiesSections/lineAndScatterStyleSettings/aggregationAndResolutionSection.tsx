@@ -1,8 +1,7 @@
 import { SpaceBetween, Box } from '@cloudscape-design/components';
 import FormField from '@cloudscape-design/components/form-field';
-import Select, { SelectProps } from '@cloudscape-design/components/select';
+import Select, { type SelectProps } from '@cloudscape-design/components/select';
 import type { FC } from 'react';
-import React from 'react';
 import './lineAndScatterStyleSettings.css';
 import { StyledExpandableSection } from '../components/styledComponents';
 

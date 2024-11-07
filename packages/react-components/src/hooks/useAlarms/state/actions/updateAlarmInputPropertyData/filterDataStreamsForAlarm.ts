@@ -1,5 +1,5 @@
-import { DataStream } from '@iot-app-kit/core';
-import { AlarmDataState } from '../../types';
+import { type DataStream } from '@iot-app-kit/core';
+import { type AlarmDataState } from '../../types';
 import { fromId } from '@iot-app-kit/source-iotsitewise';
 
 const dataStreamIsForAlarm =

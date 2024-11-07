@@ -4,8 +4,8 @@ import {
   Pagination,
   TextFilter,
 } from '@awsui/components-react';
-import React, { useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { useState } from 'react';
+import { type Meta, type Story } from '@storybook/react';
 import { RelatedTable, useTreeCollection } from '../src';
 
 export default {

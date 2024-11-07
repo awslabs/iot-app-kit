@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   KPI,
   SITUATION_SUMMARY_DEFAULT_UTTERANCE,
   useAssistant,
 } from '../../src';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from '../kpi/kpi-mock-data';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { MockInvokeAssistant } from '../assistant-chatbot/mockAPI';
 

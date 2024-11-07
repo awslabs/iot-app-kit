@@ -8,7 +8,12 @@ import {
   colorTextHeadingDefault,
 } from '@cloudscape-design/design-tokens';
 
-import { ToolbarItemIconProps, ToolbarItemOptions, ToolbarItemOrientation, ToolbarMenuPosition } from './types';
+import {
+  type ToolbarItemIconProps,
+  type ToolbarItemOptions,
+  type ToolbarItemOrientation,
+  type ToolbarMenuPosition,
+} from './types';
 
 const DEFAULT_TEXT_PADDING = 20;
 const ITEM_DIVIDER_WIDTH = 1;

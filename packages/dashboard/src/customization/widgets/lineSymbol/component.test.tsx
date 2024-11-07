@@ -1,12 +1,11 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import LineWidgetComponent from './component';
 import { Provider } from 'react-redux';
 import { configureDashboardStore } from '~/store';
-import { DashboardState } from '~/store/state';
-import { LineProperties, LineWidget } from '../types';
+import { type DashboardState } from '~/store/state';
+import { type LineProperties, type LineWidget } from '../types';
 
 const mockWidgetPartial = {
   id: 'mock-line-widget',

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { isFunction } from 'lodash';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
@@ -17,9 +17,9 @@ import { ModeledDataStreamTablePreferences } from './modeledDataStreamTablePrefe
 import { ModeledDataStreamTablePagination } from './modeledDataStreamTablePagination';
 import { ModeledDataStreamTableHeader } from './modeledDataStreamTableHeader';
 import type { ModeledDataStream } from '../types';
-import { DashboardState } from '~/store/state';
+import { type DashboardState } from '~/store/state';
 import { ResourceExplorerFooter } from '../../../footer/footer';
-import { SelectedAsset } from '../../types';
+import { type SelectedAsset } from '../../types';
 import { ResourceExplorerErrorState } from '../../components/resourceExplorerErrorState';
 import { getPlugin } from '@iot-app-kit/core';
 import { disableAdd } from '~/components/queryEditor/iotSiteWiseQueryEditor/footer/disableAdd';

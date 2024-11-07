@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import { type HTMLAttributes } from 'react';
 import { AssistantIcon } from './assistantIcon';
 import {
   borderRadiusButton,

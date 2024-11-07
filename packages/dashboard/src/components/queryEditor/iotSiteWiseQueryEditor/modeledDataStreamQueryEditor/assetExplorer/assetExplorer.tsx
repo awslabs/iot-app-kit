@@ -2,7 +2,6 @@ import {
   type AssetSummary,
   type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
-import React from 'react';
 
 import { AssetTable } from './assetTable';
 import { useAssets } from './useAssets';

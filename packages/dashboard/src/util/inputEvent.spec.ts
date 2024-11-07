@@ -1,6 +1,6 @@
-import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
+import { type BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
 import { numberFromDetail } from './inputEvent';
-import { NonCancelableCustomEvent } from '@cloudscape-design/components';
+import { type NonCancelableCustomEvent } from '@cloudscape-design/components';
 
 const mockEventDetail = (
   value: BaseChangeDetail['value']

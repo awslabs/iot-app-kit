@@ -1,14 +1,14 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { TableBase } from './tableBase';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import type { StyleSettingsMap, Threshold, Viewport } from '@iot-app-kit/core';
-import { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
+import { type UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import {
-  AlarmItem,
-  TableColumnDefinition,
-  TableItem,
-  TableItemHydrated,
+  type AlarmItem,
+  type TableColumnDefinition,
+  type TableItem,
+  type TableItemHydrated,
 } from './types';
 import { createTableItems } from './createTableItems';
 import { DEFAULT_TABLE_MESSAGES } from './messages';
@@ -28,7 +28,7 @@ import {
   convertToSupportedTimeRange,
   getSelectedQueriesAndProperties,
 } from '../../hooks/useAssistantContext/utils';
-import { AlarmData } from '../../hooks/useAlarms';
+import { type AlarmData } from '../../hooks/useAlarms';
 import { transformAlarmsToThreshold } from '../../utils/transformAlarmsToThreshold';
 import { createNonNullableList } from '../../utils/createNonNullableList';
 

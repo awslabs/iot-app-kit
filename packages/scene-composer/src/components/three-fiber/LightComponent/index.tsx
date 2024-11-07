@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { DirectionalLightHelper, HemisphereLightHelper, PointLightHelper } from 'three';
 
-import { LightType } from '../../../models/SceneModels';
-import { ISceneNodeInternal, useEditorState, ILightComponentInternal } from '../../../store';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { useEditorHelper } from '../../../hooks';
+import { type LightType } from '../../../models/SceneModels';
+import { useEditorState, type ILightComponentInternal, type ISceneNodeInternal } from '../../../store';
 import { getComponentGroupName } from '../../../utils/objectThreeUtils';
 
 import Light from './Light';

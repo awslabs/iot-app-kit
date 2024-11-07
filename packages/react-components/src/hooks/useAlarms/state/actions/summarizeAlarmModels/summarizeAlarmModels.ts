@@ -5,10 +5,10 @@ import {
   getStaticThresholdAsAssetPropertyValue,
 } from '../../../utils/parseAlarmModels';
 import { isInputPropertyRequest } from '../../converter/utils';
-import { AlarmDataState, AlarmsState } from '../../types';
+import { type AlarmDataState, type AlarmsState } from '../../types';
 import {
-  SummarizeAlarmModelsAction,
-  SummarizeAlarmModelsActionPayload,
+  type SummarizeAlarmModelsAction,
+  type SummarizeAlarmModelsActionPayload,
 } from './types';
 import { createNonNullableList } from '../../../../../utils/createNonNullableList';
 

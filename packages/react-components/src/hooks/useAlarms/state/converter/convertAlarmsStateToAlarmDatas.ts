@@ -1,7 +1,7 @@
 import { isEqual, uniqWith } from 'lodash';
 
-import { AlarmData } from '../../types';
-import { AlarmsState } from '../types';
+import { type AlarmData } from '../../types';
+import { type AlarmsState } from '../types';
 import { convertAlarmRequestStateToAlarmData } from './convertAlarmRequestStateToAlarmData';
 import { convertAlarmRequestStateToInitialAlarmData } from './convertAlarmRequestStateToInitialAlarmData';
 import { isInputPropertyRequest } from './utils/isInputPropertyRequest';

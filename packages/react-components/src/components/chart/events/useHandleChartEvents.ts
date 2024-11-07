@@ -1,6 +1,6 @@
-import { MutableRefObject, useCallback, useEffect, useState } from 'react';
-import { EChartsType, ElementEvent } from 'echarts';
-import { KeyMap } from 'react-hotkeys';
+import { type MutableRefObject, useCallback, useEffect, useState } from 'react';
+import { type EChartsType, type ElementEvent } from 'echarts';
+import { type KeyMap } from 'react-hotkeys';
 
 export const useHandleChartEvents = (
   chartRef: MutableRefObject<EChartsType | null>

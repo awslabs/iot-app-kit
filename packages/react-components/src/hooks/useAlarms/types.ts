@@ -1,17 +1,17 @@
 import {
-  AggregateType,
-  AssetModelProperty,
-  AssetProperty,
-  AssetPropertyValue,
-  IoTSiteWiseClient,
+  type AggregateType,
+  type AssetModelProperty,
+  type AssetProperty,
+  type AssetPropertyValue,
+  type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
 import {
-  DescribeAlarmModelResponse,
-  IoTEventsClient,
+  type DescribeAlarmModelResponse,
+  type IoTEventsClient,
 } from '@aws-sdk/client-iot-events';
 
 import type { DataStream, ResolutionConfig, Viewport } from '@iot-app-kit/core';
-import { AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
+import { type AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
 
 /**
  * Execution status of the alarms queries

@@ -1,5 +1,5 @@
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import { SOURCE as IoTEventsSource } from '../alarms/iotevents';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type SOURCE as IoTEventsSource } from '../alarms/iotevents';
 import type {
   CacheSettings,
   DataStreamQuery,

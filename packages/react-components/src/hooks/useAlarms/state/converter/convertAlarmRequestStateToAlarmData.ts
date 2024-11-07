@@ -1,7 +1,7 @@
 import { createNonNullableList } from '../../../../utils/createNonNullableList';
-import { AlarmData, AlarmRequest } from '../../types';
+import { type AlarmData, type AlarmRequest } from '../../types';
 import { combineStatusForQueries } from '../../utils/queryStatus';
-import { AlarmRequestState } from '../types';
+import { type AlarmRequestState } from '../types';
 
 export const convertAlarmRequestStateToAlarmData = (
   alarmRequestState: AlarmRequestState<AlarmRequest>

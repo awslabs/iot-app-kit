@@ -1,4 +1,4 @@
-import { DeleteEntityCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { type DeleteEntityCommandOutput } from '@aws-sdk/client-iottwinmaker';
 
 import { getGlobalSettings } from '../../common/GlobalSettings';
 

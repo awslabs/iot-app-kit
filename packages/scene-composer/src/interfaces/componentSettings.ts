@@ -1,4 +1,4 @@
-import { KnownComponentType } from './components';
+import { type KnownComponentType } from './components';
 
 export interface ITagSettings {
   scale: number;

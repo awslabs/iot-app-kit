@@ -1,4 +1,4 @@
-import React, { ReactNode, FC } from 'react';
+import { type ReactNode, type FC } from 'react';
 import { STYLE_PREFIX } from './constants';
 
 export interface ToolbarProps {

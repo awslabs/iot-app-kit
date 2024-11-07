@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { render, waitFor } from '@testing-library/react';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import useFeature from '../useFeature';
 
 jest.mock('react', () => ({

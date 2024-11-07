@@ -1,4 +1,3 @@
-import React from 'react';
 import { Alert, Link, SpaceBetween } from '@cloudscape-design/components';
 import { infoMessage, errorMessage } from './constants';
 

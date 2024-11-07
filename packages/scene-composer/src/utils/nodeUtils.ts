@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 
-import { ISceneComponentInternal, ISceneNodeInternal } from '../store';
-import { AddingWidgetInfo, KnownComponentType } from '../interfaces';
-import { Vector3 } from '../models/SceneModels';
-import { ITransformInternal } from '../store/internalInterfaces';
+import { type ISceneComponentInternal, type ISceneNodeInternal } from '../store';
+import { type AddingWidgetInfo, KnownComponentType } from '../interfaces';
+import { type Vector3 } from '../models/SceneModels';
+import { type ITransformInternal } from '../store/internalInterfaces';
 
 /**
  * Finds a component on a node by type

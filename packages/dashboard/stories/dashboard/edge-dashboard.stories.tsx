@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IoTSiteWise, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { registerPlugin } from '@iot-app-kit/core';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 
 import { Dashboard, DashboardView } from '../../src';
 
 import {
-  DashboardClientConfiguration,
-  DashboardConfiguration,
+  type DashboardClientConfiguration,
+  type DashboardConfiguration,
 } from '../../src/types';
 
 import { getEnvCredentials } from '../../testing/getEnvCredentials';

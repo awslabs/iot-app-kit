@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import * as dropDown from '../helpers/drop-down';
 import { createListTimeSeriesPage } from '../helpers/responses';

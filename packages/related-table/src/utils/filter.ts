@@ -1,4 +1,4 @@
-import { ITreeNode } from '../Model/TreeNode';
+import { type ITreeNode } from '../Model/TreeNode';
 
 export function filteringFunction<T extends Record<string, any>>(
   item: ITreeNode<T>,

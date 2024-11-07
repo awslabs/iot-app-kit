@@ -1,5 +1,5 @@
+import type { Quality } from '@aws-sdk/client-iotsitewise';
 import { DATA_TYPE } from '@iot-app-kit/core';
-import { Quality } from '@aws-sdk/client-iotsitewise';
 import parse from 'parse-duration';
 import {
   mockTimeSeriesDataQueryLiveStream,

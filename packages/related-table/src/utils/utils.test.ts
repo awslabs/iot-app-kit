@@ -1,4 +1,4 @@
-import { ITreeNode, TreeMap } from '../Model/TreeNode';
+import { type ITreeNode, type TreeMap } from '../Model/TreeNode';
 import {
   buildTreeNodes,
   buildTreePrefix,

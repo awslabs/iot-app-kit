@@ -1,7 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import * as awsui from '@awsui/design-tokens';
-import React from 'react';
-import { ITreeNode, LinePrefixTypes } from '../../Model/TreeNode';
+import { type ITreeNode, LinePrefixTypes } from '../../Model/TreeNode';
 
 const TABLE_ROW_HEIGHT_PERCENT = 100;
 const WRAPPER_EXTRA_HEIGHT_PERCENT = 25;

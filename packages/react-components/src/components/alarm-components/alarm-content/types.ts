@@ -1,4 +1,4 @@
-import { PascalCaseStateName } from '../../../hooks/useAlarms/transformers';
+import { type PascalCaseStateName } from '../../../hooks/useAlarms/transformers';
 
 export type AlarmContent = {
   alarmName?: string;

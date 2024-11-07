@@ -1,33 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {
-  HTMLAttributes,
-  useEffect,
-  useCallback,
-  useMemo,
-  useState,
-  useRef,
-} from 'react';
-import { IntlProvider, FormattedMessage } from 'react-intl';
-import type { Core, EventObjectNode, EventObjectEdge } from 'cytoscape';
 import {
   Button,
-  Input,
   Grid,
+  Input,
   SpaceBetween,
 } from '@cloudscape-design/components';
-import { TwinMakerKGQueryDataModule } from '@iot-app-kit/source-iottwinmaker';
-import GraphView from './graph/graph-view';
-import Toolbar from './graph/graph-toolbar';
-import './graph/styles.scss';
-import './styles.scss';
+import { type TwinMakerKGQueryDataModule } from '@iot-app-kit/source-iottwinmaker';
+import type { Core, EventObjectEdge, EventObjectNode } from 'cytoscape';
+import {
+  type HTMLAttributes,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { FormattedMessage, IntlProvider } from 'react-intl';
 import { STYLE_PREFIX } from './graph/constants';
 import useStylesheet from './graph/cytoscape-cloudscape-theme';
-import StateManager, { useKnowledgeGraphState } from './StateManager';
+import Toolbar from './graph/graph-toolbar';
+import GraphView from './graph/graph-view';
+import './graph/styles.scss';
+import { type EdgeData, type NodeData } from './graph/types';
+import { type IQueryData } from './interfaces';
 import { createKnowledgeGraphQueryClient } from './KnowledgeGraphQueries';
 import { ResponseParser } from './responseParser';
-import { NodeData, EdgeData } from './graph/types';
-import { IQueryData } from './interfaces';
+import StateManager, { useKnowledgeGraphState } from './StateManager';
+import './styles.scss';
 import { getElementsDefinition } from './utils';
 
 export interface KnowledgeGraphInterface

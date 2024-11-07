@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { IMessage } from '../../../hooks/useAssistant/types';
 import { ChatbotAssistantMessage } from './ChatbotAssistantMessage';
 import { ChatbotCustomerMessage } from './ChatbotCustomerMessage';

@@ -1,4 +1,4 @@
-import { AssetModelAssetsRequestParameters } from '../types';
+import { type AssetModelAssetsRequestParameters } from '../types';
 import { useMultipleListRequests } from '../../../requests';
 import type { ListAssets } from '@iot-app-kit/core';
 import type {

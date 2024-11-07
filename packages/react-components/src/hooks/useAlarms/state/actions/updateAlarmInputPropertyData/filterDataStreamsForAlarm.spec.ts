@@ -5,7 +5,7 @@ import {
   mockAlarmDataDescribeAlarmModel,
   mockAlarmDataWithInputProperty,
 } from '../../../../../testing/alarms';
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 import { filterDataStreamsForAlarm } from './filterDataStreamsForAlarm';
 
 const TEST_DATASTREAM_1 = {

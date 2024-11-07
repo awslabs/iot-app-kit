@@ -1,37 +1,37 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { getPlugin } from '@iot-app-kit/core';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { Box, Button, type ButtonProps } from '@cloudscape-design/components';
 import {
-  colorBackgroundButtonPrimaryDefault,
+  type CancelableEventHandler,
+  type ClickDetail,
+} from '@cloudscape-design/components/internal/events';
+import {
   colorBackgroundButtonNormalDefault,
-  spaceStaticXl,
+  colorBackgroundButtonPrimaryDefault,
   spaceStaticL,
+  spaceStaticXl,
   spaceStaticXs,
   spaceStaticXxxs,
 } from '@cloudscape-design/design-tokens';
-import {
-  CancelableEventHandler,
-  ClickDetail,
-} from '@cloudscape-design/components/internal/events';
-import { Box, Button, ButtonProps } from '@cloudscape-design/components';
 
+import { type StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
+import { useDeleteWidgets } from '~/hooks/useDeleteWidgets';
+import { type DashboardWidget } from '~/types';
+import ConfirmDeleteModal from '../confirmDeleteModal';
 import {
   CSVDownloadButton,
   canOnlyDownloadLiveMode,
   isQueryEmpty,
 } from '../csvDownloadButton';
-import { StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
-import ConfirmDeleteModal from '../confirmDeleteModal';
 import { useClients } from '../dashboard/clientContext';
-import { useDeleteWidgets } from '~/hooks/useDeleteWidgets';
-import { DashboardWidget } from '~/types';
 
 import {
   onChangeDashboardGridEnabledAction,
   onSelectWidgetsAction,
 } from '~/store/actions';
-import { DashboardState } from '~/store/state';
+import { type DashboardState } from '~/store/state';
 
 import './widgetActions.css';
 

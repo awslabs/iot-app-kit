@@ -1,9 +1,9 @@
 import type { Arguments, CommandBuilder } from 'yargs';
 import {
   ConflictException,
-  FunctionResponse,
-  GetWorkspaceCommandOutput,
-  PropertyDefinitionResponse,
+  type FunctionResponse,
+  type GetWorkspaceCommandOutput,
+  type PropertyDefinitionResponse,
   ResourceNotFoundException,
   ValidationException,
 } from '@aws-sdk/client-iottwinmaker';
@@ -19,7 +19,7 @@ import {
 import { importScene } from '../lib/scene';
 import { importResource } from '../lib/resource';
 import { syncEntitiesFunction } from '../lib/sync';
-import { tmdt_config_file } from './init';
+import { type tmdt_config_file } from './init';
 import * as path from 'path';
 import { verifyWorkspaceExists } from '../lib/utils';
 import { prompt } from 'prompts';

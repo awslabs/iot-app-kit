@@ -1,9 +1,8 @@
-import React from 'react';
 import * as THREE from 'three';
 import { render } from '@testing-library/react';
 import { useThree } from '@react-three/fiber';
 
-import { ICameraComponentInternal, ISceneNodeInternal, useEditorState, accessStore } from '../../../../store';
+import { type ICameraComponentInternal, type ISceneNodeInternal, useEditorState, accessStore } from '../../../../store';
 import useActiveCamera from '../../../../hooks/useActiveCamera';
 import CameraComponent from '..';
 

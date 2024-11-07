@@ -1,11 +1,10 @@
-import React from 'react';
-import SelectionBoxAnchor from './selectionBoxAnchor';
 import { getSelectionBox } from '~/util/getSelectionBox';
+import SelectionBoxAnchor from './selectionBoxAnchor';
 
-import './selectionBox.css';
-import { useLayers } from '../internalDashboard/useLayers';
 import type { DashboardWidget } from '~/types';
 import { gestureable } from '../internalDashboard/gestures/determineTargetGestures';
+import { useLayers } from '../internalDashboard/useLayers';
+import './selectionBox.css';
 
 export type SelectionBoxProps = {
   selectedWidgets: DashboardWidget[];

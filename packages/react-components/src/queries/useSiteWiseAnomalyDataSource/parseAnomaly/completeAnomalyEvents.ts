@@ -1,5 +1,5 @@
-import { DescribeAssetPropertyCommandOutput } from '@aws-sdk/client-iotsitewise';
-import { AnomalyEvent } from './types';
+import { type DescribeAssetPropertyCommandOutput } from '@aws-sdk/client-iotsitewise';
+import { type AnomalyEvent } from './types';
 
 export const completeAnomalyEvents = (
   anomalyEvents: AnomalyEvent[],

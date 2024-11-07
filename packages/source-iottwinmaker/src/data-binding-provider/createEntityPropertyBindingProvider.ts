@@ -1,22 +1,22 @@
-import { TwinMakerErrorCode } from '../common/error';
+import { type TwinMakerErrorCode } from '../common/error';
 import {
-  ITwinMakerEntityDataBindingContext,
-  IValueDataBinding,
-  IValueDataBindingProvider,
+  type ITwinMakerEntityDataBindingContext,
+  type IValueDataBinding,
+  type IValueDataBindingProvider,
 } from './types';
 import { EntityPropertyBindingProviderStore } from './EntityPropertyBindingProviderStore';
 import {
-  ErrorDetails,
-  Query,
-  TimeSeriesDataQuery,
-  DataBase,
-  DataRequest,
+  type ErrorDetails,
+  type Query,
+  type TimeSeriesDataQuery,
+  type DataBase,
+  type DataRequest,
 } from '@iot-app-kit/core';
 import {
-  TwinMakerHistoryQuery,
-  TwinMakerPropertyValueQuery,
+  type TwinMakerHistoryQuery,
+  type TwinMakerPropertyValueQuery,
 } from '../common/queryTypes';
-import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
+import { type TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 
 export const createEntityPropertyBindingProvider = ({
   metadataModule,

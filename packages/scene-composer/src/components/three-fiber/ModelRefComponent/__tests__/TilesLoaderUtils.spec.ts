@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { TilesRenderer } from '3d-tiles-renderer';
+import { type TilesRenderer } from '3d-tiles-renderer';
 
 import { fixNasaUriBug, setupTilesRenderer } from '../TilesLoaderUtils';
 

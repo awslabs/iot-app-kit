@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
-import { ITagSettings, KnownComponentType } from '../interfaces';
+import { type ITagSettings, KnownComponentType } from '../interfaces';
 import { accessStore, useViewOptionState } from '../store';
 import { componentSettingsSelector } from '../utils/componentSettingsUtils';
 

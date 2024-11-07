@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, CSSProperties, useState } from 'react';
+import { useRef, useEffect, type CSSProperties, useState } from 'react';
 import copy from 'copy-to-clipboard';
-import { IMessage } from '../../../hooks/useAssistant/types';
+import { type IMessage } from '../../../hooks/useAssistant/types';
 import { AssistantProgressBar } from '../../assistant-common/assistantProgressBar';
 import { AssistantMessage } from '../../assistant-common/AssistantMessage';
 import { ResultHeader } from './resultHeader';

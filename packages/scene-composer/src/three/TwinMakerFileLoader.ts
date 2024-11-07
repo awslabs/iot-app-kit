@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 
-import { GetSceneObjectFunction } from '../interfaces';
+import { type GetSceneObjectFunction } from '../interfaces';
 
-import { OnFileLoaderLoadFunc, OnProgressFunc, OnErrorFunc } from './types';
+import { type OnFileLoaderLoadFunc, type OnProgressFunc, type OnErrorFunc } from './types';
 
 export class TwinMakerFileLoader extends THREE.FileLoader {
   private getSceneObjectFunction?: GetSceneObjectFunction;

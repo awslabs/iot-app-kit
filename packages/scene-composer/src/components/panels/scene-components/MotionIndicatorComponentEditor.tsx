@@ -1,12 +1,12 @@
-import React, { useCallback, useContext } from 'react';
 import { FormField, Select, SpaceBetween } from '@cloudscape-design/components';
-import { useIntl, defineMessages } from 'react-intl';
+import { useCallback, useContext } from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
-import { IComponentEditorProps } from '../ComponentEditor';
-import { IMotionIndicatorComponentInternal, ISceneComponentInternal, accessStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { Component } from '../../../models/SceneModels';
+import { type IMotionIndicatorComponentInternal, type ISceneComponentInternal, accessStore } from '../../../store';
 import { Divider } from '../../Divider';
+import { type IComponentEditorProps } from '../ComponentEditor';
 
 import AppearanceEditor from './motion-indicator/AppearanceEditor';
 import { SpeedEditor } from './motion-indicator/SpeedEditor';

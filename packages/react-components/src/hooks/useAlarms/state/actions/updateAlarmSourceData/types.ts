@@ -1,5 +1,5 @@
-import { GetAssetPropertyValueResponse } from '@aws-sdk/client-iotsitewise';
-import { AlarmDataStatus } from '../../../types';
+import { type GetAssetPropertyValueResponse } from '@aws-sdk/client-iotsitewise';
+import { type AlarmDataStatus } from '../../../types';
 
 export type AssetPropertyValueSummary = {
   request: {

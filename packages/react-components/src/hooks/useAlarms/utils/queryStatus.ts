@@ -1,5 +1,5 @@
-import { UseQueryResult } from '@tanstack/react-query';
-import { SetOptional } from 'type-fest';
+import { type UseQueryResult } from '@tanstack/react-query';
+import { type SetOptional } from 'type-fest';
 import type { AlarmDataStatus } from '../types';
 
 /**

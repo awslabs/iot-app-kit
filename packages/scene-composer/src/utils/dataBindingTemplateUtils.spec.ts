@@ -1,6 +1,6 @@
 import { pick } from 'lodash';
 
-import { IDataBindingTemplate } from '../interfaces';
+import { type IDataBindingTemplate } from '../interfaces';
 
 import { applyDataBindingTemplate, dataBindingConfigSelector, extractEntityId } from './dataBindingTemplateUtils';
 

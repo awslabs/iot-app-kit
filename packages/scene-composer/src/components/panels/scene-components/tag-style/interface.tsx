@@ -1,4 +1,4 @@
-import { IIconLookup } from '../../../../models/SceneModels';
+import { type IIconLookup } from '../../../../models/SceneModels';
 
 export interface TagStyle {
   colorPicker?: React.ReactNode;

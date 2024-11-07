@@ -1,11 +1,11 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import {
-  BatchGetAssetPropertyValueHistoryRequest,
-  BatchGetAssetPropertyValueRequest,
+  type BatchGetAssetPropertyValueHistoryRequest,
+  type BatchGetAssetPropertyValueRequest,
 } from '@aws-sdk/client-iotsitewise';
 import {
-  BatchGetAssetPropertyValue,
-  BatchGetAssetPropertyValueHistory,
+  type BatchGetAssetPropertyValue,
+  type BatchGetAssetPropertyValueHistory,
 } from '@iot-app-kit/core';
 import { queryClient } from '../../../queries';
 import { useAlarmThreshold } from './useAlarmThreshold';

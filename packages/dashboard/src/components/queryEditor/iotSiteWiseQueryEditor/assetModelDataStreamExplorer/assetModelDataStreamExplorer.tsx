@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { AssetSummary, IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 
 import Box from '@cloudscape-design/components/box';
@@ -24,11 +24,11 @@ import { createAssetModelQuery } from './createAssetModelQuery';
 import { getPlugin } from '@iot-app-kit/core';
 import { ResourceExplorerFooter } from '../footer/footer';
 import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
-import { DashboardWidget } from '~/types';
+import { type DashboardWidget } from '~/types';
 import {
   AlarmExplorer,
-  AlarmExplorerProps,
-  AssetResource,
+  type AlarmExplorerProps,
+  type AssetResource,
 } from '@iot-app-kit/react-components';
 import { ExpandableSection } from '@cloudscape-design/components';
 import { ExpandableSectionHeading } from '../components/expandableSectionHeading';

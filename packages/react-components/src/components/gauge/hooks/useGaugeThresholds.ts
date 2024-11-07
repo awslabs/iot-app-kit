@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { GaugeProps } from '../types';
+import { type GaugeProps } from '../types';
 import { convertThresholdsToEchartsValuePair } from '../utils/convertThresholdsToEchartsValuePair';
 
 export const useGaugeThresholds = ({

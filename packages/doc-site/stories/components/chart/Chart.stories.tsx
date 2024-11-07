@@ -1,4 +1,3 @@
-import React from 'react';
 import { Chart } from '@iot-app-kit/react-components';
 import {
   mockAlarmData,

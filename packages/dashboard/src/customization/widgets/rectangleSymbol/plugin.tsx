@@ -1,8 +1,7 @@
-import React from 'react';
 import RectangleWidgetComponent from './component';
 import RectangleIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';
-import { RectangleWidget } from '../types';
+import { type RectangleWidget } from '../types';
 
 export const rectanglePlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

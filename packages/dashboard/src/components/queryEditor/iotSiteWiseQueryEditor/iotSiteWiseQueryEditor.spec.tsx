@@ -1,19 +1,18 @@
-import React from 'react';
+import {
+  type AssetModelPropertySummary,
+  type AssetPropertySummary,
+  type AssetSummary,
+  IoTSiteWise,
+  type ListAssetModelPropertiesResponse,
+  type ListAssetPropertiesResponse,
+  type ListAssetsResponse,
+} from '@aws-sdk/client-iotsitewise';
+import { resourceExplorerQueryClient } from '@iot-app-kit/react-components';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IoTSiteWiseQueryEditor } from './iotSiteWiseQueryEditor';
-import { resourceExplorerQueryClient } from '@iot-app-kit/react-components';
-import {
-  AssetModelPropertySummary,
-  AssetPropertySummary,
-  AssetSummary,
-  IoTSiteWise,
-  ListAssetsResponse,
-  ListAssetPropertiesResponse,
-  ListAssetModelPropertiesResponse,
-} from '@aws-sdk/client-iotsitewise';
-import { configureDashboardStore } from '~/store';
 import { Provider } from 'react-redux';
+import { configureDashboardStore } from '~/store';
+import { IoTSiteWiseQueryEditor } from './iotSiteWiseQueryEditor';
 
 jest.mock('@iot-app-kit/charts-core');
 

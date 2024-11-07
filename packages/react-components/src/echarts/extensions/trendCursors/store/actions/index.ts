@@ -1,9 +1,9 @@
-import { AddTrendCursorAction } from './addTrendCursor';
-import { ConnectAction } from './connect';
-import { DeleteTrendCursorAction } from './deleteTrendCursor';
-import { DisconnectAction } from './disconnect';
-import { UpdateTrendCursorAction } from './updateTrendCursor';
-import { SetTrendCursorValuesAction } from './setTrendCursorValue';
+import { type AddTrendCursorAction } from './addTrendCursor';
+import { type ConnectAction } from './connect';
+import { type DeleteTrendCursorAction } from './deleteTrendCursor';
+import { type DisconnectAction } from './disconnect';
+import { type UpdateTrendCursorAction } from './updateTrendCursor';
+import { type SetTrendCursorValuesAction } from './setTrendCursorValue';
 
 export * from './connect';
 export * from './disconnect';

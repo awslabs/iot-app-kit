@@ -1,5 +1,4 @@
 import CloudscapeHeader from '@cloudscape-design/components/header';
-import React from 'react';
 
 export interface ResourceTableTitleProps {
   selectedResourceCount: number;

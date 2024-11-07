@@ -1,12 +1,10 @@
-// eslint-disable-next-line import/default
-import React from 'react';
+import { Title } from '../../common/title';
 import { useECharts } from '../../hooks/useECharts';
-import { GaugeBaseProperties } from './types';
+import './gauge.css';
+import { GaugeText } from './gaugeText';
 import { useGaugeConfiguration } from './hooks/useGaugeConfiguration';
 import { useResizableGauge } from './hooks/useResizableGauge';
-import { GaugeText } from './gaugeText';
-import './gauge.css';
-import { Title } from '../../common/title';
+import { type GaugeBaseProperties } from './types';
 import { thresholdsToColor } from './utils/thresholdsToColor';
 
 /**

@@ -1,10 +1,9 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { ResultPanel, type ResultPanelProps } from './resultPanel';
-import userEvent from '@testing-library/user-event';
-import { MessageType } from '../../../hooks/useAssistant/types';
 import type { ResponseStream } from '@amzn/iot-black-pearl-internal-v3';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { IntlProvider } from 'react-intl';
+import { MessageType } from '../../../hooks/useAssistant/types';
+import { ResultPanel, type ResultPanelProps } from './resultPanel';
 
 const component = (props: Partial<ResultPanelProps>) => (
   <IntlProvider locale='en' defaultLocale='en'>

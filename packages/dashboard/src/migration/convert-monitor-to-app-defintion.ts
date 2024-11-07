@@ -1,18 +1,18 @@
 import {
-  DashboardConfiguration,
-  DashboardWidget,
-  MigrateDashboard,
+  type DashboardConfiguration,
+  type DashboardWidget,
+  type MigrateDashboard,
 } from '../types';
 import {
   DashboardWidgetType,
   MonitorWidgetType,
   SiteWiseWidgetType,
-  MonitorMetric,
-  SiteWiseMonitorDashboardDefinition,
-  MonitorAnnotations,
-  MonitorWidget,
-  QueryConfig,
-  AssetMap,
+  type MonitorMetric,
+  type SiteWiseMonitorDashboardDefinition,
+  type MonitorAnnotations,
+  type MonitorWidget,
+  type QueryConfig,
+  type AssetMap,
 } from './types';
 import { nanoid } from 'nanoid';
 import {

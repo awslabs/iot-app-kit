@@ -1,4 +1,4 @@
-import { LatestAssetPropertyValueRequest } from './types';
+import { type LatestAssetPropertyValueRequest } from './types';
 
 export const LATEST_ASSET_PROPERTY_VALUE_RESOURCE_KEY =
   'latest asset property value';

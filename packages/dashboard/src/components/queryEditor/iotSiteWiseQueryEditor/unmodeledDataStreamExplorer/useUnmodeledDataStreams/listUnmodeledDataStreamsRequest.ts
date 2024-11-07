@@ -2,7 +2,7 @@ import {
   ListTimeSeriesCommand,
   type ListTimeSeriesCommandInput,
   type TimeSeriesSummary,
-  IoTSiteWiseClient,
+  type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
 
 import type { UnmodeledDataStream } from '../types';

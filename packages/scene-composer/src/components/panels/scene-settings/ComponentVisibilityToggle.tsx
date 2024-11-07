@@ -1,10 +1,10 @@
-import React, { useContext, useMemo } from 'react';
 import { Box, Toggle } from '@cloudscape-design/components';
+import { useContext, useMemo } from 'react';
 
-import { IDataOverlayComponentInternal, accessStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { KnownComponentType } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
+import { type IDataOverlayComponentInternal, accessStore, useViewOptionState } from '../../../store';
 import { findComponentByType } from '../../../utils/nodeUtils';
 
 export interface ComponentVisibilityToggleProps {

@@ -1,4 +1,4 @@
-import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { Object3D } from 'three';
 import flushPromises from 'flush-promises';
 import { ResourceNotFoundException } from '@aws-sdk/client-iottwinmaker';
@@ -10,7 +10,11 @@ import {
   SCENE_ROOT_ENTITY_NAME,
   RESERVED_LAYER_ID,
 } from '../../common/entityModelConstants';
-import { ISceneDocumentInternal, ISceneNodeInternal, SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
+import {
+  type ISceneDocumentInternal,
+  type ISceneNodeInternal,
+  SceneNodeRuntimeProperty,
+} from '../../store/internalInterfaces';
 import { defaultNode } from '../../../__mocks__/sceneNode';
 import { findComponentByType } from '../nodeUtils';
 import { KnownSceneProperty } from '../../interfaces';

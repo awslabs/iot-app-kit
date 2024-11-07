@@ -1,6 +1,5 @@
 import FormField from '@cloudscape-design/components/form-field';
 import Input from '@cloudscape-design/components/input';
-import React from 'react';
 import { Controller, type Control } from 'react-hook-form';
 
 export interface AliasPrefixInputProps {

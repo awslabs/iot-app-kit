@@ -1,4 +1,3 @@
-import React from 'react';
 import { Table } from '@iot-app-kit/react-components';
 import { mockAlarmData, mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { DATA_TYPE } from '@iot-app-kit/core';

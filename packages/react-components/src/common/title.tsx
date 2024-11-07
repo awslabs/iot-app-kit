@@ -1,5 +1,5 @@
 import { colorTextHeadingDefault } from '@cloudscape-design/design-tokens';
-import React, { CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 import './title.css';
 
 type TitleProps = {

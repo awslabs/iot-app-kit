@@ -1,5 +1,3 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { PerspectiveCamera } from 'three';
 import {
   Button,
   FormField,
@@ -10,17 +8,19 @@ import {
   StatusIndicator,
   TextContent,
 } from '@cloudscape-design/components';
+import { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { PerspectiveCamera } from 'three';
 
-import { IComponentEditorProps } from '../ComponentEditor';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { ICameraBasics } from '../../../interfaces';
-import { parseFloatOrDefault } from '../../../utils/mathUtils';
-import { ICameraComponentInternal, accessStore } from '../../../store';
-import { DynamicSelect, NumericInput } from '../CommonPanelComponents';
 import useActiveCamera from '../../../hooks/useActiveCamera';
-import { Divider } from '../../Divider';
+import { type ICameraBasics } from '../../../interfaces';
+import { type ICameraComponentInternal, accessStore } from '../../../store';
+import { parseFloatOrDefault } from '../../../utils/mathUtils';
 import { createNodeWithTransform } from '../../../utils/nodeUtils';
+import { Divider } from '../../Divider';
+import { DynamicSelect, NumericInput } from '../CommonPanelComponents';
+import { type IComponentEditorProps } from '../ComponentEditor';
 
 import './CameraComponentEditor.scss';
 

@@ -1,9 +1,9 @@
 import {
-  Viewport,
+  type Viewport,
   viewportEndDate,
   viewportStartDate,
 } from '@iot-app-kit/core';
-import { FetchMode } from '../types';
+import { type FetchMode } from '../types';
 import { SITEWISE_PREVIEW_DATE } from '../../useAssetPropertyValues/utils/timeConstants';
 
 export const mapViewport = ({

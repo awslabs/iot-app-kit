@@ -1,5 +1,5 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { QueryFunctionContext, useQuery } from '@tanstack/react-query';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type QueryFunctionContext, useQuery } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 import { AssetModelCompositeModelCacheKeyFactory } from './assetModelCompositeModelQueryKeyFactory';
 import { GetDescribeAssetCompositeModelRequest } from './getDescribeAssetModelCompositeModelRequest';

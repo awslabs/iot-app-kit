@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react';
+import { type ReactElement } from 'react';
 
 import { Component } from '../../../models/SceneModels';
-import { IDataOverlayComponentInternal } from '../../../store/internalInterfaces';
+import { type IDataOverlayComponentInternal } from '../../../store/internalInterfaces';
 
 import { DataOverlayDataRow } from './DataOverlayDataRow';
 import { tmPanelRows } from './styles';

@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/default
-import React from 'react';
 import { Gauge } from '@iot-app-kit/react-components';
 import {
   mockAlarmData,

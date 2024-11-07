@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
-import { FormField, Select, SelectProps } from '@cloudscape-design/components';
+import {
+  FormField,
+  Select,
+  type SelectProps,
+} from '@cloudscape-design/components';
+import { type OptionDefinition } from '@cloudscape-design/components/internal/components/option/interfaces';
 import { spaceScaledXs } from '@cloudscape-design/design-tokens';
-import { ThresholdStyleType } from '@iot-app-kit/core';
-import { OptionDefinition } from '@cloudscape-design/components/internal/components/option/interfaces';
+import { type ThresholdStyleType } from '@iot-app-kit/core';
+import { useState } from 'react';
 
 export type ThresholdStyleSettingsProps = {
   thresholdStyle: ThresholdStyleType;

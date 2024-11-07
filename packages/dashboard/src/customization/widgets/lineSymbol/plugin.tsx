@@ -1,8 +1,7 @@
-import React from 'react';
 import LineWidgetComponent from './component';
 import LineSymbolIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';
-import { LineWidget } from '../types';
+import { type LineWidget } from '../types';
 
 export const linePlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

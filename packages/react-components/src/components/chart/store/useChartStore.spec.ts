@@ -1,4 +1,4 @@
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 import { renderHook } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { useChartStore } from '../store';

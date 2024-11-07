@@ -1,7 +1,7 @@
 import {
   ExpandableTableNodeStatus,
-  ITreeNode,
-  TreeMap,
+  type ITreeNode,
+  type TreeMap,
   TreeNode,
 } from '../Model/TreeNode';
 import { cleanupTree } from './cleanup';

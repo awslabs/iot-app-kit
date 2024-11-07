@@ -8,7 +8,7 @@ import {
   mockLoadingStatus,
   mockSuccessStatus,
 } from '../../../../../testing/alarms/mockStatuses';
-import { AlarmsState } from '../../types';
+import { type AlarmsState } from '../../types';
 import { updateAlarmTypeData } from './updateAlarmTypeData';
 
 describe('updateAlarmTypeData', () => {

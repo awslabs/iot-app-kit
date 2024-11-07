@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { type FC } from 'react';
 import { Header, TextContent } from '@cloudscape-design/components';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';

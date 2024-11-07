@@ -1,14 +1,14 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { registerPlugin } from '@iot-app-kit/core';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 
 import { Dashboard, DashboardView } from '../../src';
 import { REGION } from '../../testing/siteWiseQueries';
 
 import { getEnvCredentials } from '../../testing/getEnvCredentials';
 import {
-  DashboardClientConfiguration,
-  DashboardConfiguration,
+  type DashboardClientConfiguration,
+  type DashboardConfiguration,
 } from '../../src/types';
 
 const DASHBOARD_STORAGE_NAMESPACE = 'connected-dashboard';

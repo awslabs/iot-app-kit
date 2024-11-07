@@ -1,13 +1,13 @@
 import {
-  DescribeAssetModelResponse,
-  DescribeAssetResponse,
+  type DescribeAssetModelResponse,
+  type DescribeAssetResponse,
 } from '@aws-sdk/client-iotsitewise';
 import {
-  AlarmAssetModelRequest,
-  AlarmAssetRequest,
-  AlarmCompositeModelRequest,
-  AlarmDataStatus,
-  AlarmInputPropertyRequest,
+  type AlarmAssetModelRequest,
+  type AlarmAssetRequest,
+  type AlarmCompositeModelRequest,
+  type AlarmDataStatus,
+  type AlarmInputPropertyRequest,
 } from '../../../types';
 
 /**

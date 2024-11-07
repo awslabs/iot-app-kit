@@ -1,7 +1,6 @@
 import CollectionPreferences, {
   type CollectionPreferencesProps,
 } from '@cloudscape-design/components/collection-preferences';
-import React from 'react';
 import { useSelector } from 'react-redux';
 
 import type { DashboardState } from '~/store/state';

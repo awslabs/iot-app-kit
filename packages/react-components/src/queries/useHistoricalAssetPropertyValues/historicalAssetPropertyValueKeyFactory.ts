@@ -1,6 +1,9 @@
-import { Viewport } from '@iot-app-kit/core';
-import { FetchMode, HistoricalAssetPropertyValueRequest } from './types';
-import { Quality, TimeOrdering } from '@aws-sdk/client-iotsitewise';
+import { type Viewport } from '@iot-app-kit/core';
+import {
+  type FetchMode,
+  type HistoricalAssetPropertyValueRequest,
+} from './types';
+import { type Quality, type TimeOrdering } from '@aws-sdk/client-iotsitewise';
 
 export const HISTORICAL_ASSET_PROPERTY_VALUE_RESOURCE_KEY =
   'historical asset property value';

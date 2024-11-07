@@ -4,9 +4,9 @@ import {
   isAlarmCompositeModel,
 } from '../../../utils/parseCompositeModels';
 import { constructAlarmProperty } from '../../../utils/constructAlarmProperty';
-import { AlarmAssetModelRequest } from '../../../types';
-import { AlarmAssetModelSummary } from './types';
-import { AlarmRequestState, AlarmDataState } from '../../types';
+import { type AlarmAssetModelRequest } from '../../../types';
+import { type AlarmAssetModelSummary } from './types';
+import { type AlarmRequestState, type AlarmDataState } from '../../types';
 
 export const createAlarmsByAssetModel = ({
   request,

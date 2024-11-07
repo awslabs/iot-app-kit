@@ -1,4 +1,4 @@
-import { EndpointV2, Provider } from '@aws-sdk/types';
+import { type EndpointV2, type Provider } from '@aws-sdk/types';
 
 export const DEFAULT_REGION = 'us-west-2';
 

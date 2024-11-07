@@ -1,4 +1,4 @@
-import { DashboardPage } from '../dashboard/DashboardPage';
+import { type DashboardPage } from '../dashboard/DashboardPage';
 
 // refer to the line.spec.ts for details regarding structure of TC text
 export const getAllLineChartText = async (dashboard: DashboardPage) => {

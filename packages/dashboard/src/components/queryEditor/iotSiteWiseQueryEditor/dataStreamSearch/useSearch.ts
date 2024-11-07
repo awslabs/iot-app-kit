@@ -1,7 +1,10 @@
-import { QueryFunctionContext, useInfiniteQuery } from '@tanstack/react-query';
+import {
+  type QueryFunctionContext,
+  useInfiniteQuery,
+} from '@tanstack/react-query';
 
 import { search } from './search';
-import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { QueryResponseProcessor } from './queryResponseProcessor';
 
 const TWIN_MAKER_CACHE_KEY = [{ service: 'iottwinmaker' }] as const;

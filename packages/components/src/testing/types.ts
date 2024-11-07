@@ -1,4 +1,4 @@
-import { AssetSummary } from '@aws-sdk/client-iotsitewise';
+import { type AssetSummary } from '@aws-sdk/client-iotsitewise';
 
 export type CustomHTMLElement<T> = T & HTMLElement;
 

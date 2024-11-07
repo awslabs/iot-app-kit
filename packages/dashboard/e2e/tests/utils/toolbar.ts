@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
 import { TOOLBAR_FRAME } from '../constants';
 
 export const toolbarUtil = (page: Page) => {

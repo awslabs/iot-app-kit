@@ -1,5 +1,3 @@
-import React, { useRef } from 'react';
-import type { PropsWithChildren } from 'react';
 import {
   borderRadiusDropdown,
   colorBackgroundDropdownItemDefault,
@@ -7,11 +5,11 @@ import {
   colorTextBodyDefault,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
+import type { PropsWithChildren } from 'react';
+import { useRef } from 'react';
 import { useClickAway } from 'react-use';
-
-import { MenuOption, MenuOptionProps } from './option';
-
 import './menu.css';
+import { MenuOption, type MenuOptionProps } from './option';
 
 export type MenuProps = {
   options?: MenuOptionProps[];

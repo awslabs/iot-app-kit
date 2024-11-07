@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { useAssetProperties } from './use-asset-properties';
 import type { AssetPropertyExplorerProps } from './types';
@@ -25,14 +25,14 @@ import {
   latestValueCellRenderer,
   latestValueTimeCellRenderer,
 } from '../../constants/defaults';
-import { AssetPropertyResource } from '../../types/resources';
+import { type AssetPropertyResource } from '../../types/resources';
 import {
   DEFAULT_ASSET_PROPERTY_TABLE_DEFINITION,
   createDefaultLatestValuesTableDefinition,
 } from '../../constants/table-resource-definitions';
 import { DEFAULT_ASSET_PROPERTY_DROP_DOWN_DEFINITION } from '../../constants/drop-down-resource-definitions';
 import { useUserCustomization } from '../../helpers/use-user-customization';
-import { TableResourceDefinition } from '../../types/table';
+import { type TableResourceDefinition } from '../../types/table';
 
 export function InternalAssetPropertyExplorer({
   iotSiteWiseClient,

@@ -2,7 +2,7 @@ import {
   type AlarmResource,
   type TimeSeriesResource,
 } from '@iot-app-kit/react-components';
-import { ModeledDataStream } from '../modeledDataStreamQueryEditor/modeledDataStreamExplorer/types';
+import { type ModeledDataStream } from '../modeledDataStreamQueryEditor/modeledDataStreamExplorer/types';
 import { QueryExtender } from './queryExtender';
 
 describe(QueryExtender.name, () => {

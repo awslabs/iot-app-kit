@@ -1,7 +1,4 @@
-import React from 'react';
-
 import { colorBorderDividerDefault } from '@cloudscape-design/design-tokens';
-
 import './verticalDivider.css';
 
 export const VerticalDivider = ({

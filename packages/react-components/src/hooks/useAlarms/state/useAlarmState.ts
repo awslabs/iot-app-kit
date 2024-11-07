@@ -1,21 +1,21 @@
 import { useCallback, useMemo, useReducer } from 'react';
 import { alarmsStateReducer } from './reducer';
 import {
-  SummarizeAlarmActionPayload,
+  type SummarizeAlarmActionPayload,
   onSummarizeAlarmAction,
   onSummarizeAlarmModelsAction,
   onUpdateAlarmSourceDataAction,
 } from './actions';
 import { convertAlarmsStateToAlarmDatas } from './converter';
-import { UpdateAlarmSourceDataActionPayload } from './actions/updateAlarmSourceData/types';
-import { UpdateAlarmTypeDataActionPayload } from './actions/updateAlarmTypeData/types';
+import { type UpdateAlarmSourceDataActionPayload } from './actions/updateAlarmSourceData/types';
+import { type UpdateAlarmTypeDataActionPayload } from './actions/updateAlarmTypeData/types';
 import { onUpdateAlarmTypeDataAction } from './actions/updateAlarmTypeData';
-import { SummarizeAlarmModelsActionPayload } from './actions/summarizeAlarmModels/types';
+import { type SummarizeAlarmModelsActionPayload } from './actions/summarizeAlarmModels/types';
 import { onUpdateAlarmInputDataAction } from './actions/updateAlarmInputPropertyData';
-import { UpdateAlarmInputDataActionPayload } from './actions/updateAlarmInputPropertyData/types';
-import { UpdateAlarmStateDataActionPayload } from './actions/updateAlarmStateData/types';
+import { type UpdateAlarmInputDataActionPayload } from './actions/updateAlarmInputPropertyData/types';
+import { type UpdateAlarmStateDataActionPayload } from './actions/updateAlarmStateData/types';
 import { onUpdateAlarmStateDataAction } from './actions/updateAlarmStateData/updateAlarmStateData';
-import { UpdateAlarmThresholdDataActionPayload } from './actions/updateAlarmThresholdData/types';
+import { type UpdateAlarmThresholdDataActionPayload } from './actions/updateAlarmThresholdData/types';
 import { onUpdateAlarmThresholdDataAction } from './actions/updateAlarmThresholdData';
 
 export const useAlarmsState = () => {

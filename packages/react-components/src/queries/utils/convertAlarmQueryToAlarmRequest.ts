@@ -1,5 +1,5 @@
-import { AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
-import { AlarmCompositeModelRequest } from '../../hooks/useAlarms';
+import { type AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
+import { type AlarmCompositeModelRequest } from '../../hooks/useAlarms';
 
 export const convertAlarmQueryToAlarmRequest = (
   alarmQuery: AlarmDataQuery

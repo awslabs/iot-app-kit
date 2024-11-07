@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import IFeature from '../models/feature';
+import type IFeature from '../models/feature';
 
 export interface IFeatureContext {
   getFeature(feature: string): Promise<IFeature>;

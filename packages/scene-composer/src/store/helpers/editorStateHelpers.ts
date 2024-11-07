@@ -1,5 +1,5 @@
-import { IErrorDetails, ErrorLevel } from '../../common/errors';
-import { DisplayMessageCategory, IDisplayMessage } from '../internalInterfaces';
+import { type IErrorDetails, ErrorLevel } from '../../common/errors';
+import { DisplayMessageCategory, type IDisplayMessage } from '../internalInterfaces';
 
 function mapErrorLevelToCategory(level: ErrorLevel) {
   switch (level) {

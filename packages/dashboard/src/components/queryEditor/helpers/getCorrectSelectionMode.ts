@@ -1,4 +1,4 @@
-import { DashboardWidget } from '~/types';
+import { type DashboardWidget } from '~/types';
 
 export const getCorrectSelectionMode = (selectedWidgets: DashboardWidget[]) => {
   return selectedWidgets.at(0)?.type === 'kpi' ||

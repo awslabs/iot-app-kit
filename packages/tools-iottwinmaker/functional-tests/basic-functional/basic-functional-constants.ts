@@ -1,10 +1,10 @@
 import * as path from 'path';
 import * as os from 'os';
 import {
-  CreateComponentTypeCommandInput,
-  CreateEntityCommandInput,
-  CreateSceneCommandInput,
-  GetComponentTypeCommandOutput,
+  type CreateComponentTypeCommandInput,
+  type CreateEntityCommandInput,
+  type CreateSceneCommandInput,
+  type GetComponentTypeCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
 
 type tmdtDefinition = {

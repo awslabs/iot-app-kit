@@ -1,27 +1,27 @@
-import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
-import { ThemeProvider } from 'styled-components';
 import { Mode } from '@cloudscape-design/global-styles';
-import { cloneDeep } from 'lodash';
 import { useViewport } from '@iot-app-kit/react-components';
+import { cloneDeep } from 'lodash';
+import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
+import { ThemeProvider } from 'styled-components';
 
 import { SCENE_BODY_CLASS } from '../common/constants';
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
-import LogProvider from '../logger/react-logger/log-provider';
 import { GlobalStyles } from '../GlobalStyles';
 import useAwsLightDarkModes from '../hooks/useAwsLightDarkModes';
-import { KnownComponentType, StyleTarget } from '../interfaces';
-import { materialReducer, initialMaterialMaps, addMaterial, removeMaterial, backUpOriginalMaterial } from '../reducers';
+import { KnownComponentType, type StyleTarget } from '../interfaces';
+import { type SceneComposerInternalProps } from '../interfaces/sceneComposerInternal';
+import LogProvider from '../logger/react-logger/log-provider';
+import { addMaterial, backUpOriginalMaterial, initialMaterialMaps, materialReducer, removeMaterial } from '../reducers';
 import { accessStore } from '../store';
-import { IDataBoundSceneComponentInternal, ISceneComponentInternal } from '../store/internalInterfaces';
+import { type IDataBoundSceneComponentInternal, type ISceneComponentInternal } from '../store/internalInterfaces';
 import { darkTheme, lightTheme } from '../theme';
 import { containsMatchingEntityComponent } from '../utils/dataBindingUtils';
 import { generateUUID } from '../utils/mathUtils';
 import { createMaterialFromStyle } from '../utils/objectThreeStyleUtils';
-import { SceneComposerInternalProps } from '../interfaces/sceneComposerInternal';
 
-import StateManager from './StateManager';
 import DefaultErrorFallback from './DefaultErrorFallback';
 import IntlProvider from './IntlProvider';
+import StateManager from './StateManager';
 
 export const SceneComposerInternal: React.FC<SceneComposerInternalProps> = ({
   sceneComposerId,

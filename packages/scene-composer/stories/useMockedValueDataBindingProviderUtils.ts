@@ -5,10 +5,10 @@ import {
   COMPONENT_NAME_INDEX,
   PROPERTY_NAME_INDEX,
 } from '../src/components/panels/scene-components/common/ValueDataBindingBuilder';
-import { IDataFieldOption, IValueDataBindingProviderState, IDataBindingConfig } from '../src/interfaces';
+import { type IDataFieldOption, type IValueDataBindingProviderState, type IDataBindingConfig } from '../src/interfaces';
 
 import { componentNames, entityIds, entityNames, FIELDS, MOCK_DELAY, propertyNames, allEntityIds } from './constants';
-import { MockedValueDataBindingProviderStore } from './types';
+import { type MockedValueDataBindingProviderStore } from './types';
 
 export function cloneStoreState(store: MockedValueDataBindingProviderStore): IValueDataBindingProviderState {
   return {

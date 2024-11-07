@@ -3,18 +3,18 @@ import { DATA_TYPE } from '@iot-app-kit/core';
 import type { DataPoint } from '@iot-app-kit/charts-core';
 import random from 'lodash/random';
 import {
-  KPIWidget,
-  LineChartWidget,
-  ScatterChartWidget,
-  StatusWidget,
-  TextWidget,
+  type KPIWidget,
+  type LineChartWidget,
+  type ScatterChartWidget,
+  type StatusWidget,
+  type TextWidget,
 } from '../../src/customization/widgets/types';
 /**
  * Shared mocks for testing purposes
  */
 import {
-  DashboardWidgetsConfiguration,
-  DashboardWidget,
+  type DashboardWidgetsConfiguration,
+  type DashboardWidget,
 } from '../../src/types';
 
 import {

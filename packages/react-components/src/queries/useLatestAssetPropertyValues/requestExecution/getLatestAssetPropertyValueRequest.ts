@@ -1,5 +1,5 @@
-import { GetAssetPropertyValue } from '@iot-app-kit/core';
-import { LatestAssetPropertyValueRequest } from '../types';
+import { type GetAssetPropertyValue } from '@iot-app-kit/core';
+import { type LatestAssetPropertyValueRequest } from '../types';
 
 export class GetLatestAssetPropertyValueRequest {
   readonly #getAssetPropertyValue: GetAssetPropertyValue;

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { DashboardState } from '~/store/state';
+import { type DashboardState } from '~/store/state';
 import {
   onChangeDashboardCellSizeAction,
   onChangeDashboardHeightAction,

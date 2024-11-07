@@ -10,7 +10,6 @@ import {
 } from '@aws-sdk/client-iotsitewise';
 
 import DashboardView from './view';
-import React from 'react';
 
 const config = {
   credentials: {

@@ -1,10 +1,10 @@
-import { AlarmDataState, AlarmsState } from '../../types';
+import { type AlarmDataState, type AlarmsState } from '../../types';
 import { viewportAsInterval } from '../utils/viewportAsInterval';
 import { filterAssetPropertyValues } from '../utils/filterAssetPropertyValues';
 import { shouldUpdateAssetPropertyValues } from '../utils/shouldUpdateAssetPropertyValues';
 import {
-  UpdateAlarmThresholdDataAction,
-  UpdateAlarmThresholdDataActionPayload,
+  type UpdateAlarmThresholdDataAction,
+  type UpdateAlarmThresholdDataActionPayload,
 } from './types';
 import { uniqueSortAssetPropertyValues } from '../utils/uniqueSortAssetPropertyValues';
 import { createNonNullableList } from '../../../../../utils/createNonNullableList';

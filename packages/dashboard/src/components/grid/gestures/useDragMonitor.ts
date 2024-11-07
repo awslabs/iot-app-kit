@@ -1,6 +1,6 @@
 import { useDrag } from 'react-dnd';
 import { ItemTypes } from '~/components/dragLayer/itemTypes';
-import { DragEvent } from './types';
+import { type DragEvent } from './types';
 import {
   defaultDelta,
   deltaTracker,

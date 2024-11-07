@@ -1,4 +1,3 @@
-import React from 'react';
 import { Provider } from 'react-redux';
 import {
   getByLabelText,
@@ -7,7 +6,7 @@ import {
   render,
 } from '@testing-library/react';
 import { configureDashboardStore } from '~/store';
-import { DashboardWidget } from '~/types';
+import { type DashboardWidget } from '~/types';
 import { WidgetTitle } from './index';
 import {
   MOCK_LINE_CHART_WIDGET,

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { render } from '@testing-library/react';
 import ReactThreeTestRenderer from '@react-three/test-renderer';
 import { Mesh, Texture, MeshStandardMaterial } from 'three';
@@ -6,7 +6,7 @@ import { useFrame } from '@react-three/fiber';
 jest.useFakeTimers();
 
 import { KnownComponentType } from '../../../interfaces';
-import { IPlaneGeometryComponentInternal, ISceneNodeInternal, useEditorState } from '../../../store';
+import { type IPlaneGeometryComponentInternal, type ISceneNodeInternal, useEditorState } from '../../../store';
 import useTwinMakerTextureLoader from '../../../hooks/useTwinMakerTextureLoader';
 import useAddWidget from '../../../hooks/useAddWidget';
 

@@ -7,22 +7,32 @@ import {
   SpaceBetween,
   TextContent,
 } from '@cloudscape-design/components';
-import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { type IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { debounce } from 'lodash';
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { SCENE_ICONS } from '../../../common/constants';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { DefaultAnchorStatus, IValueDataBinding, KnownSceneProperty, SceneResourceType } from '../../../interfaces';
-import { IAnchorComponentInternal, ISceneComponentInternal, useSceneDocument, accessStore } from '../../../store';
+import {
+  DefaultAnchorStatus,
+  type IValueDataBinding,
+  KnownSceneProperty,
+  SceneResourceType,
+} from '../../../interfaces';
+import {
+  type IAnchorComponentInternal,
+  type ISceneComponentInternal,
+  accessStore,
+  useSceneDocument,
+} from '../../../store';
 import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
 import { shallowEqualsArray } from '../../../utils/objectUtils';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
 import { convertToIotTwinMakerNamespace, getSceneResourceInfo } from '../../../utils/sceneResourceUtils';
 import { colors } from '../../../utils/styleUtils';
 import { TextInput } from '../CommonPanelComponents';
-import { IComponentEditorProps } from '../ComponentEditor';
+import { type IComponentEditorProps } from '../ComponentEditor';
 
 import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
 import { ColorSelectorCombo } from './tag-style/ColorSelectorCombo/ColorSelectorCombo';

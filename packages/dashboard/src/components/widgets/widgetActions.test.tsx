@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import WidgetActions from './widgetActions';
 import { configureDashboardStore } from '~/store';

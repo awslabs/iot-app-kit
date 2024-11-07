@@ -1,4 +1,3 @@
-import React from 'react';
 import { default as GaugeSvg } from './gauge.svg';
 import { default as GaugeSvgDark } from './gauge-dark.svg';
 import WidgetIcon from '../components/widgetIcon';

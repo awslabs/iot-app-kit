@@ -1,5 +1,5 @@
-import { TimeSeriesDataQuery } from '@iot-app-kit/core';
-import { AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
+import { type TimeSeriesDataQuery } from '@iot-app-kit/core';
+import { type AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
 
 export type AxisSettings = {
   showX?: boolean;

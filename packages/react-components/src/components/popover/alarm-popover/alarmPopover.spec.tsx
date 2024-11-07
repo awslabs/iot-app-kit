@@ -1,16 +1,15 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
-import {
-  AssistantActionEventDetail,
-  AssistantProperty,
-} from '../../../common/assistantProps';
-import { AlarmPopover, type AlarmPopoverProps } from './alarmPopover';
+import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+import { type PascalCaseStateName } from '@iot-app-kit/source-iotsitewise/dist/es/alarms/iotevents';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {
+  type AssistantActionEventDetail,
+  type AssistantProperty,
+} from '../../../common/assistantProps';
 import * as useAssistant from '../../../hooks/useAssistant/useAssistant';
-import { AlarmContent } from '../../alarm-components/alarm-content/types';
-import { PascalCaseStateName } from '@iot-app-kit/source-iotsitewise/dist/es/alarms/iotevents';
+import { type AlarmContent } from '../../alarm-components/alarm-content/types';
+import { AlarmPopover, type AlarmPopoverProps } from './alarmPopover';
 
 jest.mock('../../../hooks/useAssistant/useAssistant');
 

@@ -1,10 +1,9 @@
-import React from 'react';
 import { round } from '@iot-app-kit/core-util';
 import { STATUS_ICON_TYPE } from '@iot-app-kit/core';
 import type { DataPoint } from '@iot-app-kit/core';
 
 import {
-  TableProps as CloudscapeTableProps,
+  type TableProps as CloudscapeTableProps,
   Icon,
 } from '@cloudscape-design/components';
 

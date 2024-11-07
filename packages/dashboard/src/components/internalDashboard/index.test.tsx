@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
@@ -7,7 +6,7 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import InternalDashboard from './index';
 import { configureDashboardStore } from '~/store';
 import { useDashboardPlugins } from '../../customization/api';
-import { DashboardWidgetsConfiguration } from '~/types';
+import { type DashboardWidgetsConfiguration } from '~/types';
 import { initialState } from '~/store/state';
 
 import { AppKitConfig } from '@iot-app-kit/react-components';

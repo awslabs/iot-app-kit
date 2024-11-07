@@ -8,7 +8,7 @@ import {
 } from '@iot-app-kit/core-util';
 import {
   convertToSupportedTimeRange,
-  ParsedTimeSeriesDataQuery,
+  type ParsedTimeSeriesDataQuery,
   transformQueriesForContext,
 } from './utils';
 

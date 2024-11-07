@@ -1,7 +1,6 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 
-import ILogger from '../../../../ILogger';
+import type ILogger from '../../../../ILogger';
 import ErrorBoundary from '..';
 
 describe('<ErrorBoundary />', () => {

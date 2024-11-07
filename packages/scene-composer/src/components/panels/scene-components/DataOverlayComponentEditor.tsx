@@ -1,15 +1,15 @@
 import { FormField, SpaceBetween, Textarea } from '@cloudscape-design/components';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
 import { debounce } from 'lodash';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { Component } from '../../../models/SceneModels';
-import { IDataOverlayComponentInternal, ISceneComponentInternal, accessStore } from '../../../store';
-import { IComponentEditorProps } from '../ComponentEditor';
+import { type IDataOverlayComponentInternal, type ISceneComponentInternal, accessStore } from '../../../store';
 import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
+import { type IComponentEditorProps } from '../ComponentEditor';
 
-import { ComponentWithDataBindings, DataBindingMapEditor } from './common/DataBindingMapEditor';
+import { type ComponentWithDataBindings, DataBindingMapEditor } from './common/DataBindingMapEditor';
 
 export interface IDataOverlayComponentEditorProps extends IComponentEditorProps {
   component: IDataOverlayComponentInternal;

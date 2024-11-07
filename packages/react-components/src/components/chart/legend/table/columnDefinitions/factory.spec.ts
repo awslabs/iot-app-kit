@@ -1,4 +1,4 @@
-import { TrendCursor } from '../types';
+import { type TrendCursor } from '../types';
 import { createTableLegendColumnDefinitions } from './factory';
 
 describe('legend table column definitions', () => {

@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const DeleteSvg = (
   <span>
     <svg viewBox='0 0 14 15'>

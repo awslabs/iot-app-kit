@@ -3,9 +3,9 @@ import * as THREE from 'three';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import { useEditorState } from '../store';
-import { CameraControlMode, CameraSettings } from '../interfaces';
+import { type CameraControlMode, type CameraSettings } from '../interfaces';
 import { DEFAULT_CAMERA_OPTIONS, DEFAULT_CAMERA_POSITION, DEFAULT_CAMERA_TARGET } from '../common/constants';
-import { CameraType, Transform } from '../models/SceneModels';
+import { CameraType, type Transform } from '../models/SceneModels';
 
 const useActiveCamera = () => {
   const sceneComposerId = useSceneComposerId();

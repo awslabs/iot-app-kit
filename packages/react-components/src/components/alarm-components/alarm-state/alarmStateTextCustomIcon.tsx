@@ -1,5 +1,4 @@
-import React from 'react';
-import { PascalCaseStateName } from '../../../hooks/useAlarms/transformers';
+import { type PascalCaseStateName } from '../../../hooks/useAlarms/transformers';
 import { getIconForAlarmState } from '../alarm-icons/getIconForAlarmState';
 import { spaceScaledXxs } from '@cloudscape-design/design-tokens';
 import { Box } from '@cloudscape-design/components';

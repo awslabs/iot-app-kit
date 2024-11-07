@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test';
+import { type Page, expect } from '@playwright/test';
 import {
   RESOURCE_EXPLORER_FRAME,
   MODELED_TAB,

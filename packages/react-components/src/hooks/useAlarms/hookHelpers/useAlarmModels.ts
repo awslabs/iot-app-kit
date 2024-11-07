@@ -1,10 +1,13 @@
-import { IoTEventsClient } from '@aws-sdk/client-iot-events';
+import { type IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { getAlarmModelNameFromAlarmSourceProperty } from '../utils/parseAlarmModels';
 import type { AlarmData } from '../types';
 import { useDescribeAlarmModels } from '../../../queries';
 import { getStatusForQuery } from '../utils/queryStatus';
 import type { QueryOptionsGlobal } from '../../../queries/common/types';
-import { OnSummarizeAlarmModelsAction, useRequestSelector } from '../state';
+import {
+  type OnSummarizeAlarmModelsAction,
+  useRequestSelector,
+} from '../state';
 import { useReactQueryEffect } from './useReactQueryEffect';
 
 export type UseAlarmModelsOptions = {

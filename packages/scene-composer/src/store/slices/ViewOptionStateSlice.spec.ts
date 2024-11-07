@@ -1,4 +1,4 @@
-import { ITagSettings, KnownComponentType } from '../../interfaces';
+import { type ITagSettings, KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
 
 import { createViewOptionStateSlice } from './ViewOptionStateSlice';

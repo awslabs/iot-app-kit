@@ -1,10 +1,10 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import type { AlarmRequest } from '../types';
 import { useDescribeAssetModels, useDescribeAssets } from '../../../queries';
 import { getStatusForQuery } from '../utils/queryStatus';
 import { isAssetModelRequest, isAssetRequest } from './predicates';
 import type { QueryOptionsGlobal } from '../../../queries/common/types';
-import { OnSummarizeAlarmAction, useRequestSelector } from '../state';
+import { type OnSummarizeAlarmAction, useRequestSelector } from '../state';
 import { useReactQueryEffect } from './useReactQueryEffect';
 
 export type UseAlarmAssetsOptions = {

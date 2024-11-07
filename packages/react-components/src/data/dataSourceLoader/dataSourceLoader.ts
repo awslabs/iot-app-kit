@@ -1,4 +1,4 @@
-import { DataSource, DataSourceTransformer } from '../types';
+import { type DataSource, type DataSourceTransformer } from '../types';
 
 export class DataSourceLoader<Description, TransformedData> {
   private datasourceTransformers: DataSourceTransformer<

@@ -1,12 +1,12 @@
 import {
-  DataStream,
-  Primitive,
-  StyledThreshold,
-  ThresholdSettings,
-  Viewport,
+  type DataStream,
+  type Primitive,
+  type StyledThreshold,
+  type ThresholdSettings,
+  type Viewport,
 } from '@iot-app-kit/core';
-import { OptionId } from 'echarts/types/src/util/types';
-import { AssistantProperty } from '../../common/assistantProps';
+import { type OptionId } from 'echarts/types/src/util/types';
+import { type AssistantProperty } from '../../common/assistantProps';
 import type { ComponentQuery } from '../../common/chartTypes';
 
 export type YAxisOptions = {

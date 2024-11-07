@@ -1,5 +1,5 @@
-import { TableProps } from '@awsui/components-react/table';
-import { ITreeNode } from '../Model/TreeNode';
+import { type TableProps } from '@awsui/components-react/table';
+import { type ITreeNode } from '../Model/TreeNode';
 
 const defaultComparator = <T>(sortingField: keyof T) => {
   return (row1: T, row2: T) => {

@@ -4,7 +4,7 @@ import { updateAlarmInputPropertyData } from './actions/updateAlarmInputProperty
 import { updateAlarmStateData } from './actions/updateAlarmStateData/updateAlarmStateData';
 import { updateAlarmThresholdData } from './actions/updateAlarmThresholdData';
 import { updateAlarmTypeData } from './actions/updateAlarmTypeData';
-import { AlarmAction, AlarmsState } from './types';
+import { type AlarmAction, type AlarmsState } from './types';
 
 export const alarmsStateReducer = (
   state: AlarmsState,

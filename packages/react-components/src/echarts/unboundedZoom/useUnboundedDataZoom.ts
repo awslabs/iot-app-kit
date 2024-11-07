@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useReducer, useRef } from 'react';
 import { useEffectOnce, useUpdateEffect } from 'react-use';
 import {
-  DataZoomComponentOption,
-  ECharts,
-  ToolboxComponentOption,
+  type DataZoomComponentOption,
+  type ECharts,
+  type ToolboxComponentOption,
 } from 'echarts';
 import {
-  Viewport,
+  type Viewport,
   isHistoricalViewport,
   viewportEndDate,
   viewportManager,
@@ -26,7 +26,7 @@ import {
 import { DEFAULT_VIEWPORT } from '../../components/time-sync';
 import merge from 'lodash.merge';
 import useIntlStore from '../../translations';
-import { UtilizedViewportType } from '../../hooks/useViewport/useUtilizedViewport';
+import { type UtilizedViewportType } from '../../hooks/useViewport/useUtilizedViewport';
 
 const isDurationViewport = (viewport: Viewport | undefined) =>
   !!(viewport && !isHistoricalViewport(viewport));

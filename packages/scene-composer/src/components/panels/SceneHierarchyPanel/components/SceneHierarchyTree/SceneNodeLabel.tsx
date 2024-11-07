@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import { type FC, useCallback, useState } from 'react';
 import { Button } from '@cloudscape-design/components';
 
 import VisibilityToggle from '../../../../../components/VisibilityToggle';

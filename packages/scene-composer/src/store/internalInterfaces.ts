@@ -1,33 +1,33 @@
-import { IErrorDetails } from '../common/errors';
+import { type IErrorDetails } from '../common/errors';
 import {
-  SelectionChangedEventCallback,
-  IAnchorComponent,
-  ICameraComponent,
-  IColorOverlayComponent,
-  ILightComponent,
-  IModelRefComponent,
-  IMotionIndicatorComponent,
-  IRuleBasedMap,
-  IRuleStatement,
-  ISceneComponent,
-  ISceneDocument,
-  ISceneNode,
-  IAnimationComponent,
-  ITransform,
-  ITransformConstraint,
-  IValueDataBinding,
-  IValueDataBindingProvider,
-  URIModifier,
-  KnownComponentType,
-  WidgetClickEventCallback,
-  ISubModelRefComponent,
-  IDataOverlayComponent,
-  IEntityBindingComponent,
-  IPlaneGeometryComponent,
+  type SelectionChangedEventCallback,
+  type IAnchorComponent,
+  type ICameraComponent,
+  type IColorOverlayComponent,
+  type ILightComponent,
+  type IModelRefComponent,
+  type IMotionIndicatorComponent,
+  type IRuleBasedMap,
+  type IRuleStatement,
+  type ISceneComponent,
+  type ISceneDocument,
+  type ISceneNode,
+  type IAnimationComponent,
+  type ITransform,
+  type ITransformConstraint,
+  type IValueDataBinding,
+  type IValueDataBindingProvider,
+  type URIModifier,
+  type KnownComponentType,
+  type WidgetClickEventCallback,
+  type ISubModelRefComponent,
+  type IDataOverlayComponent,
+  type IEntityBindingComponent,
+  type IPlaneGeometryComponent,
 } from '../interfaces';
-import { OperationMode, ShowAssetBrowserCallback } from '../interfaces/sceneComposerInternal';
-import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../three/OrbitControls';
-import { PointerLockControls as PointerLockControlsImpl } from '../three/PointerLockControls';
+import { type OperationMode, type ShowAssetBrowserCallback } from '../interfaces/sceneComposerInternal';
+import { type MapControls as MapControlsImpl, type OrbitControls as OrbitControlsImpl } from '../three/OrbitControls';
+import { type PointerLockControls as PointerLockControlsImpl } from '../three/PointerLockControls';
 
 export type ISerializationErrorDetails = IErrorDetails;
 

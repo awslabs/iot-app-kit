@@ -1,6 +1,6 @@
-import Table, { TableProps } from '@awsui/components-react/table';
-import React, { ReactNode } from 'react';
-import { ITreeNode } from '../Model/TreeNode';
+import Table, { type TableProps } from '@awsui/components-react/table';
+import { type ReactNode } from 'react';
+import { type ITreeNode } from '../Model/TreeNode';
 import { ButtonWithTreeLines } from './ButtonWithTreeLines';
 
 export interface RelatedTableProps<T> extends TableProps<T> {

@@ -1,6 +1,11 @@
-import React, { FC, useCallback, useState } from 'react';
+import { type FC } from 'react';
 
-import { KnowledgeGraph as KnowledgeGraphComp, NodeData, EdgeData, IQueryData } from '@iot-app-kit/react-components';
+import {
+  EdgeData,
+  IQueryData,
+  KnowledgeGraph as KnowledgeGraphComp,
+  NodeData,
+} from '@iot-app-kit/react-components';
 import { dataSource } from '../dataSource';
 import './KnowledgeGraph.scss';
 

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Box from '@cloudscape-design/components/box';
 import ExpandableSection from '@cloudscape-design/components/expandable-section';
 import Link from '@cloudscape-design/components/link';

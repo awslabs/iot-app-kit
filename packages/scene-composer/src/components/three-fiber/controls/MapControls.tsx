@@ -1,6 +1,6 @@
-import { ReactThreeFiber, useFrame, useThree } from '@react-three/fiber';
-import React, { forwardRef, useEffect, useMemo } from 'react';
-import { Camera, Event } from 'three';
+import { type ReactThreeFiber, useFrame, useThree } from '@react-three/fiber';
+import { forwardRef, useEffect, useMemo } from 'react';
+import { type Camera, type Event } from 'three';
 
 import { MapControls as MapControlsImpl } from '../../../three/OrbitControls';
 

@@ -1,11 +1,10 @@
 /* eslint-disable import/first */
 /* eslint-disable import/order */
-import React from 'react';
 import { create } from 'react-test-renderer';
 
 import LightComponent from '..';
-import { Component, LightType } from '../../../../models/SceneModels';
-import { ISceneNodeInternal } from '../../../../store';
+import { type Component, LightType } from '../../../../models/SceneModels';
+import { type ISceneNodeInternal } from '../../../../store';
 import { KnownComponentType } from '../../../../interfaces';
 
 jest.mock('@react-three/fiber', () => {

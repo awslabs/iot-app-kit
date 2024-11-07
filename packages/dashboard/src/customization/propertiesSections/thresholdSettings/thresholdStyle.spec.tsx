@@ -1,9 +1,7 @@
-import React from 'react';
-
 import { render, waitFor } from '@testing-library/react';
 import { ThresholdStyleSettings } from './thresholdStyle';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
-import { ThresholdStyleType } from '@iot-app-kit/core';
+import { type ThresholdStyleType } from '@iot-app-kit/core';
 import {
   convertOptionToThresholdStyle,
   convertThresholdStyleToOption,

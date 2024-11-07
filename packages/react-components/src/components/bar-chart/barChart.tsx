@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import {
-  StyleSettingsMap,
-  Threshold,
-  Viewport,
-  ThresholdSettings,
-  ResolutionConfig,
+  type StyleSettingsMap,
+  type Threshold,
+  type Viewport,
+  type ThresholdSettings,
+  type ResolutionConfig,
 } from '@iot-app-kit/core';
 import { BarChart as BarChartBase } from '@iot-app-kit/charts';
 import type {
@@ -21,11 +21,11 @@ import {
 } from '../../common/constants';
 import { getTimeSeriesQueries } from '../../utils/queries';
 import {
-  AxisSettings,
-  ChartSize,
-  ComponentQuery,
+  type AxisSettings,
+  type ChartSize,
+  type ComponentQuery,
 } from '../../common/chartTypes';
-import { AssistantProperty } from '../../common/assistantProps';
+import { type AssistantProperty } from '../../common/assistantProps';
 import { Title, getAdjustedChartHeight } from '../../common/title';
 import { useBarChartAlarms, useNormalizedDataStreams } from './hooks';
 

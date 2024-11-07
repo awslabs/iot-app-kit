@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 import { useThree } from '@react-three/fiber';
-import { TilesRenderer as Nasa3DTilesRenderer } from '3d-tiles-renderer';
+import { type TilesRenderer as Nasa3DTilesRenderer } from '3d-tiles-renderer';
 
 import { GLTFLoader as TwinMakerGLTFLoader } from '../../../three/GLTFLoader';
 import { TilesRenderer } from '../../../three/tiles3d/TilesRenderer';
 import { setupTwinMakerGLTFLoader } from '../../../three/loaderUtils';
 import { createTwinMakerFetch } from '../../../utils/TwinMakerBrowserUtils';
 import { getGlobalSettings } from '../../../common/GlobalSettings';
-import { URIModifier } from '../../../interfaces/interfaces';
+import { type URIModifier } from '../../../interfaces/interfaces';
 
 import { fixNasaUriBug, setupTilesRenderer } from './TilesLoaderUtils';
 

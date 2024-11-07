@@ -1,17 +1,16 @@
-import React from 'react';
 import { spaceScaledXxs } from '@cloudscape-design/design-tokens';
 
 import {
   XYPlotTooltipDatastreamName,
-  XYPlotTooltipDatastreamNameOptions,
+  type XYPlotTooltipDatastreamNameOptions,
 } from './name';
 import {
   XYPlotTooltipDatastreamColor,
-  XYPlotTooltipDatastreamColorOptions,
+  type XYPlotTooltipDatastreamColorOptions,
 } from './color';
-import { ChartAlarms, ChartDataQuality } from '../../types';
-import { XYPlotTooltipAlarm, XYPlotTooltipAlarmOptions } from './alarm';
-import { AlarmContent } from '../../../alarm-components/alarm-content/types';
+import { type ChartAlarms, type ChartDataQuality } from '../../types';
+import { XYPlotTooltipAlarm, type XYPlotTooltipAlarmOptions } from './alarm';
+import { type AlarmContent } from '../../../alarm-components/alarm-content/types';
 
 export type XYPlotTooltipDatastreamLabelOptions =
   XYPlotTooltipDatastreamNameOptions &

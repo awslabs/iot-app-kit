@@ -1,8 +1,7 @@
-import React from 'react';
 import { screen, render } from '@testing-library/react';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { StatusTimeline } from './statusTimeline';
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 
 const VIEWPORT = { duration: '5m' };
 

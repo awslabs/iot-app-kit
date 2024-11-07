@@ -1,4 +1,7 @@
-import { ComparisonOperator, ThresholdValue } from '@iot-app-kit/core';
+import {
+  type ComparisonOperator,
+  type ThresholdValue,
+} from '@iot-app-kit/core';
 
 export const getThresholdRangeFromMinMax = ({
   value,

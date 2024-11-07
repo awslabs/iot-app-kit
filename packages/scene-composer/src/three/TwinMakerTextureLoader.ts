@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 
-import { GetSceneObjectFunction } from '../interfaces';
+import { type GetSceneObjectFunction } from '../interfaces';
 
 import { TwinMakerFileLoader } from './TwinMakerFileLoader';
-import { OnFileLoaderLoadFunc, OnProgressFunc, OnErrorFunc } from './types';
+import { type OnFileLoaderLoadFunc, type OnProgressFunc, type OnErrorFunc } from './types';
 import { shouldCreateImageBitmap } from './TwinMakerTextureLoaderUtils';
 
 // https://microsoft.github.io/PowerBI-JavaScript/interfaces/_node_modules_typedoc_node_modules_typescript_lib_lib_dom_d_.imagebitmapoptions.html

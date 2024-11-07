@@ -1,5 +1,5 @@
-import { RootState } from '../store';
-import { KnownSceneProperty, IComponentSettings, KnownComponentType } from '../interfaces';
+import { type RootState } from '../store';
+import { KnownSceneProperty, type IComponentSettings, KnownComponentType } from '../interfaces';
 import { DEFAULT_OVERLAY_GLOBAL_SETTINGS, DEFAULT_TAG_GLOBAL_SETTINGS } from '../common/constants';
 
 export const componentSettingsSelector = (state: RootState, componentType: KnownComponentType): IComponentSettings => {

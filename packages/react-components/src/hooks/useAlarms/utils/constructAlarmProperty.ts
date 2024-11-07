@@ -1,7 +1,7 @@
 import {
-  AssetModelProperty,
-  AssetProperty,
-  AssetPropertyValue,
+  type AssetModelProperty,
+  type AssetProperty,
+  type AssetPropertyValue,
 } from '@aws-sdk/client-iotsitewise';
 import type { AlarmProperty } from '../types';
 

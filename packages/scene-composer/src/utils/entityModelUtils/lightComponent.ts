@@ -1,11 +1,11 @@
-import { ComponentRequest, ComponentUpdateRequest, PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
-import { DocumentType } from '@aws-sdk/types';
+import { type ComponentRequest, type ComponentUpdateRequest, PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
+import { type DocumentType } from '@aws-sdk/types';
 
-import { ILightComponent, KnownComponentType } from '../../interfaces';
+import { type ILightComponent, KnownComponentType } from '../../interfaces';
 import { componentTypeToId } from '../../common/entityModelConstants';
-import { ILightComponentInternal } from '../../store';
+import { type ILightComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
-import { Component, LightType } from '../../models/SceneModels';
+import { type Component, LightType } from '../../models/SceneModels';
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../common/constants';
 
 export enum LightComponentProperty {

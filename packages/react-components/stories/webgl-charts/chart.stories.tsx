@@ -1,4 +1,3 @@
-import React from 'react';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import {
   MOCK_TIME_SERIES_DATA_QUERY,

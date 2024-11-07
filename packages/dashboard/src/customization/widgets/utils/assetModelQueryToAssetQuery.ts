@@ -1,12 +1,12 @@
 import {
-  AssetModelQuery,
-  SiteWiseAssetQuery,
+  type AssetModelQuery,
+  type SiteWiseAssetQuery,
 } from '@iot-app-kit/source-iotsitewise';
 
 import unionBy from 'lodash/unionBy';
 import uniq from 'lodash/uniq';
 
-import { IoTSiteWiseDataStreamQuery } from '~/types';
+import { type IoTSiteWiseDataStreamQuery } from '~/types';
 
 type AssetModelQueryWithAssetId = Required<AssetModelQuery>;
 const assetModelWithAssetId = (

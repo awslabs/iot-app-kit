@@ -1,5 +1,5 @@
-import { StateCreator } from 'zustand';
-import { DEFAULT_TREND_CURSOR_DATA, TrendCursorsState } from './state';
+import { type StateCreator } from 'zustand';
+import { DEFAULT_TREND_CURSOR_DATA, type TrendCursorsState } from './state';
 import { reducer } from './reducer';
 
 export const createTrendCursorsSlice: StateCreator<TrendCursorsState> = (

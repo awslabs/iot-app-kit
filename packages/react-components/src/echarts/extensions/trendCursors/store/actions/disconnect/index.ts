@@ -1,5 +1,5 @@
-import { DEFAULT_GROUPING, TrendCursorsData } from '../../state';
-import { TrendCursorGroupId, Updater } from '../../types';
+import { DEFAULT_GROUPING, type TrendCursorsData } from '../../state';
+import { type TrendCursorGroupId, type Updater } from '../../types';
 
 export type DisconnectAction = {
   type: 'DISCONNECT';

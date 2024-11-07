@@ -1,10 +1,10 @@
-import { AlarmDataState, AlarmsState } from '../../types';
+import { type AlarmDataState, type AlarmsState } from '../../types';
 import { viewportAsInterval } from '../utils/viewportAsInterval';
 import { filterAssetPropertyValues } from '../utils/filterAssetPropertyValues';
 import { shouldUpdateAssetPropertyValues } from '../utils/shouldUpdateAssetPropertyValues';
 import {
-  UpdateAlarmStateDataAction,
-  UpdateAlarmStateDataActionPayload,
+  type UpdateAlarmStateDataAction,
+  type UpdateAlarmStateDataActionPayload,
 } from './types';
 import { uniqueSortAssetPropertyValues } from '../utils/uniqueSortAssetPropertyValues';
 

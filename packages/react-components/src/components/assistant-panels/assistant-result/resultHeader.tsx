@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button } from '@cloudscape-design/components';
 import { AssistantIcon } from '../assistantIcon';
 import { colorTextHomeHeaderDefault } from '@cloudscape-design/design-tokens';

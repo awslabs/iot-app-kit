@@ -1,12 +1,19 @@
-import { AssetModelProperty, AssetProperty } from '@aws-sdk/client-iotsitewise';
-import { AlarmData, AlarmDataStatus, AlarmRequest } from '../types';
-import { SummarizeAlarmAction } from './actions';
-import { SummarizeAlarmModelsAction } from './actions/summarizeAlarmModels/types';
-import { UpdateAlarmSourceDataAction } from './actions/updateAlarmSourceData/types';
-import { UpdateAlarmTypeDataAction } from './actions/updateAlarmTypeData/types';
-import { UpdateAlarmInputDataAction } from './actions/updateAlarmInputPropertyData/types';
-import { UpdateAlarmStateDataAction } from './actions/updateAlarmStateData/types';
-import { UpdateAlarmThresholdDataAction } from './actions/updateAlarmThresholdData/types';
+import {
+  type AssetModelProperty,
+  type AssetProperty,
+} from '@aws-sdk/client-iotsitewise';
+import {
+  type AlarmData,
+  type AlarmDataStatus,
+  type AlarmRequest,
+} from '../types';
+import { type SummarizeAlarmAction } from './actions';
+import { type SummarizeAlarmModelsAction } from './actions/summarizeAlarmModels/types';
+import { type UpdateAlarmSourceDataAction } from './actions/updateAlarmSourceData/types';
+import { type UpdateAlarmTypeDataAction } from './actions/updateAlarmTypeData/types';
+import { type UpdateAlarmInputDataAction } from './actions/updateAlarmInputPropertyData/types';
+import { type UpdateAlarmStateDataAction } from './actions/updateAlarmStateData/types';
+import { type UpdateAlarmThresholdDataAction } from './actions/updateAlarmThresholdData/types';
 
 export type AlarmDataState = Omit<AlarmData, 'status'> & {
   /**

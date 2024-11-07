@@ -1,14 +1,13 @@
-import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { DataPoint } from '@iot-app-kit/core';
+import { type DataPoint } from '@iot-app-kit/core';
 import {
-  TooltipFormatterCallback,
-  TopLevelFormatterParams,
+  type TooltipFormatterCallback,
+  type TopLevelFormatterParams,
 } from 'echarts/types/dist/shared';
 import { XYPlotTooltip } from './tooltip';
-import { ChartAlarms, ChartDataQuality } from '../../types';
-import { AlarmContent } from '../../../alarm-components/alarm-content/types';
-import { PascalCaseStateName } from '@iot-app-kit/source-iotsitewise/dist/es/alarms/iotevents';
+import { type ChartAlarms, type ChartDataQuality } from '../../types';
+import { type AlarmContent } from '../../../alarm-components/alarm-content/types';
+import { type PascalCaseStateName } from '@iot-app-kit/source-iotsitewise/dist/es/alarms/iotevents';
 
 type FormatterOptions = {
   significantDigits?: number;

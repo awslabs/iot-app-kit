@@ -1,4 +1,4 @@
-import { TwinMakerSceneMetadataModule, initialize } from '@iot-app-kit/source-iottwinmaker';
+import { type TwinMakerSceneMetadataModule, type initialize } from '@iot-app-kit/source-iottwinmaker';
 import { useMemo } from 'react';
 
 interface SceneMetadataModuleProps {

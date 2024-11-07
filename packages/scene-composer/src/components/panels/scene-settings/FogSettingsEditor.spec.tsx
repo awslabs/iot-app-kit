@@ -1,6 +1,5 @@
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 import { act, render } from '@testing-library/react';
-import React from 'react';
 
 import { accessStore } from '../../../store';
 import { KnownSceneProperty } from '../../../interfaces';

@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { useAlarmsFromQueries } from '../../../hooks/useAlarmsFromQueries';
 import { useCustomCompareEffect } from 'react-use';
 import isEqual from 'lodash.isequal';
-import { BarChartProps } from '../barChart';
+import { type BarChartProps } from '../barChart';
 import { transformAlarmsToThreshold } from '../../../utils/transformAlarmsToThreshold';
-import { AlarmData } from '../../../hooks/useAlarms';
+import { type AlarmData } from '../../../hooks/useAlarms';
 import {
-  DataStream,
-  Primitive,
-  ResolutionConfig,
-  Threshold,
-  ThresholdValue,
+  type DataStream,
+  type Primitive,
+  type ResolutionConfig,
+  type Threshold,
+  type ThresholdValue,
 } from '@iot-app-kit/core';
 import { toId } from '@iot-app-kit/source-iotsitewise';
 

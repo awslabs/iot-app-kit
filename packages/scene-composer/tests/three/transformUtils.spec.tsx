@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BoxGeometry, Mesh, MeshBasicMaterial, Object3D } from 'three';
 import { render } from '@testing-library/react';
 
-import { ISceneNodeInternal } from '../../src/store';
+import { type ISceneNodeInternal } from '../../src/store';
 import { snapObjectToFloor, useSnapObjectToFloor } from '../../src/three/transformUtils';
-import { Vector3 } from '../../src';
+import { type Vector3 } from '../../src';
 
 const getObject3DBySceneNodeRef = jest.fn();
 

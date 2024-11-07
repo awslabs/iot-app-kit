@@ -2,7 +2,7 @@ import { useFrame, useLoader } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-import { Component, Vector3 } from '../../../models/SceneModels';
+import { Component, type Vector3 } from '../../../models/SceneModels';
 import { getDataUri } from '../../../utils/svgUtils';
 
 const arrowSvg = `

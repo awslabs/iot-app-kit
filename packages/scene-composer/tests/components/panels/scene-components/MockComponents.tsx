@@ -1,10 +1,10 @@
-import { IModelRefComponentInternal, ISceneNodeInternal } from '../../../../src/store';
+import { type IModelRefComponentInternal, type ISceneNodeInternal } from '../../../../src/store';
 import {
-  IDataBindingConfig,
-  IValueDataBindingProvider,
-  IValueDataBindingStore,
-  IValueDataBinding,
-  IValueDataBindingProviderState,
+  type IDataBindingConfig,
+  type IValueDataBindingProvider,
+  type IValueDataBindingStore,
+  type IValueDataBinding,
+  type IValueDataBindingProviderState,
 } from '../../../../src/interfaces';
 import { DataBindingLabelKeys } from '../../../../src/common/constants';
 

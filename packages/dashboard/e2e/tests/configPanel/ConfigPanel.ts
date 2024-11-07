@@ -1,4 +1,4 @@
-import { Locator, Page } from '@playwright/test';
+import { type Locator, type Page } from '@playwright/test';
 const Y_LABEL_PLACEHOLDER_TEXT = 'Input Y-axis label';
 const CHECKBOX_LOCATOR = 'input[type=checkbox]';
 export class ConfigPanel {

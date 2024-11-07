@@ -1,6 +1,6 @@
 import {
-  InvokeAssistantCommandInput,
-  InvokeAssistantCommandOutput,
+  type InvokeAssistantCommandInput,
+  type InvokeAssistantCommandOutput,
 } from '@amzn/iot-black-pearl-internal-v3';
 import {
   mockedInvokeAssistantResponse1,

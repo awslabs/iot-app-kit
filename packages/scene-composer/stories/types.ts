@@ -1,4 +1,4 @@
-import { IValueDataBindingProviderState } from '../src/interfaces';
+import { type IValueDataBindingProviderState } from '../src/interfaces';
 
 export interface MockedValueDataBindingProviderStore {
   state: IValueDataBindingProviderState;

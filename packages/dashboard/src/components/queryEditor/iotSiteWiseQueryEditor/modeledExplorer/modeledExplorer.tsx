@@ -1,24 +1,24 @@
 import { Box, ExpandableSection } from '@cloudscape-design/components';
 import {
   AlarmExplorer,
-  AlarmExplorerProps,
-  AlarmResource,
+  type AlarmExplorerProps,
+  type AlarmResource,
   AssetExplorer,
-  AssetExplorerProps,
+  type AssetExplorerProps,
   AssetPropertyExplorer,
-  AssetPropertyExplorerProps,
-  AssetPropertyResource,
-  AssetResource,
-  SelectionMode,
+  type AssetPropertyExplorerProps,
+  type AssetPropertyResource,
+  type AssetResource,
+  type SelectionMode,
 } from '@iot-app-kit/react-components';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { isModeledPropertyInvalid } from '../../helpers/isModeledPropertyInvalid';
 import { ResourceExplorerFooter } from '../footer/footer';
 import { QueryExtender } from '../queryExtender';
 import { getPlugin } from '@iot-app-kit/core';
-import { useQuery } from '../../useQuery';
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import { DashboardWidget } from '~/types';
+import { type useQuery } from '../../useQuery';
+import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { type DashboardWidget } from '~/types';
 import { propertySelectionLabel } from '../../helpers/propertySelectionLabel';
 import { alarmSelectionLabel } from '../../helpers/alarmSelectionLabel';
 import { ExpandableSectionHeading } from '../components/expandableSectionHeading';

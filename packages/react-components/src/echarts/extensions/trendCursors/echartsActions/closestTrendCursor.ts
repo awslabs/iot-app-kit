@@ -1,4 +1,4 @@
-import { TrendCursorModel } from '../model';
+import { type TrendCursorModel } from '../model';
 
 export const closestTrendCursor = (
   date: number,

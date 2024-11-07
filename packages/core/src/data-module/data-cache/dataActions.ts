@@ -1,4 +1,4 @@
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 import type { Action, Dispatch } from 'redux';
 import type {
   DataStreamId,

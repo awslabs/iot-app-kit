@@ -1,7 +1,7 @@
 // wrapper that will initially only have a feature flag config
-import React, { ReactNode, createContext } from 'react';
-import { FeatureFlagConfig } from './types';
+import { type ReactNode, createContext } from 'react';
 import { DEFAULT_APP_KIT_CONFIG } from './defaultValues';
+import { type FeatureFlagConfig } from './types';
 
 export interface IAppKitConfig {
   featureFlagConfig: FeatureFlagConfig;

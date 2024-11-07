@@ -1,5 +1,5 @@
-import { AssetSummary } from '@aws-sdk/client-iotsitewise';
-import { TableProps } from '@awsui/components-react';
+import { type AssetSummary } from '@aws-sdk/client-iotsitewise';
+import { type TableProps } from '@awsui/components-react';
 
 export interface FilterTexts {
   placeholder: string;

@@ -1,5 +1,5 @@
-import { sub, add, Duration } from 'date-fns';
-import { Interval } from '../../types';
+import { sub, add, type Duration } from 'date-fns';
+import { type Interval } from '../../types';
 
 export const ANCHOR_DATE = new Date(1720488638812);
 

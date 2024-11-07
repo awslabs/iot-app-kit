@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { DataStream, StyleSettingsMap } from '@iot-app-kit/core';
+import { type DataStream, type StyleSettingsMap } from '@iot-app-kit/core';
 import { Colorizer } from '@iot-app-kit/core-util';
 import difference from 'lodash.difference';
 

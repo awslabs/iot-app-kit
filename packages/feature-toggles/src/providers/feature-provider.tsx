@@ -1,6 +1,6 @@
-import React, { PropsWithChildren, useCallback, useState } from 'react';
+import { type PropsWithChildren, useCallback, useState } from 'react';
 import FeatureContext from '../context/feature-context';
-import IFeatureRepository from '../resources/IFeatureRepository';
+import type IFeatureRepository from '../resources/IFeatureRepository';
 import OverridableFeatureRepository from '../resources/OverridableFeatureRepository';
 
 interface FeatureProviderProps extends PropsWithChildren {

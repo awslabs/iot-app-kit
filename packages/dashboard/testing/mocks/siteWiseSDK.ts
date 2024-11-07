@@ -1,5 +1,5 @@
 import {
-  DescribeAssetResponse,
+  type DescribeAssetResponse,
   PropertyDataType,
 } from '@aws-sdk/client-iotsitewise';
 

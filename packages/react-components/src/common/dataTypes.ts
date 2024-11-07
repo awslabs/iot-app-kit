@@ -1,4 +1,4 @@
-import { StatusIconType } from './constants';
+import { type StatusIconType } from './constants';
 import type { DataPoint } from '@iot-app-kit/core';
 
 /**

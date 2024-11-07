@@ -1,4 +1,4 @@
-import { AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
+import { type AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
 import { assetPropertyValueTime } from './assetPropertyValueTime';
 
 export const compareAssetPropertyValues = (

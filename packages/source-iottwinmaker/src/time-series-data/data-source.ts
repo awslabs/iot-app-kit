@@ -1,14 +1,14 @@
-import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { toDataStreamId } from './utils/dataStreamId';
 import { getPropertyValueHistoryByEntity } from './client/getPropertyValueHistoryByEntity';
 import { getPropertyValueHistoryByComponentType } from './client/getPropertyValueHistoryByComponentType';
-import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
+import { type TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 import { isEmpty } from 'lodash';
 import type { DataSource, RequestInformationAndRange } from '@iot-app-kit/core';
 import type { TwinMakerDataStreamQuery } from './types';
 import {
-  TwinMakerComponentHistoryQuery,
-  TwinMakerEntityHistoryQuery,
+  type TwinMakerComponentHistoryQuery,
+  type TwinMakerEntityHistoryQuery,
 } from '../common/queryTypes';
 import { isDefined } from '../utils/propertyValueUtils';
 

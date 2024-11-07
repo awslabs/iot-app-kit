@@ -1,11 +1,11 @@
-import { AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
+import { type AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
 import {
-  AlarmData,
-  UseAlarmsHookSettings,
-  UseAlarmsInputPropertyTimeSeriesDataSettings,
-  UseAlarmsOptions,
+  type AlarmData,
+  type UseAlarmsHookSettings,
+  type UseAlarmsInputPropertyTimeSeriesDataSettings,
+  type UseAlarmsOptions,
 } from '../../types';
-import { OnUpdateAlarmInputDataAction } from '../../state';
+import { type OnUpdateAlarmInputDataAction } from '../../state';
 
 export type UseInputPropertyTimeSeriesDataOptions = {
   timeSeriesData?: AlarmDataQuery['timeSeriesData'];

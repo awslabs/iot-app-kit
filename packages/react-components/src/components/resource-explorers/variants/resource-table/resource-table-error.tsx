@@ -1,5 +1,4 @@
 import Alert from '@cloudscape-design/components/alert';
-import React from 'react';
 
 export interface ResourceTableErrorProps {
   error: Error;

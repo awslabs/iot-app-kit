@@ -1,8 +1,8 @@
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import { SiteWiseDataStreamQuery } from '@iot-app-kit/source-iotsitewise';
-import { AlarmData } from '../../types';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type SiteWiseDataStreamQuery } from '@iot-app-kit/source-iotsitewise';
+import { type AlarmData } from '../../types';
 import { createNonNullableList } from '../../../../utils/createNonNullableList';
-import { IterableElement } from 'type-fest';
+import { type IterableElement } from 'type-fest';
 
 type Properties<PropertyId = string> = Set<PropertyId>;
 

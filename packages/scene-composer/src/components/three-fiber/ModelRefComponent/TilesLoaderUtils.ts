@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { TilesRenderer } from '3d-tiles-renderer';
+import { type TilesRenderer } from '3d-tiles-renderer';
 
 /**
  * With the problem in NASA code for 3D Tiles Renderer, they can't handle unknown protocol like s3, it'll turn "s3://domain-name/file.ext" to "s3:/domain-name/file.ext"

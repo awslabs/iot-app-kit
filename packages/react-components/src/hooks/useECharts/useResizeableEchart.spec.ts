@@ -10,8 +10,8 @@ import {
   getLegendHeight,
   getLegendWidth,
 } from './useResizeableEChart';
-import { ChartOptions } from '../../components/chart/types';
-import { ResizeCallbackData } from 'react-resizable';
+import { type ChartOptions } from '../../components/chart/types';
+import { type ResizeCallbackData } from 'react-resizable';
 import { perToPx } from '../utils/pxConversion';
 
 describe('useResizeableEChart', () => {

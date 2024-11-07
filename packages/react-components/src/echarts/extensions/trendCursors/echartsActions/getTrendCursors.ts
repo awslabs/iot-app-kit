@@ -1,5 +1,5 @@
-import GlobalModel from 'echarts/types/src/model/Global';
-import { TrendCursorModel } from '../model';
+import type GlobalModel from 'echarts/types/src/model/Global';
+import { type TrendCursorModel } from '../model';
 
 export const getTrendCursors = (ecmodel: GlobalModel) => {
   // sometimes echarts just maps off an option to null on delete

@@ -1,14 +1,14 @@
-import React, { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { v4 as uuid } from 'uuid';
 import {
   AssistantPopover,
-  AssistantPopoverProps,
+  type AssistantPopoverProps,
 } from '../assistant-popover/assistantPopover';
 import { useAssistant } from '../../../hooks/useAssistant/useAssistant';
 import { EVENT_SUMMARY_DEFAULT_UTTERANCE } from '../../assistant-panels/constants';
 import {
   AlarmContentContainer,
-  AlarmContentContainerProps,
+  type AlarmContentContainerProps,
 } from '../../alarm-components/alarm-content/alarmContentContainer';
 
 export type AlarmPopoverProps = AssistantPopoverProps &

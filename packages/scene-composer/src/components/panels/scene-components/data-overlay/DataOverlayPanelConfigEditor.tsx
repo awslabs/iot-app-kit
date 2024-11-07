@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
 import { Checkbox, FormField } from '@cloudscape-design/components';
+import { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 
-import { IDataOverlayComponentInternal } from '../../../../store';
-import { Component } from '../../../../models/SceneModels';
+import { type Component } from '../../../../models/SceneModels';
+import { type IDataOverlayComponentInternal } from '../../../../store';
 
 interface IDataOverlayPanelConfigEditorProps {
   config: Component.OverlayPanelConfig | undefined;

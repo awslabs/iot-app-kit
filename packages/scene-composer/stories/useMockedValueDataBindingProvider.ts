@@ -1,12 +1,12 @@
 import { isEqual } from 'lodash';
 
 import {
-  IValueDataBindingProvider,
-  IDataFieldOption,
-  IDataBindingConfig,
-  IValueDataBinding,
-  IValueDataBindingStore,
-  IValueDataBindingProviderState,
+  type IValueDataBindingProvider,
+  type IDataFieldOption,
+  type IDataBindingConfig,
+  type IValueDataBinding,
+  type IValueDataBindingStore,
+  type IValueDataBindingProviderState,
 } from '../src/interfaces';
 import {
   ENTITY_ID_INDEX,
@@ -23,7 +23,7 @@ import {
   createIdenticalLabelOption,
   validateEntityId,
 } from './useMockedValueDataBindingProviderUtils';
-import { FIELD_NAME, MockedValueDataBindingProviderStore } from './types';
+import { type FIELD_NAME, type MockedValueDataBindingProviderStore } from './types';
 import { FIELDS, MOCK_DELAY } from './constants';
 
 export const propertyNames = Object.seal(['temperature']);

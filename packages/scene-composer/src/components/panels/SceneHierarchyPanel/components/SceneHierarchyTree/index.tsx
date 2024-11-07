@@ -1,7 +1,7 @@
-import React, { FC, useCallback } from 'react';
+import { type FC, useCallback } from 'react';
 
 import { useSceneHierarchyData } from '../../SceneHierarchyDataProvider';
-import { DropHandler } from '../../../../../hooks/useDropMonitor';
+import { type DropHandler } from '../../../../../hooks/useDropMonitor';
 
 import { AcceptableDropTypes, EnhancedTree } from './constants';
 import SceneHierarchyTreeItem from './SceneHierarchyTreeItem';

@@ -1,11 +1,11 @@
-import { ListAssetModels } from '@iot-app-kit/core';
+import { type ListAssetModels } from '@iot-app-kit/core';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AssetModelExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests';
-import { SelectionMode } from '../../types/common';
-import { AssetModelResource } from '../../types/resources';
+import { type SelectionMode } from '../../types/common';
+import { type AssetModelResource } from '../../types/resources';
 import { createListAssetModelsPage } from '../helpers/responses';
 import * as table from '../helpers/table';
 

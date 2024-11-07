@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import Box from '@cloudscape-design/components/box';
 import Tabs from '@cloudscape-design/components/tabs';
 import SpaceBetween from '@cloudscape-design/components/space-between';

@@ -1,13 +1,12 @@
-import React from 'react';
 import { type TableProps } from '@cloudscape-design/components/table';
 import { isNumeric, round } from '@iot-app-kit/core-util';
-import { DataStreamInformation, TrendCursor } from '../types';
+import { type DataStreamInformation, type TrendCursor } from '../types';
 import { DataStreamCell, DataStreamColumnHeader } from './datastream';
 import { TrendCursorCell, TrendCursorColumnHeader } from './trendCursor';
 import { MaximumColumnHeader, MaximumCell } from './maximumValue';
 import { AssetNameCell, AssetNameColumnHeader } from './assetName';
 import { MinimumColumnHeader, MinimumCell } from './minimumValue';
-import { ChartLegend, ChartOptions } from '../../../types';
+import { type ChartLegend, type ChartOptions } from '../../../types';
 import { LatestValueCell, LatestValueColumnHeader } from './latestValue';
 import {
   LEGEND_ASSET_NAME_COL_MAX_WIDTH,

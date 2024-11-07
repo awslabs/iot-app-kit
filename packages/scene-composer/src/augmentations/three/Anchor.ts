@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import DebugLogger from '../../logger/DebugLogger';
 import { DefaultAnchorStatus, SelectedAnchor } from '../../interfaces';
 
-import { IVisual } from './visuals';
+import { type IVisual } from './visuals';
 
 /**
  * The generic anchor object.

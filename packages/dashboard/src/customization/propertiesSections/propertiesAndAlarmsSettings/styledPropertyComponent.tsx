@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { FC } from 'react';
 import {
   Button,
@@ -18,9 +18,9 @@ import {
 
 import ColorPicker from '../shared/colorPicker';
 import {
-  LineStyles,
-  StyledAssetPropertyQuery,
-  YAxisOptions,
+  type LineStyles,
+  type StyledAssetPropertyQuery,
+  type YAxisOptions,
 } from '~/customization/widgets/types';
 import { getPropertyDisplay } from './getPropertyDisplay';
 import type { AssetSummary } from '~/hooks/useAssetDescriptionQueries';

@@ -1,5 +1,5 @@
 import { spaceScaledS } from '@cloudscape-design/design-tokens';
-import React, { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import './resource-table-header.css';
 

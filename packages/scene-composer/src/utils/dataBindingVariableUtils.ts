@@ -1,4 +1,4 @@
-import { Primitive } from '@iot-app-kit/core';
+import { type Primitive } from '@iot-app-kit/core';
 
 // Match ${xyz} where xyz can be anything except new line, and as few as possible
 const bindingVariableRegex = /\$\{.+?\}/gi;

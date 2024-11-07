@@ -1,9 +1,12 @@
 import {
-  AssetModelSummary,
+  type AssetModelSummary,
   AssetModelType,
-  IoTSiteWiseClient,
+  type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
-import { QueryFunctionContext, useInfiniteQuery } from '@tanstack/react-query';
+import {
+  type QueryFunctionContext,
+  useInfiniteQuery,
+} from '@tanstack/react-query';
 import { AssetModelsCacheKeyFactory } from './assetModelQueryKeyFactory';
 import { GetAssetModelsRequest } from './getAssetModelRequest';
 import { createNonNullableList } from '~/helpers/lists/createNonNullableList';

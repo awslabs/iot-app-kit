@@ -1,4 +1,4 @@
-import { Browser, Page, test as base } from '@playwright/test';
+import { type Browser, type Page, test as base } from '@playwright/test';
 import { DashboardPage } from './dashboard/DashboardPage';
 import { createWorkerFixture, type MockServiceWorker } from 'playwright-msw';
 import { handlers } from '../../src/msw/handlers';

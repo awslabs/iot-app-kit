@@ -1,4 +1,4 @@
-import { SiteWiseAssetSession } from '../index';
+import { type SiteWiseAssetSession } from '../index';
 import { isDefined } from '../../common/predicates';
 import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import type { ErrorDetails } from '@iot-app-kit/core';

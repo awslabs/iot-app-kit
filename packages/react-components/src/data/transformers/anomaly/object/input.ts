@@ -1,5 +1,5 @@
-import { ObjectDataSourceValue } from '../../object';
-import { AnomalyStyles } from '../input';
+import { type ObjectDataSourceValue } from '../../object';
+import { type AnomalyStyles } from '../input';
 
 export type Diagnostic = {
   name: string;

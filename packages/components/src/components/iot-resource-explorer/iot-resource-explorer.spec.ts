@@ -1,12 +1,12 @@
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { newSpecPage } from '@stencil/core/testing';
 import { IotResourceExplorer } from './iot-resource-explorer';
-import { Components } from '../../components.d';
-import { CustomHTMLElement } from '../../testing/types';
+import { type Components } from '../../components.d';
+import { type CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
 import flushPromises from 'flush-promises';
 import { mocklistAssetsResponse } from '../../testing/mocks/data/listAssetsResponse';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import {
   createMockIoTEventsSDK,
   createMockSiteWiseSDK,

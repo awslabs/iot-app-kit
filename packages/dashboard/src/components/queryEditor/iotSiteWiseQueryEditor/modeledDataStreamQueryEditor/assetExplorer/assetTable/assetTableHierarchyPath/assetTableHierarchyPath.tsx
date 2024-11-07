@@ -1,6 +1,5 @@
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import BreadcrumbGroup from '@cloudscape-design/components/breadcrumb-group';
-import React from 'react';
 
 import { useHierarchyCrumbs } from './useHierarchyCrumbs';
 

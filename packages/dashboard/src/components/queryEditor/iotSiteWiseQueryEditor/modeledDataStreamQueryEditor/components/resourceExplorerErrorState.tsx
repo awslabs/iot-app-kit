@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Alert, Box, SpaceBetween } from '@cloudscape-design/components';
 
 export const ResourceExplorerErrorState = ({ title }: { title?: string }) => {

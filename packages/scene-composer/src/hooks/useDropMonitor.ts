@@ -1,4 +1,4 @@
-import { TargetType } from 'dnd-core';
+import { type TargetType } from 'dnd-core';
 import { useDrop } from 'react-dnd';
 
 export type DropHandler<TItem> = (

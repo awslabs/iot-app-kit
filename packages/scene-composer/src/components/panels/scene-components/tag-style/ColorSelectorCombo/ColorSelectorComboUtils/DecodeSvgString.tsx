@@ -1,5 +1,4 @@
-import React from 'react';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { type IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 import { useSvgParser } from './useSvgParser';
 

@@ -1,9 +1,8 @@
-import { AssetSummary } from '@aws-sdk/client-iotsitewise';
+import { type AssetSummary } from '@aws-sdk/client-iotsitewise';
 import { type TableProps } from '@cloudscape-design/components/table';
-import React from 'react';
 
-import type { AssetTableNameLinkProps } from './assetTableNameLink';
 import { formatDate } from '@iot-app-kit/react-components';
+import type { AssetTableNameLinkProps } from './assetTableNameLink';
 
 type AssetTableColumnDefinitions =
   TableProps<AssetSummary>['columnDefinitions'];

@@ -1,4 +1,4 @@
-import { Interval } from '../types';
+import { type Interval } from '../types';
 
 export type SendOptions<Request> = {
   request: Request;

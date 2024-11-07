@@ -1,4 +1,4 @@
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 
 export type UpdateAlarmInputDataActionPayload = {
   dataStreams?: DataStream[];

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Link, Icon } from '@cloudscape-design/components';
 import { spaceScaledXs } from '@cloudscape-design/design-tokens';
 

@@ -1,5 +1,5 @@
 import { sub } from 'date-fns';
-import { Interval, Viewport } from '../../types';
+import { type Interval, type Viewport } from '../../types';
 import { IntervalTransformer, getViewportType } from './transformer';
 import { ANCHOR_DATE } from './testData';
 

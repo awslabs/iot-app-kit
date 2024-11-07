@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { render } from '@testing-library/react';
 
 import DebugLogger from '../../../DebugLogger';
-import ILogger from '../../../ILogger';
+import type ILogger from '../../../ILogger';
 import LogProvider from '..';
 import LoggingContext from '../../contexts/logging';
 

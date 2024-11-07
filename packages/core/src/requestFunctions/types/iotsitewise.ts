@@ -26,7 +26,7 @@ import type {
   ListTimeSeriesRequest,
   ListTimeSeriesResponse,
 } from '@aws-sdk/client-iotsitewise';
-import { RequestFunction } from './common';
+import { type RequestFunction } from './common';
 
 /**
  * First-class function for requesting the latest value of a single asset property or

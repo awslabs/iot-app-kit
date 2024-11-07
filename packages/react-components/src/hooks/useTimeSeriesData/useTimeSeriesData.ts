@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { combineProviders } from '@iot-app-kit/core';
 import {
-  SiteWiseAssetQuery,
-  SiteWisePropertyAliasQuery,
+  type SiteWiseAssetQuery,
+  type SiteWisePropertyAliasQuery,
 } from '@iot-app-kit/source-iotsitewise';
 import type {
   Viewport,

@@ -1,4 +1,3 @@
-import React from 'react';
 import Button from '@cloudscape-design/components/button';
 
 export const PreferencesModalToggle = ({ onShow }: { onShow: () => void }) => {

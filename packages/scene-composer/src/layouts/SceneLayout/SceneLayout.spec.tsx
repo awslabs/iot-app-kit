@@ -1,6 +1,5 @@
 /* eslint-disable import/first */
 /* eslint-disable import/order */
-import * as React from 'react';
 import { create } from 'react-test-renderer';
 
 import { SceneLayout } from '.';

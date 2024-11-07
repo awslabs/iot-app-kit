@@ -1,11 +1,11 @@
-import React, { FC, useCallback, useContext, useMemo } from 'react';
+import { type FC, useCallback, useContext, useMemo } from 'react';
 import styled from 'styled-components';
 import { ButtonDropdown, SpaceBetween } from '@cloudscape-design/components';
 import { useIntl } from 'react-intl';
 
 import { KnownComponentType } from '../../interfaces';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { ICameraComponentInternal, accessStore } from '../../store';
+import { type ICameraComponentInternal, accessStore } from '../../store';
 import useActiveCamera from '../../hooks/useActiveCamera';
 import useMatterportViewer from '../../hooks/useMatterportViewer';
 import { findComponentByType } from '../../utils/nodeUtils';

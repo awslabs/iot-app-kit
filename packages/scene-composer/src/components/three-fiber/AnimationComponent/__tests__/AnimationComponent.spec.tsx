@@ -1,8 +1,7 @@
 import * as THREE from 'three';
-import React from 'react';
 import { render } from '@testing-library/react';
 
-import { ISceneNodeInternal, accessStore, IAnimationComponentInternal } from '../../../../store';
+import { type ISceneNodeInternal, accessStore, type IAnimationComponentInternal } from '../../../../store';
 import AnimationComponent, { toggleIsAnimationPaused } from '../AnimationComponent';
 import { generateUUID } from '../../../../utils/mathUtils';
 

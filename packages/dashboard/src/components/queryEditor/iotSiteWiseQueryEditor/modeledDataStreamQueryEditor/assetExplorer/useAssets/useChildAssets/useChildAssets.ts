@@ -1,5 +1,5 @@
 import {
-  IoTSiteWiseClient,
+  type IoTSiteWiseClient,
   type AssetSummary,
 } from '@aws-sdk/client-iotsitewise';
 import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
