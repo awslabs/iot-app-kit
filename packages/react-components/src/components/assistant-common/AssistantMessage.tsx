@@ -36,7 +36,9 @@ export const AssistantMessage = ({ message }: AssistantMessageProps) => {
           fontSize='body-m'
           data-testid='assistant-chatbot-assistant-message'
         >
-          <Markdown remarkPlugins={[remarkGfm]}>{sanitizedText}</Markdown>
+          <Markdown disallowedElements={['img']} remarkPlugins={[remarkGfm]}>
+            {sanitizedText}
+          </Markdown>
           {generatedByAi ? (
             <Box float='right'>
               <CopyToClipboard
