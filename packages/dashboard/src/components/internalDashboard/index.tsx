@@ -67,7 +67,6 @@ import type { UserSelectionProps } from '../userSelection';
 import type { WidgetsProps } from '../widgets/list';
 import DashboardHeader from './dashboardHeader';
 
-import '@iot-app-kit/components/styles.css';
 import { useChatbotPosition } from '~/hooks/useChatbotPosition';
 import { useDashboardViewport } from '~/hooks/useDashboardViewport';
 import { useSyncDashboardConfiguration } from '~/hooks/useSyncDashboardConfiguration';

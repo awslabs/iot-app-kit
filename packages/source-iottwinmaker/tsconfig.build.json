@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": [
-    "**/*.spec.*"
-  ]
+  "compilerOptions": {
+    "incremental": true
+  },
+  "exclude": ["**/*.spec.*", "**/*.test.*", "node_modules"]
 }

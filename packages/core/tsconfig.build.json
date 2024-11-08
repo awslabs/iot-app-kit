@@ -1,7 +1,9 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": [
-    "**/*.spec.*",
-    "**/__mocks__"
-  ]
+  "compilerOptions": {
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "**/*.spec.*", "**/__mocks__"]
 }

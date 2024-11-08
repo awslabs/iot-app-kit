@@ -38,7 +38,7 @@ jobs:
         shell: bash
         env:
           NODE_OPTIONS: '--max_old_space_size=8192'
-        run: npm ci --workspaces --include-workspace-root
+        run: npm ci --prefer-offline --no-audit --progress=false --workspaces --include-workspace-root
 
       - name: Stylelint
         run: npm run test:stylelint
@@ -53,18 +53,14 @@ jobs:
       matrix:
         package:
           [
-            components,
             core,
             core-util,
             dashboard,
             doc-site,
-            feature-toggles,
             react-components,
-            related-table,
             scene-composer,
             source-iotsitewise,
             source-iottwinmaker,
-            testing-util,
             tools-iottwinmaker,
           ]
     steps:
@@ -92,7 +88,7 @@ jobs:
         shell: bash
         env:
           NODE_OPTIONS: '--max_old_space_size=8192'
-        run: npm ci --workspaces --include-workspace-root
+        run: npm ci --prefer-offline --no-audit --progress=false --workspaces --include-workspace-root
 
       - name: Turbo cache
         uses: actions/cache@v4
@@ -101,6 +97,22 @@ jobs:
           key: ${{ runner.os }}-turbo-unit-${{ matrix.package}}-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-turbo-unit-${{ matrix.package}}-
+
+      - name: Build cache
+        uses: actions/cache@v4
+        with:
+          path: '**/.tsbuildinfo'
+          key: ${{ runner.os }}-tsbuildinfo-${{ matrix.package}}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-tsbuildinfo-${{ matrix.package}}-
+
+      - name: Test and lint cache
+        uses: actions/cache@v4
+        with:
+          path: '**/.cache'
+          key: ${{ runner.os }}-test-lint-${{ matrix.package}}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-test-lint-${{ matrix.package}}-
 
       - name: Validate
         run: npx turbo run build lint test --filter=@iot-app-kit/${{ matrix.package }}
@@ -135,7 +147,7 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         env:
           NODE_OPTIONS: '--max_old_space_size=8192'
-        run: npm ci --workspaces --include-workspace-root
+        run: npm ci --prefer-offline --no-audit --progress=false --workspaces --include-workspace-root
 
       - name: Turbo cache
         uses: actions/cache@v4
@@ -166,6 +178,14 @@ jobs:
       - name: Install Playwright's dependencies
         if: steps.playwright-cache.outputs.cache-hit == 'true'
         run: npx playwright install-deps
+
+      - name: Build cache
+        uses: actions/cache@v4
+        with:
+          path: '**/.tsbuildinfo'
+          key: ${{ runner.os }}-tsbuildinfo-${{ matrix.package}}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-tsbuildinfo-${{ matrix.package}}-
 
       - name: Playwright
         run: npx turbo run build test:ui:ci --filter=@iot-app-kit/${{matrix.package}}

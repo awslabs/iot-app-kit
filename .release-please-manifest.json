@@ -1,11 +1,9 @@
 {
-  "packages/components": "10.12.2",
   "packages/core": "10.12.2",
   "packages/dashboard": "10.12.2",
   "packages/doc-site": "10.12.2",
   "packages/core-util": "10.12.2",
   "packages/react-components": "10.12.2",
-  "packages/related-table": "10.12.2",
   "packages/scene-composer": "10.12.2",
   "packages/source-iotsitewise": "10.12.2",
   "packages/source-iottwinmaker": "10.12.2",

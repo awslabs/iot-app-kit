@@ -15,6 +15,7 @@ import { configureDashboardStore } from '~/store';
 import { IoTSiteWiseQueryEditor } from './iotSiteWiseQueryEditor';
 
 jest.mock('@iot-app-kit/charts-core');
+export const SUPPORTED_PAGE_SIZES = [10, 25, 100, 250];
 
 export async function waitForLoadingToFinish() {
   await waitFor(() => {

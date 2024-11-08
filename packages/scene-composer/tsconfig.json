@@ -1,7 +1,5 @@
 {
   "extends": "./tsconfig.build.json",
-  "include": [
-    "src",
-    "stories",
-    "tests"  ]
+  "include": ["src", "stories", "tests"],
+  "exclude": ["node_modules"]
 }

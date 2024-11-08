@@ -1,5 +1,4 @@
 /** @type { import('@storybook/react').Preview } */
-import '@iot-app-kit/components/dist/iot-app-kit-components/iot-app-kit-components.css';
 
 const preview = {
   parameters: {
@@ -12,7 +11,14 @@ const preview = {
     },
     options: {
       storySort: {
-        order: ['Introduction', 'Overview', 'Data sources', 'Components', 'Core', 'React hooks'],
+        order: [
+          'Introduction',
+          'Overview',
+          'Data sources',
+          'Components',
+          'Core',
+          'React hooks',
+        ],
       },
     },
     docs: {

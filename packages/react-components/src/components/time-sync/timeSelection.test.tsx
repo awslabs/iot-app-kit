@@ -1,11 +1,7 @@
 import wrapper from '@cloudscape-design/components/test-utils/dom';
-
-import { act, render } from '@testing-library/react';
-
-import { screen } from '@testing-library/dom';
-
-import { TimeSelection } from './timeSelection';
+import { act, render, screen } from '@testing-library/react';
 import { TimeSync } from '.';
+import { TimeSelection } from './timeSelection';
 
 const LAST_MINUTE = 0;
 const CUSTOM = 9;

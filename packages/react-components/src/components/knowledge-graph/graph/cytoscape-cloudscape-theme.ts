@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { STYLE_PREFIX } from './constants';
 import { type RefObject, useCallback, useEffect, useState } from 'react';
+import { STYLE_PREFIX } from './constants';
 
 export const colors = {
   nodeBackground: `--${STYLE_PREFIX}-color-background-node`,
@@ -40,11 +40,7 @@ const useCloudScapeTheme = (container: RefObject<HTMLDivElement>) => {
         }
       }
 
-      console.warn(
-        'No color found for',
-        colors[color],
-        `using fallback. You may not be importing the AppKit CSS (try import '@iot-app-kit/components/styles.css') at your applications's entry point`
-      );
+      console.warn('No color found for', colors[color]);
       // istanbul ignore next (shouldn't really be a factor)
       return fallback;
     },

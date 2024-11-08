@@ -1,10 +1,13 @@
-import { toId } from '@iot-app-kit/source-iotsitewise';
-import { useQueries } from '@tanstack/react-query';
-import { useClients } from '~/components/dashboard/clientContext';
-import { AssetCacheKeyFactory } from '~/components/queryEditor/iotSiteWiseQueryEditor/modeledDataStreamQueryEditor/assetExplorer/useAsset/assetCacheKeyFactory';
-import { createQueryFn } from '~/components/queryEditor/iotSiteWiseQueryEditor/modeledDataStreamQueryEditor/assetExplorer/useAsset/useAsset';
-import { type SiteWiseQueryConfig } from '../types';
+import {
+  DescribeAssetCommand,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import { type StyleSettingsMap } from '@iot-app-kit/core';
+import { toId } from '@iot-app-kit/source-iotsitewise';
+import { useQueries, type QueryFunctionContext } from '@tanstack/react-query';
+import invariant from 'tiny-invariant';
+import { useClients } from '~/components/dashboard/clientContext';
+import { type SiteWiseQueryConfig } from '../types';
 
 export const useTableItems = (
   query: SiteWiseQueryConfig['query'],
@@ -68,3 +71,84 @@ export const useTableItems = (
 
   return [...assetItems, ...unmodeledItems];
 };
+
+export class AssetCacheKeyFactory {
+  #assetId: string | undefined;
+
+  constructor(assetId?: string) {
+    this.#assetId = assetId;
+  }
+
+  create() {
+    const cacheKey = [{ resource: 'asset', assetId: this.#assetId }] as const;
+
+    return cacheKey;
+  }
+}
+
+function isEnabled(assetId: string | undefined): assetId is string {
+  return Boolean(assetId);
+}
+
+function createQueryFn(client: IoTSiteWiseClient) {
+  return async function ({
+    queryKey: [{ assetId }],
+    signal,
+  }: QueryFunctionContext<ReturnType<AssetCacheKeyFactory['create']>>) {
+    invariant(
+      isEnabled(assetId),
+      'Expected assetId to be defined as required by the enabled flag.'
+    );
+
+    const request = new GetAssetRequest({ assetId, client, signal });
+    const response = await request.send();
+
+    return response;
+  };
+}
+
+export class GetAssetRequest {
+  readonly #command: DescribeAssetCommand;
+  readonly #client: IoTSiteWiseClient;
+  readonly #signal: AbortSignal | undefined;
+
+  constructor({
+    assetId,
+    client,
+    signal,
+  }: {
+    assetId: string;
+    client: IoTSiteWiseClient;
+    signal?: AbortSignal;
+  }) {
+    this.#command = this.#createCommand(assetId);
+    this.#client = client;
+    this.#signal = signal;
+  }
+
+  public async send() {
+    try {
+      const response = await this.#client.send(this.#command, {
+        abortSignal: this.#signal,
+      });
+
+      return response;
+    } catch (error) {
+      this.#handleError(error);
+    }
+  }
+
+  #createCommand(assetId: string) {
+    const command = new DescribeAssetCommand({ assetId });
+
+    return command;
+  }
+
+  #handleError(error: unknown): never {
+    console.error(`Failed to get asset description. Error: ${error}`);
+    console.info('Request input:');
+    console.table(this.#command.input);
+
+    throw error;
+  }
+}

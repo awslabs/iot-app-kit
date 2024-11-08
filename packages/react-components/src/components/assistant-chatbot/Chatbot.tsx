@@ -1,11 +1,11 @@
 import Container from '@cloudscape-design/components/container';
+import { useEffect, useState } from 'react';
+import { IntlProvider } from 'react-intl';
+import type { IMessage } from '../../hooks/useAssistant/types';
+import './chatbot.css';
 import { ChatbotHeader, type ChatbotHeaderProps } from './ChatbotHeader';
 import { ChatbotInputBox } from './ChatbotInputBox';
 import { ChatbotConversationContainer } from './conversation/ChatbotConversationContainer';
-import type { IMessage } from '../../hooks/useAssistant/types';
-import './chatbot.css';
-import { useEffect, useState } from 'react';
-import { IntlProvider } from 'react-intl';
 
 export interface ChatbotProps {
   height: number;

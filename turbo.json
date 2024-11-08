@@ -3,8 +3,39 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "styles.css", "loader/**"],
+      "outputs": ["dist/**", ".tsbuildinfo"],
       "outputLogs": "new-only"
+    },
+    "clean": {
+      "dependsOn": ["^clean"],
+      "cache": false,
+      "outputLogs": "new-only"
+    },
+    "clean:build": {
+      "dependsOn": ["^clean:build"],
+      "cache": false,
+      "outputLogs": "new-only"
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".tsbuildinfo"],
+      "persistent": true,
+      "cache": false,
+      "outputLogs": "full"
+    },
+    "dev:dashboard": {
+      "dependsOn": ["build"],
+      "outputs": ["dist/**", ".tsbuildinfo"],
+      "persistent": true,
+      "cache": false,
+      "outputLogs": "full"
+    },
+    "dev:react-components": {
+      "dependsOn": ["build"],
+      "outputs": ["dist/**", ".tsbuildinfo"],
+      "persistent": true,
+      "cache": false,
+      "outputLogs": "full"
     },
     "pack": {
       "dependsOn": [],
@@ -12,13 +43,16 @@
     },
     "lint": {
       "dependsOn": ["build"],
+      "outputs": [".cache/**"],
       "outputLogs": "new-only"
     },
     "fix": {
       "dependsOn": ["build"],
+      "outputs": [".cache/**"],
       "outputLogs": "new-only"
     },
     "test": {
+      "outputs": ["coverage/**", ".cache/**"],
       "dependsOn": ["build"],
       "outputLogs": "new-only"
     },

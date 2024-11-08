@@ -1,6 +1,16 @@
 {
   "extends": "./tsconfig.json",
-  "include": [
-    "./src"
-  ],
+  "compilerOptions": {
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo"
+  },
+  "include": ["src"],
+  "exclude": [
+    ".storybook",
+    "e2e",
+    "stories",
+    "node_modules",
+    "**/*.spec.*",
+    "**/*.test.*"
+  ]
 }

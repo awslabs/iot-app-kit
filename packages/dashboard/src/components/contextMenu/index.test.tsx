@@ -1,14 +1,13 @@
 import { Provider } from 'react-redux';
 
-import { act, render } from '@testing-library/react';
-import { screen, waitFor } from '@testing-library/dom';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import UserEvent from '@testing-library/user-event';
 
+import { DefaultDashboardMessages } from '~/messages';
+import { configureDashboardStore } from '~/store';
+import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 import type { ContextMenuProps } from './index';
 import ContextMenu from './index';
-import { DefaultDashboardMessages } from '~/messages';
-import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
-import { configureDashboardStore } from '~/store';
 
 const renderContextMenu = async (args: ContextMenuProps, open?: boolean) => {
   const ret: { container: HTMLElement | null } = {

@@ -3,9 +3,6 @@
     ".": {
       "component": "root"
     },
-    "packages/components": {
-      "component": "components"
-    },
     "packages/core": {
       "component": "core"
     },
@@ -23,9 +20,6 @@
     },
     "packages/react-components": {
       "component": "react-components"
-    },
-    "packages/related-table": {
-      "component": "related-table"
     },
     "packages/scene-composer": {
       "component": "scene-composer"
@@ -61,12 +55,10 @@
       "groupName": "iot-app-kit",
       "components": [
         "root",
-        "components",
         "core",
         "dashboard",
         "doc-site",
         "react-components",
-        "related-table",
         "scene-composer",
         "source-iotsitewise",
         "source-iottwinmaker",
@@ -79,6 +71,6 @@
       ]
     }
   ],
-  "pull-request-title-pattern": "chore: release ${version}" ,
+  "pull-request-title-pattern": "chore: release ${version}",
   "group-pull-request-title-pattern": "chore: release ${version}"
 }

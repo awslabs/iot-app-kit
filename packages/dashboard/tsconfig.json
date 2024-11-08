@@ -2,11 +2,14 @@
   "extends": "@iot-app-kit/ts-config/react-library.json",
   "include": ["./src", "./stories"],
   "compilerOptions": {
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]
     }
   },
+  "exclude": ["node_modules"],
   "files": ["./global.d.ts", "custom.d.ts"]
 }

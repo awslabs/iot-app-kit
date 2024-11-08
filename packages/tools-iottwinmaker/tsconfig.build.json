@@ -1,7 +1,10 @@
 {
   "extends": "@iot-app-kit/ts-config/base.json",
   "include": ["src"],
-  "exclude": ["**/*.spec.*"],
+  "compilerOptions": {
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo"
+  },
+  "exclude": ["**/*.spec.*", "**/*.test.*", "node_modules"],
   "files": ["global.d.ts"]
 }
-

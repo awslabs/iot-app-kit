@@ -1,8 +1,8 @@
-import {
-  type AlarmResource,
-  type TimeSeriesResource,
+import type {
+  AlarmResource,
+  AssetPropertyResource,
+  TimeSeriesResource,
 } from '@iot-app-kit/react-components';
-import { type ModeledDataStream } from '../modeledDataStreamQueryEditor/modeledDataStreamExplorer/types';
 import { QueryExtender } from './queryExtender';
 
 describe(QueryExtender.name, () => {
@@ -23,7 +23,7 @@ describe(QueryExtender.name, () => {
           assetId: 'asset-2',
           propertyId: 'property-2',
         },
-      ] as ModeledDataStream[];
+      ] as AssetPropertyResource[];
 
       const extendedQuery =
         queryExtender.extendAssetQueries(modeledDataStreams);
@@ -62,7 +62,7 @@ describe(QueryExtender.name, () => {
           assetId: 'asset-1',
           propertyId: 'property-2',
         },
-      ] as ModeledDataStream[];
+      ] as AssetPropertyResource[];
 
       const extendedQuery =
         queryExtender.extendAssetQueries(modeledDataStreams);

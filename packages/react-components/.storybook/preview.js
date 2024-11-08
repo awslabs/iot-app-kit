@@ -1,8 +1,7 @@
-import { useDarkMode } from 'storybook-dark-mode';
 import { applyMode, Mode } from '@cloudscape-design/global-styles';
 import { useEffect } from 'react';
+import { useDarkMode } from 'storybook-dark-mode';
 
-import '@iot-app-kit/components/dist/iot-app-kit-components/iot-app-kit-components.css';
 import './global.scss';
 
 // https://storybook.js.org/docs/react/writing-stories/parameters#global-parameters
@@ -23,6 +22,6 @@ export const decorators = [
       }
     }, [isDarkMode]);
 
-    return <Story />
-  }
-]
+    return <Story />;
+  },
+];

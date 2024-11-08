@@ -5,13 +5,14 @@
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "clean": "rimraf storybook-static .turbo",
     "start": "storybook dev -p 6006",
     "build": "storybook build",
-    "lint": "eslint  --max-warnings=0",
-    "fix": "eslint --fix "
+    "lint": "eslint --max-warnings=0 --cache --cache-location .cache/eslint/",
+    "fix": "eslint --fix . --cache --cache-location .cache/eslint/"
   },
   "devDependencies": {
-    "@iot-app-kit/testing-util": "^10.12.2",
+    "@iot-app-kit/testing-util": "*",
     "@storybook/addon-essentials": "^7.6.6",
     "@storybook/addon-interactions": "^7.6.6",
     "@storybook/addon-links": "^7.6.6",
@@ -23,14 +24,17 @@
     "@storybook/react-webpack5": "^7.6.6",
     "@storybook/test": "^7.6.6",
     "@storybook/theming": "^7.6.6",
-    "eslint-config-iot-app-kit": "^10.12.2",
+    "@types/node": "^18.16.18",
+    "eslint-config-iot-app-kit": "*",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "storybook": "^7.6.6"
+    "rimraf": "^5.0.1",
+    "storybook": "^7.6.6",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@iot-app-kit/core": "^10.12.2",
-    "@iot-app-kit/react-components": "^10.12.2"
+    "@iot-app-kit/core": "*",
+    "@iot-app-kit/react-components": "*"
   }
 }

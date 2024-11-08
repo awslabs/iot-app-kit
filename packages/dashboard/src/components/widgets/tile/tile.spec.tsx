@@ -1,15 +1,11 @@
+import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-
-import { render } from '@testing-library/react';
-
-import { screen } from '@testing-library/dom';
-
-import WidgetTile from './tile';
 import { configureDashboardStore } from '~/store';
 import {
   MOCK_BAR_WIDGET,
   MOCK_LINE_CHART_WIDGET,
 } from '../../../../testing/mocks';
+import WidgetTile from './tile';
 
 describe('WidgetTile', () => {
   it('should render widget content', function () {

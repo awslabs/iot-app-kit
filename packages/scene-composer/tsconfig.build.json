@@ -31,7 +31,9 @@
         "overrideIdFn": "[sha512:contenthash:base64:6]",
         "ast": true
       }
-    ]
+    ],
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo"
   },
   "include": ["src", "src/Global.d.ts"],
   "exclude": ["node_modules", "dist", "**/**.spec.**", "tests"]

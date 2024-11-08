@@ -1,14 +1,18 @@
-import './global';
 import { createRoot } from 'react-dom/client';
-import reportWebVitals from './reportWebVitals';
 import { RouterProvider } from 'react-router-dom';
+import './global';
+import reportWebVitals from './reportWebVitals';
 
 import { StrictMode } from 'react';
 import router from './router';
 
-import { Density, Mode, applyDensity, applyMode } from '@cloudscape-design/global-styles';
+import {
+  Density,
+  Mode,
+  applyDensity,
+  applyMode,
+} from '@cloudscape-design/global-styles';
 import '@cloudscape-design/global-styles/index.css';
-import '@iot-app-kit/components/styles.css';
 
 applyDensity(Density.Comfortable);
 applyMode(Mode.Light);

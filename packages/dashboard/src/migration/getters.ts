@@ -7,6 +7,7 @@ import {
   scatterChartProperties,
   timelineProperties,
 } from './constants';
+import { convertResolution } from './convert-resolution';
 import {
   type ApplicationProperty,
   type MonitorMetric,
@@ -14,7 +15,6 @@ import {
   MonitorWidgetType,
   type SiteWiseWidgetType,
 } from './types';
-import { convertResolution } from './convert-monitor-to-app-defintion';
 
 export const getStaticProperties = (
   widgetType: MonitorWidgetType | SiteWiseWidgetType

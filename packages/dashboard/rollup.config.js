@@ -1,12 +1,12 @@
-import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import typescript from 'rollup-plugin-typescript2';
+import image from '@rollup/plugin-image';
+import json from '@rollup/plugin-json';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import url from 'postcss-url';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
-import json from '@rollup/plugin-json';
-import url from 'postcss-url';
 import tsConfigPaths from 'rollup-plugin-tsconfig-paths';
-import image from '@rollup/plugin-image';
+import typescript from 'rollup-plugin-typescript2';
 
 const packageJson = require('./package.json'); // eslint-disable-line
 
@@ -60,6 +60,14 @@ export default [
         ],
       }),
     ],
+    // silence Tanstack Query related warning
+    // see https://github.com/TanStack/query/issues/5175
+    onwarn(warning, warn) {
+      if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+        return;
+      }
+      warn(warning);
+    },
     external: ['react', 'react-dom'],
   },
 ];

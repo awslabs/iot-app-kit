@@ -4,11 +4,7 @@ export const COMPONENT_SELECTOR = '.dashboard';
 
 export const PREVIEW_BUTTON_SELECTOR = 'Preview';
 
-export const TOOLBAR_FRAME = '.dashboard-toolbar';
-
 export const RESOURCE_EXPLORER_FRAME = '.collapsible-panel-left';
-export const RESOURCE_EXPLORER_ICON =
-  '[data-testid="collapsed-left-panel-icon"]';
 export const MODELED_TAB = '[data-testid="explore-modeled-tab"]';
 export const UNMODELED_TAB = '[data-testid="explore-unmodeled-tab"]';
 export const ASSET_MODEL_TAB = '[data-testid="explore-asset-model-tab"]';
