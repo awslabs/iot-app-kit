@@ -83,7 +83,7 @@ describe('useResizeableEChart', () => {
         const event = {
           stopPropagation: jest.fn(),
         } as unknown as React.SyntheticEvent;
-        result.current.onResize(event, {
+        result.current.onResizeEnd(event, {
           size: { width: 800, height: 400 },
         } as unknown as ResizeCallbackData);
       });
@@ -136,7 +136,7 @@ describe('useResizeableEChart', () => {
         const event = {
           stopPropagation: jest.fn(),
         } as unknown as React.SyntheticEvent;
-        result.current.onResize(event, {
+        result.current.onResizeEnd(event, {
           size: { width: 800, height: 400 },
         } as unknown as ResizeCallbackData);
       });
