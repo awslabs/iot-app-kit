@@ -1,13 +1,13 @@
-import { renderToString } from 'react-dom/server';
 import { type DataPoint } from '@iot-app-kit/core';
+import { type PascalCaseStateName } from '@iot-app-kit/source-iotsitewise';
 import {
   type TooltipFormatterCallback,
   type TopLevelFormatterParams,
 } from 'echarts/types/dist/shared';
-import { XYPlotTooltip } from './tooltip';
-import { type ChartAlarms, type ChartDataQuality } from '../../types';
+import { renderToString } from 'react-dom/server';
 import { type AlarmContent } from '../../../alarm-components/alarm-content/types';
-import { type PascalCaseStateName } from '@iot-app-kit/source-iotsitewise/dist/es/alarms/iotevents';
+import { type ChartAlarms, type ChartDataQuality } from '../../types';
+import { XYPlotTooltip } from './tooltip';
 
 type FormatterOptions = {
   significantDigits?: number;

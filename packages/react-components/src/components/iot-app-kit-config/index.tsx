@@ -3,6 +3,8 @@ import { type ReactNode, createContext } from 'react';
 import { DEFAULT_APP_KIT_CONFIG } from './defaultValues';
 import { type FeatureFlagConfig } from './types';
 
+export { DEFAULT_APP_KIT_CONFIG };
+
 export interface IAppKitConfig {
   featureFlagConfig: FeatureFlagConfig;
 }

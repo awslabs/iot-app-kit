@@ -6,6 +6,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "clean": "rimraf storybook-static .turbo",
+    "clean:nuke": "npm run clean && rimraf node_modules",
     "start": "storybook dev -p 6006",
     "build": "storybook build",
     "lint": "eslint --max-warnings=0 --cache --cache-location .cache/eslint/",

@@ -1,6 +1,10 @@
 {
   "extends": "@iot-app-kit/ts-config/base.json",
   "include": ["src"],
-  "files": ["global.d.ts"]
+  "exclude": ["node_modules", "dist", "coverage"],
+  "files": ["global.d.ts"],
+  "compilerOptions": {
+    "rootDir": "./src",
+    "sourceMap": true
+  }
 }
-

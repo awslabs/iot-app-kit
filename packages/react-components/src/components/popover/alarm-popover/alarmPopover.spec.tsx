@@ -1,6 +1,6 @@
 import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
-import { type PascalCaseStateName } from '@iot-app-kit/source-iotsitewise/dist/es/alarms/iotevents';
+import type { PascalCaseStateName } from '@iot-app-kit/source-iotsitewise';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {

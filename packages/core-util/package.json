@@ -5,22 +5,30 @@
     "access": "public"
   },
   "version": "10.12.2",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/es/index.js",
-  "types": "./dist/es/index.d.ts",
+  "types": "dist/esm/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/esm/index.js"
+    }
+  },
   "directories": {
     "dist": "dist"
   },
   "files": [
-    "dist/"
+    "dist"
   ],
   "scripts": {
-    "build": "npm run build:es && npm run build:cjs",
-    "build:es": "tsc -p ./tsconfig.build.json --outDir ./dist/es",
-    "build:cjs": "tsc -p ./tsconfig.build.json --outDir ./dist/cjs --module CommonJS",
-    "clean": "rimraf dist coverage .tsbuildinfo .turbo",
-    "clean:build": "rimraf .tsbuildinfo",
-    "dev": "tsc --watch -p ./tsconfig.build.json --outDir ./dist/es",
+    "build": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json",
+    "build:cjs": "tsc -b ./tsconfig.cjs.json",
+    "build:es": "tsc -b ./tsconfig.esm.json",
+    "clean": "rimraf dist coverage .turbo .cache",
+    "clean:nuke": "npm run clean && rimraf node_modules",
+    "dev": "tsc -b ./tsconfig.esm.json --watch",
     "dev:dashboard": "npm run dev",
     "dev:react-components": "npm run dev",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",

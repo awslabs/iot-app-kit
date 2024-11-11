@@ -1,9 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo"
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/*.spec.*", "**/*.test.*"]
-}

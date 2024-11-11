@@ -22,12 +22,19 @@
   "types": "dist/types/src/index.d.ts",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/types/src/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/esm/index.js"
+    }
+  },
   "scripts": {
-    "build": "rollup -c --bundleConfigAsCjs && npm run build:types",
+    "build": "rollup -c --bundleConfigAsCjs && tsc -b ./tsconfig.types.json",
     "build-storybook": "build-storybook",
-    "build:types": "tsc --declarationDir dist/types --declaration true --emitDeclarationOnly true",
-    "clean": "rimraf dist storybook-static .tsbuildinfo .turbo",
-    "clean:build": "rimraf .tsbuildinfo",
+    "clean": "rimraf dist storybook-static .turbo .cache",
+    "clean:nuke": "npm run clean && rimraf node_modules",
     "dev": "npm start",
     "dev:dashboard": "npm run dev",
     "start": "start-storybook -s ./public -p 6006",

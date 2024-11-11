@@ -8,20 +8,28 @@
     "node": ">=16",
     "npm": ">=8"
   },
-  "main": "src/build.ts",
-  "module": "./dist/es/build.js",
-  "types": "./dist/es/build.d.ts",
+  "main": "./dist/cjs/build.js",
+  "module": "./dist/esm/build.js",
+  "types": "./dist/esm/build.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/esm/index.js"
+    }
+  },
   "bin": {
     "tmdt": "./dist/cjs/cli.js"
   },
   "scripts": {
-    "build": "npm run build:es && npm run build:cjs && npm run package",
-    "build-global": "npm run clean && npm run build:cjs && npm run build:es && npm run package && npm install -g",
-    "build:es": "tsc -p ./tsconfig.build.json --outDir ./dist/es",
-    "build:cjs": "tsc -p ./tsconfig.build.json --outDir ./dist/cjs --module CommonJS",
-    "clean": "rimraf dist coverage tmdt_local .tsbuildinfo .turbo && npm uninstall -g tmdt || true",
-    "clean:build": "rimraf .tsbuildinfo",
-    "dev": "tsc --watch -p ./tsconfig.build.json --outDir ./dist/es",
+    "build": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json && npm run package",
+    "build-global": "npm run clean && npm run build && npm run package && npm install -g",
+    "build:cjs": "tsc -b ./tsconfig.cjs.json && npm run package",
+    "build:es": "tsc -b ./tsconfig.esm.json",
+    "clean": "rimraf dist coverage tmdt_local .turbo .cache && npm uninstall -g tmdt || true",
+    "clean:nuke": "npm run clean && rimraf node_modules",
+    "dev": "tsc -b ./tsconfig.esm.json --watch",
     "dev:dashboard": "npm run dev",
     "dev:react-components": "npm run dev",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",

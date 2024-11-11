@@ -1,14 +1,11 @@
-import { Chart, useViewport } from '@iot-app-kit/react-components';
-import { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-// FIXME: Export ChartOptions from @iot-app-kit/react-components
-// FIXME: Export ChartStyleSettingsOptions from @iot-app-kit/react-components
-// eslint-disable-next-line no-restricted-imports
 import {
+  Chart,
+  useViewport,
   type ChartOptions,
   type ChartStyleSettingsOptions,
-} from '@iot-app-kit/react-components/src/components/chart/types';
-
+} from '@iot-app-kit/react-components';
+import { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useQueries } from '~/components/dashboard/queryContext';
 import WidgetTile from '~/components/widgets/tile/tile';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';

@@ -4,15 +4,26 @@
   "private": true,
   "version": "10.12.2",
   "main": "./dist/cjs/index.js",
-  "module": "./dist/es/index.js",
-  "types": "./dist/es/index.d.ts",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/esm/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "npm run build:es && npm run build:cjs",
-    "build:es": "tsc -p ./tsconfig.build.json --outDir ./dist/es",
-    "build:cjs": "tsc -p ./tsconfig.build.json --outDir ./dist/cjs --module CommonJS",
-    "clean": "rimraf dist .tsbuildinfo .turbo",
-    "clean:build": "rimraf .tsbuildinfo",
-    "dev": "tsc --watch -p ./tsconfig.build.json --outDir ./dist/es",
+    "build": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json",
+    "build:cjs": "tsc -b ./tsconfig.cjs.json",
+    "build:es": "tsc -b ./tsconfig.esm.json",
+    "clean": "rimraf dist .turbo .cache",
+    "clean:nuke": "npm run clean && rimraf node_modules",
+    "dev": "tsc -b ./tsconfig.esm.json --watch",
     "dev:dashboard": "npm run dev",
     "dev:react-components": "npm run dev",
     "lint": "eslint . --max-warnings=1 --cache --cache-location .cache/eslint/",

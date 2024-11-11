@@ -3,10 +3,18 @@
   "license": "Apache-2.0",
   "source": "./src/index.ts",
   "main": "./dist/cjs/index.js",
-  "module": "./dist/es/index.js",
-  "types": "./dist/es/index.d.ts",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/esm/index.js"
+    }
+  },
   "files": [
-    "dist/",
+    "dist",
     "CHANGELOG.md",
     "*NOTICE",
     "*styles.css"
@@ -17,15 +25,15 @@
   "version": "10.12.2",
   "scripts": {
     "start": "npx start-storybook -p 6007",
-    "build": "npm run build:es && npm run build:cjs",
-    "build:es": "tsc -p ./tsconfig.build.json --outDir ./dist/es && npm run copy-assets:es",
-    "build:cjs": "tsc -p ./tsconfig.build.json --outDir ./dist/cjs --module CommonJS && npm run copy-assets:cjs",
-    "clean": "rimraf dist storybook-static test-results coverage .tsbuildinfo .turbo",
-    "clean:build": "rimraf .tsbuildinfo",
-    "copy-assets:es": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" -u 1 dist/es/",
+    "build": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json && npm run copy-assets:es && npm run copy-assets:cjs",
+    "build:cjs": "tsc -b ./tsconfig.cjs.json && npm run copy-assets:cjs",
+    "build:es": "tsc -b ./tsconfig.esm.json && npm run copy-assets:es",
+    "clean": "rimraf dist storybook-static test-results coverage .turbo .cache",
+    "clean:nuke": "npm run clean && rimraf node_modules",
+    "copy-assets:es": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" -u 1 dist/esm/",
     "copy-assets:cjs": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" -u 1 dist/cjs/",
     "copy:styles": "cp ../components/styles.css styles.css",
-    "dev": "tsc --watch -p ./tsconfig.build.json --outDir ./dist/es",
+    "dev": "tsc -b ./tsconfig.esm.json --watch",
     "dev:dashboard": "npm run dev",
     "dev:react-components": "npm start",
     "test": "npm run test:jest",

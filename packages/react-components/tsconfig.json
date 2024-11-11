@@ -1,5 +1,10 @@
 {
   "extends": "@iot-app-kit/ts-config/react-library.json",
-  "include": ["./src", "./stories", "./e2e"],
-  "files": ["global.d.ts"]
+  "include": ["src", "stories", "e2e"],
+  "files": ["global.d.ts"],
+  "exclude": ["node_modules", "dist", "coverage"],
+  "compilerOptions": {
+    "rootDir": "./src",
+    "sourceMap": true
+  }
 }

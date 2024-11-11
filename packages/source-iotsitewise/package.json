@@ -8,14 +8,22 @@
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "license": "Apache-2.0",
   "main": "./dist/cjs/index.js",
-  "module": "./dist/es/index.js",
-  "types": "./dist/es/index.d.ts",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/esm/index.js"
+    }
+  },
   "directories": {
     "dist": "dist",
     "test": "__tests__"
   },
   "files": [
-    "dist/",
+    "dist",
     "CHANGELOG.md",
     "*NOTICE"
   ],
@@ -25,12 +33,12 @@
     "directory": "packages/source-iotsitewise"
   },
   "scripts": {
-    "build": "npm run build:es && npm run build:cjs",
-    "build:es": "tsc -p ./tsconfig.build.json --outDir ./dist/es",
-    "build:cjs": "tsc -p ./tsconfig.build.json --outDir ./dist/cjs --module CommonJS",
-    "clean": "rimraf dist coverage .tsbuildinfo .turbo",
-    "clean:build": "rimraf .tsbuildinfo",
-    "dev": "tsc --watch -p ./tsconfig.build.json --outDir ./dist/es",
+    "build": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json",
+    "build:cjs": "tsc -b ./tsconfig.cjs.json",
+    "build:es": "tsc -b ./tsconfig.esm.json",
+    "clean": "rimraf dist coverage .turbo .cache",
+    "clean:nuke": "npm run clean && rimraf node_modules",
+    "dev": "tsc -b ./tsconfig.esm.json --watch",
     "dev:dashboard": "npm run dev",
     "dev:react-components": "npm run dev",
     "lint": "eslint . --max-warnings=0 --cache --cache-location .cache/eslint/",

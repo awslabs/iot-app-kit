@@ -1,13 +1,13 @@
-import { createDataBindingTemplateOptions } from '@iot-app-kit/source-iottwinmaker/dist/es/utils/dataBindingTemplateUtils';
+import { createDataBindingTemplateOptions } from '@iot-app-kit/source-iottwinmaker';
 
 import {
-  ENTITY_ID_INDEX,
   COMPONENT_NAME_INDEX,
+  ENTITY_ID_INDEX,
   PROPERTY_NAME_INDEX,
 } from '../src/components/panels/scene-components/common/ValueDataBindingBuilder';
-import { type IDataFieldOption, type IValueDataBindingProviderState, type IDataBindingConfig } from '../src/interfaces';
+import { type IDataBindingConfig, type IDataFieldOption, type IValueDataBindingProviderState } from '../src/interfaces';
 
-import { componentNames, entityIds, entityNames, FIELDS, MOCK_DELAY, propertyNames, allEntityIds } from './constants';
+import { allEntityIds, componentNames, entityIds, entityNames, FIELDS, MOCK_DELAY, propertyNames } from './constants';
 import { type MockedValueDataBindingProviderStore } from './types';
 
 export function cloneStoreState(store: MockedValueDataBindingProviderStore): IValueDataBindingProviderState {

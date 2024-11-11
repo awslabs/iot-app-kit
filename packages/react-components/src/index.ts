@@ -24,7 +24,10 @@ export { Tooltip } from './components/tooltip';
 export { RequestVideoUpload, VideoPlayer } from './components/video-player';
 
 export { WebglContext } from '@iot-app-kit/charts';
-export { AppKitConfig } from './components/iot-app-kit-config';
+export {
+  AppKitConfig,
+  DEFAULT_APP_KIT_CONFIG,
+} from './components/iot-app-kit-config';
 export { TimeSync } from './components/time-sync';
 export { TimeSelection } from './components/time-sync/timeSelection';
 
@@ -33,7 +36,11 @@ export { useTimeSeriesData } from './hooks/useTimeSeriesData';
 export { useViewport } from './hooks/useViewport';
 export { useGetConfigValue } from './store/index';
 
-export { Chart } from './components/chart';
+export {
+  Chart,
+  type ChartOptions,
+  type ChartStyleSettingsOptions,
+} from './components/chart';
 
 export { AnomalyChart } from './components/anomaly-chart';
 export type {
