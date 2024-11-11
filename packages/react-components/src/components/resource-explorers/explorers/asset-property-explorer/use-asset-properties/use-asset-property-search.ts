@@ -6,6 +6,7 @@ import {
   type UseListAPIBaseResult,
 } from '../../../types/requests';
 import type { AssetPropertyResource } from '../../../types/resources';
+import { normalizeSearchStatement } from '../../../helpers/search-statement-normalizer';
 
 export interface UseAssetPropertySearchOptions extends UseListAPIBaseOptions {
   parameters: readonly SearchedAssetsRequestParameters[];
@@ -22,10 +23,11 @@ export function useAssetPropertySearch({
   pageSize,
 }: UseAssetPropertySearchOptions): UseAssetPropertySearchResult {
   const executeQueryParameters = parameters.map(({ searchStatement }) => {
+    const normalizedSearchStatement = normalizeSearchStatement(searchStatement);
     const queryStatement = `
       SELECT p.property_id, p.property_name, p.asset_id, p.property_alias, p.property_data_type
       FROM asset_property p
-      WHERE p.property_name LIKE '%${searchStatement}%'
+      WHERE p.property_name LIKE '${normalizedSearchStatement}'
     `;
 
     return {
