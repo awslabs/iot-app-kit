@@ -220,7 +220,13 @@ export const useResizeableEChart = (
 
   const onResize = (_event: SyntheticEvent, data: ResizeCallbackData) => {
     _event.stopPropagation();
+    isBottomAligned
+      ? setChartHeight(parseInt(data.size.height.toFixed(0)))
+      : setChartWidth(parseInt(data.size.width.toFixed(0)));
+  };
 
+  const onResizeEnd = (_event: SyntheticEvent, data: ResizeCallbackData) => {
+    _event.stopPropagation();
     if (isBottomAligned) {
       setChartHeight(parseInt(data.size.height.toFixed(0)));
       onChartOptionsChange?.({
@@ -290,6 +296,7 @@ export const useResizeableEChart = (
     rightLegendWidth,
     rightLegendHeight,
     onResize,
+    onResizeEnd,
     minConstraints,
     maxConstraints,
     leftLegendRef,

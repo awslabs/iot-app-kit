@@ -156,6 +156,7 @@ const BaseChart = ({
     rightLegendHeight,
     leftLegendWidth,
     onResize,
+    onResizeEnd,
     minConstraints,
     maxConstraints,
     leftLegendRef,
@@ -362,7 +363,7 @@ const BaseChart = ({
               />
             }
             onResizeStart={(e: React.SyntheticEvent) => e.stopPropagation()}
-            onResizeStop={(e: React.SyntheticEvent) => e.stopPropagation()}
+            onResizeStop={onResizeEnd}
             resizeHandles={[...setHandles(options.legend?.position || 'right')]}
           >
             <HotKeys
