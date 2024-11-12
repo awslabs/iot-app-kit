@@ -22,7 +22,7 @@ jobs:
       - name: Set node version
         uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
 
       - name: Cache npm packages
         id: npm-cache

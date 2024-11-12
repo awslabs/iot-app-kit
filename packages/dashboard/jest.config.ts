@@ -2,6 +2,10 @@ import { reactConfig } from '@iot-app-kit/jest-config';
 
 const config = {
   ...reactConfig,
+  testEnvironment: './testing/customTestEnv.ts',
+  testEnvironmentOptions: {
+    customExportConditions: [''],
+  },
   moduleNameMapper: {
     '\\.(css|scss)$': 'identity-obj-proxy',
     '~/(.*)': '<rootDir>/src/$1',

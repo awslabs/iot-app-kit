@@ -1,21 +1,33 @@
-import { expect, test } from '../test';
+import { test, expect } from '@playwright/test';
 import { getDecimalPlaces } from '../utils/getDecimalPlaces';
 import { NEW_PROPERTY_NAME } from '../constants';
+import { createNewDashboardWithWidget } from '../createDashboardWidget';
+import { ResourceExplorer } from '../resourceExplorer/ResourceExplorer';
+import { ConfigPanel } from '../configPanel/ConfigPanel';
 
 test.describe('Test KPI Widget', () => {
   test('KPI widget can be added to the dashboard', async ({
-    dashboardWithKPIWidget,
+    page,
+    browser,
   }) => {
+    const dashboardWithKPIWidget = await createNewDashboardWithWidget(
+      'kpi',
+      page,
+      browser
+    );
     const widgetEmptyState = dashboardWithKPIWidget.gridArea.locator(
       '.kpi-widget-empty-state'
     );
     await expect(widgetEmptyState).toBeVisible();
   });
 
-  test('Can add property to KPI widget', async ({
-    dashboardWithKPIWidget,
-    resourceExplorer,
-  }) => {
+  test('Can add property to KPI widget', async ({ page, browser }) => {
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithKPIWidget = await createNewDashboardWithWidget(
+      'kpi',
+      page,
+      browser
+    );
     await resourceExplorer.addModeledProperties(['Max Temperature']);
     const widget =
       dashboardWithKPIWidget.gridArea.getByTestId('kpi-base-component');
@@ -23,9 +35,15 @@ test.describe('Test KPI Widget', () => {
   });
 
   test('Cannot add more than 1 property to KPI widget', async ({
-    dashboardWithKPIWidget,
-    resourceExplorer,
+    page,
+    browser,
   }) => {
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithKPIWidget = await createNewDashboardWithWidget(
+      'kpi',
+      page,
+      browser
+    );
     //add property
     await resourceExplorer.addModeledProperties(['Max Temperature']);
     dashboardWithKPIWidget.gridArea.getByTestId('kpi-base-component');
@@ -38,9 +56,15 @@ test.describe('Test KPI Widget', () => {
   });
 
   test('Cannot multiselect add property to KPI widget', async ({
-    dashboardWithKPIWidget,
-    resourceExplorer,
+    page,
+    browser,
   }) => {
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithKPIWidget = await createNewDashboardWithWidget(
+      'kpi',
+      page,
+      browser
+    );
     //select 3 properties
     await resourceExplorer.addModeledProperties([
       'Min Temperature',
@@ -54,10 +78,16 @@ test.describe('Test KPI Widget', () => {
   });
 
   test('KPI Widget supports show/hide several properties', async ({
-    resourceExplorer,
-    dashboardWithKPIWidget,
-    configPanel,
+    page,
+    browser,
   }) => {
+    const configPanel = new ConfigPanel({ page });
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithKPIWidget = await createNewDashboardWithWidget(
+      'kpi',
+      page,
+      browser
+    );
     // add property
     await resourceExplorer.addModeledProperties(['Max Temperature']);
 
@@ -89,11 +119,15 @@ test.describe('Test KPI Widget', () => {
     await expect(value).toBeVisible();
   });
 
-  test('KPI Widget supports significant digits', async ({
-    resourceExplorer,
-    dashboardWithKPIWidget,
-    configPanel,
-  }) => {
+  test('KPI Widget supports significant digits', async ({ page, browser }) => {
+    const configPanel = new ConfigPanel({ page });
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithKPIWidget = await createNewDashboardWithWidget(
+      'kpi',
+      page,
+      browser
+    );
+
     // add property
     await resourceExplorer.addModeledProperties(['Max Temperature']);
 
@@ -114,12 +148,14 @@ test.describe('Test KPI Widget', () => {
     expect(getDecimalPlaces(updatedWidgetValue)).toBe(1);
   });
 
-  test('KPI Widget supports thresholds', async ({
-    page,
-    resourceExplorer,
-    dashboardWithKPIWidget,
-    configPanel,
-  }) => {
+  test('KPI Widget supports thresholds', async ({ page, browser }) => {
+    const configPanel = new ConfigPanel({ page });
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithKPIWidget = await createNewDashboardWithWidget(
+      'kpi',
+      page,
+      browser
+    );
     // add a property
     await resourceExplorer.addModeledProperties(['Max Temperature']);
 
@@ -159,12 +195,15 @@ test.describe('Test KPI Widget', () => {
     await expect(widgetValue).toHaveCSS('color', 'rgb(255, 255, 255)');
   });
 
-  test('KPI widget can change label', async ({
-    page,
-    resourceExplorer,
-    configPanel,
-    dashboardWithKPIWidget,
-  }) => {
+  test('KPI widget can change label', async ({ page, browser }) => {
+    const configPanel = new ConfigPanel({ page });
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithKPIWidget = await createNewDashboardWithWidget(
+      'kpi',
+      page,
+      browser
+    );
+
     //add property and open config panel
     await resourceExplorer.addModeledProperties(['Max Temperature']);
     await configPanel.collapsedButton.click();

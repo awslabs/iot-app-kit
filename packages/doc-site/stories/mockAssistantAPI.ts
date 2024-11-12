@@ -1,29 +1,28 @@
 import {
-  InvokeAssistantCommandInput,
-  InvokeAssistantCommandOutput,
+  type InvokeAssistantCommandInput,
+  type InvokeAssistantCommandOutput,
+  type ResponseStream,
 } from '@amzn/iot-black-pearl-internal-v3';
 
-import type { ResponseStream } from "@amzn/iot-black-pearl-internal-v3";
-
-export const mockedInvokeAssistantResponse1:ResponseStream = {
+export const mockedInvokeAssistantResponse1: ResponseStream = {
   trace: {
     traceId: 'trace1',
     text: 'Analysing IoT Sitewise data ...',
-  }
+  },
 };
 
-export const mockedInvokeAssistantResponse2:ResponseStream = {
+export const mockedInvokeAssistantResponse2: ResponseStream = {
   trace: {
     traceId: 'trace2',
     text: 'Generating a response ...',
   },
 };
 
-export const mockedInvokeAssistantResponse3:ResponseStream = {
+export const mockedInvokeAssistantResponse3: ResponseStream = {
   output: {
     message: 'assistant response end',
   },
-}; 
+};
 
 export const mockedInvokeAssistantResponse4: any = {
   output: {

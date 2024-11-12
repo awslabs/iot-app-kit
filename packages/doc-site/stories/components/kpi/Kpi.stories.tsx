@@ -9,7 +9,7 @@ import {
   mockTimeSeriesDataQueryLoading,
 } from '@iot-app-kit/testing-util';
 import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
-import { Meta, StoryObj } from '@storybook/react';
+import { type Meta, type StoryObj } from '@storybook/react';
 import { MockInvokeAssistant } from '../../mockAssistantAPI';
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
@@ -24,7 +24,9 @@ type Story = StoryObj<typeof KPI>;
 
 export const Standard: Story = {
   render: (props) => (
-    <div style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}>
+    <div
+      style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}
+    >
       <KPI {...props} />
     </div>
   ),
@@ -38,13 +40,15 @@ export const Standard: Story = {
       fontSize: 30,
       secondaryFontSize: 12,
       backgroundColor: '#ffffff',
-    }
+    },
   },
 };
 
 export const Alarm: Story = {
   render: (props) => (
-    <div style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}>
+    <div
+      style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}
+    >
       <KPI {...props} />
     </div>
   ),
@@ -57,13 +61,15 @@ export const Alarm: Story = {
       showAggregationAndResolution: true,
       fontSize: 30,
       secondaryFontSize: 12,
-    }
+    },
   },
 };
 
 export const Error: Story = {
   render: (props) => (
-    <div style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}>
+    <div
+      style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}
+    >
       <KPI {...props} />
     </div>
   ),
@@ -74,7 +80,9 @@ export const Error: Story = {
 
 export const Loading: Story = {
   render: (props) => (
-    <div style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}>
+    <div
+      style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}
+    >
       <KPI {...props} />
     </div>
   ),
@@ -85,7 +93,9 @@ export const Loading: Story = {
 
 export const Empty: Story = {
   render: (props) => (
-    <div style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}>
+    <div
+      style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}
+    >
       <KPI {...props} />
     </div>
   ),
@@ -96,7 +106,9 @@ export const Empty: Story = {
 
 export const UncertainDataQuality: Story = {
   render: (props) => (
-    <div style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}>
+    <div
+      style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}
+    >
       <KPI {...props} />
     </div>
   ),
@@ -107,13 +119,15 @@ export const UncertainDataQuality: Story = {
     }),
     settings: {
       showDataQuality: true,
-    }
+    },
   },
 };
 
 export const BadDataQuality: Story = {
   render: (props) => (
-    <div style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}>
+    <div
+      style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}
+    >
       <KPI {...props} />
     </div>
   ),
@@ -121,13 +135,15 @@ export const BadDataQuality: Story = {
     query: mockSinWaveDataWithQuality({ frequency: '5s', quality: 'BAD' }),
     settings: {
       showDataQuality: true,
-    }
+    },
   },
 };
 
 export const SignificantDigits: Story = {
   render: (props) => (
-    <div style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}>
+    <div
+      style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}
+    >
       <KPI {...props} />
     </div>
   ),
@@ -159,12 +175,19 @@ export const Assistant: Story = {
         componentId,
         conversationId: crypto.randomUUID(),
         target: 'widget',
-        utterance: 'generate a summary and return the response in markdown format.',
+        utterance:
+          'generate a summary and return the response in markdown format.',
       });
     }, []);
 
     return (
-      <div style={{ width: '300px', height: '200px', border: '1px solid lightgrey' }}>
+      <div
+        style={{
+          width: '300px',
+          height: '200px',
+          border: '1px solid lightgrey',
+        }}
+      >
         <KPI
           {...props}
           assistant={{
@@ -175,7 +198,7 @@ export const Assistant: Story = {
           }}
         />
       </div>
-    )
+    );
   },
   args: {
     query: mockSinWaveData('5s'),
@@ -187,6 +210,6 @@ export const Assistant: Story = {
       fontSize: 30,
       secondaryFontSize: 12,
       backgroundColor: '#ffffff',
-    }
+    },
   },
 };

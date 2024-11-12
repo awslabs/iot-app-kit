@@ -6,10 +6,10 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "repository": "git@github.com:awslabs/iot-app-kit.git",
-  "packageManager": "npm@8.7.0",
+  "packageManager": "npm@10.7.0",
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=8.7.0"
+    "node": ">=18.0.0",
+    "npm": ">=10.7.0"
   },
   "workspaces": [
     "examples/*",
@@ -55,6 +55,7 @@
     "@swc/jest": "^0.2.26",
     "@commitlint/cli": "^17.6.7",
     "@commitlint/config-conventional": "^17.6.5",
+    "@playwright/test": "^1.48.2",
     "husky": "^8.0.3",
     "identity-obj-proxy": "^3.0.0",
     "rimraf": "^5.0.1",

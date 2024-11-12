@@ -1,5 +1,4 @@
-import { expect, type Page } from '@playwright/test';
-import { test } from '../test';
+import { test, expect, type Page } from '@playwright/test';
 import {
   MODELED_TAB,
   TEST_PAGE,
@@ -10,6 +9,7 @@ import {
 import { gridUtil } from '../utils/grid';
 import { resourceExplorerUtil } from '../utils/resourceExplorer';
 import { getDecimalPlaces } from '../utils/getDecimalPlaces';
+import { ConfigPanel } from '../configPanel/ConfigPanel';
 
 const setupTest = async (page: Page) => {
   await page.goto(TEST_PAGE);
@@ -44,7 +44,8 @@ const setupTest = async (page: Page) => {
 };
 
 test.describe('Data Stream Maxes', () => {
-  test('max value is present', async ({ page, configPanel }) => {
+  test('max value is present', async ({ page }) => {
+    const configPanel = new ConfigPanel({ page });
     const lineWidget = await setupTest(page);
 
     const bounds = await lineWidget.boundingBox();
@@ -71,10 +72,8 @@ test.describe('Data Stream Maxes', () => {
     expect(updatedMaxValueString).not.toEqual('-');
   });
 
-  test('Max value has correct significant digits', async ({
-    page,
-    configPanel,
-  }) => {
+  test('Max value has correct significant digits', async ({ page }) => {
+    const configPanel = new ConfigPanel({ page });
     const lineWidget = await setupTest(page);
     const bounds = await lineWidget.boundingBox();
 

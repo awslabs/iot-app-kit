@@ -6,7 +6,7 @@ import {
   mockTimeSeriesDataQueryWithError,
   mockTimeSeriesDataQueryLoading,
 } from '@iot-app-kit/testing-util';
-import { Meta, StoryObj } from '@storybook/react';
+import { type Meta, type StoryObj } from '@storybook/react';
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
 const meta: Meta<typeof Chart> = {
@@ -33,17 +33,19 @@ export const Standard: Story = {
 export const Alarm: Story = {
   render: (props) => (
     <div style={{ height: '500px', width: '800px' }}>
-      <Chart {...{
-        ...props, 
-        legend: {
-          visible: true,
-          position: 'bottom',
-          visibleContent: { visibility: true, latestAlarmStateValue: true },
-          height: '100px',
-        }, 
-        size: { height: 500, width: 900 },
-        significantDigits: 2
-      }} />
+      <Chart
+        {...{
+          ...props,
+          legend: {
+            visible: true,
+            position: 'bottom',
+            visibleContent: { visibility: true, latestAlarmStateValue: true },
+            height: '100px',
+          },
+          size: { height: 500, width: 900 },
+          significantDigits: 2,
+        }}
+      />
     </div>
   ),
   args: {
@@ -55,16 +57,18 @@ export const Alarm: Story = {
 export const StandardWithLegend: Story = {
   render: (props) => (
     <div style={{ height: '500px', width: '800px' }}>
-      <Chart {...{
-        ...props, 
-        legend: {
-          visible: true,
-          position: 'bottom',
-          visibleContent: { maxValue: true },
-          height: '100px',
-        }, 
-        size: { height: 500, width: 900 } 
-      }} />
+      <Chart
+        {...{
+          ...props,
+          legend: {
+            visible: true,
+            position: 'bottom',
+            visibleContent: { maxValue: true },
+            height: '100px',
+          },
+          size: { height: 500, width: 900 },
+        }}
+      />
     </div>
   ),
   args: {

@@ -1,5 +1,5 @@
 import { AnomalyChart } from '@iot-app-kit/react-components';
-import { Meta, StoryObj } from '@storybook/react';
+import { type Meta, type StoryObj } from '@storybook/react';
 import { MOCK_DATA, MOCK_DATA_ERROR, MOCK_DATA_LOADING } from './data';
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
@@ -15,7 +15,9 @@ type Story = StoryObj<typeof AnomalyChart>;
 export const Standard: Story = {
   render: (props) => (
     <div style={{ height: '400px', width: '450px' }}>
-      <AnomalyChart {...{ ...props, legend: {}, size: { height: 500, width: 900 } }} />
+      <AnomalyChart
+        {...{ ...props, legend: {}, size: { height: 500, width: 900 } }}
+      />
     </div>
   ),
   args: {
@@ -34,7 +36,7 @@ export const Error: Story = {
 export const Empty: Story = {
   ...Standard,
   args: {
-    data: [{state: 'success', value: {data: []}}],
+    data: [{ state: 'success', value: { data: [] } }],
   },
 };
 

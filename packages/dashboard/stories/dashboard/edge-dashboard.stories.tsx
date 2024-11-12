@@ -17,18 +17,6 @@ import { getEndpoints } from '../../testing/getEndpoints';
 
 const DASHBOARD_STORAGE_NAMESPACE = 'edge-dashboard';
 
-const endpoint = getEndpoints().edgeGatewayEndpoint;
-const clientConfig = {
-  endpoint,
-  credentials: getEnvCredentials(),
-  region: 'edge',
-  disableHostPrefix: true,
-};
-const iotSiteWiseClient = new IoTSiteWiseClient(clientConfig);
-const iotEventsClient = new IoTEventsClient(clientConfig);
-const iotTwinMakerClient = new IoTTwinMakerClient(clientConfig);
-const iotSiteWise = new IoTSiteWise(clientConfig);
-
 const DEFAULT_DASHBOARD_CONFIG = {
   displaySettings: {
     numColumns: 100,
@@ -38,11 +26,26 @@ const DEFAULT_DASHBOARD_CONFIG = {
   viewport: { duration: '10m' },
 };
 
-const CLIENT_CONFIGURATION: DashboardClientConfiguration = {
-  iotSiteWiseClient,
-  iotEventsClient,
-  iotTwinMakerClient,
-  iotSiteWise,
+const getClientConfig = () => {
+  const clientConfig = {
+    endpoint: getEndpoints().edgeGatewayEndpoint,
+    credentials: getEnvCredentials(),
+    region: 'edge',
+    disableHostPrefix: true,
+  };
+  const iotSiteWiseClient = new IoTSiteWiseClient(clientConfig);
+  const iotEventsClient = new IoTEventsClient(clientConfig);
+  const iotTwinMakerClient = new IoTTwinMakerClient(clientConfig);
+  const iotSiteWise = new IoTSiteWise(clientConfig);
+
+  const CLIENT_CONFIGURATION: DashboardClientConfiguration = {
+    iotSiteWiseClient,
+    iotEventsClient,
+    iotTwinMakerClient,
+    iotSiteWise,
+  };
+
+  return CLIENT_CONFIGURATION;
 };
 
 registerPlugin('metricsRecorder', {
@@ -88,9 +91,11 @@ export const Main: ComponentStory<typeof Dashboard> = () => {
     return new Promise(() => setDashboardConfig(dashboard)) as Promise<void>;
   };
 
+  const clientConfig = getClientConfig();
+
   return (
     <Dashboard
-      clientConfiguration={CLIENT_CONFIGURATION}
+      clientConfiguration={clientConfig}
       onSave={onSave}
       initialViewMode={initialViewMode}
       dashboardConfiguration={dashboardConfig}
@@ -99,13 +104,16 @@ export const Main: ComponentStory<typeof Dashboard> = () => {
   );
 };
 
-export const View: ComponentStory<typeof DashboardView> = () => (
-  <DashboardView
-    clientConfiguration={CLIENT_CONFIGURATION}
-    dashboardConfiguration={getInitialDashboardConfig()}
-    edgeMode='enabled'
-  />
-);
+export const View: ComponentStory<typeof DashboardView> = () => {
+  const clientConfig = getClientConfig();
+  return (
+    <DashboardView
+      clientConfiguration={clientConfig}
+      dashboardConfiguration={getInitialDashboardConfig()}
+      edgeMode='enabled'
+    />
+  );
+};
 
 export default {
   title: 'Dashboard/Edge Connected',

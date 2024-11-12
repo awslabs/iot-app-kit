@@ -1,7 +1,10 @@
 import { Table } from '@iot-app-kit/react-components';
-import { mockAlarmData, mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
+import {
+  mockAlarmData,
+  mockTimeSeriesDataQuery,
+} from '@iot-app-kit/testing-util';
 import { DATA_TYPE } from '@iot-app-kit/core';
-import { Meta, StoryObj } from '@storybook/react';
+import { type Meta, type StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Table> = {
   title: 'Components/Table',
@@ -32,36 +35,36 @@ export const Standard: Story = {
       items={[
         {
           rpm: 120.3,
-          wind_speed: 50
+          wind_speed: 50,
         },
         {
           rpm: 120.3,
-          wind_speed: 50
-        }
+          wind_speed: 50,
+        },
       ]}
-    
       columnDefinitions={[
         {
           key: 'rpm',
-          header: 'RPM'
+          header: 'RPM',
         },
         {
           key: 'wind_speed',
-          header: 'Wind Speed'
-        }
+          header: 'Wind Speed',
+        },
       ]}
-    
       queries={props.queries}
-    /> 
+    />
   ),
   args: {
-    queries: [mockTimeSeriesDataQuery([
-      {
-        dataStreams: [DATA_STREAM],
-        viewport: VIEWPORT,
-        thresholds: [],
-      },
-    ])],
+    queries: [
+      mockTimeSeriesDataQuery([
+        {
+          dataStreams: [DATA_STREAM],
+          viewport: VIEWPORT,
+          thresholds: [],
+        },
+      ]),
+    ],
   },
 };
 
@@ -87,9 +90,8 @@ export const Alarm: Story = {
           sortingField: 'unit',
         },
       ]}
-    
       queries={props.queries}
-    /> 
+    />
   ),
   args: {
     queries: [mockAlarmData()],

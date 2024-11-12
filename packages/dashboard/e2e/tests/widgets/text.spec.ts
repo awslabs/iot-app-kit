@@ -1,10 +1,18 @@
-import { expect, test } from '../test';
+import { test, expect } from '@playwright/test';
+import { ConfigPanel } from '../configPanel/ConfigPanel';
+import { createNewDashboardWithWidget } from '../createDashboardWidget';
 
 const TEXT_WIDGET_CONTENT = 'This is test';
 test.describe('Test Text Widget', () => {
   test('text widget should be visible on the dashboard', async ({
-    dashboardWithTextWidget,
+    page,
+    browser,
   }) => {
+    const dashboardWithTextWidget = await createNewDashboardWithWidget(
+      'text',
+      page,
+      browser
+    );
     const widget = dashboardWithTextWidget.gridArea.locator(
       '[data-gesture=widget]'
     );
@@ -12,10 +20,12 @@ test.describe('Test Text Widget', () => {
     await expect(widget).toBeVisible();
   });
 
-  test('verifying updating text of text widget', async ({
-    dashboardWithTextWidget,
-    page,
-  }) => {
+  test('verifying updating text of text widget', async ({ browser, page }) => {
+    const dashboardWithTextWidget = await createNewDashboardWithWidget(
+      'text',
+      page,
+      browser
+    );
     const widget = dashboardWithTextWidget.gridArea.locator(
       '[data-gesture=widget]'
     );
@@ -32,10 +42,12 @@ test.describe('Test Text Widget', () => {
     expect(text).toContain(TEXT_WIDGET_CONTENT);
   });
 
-  test('verifying copying of text widget', async ({
-    dashboardWithTextWidget,
-    page,
-  }) => {
+  test('verifying copying of text widget', async ({ browser, page }) => {
+    const dashboardWithTextWidget = await createNewDashboardWithWidget(
+      'text',
+      page,
+      browser
+    );
     const widget = dashboardWithTextWidget.gridArea.locator(
       '[data-gesture=widget]'
     );
@@ -54,7 +66,12 @@ test.describe('Test Text Widget', () => {
     expect(widgets.length).toBe(2);
   });
 
-  test('delete text widget', async ({ dashboardWithTextWidget, page }) => {
+  test('delete text widget', async ({ browser, page }) => {
+    const dashboardWithTextWidget = await createNewDashboardWithWidget(
+      'text',
+      page,
+      browser
+    );
     let widget = dashboardWithTextWidget.gridArea.locator(
       '[data-gesture=widget]'
     );
@@ -75,14 +92,24 @@ test.describe('Test Text Widget', () => {
 
   test.describe('resizing', () => {
     test('verify dragging out bottom right handler increases height and width', async ({
-      dashboardWithTextWidget,
+      browser,
       page,
     }) => {
+      const dashboardWithTextWidget = await createNewDashboardWithWidget(
+        'text',
+        page,
+        browser
+      );
       const widget = dashboardWithTextWidget.gridArea.locator(
         '[data-gesture=widget]'
       );
 
-      const { width, height, x, y } = await widget.boundingBox();
+      const boundingBox = await widget.boundingBox();
+      if (!boundingBox) {
+        throw new Error('Text widget has no bounds');
+      }
+      const { width, height, x, y } = boundingBox;
+
       // the selector is out of the widget
       const bottomRight = dashboardWithTextWidget.gridArea.locator(
         'div[data-anchor="bottom-right"]'
@@ -93,19 +120,34 @@ test.describe('Test Text Widget', () => {
       await page.mouse.move(x + 2 * width, y + 2 * height, { steps: 10 });
       await page.mouse.up();
       const newDimension = await widget.boundingBox();
+
+      if (!newDimension) {
+        throw new Error('Resized text widget has no bounds');
+      }
+
       expect(newDimension.width > width).toBeTruthy();
       expect(newDimension.height > height).toBeTruthy();
     });
 
     test('verify dragging out bottom left handler increases height and width', async ({
-      dashboardWithTextWidget,
+      browser,
       page,
     }) => {
+      const dashboardWithTextWidget = await createNewDashboardWithWidget(
+        'text',
+        page,
+        browser
+      );
       const widget = dashboardWithTextWidget.gridArea.locator(
         '[data-gesture=widget]'
       );
 
-      const { width, height, x, y } = await widget.boundingBox();
+      const boundingBox = await widget.boundingBox();
+      if (!boundingBox) {
+        throw new Error('Text widget has no bounds');
+      }
+      const { width, height, x, y } = boundingBox;
+
       // the selector is out of the widget
       const bottomRight = dashboardWithTextWidget.gridArea.locator(
         'div[data-anchor="bottom-left"]'
@@ -116,19 +158,33 @@ test.describe('Test Text Widget', () => {
       await page.mouse.move(x - 30, y + 1.25 * height, { steps: 10 });
       await page.mouse.up();
       const newDimension = await widget.boundingBox();
+
+      if (!newDimension) {
+        throw new Error('Resized text widget has no bounds');
+      }
       expect(newDimension.width > width).toBeTruthy();
       expect(newDimension.height > height).toBeTruthy();
     });
 
     test('verify dragging out top left handler increases height and width', async ({
-      dashboardWithTextWidget,
+      browser,
       page,
     }) => {
+      const dashboardWithTextWidget = await createNewDashboardWithWidget(
+        'text',
+        page,
+        browser
+      );
       const widget = dashboardWithTextWidget.gridArea.locator(
         '[data-gesture=widget]'
       );
 
-      const { width, height, x, y } = await widget.boundingBox();
+      const boundingBox = await widget.boundingBox();
+      if (!boundingBox) {
+        throw new Error('Text widget has no bounds');
+      }
+      const { width, height, x, y } = boundingBox;
+
       // the selector is out of the widget
       const bottomRight = dashboardWithTextWidget.gridArea.locator(
         'div[data-anchor="top-left"]'
@@ -139,19 +195,32 @@ test.describe('Test Text Widget', () => {
       await page.mouse.move(x - 30, y - 1.25 * height, { steps: 10 });
       await page.mouse.up();
       const newDimension = await widget.boundingBox();
+      if (!newDimension) {
+        throw new Error('Resized text widget has no bounds');
+      }
       expect(newDimension.width > width).toBeTruthy();
       expect(newDimension.height > height).toBeTruthy();
     });
 
     test('verify dragging out top right handler increases height and width', async ({
-      dashboardWithTextWidget,
+      browser,
       page,
     }) => {
+      const dashboardWithTextWidget = await createNewDashboardWithWidget(
+        'text',
+        page,
+        browser
+      );
       const widget = dashboardWithTextWidget.gridArea.locator(
         '[data-gesture=widget]'
       );
 
-      const { width, height, x, y } = await widget.boundingBox();
+      const boundingBox = await widget.boundingBox();
+      if (!boundingBox) {
+        throw new Error('Text widget has no bounds');
+      }
+      const { width, height, x, y } = boundingBox;
+
       // the selector is out of the widget
       const bottomRight = dashboardWithTextWidget.gridArea.locator(
         'div[data-anchor="top-right"]'
@@ -162,21 +231,30 @@ test.describe('Test Text Widget', () => {
       await page.mouse.move(x + 1.25 * width, y - 1.25 * height, { steps: 10 });
       await page.mouse.up();
       const newDimension = await widget.boundingBox();
+      if (!newDimension) {
+        throw new Error('Resized text widget has no bounds');
+      }
       expect(newDimension.width > width).toBeTruthy();
       expect(newDimension.height > height).toBeTruthy();
     });
   });
 
   test.describe('Moving', () => {
-    test('verify the widget can be moved around', async ({
-      dashboardWithTextWidget,
-      page,
-    }) => {
+    test('verify the widget can be moved around', async ({ browser, page }) => {
+      const dashboardWithTextWidget = await createNewDashboardWithWidget(
+        'text',
+        page,
+        browser
+      );
       const widget = dashboardWithTextWidget.gridArea.locator(
         '[data-gesture=widget]'
       );
 
-      const { width, height, x, y } = await widget.boundingBox();
+      const boundingBox = await widget.boundingBox();
+      if (!boundingBox) {
+        throw new Error('Text widget has no bounds');
+      }
+      const { width, height, x, y } = boundingBox;
 
       await widget.hover();
       await page.mouse.down();
@@ -186,6 +264,9 @@ test.describe('Test Text Widget', () => {
       await page.mouse.move(x, y - 1.5 * height, { steps: 10 });
       await page.mouse.up();
       const newDimension = await widget.boundingBox();
+      if (!newDimension) {
+        throw new Error('Resized text widget has no bounds');
+      }
       expect(newDimension.x !== x).toBeTruthy();
       expect(newDimension.y !== y).toBeTruthy();
       await expect(widget).toBeVisible();
@@ -193,11 +274,13 @@ test.describe('Test Text Widget', () => {
   });
 
   test.describe('Config Panel updates', () => {
-    test('verify the Text style is configurable', async ({
-      dashboardWithTextWidget,
-      configPanel,
-      page,
-    }) => {
+    test('verify the Text style is configurable', async ({ browser, page }) => {
+      const configPanel = new ConfigPanel({ page });
+      const dashboardWithTextWidget = await createNewDashboardWithWidget(
+        'text',
+        page,
+        browser
+      );
       const widget = dashboardWithTextWidget.gridArea.locator(
         '[data-gesture=widget]'
       );
@@ -250,10 +333,15 @@ test.describe('Test Text Widget', () => {
     });
 
     test('when link is enabled, it should route to the path specified', async ({
-      dashboardWithTextWidget,
-      configPanel,
+      browser,
       page,
     }) => {
+      const configPanel = new ConfigPanel({ page });
+      const dashboardWithTextWidget = await createNewDashboardWithWidget(
+        'text',
+        page,
+        browser
+      );
       const widget = dashboardWithTextWidget.gridArea.locator(
         '[data-gesture=widget]'
       );
@@ -283,10 +371,15 @@ test.describe('Test Text Widget', () => {
     });
 
     test('when link is enabled, it should sanitize href and not link if dangerous', async ({
-      dashboardWithTextWidget,
-      configPanel,
+      browser,
       page,
     }) => {
+      const configPanel = new ConfigPanel({ page });
+      const dashboardWithTextWidget = await createNewDashboardWithWidget(
+        'text',
+        page,
+        browser
+      );
       const widget = dashboardWithTextWidget.gridArea.locator(
         '[data-gesture=widget]'
       );
