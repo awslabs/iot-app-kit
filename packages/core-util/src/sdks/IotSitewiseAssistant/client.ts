@@ -61,9 +61,13 @@ export class IoTSitewiseAssistantClient {
     utterance,
     context,
   }: InvokeAssistantOptions) {
-    const assistantContext = `given this context:${
-      this.defaultContext?.trim() ?? ''
-    } ${context?.trim() ?? ''}`;
+    const mergedContext = `${this.defaultContext?.trim() ?? ''}${
+      context?.trim() ?? ''
+    }`;
+    const isContextEmpty = !mergedContext || mergedContext === '{}';
+    const assistantContext = !isContextEmpty
+      ? `given this context: ${mergedContext}`
+      : '';
 
     invokeAssistant({
       iotSiteWiseClient: this.iotSiteWiseClient,

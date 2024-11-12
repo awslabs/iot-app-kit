@@ -63,7 +63,6 @@ describe('Chatbot', () => {
     );
     expect(store.getState().assistant.callerComponentId).not.toBeDefined();
     expect(store.getState().assistant.action).not.toBeDefined();
-    expect(store.getState().assistant.selectedQueries).toEqual([]);
   });
 
   it('should open chatbot when summarization is requested from widget', async () => {

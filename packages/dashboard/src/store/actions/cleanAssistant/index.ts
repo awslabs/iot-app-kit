@@ -18,7 +18,6 @@ export const cleanAssistant = (state: DashboardState): DashboardState => {
       conversationId: uuid(),
       callerComponentId: undefined,
       action: undefined,
-      selectedQueries: [],
     },
   };
 };

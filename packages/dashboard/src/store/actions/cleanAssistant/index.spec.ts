@@ -28,7 +28,6 @@ it('clean assistant state', () => {
   expect(assistant.conversationId).not.toEqual('conversationId');
   expect(assistant.callerComponentId).not.toBeDefined();
   expect(assistant.action).not.toBeDefined();
-  expect(assistant.selectedQueries).toEqual([]);
 });
 
 it('action CLEAN_ASSISTANT changes state correctly', () => {
@@ -40,5 +39,4 @@ it('action CLEAN_ASSISTANT changes state correctly', () => {
   );
   expect(store.getState().assistant.callerComponentId).not.toBeDefined();
   expect(store.getState().assistant.action).not.toBeDefined();
-  expect(store.getState().assistant.selectedQueries).toEqual([]);
 });
