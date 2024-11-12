@@ -13,6 +13,7 @@ export interface UseAssetModelPropertiesResult {
   assetModelPropertiesById: {
     [assetModelId: string]: AssetModelPropertySummary[];
   };
+  isLoading: boolean;
   isSuccess: boolean;
   error: Error | null;
 }
@@ -71,12 +72,14 @@ export function useAssetModelProperties({
     return total;
   }, {});
 
+  const isLoading = queries.some((query) => query.isFetching);
   const isSuccess = queries.every((query) => query.isSuccess);
   const error: Error | null = (queries.find((query) => query.error)?.error ??
     null) as Error | null;
 
   return {
     assetModelPropertiesById,
+    isLoading,
     isSuccess,
     error,
   };

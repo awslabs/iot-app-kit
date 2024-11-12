@@ -15,8 +15,8 @@ export const resourceExplorerQueryClient =
     : new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: Infinity,
-            gcTime: Infinity,
+            // staleTime: Infinity,
+            // gcTime: Infinity,
           },
         },
       });

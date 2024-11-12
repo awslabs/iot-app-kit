@@ -1,45 +1,43 @@
 import { useMemo } from 'react';
-import { noop } from 'lodash';
-
-import type {
-  AlarmByAssetRequestParameters,
-  AlarmExplorerProps,
-  AlarmResourcesRequestParameters,
-} from './types';
+import { useAlarms } from '../../../../hooks/useAlarms';
 import {
-  ResourceDropDown,
-  ResourceTable,
-  ResourceExplorerVariant,
-} from '../../variants';
-import {
+  DEFAULT_ALARM_RESOURCE_NAME,
   DEFAULT_DEFAULT_PAGE_SIZE,
   DEFAULT_IS_RESOURCE_DISABLED,
+  DEFAULT_IS_TABLE_ENABLED,
   DEFAULT_IS_TABLE_FILTER_ENABLED,
   DEFAULT_IS_TABLE_SEARCH_ENABLED,
-  DEFAULT_IS_TABLE_ENABLED,
   DEFAULT_IS_TABLE_USER_SETTINGS_ENABLED,
   DEFAULT_ON_SELECT_RESOURCE,
+  DEFAULT_PLURAL_ALARM_RESOURCE_NAME,
   DEFAULT_RESOURCE_EXPLORER_VARIANT,
   DEFAULT_SELECTED_RESOURCES,
   DEFAULT_SELECTION_MODE,
   DEFAULT_SHOULD_PERSIST_USER_CUSTOMIZATION,
   createDefaultTableUserSettings,
-  DEFAULT_ALARM_RESOURCE_NAME,
-  DEFAULT_PLURAL_ALARM_RESOURCE_NAME,
-  latestValueTimeCellRenderer,
   latestValueCellRenderer,
+  latestValueTimeCellRenderer,
 } from '../../constants/defaults';
-import { type AlarmResourceWithLatestValue } from '../../types/resources';
+import { DEFAULT_ALARM_DROP_DOWN_DEFINITION } from '../../constants/drop-down-resource-definitions';
 import {
   ALARM_TABLE_ASSET_ID_DEFINITION,
   DEFAULT_ALARM_TABLE_DEFINITION,
   createDefaultLatestValuesTableDefinition,
 } from '../../constants/table-resource-definitions';
-import { DEFAULT_ALARM_DROP_DOWN_DEFINITION } from '../../constants/drop-down-resource-definitions';
 import { useUserCustomization } from '../../helpers/use-user-customization';
-import { type TableResourceDefinition } from '../../types/table';
-import { useAlarms } from '../../../../hooks/useAlarms';
+import type { AlarmResourceWithLatestValue } from '../../types/resources';
+import type { TableResourceDefinition } from '../../types/table';
+import {
+  ResourceDropDown,
+  ResourceExplorerVariant,
+  ResourceTable,
+} from '../../variants';
 import { isAlarmResource, transformAlarmData } from './transformAlarmData';
+import type {
+  AlarmByAssetRequestParameters,
+  AlarmExplorerProps,
+  AlarmResourcesRequestParameters,
+} from './types';
 
 export function InternalAlarmExplorer({
   iotSiteWiseClient,
@@ -148,12 +146,11 @@ export function InternalAlarmExplorer({
           resources={alarmResources}
           createResourceKey={createResourceKey}
           isResourceDisabled={isAlarmDisabled}
-          isLoading={isLoading}
+          isLoadingResources={isLoading}
           error={error}
           selectionMode={selectionMode}
           selectedResources={selectedAlarms}
           onSelectResource={onSelectAlarm}
-          onClickNextPage={noop}
           userCustomization={userCustomization}
           onUpdateUserCustomization={setUserCutomization}
           isTitleEnabled={isTitleEnabled}
@@ -171,13 +168,11 @@ export function InternalAlarmExplorer({
           resourceDefinition={dropDownResourceDefinition}
           resources={alarmResources}
           isResourceDisabled={isAlarmDisabled}
-          isLoading={isLoading}
+          isLoadingResources={isLoading}
           error={error}
           selectionMode={selectionMode}
           selectedResources={selectedAlarms}
           onSelectResource={onSelectAlarm}
-          hasNextPage={false}
-          onScrollNextPage={noop}
           isFilterEnabled={isDropDownFilterEnabled}
         />
       }

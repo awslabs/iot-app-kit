@@ -1,19 +1,11 @@
 import { useState } from 'react';
-
-import { useAssetProperties } from './use-asset-properties';
-import type { AssetPropertyExplorerProps } from './types';
-import {
-  ResourceDropDown,
-  ResourceTable,
-  ResourceExplorerVariant,
-} from '../../variants';
 import {
   DEFAULT_ASSET_PROPERTY_RESOURCE_NAME,
   DEFAULT_DEFAULT_PAGE_SIZE,
   DEFAULT_IS_RESOURCE_DISABLED,
+  DEFAULT_IS_TABLE_ENABLED,
   DEFAULT_IS_TABLE_FILTER_ENABLED,
   DEFAULT_IS_TABLE_SEARCH_ENABLED,
-  DEFAULT_IS_TABLE_ENABLED,
   DEFAULT_IS_TABLE_USER_SETTINGS_ENABLED,
   DEFAULT_ON_SELECT_RESOURCE,
   DEFAULT_PLURAL_ASSET_PROPERTY_RESOURCE_NAME,
@@ -25,14 +17,21 @@ import {
   latestValueCellRenderer,
   latestValueTimeCellRenderer,
 } from '../../constants/defaults';
-import { type AssetPropertyResource } from '../../types/resources';
+import { DEFAULT_ASSET_PROPERTY_DROP_DOWN_DEFINITION } from '../../constants/drop-down-resource-definitions';
 import {
   DEFAULT_ASSET_PROPERTY_TABLE_DEFINITION,
   createDefaultLatestValuesTableDefinition,
 } from '../../constants/table-resource-definitions';
-import { DEFAULT_ASSET_PROPERTY_DROP_DOWN_DEFINITION } from '../../constants/drop-down-resource-definitions';
 import { useUserCustomization } from '../../helpers/use-user-customization';
-import { type TableResourceDefinition } from '../../types/table';
+import type { AssetPropertyResource } from '../../types/resources';
+import type { TableResourceDefinition } from '../../types/table';
+import {
+  ResourceDropDown,
+  ResourceExplorerVariant,
+  ResourceTable,
+} from '../../variants';
+import type { AssetPropertyExplorerProps } from './types';
+import { useAssetProperties } from './use-asset-properties';
 
 export function InternalAssetPropertyExplorer({
   iotSiteWiseClient,
@@ -93,7 +92,7 @@ export function InternalAssetPropertyExplorer({
     return Boolean(searchStatement);
   }
 
-  const { assetProperties, isLoading, error, hasNextPage, nextPage } =
+  const { assetProperties, isLoadingFirstPage, isLoadingResources, error } =
     useAssetProperties({
       parameters: isSearched(userSearchStatement)
         ? [{ searchStatement: userSearchStatement }]
@@ -105,7 +104,7 @@ export function InternalAssetPropertyExplorer({
         iotSiteWiseClient?.listAssetProperties?.bind(iotSiteWiseClient),
       listAssetModelProperties:
         iotSiteWiseClient?.listAssetModelProperties?.bind(iotSiteWiseClient),
-      pageSize: userCustomization.pageSize,
+      pageSize: 250,
     });
 
   return (
@@ -119,13 +118,12 @@ export function InternalAssetPropertyExplorer({
           resources={assetProperties}
           createResourceKey={createResourceKey}
           isResourceDisabled={isAssetPropertyDisabled}
-          isLoading={isLoading}
+          isLoadingFirstPage={isLoadingFirstPage}
+          isLoadingResources={isLoadingResources}
           error={error}
           selectionMode={selectionMode}
           selectedResources={selectedAssetProperties}
           onSelectResource={onSelectAssetProperty}
-          hasNextPage={hasNextPage}
-          onClickNextPage={nextPage}
           userCustomization={userCustomization}
           onUpdateUserCustomization={setUserCutomization}
           onClickSearch={onClickSearch}
@@ -144,13 +142,11 @@ export function InternalAssetPropertyExplorer({
           resourceDefinition={dropDownResourceDefinition}
           resources={assetProperties}
           isResourceDisabled={isAssetPropertyDisabled}
-          isLoading={isLoading}
+          isLoadingResources={isLoadingResources}
           error={error}
           selectionMode={selectionMode}
           selectedResources={selectedAssetProperties}
           onSelectResource={onSelectAssetProperty}
-          hasNextPage={hasNextPage}
-          onScrollNextPage={nextPage}
           isFilterEnabled={isDropDownFilterEnabled}
         />
       }

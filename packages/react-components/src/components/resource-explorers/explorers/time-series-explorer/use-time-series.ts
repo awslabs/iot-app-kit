@@ -1,8 +1,10 @@
-import type { TimeSeriesRequestParameters } from './types';
 import {
   type BatchGetAssetPropertyValue,
   type ListTimeSeries,
 } from '@iot-app-kit/core';
+import { transformListTimeSeriesResponse } from '../../helpers/response-transformers';
+import { useLatestValues } from '../../requests/use-latest-values';
+import { useMultipleListRequests } from '../../requests/use-multiple-list-requests';
 import type {
   UseListAPIBaseOptions,
   UseListAPIBaseResult,
@@ -11,9 +13,7 @@ import {
   type TimeSeriesResource,
   type TimeSeriesResourceWithLatestValue,
 } from '../../types/resources';
-import { useMultipleListRequests } from '../../requests/use-multiple-list-requests';
-import { useLatestValues } from '../../requests/use-latest-values';
-import { transformListTimeSeriesResponse } from '../../helpers/response-transformers';
+import type { TimeSeriesRequestParameters } from './types';
 
 export interface UseTimeSeriesOptions extends UseListAPIBaseOptions {
   parameters: readonly TimeSeriesRequestParameters[];
@@ -33,10 +33,8 @@ export function useTimeSeries({
 }: UseTimeSeriesOptions): UseTimeSeriesResult {
   const {
     resources: timeSeriesWithoutLatestValues,
-    isLoading: isLoadingTimeSeriesWithLatestValues,
+    isLoadingFirstPage: isLoadingTimeSeriesWithLatestValues,
     error,
-    hasNextPage,
-    nextPage,
   } = useMultipleListRequests({
     resourceId: 'TimeSeriesSummary',
     pageSize,
@@ -59,15 +57,14 @@ export function useTimeSeries({
       ? timeSeriesWithLatestValues
       : timeSeriesWithoutLatestValues;
 
-  const isLoading =
+  const isLoadingFirstPage =
     isLoadingTimeSeriesWithLatestValues ||
     isLoadingTimeSeriesWithoutLatestValues;
 
   return {
     timeSeries,
-    isLoading,
+    isLoadingFirstPage,
+    isLoadingResources: isLoadingFirstPage,
     error,
-    hasNextPage,
-    nextPage,
   };
 }

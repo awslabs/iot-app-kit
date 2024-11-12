@@ -1,11 +1,5 @@
-import type {
-  HasNextPage,
-  NextPage,
-  PageSize,
-  RequestError,
-  RequestIsLoading,
-} from './common';
 import type { RequestFunction } from '@iot-app-kit/core';
+import type { PageSize, RequestError } from './common';
 
 /** Minimum required parameters for a list request. */
 export interface ListRequestBaseParams {
@@ -82,7 +76,7 @@ export type ResponseTransformer<Response, Resource> = (
  * `nextToken` is handled internally to the function for pagination and
  * `maxResults` is passed as a top-level hook option.
  */
-type UseListRequestParams<Params extends ListRequestBaseParams> = Omit<
+export type UseListRequestParams<Params extends ListRequestBaseParams> = Omit<
   Params,
   'nextToken' | 'maxResults'
 >;
@@ -94,15 +88,12 @@ type UseListRequestParams<Params extends ListRequestBaseParams> = Omit<
  * This type is used to limit implicit dependence on Tanstack Query.
  */
 export interface UseListAPIBaseResult {
-  /** True when there is a next page to request. */
-  hasNextPage: HasNextPage;
+  /** True when the first page of resources is loading. */
+  isLoadingFirstPage: boolean;
 
-  /** True when the next page is being requested. */
-  isLoading: RequestIsLoading;
+  /** True when resources are loading. */
+  isLoadingResources: boolean;
 
   /** Defined when there is an error. */
   error: RequestError;
-
-  /** Call to request the next page of resources. */
-  nextPage: NextPage;
 }

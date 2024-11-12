@@ -1,20 +1,19 @@
+import type {
+  ListAssetModelProperties,
+  ListAssetProperties,
+} from '@iot-app-kit/core';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
-
+import { AssetPropertyExplorer } from '../../explorers';
+import { resourceExplorerQueryClient } from '../../requests/resource-explorer-query-client';
+import type { SelectionMode } from '../../types/common';
+import type { AssetPropertyResource } from '../../types/resources';
 import * as dropDown from '../helpers/drop-down';
 import {
   createListAssetModelPropertiesPage,
   createListAssetPropertiesPage,
 } from '../helpers/responses';
-import { AssetPropertyExplorer } from '../../explorers';
-import { resourceExplorerQueryClient } from '../../requests/resource-explorer-query-client';
-import type { SelectionMode } from '../../types/common';
-import type {
-  ListAssetModelProperties,
-  ListAssetProperties,
-} from '@iot-app-kit/core';
-import type { AssetPropertyResource } from '../../types/resources';
 
 function SelectableAssetPropertyDropDown({
   selectionMode,

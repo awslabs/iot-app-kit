@@ -1,14 +1,13 @@
+import type { ListAssetModels } from '@iot-app-kit/core';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
-
-import * as dropDown from '../helpers/drop-down';
-import { createListAssetModelsPage } from '../helpers/responses';
 import { AssetModelExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests/resource-explorer-query-client';
 import type { SelectionMode } from '../../types/common';
-import type { ListAssetModels } from '@iot-app-kit/core';
 import type { AssetModelResource } from '../../types/resources';
+import * as dropDown from '../helpers/drop-down';
+import { createListAssetModelsPage } from '../helpers/responses';
 
 function SelectableAssetModelDropDown({
   selectionMode,
@@ -128,9 +127,6 @@ describe('asset model drop-down', () => {
         />
       );
 
-      // First page is requested without opening the drop-down
-      expect(listAssetModels).toHaveBeenCalledOnce();
-
       await dropDown.open();
       await dropDown.waitForLoadingToFinish();
 
@@ -138,8 +134,7 @@ describe('asset model drop-down', () => {
       expect(listAssetModels).toHaveBeenCalledTimes(3);
     });
 
-    // TODO: flaky test, commented out to do an iot-app-kit release
-    it.skip('requests multiple lists of pages of asset models correctly', async () => {
+    it('requests multiple lists of pages of asset models correctly', async () => {
       const listAssetModels = jest
         .fn()
         .mockResolvedValueOnce(createListAssetModelsPage(1, 10, 'next-token-1'))
@@ -157,8 +152,6 @@ describe('asset model drop-down', () => {
           ]}
         />
       );
-
-      expect(listAssetModels).toHaveBeenCalledOnce();
 
       await dropDown.open();
       await dropDown.waitForLoadingToFinish();
