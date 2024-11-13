@@ -39,10 +39,10 @@ export class ConfigPanel {
       .getByTestId('decimal-places')
       .locator('input');
     this.maxValueCheckbox = this.container
-      .getByTestId('Maximum Value')
+      .getByTestId('Maximum value')
       .locator(CHECKBOX_LOCATOR);
     this.minValueCheckbox = this.container
-      .getByTestId('Minimum Value')
+      .getByTestId('Minimum value')
       .locator(CHECKBOX_LOCATOR);
     this.showHideUnit = this.container
       .getByTestId('show-hide-unit')

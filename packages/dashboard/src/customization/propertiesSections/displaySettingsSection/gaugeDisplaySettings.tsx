@@ -50,7 +50,7 @@ export const RenderGaugeDisplaySettingsSection = ({
             checked={!!showUnit}
             data-testid='show-hide-tunit'
           >
-            Show Unit
+            Show units
           </Checkbox>
         </FormField>
       </Box>

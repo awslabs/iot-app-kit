@@ -266,7 +266,7 @@ test.describe('test Line Widget Styling changes', () => {
         .textContent();
 
       // TODO: update this to check property name, checking data streams because of a bug which hides the table
-      expect(legendText).not.toContain('Data Streams');
+      expect(legendText).not.toContain('Data streams');
       await configPanel.showLegendToggle.click();
       legendText = await dashboardWithLineWidget.gridArea
         .locator('[data-gesture=widget]')
@@ -621,7 +621,7 @@ test.describe('Testing Line Widget property changes', () => {
     await configPanel.page.getByRole('button', { name: 'Label' }).click();
 
     // uncheck default value
-    await configPanel.page.getByText('Use default datastream name').click();
+    await configPanel.page.getByText('Use default data stream name').click();
     await page.waitForTimeout(1000);
 
     // click and change input value

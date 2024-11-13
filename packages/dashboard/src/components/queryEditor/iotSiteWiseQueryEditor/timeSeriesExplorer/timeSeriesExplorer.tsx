@@ -62,7 +62,7 @@ export const UnmodeledExplorer = ({
           isFilterEnabled: true,
           isUserSettingsEnabled: true,
         }}
-        description='Select a unmodeled datastream to add to a selected widget'
+        description='Select an unmodeled data stream to add to a selected widget.'
         timeZone={timeZone}
         significantDigits={significantDigits}
       />

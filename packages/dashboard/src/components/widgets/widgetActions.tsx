@@ -142,8 +142,8 @@ const WidgetActions = ({ widget }: { widget: DashboardWidget }) => {
         description={
           <Box>
             <Box variant='p'>
-              Are you sure you want to delete the selected widget? You'll lose
-              all the progress you made to the widget
+              Do you want to delete the selected widget? All changes will be
+              lost.
             </Box>
             <Box variant='p' padding={{ top: 'm' }}>
               You cannot undo this action.

@@ -117,7 +117,7 @@ const KPIWidgetEmptyStateComponent: React.FC<
           color='text-status-inactive'
           margin={{ bottom: 's', horizontal: 's' }}
         >
-          Add a property or alarm to populate KPI
+          Add a property or alarm to populate KPI.
         </Box>
       </div>
     </div>

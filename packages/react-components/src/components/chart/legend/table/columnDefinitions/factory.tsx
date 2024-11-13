@@ -58,7 +58,7 @@ const createAssetNameColumnDefinition =
 const createLatestValueColumnDefinition = (
   significantDigits: ChartOptions['significantDigits']
 ): LegendTableColumnDefinitions[1] => ({
-  id: 'Latest Value',
+  id: 'Latest value',
   sortingField: 'latestValue',
   header: <LatestValueColumnHeader />,
   cell: (item) => {
@@ -74,7 +74,7 @@ const createLatestValueColumnDefinition = (
 
 const createLatestAlarmStateValueColumnDefinition =
   (): LegendTableColumnDefinitions[1] => ({
-    id: 'Latest Alarm State Value',
+    id: 'Latest alarm state value',
     sortingField: 'latestAlarmStateValue',
     header: <LatestAlarmStateValueColumnHeader />,
     cell: (item) => {

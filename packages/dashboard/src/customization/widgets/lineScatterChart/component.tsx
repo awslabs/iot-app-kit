@@ -208,7 +208,7 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (
       <WidgetTile widget={widget} title={title}>
         <NoChartData
           icon={lineSvgDark}
-          emptyStateText='Browse and select to add your asset properties in your line widget.'
+          emptyStateText='Browse assets and add asset properties to the line widget.'
         />
       </WidgetTile>
     );

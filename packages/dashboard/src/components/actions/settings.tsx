@@ -74,7 +74,7 @@ const DashboardSettings: React.FC<DashboardSettingsProps> = ({
       onDismiss={onClose}
       visible={isVisible}
       closeAriaLabel='Close modal'
-      header='Dashboard Settings'
+      header='Dashboard settings'
       footer={
         <Box float='right'>
           <SpaceBetween direction='horizontal' size='xs'>
@@ -101,19 +101,19 @@ const DashboardSettings: React.FC<DashboardSettingsProps> = ({
             shouldClearErrors={isVisible}
           />
           <LabeledInput
-            label='Cell Size'
+            label='Cell size'
             type='number'
             value={changedCellSize.toFixed()}
             onChange={(event) => setCellSize(numberFromDetail(event))}
           />
           <LabeledInput
-            label='Number of Rows'
+            label='Number of rows'
             type='number'
             value={changedNumberRows.toFixed()}
             onChange={(event) => setNumberRows(numberFromDetail(event))}
           />
           <LabeledInput
-            label='Number of Columns'
+            label='Number of columns'
             type='number'
             value={changedNumberColumns.toFixed()}
             onChange={(event) => setNumberColumns(numberFromDetail(event))}

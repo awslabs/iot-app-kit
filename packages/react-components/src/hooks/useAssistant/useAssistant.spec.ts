@@ -137,7 +137,7 @@ describe('useAssistant', () => {
     );
 
     const expectedContent =
-      'Hello, I am your dashboard assistant, please ask me anything about your dashboard.';
+      'Hello, I am your AWS IoT SiteWise Assistant. Please ask me anything about your dashboard.';
     act(() => {
       result.current.setMessages([
         {

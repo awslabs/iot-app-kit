@@ -165,7 +165,7 @@ export const AssetModelDataStreamExplorer = ({
             <>
               <ExpandableSection
                 headerText={
-                  <ExpandableSectionHeading headerText='Data Streams' />
+                  <ExpandableSectionHeading headerText='Data streams' />
                 }
                 defaultExpanded
               >
@@ -175,7 +175,7 @@ export const AssetModelDataStreamExplorer = ({
               </ExpandableSection>
               <ExpandableSection
                 headerText={
-                  <ExpandableSectionHeading headerText='Alarm Data Streams' />
+                  <ExpandableSectionHeading headerText='Alarm data streams' />
                 }
               >
                 <AlarmExplorer
@@ -203,7 +203,7 @@ export const AssetModelDataStreamExplorer = ({
                         modeledDataStream
                       ),
                   }}
-                  description='Select an alarm to add to a selected widget'
+                  description='Select an alarm to add to a selected widget.'
                   timeZone={timeZone}
                   significantDigits={significantDigits}
                 />

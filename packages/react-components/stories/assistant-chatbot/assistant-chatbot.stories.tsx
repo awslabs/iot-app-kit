@@ -53,7 +53,7 @@ export const AssistantChatbotDefault: ComponentStory<
       },
       {
         content:
-          'Hello, I am an AI powered assistant for your production floor, please ask me anything.',
+          'Hello, I am your AWS IoT SiteWise Assistant. Please ask me anything about your dashboard.',
         sender: 'assistant',
         type: MessageType.TEXT,
         id: crypto.randomUUID(),

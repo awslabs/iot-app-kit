@@ -1,3 +1,3 @@
 export const LatestAlarmStateValueColumnHeader = () => (
-  <div>Latest Alarm State Value</div>
+  <div>Latest alarm state value</div>
 );

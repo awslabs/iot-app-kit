@@ -69,10 +69,7 @@ export const YAxisSection: FC<YAxisSectionOptions> = ({
           </Box>
         )}
         <Box>
-          <FormField
-            description='Leave empty to auto-calculate based on all the values'
-            label='Range'
-          >
+          <FormField description='Leave empty to auto calculate.' label='Range'>
             <FormLabel htmlFor='y-axis-min'>Min</FormLabel>
             <Input
               placeholder='Auto'

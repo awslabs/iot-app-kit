@@ -529,10 +529,9 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
         description={
           <Box>
             <Box variant='p'>
-              {`Are you sure you want to delete the selected widget${
+              {`Do you want to delete the selected widget${
                 selectedWidgets.length > 1 ? 's' : ''
-              }? You'll lose all the progress you made to the
-                        widget${selectedWidgets.length > 1 ? 's' : ''}`}
+              }? All changes will be lost.`}
             </Box>
             <Box variant='p' padding={{ top: 'm' }}>
               You cannot undo this action.

@@ -108,7 +108,7 @@ const GaugeWidgetEmptyStateComponent: React.FC<
           color='text-status-inactive'
           margin={{ bottom: 's', horizontal: 's' }}
         >
-          Add a property or alarm to populate Gauge
+          Add a property or alarm to populate Gauge.
         </Box>
       </div>
     </div>

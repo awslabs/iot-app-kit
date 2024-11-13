@@ -1,1 +1,1 @@
-export const LatestValueColumnHeader = () => <div>Latest Value</div>;
+export const LatestValueColumnHeader = () => <div>Latest value</div>;

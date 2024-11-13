@@ -101,7 +101,7 @@ const StatusWidgetEmptyStateComponent: React.FC = () => {
           color='text-status-inactive'
           margin={{ bottom: 's', horizontal: 's' }}
         >
-          Add a property or alarm to populate status
+          Add a property or alarm to populate Status.
         </Box>
       </div>
     </div>

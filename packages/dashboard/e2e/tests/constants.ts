@@ -10,7 +10,7 @@ export const UNMODELED_TAB = '[data-testid="explore-unmodeled-tab"]';
 export const ASSET_MODEL_TAB = '[data-testid="explore-asset-model-tab"]';
 
 export const WIDGET_EMPTY_STATE_TEXT =
-  'Browse and select to add your asset properties in your line widget.';
+  'Browse assets and add asset properties to the line widget.';
 
 export const ADD_TREND_CURSOR = 'Add trend cursor';
 export const REMOVE_TREND_CURSOR = 'Delete trend cursor';

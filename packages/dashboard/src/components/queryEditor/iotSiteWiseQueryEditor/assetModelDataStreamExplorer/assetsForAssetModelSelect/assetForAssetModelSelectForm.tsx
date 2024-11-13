@@ -9,7 +9,7 @@ export const AssetForAssetModelSelectForm = (
 ) => (
   <FormField
     label='Default asset'
-    description='This asset will be the default view in both edit and preview mode.'
+    description='This asset is the default view in both Edit and Preview modes.'
   >
     <AssetForAssetModelSelect {...props} />
   </FormField>

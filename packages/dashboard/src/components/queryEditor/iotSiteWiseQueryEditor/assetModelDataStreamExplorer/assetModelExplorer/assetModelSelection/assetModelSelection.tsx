@@ -47,8 +47,8 @@ export const AssetModelSelection = ({
   return (
     <SpaceBetween size='s' direction='vertical'>
       <Box variant='p'>
-        Dynamic asset visualizations allow you to build one visualization to
-        represent any asset of a specified asset model.{' '}
+        Dynamic asset visualizations allow you to build a visualization to
+        represent an asset of a specified asset model.{' '}
         <Link
           external
           href='https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-asset-models.html'

@@ -170,7 +170,7 @@ test.describe('Test Table Widget', () => {
     await configPanel.page.getByRole('button', { name: 'Label' }).click();
 
     // uncheck default value
-    await configPanel.page.getByText('Use default datastream name').click();
+    await configPanel.page.getByText('Use default data stream name').click();
     await page.waitForTimeout(1000);
 
     // click and change input value

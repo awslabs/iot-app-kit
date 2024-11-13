@@ -37,7 +37,7 @@ export const DataStreamLabelComponent = ({
             }}
             checked={checked}
           >
-            Use default datastream name
+            Use default data stream name
           </Checkbox>
           <Input
             data-testid='label-input'

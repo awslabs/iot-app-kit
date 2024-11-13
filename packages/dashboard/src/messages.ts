@@ -326,7 +326,7 @@ export const DefaultDashboardMessages: DashboardMessages = {
     },
     chatbot: {
       initialMessage:
-        'Hello, I am your dashboard assistant, please ask me anything about your dashboard.',
+        'Hello, I am your AWS IoT SiteWise Assistant. Please ask me anything about your dashboard.',
     },
   },
 };

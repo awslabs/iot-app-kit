@@ -110,7 +110,7 @@ export const ModeledExplorer = ({
             selectedWidgets
           ),
       }}
-      description='Select a modeled datastream to add to a selected widget'
+      description='Select a modeled data stream to add to a widget.'
       timeZone={timeZone}
       significantDigits={significantDigits}
     />
@@ -128,7 +128,7 @@ export const ModeledExplorer = ({
           isFilterEnabled: true,
           isUserSettingsEnabled: true,
         }}
-        description='Browse through your asset hierarchy and select an asset to view its associated data streams.'
+        description='Browse through your assets to select an asset, and view its associated data streams.'
         ariaLabels={{
           resizerRoleDescription: 'Resize button',
           itemSelectionLabel: (isNotSelected, asset: AssetResource) =>
@@ -142,7 +142,7 @@ export const ModeledExplorer = ({
           <>
             <ExpandableSection
               headerText={
-                <ExpandableSectionHeading headerText='Data Streams' />
+                <ExpandableSectionHeading headerText='Data streams' />
               }
               defaultExpanded
             >
@@ -150,7 +150,7 @@ export const ModeledExplorer = ({
             </ExpandableSection>
             <ExpandableSection
               headerText={
-                <ExpandableSectionHeading headerText='Alarm Data Streams' />
+                <ExpandableSectionHeading headerText='Alarm data streams' />
               }
             >
               <AlarmExplorer
@@ -168,7 +168,7 @@ export const ModeledExplorer = ({
                   itemSelectionLabel: ({ selectedItems }, modeledDataStream) =>
                     alarmSelectionLabel([...selectedItems], modeledDataStream),
                 }}
-                description='Select an alarm to add to a selected widget'
+                description='Select an alarm to add to a selected widget.'
                 timeZone={timeZone}
                 significantDigits={significantDigits}
               />

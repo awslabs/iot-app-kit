@@ -231,10 +231,7 @@ const YAxisPropertyConfig = ({
           >
             Show Y-axis controls
           </Toggle>
-          <FormField
-            description='Leave empty to auto-calculate based on all the values'
-            label='Range'
-          >
+          <FormField description='Leave empty to auto calculate.' label='Range'>
             <SpaceBetween size='m' direction='horizontal'>
               <SpaceBetween size='s' direction='horizontal'>
                 <label htmlFor='y-axis-min'>Min</label>

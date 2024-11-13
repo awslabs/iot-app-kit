@@ -20,7 +20,7 @@ export const AssetModelSelect = ({
   return (
     <FormField
       label='Asset model'
-      description='Select an asset model to add the associated properties into your dynamic display.'
+      description='Select an asset model, and add its associated properties.'
     >
       <AssetModelExplorer
         iotSiteWiseClient={iotSiteWiseClient}
