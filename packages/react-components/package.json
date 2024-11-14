@@ -120,7 +120,6 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@amzn/iot-black-pearl-internal-v3": "file:../../iot-black-pearl-internal-v3.tgz",
     "@cloudscape-design/chat-components": "^1.0.10",
     "@cloudscape-design/collection-hooks": "1.0.49",
     "@cloudscape-design/components": "3.0.693",

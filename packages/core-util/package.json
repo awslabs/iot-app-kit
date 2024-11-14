@@ -38,7 +38,6 @@
     "test:typescript": "tsc --noEmit"
   },
   "dependencies": {
-    "@amzn/iot-black-pearl-internal-v3": "file:../../iot-black-pearl-internal-v3.tgz",
     "@iot-app-kit/core": "*",
     "lodash.difference": "4.5.0",
     "pako": "^2.1.0",

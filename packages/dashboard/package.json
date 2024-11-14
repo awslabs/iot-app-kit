@@ -19,12 +19,12 @@
   "bugs": {
     "url": "https://github.com/awslabs/iot-app-kit/issues"
   },
-  "types": "dist/types/src/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "exports": {
     ".": {
-      "types": "./dist/types/src/index.d.ts",
+      "types": "./dist/types/index.d.ts",
       "require": "./dist/cjs/index.js",
       "import": "./dist/esm/index.js",
       "default": "./dist/esm/index.js"
@@ -105,7 +105,6 @@
     "webpack": "^5.94.0"
   },
   "dependencies": {
-    "@amzn/iot-black-pearl-internal-v3": "file:../../iot-black-pearl-internal-v3.tgz",
     "@cloudscape-design/components": "3.0.693",
     "@cloudscape-design/design-tokens": "3.0.42",
     "@cloudscape-design/global-styles": "1.0.32",

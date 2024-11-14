@@ -50,6 +50,9 @@
     "prepare": "husky install",
     "test:ci": "if test \"$NODE_ENV\" = \"production\"; then echo \"Yes!\"; fi"
   },
+  "dependencies": {
+    "@amzn/iot-black-pearl-internal-v3": "file:./iot-black-pearl-internal-v3.tgz"
+  },
   "devDependencies": {
     "@swc/core": "^1.3.71",
     "@swc/jest": "^0.2.26",

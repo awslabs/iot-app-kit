@@ -1,9 +1,11 @@
-import { Box, Popover, Spinner } from '@awsui/components-react';
 import {
   colorTextBodyDefault,
   fontFamilyBase,
 } from '@cloudscape-design/design-tokens';
 import './anomalyChartStyles.css';
+import Box from '@cloudscape-design/components/box';
+import Spinner from '@cloudscape-design/components/spinner';
+import Popover from '@cloudscape-design/components/popover';
 
 export const LoadingIcon = ({ loading }: { loading?: boolean }) => {
   if (!loading) return null;
