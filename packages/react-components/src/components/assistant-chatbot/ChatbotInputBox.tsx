@@ -59,11 +59,12 @@ export const ChatbotInputBox = ({
 
   const handleClick = () => {
     if (value) {
-      onSubmit(value);
+      onSubmit(value.trim().replace(/^\s+|\s+$/g, ''));
       setValue('');
       if (textareaRef.current) {
         // eslint-disable-next-line import/no-named-as-default-member
         autosize.destroy(textareaRef.current);
+        textareaRef.current.focus();
       }
     }
   };
@@ -83,7 +84,10 @@ export const ChatbotInputBox = ({
     event: NonCancelableCustomEvent<InputProps.KeyDetail>
   ) => {
     if (event.detail.key === 'Enter' && !event.detail.shiftKey) {
-      handleClick();
+      const valueCleaned = value.trim().replace(/^\s+|\s+$/g, '');
+      if (valueCleaned && !disabled) {
+        handleClick();
+      }
     }
     if (event.detail.key === 'Delete' || event.detail.key === 'Backspace') {
       onResize();
@@ -102,7 +106,6 @@ export const ChatbotInputBox = ({
           onChange={handleChange}
           onKeyUp={handleKeyUp}
           rows={1}
-          disabled={disabled}
         />
         <div className='iot-app-kit-assistant-chatbot-input-button'>
           <Button
