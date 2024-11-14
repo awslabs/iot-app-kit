@@ -3,7 +3,7 @@
   "include": ["src", "stories"],
   "compilerOptions": {
     "jsx": "react-jsx",
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "~/*": ["./src/*"]
     },
