@@ -320,7 +320,6 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
           name={name}
         />
       }
-      headerVariant='high-contrast'
     >
       <div
         className='dashboard'

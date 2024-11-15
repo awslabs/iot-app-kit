@@ -81,12 +81,13 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
 
   if (error) {
     return (
-      <ErrorText
-        {...{
-          error,
-          secondaryFontSize,
-          nonThresholdBackground,
-          nonThresholdFontColor,
+      <div
+        className='kpi'
+        data-testid='kpi-error-component'
+        style={{
+          fontSize: `${secondaryFontSize}px`,
+          backgroundColor: nonThresholdBackground,
+          color: nonThresholdFontColor,
         }}
       >
         <Title

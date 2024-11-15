@@ -84,25 +84,3 @@ export const combineStatusForQueries = (
 
   return status;
 };
-
-export const isQueryDisabled = (query: UseQueryResult) => {
-  return query.status === 'pending' && query.fetchStatus === 'idle';
-};
-
-export const updateAlarmStatusForQueries = (
-  alarm: AlarmData,
-  queries: UseQueryResult[]
-): AlarmData => {
-  const currentStatus = alarm.status;
-
-  // remove irrelevant queries which are disabled
-  const statusFromQueries = queries.filter((query) => !isQueryDisabled(query));
-
-  const updatedStatus = combineStatusForQueries(statusFromQueries);
-
-  if (!isEqual(currentStatus, updatedStatus)) {
-    alarm.status = updatedStatus;
-  }
-
-  return alarm;
-};

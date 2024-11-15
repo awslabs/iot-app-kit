@@ -20,7 +20,6 @@ export type {
   AlarmAssetModelQuery,
   AlarmQuery,
   AssetModelQuery,
-  AlarmAssetModelQuery,
   AssetPropertyQuery,
   AssetQuery,
   PropertyAliasQuery,

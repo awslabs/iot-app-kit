@@ -1,7 +1,7 @@
 import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { type MpSdk } from '@matterport/r3f/dist';
 
-import { type DracoDecoderConfig, type GetSceneObjectFunction } from '../interfaces/sceneViewer';
+import { type DracoDecoderConfig, type GetSceneObjectFunction, type BasisuDecoderConfig } from '../interfaces/sceneViewer';
 import { type COMPOSER_FEATURES, type FeatureConfig } from '../interfaces';
 import { type IMetricRecorder } from '../interfaces/metricRecorder';
 import { type FlashMessageDefinition } from '../interfaces/sceneComposerInternal';

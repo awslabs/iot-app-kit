@@ -1,9 +1,9 @@
-import { type Loader, LoadingManager, DefaultLoadingManager } from 'three';
+import { Loader, LoadingManager, DefaultLoadingManager, WebGLRenderer } from 'three';
 import { useLoader } from '@react-three/fiber';
 
 import { GLTFLoader as TwinMakerGLTFLoader } from '../../../three/GLTFLoader';
 import { setupTwinMakerGLTFLoader } from '../../../three/loaderUtils';
-import { type URIModifier } from '../../../interfaces/interfaces';
+import { URIModifier } from '../../../interfaces/interfaces';
 
 function extensions(gl: WebGLRenderer, extendLoader?: (loader: TwinMakerGLTFLoader) => void) {
   return (loader: Loader) => {
