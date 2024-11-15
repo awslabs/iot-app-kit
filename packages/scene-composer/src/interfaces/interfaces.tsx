@@ -7,6 +7,7 @@
 
 import { type ReactElement } from 'react';
 import * as awsui from '@cloudscape-design/design-tokens';
+
 import { type ISceneNodeInternal } from '../store/Store';
 
 import { type ISceneComponent, type KnownComponentType } from './components';
