@@ -28,14 +28,14 @@ const useLoader = (
         },
         getSceneObject,
       } as SceneLoader),
-    [scene],
+    [scene, getSceneObject],
   );
 
   const awsLoader = useMemo(() => {
     const loader = dataSource.s3SceneLoader(sceneId!);
 
     return loader as SceneLoader;
-  }, [dataSource.s3SceneLoader, sceneId]);
+  }, [dataSource, sceneId]);
 
   const loader = useMemo(() => {
     switch (source) {
@@ -44,7 +44,7 @@ const useLoader = (
       default:
         return scene ? localLoader : null;
     }
-  }, [scene, awsLoader, sceneId, source]);
+  }, [scene, awsLoader, sceneId, source, localLoader]);
 
   const awsBindingProvider = useMemo(() => {
     return dataSource.valueDataBindingProviders();
@@ -59,7 +59,7 @@ const useLoader = (
       default:
         return scene ? { TwinMakerEntityProperty: localBindingProvider } : undefined;
     }
-  }, [scene, source]);
+  }, [scene, source, awsBindingProvider]);
 
   return { loader, bindingProvider };
 };

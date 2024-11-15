@@ -66,12 +66,14 @@ export const BarChart = (props: BarChartProps) => {
 
   const { viewport, setViewport, group, lastUpdatedBy } = useViewport();
 
-  // if using echarts then echarts gesture overrides passed in viewport
-  // else explicitly passed in viewport overrides viewport group
-  const utilizedViewport =
-    (lastUpdatedBy === ECHARTS_GESTURE
-      ? viewport
-      : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
+  const allThresholds = useMemo(
+    () => [...queryThresholds, ...thresholds, ...filteredAlarms],
+    [
+      JSON.stringify(queryThresholds),
+      JSON.stringify(thresholds),
+      JSON.stringify(filteredAlarms),
+    ]
+  );
 
   /** Bar chart cannot visualize raw data, so customize the resolution breakpoints as the default resolution */
   const resolutionConfig: ResolutionConfig = {

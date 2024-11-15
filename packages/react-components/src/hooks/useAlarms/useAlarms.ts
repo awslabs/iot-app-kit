@@ -190,6 +190,53 @@ function useAlarms<T>(options?: UseAlarmsOptions<T>): (T | AlarmData)[] {
     refreshRate: Infinity, // Only fetch thresholds once, require page refresh
   });
 
+  // Remove internal properties on AlarmDataInternal
+  const alarmDataWithoutInternalProperties: AlarmData[] = useMemo(
+    () =>
+      inputPropertiesAlarmData.map(
+        ({
+          request: _unusedRequest,
+          properties: _unusedProperties,
+          ...alarmData
+        }) => ({
+          ...alarmData,
+        })
+      ),
+    [inputPropertiesAlarmData]
+  );
+
+  const alarmData = useInputPropertyTimeSeriesData({
+    alarms: alarmDataWithoutInternalProperties,
+    timeSeriesData,
+    viewport,
+    ...settings,
+    ...inputPropertyTimeSeriesDataSettings,
+  });
+
+  /**
+   * Fetch latest asset property values for alarms with a state property.
+   * Data should be available for all alarms fetched for an asset.
+   */
+  const statePropertyAlarmData = useAlarmState({
+    iotSiteWiseClient,
+    alarms: alarmData,
+    viewport,
+    ...settings,
+  });
+
+  /**
+   * Fetch alarm threshold values from the alarm model or from a
+   * SiteWise asset property.
+   */
+  const thresholdAlarmData = useAlarmThreshold({
+    enabled: settings?.fetchThresholds,
+    iotSiteWiseClient,
+    alarms: statePropertyAlarmData,
+    viewport,
+    ...settings,
+    refreshRate: Infinity, // Only fetch thresholds once, require page refresh
+  });
+
   // Apply the transform callback if it exists, otherwise return the AlarmData
   return useMemo(
     () =>

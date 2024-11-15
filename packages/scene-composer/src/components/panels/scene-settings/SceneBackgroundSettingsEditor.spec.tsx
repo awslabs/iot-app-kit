@@ -49,7 +49,7 @@ describe('SceneBackgroundSettingsEditor', () => {
 
     expect(setScenePropertyMock).toBeCalledTimes(1);
     expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.SceneBackgroundSettings, {
-      color: '#2a2e33',
+      color: 'colorBackgroundContainerContent',
     });
   });
 
@@ -141,7 +141,7 @@ describe('SceneBackgroundSettingsEditor', () => {
       removeTextureButton!.click();
     });
     expect(setScenePropertyMock).toBeCalledWith(KnownSceneProperty.SceneBackgroundSettings, {
-      color: '#2a2e33',
+      color: 'colorBackgroundContainerContent',
     });
   });
 });

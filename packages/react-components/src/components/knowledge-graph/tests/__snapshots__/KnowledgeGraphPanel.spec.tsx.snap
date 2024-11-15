@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`KnowledgeGraph should render correctly 1`] = `
+<div>
+  <div
+    class="knowledgeGraph-container"
+  >
+    <h2>
+      Knowledge Graph
+    </h2>
+    <div
+      class="search-bar"
+    >
+      <div
+        class="awsui_grid_14yj0_xuaq6_97"
+      >
+        <div
+          class="awsui_grid-column_14yj0_xuaq6_141 awsui_colspan-9_14yj0_xuaq6_232"
+        >
+          <div
+            class="awsui_restore-pointer-events_14yj0_xuaq6_312"
+          >
+            <div
+              class="awsui_root_2rhyz_4n5z9_97 awsui_input-container_2rhyz_4n5z9_273"
+            >
+              <span
+                class="awsui_input-icon-left_2rhyz_4n5z9_278"
+              >
+                <span
+                  class="awsui_icon_h11ix_ayzd6_101 awsui_size-normal-mapped-height_h11ix_ayzd6_157 awsui_size-normal_h11ix_ayzd6_153 awsui_variant-subtle_h11ix_ayzd6_238"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 16 16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="7"
+                      cy="7"
+                      r="5"
+                    />
+                    <path
+                      d="m15 15-4.5-4.5"
+                    />
+                  </svg>
+                </span>
+              </span>
+              <input
+                autocomplete="on"
+                class="awsui_input_2rhyz_4n5z9_101 awsui_input-type-search_2rhyz_4n5z9_250 awsui_input-has-icon-left_2rhyz_4n5z9_229"
+                type="search"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="awsui_grid-column_14yj0_xuaq6_141 awsui_colspan-3_14yj0_xuaq6_172"
+        >
+          <div
+            class="awsui_restore-pointer-events_14yj0_xuaq6_312"
+          >
+            <div
+              data-mocked="Button"
+              data-testid="search-button"
+            >
+              Search
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="iot-app-kit-graph"
+    >
+      <div
+        class="iot-app-kit-graph-canvas"
+        data-mocked="CytoscapeComponent"
+        layout="[object Object]"
+        stylesheet="[object Object],[object Object],[object Object],[object Object]"
+      >
+        []
+      </div>
+      ;
+      <ul
+        class="iot-app-kit-graph-controls"
+      >
+        <li
+          class="iot-app-kit-graph-control-item"
+        >
+          <div
+            class="iot-app-kit-graph-button"
+            data-mocked="Button"
+            data-testid="fit-button"
+            iconname="zoom-to-fit"
+            variant="icon"
+          />
+        </li>
+        <li
+          class="iot-app-kit-graph-control-item"
+        >
+          <div
+            class="iot-app-kit-graph-button"
+            data-mocked="Button"
+            data-testid="center-button"
+            iconname="expand"
+            variant="icon"
+          />
+        </li>
+        <li
+          class="iot-app-kit-graph-control-item"
+        >
+          <div
+            class="iot-app-kit-graph-button"
+            data-mocked="Button"
+            data-testid="zoom-in-button"
+            iconname="zoom-in"
+            variant="icon"
+          />
+        </li>
+        <li
+          class="iot-app-kit-graph-control-item"
+        >
+          <div
+            class="iot-app-kit-graph-button"
+            data-mocked="Button"
+            data-testid="zoom-out-button"
+            iconname="zoom-out"
+            variant="icon"
+          />
+        </li>
+      </ul>
+    </div>
+    <div
+      class="action-buttons"
+    >
+      <div
+        class="awsui_root_18582_jftqg_97 awsui_horizontal_18582_jftqg_112 awsui_horizontal-s_18582_jftqg_125"
+      >
+        <div
+          class="awsui_child_18582_jftqg_101"
+        >
+          <div
+            data-mocked="Button"
+            data-testid="explore-button"
+            disabled=""
+          >
+            Explore
+          </div>
+        </div>
+        <div
+          class="awsui_child_18582_jftqg_101"
+        >
+          <div
+            data-mocked="Button"
+            data-testid="clear-button"
+            disabled=""
+          >
+            Clear
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

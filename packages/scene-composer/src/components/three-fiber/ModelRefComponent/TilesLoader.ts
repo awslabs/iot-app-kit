@@ -40,7 +40,7 @@ export function useTiles<T extends string>(path: T, uriModifier?: URIModifier) {
     /** END HACKS */
 
     const loader = new TwinMakerGLTFLoader(tilesRenderer.manager);
-    setupTwinMakerGLTFLoader(loader);
+    setupTwinMakerGLTFLoader(loader, gl);
 
     tilesRenderer.manager.addHandler(/\.gltf$/, loader);
     tilesRenderer.onLoadTileSet = (_ts) => setupTilesRenderer(tilesRenderer as Nasa3DTilesRenderer);

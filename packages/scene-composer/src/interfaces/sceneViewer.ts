@@ -5,12 +5,17 @@ import { type AssistantProperty } from '@iot-app-kit/react-components';
 import { type IDataBindingTemplate, type ISelectedDataBinding, type IValueDataBindingProvider } from './dataBinding';
 import { type SelectionChangedEventCallback, type WidgetClickEventCallback } from './components';
 
+export interface BasisuDecoderConfig {
+  enable: boolean;
+  path?: string;
+}
 export interface DracoDecoderConfig {
   enable: boolean;
   path?: string;
 }
 
 export interface SceneViewerConfig {
+  basisuDecoder?: BasisuDecoderConfig;
   dracoDecoder?: DracoDecoderConfig;
   locale?: string;
   dataBindingQueryRefreshRate?: number; // in milliseconds

@@ -112,7 +112,7 @@ export async function asyncLoadComponentNameOptions(
   }
 }
 
-export const validateEntityId = async (entityId = '') => {
+export const validateEntityId = async (entityId = ''): Promise<never | string> => {
   if (allEntityIds.indexOf(entityId) > -1) {
     return Promise.resolve(entityId);
   }

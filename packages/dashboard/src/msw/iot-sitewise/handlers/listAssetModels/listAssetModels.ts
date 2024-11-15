@@ -15,7 +15,6 @@ export function listAssetModelsHandler() {
         (summmary) => summmary.assetModelType !== 'COMPONENT_MODEL'
       );
     }
-
     const response: ListAssetModelsResponse = { assetModelSummaries };
 
     await delay();

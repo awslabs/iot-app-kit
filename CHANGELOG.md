@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.13.1](https://github.com/awslabs/iot-app-kit/compare/root-v10.13.0...root-v10.13.1) (2024-10-16)
+
+
+### Bug Fixes
+
+* **draco:** modifying check to ensure globalSettings are ready for evaluation ([80c3295](https://github.com/awslabs/iot-app-kit/commit/80c3295f96609885a043c4cb01d314447a376485))
+* **draco:** updating global settings ([9010137](https://github.com/awslabs/iot-app-kit/commit/90101378170004df2de7de511bb0be458ef45842))
+* **example:** fix HDR loader in react example ([63afb47](https://github.com/awslabs/iot-app-kit/commit/63afb47e94ad4025045116a9eff9d6ac1afdc823))
+
+## [10.13.0](https://github.com/awslabs/iot-app-kit/compare/root-v10.12.2...root-v10.13.0) (2024-10-10)
+
+
+### Features
+
+* **draco:** setup support for draco compressed files ([cc0d4e4](https://github.com/awslabs/iot-app-kit/commit/cc0d4e4a74232c856100a6781354342a669f5fd0))
+
+
+### Bug Fixes
+
+* **imports:** move luxon dependency to right package ([31235da](https://github.com/awslabs/iot-app-kit/commit/31235da4b31e49ec0fc0f1ec21f649cf7af7e253))
+
 ## [10.12.2](https://github.com/awslabs/iot-app-kit/compare/root-v10.12.1...root-v10.12.2) (2024-09-17)
 
 

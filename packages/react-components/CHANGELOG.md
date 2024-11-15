@@ -2,6 +2,54 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [10.13.1](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.13.0...react-components-v10.13.1) (2024-10-16)
+
+
+### Miscellaneous Chores
+
+* **react-components:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.13.0 to 10.13.1
+    * @iot-app-kit/core bumped from 10.13.0 to 10.13.1
+    * @iot-app-kit/core-util bumped from 10.13.0 to 10.13.1
+    * @iot-app-kit/source-iottwinmaker bumped from 10.13.0 to 10.13.1
+  * devDependencies
+    * @iot-app-kit/core bumped from 10.13.0 to 10.13.1
+    * @iot-app-kit/jest-config bumped from 10.13.0 to 10.13.1
+    * @iot-app-kit/source-iotsitewise bumped from 10.13.0 to 10.13.1
+    * @iot-app-kit/testing-util bumped from 10.13.0 to 10.13.1
+    * @iot-app-kit/ts-config bumped from 10.13.0 to 10.13.1
+    * eslint-config-iot-app-kit bumped from 10.13.0 to 10.13.1
+
+## [10.13.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.12.2...react-components-v10.13.0) (2024-10-10)
+
+
+### Bug Fixes
+
+* **imports:** move luxon dependency to right package ([31235da](https://github.com/awslabs/iot-app-kit/commit/31235da4b31e49ec0fc0f1ec21f649cf7af7e253))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 10.12.2 to 10.13.0
+    * @iot-app-kit/core bumped from 10.12.2 to 10.13.0
+    * @iot-app-kit/core-util bumped from 10.12.2 to 10.13.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.12.2 to 10.13.0
+  * devDependencies
+    * @iot-app-kit/core bumped from 10.12.2 to 10.13.0
+    * @iot-app-kit/jest-config bumped from 10.12.2 to 10.13.0
+    * @iot-app-kit/source-iotsitewise bumped from 10.12.2 to 10.13.0
+    * @iot-app-kit/testing-util bumped from 10.12.2 to 10.13.0
+    * @iot-app-kit/ts-config bumped from 10.12.2 to 10.13.0
+    * eslint-config-iot-app-kit bumped from 10.12.2 to 10.13.0
+
 ## [10.12.2](https://github.com/awslabs/iot-app-kit/compare/react-components-v10.12.1...react-components-v10.12.2) (2024-09-17)
 
 

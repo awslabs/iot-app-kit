@@ -163,7 +163,7 @@ export interface ISceneBackgroundSetting {
   color?: string;
   textureUri?: string;
 }
-export const DEFAULT_SCENE_BACKGROUND_COLOR = '#2a2e33';
+export const DEFAULT_SCENE_BACKGROUND_COLOR = awsui.colorBackgroundContainerContent;
 
 export interface IGroundPlaneSettings {
   color?: string;

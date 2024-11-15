@@ -13,6 +13,7 @@ import * as THREE from 'three';
 
 import {
   getMatterportSdk,
+  setBasisuDecoder,
   setDracoDecoder,
   setFeatureConfig,
   setGetSceneObjectFunction,
@@ -194,6 +195,12 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   }, [selectedSceneNodeRef]);
 
   useEffect(() => {
+    if (config.basisuDecoder) {
+      setBasisuDecoder(config.basisuDecoder);
+    }
+  }, [config.basisuDecoder]);
+
+  useEffect(() => {
     if (config.dracoDecoder) {
       setDracoDecoder(config.dracoDecoder);
     }
@@ -330,11 +337,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
 
   useEffect(() => {
     if (onSceneLoaded && sceneLoaded && (!enableMatterportViewer || matterportReady)) {
-      // Delay the event handler to let other components finish loading, otherwise the consumer side will
-      // fail to update scene states
-      setTimeout(() => {
-        onSceneLoaded();
-      }, 1);
+      onSceneLoaded();
     }
   }, [sceneLoaded, onSceneLoaded, enableMatterportViewer, matterportReady]);
 

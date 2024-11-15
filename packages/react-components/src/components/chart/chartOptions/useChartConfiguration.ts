@@ -259,6 +259,7 @@ export const useChartConfiguration = (
       ? undefined
       : { replaceMerge: ['series'] };
     previousDataStreamIdentifiers.current = dataSteamIdentifiers;
+    // prevAlarmsSeries.current = alarmSeries;
 
     setDataStreamMetaData(
       toDataStreamMetaData(dataSteamIdentifiers, series, styleSettings)

@@ -30,7 +30,7 @@ export class TwinMakerTextureLoader extends THREE.Loader {
 
   load(url: string, onLoad?: OnFileLoaderLoadFunc, onProgress?: OnProgressFunc, onError?: OnErrorFunc) {
     if (THREE.Cache.get(url) !== undefined) {
-      setTimeout(() => onLoad?.(THREE.Cache.get(url)), 1);
+      onLoad?.(THREE.Cache.get(url));
       return;
     }
 

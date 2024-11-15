@@ -7,6 +7,7 @@ import { type IMetricRecorder } from '../interfaces/metricRecorder';
 import { type FlashMessageDefinition } from '../interfaces/sceneComposerInternal';
 
 const globalSettings: {
+  basisuDecoder: BasisuDecoderConfig;
   debugMode: boolean;
   dracoDecoder: DracoDecoderConfig;
   locale: string;
@@ -17,6 +18,7 @@ const globalSettings: {
   matterportSdks: Record<string, MpSdk | undefined>;
   onFlashMessage?: (message: FlashMessageDefinition) => void;
 } = {
+  basisuDecoder: { enable: true },
   debugMode: false,
   dracoDecoder: { enable: true },
   locale: 'en-US',
@@ -39,10 +41,16 @@ export const setDebugMode = () => {
   notifySubscribers();
 };
 
+export const setBasisuDecoder = (basisu: BasisuDecoderConfig) => {
+  globalSettings.basisuDecoder = basisu;
+  notifySubscribers();
+};
+
 export const setDracoDecoder = (dracoDecoder: DracoDecoderConfig) => {
   globalSettings.dracoDecoder = dracoDecoder;
   notifySubscribers();
 };
+
 export const setLocale = (locale: string) => {
   globalSettings.locale = locale;
   notifySubscribers();

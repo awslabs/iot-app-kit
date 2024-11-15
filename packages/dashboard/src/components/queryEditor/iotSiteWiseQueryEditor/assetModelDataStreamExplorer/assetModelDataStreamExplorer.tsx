@@ -132,6 +132,16 @@ export const AssetModelDataStreamExplorer = ({
         metricValue: 1,
       });
     }
+
+    if (selectedAlarms.length > 0) {
+      uppdateAssetAlarmModels(
+        createAlarmModelQuery({
+          assetModelId: selectedAssetModel[0].assetModelId,
+          assetId: selectedAsset?.at(0)?.assetId,
+          alarms: selectedAlarms,
+        })
+      );
+    }
   };
 
   const assetModelPropertiesExplorerProps = {

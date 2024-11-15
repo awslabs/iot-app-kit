@@ -62,27 +62,19 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
 
   const gltf = useGLTF(
     component.uri,
+    gl,
     uriModifier,
     (loader) => {
       loader.manager = GLTFLoadingManager;
 
       loader.manager.onStart = appendFunction(loader.manager.onStart, () => {
-        // Use setTimeout to avoid mutating the state during rendering process
-        setTimeout(() => {
-          accessStore(sceneComposerId).getState().setLoadingModelState(true);
-        }, 0);
+        accessStore(sceneComposerId).getState().setLoadingModelState(true);
       });
       loader.manager.onLoad = appendFunction(loader.manager.onLoad, () => {
-        // Use setTimeout to avoid mutating the state during rendering process
-        setTimeout(() => {
-          accessStore(sceneComposerId).getState().setLoadingModelState(false);
-        }, 0);
+        accessStore(sceneComposerId).getState().setLoadingModelState(false);
       });
       loader.manager.onError = appendFunction(loader.manager.onError, () => {
-        // Use setTimeout to avoid mutating the state during rendering process
-        setTimeout(() => {
-          accessStore(sceneComposerId).getState().setLoadingModelState(false);
-        }, 0);
+        accessStore(sceneComposerId).getState().setLoadingModelState(false);
       });
     },
     (progressEvent) => {

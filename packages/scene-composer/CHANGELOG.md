@@ -4,6 +4,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.13.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v10.13.0...scene-composer-v10.13.1) (2024-10-16)
+
+
+### Bug Fixes
+
+* **draco:** modifying check to ensure globalSettings are ready for evaluation ([80c3295](https://github.com/awslabs/iot-app-kit/commit/80c3295f96609885a043c4cb01d314447a376485))
+* **draco:** updating global settings ([9010137](https://github.com/awslabs/iot-app-kit/commit/90101378170004df2de7de511bb0be458ef45842))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.13.0 to 10.13.1
+    * @iot-app-kit/react-components bumped from 10.13.0 to 10.13.1
+    * @iot-app-kit/related-table bumped from 10.13.0 to 10.13.1
+    * @iot-app-kit/source-iottwinmaker bumped from 10.13.0 to 10.13.1
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 10.13.0 to 10.13.1
+
+## [10.13.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v10.12.2...scene-composer-v10.13.0) (2024-10-10)
+
+
+### Features
+
+* **draco:** setup support for draco compressed files ([cc0d4e4](https://github.com/awslabs/iot-app-kit/commit/cc0d4e4a74232c856100a6781354342a669f5fd0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 10.12.2 to 10.13.0
+    * @iot-app-kit/react-components bumped from 10.12.2 to 10.13.0
+    * @iot-app-kit/related-table bumped from 10.12.2 to 10.13.0
+    * @iot-app-kit/source-iottwinmaker bumped from 10.12.2 to 10.13.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 10.12.2 to 10.13.0
+
 ## [10.12.2](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v10.12.1...scene-composer-v10.12.2) (2024-09-17)
 
 
