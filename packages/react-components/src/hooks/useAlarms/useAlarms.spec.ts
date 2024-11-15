@@ -17,7 +17,7 @@ import {
 import * as alarmAssetHook from './hookHelpers/useAlarmAssets';
 import * as alarmCompositeProp from './hookHelpers/useLatestAlarmPropertyValues';
 import * as alarmModelHook from './hookHelpers/useAlarmModels';
-import { AssetProperty } from '@aws-sdk/client-iotsitewise';
+import { type AssetProperty } from '@aws-sdk/client-iotsitewise';
 
 jest.mock('./hookHelpers/useAlarmAssets');
 jest.mock('./hookHelpers/useLatestAlarmPropertyValues');

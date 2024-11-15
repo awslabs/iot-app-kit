@@ -41,13 +41,7 @@ describe('useAlarmAssets', () => {
     const alarmCompositeModelRequest = {
       assetId: MOCK_ASSET_ID,
       assetCompositeModelId: MOCK_COMPOSITE_MODEL_ID,
-    } satisfies AlarmCompositeModelRequest;
-
-    const mockAlarmDataInternal = {
-      ...mockAlarmDataDescribeAsset,
-      request: alarmCompositeModelRequest,
-      properties: mockAssetProperties,
-    } satisfies AlarmDataInternal;
+    };
 
     renderHook(() =>
       useAlarmAssets({

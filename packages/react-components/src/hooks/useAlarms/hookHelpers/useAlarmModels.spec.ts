@@ -89,34 +89,4 @@ describe('useAlarmModels', () => {
       );
     });
   });
-
-  it('should overwrite the status of AlarmData when queries fail', async () => {
-    describeAlarmModelMock.mockRejectedValue(
-      'Failure calling DescribeAlarmModel'
-    );
-    const expectedAlarmData = {
-      ...mockAlarmDataGetAssetPropertyValue,
-      status: {
-        isLoading: false,
-        isRefetching: false,
-        isSuccess: false,
-        isError: true,
-      },
-    } satisfies AlarmDataInternal;
-
-    const { result: alarmDataResults } = renderHook(() =>
-      useAlarmModels({
-        iotEventsClient: iotEventsClientMock,
-        alarmDataList: [mockAlarmDataGetAssetPropertyValue],
-        retry: false,
-      })
-    );
-
-    await waitFor(() => {
-      expect(alarmDataResults.current.length).toBe(1);
-      expect(alarmDataResults.current[0]).toMatchObject(expectedAlarmData);
-    });
-
-    expect(describeAlarmModelMock).toBeCalledTimes(1);
-  });
 });

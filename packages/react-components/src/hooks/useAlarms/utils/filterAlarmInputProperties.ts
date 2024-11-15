@@ -1,6 +1,9 @@
 import type { AlarmDataInternal } from '../types';
 import { extractAssetPropertyId } from './parseAlarmModels';
-import { AssetModelProperty, AssetProperty } from '@aws-sdk/client-iotsitewise';
+import {
+  type AssetModelProperty,
+  type AssetProperty,
+} from '@aws-sdk/client-iotsitewise';
 
 /**
  * Finds the input properties for an alarm based on the original alarm request.

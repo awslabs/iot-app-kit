@@ -1,8 +1,8 @@
-import { AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
+import { type AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
 import type { AlarmData } from '../types';
 import { toTimestamp } from '../../../utils/time';
 import { bisector } from 'd3-array';
-import { Viewport } from '../../../queries';
+import { type Viewport } from '../../../queries';
 import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
 import { alarmValueFilterer } from './alarmValueFilterer';
 

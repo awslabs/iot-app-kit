@@ -1,6 +1,6 @@
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 import { matchesDatastream } from './filterDatastreamsForAlarm';
-import { AlarmData } from '../../types';
+import { type AlarmData } from '../../types';
 export const updateAlarmInputPropertyData = (
   alarm: AlarmData,
   dataStreams: DataStream[]
