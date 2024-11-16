@@ -1,6 +1,6 @@
-import { WebGLRenderer } from 'three';
+import { type WebGLRenderer } from 'three';
 
-import { GLTFLoader as TwinMakerGLTFLoader } from './GLTFLoader';
+import { type GLTFLoader as TwinMakerGLTFLoader } from './GLTFLoader';
 import { setupBasisuSupport, setupFileLoader, setupDracoSupport } from './loaderUtilsHelpers';
 
 export function setupTwinMakerGLTFLoader(loader: TwinMakerGLTFLoader, renderer: WebGLRenderer): TwinMakerGLTFLoader {

@@ -1,7 +1,7 @@
 import { type AssetModelPropertySummary } from '@aws-sdk/client-iotsitewise';
 import { useQueries } from '@tanstack/react-query';
 
-import { ListAssetModelProperties } from '@iot-app-kit/core';
+import { type ListAssetModelProperties } from '@iot-app-kit/core';
 import { resourceExplorerQueryClient } from '../../../requests/resource-explorer-query-client';
 
 export interface UseAssetModelPropertiesOptions {
@@ -13,6 +13,7 @@ export interface UseAssetModelPropertiesResult {
   assetModelPropertiesById: {
     [assetModelId: string]: AssetModelPropertySummary[];
   };
+  isLoading: boolean;
   isSuccess: boolean;
   error: Error | null;
 }
@@ -39,6 +40,11 @@ export function useAssetModelProperties({
               await listAssetModelProperties({
                 assetModelId,
                 nextToken: currentNextToken,
+                /**
+                 * https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_ListAssetProperties.html#API_ListAssetProperties_RequestSyntax
+                 * Includes properties for components as well
+                 */
+                filter: 'ALL',
                 maxResults: 250,
               });
 
@@ -66,12 +72,14 @@ export function useAssetModelProperties({
     return total;
   }, {});
 
+  const isLoading = queries.some((query) => query.isFetching);
   const isSuccess = queries.every((query) => query.isSuccess);
   const error: Error | null = (queries.find((query) => query.error)?.error ??
     null) as Error | null;
 
   return {
     assetModelPropertiesById,
+    isLoading,
     isSuccess,
     error,
   };

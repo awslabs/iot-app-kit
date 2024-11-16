@@ -1,43 +1,26 @@
-import React from 'react';
 import Spinner from '@cloudscape-design/components/spinner';
 import { Value } from '../shared-components';
 import { DataQualityText } from '../data-quality/data-quality-text';
 import { formatDate } from '../../utils/time';
-import { AlarmStateText } from '../alarm-state/alarm-state-text';
-import { PascalCaseStateName } from '../../hooks/useAlarms/transformers';
-import { AlarmDataStatus } from '../../hooks/useAlarms';
+import { AlarmStateTextWithAssistant } from '../alarm-components/alarm-state/alarmStateTextWithAssistant';
+import { AlarmStateText } from '../alarm-components/alarm-state/alarmStateText';
+import { type AlarmDataStatus } from '../../hooks/useAlarms';
 import type { DataPoint } from '@iot-app-kit/core';
 import { Alert, Box } from '@cloudscape-design/components';
+import { type AlarmContent } from '../alarm-components/alarm-content/types';
+import { type AssistantProperty } from '../../common/assistantProps';
 
-export const ErrorText = ({
-  secondaryFontSize,
-  nonThresholdBackground,
-  nonThresholdFontColor,
-  error,
-}: {
-  secondaryFontSize: number;
-  nonThresholdBackground: string;
-  nonThresholdFontColor: string;
-  error?: string;
-}) => {
+export const ErrorText = ({ error }: { error?: string }) => {
+  if (!error) {
+    return null;
+  }
+
   return (
-    <div
-      className='kpi'
-      data-testid='kpi-error-component'
-      style={{
-        fontSize: `${secondaryFontSize}px`,
-        backgroundColor: nonThresholdBackground,
-        color: nonThresholdFontColor,
-      }}
-    >
-      {error && (
-        <Box margin={{ vertical: 's', horizontal: 's' }}>
-          <Alert statusIconAriaLabel='Error' type='error'>
-            {error}
-          </Alert>
-        </Box>
-      )}
-    </div>
+    <Box margin={{ vertical: 's', horizontal: 's' }}>
+      <Alert statusIconAriaLabel='Error' type='error'>
+        {error}
+      </Alert>
+    </Box>
   );
 };
 
@@ -78,19 +61,21 @@ export const NameAndUnit = ({
 export const AlarmHeader = ({
   fontColor,
   borderColor,
-  alarmState,
+  alarmContent,
   alarmStatus,
   showFilledThreshold,
   backgroundColor,
+  assistant,
 }: {
   fontColor: string;
   borderColor: string;
-  alarmState?: PascalCaseStateName;
+  alarmContent?: AlarmContent;
   alarmStatus?: AlarmDataStatus;
   showFilledThreshold?: string;
   backgroundColor?: string;
+  assistant?: AssistantProperty;
 }) => {
-  if (!alarmState && !alarmStatus) return null;
+  if (!alarmContent?.alarmState && !alarmStatus) return null;
 
   return (
     <div
@@ -100,11 +85,20 @@ export const AlarmHeader = ({
         color: fontColor,
       }}
     >
-      <AlarmStateText
-        state={alarmState}
-        status={alarmStatus}
-        inheritFontColor={!!showFilledThreshold || !!backgroundColor}
-      />
+      {assistant ? (
+        <AlarmStateTextWithAssistant
+          status={alarmStatus}
+          alarmContent={alarmContent}
+          inheritFontColor={!!showFilledThreshold || !!backgroundColor}
+          assistant={assistant}
+        />
+      ) : (
+        <AlarmStateText
+          status={alarmStatus}
+          alarmState={alarmContent?.alarmState}
+          inheritFontColor={!!showFilledThreshold || !!backgroundColor}
+        />
+      )}
     </div>
   );
 };

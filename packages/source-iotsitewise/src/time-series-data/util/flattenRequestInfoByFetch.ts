@@ -1,4 +1,4 @@
-import { RequestInformationAndRange } from '@iot-app-kit/core';
+import { type RequestInformationAndRange } from '@iot-app-kit/core';
 
 export const flattenRequestInfoByFetch = ({
   fetchMostRecentBeforeStart,

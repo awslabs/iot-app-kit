@@ -1,4 +1,3 @@
-import React from 'react';
 import type { FC } from 'react';
 import { FormField, Select } from '@cloudscape-design/components';
 import { dropdownConsts } from '../constants';

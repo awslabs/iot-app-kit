@@ -1,13 +1,18 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
 import { Checkbox, FormField, Grid, Input, SpaceBetween, Toggle } from '@cloudscape-design/components';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
+import useTagSettings from '../../../hooks/useTagSettings';
+import {
+  type IComponentSettingsMap,
+  type ITagSettings,
+  KnownComponentType,
+  KnownSceneProperty,
+} from '../../../interfaces';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { accessStore, useViewOptionState } from '../../../store';
-import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { IComponentSettingsMap, ITagSettings, KnownComponentType, KnownSceneProperty } from '../../../interfaces';
 import { Slider } from '../Slider';
-import useTagSettings from '../../../hooks/useTagSettings';
 
 export const SceneTagSettingsEditor: React.FC = () => {
   useLifecycleLogging('SceneTagSettingsEditor');
@@ -76,7 +81,7 @@ export const SceneTagSettingsEditor: React.FC = () => {
   }, [internalScale]);
 
   return (
-    <React.Fragment>
+    <>
       <SpaceBetween size='s'>
         <FormField label={intl.formatMessage({ defaultMessage: 'Scale', description: 'Form Field label' })}>
           <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
@@ -118,6 +123,6 @@ export const SceneTagSettingsEditor: React.FC = () => {
           {intl.formatMessage({ description: 'Toggle label', defaultMessage: 'Show tag through objects' })}
         </Toggle>
       </SpaceBetween>
-    </React.Fragment>
+    </>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import { isValidElement } from 'react';
 
 export default (componentName) => {
   // eslint-disable-next-line react/prop-types
@@ -10,7 +10,7 @@ export default (componentName) => {
       try {
         // Covers edge case where stringify fails due to circular object graphs
         if (typeof value === 'object') {
-          if (React.isValidElement(value)) {
+          if (isValidElement(value)) {
             renderProps[key] = value;
           } else if (key === 'style') {
             snapshotableProps[key] = value;

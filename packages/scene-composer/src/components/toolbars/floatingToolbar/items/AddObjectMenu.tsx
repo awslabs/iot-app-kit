@@ -1,29 +1,34 @@
-import React, { useCallback, useContext, useMemo } from 'react';
-import { defineMessages, MessageDescriptor, useIntl } from 'react-intl';
+import { useCallback, useContext, useMemo } from 'react';
+import { defineMessages, type MessageDescriptor, useIntl } from 'react-intl';
 import * as THREE from 'three';
-import { IconProps } from '@cloudscape-design/components';
+import { type IconProps } from '@cloudscape-design/components';
 
 import { getSceneResourceDefaultValue } from '../../../../utils/sceneResourceUtils';
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../common/constants';
 import {
   COMPOSER_FEATURES,
-  IAnchorComponent,
-  ICameraComponent,
-  IDataOverlayComponent,
-  ILightComponent,
-  IModelRefComponent,
-  IMotionIndicatorComponent,
-  ISceneNode,
+  type IAnchorComponent,
+  type ICameraComponent,
+  type IDataOverlayComponent,
+  type ILightComponent,
+  type IModelRefComponent,
+  type IMotionIndicatorComponent,
+  type ISceneNode,
   KnownComponentType,
   SceneResourceType,
   ModelFileTypeList,
 } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component, LightType } from '../../../../models/SceneModels';
-import { IColorOverlayComponentInternal, ISceneNodeInternal, useEditorState, accessStore } from '../../../../store';
+import {
+  type IColorOverlayComponentInternal,
+  type ISceneNodeInternal,
+  useEditorState,
+  accessStore,
+} from '../../../../store';
 import { parseS3BucketFromArn } from '../../../../utils/pathUtils';
 import { ToolbarItem } from '../../common/ToolbarItem';
-import { ToolbarItemOptionRaw, ToolbarItemOptions, ToolbarOrientation } from '../../common/types';
+import { type ToolbarItemOptionRaw, type ToolbarItemOptions, ToolbarOrientation } from '../../common/types';
 import { getGlobalSettings } from '../../../../common/GlobalSettings';
 import useActiveCamera from '../../../../hooks/useActiveCamera';
 import useMatterportViewer from '../../../../hooks/useMatterportViewer';

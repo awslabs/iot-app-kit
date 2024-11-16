@@ -1,10 +1,15 @@
-import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 
 import { CornerTriangleSvg } from '../../../assets/svgs';
 
 import { ItemContainer } from './ItemContainer';
 import { CornerAdornment, ToolbarItemMenu } from './styledComponents';
-import { ToolbarItemOptions, ToolbarItemOrientation, ToolbarItemType, ToolbarMenuPosition } from './types';
+import {
+  type ToolbarItemOptions,
+  type ToolbarItemOrientation,
+  type ToolbarItemType,
+  type ToolbarMenuPosition,
+} from './types';
 
 interface MenuItemsContainterProps {
   maxHeight?: string;

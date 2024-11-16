@@ -1,5 +1,5 @@
-import { DEFAULT_GROUPING, TrendCursorsData } from '../../state';
-import { TrendCursor } from '../../types';
+import { DEFAULT_GROUPING, type TrendCursorsData } from '../../state';
+import { type TrendCursor } from '../../types';
 
 export type AddTrendCursorAction = {
   type: 'ADD_TREND_CURSOR';

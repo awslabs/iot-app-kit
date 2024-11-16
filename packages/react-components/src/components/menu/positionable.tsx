@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { usePopper } from 'react-popper';
-import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 import flip from '@popperjs/core/lib/modifiers/flip';
+import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 import type { Options } from '@popperjs/core/lib/types';
-import type { PropsWithChildren, RefCallback } from 'react';
+import {
+  useEffect,
+  useState,
+  type PropsWithChildren,
+  type RefCallback,
+} from 'react';
+import { usePopper } from 'react-popper';
 
-import { Menu, MenuProps } from './menu';
+import { Menu, type MenuProps } from './menu';
 
 import './menu.css';
 

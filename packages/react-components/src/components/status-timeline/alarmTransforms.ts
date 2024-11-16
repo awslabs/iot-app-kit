@@ -6,7 +6,7 @@ import {
 import type { AlarmData } from '../../hooks/useAlarms';
 import {
   parseAlarmStateAssetProperty,
-  PascalCaseStateName,
+  type PascalCaseStateName,
 } from '../../hooks/useAlarms/transformers';
 import { CHART_ALARM_ERROR } from '../../common/constants';
 

@@ -1,5 +1,4 @@
-import React from 'react';
-import { DataPoint } from '@iot-app-kit/core';
+import { type DataPoint } from '@iot-app-kit/core';
 import Icon from '@cloudscape-design/components/icon';
 import {
   spaceScaledXxs,
@@ -7,7 +6,7 @@ import {
   colorTextStatusError,
 } from '@cloudscape-design/design-tokens';
 
-import { ChartDataQuality } from '../../types';
+import { type ChartDataQuality } from '../../types';
 
 const formatQualityInformation = (quality?: DataPoint['quality']) => {
   let icon = null;

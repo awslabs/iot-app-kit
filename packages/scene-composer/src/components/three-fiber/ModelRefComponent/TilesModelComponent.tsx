@@ -1,18 +1,17 @@
-import React from 'react';
-import { ThreeEvent, useFrame } from '@react-three/fiber';
-import { Object3D } from 'three';
+import { type ThreeEvent, useFrame } from '@react-three/fiber';
+import { type Object3D } from 'three';
 
 import { MAX_CLICK_DISTANCE } from '../../../common/constants';
-import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { IModelRefComponentInternal, ISceneNodeInternal, useEditorState, accessStore } from '../../../store';
-import { acceleratedRaycasting, getComponentGroupName } from '../../../utils/objectThreeUtils';
-import {
-  findComponentByType,
-  createNodeWithPositionAndNormal,
-  findNearestViableParentAncestorNodeRef,
-} from '../../../utils/nodeUtils';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { KnownComponentType } from '../../../interfaces';
+import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
+import { accessStore, type IModelRefComponentInternal, type ISceneNodeInternal, useEditorState } from '../../../store';
+import {
+  createNodeWithPositionAndNormal,
+  findComponentByType,
+  findNearestViableParentAncestorNodeRef,
+} from '../../../utils/nodeUtils';
+import { acceleratedRaycasting, getComponentGroupName } from '../../../utils/objectThreeUtils';
 import { getIntersectionTransform } from '../../../utils/raycastUtils';
 
 import { useTiles } from './TilesLoader';

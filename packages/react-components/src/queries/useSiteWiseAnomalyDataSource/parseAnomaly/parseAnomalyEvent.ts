@@ -1,6 +1,6 @@
-import { AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
+import { type AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
 import { isAnomalyEvent } from './isAnomalyEvent';
-import { AnomalyEvent } from './types';
+import { type AnomalyEvent } from './types';
 import { parseDiagnostics } from './parseDiagnostics';
 import { toTimestamp } from '../../../utils/time';
 

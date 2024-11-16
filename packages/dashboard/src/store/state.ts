@@ -1,5 +1,10 @@
-import type { DashboardTimeSeriesSettings, DashboardWidget } from '~/types';
+import type {
+  AssistantStateTypes,
+  DashboardTimeSeriesSettings,
+  DashboardWidget,
+} from '~/types';
 import { deepFreeze } from '~/util/deepFreeze';
+import { v4 as uuid } from 'uuid';
 
 export type DashboardState<
   Properties extends Record<string, unknown> = Record<string, unknown>
@@ -22,6 +27,22 @@ export type DashboardState<
   };
   significantDigits: number;
   timeZone?: string;
+  assistant: {
+    state: AssistantStateTypes;
+    conversationId: string;
+
+    isChatbotOpen: boolean;
+    callerComponentId?: string;
+    action?: string;
+    actionId?: string;
+
+    mode: 'on' | 'off';
+    selectedQueries: {
+      widgetId: string;
+      widgetType: string;
+      selectedProperties: number;
+    }[];
+  };
 };
 
 /**
@@ -52,4 +73,11 @@ export const initialState: DashboardState = deepFreeze({
     },
   },
   significantDigits: 4,
+  assistant: {
+    state: 'PASSIVE',
+    conversationId: uuid(),
+    isChatbotOpen: false,
+    mode: 'off',
+    selectedQueries: [],
+  },
 });

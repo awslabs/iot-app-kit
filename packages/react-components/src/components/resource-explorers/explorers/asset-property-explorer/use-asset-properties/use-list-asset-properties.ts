@@ -1,15 +1,15 @@
-import { useAssetModelProperties } from './use-asset-model-properties';
-import type { AssetPropertyRequestParameters } from '../types';
-import { useMultipleListRequests } from '../../../requests/use-multiple-list-requests';
 import type {
   ListAssetModelProperties,
   ListAssetProperties,
 } from '@iot-app-kit/core';
+import { useMultipleListRequests } from '../../../requests/use-multiple-list-requests';
 import type {
   UseListAPIBaseOptions,
   UseListAPIBaseResult,
 } from '../../../types/requests';
 import type { AssetPropertyResource } from '../../../types/resources';
+import type { AssetPropertyRequestParameters } from '../types';
+import { useAssetModelProperties } from './use-asset-model-properties';
 
 export interface UseListAssetPropertiesOptions extends UseListAPIBaseOptions {
   parameters: readonly AssetPropertyRequestParameters[];
@@ -29,6 +29,7 @@ export function useListAssetProperties({
 }: UseListAssetPropertiesOptions): UseListAssetPropertiesResult {
   const {
     assetModelPropertiesById,
+    isLoading: isLoadingAssetModelProperties,
     isSuccess: assetModelPropertiesIsSuccess,
     error: assetModelPropertiesError,
   } = useAssetModelProperties({
@@ -54,7 +55,14 @@ export function useListAssetProperties({
         }
 
         const { nextToken, assetPropertySummaries = [] } =
-          await listAssetProperties(request);
+          await listAssetProperties({
+            ...request,
+            /**
+             * https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_ListAssetProperties.html#API_ListAssetProperties_RequestSyntax
+             * Includes properties for components as well
+             */
+            filter: 'ALL',
+          });
 
         const assetModelProperties =
           assetModelPropertiesById[request.assetModelId];
@@ -90,8 +98,18 @@ export function useListAssetProperties({
     });
 
   const error = assetModelPropertiesError ?? responseResult.error;
-  const isLoading =
-    !error && (!assetModelPropertiesIsSuccess || responseResult.isLoading);
 
-  return { assetProperties, ...responseResult, isLoading, error };
+  const isLoading =
+    (error === null &&
+      parameters.length !== 0 &&
+      assetProperties.length === 0) ||
+    isLoadingAssetModelProperties ||
+    responseResult.isLoadingResources;
+
+  return {
+    assetProperties,
+    isLoadingFirstPage: isLoading,
+    isLoadingResources: isLoading,
+    error,
+  };
 }

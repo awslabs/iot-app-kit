@@ -1,10 +1,12 @@
 import {
   GetDataEndpointCommand,
-  KinesisVideoClient,
+  type KinesisVideoClient,
 } from '@aws-sdk/client-kinesis-video';
 import {
   GetHLSStreamingSessionURLCommand,
-  KinesisVideoArchivedMediaClient,
+  type KinesisVideoArchivedMediaClient,
+  type GetHLSStreamingSessionURLInput,
+  type HLSFragmentSelector,
 } from '@aws-sdk/client-kinesis-video-archived-media';
 import { parseUrl } from '@aws-sdk/url-parser';
 import {
@@ -13,10 +15,6 @@ import {
   PLAYBACKMODE_ON_DEMAND,
   PRODUCER_TIMESTAMP,
 } from '../constants';
-import type {
-  GetHLSStreamingSessionURLInput,
-  HLSFragmentSelector,
-} from '@aws-sdk/client-kinesis-video-archived-media';
 import type { Endpoint } from '@aws-sdk/types';
 import type {
   GetLiveHLSStreamingSessionURLRequest,

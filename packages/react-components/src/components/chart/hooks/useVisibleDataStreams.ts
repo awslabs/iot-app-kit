@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import isEqual from 'lodash.isequal';
 import { useChartStore } from '../store';
 import { isDataStreamInList } from '../../../utils/isDataStreamInList';
-import { DataStreamIdentity } from '../store/contextDataStreams';
+import { type DataStreamIdentity } from '../store/contextDataStreams';
 
 export const useVisibleDataStreams = () => {
   const { hideDataStream, unHideDataStream } = useChartStore(

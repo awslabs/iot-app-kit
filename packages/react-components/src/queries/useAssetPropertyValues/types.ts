@@ -1,18 +1,18 @@
 import {
-  BatchGetAssetPropertyAggregatesRequest,
-  BatchGetAssetPropertyAggregatesResponse,
-  BatchGetAssetPropertyValueHistoryRequest,
-  BatchGetAssetPropertyValueHistoryResponse,
-  GetAssetPropertyAggregatesRequest,
-  GetAssetPropertyAggregatesResponse,
-  GetAssetPropertyValueHistoryRequest,
-  GetAssetPropertyValueHistoryResponse,
+  type BatchGetAssetPropertyAggregatesRequest,
+  type BatchGetAssetPropertyAggregatesResponse,
+  type BatchGetAssetPropertyValueHistoryRequest,
+  type BatchGetAssetPropertyValueHistoryResponse,
+  type GetAssetPropertyAggregatesRequest,
+  type GetAssetPropertyAggregatesResponse,
+  type GetAssetPropertyValueHistoryRequest,
+  type GetAssetPropertyValueHistoryResponse,
 } from '@aws-sdk/client-iotsitewise';
 import {
-  RequestFunction,
-  RequestParameters,
-  RequestResponse,
-  DataPoint,
+  type RequestFunction,
+  type RequestParameters,
+  type RequestResponse,
+  type DataPoint,
 } from '@iot-app-kit/core';
 
 export type CommonRequestParameters = {

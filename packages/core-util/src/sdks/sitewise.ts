@@ -1,7 +1,7 @@
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
 
-import { SiteWiseDataSourceInitalization } from './siteWiseDataSourceInitalization';
+import { type SiteWiseDataSourceInitalization } from './siteWiseDataSourceInitalization';
 import { getEndpointPovider, DEFAULT_REGION } from './endpointProvider';
 
 const subDomain = 'iotsitewise';

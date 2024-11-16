@@ -1,4 +1,4 @@
-import { LegendConfig } from '@iot-app-kit/charts-core';
+import { type LegendConfig } from '@iot-app-kit/charts-core';
 import type { Viewport } from '@iot-app-kit/core';
 
 /**

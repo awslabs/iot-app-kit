@@ -1,22 +1,20 @@
 import {
   DescribeAssetCommand,
   GetAssetPropertyValueCommand,
-  IoTSiteWiseClient,
+  type IoTSiteWiseClient,
   DescribeAssetModelCommand,
   ListAssetsCommand,
   ListAssociatedAssetsCommand,
-} from '@aws-sdk/client-iotsitewise';
-import type {
-  DescribeAssetCommandInput,
-  DescribeAssetCommandOutput,
-  GetAssetPropertyValueCommandOutput,
-  GetAssetPropertyValueCommandInput,
-  DescribeAssetModelCommandInput,
-  DescribeAssetModelCommandOutput,
-  ListAssetsCommandInput,
-  ListAssetsCommandOutput,
-  ListAssociatedAssetsCommandInput,
-  ListAssociatedAssetsCommandOutput,
+  type DescribeAssetCommandInput,
+  type DescribeAssetCommandOutput,
+  type GetAssetPropertyValueCommandOutput,
+  type GetAssetPropertyValueCommandInput,
+  type DescribeAssetModelCommandInput,
+  type DescribeAssetModelCommandOutput,
+  type ListAssetsCommandInput,
+  type ListAssetsCommandOutput,
+  type ListAssociatedAssetsCommandInput,
+  type ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
 import type { SiteWiseAssetDataSource } from './sitewise/types';
 import { DescribeModeledDataStreamRequest } from './describeModeledDataStreamRequest/describeModeledDataStreamRequest';

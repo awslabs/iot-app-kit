@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import {
-  HistoricalViewport,
-  Viewport,
+  type HistoricalViewport,
+  type Viewport,
   isHistoricalViewport,
   isDurationViewport,
   viewportEndDate,
   viewportStartDate,
   parseDuration,
-  DurationViewport,
+  type DurationViewport,
 } from '@iot-app-kit/core';
 import { DEFAULT_ANOMALY_DATA_SOURCE_VIEWPORT } from './constants';
 

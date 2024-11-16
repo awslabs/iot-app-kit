@@ -1,11 +1,8 @@
-import {
-  HasNextPage,
+import type {
   IsResourceDisabled,
-  NextPage,
   OnSelectResource,
   PluralResourceName,
   RequestError,
-  RequestIsLoading,
   ResourceName,
   Resources,
   SelectedResources,
@@ -19,15 +16,12 @@ export interface ResourceDropDownProps<Resource> {
   resources: Resources<Resource>;
   isResourceDisabled: IsResourceDisabled<Resource>;
 
-  isLoading: RequestIsLoading;
+  isLoadingResources?: boolean;
   error: RequestError;
 
   selectionMode: SelectionMode;
   selectedResources: SelectedResources<Resource>;
   onSelectResource: OnSelectResource<Resource>;
-
-  hasNextPage: HasNextPage;
-  onScrollNextPage: NextPage;
 
   isFilterEnabled?: IsDropDownFilterEnabled;
 }

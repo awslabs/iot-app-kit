@@ -1,6 +1,6 @@
-import { QueryKey } from '@tanstack/react-query';
-import { FixedLengthArray } from 'type-fest';
-import { SeriaizedRequest, Viewport } from '../types';
+import { type QueryKey } from '@tanstack/react-query';
+import { type FixedLengthArray } from 'type-fest';
+import { type SeriaizedRequest, type Viewport } from '../types';
 
 type TimeSeriesDataCacheKeyShape = FixedLengthArray<
   {

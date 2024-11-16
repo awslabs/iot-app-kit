@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { ComponentQuery } from '../../common/chartTypes';
+import { type ComponentQuery } from '../../common/chartTypes';
 import { getAlarmQueries, getTimeSeriesQueries } from '../../utils/queries';
 import {
-  AlarmCompositeModelRequest,
-  AlarmData,
-  AlarmInputPropertyRequest,
-  UseAlarmsOptions,
+  type AlarmCompositeModelRequest,
+  type AlarmData,
+  type AlarmInputPropertyRequest,
+  type UseAlarmsOptions,
   useAlarms,
 } from '../useAlarms';
 import { createNonNullableList } from '../../utils/createNonNullableList';
@@ -24,11 +24,12 @@ import { createNonNullableList } from '../../utils/createNonNullableList';
 export const useAlarmsFromQueries = <T = AlarmData>({
   queries,
   settings,
+  inputPropertyTimeSeriesDataSettings,
   viewport,
   transform,
 }: { queries: ComponentQuery[] } & Pick<
   UseAlarmsOptions<T>,
-  'settings' | 'viewport'
+  'settings' | 'viewport' | 'inputPropertyTimeSeriesDataSettings'
 > &
   Required<Pick<UseAlarmsOptions<T>, 'transform'>>) => {
   const requests = useMemo(() => {
@@ -104,6 +105,7 @@ export const useAlarmsFromQueries = <T = AlarmData>({
       refreshRate: requestSettings.refreshRate,
     },
     inputPropertyTimeSeriesDataSettings: {
+      ...inputPropertyTimeSeriesDataSettings,
       aggregationType: requestSettings.aggregationType,
       resolution: requestSettings.resolution,
     },

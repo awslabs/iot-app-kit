@@ -1,10 +1,10 @@
 import { isUndefined, omit } from 'lodash';
 import omitBy from 'lodash.omitby';
 import {
-  SeriaizedRequest,
+  type SeriaizedRequest,
   TimeSeriesDataCacheKeyManager,
 } from '../../useTimeSeriesData';
-import { AssetPropertyValuesRequest } from '../types';
+import { type AssetPropertyValuesRequest } from '../types';
 
 export class AssetPropertyValuesKeyManager extends TimeSeriesDataCacheKeyManager<AssetPropertyValuesRequest> {
   RESOURCE = 'Asset property values';

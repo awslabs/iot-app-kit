@@ -1,23 +1,23 @@
 import {
   Autosuggest,
   Box,
+  Button,
   FormField,
+  Popover,
   Select,
   SpaceBetween,
-  Button,
-  Popover,
   StatusIndicator,
 } from '@cloudscape-design/components';
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE } from '../../../../common/constants';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import {
-  IDataFieldOption,
-  IValueDataBinding,
-  IValueDataBindingProvider,
-  IValueDataBindingProviderState,
+  type IDataFieldOption,
+  type IValueDataBinding,
+  type IValueDataBindingProvider,
+  type IValueDataBindingProviderState,
 } from '../../../../interfaces';
 import useLifecycleLogging from '../../../../logger/react-logger/hooks/useLifecycleLogging';
 import { accessStore } from '../../../../store';
@@ -156,7 +156,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
   );
 
   return (
-    <React.Fragment>
+    <>
       <SpaceBetween size='s'>
         {builderState.definitions.map((definition, index) => {
           const { options, state } = definition;
@@ -248,6 +248,6 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
           );
         })}
       </SpaceBetween>
-    </React.Fragment>
+    </>
   );
 };

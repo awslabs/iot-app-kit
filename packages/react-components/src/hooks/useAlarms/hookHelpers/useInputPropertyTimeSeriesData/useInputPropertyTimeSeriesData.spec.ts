@@ -1,9 +1,7 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 
-import { cloneDeep } from 'lodash';
-
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 import { toId } from '@iot-app-kit/source-iotsitewise';
 
 import { useInputPropertyTimeSeriesData } from './useInputPropertyTimeSeriesData';
@@ -14,7 +12,7 @@ import {
   mockAlarmDataWithInputProperty,
   mockAlarmDataWithInputProperty2,
 } from '../../../../testing/alarms';
-import { UseInputPropertyTimeSeriesDataOptions } from './types';
+import { type UseInputPropertyTimeSeriesDataOptions } from './types';
 
 const TEST_REFRESH_RATE = 5000;
 
@@ -51,7 +49,9 @@ describe('useInputPropertyTimeSeriesData', () => {
     jest.resetAllMocks();
   });
 
-  it('fetches time series data for an input property.', async () => {
+  it('correctly calls onUpdateAlarmInputPropertyData', async () => {
+    const onUpdateAlarmInputPropertyData = jest.fn();
+
     const testViewport = { duration: '1m' };
     const timeSeriesDataMock = jest.fn();
     timeSeriesDataMock.mockReturnValue(
@@ -64,12 +64,19 @@ describe('useInputPropertyTimeSeriesData', () => {
       ])
     );
 
-    const { result } = renderHook(() =>
+    renderHook(() =>
       useInputPropertyTimeSeriesData({
-        alarms: [
-          cloneDeep(mockAlarmDataWithInputProperty),
-          cloneDeep(mockAlarmDataWithInputProperty2),
+        requests: [
+          {
+            assetId: mockAlarmDataWithInputProperty.assetId,
+            inputProperty: mockAlarmDataWithInputProperty.inputProperty,
+          },
+          {
+            assetId: mockAlarmDataWithInputProperty2.assetId,
+            inputProperty: mockAlarmDataWithInputProperty2.inputProperty,
+          },
         ],
+        onUpdateAlarmInputPropertyData,
         timeSeriesData: timeSeriesDataMock,
         refreshRate: TEST_REFRESH_RATE,
         fetchInputPropertyData: true,
@@ -79,39 +86,24 @@ describe('useInputPropertyTimeSeriesData', () => {
       })
     );
 
-    expect(timeSeriesDataMock).toHaveBeenCalledWith({
-      assets: [
-        {
-          assetId: MOCK_ASSET_ID,
-          properties: [
-            {
-              propertyId: MOCK_ALARM_INPUT_PROPERTY_ID,
-              aggregationType: 'AVERAGE',
-              resolution: undefined,
-            },
-            {
-              propertyId: MOCK_ALARM_INPUT_PROPERTY_ID_2,
-              aggregationType: 'AVERAGE',
-              resolution: undefined,
-            },
-          ],
-        },
-      ],
+    await waitFor(() => {
+      expect(onUpdateAlarmInputPropertyData).toBeCalledWith(
+        expect.objectContaining({
+          dataStreams: expect.arrayContaining([
+            expect.objectContaining(TEST_DATASTREAM_1),
+            expect.objectContaining(TEST_DATASTREAM_2),
+          ]),
+        })
+      );
     });
-
-    expect(result.current[0].inputProperty?.at(0)?.dataStream).toEqual(
-      expect.objectContaining(TEST_DATASTREAM_1)
-    );
-    expect(result.current[1].inputProperty?.at(0)?.dataStream).toEqual(
-      expect.objectContaining(TEST_DATASTREAM_2)
-    );
   });
 
   it('does not fetch time series data if the required properties are not provided', async () => {
+    const onUpdateAlarmInputPropertyData = jest.fn();
     const testViewport = { duration: '1m' };
     const timeSeriesDataMock = jest.fn();
 
-    const { result, rerender } = renderHook(
+    const { rerender } = renderHook(
       (
         {
           timeSeriesData,
@@ -127,10 +119,17 @@ describe('useInputPropertyTimeSeriesData', () => {
         }
       ) =>
         useInputPropertyTimeSeriesData({
-          alarms: [
-            cloneDeep(mockAlarmDataWithInputProperty),
-            cloneDeep(mockAlarmDataWithInputProperty2),
+          requests: [
+            {
+              assetId: mockAlarmDataWithInputProperty.assetId,
+              inputProperty: mockAlarmDataWithInputProperty.inputProperty,
+            },
+            {
+              assetId: mockAlarmDataWithInputProperty2.assetId,
+              inputProperty: mockAlarmDataWithInputProperty2.inputProperty,
+            },
           ],
+          onUpdateAlarmInputPropertyData,
           timeSeriesData,
           refreshRate: TEST_REFRESH_RATE,
           fetchInputPropertyData,
@@ -140,9 +139,6 @@ describe('useInputPropertyTimeSeriesData', () => {
 
     expect(timeSeriesDataMock).not.toHaveBeenCalled();
 
-    expect(result.current[0].inputProperty?.at(0)?.dataStream).toBeUndefined();
-    expect(result.current[1].inputProperty?.at(0)?.dataStream).toBeUndefined();
-
     rerender({
       fetchInputPropertyData: true,
       timeSeriesData: undefined,
@@ -150,17 +146,11 @@ describe('useInputPropertyTimeSeriesData', () => {
 
     expect(timeSeriesDataMock).not.toHaveBeenCalled();
 
-    expect(result.current[0].inputProperty?.at(0)?.dataStream).toBeUndefined();
-    expect(result.current[1].inputProperty?.at(0)?.dataStream).toBeUndefined();
-
     rerender({
       fetchInputPropertyData: true,
       viewport: undefined,
     });
 
     expect(timeSeriesDataMock).not.toHaveBeenCalled();
-
-    expect(result.current[0].inputProperty?.at(0)?.dataStream).toBeUndefined();
-    expect(result.current[1].inputProperty?.at(0)?.dataStream).toBeUndefined();
   });
 });

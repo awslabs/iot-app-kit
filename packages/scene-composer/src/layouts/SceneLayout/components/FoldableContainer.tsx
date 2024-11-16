@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Icon, IconProps } from '@cloudscape-design/components';
+import { Icon, type IconProps } from '@cloudscape-design/components';
+import { useEffect, useState } from 'react';
 
-import { Direction } from './utils';
 import './FoldableContainer.scss';
+import { type Direction } from './utils';
 
 type FoldableContainerProps = React.PropsWithChildren<{
   direction: Direction;

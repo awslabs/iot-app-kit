@@ -6,10 +6,10 @@ import {
   copyNearestTrendCursor,
   removeNearestTrendCursor,
 } from '../echartsActions';
-import { ElementEvent } from 'echarts';
+import { type ElementEvent } from 'echarts';
 import { useTrendCursorColorer } from './useTrendCursorColorer';
-import { ChartRef } from '../../../../hooks/useECharts';
-import { TrendCursorGroupId } from '../store';
+import { type ChartRef } from '../../../../hooks/useECharts';
+import { type TrendCursorGroupId } from '../store';
 
 export const useTrendCursorActions = ({
   group,

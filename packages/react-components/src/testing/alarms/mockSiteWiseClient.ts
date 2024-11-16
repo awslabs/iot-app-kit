@@ -1,4 +1,4 @@
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 
 export const describeAssetMock = jest.fn();
 export const describeAssetModelMock = jest.fn();

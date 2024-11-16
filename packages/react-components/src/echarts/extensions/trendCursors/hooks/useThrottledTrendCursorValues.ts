@@ -1,9 +1,9 @@
 import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
-import useDataStore, { StateData } from '../../../../store';
+import useDataStore, { type StateData } from '../../../../store';
 import {
-  TrendCursor,
-  TrendCursorValues,
+  type TrendCursor,
+  type TrendCursorValues,
   trendCursorValuesForGroup,
   trendCursorsForGroup,
 } from '../store';

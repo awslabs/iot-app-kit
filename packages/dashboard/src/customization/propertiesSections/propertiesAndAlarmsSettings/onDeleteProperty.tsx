@@ -1,4 +1,4 @@
-import { OnDeleteAssetQuery } from './sectionTypes';
+import { type OnDeleteAssetQuery } from './sectionTypes';
 
 export const defaultOnDeleteQuery: OnDeleteAssetQuery =
   ({ assetId, propertyId, siteWiseAssetQuery, updateSiteWiseAssetQuery }) =>

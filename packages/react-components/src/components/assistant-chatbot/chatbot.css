@@ -1,0 +1,148 @@
+@import url("@cloudscape-design/global-styles/index.css");
+
+.iot-app-kit-assistant-chatbot-header {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 0.3rem 1rem;
+}
+
+.iot-app-kit-assistant-chatbot-header-buttons {
+  padding-top: 0.5rem;
+  margin-left: auto;
+}
+
+.iot-app-kit-assistant-chatbot-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.iot-app-kit-assistant-chatbot-input textarea {
+  max-height: 110px;
+  width: 100%;
+  padding-right: 1.5rem !important;
+  resize: none !important;
+}
+
+.iot-app-kit-assistant-chatbot-input span {
+  width: 100%;
+}
+
+.iot-app-kit-assistant-chatbot-input-button {
+  position: relative;
+  margin-left: auto;
+  width: fit-content;
+  margin-top: -32px;
+  margin-right: 6px;
+}
+
+.iot-app-kit.assistant-chatbot {
+  min-width: 290px;
+
+  .conversation-container {
+    overflow: auto;
+    overflow-x: hidden;
+    padding-left: 1.2rem;
+    padding-right: 0.5rem;
+
+    .message-row {
+      display: flex;
+      align-items: start;
+      flex-shrink: 0;
+      width: 100%;
+    }
+  }
+}
+
+.iot-app-kit.assistant-chatbot .customer-message-icon {
+  background: var(--awsui-color-grey-600);
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  margin-top: 0.3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iot-app-kit.assistant-chatbot .customer-message {
+  padding: 0.5rem 1rem;
+}
+
+.iot-app-kit.assistant-chatbot .assistant-icon {
+  margin-top: 0.3rem;
+}
+
+.iot-app-kit.assistant-chatbot .assistant-message {
+  width: 100%;
+  background: var(--awsui-color-grey-150);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin-left: 1rem;
+
+  p:first-of-type {
+    margin: 0;
+  }
+}
+
+.iot-app-kit.assistant-chatbot .assistant-processing-message-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: var(--awsui-color-grey-150);
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+  margin-left: 1rem;
+
+  p:first-of-type {
+    margin: 0;
+  }
+}
+
+.iot-app-kit.assistant-chatbot .assistant-processing-message {
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.iot-app-kit.assistant-chatbot .processing-message-icon {
+  background-image: url("./assets/purpleCircleIcon.svg");
+  background-size: 24px 24px;
+  min-width: 24px;
+  width: 24px;
+  height: 24px;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+/* --- Processing animation --- */
+@keyframes jump {
+  0%,
+  40%,
+  100% {
+    transform: initial;
+  }
+
+  20% {
+    transform: translateY(-4px);
+  }
+}
+
+.iot-app-kit.assistant-chatbot .processing-message-icon > div {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: white;
+  animation: jump 1s linear infinite;
+}
+
+.iot-app-kit.assistant-chatbot .processing-message-icon > div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.iot-app-kit.assistant-chatbot .processing-message-icon > div:nth-child(3) {
+  animation-delay: 0.4s;
+}

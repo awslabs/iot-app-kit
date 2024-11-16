@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { DashboardPlugin } from '~/customization/api';
-import { StatusTimelineWidget } from '../types';
+import { type DashboardPlugin } from '~/customization/api';
+import { type StatusTimelineWidget } from '../types';
 import StatusTimelineWidgetComponent from './statusTimeline';
 import StatusTimelineIcon from './statusTimelineIcon';
 import { WIDGET_INITIAL_HEIGHT, WIDGET_INITIAL_WIDTH } from '../constants';

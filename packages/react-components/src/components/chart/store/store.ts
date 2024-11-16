@@ -1,8 +1,11 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { createMultiYAxisSlice, MultiYAxisState } from './multiYAxis';
-import { createDataStreamsSlice, DataStreamsState } from './contextDataStreams';
-import { createMinMaxSlice, MinMaxState } from './dataStreamMinMaxStore';
+import { createMultiYAxisSlice, type MultiYAxisState } from './multiYAxis';
+import {
+  createDataStreamsSlice,
+  type DataStreamsState,
+} from './contextDataStreams';
+import { createMinMaxSlice, type MinMaxState } from './dataStreamMinMaxStore';
 
 export type StateData = DataStreamsState &
   MultiYAxisState &

@@ -1,8 +1,7 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 
 import { MotionIndicatorComponentEditor } from '../../../../src/components/panels/scene-components/MotionIndicatorComponentEditor';
-import { IMotionIndicatorComponentInternal, accessStore } from '../../../../src/store';
+import { type IMotionIndicatorComponentInternal, accessStore } from '../../../../src/store';
 import { KnownComponentType } from '../../../../src/interfaces';
 import { Component } from '../../../models/SceneModels';
 import { mockNode, mockComponent } from '../../../../tests/components/panels/scene-components/MockComponents';

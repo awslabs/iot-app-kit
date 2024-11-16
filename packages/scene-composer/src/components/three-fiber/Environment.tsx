@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { Scene, Loader } from 'three';
+import { type FC } from 'react';
+import { type Scene, type Loader } from 'three';
 import { Environment as DreiEnvironment } from '@react-three/drei';
 
 import NuetralHDR from '../../assets/hdri/Neutral_sm.hdr';

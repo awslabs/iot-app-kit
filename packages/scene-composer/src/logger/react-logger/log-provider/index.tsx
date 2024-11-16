@@ -1,9 +1,9 @@
-import React, { FC, ReactNode, useContext, useEffect, useState } from 'react';
+import { type FC, type ReactNode, useContext, useEffect, useState } from 'react';
 
 import DebugLogger from '../../DebugLogger';
-import ILogger from '../../ILogger';
+import type ILogger from '../../ILogger';
 import LoggingContext from '../contexts/logging';
-import ErrorBoundary, { ErrorBoundaryProps } from '../components/error-boundary';
+import ErrorBoundary, { type ErrorBoundaryProps } from '../components/error-boundary';
 
 interface LogProviderProps extends ErrorBoundaryProps {
   namespace: string;

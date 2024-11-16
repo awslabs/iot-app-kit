@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import { renderHook } from '@testing-library/react-hooks';
-import { ThreeEvent } from '@react-three/fiber';
+import { type ThreeEvent } from '@react-three/fiber';
 
-import { AddingWidgetInfo, KnownComponentType } from '../interfaces';
-import { ISceneNodeInternal, ISubModelRefComponentInternal, accessStore } from '../../src/store';
+import { type AddingWidgetInfo, KnownComponentType } from '../interfaces';
+import { type ISceneNodeInternal, type ISubModelRefComponentInternal, accessStore } from '../../src/store';
 
 import useAddWidget from './useAddWidget';
 

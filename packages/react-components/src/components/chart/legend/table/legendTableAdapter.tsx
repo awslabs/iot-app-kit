@@ -1,11 +1,21 @@
-import React from 'react';
-import { DataStream, Primitive } from '@iot-app-kit/core';
-import { ChartLegend, ChartOptions } from '../../types';
+import { type DataStream, type Primitive } from '@iot-app-kit/core';
+import { type ChartLegend, type ChartOptions } from '../../types';
 import { ChartLegendTable } from './table';
-import { DataStreamInformation, TrendCursor } from './types';
-import { TrendCursorValues } from '../../../../echarts/extensions/trendCursors/store';
+import { type DataStreamInformation, type TrendCursor } from './types';
+import { type TrendCursorValues } from '../../../../echarts/extensions/trendCursors/store';
 import { useDataStreamMaxMin } from '../../hooks/useDataStreamMaxMin';
-import { MinMaxMap } from '../../store/dataStreamMinMaxStore';
+import { type MinMaxMap } from '../../store/dataStreamMinMaxStore';
+import type { TableProps } from '@cloudscape-design/components/table';
+import type { AssistantProperty } from '../../../../common/assistantProps';
+import { type AlarmAssistantContext } from '../../../assistant-common/types';
+
+type LegendTableDataStream = Pick<
+  DataStream,
+  'id' | 'color' | 'name' | 'unit' | 'assetName' | 'refId'
+> & {
+  latestValue: Primitive | undefined;
+  latestAlarmStateValue: string | undefined;
+} & AlarmAssistantContext;
 
 const mapDataStreamInformation = ({
   datastreams,
@@ -15,13 +25,7 @@ const mapDataStreamInformation = ({
   dataStreamMaxes,
   dataStreamMins,
 }: {
-  datastreams: (Pick<
-    DataStream,
-    'id' | 'color' | 'name' | 'unit' | 'assetName'
-  > & {
-    latestValue: Primitive | undefined;
-    latestAlarmStateValue: string | undefined;
-  })[];
+  datastreams: LegendTableDataStream[];
   trendCursorValues: TrendCursorValues[];
   chartId: string;
   visibleContent: ChartLegend['visibleContent'];
@@ -37,6 +41,9 @@ const mapDataStreamInformation = ({
       assetName,
       latestValue,
       latestAlarmStateValue,
+      assetId,
+      alarmName,
+      refId,
     }) => {
       const values = trendCursorValues.reduce<
         DataStreamInformation['trendCursorValues']
@@ -60,25 +67,26 @@ const mapDataStreamInformation = ({
         assetName,
         latestValue,
         latestAlarmStateValue,
+        assetId,
+        alarmName,
         trendCursorValues: values,
         maxValue,
         minValue,
+        refId,
       };
     }
   );
 
 type ChartLegendTableAdapterOptions = ChartLegend & {
-  datastreams: (Pick<
-    DataStream,
-    'id' | 'color' | 'name' | 'unit' | 'assetName'
-  > & {
-    latestValue: Primitive | undefined;
-    latestAlarmStateValue: string | undefined;
-  })[];
+  datastreams: LegendTableDataStream[];
   trendCursorValues: TrendCursorValues[];
   trendCursors: TrendCursor[];
   chartId?: string;
   significantDigits: ChartOptions['significantDigits'];
+  assistant?: AssistantProperty;
+  selectedItems?: DataStreamInformation[];
+  setSelectedItems?: (selectedItems: DataStreamInformation[]) => void;
+  selectionType?: TableProps.SelectionType;
 };
 
 export const ChartLegendTableAdapter = ({

@@ -1,5 +1,10 @@
 import { BranchReference } from './types';
-import { BehaviorSubject, debounceTime, Subject, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  debounceTime,
+  Subject,
+  type Subscription,
+} from 'rxjs';
 import { HIERARCHY_ROOT_ID, LoadingStateEnum } from '../sitewise/types';
 import type {
   HierarchyGroup,

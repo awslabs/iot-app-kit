@@ -1,15 +1,15 @@
 import {
-  DataRequest,
-  Provider,
-  ProviderObserver,
-  DataBase,
-  DataStreamBase,
+  type DataRequest,
+  type Provider,
+  type ProviderObserver,
+  type DataBase,
+  type DataStreamBase,
 } from '@iot-app-kit/core';
-import { QueryClient, QueryObserver } from '@tanstack/query-core';
+import { type QueryClient, QueryObserver } from '@tanstack/query-core';
 
-import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { getPropertyValueByEntity } from './client/getPropertyValueByEntity';
-import { TwinMakerStaticDataQuery } from './types';
+import { type TwinMakerStaticDataQuery } from './types';
 
 /**
  * Provider for TwinMaker time series data

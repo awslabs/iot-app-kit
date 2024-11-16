@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react';
 import { Box, Button, FormField, Icon, Select, SpaceBetween } from '@cloudscape-design/components';
 import { isEmpty } from 'lodash';
+import { useContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 
-import { IMotionIndicatorComponentInternal, accessStore } from '../../../../store';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component } from '../../../../models/SceneModels';
+import { type IMotionIndicatorComponentInternal, accessStore } from '../../../../store';
 import { Slider } from '../../Slider';
 
 import { DataBindingEditor } from './DataBindingEditor';

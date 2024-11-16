@@ -1,15 +1,15 @@
-import { GetEntityCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { type GetEntityCommandOutput } from '@aws-sdk/client-iottwinmaker';
 
 import { RESERVED_LAYER_ID, SCENE_COMPONENT_TYPE_ID } from '../../common/entityModelConstants';
 import {
-  IDataBindingConfig,
-  IOverlaySettings,
-  IRuleBasedMap,
-  ITagSettings,
+  type IDataBindingConfig,
+  type IOverlaySettings,
+  type IRuleBasedMap,
+  type ITagSettings,
   KnownComponentType,
   KnownSceneProperty,
 } from '../../interfaces';
-import { ISceneDocumentInternal } from '../../store';
+import { type ISceneDocumentInternal } from '../../store';
 import { DEFAULT_DISTANCE_UNIT, DEFAULT_TAG_GLOBAL_SETTINGS } from '../../common/constants';
 
 import { createSceneEntityComponent, parseSceneCompFromEntity, updateSceneEntityComponent } from './sceneComponent';

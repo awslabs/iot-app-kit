@@ -1,0 +1,11 @@
+.iot-dashboard-assistant-chatbot {
+  position: fixed;
+  right: 0;
+  width: 35rem;
+  padding: 0.5rem;
+  z-index: 1;
+}
+
+.iot-dashboard-assistant-chatbot-hidden {
+  display: none;
+}

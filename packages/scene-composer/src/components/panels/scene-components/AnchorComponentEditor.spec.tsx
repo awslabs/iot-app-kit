@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { render, waitFor } from '@testing-library/react';
 
-import { IAnchorComponentInternal, accessStore } from '../../../store';
+import { type IAnchorComponentInternal, accessStore } from '../../../store';
 import {
   mockBinding,
   mockNode,

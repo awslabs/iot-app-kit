@@ -1,12 +1,12 @@
 import {
-  RequestParameters,
-  RequestResponse,
-  GetAssetPropertyValueHistory,
-  BatchGetAssetPropertyValueHistory,
-  Viewport,
+  type RequestParameters,
+  type RequestResponse,
+  type GetAssetPropertyValueHistory,
+  type BatchGetAssetPropertyValueHistory,
+  type Viewport,
 } from '@iot-app-kit/core';
-import { UseIoTSiteWiseClientOptions } from '../../hooks/requestFunctions/useIoTSiteWiseClient';
-import { QueryOptionsGlobal } from '../common/types';
+import { type UseIoTSiteWiseClientOptions } from '../../hooks/requestFunctions/useIoTSiteWiseClient';
+import { type QueryOptionsGlobal } from '../common/types';
 
 export type HistoricalValueQueryFnClient = {
   getAssetPropertyValueHistory?: GetAssetPropertyValueHistory;

@@ -1,14 +1,13 @@
-import React from 'react';
-import { renderHook, act } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
 import { configureDashboardStore } from '~/store';
 import { useMoveGestures } from './useMove';
 
-import { onMoveWidgetsAction } from '~/store/actions';
 import type { ReactNode } from 'react';
-import type { RecursivePartial } from '~/types';
+import { onMoveWidgetsAction } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
+import type { RecursivePartial } from '~/types';
 
 jest.mock('../../../store/actions', () => {
   const originalModule = jest.requireActual('../../../store/actions');

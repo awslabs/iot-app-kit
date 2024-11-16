@@ -1,5 +1,4 @@
-import React from 'react';
-import { Primitive } from '@iot-app-kit/core';
+import { type Primitive } from '@iot-app-kit/core';
 import { isNumeric, round } from '@iot-app-kit/core-util';
 
 export const formatValue =
@@ -17,7 +16,7 @@ export const XYPlotTooltipValue = ({
   significantDigits,
 }: XYPlotTooltipValueOptions) => {
   return (
-    <div style={{ alignSelf: 'end' }}>
+    <div style={{ alignSelf: 'start' }}>
       {formatValue(significantDigits)(value ?? '')}
     </div>
   );

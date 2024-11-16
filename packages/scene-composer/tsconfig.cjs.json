@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist/cjs",
+    "module": "commonjs",
+    "incremental": true,
+    "tsBuildInfoFile": "./dist/cjs/.tsbuildinfo"
+  },
+  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    ".husky",
+    ".storybook",
+    "dist",
+    "coverage",
+    "tests",
+    "public",
+    "__mocks__",
+    "e2e",
+    "**/*.spec.*",
+    "**/*.test.*",
+    "./src/__snapshots__"
+  ]
+}

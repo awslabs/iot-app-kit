@@ -1,12 +1,12 @@
-import React, { useCallback, useContext } from 'react';
 import { Button, FormField, Select, SpaceBetween } from '@cloudscape-design/components';
+import { useCallback, useContext } from 'react';
 import { useIntl } from 'react-intl';
 
-import { IComponentEditorProps } from '../ComponentEditor';
-import { IColorOverlayComponentInternal, ISceneComponentInternal, accessStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { IValueDataBinding } from '../../../interfaces';
+import { type IValueDataBinding } from '../../../interfaces';
+import { type IColorOverlayComponentInternal, type ISceneComponentInternal, accessStore } from '../../../store';
 import { isDynamicScene } from '../../../utils/entityModelUtils/sceneUtils';
+import { type IComponentEditorProps } from '../ComponentEditor';
 
 import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
 

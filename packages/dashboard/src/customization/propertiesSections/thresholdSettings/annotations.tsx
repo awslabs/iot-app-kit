@@ -1,5 +1,4 @@
 import { Toggle } from '@cloudscape-design/components';
-import React from 'react';
 
 export type AnnotationsSettingsProps = {
   colorBreachedData: boolean;

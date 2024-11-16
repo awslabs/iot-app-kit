@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story } from '@storybook/blocks';
+import { Canvas, Meta, Story, Source } from '@storybook/blocks';
 
 import * as AnomalyChartStories from './AnomalyChart.stories';
 
@@ -10,7 +10,7 @@ The Anomaly chart is a visualization tool that provides a timeline view of anoma
 
 ## Demo
 
-<Canvas  story={{ height: '350px' }}  sourceState="none" of={AnomalyChartStories.Standard} />
+<Canvas  story={{ height: '350px' }}  sourceState="hidden" of={AnomalyChartStories.Standard} />
 
 **📈👆 Interact with the chart!**
 
@@ -26,7 +26,7 @@ The Anomaly chart is a visualization tool that provides a timeline view of anoma
 
 ---
 
-### Anomaly Chart Properties
+## Anomaly Chart Properties
 
 #### query and data:
 
@@ -38,36 +38,43 @@ These properties are used to specify the data that the chart will display, at le
   - **data (array)**: This property allows you to provide raw data that the component will visualize.
   Learn more about the anomaly widget's [data](/docs/components-anomalychart--data).
 
-#### viewport (object, optional): 
+#### viewport
+##### (object, optional)
 
 Specifies the time interval that the chart will visualize. If not provided, the chart utilizes the viewport specified by its ViewportManager. If there is no ViewportManager and no viewport defined, the default viewport will be calculated based on the minimum and maximum dates in the data.
 Learn more about the [viewport](/docs/core-viewport--docs).
 
-#### mode (string, optional): 
+#### mode
+##### (string, optional)
 
 Sets the chart's light or dark mode theme. It must be one of the following:
   * `light`
   * `dark`
 
-#### decimalPlaces (number, optional): 
+#### decimalPlaces
+##### (number, optional)
 
 Specifies the number of significant digits to be shown for the data.
 
-#### showTimestamp (boolean, optional): 
+#### showTimestamp
+##### (boolean, optional)
 
 Determines whether the timestamp bar is shown below the X-axis. The default value is `true`.
 
-**timeZone** (string, optional): 
+#### timeZone
+##### (string, optional): 
 
 Timezone must be specified as an [IANA timezone string](https://ftp.iana.org/tz/tzdb-2020f/zone1970.tab). If this property is provided, the chart displays all dates in the provided timezone. If not provided, it uses the browsers local timezone.
 
-#### tooltipSort (string, optional): 
+#### tooltipSort
+##### (string, optional): 
 
 Specifies how the tooltip data should be sorted. It must be one of the following strings:
   * `value` (sorts by descending percentages)
   * `alphabetical` (sorts in alphabetical order)
 
-#### axis (object, optional):
+#### axis
+##### (object, optional)
 
 Specifies the axis settings for the chart.
 It has the following properties.
@@ -75,13 +82,14 @@ It has the following properties.
   - **showX (boolean, optional)**: Setting to determine to display the x-axis and the horizontal grid lines. Defaults to true.
   - **showY (boolean, optional)**: Setting to determine to display the y-axis and the horizontal grid lines. Defaults to true.
 
-#### gestures (boolean, optional):
+#### gestures
+##### (boolean, optional)
 
 Specifies whether gestures (pan, zoom and restrict time-span) are enabled. The default value is `true`.
 
 ## Example
 
-```
+<Source dark="true" code={`
 import { AnomalyChart, TimeSync } from '@iot-app-kit/react-components';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 
@@ -114,7 +122,7 @@ const App = () => {
     </TimeSync>
   )
 };
-```
+`} />
 
 In this example, the Anomaly Chart is configured with an anomalyQuery, a viewport, mode, decimalPlaces, showTimestamp, tooltipSort, and axis settings. The chart will display the anomaly data specified by anomalyQuery, with a dark mode theme, showing two decimal places for the data values, hiding the timestamp bar, sorting the tooltip data by value, and displaying the x-axis but not the y-axis.
 By adjusting these properties, you can customize the appearance and behavior of the Anomaly chart to suit your specific needs. Remember to refer to the documentation for more detailed information and examples.

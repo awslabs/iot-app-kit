@@ -1,6 +1,6 @@
 import {
   GetAssetPropertyValueHistoryCommand,
-  GetAssetPropertyValueHistoryCommandOutput,
+  type GetAssetPropertyValueHistoryCommandOutput,
   type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
 import { createNonNullableList } from '../../utils/createNonNullableList';

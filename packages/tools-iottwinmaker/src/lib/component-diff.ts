@@ -1,8 +1,8 @@
-import {
-  GetEntityCommandOutput,
+import type {
   ComponentRequest,
-  PropertyDefinitionRequest,
   DataType,
+  GetEntityCommandOutput,
+  PropertyDefinitionRequest,
 } from '@aws-sdk/client-iottwinmaker';
 
 /**

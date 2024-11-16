@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import type { MouseEvent, FC, ReactNode } from 'react';
 
 import { spaceStaticXs } from '@cloudscape-design/design-tokens';
@@ -15,8 +15,11 @@ import {
 
 import './index.css';
 import { CollapsiblePanel } from '../internalDashboard/collapsiblePanel';
-import resourceExplorerPanelIcon from './assets/resourceExplorer.svg';
-import PropertiesPanelIcon from './assets/propertiesPane.svg';
+import { ResourceExplorerIcon } from './assets/ResourceExplorerIcon';
+import { useDispatch, useSelector } from 'react-redux';
+import type { DashboardState } from '~/store/state';
+import { onToggleChatbotAction } from '~/store/actions/toggleChatbot';
+import { useResizeObserver } from 'usehooks-ts';
 
 const getSessionStorageNumber = (key: string, fallback: number) => {
   const stored = sessionStorage.getItem(key);
@@ -27,18 +30,32 @@ const getSessionStorageNumber = (key: string, fallback: number) => {
 const getStoredLeftWidthPercent = () =>
   getSessionStorageNumber(LEFT_WIDTH_PERCENT_STORAGE_KEY, LEFT_WIDTH_PERCENT);
 
+export type Size = {
+  width?: number;
+  height?: number;
+};
+
 type ResizablePanesProps = {
-  leftPane: ReactNode;
+  leftPane?: ReactNode;
   centerPane: ReactNode;
   rightPane: ReactNode;
+  rightPaneOptions: {
+    icon: ReactNode;
+    iconBackground?: string;
+    headerText: string;
+    hideHeaderWhenExpanded?: boolean;
+  };
+  onResize?: (size: Size) => void;
 };
 
 export const ResizablePanes: FC<ResizablePanesProps> = ({
   leftPane,
   centerPane,
   rightPane,
+  ...props
 }) => {
   const panes = useRef(null);
+  const dispatch = useDispatch();
 
   // Used to prevent any scroll events leaking to the grid component on resize
   const [pointerEvents, setPointerEvents] = useState<'auto' | 'none'>('auto');
@@ -48,6 +65,12 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
     null
   );
 
+  /** Capture resize event */
+  useResizeObserver({
+    ref: panes,
+    onResize: props.onResize,
+  });
+
   /** Last seen mouse x position during a drag, in px from screen left side */
   const [lastSeenAtX, setLastSeenAtX] = useState<number | null>(null);
 
@@ -56,7 +79,10 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
 
   /** Current widths of the three panes, in px */
   const [isRightPaneCollapsed, setRightPaneCollapsed] = useState(true);
-  const [isLeftPaneCollapsed, setLeftPaneCollapsed] = useState(false);
+  const [isLeftPaneCollapsed, setLeftPaneCollapsed] = useState(
+    leftPane === null
+  );
+  const [isChatOpened, setChatOpened] = useState(false);
   // left panel open by default
   const [leftPaneWidth, setLeftPaneWidth] = useState(DEFAULT_SIDE_PANE_WIDTH);
   // right panel closed by default
@@ -227,7 +253,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
   };
 
   // expand and collapse right pane
-  const onRightCollapsedPaneClick = () => {
+  const handleRightPaneCollapse = () => {
     if (isRightPaneCollapsed) {
       setRightPaneWidth(DEFAULT_SIDE_PANE_WIDTH);
       setRightPaneCollapsed(false);
@@ -238,6 +264,28 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
       setRightPaneCollapsed(true);
     }
   };
+
+  const onRightCollapsedPaneClick = () => {
+    handleRightPaneCollapse();
+    if (props.rightPaneOptions?.headerText === 'AI Assistant') {
+      setChatOpened(!isChatOpened);
+      dispatch(
+        onToggleChatbotAction({
+          open: !isChatOpened,
+          callerComponentId: '',
+        })
+      );
+    }
+  };
+
+  const assistant = useSelector((state: DashboardState) => state.assistant);
+  useEffect(() => {
+    if (isChatOpened !== assistant.isChatbotOpen) {
+      handleRightPaneCollapse();
+      setChatOpened(!isChatOpened);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [assistant.isChatbotOpen]);
 
   useEffect(() => {
     const handleWindowResize = () => {
@@ -300,7 +348,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
         panelWidth={leftPaneWidth}
         onCollapsedPanelClick={onLeftCollapsedPaneClick}
         panelContent={leftPane}
-        icon={resourceExplorerPanelIcon}
+        icon={<ResourceExplorerIcon role='img' ariaLabel='Resource explorer' />}
         side='left'
         headerText='Resource explorer'
       />
@@ -337,9 +385,8 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({
         panelWidth={rightPaneWidth}
         onCollapsedPanelClick={onRightCollapsedPaneClick}
         panelContent={rightPane}
-        icon={PropertiesPanelIcon}
         side='right'
-        headerText='Configuration'
+        {...props.rightPaneOptions}
       />
     </div>
   );

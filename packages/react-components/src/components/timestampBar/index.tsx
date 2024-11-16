@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   colorBackgroundLayoutToggleActive,
   colorBorderDividerSecondary,
@@ -8,7 +7,7 @@ import { Spinner } from '@cloudscape-design/components';
 
 import './timestamp.css';
 import { convertViewportToMs } from '../../utils/convertViewportToMs';
-import { Viewport } from '@iot-app-kit/core';
+import { type Viewport } from '@iot-app-kit/core';
 import { formatDate } from '../../utils/time';
 import useDataStore from '../../store';
 

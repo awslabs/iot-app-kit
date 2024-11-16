@@ -1,4 +1,4 @@
-import { TwinMakerPropertyValueQuery } from '../common/queryTypes';
+import { type TwinMakerPropertyValueQuery } from '../common/queryTypes';
 
 export type TwinMakerStaticDataQuery = TwinMakerPropertyValueQuery & {
   workspaceId: string;

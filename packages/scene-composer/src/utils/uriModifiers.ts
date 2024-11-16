@@ -1,6 +1,6 @@
 import isAbsoluteUrl from 'is-absolute-url';
 
-import { URIModifier } from '../interfaces';
+import { type URIModifier } from '../interfaces';
 
 import { getContainingDir } from './pathUtils';
 

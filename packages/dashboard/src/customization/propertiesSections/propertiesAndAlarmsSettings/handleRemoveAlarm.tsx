@@ -1,4 +1,7 @@
-import { AlarmQuery } from '@iot-app-kit/source-iotsitewise';
+import {
+  type AlarmQuery,
+  type SiteWiseAlarmAssetModelQuery,
+} from '@iot-app-kit/source-iotsitewise';
 
 export const handleRemoveAlarm = (
   { alarms }: { alarms: AlarmQuery[] },
@@ -19,4 +22,26 @@ export const handleRemoveAlarm = (
       };
     })
     .filter((alarm) => alarm.alarmComponents.length > 0);
+};
+
+export const handleRemoveAssetModelAlarms = (
+  { alarmModels }: SiteWiseAlarmAssetModelQuery,
+  {
+    assetModelId,
+    assetCompositeModelId,
+  }: { assetModelId: string; assetCompositeModelId: string }
+) => {
+  return alarmModels
+    .map((assetModel) => {
+      if (assetModel.assetModelId !== assetModelId) return assetModel;
+      const { alarmComponents } = assetModel;
+      return {
+        ...assetModel,
+        alarmComponents: alarmComponents.filter(
+          (alarmComponent) =>
+            alarmComponent.assetCompositeModelId !== assetCompositeModelId
+        ),
+      };
+    })
+    .filter((assetModel) => assetModel.alarmComponents.length > 0);
 };

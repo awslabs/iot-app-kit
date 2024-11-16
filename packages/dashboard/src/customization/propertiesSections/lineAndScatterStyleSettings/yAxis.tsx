@@ -1,4 +1,3 @@
-import React from 'react';
 import type { FC } from 'react';
 
 import FormField from '@cloudscape-design/components/form-field';
@@ -56,10 +55,7 @@ export const YAxisSection: FC<YAxisSectionOptions> = ({
           </FormField>
         </Box>
         <Box>
-          <FormField
-            description='Leave empty to auto-calculate based on all the values'
-            label='Range'
-          >
+          <FormField description='Leave empty to auto calculate.' label='Range'>
             <FormLabel htmlFor='y-axis-min'>Min</FormLabel>
             <Input
               placeholder='Auto'

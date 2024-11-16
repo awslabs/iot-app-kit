@@ -1,5 +1,10 @@
-import { IntlCache, IntlShape, createIntl, createIntlCache } from 'react-intl';
-import { StateCreator, create } from 'zustand';
+import {
+  type IntlCache,
+  type IntlShape,
+  createIntl,
+  createIntlCache,
+} from 'react-intl';
+import { type StateCreator, create } from 'zustand';
 import { mergedMessages } from './messages';
 
 export interface IntlData {

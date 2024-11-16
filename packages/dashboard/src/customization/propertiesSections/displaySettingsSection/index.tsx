@@ -1,7 +1,9 @@
-import React from 'react';
 import { PropertiesSection } from '~/customization/propertiesSectionComponent';
-import { GaugeWidget, KPIWidget } from '~/customization/widgets/types';
-import { DashboardWidget } from '~/types';
+import {
+  type GaugeWidget,
+  type KPIWidget,
+} from '~/customization/widgets/types';
+import { type DashboardWidget } from '~/types';
 import { RenderGaugeDisplaySettingsSection } from './gaugeDisplaySettings';
 import { RenderDisplaySettingsSection } from './kpiDisplaySettings';
 

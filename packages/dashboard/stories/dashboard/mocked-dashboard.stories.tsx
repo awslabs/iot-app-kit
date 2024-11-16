@@ -1,12 +1,11 @@
-import React from 'react';
 import { registerPlugin } from '@iot-app-kit/core';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 
-import { Dashboard, DashboardProperties } from '../../src';
-import { DashboardClientConfiguration } from '../../src/types';
+import { Dashboard, type DashboardProperties } from '../../src';
+import { type DashboardClientConfiguration } from '../../src/types';
 import { DEFAULT_REGION } from '~/msw/constants';
 import { useWorker } from '~/msw/useWorker';
-import { RefreshRate } from '~/components/refreshRate/types';
+import { type RefreshRate } from '~/components/refreshRate/types';
 import DashboardView from '~/components/dashboard/view';
 import { MOCK_DASHBOARD_CONFIG } from './mockData';
 
@@ -42,6 +41,19 @@ const emptyDashboardConfiguration: DashboardProperties = {
   timeZone: 'Asia/Hong_Kong',
 };
 
+const noOptionalPropsDashboardConfiguration: DashboardProperties = {
+  clientConfiguration,
+  dashboardConfiguration: {
+    displaySettings,
+    widgets: [],
+  },
+  onSave: () => Promise.resolve(),
+  onDashboardConfigurationChange: (config) => {
+    console.log('dashboard config changed to: ', config);
+  },
+  timeZone: 'Asia/Hong_Kong',
+};
+
 registerPlugin('metricsRecorder', {
   provider: () => ({
     record: (...args) => console.log('record metric:', ...args),
@@ -65,6 +77,10 @@ export default {
 
 export const Empty: ComponentStory<typeof Dashboard> = () => (
   <Dashboard {...emptyDashboardConfiguration} />
+);
+
+export const NoOptionalProps: ComponentStory<typeof Dashboard> = () => (
+  <Dashboard {...noOptionalPropsDashboardConfiguration} />
 );
 
 export const ViewOnly: ComponentStory<typeof Dashboard> = () => (

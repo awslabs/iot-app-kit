@@ -1,6 +1,6 @@
 import {
-  BatchPutAssetPropertyErrorEntry,
-  GetAssetPropertyValueCommandOutput,
+  type BatchPutAssetPropertyErrorEntry,
+  type GetAssetPropertyValueCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
 import {
   getAssetPropertyValue as getAssetPropertyValueFn,
@@ -16,8 +16,8 @@ import {
 } from '../../__mocks__/MockVideoPlayerProps';
 import { createMockSiteWiseSDK } from '../../__mocks__/iotsitewiseSDK';
 import {
-  GetLastValueBeforeTimestampRequest,
-  TriggerVideoUploadRequest,
+  type GetLastValueBeforeTimestampRequest,
+  type TriggerVideoUploadRequest,
 } from '../types';
 
 describe('SitewiseUtils for Video Player', () => {

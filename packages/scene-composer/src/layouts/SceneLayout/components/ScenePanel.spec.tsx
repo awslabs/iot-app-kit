@@ -1,4 +1,4 @@
-import React, { useState as useStateMock } from 'react';
+import { useState as useStateMock } from 'react';
 import { render } from '@testing-library/react';
 
 import ScenePanel from './ScenePanel';

@@ -1,7 +1,7 @@
-import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import type {
   DescribeAlarmModelCommandInput,
   DescribeAlarmModelResponse,
+  IoTEventsClient,
 } from '@aws-sdk/client-iot-events';
 
 const nonOverriddenMock = () =>

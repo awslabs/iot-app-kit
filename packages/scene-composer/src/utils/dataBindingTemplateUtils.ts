@@ -1,8 +1,8 @@
 import { cloneDeep, pick } from 'lodash';
 import {
-  IDataBindingConfig,
-  IDataBindingTemplate,
-  ITwinMakerDataBindingContext,
+  type IDataBindingConfig,
+  type IDataBindingTemplate,
+  type ITwinMakerDataBindingContext,
   undecorateDataBindingTemplate,
 } from '@iot-app-kit/source-iottwinmaker';
 
@@ -11,8 +11,8 @@ import {
   DEFAULT_DATA_BINDING_TEMPLATE_ENTITY_ID,
   DataBindingLabelKeys,
 } from '../common/constants';
-import { IValueDataBinding, KnownSceneProperty } from '../interfaces';
-import { RootState } from '../store';
+import { type IValueDataBinding, KnownSceneProperty } from '../interfaces';
+import { type RootState } from '../store';
 
 export const dataBindingConfigSelector = (state: RootState): IDataBindingConfig => {
   const dataBindingConfig: IDataBindingConfig = cloneDeep(

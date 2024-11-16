@@ -1,4 +1,4 @@
-import { TrendCursor } from '../types';
+import { type TrendCursor } from '../types';
 import { createTableLegendColumnDefinitions } from './factory';
 
 describe('legend table column definitions', () => {
@@ -63,7 +63,7 @@ describe('legend table column definitions', () => {
           id: 'AssetName',
         }),
         expect.objectContaining({
-          id: 'Latest Value',
+          id: 'Latest value',
         }),
       ])
     );
@@ -86,7 +86,7 @@ describe('legend table column definitions', () => {
           id: 'AssetName',
         }),
         expect.not.objectContaining({
-          id: 'Latest Value',
+          id: 'Latest value',
         }),
       ])
     );

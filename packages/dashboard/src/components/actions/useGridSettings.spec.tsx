@@ -1,11 +1,10 @@
-import React from 'react';
 import { act, renderHook } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
-import { configureDashboardStore } from '~/store';
-import { useGridSettings } from './useGridSettings';
 import type { ReactNode } from 'react';
+import { configureDashboardStore } from '~/store';
 import { initialState } from '~/store/state';
+import { useGridSettings } from './useGridSettings';
 
 const TestProvider: React.FC<{
   children: ReactNode;

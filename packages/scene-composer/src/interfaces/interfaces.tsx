@@ -4,13 +4,14 @@
  * These interfaces are used to interact with the SceneComposer instance at
  * runtime, thus the data structure is slightly different from the GLTF Toolkit.
  */
+
+import { type ReactElement } from 'react';
 import * as awsui from '@cloudscape-design/design-tokens';
-import { ReactElement } from 'react';
 
-import { ISceneNodeInternal } from '../store/Store';
+import { type ISceneNodeInternal } from '../store/Store';
 
-import { ISceneComponent, KnownComponentType } from './components';
-import { IRuleBasedMap, ITransform, ITransformConstraint, Vector3 } from './dataTypes';
+import { type ISceneComponent, type KnownComponentType } from './components';
+import { type IRuleBasedMap, type ITransform, type ITransformConstraint, type Vector3 } from './dataTypes';
 
 /************************************************
  * Scene document, entity, component models

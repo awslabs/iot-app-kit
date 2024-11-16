@@ -1,8 +1,7 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 
 import { mockComponent } from '../../../../../tests/components/panels/scene-components/MockComponents';
-import { IMotionIndicatorComponentInternal } from '../../../../store';
+import { type IMotionIndicatorComponentInternal } from '../../../../store';
 import { KnownComponentType } from '../../../../interfaces';
 import { Component } from '../../../../models/SceneModels';
 

@@ -1,24 +1,24 @@
 import {
-  ComponentUpdateRequest,
-  ComponentRequest,
+  type ComponentUpdateRequest,
+  type ComponentRequest,
   ComponentUpdateType,
-  UpdateEntityCommandInput,
+  type UpdateEntityCommandInput,
   PropertyUpdateType,
 } from '@aws-sdk/client-iottwinmaker';
 
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import {
-  ICameraComponent,
-  IColorOverlayComponent,
-  IDataOverlayComponent,
-  ILightComponent,
-  IModelRefComponent,
-  IMotionIndicatorComponent,
-  IPlaneGeometryComponent,
-  ISubModelRefComponent,
+  type ICameraComponent,
+  type IColorOverlayComponent,
+  type IDataOverlayComponent,
+  type ILightComponent,
+  type IModelRefComponent,
+  type IMotionIndicatorComponent,
+  type IPlaneGeometryComponent,
+  type ISubModelRefComponent,
   KnownComponentType,
 } from '../../interfaces';
-import { ISceneComponentInternal, ISceneNodeInternal } from '../../store/internalInterfaces';
+import { type ISceneComponentInternal, type ISceneNodeInternal } from '../../store/internalInterfaces';
 import { componentTypeToId } from '../../common/entityModelConstants';
 
 import { updateNodeEntityComponent } from './nodeComponent';

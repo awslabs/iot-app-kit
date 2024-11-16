@@ -1,5 +1,4 @@
 import Box from '@cloudscape-design/components/box';
-import React from 'react';
 import useDataStore from '../../../store';
 import { formatDate } from '../../../utils/time';
 

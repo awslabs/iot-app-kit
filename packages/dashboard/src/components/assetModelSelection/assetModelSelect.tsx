@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import FormField from '@cloudscape-design/components/form-field';
 
 import { AssetForAssetModelSelect } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/assetsForAssetModelSelect/assetForAssetModelSelect';
@@ -12,7 +12,7 @@ import {
   createInitialAssetResource,
   useSelectedAsset,
 } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/useSelectedAsset';
-import { AssetResource } from '@iot-app-kit/react-components';
+import { type AssetResource } from '@iot-app-kit/react-components';
 import { useAssetsForAssetModel } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/assetsForAssetModelSelect/useAssetsForAssetModel/useAssetsForAssetModel';
 
 type AssetModelSelectOptions = {

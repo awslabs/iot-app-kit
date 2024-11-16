@@ -4,22 +4,26 @@ import type {
   Provider,
 } from '@aws-sdk/types';
 import {
-  TreeQuery,
-  TimeSeriesDataRequest,
-  TimeSeriesDataQuery as TimeSeriesDataQueryCore,
+  type TreeQuery,
+  type TimeSeriesDataRequest,
+  type TimeSeriesDataQuery as TimeSeriesDataQueryCore,
   TimeSeriesDataModule,
-  Viewport,
-  DataStream,
-  TimeSeriesDataRequestSettings,
+  type Viewport,
+  type DataStream,
+  type TimeSeriesDataRequestSettings,
 } from '@iot-app-kit/core';
-import { IoTEventsClient } from '@aws-sdk/client-iot-events';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTEventsClient } from '@aws-sdk/client-iot-events';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { getIotEventsClient, getSiteWiseClient } from '@iot-app-kit/core-util';
 import { SiteWiseTimeSeriesDataProvider } from './time-series-data/provider';
 import {
-  BranchReference,
+  type BranchReference,
   SiteWiseAssetModule,
   SiteWiseAssetTreeSession,
+  type RootedSiteWiseAssetTreeQueryArguments,
+  type SiteWiseAssetDataSource,
+  type SiteWiseAssetTreeNode,
+  type SiteWiseAssetTreeQueryArguments,
 } from './asset-modules';
 import { SiteWiseComponentSession } from './component-session';
 import { createSiteWiseAssetDataSource } from './asset-modules/asset-data-source';
@@ -32,12 +36,6 @@ import type {
   SiteWiseDataSourceSettings,
   SiteWiseDataStreamQuery,
 } from './time-series-data/types';
-import type {
-  RootedSiteWiseAssetTreeQueryArguments,
-  SiteWiseAssetDataSource,
-  SiteWiseAssetTreeNode,
-  SiteWiseAssetTreeQueryArguments,
-} from './asset-modules';
 import { fetchTimeSeriesData } from './time-series-data/fetchTimeSeriesData';
 
 const SOURCE = 'iotsitewise';

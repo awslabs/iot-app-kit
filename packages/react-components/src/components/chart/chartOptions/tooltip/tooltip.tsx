@@ -1,19 +1,20 @@
-import React from 'react';
-import { XYPlotTooltipTime, XYPlotTooltipTimeOptions } from './time';
+import { XYPlotTooltipTime, type XYPlotTooltipTimeOptions } from './time';
 import {
   XYPlotTooltipDatastreams,
-  XYPlotTooltipDatastreamsOptions,
+  type XYPlotTooltipDatastreamsOptions,
 } from './datastreams';
-import { ChartDataQuality } from '../../types';
+import { type ChartAlarms, type ChartDataQuality } from '../../types';
 
 export type XYPlotTooltipOptions = XYPlotTooltipTimeOptions &
   XYPlotTooltipDatastreamsOptions &
-  ChartDataQuality;
+  ChartDataQuality &
+  ChartAlarms;
 export const XYPlotTooltip = ({
   time,
   datastreams,
   showBadDataIcons,
   showUncertainDataIcons,
+  showAlarmIcons,
 }: XYPlotTooltipOptions) => {
   return (
     <div role='tooltip'>
@@ -21,6 +22,7 @@ export const XYPlotTooltip = ({
       <XYPlotTooltipDatastreams
         showBadDataIcons={showBadDataIcons}
         showUncertainDataIcons={showUncertainDataIcons}
+        showAlarmIcons={showAlarmIcons}
         datastreams={datastreams}
       />
     </div>

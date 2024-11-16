@@ -1,6 +1,6 @@
 import { applyMode } from '@cloudscape-design/global-styles';
 import { applyTheme } from '@cloudscape-design/components/theming';
-import { Mode, UseThemeOptions } from './types';
+import { type Mode, type UseThemeOptions } from './types';
 import { applyTokens } from './applyTokens';
 
 /**

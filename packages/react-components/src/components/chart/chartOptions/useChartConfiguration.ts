@@ -1,24 +1,34 @@
-import { DataPoint, Threshold, ThresholdValue } from '@iot-app-kit/core';
 import {
-  ChartRef,
+  type DataPoint,
+  type Threshold,
+  type ThresholdValue,
+} from '@iot-app-kit/core';
+import {
+  type ChartRef,
   useGroupableEChart,
   useLoadableEChart,
 } from '../../../hooks/useECharts';
-import { ChartDataQuality, ChartOptions, ChartStyleSettings } from '../types';
+import {
+  type ChartDataQuality,
+  type ChartOptions,
+  type ChartStyleSettings,
+} from '../types';
 import { useXAxis } from './axes/xAxis';
 import { useTooltip } from './tooltip/convertTooltip';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import isEqual from 'lodash.isequal';
+import { uniqWith } from 'lodash';
 import {
   getDefaultChartOption,
   DEFAULT_DATA_ZOOM,
   PERFORMANCE_MODE_THRESHOLD,
 } from '../eChartsConstants';
 import { useSeriesAndYAxis } from './seriesAndYAxis/convertSeriesAndYAxis';
-import { SeriesOption } from 'echarts';
-import { GenericSeries } from '../../../echarts/types';
-import { useNormalizedDataStreams } from '../hooks/useNormalizedDataStreams';
-import { ChartAlarms } from '../hooks/useChartAlarms';
+import { type SeriesOption } from 'echarts';
+import { type GenericSeries } from '../../../echarts/types';
+import { type useNormalizedDataStreams } from '../hooks/useNormalizedDataStreams';
+import { type ChartAlarms } from '../hooks/useChartAlarms';
+import { createNonNullableList } from '../../../utils/createNonNullableList';
 
 const toDataStreamIdentifiers = (
   dataStreams: ReturnType<typeof useNormalizedDataStreams>
@@ -35,6 +45,8 @@ const toDataStreamIdentifiers = (
       data,
       assetName,
       latestAlarmStateValue,
+      assetId,
+      alarmName,
     }) => ({
       id,
       name,
@@ -45,6 +57,8 @@ const toDataStreamIdentifiers = (
       unit,
       latestValue: data.at(-1)?.y,
       latestAlarmStateValue,
+      assetId,
+      alarmName,
       assetName,
     })
   );
@@ -66,6 +80,8 @@ const toDataStreamMetaData = (
       assetName,
       latestValue,
       latestAlarmStateValue,
+      assetId,
+      alarmName,
     }) => {
       const foundSeries = series.find(
         ({ id: seriesId }) => seriesId === id
@@ -86,6 +102,8 @@ const toDataStreamMetaData = (
         assetName,
         latestValue,
         latestAlarmStateValue,
+        assetId,
+        alarmName,
       };
     }
   );
@@ -190,6 +208,12 @@ export const useChartConfiguration = (
     [alarms, showAlarmIcons, visibleData.length]
   );
 
+  const alarmThresholds = useMemo(
+    () =>
+      uniqWith(createNonNullableList(alarms.map((a) => a.thresholds)), isEqual),
+    [alarms]
+  );
+
   const xAxis = useXAxis(axis);
 
   const { series, yAxis } = useSeriesAndYAxis(dataSteamIdentifiers, {
@@ -198,6 +222,7 @@ export const useChartConfiguration = (
     significantDigits,
     axis,
     thresholds,
+    alarmThresholds,
     performanceMode,
     showBadDataIcons,
     showUncertainDataIcons,
@@ -209,6 +234,7 @@ export const useChartConfiguration = (
     series,
     showBadDataIcons,
     showUncertainDataIcons,
+    showAlarmIcons,
   });
 
   /*

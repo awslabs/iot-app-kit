@@ -1,5 +1,5 @@
-import LineSeriesModel from 'echarts/types/src/chart/line/LineSeries';
-import { EChartsExtensionInstallRegisters } from 'echarts/types/src/extension';
+import type LineSeriesModel from 'echarts/types/src/chart/line/LineSeries';
+import { type EChartsExtensionInstallRegisters } from 'echarts/types/src/extension';
 import { handlesYAxis } from './yAxisPredicates';
 import { handleSetYAxis } from './updateYAxis';
 

@@ -1,9 +1,9 @@
 import * as echarts from 'echarts';
 
-import { TrendCursorModel } from '../model';
-import ExtensionAPI from 'echarts/types/src/core/ExtensionAPI';
-import { SeriesModel } from 'echarts';
-import Axis2D from 'echarts/types/src/coord/cartesian/Axis2D';
+import { type TrendCursorModel } from '../model';
+import type ExtensionAPI from 'echarts/types/src/core/ExtensionAPI';
+import { type SeriesModel } from 'echarts';
+import type Axis2D from 'echarts/types/src/coord/cartesian/Axis2D';
 import { round } from '@iot-app-kit/core-util';
 import useDataStore from '../../../../store';
 import { getGrid, getXAxisCoord, getXAxisDataValue } from './utils';
@@ -15,8 +15,8 @@ import {
 import { POSITION, SIZE, STYLE, Z } from './constants';
 
 import deleteButtonSvg from './deleteButton.svg';
-import { TrendCursor } from '../store';
-import { GenericSeries } from '../../../types';
+import { type TrendCursor } from '../store';
+import { type GenericSeries } from '../../../types';
 
 import { formatDate } from '../../../../utils/time';
 

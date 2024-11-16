@@ -1,29 +1,29 @@
-import * as THREE from 'three';
-import React, { useContext, useEffect, useMemo } from 'react';
-import { invalidate, ThreeEvent, useFrame, useThree } from '@react-three/fiber';
+import { invalidate, type ThreeEvent, useFrame, useThree } from '@react-three/fiber';
+import { useContext, useEffect, useMemo } from 'react';
+import type * as THREE from 'three';
 import { SkeletonUtils } from 'three-stdlib';
-import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
+import { type GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 
 import { MAX_CLICK_DISTANCE } from '../../../common/constants';
-import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { Vector3, KnownComponentType } from '../../../interfaces';
-import { IModelRefComponentInternal, ISceneNodeInternal, useEditorState, accessStore } from '../../../store';
-import { appendFunction } from '../../../utils/objectUtils';
+import { GLTFLoadingManager } from '../../../common/loadingManagers';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
+import { KnownComponentType, type Vector3 } from '../../../interfaces';
+import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
+import { accessStore, type IModelRefComponentInternal, type ISceneNodeInternal, useEditorState } from '../../../store';
+import { getScaleFactor } from '../../../utils/mathUtils';
+import {
+  createNodeWithPositionAndNormal,
+  findComponentByType,
+  findNearestViableParentAncestorNodeRef,
+} from '../../../utils/nodeUtils';
 import {
   acceleratedRaycasting,
   cloneMaterials,
   enableShadow,
   getComponentGroupName,
 } from '../../../utils/objectThreeUtils';
-import { getScaleFactor } from '../../../utils/mathUtils';
+import { appendFunction } from '../../../utils/objectUtils';
 import { getIntersectionTransform } from '../../../utils/raycastUtils';
-import {
-  createNodeWithPositionAndNormal,
-  findComponentByType,
-  findNearestViableParentAncestorNodeRef,
-} from '../../../utils/nodeUtils';
-import { GLTFLoadingManager } from '../../../common/loadingManagers';
 
 import { useGLTF } from './GLTFLoader';
 

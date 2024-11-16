@@ -1,13 +1,13 @@
 import {
   GetAssetPropertyValueCommand,
-  IoTSiteWiseClient,
+  type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
 import { toDataPoint } from '../../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../../dataStreamFromSiteWise';
 import {
-  OnSuccessCallback,
-  ErrorCallback,
-  RequestInformationAndRange,
+  type OnSuccessCallback,
+  type ErrorCallback,
+  type RequestInformationAndRange,
   toSiteWiseAssetProperty,
 } from '@iot-app-kit/core';
 import { toId } from '../../util/dataStreamId';

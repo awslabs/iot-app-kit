@@ -1,6 +1,6 @@
 import { KnownComponentType } from '../../src';
 import { Component } from '../../src/models/SceneModels';
-import { ISceneNodeInternal } from '../../src/store';
+import { type ISceneNodeInternal } from '../../src/store';
 import { isLinearPlaneMotionIndicator } from '../../src/utils/sceneComponentUtils';
 
 type componentType = {

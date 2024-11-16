@@ -1,7 +1,6 @@
-import React from 'react';
+import type { StatusSettings } from './types';
 import { KPI } from '../kpi/kpi';
 import type { Threshold, StyleSettingsMap, Viewport } from '@iot-app-kit/core';
-import type { StatusSettings } from './types';
 import type { ComponentQuery } from '../../common/chartTypes';
 
 export const Status = ({

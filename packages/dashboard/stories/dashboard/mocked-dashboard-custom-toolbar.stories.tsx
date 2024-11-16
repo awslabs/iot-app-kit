@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { Viewport, registerPlugin } from '@iot-app-kit/core';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { useEffect, useState } from 'react';
+import { type Viewport, registerPlugin } from '@iot-app-kit/core';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 
 import { Dashboard } from '../../src/index';
 import {
-  DashboardClientConfiguration,
-  DashboardConfiguration,
+  type DashboardClientConfiguration,
+  type DashboardConfiguration,
 } from '../../src/types';
 import { DEFAULT_REGION } from '~/msw/constants';
 import { useWorker } from '~/msw/useWorker';
-import { RefreshRate } from '~/components/refreshRate/types';
+import { type RefreshRate } from '~/components/refreshRate/types';
 import {
   DateRangePicker,
-  DateRangePickerProps,
+  type DateRangePickerProps,
   FormField,
 } from '@cloudscape-design/components';
 import { Controller, useForm } from 'react-hook-form';

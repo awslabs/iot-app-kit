@@ -1,4 +1,3 @@
-import React from 'react';
 import { default as lineSvg } from './line.svg';
 import { default as lineSvgDark } from './line-dark.svg';
 import WidgetIcon from '../components/widgetIcon';

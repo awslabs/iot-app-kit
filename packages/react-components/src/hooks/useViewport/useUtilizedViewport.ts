@@ -1,4 +1,4 @@
-import { Viewport } from '@iot-app-kit/core';
+import { type Viewport } from '@iot-app-kit/core';
 import { useViewport } from './useViewport';
 import { useCallback, useState } from 'react';
 import { useCustomCompareEffect, useEffectOnce } from 'react-use';

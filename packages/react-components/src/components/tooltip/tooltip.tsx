@@ -1,18 +1,18 @@
-import React, { useRef, useState } from 'react';
 import {
+  colorBackgroundContainerContent,
+  colorBorderControlDefault,
   colorTextBodyDefault,
   spaceScaledM,
   spaceStaticS,
   spaceStaticXs,
-  colorBackgroundContainerContent,
-  colorBorderControlDefault,
 } from '@cloudscape-design/design-tokens';
+import { useRef, useState } from 'react';
+import styled, { css } from 'styled-components';
 import {
   MAX_TOOLTIP_WIDTH,
   TOP_TOOLTIP_MARGIN,
   WRAPPED_TOOLTIP_WIDTH,
 } from './constants';
-import styled, { css } from 'styled-components';
 
 interface TooltipProps {
   position: 'bottom' | 'top' | 'right' | 'left';

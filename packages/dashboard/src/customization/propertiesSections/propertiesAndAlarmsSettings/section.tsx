@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import { type FC } from 'react';
 import {
-  AssetSummary,
+  type AssetSummary,
   useAssetDescriptionMapQuery,
 } from '~/hooks/useAssetDescriptionQueries';
 import { PropertyComponent } from './propertyComponent';
@@ -8,12 +8,16 @@ import { isJust } from '~/util/maybe';
 import { SelectOneWidget } from '../shared/selectOneWidget';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Box from '@cloudscape-design/components/box';
-import { PropertiesAlarmsSectionProps } from './sectionTypes';
+import { type PropertiesAlarmsSectionProps } from './sectionTypes';
 import { defaultOnDeleteQuery } from './onDeleteProperty';
-import { IoTSiteWiseDataStreamQuery } from '~/types';
+import { type IoTSiteWiseDataStreamQuery } from '~/types';
 import { useAssetModel } from '~/hooks/useAssetModel/useAssetModel';
 import { handleRemoveAssetModelProperty } from './handleDeleteAssetModelProperty';
-import { handleRemoveAlarm } from './handleRemoveAlarm';
+import {
+  handleRemoveAlarm,
+  handleRemoveAssetModelAlarms,
+} from './handleRemoveAlarm';
+import { type AssetModelPropertySummary } from '@aws-sdk/client-iotsitewise';
 
 const NoComponents = () => <Box variant='p'>No properties or alarms found</Box>;
 
@@ -53,9 +57,14 @@ export const GeneralPropertiesAlarmsSection: FC<
   const siteWiseAssetQuery =
     (editablePropertiesAndAlarms && queryConfig.value.query) || undefined;
 
-  const assetModelIds = (siteWiseAssetQuery?.assetModels ?? []).map(
-    ({ assetModelId }) => assetModelId
-  );
+  const assetModelIds = [
+    ...(siteWiseAssetQuery?.assetModels ?? []).map(
+      ({ assetModelId }) => assetModelId
+    ),
+    ...(siteWiseAssetQuery?.alarmModels ?? []).map(
+      ({ assetModelId }) => assetModelId
+    ),
+  ];
   const { assetModels } = useAssetModel({
     assetModelIds,
     iotSiteWiseClient: client,
@@ -244,7 +253,70 @@ export const GeneralPropertiesAlarmsSection: FC<
         })
       ) ?? [];
 
-    const components = [...modeled, ...unmodeled, ...assetModeled, ...alarms];
+    const assetModelAlarms =
+      siteWiseAssetQuery?.alarmModels?.flatMap(
+        ({ assetModelId, alarmComponents }) => {
+          return alarmComponents.map(({ assetCompositeModelId }) => {
+            const assetModel = assetModels?.at(0);
+
+            if (!assetModel) return null;
+
+            const compositeAssetModel = assetModel.find(
+              (a) =>
+                (a as AssetModelPropertySummary).assetModelCompositeModelId ===
+                assetCompositeModelId
+            );
+            const name =
+              compositeAssetModel?.path?.find(
+                (p) => p.id === assetCompositeModelId
+              )?.name ?? '';
+
+            return (
+              <PropertyComponent
+                key={`${assetModelId}-${assetCompositeModelId}`}
+                propertyId={assetCompositeModelId}
+                refId={assetCompositeModelId}
+                assetSummary={{
+                  assetId: assetModelId,
+                  assetName: undefined,
+                  properties: [
+                    {
+                      propertyId: assetCompositeModelId,
+                      name: name,
+                      unit: undefined,
+                      dataType: undefined,
+                      alias: undefined,
+                    },
+                  ],
+                  alarms: [],
+                }}
+                styleSettings={{}}
+                onDeleteAssetQuery={() =>
+                  updateSiteWiseAssetQuery({
+                    ...siteWiseAssetQuery,
+                    alarmModels: handleRemoveAssetModelAlarms(
+                      { alarmModels: siteWiseAssetQuery.alarmModels ?? [] },
+                      { assetModelId, assetCompositeModelId }
+                    ),
+                  })
+                }
+                onUpdatePropertyColor={() => {}}
+                onUpdatePropertyName={() => {}}
+                colorable={false}
+                nameable={false}
+              />
+            );
+          });
+        }
+      ) ?? [];
+
+    const components = [
+      ...modeled,
+      ...unmodeled,
+      ...assetModeled,
+      ...alarms,
+      ...assetModelAlarms,
+    ];
 
     return components.length ? components : <NoComponents />;
   };

@@ -1,17 +1,17 @@
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import React from 'react';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 
-import { AggregationAndResolutionSection } from '../lineAndScatterStyleSettings/aggregationAndResolutionSection';
-import { PropertiesSection } from '~/customization/propertiesSectionComponent';
-import { LineScatterChartWidget } from '~/customization/widgets/types';
-import { applyAggregationToQuery } from '~/customization/widgets/utils/assetQuery/applyAggregationToQuery';
-import { applyResolutionToQuery } from '~/customization/widgets/utils/assetQuery/applyResolutionToQuery';
 import {
   type FilterPredicate,
-  PropertyLens,
+  type PropertyLens,
 } from '~/customization/propertiesSection';
+import { PropertiesSection } from '~/customization/propertiesSectionComponent';
+import { type LineScatterChartWidget } from '~/customization/widgets/types';
+import { applyAggregationToQuery } from '~/customization/widgets/utils/assetQuery/applyAggregationToQuery';
+import { applyResolutionToQuery } from '~/customization/widgets/utils/assetQuery/applyResolutionToQuery';
 import { type DashboardWidget } from '~/types';
+import { AggregationAndResolutionSection } from '../lineAndScatterStyleSettings/aggregationAndResolutionSection';
 
+import { type SelectProps } from '@cloudscape-design/components';
 import { isJust, maybeWithDefault } from '~/util/maybe';
 import {
   AGGREGATE_ONLY_AGGREGATION_OPTIONS,
@@ -19,7 +19,6 @@ import {
   ALL_AGGREGATION_OPTIONS,
   ALL_RESOLUTION_OPTIONS,
 } from '../constants';
-import { SelectProps } from '@cloudscape-design/components';
 
 const isOnlyRawData: readonly string[] = ['status-timeline', 'table'];
 const isOnlyAggregated: readonly string[] = ['bar-chart'];

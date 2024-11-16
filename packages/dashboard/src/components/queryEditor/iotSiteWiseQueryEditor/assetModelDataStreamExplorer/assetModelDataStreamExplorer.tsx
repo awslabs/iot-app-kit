@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { AssetSummary, IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 
 import Box from '@cloudscape-design/components/box';
@@ -24,12 +24,11 @@ import { createAssetModelQuery } from './createAssetModelQuery';
 import { getPlugin } from '@iot-app-kit/core';
 import { ResourceExplorerFooter } from '../footer/footer';
 import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
-import { DashboardWidget } from '~/types';
+import { type DashboardWidget } from '~/types';
 import {
   AlarmExplorer,
-  AlarmExplorerProps,
-  AssetResource,
-  useGetConfigValue,
+  type AlarmExplorerProps,
+  type AssetResource,
 } from '@iot-app-kit/react-components';
 import { ExpandableSection } from '@cloudscape-design/components';
 import { ExpandableSectionHeading } from '../components/expandableSectionHeading';
@@ -57,7 +56,7 @@ export const AssetModelDataStreamExplorer = ({
 }: AssetModelDataStreamExplorerProps) => {
   const metricsRecorder = getPlugin('metricsRecorder');
 
-  const alarmsFeatureOn = useGetConfigValue('useAlarms');
+  const alarmsFeatureOn = true; //useGetConfigValue('useAlarms');
 
   const {
     assetModelId,
@@ -66,8 +65,7 @@ export const AssetModelDataStreamExplorer = ({
     updateSelectedAsset,
   } = useModelBasedQuery();
 
-  const { updateAssetModels, uppdateAssetAlarmModels } =
-    useModelBasedQuerySelection();
+  const { updateModelQueries } = useModelBasedQuerySelection();
 
   const [selectedAssetModel, selectAssetModel] = useSelectedAssetModel(
     createInitialAssetModelResource(assetModelId)
@@ -110,32 +108,29 @@ export const AssetModelDataStreamExplorer = ({
 
   const onSave = () => {
     if (
-      selectedAssetModel[0].assetModelId &&
-      selectedAssetModelProperties.length > 0
+      (selectedAssetModel[0].assetModelId &&
+        selectedAssetModelProperties.length > 0) ||
+      selectedAlarms.length > 0
     ) {
-      updateAssetModels(
-        createAssetModelQuery({
+      updateModelQueries({
+        alarmModels: createAlarmModelQuery({
+          assetModelId: selectedAssetModel[0].assetModelId,
+          assetId: selectedAsset?.at(0)?.assetId,
+          alarms: selectedAlarms,
+        }),
+        assetModels: createAssetModelQuery({
           assetModelId: selectedAssetModel[0].assetModelId,
           assetId: selectedAsset?.at(0)?.assetId,
           assetModelPropertyIds: createNonNullableList(
             selectedAssetModelProperties.map(({ propertyId }) => propertyId)
           ),
-        })
-      );
+        }),
+      });
+
       metricsRecorder?.record({
         metricName: 'AssetModelDataStreamAdd',
         metricValue: 1,
       });
-    }
-
-    if (selectedAlarms.length > 0) {
-      uppdateAssetAlarmModels(
-        createAlarmModelQuery({
-          assetModelId: selectedAssetModel[0].assetModelId,
-          assetId: selectedAsset?.at(0)?.assetId,
-          alarms: selectedAlarms,
-        })
-      );
     }
   };
 
@@ -170,7 +165,7 @@ export const AssetModelDataStreamExplorer = ({
             <>
               <ExpandableSection
                 headerText={
-                  <ExpandableSectionHeading headerText='Data Streams' />
+                  <ExpandableSectionHeading headerText='Data streams' />
                 }
                 defaultExpanded
               >
@@ -180,7 +175,7 @@ export const AssetModelDataStreamExplorer = ({
               </ExpandableSection>
               <ExpandableSection
                 headerText={
-                  <ExpandableSectionHeading headerText='Alarm Data Streams' />
+                  <ExpandableSectionHeading headerText='Alarm data streams' />
                 }
               >
                 <AlarmExplorer
@@ -208,7 +203,7 @@ export const AssetModelDataStreamExplorer = ({
                         modeledDataStream
                       ),
                   }}
-                  description='Select an alarm to add to a selected widget'
+                  description='Select an alarm to add to a selected widget.'
                   timeZone={timeZone}
                   significantDigits={significantDigits}
                 />

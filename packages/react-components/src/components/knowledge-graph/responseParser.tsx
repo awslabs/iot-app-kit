@@ -1,9 +1,9 @@
 import {
-  INodeResults,
-  IRelationResults,
+  type INodeResults,
+  type IRelationResults,
 } from './interfaces/kgDataSourceInterfaces';
-import { ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
-import { NodeData, EdgeData } from './graph/types';
+import { type ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { type NodeData, type EdgeData } from './graph/types';
 
 function parseNode(item: INodeResults, nodeData: Map<string, NodeData>) {
   const entityId = item.entityId;

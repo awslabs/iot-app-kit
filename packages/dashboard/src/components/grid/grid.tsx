@@ -1,6 +1,5 @@
-import React, { PropsWithChildren } from 'react';
+import { type PropsWithChildren } from 'react';
 import { DASHBOARD_CONTAINER_ID } from './getDashboardPosition';
-
 import './grid.css';
 
 /**

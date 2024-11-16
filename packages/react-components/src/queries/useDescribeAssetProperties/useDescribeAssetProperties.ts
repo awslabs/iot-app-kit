@@ -1,4 +1,4 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useQueries } from '@tanstack/react-query';
 import {
   createDescribeAssetPropertyQueryFn,

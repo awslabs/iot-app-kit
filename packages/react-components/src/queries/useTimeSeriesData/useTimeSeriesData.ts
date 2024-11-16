@@ -1,10 +1,10 @@
 import {
-  AssetPropertyValuesRequest,
-  AssetPropertyValuesRequestFunctions,
+  type AssetPropertyValuesRequest,
+  type AssetPropertyValuesRequestFunctions,
 } from '../useAssetPropertyValues';
 import { useAssetPropertyValues } from '../useAssetPropertyValues/useAssetPropertyValues';
-import { RequestSettings } from './requestManager';
-import { Viewport } from './types';
+import { type RequestSettings } from './requestManager';
+import { type Viewport } from './types';
 
 type Request = AssetPropertyValuesRequest;
 type RequestFunctions = AssetPropertyValuesRequestFunctions;

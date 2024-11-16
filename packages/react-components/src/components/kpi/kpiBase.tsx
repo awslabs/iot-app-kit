@@ -1,17 +1,16 @@
-import React from 'react';
-import omitBy from 'lodash.omitby';
-
-import { DEFAULT_KPI_SETTINGS } from './constants';
-import type { KPIBaseProperties, KPISettings } from './types';
-import './kpi.css';
-import { highContrastColor } from './highContrastColor';
-import { getAggregationFrequency } from '../../utils/aggregationFrequency';
 import {
   colorBorderDividerSecondary,
   colorTextHeadingDefault,
   fontSizeBodyS,
+  spaceStaticXs,
 } from '@cloudscape-design/design-tokens';
+import omitBy from 'lodash.omitby';
 import { DEFAULT_DECIMAL_PLACES } from '../../common/constants';
+import { Title } from '../../common/title';
+import { getAggregationFrequency } from '../../utils/aggregationFrequency';
+import { DEFAULT_KPI_SETTINGS } from './constants';
+import { highContrastColor } from './highContrastColor';
+import './kpi.css';
 import {
   AggregationResolutionText,
   AlarmHeader,
@@ -21,6 +20,7 @@ import {
   TimestampText,
   ValueText,
 } from './kpiTextFragments';
+import type { KPIBaseProperties, KPISettings } from './types';
 
 export const KpiBase: React.FC<KPIBaseProperties> = ({
   propertyPoint,
@@ -34,8 +34,10 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
   significantDigits = DEFAULT_DECIMAL_PLACES,
   propertyThreshold,
   timeZone,
-  alarmState,
+  titleText,
+  alarmContent,
   alarmStatus,
+  assistant,
 }) => {
   const {
     showUnit,
@@ -79,14 +81,29 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
 
   if (error) {
     return (
-      <ErrorText
-        {...{
-          error,
-          secondaryFontSize,
-          nonThresholdBackground,
-          nonThresholdFontColor,
+      <div
+        className='kpi'
+        data-testid='kpi-error-component'
+        style={{
+          fontSize: `${secondaryFontSize}px`,
+          backgroundColor: nonThresholdBackground,
+          color: nonThresholdFontColor,
         }}
-      />
+      >
+        <Title
+          text={titleText}
+          style={{
+            fontSize: `${secondaryFontSize}px`,
+            color: fontColor,
+            paddingLeft: `${spaceStaticXs}`,
+          }}
+        />
+        <ErrorText
+          {...{
+            error,
+          }}
+        />
+      </div>
     );
   }
 
@@ -98,18 +115,28 @@ export const KpiBase: React.FC<KPIBaseProperties> = ({
     >
       <div className='kpi'>
         <div>
+          <Title
+            text={titleText}
+            style={{
+              fontSize: `${secondaryFontSize}px`,
+              color: fontColor,
+              paddingLeft: `${spaceStaticXs}`,
+            }}
+          />
           <AlarmHeader
             {...{
               fontColor,
               borderColor,
-              alarmState,
+              alarmContent,
               alarmStatus,
               showFilledThreshold,
               backgroundColor: settings.backgroundColor,
+              assistant,
             }}
           />
           <NameAndUnit
             {...{
+              titleText,
               showName,
               name,
               showUnit,

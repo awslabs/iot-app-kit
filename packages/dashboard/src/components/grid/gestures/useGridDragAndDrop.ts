@@ -1,5 +1,5 @@
 import { useKeyPress } from '~/hooks/useKeyPress';
-import { PointClickEvent, DragEvent, DropEvent } from './types';
+import { type PointClickEvent, type DragEvent, type DropEvent } from './types';
 import { usePointerTracker } from './usePointerTracker';
 import { useDragMonitor } from './useDragMonitor';
 import { useDropMonitor } from './useDropMonitor';

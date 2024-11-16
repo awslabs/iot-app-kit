@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useLayoutEffect, useState, useCallback } from 'react';
-import { useIntl, defineMessages } from 'react-intl';
 import { Checkbox, FormField, Select, SpaceBetween } from '@cloudscape-design/components';
+import { useCallback, useContext, useEffect, useLayoutEffect, useState } from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
-import useLogger from '../../../logger/react-logger/hooks/useLogger';
-import { Component, LightType } from '../../../models/SceneModels';
-import { ILightComponentInternal, accessStore } from '../../../store';
-import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { IComponentEditorProps } from '../ComponentEditor';
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../common/constants';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
+import useLogger from '../../../logger/react-logger/hooks/useLogger';
+import { type Component, LightType } from '../../../models/SceneModels';
+import { type ILightComponentInternal, accessStore } from '../../../store';
 import { parseFloatOrDefault } from '../../../utils/mathUtils';
-import { NumericInput } from '../CommonPanelComponents';
 import { ColorPicker } from '../ColorPicker/ColorPicker';
+import { NumericInput } from '../CommonPanelComponents';
+import { type IComponentEditorProps } from '../ComponentEditor';
 
 type OnLightSettingsUpdatedCallback = (lightSettings: Component.ILightSettings) => void;
 
@@ -144,13 +144,13 @@ function LightSettingsEditor(props: {
   }, [lightSettings, dirty]);
 
   return (
-    <React.Fragment>
+    <>
       <SpaceBetween size='s'>
         {Object.keys(lightSettings).map((field, index) =>
           CreateInputForField(field, index, lightSettings, setLightSettings, setDirty),
         )}
       </SpaceBetween>
-    </React.Fragment>
+    </>
   );
 }
 
@@ -165,7 +165,7 @@ function createLightSettingsEditor(
     case LightType.Hemisphere:
       return <LightSettingsEditor lightSettings={component.lightSettings} onSettingsUpdated={onSettingsUpdated} />;
     default:
-      return <React.Fragment></React.Fragment>;
+      return <></>;
   }
 }
 
@@ -236,7 +236,7 @@ export const LightComponentEditor: React.FC<IComponentEditorProps> = ({ node, co
   const lightSettingsEditor = createLightSettingsEditor(lightComponent, onLightSettingsUpdated);
 
   return (
-    <React.Fragment>
+    <>
       <SpaceBetween size='s'>
         <FormField label={intl.formatMessage({ defaultMessage: 'Light Type', description: 'Form Field label' })}>
           <Select
@@ -260,6 +260,6 @@ export const LightComponentEditor: React.FC<IComponentEditorProps> = ({ node, co
 
         {lightSettingsEditor}
       </SpaceBetween>
-    </React.Fragment>
+    </>
   );
 };

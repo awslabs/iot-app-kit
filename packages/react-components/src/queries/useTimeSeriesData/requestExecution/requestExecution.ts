@@ -1,6 +1,6 @@
-import { TimeSeriesDataCacheClient } from '../cacheClient';
-import { OnRequestSuccessCallback } from './requestExecutionStrategy';
-import { SendOptions } from './types';
+import { type TimeSeriesDataCacheClient } from '../cacheClient';
+import { type OnRequestSuccessCallback } from './requestExecutionStrategy';
+import { type SendOptions } from './types';
 
 export type TimeSeriesDataRequestExecutionOptions<Request, Data> = {
   cacheClient: TimeSeriesDataCacheClient<Request, Data>;

@@ -1,4 +1,4 @@
-import { TableProps as CloudscapeTableProps } from '@cloudscape-design/components';
+import { type TableProps as CloudscapeTableProps } from '@cloudscape-design/components';
 import type {
   DataPoint,
   ErrorDetails,
@@ -7,7 +7,8 @@ import type {
 } from '@iot-app-kit/core';
 import type { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import type { TableMessages } from './messages';
-import { PascalCaseStateName } from '../../hooks/useAlarms/transformers';
+import type { AssistantProperty } from '../../common/assistantProps';
+import { type PascalCaseStateName } from '../../hooks/useAlarms/transformers';
 
 export type TableItemRef = {
   $cellRef: {
@@ -28,6 +29,8 @@ export type CellItemProps = {
 };
 
 export type AlarmItem = {
+  id?: string;
+  assetId?: string;
   alarmName?: string;
   property?: string;
   value?: Primitive;
@@ -36,6 +39,7 @@ export type AlarmItem = {
   state?: PascalCaseStateName;
   severity?: number;
   isLoading?: boolean;
+  threshold?: Threshold;
   /**
    * I don't know why these are
    * required but I need to leave
@@ -54,6 +58,7 @@ export type CellItem = {
   valueOf?: () => Primitive | undefined;
   toString?: () => string;
   quality?: DataPoint['quality'];
+  refId?: string;
 } & AlarmItem;
 
 export type TableItemHydrated = { [k: string]: CellItem };
@@ -73,6 +78,7 @@ export type CellProps = {
   isLoading: boolean;
   threshold: Threshold;
   quality?: DataPoint['quality'];
+  refId?: string;
 };
 
 export interface TableProps
@@ -84,4 +90,6 @@ export interface TableProps
   precision?: number;
   pageSize?: number;
   paginationEnabled?: boolean;
+  assistant?: AssistantProperty;
+  onTableSelection?: (indexesSelected: number[]) => void;
 }

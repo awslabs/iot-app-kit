@@ -1,7 +1,7 @@
-import * as React from 'react';
+import { createContext, useContext } from 'react';
 
-export const sceneComposerIdContext = React.createContext('default');
+export const sceneComposerIdContext = createContext('default');
 
 export const useSceneComposerId = (): string => {
-  return React.useContext(sceneComposerIdContext);
+  return useContext(sceneComposerIdContext);
 };

@@ -1,16 +1,14 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import pickBy from 'lodash/pickBy';
-import { Gauge, useViewport } from '@iot-app-kit/react-components';
-import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
-import type { DashboardState } from '~/store/state';
-import type { GaugeWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
+import { Gauge, useViewport } from '@iot-app-kit/react-components';
+import pickBy from 'lodash/pickBy';
+import { useSelector } from 'react-redux';
 import { useQueries } from '~/components/dashboard/queryContext';
-import { isDefined } from '~/util/isDefined';
-
 import WidgetTile from '~/components/widgets/tile';
 import { useChartSize } from '~/hooks/useChartSize';
+import type { DashboardState } from '~/store/state';
+import { isDefined } from '~/util/isDefined';
+import type { GaugeWidget } from '../types';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import './component.css';
 
 const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
@@ -32,6 +30,7 @@ const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
     significantDigits: widgetSignificantDigits,
     yMin,
     yMax,
+    assistant,
   } = widget.properties;
 
   const queries = useQueries(queryConfig.query);
@@ -43,7 +42,7 @@ const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
   if (shouldShowEmptyState) {
     return (
       <WidgetTile widget={widget}>
-        <GaugeWidgetEmptyStateComponent />
+        <GaugeWidgetEmptyStateComponent title={title} />
       </WidgetTile>
     );
   }
@@ -69,7 +68,7 @@ const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
   const size = { width: chartSize.width - 8, height: chartSize.height - 44 };
 
   return (
-    <WidgetTile widget={widget} title={title} key={key}>
+    <WidgetTile widget={widget} key={key} assistant={assistant}>
       <Gauge
         size={size}
         query={queries[0]}
@@ -78,16 +77,21 @@ const GaugeWidgetComponent: React.FC<GaugeWidget> = (widget) => {
         settings={settings}
         thresholds={thresholds}
         significantDigits={significantDigits}
+        assistant={assistant}
+        titleText={title}
       />
     </WidgetTile>
   );
 };
 
-const GaugeWidgetEmptyStateComponent: React.FC = () => {
+type GaugeWidgetEmptyStateComponentProps = { title?: string };
+const GaugeWidgetEmptyStateComponent: React.FC<
+  GaugeWidgetEmptyStateComponentProps
+> = ({ title = 'Gauge' }: GaugeWidgetEmptyStateComponentProps) => {
   return (
     <div className='gauge-widget-empty-state'>
       <Box variant='strong' color='text-status-inactive' margin='s'>
-        Gauge
+        {title}
       </Box>
 
       <div className='gauge-widget-empty-state-message-container'>
@@ -104,7 +108,7 @@ const GaugeWidgetEmptyStateComponent: React.FC = () => {
           color='text-status-inactive'
           margin={{ bottom: 's', horizontal: 's' }}
         >
-          Add a property or alarm to populate Gauge
+          Add a property or alarm to populate Gauge.
         </Box>
       </div>
     </div>

@@ -1,9 +1,8 @@
-import React from 'react';
 import { Box, Checkbox, FormField } from '@cloudscape-design/components';
 import { StyledExpandableSection } from '../components/styledComponents';
-import { PropertyLens } from '~/customization/propertiesSection';
-import { GaugeProperties } from '~/customization/widgets/types';
-import { DashboardWidget } from '~/types';
+import { type PropertyLens } from '~/customization/propertiesSection';
+import { type GaugeProperties } from '~/customization/widgets/types';
+import { type DashboardWidget } from '~/types';
 import { maybeWithDefault } from '~/util/maybe';
 
 export const RenderGaugeDisplaySettingsSection = ({
@@ -51,7 +50,7 @@ export const RenderGaugeDisplaySettingsSection = ({
             checked={!!showUnit}
             data-testid='show-hide-tunit'
           >
-            Show Unit
+            Show units
           </Checkbox>
         </FormField>
       </Box>

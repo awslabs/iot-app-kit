@@ -1,7 +1,14 @@
-import { DataStream, DataType, TimeSeriesData, Viewport, viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
+import {
+  type DataStream,
+  type DataType,
+  type TimeSeriesData,
+  type Viewport,
+  viewportEndDate,
+  viewportStartDate,
+} from '@iot-app-kit/core';
 
 import { DataBindingLabelKeys } from '../common/constants';
-import { IDataField, IDataFrame, IDataInput, ValueType } from '../interfaces';
+import { type IDataField, type IDataFrame, type IDataInput, type ValueType } from '../interfaces';
 
 const toValueType = (dataType: DataType | undefined): ValueType => {
   switch (dataType) {

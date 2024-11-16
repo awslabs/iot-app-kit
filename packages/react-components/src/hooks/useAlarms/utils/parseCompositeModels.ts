@@ -1,8 +1,8 @@
 import {
-  AssetCompositeModel,
-  AssetModelCompositeModel,
-  AssetModelProperty,
-  AssetProperty,
+  type AssetCompositeModel,
+  type AssetModelCompositeModel,
+  type AssetModelProperty,
+  type AssetProperty,
 } from '@aws-sdk/client-iotsitewise';
 import {
   ALARM_COMPOSITE_MODEL_TYPE,

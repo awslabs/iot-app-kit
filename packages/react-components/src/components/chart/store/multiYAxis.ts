@@ -1,4 +1,4 @@
-import { StateCreator } from 'zustand';
+import { type StateCreator } from 'zustand';
 
 type YAxisValue = {
   value: number;

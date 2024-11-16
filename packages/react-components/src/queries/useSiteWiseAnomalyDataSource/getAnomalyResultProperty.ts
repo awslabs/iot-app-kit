@@ -1,4 +1,4 @@
-import { DescribeAssetModelCompositeModelCommandOutput } from '@aws-sdk/client-iotsitewise';
+import { type DescribeAssetModelCompositeModelCommandOutput } from '@aws-sdk/client-iotsitewise';
 
 const ANOMALY_RESULT_NAME = 'AWS/L4E_ANOMALY_RESULT';
 

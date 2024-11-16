@@ -1,15 +1,15 @@
 import {
-  IoTSiteWiseClient,
+  type IoTSiteWiseClient,
   paginateListAssetProperties,
-  IoTSiteWisePaginationConfiguration,
-  ListAssetPropertiesCommandInput,
-  ListAssetPropertiesCommandOutput,
+  type IoTSiteWisePaginationConfiguration,
+  type ListAssetPropertiesCommandInput,
+  type ListAssetPropertiesCommandOutput,
   DescribeAssetCommand,
   paginateListAssetModelProperties,
-  ListAssetModelPropertiesCommandInput,
-  AssetModelPropertySummary,
+  type ListAssetModelPropertiesCommandInput,
+  type AssetModelPropertySummary,
 } from '@aws-sdk/client-iotsitewise';
-import { Paginator } from '@aws-sdk/types';
+import { type Paginator } from '@aws-sdk/types';
 import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
 
 export class listAssetPropertiesWithComposite {

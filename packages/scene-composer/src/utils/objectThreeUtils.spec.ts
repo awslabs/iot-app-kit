@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { acceleratedRaycast as mockAcceleratedRaycast } from 'three-mesh-bvh';
 
 import { KnownComponentType } from '../../src/interfaces';
-import { IModelRefComponentInternal } from '../../src/store';
+import { type IModelRefComponentInternal } from '../../src/store';
 import {
   acceleratedRaycasting,
   cloneMaterials,

@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { DashboardWidget } from '..';
+import { type DashboardWidget } from '..';
 import { onDeleteWidgetsAction } from '~/store/actions';
 
 export const useDeleteWidgets = () => {

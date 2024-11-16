@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
 import { AlarmExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests';
 import * as table from '../helpers/table';

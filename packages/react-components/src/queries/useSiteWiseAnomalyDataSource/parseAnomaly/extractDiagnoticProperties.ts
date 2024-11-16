@@ -1,4 +1,4 @@
-import { AnomalyEvent } from './types';
+import { type AnomalyEvent } from './types';
 
 export const extractDiagnoticProperties = (anomalyEvents: AnomalyEvent[]) => {
   const diagnosticPropertyMap = new Map<string, string>();

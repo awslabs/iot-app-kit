@@ -1,26 +1,34 @@
-import { DataPoint, DataStream, Threshold } from '@iot-app-kit/core';
-import { BarSeriesOption, SeriesOption, YAXisComponentOption } from 'echarts';
+import {
+  type DataPoint,
+  type DataStream,
+  type Threshold,
+} from '@iot-app-kit/core';
+import {
+  type BarSeriesOption,
+  type SeriesOption,
+  type YAXisComponentOption,
+} from 'echarts';
 
 import {
-  ChartAxisOptions,
-  ChartDataQuality,
-  ChartOptions,
-  ChartStyleSettingsOptions,
-  Visualization,
+  type ChartAxisOptions,
+  type ChartDataQuality,
+  type ChartOptions,
+  type ChartStyleSettingsOptions,
+  type Visualization,
 } from '../../types';
 import { convertStyles } from '../style/convertStyles';
 import { convertYAxis as convertChartYAxis } from '../axes/yAxis';
 import { convertThresholds } from '../convertThresholds';
 import {
-  ChartStyleSettingsWithDefaults,
-  Emphasis,
+  type ChartStyleSettingsWithDefaults,
+  type Emphasis,
 } from '../../utils/getStyles';
 import {
   createAlarmLabel,
   DEEMPHASIZE_OPACITY,
   EMPHASIZE_SCALE_CONSTANT,
 } from '../../eChartsConstants';
-import { GenericSeries } from '../../../../echarts/types';
+import { type GenericSeries } from '../../../../echarts/types';
 import { useMemo } from 'react';
 import { useVisibleDataStreams } from '../../hooks/useVisibleDataStreams';
 import { useHighlightedDataStreams } from '../../hooks/useHighlightedDataStreams';
@@ -272,6 +280,7 @@ export const useSeriesAndYAxis = (
     styleSettings,
     axis,
     thresholds,
+    alarmThresholds,
     performanceMode,
     showBadDataIcons,
     showUncertainDataIcons,
@@ -284,6 +293,7 @@ export const useSeriesAndYAxis = (
     axis?: ChartAxisOptions;
     performanceMode?: boolean;
     showAlarmIcons?: boolean;
+    alarmThresholds: Threshold[];
   } & ChartDataQuality
 ) => {
   const { isDataStreamHidden } = useVisibleDataStreams();
@@ -292,7 +302,8 @@ export const useSeriesAndYAxis = (
 
   return useMemo(() => {
     const defaultYAxis: YAXisComponentOption[] = [convertChartYAxis(axis)];
-    const convertedThresholds = convertThresholds(thresholds);
+    const allThresholds = [...(thresholds ?? []), ...alarmThresholds];
+    const convertedThresholds = convertThresholds(allThresholds);
 
     const shouldUseEmphasis = highlightedDataStreams.length > 0;
 
@@ -347,6 +358,7 @@ export const useSeriesAndYAxis = (
     styleSettings,
     performanceMode,
     thresholds,
+    alarmThresholds,
     highlightedDataStreams,
     isDataStreamHighlighted,
     isDataStreamHidden,

@@ -1,5 +1,5 @@
 import { isDiagnostics } from './isDiagnostic';
-import { AnomalyEvent } from './types';
+import { type AnomalyEvent } from './types';
 
 export const isAnomalyEvent = (event: object): event is AnomalyEvent => {
   const isCorrectShape =

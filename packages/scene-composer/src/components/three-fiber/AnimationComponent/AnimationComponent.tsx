@@ -1,11 +1,11 @@
 // eslint-disable-next-line import/default
-import React, { Fragment, useEffect, useMemo } from 'react';
-import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
+import { Fragment, useEffect, useMemo, useState } from 'react';
+import * as THREE from 'three';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { ISceneNodeInternal, useEditorState, useViewOptionState } from '../../../store';
-import { IAnimationComponent } from '../../../interfaces';
+import { type IAnimationComponent } from '../../../interfaces';
+import { type ISceneNodeInternal, useEditorState, useViewOptionState } from '../../../store';
 
 export const toggleIsAnimationPaused = (
   AnimationMixer: THREE.AnimationMixer,
@@ -29,7 +29,7 @@ export const animationObjectKey = 'Scene';
 const AnimationComponent: React.FC<AnimationComponentProps> = ({ component, node }) => {
   const sceneComposerId = useSceneComposerId();
   const isGlobalAnimationPaused = !useViewOptionState(sceneComposerId).componentVisibilities['Animation'];
-  const [scene, setScene] = React.useState<THREE.Object3D>();
+  const [scene, setScene] = useState<THREE.Object3D>();
   const { getObject3DBySceneNodeRef } = useEditorState(sceneComposerId);
   const object = getObject3DBySceneNodeRef(node.ref);
   const currentAnimations = useMemo(() => {

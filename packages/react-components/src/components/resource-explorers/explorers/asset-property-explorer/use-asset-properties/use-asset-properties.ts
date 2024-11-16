@@ -1,22 +1,22 @@
-import { useAssetPropertySearch } from './use-asset-property-search';
-import { useListAssetProperties } from './use-list-asset-properties';
-import type {
-  AssetPropertyRequestParameters,
-  AssetPropertyResourcesRequestParameters,
-  SearchedAssetPropertiesRequestParameters,
-} from '../types';
-import { useLatestValues } from '../../../requests/use-latest-values';
-import type {
-  UseListAPIBaseOptions,
-  UseListAPIBaseResult,
-} from '../../../types/requests';
 import type {
   BatchGetAssetPropertyValue,
   ExecuteQuery,
   ListAssetModelProperties,
   ListAssetProperties,
 } from '@iot-app-kit/core';
+import { useLatestValues } from '../../../requests/use-latest-values';
+import type {
+  UseListAPIBaseOptions,
+  UseListAPIBaseResult,
+} from '../../../types/requests';
 import type { AssetPropertyResource } from '../../../types/resources';
+import type {
+  AssetPropertyRequestParameters,
+  AssetPropertyResourcesRequestParameters,
+  SearchedAssetPropertiesRequestParameters,
+} from '../types';
+import { useAssetPropertySearch } from './use-asset-property-search';
+import { useListAssetProperties } from './use-list-asset-properties';
 
 export interface UseAssetPropertiesOptions extends UseListAPIBaseOptions {
   parameters: AssetPropertyResourcesRequestParameters;
@@ -63,10 +63,9 @@ export function useAssetProperties({
 
   const {
     assetProperties: assetPropertiesWithoutLatestValues,
-    isLoading: isLoadingAssetPropertiesWithoutLatestValues,
+    isLoadingFirstPage: isLoadingAssetPropertiesFirstPage,
+    isLoadingResources: isLoadingAssetProperties,
     error,
-    hasNextPage,
-    nextPage,
   } = shouldRequestSearchedAssetProperties
     ? assetPropertySearchResult
     : listedAssetPropertiesResult;
@@ -81,16 +80,27 @@ export function useAssetProperties({
       [assetId, propertyId].join('').split('-').join(''),
   });
 
-  const isLoading =
-    isLoadingAssetPropertiesWithoutLatestValues ||
-    isLoadingAssetPropertiesWithLatestValues;
+  const isLoadingFirstPage =
+    batchGetAssetPropertyValue && parameters.length !== 0 && error === null
+      ? assetPropertiesWithLatestValues.length === 0 ||
+        isLoadingAssetPropertiesWithLatestValues ||
+        isLoadingAssetPropertiesFirstPage
+      : isLoadingAssetPropertiesFirstPage;
+
+  const isLoadingResources =
+    isLoadingAssetProperties || isLoadingAssetPropertiesWithLatestValues;
 
   const assetProperties =
     batchGetAssetPropertyValue !== undefined
       ? assetPropertiesWithLatestValues
       : assetPropertiesWithoutLatestValues;
 
-  return { assetProperties, isLoading, error, hasNextPage, nextPage };
+  return {
+    assetProperties,
+    isLoadingFirstPage,
+    isLoadingResources,
+    error,
+  };
 }
 
 function isSearchedAssetPropertyParameters(

@@ -1,9 +1,14 @@
-import React from 'react';
+import type { IoTSiteWise } from '@amzn/iot-black-pearl-internal-v3';
+import { type DataStream } from '@iot-app-kit/core';
+import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
-import { DataStream } from '@iot-app-kit/core';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import type {
+  AssistantActionEventDetail,
+  AssistantProperty,
+} from '../../../common/assistantProps';
 import { Chart } from '../index';
-import { ChartLegend } from '../types';
+import { type ChartLegend } from '../types';
 
 const VIEWPORT = { duration: '5m' };
 
@@ -36,27 +41,23 @@ export const mockQuery = mockTimeSeriesDataQuery([
     thresholds: [],
   },
 ]);
+
+const client = new IoTSitewiseAssistantClient({
+  iotSiteWiseClient: {
+    invokeAssistant: jest.fn(),
+  } satisfies Pick<IoTSiteWise, 'invokeAssistant'>,
+  defaultContext: '',
+});
+
+const assistant = {
+  onAction: (_event: AssistantActionEventDetail) => jest.fn(),
+  conversationId: 'conversationId',
+  componentId: 'componentId',
+  target: 'widget',
+  client,
+} satisfies AssistantProperty;
+
 describe('Chart Component Testing', () => {
-  it('Chart renders', () => {
-    const query = mockTimeSeriesDataQuery([
-      {
-        dataStreams: [DATA_STREAM],
-        viewport: VIEWPORT,
-        thresholds: [],
-      },
-    ]);
-
-    const element = render(
-      <Chart
-        queries={[query]}
-        onChartOptionsChange={jest.fn()}
-        viewport={VIEWPORT}
-        size={{ width: 500, height: 500 }}
-      />
-    );
-    expect(element).not.toBeNull();
-  });
-
   it('Chart renders', () => {
     const element = render(
       <Chart
@@ -67,6 +68,35 @@ describe('Chart Component Testing', () => {
       />
     );
     expect(element).not.toBeNull();
+  });
+
+  it('Chart renders with assistant action panel', () => {
+    expect(() => {
+      render(
+        <Chart
+          queries={[mockQuery]}
+          onChartOptionsChange={jest.fn()}
+          viewport={VIEWPORT}
+          size={{ width: 500, height: 500 }}
+          assistant={assistant}
+        />
+      );
+    }).not.toThrowError();
+  });
+
+  it('Chart should render title', () => {
+    render(
+      <Chart
+        queries={[mockQuery]}
+        onChartOptionsChange={jest.fn()}
+        viewport={VIEWPORT}
+        size={{ width: 500, height: 500 }}
+        id='componentId'
+        titleText='Chart Title'
+      />
+    );
+
+    expect(screen.getByText('Chart Title')).toBeInTheDocument();
   });
 });
 

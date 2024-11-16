@@ -1,5 +1,5 @@
-import { TwinMakerKGQueryDataModule } from '@iot-app-kit/source-iottwinmaker';
-import { ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { type TwinMakerKGQueryDataModule } from '@iot-app-kit/source-iottwinmaker';
+import { type ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
 export interface KnowledgeGraphQueryInterface {
   findPropertiesByEntityOrPropertyNameOrDisplayName(
     searchTerm: string

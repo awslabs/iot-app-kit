@@ -1,6 +1,7 @@
-import { Canvas, Meta, Story } from '@storybook/blocks';
+import { Canvas, Meta, Story, Source, Markdown, IconItem } from '@storybook/blocks';
 
 import * as ChartStories from './Chart.stories';
+import { Icon } from '@cloudscape-design/components';
 
 <Meta of={ChartStories} />
 
@@ -10,36 +11,15 @@ The chart component is a way to visualize and navigate time series data from one
 
 Chart supports a rich set of features including trend cursors, thresholds, high performance live-streaming and smooth syncing across other IoT App Kit components.
 
-This component can be used to draw both line (step-up, step-down, step-mid etc.)and scatter charts
+This component can be used to draw both line (step-up, step-down, step-mid etc.) and scatter charts.
 
-## Demo
+## Example
 
 <Canvas sourceState="none"  story={{height : '450px' }}  of={ChartStories.Standard} />
 
-**📈👆 Interact with the chart!**
+##### Basic usage
 
-**_Pan_**: hold shift, click and drag within the data-visualization area of the chart.
-
-**_Zoom in_**: you can zoom in by scrolling up on the chart OR clicking on the zoom icon on the top tight corner of the chart and select the desired window.
-
-**_Zoom out:_** you can zoom out by scrolling down on the chart.
-
-**_Restrict time span_:** click on the zoom icon in the top right corner of the chart and drag through the interval of time you wish to restrict the viewport to.
-
-**_Reset time span_:** click on the zoom reset icon in the top right corner of the chart.
-
-**_Resize chart width_:** hold the divider between the chart and the legend section and move it horizontally.
-
-**_Add a trend cursor_:** right click on the chart and click on Add trend cursor OR hold t key and click on the chart where you want a trend cursor
-
-**_Delete a trend cursor_:** right click near a trend cursor(do not have to be exactly on the trend cursor line) and click on Delete trend cursor.
-
-**_Copy a trend cursor's data_:** right click near a trend cursor(do not have to be exactly on the trend cursor line) and click on Copy trend cursor. The copied data is csv/excel compatible.
-
-## Basic usage
-
-
-```jsx
+<Source dark="true" code={`
 import { Chart } from '@iot-app-kit/react-components';
 
 const Page = () => (
@@ -47,170 +27,228 @@ const Page = () => (
     <Chart queries={[/** add your queries here *//]} />
   </div>
 );
-```
+`} />
+
+## Chart gestures and actions
+
+**📈👆 Interact with the chart!**
+
+<Markdown>
+{`
+| Actions         | Description         |
+| ------------ | ------------------- |
+| **_Pan_** | hold shift, click and drag within the data-visualization area of the chart. |
+| **_Zoom in_** | you can zoom in by scrolling up on the chart OR clicking on the zoom icon on the top tight corner of the chart and select the desired window. |
+| **_Zoom out_** | you can zoom out by scrolling down on the chart. |
+| **_Restrict time span_** | click on the zoom icon in the top right corner of the chart and drag through the interval of time you wish to restrict the viewport to. |
+| **_Reset time span_** | click on the zoom reset icon in the top right corner of the chart. |
+| **_Resize chart width_** | hold the divider between the chart and the legend section and move it horizontally. |
+| **_Add a trend cursor_** | right click on the chart and click on Add trend cursor OR hold t key and click on the chart where you want a trend cursor |
+| **_Delete a trend cursor_** | right click near a trend cursor(do not have to be exactly on the trend cursor line) and click on Delete trend cursor. |
+| **_Copy a trend cursor's data_** | right click near a trend cursor(do not have to be exactly on the trend cursor line) and click on Copy trend cursor. The copied data is csv/excel compatible. |
+`}
+</Markdown>
 
 ## Chart Properties
 
 The chart component contains the following properties.
 
+#### queries
+##### (array, required)
 
-#### queries (array, required): 
-
-The queries which specify the time series data to visualize. 
+This query specifies the time series data or alarm data to visualize.
 This is the only required property. Learn more about [time series data queries](/docs/core-time-series-data--docs).
 
-#### defaultVisualizationType (type, optional): 
-
-This property specifies the visualization type for the chart. The default value is `line`.
-The type must be one of the following:
-  - `line`
-  - `bar` 
-  - `scatter`
-  - `step-start` 
-  - `step-middle`
-  - `step-end`
-
-**timeZone** (string, optional): 
-
-Timezone must be specified as an [IANA timezone string](https://ftp.iana.org/tz/tzdb-2020f/zone1970.tab). If this property is provided, the chart displays all dates in the provided timezone. If not provided, it uses the browsers local timezone.
-
-#### size (object, optional): 
-Specifies the height and width of the chart component. 
-This includes the legend section when the legend section is selected. For example, `{ width: Number, height: Number }`.
-The default value is `{ width: 500, height: 500 }`.
-
-#### styleSettings (object, optional): 
-
-This groups all the styling options available for the chart by `refId`. 
-Learn more about [reference IDs](/docs/core-styles--docs). It has the following properties:
-
-  - **visualizationType (optional)**: This is similar to the defaultVisualizationType field. The default value is `line`.
-  The value must be one of the following:
-    - `line` 
-    - `bar`
-    - `scatter` 
-    - `step-start` 
-    - `step-middle` 
-    - `step-end`
-
-  - **color** ():
-  - **symbol (optional)**: This is the symbol style that marks the data points. The default value is `'circle'`. The value must be one of the following:
-    - `emptyCircle` 
-    - `circle`
-    - `rect` 
-    - `roundRect` 
-    - `triangle` 
-    - `diamond`
-    - `pin` 
-    - `arrow` 
-    - `none` 
-  
-  - **symbolColor (string, optional)**: This specifies the symbol color. The value is a color name or a hex value. Default is `'none'`. 
-  - **symbolSize (number, optional)**: This specifies the symbol size. Default is `''`.
-  - **lineStyle (optional)**: This specifies the line style if `visualizationType` is not `scatter`. The type must be of
-   one of the following values.The default value is `solid`.
-    - `solid`
-    - `dotted` 
-    - `dashed` 
-
-  - **lineThicknes (number, optional)**: This specifies the thickness of the line drawn between the data points. Default value is `''`.
-  - **name (string, optional)**: This specifies the property name shown on the widget. Default value is  `undefined`.
-  - **yAxis (object, optional)**: This specifies y value and has the following properties:
-
-      - **yAxisLabel (string, optional)**: This specifies the label shown for the yAxis. Default value is `undefined`.
-      - **yMin (number, optional)**: This specifies the minimum value for the yAxis. The data below this value is hidden. Default value is `undefined`.
-      - **yMax (number, optional)**: This specifies the maximum value for the yAxis, the data above this value is hidden. Default value is `undefined`.
-      - **significantDigits (number, optional)**: This specifies the number of significant digits shown. Default value is `4`.
-
-### Example 
-
-The below example sets the color and name of the property in a line chart. The property is colored red on the chart,
- and displayed as **Demo Property**.
-
-```jsx
-<LineChart
-  /** Specifying a query which provides a `refId` */
+Example for time series data.
+<Source dark="true" code={`
+<Chart
   queries={[
-    query.timeSeriesData({ 
+    query.timeSeriesData({
       assets: [{
-        assetId: 'id', 
+        assetId: 'id',
         properties: [{ propertyId: 'property', refId: 'my-property' }]
       }]
     })
  ]}
- 
- /** Mapping the provided `refId` to the line chart style settings */
- styleSettings={{ 'my-property': { color: 'red', name: 'Demo Property' }}}
+ styles={{ 'my-property': { name: 'My Cool Property' }}}
 />
-```
+`} />
 
-The below example demonstrates the data point symbols, line type, and significant digits styles which are customized. 
-This style setting displays a dashed red line with rounded rectangle datapoints, whose values are truncated to 5 significant digits 
-for the property **Demo Property**.
-
-```jsx
-const styleObject = { color: 'red', name: 'Demo Property', symbol: 'roundRect', lineStyle: 'dashed', significantDigits: 5 }
-
-<LineChart
-  /** Specifying a query which provides a `refId` */
+Example for alarm data.
+<Source dark="true" code={`
+<Chart
   queries={[
-    query.timeSeriesData({ 
-      assets: [{
-        assetId: 'id', 
-        properties: [{ propertyId: 'property', refId: 'my-property' }]
+    query.alarmData({
+      alarms: [{
+        assetId: 'id',
+        alarmComponents: [{ assetCompositeModelId: 'asset-composite-model-id' }]
       }]
     })
  ]}
- 
- /** Mapping the provided `refId` to the line chart style settings */
- styleSettings={{ 'my-property': styleObject}}
 />
-```
+`} />
 
-#### viewport (object, optional): 
+#### viewport
+##### (object, optional)
 
 This specifies the time interval that the widget visualizes. If not provided, the widget
 utilizes the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs). If a
 ViewportManager, and `viewport` is not defined, the default viewport is `{ duration: '10s' }`. Learn more about the [viewport](/docs/core-viewport--docs).
 
-#### Thresholds (optional): 
+#### defaultVisualizationType
+##### (type, optional)
+
+This property specifies the visualization type for the chart. The default value is `line`.
+
+The type must be one of the following: `line`, `bar`, `scatter`, `step-start`, `step-middle`, `step-end`
+
+#### timeZone
+##### (string, optional)
+
+Timezone must be specified as an [IANA timezone string](https://ftp.iana.org/tz/tzdb-2020f/zone1970.tab). If this property is provided, the chart displays all dates in the provided timezone. If not provided, it uses the browsers local timezone.
+
+#### size
+##### (object, optional)
+Specifies the height and width of the chart component. 
+This includes the legend section when the legend section is selected. For example, `{ width: Number, height: Number }`.
+The default value is `{ width: 500, height: 500 }`.
+
+#### styleSettings
+##### (object, optional)
+
+This groups all the styling options available for the chart by `refId`. 
+Learn more about [reference IDs](/docs/core-styles--docs). It has the following properties:
+
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`visualizationType\` | string, optional | \`line\` | This is similar to the defaultVisualizationType field. The value must be one of the following: \`line\`, \`bar\`, \`scatter\`, \`step-start\`, \`step-middle\`, \`step-end\` |
+| \`symbol\` | string, optional | \`circle\` | This is the symbol style that marks the data points. The value must be one of the following: \`emptyCircle\`, \`circle\`, \`rect\`, \`roundRect\`, \`triangle\`, \`diamond\`, \`pin\`, \`arrow\`, \`none\`  |
+| \`symbolColor\` | string, optional |  \`none\` | This specifies the symbol color. The value is a color name or a hex value. |
+| \`symbolSize\` | number, optional | \`undefined\` | This specifies the symbol size. |
+| \`lineStyle\` | string, optional | \`solid\` | This specifies the line style if \`visualizationType\` is not \`scatter\`. The type must be of one of the following values: \`solid\`, \`dotted\`, \`dashed\`  |
+| \`lineThicknes\` | number, optional | \`undefined\` | This specifies the thickness of the line drawn between the data points. |
+| \`name\` | string, optional | \`undefined\` | This specifies the property name shown on the widget |
+| \`yAxis\` | YAxis, optional | N/A | This specifies y value and has the following properties below. |
+`}
+</Markdown>
+
+##### YAxis object
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`yAxisLabel\` | string, optional | \`undefined\` | This specifies the label shown for the yAxis. |
+| \`yMin\` | number, optional | \`undefined\` | This specifies the minimum value for the yAxis. The data below this value is hidden.  |
+| \`yMax\` | number, optional | \`undefined\` | This specifies the maximum value for the yAxis, the data above this value is hidden. |
+| \`significantDigits\` | number, optional | \`4\` | This specifies the number of significant digits shown. |
+`}
+</Markdown>
+
+##### Example 
+
+The below example sets the color and name of the property in a line chart. The property is colored red on the chart,
+ and displayed as **Demo Property**.
+
+<Source dark="true" code={`
+import { Chart } from '@iot-app-kit/react-components';
+
+const Page = () => (
+  <Chart 
+    /** Specifying a query which provides a refId */
+    queries={[
+      query.timeSeriesData({ 
+        assets: [{
+          assetId: 'id', 
+          properties: [{ propertyId: 'property', refId: 'my-property' }]
+        }]
+      })
+  ]}
+  
+  /** Mapping the provided refId to the line chart style settings */
+  styleSettings={{ 'my-property': { color: 'red', name: 'Demo Property' }}}
+    />
+);
+`} />
+
+The below example demonstrates the data point symbols, line type, and significant digits styles which are customized. 
+This style setting displays a dashed red line with rounded rectangle datapoints, whose values are truncated to 5 significant digits 
+for the property **Demo Property**.
+
+<Source dark="true" code={`
+import { Chart } from '@iot-app-kit/react-components';
+
+const styleObject = { color: 'red', name: 'Demo Property', symbol: 'roundRect', lineStyle: 'dashed', significantDigits: 5 }
+
+const Page = () => (
+  <Chart 
+    /** Specifying a query which provides a refId */
+    queries={[
+      query.timeSeriesData({ 
+        assets: [{
+          assetId: 'id', 
+          properties: [{ propertyId: 'property', refId: 'my-property' }]
+        }]
+      })
+  ]}
+  
+  /** Mapping the provided refId to the line chart style settings */
+  styleSettings={{ 'my-property': styleObject}}
+    />
+);
+`} />
+
+#### Thresholds
+##### (object, optional)
 
 This specifies rules that effect how the data is visualized based on if the data breaches the threshold. Learn more about [thresholds](/docs/core-thresholds--docs#thresholds).
 
-#### thresholdSettings (object, optional): 
+#### thresholdSettings
+##### (object, optional)
 
 This customizes the threshold visualization settings in the widget. The default value is `{ colorBreachedData: true }`. Learn more about [thresholds settings](/docs/core-thresholds--docs#thresholdsettings).
  
-#### aggregationType (string, optional): 
+#### aggregationType
+##### (string, optional)
 
 This specifies the data aggregation window. Default value is `undefined`.
 
-#### gestures (optional): 
+#### gestures
+##### (optional)
 
 This specifies if gestures (pan, zoom and restrict time-span) are enabled. The default value is `true`.
 
-#### axis (optional):
+#### axis
+##### (object, optional)
 
 This specifies x and y-axis related settings. The default value is 
 `{ showX: true, showY: true, yAxisLabel: undefined }`. 
 It has the following properties:
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`showX\` | boolean, optional | true | Determines whether to show the x-axis. |
+| \`showY\` | boolean, optional | true | Determines whether to show the y-axis and the horizontal grid lines. |
+| \`yAxisLabel\` | string, optional | - | The y-axis label content. The defaul value is empty. |
+`}
+</Markdown>
 
-  - **showX (boolean, optional)**: Displays the x-axis. Default value is `true`.
-  - **showY (boolean, optional)**: Displays the y-axis. Default value is `true`.
-  - **yAxisLabel (string, optional)**: Displays the y-axis label content. Default value is empty.
-
-### Example 
-```jsx
+##### Example 
+<Source dark="true" code={`
 import { Chart } from '@iot-app-kit/react-components';
 const otherFields = {};
 <Chart axis={{ showX: false, showY: true }} {...otherFields} />
-```
+`} />
 
-#### backgroundColor (string, optional): 
+#### backgroundColor
+##### (string, optional)
 
 This specifies the background color of the chart. The default value is `undefined`.
 
-#### fontSettings (optional): 
+#### fontSettings
+##### (object, optional)
 
 This specifies the chart's font color and font size. The default value is `undefined`. 
 It has the following properties:
@@ -218,32 +256,97 @@ It has the following properties:
   - **fontColor (string, optional)**: This specifies the chart's font color. Default value is `undefined`.
   - **fontSize (number, optional)**: This specifies the chart's font size. Default value is `undefined`.
 
-#### significantDigits (number, optional): 
+#### significantDigits
+##### (number, optional)
 
 This specifies the number of significant digits displayed. Default value is `4`.
 
-#### theme (string, optional): 
+#### theme
+##### (string, optional)
 
 This specifies the light or dark theme used. The type must be one of `'light' | 'dark'`.
 The default value is `light`. 
 
-#### id (string, optional):
+#### id
+##### (string, optional)
 
 This specifies an **unique** id for the chart. Default value is `undefined`.
 
-#### titleText (string, optional): 
+#### titleText
+##### (string, optional)
 
 This specifies the chart title. Default value is `undefined`.
 
-#### legend (optional): 
+#### legend
+##### (optional)
 
 This specifies the color and position of the legend section. Default value is `undefined`. It has the following properties:
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`visible\` | boolean, optional | false | Determines whether to show the legend table or not. |
+| \`position\` | string, optional | \`right\` | This specifies the position of the legend in the chart. |
+| \`visibleContent\` | object, optional | - | Determines which columns to display, the options are: \`unit\`, \`asset\`, \`visibility\`, \`maxValue\`, \`minValue\`, \`latestValue\`, \`latestAlarmStateValue\`. |
+| \`height\` | string, optional | \`undefined\` | This specifies the height of the legend table. |
+| \`width\` | string, optional | \`undefined\` | This specifies the width of the legend table. |
+`}
+</Markdown>
 
-  - **backgroundColor (string, optional)**: This specifies the background color of the legend section. 
-    It can be either a color name or its hex value. The default value is `undefined`.
-  - **position[WIP] (string, optional)**: This specifies the position of the legend in the chart. The default value is `right`.
-  The type must be one of the following:
-    - `top` 
-    - `bottom` 
-    - `left` 
-    - `right` 
+<Canvas sourceState="hidden"  story={{height : '450px' }}  of={ChartStories.StandardWithLegend} />
+
+## Alarms
+
+<Canvas sourceState="none"  story={{height : '450px' }}  of={ChartStories.Alarm} />
+
+When you add an IoT SiteWise alarm to the Chart the alarm's threshold will be displayed on the chart.
+
+An IoT SiteWise alarm is triggered based on a SiteWise input property. The associated input property data will automatically be added to the chart as well.
+
+Alarm state is displayed as a label above an input property's datapoint at the time of the state change. 
+
+**Hover** over the label to see more alarm info in the Chart tooltip.
+
+#### Alarm state icons
+
+<IconItem name="Normal">
+  <Icon name="status-positive" variant="success" />
+</IconItem>
+<IconItem name="Active">
+  <Icon name='notification' variant='error' />
+</IconItem>
+<IconItem name="Latched">
+  <Icon name='status-warning' variant='warning' />
+</IconItem>
+<IconItem name="Acknowledged">
+  <Icon name='status-in-progress' variant='subtle' />
+</IconItem>
+<IconItem name="SnoozeDisabled">
+  <Icon name='status-stopped' variant='subtle' />
+</IconItem>
+<IconItem name="Disabled">
+  <Icon name='status-pending' variant='subtle' />
+</IconItem>
+
+<Markdown>
+{`
+| Name         | Description        |
+| ------------ | -------------- |
+| Normal | The alarm is enabled but inactive. The industrial process or equipment operates as expected. |
+| Active | The alarm is active. The industrial process or equipment is outside its operating range and needs attention. |
+| Acknowledged | An operator acknowledged the state of the alarm. This state applies to only alarms where you enable the acknowledge flow. |
+| Latched | The alarm returned to normal but was active and no operator acknowledged it. The industrial process or equipment requires attention from an operator to reset the alarm to normal. This state applies to only alarms where you enable the acknowledge flow. |
+| SnoozeDisabled | The alarm is disabled because an operator snoozed the alarm. The operator defines the duration for which the alarm snoozes. After that duration, the alarm returns to normal state. |
+| Disabled | The alarm is disabled and won't detect. |
+`}
+</Markdown>
+
+---
+
+## More Examples
+
+##### Loading state
+<Canvas sourceState="none"  story={{height : '450px' }}  of={ChartStories.Loading} />
+
+##### Empty state
+<Canvas sourceState="none"  story={{height : '450px' }}  of={ChartStories.Empty} />

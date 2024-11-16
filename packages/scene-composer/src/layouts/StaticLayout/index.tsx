@@ -1,7 +1,6 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-import * as awsui from '@cloudscape-design/design-tokens';
 import { Box } from '@cloudscape-design/components';
+import * as awsui from '@cloudscape-design/design-tokens';
+import styled, { css } from 'styled-components';
 
 const LayoutContainerBox = styled(Box)`
   position: relative;

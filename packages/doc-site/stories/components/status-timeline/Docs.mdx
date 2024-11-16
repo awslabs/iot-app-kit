@@ -1,8 +1,9 @@
-import { Canvas, Meta, Story } from '@storybook/blocks';
+import { Canvas, Meta, Story, Source, Markdown } from '@storybook/blocks';
 
 import * as StatusTimelineStories from './StatusTimeline.stories';
 
 <Meta of={StatusTimelineStories} />
+
 
 # Status Timeline
 
@@ -12,22 +13,21 @@ Status timeline supports a rich set of features including alarms, thresholds, hi
 
 ## Demo
 
-<Canvas  story={{height : '450px' }}  sourceState="none" of={StatusTimelineStories.Standard} />
+<Canvas story={{ inline: true }} sourceState="hidden" of={StatusTimelineStories.Standard} />
 
-**📈👆 Interact with the chart!**
+**📈👆 Interact with the timeline!**
 
-**_Pan_**: hold shift, click and drag within the data-visualization area of the chart.
+**_Pan_**: hold shift, click and drag within the data-visualization area of the widget.
 
-**_Zoom in_**: double-click on a position within the data visualization area of the chart.
+**_Zoom in_**: double-click on a position within the data visualization area of the widget.
 
-**_Zoom out:_** hold shift and double-click on a position within a chart to zoom away from that area.
+**_Zoom out:_** hold shift and double-click on a position within the widget to zoom away from that area.
 
 **_Restrict time span_:** click and drag through the interval of time you wish to restrict the viewport to.
 
 ## Basic usage
 
-
-```jsx
+<Source dark="true" code={`
 import { StatusTimeline, WebglContext } from '@iot-app-kit/react-components';
 import '@iot-app-kit/react-components/styles.css';
 
@@ -37,79 +37,147 @@ const Page = () => (
     <WebglContext />
   </div>
 );
-```
+`} />
 
-## Scene Composer Properties
+## Status Timeline Properties
 
-The Scene Composer component contains the following properties:
+The Status timeline component contains the following properties:
 
-#### viewport (object, optional): 
+#### query
+##### (object, required)
+This query specifies the time series data or alarm data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
 
-This attribute specifies the interval of time the widget visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
-If there is no ViewportManager, and no `viewport` defined, the default viewport will be `{ duration: '10d' }`.
-Learn more about [viewport](/docs/core-viewport--docs).
-
-#### thresholds (object, optional): 
-
-Thresholds define rules that affect data visualization based on if the data breaches the threshold.
-Learn more about [thresholds](/docs/core-thresholds--docs#thresholds).
-
-#### thresholdSettings (object, optional): 
-
-This attribute customizes settings on threshold visualization within the widget. Default value is `{ colorBreachedData: true }`.
-Learn more about [thresholds settings](/docs/core-thresholds--docs#thresholdsettings).
-
-#### queries (array): 
-
-The queries that specify the time series data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
-
-#### gestures (optional): 
-
-Specifies if gestures (pan, zoom and restrict time-span) are enabled. Default value is `true`.
-
-#### axis (optional): 
-
-Specifies the x and y-axis related settings. The default values are `{ showX: true, showY: true, yAxisLabel: undefined }`. This contains the 
-following properties:
-
-  * `showX` (boolean, optional): This setting determines if the x-axis is displayed.  The default value is true.
-  * `showY` (boolean, optional): This setting determines if the y-axis is displayed.  The default value is true.
-  * `yAxisLabel` (string, optional): The y-axis label content.  The default value is empty.
-
-### Example 
-
-```jsx
-<StatusTimeline axis={{ showX: false, showY: true, yAxisLabel: 'mph' }} {...otherFields} />
-```
-
-#### styles (optional): 
-
-A map of `refId` to style settings for the component. Learn more about [reference IDs](/docs/core-styles--docs#reference-ids).
-The status timeline provides the following customizable style settings:
-
-  * `name` (string, optional): This attribute specifies a name to replace the name of the data set given by its source.
-  * `unit` (string, optional): This attribute specifies the unit for the data like `"m/s"` and `"count".
-  * `color` (string, optional): This attribute specifies the color of the data stream visualized on the component. It must be a [css color string](https://www.w3schools.com/howto/default.asp).
-  * `detailedName` (string, optional): This attribute specifies the detailed name that is presented in the tooltip.
-
-### Example
-
-```jsx
+Example for time series data.
+<Source dark="true" code={`
 <StatusTimeline
-  /** Specifying a query which provides a `refId` */
-  queries={[
+  query={
     query.timeSeriesData({
       assets: [{
         assetId: 'id',
         properties: [{ propertyId: 'property', refId: 'my-property' }]
       }]
     })
- ]}
-
- /** Mapping the provided `refId` to the status timeline style settings */
- styles={{ 'my-property': { color: 'red', name: 'My Cool Property' }}}
+ }
 />
+`} />
 
-```
+Example for alarm data.
+<Source dark="true" code={`
+<StatusTimeline
+  query={
+    query.alarmData({
+      alarms: [{
+        assetId: 'id',
+        alarmComponents: [{ assetCompositeModelId: 'asset-composite-model-id' }]
+      }]
+    })
+ }
+/>
+`} />
 
+#### viewport
+##### (object, optional) 
 
+This attribute specifies the interval of time the widget visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
+
+#### titleText
+##### (string, optional)
+This specifies the title for the status timeline component. Default value is `undefined`.
+
+If there is no ViewportManager, and no `viewport` defined, the default viewport will be `{ duration: '10d' }`.
+Learn more about [viewport](/docs/core-viewport--docs).
+
+#### thresholds
+##### (object, optional)
+
+Thresholds define rules that affect data visualization based on if the data breaches the threshold.
+Learn more about [thresholds](/docs/core-thresholds--docs#thresholds).
+
+#### thresholdSettings 
+##### (object, optional)
+
+This attribute customizes settings on threshold visualization within the widget. Default value is `{ colorBreachedData: true }`.
+Learn more about [thresholds settings](/docs/core-thresholds--docs#thresholdsettings).
+
+#### gestures
+##### (boolean, optional): 
+
+Specifies if gestures (pan, zoom and restrict time-span) are enabled. Default value is `true`.
+
+#### axis
+##### (object, optional): 
+
+Specifies the x and y-axis related settings. The default values are `{ showX: true, showY: true, yAxisLabel: undefined }`. This contains the 
+following properties:
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`showX\` | boolean, optional | true | Determines whether to show the x-axis. |
+| \`showY\` | boolean, optional | true | Determines whether to show the y-axis and the horizontal grid lines. |
+| \`yAxisLabel\` | string, optional | - | The y-axis label content. The defaul value is empty. |
+`}
+</Markdown>
+
+##### Example 
+
+<Source dark="true" code={`
+<StatusTimeline axis={{ showX: false, showY: true, yAxisLabel: 'mph' }} {...otherFields} />
+`} />
+
+#### styles 
+#### (object, optional)
+
+A map of `refId` to style settings for the component. Learn more about [reference IDs](/docs/core-styles--docs#reference-ids).
+The status timeline provides the following customizable style settings:
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`name\` | string, optional | - | This specifies a name to replace the name of the data set given by its source. |
+| \`unit\` | string, optional | - | This specifies the units for the data (for example, \`"m/s"\` and \`"count"\`). |
+| \`color\` | string, optional | - | This attribute specifies the color of the data stream visualized on the component. It must be a \[css color string\]\(https://www.w3schools.com/howto/default.asp\). |
+| \`detailedName\` | string, optional | - | This specifies the detailed name presented in the tooltip.|
+`}
+</Markdown>
+
+## Example with time series query 
+
+<Source dark="true" code={`
+import { StatusTimeline, WebglContext } from '@iot-app-kit/react-components';
+import '@iot-app-kit/react-components/styles.css';
+
+const Page = () => (
+  <div>
+    <StatusTimeline
+      /** Specifying a query which provides a refId */
+      queries={[
+        query.timeSeriesData({
+          assets: [{
+            assetId: 'id',
+            properties: [{ propertyId: 'property', refId: 'my-property' }]
+          }]
+        })
+    ]}
+    /** Mapping the provided refId to the status timeline style settings */
+    styles={{ 'my-property': { color: 'red', name: 'My Cool Property' }}}
+
+    />
+    <WebglContext />
+  </div>
+);
+`} />
+
+## Alarms
+
+<Canvas sourceState='hidden' of={StatusTimelineStories.Alarm} />
+
+When you add an IoT SiteWise alarm to the StatusTimeline the alarm's state will be displayed as a style specific to the state type.
+
+An IoT SiteWise alarm is triggered based on a SiteWise input property. The associated input property data will automatically be displayed on the StatusTimeline as well.
+
+## More Examples
+
+<Canvas sourceState="hidden" of={StatusTimelineStories.Error} />
+<Canvas sourceState="hidden" of={StatusTimelineStories.Loading} />
+<Canvas sourceState="hidden" of={StatusTimelineStories.Empty} />

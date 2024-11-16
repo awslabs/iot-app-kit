@@ -1,5 +1,5 @@
 import { isHistoricalViewport, parseDuration } from '@iot-app-kit/core';
-import { Interval, Viewport, ViewportType } from '../../types';
+import { type Interval, type Viewport, type ViewportType } from '../../types';
 
 export const getViewportType = (viewport: Viewport): ViewportType =>
   isHistoricalViewport(viewport) ? 'historical' : 'duration';

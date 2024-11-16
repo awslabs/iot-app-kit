@@ -1,11 +1,16 @@
-import React, { useCallback, useContext, useEffect, useMemo } from 'react';
-import { useIntl } from 'react-intl';
 import { Box, Toggle } from '@cloudscape-design/components';
+import { useCallback, useContext, useEffect, useMemo } from 'react';
+import { useIntl } from 'react-intl';
 
-import { IDataOverlayComponentInternal, accessStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { IComponentSettingsMap, IOverlaySettings, KnownComponentType, KnownSceneProperty } from '../../../interfaces';
+import {
+  type IComponentSettingsMap,
+  type IOverlaySettings,
+  KnownComponentType,
+  KnownSceneProperty,
+} from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
+import { type IDataOverlayComponentInternal, accessStore, useViewOptionState } from '../../../store';
 import { componentSettingsSelector } from '../../../utils/componentSettingsUtils';
 import { findComponentByType } from '../../../utils/nodeUtils';
 

@@ -1,7 +1,10 @@
 import { initialize } from '@iot-app-kit/source-iotsitewise';
-import { AggregateType, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  type AggregateType,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import type { IoTEventsClient } from '@aws-sdk/client-iot-events';
-import { AlarmData } from '../hooks/useAlarms';
+import { type AlarmData } from '../hooks/useAlarms';
 import { parseAlarmStateAssetProperty } from '../hooks/useAlarms/transformers';
 import { transformAlarmsToThreshold } from './transformAlarmsToThreshold';
 

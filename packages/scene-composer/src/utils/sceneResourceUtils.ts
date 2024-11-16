@@ -7,7 +7,7 @@ import {
   IotTwinMakerNamespaceSeparator,
   IotTwinMakerNumberNamespace,
   IotTwinMakerOpacityNamespace,
-  SceneResourceInfo,
+  type SceneResourceInfo,
   SceneResourceType,
 } from '../interfaces';
 

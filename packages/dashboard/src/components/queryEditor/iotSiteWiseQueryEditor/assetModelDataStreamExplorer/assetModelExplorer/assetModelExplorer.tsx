@@ -1,13 +1,14 @@
-import React from 'react';
-
 import { AssetModelSelection } from './assetModelSelection/assetModelSelection';
 import { AssetModelSelected } from './assetModelSelection/assetModelSelected';
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import {
-  SelectedAssetModel,
-  UpdateSelectedAssetModel,
+  type SelectedAssetModel,
+  type UpdateSelectedAssetModel,
 } from '../useSelectedAssetModel';
-import { SelectedAsset, UpdateSelectedAsset } from '../useSelectedAsset';
+import {
+  type SelectedAsset,
+  type UpdateSelectedAsset,
+} from '../useSelectedAsset';
 
 type AssetModelExplorerOptions = {
   selectedAssetModel: SelectedAssetModel;

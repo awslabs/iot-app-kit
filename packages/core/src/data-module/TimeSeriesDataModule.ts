@@ -80,10 +80,12 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
     viewport,
     request,
     queries,
+    unsubscribe,
   }: {
     viewport: Viewport;
     request: TimeSeriesDataRequest;
     queries: Query[];
+    unsubscribe?: () => void;
   }) => {
     const requestedStreams = await this.dataSourceStore.getRequestsFromQueries({
       queries,
@@ -122,7 +124,7 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
     requests.forEach(this.dataCache.onRequest);
 
     if (requests.length > 0) {
-      this.registerRequest({ queries, request }, requests);
+      this.registerRequest({ queries, request, unsubscribe }, requests);
     }
   };
 
@@ -180,6 +182,17 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
   ): SubscriptionResponse<Query> => {
     const subscriptionId = v4();
 
+    /**
+     * subscription management
+     */
+
+    const unsubscribe = () => {
+      this.unsubscribe(subscriptionId);
+    };
+
+    const update = (subscriptionUpdate: SubscriptionUpdate<Query>) =>
+      this.update(subscriptionId, subscriptionUpdate);
+
     this.subscriptions.addSubscription(subscriptionId, {
       queries,
       request,
@@ -191,21 +204,11 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
             viewport,
             queries,
             request,
+            unsubscribe,
           });
         }
       },
     });
-
-    /**
-     * subscription management
-     */
-
-    const unsubscribe = () => {
-      this.unsubscribe(subscriptionId);
-    };
-
-    const update = (subscriptionUpdate: SubscriptionUpdate<Query>) =>
-      this.update(subscriptionId, subscriptionUpdate);
 
     return { unsubscribe, update };
   };
@@ -233,10 +236,14 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
   };
 
   private registerRequest = (
-    subscription: { queries: Query[]; request: TimeSeriesDataRequest },
+    subscription: {
+      queries: Query[];
+      request: TimeSeriesDataRequest;
+      unsubscribe?: () => void;
+    },
     requestInformations: RequestInformationAndRange[]
   ): void => {
-    const { queries, request } = subscription;
+    const { queries, request, unsubscribe } = subscription;
 
     queries.forEach((query) =>
       this.dataSourceStore.initiateRequest(
@@ -244,7 +251,12 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
           request,
           query,
           onSuccess: this.dataCache.onSuccess,
-          onError: this.dataCache.onError,
+          onError: (e) => {
+            if (unsubscribe != null && `${e.error.status}` === '403') {
+              unsubscribe();
+            }
+            this.dataCache.onError(e);
+          },
         },
         requestInformations
       )

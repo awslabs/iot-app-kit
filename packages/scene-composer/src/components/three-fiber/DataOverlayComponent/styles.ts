@@ -1,5 +1,5 @@
 import { colorBackgroundContainerHeader, colorBorderButtonNormalDisabled } from '@cloudscape-design/design-tokens';
-import { CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 
 // DataRow
 export const tmAnnotationRow: CSSProperties = {

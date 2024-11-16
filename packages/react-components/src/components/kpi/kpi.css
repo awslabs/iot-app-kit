@@ -14,12 +14,6 @@
   width: 100%;
 }
 
-.kpi .property-name {
-  font-weight: bold;
-  color: #000716;
-  padding: 8px 8px 2px;
-}
-
 .kpi .asset-name {
   color: #414d5c;
   padding: 8px 8px 2px;
@@ -54,4 +48,8 @@
 
 .aggregation {
   padding: 8px;
+}
+
+.kpi .property-name {
+  padding: 8px 0 0 8px;
 }

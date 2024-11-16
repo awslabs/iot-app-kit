@@ -1,18 +1,23 @@
-import { IconProps } from '@cloudscape-design/components';
-import React, { useCallback, useContext, useMemo } from 'react';
-import { MessageDescriptor, defineMessages, useIntl } from 'react-intl';
+import { type IconProps } from '@cloudscape-design/components';
+import { useCallback, useContext, useMemo } from 'react';
+import { type MessageDescriptor, defineMessages, useIntl } from 'react-intl';
 import * as THREE from 'three';
 
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
-import { IDataOverlayComponentInternal, IModelRefComponentInternal, accessStore, useEditorState } from '../../store';
-import { IEntityBindingComponentInternal, IAnimationComponentInternal } from '../../store/internalInterfaces';
+import {
+  type IDataOverlayComponentInternal,
+  type IModelRefComponentInternal,
+  accessStore,
+  useEditorState,
+} from '../../store';
+import { type IAnimationComponentInternal, type IEntityBindingComponentInternal } from '../../store/internalInterfaces';
 import { findComponentByType } from '../../utils/nodeUtils';
-import { ToolbarItem } from '../toolbars/common/ToolbarItem';
-import { ToolbarItemOptionRaw, ToolbarItemOptions } from '../toolbars/common/types';
 import { animationObjectKey } from '../three-fiber/AnimationComponent/AnimationComponent';
+import { ToolbarItem } from '../toolbars/common/ToolbarItem';
+import { type ToolbarItemOptionRaw, type ToolbarItemOptions } from '../toolbars/common/types';
 
 interface AddComponentMenuProps {
   onSelect?: (selectedObject: ObjectTypes) => void;

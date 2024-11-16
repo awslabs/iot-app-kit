@@ -1,5 +1,5 @@
-import { Threshold } from '@iot-app-kit/core';
-import { GaugeConfigurationOptions } from '../types';
+import { type Threshold } from '@iot-app-kit/core';
+import { type GaugeConfigurationOptions } from '../types';
 import { convertThresholdsToEchartsValuePair } from '../utils/convertThresholdsToEchartsValuePair';
 import { getPreciseValue } from '../../../utils/getPreciseValue';
 import {

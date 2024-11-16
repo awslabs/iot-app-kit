@@ -1,7 +1,6 @@
-import React from 'react';
 import { render, renderHook, screen } from '@testing-library/react';
 import { ChartLegendTable } from './table';
-import { DataStreamInformation, TrendCursor } from './types';
+import { type DataStreamInformation, type TrendCursor } from './types';
 import { useChartStore } from '../../store';
 import { formatDate } from '../../../../utils/time';
 
@@ -91,15 +90,15 @@ describe('legend table', () => {
 
     expect(table).not.toBeNull();
     expect(
-      screen.getAllByText(
+      screen.queryAllByText(
         formatDate(trendCursors[0].date, { pattern: 'hh:mm:ss aaaa' })
-      )[0]
-    ).not.toBeNull();
+      ).length
+    ).toBeGreaterThanOrEqual(1);
     expect(
-      screen.getAllByText(
+      screen.queryAllByText(
         formatDate(trendCursors[0].date, { pattern: 'hh:mm:ss aaaa' })
-      )[0]
-    ).not.toBeNull();
+      ).length
+    ).toBeGreaterThanOrEqual(1);
 
     expect(screen.getByText('111')).not.toBeNull();
     expect(screen.getByText('333')).not.toBeNull();

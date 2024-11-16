@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import TextWidgetComponent from './component';
 import * as ReactRedux from 'react-redux';

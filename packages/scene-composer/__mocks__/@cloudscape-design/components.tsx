@@ -1,4 +1,3 @@
-import React from 'react';
 import mockComponent from '../mockComponent';
 
 const cloudscapeRaw: any = jest.createMockFromModule('@cloudscape-design/components');

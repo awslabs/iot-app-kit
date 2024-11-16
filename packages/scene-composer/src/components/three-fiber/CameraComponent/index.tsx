@@ -1,17 +1,17 @@
-import * as THREE from 'three';
-import React, { useEffect } from 'react';
 import { OrthographicCamera, PerspectiveCamera } from '@react-three/drei';
-import { Camera, useThree } from '@react-three/fiber';
+import { type Camera, useThree } from '@react-three/fiber';
+import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
 
-import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { ISceneNodeInternal, useEditorState, ICameraComponentInternal } from '../../../store';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { getComponentGroupName } from '../../../utils/objectThreeUtils';
-import useSelectedNode from '../../../hooks/useSelectedNode';
-import useActiveCamera from '../../../hooks/useActiveCamera';
-import { getCameraSettings } from '../../../utils/cameraUtils';
 import { useEditorHelper } from '../../../hooks';
+import useActiveCamera from '../../../hooks/useActiveCamera';
+import useSelectedNode from '../../../hooks/useSelectedNode';
+import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { CameraType } from '../../../models/SceneModels';
+import { type ICameraComponentInternal, type ISceneNodeInternal, useEditorState } from '../../../store';
+import { getCameraSettings } from '../../../utils/cameraUtils';
+import { getComponentGroupName } from '../../../utils/objectThreeUtils';
 
 interface ICameraComponentProps {
   node: ISceneNodeInternal;
@@ -21,7 +21,7 @@ interface ICameraComponentProps {
 const CameraComponent: React.FC<ICameraComponentProps> = ({ node, component }: ICameraComponentProps) => {
   const sceneComposerId = useSceneComposerId();
   useLifecycleLogging('CameraComponent');
-  const camera = React.useRef<Camera>();
+  const camera = useRef<Camera>();
 
   const size = useThree((state) => state.size);
   const { fov, far, near, zoom } = component;

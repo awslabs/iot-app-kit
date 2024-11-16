@@ -19,7 +19,7 @@ import {
   createListAssetPropertiesMapCacheKey,
 } from '~/data/listAssetPropertiesMap/query';
 import { selectListAssetPropertiesMap } from '~/data/listAssetPropertiesMap/selectData';
-import { DashboardState } from '~/store/state';
+import { type DashboardState } from '~/store/state';
 
 export type PropertySummary = {
   propertyId: AssetProperty['id'];

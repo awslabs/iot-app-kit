@@ -1,4 +1,4 @@
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 
 export const start = new Date(2022, 1, 1);
 export const end = new Date(2022, 2, 1);

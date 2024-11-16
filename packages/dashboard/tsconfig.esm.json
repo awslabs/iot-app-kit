@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "files": ["custom.d.ts"],
+  "compilerOptions": {
+    "outDir": "./dist/esm",
+    "module": "ESNext",
+    "incremental": true,
+    "tsBuildInfoFile": "./dist/esm/.tsbuildinfo"
+  },
+  "include": ["src"],
+  "exclude": [
+    "./src/__mocks__",
+    "./src/msw",
+    "./src/test",
+    "./src/**/*.spec.*",
+    "./src/**/*.test.*"
+  ]
+}

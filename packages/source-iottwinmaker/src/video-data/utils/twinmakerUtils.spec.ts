@@ -1,5 +1,5 @@
-import { GetPropertyValueHistoryCommandOutput } from '@aws-sdk/client-iottwinmaker';
-import { Primitive } from '../../common/types';
+import { type GetPropertyValueHistoryCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { type Primitive } from '../../common/types';
 import {
   createPropertyIndentifierKey,
   generateEntityRefKey,

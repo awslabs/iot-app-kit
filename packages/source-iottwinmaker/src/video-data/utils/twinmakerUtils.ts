@@ -1,14 +1,12 @@
 import {
   GetPropertyValueHistoryCommand,
-  IoTTwinMakerClient,
+  type IoTTwinMakerClient,
+  type EntityPropertyReference,
+  type GetPropertyValueHistoryRequest,
+  type GetPropertyValueHistoryResponse,
+  type PropertyValueHistory,
 } from '@aws-sdk/client-iottwinmaker';
 import { isUndefined } from 'lodash';
-import type {
-  EntityPropertyReference,
-  GetPropertyValueHistoryRequest,
-  GetPropertyValueHistoryResponse,
-  PropertyValueHistory,
-} from '@aws-sdk/client-iottwinmaker';
 import type { Primitive } from '../../common/types';
 
 export const getSinglePropertyValueHistory = async (

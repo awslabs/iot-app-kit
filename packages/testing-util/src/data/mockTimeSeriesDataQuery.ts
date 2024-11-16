@@ -1,8 +1,8 @@
 import {
   DATA_TYPE,
-  TimeSeriesData,
-  TimeSeriesDataQuery,
-  Viewport,
+  type TimeSeriesData,
+  type TimeSeriesDataQuery,
+  type Viewport,
 } from '@iot-app-kit/core';
 
 const noop = () => {};

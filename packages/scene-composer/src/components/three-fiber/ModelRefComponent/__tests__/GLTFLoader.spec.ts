@@ -5,7 +5,7 @@ import { useLoader as mockUseLoader } from '@react-three/fiber';
 import { GLTFLoader } from '../../../../three/GLTFLoader';
 import { useGLTF } from '../GLTFLoader';
 import { getGlobalSettings, getGlobalSettings as mockGetGlobalSettings } from '../../../../common/GlobalSettings';
-import { BasisuDecoderConfig, DracoDecoderConfig } from '../../../../interfaces';
+import { type BasisuDecoderConfig, type DracoDecoderConfig } from '../../../../interfaces';
 import { THREE_PATH } from '../../../../common/constants';
 jest.mock('three', () => {
   const originalModule = jest.requireActual('three');

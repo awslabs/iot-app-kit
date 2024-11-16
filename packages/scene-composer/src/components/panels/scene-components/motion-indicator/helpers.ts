@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash';
 
 import { Component } from '../../../../models/SceneModels';
-import { IMotionIndicatorComponentInternal } from '../../../../store';
+import { type IMotionIndicatorComponentInternal } from '../../../../store';
 
 export function updateComponentForColorTypeSelection(colorType: string, component: IMotionIndicatorComponentInternal) {
   const valueDataBindings = { ...component.valueDataBindings };

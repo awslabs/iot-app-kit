@@ -1,5 +1,5 @@
 import { colorTextLinkDefault } from '@cloudscape-design/design-tokens';
-import React, { CSSProperties, FC } from 'react';
+import { type CSSProperties, type FC } from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeSanitize from 'rehype-sanitize';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { DialBase } from './dialBase';
 import type { DataPoint } from '@iot-app-kit/core';

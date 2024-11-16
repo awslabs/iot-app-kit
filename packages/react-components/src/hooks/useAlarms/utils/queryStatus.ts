@@ -1,6 +1,6 @@
-import { UseQueryResult } from '@tanstack/react-query';
-import isEqual from 'lodash.isequal';
-import type { AlarmData, AlarmDataStatus } from '../types';
+import { type UseQueryResult } from '@tanstack/react-query';
+import { type SetOptional } from 'type-fest';
+import type { AlarmDataStatus } from '../types';
 
 /**
  * Combine two query statuses.
@@ -31,7 +31,13 @@ const combineStatuses = ({
  * @returns an AlarmDataStatus for the query
  */
 export const getStatusForQuery = (
-  query: UseQueryResult,
+  query: SetOptional<
+    Pick<
+      UseQueryResult,
+      'isLoading' | 'isRefetching' | 'isSuccess' | 'isError' | 'error'
+    >,
+    'error'
+  >,
   oldStatus?: AlarmDataStatus
 ): AlarmDataStatus => {
   let status: AlarmDataStatus = {
@@ -56,19 +62,15 @@ export const getStatusForQuery = (
  * @returns one AlarmDataStatus
  */
 export const combineStatusForQueries = (
-  queries: Pick<
-    UseQueryResult,
-    'isLoading' | 'isRefetching' | 'isSuccess' | 'isError' | 'error'
+  queries: SetOptional<
+    Pick<
+      UseQueryResult,
+      'isLoading' | 'isRefetching' | 'isSuccess' | 'isError' | 'error'
+    >,
+    'error'
   >[],
   oldStatus?: AlarmDataStatus
 ) => {
-  const errors: Error[] = [];
-  queries.forEach(({ error }) => {
-    if (error !== null) {
-      errors.push(error);
-    }
-  });
-
   let status: AlarmDataStatus = {
     isLoading: queries.some(({ isLoading }) => isLoading),
     isRefetching: queries.some(({ isRefetching }) => isRefetching),
@@ -81,26 +83,4 @@ export const combineStatusForQueries = (
   }
 
   return status;
-};
-
-export const isQueryDisabled = (query: UseQueryResult) => {
-  return query.status === 'pending' && query.fetchStatus === 'idle';
-};
-
-export const updateAlarmStatusForQueries = (
-  alarm: AlarmData,
-  queries: UseQueryResult[]
-): AlarmData => {
-  const currentStatus = alarm.status;
-
-  // remove irrelevant queries which are disabled
-  const statusFromQueries = queries.filter((query) => !isQueryDisabled(query));
-
-  const updatedStatus = combineStatusForQueries(statusFromQueries);
-
-  if (!isEqual(currentStatus, updatedStatus)) {
-    alarm.status = updatedStatus;
-  }
-
-  return alarm;
 };

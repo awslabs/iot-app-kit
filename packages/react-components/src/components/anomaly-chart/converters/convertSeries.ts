@@ -1,5 +1,5 @@
 import { ANOMALY_BAR_SERIES_CONFIGURATION } from '../constants';
-import { ConfigurationOptions } from '../hooks/types';
+import { type ConfigurationOptions } from '../hooks/types';
 
 export const convertSeries = ({
   description,

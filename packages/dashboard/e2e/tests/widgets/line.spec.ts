@@ -1,7 +1,10 @@
 import { NEW_PROPERTY_NAME } from '../constants';
-import { expect, test } from '../test';
+import { test, expect } from '@playwright/test';
 import { getTrendCursorText } from './LineWidget';
-import { Locator } from '@playwright/test';
+import { type Locator } from '@playwright/test';
+import { createNewDashboardWithWidget } from '../createDashboardWidget';
+import { ResourceExplorer } from '../resourceExplorer/ResourceExplorer';
+import { ConfigPanel } from '../configPanel/ConfigPanel';
 
 const NEW_Y_LABEL = 'This is new Y-axis Label';
 const Y_MIN = '1';
@@ -30,15 +33,30 @@ const getComputedStyles = async (locator: Locator) => {
 // <text>[n-th] --> when a trend cursor is added , this is timestamp rendered on a trend cursor
 
 test.describe('test Line Widget Styling changes', () => {
-  test('verify widget has a property', async ({ dashboardWithLineWidget }) => {
+  test('verify widget has a property', async ({ page, browser }) => {
+    const resourceExplorer = new ResourceExplorer({ page });
+    const dashboardWithLineWidget = await createNewDashboardWithWidget(
+      'line',
+      page,
+      browser,
+      resourceExplorer
+    );
     const gridText = await dashboardWithLineWidget.gridArea.textContent();
     expect(gridText).toContain('Max Temperature');
   });
 
   test('verify update title reflects on the widget', async ({
-    dashboardWithLineWidget,
-    configPanel,
+    page,
+    browser,
   }) => {
+    const resourceExplorer = new ResourceExplorer({ page });
+    const configPanel = new ConfigPanel({ page });
+    const dashboardWithLineWidget = await createNewDashboardWithWidget(
+      'line',
+      page,
+      browser,
+      resourceExplorer
+    );
     await configPanel.collapsedButton.click();
     expect(await configPanel.container.isVisible()).toBeTruthy();
     // update name
@@ -51,9 +69,18 @@ test.describe('test Line Widget Styling changes', () => {
 
   test.describe('Y Axis', () => {
     test('verify y-axis text change is reflects on the widgets', async ({
-      dashboardWithLineWidget,
-      configPanel,
+      page,
+      browser,
     }) => {
+      const resourceExplorer = new ResourceExplorer({ page });
+      const configPanel = new ConfigPanel({ page });
+      const dashboardWithLineWidget = await createNewDashboardWithWidget(
+        'line',
+        page,
+        browser,
+        resourceExplorer
+      );
+
       await configPanel.collapsedButton.click();
       await configPanel.yAxisLabelInput.fill(NEW_Y_LABEL);
       // the first of the text inside the g is Y-Axis
@@ -61,13 +88,22 @@ test.describe('test Line Widget Styling changes', () => {
         .locator('[data-gesture=widget]')
         .locator('text')
         .all();
+
       expect(await svgTexts[0].textContent()).toContain(NEW_Y_LABEL);
     });
 
     test('verify toggling show Y-axis  hides/un-hides y-axis ', async ({
-      dashboardWithLineWidget,
-      configPanel,
+      page,
+      browser,
     }) => {
+      const resourceExplorer = new ResourceExplorer({ page });
+      const configPanel = new ConfigPanel({ page });
+      const dashboardWithLineWidget = await createNewDashboardWithWidget(
+        'line',
+        page,
+        browser,
+        resourceExplorer
+      );
       await configPanel.collapsedButton.click();
       await configPanel.yAxisLabelInput.fill(NEW_Y_LABEL);
       await configPanel.showYAxisToggle.click();
@@ -83,9 +119,17 @@ test.describe('test Line Widget Styling changes', () => {
     });
 
     test('changing Y Min and Max reflects on the widget', async ({
-      dashboardWithLineWidget,
-      configPanel,
+      page,
+      browser,
     }) => {
+      const resourceExplorer = new ResourceExplorer({ page });
+      const configPanel = new ConfigPanel({ page });
+      const dashboardWithLineWidget = await createNewDashboardWithWidget(
+        'line',
+        page,
+        browser,
+        resourceExplorer
+      );
       await configPanel.collapsedButton.click();
 
       await configPanel.YMinInput.fill(Y_MIN);
@@ -97,9 +141,10 @@ test.describe('test Line Widget Styling changes', () => {
         .locator('text')
         .all();
 
-      const textValues = [];
+      const textValues: string[] = [];
       for (let i = 0; i < svgTexts.length; i++) {
-        textValues.push(await svgTexts[i].textContent());
+        const value = await svgTexts[i].textContent();
+        value && textValues.push(value);
       }
 
       // the first 6 (w.o yaxis label) of the <text> inside the g are the Y-Axis markers
@@ -109,10 +154,15 @@ test.describe('test Line Widget Styling changes', () => {
   });
 
   test.describe('test Line styles', () => {
-    test('update Line type', async ({
-      dashboardWithLineWidget,
-      configPanel,
-    }) => {
+    test('update Line type', async ({ page, browser }) => {
+      const resourceExplorer = new ResourceExplorer({ page });
+      const configPanel = new ConfigPanel({ page });
+      const dashboardWithLineWidget = await createNewDashboardWithWidget(
+        'line',
+        page,
+        browser,
+        resourceExplorer
+      );
       await configPanel.collapsedButton.click();
 
       await configPanel.container
@@ -126,10 +176,15 @@ test.describe('test Line Widget Styling changes', () => {
       await expect(div).toBeVisible();
     });
 
-    test('update Line thickness', async ({
-      dashboardWithLineWidget,
-      configPanel,
-    }) => {
+    test('update Line thickness', async ({ page, browser }) => {
+      const resourceExplorer = new ResourceExplorer({ page });
+      const configPanel = new ConfigPanel({ page });
+      const dashboardWithLineWidget = await createNewDashboardWithWidget(
+        'line',
+        page,
+        browser,
+        resourceExplorer
+      );
       await configPanel.collapsedButton.click();
 
       await configPanel.container.getByText('Normal', { exact: true }).click();
@@ -159,10 +214,15 @@ test.describe('test Line Widget Styling changes', () => {
       expect(strokeWidth === '2px').toBeTruthy();
     });
 
-    test('update line style', async ({
-      configPanel,
-      dashboardWithLineWidget,
-    }) => {
+    test('update line style', async ({ page, browser }) => {
+      const resourceExplorer = new ResourceExplorer({ page });
+      const configPanel = new ConfigPanel({ page });
+      const dashboardWithLineWidget = await createNewDashboardWithWidget(
+        'line',
+        page,
+        browser,
+        resourceExplorer
+      );
       await configPanel.collapsedButton.click();
       await configPanel.container.getByText('Solid', { exact: true }).click();
       await configPanel.container.getByText('Dashed', { exact: true }).click();
@@ -188,10 +248,15 @@ test.describe('test Line Widget Styling changes', () => {
   });
 
   test.describe('Legend Section', () => {
-    test('Hide/Show Legend', async ({
-      dashboardWithLineWidget,
-      configPanel,
-    }) => {
+    test('Hide/Show Legend', async ({ page, browser }) => {
+      const resourceExplorer = new ResourceExplorer({ page });
+      const configPanel = new ConfigPanel({ page });
+      const dashboardWithLineWidget = await createNewDashboardWithWidget(
+        'line',
+        page,
+        browser,
+        resourceExplorer
+      );
       await configPanel.collapsedButton.click();
 
       await configPanel.showLegendToggle.click();
@@ -201,7 +266,7 @@ test.describe('test Line Widget Styling changes', () => {
         .textContent();
 
       // TODO: update this to check property name, checking data streams because of a bug which hides the table
-      expect(legendText).not.toContain('Data Streams');
+      expect(legendText).not.toContain('Data streams');
       await configPanel.showLegendToggle.click();
       legendText = await dashboardWithLineWidget.gridArea
         .locator('[data-gesture=widget]')
@@ -211,7 +276,14 @@ test.describe('test Line Widget Styling changes', () => {
   });
 
   test.describe('Trend Cursors', () => {
-    test('add a trend Cursor', async ({ dashboardWithLineWidget, page }) => {
+    test('add a trend Cursor', async ({ browser, page }) => {
+      const resourceExplorer = new ResourceExplorer({ page });
+      const dashboardWithLineWidget = await createNewDashboardWithWidget(
+        'line',
+        page,
+        browser,
+        resourceExplorer
+      );
       await dashboardWithLineWidget.gridArea
         .locator('[data-gesture=widget]')
         .click({ button: 'right' });
@@ -234,12 +306,19 @@ test.describe('test Line Widget Styling changes', () => {
       // the table populates the value a bit later
       await page.waitForTimeout(3000);
       const legendText = await legend.textContent();
-      const legendTextWoSpace = legendText.replace(' ', '');
-      const tcTextWoSpace = tcText.replace(' ', '');
+      const legendTextWoSpace = legendText?.replace(' ', '');
+      const tcTextWoSpace = tcText?.replace(' ', '');
       expect(legendTextWoSpace).toContain(tcTextWoSpace);
     });
 
-    test('drag a trend Cursor', async ({ dashboardWithLineWidget, page }) => {
+    test('drag a trend Cursor', async ({ browser, page }) => {
+      const resourceExplorer = new ResourceExplorer({ page });
+      const dashboardWithLineWidget = await createNewDashboardWithWidget(
+        'line',
+        page,
+        browser,
+        resourceExplorer
+      );
       const widget = dashboardWithLineWidget.gridArea.locator(
         '[data-gesture=widget]'
       );
@@ -248,7 +327,7 @@ test.describe('test Line Widget Styling changes', () => {
 
       await widget.getByText('Add Trend Cursor').click();
 
-      const tcText = await getTrendCursorText(dashboardWithLineWidget);
+      const tcText = (await getTrendCursorText(dashboardWithLineWidget)) ?? '';
       const legend = widget.locator(
         'div[class="base-chart-legend-table-container"]'
       );
@@ -260,22 +339,33 @@ test.describe('test Line Widget Styling changes', () => {
 
       await page.mouse.down();
       // this is just dragging a bit, bounding box can be used to be more precise if needed
-      await page.mouse.move(textEleBoundingBox.x - 50, textEleBoundingBox.y, {
-        steps: 10,
-      });
+      await page.mouse.move(
+        (textEleBoundingBox?.x ?? 0) - 50,
+        textEleBoundingBox?.y ?? 0,
+        {
+          steps: 10,
+        }
+      );
 
       await page.waitForTimeout(2000);
-      const tcText2 = await getTrendCursorText(dashboardWithLineWidget);
+      const tcText2 = (await getTrendCursorText(dashboardWithLineWidget)) ?? '';
       expect(tcText2 !== tcText).toBeTruthy();
 
       // the line break in the legend header makes the equality break, so just removing all spaces
-      const legendText = await legend.textContent();
+      const legendText = (await legend.textContent()) ?? '';
       const legendTextWoSpace = legendText.replace(' ', '');
       const tcTextWoSpace = tcText2.replace(' ', '');
       expect(legendTextWoSpace).toContain(tcTextWoSpace);
     });
 
-    test('delete a trend Cursor', async ({ dashboardWithLineWidget, page }) => {
+    test('delete a trend Cursor', async ({ browser, page }) => {
+      const resourceExplorer = new ResourceExplorer({ page });
+      const dashboardWithLineWidget = await createNewDashboardWithWidget(
+        'line',
+        page,
+        browser,
+        resourceExplorer
+      );
       await dashboardWithLineWidget.gridArea
         .locator('[data-gesture=widget]')
         .click({ button: 'right' });
@@ -307,11 +397,17 @@ test.describe('test Line Widget Styling changes', () => {
 
 test.describe('Testing Line Widget property changes', () => {
   test('Deleting a property is reflected on the chart', async ({
-    dashboardWithLineWidget,
-    configPanel,
-    resourceExplorer,
+    browser,
     page,
   }) => {
+    const resourceExplorer = new ResourceExplorer({ page });
+    const configPanel = new ConfigPanel({ page });
+    const dashboardWithLineWidget = await createNewDashboardWithWidget(
+      'line',
+      page,
+      browser,
+      resourceExplorer
+    );
     const widget = dashboardWithLineWidget.gridArea.locator(
       '[data-gesture=widget]'
     );
@@ -331,10 +427,17 @@ test.describe('Testing Line Widget property changes', () => {
   });
 
   test('changing color of a property, should only change that property color', async ({
-    dashboardWithLineWidget,
-    configPanel,
-    resourceExplorer,
+    page,
+    browser,
   }) => {
+    const resourceExplorer = new ResourceExplorer({ page });
+    const configPanel = new ConfigPanel({ page });
+    const dashboardWithLineWidget = await createNewDashboardWithWidget(
+      'line',
+      page,
+      browser,
+      resourceExplorer
+    );
     await resourceExplorer.addModeledProperties(['Min Temperature']);
     const fillColor = '#bf3636';
     const fillColorRGB = 'rgb(191, 54, 54)';
@@ -365,10 +468,17 @@ test.describe('Testing Line Widget property changes', () => {
   });
 
   test('changing style on a property , should only reflect on that property', async ({
-    dashboardWithLineWidget,
-    configPanel,
-    resourceExplorer,
+    page,
+    browser,
   }) => {
+    const resourceExplorer = new ResourceExplorer({ page });
+    const configPanel = new ConfigPanel({ page });
+    const dashboardWithLineWidget = await createNewDashboardWithWidget(
+      'line',
+      page,
+      browser,
+      resourceExplorer
+    );
     await resourceExplorer.addModeledProperties(['Min Temperature']);
     const widget = dashboardWithLineWidget.gridArea.locator(
       '[data-gesture=widget]'
@@ -435,10 +545,17 @@ test.describe('Testing Line Widget property changes', () => {
   });
 
   test('changing Y-axis values per property, should be reflected on the chart', async ({
-    dashboardWithLineWidget,
-    configPanel,
-    resourceExplorer,
+    page,
+    browser,
   }) => {
+    const resourceExplorer = new ResourceExplorer({ page });
+    const configPanel = new ConfigPanel({ page });
+    const dashboardWithLineWidget = await createNewDashboardWithWidget(
+      'line',
+      page,
+      browser,
+      resourceExplorer
+    );
     await resourceExplorer.addModeledProperties(['Min Temperature']);
     const widget = dashboardWithLineWidget.gridArea.locator(
       '[data-gesture=widget]'
@@ -480,12 +597,15 @@ test.describe('Testing Line Widget property changes', () => {
     await expect(max).toBeVisible();
   });
 
-  test('Line widget can change label', async ({
-    page,
-    resourceExplorer,
-    configPanel,
-    dashboardWithLineWidget,
-  }) => {
+  test('Line widget can change label', async ({ page, browser }) => {
+    const resourceExplorer = new ResourceExplorer({ page });
+    const configPanel = new ConfigPanel({ page });
+    const dashboardWithLineWidget = await createNewDashboardWithWidget(
+      'line',
+      page,
+      browser,
+      resourceExplorer
+    );
     //add property and open config panel
     await resourceExplorer.addModeledProperties(['Max Temperature']);
     await configPanel.collapsedButton.click();
@@ -501,7 +621,7 @@ test.describe('Testing Line Widget property changes', () => {
     await configPanel.page.getByRole('button', { name: 'Label' }).click();
 
     // uncheck default value
-    await configPanel.page.getByText('Use default datastream name').click();
+    await configPanel.page.getByText('Use default data stream name').click();
     await page.waitForTimeout(1000);
 
     // click and change input value
@@ -517,11 +637,17 @@ test.describe('Testing Line Widget property changes', () => {
 
 test.describe('Testing Thresholds', () => {
   test('adding Threshold, hiding and then removing threshold ', async ({
-    dashboardWithLineWidget,
-    configPanel,
     page,
-    resourceExplorer,
+    browser,
   }) => {
+    const resourceExplorer = new ResourceExplorer({ page });
+    const configPanel = new ConfigPanel({ page });
+    const dashboardWithLineWidget = await createNewDashboardWithWidget(
+      'line',
+      page,
+      browser,
+      resourceExplorer
+    );
     await resourceExplorer.collapseLeftIcon.click();
     const widget = dashboardWithLineWidget.gridArea.locator(
       '[data-gesture=widget]'

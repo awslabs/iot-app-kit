@@ -1,21 +1,25 @@
 import unique from 'lodash/uniq';
 
-import { DataSource } from '../../../types';
+import { type DataSource } from '../../../types';
 
 import {
-  ObjectDataSource,
+  type ObjectDataSource,
   ObjectDataSourceTransformer,
-  ObjectDataSourceValue,
+  type ObjectDataSourceValue,
 } from '../../object';
-import { AnomalyObjectDataSource } from './datasource';
+import { type AnomalyObjectDataSource } from './datasource';
 import {
-  AnomalyObjectDataInput,
-  AnomalyObjectDataSourceValue,
-  Diagnostic,
-  Diagnostics,
+  type AnomalyObjectDataInput,
+  type AnomalyObjectDataSourceValue,
+  type Diagnostic,
+  type Diagnostics,
 } from './input';
 import { isAfter, isBefore } from 'date-fns';
-import { AnomalyData, AnomalyDescription, DiagnosticData } from '../output';
+import {
+  type AnomalyData,
+  type AnomalyDescription,
+  type DiagnosticData,
+} from '../output';
 
 /**
  * there can be points that have an anomaly score

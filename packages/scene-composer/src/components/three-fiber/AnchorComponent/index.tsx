@@ -1,9 +1,7 @@
-import React from 'react';
-
 import { AnchorWidget } from '../../../augmentations/components/three-fiber/anchor/AnchorWidget';
-import { ISceneNodeInternal, IAnchorComponentInternal } from '../../../store';
-import { getComponentGroupName } from '../../../utils/objectThreeUtils';
 import { DefaultAnchorStatus } from '../../../interfaces';
+import { type IAnchorComponentInternal, type ISceneNodeInternal } from '../../../store';
+import { getComponentGroupName } from '../../../utils/objectThreeUtils';
 
 interface IAnchorComponentProps {
   node: ISceneNodeInternal;

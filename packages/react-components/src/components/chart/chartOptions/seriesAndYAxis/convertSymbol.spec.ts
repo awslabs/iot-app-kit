@@ -1,5 +1,5 @@
-import { DataPoint } from '@iot-app-kit/core';
-import { ConvertSymbolOptions, convertSymbol } from './convertSymbol';
+import { type DataPoint } from '@iot-app-kit/core';
+import { type ConvertSymbolOptions, convertSymbol } from './convertSymbol';
 
 const DEFAULT_ECHARTS_PARAMS = {
   componentType: '',

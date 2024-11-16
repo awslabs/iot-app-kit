@@ -1,11 +1,10 @@
-import React from 'react';
 import { spaceScaledXs } from '@cloudscape-design/design-tokens';
 
 import {
   XYPlotTooltipDatastream,
-  XYPlotTooltipDatastreamOptions,
+  type XYPlotTooltipDatastreamOptions,
 } from './datastream';
-import { ChartDataQuality } from '../../types';
+import { type ChartAlarms, type ChartDataQuality } from '../../types';
 
 const gridStyles = {
   display: 'grid',
@@ -18,11 +17,13 @@ export type IdentifiableDataStreamOptions = XYPlotTooltipDatastreamOptions & {
 };
 export type XYPlotTooltipDatastreamsOptions = {
   datastreams: IdentifiableDataStreamOptions[];
-} & ChartDataQuality;
+} & ChartDataQuality &
+  ChartAlarms;
 export const XYPlotTooltipDatastreams = ({
   datastreams,
   showBadDataIcons,
   showUncertainDataIcons,
+  showAlarmIcons,
 }: XYPlotTooltipDatastreamsOptions) => {
   return (
     <div style={gridStyles}>
@@ -32,6 +33,7 @@ export const XYPlotTooltipDatastreams = ({
           {...s}
           showBadDataIcons={showBadDataIcons}
           showUncertainDataIcons={showUncertainDataIcons}
+          showAlarmIcons={showAlarmIcons}
         />
       ))}
     </div>

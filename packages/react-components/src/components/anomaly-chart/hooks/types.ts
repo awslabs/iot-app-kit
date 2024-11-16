@@ -1,5 +1,5 @@
-import { AnomalyData, AnomalyDescription } from '../../../data';
-import { ThemeMode, TooltipSort } from '../types';
+import { type AnomalyData, type AnomalyDescription } from '../../../data';
+import { type ThemeMode, type TooltipSort } from '../types';
 
 export type ConfigurationOptions = {
   gestures?: boolean;

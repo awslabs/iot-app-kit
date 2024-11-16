@@ -1,11 +1,11 @@
 import {
-  CreateEntityCommandInput,
-  CreateEntityCommandOutput,
+  type CreateEntityCommandInput,
+  type CreateEntityCommandOutput,
   ResourceNotFoundException,
-  UpdateEntityCommandInput,
-  UpdateEntityCommandOutput,
+  type UpdateEntityCommandInput,
+  type UpdateEntityCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
-import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { isEmpty } from 'lodash';
 
 import {
@@ -18,8 +18,8 @@ import {
 } from '../../common/entityModelConstants';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { generateUUID } from '../mathUtils';
-import { ISceneDocumentInternal, ISceneNodeInternal } from '../../store';
-import { ISceneDocument, KnownSceneProperty } from '../../interfaces';
+import { type ISceneDocumentInternal, type ISceneNodeInternal } from '../../store';
+import { type ISceneDocument, KnownSceneProperty } from '../../interfaces';
 import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
 
 import { createNodeEntity } from './createNodeEntity';

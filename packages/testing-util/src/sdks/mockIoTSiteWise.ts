@@ -1,4 +1,3 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import type {
   DescribeAssetCommandInput,
   DescribeAssetModelCommandInput,
@@ -26,6 +25,7 @@ import type {
   ListAssetPropertiesResponse,
   ListAssetModelPropertiesCommandInput,
   ListAssetModelPropertiesResponse,
+  IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
 
 const nonOverriddenMock = () =>

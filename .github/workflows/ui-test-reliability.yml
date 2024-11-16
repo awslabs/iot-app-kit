@@ -1,11 +1,11 @@
-name: "UI Test Reliability Check"
+name: 'UI Test Reliability Check'
 
 # We only run this on PRs that have the label "test:reliability", otherwise it's excluded.
 # Add this label anytime there are new UI tests added, or you want to verify a change still
 # reliabily passes tests
 on:
   pull_request:
-    types: [ labeled ]
+    types: [labeled]
 
 env:
   PW_TEST_HTML_REPORT_OPEN: 'never'
@@ -21,7 +21,7 @@ jobs:
           lfs: 'true'
       - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
@@ -32,16 +32,18 @@ jobs:
           path: |
             ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+
       - name: Install
-        run:
-          npm ci --prefer-offline --no-audit --no-fund && npm run bootstrap
+        env:
+          NODE_OPTIONS: '--max_old_space_size=8192'
+        run: npm ci --prefer-offline --no-audit --no-fund && npm run bootstrap
 
       - name: Install Playwright's dependencies
         run: npx playwright install --with-deps
 
       - name: test reliability
-        run:
-          npm run test:reliability --production
+        run: npm run test:reliability --production
+
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

@@ -1,4 +1,3 @@
-import React from 'react';
 import StatusWidgetComponent from './component';
 import type { DashboardPlugin } from '~/customization/api';
 import type { StatusWidget } from '../types';

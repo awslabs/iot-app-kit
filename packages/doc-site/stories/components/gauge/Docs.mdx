@@ -1,5 +1,4 @@
-import { Canvas, Meta, Story } from '@storybook/blocks';
-
+import { Canvas, Meta, Story, Source, Markdown } from '@storybook/blocks';
 import * as GaugeStories from './Gauge.stories';
 
 # Gauge
@@ -8,122 +7,255 @@ The Gauge component provides a compact representation of an overview of your ass
 Visualize critical insights into the overall performance of your devices, equipment, or processes. 
 Interact with IoT data from one or more data sources with Gauge.
 
+<Meta title="Components/Gauge" />
+
 <Canvas
-  sourceState='none'
-  story={{ height: '500px' }}
-  of={GaugeStories.Standard}
+  sourceState='hidden'
+  story={{ height: '300px' }}
+  of={GaugeStories.StandardWithThresholds}
 />
 
-# Gauge with Thresholds
+##### Gauge with Thresholds
 
 Gauge with thresholds enhances visualization of your asset properties. This allows for better differentiation,
 and highlights specific ranges or values. A defined threshold visually represents different levels or 
 categories of data, making it easier to identify patterns or anomalies. 
 It provides clear and insightful visualizations for improved data analysis.
 
-<Canvas
-  sourceState='none'
-  story={{ height: '500px' }}
-  of={GaugeStories.StandardWithThresholds}
-/>
-
 ## Basic usage
 
-```jsx
-<Gauge
-  query={query.timeSeriesData({
-    assets: [
-      {
-        assetId: 'id',
-        properties: [{ propertyId: 'property', refId: 'my-property' }],
-      },
-    ],
-  })}
-  thresholds={[
-    {
-      value: 30,
-      id: 'abc',
-      color: '#1e8103',
-      comparisonOperator: 'GT',
-    },
-    {
-      value: 70,
-      id: 'xyz',
-      color: '#ed7211',
-      comparisonOperator: 'GT',
-    },
-    {
-      value: 100,
-      id: 'xyz',
-      color: '#d13211',
-      comparisonOperator: 'GT',
-    },
-  ]}
-  settings={{
-    gaugeThickness: 30,
-    showUnit: true,
-    showName: false,
-    fontSize: 40,
-    labelFontSize: 12,
-    unitFontSize: 16,
-    yMin: 0,
-    yMax: 100,
-  }}
-/>
-```
+<Source dark="true" code={`
+import { Gauge } from '@iot-app-kit/react-components';
 
-## Gauge Properties
+export const GaugeUsage = () => {
+  return (
+    <Gauge
+      query={query.timeSeriesData({
+        assets: [
+          {
+            assetId: 'id',
+            properties: [{ propertyId: 'property', refId: 'my-property' }],
+          },
+        ],
+      })}
+      thresholds={[
+        {
+          value: 30,
+          id: 'abc',
+          color: '#1e8103',
+          comparisonOperator: 'GT',
+        },
+        {
+          value: 70,
+          id: 'xyz',
+          color: '#ed7211',
+          comparisonOperator: 'GT',
+        },
+        {
+          value: 100,
+          id: 'xyz',
+          color: '#d13211',
+          comparisonOperator: 'GT',
+        },
+      ]}
+      settings={{
+        gaugeThickness: 30,
+        showUnit: true,
+        showName: false,
+        fontSize: 40,
+        labelFontSize: 12,
+        unitFontSize: 16,
+        yMin: 0,
+        yMax: 100,
+      }}
+    />
+  )
+}  
+`} />
+
+## Properties
 
 The Gauge component has the following customizable properties:
 
-#### viewport (object,optional):
+#### query
+##### (object, required)
+This query specifies the time series data or alarm data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
 
-Specify the interval of time the widget visualizes. If not provided, the widget utilizes the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
-If a iewportManager, and a `viewport` is not defined, the default viewport is `{ duration: '10d' }`.
+Example for time series data.
+<Source dark="true" code={`
+<Gauge
+  query={
+    query.timeSeriesData({
+      assets: [{
+        assetId: 'id',
+        properties: [{ propertyId: 'property', refId: 'my-property' }]
+      }]
+    })
+ }
+ styles={{ 'my-property': { name: 'My Cool Property' }}}
+/>
+
+`} />
+
+Example for alarm data.
+<Source dark="true" code={`
+<Gauge
+  query={
+    query.alarmData({
+      alarms: [{
+        assetId: 'id',
+        alarmComponents: [{ assetCompositeModelId: 'asset-composite-model-id' }]
+      }]
+    })
+ }
+/>
+
+`} />
+
+#### viewport
+##### (object, optional)
+This specifies the interval of time the widget visualizes. If not present, the widget utilizes the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
+If a ViewportManager, and a `viewport` is not defined, the default value is `{ duration: '10d' }`.
 Learn about the [viewport](/docs/core-viewport--docs).
 
-#### thresholds (object, optional):
-
+#### thresholds
+##### (array of object, optional)
 Define rules to display how the data is visualized based on if the data breaches the threshold and how the threshold is styled.
 Learn more about [thresholds](/docs/core-thresholds--docs#thresholds).
 
-#### query (object):
-
-The query that specifes the time series data to visualize.
-Learn more about [time series data queries](/docs/core-time-series-data--docs).
-
-#### significantDigits (number, optional):
-
+#### significantDigits
+##### (number, optional)
 Specify the number of significant digits displayed. The default value is `4`.
 
-#### settings (object, optional):
+<Canvas
+  sourceState='hidden'
+  of={GaugeStories.SignificantDigits}
+/>
 
-Settings to customize the appearance of the widget.
+#### settings
+##### (object, optional)
+Settings to customize the appearance of the widget. The settings object contains the following properties:
 
-The settings object contains the following properties:
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`showName\` | boolean, optional | false | Displays the name of the data being displayed. |
+| \`showUnit\` | boolean, optional | true | Displays the unit if present. |
+| \`fontSize\` | number, optional | 40 | Font size in pixels of the value. |
+| \`labelFontSize\` | number, optional | 16 | Font size in pixels of the value label. |
+| \`unitFontSize\` | number, optional | 16 | Font size in pixels of the unit label. |
+| \`gaugeThickness\` | number, optional | 30 | Font size in pixels of the thickness of the progress bar. |
+| \`yMin\` | number, optional | 0 | The starting (minimum) value of the gauge |
+| \`yMax\` | number, optional | 100 | The ending (maximum) value of the gauge |
+| ** The properies below are DEPRECATED** |||
+| \`color\` | string, optional | black | Specifies the color to display. It is overriden by thresholds and alarms. The value must be a \`css\` string. |
+`}
+</Markdown>
 
-  - `gaugeThickness` (number, optional): Specifies the thickness of the gauge.
-  - `showName` (boolean, optional): Set to `true` to display the name of the data. Default value is `true`.
-  - `showUnit` (boolean, optional): Set to `true` to display the units of the data. Default value is `true`.
-  - `fontSize` (number, optional): The font size in pixels. Default value is 40.
-  - `labelFontSize` (number, optional): The label font size in pixels. Default is 12.
-  - `unitFontSize` (number, optional): The unit font size in pixels. Default is 16.
-  - `yMin` (number, optional): The starting (minimum) value of the gauge.
-  - `yMax` (number, optional): The ending (maximum) value of the gauge.
+#### titleText
+##### (string, optional)
+This specifies the title for the gauge component. Default value is `undefined`.
 
+#### size
+##### (object: {'{'}width: number; height: number{'}'}, optional)
+This defines a fixed width and height for the Gauge. Default behavior is to use 100% of the avaliable width and height of the parent component.
 
+#### styles
+##### (object, optional) 
+This contains a map of `refId` to style settings for the component. Learn more about [reference IDs](/docs/core-styles--docs).
+It has the following style settings that are customizable:
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`name\` | string, optional | - | This specifies a name to replace the name of the data set given by its source. |
+| \`unit\` | string, optional | - | This specifies the units for the data (for example, \`"m/s"\` and \`"count"\`). |
+| \`detailedName\` | string, optional | - | This specifies the detailed name presented in the tooltip.|
+| \`color\` | string, optional | - | This specifies the detault color for progress bar and value label. CSS color string, i.e. 'red' or '#ffffff'|
+`}
+</Markdown>
 
-### Examples
+#### assistant
+##### (object, optional)
+This specifies settings to enable the IoT Sitewise AI assistant within the component. Please refer to the [AWS documentation for more details about IoT Sitewise AI assistant](#). 
+
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`client\` | object, required | - | Specifies an instantiated assistant client \`IoTSitewiseAssistantClient\`, the assistant client is responsible for interfacing with the Assistant API.|
+| \`conversationId\` | string, required | - | Defines a conversation ID to be used as unique identifier for conversations with the assistant, the conversation ID can be the same for multiple components or unique, depending on use cases. |
+| \`componentId\` | string, required | - | Each component **must define an unique ID** which will be used by the assistant to manage state and assistant results. |
+| \`target\` | object, required | - | Defines the target for the assistant actions, the target options are \`dashboard\` and \`widget\`. For target \`dashboard\` all assistant results will be broadcasted to the Dashboard component, for target \`widget\` the assistant results will be display next to the component. |
+| \`enabled\` | boolean, optional | true | Allows to disable or enable the assistant at the component level. |
+| \`onAction\` | event, optional | - | Allows to pass a callback function to listen for any assistant action within the component. |
+`}
+</Markdown>
+
+<Source dark="true" code={`import React, { useEffect } from 'react';
+import { Gauge, useAssistant } from '@iot-app-kit/react-components';
+import { IoTSitewiseAssistantClient } from '@iot-app-kit/core-util';
+
+export const GaugeWithAssistant = () => {
+  const client = new IoTSitewiseAssistantClient({
+    iotSiteWiseClient
+  });
+
+  const { generateSummary } = useAssistant({
+    assistantClient: client,
+  });
+
+  useEffect(() => {
+    generateSummary({
+      componentId: 'my-kpi-component-id',
+      conversationId: 'my-conversation-id',
+      target: 'widget',
+      utterance: 'generate a summary and return the response in markdown format.',
+    });
+  }, []);
+
+  return (
+    <Gauge
+      query: sitewise,
+      settings: {
+        showUnit: true,
+        showName: true,
+        showTimestamp: true,
+        showAggregationAndResolution: true,
+        fontSize: 30,
+        secondaryFontSize: 12,
+        backgroundColor: '#ffffff',
+      }
+      assistant={{
+        client,
+        componentId: 'my-kpi-component-id',
+        conversationId: 'my-conversation-id',
+        target: 'widget',
+      }}
+    />
+  );
+};`} />
+
+## Alarms
+
+<Canvas sourceState='hidden' of={GaugeStories.Alarm} />
+
+When you add an IoT SiteWise alarm to the Gauge the alarm's state will be displayed as a label, and the alarm's threshold will be added.
+
+An IoT SiteWise alarm is triggered based on a SiteWise input property. The associated input property data will automatically be displayed on the Gauge as well.
+
+## Examples
 
 #### Bad data quality
 An example of bad data quality.
 
-<Canvas sourceState='none' of={GaugeStories.BadDataQuality} />
+<Canvas sourceState='hidden' of={GaugeStories.BadDataQuality} />
 
 #### Uncertain data quality
 An example of uncertain data quality
 
-<Canvas sourceState='none' of={GaugeStories.UncertainDataQuality} />
+<Canvas sourceState='hidden' of={GaugeStories.UncertainDataQuality} />
 
 #### Loading
 An example when the data is loading.

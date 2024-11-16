@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import ReactThreeTestRenderer from '@react-three/test-renderer';
-import { Mesh, Texture, MeshStandardMaterial } from 'three';
+import { type Mesh, Texture, type MeshStandardMaterial } from 'three';
 import { useFrame } from '@react-three/fiber';
 jest.useFakeTimers();
 

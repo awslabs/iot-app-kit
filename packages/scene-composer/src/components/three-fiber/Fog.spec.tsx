@@ -8,10 +8,9 @@ const baseState = {
   getSceneProperty: getScenePropertyMock,
 };
 import { useThree } from '@react-three/fiber';
-import React from 'react';
 
 import { accessStore } from '../../../src/store';
-import { IFogSettings } from '../../interfaces';
+import { type IFogSettings } from '../../interfaces';
 
 import Fog from './Fog';
 

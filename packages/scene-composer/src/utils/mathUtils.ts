@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
-import { DistanceUnit } from '../interfaces';
-import { Color } from '../models/SceneModels';
+import { type DistanceUnit } from '../interfaces';
+import { type Color } from '../models/SceneModels';
 
 /**
  * Format bytes as human-readable text.

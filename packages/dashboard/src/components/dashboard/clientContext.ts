@@ -1,6 +1,6 @@
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { createContext, useContext } from 'react';
-import { DashboardIotSiteWiseClients } from '~/types';
+import { type DashboardIotSiteWiseClients } from '~/types';
 
 export interface DashboardClientContext extends DashboardIotSiteWiseClients {
   iotSiteWise: IoTSiteWise;

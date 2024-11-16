@@ -1,8 +1,8 @@
 import {
-  AnnotationValue,
+  type AnnotationValue,
   COMPARISON_OPERATOR,
-  ComparisonOperator,
-  StyledThreshold,
+  type ComparisonOperator,
+  type StyledThreshold,
 } from '@iot-app-kit/core';
 import { COMPARATOR_MAP } from '../../../common/constants';
 

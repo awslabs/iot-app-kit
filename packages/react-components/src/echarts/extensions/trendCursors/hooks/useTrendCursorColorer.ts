@@ -3,8 +3,8 @@ import { useEffect, useRef } from 'react';
 import isEqual from 'lodash.isequal';
 import useDataStore from '../../../../store';
 import {
-  TrendCursor,
-  TrendCursorGroupId,
+  type TrendCursor,
+  type TrendCursorGroupId,
   trendCursorsForGroup,
 } from '../store';
 

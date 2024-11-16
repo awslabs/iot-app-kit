@@ -1,10 +1,10 @@
-import React, { FC, useCallback } from 'react';
+import { type FC, useCallback } from 'react';
 import { Button, Container } from '@cloudscape-design/components';
 import styled from 'styled-components';
 
 import { useSceneComposerApi } from '../../src';
 
-import SceneViewerWrapper, { StorybookSceneViewerProps } from './scene-viewer';
+import SceneViewerWrapper, { type StorybookSceneViewerProps } from './scene-viewer';
 import { viewerArgTypes } from './argTypes';
 
 const SceneViewerContainer = styled.div`

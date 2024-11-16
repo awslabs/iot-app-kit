@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from "react";
 import { DateRangePicker, DateRangePickerProps } from "@cloudscape-design/components";
-import React from "react";
 import { useViewport } from "@iot-app-kit/react-components";
 
 const mapUnit = (unit: DateRangePickerProps.TimeUnit) => {

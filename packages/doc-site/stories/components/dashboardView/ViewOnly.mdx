@@ -94,6 +94,16 @@ It contains the following properties:
     - **properties (object)**: The properties of the widget. Available properties to customize is based on the widget `type`. The properties will contain all widget level customizations
     and configuration of data within the widget.
 
+#### assistantConfiguration (object): 
+
+This specifies the assistant configuration contained within the dashboard, the assistant actions are displayed within the widgets 
+and the dashboard. Also, this includes a chatbot interface that can be interacted withint the dashboard preview mode.
+
+Contains the following properties:
+  - **state (string)**: The state of the assistant. It contains the following states:
+   - 'DISABLED': Assistant is not available to interact anywhere on the dashboard or dashboard widgets. There is no chatbot option as well.
+   - 'PASSIVE': Assistant will be available to interact on the dashboard and widgets, including the chatbot. It will not actively provide insights without user interaction.
+
 
 ### Example
 

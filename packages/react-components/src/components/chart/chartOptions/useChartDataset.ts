@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { DataStream } from '@iot-app-kit/core';
-import { ChartRef } from '../../../hooks/useECharts';
+import { type DataStream } from '@iot-app-kit/core';
+import { type ChartRef } from '../../../hooks/useECharts';
 
 /**
  *

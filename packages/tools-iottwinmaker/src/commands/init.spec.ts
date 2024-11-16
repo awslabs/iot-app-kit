@@ -1,5 +1,5 @@
-import { handler, Options } from './init';
-import { Arguments } from 'yargs';
+import { handler, type Options } from './init';
+import { type Arguments } from 'yargs';
 import {
   GetComponentTypeCommand,
   GetEntityCommand,
@@ -12,7 +12,7 @@ import {
 } from '@aws-sdk/client-iottwinmaker';
 import { mockClient } from 'aws-sdk-client-mock';
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { SdkStream } from '@aws-sdk/types';
+import { type SdkStream } from '@aws-sdk/types';
 import { workspaceId, fakeModelData } from './test-utils';
 import {
   emptyListComponentTypesResp,

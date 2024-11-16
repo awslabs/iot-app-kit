@@ -1,4 +1,4 @@
-import { test, expect, Page, Locator } from '@playwright/test';
+import { test, expect, type Page, type Locator } from '@playwright/test';
 import {
   ADD_TREND_CURSOR,
   ASSET_MODEL_TAB,

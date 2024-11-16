@@ -1,5 +1,5 @@
-import { SiteWiseAssetModelQuery } from '@iot-app-kit/source-iotsitewise';
-import { StyledAssetQuery } from '~/customization/widgets/types';
+import { type SiteWiseAssetModelQuery } from '@iot-app-kit/source-iotsitewise';
+import { type StyledAssetQuery } from '~/customization/widgets/types';
 
 export const handleRemoveAssetModelProperty = (
   { assetModels }: SiteWiseAssetModelQuery,

@@ -1,11 +1,11 @@
 import { Grid, Select } from '@cloudscape-design/components';
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { KnownSceneProperty, SceneResourceType, TargetMetadata } from '../../../interfaces';
-import { IIconLookup } from '../../../models/SceneModels';
-import { useSceneDocument, accessStore } from '../../../store';
+import { KnownSceneProperty, SceneResourceType, type TargetMetadata } from '../../../interfaces';
+import { type IIconLookup } from '../../../models/SceneModels';
+import { accessStore, useSceneDocument } from '../../../store';
 import {
   convertToIotTwinMakerNamespace,
   getSceneResourceDefaultValue,

@@ -1,8 +1,8 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import {
-  RequestFunction,
-  RequestParameters,
-  RequestResponse,
+  type RequestFunction,
+  type RequestParameters,
+  type RequestResponse,
 } from '@iot-app-kit/core';
 
 export const isAlarmModelId = (alarmModelId?: string): alarmModelId is string =>

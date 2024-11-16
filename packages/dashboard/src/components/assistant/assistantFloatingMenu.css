@@ -1,0 +1,63 @@
+.iot-app-kit-assistant-menu-container {
+  min-height: 90px;
+  width: fit-content;
+}
+
+.iot-app-kit-assistant-menu {
+  display: flex;
+  flex-flow: column wrap;
+  position: fixed;
+}
+
+.iot-app-kit-assistant-menu-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: end;
+}
+
+.iot-app-kit-assistant-menu-buttons {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  width: fit-content;
+}
+
+.iot-app-kit-assistant-menu-left-button {
+  text-wrap: nowrap;
+}
+
+.iot-app-kit-assistant-menu-right-button,
+.iot-app-kit-assistant-menu-center-button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: #59309d;
+  text-wrap: nowrap;
+}
+
+.iot-app-kit-assistant-menu-right-button:disabled,
+.iot-app-kit-assistant-menu-right-button[disabled],
+.iot-app-kit-assistant-menu-center-button:disabled,
+.iot-app-kit-assistant-menu-center-button[disabled] {
+  cursor: default;
+  color: var(--awsui-color-grey-500, #8c8c94);
+}
+
+.iot-app-kit-assistant-button:hover:enabled {
+  background: #ebebf0;
+  color: #59309d;
+}
+
+.iot-app-kit-assistant-button:hover span {
+  color: #59309d;
+}
+
+.iot-app-kit-assistant-button:active span {
+  color: #431d84;
+}
+
+.iot-app-kit-assistant-menu-right-button:hover:enabled,
+.iot-app-kit-assistant-menu-center-button:hover:enabled {
+  background: var(--purple-300, #d8b2ff);
+}

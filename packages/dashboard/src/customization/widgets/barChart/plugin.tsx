@@ -1,4 +1,3 @@
-import React from 'react';
 import BarChartWidgetComponent from './component';
 import BarIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';

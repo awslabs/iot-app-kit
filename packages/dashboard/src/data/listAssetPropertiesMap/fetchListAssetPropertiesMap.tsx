@@ -1,9 +1,9 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import {
-  SiteWiseAssetQuery,
-  SiteWisePropertyAliasQuery,
+  type SiteWiseAssetQuery,
+  type SiteWisePropertyAliasQuery,
 } from '@iot-app-kit/source-iotsitewise';
-import { QueryClient } from '@tanstack/react-query';
+import { type QueryClient } from '@tanstack/react-query';
 import {
   createFetchSiteWiseAssetQueryDescription,
   createListAssetPropertiesMapCacheKey,

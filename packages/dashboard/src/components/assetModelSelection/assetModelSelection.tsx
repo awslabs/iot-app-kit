@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import {
   colorBorderDividerDefault,
   colorTextBodyDefault,

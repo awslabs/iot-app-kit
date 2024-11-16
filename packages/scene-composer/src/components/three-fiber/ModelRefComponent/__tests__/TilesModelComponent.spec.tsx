@@ -1,11 +1,10 @@
 import * as THREE from 'three';
-import React from 'react';
 import { render } from '@testing-library/react';
 import { useFrame as mockUseFrame } from '@react-three/fiber';
 
 import { TilesModelComponent } from '../TilesModelComponent';
 import { KnownComponentType } from '../../../../interfaces';
-import { IModelRefComponentInternal } from '../../../../store/internalInterfaces';
+import { type IModelRefComponentInternal } from '../../../../store/internalInterfaces';
 import { useTiles as mockUseTiles } from '../TilesLoader';
 
 jest.mock('../TilesLoader', () => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ChartDataQuality, ChartOptions } from '../types';
+import { type ChartDataQuality, type ChartOptions } from '../types';
 
 type ChartPreferencesOptions = ChartDataQuality &
   Pick<ChartOptions, 'onChartOptionsChange'> & {

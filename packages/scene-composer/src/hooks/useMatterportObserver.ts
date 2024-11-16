@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MpSdk } from '@matterport/webcomponent';
+import { type MpSdk } from '@matterport/webcomponent';
 
 import { getMatterportSdk } from '../common/GlobalSettings';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';

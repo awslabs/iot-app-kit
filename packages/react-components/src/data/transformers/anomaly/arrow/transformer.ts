@@ -1,15 +1,15 @@
-import { DataSource } from '../../../types';
+import { type DataSource } from '../../../types';
 
 import { isAfter, isBefore } from 'date-fns';
 import {
-  ArrowDataSource,
+  type ArrowDataSource,
   ArrowDataSourceTransformer,
-  ArrowDataSourceValue,
-  Field,
+  type ArrowDataSourceValue,
+  type Field,
 } from '../../arrow';
-import { AnomalyData, AnomalyDescription } from '../output';
-import { AnomalyArrowDataSourceValue } from './input';
-import { AnomalyArrowDataSource } from './datasource';
+import { type AnomalyData, type AnomalyDescription } from '../output';
+import { type AnomalyArrowDataSourceValue } from './input';
+import { type AnomalyArrowDataSource } from './datasource';
 
 const NON_DIAGNOSTIC_FIELDS = [
   'time',

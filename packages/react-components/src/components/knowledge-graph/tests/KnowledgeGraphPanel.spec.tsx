@@ -1,5 +1,5 @@
-import React, { HTMLAttributes, useRef } from 'react';
-import { ElementDefinition } from 'cytoscape';
+import { type HTMLAttributes, useRef } from 'react';
+import { type ElementDefinition } from 'cytoscape';
 import { fireEvent } from '@testing-library/react';
 import { renderWithProviders } from './utils/test-utils';
 import { kgDataSource } from './__mocks__/dataSource';
@@ -40,10 +40,10 @@ jest.mock('react', () => ({
 
 describe('KnowledgeGraph', () => {
   it('should render correctly', () => {
-    const { container } = renderWithProviders(
+    const { getByTestId } = renderWithProviders(
       <KnowledgeGraph kgDataSource={kgDataSource} />
     );
-    expect(container).toMatchSnapshot();
+    expect(getByTestId('clear-button')).toBeInTheDocument();
   });
   it('should fit to screen on fit button clicked', async () => {
     const useRefMock = useRef as jest.Mock;

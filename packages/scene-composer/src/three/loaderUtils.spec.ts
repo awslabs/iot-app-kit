@@ -1,6 +1,6 @@
-import { WebGLRenderer } from 'three';
+import { type WebGLRenderer } from 'three';
 
-import { GLTFLoader } from './GLTFLoader';
+import { type GLTFLoader } from './GLTFLoader';
 import { setupTwinMakerGLTFLoader } from './loaderUtils';
 import { setupBasisuSupport, setupDracoSupport, setupFileLoader } from './loaderUtilsHelpers';
 

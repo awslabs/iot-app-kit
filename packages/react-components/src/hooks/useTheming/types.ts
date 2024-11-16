@@ -1,5 +1,5 @@
 import { type Theme } from '@cloudscape-design/components/theming';
-import { Mode as ThemeMode } from '@cloudscape-design/global-styles';
+import { type Mode as ThemeMode } from '@cloudscape-design/global-styles';
 
 /** Collection of Cloudscape design tokens supported for theming. */
 export type Tokens = Pick<

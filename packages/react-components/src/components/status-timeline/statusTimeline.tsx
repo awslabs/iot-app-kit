@@ -1,9 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo } from 'react';
-import { StyleSettingsMap, Threshold, Viewport } from '@iot-app-kit/core';
+import { useMemo, useRef } from 'react';
+import {
+  type StyleSettingsMap,
+  type Threshold,
+  type Viewport,
+} from '@iot-app-kit/core';
 import {
   StatusTimeline as StatusTimelineBaseWrongType,
-  LineChart,
+  type LineChart,
 } from '@iot-app-kit/charts';
 import type {
   DataStream as DataStreamViz,
@@ -11,13 +15,16 @@ import type {
 } from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
+import { type AssistantProperty } from '../../common/assistantProps';
 import {
   DEFAULT_LEGEND,
   DEFAULT_VIEWPORT,
   ECHARTS_GESTURE,
 } from '../../common/constants';
+import { getAdjustedChartHeight, Title } from '../../common/title';
 import type { ComponentQuery } from '../../common/chartTypes';
 import { useAlarms } from '../../hooks/useAlarms';
+import { useResizeObserver } from 'usehooks-ts';
 import { getAlarmQueries, getTimeSeriesQueries } from '../../utils/queries';
 import { convertAlarmQueryToAlarmRequest } from '../../queries/utils/convertAlarmQueryToAlarmRequest';
 import {
@@ -47,6 +54,8 @@ export const StatusTimeline = ({
   aggregationType?: string;
   gestures?: boolean;
   significantDigits?: number;
+  assistant?: AssistantProperty;
+  titleText?: string;
 }) => {
   const { viewport, setViewport, group, lastUpdatedBy } = useViewport();
   // if using echarts then echarts gesture overrides passed in viewport
@@ -94,18 +103,29 @@ export const StatusTimeline = ({
     alarmStateDataStreams.length,
   ]);
 
+  const ref = useRef(null);
+  const { height } = useResizeObserver({ ref });
+
   return (
-    <StatusTimelineBase
-      aggregationType={aggregationType}
-      widgetId=''
-      dataStreams={
-        [...dataStreams, ...alarmStateDataStreams] as DataStreamViz[]
-      }
-      viewport={{ ...utilizedViewport, group, lastUpdatedBy }}
-      annotations={{ y: allThresholds } as Annotations}
-      setViewport={setViewport}
-      legend={DEFAULT_LEGEND}
-      {...rest}
-    />
+    <div ref={ref} style={{ height: 'inherit' }}>
+      <Title text={rest.titleText} />
+      <StatusTimelineBase
+        aggregationType={aggregationType}
+        widgetId=''
+        dataStreams={
+          [...dataStreams, ...alarmStateDataStreams] as DataStreamViz[]
+        }
+        viewport={{ ...utilizedViewport, group, lastUpdatedBy }}
+        annotations={{ y: allThresholds } as Annotations}
+        setViewport={setViewport}
+        legend={DEFAULT_LEGEND}
+        size={
+          height
+            ? { height: getAdjustedChartHeight(!!rest.titleText, height) }
+            : undefined
+        }
+        {...rest}
+      />
+    </div>
   );
 };

@@ -1,6 +1,12 @@
-import { TableProps } from '@cloudscape-design/components';
-import { IoTSiteWise, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { IoTEvents, IoTEventsClient } from '@aws-sdk/client-iot-events';
+import { type TableProps } from '@cloudscape-design/components';
+import {
+  type IoTSiteWise,
+  type IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
+import {
+  type IoTEvents,
+  type IoTEventsClient,
+} from '@aws-sdk/client-iot-events';
 import type {
   IsResourceDisabled,
   OnSelectResource,

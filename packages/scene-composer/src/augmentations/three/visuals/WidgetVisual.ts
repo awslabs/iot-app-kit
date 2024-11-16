@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 import DebugLogger from '../../../logger/DebugLogger';
 
-import { IVisual } from '.';
+import { type IVisual } from '.';
 
 /**
  * Represents a Visual for a widget.

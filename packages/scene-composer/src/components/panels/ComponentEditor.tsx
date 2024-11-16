@@ -1,20 +1,19 @@
-import React from 'react';
 import { FormField, Input, SpaceBetween } from '@cloudscape-design/components';
 
-import { IDataOverlayComponentInternal, ISceneComponentInternal, ISceneNodeInternal } from '../../store';
 import { KnownComponentType } from '../../interfaces';
+import { type IDataOverlayComponentInternal, type ISceneComponentInternal, type ISceneNodeInternal } from '../../store';
+import { type IAnimationComponentInternal, type IEntityBindingComponentInternal } from '../../store/internalInterfaces';
 import { pascalCase } from '../../utils/stringUtils';
-import { IAnimationComponentInternal, IEntityBindingComponentInternal } from '../../store/internalInterfaces';
 
 import { AnchorComponentEditor } from './scene-components/AnchorComponentEditor';
-import { LightComponentEditor } from './scene-components/LightComponentEditor';
-import { ColorOverlayComponentEditor } from './scene-components/ColorOverlayComponentEditor';
-import { ModelRefComponentEditor } from './scene-components/ModelRefComponentEditor';
-import { MotionIndicatorComponentEditor } from './scene-components/MotionIndicatorComponentEditor';
+import { AnimationComponentEditor } from './scene-components/AnimationComponentEditor';
 import CameraComponentEditor from './scene-components/CameraComponentEditor';
+import { ColorOverlayComponentEditor } from './scene-components/ColorOverlayComponentEditor';
 import { DataOverlayComponentEditor } from './scene-components/DataOverlayComponentEditor';
 import { EntityBindingComponentEditor } from './scene-components/EntityBindingComponentEditor';
-import { AnimationComponentEditor } from './scene-components/AnimationComponentEditor';
+import { LightComponentEditor } from './scene-components/LightComponentEditor';
+import { ModelRefComponentEditor } from './scene-components/ModelRefComponentEditor';
+import { MotionIndicatorComponentEditor } from './scene-components/MotionIndicatorComponentEditor';
 import { PlaneGeometryComponentEditor } from './scene-components/PlaneGeometryComponentEditor';
 export interface IComponentEditorProps {
   node: ISceneNodeInternal;
@@ -35,9 +34,9 @@ export const DefaultComponentEditor: React.FC<IComponentEditorProps> = ({ compon
   });
 
   return (
-    <React.Fragment>
+    <>
       <SpaceBetween size='s'>{itemsView}</SpaceBetween>
-    </React.Fragment>
+    </>
   );
 };
 

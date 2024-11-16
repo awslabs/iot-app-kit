@@ -1,11 +1,11 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { getAggregatedPropertyDataPoints } from './getAggregatedPropertyDataPoints';
 import { getHistoricalPropertyDataPoints } from './getHistoricalPropertyDataPoints';
 import { getLatestPropertyDataPoint } from './getLatestPropertyDataPoint';
 import {
-  AggregatedPropertyParams,
-  HistoricalPropertyParams,
-  LatestPropertyParams,
+  type AggregatedPropertyParams,
+  type HistoricalPropertyParams,
+  type LatestPropertyParams,
 } from '../client';
 
 export class SiteWiseClientEdge {

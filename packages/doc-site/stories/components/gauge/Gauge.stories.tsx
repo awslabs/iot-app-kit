@@ -1,12 +1,12 @@
 // eslint-disable-next-line import/default
-import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
 import { Gauge } from '@iot-app-kit/react-components';
 import {
+  mockAlarmData,
+  mockSinWaveDataWithQuality,
   mockTimeSeriesDataQueryWithError,
   mockTimeSeriesDataQueryLoading,
 } from '@iot-app-kit/testing-util';
-import { mockSinWaveDataWithQuality } from '../../mockSinWaveData';
+import { type Meta, type StoryObj } from '@storybook/react';
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
 const meta: Meta<typeof Gauge> = {
@@ -20,7 +20,7 @@ type Story = StoryObj<typeof Gauge>;
 
 export const Standard: Story = {
   render: (props) => (
-    <div style={{ width: '900px', height: '500px' }}>
+    <div style={{ width: '300px', height: '300px' }}>
       <Gauge {...props} />
     </div>
   ),
@@ -40,11 +40,38 @@ export const Standard: Story = {
 };
 
 export const StandardWithThresholds: Story = {
-  render: (props) => (
-    <div style={{ width: '900px', height: '500px' }}>
-      <Gauge {...props} />
-    </div>
-  ),
+  render: (props) => {
+    const standardProps = { ...props };
+    delete standardProps.thresholds;
+    return (
+      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+        <div>
+          <h3>Standard</h3>
+          <div
+            style={{
+              width: '400px',
+              height: '300px',
+              border: '1px solid lightgrey',
+            }}
+          >
+            <Gauge {...standardProps} />
+          </div>
+        </div>
+        <div>
+          <h3>With Thresholds</h3>
+          <div
+            style={{
+              width: '400px',
+              height: '300px',
+              border: '1px solid lightgrey',
+            }}
+          >
+            <Gauge {...props} />
+          </div>
+        </div>
+      </div>
+    );
+  },
   args: {
     query: mockSinWaveDataWithQuality({ frequency: '5s', positiveOnly: true }),
     thresholds: [
@@ -82,12 +109,23 @@ export const StandardWithThresholds: Story = {
 
 export const BadDataQuality: Story = {
   render: (props) => (
-    <div style={{ width: '900px', height: '500px' }}>
+    <div
+      style={{
+        width: '400px',
+        height: '300px',
+        border: '1px solid lightgrey',
+        margin: '0 auto',
+      }}
+    >
       <Gauge {...props} />
     </div>
   ),
   args: {
-    query: mockSinWaveDataWithQuality({ frequency: '5s', quality: 'BAD', positiveOnly: true }),
+    query: mockSinWaveDataWithQuality({
+      frequency: '5s',
+      quality: 'BAD',
+      positiveOnly: true,
+    }),
     thresholds: [
       {
         value: 30,
@@ -123,7 +161,14 @@ export const BadDataQuality: Story = {
 
 export const UncertainDataQuality: Story = {
   render: (props) => (
-    <div style={{ width: '900px', height: '500px' }}>
+    <div
+      style={{
+        width: '400px',
+        height: '300px',
+        border: '1px solid lightgrey',
+        margin: '0 auto',
+      }}
+    >
       <Gauge {...props} />
     </div>
   ),
@@ -131,7 +176,7 @@ export const UncertainDataQuality: Story = {
     query: mockSinWaveDataWithQuality({
       frequency: '5s',
       quality: 'UNCERTAIN',
-      positiveOnly: true
+      positiveOnly: true,
     }),
     settings: {
       gaugeThickness: 30,
@@ -146,9 +191,53 @@ export const UncertainDataQuality: Story = {
   },
 };
 
+export const SignificantDigits: Story = {
+  render: (props) => (
+    <div
+      style={{
+        width: '300px',
+        height: '300px',
+        border: '1px solid lightgrey',
+        margin: '0 auto',
+      }}
+    >
+      <Gauge {...props} />
+    </div>
+  ),
+  args: {
+    query: mockSinWaveDataWithQuality({ frequency: '5s', positiveOnly: true }),
+    significantDigits: 2,
+  },
+};
+
+export const Loading: Story = {
+  render: (props) => (
+    <div
+      style={{
+        width: '400px',
+        height: '300px',
+        border: '1px solid lightgrey',
+        margin: '0 auto',
+      }}
+    >
+      <Gauge {...props} />
+    </div>
+  ),
+  args: {
+    query: mockTimeSeriesDataQueryLoading(),
+  },
+};
+
 export const Error: Story = {
   render: (props) => (
-    <div style={{ width: '900px', height: '500px' }}>
+    <div
+      style={{
+        width: '400px',
+        height: '300px',
+        border: '1px solid lightgrey',
+        margin: '0 auto',
+      }}
+    >
       <Gauge {...props} />
     </div>
   ),
@@ -157,13 +246,30 @@ export const Error: Story = {
   },
 };
 
-export const Loading: Story = {
+export const Alarm: Story = {
   render: (props) => (
-    <div style={{ width: '900px', height: '500px' }}>
+    <div
+      style={{
+        width: '400px',
+        height: '300px',
+        border: '1px solid lightgrey',
+        margin: '0 auto',
+      }}
+    >
       <Gauge {...props} />
     </div>
   ),
   args: {
-    query: mockTimeSeriesDataQueryLoading(),
+    query: mockAlarmData(),
+    settings: {
+      gaugeThickness: 30,
+      showUnit: true,
+      showName: false,
+      fontSize: 40,
+      labelFontSize: 16,
+      unitFontSize: 16,
+      yMin: -100,
+      yMax: 100,
+    },
   },
 };

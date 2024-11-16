@@ -1,17 +1,16 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import pickBy from 'lodash/pickBy';
-import { Status, useViewport } from '@iot-app-kit/react-components';
-import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
-import type { DashboardState } from '~/store/state';
-import type { StatusWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
+import { Status, useViewport } from '@iot-app-kit/react-components';
+import pickBy from 'lodash/pickBy';
+import { useSelector } from 'react-redux';
 import { useQueries } from '~/components/dashboard/queryContext';
-import { isDefined } from '~/util/isDefined';
+import WidgetTile from '~/components/widgets/tile/tile';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import type { DashboardState } from '~/store/state';
+import { isDefined } from '~/util/isDefined';
+import type { StatusWidget } from '../types';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import './component.css';
-import WidgetTile from '~/components/widgets/tile/tile';
 
 const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const { viewport } = useViewport();
@@ -102,7 +101,7 @@ const StatusWidgetEmptyStateComponent: React.FC = () => {
           color='text-status-inactive'
           margin={{ bottom: 's', horizontal: 's' }}
         >
-          Add a property or alarm to populate status
+          Add a property or alarm to populate Status.
         </Box>
       </div>
     </div>

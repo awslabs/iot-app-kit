@@ -1,9 +1,8 @@
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 import { act, render } from '@testing-library/react';
-import React from 'react';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
-import { IPlaneGeometryComponentInternal, accessStore } from '../../../store';
+import { type IPlaneGeometryComponentInternal, accessStore } from '../../../store';
 import { KnownComponentType, COMPOSER_FEATURES } from '../../../interfaces';
 import { mockNode, mockComponent } from '../../../../tests/components/panels/scene-components/MockComponents';
 

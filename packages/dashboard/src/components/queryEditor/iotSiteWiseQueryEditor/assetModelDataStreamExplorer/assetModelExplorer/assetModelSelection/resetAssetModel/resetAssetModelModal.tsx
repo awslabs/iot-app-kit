@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Alert from '@cloudscape-design/components/alert';
 import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';

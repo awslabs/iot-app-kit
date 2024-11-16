@@ -1,7 +1,7 @@
-import React, { forwardRef } from 'react';
-import { Color, DirectionalLight as DirectionalLightType } from 'three';
+import { forwardRef } from 'react';
+import { Color, type DirectionalLight as DirectionalLightType } from 'three';
 
-import { Component } from '../../../../models/SceneModels';
+import { type Component } from '../../../../models/SceneModels';
 
 const DirectionalLight = forwardRef<DirectionalLightType, Component.IDirectionalLightSettings>(
   ({ color, intensity, castShadow }, ref) => {

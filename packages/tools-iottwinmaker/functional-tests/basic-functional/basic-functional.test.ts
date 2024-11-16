@@ -2,7 +2,7 @@ import {
   getDefaultAwsClients as aws,
   initDefaultAwsClients,
 } from '../../src/lib/aws-clients';
-import { Arguments } from 'yargs';
+import { type Arguments } from 'yargs';
 import * as deploy from '../../src/commands/deploy';
 import * as init from '../../src/commands/init';
 import * as destroy from '../../src/commands/destroy';
@@ -13,12 +13,12 @@ import {
   twinMakerPermissionPolicy,
 } from './basic-functional-iam';
 import {
-  ComponentTypeSummary,
-  GetComponentTypeCommandOutput,
+  type ComponentTypeSummary,
+  type GetComponentTypeCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
 import { DeleteObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import * as path from 'path';
-import { EntitySummary } from '@aws-sdk/client-iottwinmaker/dist-types/models/models_0';
+import { type EntitySummary } from '@aws-sdk/client-iottwinmaker/dist-types/models/models_0';
 import { delay } from '../../src/lib/utils';
 import * as prompts from 'prompts';
 import {

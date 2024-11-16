@@ -1,12 +1,12 @@
-import React, { type ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
-import type { ResourceExplorerVariant } from '../types/common';
-import { ResourceTable } from './resource-table';
-import { ResourceDropDown } from './resource-drop-down';
 import {
   RESOURCE_DROP_DOWN_VARIANT,
   RESOURCE_TABLE_VARIANT,
 } from '../constants/defaults';
+import type { ResourceExplorerVariant } from '../types/common';
+import { type ResourceDropDown } from './resource-drop-down';
+import { type ResourceTable } from './resource-table';
 
 export interface ResourceExplorerVariantProps {
   variant: ResourceExplorerVariant;

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { LiveDataConfiguration, Viewport } from '../types';
+import { type LiveDataConfiguration, type Viewport } from '../types';
 import {
   DEFAULT_LIVE_DATA_CONFIGURATION,
   convertToLiveDataIntervals,

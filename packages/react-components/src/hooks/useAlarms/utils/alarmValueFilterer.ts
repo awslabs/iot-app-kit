@@ -1,5 +1,5 @@
-import { Bisector } from 'd3-array';
-import { Interval } from '../../../queries';
+import { type Bisector } from 'd3-array';
+import { type Interval } from '../../../queries';
 
 export const alarmValueFilterer =
   <Point>(

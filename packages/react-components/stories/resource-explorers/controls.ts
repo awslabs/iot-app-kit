@@ -9,7 +9,7 @@ import type {
   SelectionMode,
   ShouldPersistUserCustomization,
 } from '../../src/components/resource-explorers/types/common';
-import { IsDropDownFilterEnabled } from '../../src/components/resource-explorers/types/drop-down';
+import { type IsDropDownFilterEnabled } from '../../src/components/resource-explorers/types/drop-down';
 
 export interface CommonResourceExplorerControls {
   selectionMode: SelectionMode;

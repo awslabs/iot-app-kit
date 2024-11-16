@@ -1,5 +1,5 @@
-import { ElementEvent, Payload } from 'echarts';
-import { TrendCursor } from '../store';
+import { type ElementEvent, type Payload } from 'echarts';
+import { type TrendCursor } from '../store';
 
 export const AddTrendCursorActionType = 'ADD_TREND_CURSOR' as const;
 

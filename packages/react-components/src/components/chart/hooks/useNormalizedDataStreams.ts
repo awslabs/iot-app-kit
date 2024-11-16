@@ -1,10 +1,12 @@
-import { DataPoint, DataStream } from '@iot-app-kit/core';
+import { type DataPoint, type DataStream } from '@iot-app-kit/core';
 import { fromId, toId } from '@iot-app-kit/source-iotsitewise';
-import { ChartAlarms } from './useChartAlarms';
+import { type ChartAlarm, type ChartAlarms } from './useChartAlarms';
 import { createNonNullableList } from '../../../utils/createNonNullableList';
 import { useMemo } from 'react';
 import { bisector } from 'd3-array';
-import { PascalCaseStateName } from '../../../hooks/useAlarms/transformers';
+import { uniqWith } from 'lodash';
+import { type AlarmContent } from '../../alarm-components/alarm-content/types';
+import { type AlarmAssistantContext } from '../../assistant-common/types';
 
 const interpolateY = (
   point1: DataPointWithAlarm,
@@ -29,9 +31,8 @@ const getY = (
 };
 
 type DataPointWithAlarm = DataPoint<number> & {
-  alarmState?: PascalCaseStateName;
   showAlarmYLabelValue?: boolean;
-};
+} & AlarmContent;
 const dataSetBisector = bisector(
   (dataPoint: DataPointWithAlarm) => dataPoint.x
 );
@@ -43,7 +44,7 @@ type UseNormalizedDataStreamsOptions = {
 
 export type DataStreamWithLatestAlarmState = DataStream & {
   latestAlarmStateValue?: string;
-};
+} & AlarmAssistantContext;
 
 export const useNormalizedDataStreams = ({
   dataStreams,
@@ -62,21 +63,23 @@ export const useNormalizedDataStreams = ({
         .map(({ datastream }) => datastream)
     );
 
-    return [...dataStreams, ...alarmDataStreams].map(
+    const normalizedDatastreams = [...dataStreams, ...alarmDataStreams].map(
       ({ id, data, ...rest }) => {
         const propertyInfo = fromId(id);
         const dataCopy = [...data] as DataPointWithAlarm[];
         let latestAlarmStateValue: string | undefined = undefined;
+        let associatedAlarm: ChartAlarm | undefined;
         if ('assetId' in propertyInfo) {
-          const associatedAlarm = alarms.find((a) => {
+          associatedAlarm = alarms.find((a) => {
             return (
               a.assetId === propertyInfo.assetId &&
               a.propertyId === propertyInfo.propertyId
             );
           });
           if (associatedAlarm != null) {
-            (latestAlarmStateValue = associatedAlarm.events.at(-1)?.alarmState),
-              associatedAlarm.events.forEach((event) => {
+            (latestAlarmStateValue =
+              associatedAlarm.events?.at(-1)?.alarmState),
+              associatedAlarm.events?.forEach((event) => {
                 let deleteCount = 0;
                 let i = dataSetBisector.right(dataCopy, event.x);
 
@@ -96,7 +99,7 @@ export const useNormalizedDataStreams = ({
                   ...event,
                   y: event.y ?? getY(pointBefore, pointAfter, event.x),
                   showAlarmYLabelValue: event.y != null,
-                };
+                } satisfies DataPointWithAlarm;
                 dataCopy.splice(i, deleteCount, eventCopy);
               });
           }
@@ -105,9 +108,13 @@ export const useNormalizedDataStreams = ({
           id,
           data: dataCopy,
           latestAlarmStateValue,
+          assetId: associatedAlarm?.assetId,
+          alarmName: associatedAlarm?.name,
           ...rest,
         };
       }
     );
+
+    return uniqWith(normalizedDatastreams, (a, b) => a.id === b.id);
   }, [dataStreams, alarms]);
 };

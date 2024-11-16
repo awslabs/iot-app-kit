@@ -1,15 +1,15 @@
 import DataLoader from 'dataloader';
 import { nanoid } from 'nanoid';
 import {
-  BatchGetAssetPropertyValueHistory,
-  RequestResponse,
+  type BatchGetAssetPropertyValueHistory,
+  type RequestResponse,
 } from '@iot-app-kit/core';
 import {
-  HistoricalAssetPropertyValueRequest,
-  HistoricalAssetPropertyValueResponse,
+  type HistoricalAssetPropertyValueRequest,
+  type HistoricalAssetPropertyValueResponse,
 } from '../types';
 import { anySignal } from '../../useAssetPropertyValues/requestExecution/utils/anySignal';
-import { BatchGetAssetPropertyValueHistoryErrorEntry } from '@aws-sdk/client-iotsitewise';
+import { type BatchGetAssetPropertyValueHistoryErrorEntry } from '@aws-sdk/client-iotsitewise';
 import { BatchResponseProcessor } from './batchResponseProcessor';
 import { mapViewport } from './mapViewport';
 import { mapTimeOrdering } from './mapTimeOrdering';
@@ -85,7 +85,13 @@ export class HistoricalAssetPropertyValueBatcher {
     let nextToken = undefined;
 
     const entries = requests.map(
-      ({ viewport, fetchMode, timeOrdering, ...request }) => ({
+      ({
+        abortSignal: _abortSignal,
+        viewport,
+        fetchMode,
+        timeOrdering,
+        ...request
+      }) => ({
         ...request,
         entryId: createEntryId(),
         ...mapViewport({ viewport, fetchMode }),

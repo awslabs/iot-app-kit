@@ -1,18 +1,16 @@
 import {
   GetSceneCommand,
   GetWorkspaceCommand,
-  IoTTwinMakerClient,
+  type IoTTwinMakerClient,
+  type GetSceneCommandOutput,
+  type GetWorkspaceCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
-import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { GetObjectCommand, type S3Client } from '@aws-sdk/client-s3';
 import {
   getS3BucketAndKey,
   parseS3BucketFromArn,
   parseS3RelativeScenePathFromURI,
 } from '../utils/s3Utils';
-import type {
-  GetSceneCommandOutput,
-  GetWorkspaceCommandOutput,
-} from '@aws-sdk/client-iottwinmaker';
 import type { SceneLoader } from '../types';
 
 export class S3SceneLoader implements SceneLoader {

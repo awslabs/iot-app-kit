@@ -1,10 +1,11 @@
-import { AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
+import { type AlarmDataQuery } from '@iot-app-kit/source-iotsitewise';
 import {
-  AlarmData,
-  UseAlarmsHookSettings,
-  UseAlarmsInputPropertyTimeSeriesDataSettings,
-  UseAlarmsOptions,
+  type AlarmData,
+  type UseAlarmsHookSettings,
+  type UseAlarmsInputPropertyTimeSeriesDataSettings,
+  type UseAlarmsOptions,
 } from '../../types';
+import { type OnUpdateAlarmInputDataAction } from '../../state';
 
 export type UseInputPropertyTimeSeriesDataOptions = {
   timeSeriesData?: AlarmDataQuery['timeSeriesData'];
@@ -13,5 +14,7 @@ export type UseInputPropertyTimeSeriesDataOptions = {
   'fetchInputPropertyData' | 'fetchOnlyLatest' | 'refreshRate'
 > &
   Pick<UseAlarmsOptions, 'viewport'> & {
-    alarms: AlarmData[];
-  } & UseAlarmsInputPropertyTimeSeriesDataSettings;
+    requests: Pick<AlarmData, 'assetId' | 'inputProperty'>[];
+  } & UseAlarmsInputPropertyTimeSeriesDataSettings & {
+    onUpdateAlarmInputPropertyData: OnUpdateAlarmInputDataAction;
+  };

@@ -2,13 +2,14 @@
   "name": "iot-app-kit",
   "private": true,
   "description": "IoT Application Kit",
-  "version": "10.13.1",
+  "version": "11.0.0",
   "main": "index.js",
   "license": "Apache-2.0",
   "repository": "git@github.com:awslabs/iot-app-kit.git",
+  "packageManager": "npm@10.7.0",
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=8.7.0"
+    "node": ">=18.0.0",
+    "npm": ">=10.7.0"
   },
   "workspaces": [
     "examples/*",
@@ -16,21 +17,33 @@
     "configuration/*"
   ],
   "scripts": {
-    "install-ws": "npm install --workspaces --include-workspace-root",
+    "install-ws": "npm install --prefer-offline --no-audit --workspaces --include-workspace-root",
     "bootstrap": "npm run install-ws && npm run build",
     "start": "cd packages/components && npm start",
     "build": "turbo run build",
-    "clean": "git clean -dxf -e /.idea -e /.vscode -e creds.json",
-    "lint": "turbo run lint",
+    "build:core": "turbo run build --filter=@iot-app-kit/core",
+    "build:core-util": "turbo run build --filter=@iot-app-kit/core-util",
+    "build:dashboard": "turbo run build --filter=@iot-app-kit/dashboard",
+    "build:doc-site": "turbo run build --filter=@iot-app-kit/doc-site",
+    "build:react-components": "turbo run build --filter=@iot-app-kit/react-components",
+    "build:scene-composer": "turbo run build --filter=@iot-app-kit/scene-composer",
+    "build:source-iotsitewise": "turbo run build --filter=@iot-app-kit/source-iotsitewise",
+    "build:source-iottwinmaker": "turbo run build --filter=@iot-app-kit/source-iottwinmaker",
+    "build:testing-util": "turbo run build --filter=@iot-app-kit/testing-util",
+    "build:tools-iottwinmaker": "turbo run build --filter=@iot-app-kit/tools-iottwinmaker",
+    "clean": "turbo run clean && rimraf .turbo",
+    "clean:nuke": "turbo run clean:nuke && rimraf .turbo node_modules",
     "fix": "turbo run fix && npm run fix:stylelint",
     "fix:stylelint": "stylelint '**/*.css' --fix",
     "test": "turbo run test",
     "test:ui": "turbo run test:ui",
+    "test:ui:ci": "turbo run test:ui:ci",
     "test:reliability": "turbo run test:ui:reliability",
     "test:stylelint": "stylelint '**/*.css' --max-warnings 0",
     "test:git": "git diff --exit-code",
     "release": "npm run build",
     "pack": "turbo run pack",
+    "publish-packages": "turbo run clean && rimraf .turbo && npm run install-ws && turbo run build lint test",
     "versionup:patch": "turbo run version --no-git-tag-version patch",
     "versionup:minor": "turbo run version --no-git-tag-version minor",
     "versionup:major": "turbo run version --no-git-tag-version major",
@@ -38,30 +51,20 @@
     "test:ci": "if test \"$NODE_ENV\" = \"production\"; then echo \"Yes!\"; fi"
   },
   "dependencies": {
-    "@cloudscape-design/collection-hooks": "1.0.49",
-    "@cloudscape-design/components": "3.0.693",
-    "@cloudscape-design/design-tokens": "3.0.42",
-    "@cloudscape-design/global-styles": "1.0.31",
-    "@cloudscape-design/component-toolkit": "^1.0.0-beta.62",
-    "vite": "^4.5.3"
+    "@amzn/iot-black-pearl-internal-v3": "file:./iot-black-pearl-internal-v3.tgz"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.6.7",
-    "@commitlint/config-conventional": "^17.6.5",
-    "@playwright/test": "^1.39.0",
     "@swc/core": "^1.3.71",
     "@swc/jest": "^0.2.26",
-    "@testing-library/dom": "^9.3.1",
-    "@testing-library/user-event": "^14.4.3",
-    "copy-webpack-plugin": "^5.0.4",
+    "@commitlint/cli": "^17.6.7",
+    "@commitlint/config-conventional": "^17.6.5",
+    "@playwright/test": "^1.48.2",
     "husky": "^8.0.3",
     "identity-obj-proxy": "^3.0.0",
-    "jest-matcher-utils": "26.6.2",
-    "jest-raw-loader": "^1.0.1",
-    "npm-run-all": "^4.1.5",
+    "rimraf": "^5.0.1",
     "stylelint": "14.16.1",
     "stylelint-config-standard": "25.0.0",
-    "turbo": "^1.10.3"
+    "turbo": "^2.2.3"
   },
   "npm-pretty-much": {
     "useWorkspaces": true,
@@ -73,7 +76,6 @@
     "@babel/traverse": "^7.23.7",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
-    "fast-xml-parser": "^4.2.5",
-    "vite": "$vite"
+    "fast-xml-parser": "^4.2.5"
   }
 }

@@ -1,8 +1,8 @@
 import {
-  GetAssetPropertyValueHistory,
-  RequestResponse,
+  type GetAssetPropertyValueHistory,
+  type RequestResponse,
 } from '@iot-app-kit/core';
-import { HistoricalAssetPropertyValueRequest } from '../types';
+import { type HistoricalAssetPropertyValueRequest } from '../types';
 import { take } from 'lodash';
 import { mapViewport } from './mapViewport';
 import { mapTimeOrdering } from './mapTimeOrdering';

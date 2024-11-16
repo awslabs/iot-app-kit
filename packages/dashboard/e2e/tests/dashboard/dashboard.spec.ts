@@ -54,7 +54,7 @@ test.skip('dashboard resize, move, and select gestures', async ({ page }) => {
 
   // Placeholder text for kpi widget
   await expect(
-    page.getByText('Add a property or alarm to populate KPI')
+    page.getByText('Add a property or alarm to populate KPI.')
   ).toBeVisible();
 
   const initialWidgetBoundingBox = await getBoundingBox(widget);

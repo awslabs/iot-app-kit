@@ -1,7 +1,7 @@
 import {
-  AssetModelProperty,
-  AssetProperty,
-  AssetPropertyValue,
+  type AssetModelProperty,
+  type AssetProperty,
+  type AssetPropertyValue,
 } from '@aws-sdk/client-iotsitewise';
 import {
   ALARM_SOURCE_PROPERTY_NAME,
@@ -62,7 +62,7 @@ export const mockTypeAssetProperty = {
 
 export const mockTypeAssetProperty2 = {
   id: 'typeId2',
-  name: ALARM_STATE_PROPERTY_NAME,
+  name: ALARM_TYPE_PROPERTY_NAME,
   dataType: 'STRING',
 } satisfies AssetProperty;
 
@@ -74,19 +74,20 @@ export const mockSourceAssetProperty = {
 
 export const mockSourceAssetProperty2 = {
   id: 'sourceId2',
-  name: ALARM_STATE_PROPERTY_NAME,
+  name: ALARM_SOURCE_PROPERTY_NAME,
   dataType: 'STRING',
 } satisfies AssetProperty;
 
+export const mockDefaultAlarmStateRuleEvaluation = {
+  simpleRule: {
+    inputProperty: 41,
+    operator: 'GREATER',
+    threshold: 30,
+  },
+};
 export const mockDefaultAlarmState = JSON.stringify({
   stateName: 'NORMAL',
-  ruleEvaluation: {
-    simpleRule: {
-      inputProperty: 41,
-      operator: 'GREATER',
-      threshold: 30,
-    },
-  },
+  ruleEvaluation: mockDefaultAlarmStateRuleEvaluation,
 });
 
 export const mockDefaultAlarmState2 = JSON.stringify({
@@ -98,6 +99,10 @@ export const mockDefaultAlarmState2 = JSON.stringify({
       threshold: 30,
     },
   },
+});
+
+export const mockDefaultAlarmState3 = JSON.stringify({
+  stateName: 'LATCHED',
 });
 
 export const mockStateAssetModelProperty = {
@@ -184,3 +189,8 @@ export const mockStateAssetPropertyValue2 = mockStringAssetPropertyValue(
 export const mockSourceAssetPropertyValue2 = mockStringAssetPropertyValue(
   mockAlarmModelArn2
 ) satisfies AssetPropertyValue;
+export const mockTypeAssetPropertyValue2 = mockStringAssetPropertyValue(
+  mockDefaultAlarmType
+) satisfies AssetPropertyValue;
+
+export const mockThresholdAssetProperty = mockDoubleAssetPropertyValue(30);

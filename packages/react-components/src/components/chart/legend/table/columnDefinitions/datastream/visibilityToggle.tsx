@@ -3,7 +3,7 @@ import {
   borderRadiusDropdown,
   colorBackgroundDropdownItemHover,
 } from '@cloudscape-design/design-tokens';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useHoverDirty } from 'react-use';
 
 import Hide from './hide.svg';

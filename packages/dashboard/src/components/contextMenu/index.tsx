@@ -1,17 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import Menu from './menu';
-import ContextMenuOption from './option';
+import { spaceScaledXxxs } from '@cloudscape-design/design-tokens';
+import { useCallback, useEffect, useState } from 'react';
+import { useKeyPress } from '~/hooks/useKeyPress';
+import type { DashboardMessages } from '~/messages';
+import type { Position } from '~/types';
 import {
   DASHBOARD_CONTAINER_ID,
   getDashboardPosition,
 } from '../grid/getDashboardPosition';
-import { useKeyPress } from '~/hooks/useKeyPress';
-import { createContextMenuOptions } from './contextMenuOptions';
 import { useLayers } from '../internalDashboard/useLayers';
-import type { Position } from '~/types';
-import type { DashboardMessages } from '~/messages';
+import { createContextMenuOptions } from './contextMenuOptions';
+import Menu from './menu';
 import './menu.css';
-import { spaceScaledXxxs } from '@cloudscape-design/design-tokens';
+import ContextMenuOption from './option';
 
 export type ContextMenuProps = {
   copyWidgets: () => void;

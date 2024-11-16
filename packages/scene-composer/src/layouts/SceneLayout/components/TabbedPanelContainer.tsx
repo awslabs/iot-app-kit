@@ -1,4 +1,3 @@
-import React from 'react';
 import { Tabs } from '@cloudscape-design/components';
 
 import { TABBED_PANEL_CONTAINER_NAME } from '../../../common/internalConstants';

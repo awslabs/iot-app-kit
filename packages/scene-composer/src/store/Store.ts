@@ -1,30 +1,30 @@
-import create, { StateCreator, UseStore } from 'zustand';
+import create, { type StateCreator, type UseStore } from 'zustand';
 import shallow from 'zustand/shallow';
 
-import { log, immer, undoMiddleware, UndoState } from './middlewares';
-import { SceneComposerOperation } from './StoreOperations';
-import { createSceneDocumentSlice, ISceneDocumentSlice } from './slices/SceneDocumentSlice';
-import { createEditStateSlice, IEditorStateSlice } from './slices/EditorStateSlice';
-import { IDataStoreSlice, createDataStoreSlice } from './slices/DataStoreSlice';
-import { createNodeErrorStateSlice, INodeErrorStateSlice } from './slices/NodeErrorStateSlice';
-import { createViewOptionStateSlice, IViewOptionStateSlice } from './slices/ViewOptionStateSlice';
+import { log, immer, undoMiddleware, type UndoState } from './middlewares';
+import { type SceneComposerOperation } from './StoreOperations';
+import { createSceneDocumentSlice, type ISceneDocumentSlice } from './slices/SceneDocumentSlice';
+import { createEditStateSlice, type IEditorStateSlice } from './slices/EditorStateSlice';
+import { type IDataStoreSlice, createDataStoreSlice } from './slices/DataStoreSlice';
+import { createNodeErrorStateSlice, type INodeErrorStateSlice } from './slices/NodeErrorStateSlice';
+import { createViewOptionStateSlice, type IViewOptionStateSlice } from './slices/ViewOptionStateSlice';
 import {
-  ISceneDocumentInternal,
-  ISceneNodeInternal,
-  ISceneComponentInternal,
-  IModelRefComponentInternal,
-  ISubModelRefComponentInternal,
-  ICameraComponentInternal,
-  IAnchorComponentInternal,
-  ILightComponentInternal,
-  IAnimationComponentInternal,
-  IColorOverlayComponentInternal,
+  type ISceneDocumentInternal,
+  type ISceneNodeInternal,
+  type ISceneComponentInternal,
+  type IModelRefComponentInternal,
+  type ISubModelRefComponentInternal,
+  type ICameraComponentInternal,
+  type IAnchorComponentInternal,
+  type ILightComponentInternal,
+  type IAnimationComponentInternal,
+  type IColorOverlayComponentInternal,
   isISceneComponentInternal,
   isISceneNodeInternal,
-  IMotionIndicatorComponentInternal,
-  IDataOverlayComponentInternal,
-  IEntityBindingComponentInternal,
-  IPlaneGeometryComponentInternal,
+  type IMotionIndicatorComponentInternal,
+  type IDataOverlayComponentInternal,
+  type IEntityBindingComponentInternal,
+  type IPlaneGeometryComponentInternal,
 } from './internalInterfaces';
 
 export type {

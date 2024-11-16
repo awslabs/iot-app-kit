@@ -1,11 +1,10 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import { BoxGeometry, Group, Mesh } from 'three';
 
 import { DataOverlayComponent } from '../DataOverlayComponent';
 import { Component } from '../../../../models/SceneModels';
 import { KnownComponentType } from '../../../../interfaces';
-import { IDataOverlayComponentInternal, ISceneNodeInternal, accessStore } from '../../../../store';
+import { type IDataOverlayComponentInternal, type ISceneNodeInternal, accessStore } from '../../../../store';
 
 jest.mock('@react-three/fiber', () => {
   const originalModule = jest.requireActual('@react-three/fiber');

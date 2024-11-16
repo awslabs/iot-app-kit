@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 
 import type { Asset, AssetModel } from '../types';
-import { AssetState } from '@aws-sdk/client-iotsitewise';
+import { type AssetState } from '@aws-sdk/client-iotsitewise';
 
 export class AssetFactory {
   readonly #assetModel: AssetModel;

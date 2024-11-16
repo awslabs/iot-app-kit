@@ -1,4 +1,4 @@
-import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import { type IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 export type KGDataModuleInput = {
   workspaceId: string;
   twinMakerClient: IoTTwinMakerClient;

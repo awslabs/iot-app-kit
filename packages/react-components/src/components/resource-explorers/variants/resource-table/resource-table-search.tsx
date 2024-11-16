@@ -6,7 +6,7 @@ import {
   fontWeightHeadingXs,
   spaceScaledXs,
 } from '@cloudscape-design/design-tokens';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import './resource-table-search.css';
 import type { OnClickSearch } from '../../types/common';

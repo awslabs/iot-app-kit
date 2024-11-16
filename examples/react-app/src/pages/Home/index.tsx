@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { sceneId } from '../../configs';
 import { AppLayout } from '../../layouts/AppLayout';

@@ -1,6 +1,6 @@
 import {
-  IDataBindingConfig,
-  IDataFieldOption,
+  type IDataBindingConfig,
+  type IDataFieldOption,
 } from '../data-binding-provider/types';
 
 /**

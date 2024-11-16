@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import cytoscape, { Core } from 'cytoscape';
-import React, {
-  CSSProperties,
+import { type Core } from 'cytoscape';
+import type cytoscape from 'cytoscape';
+import {
+  type CSSProperties,
   forwardRef,
-  MutableRefObject,
+  type MutableRefObject,
   useRef,
 } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';

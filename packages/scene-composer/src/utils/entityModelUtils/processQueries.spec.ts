@@ -1,4 +1,4 @@
-import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { type TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import { setTwinMakerSceneMetadataModule } from '../../common/GlobalSettings';
 import {
@@ -8,7 +8,7 @@ import {
   SUB_MODEL_REF_PARENT_RELATIONSHIP_NAME,
   componentTypeToId,
 } from '../../common/entityModelConstants';
-import { ISubModelRefComponent, KnownComponentType } from '../../interfaces';
+import { type ISubModelRefComponent, KnownComponentType } from '../../interfaces';
 
 import { isValidSceneNodeEntity, processQueries } from './processQueries';
 

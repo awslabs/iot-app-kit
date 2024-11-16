@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { defaultsDeep } from 'lodash';
 import PropTypes from 'prop-types';
 import { IntlProvider } from 'react-intl';

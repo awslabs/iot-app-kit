@@ -4,8 +4,8 @@ import flushPromises from 'flush-promises';
 import { Object3D, Vector3 } from 'three';
 import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
 
-import { IAnchorComponentInternal, IDataOverlayComponentInternal, ISceneNodeInternal } from '..';
-import { COMPOSER_FEATURES, IErrorDetails, KnownComponentType, KnownSceneProperty } from '../..';
+import { type IAnchorComponentInternal, type IDataOverlayComponentInternal, type ISceneNodeInternal } from '..';
+import { COMPOSER_FEATURES, type IErrorDetails, KnownComponentType, KnownSceneProperty } from '../..';
 import { Component } from '../../models/SceneModels';
 import { containsMatchingEntityComponent } from '../../utils/dataBindingUtils';
 import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity';

@@ -1,8 +1,8 @@
-import { GetPropertyValueCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { type GetPropertyValueCommandOutput } from '@aws-sdk/client-iottwinmaker';
 import { createMockTwinMakerSDK } from '../../__mocks__/iottwinmakerSDK';
 
 import { getPropertyValueByEntity } from './getPropertyValueByEntity';
-import { TwinMakerStaticDataQuery } from '../types';
+import { type TwinMakerStaticDataQuery } from '../types';
 
 describe('getPropertyValueByEntity', () => {
   const mockEntityRef1 = {

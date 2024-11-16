@@ -1,4 +1,3 @@
-import React from 'react';
 import { useMeasure } from 'react-use';
 
 import Box from '@cloudscape-design/components/box';

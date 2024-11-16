@@ -1,4 +1,9 @@
-import { Observable, ReplaySubject, Subscriber, Subscription } from 'rxjs';
+import {
+  type Observable,
+  ReplaySubject,
+  type Subscriber,
+  type Subscription,
+} from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 /**

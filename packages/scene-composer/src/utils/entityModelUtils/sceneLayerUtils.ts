@@ -1,9 +1,9 @@
 import {
-  CreateEntityCommandInput,
-  CreateEntityCommandOutput,
-  PropertyRequest,
-  UpdateEntityCommandInput,
-  UpdateEntityCommandOutput,
+  type CreateEntityCommandInput,
+  type CreateEntityCommandOutput,
+  type PropertyRequest,
+  type UpdateEntityCommandInput,
+  type UpdateEntityCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
 
 import {

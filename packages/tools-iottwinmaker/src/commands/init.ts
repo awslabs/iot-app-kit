@@ -8,15 +8,15 @@ import {
 import * as fs from 'fs';
 import * as path from 'path';
 import {
-  ListComponentTypesCommandOutput,
-  ListScenesCommandOutput,
-  ListEntitiesCommandOutput,
-  GetEntityCommandOutput,
-  GetComponentTypeCommandOutput,
+  type ListComponentTypesCommandOutput,
+  type ListScenesCommandOutput,
+  type ListEntitiesCommandOutput,
+  type GetEntityCommandOutput,
+  type GetComponentTypeCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
 import { verifyWorkspaceExists } from '../lib/utils';
 import { streamToBuffer } from '../lib/stream-to-buffer';
-import { Readable } from 'stream';
+import { type Readable } from 'stream';
 
 export type Options = {
   region: string;

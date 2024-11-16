@@ -19,10 +19,11 @@ import type {
   ThresholdWithId,
 } from '../settings';
 import type {
+  AssistantProperty,
   TableColumnDefinition,
   TableItem,
 } from '@iot-app-kit/react-components';
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 
 export type QueryConfig<S, T> = {
   source: S;
@@ -58,6 +59,7 @@ export type KPIProperties = QueryProperties & {
   thresholds?: StyledThreshold[];
   backgroundColor?: string;
   significantDigits?: number;
+  assistant?: AssistantProperty;
 };
 
 export type KPIPropertiesKeys = keyof KPIProperties;
@@ -199,6 +201,7 @@ export type LineScatterChartProperties = LineAndScatterStyles & {
   axis?: ChartAxisOptions;
   legend?: ChartLegend;
   queryConfig: StyledSiteWiseQueryConfig;
+  assistant?: AssistantProperty;
 };
 
 export type LineScatterChartPropertiesKeys = keyof LineScatterChartProperties;
@@ -223,6 +226,7 @@ export type TableProperties = QueryProperties & {
   columnDefinitions?: TableColumnDefinition[];
   significantDigits?: number;
   pageSize?: number;
+  assistant?: AssistantProperty;
 };
 
 export type TablePropertiesKeys = keyof TableProperties;
@@ -266,6 +270,7 @@ export type GaugeProperties = QueryProperties & {
   yMax?: number;
   thresholds?: StyledThreshold[];
   significantDigits?: number;
+  assistant?: AssistantProperty;
 };
 
 type ChartPropertiesUnion =

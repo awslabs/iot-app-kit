@@ -1,4 +1,4 @@
-import { Interval } from '../../common/intervalStructure';
+import { type Interval } from '../../common/intervalStructure';
 import { isHistoricalViewport } from '../../common/predicates';
 import { parseDuration } from '../../common/time';
 import type { DateInterval, Viewport } from './requestTypes';

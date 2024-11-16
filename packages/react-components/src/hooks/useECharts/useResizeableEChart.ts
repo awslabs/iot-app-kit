@@ -1,16 +1,16 @@
 import {
   useEffect,
   useState,
-  SyntheticEvent,
+  type SyntheticEvent,
   useMemo,
-  MutableRefObject,
+  type MutableRefObject,
 } from 'react';
 import type { ECharts } from 'echarts';
 import {
   CHART_RESIZE_MAX_FACTOR,
   CHART_RESIZE_MIN_FACTOR,
 } from '../../components/chart/eChartsConstants';
-import { ResizeCallbackData } from 'react-resizable';
+import { type ResizeCallbackData } from 'react-resizable';
 import { useMeasure } from 'react-use';
 import {
   emToPx,
@@ -20,7 +20,7 @@ import {
   pxToRem,
   remToPx,
 } from '../utils/pxConversion';
-import { ChartOptions } from '../../components/chart/types';
+import { type ChartOptions } from '../../components/chart/types';
 import { parseValueAndUnit } from '../utils/parseValueAndUnit';
 
 export const calculateAdjustedWidth = (
@@ -220,7 +220,13 @@ export const useResizeableEChart = (
 
   const onResize = (_event: SyntheticEvent, data: ResizeCallbackData) => {
     _event.stopPropagation();
+    isBottomAligned
+      ? setChartHeight(parseInt(data.size.height.toFixed(0)))
+      : setChartWidth(parseInt(data.size.width.toFixed(0)));
+  };
 
+  const onResizeEnd = (_event: SyntheticEvent, data: ResizeCallbackData) => {
+    _event.stopPropagation();
     if (isBottomAligned) {
       setChartHeight(parseInt(data.size.height.toFixed(0)));
       onChartOptionsChange?.({
@@ -290,6 +296,7 @@ export const useResizeableEChart = (
     rightLegendWidth,
     rightLegendHeight,
     onResize,
+    onResizeEnd,
     minConstraints,
     maxConstraints,
     leftLegendRef,

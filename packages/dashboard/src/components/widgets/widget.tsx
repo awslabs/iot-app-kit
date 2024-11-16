@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   gestureable,
   idable,
@@ -6,15 +6,16 @@ import {
 import DynamicWidgetComponent from './dynamicWidget';
 import WidgetActions from './widgetActions';
 
-import './widget.css';
 import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import type { DashboardMessages } from '~/messages';
 import type { DashboardWidget } from '~/types';
+import './widget.css';
 
 export type WidgetProps = {
   readOnly: boolean;
   query?: SiteWiseQuery;
   isSelected: boolean;
+  numSelected: number;
   cellSize: number;
   widget: DashboardWidget;
   messageOverrides: DashboardMessages;
@@ -31,17 +32,20 @@ const WidgetComponent: React.FC<WidgetProps> = ({
   widget,
   messageOverrides,
   isSelected,
+  numSelected,
   readOnly,
 }) => {
   const { x, y, z, width, height } = widget;
   const [showActionButtons, setShowActionButtons] = useState(false);
 
-  const handleShowActionButtons = (show: boolean) => {
-    if (isSelected) {
-      setShowActionButtons(false);
-      return;
+  const widgetActions = () => {
+    if (numSelected > 1) {
+      return null;
+    } else if (isSelected) {
+      return <WidgetActions widget={widget} />;
+    } else {
+      return showActionButtons ? <WidgetActions widget={widget} /> : null;
     }
-    setShowActionButtons(show);
   };
 
   return (
@@ -50,16 +54,16 @@ const WidgetComponent: React.FC<WidgetProps> = ({
       {...idable(widget.id)}
       className={`widget ${readOnly ? 'widget-readonly' : 'widget-editable'}`}
       style={{
-        zIndex: z.toString(),
+        ...(!z ? {} : { zIndex: z.toString() }),
         top: `${cellSize * y}px`,
         left: `${cellSize * x}px`,
         width: `${cellSize * width}px`,
         height: `${cellSize * height}px`,
       }}
-      onMouseEnter={() => handleShowActionButtons(true)}
-      onMouseLeave={() => handleShowActionButtons(false)}
+      onMouseEnter={() => setShowActionButtons(true)}
+      onMouseLeave={() => setShowActionButtons(false)}
     >
-      {showActionButtons && <WidgetActions widget={widget} />}
+      {widgetActions()}
       <DynamicWidgetComponent
         widget={widget}
         widgetsMessages={messageOverrides.widgets}

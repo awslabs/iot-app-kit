@@ -1,6 +1,6 @@
-import { ISceneDocumentSnapshot } from '../interfaces';
-import { ISceneDocumentInternal } from '../store/internalInterfaces';
-import { RootState } from '../store/Store';
+import { type ISceneDocumentSnapshot } from '../interfaces';
+import { type ISceneDocumentInternal } from '../store/internalInterfaces';
+import { type RootState } from '../store/Store';
 import serializationHelpers from '../store/helpers/serializationHelpers';
 
 /**

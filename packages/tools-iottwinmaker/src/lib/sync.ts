@@ -1,7 +1,7 @@
 import {
-  GetEntityCommandOutput,
-  ComponentRequest,
-  ParentEntityUpdateRequest,
+  type GetEntityCommandOutput,
+  type ComponentRequest,
+  type ParentEntityUpdateRequest,
   ResourceNotFoundException,
   ValidationException,
 } from '@aws-sdk/client-iottwinmaker';

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { act, cleanup, renderHook } from '@testing-library/react-hooks';
-import { Object3D, Event, Mesh, MeshBasicMaterial, Color } from 'three';
+import { Object3D, type Event, Mesh, MeshBasicMaterial, Color } from 'three';
 
 import useMaterialEffect from './useMaterialEffect';
 

@@ -1,15 +1,16 @@
-import React from 'react';
-
 import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 
 import { spaceScaledXxs } from '@cloudscape-design/design-tokens';
 
 import { VerticalDivider } from '~/components/divider/verticalDivider';
-import { SelectedAssetModel } from '../../useSelectedAssetModel';
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { type SelectedAssetModel } from '../../useSelectedAssetModel';
+import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
 import { AssetForAssetModelSelectForm } from '../../assetsForAssetModelSelect/assetForAssetModelSelectForm';
-import { SelectedAsset, UpdateSelectedAsset } from '../../useSelectedAsset';
+import {
+  type SelectedAsset,
+  type UpdateSelectedAsset,
+} from '../../useSelectedAsset';
 
 import { useModalVisibility } from '~/hooks/useModalVisibility';
 import { ResetAssetModelModal } from './resetAssetModel/resetAssetModelModal';

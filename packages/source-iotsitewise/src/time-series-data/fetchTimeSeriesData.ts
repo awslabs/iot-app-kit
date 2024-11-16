@@ -1,10 +1,10 @@
 import {
-  TimeSeriesDataModule,
-  Viewport,
-  DataStream,
-  TimeSeriesDataRequestSettings,
+  type TimeSeriesDataModule,
+  type Viewport,
+  type DataStream,
+  type TimeSeriesDataRequestSettings,
 } from '@iot-app-kit/core';
-import { SiteWiseDataStreamQuery } from './types';
+import { type SiteWiseDataStreamQuery } from './types';
 
 // creates async function which requests cachedDataStreams until all the data for viewport is present
 export const fetchTimeSeriesData =

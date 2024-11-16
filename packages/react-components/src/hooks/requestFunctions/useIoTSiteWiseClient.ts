@@ -1,4 +1,7 @@
-import { IoTSiteWise, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  type IoTSiteWise,
+  IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
 import { useMemo } from 'react';
 import {
   createBatchGetAssetPropertyValue,

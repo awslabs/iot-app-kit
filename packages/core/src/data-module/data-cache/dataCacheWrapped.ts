@@ -1,8 +1,8 @@
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 import { configureStore } from './createStore';
 import { onErrorAction, onRequestAction, onSuccessAction } from './dataActions';
 import { getDataStreamStore } from './getDataStreamStore';
-import { Observable, map, startWith, pairwise, from } from 'rxjs';
+import { type Observable, map, startWith, pairwise, from } from 'rxjs';
 import { delay, filter } from 'rxjs/operators';
 import { toDataStreams } from './toDataStreams';
 import type { Store } from 'redux';

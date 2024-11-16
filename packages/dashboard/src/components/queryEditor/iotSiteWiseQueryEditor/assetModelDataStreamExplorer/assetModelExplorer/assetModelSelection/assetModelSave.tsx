@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Box from '@cloudscape-design/components/box';
 
 import Button from '@cloudscape-design/components/button';

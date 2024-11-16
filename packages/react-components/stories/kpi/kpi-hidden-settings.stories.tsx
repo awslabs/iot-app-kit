@@ -1,6 +1,5 @@
-import React from 'react';
 import { KPI } from '../../src';
-import { ComponentMeta } from '@storybook/react';
+import { type ComponentMeta } from '@storybook/react';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from './kpi-mock-data';
 
 export default {
@@ -28,6 +27,7 @@ export const KPIHiddenSettings = () => {
             showTimestamp: false,
             showUnit: false,
             showAggregationAndResolution: false,
+            fontSize: 50,
           }}
         />
       </div>

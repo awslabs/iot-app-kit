@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { KpiBase } from '../kpiBase';
 import type { DataPoint } from '@iot-app-kit/core';
@@ -17,6 +16,23 @@ describe('name', () => {
     render(<KpiBase name={someName} settings={{ showName: false }} />);
 
     expect(screen.queryByText(someName)).toBeNull();
+  });
+});
+
+describe('title', () => {
+  const point: DataPoint = { x: 1213, y: 123 };
+
+  it('renders title when titleText is provided', () => {
+    render(
+      <KpiBase
+        propertyPoint={point}
+        name='some-name'
+        settings={{ showName: false }}
+        titleText='KPI Title'
+      />
+    );
+
+    expect(screen.getByText('KPI Title')).toBeInTheDocument();
   });
 });
 

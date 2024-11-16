@@ -1,7 +1,7 @@
 import { PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
 
 import { componentTypeToId } from '../../common/entityModelConstants';
-import { IPlaneGeometryComponent, KnownComponentType } from '../../interfaces';
+import { type IPlaneGeometryComponent, KnownComponentType } from '../../interfaces';
 
 import {
   createPlaneGeometryEntityComponent,

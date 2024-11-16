@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { describe } from '@jest/globals';
 import {
-  RenderResult,
+  type RenderResult,
   act,
   fireEvent,
   render,

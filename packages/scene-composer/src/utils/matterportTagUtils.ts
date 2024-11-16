@@ -1,4 +1,4 @@
-import { MpSdk } from '@matterport/r3f/dist';
+import { type MpSdk } from '@matterport/r3f/dist';
 
 export type TagItem = MpSdk.Tag.TagData;
 export class TagObserver implements MpSdk.IMapObserver<TagItem> {

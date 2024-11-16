@@ -14,6 +14,7 @@ const config = {
     '../stories/**/*.mdx',
     '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
+  staticDirs: [{ from: "../assets", to: "/assets" }],
   addons: [
     getAbsolutePath('@storybook/addon-links'),
     getAbsolutePath('@storybook/addon-essentials'),
@@ -32,6 +33,10 @@ const config = {
   docs: {
     autodocs: 'tag',
   },
+  managerHead: (head) => `
+      ${head}
+      <style>div[data-nodetype="story"] { display: none; }</style>
+  `,
   swc: () => ({
     jsc: {
       transform: {

@@ -1,4 +1,4 @@
-import { IoTEvents, IoTEventsClient } from '@aws-sdk/client-iot-events';
+import { type IoTEvents, IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { useMemo } from 'react';
 import { createDescribeAlarmModel } from './data/iotevents';
 

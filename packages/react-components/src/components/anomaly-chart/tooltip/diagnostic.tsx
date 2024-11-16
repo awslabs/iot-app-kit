@@ -1,4 +1,3 @@
-import React from 'react';
 import { Value } from '../../shared-components';
 import Box from '@cloudscape-design/components/box';
 import { spaceScaledS } from '@cloudscape-design/design-tokens';

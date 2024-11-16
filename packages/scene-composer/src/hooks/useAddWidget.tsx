@@ -1,4 +1,4 @@
-import { ThreeEvent } from '@react-three/fiber';
+import { type ThreeEvent } from '@react-three/fiber';
 import { useCallback } from 'react';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';

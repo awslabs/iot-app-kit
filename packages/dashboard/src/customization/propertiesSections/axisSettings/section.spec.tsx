@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import { configureDashboardStore } from '~/store';
 import { DefaultDashboardMessages } from '~/messages';
 import { render } from '@testing-library/react';
-import React from 'react';
 import type { DashboardState } from '~/store/state';
 import { AxisSettingsConfiguration } from './index';
 

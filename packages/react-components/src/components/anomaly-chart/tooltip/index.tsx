@@ -1,6 +1,8 @@
-import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { AnomalyChartTooltip, AnomalyChartTooltipOptions } from './tooltip';
+import {
+  AnomalyChartTooltip,
+  type AnomalyChartTooltipOptions,
+} from './tooltip';
 
 export type { AnomalyChartTooltipData } from './formatTooltipData';
 

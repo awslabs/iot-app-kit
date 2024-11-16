@@ -1,17 +1,17 @@
 import {
   GetAssetPropertyAggregatesCommand,
-  IoTSiteWiseClient,
+  type IoTSiteWiseClient,
   TimeOrdering,
 } from '@aws-sdk/client-iotsitewise';
-import { AssetId, AssetPropertyId } from '../../types';
+import { type AssetId, type AssetPropertyId } from '../../types';
 import { aggregateToDataPoint } from '../../util/toDataPoint';
 import { RESOLUTION_TO_MS_MAPPING } from '../../util/resolution';
 import { toId } from '../../util/dataStreamId';
 import {
   parseDuration,
-  OnSuccessCallback,
-  ErrorCallback,
-  RequestInformationAndRange,
+  type OnSuccessCallback,
+  type ErrorCallback,
+  type RequestInformationAndRange,
   toSiteWiseAssetProperty,
 } from '@iot-app-kit/core';
 import { isDefined } from '../../../common/predicates';

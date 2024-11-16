@@ -1,14 +1,12 @@
-import React from 'react';
-
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
+import {
+  AppKitConfig,
+  DEFAULT_APP_KIT_CONFIG,
+} from '@iot-app-kit/react-components';
 import { useDashboardPlugins } from '../../customization/api';
-import { AppKitConfig } from '@iot-app-kit/react-components';
-// FIXME: Export DEFAULT_APP_KIT_CONFIG from @iot-app-kit/react-components
-// eslint-disable-next-line no-restricted-imports
-import { DEFAULT_APP_KIT_CONFIG } from '@iot-app-kit/react-components/src/components/iot-app-kit-config/defaultValues';
 import Palette from './index';
 
 const ComponentPaletteTestComponent = ({

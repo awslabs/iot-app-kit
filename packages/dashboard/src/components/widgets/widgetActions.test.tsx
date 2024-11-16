@@ -1,15 +1,12 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import WidgetActions from './widgetActions';
+import wrapper from '@cloudscape-design/components/test-utils/dom';
+import { act, render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { configureDashboardStore } from '~/store';
 import {
   MOCK_KPI_WIDGET,
   MOCK_LINE_CHART_WIDGET,
 } from '../../../testing/mocks';
-import { Provider } from 'react-redux';
-import wrapper from '@cloudscape-design/components/test-utils/dom';
-import { act } from 'react-dom/test-utils';
-import { screen } from '@testing-library/dom';
+import WidgetActions from './widgetActions';
 
 describe('WidgetActions', () => {
   it('can remove a widget', function () {

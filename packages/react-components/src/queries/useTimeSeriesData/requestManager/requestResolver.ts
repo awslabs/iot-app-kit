@@ -1,7 +1,7 @@
-import { TimeSeriesDataCacheClient } from '../cacheClient';
+import { type TimeSeriesDataCacheClient } from '../cacheClient';
 import { IntervalTransformer, getViewportType } from '../intervals';
-import { Viewport } from '../types';
-import { RequestResolverStrategy, RequestSettings } from './types';
+import { type Viewport } from '../types';
+import { type RequestResolverStrategy, type RequestSettings } from './types';
 
 export type ResolveOptions<Request> = {
   request: Request;

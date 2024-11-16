@@ -1,7 +1,9 @@
 import {
   BatchGetAssetPropertyValueHistoryCommand,
-  IoTSiteWiseClient,
+  type IoTSiteWiseClient,
   TimeOrdering,
+  type BatchGetAssetPropertyValueHistoryErrorEntry,
+  type BatchGetAssetPropertyValueHistorySuccessEntry,
 } from '@aws-sdk/client-iotsitewise';
 import { toDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
@@ -14,10 +16,6 @@ import {
 } from './batch';
 import { deduplicateBatch } from '../util/deduplication';
 import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
-import type {
-  BatchGetAssetPropertyValueHistoryErrorEntry,
-  BatchGetAssetPropertyValueHistorySuccessEntry,
-} from '@aws-sdk/client-iotsitewise';
 import {
   type OnSuccessCallback,
   type ErrorCallback,
@@ -160,6 +158,15 @@ const sendRequest = ({
           dataPointsFetched,
         });
       }
+    })
+    .catch((e) => {
+      Object.entries(callbackCache).forEach(([entryId, { onError }]) => {
+        onError({
+          entryId,
+          errorCode: e.$metadata.httpStatusCode,
+          errorMessage: e.message,
+        });
+      });
     });
 };
 

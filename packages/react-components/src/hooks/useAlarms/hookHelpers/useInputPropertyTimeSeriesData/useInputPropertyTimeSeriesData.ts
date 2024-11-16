@@ -1,51 +1,39 @@
-import { useMemo, useState } from 'react';
-import { useCustomCompareEffect } from 'react-use';
-import isEqual from 'lodash.isequal';
+import { useEffect, useMemo } from 'react';
 
-import { AlarmData } from '../../types';
-import { UseInputPropertyTimeSeriesDataOptions } from './types';
-import { useTimeSeriesDataQueries } from './useTimeSeriesDataQueries';
-import { updateAlarmStatusForDatastreams } from './updateAlarmStatusForDatastreams';
-import { updateAlarmInputPropertyData } from './updateAlarmInputPropertyData';
-import { filterDataStreamsForAlarm } from './filterDatastreamsForAlarm';
+import { type UseInputPropertyTimeSeriesDataOptions } from './types';
 
 import { useTimeSeriesData } from '../../../useTimeSeriesData';
-
-const alarmDataAsComparable = ({ inputProperty, assetId }: AlarmData) =>
-  inputProperty?.map(({ property }) => ({ assetId, propertyId: property.id }));
+import { useRequestSelector } from '../../state';
+import { alarmToSiteWiseDataStreamQuery } from './alarmToSiteWiseDataStreamQuery';
 
 export const useInputPropertyTimeSeriesData = ({
-  alarms,
+  requests,
+  onUpdateAlarmInputPropertyData,
   viewport,
   fetchOnlyLatest,
   refreshRate,
-  ...queryOptions
+  fetchInputPropertyData,
+  timeSeriesData,
+  aggregationType = 'AVERAGE',
+  resolution = undefined,
+  resolutionConfig = undefined,
 }: UseInputPropertyTimeSeriesDataOptions) => {
-  const [alarmsInternal, setAlarmsInternal] = useState<AlarmData[]>(alarms);
-
-  /**
-   * Alarm data can change, we only want to update the
-   * timeSeriesData queries if the input properties property
-   * have changed between renders.
-   */
-  useCustomCompareEffect(
-    () => {
-      setAlarmsInternal(alarms);
-    },
-    [alarms],
-    ([prevAlarms], [nextAlarms]) => {
-      return isEqual(
-        prevAlarms.map(alarmDataAsComparable),
-        nextAlarms.map(alarmDataAsComparable)
-      );
-    }
+  const query = useRequestSelector(requests, (inputPropertyRequests) =>
+    alarmToSiteWiseDataStreamQuery(inputPropertyRequests, {
+      aggregationType,
+      resolution,
+    })
   );
 
-  const queries = useTimeSeriesDataQueries({
-    alarms: alarmsInternal,
-    viewport,
-    ...queryOptions,
-  });
+  const queries = useMemo(() => {
+    const enabled =
+      !!fetchInputPropertyData &&
+      timeSeriesData != null &&
+      viewport != null &&
+      (query.assets?.length ?? 0) > 0;
+
+    return enabled ? [timeSeriesData(query)] : [];
+  }, [fetchInputPropertyData, timeSeriesData, viewport, query]);
 
   const { dataStreams } = useTimeSeriesData({
     queries,
@@ -54,18 +42,13 @@ export const useInputPropertyTimeSeriesData = ({
       refreshRate,
       fetchFromStartToEnd: !fetchOnlyLatest,
       fetchMostRecentBeforeEnd: !!fetchOnlyLatest,
+      resolution: resolutionConfig,
     },
   });
 
-  return useMemo(() => {
-    return alarms.map((alarm) => {
-      const datastreamsForAlarm = filterDataStreamsForAlarm(alarm, dataStreams);
-
-      updateAlarmStatusForDatastreams(alarm, datastreamsForAlarm);
-
-      updateAlarmInputPropertyData(alarm, datastreamsForAlarm);
-
-      return alarm;
+  useEffect(() => {
+    onUpdateAlarmInputPropertyData({
+      dataStreams,
     });
-  }, [alarms, dataStreams]);
+  }, [onUpdateAlarmInputPropertyData, dataStreams]);
 };

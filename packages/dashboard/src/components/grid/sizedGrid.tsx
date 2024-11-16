@@ -1,5 +1,4 @@
-import React from 'react';
-import { Grid, GridProps } from './grid';
+import { Grid, type GridProps } from './grid';
 
 export type SizedGridProps = GridProps;
 

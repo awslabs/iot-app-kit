@@ -1,5 +1,4 @@
 import { useLoader } from '@react-three/fiber';
-import React from 'react';
 import { act, create } from 'react-test-renderer';
 import * as THREE from 'three';
 
@@ -7,11 +6,11 @@ import {
   Anchor,
   DEFAULT_TAG_GLOBAL_SETTINGS,
   DefaultAnchorStatus,
-  IValueDataBinding,
+  type IValueDataBinding,
   KnownComponentType,
 } from '../../../../..';
 import useTagSettings from '../../../../../hooks/useTagSettings';
-import { ISceneNodeInternal, accessStore } from '../../../../../store/Store';
+import { type ISceneNodeInternal, accessStore } from '../../../../../store/Store';
 import { AnchorWidget, AsyncLoadedAnchorWidget } from '../AnchorWidget';
 
 jest.mock('../../common/SvgIconToWidgetSprite', () =>

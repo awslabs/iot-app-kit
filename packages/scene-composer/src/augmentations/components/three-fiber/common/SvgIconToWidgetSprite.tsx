@@ -1,8 +1,7 @@
 import * as THREE from 'three';
-import React from 'react';
 
-import { DefaultAnchorStatus } from '../../../../interfaces';
-import { WidgetSpriteProps } from '../../../UpdateJsxIntrinsicElements';
+import { type DefaultAnchorStatus } from '../../../../interfaces';
+import { type WidgetSpriteProps } from '../../../UpdateJsxIntrinsicElements';
 import { RenderOrder } from '../../../../common/constants';
 
 export default function svgIconToWidgetSprite(

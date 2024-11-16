@@ -70,7 +70,6 @@ jest.doMock('../../../src/hooks', () => {
   };
 });
 
-import * as React from 'react';
 import * as THREE from 'three';
 
 import { act, render } from '@testing-library/react';

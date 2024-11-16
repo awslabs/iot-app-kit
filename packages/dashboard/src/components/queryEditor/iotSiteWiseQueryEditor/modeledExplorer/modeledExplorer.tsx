@@ -1,25 +1,24 @@
 import { Box, ExpandableSection } from '@cloudscape-design/components';
 import {
   AlarmExplorer,
-  AlarmExplorerProps,
-  AlarmResource,
+  type AlarmExplorerProps,
+  type AlarmResource,
   AssetExplorer,
-  AssetExplorerProps,
+  type AssetExplorerProps,
   AssetPropertyExplorer,
-  AssetPropertyExplorerProps,
-  AssetPropertyResource,
-  AssetResource,
-  SelectionMode,
-  useGetConfigValue,
+  type AssetPropertyExplorerProps,
+  type AssetPropertyResource,
+  type AssetResource,
+  type SelectionMode,
 } from '@iot-app-kit/react-components';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { isModeledPropertyInvalid } from '../../helpers/isModeledPropertyInvalid';
 import { ResourceExplorerFooter } from '../footer/footer';
 import { QueryExtender } from '../queryExtender';
 import { getPlugin } from '@iot-app-kit/core';
-import { useQuery } from '../../useQuery';
-import { IoTSiteWise } from '@aws-sdk/client-iotsitewise';
-import { DashboardWidget } from '~/types';
+import { type useQuery } from '../../useQuery';
+import { type IoTSiteWise } from '@aws-sdk/client-iotsitewise';
+import { type DashboardWidget } from '~/types';
 import { propertySelectionLabel } from '../../helpers/propertySelectionLabel';
 import { alarmSelectionLabel } from '../../helpers/alarmSelectionLabel';
 import { ExpandableSectionHeading } from '../components/expandableSectionHeading';
@@ -55,7 +54,7 @@ export const ModeledExplorer = ({
     NonNullable<AlarmExplorerProps['selectedAlarms']>
   >([]);
 
-  const alarmsFeatureOn = useGetConfigValue('useAlarms');
+  const alarmsFeatureOn = true; //useGetConfigValue('useAlarms');
 
   const metricsRecorder = getPlugin('metricsRecorder');
 
@@ -111,7 +110,7 @@ export const ModeledExplorer = ({
             selectedWidgets
           ),
       }}
-      description='Select a modeled datastream to add to a selected widget'
+      description='Select a modeled data stream to add to a widget.'
       timeZone={timeZone}
       significantDigits={significantDigits}
     />
@@ -129,7 +128,7 @@ export const ModeledExplorer = ({
           isFilterEnabled: true,
           isUserSettingsEnabled: true,
         }}
-        description='Browse through your asset hierarchy and select an asset to view its associated data streams.'
+        description='Browse through your assets to select an asset, and view its associated data streams.'
         ariaLabels={{
           resizerRoleDescription: 'Resize button',
           itemSelectionLabel: (isNotSelected, asset: AssetResource) =>
@@ -143,7 +142,7 @@ export const ModeledExplorer = ({
           <>
             <ExpandableSection
               headerText={
-                <ExpandableSectionHeading headerText='Data Streams' />
+                <ExpandableSectionHeading headerText='Data streams' />
               }
               defaultExpanded
             >
@@ -151,7 +150,7 @@ export const ModeledExplorer = ({
             </ExpandableSection>
             <ExpandableSection
               headerText={
-                <ExpandableSectionHeading headerText='Alarm Data Streams' />
+                <ExpandableSectionHeading headerText='Alarm data streams' />
               }
             >
               <AlarmExplorer
@@ -169,7 +168,7 @@ export const ModeledExplorer = ({
                   itemSelectionLabel: ({ selectedItems }, modeledDataStream) =>
                     alarmSelectionLabel([...selectedItems], modeledDataStream),
                 }}
-                description='Select an alarm to add to a selected widget'
+                description='Select an alarm to add to a selected widget.'
                 timeZone={timeZone}
                 significantDigits={significantDigits}
               />

@@ -1,11 +1,11 @@
-import { Color, LoadingManager, Mesh, Texture } from 'three';
+import { Color, LoadingManager, type Mesh, Texture } from 'three';
 import { useCallback, useState, useEffect } from 'react';
 
 import { getGlobalSettings } from '../common/GlobalSettings';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import { accessStore } from '../store';
-import { TwinMakerTextureLoader, TwinMakerTextureLoaderOptions } from '../three/TwinMakerTextureLoader';
-import { OnFileLoaderLoadFunc } from '../three/types';
+import { TwinMakerTextureLoader, type TwinMakerTextureLoaderOptions } from '../three/TwinMakerTextureLoader';
+import { type OnFileLoaderLoadFunc } from '../three/types';
 import { appendFunction } from '../utils/objectUtils';
 
 const useTwinMakerTextureLoader: (options?: TwinMakerTextureLoaderOptions) => {

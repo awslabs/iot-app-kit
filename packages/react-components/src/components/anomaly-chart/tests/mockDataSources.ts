@@ -1,5 +1,5 @@
-import { AnomalyArrowDataSource } from '../../../data/transformers/anomaly/arrow/datasource';
-import { AnomalyObjectDataSource } from '../../../data/transformers/anomaly/object/datasource';
+import { type AnomalyArrowDataSource } from '../../../data/transformers/anomaly/arrow/datasource';
+import { type AnomalyObjectDataSource } from '../../../data/transformers/anomaly/object/datasource';
 import { FieldType } from '../../../data/transformers/arrow';
 
 export const MOCK_DATA_SOURCE_EMPTY_SUCCESS: AnomalyObjectDataSource = {

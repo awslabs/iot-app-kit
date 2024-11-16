@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
 import {
   AttributeEditor,
   Box,
   ExpandableSection,
   Grid,
   Input,
-  InputProps,
+  type InputProps,
   Select,
-  SelectProps,
+  type SelectProps,
   SpaceBetween,
   TextContent,
 } from '@cloudscape-design/components';
-import styled from 'styled-components';
 import * as awsui from '@cloudscape-design/design-tokens';
+import { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import styled from 'styled-components';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
 

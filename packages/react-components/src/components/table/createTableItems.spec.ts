@@ -227,3 +227,28 @@ it('contains breached threshold', () => {
   // Item with no $cellRef does not support threshold
   expect(noRef).toMatchObject({ threshold: undefined });
 });
+
+it('returns items with id defined', () => {
+  const viewport: Viewport = {
+    start: new Date(2022, 1, 1, 0, 0, 1),
+    end: new Date(2022, 1, 1, 0, 0, 2),
+  };
+
+  const itemDef = [
+    {
+      value1: {
+        $cellRef: {
+          id: 'data-1',
+          resolution: 0,
+        },
+      },
+    },
+  ];
+  const [item] = createTableItems(
+    { dataStreams, viewport: viewport, items: itemDef },
+    DEFAULT_TABLE_MESSAGES
+  );
+
+  expect(item.id).toEqual(1);
+  expect(item.value1.value).toEqual(1);
+});

@@ -1,7 +1,7 @@
 import {
-  BatchGetAssetPropertyValueHistoryResponse,
-  GetAssetPropertyValueHistoryResponse,
-  IoTSiteWise,
+  type BatchGetAssetPropertyValueHistoryResponse,
+  type GetAssetPropertyValueHistoryResponse,
+  type IoTSiteWise,
 } from '@aws-sdk/client-iotsitewise';
 import { renderHook, waitFor } from '@testing-library/react';
 import { queryClient } from '../queryClient';

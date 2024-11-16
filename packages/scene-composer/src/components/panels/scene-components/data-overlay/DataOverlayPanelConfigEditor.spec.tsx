@@ -1,4 +1,3 @@
-import React from 'react';
 import { act, render } from '@testing-library/react';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 

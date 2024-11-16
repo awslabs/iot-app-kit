@@ -3,12 +3,12 @@ import {
   HIERARCHY_ROOT_ID,
   LoadingStateEnum,
 } from './types';
-import { EMPTY, Observable, Subscriber } from 'rxjs';
+import { EMPTY, Observable, type Subscriber } from 'rxjs';
 import {
   ListAssetsFilter,
   TraversalDirection,
 } from '@aws-sdk/client-iotsitewise';
-import { SiteWiseAssetCache } from './cache';
+import { type SiteWiseAssetCache } from './cache';
 import { SiteWiseAssetSession } from './session';
 import { RequestProcessorWorkerGroup } from './requestProcessorWorkerGroup';
 import { expand, map } from 'rxjs/operators';

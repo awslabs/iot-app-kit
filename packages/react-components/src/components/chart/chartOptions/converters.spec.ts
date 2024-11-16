@@ -1,5 +1,5 @@
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
-import { ChartLegend } from '../types';
+import { type ChartLegend } from '../types';
 import { convertYAxis } from './axes/yAxis';
 import { convertSeriesAndYAxis } from './seriesAndYAxis/convertSeriesAndYAxis';
 import { convertStyles } from './style/convertStyles';

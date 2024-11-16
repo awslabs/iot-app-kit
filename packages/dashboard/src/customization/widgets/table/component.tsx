@@ -1,34 +1,33 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   CollectionPreferences,
-  CollectionPreferencesProps,
+  type CollectionPreferencesProps,
 } from '@cloudscape-design/components';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Table,
-  TableColumnDefinition,
+  type TableColumnDefinition,
   useViewport,
 } from '@iot-app-kit/react-components';
 
 import EmptyTableComponent from './emptyTableComponent';
 
-import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
-import type { DashboardState } from '~/store/state';
-import type { TableWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { useChartSize } from '~/hooks/useChartSize';
+import type { DashboardState } from '~/store/state';
+import type { TableWidget } from '../types';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 
+import WidgetTile from '~/components/widgets/tile/tile';
+import { onUpdateWidgetsAction } from '~/store/actions';
+import { TABLE_OVERFLOW_HEIGHT, TABLE_WIDGET_MAX_HEIGHT } from '../constants';
+import { assetModelQueryToSiteWiseAssetQuery } from '../utils/assetModelQueryToAssetQuery';
 import {
-  DEFAULT_PREFERENCES,
   collectionPreferencesProps,
+  DEFAULT_PREFERENCES,
   PROPERTY_FILTERING,
 } from './table-config';
-import { TABLE_OVERFLOW_HEIGHT, TABLE_WIDGET_MAX_HEIGHT } from '../constants';
-import { onUpdateWidgetsAction } from '~/store/actions';
 import { useTableItems } from './useTableItems';
-import WidgetTile from '~/components/widgets/tile/tile';
-import { assetModelQueryToSiteWiseAssetQuery } from '../utils/assetModelQueryToAssetQuery';
 
 export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
   {
@@ -59,6 +58,8 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
     thresholds,
     significantDigits: widgetSignificantDigits,
     styleSettings,
+    title,
+    assistant,
   } = widget.properties;
 
   const queries = useQueries(queryConfig.query);
@@ -120,6 +121,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
         }}
       >
         <Table
+          titleText={title}
           resizableColumns
           key={key}
           queries={queries}
@@ -147,6 +149,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
             )
           }
           propertyFiltering={PROPERTY_FILTERING}
+          assistant={assistant}
         />
       </div>
     </WidgetTile>

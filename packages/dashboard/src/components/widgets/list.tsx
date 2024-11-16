@@ -1,14 +1,12 @@
-import React from 'react';
-
-import map from 'lodash/map';
-import includes from 'lodash/includes';
-import WidgetComponent from './widget';
-import SelectionBox from './selectionBox';
-import './list.css';
 import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import type { DashboardWidget } from '~/types';
+import includes from 'lodash/includes';
+import map from 'lodash/map';
 import type { DashboardMessages } from '~/messages';
-import { DashboardState } from '~/store/state';
+import { type DashboardState } from '~/store/state';
+import type { DashboardWidget } from '~/types';
+import './list.css';
+import SelectionBox from './selectionBox';
+import WidgetComponent from './widget';
 
 export type WidgetsProps = {
   readOnly: boolean;
@@ -56,6 +54,7 @@ const Widgets: React.FC<WidgetsProps> = ({
           query={query}
           messageOverrides={messageOverrides}
           isSelected={isSelected(widget.id)}
+          numSelected={selectedWidgets.length}
           key={widget.id}
           cellSize={cellSize}
           widget={widget}

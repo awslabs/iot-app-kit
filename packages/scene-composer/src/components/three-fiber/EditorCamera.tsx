@@ -1,8 +1,8 @@
 import * as THREE from 'three';
-import React, { Fragment, forwardRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, forwardRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import mergeRefs from 'react-merge-refs';
 import { PerspectiveCamera } from '@react-three/drei/core/PerspectiveCamera';
-import { Camera, useFrame, useThree } from '@react-three/fiber';
+import { type Camera, useFrame, useThree } from '@react-three/fiber';
 import { MatterportFocusCamera } from '@matterport/r3f/dist';
 
 import useLogger from '../../logger/react-logger/hooks/useLogger';
@@ -14,11 +14,11 @@ import {
   DEFAULT_CAMERA_TARGET,
   DEFAULT_TWEEN_DURATION,
 } from '../../common/constants';
-import { FixedCameraTarget, Vector3 } from '../../interfaces';
+import { type FixedCameraTarget, type Vector3 } from '../../interfaces';
 import { useTween } from '../../hooks';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useEditorState } from '../../store';
-import { CameraControlImpl, TweenValueObject } from '../../store/internalInterfaces';
+import { type CameraControlImpl, type TweenValueObject } from '../../store/internalInterfaces';
 import useActiveCamera from '../../hooks/useActiveCamera';
 import useOverwriteRaycaster from '../../hooks/useOverwriteRaycaster';
 import { getSafeBoundingBox } from '../../utils/objectThreeUtils';

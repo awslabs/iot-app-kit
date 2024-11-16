@@ -1,4 +1,4 @@
-import { ElementEvent, Payload } from 'echarts';
+import { type ElementEvent, type Payload } from 'echarts';
 
 export const CopyTrendCursorActionType = 'COPY_TREND_CURSOR' as const;
 

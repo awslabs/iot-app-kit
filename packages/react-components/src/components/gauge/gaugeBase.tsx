@@ -1,11 +1,10 @@
-// eslint-disable-next-line import/default
-import React from 'react';
+import { Title } from '../../common/title';
 import { useECharts } from '../../hooks/useECharts';
-import { GaugeBaseProperties } from './types';
+import './gauge.css';
+import { GaugeText } from './gaugeText';
 import { useGaugeConfiguration } from './hooks/useGaugeConfiguration';
 import { useResizableGauge } from './hooks/useResizableGauge';
-import { GaugeText } from './gaugeText';
-import './gauge.css';
+import { type GaugeBaseProperties } from './types';
 import { thresholdsToColor } from './utils/thresholdsToColor';
 
 /**
@@ -31,7 +30,9 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
   isLoading,
   significantDigits,
   error,
-  alarmState,
+  titleText,
+  alarmContent,
+  assistant,
   alarmStatus,
   ...options
 }) => {
@@ -64,7 +65,12 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
       data-testid={
         !error ? 'gauge-base-component' : 'gauge-base-component-error'
       }
+      style={{
+        width: size?.width,
+        height: size?.height,
+      }}
     >
+      <Title text={titleText} />
       <div
         ref={ref}
         className='gauge-base'
@@ -88,8 +94,10 @@ export const GaugeBase: React.FC<GaugeBaseProperties> = ({
         name={name}
         quality={quality}
         value={gaugeValue}
-        alarmState={alarmState}
         significantDigits={significantDigits}
+        titleText={titleText}
+        alarmContent={alarmContent}
+        assistant={assistant}
       />
     </div>
   );

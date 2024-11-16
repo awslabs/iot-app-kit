@@ -1,13 +1,13 @@
 import {
-  AnomalyObjectDataSource,
+  type AnomalyObjectDataSource,
   AnomalyObjectDataSourceTransformer,
 } from '../transformers/anomaly';
 import {
-  AnomalyArrowDataSource,
+  type AnomalyArrowDataSource,
   AnomalyArrowDataSourceTransformer,
 } from '../transformers/anomaly/arrow';
 import { FieldType } from '../transformers/arrow';
-import { DataSource } from '../types';
+import { type DataSource } from '../types';
 import { DataSourceLoader } from './dataSourceLoader';
 
 const validAnomalyObjectDataSource: AnomalyObjectDataSource = {

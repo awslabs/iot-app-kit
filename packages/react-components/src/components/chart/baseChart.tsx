@@ -1,44 +1,57 @@
-import React, { useEffect } from 'react';
-import type { MouseEvent } from 'react';
+import { type TableProps } from '@cloudscape-design/components/table';
 import {
   colorBorderDividerSecondary,
   spaceStaticL,
   spaceStaticM,
 } from '@cloudscape-design/design-tokens';
-
-import { useECharts, useResizeableEChart } from '../../hooks/useECharts';
-import { ChartOptions } from './types';
-import { useVisualizedDataStreams } from './hooks/useVisualizedDataStreams';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type MouseEvent,
+} from 'react';
 import { HotKeys } from 'react-hotkeys';
-import { Resizable, ResizeHandle } from 'react-resizable';
-import Legend from './legend/table';
-import ChartContextMenu from './contextMenu/ChartContextMenu';
-import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
-import { useDataZoom } from './hooks/useDataZoom';
+import { Resizable, type ResizeHandle } from 'react-resizable';
+import { useECharts, useResizeableEChart } from '../../hooks/useECharts';
 import { useViewport } from '../../hooks/useViewport';
-import { useHandleChartEvents } from './events/useHandleChartEvents';
-import { useChartDataset } from './chartOptions/useChartDataset';
 import { useChartConfiguration } from './chartOptions/useChartConfiguration';
+import { useChartDataset } from './chartOptions/useChartDataset';
+import ChartContextMenu from './contextMenu/ChartContextMenu';
+import { useHandleChartEvents } from './events/useHandleChartEvents';
+import { useDataZoom } from './hooks/useDataZoom';
+import { useVisualizedDataStreams } from './hooks/useVisualizedDataStreams';
+import Legend from './legend/table';
+import { MultiYAxisLegend } from './multiYAxis/multiYAxis';
+import { type ChartOptions } from './types';
 
-import './chart.css';
+import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
+import { Title, getAdjustedChartHeight } from '../../common/title';
 import { useTrendCursors } from '../../echarts/extensions/trendCursors';
-import { useChartStoreDataStreamsSync } from './hooks/useChartStoreDataStreamsSync';
-import useIsRefreshing from './hooks/useIsrefreshing';
+import { useAssistantContext } from '../../hooks/useAssistantContext/useAssistantContext';
+import {
+  convertToSupportedTimeRange,
+  getSelectedQueriesAndProperties,
+} from '../../hooks/useAssistantContext/utils';
+import { useModalVisibility } from '../../hooks/useModalVisibility/useModalVisibility';
+import useDataStore from '../../store';
+import { getTimeSeriesQueries } from '../../utils/queries';
+import { Timestamp } from '../timestampBar';
+import './chart.css';
 import {
   REFRESHING_DELAY_MS,
   TIMESTAMP_HEIGHT_FACTOR_BOTTOM,
   TIMESTAMP_WIDTH_FACTOR,
   TIMESTAMP_WIDTH_FACTOR_BOTTOM,
 } from './eChartsConstants';
-import { ChartPreferencesModal } from './preferences/dataQualityModal';
-import { useModalVisibility } from '../../hooks/useModalVisibility/useModalVisibility';
-import { PreferencesModalToggle } from './preferences/toggle';
-import { useChartPreferences } from './hooks/useChartPreferences';
-import { Timestamp } from '../timestampBar';
-import useDataStore from '../../store';
-import { getTimeSeriesQueries } from '../../utils/queries';
 import { useChartAlarms } from './hooks/useChartAlarms';
+import { useChartPreferences } from './hooks/useChartPreferences';
+import { useChartStoreDataStreamsSync } from './hooks/useChartStoreDataStreamsSync';
+import useIsRefreshing from './hooks/useIsrefreshing';
 import { useNormalizedDataStreams } from './hooks/useNormalizedDataStreams';
+import { type DataStreamInformation } from './legend/table/types';
+import { ChartPreferencesModal } from './preferences/dataQualityModal';
+import { PreferencesModalToggle } from './preferences/toggle';
 
 /**
  * Developer Notes:
@@ -86,6 +99,12 @@ const BaseChart = ({
     handleChangeAlarmIconsVisibility,
   } = useChartPreferences({ ...options.dataQuality, onChartOptionsChange });
 
+  const { setContextByComponent, transformTimeseriesDataToAssistantContext } =
+    useAssistantContext();
+  const [selectedItems, setSelectedItems] = useState<DataStreamInformation[]>(
+    []
+  );
+
   const isLegendVisible = options.legend?.visible;
   const isLegendPositionLeft = options.legend?.position === 'left';
   const isLegendPositionBottom = options.legend?.position === 'bottom';
@@ -103,12 +122,8 @@ const BaseChart = ({
     trendCursorValues,
   } = useTrendCursors({ group, chartRef, id: options.id });
 
-  const alarms = useChartAlarms({
-    queries,
-    viewport,
-  });
-
   // convert TimeSeriesDataQuery to TimeSeriesData
+  const timeSeriesQueries = getTimeSeriesQueries(queries);
   const {
     isLoading,
     isRefreshing,
@@ -116,7 +131,12 @@ const BaseChart = ({
     thresholds,
     utilizedViewport,
     visibleData,
-  } = useVisualizedDataStreams(getTimeSeriesQueries(queries), viewport);
+  } = useVisualizedDataStreams(timeSeriesQueries, viewport);
+
+  const alarms = useChartAlarms({
+    queries,
+    viewport: utilizedViewport,
+  });
 
   const dataStreams = useNormalizedDataStreams({
     dataStreams: visualizedDataStreams,
@@ -136,6 +156,7 @@ const BaseChart = ({
     rightLegendHeight,
     leftLegendWidth,
     onResize,
+    onResizeEnd,
     minConstraints,
     maxConstraints,
     leftLegendRef,
@@ -147,6 +168,10 @@ const BaseChart = ({
     onChartOptionsChange
   );
 
+  const adjustedChartHeight = getAdjustedChartHeight(
+    !!options.titleText,
+    chartHeight
+  );
   const getTimeStampWidth = () => {
     const timestampWidth =
       chartWidth + leftLegendWidth - TIMESTAMP_WIDTH_FACTOR_BOTTOM;
@@ -245,119 +270,195 @@ const BaseChart = ({
     };
   };
 
+  const handleSelection = useCallback(
+    (selectedItems: DataStreamInformation[]) => {
+      if (options.id && options.assistant) {
+        const contexts = [];
+
+        selectedItems
+          .filter((alarmItem) => !!alarmItem.assetId && !!alarmItem.alarmName)
+          .forEach((alarmItem) => {
+            contexts.push({
+              timerange: convertToSupportedTimeRange(
+                viewportStartDate(utilizedViewport),
+                viewportEndDate(utilizedViewport)
+              ),
+              assetId: alarmItem.assetId,
+              alarmName: alarmItem.alarmName,
+            });
+          });
+
+        const selectedQueries = getSelectedQueriesAndProperties(
+          timeSeriesQueries,
+          selectedItems.map((item) => item.refId ?? '')
+        );
+        contexts.push(
+          transformTimeseriesDataToAssistantContext({
+            start: viewportStartDate(utilizedViewport),
+            end: viewportEndDate(utilizedViewport),
+            queries: selectedQueries,
+          })
+        );
+
+        setContextByComponent(options.assistant.componentId, contexts);
+
+        if (options.assistant.onAction) {
+          options.assistant.onAction({
+            type: 'selection',
+            sourceComponentId: options.assistant.componentId,
+            sourceComponentType: 'chart',
+            selectedProperties: selectedItems.length,
+          });
+        }
+      }
+      setSelectedItems(selectedItems);
+    },
+    [
+      options.id,
+      options.assistant,
+      setSelectedItems,
+      setContextByComponent,
+      transformTimeseriesDataToAssistantContext,
+      timeSeriesQueries,
+      utilizedViewport,
+    ]
+  );
+
+  const assistantSelection = useMemo(() => {
+    if (options.assistant && options.assistant?.enabled) {
+      return {
+        assistant: options.assistant,
+        setSelectedItems: handleSelection,
+        selectedItems,
+        selectionType: 'multi' as TableProps.SelectionType,
+      };
+    } else {
+      return {};
+    }
+  }, [options.assistant, selectedItems, handleSelection]);
+
   return (
-    <div
-      className={`base-chart-container ${options.legend?.position}-position`}
-      data-testid='base-chart-container'
-    >
-      <div className='base-chart-container-element'>
-        <Resizable
-          height={chartHeight}
-          width={chartWidth}
-          onResize={onResize}
-          axis={`${isBottomAligned ? 'y' : 'x'}`}
-          minConstraints={minConstraints}
-          maxConstraints={maxConstraints}
-          handle={
-            <span
-              className={
-                options.legend?.visible
-                  ? 'react-resizable-handle react-resizable-handle-se'
-                  : ''
-              }
-              style={options.legend?.visible ? legendResizerStyle() : {}}
-              data-gesture='resize'
-            />
-          }
-          onResizeStart={(e) => e.stopPropagation()}
-          onResizeStop={(e) => e.stopPropagation()}
-          resizeHandles={[...setHandles(options.legend?.position || 'right')]}
-        >
-          <HotKeys
-            keyMap={hotKeyMap}
-            handlers={hotKeyHandlers}
-            className='chart-rightlegend-container'
-            style={{
-              paddingBottom: isLegendPositionBottom ? `${spaceStaticM}` : 0,
-            }}
-          >
-            <div className='base-chart-left-legend' ref={leftLegendRef}>
-              <MultiYAxisLegend
-                datastreams={dataStreams}
-                height={chartHeight}
+    <div className='base-chart-wrapper'>
+      <div
+        className={`base-chart-container ${options.legend?.position}-position`}
+        data-testid='base-chart-container'
+      >
+        <div className='base-chart-container-element'>
+          <Resizable
+            height={adjustedChartHeight}
+            width={chartWidth}
+            onResize={onResize}
+            axis={`${isBottomAligned ? 'y' : 'x'}`}
+            minConstraints={minConstraints}
+            maxConstraints={maxConstraints}
+            handle={
+              <span
+                className={
+                  options.legend?.visible
+                    ? 'react-resizable-handle react-resizable-handle-se'
+                    : ''
+                }
+                style={options.legend?.visible ? legendResizerStyle() : {}}
+                data-gesture='resize'
               />
-            </div>
-            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-            <div
-              ref={ref}
-              onMouseDown={handleMouseDown}
-              className='base-chart-element'
+            }
+            onResizeStart={(e: React.SyntheticEvent) => e.stopPropagation()}
+            onResizeStop={onResizeEnd}
+            resizeHandles={[...setHandles(options.legend?.position || 'right')]}
+          >
+            <HotKeys
+              keyMap={hotKeyMap}
+              handlers={hotKeyHandlers}
+              className='chart-rightlegend-container'
               style={{
-                height: chartHeight,
-                width: chartWidth,
+                paddingBottom: isLegendPositionBottom ? `${spaceStaticM}` : 0,
               }}
-            />
-            <PreferencesModalToggle onShow={onShowDataQualityPreferences} />
-            <ChartPreferencesModal
-              onHide={onHideDataQualityPreferences}
-              visible={dataQualityPreferencesVisible}
-              showBadDataIcons={showBadDataIcons}
-              showUncertainDataIcons={showUncertainDataIcons}
-              onChangeShowBadDataIcons={handleChangeBadDataIconsVisibility}
-              onChangeShowUncertainDataIcons={
-                handleChangeUncertainDataIconsVisibility
-              }
-              showAlarmIcons={showAlarmIcons}
-              onChangeShowAlarmIcons={handleChangeAlarmIconsVisibility}
-            />
-            {/*TODO: should not show when in dashboard */}
-            <ChartContextMenu
-              targetTrigger={ref}
-              options={[
-                {
-                  label: 'Add trend cursor',
-                  action: (offsetX) => handleAddTrendCursor(offsetX),
-                  disabled: trendCursors.length > 4,
-                },
-                {
-                  label: 'Copy trend cursor',
-                  action: (offsetX) => handleCopyTrendCursor(offsetX),
-                  disabled: trendCursors.length === 0,
-                },
-                {
-                  label: 'Delete trend cursor',
-                  action: (offsetX) => handleDeleteTrendCursor(offsetX),
-                  disabled: trendCursors.length === 0,
-                },
-              ]}
-            />
-          </HotKeys>
-        </Resizable>
-        <Timestamp
-          isLoading={isPropertiesRefreshing}
-          showLoadingIndicator={true}
-          styleProps={timestampStyle}
-          viewport={utilizedViewport}
-        />
-      </div>
-      {options.legend?.visible && (
-        <div
-          style={{
-            height: rightLegendHeight,
-            width: rightLegendWidth,
-          }}
-        >
-          <Legend
-            {...options.legend}
-            chartId={options.id}
-            datastreams={dataStreamMetaData}
-            trendCursors={trendCursors}
-            trendCursorValues={trendCursorValues}
-            width={rightLegendWidth.toString()}
-            significantDigits={options.significantDigits}
+            >
+              <div className='base-chart-left-legend' ref={leftLegendRef}>
+                <MultiYAxisLegend
+                  datastreams={dataStreams}
+                  height={adjustedChartHeight}
+                />
+              </div>
+              <div>
+                <Title
+                  text={options.titleText}
+                  style={{ paddingLeft: '0.5rem' }}
+                />
+                {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+                <div
+                  ref={ref}
+                  onMouseDown={handleMouseDown}
+                  className='base-chart-element'
+                  style={{
+                    height: adjustedChartHeight,
+                    width: chartWidth,
+                  }}
+                />
+              </div>
+              <PreferencesModalToggle onShow={onShowDataQualityPreferences} />
+              <ChartPreferencesModal
+                onHide={onHideDataQualityPreferences}
+                visible={dataQualityPreferencesVisible}
+                showBadDataIcons={showBadDataIcons}
+                showUncertainDataIcons={showUncertainDataIcons}
+                onChangeShowBadDataIcons={handleChangeBadDataIconsVisibility}
+                onChangeShowUncertainDataIcons={
+                  handleChangeUncertainDataIconsVisibility
+                }
+                showAlarmIcons={showAlarmIcons}
+                onChangeShowAlarmIcons={handleChangeAlarmIconsVisibility}
+              />
+              {/*TODO: should not show when in dashboard */}
+              <ChartContextMenu
+                targetTrigger={ref}
+                options={[
+                  {
+                    label: 'Add trend cursor',
+                    action: (offsetX) => handleAddTrendCursor(offsetX),
+                    disabled: trendCursors.length > 4,
+                  },
+                  {
+                    label: 'Copy trend cursor',
+                    action: (offsetX) => handleCopyTrendCursor(offsetX),
+                    disabled: trendCursors.length === 0,
+                  },
+                  {
+                    label: 'Delete trend cursor',
+                    action: (offsetX) => handleDeleteTrendCursor(offsetX),
+                    disabled: trendCursors.length === 0,
+                  },
+                ]}
+              />
+            </HotKeys>
+          </Resizable>
+          <Timestamp
+            isLoading={isPropertiesRefreshing}
+            showLoadingIndicator={true}
+            styleProps={timestampStyle}
+            viewport={utilizedViewport}
           />
         </div>
-      )}
+        {options.legend?.visible && (
+          <div
+            style={{
+              height: rightLegendHeight,
+              width: rightLegendWidth,
+            }}
+          >
+            <Legend
+              {...options.legend}
+              chartId={options.id}
+              datastreams={dataStreamMetaData}
+              trendCursors={trendCursors}
+              trendCursorValues={trendCursorValues}
+              width={rightLegendWidth.toString()}
+              significantDigits={options.significantDigits}
+              {...assistantSelection}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

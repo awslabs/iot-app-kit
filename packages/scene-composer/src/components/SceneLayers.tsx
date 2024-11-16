@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useContext, useEffect } from 'react';
 
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
+import { KnownSceneProperty } from '../interfaces';
 import { accessStore } from '../store';
 import { fetchSceneNodes } from '../utils/entityModelUtils/sceneUtils';
-import { KnownSceneProperty } from '../interfaces';
 
 export const SceneLayers: React.FC = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);

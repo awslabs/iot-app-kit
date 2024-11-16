@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story } from '@storybook/blocks';
+import { Canvas, Meta, Story, Source, Markdown } from '@storybook/blocks';
 import * as BarChartStories from './BarChart.stories';
 
 <Meta of={BarChartStories} />
@@ -10,7 +10,7 @@ The Bar Chart is rendered with WebGL and users **must** include the WebGL Contex
 
 ## Demo
 
-<Canvas  story={{height : '400px' }}  sourceState="none" of={BarChartStories.Standard} />
+<Canvas  story={{height : '400px' }}  sourceState="hidden" of={BarChartStories.Alarm} />
 
 **📈👆 Interact with the chart!**
 
@@ -28,59 +28,109 @@ The Bar Chart is rendered with WebGL and users **must** include the WebGL Contex
 
 The bar chart component contains the following properties.
 
-#### queries (array): 
+#### query
+##### (object, required)
+This query specifies the time series data or alarm data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
 
-An array of queries that specify the time-series data to visualize. Learn more about [time series data queries](/docs/core-time-series-data--docs).
+Example for time series data.
+<Source dark="true" code={`
+<BarChart
+  query={
+    query.timeSeriesData({
+      assets: [{
+        assetId: 'id',
+        properties: [{ propertyId: 'property', refId: 'my-property' }]
+      }]
+    })
+ }
+/>
+`} />
 
-#### viewport (object, optional): 
+Example for alarm data.
+<Source dark="true" code={`
+<BarChart
+  query={
+    query.alarmData({
+      alarms: [{
+        assetId: 'id',
+        alarmComponents: [{ assetCompositeModelId: 'asset-composite-model-id' }]
+      }]
+    })
+ }
+/>
+`} />
+
+When you add an IoT SiteWise alarm to the Bar Chart the alarm's threshold will be displayed on the chart.
+
+An IoT SiteWise alarm is triggered based on a SiteWise input property. The associated input property data will automatically be added to the chart as well.
+
+#### viewport
+##### (object, optional)
 
 Specifies the interval of time the widget visualizes. If a value is not provided, it utilizes the `viewport` specified by its [ViewportManager](http://localhost:6006/?path=/docs/components-viewportmanager--docs). 
 If there is no ViewportManager and no `viewport` defined, the default viewport will be `{ duration: '10d' }`. 
 Learn more about [viewports](/docs/core-viewport--docs).
 
-#### thresholds (object, optional): 
+#### thresholds
+##### (object, optional)
 
 Thresholds define rules that affect how the data is visualized based on whether the data breaches the threshold. Learn more about [thresholds](/docs/core-thresholds--docs#thresholds).
 
-#### thresholdSettings (object, optional): 
+#### thresholdSettings
+##### (object, optional)
 
 Customize settings on how thresholds are visualized within the widget. The default is `{ colorBreachedData: true }`. Learn more about [thresholds settings](/docs/core-thresholds--docs#thresholdsettings).
 
-#### yMin (number, optional): 
+#### yMin
+##### (number, optional)
 
 Minimum y value displayed on component. Defaults to automatically determining yMin based on data present within the `viewport`.
 
-#### yMax (number, optional):  
+#### yMax
+##### (number, optional)
 
 Maximum y value displayed on component. Defaults to automatically determining yMax based on data present within the `viewport`.
 
-#### gestures (boolean, optional): 
+#### gestures
+##### (boolean, optional)
 
 Specifies whether gestures (pan, zoom and restrict time-span) are enabled. Defaults to `true`.
 
-#### axis (object, optional): 
+#### axis
+##### (object, optional)
 
 Specifies x and y-axis related settings. The default value is `{ showX: true, showY: true, yAxisLabel: undefined }`. 
 It has the following properties:
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`showX\` | boolean, optional | true | Determines whether to show the x-axis. |
+| \`showY\` | boolean, optional | true | Determines whether to show the y-axis and the horizontal grid lines. |
+| \`yAxisLabel\` | string, optional | - | The y-axis label content. The defaul value is empty. |
+`}
+</Markdown>
 
-  - **showX (boolean, optional)**: Determines whether to show the x-axis. The default value is `true`.
-  - **showY (boolean, optional)**: Determines whether to show the y-axis and the horizontal grid lines. The default value is `true`.
-  - **yAxisLabel (string, optional)**: The y-axis label content. The defaul value is empty.
-
-#### styles (object, optional): 
+#### styles
+##### (object, optional)
 
 The styles prop is for customising the appearance of each data stream based on its `refId` or [reference ID](/docs/core-styles--docs). 
 It has the following properties:
-
-  - **name (string, optional)**: Specify a name to replace the name of the data set given by its source.
-  - **unit (string, optional)**: The unit given to the data. Examples are `m/s` and `count`.
-  - **color (string, optional)**: A detailed name presented in the tooltip.
+<Markdown>
+{`
+| Name         | Type         | Default        | Description         |
+| ------------ | ------------ | -------------- | ------------------- |
+| \`name\` | string, optional | - | This specifies a name to replace the name of the data set given by its source. |
+| \`unit\` | string, optional | - | This specifies the units for the data (for example, \`"m/s"\` and \`"count"\`). |
+| \`detailedName\` | string, optional | - | This specifies the detailed name presented in the tooltip.|
+`}
+</Markdown>
   
 ---
 
 ## Example 
 
-```jsx
+<Source dark="true" code={`
 import { BarChart, WebglContext } from '@iot-app-kit/react-components';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 
@@ -99,22 +149,24 @@ const Page = () => {
   })
 
 
-  <div>
-    <BarChart 
-      /** Providing a query with ref-id of 'my-property' */
-      queries={[barChartQuery]}  
-      
-      /** Mapping the provided 'my-property' refId to the bar chart style settings */
-      styles={{ 'my-property': { color: 'red', name: 'My Cool Property' }}}
+  return (
+    <div>
+      <BarChart 
+        /** Providing a query with ref-id of 'my-property' */
+        queries={[barChartQuery]}  
+        
+        /** Mapping the provided 'my-property' refId to the bar chart style settings */
+        styles={{ 'my-property': { color: 'red', name: 'My Cool Property' }}}
 
-      /** Customizing the axis to hide x-axis, show y-axis, and set y-axis label */
-      axis={{ showX: false, showY: true, yAxisLabel: 'mph' }}
-    />
+        /** Customizing the axis to hide x-axis, show y-axis, and set y-axis label */
+        axis={{ showX: false, showY: true, yAxisLabel: 'mph' }}
+      />
 
-    /** WebglContext is must be present for chart to render. */
-    /** Note you only need one WebglContext per project. Do not add one per chart. */
-    <WebglContext />
-  </div>
+      /** WebglContext is must be present for chart to render. */
+      /** Note you only need one WebglContext per project. Do not add one per chart. */
+      <WebglContext />
+    </div>
+  );
 };
-```
+`} />
 

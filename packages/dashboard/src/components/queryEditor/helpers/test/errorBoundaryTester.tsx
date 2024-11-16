@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 /**
  * Render this component inside of an `<ErrorBoundary />` and click the button

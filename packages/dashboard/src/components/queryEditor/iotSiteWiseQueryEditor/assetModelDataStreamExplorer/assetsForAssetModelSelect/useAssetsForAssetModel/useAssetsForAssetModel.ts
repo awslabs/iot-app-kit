@@ -1,5 +1,8 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { QueryFunctionContext, useInfiniteQuery } from '@tanstack/react-query';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import {
+  type QueryFunctionContext,
+  useInfiniteQuery,
+} from '@tanstack/react-query';
 import { createNonNullableList } from '~/helpers/lists/createNonNullableList';
 import { AssetsForAssetModelCacheKeyFactory } from './assetsForAssetModelQueryKeyFactory';
 import invariant from 'tiny-invariant';
@@ -35,6 +38,7 @@ export function useAssetsForAssetModel({
     queryKey: cacheKeyFactory.create(),
     queryFn: createQueryFn(iotSiteWiseClient),
     getNextPageParam: ({ nextToken }) => nextToken,
+    initialPageParam: undefined,
   });
 
   if (fetchAll && hasNextPage) fetchNextPage();
@@ -75,7 +79,7 @@ export const createQueryFn = (client: IoTSiteWiseClient) => {
 
     const request = new GetAssetsForAssetModelRequest({
       assetModelId,
-      nextToken,
+      nextToken: nextToken as string,
       client,
       signal,
     });

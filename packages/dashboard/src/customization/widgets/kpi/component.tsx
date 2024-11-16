@@ -1,18 +1,17 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import pickBy from 'lodash/pickBy';
-import { KPI, useViewport } from '@iot-app-kit/react-components';
-import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
-import type { DashboardState } from '~/store/state';
-import type { KPIWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
+import { KPI, useViewport } from '@iot-app-kit/react-components';
+import pickBy from 'lodash/pickBy';
+import { useSelector } from 'react-redux';
 import { useQueries } from '~/components/dashboard/queryContext';
+import type { DashboardState } from '~/store/state';
 import { isDefined } from '~/util/isDefined';
+import type { KPIWidget } from '../types';
+import { createWidgetRenderKey } from '../utils/createWidgetRenderKey';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 
-import './component.css';
-import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import WidgetTile from '~/components/widgets/tile';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import './component.css';
 
 const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const { viewport } = useViewport();
@@ -38,6 +37,8 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     backgroundColor,
     thresholds,
     significantDigits: widgetSignificantDigits,
+    assistant,
+    title,
   } = widget.properties;
 
   const queries = useQueries(queryConfig.query);
@@ -49,7 +50,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   if (shouldShowEmptyState) {
     return (
       <WidgetTile widget={widget}>
-        <KPIWidgetEmptyStateComponent />
+        <KPIWidgetEmptyStateComponent title={title} />
       </WidgetTile>
     );
   }
@@ -75,7 +76,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
-    <WidgetTile widget={widget} key={key}>
+    <WidgetTile widget={widget} key={key} assistant={assistant}>
       <KPI
         query={queries[0]}
         viewport={viewport}
@@ -85,16 +86,21 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
         aggregationType={aggregateToString(aggregation)}
         significantDigits={significantDigits}
         timeZone={dashboardTimeZone}
+        assistant={assistant}
+        titleText={title}
       />
     </WidgetTile>
   );
 };
 
-const KPIWidgetEmptyStateComponent: React.FC = () => {
+type KPIWidgetEmptyStateComponentProps = { title?: string };
+const KPIWidgetEmptyStateComponent: React.FC<
+  KPIWidgetEmptyStateComponentProps
+> = ({ title = 'KPI' }: KPIWidgetEmptyStateComponentProps) => {
   return (
     <div className='kpi-widget-empty-state'>
       <Box variant='strong' color='text-status-inactive' margin='s'>
-        KPI
+        {title}
       </Box>
 
       <div className='kpi-widget-empty-state-message-container'>
@@ -111,7 +117,7 @@ const KPIWidgetEmptyStateComponent: React.FC = () => {
           color='text-status-inactive'
           margin={{ bottom: 's', horizontal: 's' }}
         >
-          Add a property or alarm to populate KPI
+          Add a property or alarm to populate KPI.
         </Box>
       </div>
     </div>

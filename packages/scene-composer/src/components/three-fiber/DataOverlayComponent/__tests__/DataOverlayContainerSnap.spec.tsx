@@ -1,11 +1,10 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 
-import { IDataOverlayComponentInternal, ISceneNodeInternal, accessStore } from '../../../../store';
+import { type IDataOverlayComponentInternal, type ISceneNodeInternal, accessStore } from '../../../../store';
 import { KnownComponentType } from '../../../../interfaces';
 import { Component } from '../../../../models/SceneModels';
 import { DataOverlayContainer } from '../DataOverlayContainer';
-import { DataOverlayRowsProps } from '../DataOverlayRows';
+import { type DataOverlayRowsProps } from '../DataOverlayRows';
 
 jest.mock('../DataOverlayRows', () => ({
   DataOverlayRows: (...props: [DataOverlayRowsProps, object]) => <div data-testid='rows'>{JSON.stringify(props)}</div>,

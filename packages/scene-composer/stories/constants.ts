@@ -1,4 +1,4 @@
-import { FIELD_NAME } from './types';
+import { type FIELD_NAME } from './types';
 
 export const entityIds = Object.seal(['room1', 'room2']);
 export const entityNames = Object.seal(['room1Name', 'room2Name']);

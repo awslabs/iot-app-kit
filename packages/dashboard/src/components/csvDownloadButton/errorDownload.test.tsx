@@ -1,13 +1,12 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
-import React from 'react';
 import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { CSVDownloadButton } from './index';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFetchTimeSeriesData } from '../dashboard/queryContext';
-import { StyledAssetQuery } from '~/customization/widgets/types';
-import { DataStream } from '@iot-app-kit/core';
+import { type StyledAssetQuery } from '~/customization/widgets/types';
+import { type DataStream } from '@iot-app-kit/core';
 
 const testQueryClient = new QueryClient({
   defaultOptions: {

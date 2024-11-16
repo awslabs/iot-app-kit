@@ -1,4 +1,3 @@
-import React from 'react';
 import GaugeWidgetComponent from './component';
 import GaugeIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';

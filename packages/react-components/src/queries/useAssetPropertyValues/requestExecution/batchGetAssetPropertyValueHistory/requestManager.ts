@@ -1,13 +1,13 @@
 import { TimeOrdering } from '@aws-sdk/client-iotsitewise';
 import {
-  OnRequestSuccessCallback,
-  SendOptions,
+  type OnRequestSuccessCallback,
+  type SendOptions,
 } from '../../../useTimeSeriesData';
 import {
-  AssetPropertyValueHistoryRequest,
-  AssetPropertyValuesData,
-  BatchGetAssetPropertyValueHistoryRequestParameters,
-  BatchGetAssetPropertyValueHistoryRequestResponse,
+  type AssetPropertyValueHistoryRequest,
+  type AssetPropertyValuesData,
+  type BatchGetAssetPropertyValueHistoryRequestParameters,
+  type BatchGetAssetPropertyValueHistoryRequestResponse,
 } from '../../types';
 import { nanoid } from 'nanoid';
 import takeRight from 'lodash.takeright';

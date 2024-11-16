@@ -1,7 +1,7 @@
-import React, {
+import {
   createContext,
   useRef,
-  PropsWithChildren,
+  type PropsWithChildren,
   useEffect,
 } from 'react';
 import { createChartStore } from './store';

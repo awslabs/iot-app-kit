@@ -1,7 +1,7 @@
-import React, { type PropsWithChildren } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 import Box from '@cloudscape-design/components/box';
 import Link from '@cloudscape-design/components/link';
+import type { PropsWithChildren } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
 export type QueryEditorErrorBoundaryProps = PropsWithChildren;
 

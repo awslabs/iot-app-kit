@@ -2,7 +2,7 @@ import { PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
 
 import { DEFAULT_CAMERA_OPTIONS } from '../../common/constants';
 import { componentTypeToId } from '../../common/entityModelConstants';
-import { ICameraComponent, KnownComponentType } from '../../interfaces';
+import { type ICameraComponent, KnownComponentType } from '../../interfaces';
 import { CameraType } from '../../models/SceneModels';
 
 import { createCameraEntityComponent, parseCameraComp, updateCameraEntityComponent } from './cameraComponent';

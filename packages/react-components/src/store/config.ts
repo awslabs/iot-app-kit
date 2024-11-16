@@ -1,4 +1,4 @@
-import { StateCreator } from 'zustand/esm';
+import { type StateCreator } from 'zustand/esm';
 
 export type Flags = 'useModelBasedQuery' | 'useAlarms';
 export interface ConfigState {
@@ -8,6 +8,6 @@ export interface ConfigState {
 export const createConfigSlice: StateCreator<ConfigState> = () => ({
   config: {
     useModelBasedQuery: !!localStorage?.getItem('USE_MODEL_BASED_QUERY'),
-    useAlarms: !!localStorage?.getItem('USE_ALARMS'),
+    useAlarms: true,
   },
 });

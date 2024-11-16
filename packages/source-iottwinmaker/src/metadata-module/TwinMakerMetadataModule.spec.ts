@@ -1,9 +1,9 @@
-import { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
-import { ErrorDetails } from '@iot-app-kit/core';
+import { type GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
+import { type ErrorDetails } from '@iot-app-kit/core';
 import { createMockTwinMakerSDK } from '../__mocks__/iottwinmakerSDK';
 import { TwinMakerMetadataModule } from './TwinMakerMetadataModule';
 import { QueryClient } from '@tanstack/query-core';
-import { FetchEntityErrorMeta } from './types';
+import { type FetchEntityErrorMeta } from './types';
 
 const createCache = () =>
   new QueryClient({

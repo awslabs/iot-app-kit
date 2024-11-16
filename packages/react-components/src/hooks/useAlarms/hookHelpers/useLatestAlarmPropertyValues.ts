@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import type { AlarmDataInternal, AlarmProperty } from '../types';
 import { useLatestAssetPropertyValues } from '../../../queries';
 import { getStatusForQuery } from '../utils/queryStatus';

@@ -1,25 +1,21 @@
 import { useCollection as useCloudscapeCollection } from '@cloudscape-design/collection-hooks';
-
 import CloudscapeTable, {
   type TableProps as CloudScapeTableProps,
 } from '@cloudscape-design/components/table';
-import React from 'react';
-
-import { ResourceTableSearch } from './resource-table-search';
-import { ResourceTableFilter } from './resource-table-filter';
-import { ResourceTableHeader } from './resource-table-header';
-
 import type {
   ResourceTableProps,
   TableResourceField,
   UserCustomization,
 } from '../../types/table';
-import { ResourceTableUserSettings } from './resource-table-user-settings';
-import { ResourceTableError } from './resource-table-error';
 import { ResourceTableEmpty } from './resource-table-empty';
-import { ResourceTableTitle } from './resource-table-title';
-import { ResourceTablePagination } from './resource-table-pagination';
+import { ResourceTableError } from './resource-table-error';
+import { ResourceTableFilter } from './resource-table-filter';
+import { ResourceTableHeader } from './resource-table-header';
 import { ResourceTableNoFilterMatch } from './resource-table-no-filter-match';
+import { ResourceTablePagination } from './resource-table-pagination';
+import { ResourceTableSearch } from './resource-table-search';
+import { ResourceTableTitle } from './resource-table-title';
+import { ResourceTableUserSettings } from './resource-table-user-settings';
 
 export function ResourceTable<Resource>({
   resourceName,
@@ -28,16 +24,15 @@ export function ResourceTable<Resource>({
   resources,
   createResourceKey,
   isResourceDisabled,
+  isLoadingFirstPage,
+  isLoadingResources,
   error,
-  isLoading,
   onSelectResource = () => {},
   selectedResources,
   selectionMode,
   onClickSearch = () => {},
   userCustomization,
   onUpdateUserCustomization,
-  onClickNextPage,
-  hasNextPage,
   isTitleEnabled,
   isFilterEnabled,
   isUserSettingsEnabled,
@@ -78,7 +73,13 @@ export function ResourceTable<Resource>({
             operators,
           })
         ),
-      empty: <ResourceTableEmpty pluralResourceName={pluralResourceName} />,
+      empty: error ? (
+        // Cloudscape design pattern recommends using the error alert in the table empty state
+        // https://cloudscape.design/patterns/resource-management/view/table-view/#key-ux-concepts
+        <ResourceTableError error={error} />
+      ) : (
+        <ResourceTableEmpty pluralResourceName={pluralResourceName} />
+      ),
       noMatch: (
         <ResourceTableNoFilterMatch
           pluralResourceName={pluralResourceName}
@@ -92,15 +93,6 @@ export function ResourceTable<Resource>({
     selection: { keepSelection: true, trackBy: createResourceKey },
     sorting: {},
   });
-
-  if (error) {
-    return (
-      <ResourceTableError
-        pluralResourceName={pluralResourceName}
-        error={error}
-      />
-    );
-  }
 
   const columnDefinitions =
     resourceFieldsToCloudscapeColumnDefinitions(resourceFields);
@@ -119,6 +111,7 @@ export function ResourceTable<Resource>({
               pluralResourceName={pluralResourceName}
               titleExtension={titleExtension}
               description={description}
+              isLoadingResources={isLoadingResources}
             />
           )
         }
@@ -142,10 +135,12 @@ export function ResourceTable<Resource>({
           <ResourceTablePagination
             currentPage={currentPage}
             totalPageCount={totalPageCount}
-            hasNextPage={hasNextPage}
             onClickChangePage={onClickChangePage}
-            onClickNextPage={onClickNextPage}
-            isLoading={isLoading}
+            // only show page elipsis when page size has been crossed and there is still loading
+            isLoadingResources={
+              isLoadingResources &&
+              resources.length > userCustomization.pageSize
+            }
           />
         }
         userSettings={
@@ -179,7 +174,7 @@ export function ResourceTable<Resource>({
         selectedItems={selectedResources.filter(
           (resource) => !isResourceDisabled(resource)
         )}
-        loading={isLoading}
+        loading={isLoadingFirstPage}
         loadingText={`Loading ${pluralResourceName.toLowerCase()}...`}
         selectionType={selectionMode}
         resizableColumns

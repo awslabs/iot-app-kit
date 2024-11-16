@@ -1,5 +1,5 @@
 import { getGlobalSettings } from '../common/GlobalSettings';
-import { IMetricRecorder } from '../interfaces';
+import { type IMetricRecorder } from '../interfaces';
 import useLogger from '../logger/react-logger/hooks/useLogger';
 
 const useMetricRecorder = () => {

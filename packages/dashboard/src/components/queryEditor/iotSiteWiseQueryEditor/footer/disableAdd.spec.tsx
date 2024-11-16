@@ -1,5 +1,5 @@
 import { disableAdd } from '~/components/queryEditor/iotSiteWiseQueryEditor/footer/disableAdd';
-import { SiteWiseQueryConfig } from '~/customization/widgets/types';
+import { type SiteWiseQueryConfig } from '~/customization/widgets/types';
 
 const commonTests = ({
   objectWithoutProperties,

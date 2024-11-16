@@ -1,22 +1,22 @@
-import React, { useCallback, useContext, useState } from 'react';
-import { useIntl } from 'react-intl';
 import { Button, FormField, Input, SpaceBetween } from '@cloudscape-design/components';
+import { useCallback, useContext, useState, type FC } from 'react';
+import { useIntl } from 'react-intl';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import {
-  DEFAULT_GROUND_PLANE_COLOR,
-  IGroundPlaneSettings,
-  KnownSceneProperty,
   COMPOSER_FEATURES,
+  DEFAULT_GROUND_PLANE_COLOR,
+  type IGroundPlaneSettings,
+  KnownSceneProperty,
   TextureFileTypeList,
 } from '../../../interfaces';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { accessStore } from '../../../store';
-import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
 import { parseS3BucketFromArn } from '../../../utils/pathUtils';
+import { ColorSelectorCombo } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorCombo';
 
-export const GroundPlaneSettingsEditor: React.FC = () => {
+export const GroundPlaneSettingsEditor: FC = () => {
   useLifecycleLogging('GroundPlaneSettingsEditor');
   const texturesEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Textures];
 
@@ -116,7 +116,7 @@ export const GroundPlaneSettingsEditor: React.FC = () => {
   }, [internalColor, internalOpacity]);
 
   return (
-    <React.Fragment>
+    <>
       <FormField label={intl.formatMessage({ defaultMessage: 'Ground Plane', description: 'Form Field label' })}>
         <SpaceBetween size='s' direction='vertical'>
           {(!groundSettings?.textureUri || !texturesEnabled) && (
@@ -166,6 +166,6 @@ export const GroundPlaneSettingsEditor: React.FC = () => {
           )}
         </SpaceBetween>
       </FormField>
-    </React.Fragment>
+    </>
   );
 };

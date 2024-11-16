@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useStableDashboardConfiguration } from '~/hooks/useStableDashboardConfiguration';
-import DashboardView, { DashboardViewProperties } from './view';
+import DashboardView, { type DashboardViewProperties } from './view';
 
 export const DashboardViewWrapper: React.FC<DashboardViewProperties> = ({
   clientConfiguration,
@@ -11,6 +11,7 @@ export const DashboardViewWrapper: React.FC<DashboardViewProperties> = ({
   onViewportChange,
   toolbar,
   timeZone,
+  assistantConfiguration,
 }) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   const stableOnViewportChange = useMemo(() => onViewportChange, []);
@@ -35,6 +36,7 @@ export const DashboardViewWrapper: React.FC<DashboardViewProperties> = ({
     <DashboardView
       clientConfiguration={clientConfiguration}
       dashboardConfiguration={stableDashboardConfiguration}
+      assistantConfiguration={assistantConfiguration}
       edgeMode={edgeMode}
       name={name}
       currentViewport={currentViewport}

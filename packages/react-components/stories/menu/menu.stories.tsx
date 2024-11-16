@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { useState } from 'react';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import type { FC } from 'react';
 import { Icon } from '@cloudscape-design/components';
 
@@ -7,9 +7,9 @@ import { getColor } from '../../src/components/chart/utils/getColor';
 import {
   Menu,
   MenuOption,
-  MenuProps,
+  type MenuProps,
   PositionableMenu,
-  PositionableMenuProps,
+  type PositionableMenuProps,
 } from '../../src/components/menu';
 
 const defaultPosition = { x: 10, y: 10, z: 0 };

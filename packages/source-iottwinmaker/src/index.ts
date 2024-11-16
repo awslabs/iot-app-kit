@@ -1,27 +1,28 @@
-export * from './video-data/constants';
-export * from './initialize';
-export * from './types';
-export { createPropertyIndentifierKey } from './video-data/utils/twinmakerUtils';
-export * from './video-data/types';
 export type {
   PropertyQueryInfo,
   TwinMakerBaseQuery,
-  TwinMakerEntityHistoryQuery,
   TwinMakerComponentHistoryQuery,
+  TwinMakerEntityHistoryQuery,
   TwinMakerQuery,
 } from './common/queryTypes';
+export * from './data-binding-provider/types';
+export * from './initialize';
+export type { FetchEntityErrorMeta } from './metadata-module/types';
 export type {
-  TwinMakerDataStreamQuery,
   TwinMakerDataStreamIdComponent,
+  TwinMakerDataStreamQuery,
 } from './time-series-data/types';
 export {
-  toDataStreamId,
   fromDataStreamId,
+  toDataStreamId,
 } from './time-series-data/utils/dataStreamId';
+export * from './types';
 export {
+  createDataBindingTemplateOptions,
   decorateDataBindingTemplate,
   isDataBindingTemplate,
   undecorateDataBindingTemplate,
 } from './utils/dataBindingTemplateUtils';
-export * from './data-binding-provider/types';
-export type { FetchEntityErrorMeta } from './metadata-module/types';
+export * from './video-data/constants';
+export * from './video-data/types';
+export { createPropertyIndentifierKey } from './video-data/utils/twinmakerUtils';

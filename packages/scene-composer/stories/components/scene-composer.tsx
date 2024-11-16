@@ -1,25 +1,25 @@
-import React, { FC, useCallback, useMemo, useRef } from 'react';
+import { type FC, useCallback, useMemo, useRef } from 'react';
 import styled from 'styled-components';
-import { CredentialProvider, Credentials } from '@aws-sdk/types';
-import { Viewport } from '@iot-app-kit/core';
+import { type CredentialProvider, type Credentials } from '@aws-sdk/types';
+import { type Viewport } from '@iot-app-kit/core';
 import { TimeSync, TimeSelection } from '@iot-app-kit/react-components';
 import { useDarkMode } from 'storybook-dark-mode';
 
 import {
   AssetType,
-  COMPOSER_FEATURES,
-  ExternalLibraryConfig,
-  ISceneDocumentSnapshot,
+  type COMPOSER_FEATURES,
+  type ExternalLibraryConfig,
+  type ISceneDocumentSnapshot,
   ModelFileTypeList,
-  SceneViewerPropsShared,
+  type SceneViewerPropsShared,
   TextureFileTypeList,
 } from '../../src';
 import { convertDataInputToDataStreams, getTestDataInputContinuous } from '../../tests/testData';
 import {
-  AssetBrowserResultCallback,
-  OnSceneUpdateCallback,
-  OperationMode,
-  ShowAssetBrowserCallback,
+  type AssetBrowserResultCallback,
+  type OnSceneUpdateCallback,
+  type OperationMode,
+  type ShowAssetBrowserCallback,
 } from '../../src/interfaces/sceneComposerInternal';
 import { SceneComposerInternal } from '../../src/components/SceneComposerInternal';
 

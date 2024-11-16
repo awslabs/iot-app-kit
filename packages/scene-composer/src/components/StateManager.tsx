@@ -1,15 +1,15 @@
+import { type GetSceneCommandOutput } from '@aws-sdk/client-iottwinmaker';
 import {
-  DurationViewport,
-  DataStream,
-  ProviderWithViewport,
-  TimeSeriesData,
+  type DataStream,
+  type DurationViewport,
+  type ProviderWithViewport,
+  type TimeSeriesData,
   combineProviders,
 } from '@iot-app-kit/core';
-import { ThreeEvent } from '@react-three/fiber';
+import { type ThreeEvent } from '@react-three/fiber';
 import ab2str from 'arraybuffer-to-string';
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { GetSceneCommandOutput } from '@aws-sdk/client-iottwinmaker';
 
 import {
   getMatterportSdk,
@@ -25,22 +25,33 @@ import {
   unsubscribe,
 } from '../common/GlobalSettings';
 import { MATTERPORT_ACCESS_TOKEN, MATTERPORT_APPLICATION_KEY, MATTERPORT_ERROR } from '../common/constants';
-import { DisplayMessageCategory } from '../store/internalInterfaces';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
+import { SceneMetadataMapKeys } from '../common/sceneModelConstants';
 import useActiveCamera from '../hooks/useActiveCamera';
 import useMatterportViewer from '../hooks/useMatterportViewer';
-import { AdditionalComponentData, ExternalLibraryConfig, KnownComponentType, KnownSceneProperty } from '../interfaces';
+import {
+  type AdditionalComponentData,
+  type ExternalLibraryConfig,
+  KnownComponentType,
+  KnownSceneProperty,
+} from '../interfaces';
+import { type SceneComposerInternalProps } from '../interfaces/sceneComposerInternal';
 import { SceneLayout } from '../layouts/SceneLayout';
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
-import { ICameraComponentInternal, ISceneDocumentInternal, RootState, accessStore, useViewOptionState } from '../store';
+import {
+  type ICameraComponentInternal,
+  type ISceneDocumentInternal,
+  type RootState,
+  accessStore,
+  useViewOptionState,
+} from '../store';
+import { DisplayMessageCategory } from '../store/internalInterfaces';
 import { getCameraSettings } from '../utils/cameraUtils';
-import { getAdditionalComponentData } from '../utils/eventDataUtils';
 import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/dataStreamUtils';
+import { getAdditionalComponentData } from '../utils/eventDataUtils';
 import { findComponentByType } from '../utils/nodeUtils';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
 import { createStandardUriModifier } from '../utils/uriModifiers';
-import { SceneComposerInternalProps } from '../interfaces/sceneComposerInternal';
-import { SceneMetadataMapKeys } from '../common/sceneModelConstants';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';

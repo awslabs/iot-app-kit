@@ -1,11 +1,11 @@
-import { Viewport } from '@iot-app-kit/core';
+import { type Viewport } from '@iot-app-kit/core';
 import {
-  AnomalyData,
-  AnomalyDescription,
-  DataSourceLoader,
+  type AnomalyData,
+  type AnomalyDescription,
+  type DataSourceLoader,
 } from '../../../data';
 import { useSiteWiseAnomalyDataSource } from '../../../queries';
-import { AnomalyChartWithData } from '../types';
+import { type AnomalyChartWithData } from '../types';
 
 type UseTransformedDataOptions = AnomalyChartWithData & {
   loader: DataSourceLoader<AnomalyDescription, AnomalyData>;

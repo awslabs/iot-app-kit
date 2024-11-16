@@ -1,4 +1,4 @@
-import { useRef, useEffect, MutableRefObject, useState } from 'react';
+import { useRef, useEffect, type MutableRefObject, useState } from 'react';
 import { init, connect, disconnect } from 'echarts';
 import type { ECharts } from 'echarts';
 import {
@@ -6,10 +6,10 @@ import {
   registerCloudscapeThemes,
 } from '../../echarts';
 import { useUnboundedDataZoom } from '../../echarts/unboundedZoom';
-import { Viewport } from '@iot-app-kit/core';
+import { type Viewport } from '@iot-app-kit/core';
 import { useViewport } from '../useViewport';
 import { useMeasure } from 'react-use';
-import { UtilizedViewportType } from '../useViewport/useUtilizedViewport';
+import { type UtilizedViewportType } from '../useViewport/useUtilizedViewport';
 
 configureEchartsPlugins();
 

@@ -1,8 +1,10 @@
 import {
-  AggregateType,
+  type AggregateType,
   BatchGetAssetPropertyAggregatesCommand,
-  IoTSiteWiseClient,
+  type IoTSiteWiseClient,
   TimeOrdering,
+  type BatchGetAssetPropertyAggregatesErrorEntry,
+  type BatchGetAssetPropertyAggregatesSuccessEntry,
 } from '@aws-sdk/client-iotsitewise';
 import { aggregateToDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
@@ -16,10 +18,6 @@ import {
 } from './batch';
 import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
 import { deduplicateBatch } from '../util/deduplication';
-import type {
-  BatchGetAssetPropertyAggregatesErrorEntry,
-  BatchGetAssetPropertyAggregatesSuccessEntry,
-} from '@aws-sdk/client-iotsitewise';
 import type {
   OnSuccessCallback,
   ErrorCallback,
@@ -165,6 +163,15 @@ const sendRequest = ({
           dataPointsFetched,
         });
       }
+    })
+    .catch((e) => {
+      Object.entries(callbackCache).forEach(([entryId, { onError }]) => {
+        onError({
+          entryId,
+          errorCode: e.$metadata.httpStatusCode,
+          errorMessage: e.message,
+        });
+      });
     });
 };
 

@@ -1,5 +1,4 @@
-import React from 'react';
-import { Quality } from '@aws-sdk/client-iotsitewise';
+import { type Quality } from '@aws-sdk/client-iotsitewise';
 import Box from '@cloudscape-design/components/box';
 import { spaceScaledXxs } from '@cloudscape-design/design-tokens';
 

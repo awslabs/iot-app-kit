@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { QueryFunctionContext, useQueries } from '@tanstack/react-query';
+import { type QueryFunctionContext, useQueries } from '@tanstack/react-query';
 import invariant from 'tiny-invariant';
 
 import { useIoTSiteWiseClient } from '../../hooks/requestFunctions/useIoTSiteWiseClient';
@@ -12,9 +12,9 @@ import {
 } from '../predicates';
 
 import {
-  HistoricalAssetPropertyValueRequest,
-  HistoricalValueQueryFnClient,
-  UseHistoricalAssetPropertyValuesOptions,
+  type HistoricalAssetPropertyValueRequest,
+  type HistoricalValueQueryFnClient,
+  type UseHistoricalAssetPropertyValuesOptions,
 } from './types';
 import { HistoricalAssetPropertyValueKeyFactory } from './historicalAssetPropertyValueKeyFactory';
 import {
@@ -22,8 +22,8 @@ import {
   HistoricalAssetPropertyValueBatcher,
 } from './requestExecution';
 import {
-  BatchGetAssetPropertyValueHistory,
-  GetAssetPropertyValueHistory,
+  type BatchGetAssetPropertyValueHistory,
+  type GetAssetPropertyValueHistory,
   isDurationViewport,
   isHistoricalViewport,
 } from '@iot-app-kit/core';

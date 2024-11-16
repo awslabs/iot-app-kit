@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Viewport, isDurationViewport } from '@iot-app-kit/core';
+import { type Viewport, isDurationViewport } from '@iot-app-kit/core';
 
 export type QueryMode = 'LATEST' | 'LATEST_IN_VIEWPORT' | 'HISTORICAL' | 'LIVE';
 

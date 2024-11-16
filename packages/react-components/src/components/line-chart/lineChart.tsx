@@ -1,10 +1,9 @@
-import React from 'react';
 import {
-  StyleSettingsMap,
-  Threshold,
-  TimeSeriesDataQuery,
-  Viewport,
-  ThresholdSettings,
+  type StyleSettingsMap,
+  type Threshold,
+  type TimeSeriesDataQuery,
+  type Viewport,
+  type ThresholdSettings,
 } from '@iot-app-kit/core';
 import { LineChart as LineChartBase } from '@iot-app-kit/charts';
 import type {
@@ -18,7 +17,7 @@ import {
   DEFAULT_VIEWPORT,
   ECHARTS_GESTURE,
 } from '../../common/constants';
-import { AxisSettings, ChartSize } from '../../common/chartTypes';
+import { type AxisSettings, type ChartSize } from '../../common/chartTypes';
 
 export interface LineChartProps {
   queries: TimeSeriesDataQuery[];

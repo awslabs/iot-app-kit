@@ -1,7 +1,10 @@
-import { EChartsExtensionInstallRegisters } from 'echarts/types/src/extension';
-import { SeriesModelRenderInformation, TrendCursorView } from './view';
+import { type EChartsExtensionInstallRegisters } from 'echarts/types/src/extension';
+import {
+  type SeriesModelRenderInformation,
+  type TrendCursorView,
+} from './view';
 import { clonePolyLine, createPolyLineFromPoints } from './view/utils/polyline';
-import { TrendCursorModel } from './model';
+import { type TrendCursorModel } from './model';
 
 // Echarts core use type does not map correctly to the echarts extension type so exporting as any
 // eslint-disable-next-line

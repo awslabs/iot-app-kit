@@ -1,9 +1,9 @@
-import { ComponentRequest, ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
-import { DocumentType } from '@aws-sdk/types';
+import { type ComponentRequest, type ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
+import { type DocumentType } from '@aws-sdk/types';
 
-import { ICameraComponent, KnownComponentType } from '../../interfaces';
+import { type ICameraComponent, KnownComponentType } from '../../interfaces';
 import { componentTypeToId } from '../../common/entityModelConstants';
-import { ICameraComponentInternal } from '../../store';
+import { type ICameraComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
 import { CameraType } from '../../models/SceneModels';
 import { DEFAULT_CAMERA_OPTIONS } from '../../common/constants';

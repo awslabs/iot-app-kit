@@ -1,4 +1,4 @@
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { type AggregateType } from '@aws-sdk/client-iotsitewise';
 import type { IntervalStructure } from '../../common/intervalStructure';
 import type { ErrorDetails } from '../../common/types';
 import type { DataPoint, DataStream } from '../types';

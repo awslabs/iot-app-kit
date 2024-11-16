@@ -1,11 +1,12 @@
 import {
-  DataStream,
-  Primitive,
-  StyledThreshold,
-  ThresholdSettings,
-  Viewport,
+  type DataStream,
+  type Primitive,
+  type StyledThreshold,
+  type ThresholdSettings,
+  type Viewport,
 } from '@iot-app-kit/core';
-import { OptionId } from 'echarts/types/src/util/types';
+import { type OptionId } from 'echarts/types/src/util/types';
+import { type AssistantProperty } from '../../common/assistantProps';
 import type { ComponentQuery } from '../../common/chartTypes';
 
 export type YAxisOptions = {
@@ -95,6 +96,10 @@ export type ChartDataQuality = {
   showUncertainDataIcons?: boolean;
 };
 
+export type ChartAlarms = {
+  showAlarmIcons?: boolean;
+};
+
 export type ChartOptions = {
   queries: ComponentQuery[];
   defaultVisualizationType?: Visualization;
@@ -113,10 +118,10 @@ export type ChartOptions = {
   theme?: string;
   id?: string;
   dataQuality?: ChartDataQuality;
+  assistant?: AssistantProperty;
   onChartOptionsChange?: (
     options: Pick<ChartOptions, 'legend' | 'dataQuality'>
   ) => void;
-  /** @deprecated */
   titleText?: string;
   timeZone?: string;
 };

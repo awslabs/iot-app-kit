@@ -15,7 +15,6 @@ jest.doMock('@iot-app-kit/core', () => {
   };
 });
 
-import * as React from 'react';
 import { act, create } from 'react-test-renderer';
 import str2ab from 'string-to-arraybuffer';
 import flushPromises from 'flush-promises';

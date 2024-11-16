@@ -1,17 +1,16 @@
 import { type Meta } from '@storybook/react';
-import React from 'react';
 
 import {
-  CommonResourceExplorerControls,
+  type CommonResourceExplorerControls,
   SHARED_RESOURCE_EXPLORER_STORY_ARG_TYPES,
 } from './controls';
 import { client } from './data-source';
 
+import { type StoryFnReactReturnType } from '@storybook/react/dist/ts3.9/client/preview/types';
 import {
   TimeSeriesExplorer,
   type TimeSeriesExplorerProps,
 } from '../../src/components/resource-explorers';
-import { StoryFnReactReturnType } from '@storybook/react/dist/ts3.9/client/preview/types';
 import {
   StoryWithClearedResourceCache,
   StoryWithSelectableResource,

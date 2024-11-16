@@ -1,32 +1,34 @@
-import React, { CSSProperties, ReactNode, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Viewport, getPlugin } from '@iot-app-kit/core';
-import { WebglContext } from '@iot-app-kit/react-components';
+import { ContentLayout } from '@cloudscape-design/components';
 import Box from '@cloudscape-design/components/box';
+import { I18nProvider } from '@cloudscape-design/components/i18n';
+import messages from '@cloudscape-design/components/i18n/messages/all.all';
 import {
   colorBackgroundCellShaded,
   colorBackgroundLayoutMain,
   colorBorderDividerDefault,
+  colorForegroundControlReadOnly,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
-import { ContentLayout } from '@cloudscape-design/components';
-import messages from '@cloudscape-design/components/i18n/messages/all.all';
-import { I18nProvider } from '@cloudscape-design/components/i18n';
+import { type Viewport, getPlugin } from '@iot-app-kit/core';
+import { WebglContext } from '@iot-app-kit/react-components';
+import { type CSSProperties, type ReactNode, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { PropertiesPaneIcon } from '../resizablePanes/assets/propertiesPaneIcon';
 
 import { selectedRect } from '~/util/select';
 
 /**
  * Component imports
  */
-import { ResizablePanes } from '../resizablePanes';
 import ContextMenu from '../contextMenu';
-import { GestureableGrid, ReadOnlyGrid } from '../grid';
-import Widgets from '../widgets/list';
-import UserSelection from '../userSelection';
-import ComponentPalette from '../palette';
-import CustomDragLayer from '../dragLayer';
-import { QueryEditor } from '../queryEditor';
 import { useClients } from '../dashboard/clientContext';
+import CustomDragLayer from '../dragLayer';
+import { GestureableGrid, ReadOnlyGrid } from '../grid';
+import ComponentPalette from '../palette';
+import { QueryEditor } from '../queryEditor';
+import { ResizablePanes } from '../resizablePanes';
+import UserSelection from '../userSelection';
+import Widgets from '../widgets/list';
 import DashboardEmptyState from './dashboardEmptyState';
 
 /**
@@ -46,31 +48,34 @@ import { toGridPosition } from '~/util/position';
 import { useGestures } from './gestures';
 import { useKeyboardShortcuts } from './keyboardShortcuts';
 
+import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 import { DefaultDashboardMessages } from '~/messages';
+import type { DashboardState } from '~/store/state';
 import type {
-  DashboardSave,
-  Position,
-  DashboardWidget,
-  DashboardToolbar,
   DashboardConfigurationChange,
+  DashboardSave,
+  DashboardToolbar,
+  DashboardWidget,
+  Position,
 } from '~/types';
+import { AssetModelSelection } from '../assetModelSelection/assetModelSelection';
+import ConfirmDeleteModal from '../confirmDeleteModal';
 import type { ContextMenuProps } from '../contextMenu';
 import type { DropEvent, GesturableGridProps } from '../grid';
-import type { WidgetsProps } from '../widgets/list';
-import type { UserSelectionProps } from '../userSelection';
-import type { DashboardState } from '~/store/state';
-import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
-import ConfirmDeleteModal from '../confirmDeleteModal';
-import { AssetModelSelection } from '../assetModelSelection/assetModelSelection';
 import { useModelBasedQuery } from '../queryEditor/iotSiteWiseQueryEditor/assetModelDataStreamExplorer/modelBasedQuery/useModelBasedQuery';
+import type { UserSelectionProps } from '../userSelection';
+import type { WidgetsProps } from '../widgets/list';
 import DashboardHeader from './dashboardHeader';
 
-import '@iot-app-kit/components/styles.css';
-import './index.css';
+import { useChatbotPosition } from '~/hooks/useChatbotPosition';
 import { useDashboardViewport } from '~/hooks/useDashboardViewport';
+import { useSyncDashboardConfiguration } from '~/hooks/useSyncDashboardConfiguration';
 import { parseViewport } from '~/util/parseViewport';
 import Actions from '../actions';
-import { useSyncDashboardConfiguration } from '~/hooks/useSyncDashboardConfiguration';
+import { AssistantFloatingMenu } from '../assistant/assistantFloatingMenu';
+import { AssistantIcon } from '../assistant/assistantIcon';
+import { Chatbot } from '../assistant/chatbot';
+import './index.css';
 
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
@@ -120,6 +125,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     (state: DashboardState) => state.copiedWidgets
   );
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
+  const assistant = useSelector((state: DashboardState) => state.assistant);
   const selectedWidgets = useSelectedWidgets();
   const { assetModelId, hasModelBasedQuery } = useModelBasedQuery();
 
@@ -129,10 +135,13 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     undefined
   );
   const [visible, setVisible] = useState<boolean>(false);
-
   useDashboardViewport(
     currentViewport || parseViewport(dashboardConfiguration?.defaultViewport)
   );
+  const { chatbotHeight, calculateChatbotDimensions } = useChatbotPosition(
+    '.iot-resizable-panes'
+  );
+  const [resizablePanesWidth, setResizablePanesWidth] = useState<number>(0);
 
   const dispatch = useDispatch();
 
@@ -302,6 +311,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
   const EditComponent = (
     <ContentLayout
       disableOverlap
+      headerVariant='high-contrast'
       header={
         <DashboardHeader
           editable={editable}
@@ -310,11 +320,10 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
           name={name}
         />
       }
-      headerVariant='high-contrast'
     >
       <div
         className='dashboard'
-        data-test-id='edit-mode-dashboard'
+        data-testid='edit-mode-dashboard'
         style={userSelect}
       >
         <CustomDragLayer
@@ -374,10 +383,15 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
             </div>
           }
           rightPane={propertiesPanel}
+          rightPaneOptions={{
+            icon: <PropertiesPaneIcon role='img' ariaLabel='Configuration' />,
+            headerText: 'Configuration',
+          }}
         />
       </div>
     </ContentLayout>
   );
+
   const ReadOnlyComponent = (
     <ContentLayout
       disableOverlap
@@ -391,12 +405,13 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
         />
       }
     >
-      <div className='dashboard' data-test-id='read-only-mode-dashboard'>
+      <div className='dashboard' data-testid='read-only-mode-dashboard'>
         {hasValidAssetModelData && (
           <div
             style={dashboardToolbarBottomBorder}
             className='dashboard-toolbar-read-only'
             aria-label='preview mode dashboard toolbar'
+            data-testid='read-only-mode-dashboard-toolbar'
             //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
             tabIndex={0}
           >
@@ -419,9 +434,91 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
     </ContentLayout>
   );
 
+  const AssistantComponent = (
+    <ContentLayout
+      disableOverlap
+      headerVariant='high-contrast'
+      header={
+        <DashboardHeader
+          editable={editable}
+          toolbar={toolbar}
+          onSave={onSave}
+          name={name}
+        />
+      }
+    >
+      <div className='dashboard' data-testid='read-only-mode-dashboard'>
+        {hasValidAssetModelData && (
+          <div
+            style={dashboardToolbarBottomBorder}
+            className='dashboard-toolbar-readonly-assistant'
+            aria-label='dashboard assistant mode with toolbar'
+            data-testid='assistant-mode-dashboard-toolbar'
+            //eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+            tabIndex={0}
+          >
+            <Box float='left' padding='s'>
+              <AssetModelSelection iotSiteWiseClient={iotSiteWise} />
+            </Box>
+          </div>
+        )}
+        <ResizablePanes
+          onResize={(size) => {
+            if (size.width) {
+              setResizablePanesWidth(size.width);
+            }
+          }}
+          leftPane={null}
+          centerPane={
+            <div
+              className='display-area'
+              ref={(el) => {
+                calculateChatbotDimensions();
+                setViewFrameElement(el || undefined);
+              }}
+              style={{ backgroundColor: colorBackgroundCellShaded }}
+            >
+              <ReadOnlyGrid {...grid}>
+                <AssistantFloatingMenu
+                  width={resizablePanesWidth}
+                  messageOverrides={DefaultDashboardMessages}
+                />
+                <Widgets {...widgetsProps} />
+              </ReadOnlyGrid>
+              <WebglContext viewFrame={viewFrame} />
+            </div>
+          }
+          rightPane={
+            <Chatbot
+              height={chatbotHeight}
+              messageOverrides={DefaultDashboardMessages}
+            />
+          }
+          rightPaneOptions={{
+            icon: (
+              <AssistantIcon
+                role='img'
+                ariaLabel={
+                  DefaultDashboardMessages.assistant.floatingMenu
+                    .buttonAIAssistant
+                }
+              />
+            ),
+            iconBackground: colorForegroundControlReadOnly,
+            headerText:
+              DefaultDashboardMessages.assistant.floatingMenu.buttonAIAssistant,
+            hideHeaderWhenExpanded: true,
+          }}
+        />
+      </div>
+    </ContentLayout>
+  );
+
+  const readOnlyOrAssistant =
+    assistant.state === 'DISABLED' ? ReadOnlyComponent : AssistantComponent;
   return (
     <I18nProvider locale='en' messages={[messages]}>
-      {readOnly ? ReadOnlyComponent : EditComponent}
+      {readOnly ? readOnlyOrAssistant : EditComponent}
       <ConfirmDeleteModal
         visible={visible}
         headerTitle={`Delete selected widget${
@@ -432,10 +529,9 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({
         description={
           <Box>
             <Box variant='p'>
-              {`Are you sure you want to delete the selected widget${
+              {`Do you want to delete the selected widget${
                 selectedWidgets.length > 1 ? 's' : ''
-              }? You'll lose all the progress you made to the
-                        widget${selectedWidgets.length > 1 ? 's' : ''}`}
+              }? All changes will be lost.`}
             </Box>
             <Box variant='p' padding={{ top: 'm' }}>
               You cannot undo this action.

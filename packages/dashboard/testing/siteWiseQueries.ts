@@ -1,5 +1,8 @@
-import { TimeSeriesData, Viewport } from '@iot-app-kit/core';
-import { initialize, SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
+import { type TimeSeriesData, type Viewport } from '@iot-app-kit/core';
+import {
+  initialize,
+  type SiteWiseQuery,
+} from '@iot-app-kit/source-iotsitewise';
 import {
   createMockIoTEventsSDK,
   createMockSiteWiseSDK,

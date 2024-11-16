@@ -5,7 +5,7 @@ export const createCellItem: (
   props: Partial<CellProps>,
   messageOverrides: TableMessages
 ) => CellItem = (
-  { value, error, isLoading, threshold, quality } = {},
+  { value, error, isLoading, threshold, quality, refId } = {},
   messageOverrides
 ) => {
   const valueOf = () => {
@@ -30,5 +30,6 @@ export const createCellItem: (
     valueOf,
     toString,
     quality,
+    refId,
   };
 };

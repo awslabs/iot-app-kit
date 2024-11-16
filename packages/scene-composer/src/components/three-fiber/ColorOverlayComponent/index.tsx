@@ -1,13 +1,13 @@
-import React, { useMemo, useEffect } from 'react';
-import { Material, Mesh } from 'three';
 import { isEmpty } from 'lodash';
+import { useEffect, useMemo } from 'react';
+import { type Material, Mesh } from 'three';
 
-import { SceneResourceType } from '../../../interfaces';
-import { ISceneNodeInternal, IColorOverlayComponentInternal, accessStore } from '../../../store';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { getSceneResourceInfo, parseColorWithAlpha } from '../../../utils/sceneResourceUtils';
 import useMaterialEffect from '../../../hooks/useMaterialEffect';
 import useRuleResult from '../../../hooks/useRuleResult';
+import { SceneResourceType } from '../../../interfaces';
+import { type IColorOverlayComponentInternal, type ISceneNodeInternal, accessStore } from '../../../store';
+import { getSceneResourceInfo, parseColorWithAlpha } from '../../../utils/sceneResourceUtils';
 
 interface IColorOverlayComponentProps {
   node: ISceneNodeInternal;
@@ -73,7 +73,7 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
   }, [ruleResult, entityObject3D]);
 
   // This component relies on side effects to update the rendering of the entity's mesh. Returning an empty fragment.
-  return <React.Fragment></React.Fragment>;
+  return <></>;
 };
 
 export default ColorOverlayComponent;

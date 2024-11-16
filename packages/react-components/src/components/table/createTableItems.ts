@@ -15,6 +15,7 @@ import type {
   TableItemHydrated,
 } from './types';
 import type { TableMessages } from './messages';
+import { getBreachedThreshold } from '../../utils/thresholdUtils';
 
 export const createTableItems: (
   config: {
@@ -39,6 +40,13 @@ export const createTableItems: (
   const alarmItemsWithData = alarms.map((alarm) => {
     const isLoading = alarm.isLoading;
     return {
+      id: alarm.id as Primitive,
+      assetId: createCellItem(
+        {
+          value: alarm.assetId,
+        },
+        messageOverrides
+      ),
       alarmName: createCellItem(
         {
           value: alarm.alarmName,
@@ -77,6 +85,10 @@ export const createTableItems: (
       value: createCellItem(
         {
           value: alarm.value,
+          threshold:
+            alarm.value && alarm.threshold
+              ? getBreachedThreshold(alarm.value, [alarm.threshold])
+              : undefined,
           isLoading,
         },
         messageOverrides
@@ -105,7 +117,10 @@ export const createTableItems: (
           if (dataStream.resolution !== $cellRef.resolution) {
             return {
               key,
-              data: createCellItem({ error, isLoading }, messageOverrides),
+              data: createCellItem(
+                { error, isLoading, refId: dataStream?.refId },
+                messageOverrides
+              ),
             };
           }
 
@@ -123,7 +138,14 @@ export const createTableItems: (
             return {
               key,
               data: createCellItem(
-                { value, error, isLoading, threshold, quality },
+                {
+                  value,
+                  error,
+                  isLoading,
+                  threshold,
+                  quality,
+                  refId: dataStream?.refId,
+                },
                 messageOverrides
               ),
             };
@@ -142,7 +164,14 @@ export const createTableItems: (
           return {
             key,
             data: createCellItem(
-              { value, error, isLoading, threshold, quality },
+              {
+                value,
+                error,
+                isLoading,
+                threshold,
+                quality,
+                refId: dataStream?.refId,
+              },
               messageOverrides
             ),
           };
@@ -158,13 +187,17 @@ export const createTableItems: (
       };
     });
 
-    return keyDataPairs.reduce(
-      (previous, { key, data }) => ({
-        ...previous,
-        [key]: data,
-      }),
-      {}
-    );
+    const [first] = keyDataPairs;
+    return {
+      id: first.data.value as Primitive,
+      ...keyDataPairs.reduce(
+        (previous, { key, data }) => ({
+          ...previous,
+          [key]: data,
+        }),
+        {}
+      ),
+    };
   });
 
   return [...alarmItemsWithData, ...itemsWithData];

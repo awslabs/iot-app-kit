@@ -1,5 +1,4 @@
-import React from 'react';
-import { TooltipDiagnostic, TooltipDiagnosticOptions } from './diagnostic';
+import { TooltipDiagnostic, type TooltipDiagnosticOptions } from './diagnostic';
 
 export type TooltipDiagnosticsOptions = {
   diagnostics: TooltipDiagnosticOptions[];

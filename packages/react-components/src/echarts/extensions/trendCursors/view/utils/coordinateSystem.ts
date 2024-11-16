@@ -1,5 +1,5 @@
-import Grid from 'echarts/types/src/coord/cartesian/Grid';
-import ExtensionAPI from 'echarts/types/src/core/ExtensionAPI';
+import type Grid from 'echarts/types/src/coord/cartesian/Grid';
+import type ExtensionAPI from 'echarts/types/src/core/ExtensionAPI';
 
 export const getCartesianCoordinateSystem = (api: ExtensionAPI) => {
   const system = api

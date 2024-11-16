@@ -1,17 +1,16 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 
 import { KnownComponentType } from '../../../../interfaces';
 import {
-  ISceneComponentInternal,
-  IModelRefComponentInternal,
-  ISubModelRefComponentInternal,
-  IAnchorComponentInternal,
-  ICameraComponentInternal,
-  ILightComponentInternal,
-  IMotionIndicatorComponentInternal,
-  IColorOverlayComponentInternal,
-  IDataOverlayComponentInternal,
+  type ISceneComponentInternal,
+  type IModelRefComponentInternal,
+  type ISubModelRefComponentInternal,
+  type IAnchorComponentInternal,
+  type ICameraComponentInternal,
+  type ILightComponentInternal,
+  type IMotionIndicatorComponentInternal,
+  type IColorOverlayComponentInternal,
+  type IDataOverlayComponentInternal,
 } from '../../../../store';
 import ComponentGroup from '../ComponentGroup';
 import { fakeSceneNode } from '../fakers';

@@ -1,8 +1,7 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 
 import { KnownComponentType } from '../../interfaces';
-import { ISceneNodeInternal } from '../../store/internalInterfaces';
+import { type ISceneNodeInternal } from '../../store/internalInterfaces';
 
 import { ComponentEditor, DefaultComponentEditor } from './ComponentEditor';
 

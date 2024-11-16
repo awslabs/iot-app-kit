@@ -1,5 +1,5 @@
 import { DashboardPage } from '../dashboard/DashboardPage';
-import { expect, test } from '../test';
+import { test, expect } from '@playwright/test';
 
 test.describe('Test Status Widget', () => {
   test('Status widget cannot be added to the dashboard', async ({

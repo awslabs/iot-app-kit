@@ -1,30 +1,28 @@
-import { useMemo } from 'react';
-import {
-  AssetPropertyValue,
-  IoTSiteWiseClient,
-} from '@aws-sdk/client-iotsitewise';
-import { Viewport } from '@iot-app-kit/core';
-import { AlarmData } from '../types';
-import {
-  extractAssetPropertyId,
-  getStaticThresholdAsAssetPropertyValue,
-} from '../utils/parseAlarmModels';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type Viewport } from '@iot-app-kit/core';
+import { type AlarmData } from '../types';
+import { extractAssetPropertyId } from '../utils/parseAlarmModels';
 import { useQueryMode } from './useQueryMode';
 import {
   useHistoricalAssetPropertyValues,
   useLatestAssetPropertyValues,
 } from '../../../queries';
-import { updateAlarmStatusForQueries } from '../utils/queryStatus';
+import { combineStatusForQueries } from '../utils/queryStatus';
 import { createNonNullableList } from '../../../utils/createNonNullableList';
-import { updateAlarmThresholdData } from '../utils/updateAlarmValues';
+import {
+  type OnUpdateAlarmThresholdDataAction,
+  useRequestSelector,
+} from '../state';
+import { useReactQueryEffect } from './useReactQueryEffect';
 
 export interface UseAlarmThresholdOptions {
   iotSiteWiseClient?: IoTSiteWiseClient;
-  alarms?: AlarmData[];
+  requests: Pick<AlarmData, 'assetId' | 'models'>[];
   viewport?: Viewport;
-  enabled?: boolean;
+  fetchThresholds?: boolean;
   fetchOnlyLatest?: boolean;
   refreshRate?: number;
+  onUpdateAlarmThresholdData: OnUpdateAlarmThresholdDataAction;
 }
 
 /**
@@ -46,35 +44,42 @@ export interface UseAlarmThresholdOptions {
  * into the associated threshold field
  */
 export const useAlarmThreshold = ({
-  alarms,
+  requests: thresholdRequests,
   iotSiteWiseClient,
   viewport,
-  enabled,
+  fetchThresholds: enabled,
   fetchOnlyLatest,
   refreshRate,
+  onUpdateAlarmThresholdData,
 }: UseAlarmThresholdOptions) => {
-  const requests = useMemo(() => {
-    return alarms?.map(({ assetId, models }) => {
+  const requests = useRequestSelector(thresholdRequests, (alarmRequests) =>
+    alarmRequests.map(({ assetId, models = [] }) => {
       // Find the threshold's source asset propertyId if it is modeled in SiteWise
-      let thresholdPropertyId: string | undefined;
-      if (models && models.length > 0) {
-        const threshold = models[0].alarmRule?.simpleRule?.threshold;
-        thresholdPropertyId = extractAssetPropertyId(threshold);
-      }
+      const thresholdPropertyIds = createNonNullableList(
+        models.map((model) =>
+          extractAssetPropertyId(model.alarmRule?.simpleRule?.threshold)
+        )
+      );
       return {
         assetId,
-        propertyId: thresholdPropertyId,
+        propertyId: thresholdPropertyIds.at(0),
       };
-    });
-  }, [alarms]);
+    })
+  );
 
   const queryMode = useQueryMode({ fetchOnlyLatest, viewport });
+
+  const latestValueQueriesEnabled = enabled && queryMode === 'LATEST';
+  const mostRecentBeforeEndValueQueriesEnabled =
+    enabled && queryMode !== 'LATEST';
+  const historicalQueriesInViewportEnabled =
+    enabled && (queryMode === 'LIVE' || queryMode === 'HISTORICAL');
 
   /**
    * Fetch only the latest value if there is no viewport present
    */
   const latestValueQueries = useLatestAssetPropertyValues({
-    enabled: enabled && queryMode === 'LATEST',
+    enabled: latestValueQueriesEnabled,
     iotSiteWiseClient,
     requests,
     refreshRate,
@@ -85,7 +90,7 @@ export const useAlarmThreshold = ({
    * Useful if there is no threshold data within the viewport.
    */
   const mostRecentBeforeEndValueQueries = useHistoricalAssetPropertyValues({
-    enabled: enabled && queryMode !== 'LATEST',
+    enabled: mostRecentBeforeEndValueQueriesEnabled,
     iotSiteWiseClient,
     requests,
     viewport,
@@ -98,71 +103,61 @@ export const useAlarmThreshold = ({
    * Fetch all asset property values within the viewport
    */
   const historicalQueriesInViewport = useHistoricalAssetPropertyValues({
-    enabled: enabled && (queryMode === 'LIVE' || queryMode === 'HISTORICAL'),
+    enabled: historicalQueriesInViewportEnabled,
     iotSiteWiseClient,
     requests,
     viewport,
     refreshRate,
   });
 
-  return useMemo(() => {
-    return (
-      alarms?.map((alarm, index) => {
-        // Short circuit if thresholds not enabled
-        if (!enabled) return alarm;
+  useReactQueryEffect(() => {
+    if (!enabled) return;
 
+    onUpdateAlarmThresholdData({
+      viewport,
+      assetPropertyValueSummaries: requests.map((request, index) => {
         const latestValueQuery = latestValueQueries[index];
         const mostRecentBeforeEndValueQuery =
           mostRecentBeforeEndValueQueries[index];
         const historicalQueryInViewport = historicalQueriesInViewport[index];
 
         /**
-         * Find the threshold static value if it is defined on the alarm model.
-         *
-         * We only consider a single alarm model for now.
+         * derive status and data from only those queries
+         * who are enabled. It is possible that disabled
+         * queries return data if they were enabled in other
+         * useAlarms hooks for the same request.
+         * This could lead to a scenario where we return
+         * different data than requested and with a status that
+         * is not accurate.
          */
-        const staticThresholdValue =
-          alarm.models && alarm.models.length > 0
-            ? getStaticThresholdAsAssetPropertyValue(alarm.models[0])
-            : undefined;
+        const queries = [
+          latestValueQueriesEnabled ? latestValueQuery : undefined,
+          mostRecentBeforeEndValueQueriesEnabled
+            ? mostRecentBeforeEndValueQuery
+            : undefined,
+          historicalQueriesInViewportEnabled
+            ? historicalQueryInViewport
+            : undefined,
+        ] as const;
 
-        const staticThresholdData = staticThresholdValue
-          ? [staticThresholdValue]
-          : [];
-        let thresholdData: AssetPropertyValue[] = [];
+        const status = combineStatusForQueries(
+          createNonNullableList([...queries])
+        );
 
-        // If there is no static value then the query may have data for the threshold
-        if (!staticThresholdData.length) {
-          updateAlarmStatusForQueries(alarm, [
-            latestValueQuery,
-            mostRecentBeforeEndValueQuery,
-            historicalQueryInViewport,
-          ]);
-
-          thresholdData = [
-            ...createNonNullableList([latestValueQuery.data?.propertyValue]),
-            ...(mostRecentBeforeEndValueQuery.data?.assetPropertyValueHistory ??
-              []),
-            ...(historicalQueryInViewport.data?.assetPropertyValueHistory ??
-              []),
-          ];
-        }
-
-        updateAlarmThresholdData(alarm, {
-          data: thresholdData,
-          viewport,
-          staticData: staticThresholdData,
-        });
-
-        return alarm;
-      }) ?? []
-    );
+        return {
+          request,
+          data: [
+            ...createNonNullableList([queries[0]?.data?.propertyValue]),
+            ...(queries[1]?.data?.assetPropertyValueHistory ?? []),
+            ...(queries[2]?.data?.assetPropertyValueHistory ?? []),
+          ],
+          status,
+        };
+      }),
+    });
   }, [
-    enabled,
-    alarms,
-    viewport,
     latestValueQueries,
-    historicalQueriesInViewport,
     mostRecentBeforeEndValueQueries,
+    historicalQueriesInViewport,
   ]);
 };

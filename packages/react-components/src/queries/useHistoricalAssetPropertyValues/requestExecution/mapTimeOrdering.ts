@@ -1,5 +1,5 @@
-import { TimeOrdering } from '@aws-sdk/client-iotsitewise';
-import { FetchMode } from '../types';
+import { type TimeOrdering } from '@aws-sdk/client-iotsitewise';
+import { type FetchMode } from '../types';
 
 export const mapTimeOrdering = ({
   timeOrdering,

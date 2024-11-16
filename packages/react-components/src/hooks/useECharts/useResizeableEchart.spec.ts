@@ -10,8 +10,8 @@ import {
   getLegendHeight,
   getLegendWidth,
 } from './useResizeableEChart';
-import { ChartOptions } from '../../components/chart/types';
-import { ResizeCallbackData } from 'react-resizable';
+import { type ChartOptions } from '../../components/chart/types';
+import { type ResizeCallbackData } from 'react-resizable';
 import { perToPx } from '../utils/pxConversion';
 
 describe('useResizeableEChart', () => {
@@ -83,7 +83,7 @@ describe('useResizeableEChart', () => {
         const event = {
           stopPropagation: jest.fn(),
         } as unknown as React.SyntheticEvent;
-        result.current.onResize(event, {
+        result.current.onResizeEnd(event, {
           size: { width: 800, height: 400 },
         } as unknown as ResizeCallbackData);
       });
@@ -136,7 +136,7 @@ describe('useResizeableEChart', () => {
         const event = {
           stopPropagation: jest.fn(),
         } as unknown as React.SyntheticEvent;
-        result.current.onResize(event, {
+        result.current.onResizeEnd(event, {
           size: { width: 800, height: 400 },
         } as unknown as ResizeCallbackData);
       });

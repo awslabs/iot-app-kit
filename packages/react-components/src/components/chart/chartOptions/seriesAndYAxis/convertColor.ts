@@ -1,10 +1,10 @@
-import { LineSeriesOption } from 'echarts';
+import { type LineSeriesOption } from 'echarts';
 import {
   BAD_DATA_ICON_COLOR,
   UNCERTAIN_DATA_ICON_COLOR,
 } from '../../eChartsConstants';
-import { DataPoint } from '@iot-app-kit/core';
-import { ChartDataQuality } from '../../types';
+import { type DataPoint } from '@iot-app-kit/core';
+import { type ChartDataQuality } from '../../types';
 
 export type ConvertColorOptions = { color?: string } & ChartDataQuality;
 export const convertColor = ({

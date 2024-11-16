@@ -1,6 +1,6 @@
-import { DataSource, DataSourceTransformer } from '../../types';
-import { ObjectDataSource } from './dataSource';
-import { ObjectDataSourceValue } from './input';
+import { type DataSource, type DataSourceTransformer } from '../../types';
+import { type ObjectDataSource } from './dataSource';
+import { type ObjectDataSourceValue } from './input';
 
 /**
  * Abstract object transformer

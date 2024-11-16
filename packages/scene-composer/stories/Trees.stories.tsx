@@ -1,5 +1,5 @@
 import Box from '@cloudscape-design/components/box';
-import React, { FC, ReactNode, useCallback, useState } from 'react';
+import { type FC, type ReactNode, useCallback, useState } from 'react';
 import * as awsui from '@cloudscape-design/design-tokens';
 import { applyMode, Mode } from '@cloudscape-design/global-styles';
 import styled, { ThemeProvider } from 'styled-components';

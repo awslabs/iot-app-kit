@@ -1,7 +1,6 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { KPI } from '../kpi';
-import { COMPARISON_OPERATOR, Viewport } from '@iot-app-kit/core';
+import { COMPARISON_OPERATOR, type Viewport } from '@iot-app-kit/core';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { formatDate } from '../../../utils/time';
 
@@ -92,7 +91,7 @@ describe('default kpi widget', () => {
     const DECIMAL_PLACES = 4;
     render(<KPI query={SUCCESS_QUERY} />);
 
-    expect(screen.getByText(DATA_STREAM.name)).toBeVisible();
+    expect(screen.getByText(`${DATA_STREAM.name}`)).toBeVisible();
     expect(screen.getByText(`(${DATA_STREAM.unit})`)).toBeVisible();
     expect(
       screen.getByText(DATA_STREAM.data[1].y.toFixed(DECIMAL_PLACES))
@@ -123,7 +122,7 @@ describe('default kpi with thresholds', () => {
     const DECIMAL_PLACES = 4;
     render(<KPI query={SUCCESS_QUERY} thresholds={[THRESHOLD]} />);
 
-    expect(screen.getByText(DATA_STREAM.name)).toBeVisible();
+    expect(screen.getByText(`${DATA_STREAM.name}`)).toBeVisible();
     expect(screen.getByText(`(${DATA_STREAM.unit})`)).toBeVisible();
     expect(
       screen.getByText(
@@ -143,7 +142,7 @@ describe('default kpi with thresholds', () => {
     const COLOR_RED = '#ff0000';
     const DECIMAL_PLACES = 4;
     render(<KPI query={SUCCESS_QUERY} thresholds={[FILLED_THRESHOLD]} />);
-    expect(screen.getByText(DATA_STREAM.name)).toBeVisible();
+    expect(screen.getByText(`${DATA_STREAM.name}`)).toBeVisible();
     expect(screen.getByText(`(${DATA_STREAM.unit})`)).toBeVisible();
     expect(
       screen.getByText(

@@ -21,7 +21,7 @@ import type {
   ResourceTableUserSettings,
   TableResourceField,
 } from '../types/table';
-import { DataStreamResourceWithLatestValue } from '../types/resources';
+import { type DataStreamResourceWithLatestValue } from '../types/resources';
 import { formatDate } from '../../../utils/time';
 import { isNumeric, round } from '@iot-app-kit/core-util';
 

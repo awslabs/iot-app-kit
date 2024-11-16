@@ -1,6 +1,6 @@
 import {
-  AssetSummary,
-  PropertySummary,
+  type AssetSummary,
+  type PropertySummary,
 } from '~/hooks/useAssetDescriptionQueries';
 
 type DisplayType = 'property' | 'alarm' | 'none';

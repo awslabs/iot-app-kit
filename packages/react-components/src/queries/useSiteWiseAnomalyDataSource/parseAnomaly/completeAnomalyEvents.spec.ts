@@ -1,10 +1,10 @@
 import {
-  DescribeAssetPropertyCommandOutput,
-  PropertyDataType,
-  PropertyNotificationState,
+  type DescribeAssetPropertyCommandOutput,
+  type PropertyDataType,
+  type PropertyNotificationState,
 } from '@aws-sdk/client-iotsitewise';
 import { completeAnomalyEvents } from './completeAnomalyEvents';
-import { AnomalyEvent } from './types';
+import { type AnomalyEvent } from './types';
 
 const anomalyEvent1: AnomalyEvent = {
   timestamp: 1715356810990,

@@ -1,17 +1,17 @@
 import * as THREE from 'three';
-import { GetState, SetState, StoreApi } from 'zustand';
+import { type GetState, type SetState, type StoreApi } from 'zustand';
 
-import { TransformControls } from '../../three/TransformControls';
+import { type TransformControls } from '../../three/TransformControls';
 import {
-  CameraControlMode,
-  CameraControlsType,
-  TransformControlMode,
-  CameraTarget,
-  AddingWidgetInfo,
-  CameraSettings,
+  type CameraControlMode,
+  type CameraControlsType,
+  type TransformControlMode,
+  type CameraTarget,
+  type AddingWidgetInfo,
+  type CameraSettings,
 } from '../../interfaces';
-import { RootState } from '../Store';
-import { CursorStyle, IDisplayMessage, IEditorConfig } from '../internalInterfaces';
+import { type RootState } from '../Store';
+import { type CursorStyle, type IDisplayMessage, type IEditorConfig } from '../internalInterfaces';
 import { DEFAULT_CAMERA_OPTIONS, DEFAULT_CAMERA_POSITION } from '../../common/constants';
 import { CameraType } from '../../models/SceneModels';
 

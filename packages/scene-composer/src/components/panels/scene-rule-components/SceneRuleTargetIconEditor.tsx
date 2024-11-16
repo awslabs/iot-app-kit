@@ -1,11 +1,11 @@
 import { Grid, Select } from '@cloudscape-design/components';
-import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
-import React, { useMemo, useState } from 'react';
+import { type IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { useMemo, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { SCENE_ICONS } from '../../../common/constants';
 import { DefaultAnchorStatus } from '../../../interfaces';
-import { IIconLookup } from '../../../models/SceneModels';
+import { type IIconLookup } from '../../../models/SceneModels';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
 import { colors } from '../../../utils/styleUtils';
 import { DecodeSvgString } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorComboUtils/DecodeSvgString';

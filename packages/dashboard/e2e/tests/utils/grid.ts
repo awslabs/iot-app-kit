@@ -1,8 +1,8 @@
-import { Locator, Page } from '@playwright/test';
+import { type Locator, type Page } from '@playwright/test';
 
-import { DragPosition, dragAndDrop } from './dragAndDrop';
+import { type DragPosition, dragAndDrop } from './dragAndDrop';
 import { center } from './mousePosition';
-import { BoundingBox, getBoundingBox } from './locator';
+import { type BoundingBox, getBoundingBox } from './locator';
 
 export const GRID_SIZE = 10;
 

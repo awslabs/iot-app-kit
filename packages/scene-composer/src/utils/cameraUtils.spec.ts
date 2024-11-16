@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
-import { ICameraBasics, KnownComponentType } from '../interfaces';
-import { ICameraComponentInternal } from '../store';
+import { type ICameraBasics, KnownComponentType } from '../interfaces';
+import { type ICameraComponentInternal } from '../store';
 
 import { getCameraSettings } from './cameraUtils';
 

@@ -1,4 +1,4 @@
-import { Viewport } from '@iot-app-kit/core';
+import { type Viewport } from '@iot-app-kit/core';
 import { useViewport } from '@iot-app-kit/react-components';
 import { useEffect } from 'react';
 

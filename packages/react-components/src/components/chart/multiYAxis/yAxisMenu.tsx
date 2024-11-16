@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useMeasure } from 'react-use';
 import { isNumeric, round } from '@iot-app-kit/core-util';
-import { Primitive } from '@iot-app-kit/core';
+import { type Primitive } from '@iot-app-kit/core';
 
 import Icon from '@cloudscape-design/components/icon';
 import {
@@ -18,7 +18,7 @@ import { Menu, MenuOption, PositionableMenu } from '../../menu';
 import { ColorIcon } from '../legend/colorIcon';
 import { Value } from '../../shared-components';
 import { MULTI_Y_AXIS_LEGEND_WIDTH } from '../eChartsConstants';
-import { YAxisLegendOption } from '../types';
+import { type YAxisLegendOption } from '../types';
 import { useHighlightedDataStreams } from '../hooks/useHighlightedDataStreams';
 
 import './yAxisMenu.css';

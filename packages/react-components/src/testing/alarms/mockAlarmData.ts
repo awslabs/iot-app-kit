@@ -29,6 +29,7 @@ import {
   mockStateAssetProperty2,
   mockStateAssetPropertyValue,
   mockStateAssetPropertyValue2,
+  mockThresholdAssetProperty,
   mockTypeAssetModelProperty,
   mockTypeAssetProperty,
   mockTypeAssetProperty2,
@@ -188,4 +189,9 @@ export const mockAlarmDataWithInputProperty2 = {
       },
     },
   ],
+} satisfies AlarmDataInternal;
+
+export const mockAlarmDataWithThresholds = {
+  ...mockAlarmDataWithInputProperty,
+  thresholds: [mockThresholdAssetProperty],
 } satisfies AlarmDataInternal;

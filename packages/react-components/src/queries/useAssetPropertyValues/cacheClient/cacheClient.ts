@@ -1,12 +1,18 @@
 import isEqual from 'lodash.isequal';
 import omitBy from 'lodash.omitby';
 import { isUndefined } from 'lodash';
-import { Interval, TimeSeriesDataCacheClient } from '../../useTimeSeriesData';
+import {
+  type Interval,
+  TimeSeriesDataCacheClient,
+} from '../../useTimeSeriesData';
 import {
   assetPropertyValuePointMilliseconds,
   filterAssetPropertyValues,
 } from '../cacheUtils/filterAssetPropertyValues';
-import { AssetPropertyValuesData, AssetPropertyValuesRequest } from '../types';
+import {
+  type AssetPropertyValuesData,
+  type AssetPropertyValuesRequest,
+} from '../types';
 
 export class AssetPropertyValuesCacheClient extends TimeSeriesDataCacheClient<
   AssetPropertyValuesRequest,

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Box, SpaceBetween } from '@cloudscape-design/components';
 import { colorBackgroundContainerContent } from '@cloudscape-design/design-tokens';
 

@@ -1,7 +1,7 @@
 import { MapControls, OrbitControls } from '../three/OrbitControls';
 import { PointerLockControls } from '../three/PointerLockControls';
-import { CameraControlsType } from '../interfaces';
-import { CameraControlImpl } from '../store/internalInterfaces';
+import { type CameraControlsType } from '../interfaces';
+import { type CameraControlImpl } from '../store/internalInterfaces';
 import { Pan } from '../assets/auto-gen/icons';
 
 export const isPointerLockControl = (controlType: CameraControlsType): boolean => {

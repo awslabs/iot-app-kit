@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import { Button, ButtonProps } from '@cloudscape-design/components';
+import { Button, type ButtonProps } from '@cloudscape-design/components';
 
 import { unparse } from 'papaparse';
-import { StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { type StyledSiteWiseQueryConfig } from '~/customization/widgets/types';
+import { type IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useFetchTimeSeriesData } from '../dashboard/queryContext';
 import { useViewport } from '@iot-app-kit/react-components';
 import { assetModelQueryToSiteWiseAssetQuery } from '~/customization/widgets/utils/assetModelQueryToAssetQuery';

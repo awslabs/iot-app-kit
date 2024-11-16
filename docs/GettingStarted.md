@@ -1,47 +1,41 @@
 ## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
 
-# Getting started with IoT Application Kit 
+# Getting started with IoT Application Kit
 
-Use the step-by-step tutorial in this section to learn how to set up IoT Application Kit. 
+Use the step-by-step tutorial in this section to learn how to set up IoT Application Kit.
 
 1. Install the required dependencies
-    To install by using npm, run the following command.
-    1. `npm install --save @iot-app-kit/source-iotsitewise`
-    1. `npm install --save @iot-app-kit/source-iottwinmaker`
-    1. `npm install --save @iot-app-kit/components`
-    1.  If you want to use React: `npm install --save @iot-app-kit/react-components`
-    1. `npm install --save @iot-app-kit/scene-composer`
-2. To initialize the AWS IoT SiteWise source, choose one of the following. 
-    1. To initialize an instance of [@aws-sdk/client-iotsitewise](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iotsitewise/index.html), use the following sample code.
+   To install by using npm, run the following command.
+   1. `npm install --save @iot-app-kit/source-iotsitewise`
+   1. `npm install --save @iot-app-kit/source-iottwinmaker`
+   1. If you want to use React: `npm install --save @iot-app-kit/react-components`
+   1. `npm install --save @iot-app-kit/scene-composer`
+2. To initialize the AWS IoT SiteWise source, choose one of the following.
 
-    ```ts
-    import { initialize } from '@iot-app-kit/source-iotsitewise';
+   1. To initialize an instance of [@aws-sdk/client-iotsitewise](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iotsitewise/index.html), use the following sample code.
 
-    const { IoTSiteWiseClient } = require("@aws-sdk/client-iotsitewise");
+   ```ts
+   import { initialize } from '@iot-app-kit/source-iotsitewise';
 
-    const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
+   const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
 
-    const { query } = initialize({ iotSiteWiseClient });
-    ```
+   const iotSiteWiseClient = new IoTSiteWiseClient({ region: 'REGION' });
 
-    2. To initialize an instance of [@aws-sdk/credential-providers](https://www.npmjs.com/package/@aws-sdk/credential-providers), use the following sample code, but replace the credential provider with the one you wish to utilize: 
+   const { query } = initialize({ iotSiteWiseClient });
+   ```
 
-    ```ts
-    import { initialize } from '@iot-app-kit/source-iotsitewise';
-    import { fromCognitoIdentity } from "@aws-sdk/credential-providers";
+   2. To initialize an instance of [@aws-sdk/credential-providers](https://www.npmjs.com/package/@aws-sdk/credential-providers), use the following sample code, but replace the credential provider with the one you wish to utilize:
 
-    const { query } = initialize({ awsCredentials: fromCognitoIdentity(...) });
-    ```
+   ```ts
+   import { initialize } from '@iot-app-kit/source-iotsitewise';
+   import { fromCognitoIdentity } from "@aws-sdk/credential-providers";
 
-3. Include the style sheets somewhere in your application
+   const { query } = initialize({ awsCredentials: fromCognitoIdentity(...) });
+   ```
 
-```ts
-import "@iot-app-kit/components/styles.css";
-```
+3. To mount the component, use the following sample code.
 
-4. To mount the component, use the following sample code. 
-
-```tsx
+````tsx
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { LineChart, WebglContext } from '@iot-app-kit/react-components';
 const { IoTSiteWiseClient } = require("@aws-sdk/client-iotsitewise");
@@ -55,9 +49,9 @@ const { query } = initialize({ iotSiteWiseClient });
     query.timeSeriesData(
       {
         assets: [{
-          // Replace sitewse-asset-id with the ID of your AWS IoT SiteWise asset. 
+          // Replace sitewse-asset-id with the ID of your AWS IoT SiteWise asset.
           assetId: 'sitewise-asset-id',
-          // Replace property-id with the ID of your AWS IoT SiteWise asset property. 
+          // Replace property-id with the ID of your AWS IoT SiteWise asset property.
           properties: [{ propertyId: 'property-id' }],
         }]
       }
@@ -66,30 +60,10 @@ const { query } = initialize({ iotSiteWiseClient });
 />
 <WebglContext />
 
-// Web component example
-const { defineCustomElements } = require('@iot-app-kit/components/loader');
-defineCustomElements();
-
-<iot-line-chart
-  queries={[
-    query.timeSeriesData(
-      {
-        assets: [{
-          // Replace sitewse-asset-id with the ID of your AWS IoT SiteWise asset. 
-          assetId: 'sitewise-asset-id',
-          // Replace property-id with the ID of your AWS IoT SiteWise asset property. 
-          properties: [{ propertyId: 'property-id' }],
-        }]
-      }
-    )
-  ]}
-/>
-<iot-webgl-context />
-```
 The IoT App Kit components are all supported broadly across all modern browsers, including IE11. Due to usage of WebGL, users with misconfigured or missing graphics drivers may face problems when utilizing IoT App Kit components which utilize WebGL. Components which require WebGL will specify in their components documentation.
 
 
-5. To initialize the AWS IoT TwinMaker source with [@aws-sdk/credential-providers](https://www.npmjs.com/package/@aws-sdk/credential-providers), use the following sample code, but replace the credential provider with the one you wish to utilize: 
+4. To initialize the AWS IoT TwinMaker source with [@aws-sdk/credential-providers](https://www.npmjs.com/package/@aws-sdk/credential-providers), use the following sample code, but replace the credential provider with the one you wish to utilize:
 
 ```ts
 import { initialize } from '@iot-app-kit/source-iottwinmaker';
@@ -98,9 +72,9 @@ import { fromCognitoIdentity } from "@aws-sdk/credential-providers";
 // Replace twin-maker-workspace-id with the ID of your AWS IoT TwinMaker workspace, and replace
 // REGION with the region of your workspace.
 const { query } = initialize('twin-maker-workspace-id', { awsCredentials: fromCognitoIdentity(...), awsRegion: 'REGION' });
-```
+````
 
-6. To mount the SceneViewer component, use the following sample code. 
+5. To mount the SceneViewer component, use the following sample code.
 
 ```tsx
 import { initialize, TwinMakerQuery } from '@iot-app-kit/source-iottwinmaker';
@@ -133,14 +107,15 @@ const viewport = {
 };
 
 // React component example
-<SceneViewer 
+<SceneViewer
   sceneLoader={sceneLoader}
   queries={queries}
   viewport={viewport}
 />
 ```
 
-7. To mount the VideoPlayer component, use the following sample code. 
+6. To mount the VideoPlayer component, use the following sample code.
+
 ```tsx
 import { initialize } from '@iot-app-kit/source-iottwinmaker';
 import { VideoPlayer } from '@iot-app-kit/react-components';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, SpaceBetween } from '@cloudscape-design/components';
 import type { FunctionComponent } from 'react';
 

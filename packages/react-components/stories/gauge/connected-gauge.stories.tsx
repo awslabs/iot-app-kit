@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/default
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 
 import {
   getSingleValueAlarmDataQuery,
@@ -21,7 +20,7 @@ export default {
       control: { type: 'object' },
       defaultValue: {
         gaugeThickness: 30,
-        showName: false,
+        showName: true,
         showUnit: true,
         fontSize: 40,
         labelFontSize: 16,
@@ -74,6 +73,7 @@ export const ConnectedGuage: ComponentStory<typeof Gauge> = ({ settings }) => {
             : getTimeSeriesDataQuery()
         }
         settings={settings}
+        titleText='Average Speed'
       />
     </div>
   );

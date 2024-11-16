@@ -8,7 +8,7 @@ import {
   RESERVED_LAYER_ID,
   componentTypeToId,
 } from '../../common/entityModelConstants';
-import { ISceneComponent, ISceneNode, KnownComponentType } from '../../interfaces';
+import { type ISceneComponent, type ISceneNode, KnownComponentType } from '../../interfaces';
 
 import { createNodeEntityComponent, parseNode, updateNodeEntityComponent } from './nodeComponent';
 

@@ -1,6 +1,6 @@
 import {
-  CreateComponentTypeRequest,
-  ListComponentTypesCommandOutput,
+  type CreateComponentTypeRequest,
+  type ListComponentTypesCommandOutput,
   ResourceNotFoundException,
 } from '@aws-sdk/client-iottwinmaker';
 import { getDefaultAwsClients as aws } from './aws-clients';
@@ -130,9 +130,9 @@ async function waitForComponentTypeActive(
 }
 
 export {
-  fromComponentTypeDefinition,
   createComponentTypeIfNotExists,
-  waitForComponentTypeActive,
   deleteComponentTypes,
+  fromComponentTypeDefinition,
+  waitForComponentTypeActive,
 };
 export type { ComponentTypeDefinition, ComponentTypeProvider };

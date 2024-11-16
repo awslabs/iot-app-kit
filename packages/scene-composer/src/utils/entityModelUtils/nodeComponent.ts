@@ -1,15 +1,15 @@
-import { ComponentRequest, ComponentUpdateRequest, PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
-import { DocumentType } from '@aws-sdk/types';
+import { type ComponentRequest, type ComponentUpdateRequest, PropertyUpdateType } from '@aws-sdk/client-iottwinmaker';
+import { type DocumentType } from '@aws-sdk/types';
 import { isEmpty } from 'lodash';
 
-import { IEntityBindingComponent, ISceneNode } from '../../interfaces';
+import { type IEntityBindingComponent, type ISceneNode } from '../../interfaces';
 import {
   DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
   NODE_COMPONENT_TYPE_ID,
   componentTypeToId,
   RESERVED_LAYER_ID,
 } from '../../common/entityModelConstants';
-import { ISceneComponentInternal, ISceneNodeInternal } from '../../store';
+import { type ISceneComponentInternal, type ISceneNodeInternal } from '../../store';
 import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
 
 import { attachToLayerRequest } from './sceneLayerUtils';

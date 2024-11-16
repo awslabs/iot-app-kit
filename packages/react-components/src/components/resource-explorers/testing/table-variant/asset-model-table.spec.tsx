@@ -1,13 +1,13 @@
-import { render, screen } from '@testing-library/react';
+import type { ListAssetModels } from '@iot-app-kit/core';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AssetModelExplorer } from '../../explorers';
 import { resourceExplorerQueryClient } from '../../requests';
-import * as table from '../helpers/table';
+import type { SelectionMode } from '../../types/common';
+import type { AssetModelResource } from '../../types/resources';
 import { createListAssetModelsPage } from '../helpers/responses';
-import { ListAssetModels } from '@iot-app-kit/core';
-import { AssetModelResource } from '../../types/resources';
-import { SelectionMode } from '../../types/common';
+import * as table from '../helpers/table';
 
 function SelectableAssetModelTable({
   selectionMode,
@@ -146,12 +146,12 @@ describe('asset model table', () => {
 
       await table.waitForLoadingToFinish();
 
-      expect(listAssetModels).toHaveBeenCalledOnce();
-      expect(screen.getByText('(10)')).toBeInTheDocument();
+      expect(listAssetModels).toHaveBeenCalledTimes(2);
+      expect(screen.getByText('(20)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
       expect(listAssetModels).toHaveBeenCalledTimes(2);
       expect(screen.getByText('(20)')).toBeInTheDocument();
@@ -173,8 +173,7 @@ describe('asset model table', () => {
       expect(table.getNextPageButton()).toBeDisabled();
     });
 
-    // TODO: flaky test, commented out to do an iot-app-kit release
-    it.skip('requests multiple lists of pages of asset models correctly', async () => {
+    it('requests multiple lists of pages of asset models correctly', async () => {
       const listAssetModels = jest
         .fn()
         .mockResolvedValueOnce(createListAssetModelsPage(10, 0, 'next-token-1'))
@@ -194,19 +193,19 @@ describe('asset model table', () => {
 
       await table.waitForLoadingToFinish();
 
-      expect(listAssetModels).toHaveBeenCalledOnce();
-      expect(screen.getByText('(10)')).toBeInTheDocument();
+      expect(listAssetModels).toHaveBeenCalledTimes(4);
+      expect(screen.getByText('(30)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
-      expect(listAssetModels).toHaveBeenCalledTimes(3);
-      expect(screen.getByText('(20)')).toBeInTheDocument();
+      expect(listAssetModels).toHaveBeenCalledTimes(4);
+      expect(screen.getByText('(30)')).toBeInTheDocument();
       expect(table.getPreviousPageButton()).not.toBeDisabled();
       expect(table.getNextPageButton()).not.toBeDisabled();
 
-      await table.clickNextPageButtonWithLoading();
+      await table.clickNextPageButton();
 
       expect(listAssetModels).toHaveBeenCalledTimes(4);
       expect(screen.getByText('(30)')).toBeInTheDocument();
@@ -521,6 +520,34 @@ describe('asset model table', () => {
 
       expect(screen.getByText('Name')).toBeVisible();
       expect(screen.getByText('Description')).toBeVisible();
+    });
+  });
+
+  describe('errors', () => {
+    // hide errors in test output
+    const realConsoleError = console.error;
+    beforeAll(() => {
+      console.error = () => {};
+    });
+    afterAll(() => {
+      console.error = realConsoleError;
+    });
+
+    test('user experiences an error when listing asset models', async () => {
+      const errorMessage = 'Failed to request resources';
+      render(
+        <AssetModelExplorer
+          iotSiteWiseClient={{
+            listAssetModels: jest
+              .fn()
+              .mockRejectedValue(new Error(errorMessage)),
+          }}
+        />
+      );
+      await table.waitForLoadingToFinish();
+      const assetModelTable = screen.getByRole('table');
+
+      expect(within(assetModelTable).getByText(errorMessage)).toBeVisible();
     });
   });
 });

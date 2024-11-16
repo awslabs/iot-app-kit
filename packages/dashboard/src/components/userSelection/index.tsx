@@ -1,8 +1,7 @@
-import React from 'react';
 import { useLayers } from '../internalDashboard/useLayers';
 
-import './index.css';
 import type { Rect } from '~/types';
+import './index.css';
 
 export type UserSelectionProps = {
   rect: Rect | undefined;

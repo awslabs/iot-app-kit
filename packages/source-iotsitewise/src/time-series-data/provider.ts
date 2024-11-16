@@ -1,5 +1,5 @@
 import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
-import { SiteWiseComponentSession } from '../component-session';
+import { type SiteWiseComponentSession } from '../component-session';
 import {
   timeSeriesDataSession,
   assetSession,

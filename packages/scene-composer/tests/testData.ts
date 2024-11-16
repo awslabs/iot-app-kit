@@ -1,6 +1,6 @@
-import { DataStream } from '@iot-app-kit/core';
+import { type DataStream } from '@iot-app-kit/core';
 
-import { IDataInput } from '../src/interfaces';
+import { type IDataInput } from '../src/interfaces';
 
 import scene1 from './scenes/scene_1.json';
 import scene2 from './scenes/scene_2.json';

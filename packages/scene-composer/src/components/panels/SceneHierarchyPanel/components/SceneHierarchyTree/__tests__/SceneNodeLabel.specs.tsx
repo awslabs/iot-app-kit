@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { render } from '@testing-library/react';
 
-import SceneNodeLabel, { SceneNodeLabelProps } from '../SceneNodeLabel';
+import SceneNodeLabel, { type SceneNodeLabelProps } from '../SceneNodeLabel';
 import { useSceneHierarchyData } from '../../../SceneHierarchyDataProvider';
 import { KnownComponentType } from '../../../../../../interfaces';
 

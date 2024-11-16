@@ -1,9 +1,9 @@
-import {
-  CreateEntityRequest,
-  ListEntitiesFilter,
+import type {
   ComponentUpdateRequest,
-  ParentEntityUpdateRequest,
+  CreateEntityRequest,
   ListEntitiesCommandOutput,
+  ListEntitiesFilter,
+  ParentEntityUpdateRequest,
 } from '@aws-sdk/client-iottwinmaker';
 import { getDefaultAwsClients as aws } from './aws-clients';
 import { delay } from './utils';
@@ -231,5 +231,5 @@ async function updateEntity(
   console.log(`updated entity: ${entityId}`);
 }
 
-export { deleteEntities, updateEntity, deleteEntitiesWithServiceRecursion };
+export { deleteEntities, deleteEntitiesWithServiceRecursion, updateEntity };
 export type { EntityDefinition };

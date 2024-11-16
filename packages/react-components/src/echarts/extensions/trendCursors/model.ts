@@ -1,5 +1,5 @@
 import * as echarts from 'echarts';
-import { ComponentOption } from 'echarts/types/src/util/types';
+import { type ComponentOption } from 'echarts/types/src/util/types';
 
 export interface TrendCursorOption extends ComponentOption {
   group: string;

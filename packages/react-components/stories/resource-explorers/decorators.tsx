@@ -1,5 +1,5 @@
 import { type DecoratorFn } from '@storybook/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { resourceExplorerQueryClient } from '../../src/components/resource-explorers/requests';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 

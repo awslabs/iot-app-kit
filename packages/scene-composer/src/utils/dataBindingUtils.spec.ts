@@ -1,4 +1,4 @@
-import { IDataFrame, IDataInput, IotTwinMakerNumberNamespace, IRuleBasedMap } from '../interfaces';
+import { type IDataFrame, type IDataInput, IotTwinMakerNumberNamespace, type IRuleBasedMap } from '../interfaces';
 
 import { dataBindingValuesProvider, ruleEvaluator } from './dataBindingUtils';
 

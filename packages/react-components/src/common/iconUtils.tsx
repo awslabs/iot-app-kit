@@ -1,4 +1,3 @@
-import React from 'react';
 import type { StatusIconType } from '@iot-app-kit/core';
 
 type Icons = {

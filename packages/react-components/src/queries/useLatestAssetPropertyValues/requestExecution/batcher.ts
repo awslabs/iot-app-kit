@@ -1,12 +1,15 @@
 import DataLoader from 'dataloader';
 import { nanoid } from 'nanoid';
-import { BatchGetAssetPropertyValue, RequestResponse } from '@iot-app-kit/core';
 import {
-  LatestAssetPropertyValueRequest,
-  LatestAssetPropertyValueResponse,
+  type BatchGetAssetPropertyValue,
+  type RequestResponse,
+} from '@iot-app-kit/core';
+import {
+  type LatestAssetPropertyValueRequest,
+  type LatestAssetPropertyValueResponse,
 } from '../types';
 import { anySignal } from '../../useAssetPropertyValues/requestExecution/utils/anySignal';
-import { BatchGetAssetPropertyValueErrorEntry } from '@aws-sdk/client-iotsitewise';
+import { type BatchGetAssetPropertyValueErrorEntry } from '@aws-sdk/client-iotsitewise';
 
 type LoaderRequest = LatestAssetPropertyValueRequest & {
   abortSignal: AbortSignal;
@@ -65,10 +68,12 @@ export class LatestAssetPropertyValueBatcher {
   ): Promise<LoaderResponse[]> {
     let nextToken = undefined;
 
-    const entries = requests.map((request) => ({
-      ...request,
-      entryId: createEntryId(),
-    }));
+    const entries = requests.map(
+      ({ abortSignal: _abortSignal, ...request }) => ({
+        ...request,
+        entryId: createEntryId(),
+      })
+    );
 
     const abortSignal = anySignal(
       requests.map(({ abortSignal: requestAbortSignal }) => requestAbortSignal)

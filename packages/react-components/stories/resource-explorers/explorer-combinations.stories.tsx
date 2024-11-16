@@ -1,20 +1,20 @@
 import { type Meta } from '@storybook/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
+import {
+  AlarmExplorer,
+  AssetExplorer,
+  AssetModelExplorer,
+  AssetPropertyExplorer,
+  TimeSeriesExplorer,
+  type AssetExplorerProps,
+  type AssetModelExplorerProps,
+} from '../../src/components/resource-explorers';
+import { client, eventsClient } from './data-source';
 import {
   StoryWithClearedResourceCache,
   StoryWithTanstackDevTools,
 } from './decorators';
-import { client } from './data-source';
-import {
-  AssetModelExplorer,
-  AssetExplorer,
-  AssetPropertyExplorer,
-  TimeSeriesExplorer,
-  type AssetModelExplorerProps,
-  type AssetExplorerProps,
-  AlarmExplorer,
-} from '../../src/components/resource-explorers';
 
 export default {
   title: 'Resource Explorers/Combinations',
@@ -235,6 +235,7 @@ export function AssetExplorerPlusAlarmExplorer() {
 
       <AlarmExplorer
         iotSiteWiseClient={client}
+        iotEventsClient={eventsClient}
         parameters={selectedAssets}
         tableSettings={{
           isUserSettingsEnabled: true,
@@ -260,6 +261,7 @@ export function AssetModelExplorerPlusAlarmExplorer() {
 
       <AlarmExplorer
         iotSiteWiseClient={client}
+        iotEventsClient={eventsClient}
         parameters={selectedAssetModels}
         tableSettings={{ isFilterEnabled: true, isUserSettingsEnabled: true }}
       />

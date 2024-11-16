@@ -1,7 +1,7 @@
-import { DescribeAlarmModelResponse } from '@aws-sdk/client-iot-events';
+import { type DescribeAlarmModelResponse } from '@aws-sdk/client-iot-events';
 import { SITE_WISE_BACKED_PROPERTY_PREFIX } from '../constants';
 import type { AlarmProperty } from '../types';
-import { AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
+import { type AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
 
 /**
  * Extracts the alarm model name from its ARN.

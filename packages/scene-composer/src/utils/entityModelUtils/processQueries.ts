@@ -1,5 +1,5 @@
-import { Row } from '@aws-sdk/client-iottwinmaker';
-import { DocumentType } from '@aws-sdk/types';
+import { type Row } from '@aws-sdk/client-iottwinmaker';
+import { type DocumentType } from '@aws-sdk/types';
 
 import { KnownComponentType } from '../../interfaces';
 import { getGlobalSettings } from '../../common/GlobalSettings';
@@ -9,7 +9,11 @@ import {
   NODE_COMPONENT_TYPE_ID,
   SUB_MODEL_REF_PARENT_RELATIONSHIP_NAME,
 } from '../../common/entityModelConstants';
-import { IEntityBindingComponentInternal, ISceneNodeInternal, ISubModelRefComponentInternal } from '../../store';
+import {
+  type IEntityBindingComponentInternal,
+  type ISceneNodeInternal,
+  type ISubModelRefComponentInternal,
+} from '../../store';
 import { generateUUID } from '../mathUtils';
 import { findComponentByType } from '../nodeUtils';
 

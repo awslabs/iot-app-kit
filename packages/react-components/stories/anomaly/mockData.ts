@@ -1,4 +1,4 @@
-import { AnomalyObjectDataSource } from '../../src/data';
+import { type AnomalyObjectDataSource } from '../../src/data';
 import shuffle from 'lodash/shuffle';
 
 const randomValuePicker = (
