@@ -77,5 +77,9 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "fast-xml-parser": "^4.2.5"
+  },
+  "volta": {
+    "node": "18.20.5",
+    "npm": "10.8.2"
   }
 }
