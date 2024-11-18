@@ -4,6 +4,80 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.0.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v11.0.0...scene-composer-v12.0.0) (2024-11-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **composer:** remove deprecated and internal interfaces from public
+
+### Features
+
+* adding docker setup for scene-composer ui tests ([3db0c9b](https://github.com/awslabs/iot-app-kit/commit/3db0c9bf11dcba40782241f3886cd79f1912f00f))
+* **composer:** createDynamicScene util ([0b3b80c](https://github.com/awslabs/iot-app-kit/commit/0b3b80c0e62176c76411fe07718df7ef6849ef3a))
+* **composer:** save scene level data to scene root entity ([6cabfb5](https://github.com/awslabs/iot-app-kit/commit/6cabfb55de10004b1f0314cb7be931ef3969b09e))
+* **composer:** show delete confirmation modal for dynamic scene ([fdc9ef1](https://github.com/awslabs/iot-app-kit/commit/fdc9ef16df97d1528b3f28c96470e513bb9722a7))
+* **composer:** support showing flash message ([da7281a](https://github.com/awslabs/iot-app-kit/commit/da7281a84e47325c56071850f6ea49a6eed73233))
+* **composer:** update convert to attached scene component and load data from it ([86c92ce](https://github.com/awslabs/iot-app-kit/commit/86c92ce5e4361b563be799cc367c0da14a7a0c2c))
+* **draco:** setup support for draco compressed files ([cc0d4e4](https://github.com/awslabs/iot-app-kit/commit/cc0d4e4a74232c856100a6781354342a669f5fd0))
+* ds ga ([4a07ece](https://github.com/awslabs/iot-app-kit/commit/4a07ece255b189d5d9d9693abe75046d8c0458bd))
+* ds ga ([dbc396b](https://github.com/awslabs/iot-app-kit/commit/dbc396b1ade912f7cfa7f25e591afcc6d0e84cf4))
+* ds ga ([5b241d0](https://github.com/awslabs/iot-app-kit/commit/5b241d09196aa50a0c8798a7214a338ba7031ec4))
+* ds ga ([b503fcf](https://github.com/awslabs/iot-app-kit/commit/b503fcf62367ceff847010c845adafa9154f7c6b))
+* **dynamic scene:** reverse query structure for improved query speed ([c91995f](https://github.com/awslabs/iot-app-kit/commit/c91995f3c976b62c613708925693843bfbbada11))
+* **DynamicScenes:** upgrade the AWS SDK and use RESET_VALUE for clearing property values ([3c03272](https://github.com/awslabs/iot-app-kit/commit/3c03272ca3d6b32acd6a7a1518ca088300933dcd))
+* migrate from awsui to cloudscape ([37802b1](https://github.com/awslabs/iot-app-kit/commit/37802b18f12844dba6876cd7d94c50420cbece66))
+* **scene composer:** adding data-testid to improve e2e test ([1e5ab86](https://github.com/awslabs/iot-app-kit/commit/1e5ab863f89fcdf66aa7b4c0e3b0f5c77367411e))
+* **scene composer:** setting up 3D test harness ([df62eef](https://github.com/awslabs/iot-app-kit/commit/df62eefd048a66f327070bc8c90b4c9b964de26e))
+* **scene-composer:** enable accelerated raycasting for 3D Tiles ([84d2ce4](https://github.com/awslabs/iot-app-kit/commit/84d2ce4783c74a3792c11009f99cfac888cd848d))
+* **scene:** add asset type filter option for browser callback ([f65d4f0](https://github.com/awslabs/iot-app-kit/commit/f65d4f0d5429dfa25b90208d924bfe3c3e3640df))
+* **scene:** alphabetize camera drop down ([960f195](https://github.com/awslabs/iot-app-kit/commit/960f195e229736bda9e73c17ecda93fa047a56c6))
+* **scene:** move add ground plane to settings ([3b0c59b](https://github.com/awslabs/iot-app-kit/commit/3b0c59b13243892a657f8ed975448babe7a6caec))
+* **scene:** textures for backgrounds and planes ([0b2104a](https://github.com/awslabs/iot-app-kit/commit/0b2104ae299f899b88ac4d77696b075793ceed1d))
+* **Tiles3D:** add Tiles3D AssetType and evaluate model type when adding a 3D model to the scene ([eec0f50](https://github.com/awslabs/iot-app-kit/commit/eec0f508caa4b1f6b2c7a84baa4f45bf4dc7195b))
+
+
+### Bug Fixes
+
+* **composer:** cannot delete scene node of a child and then its parent ([a2e140a](https://github.com/awslabs/iot-app-kit/commit/a2e140ab0ef05975e2ec1d8e36a4d68ad9087911))
+* **composer:** refactor scene modal rendering ([1d797b1](https://github.com/awslabs/iot-app-kit/commit/1d797b1a6aeab60e45f8e11daf8cd97b9b21033b))
+* **composer:** remove deprecated and internal interfaces from public ([07e82b4](https://github.com/awslabs/iot-app-kit/commit/07e82b42963931ddce95362f4a6cca9add6a1423))
+* **composer:** trigger onSceneLoaded after dynamic scene is loaded ([4c9453a](https://github.com/awslabs/iot-app-kit/commit/4c9453a12211a878a850d71eee7cb8bd3d4a5fe3))
+* **composer:** update property string length limit to 2048 ([a3cb800](https://github.com/awslabs/iot-app-kit/commit/a3cb8009d8547351449bac7c121e67d66971a708))
+* **draco:** modifying check to ensure globalSettings are ready for evaluation ([80c3295](https://github.com/awslabs/iot-app-kit/commit/80c3295f96609885a043c4cb01d314447a376485))
+* **draco:** updating global settings ([9010137](https://github.com/awslabs/iot-app-kit/commit/90101378170004df2de7de511bb0be458ef45842))
+* **dynamicscene:** converting empty scene locks ui ([cc8efff](https://github.com/awslabs/iot-app-kit/commit/cc8efffb80eeb17a64b1b8f021f42b7e5f52570f))
+* **DynamicScenes:** copySceneNodes should take the new sceneId as an argument ([37f8251](https://github.com/awslabs/iot-app-kit/commit/37f8251db97b6ee6320e9cdf810c1e317717e7ac))
+* **DynamicScenes:** fix bug to render empty scenes ([2c25827](https://github.com/awslabs/iot-app-kit/commit/2c25827f4fc2b9bc745eacd81e9b7d875fb3a086))
+* **DynamicScenes:** revert detect dynamic scenes missing their root entity ([8593b33](https://github.com/awslabs/iot-app-kit/commit/8593b3304faf9933f9050400201fc0a1c6aae0ef))
+* internal pipeline has issues with lfs, reverting ([968f950](https://github.com/awslabs/iot-app-kit/commit/968f95005c51591d7cb99af323808fd232b8d4e9))
+* **scene composer:** correcting state logic for tag settings ([f149ac9](https://github.com/awslabs/iot-app-kit/commit/f149ac94f5f78a6798dbefa95435134989859f68))
+* **scene composer:** implemented react-hooks linter & converted useStore to accessStore ([d95f684](https://github.com/awslabs/iot-app-kit/commit/d95f684ad6c14405d8c9c1f5b2ac84cb5f3355e1))
+* **scene hierarchy:** cleaning up scene hierarchy ui ([b1a11f3](https://github.com/awslabs/iot-app-kit/commit/b1a11f361af37c8cd05db79d964ef1642860e0f1))
+* **scene-composer:** 3D model selection broken on first click ([7ee722a](https://github.com/awslabs/iot-app-kit/commit/7ee722ab3cf1aa4a353e7b05c1a9b53f3ac00c88))
+* **scene-composer:** fix scene hierarchy in viewer mode ([c8c70fd](https://github.com/awslabs/iot-app-kit/commit/c8c70fdac04d8aab12f5a6a3f19303cb6754d083))
+* **scene-composer:** fix sub-model selection ([0a11b9a](https://github.com/awslabs/iot-app-kit/commit/0a11b9a391767fea2d255509ac9377889e812a5c))
+* **scene-composer:** reverting zustand upgrade due to Grafana issues related to zustand, react, r3f ([cfbca24](https://github.com/awslabs/iot-app-kit/commit/cfbca24d51de3fb113f79ab0dce2cc96264a8c82))
+* **scene:** fix dynamic scene entity binding reload on query ([d8a1b89](https://github.com/awslabs/iot-app-kit/commit/d8a1b89c189dc7694b83b0819199b54711a34109))
+* **scene:** fix possible undefined query state ([0511c34](https://github.com/awslabs/iot-app-kit/commit/0511c3429d4c6426851b0dfae91a03d4e3982800))
+* **scene:** fix regression in updateSceneNode for reparenting nodes ([016e9f5](https://github.com/awslabs/iot-app-kit/commit/016e9f59ff755ff8d1522117d159df7246aebe22))
+* **scene:** fix Scene Hierarchy Tree item for node with no components ([e341fa5](https://github.com/awslabs/iot-app-kit/commit/e341fa511cfec0630ec13b0dba22981b7307c6be))
+* **scene:** handle bad texture files gracefully and toggle opacity on selection ([dca5b10](https://github.com/awslabs/iot-app-kit/commit/dca5b10404d9dd1175e16284d9733abe38590175))
+* **scene:** round ground plane opacity to whole percent ([760aa8c](https://github.com/awslabs/iot-app-kit/commit/760aa8cac2511717e0fa1f9b1974125ee97c569a))
+* **scene:** update dependency for selection change use effect ([623b55b](https://github.com/awslabs/iot-app-kit/commit/623b55b016890a3e537fdae0b1d39ec665603834))
+* **scene:** validation scene json on deserialize ([3f2ad73](https://github.com/awslabs/iot-app-kit/commit/3f2ad737c7c85a1d3e14e2fb5a74d7213780e581))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from * to 12.0.0
+    * @iot-app-kit/react-components bumped from * to 12.0.0
+    * @iot-app-kit/source-iottwinmaker bumped from * to 12.0.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from * to 12.0.0
+
 ## [10.13.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v10.13.0...scene-composer-v10.13.1) (2024-10-16)
 
 

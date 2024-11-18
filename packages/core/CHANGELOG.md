@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.0.0](https://github.com/awslabs/iot-app-kit/compare/core-v11.0.0...core-v12.0.0) (2024-11-18)
+
+
+### Features
+
+* add a widget level loading indicator for x-y plot ([9be5617](https://github.com/awslabs/iot-app-kit/commit/9be5617aabe7a1edf88876406aeb1e83f174a288))
+* add dataquality attribute to data-point ([5fb23de](https://github.com/awslabs/iot-app-kit/commit/5fb23de5473fa4f9c2377330b598711209514620))
+* add threshold settings to KPI ([2fa0429](https://github.com/awslabs/iot-app-kit/commit/2fa0429b6262092b4b3c86c21b8808b90e2d49fe))
+* async fetchTimeSeriesData ([2b776cc](https://github.com/awslabs/iot-app-kit/commit/2b776ccf73a538abfbcf4a0ba175dca7c2c4aa0c))
+* **composer:** support showing flash message ([da7281a](https://github.com/awslabs/iot-app-kit/commit/da7281a84e47325c56071850f6ea49a6eed73233))
+* display assetname conditionally in legend [#2277](https://github.com/awslabs/iot-app-kit/issues/2277) ([c4c443f](https://github.com/awslabs/iot-app-kit/commit/c4c443fab77d6e337d32fbecebb308c7f339fab5))
+* fetchTimeSeriesData ([1c65191](https://github.com/awslabs/iot-app-kit/commit/1c65191654c726b66cf1e0bcc2df83d620f6d4a5))
+* introduce edgeMode in dashboard components ([c168fb4](https://github.com/awslabs/iot-app-kit/commit/c168fb45b68252e25385c38bc20752ce1ffcd4e8))
+* **react-components:** add l4e queries ([328da8e](https://github.com/awslabs/iot-app-kit/commit/328da8ed9341c68c8c0a3a6b672170f1fa8eeb37))
+* **react-components:** implement request functions and hooks to build clients ([2ca7e6c](https://github.com/awslabs/iot-app-kit/commit/2ca7e6caf771bd929b993d79f91f6e7d3ce21350))
+* user selected dashboard refresh-rate ([1c1256d](https://github.com/awslabs/iot-app-kit/commit/1c1256da83c938037a47e930c127c2bf3bc14e90))
+
+
+### Bug Fixes
+
+* add request settings to fetchTimeSeriesData ([d7cbd9d](https://github.com/awslabs/iot-app-kit/commit/d7cbd9d8bb5a5f56804a7ebce2c87e944bcb6f2b))
+* aws clients marked as peer dependencies ([0272167](https://github.com/awslabs/iot-app-kit/commit/027216707ec5fdd77390ef1de132ef744f4f17b8))
+* **core:** increase cache and min request interval to prevent making many requests for near now data ([403fec9](https://github.com/awslabs/iot-app-kit/commit/403fec94c16a68adbae04134dc4ee69bedb4f4d6))
+* corrected the spelling in refresh rate error in documentation [#2777](https://github.com/awslabs/iot-app-kit/issues/2777) ([03e58e7](https://github.com/awslabs/iot-app-kit/commit/03e58e7403fbc501e00dd1b216d710a5a4dafcdb))
+* fix data-zoom behavior for base chart ([0c66a80](https://github.com/awslabs/iot-app-kit/commit/0c66a8016e2aa827ad3093c3ef89d6437e014d18))
+* pass in refresh rate through the query instead of props ([b6df585](https://github.com/awslabs/iot-app-kit/commit/b6df5856b4407c74d4746d12a1781d11976f9948))
+* refresh rate defined in dashboard and on query ([43cc5e4](https://github.com/awslabs/iot-app-kit/commit/43cc5e437543aed60663620655044cba9437a226))
+* remove duplicate constants and types ([45c155b](https://github.com/awslabs/iot-app-kit/commit/45c155b414a29c767e276060f1c60ce8401ea456))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from * to 12.0.0
+    * @iot-app-kit/ts-config bumped from * to 12.0.0
+    * eslint-config-iot-app-kit bumped from * to 12.0.0
+
 ## [10.13.1](https://github.com/awslabs/iot-app-kit/compare/core-v10.13.0...core-v10.13.1) (2024-10-16)
 
 

@@ -1,5 +1,19 @@
 # Changelog
 
+## [12.0.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v11.0.0...tools-iottwinmaker-v12.0.0) (2024-11-18)
+
+
+### Features
+
+* **DynamicScenes:** upgrade the AWS SDK and use RESET_VALUE for clearing property values ([3c03272](https://github.com/awslabs/iot-app-kit/commit/3c03272ca3d6b32acd6a7a1518ca088300933dcd))
+* **tmdt:** support endpoint-url parameter and respect S3 bucket name character limit ([b4ea8fb](https://github.com/awslabs/iot-app-kit/commit/b4ea8fbdf3970abfedee4e2465572e20f8f0a707))
+
+
+### Bug Fixes
+
+* **bucket policy:** switch from ACL to bucket policy for access logs ([2d17a0f](https://github.com/awslabs/iot-app-kit/commit/2d17a0fa53057ddd0a9e5b46ab2b0de6b9163ac2))
+* **tmdt:** stream 3D assets from S3 on init ([ee0e11b](https://github.com/awslabs/iot-app-kit/commit/ee0e11b30c331f7ec341e8cf58f155e41011a0bd))
+
 ## [10.13.1](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v10.13.0...tools-iottwinmaker-v10.13.1) (2024-10-16)
 
 
