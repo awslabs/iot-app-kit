@@ -1,5 +1,45 @@
 # Changelog
 
+## [12.0.0](https://github.com/awslabs/iot-app-kit/compare/doc-site-v11.0.0...doc-site-v12.0.0) (2024-11-18)
+
+
+### Features
+
+* add alarm data source query ([32fe5c7](https://github.com/awslabs/iot-app-kit/commit/32fe5c706fba1c483b98d7baa1d1045eb6cf2ac3))
+* add gauge component in doc site package ([17a02f5](https://github.com/awslabs/iot-app-kit/commit/17a02f54ac811ab384aa6b8ad2dd4f61e0cc1514))
+* add timezone docs ([8995f92](https://github.com/awslabs/iot-app-kit/commit/8995f92959132da6feaace768206070a8c8aae6d))
+* **anomaly-chart:** added `gestures` enablement option ([4c2402c](https://github.com/awslabs/iot-app-kit/commit/4c2402c44a5c3538fdc60fe8210b626670073479))
+* **doc-site:** adding doc-site ([743ca50](https://github.com/awslabs/iot-app-kit/commit/743ca509649a31f11334fbbd2785cce1dbb4b735))
+* **react-components:** add arrow datasource ([efb0d6d](https://github.com/awslabs/iot-app-kit/commit/efb0d6d01549011e57400c6b48033264a7e122c9))
+
+
+### Bug Fixes
+
+* add doc-site to release-please config ([ccf5086](https://github.com/awslabs/iot-app-kit/commit/ccf5086fc9ef362e7c61c4d02cb3e88aa20b21c5))
+* anomaly chart docs not loading ([8e01a69](https://github.com/awslabs/iot-app-kit/commit/8e01a69f48b0632b80cb432f6a5f0decdf3301d4))
+* **dashboard:** bring dashboard view component up to date ([cf75507](https://github.com/awslabs/iot-app-kit/commit/cf75507b76130f708dba67a61dc14e6ba3dac7ff))
+* **doc-site:** canvas not recognised automatically ([1e42f58](https://github.com/awslabs/iot-app-kit/commit/1e42f5872f863349b51264526d4b74271e811412))
+* fix for css style issue in doc site [#2718](https://github.com/awslabs/iot-app-kit/issues/2718) ([e50f2ae](https://github.com/awslabs/iot-app-kit/commit/e50f2aeeee42e337e0a3327f5989f224241bdf74))
+* l4e bug fixes ([a71673c](https://github.com/awslabs/iot-app-kit/commit/a71673c9fbc701a5e26ed8d8c9bda191bc9b9285))
+* make gauge values absolute values in gauge docs ([dbb4901](https://github.com/awslabs/iot-app-kit/commit/dbb490144d14e144636ab02c7e4d4fa7b79188df))
+* **react-components:** export anomaly chart ([30ae675](https://github.com/awslabs/iot-app-kit/commit/30ae675d92acd26d0414f6aa2da953bc0b37d5e7))
+* **react-components:** gauge properly shows property name again ([ddb65c6](https://github.com/awslabs/iot-app-kit/commit/ddb65c6304c473e01e0c7ae3e868eba98923574c))
+* testing-util as devDependency of doc-site ([3cc2bb0](https://github.com/awslabs/iot-app-kit/commit/3cc2bb08294244c3f6fd15800892d6402894b434))
+* update data quality UX to match mocks ([ed62846](https://github.com/awslabs/iot-app-kit/commit/ed628461c0dd582ae2f03f06b81c8d25aab3832c))
+* update docs for KPI ([84a51f5](https://github.com/awslabs/iot-app-kit/commit/84a51f51c71527a4ffec72fbffb118f6e0b7f67d))
+* update timezone docs based on feedback ([17be12d](https://github.com/awslabs/iot-app-kit/commit/17be12d6336a607866a27af31e742b74d712c571))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from * to 12.0.0
+    * @iot-app-kit/react-components bumped from * to 12.0.0
+  * devDependencies
+    * @iot-app-kit/testing-util bumped from * to 12.0.0
+    * eslint-config-iot-app-kit bumped from * to 12.0.0
+
 ## [10.13.1](https://github.com/awslabs/iot-app-kit/compare/doc-site-v10.13.0...doc-site-v10.13.1) (2024-10-16)
 
 

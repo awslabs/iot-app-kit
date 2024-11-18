@@ -1,5 +1,28 @@
 # Changelog
 
+## [12.0.0](https://github.com/awslabs/iot-app-kit/compare/testing-util-v11.0.0...testing-util-v12.0.0) (2024-11-18)
+
+
+### Features
+
+* add gauge component in doc site package ([17a02f5](https://github.com/awslabs/iot-app-kit/commit/17a02f54ac811ab384aa6b8ad2dd4f61e0cc1514))
+
+
+### Bug Fixes
+
+* pass in refresh rate through the query instead of props ([b6df585](https://github.com/awslabs/iot-app-kit/commit/b6df5856b4407c74d4746d12a1781d11976f9948))
+* updated the viewport settings for dynamic input [#2565](https://github.com/awslabs/iot-app-kit/issues/2565) ([0e31d25](https://github.com/awslabs/iot-app-kit/commit/0e31d25b9a7001a6216057681ac5aa7b6ec327ed))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from * to 12.0.0
+  * devDependencies
+    * @iot-app-kit/ts-config bumped from * to 12.0.0
+    * eslint-config-iot-app-kit bumped from * to 12.0.0
+
 ## [10.13.1](https://github.com/awslabs/iot-app-kit/compare/testing-util-v10.13.0...testing-util-v10.13.1) (2024-10-16)
 
 

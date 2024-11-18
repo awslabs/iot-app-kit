@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v11.0.0...source-iottwinmaker-v12.0.0) (2024-11-18)
+
+
+### Features
+
+* add a widget level loading indicator for x-y plot ([9be5617](https://github.com/awslabs/iot-app-kit/commit/9be5617aabe7a1edf88876406aeb1e83f174a288))
+* **composer:** createDynamicScene util ([0b3b80c](https://github.com/awslabs/iot-app-kit/commit/0b3b80c0e62176c76411fe07718df7ef6849ef3a))
+* **composer:** support showing flash message ([da7281a](https://github.com/awslabs/iot-app-kit/commit/da7281a84e47325c56071850f6ea49a6eed73233))
+* **composer:** update convert to attached scene component and load data from it ([86c92ce](https://github.com/awslabs/iot-app-kit/commit/86c92ce5e4361b563be799cc367c0da14a7a0c2c))
+* **DynamicScenes:** upgrade the AWS SDK and use RESET_VALUE for clearing property values ([3c03272](https://github.com/awslabs/iot-app-kit/commit/3c03272ca3d6b32acd6a7a1518ca088300933dcd))
+
+
+### Bug Fixes
+
+* pass in refresh rate through the query instead of props ([b6df585](https://github.com/awslabs/iot-app-kit/commit/b6df5856b4407c74d4746d12a1781d11976f9948))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from * to 12.0.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from * to 12.0.0
+    * @iot-app-kit/ts-config bumped from * to 12.0.0
+    * eslint-config-iot-app-kit bumped from * to 12.0.0
+
 ## [10.13.1](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v10.13.0...source-iottwinmaker-v10.13.1) (2024-10-16)
 
 

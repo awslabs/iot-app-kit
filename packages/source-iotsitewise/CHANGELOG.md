@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v11.0.0...source-iotsitewise-v12.0.0) (2024-11-18)
+
+
+### Features
+
+* add a widget level loading indicator for x-y plot ([9be5617](https://github.com/awslabs/iot-app-kit/commit/9be5617aabe7a1edf88876406aeb1e83f174a288))
+* add alarm data source query ([32fe5c7](https://github.com/awslabs/iot-app-kit/commit/32fe5c706fba1c483b98d7baa1d1045eb6cf2ac3))
+* add anomaly query ([3c11512](https://github.com/awslabs/iot-app-kit/commit/3c115121db6fc8248bcd6b36989f6ebea3212ba7))
+* add dataquality attribute to data-point ([5fb23de](https://github.com/awslabs/iot-app-kit/commit/5fb23de5473fa4f9c2377330b598711209514620))
+* async fetchTimeSeriesData ([2b776cc](https://github.com/awslabs/iot-app-kit/commit/2b776ccf73a538abfbcf4a0ba175dca7c2c4aa0c))
+* **dashboard:** use new RE components to update dashboard RE for modeled and unmodeled data ([d7db11e](https://github.com/awslabs/iot-app-kit/commit/d7db11ee7c16dd012b7ced86dc52cde9a483e24e))
+* display assetname conditionally in legend [#2277](https://github.com/awslabs/iot-app-kit/issues/2277) ([c4c443f](https://github.com/awslabs/iot-app-kit/commit/c4c443fab77d6e337d32fbecebb308c7f339fab5))
+* fetchTimeSeriesData ([1c65191](https://github.com/awslabs/iot-app-kit/commit/1c65191654c726b66cf1e0bcc2df83d620f6d4a5))
+* introduce edgeMode in dashboard components ([c168fb4](https://github.com/awslabs/iot-app-kit/commit/c168fb45b68252e25385c38bc20752ce1ffcd4e8))
+* introduce edgeMode in source-iotsitewise ([3106695](https://github.com/awslabs/iot-app-kit/commit/31066951a245712a0b7aa94fd3307813390ab8e4))
+
+
+### Bug Fixes
+
+* add request settings to fetchTimeSeriesData ([d7cbd9d](https://github.com/awslabs/iot-app-kit/commit/d7cbd9d8bb5a5f56804a7ebce2c87e944bcb6f2b))
+* aws clients marked as peer dependencies ([d944df4](https://github.com/awslabs/iot-app-kit/commit/d944df4113822671b84737b98dee261cab692421))
+* aws clients marked as peer dependencies ([0272167](https://github.com/awslabs/iot-app-kit/commit/027216707ec5fdd77390ef1de132ef744f4f17b8))
+* grab asset composite property correctly ([1c57017](https://github.com/awslabs/iot-app-kit/commit/1c57017f3b3c78c62fc3a3cdfc6f4fa01a09f745))
+* pass in refresh rate through the query instead of props ([b6df585](https://github.com/awslabs/iot-app-kit/commit/b6df5856b4407c74d4746d12a1781d11976f9948))
+* prevent fetching ([85a7b35](https://github.com/awslabs/iot-app-kit/commit/85a7b35f9b5303fe037de5636a75827335ffdaba))
+* refresh rate defined in dashboard and on query ([43cc5e4](https://github.com/awslabs/iot-app-kit/commit/43cc5e437543aed60663620655044cba9437a226))
+* source-iotsitewise batch API options ([6e4d430](https://github.com/awslabs/iot-app-kit/commit/6e4d430a033bbd54eb403a96f04ecb23a7909e36))
+
+
+### Performance Improvements
+
+* improve raw batching ([263282d](https://github.com/awslabs/iot-app-kit/commit/263282d751d334745ddc3079d6a8959b5cf1e6d9))
+* increase batch entry and result size ([cf5e978](https://github.com/awslabs/iot-app-kit/commit/cf5e9785418c801e89cc2afa2a626e16547a8a7c))
+* increase batch size ([1fefe81](https://github.com/awslabs/iot-app-kit/commit/1fefe81cecf8bbeffebb5e89b73cab3494beba21))
+* prevent duplication of simultaneous data stream metadata requests ([bfbe7b2](https://github.com/awslabs/iot-app-kit/commit/bfbe7b23c968e367423cf8a81504e2773e5460bc))
+
+
+### Reverts
+
+* "perf: increase batch size" ([636a539](https://github.com/awslabs/iot-app-kit/commit/636a539fcba8c62871b1b60b117ab2881124ac81))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from * to 12.0.0
+    * @iot-app-kit/core-util bumped from * to 12.0.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from * to 12.0.0
+    * @iot-app-kit/testing-util bumped from * to 12.0.0
+    * @iot-app-kit/ts-config bumped from * to 12.0.0
+    * eslint-config-iot-app-kit bumped from * to 12.0.0
+
 ## [10.13.1](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v10.13.0...source-iotsitewise-v10.13.1) (2024-10-16)
 
 

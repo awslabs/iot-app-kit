@@ -1,5 +1,29 @@
 # Changelog
 
+## [12.0.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v11.0.0...core-util-v12.0.0) (2024-11-18)
+
+
+### Features
+
+* **dashboard:** default viewport setting ([0c3f3ef](https://github.com/awslabs/iot-app-kit/commit/0c3f3efa3a48be537d0eed0e6a1a02ecaa7c1f03))
+
+
+### Bug Fixes
+
+* add trailing zeros to decimal point rounding, fix rounding function ([9c13177](https://github.com/awslabs/iot-app-kit/commit/9c131779c5a3f5b2ce7c6d1239e54ed82bfbf572))
+* aws clients marked as peer dependencies ([d944df4](https://github.com/awslabs/iot-app-kit/commit/d944df4113822671b84737b98dee261cab692421))
+* aws clients marked as peer dependencies ([0272167](https://github.com/awslabs/iot-app-kit/commit/027216707ec5fdd77390ef1de132ef744f4f17b8))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from * to 12.0.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from * to 12.0.0
+    * @iot-app-kit/ts-config bumped from * to 12.0.0
+
 ## [10.13.1](https://github.com/awslabs/iot-app-kit/compare/core-util-v10.13.0...core-util-v10.13.1) (2024-10-16)
 
 
